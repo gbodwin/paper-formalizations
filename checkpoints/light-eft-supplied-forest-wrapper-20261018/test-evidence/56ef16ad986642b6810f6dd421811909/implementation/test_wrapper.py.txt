@@ -1,0 +1,406 @@
+"""Synthetic filesystem/probability-export/process fixtures only. No Lean tools."""
+from pathlib import Path
+import copy,fcntl,json,os,resource,shutil,sys,time,types,unittest,uuid
+from unittest.mock import patch
+from contracts import *
+import child_runner as child
+import driver,focused_audit as audit
+from lease import Lease,COMMON
+from scope import Context,reviewed_inputs
+HERE=Path(__file__).resolve().parent
+RUN=HERE/'test-evidence'/uuid.uuid4().hex;RUN.mkdir(parents=True)
+SNAPSHOT=RUN/'implementation';SNAPSHOT.mkdir()
+for source in HERE.glob('*.py'):shutil.copyfile(source,SNAPSHOT/(source.name+'.txt'))
+save(SNAPSHOT/'manifest.json',[dict(path=x.name,sha256=sha(x.read_bytes()),bytes=x.stat().st_size) for x in sorted(SNAPSHOT.iterdir())])
+COUNTER=0
+def fresh():
+ global COUNTER
+ COUNTER+=1;p=RUN/('case-%03d'%COUNTER);p.mkdir();return p
+def put(p,b=b'fixture'):
+ p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b if isinstance(b,bytes) else b.encode());return p
+def audit_files(deps):
+ loaded=list(deps)+[TARGET,'Init.Prelude']
+ inv='owner\tname\tkind\tunsafe\tpartial\n'+TARGET+'\t'+THEOREM+'\ttheorem\tfalse\tfalse\n'
+ dep='name\towner\tkind\ttypeDependencies\tbodyDependencies\tunsafe\tpartial\n'
+ dep+=THEOREM+'\t'+TARGET+'\ttheorem\tpropext\taccepted.lemma\tfalse\tfalse\n'
+ dep+='accepted.lemma\t'+list(deps)[0]+'\ttheorem\t\topaque.const\tfalse\tfalse\n'
+ dep+='opaque.const\tInit.Prelude\topaque\tpropext\t\tfalse\tfalse\n'
+ dep+='propext\tInit.Prelude\taxiom\t\t\tfalse\tfalse\n'
+ return {'actual-owner-inventory.tsv':inv,'recursive-dependencies.tsv':dep,'import-closure-loaded.txt':'\n'.join(loaded)+'\n','strict-violations.txt':'\n'}
+RAW='PASS: 1 new-module actual-owner declarations; 4 recursive constants, 1 opaque bodies; axioms [propext]\n'
+def fixture(fail=None,descendant=None):
+ root=fresh();dep=root/'deps';dep.mkdir()
+ deps={}
+ for m in ['LightEFTSpanners.Accepted','LightSpanners.Accepted']:
+  p=put(dep/Path(*m.split('.')).with_suffix('.olean'));deps[m]=bind(p)
+ std=put(dep/'Init/Prelude.olean')
+ source=put(root/'submitted.source',b'SYNTHETIC SOURCE DATA; NOT LEAN\n')
+ obj=root/'work/objects'/Path(*TARGET.split('.')).with_suffix('.olean')
+ config=root/'fixture-config.json'
+ config.write_text(json.dumps(dict(target=TARGET,object=str(obj),resolution=str(root/'work/resolution.json'),
+  audit=str(root/'work/audit/ci-evidence'),roots=[str(root/'work/objects'),str(dep)],audit_files=audit_files(deps),audit_raw=RAW,fail_stage=fail,descendant_stage=descendant)))
+ inputs={str(p):bind(p) for p in [source,config,std,*[Path(r['path']) for r in deps.values()],HERE/'fixture_worker.py']}
+ inputs.update({str(p):bind(p) for p in HERE.glob('*.py')})
+ roots=[root/'work/objects',dep];plans=[]
+ for s in STAGES:
+  plans.append(dict(stage=s,module=TARGET,argv=[sys.executable,'-I',str(HERE/'fixture_worker.py'),s,str(config)],
+   env={'LANG':'C.UTF-8','LC_ALL':'C.UTF-8','LEAN_PATH':':'.join(map(str,roots))},sources=[str(source)]))
+ return root,plans,deps,inputs,roots
+def ci_fixture():
+ root=fresh();ci=root/'ci';ci.mkdir();deps=['LightEFTSpanners.Accepted','LightSpanners.Accepted']
+ for name,text in audit_files(deps).items():put(ci/name,text)
+ return root,ci,deps
+def account():
+ node=dict(path='/fixture',limit=str(16*1024**3),current=0,memory_stat={'anon':0,'file':0,'kernel':0},oom={'oom':0,'oom_kill':0,'oom_group_kill':0},pids_max='100',pids_current=1,pids_events={'max':0})
+ return dict(namespace='fixture',membership='0::/\n',identities=[{'fixture':[1,2,3]}],headroom=8*1024**3,system_available=8*1024**3,nodes=[node],collection_errors=[])
+class Fixtures(unittest.TestCase):
+ def test_01_complete_harmless_chain(self):
+  a=fixture();r=driver.run_fixture(*a);self.assertTrue(r['accepted'],r)
+  self.assertEqual([x['stage'] for x in r['stages']],list(STAGES))
+  lease=json.loads((a[0]/'evidence/lease.json').read_text())
+  self.assertTrue(lease['kernel_echild']);self.assertFalse(lease['historical_continuity'])
+  self.assertTrue((a[0]/'lock').exists())
+ def test_02_first_failure_stops_and_preserves(self):
+  a=fixture(fail='compile');r=driver.run_fixture(*a)
+  self.assertFalse(r['accepted']);self.assertFalse((a[0]/'evidence/resolve').exists())
+  rc=json.loads((a[0]/'evidence/compile/receipt.json').read_text())
+  self.assertEqual(rc['exit'],7);self.assertTrue(rc['kernel_no_children_verified'])
+ def test_03_descendant_failure_is_reaped(self):
+  a=fixture(descendant='compile');r=driver.run_fixture(*a)
+  self.assertFalse(r['accepted']);rc=json.loads((a[0]/'evidence/compile/receipt.json').read_text())
+  self.assertTrue(rc['all_descendants_gone']);self.assertTrue(rc['kernel_no_children_verified'])
+  self.assertTrue(json.loads((a[0]/'evidence/lease.json').read_text())['kernel_echild'])
+ def test_production_entry_and_common_lock_disabled(self):
+  self.assertRaises(ProductionDisabled,driver.execute_production,reviewed_commit='0'*40,enabled=True)
+  root=fresh();self.assertRaises(ProductionDisabled,Lease(COMMON,root/'lease.json',{},True).__enter__)
+  self.assertFalse(COMMON.exists())
+ def test_real_readonly_authority_and_196_split(self):
+  spec,deps,rows=reviewed_inputs()
+  self.assertEqual(len(deps['bindings']),196)
+  self.assertEqual(sum(x['module'].startswith('LightEFTSpanners.') for x in deps['bindings']),140)
+  self.assertEqual(sum(x['module'].startswith('LightSpanners.') for x in deps['bindings']),56)
+  self.assertEqual(len(spec['commands']),4)
+ def test_fixed_fixture_program_only(self):
+  a=fixture();a[1][0]['argv'][0]='/bin/true'
+  self.assertRaises(Rejected,driver.run_fixture,*a)
+  self.assertFalse((a[0]/'lock').exists())
+ def test_exclusion_and_contention(self):
+  root=fresh()
+  with Lease(root/'lock',root/'lease.json',dict(exclusive_worker=True,same_directory=str(root)),True) as lease:
+   lease.check()
+   with (root/'lock').open('r+') as other:self.assertRaises(BlockingIOError,fcntl.flock,other,fcntl.LOCK_EX|fcntl.LOCK_NB)
+  self.assertRaises(Rejected,Lease(root/'lock',root/'other.json',dict(exclusive_worker=True,same_directory=str(root)),True).__enter__)
+ def test_uncoordinated_and_symlink_creation_refused(self):
+  root=fresh();self.assertRaises(Rejected,Lease(root/'lock',root/'l.json',{},True).__enter__)
+  put(root/'target');(root/'lock').symlink_to(root/'target')
+  self.assertRaises(Rejected,Lease(root/'lock',root/'l.json',dict(exclusive_worker=True,same_directory=str(root)),True).__enter__)
+ def test_fresh_identity_and_path_replacement(self):
+  root=fresh()
+  with Lease(root/'lock',root/'lease.json',dict(exclusive_worker=True,same_directory=str(root)),True) as l:
+   old=l.identity
+   (root/'lock').rename(root/'held');put(root/'lock')
+   self.assertRaises(Rejected,l.check)
+   (root/'lock').unlink();(root/'held').rename(root/'lock');l.check();self.assertEqual(l.identity,old)
+ def test_kernel_echild_gates_release(self):
+  root=fresh()
+  with Lease(root/'lock',root/'lease.json',dict(exclusive_worker=True,same_directory=str(root)),True) as l:
+   pid=os.fork()
+   if pid==0:time.sleep(.15);os._exit(0)
+  self.assertTrue(l.record['kernel_echild']);self.assertTrue(l.record['release_errors'])
+ def test_inherited_handshake_each_identity_field(self):
+  root=fresh()
+  with Lease(root/'lock',root/'lease.json',dict(exclusive_worker=True,same_directory=str(root)),True) as l:
+   fake=types.SimpleNamespace(pid=4242);fd=l.file.fileno();st=os.fstat(fd)
+   first={'start_ticks':12,'ppid':os.getpid(),'sid':4242,'pgid':4242}
+   packet=dict(limits={k:[v,v] for k,v in child.LIMITS.items()},pid=4242,ppid=os.getpid(),sid=4242,pgid=4242,
+    lock_fd=fd,lock_device=st.st_dev,lock_inode=st.st_ino,lock_inheritable=True)
+   def limits(pid,kind):return next((v,v) for n,v in child.LIMITS.items() if getattr(resource,n)==kind)
+   with patch.object(child.resource,'prlimit',side_effect=limits),patch.object(child.os,'stat',return_value=st):
+    child.verify_ready(packet,fake,fd,first,first)
+    for field in ['pid','ppid','sid','pgid','lock_fd','lock_device','lock_inode','lock_inheritable']:
+     bad=copy.deepcopy(packet);bad[field]=False if field=='lock_inheritable' else bad[field]+1
+     with self.subTest(field=field):self.assertRaises(RuntimeError,child.verify_ready,bad,fake,fd,first,first)
+    bad=copy.deepcopy(packet);bad['limits']['RLIMIT_CPU']=[61,61]
+    self.assertRaises(RuntimeError,child.verify_ready,bad,fake,fd,first,first)
+    now=dict(first,start_ticks=13);self.assertRaises(RuntimeError,child.verify_ready,packet,fake,fd,first,now)
+   with patch.object(child.resource,'prlimit',return_value=(0,0)):
+    self.assertRaises(RuntimeError,child.verify_ready,packet,fake,fd,first,first)
+ def test_input_hash_symlink_and_multilink_refusal(self):
+  root=fresh();p=put(root/'source');row=bind(p);p.write_bytes(b'changed')
+  self.assertRaises(Rejected,bind,p,row)
+  (root/'link').symlink_to(p);self.assertRaises((OSError,Rejected),bind,root/'link')
+  os.link(p,root/'hard');self.assertRaises(Rejected,bind,p)
+ def test_independent_shadow_even_valid_resolver(self):
+  a=fixture();root,_,deps,_,roots=a
+  roots[0].mkdir(parents=True);target=put(roots[0]/Path(*TARGET.split('.')).with_suffix('.olean'))
+  resolver=put(root/'resolution.json',json.dumps({'target':TARGET,'count':1,'resolved':[{'module':TARGET,'object':str(target)}],'search_path':list(map(str,roots))}))
+  resolution(resolver,roots,target);effective(roots,deps,target,True)
+  p=put(roots[0]/Path(*next(iter(deps)).split('.')).with_suffix('.olean'))
+  self.assertRaises(Rejected,effective,roots,deps,target,True)
+ def test_prefix_sibling_even_singleton_count(self):
+  a=fixture();root,_,deps,_,roots=a;roots[0].mkdir(parents=True)
+  target=put(roots[0]/Path(*TARGET.split('.')).with_suffix('.olean'))
+  put(roots[0]/Path(*TARGET.split('.'))/'Sibling.olean')
+  self.assertRaises(Rejected,effective,roots,deps,target,True)
+ def test_dependency_missing_or_drift(self):
+  a=fixture();root,_,deps,_,roots=a;roots[0].mkdir(parents=True)
+  target=roots[0]/Path(*TARGET.split('.')).with_suffix('.olean')
+  effective(roots,deps,target,False)
+  p=Path(next(iter(deps.values()))['path']);p.write_bytes(b'drift')
+  self.assertRaises(Rejected,effective,roots,deps,target,False);p.unlink()
+  self.assertRaises(Rejected,effective,roots,deps,target,False)
+ def test_resolution_wrong_count_target_object_and_roots(self):
+  root=fresh();obj=put(root/'object');roots=[root]
+  base={'target':TARGET,'count':1,'resolved':[{'module':TARGET,'object':str(obj)}],'search_path':[str(root)]}
+  for field,value in [('target','Other'),('count',0),('resolved',[{'module':TARGET,'object':'/wrong'}]),('search_path',['/wrong'])]:
+   j=copy.deepcopy(base);j[field]=value;p=put(root/'resolution',json.dumps(j))
+   with self.subTest(field=field):self.assertRaises(Rejected,resolution,p,roots,obj)
+ def test_new_object_and_resolution_are_protected(self):
+  root=fresh();p=put(root/'object');r=put(root/'resolution');rows={str(x):bind(x) for x in [p,r]}
+  unchanged(rows)
+  for x in [p,r]:
+   old=x.read_bytes();x.write_bytes(b'changed');self.assertRaises(Rejected,unchanged,rows);x.write_bytes(old)
+   rows={str(y):bind(y) for y in [p,r]}
+ def test_output_whitelist_and_budgets(self):
+  root=fresh();ci=root/'ci';ci.mkdir();outputs(ci)
+  put(ci/'unexpected');self.assertRaises(Rejected,outputs,ci)
+  (ci/'unexpected').unlink();p=ci/'recursive-dependencies.tsv'
+  with p.open('wb') as f:f.truncate(64*1024**2+1)
+  self.assertRaises(Rejected,outputs,ci);p.unlink()
+ def test_focused_positive_and_hint_not_warning(self):
+  _,ci,deps=ci_fixture();r=audit.validate(ci,deps,RAW+'hint: the word warning alone is not a warning diagnostic\n')
+  self.assertEqual(r['new_owner_roots'],1);self.assertEqual(r['recursive_constants'],4)
+ def test_exact_imports_missing_extra_duplicate_and_aggregate(self):
+  for mode in ['missing','extra','duplicate','aggregate']:
+   _,ci,deps=ci_fixture();p=ci/'import-closure-loaded.txt';s=p.read_text()
+   if mode=='missing':s=s.replace(deps[0]+'\n','')
+   if mode=='extra':s+='LightEFTSpanners.Unrelated\n'
+   if mode=='duplicate':s+=TARGET+'\n'
+   if mode=='aggregate':s+='LightEFTSpanners\n'
+   p.write_text(s)
+   with self.subTest(mode=mode):self.assertRaises(Rejected,audit.validate,ci,deps,RAW)
+ def test_owner_named_root_and_root_coverage(self):
+  for mode in ['owner','named','private','metadata','duplicate']:
+   _,ci,deps=ci_fixture();i=ci/'actual-owner-inventory.tsv';d=ci/'recursive-dependencies.tsv'
+   if mode=='owner':i.write_text(i.read_text().replace(TARGET+'\t',deps[0]+'\t'))
+   if mode=='named':i.write_text(i.read_text().replace(THEOREM,'Missing'))
+   if mode=='private':d.write_text(d.read_text()+f'private.generated\t{TARGET}\ttheorem\t\t\tfalse\tfalse\n')
+   if mode=='metadata':d.write_text(d.read_text().replace(THEOREM+'\t'+TARGET+'\ttheorem',THEOREM+'\t'+TARGET+'\tdefinition'))
+   if mode=='duplicate':i.write_text(i.read_text()+i.read_text().splitlines()[1]+'\n')
+   with self.subTest(mode=mode):self.assertRaises(Rejected,audit.validate,ci,deps,RAW)
+ def test_closure_types_bodies_dangling_orphans_and_truncation(self):
+  for mode in ['type','body','orphan','truncated','inductive']:
+   _,ci,deps=ci_fixture();p=ci/'recursive-dependencies.tsv';s=p.read_text()
+   if mode=='type':s=s.replace('\tpropext\taccepted.lemma','\tmissing\taccepted.lemma')
+   if mode=='body':s=s.replace('\taccepted.lemma\tfalse','\tmissing\tfalse')
+   if mode=='orphan':s+='unused\tInit.Prelude\ttheorem\t\t\tfalse\tfalse\n'
+   if mode=='truncated':s=s[:-1]
+   if mode=='inductive':s=s.replace('opaque\tpropext\t','inductive\tpropext\t')
+   p.write_text(s)
+   with self.subTest(mode=mode):self.assertRaises(Rejected,audit.validate,ci,deps,RAW)
+ def test_safety_axioms_strict_and_counts(self):
+  for mode in ['unsafe','partial','axiom','project_axiom','strict','roots','closure','opaque','printed_axiom','double','warning']:
+   _,ci,deps=ci_fixture();p=ci/'recursive-dependencies.tsv';raw=RAW
+   if mode=='unsafe':p.write_text(p.read_text().replace('false\tfalse','true\tfalse'))
+   if mode=='partial':p.write_text(p.read_text().replace('false\tfalse','false\ttrue'))
+   if mode=='axiom':p.write_text(p.read_text().replace('propext','badAxiom'))
+   if mode=='project_axiom':p.write_text(p.read_text().replace('accepted.lemma\t'+deps[0]+'\ttheorem','accepted.lemma\t'+deps[0]+'\taxiom'))
+   if mode=='strict':(ci/'strict-violations.txt').write_text('finding\n')
+   if mode=='roots':raw=raw.replace('1 new-module','2 new-module')
+   if mode=='closure':raw=raw.replace('4 recursive','3 recursive')
+   if mode=='opaque':raw=raw.replace('1 opaque','0 opaque')
+   if mode=='printed_axiom':raw=raw.replace('[propext]','[Classical.choice]')
+   if mode=='double':raw+=RAW
+   if mode=='warning':raw+='file.lean:2:3: warning: actual warning\n'
+   with self.subTest(mode=mode):self.assertRaises(Rejected,audit.validate,ci,deps,raw)
+ def test_complete_exports_reconstruction_and_tampering(self):
+  root,ci,_=ci_fixture();raw=put(root/'raw.log',RAW);e=root/'exports'
+  manifests=audit.export_all(ci,raw,e);self.assertEqual(len(manifests),5)
+  for n in list(EXPORTS)+['raw.log']:audit.verify_chunks(e/n,raw if n=='raw.log' else ci/n)
+  p=e/EXPORTS[0]/'part-0000.txt';p.write_bytes(p.read_bytes()+b'x')
+  self.assertRaises(Rejected,audit.verify_chunks,e/EXPORTS[0],ci/EXPORTS[0])
+ def test_chunk_order_path_missing_extra_and_truncation(self):
+  for mode in ['order','path','missing','extra','truncated','source','row_flag']:
+   root=fresh();src=put(root/'src',b'a\nb\nc\n');directory=root/'chunks';audit.chunk(src,directory,2)
+   m=json.loads((directory/'manifest.json').read_text())
+   if mode=='order':m['parts'].reverse()
+   if mode=='path':m['parts'][0]['path']='../src'
+   if mode=='missing':(directory/m['parts'][0]['path']).unlink()
+   if mode=='extra':put(directory/'extra')
+   if mode=='truncated':(directory/m['parts'][0]['path']).write_bytes(b'')
+   if mode=='source':m['source']='wrong'
+   if mode=='row_flag':m['row_aligned']=False
+   save(directory/'manifest.json',m)
+   with self.subTest(mode=mode):self.assertRaises((Rejected,FileNotFoundError),audit.verify_chunks,directory,src)
+ def test_admission_identity_events_capacity_and_pid_boundaries(self):
+  b=account();child.check_memory(b,b,3*1024**3)
+  mutations=[
+   lambda a:a.update(headroom=3*1024**3-1),
+   lambda a:a.update(namespace='changed'),
+   lambda a:a.update(membership='different'),
+   lambda a:a.update(identities=[]),
+   lambda a:a['nodes'][0]['oom'].update(oom=1),
+   lambda a:a['nodes'][0]['pids_events'].update(max=1),
+   lambda a:a['nodes'][0].update(pids_current=100),
+   lambda a:a['nodes'][0].update(limit='12')]
+  for mutate in mutations:
+   a=copy.deepcopy(b);mutate(a);self.assertRaises(RuntimeError,child.check_memory,a,b,3*1024**3)
+ def test_runtime_rss_anon_host_and_partial_fail_closed(self):
+  b=account()
+  def sample(a,rss=1):return {'accounting':a,'child':{'rss':rss,'vm':1},'collection_errors':[]}
+  kwargs=dict(baseline=b,anon_baseline={'/fixture':0},minimum_headroom=1024**3,rss_stop=6*1024**3,anon_stop=3*1024**3,check_memory=child.check_memory)
+  import decision_telemetry as t
+  self.assertFalse(t.policy_errors(sample(b),**kwargs))
+  for mode in ['rss','anon','host','partial']:
+   a=copy.deepcopy(b);s=sample(a)
+   if mode=='rss':s['child']['rss']=6*1024**3
+   if mode=='anon':a['nodes'][0]['memory_stat']['anon']=3*1024**3
+   if mode=='host':a['system_available']=1024**3-1
+   if mode=='partial':s['collection_errors']=[{'error':'partial'}]
+   self.assertTrue(t.policy_errors(s,**kwargs))
+ def test_wall_and_log_guards_are_retained(self):
+  self.assertEqual(child.DEADLINE,90);self.assertEqual(child.INTERVAL,.1)
+  self.assertEqual(child.DECISION_LOG_BOUND,16*1024**2)
+  self.assertEqual(child.RSS_STOP,6*1024**3);self.assertEqual(child.ANON_GROWTH_STOP,3*1024**3)
+ def test_command_snapshot_not_aliased_and_out_of_order(self):
+  a=fixture();root,plans,deps,inputs,roots=a;(root/'work').mkdir();roots[0].mkdir()
+  with Lease(root/'lock',root/'lease.json',dict(exclusive_worker=True,same_directory=str(root)),True) as l:
+   c=Context(root/'work',root,l,plans,roots,deps,inputs,fixture=True)
+   plans[0]['argv']+=['tampered']
+   self.assertNotEqual(c.plans[0],plans[0])
+   self.assertRaises(Rejected,c.before_child,plans[0],{},lambda:None)
+   self.assertRaises(Rejected,c.before_child,plans[1],{},lambda:None)
+ def test_review_authority_fresh_incarnation_boundaries(self):
+  from authority import check_document
+  commit='a'*40;f={'owner_pid':42,'owner_start_ticks':'1','boot_id':'boot','namespaces':{'pid':'p'},'directory_identity':[33,1]}
+  doc={'approved_wrapper_commit':commit,'exclusive_worker':True,'reviewer_idle':True,'allow_new_epoch':True,'same_directory':'/tmp','coordination_reference':'synthetic external review','facts':f,'issued_ns':1}
+  check_document(doc,commit,f,2)
+  for field in ['approved_wrapper_commit','exclusive_worker','reviewer_idle','allow_new_epoch','same_directory','coordination_reference','facts','issued_ns']:
+   bad=copy.deepcopy(doc);bad[field]=None
+   with self.subTest(field=field):self.assertRaises(Rejected,check_document,bad,commit,f,2)
+  self.assertRaises(Rejected,check_document,doc,commit,f,60*10**9+1)
+ def test_receipt_tampering_and_complete_sources(self):
+  a=fixture();result=driver.run_fixture(*a);self.assertTrue(result['accepted'],result)
+  from scope import verify_receipts
+  root,plans,_,_,_=a;e=root/'evidence';lease=json.loads((e/'lease.json').read_text())
+  verify_receipts(e,lease,plans)
+  p=e/'resolve/receipt.json';original=p.read_bytes()
+  for mode in ['exit','uuid','overlap','lock','preexec','sources','reaped','environment']:
+   r=json.loads(original)
+   if mode=='exit':r['exit']=1
+   if mode=='uuid':r['attempt_id']=json.loads((e/'compile/receipt.json').read_text())['attempt_id']
+   if mode=='overlap':r['started_ns']=json.loads((e/'compile/receipt.json').read_text())['started_ns']
+   if mode=='lock':r['lock']['inode']+=1
+   if mode=='preexec':r['preexec_binding_verified']=False
+   if mode=='sources':r['submitted_sources']=[]
+   if mode=='reaped':r['direct_reaped']=False
+   if mode=='environment':r['environment']['LANG']='bad'
+   save(p,r)
+   with self.subTest(mode=mode):self.assertRaises(Rejected,verify_receipts,e,lease,plans)
+   p.write_bytes(original)
+  snapshot=e/'resolve'/json.loads(original)['submitted_sources'][0]['snapshot']
+  data=snapshot.read_bytes();snapshot.write_bytes(b'tampered')
+  self.assertRaises(Rejected,verify_receipts,e,lease,plans);snapshot.write_bytes(data)
+ def test_audit_cannot_mutate_objects_or_resolution(self):
+  from output_guards import runtime_errors
+  a=fixture();root,plans,deps,inputs,roots=a;(root/'work').mkdir();roots[0].mkdir()
+  with Lease(root/'lock',root/'lease.json',dict(exclusive_worker=True,same_directory=str(root)),True) as l:
+   target=put(roots[0]/Path(*TARGET.split('.')).with_suffix('.olean'));resolutionfile=put(root/'work/resolution.json')
+   ci=root/'work/audit/ci-evidence';ci.mkdir(parents=True)
+   record={'lock':{'fd':l.file.fileno(),'path':str(l.path),'device':l.identity[0],'inode':l.identity[1]},'output_guard_spec':{'stage':'audit','objects':str(roots[0]),'target':str(target),'audit':str(ci),'protected':{str(p):bind(p) for p in [target,resolutionfile]}}}
+   self.assertFalse(runtime_errors(record))
+   for p in [target,resolutionfile]:
+    data=p.read_bytes();p.write_bytes(b'changed');self.assertTrue(runtime_errors(record));p.write_bytes(data)
+    record['output_guard_spec']['protected']={str(x):bind(x) for x in [target,resolutionfile]}
+ def test_fresh_stage_admission_host_disk_and_replay_floor(self):
+  a=fixture();root,plans,deps,inputs,roots=a;(root/'work').mkdir();roots[0].mkdir()
+  class Accounting:
+   def __init__(self,value):self.value=value
+   def sample(self):return copy.deepcopy(self.value)
+  with Lease(root/'lock',root/'lease.json',dict(exclusive_worker=True,same_directory=str(root)),True) as l:
+   c=Context(root/'work',root,l,plans,roots,deps,inputs,fixture=True)
+   with patch.object(child,'assert_idle'):
+    c.prepare_child(plans[0],{},lambda:None,Accounting(account()))
+    low=account();low['system_available']=3*1024**3-1
+    self.assertRaises(Rejected,c.prepare_child,plans[0],{},lambda:None,Accounting(low))
+    low=account();low['headroom']=4*1024**3-1
+    self.assertRaises(RuntimeError,c.prepare_child,plans[2],{},lambda:None,Accounting(low))
+    with patch('scope.shutil.disk_usage',return_value=types.SimpleNamespace(free=2*1024**3)):
+     self.assertRaises(Rejected,c.prepare_child,plans[0],{},lambda:None,Accounting(account()))
+ def test_live_guard_log_limit_signals_before_persistence(self):
+  from io import StringIO
+  sample={'accounting':account(),'child':{'rss':1,'vm':1},'collection_errors':[]}
+  stream=StringIO();stream.seek(16*1024**2)
+  record={};order=[]
+  with patch.object(child.exits,'probe',return_value={}),patch.object(child.exits,'assess'),patch.object(child.telemetry,'collect',return_value=sample),patch.object(child,'audit_output_errors',return_value=[]),patch.object(child,'kill_memory_group',side_effect=lambda *a:order.append('signal')):
+   self.assertRaises(child.MemoryGuardError,child.runtime_sample,types.SimpleNamespace(pid=1),account(),None,None,record,lambda:order.append('save'),stream)
+  self.assertEqual(order[0],'signal');self.assertIn('stop_decision_sample',record)
+ def test_receipt_wall_limits_samples_and_admission_rejection(self):
+  a=fixture();result=driver.run_fixture(*a);self.assertTrue(result['accepted'],result)
+  from scope import verify_receipts
+  root,plans,deps,_,_=a;e=root/'evidence';lease=json.loads((e/'lease.json').read_text())
+  path=e/'compile/receipt.json';original=path.read_bytes()
+  for mode in ['wall','limits','disk','host','dependency','source_commit','kernel','child']:
+   r=json.loads(original)
+   if mode=='wall':r['terminal_confirmation']['finished_ns']=r['runtime_wall_started_ns']+90*10**9
+   if mode=='limits':r['handshake']['limits']['RLIMIT_CPU']=[61,61]
+   if mode=='disk':r['preexec_disk_bytes']=2*1024**3
+   if mode=='host':r['preexec_admission']['system_available']=3*1024**3-1
+   if mode=='dependency':r['effective_dependencies']={}
+   if mode=='source_commit':r['source_commit']='wrong'
+   if mode=='kernel':r['kernel_limits_verified']=False
+   if mode=='child':r['child_identity']['start_ticks']+=1
+   save(path,r)
+   with self.subTest(mode=mode):self.assertRaises((Rejected,RuntimeError),verify_receipts,e,lease,plans,deps,'SYNTHETIC_FIXTURE')
+   path.write_bytes(original)
+  samples=e/'compile/samples.jsonl';data=samples.read_bytes();samples.write_bytes(b'')
+  self.assertRaises(Rejected,verify_receipts,e,lease,plans,deps,'SYNTHETIC_FIXTURE');samples.write_bytes(data)
+ def test_manifest_authority_shape_and_196_namespaces(self):
+  from scope import manifest_contract,dependency_contract
+  rows=[{'path':'entry-%d'%i} for i in range(13)]
+  manifest_contract(rows,13)
+  for mode in ['missing','duplicate','absolute','traversal']:
+   bad=copy.deepcopy(rows)
+   if mode=='missing':bad.pop()
+   if mode=='duplicate':bad[-1]=bad[0]
+   if mode=='absolute':bad[0]['path']='/tmp/foreign'
+   if mode=='traversal':bad[0]['path']='../foreign'
+   with self.subTest(mode=mode):self.assertRaises(Rejected,manifest_contract,bad,13)
+  rows=[{'module':'LightEFTSpanners.Module%d'%i} for i in range(140)]+[{'module':'LightSpanners.Module%d'%i} for i in range(56)]
+  dependency_contract(rows)
+  for mode in ['missing','duplicate','namespace','new_target']:
+   bad=copy.deepcopy(rows)
+   if mode=='missing':bad.pop()
+   if mode=='duplicate':bad[-1]=bad[0]
+   if mode=='namespace':bad[0]['module']='Other.Module'
+   if mode=='new_target':bad[0]['module']=TARGET
+   with self.subTest(mode=mode):self.assertRaises(Rejected,dependency_contract,bad)
+ def test_atomic_creation_race_does_not_adopt_or_follow(self):
+  import lease as locks
+  for symlink in [False,True]:
+   root=fresh();lock=root/'lock';target=put(root/'target',b'untouched')
+   real_open=os.open;seen={}
+   def racing_open(path,flags,*args,**kwargs):
+    if path==lock.name and 'dir_fd' in kwargs:
+     seen['flags']=flags;seen['dirfd']=kwargs['dir_fd']
+     if symlink:lock.symlink_to(target)
+     else:put(lock,b'other creator')
+    return real_open(path,flags,*args,**kwargs)
+   with patch.object(locks.os,'open',side_effect=racing_open):
+    self.assertRaises(FileExistsError,Lease(lock,root/'lease.json',dict(exclusive_worker=True,same_directory=str(root)),True).__enter__)
+   self.assertTrue(seen['flags']&os.O_EXCL);self.assertTrue(seen['flags']&os.O_NOFOLLOW)
+   self.assertFalse((root/'lease.json').exists());self.assertEqual(target.read_bytes(),b'untouched')
+   self.assertRaises(OSError,os.fstat,seen['dirfd'])
+class Recorded(unittest.TextTestResult):
+ def __init__(self,*a,**k):super().__init__(*a,**k);self.records=[]
+ def addSubTest(self,test,subtest,err):
+  super().addSubTest(test,subtest,err);self.records.append({'test':test.id(),'subcase':str(subtest),'outcome':'pass' if err is None else 'failure'})
+ def addSuccess(self,test):super().addSuccess(test);self.records.append({'test':test.id(),'outcome':'pass'})
+ def addFailure(self,test,err):super().addFailure(test,err);self.records.append({'test':test.id(),'outcome':'failure','diagnostic':self._exc_info_to_string(err,test)})
+ def addError(self,test,err):super().addError(test,err);self.records.append({'test':test.id(),'outcome':'error','diagnostic':self._exc_info_to_string(err,test)})
+if __name__=='__main__':
+ result=unittest.TextTestRunner(verbosity=2,resultclass=Recorded).run(unittest.defaultTestLoader.loadTestsFromTestCase(Fixtures))
+ save(RUN/'test-results.json',dict(synthetic_only=True,ordinary_worker_or_compiler_created=False,production_lock_created=False,
+  run=str(RUN),tests=result.testsRun,failures=len(result.failures),errors=len(result.errors),records=result.records))
+ print('PRESERVED_FIXTURE_RUN',RUN)
+ raise SystemExit(not result.wasSuccessful())

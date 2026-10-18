@@ -1,0 +1,125 @@
+{
+  "status": "NO_PRODUCTION_AUTHORITY_SUPPLIED",
+  "source_commit": "40029953e9e53525f0f1f431d6d56333b05183a3",
+  "source": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/LightEFTSpanners/SuppliedForestGoodEvent.lean",
+    "sha256": "6356a3b369813a155e824e471b0f7a48d29a66fb117db41eca767ed3300febee"
+  },
+  "audit": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/SuppliedForestGoodEventAudit.lean",
+    "sha256": "06eb7c880d0e7b1d5077e93090f8c6c59132ebb45a8e8da7362b9da5f289716d"
+  },
+  "dependency_count": 196,
+  "dependency_namespaces": {
+    "LightEFTSpanners": 140,
+    "LightSpanners": 56
+  },
+  "protected_checkpoint_entries": 13,
+  "protected_supervisor_bindings": 10,
+  "stage_order": [
+    "compile",
+    "resolve",
+    "replay",
+    "audit"
+  ],
+  "profile": {
+    "RLIMIT_AS": 12884901888,
+    "RLIMIT_CPU_seconds": 60,
+    "wall_seconds_per_stage": 90,
+    "RLIMIT_FSIZE_bytes": {
+      "ordinary": 16777216,
+      "audit": 67108864
+    },
+    "RLIMIT_CORE": 0,
+    "host_admission_bytes": 3221225472,
+    "minimum_free_disk_exclusive_bytes": 2147483648,
+    "runtime_visible_and_host_floor_bytes": 1073741824,
+    "observed_RSS_stop_bytes": 6442450944,
+    "per_visible_cgroup_anon_growth_stop_bytes": 3221225472,
+    "sample_interval_seconds": 0.1,
+    "decision_log_cap_bytes": 16777216,
+    "audit_source_outputs_cap_bytes": 335544320,
+    "memory_accounting_qualification": "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN",
+    "limits_basis": "Reviewed finite-chain/audit preparation profiles; not an authorization for the adapted target, namespace or lock epoch."
+  },
+  "commands": [
+    {
+      "stage": "compile",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "--root=/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged",
+        "-o",
+        "/workspace/light-eft-verification/.lake/supplied-forest-staged-782280b1cbdf496b9d5e228002e17686/objects/LightEFTSpanners/SuppliedForestGoodEvent.olean",
+        "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/LightEFTSpanners/SuppliedForestGoodEvent.lean"
+      ],
+      "visible_admission_bytes": 3221225472,
+      "submitted_sources": [
+        "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/LightEFTSpanners/SuppliedForestGoodEvent.lean"
+      ]
+    },
+    {
+      "stage": "resolve",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "/workspace/light-eft-verification/scripts/LightEFTResolveCheckerTarget.lean"
+      ],
+      "environment_additions": {
+        "LIGHTEFT_CHECKER_TARGET": "LightEFTSpanners.SuppliedForestGoodEvent",
+        "LIGHTEFT_CHECKER_RESOLUTION_FILE": "/workspace/light-eft-verification/.lake/supplied-forest-staged-782280b1cbdf496b9d5e228002e17686/resolution.json"
+      },
+      "visible_admission_bytes": 3221225472,
+      "submitted_sources": [
+        "/workspace/light-eft-verification/scripts/LightEFTResolveCheckerTarget.lean",
+        "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/LightEFTSpanners/SuppliedForestGoodEvent.lean"
+      ]
+    },
+    {
+      "stage": "replay",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/leanchecker",
+        "-v",
+        "LightEFTSpanners.SuppliedForestGoodEvent"
+      ],
+      "environment_additions": {
+        "LEAN_NUM_THREADS": "1",
+        "LEAN_STACK_SIZE_KB": "65536"
+      },
+      "environment_remove": [
+        "MIMALLOC_VERBOSE"
+      ],
+      "visible_admission_bytes": 4294967296,
+      "submitted_sources": [
+        "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/LightEFTSpanners/SuppliedForestGoodEvent.lean"
+      ]
+    },
+    {
+      "stage": "audit",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/SuppliedForestGoodEventAudit.lean"
+      ],
+      "visible_admission_bytes": 4294967296,
+      "submitted_sources": [
+        "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/SuppliedForestGoodEventAudit.lean",
+        "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/LightEFTSpanners/SuppliedForestGoodEvent.lean"
+      ]
+    }
+  ],
+  "audit_cwd_delta": "Fresh work/audit, containing only ci-evidence; object root and resolution are separately immutable after creation",
+  "activation": "Explicit later reviewed wrapper commit and a fresh incarnation-bound coordinator document are required. No authority is supplied in this preparation."
+}

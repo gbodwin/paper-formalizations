@@ -1,0 +1,128 @@
+{
+  "synthetic_fixture": true,
+  "accepted": false,
+  "stages": [
+    {
+      "stage": "compile",
+      "attempt_id": "bb7e977742e34092ad892bfc5398b818"
+    },
+    {
+      "stage": "resolve",
+      "attempt_id": "b4a0c77a4ba54ac99f9933335efecd4f"
+    },
+    {
+      "stage": "replay",
+      "attempt_id": "31355c2ccbe84e51a54ec11d6dc5c189"
+    },
+    {
+      "stage": "audit",
+      "attempt_id": "a689480620a542ee8925f51b2d9a91b3"
+    }
+  ],
+  "started_ns": 4929751371689,
+  "result": {
+    "audit": {
+      "new_owner_roots": 1,
+      "recursive_constants": 4,
+      "opaque_bodies": 1,
+      "axioms": [
+        "propext"
+      ],
+      "project_imports": [
+        "LightEFTSpanners.Accepted",
+        "LightEFTSpanners.SuppliedForestGoodEvent",
+        "LightSpanners.Accepted"
+      ],
+      "strict_findings": 0,
+      "recursive_types_and_bodies": true
+    },
+    "exports": {
+      "actual-owner-inventory.tsv": {
+        "source": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-20261018/test-evidence/6cf5530aa281491bb792274db989b6be/case-045/work/audit/ci-evidence/actual-owner-inventory.tsv",
+        "bytes": 161,
+        "sha256": "81dc049cc8b65510a2c61a113aeb1c4fb7be58a328f999f301452b07d7f015ed",
+        "row_aligned": true,
+        "target_bytes": 200000,
+        "parts": [
+          {
+            "path": "part-0000.txt",
+            "bytes": 161,
+            "sha256": "81dc049cc8b65510a2c61a113aeb1c4fb7be58a328f999f301452b07d7f015ed"
+          }
+        ]
+      },
+      "recursive-dependencies.tsv": {
+        "source": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-20261018/test-evidence/6cf5530aa281491bb792274db989b6be/case-045/work/audit/ci-evidence/recursive-dependencies.tsv",
+        "bytes": 388,
+        "sha256": "98b9a256c263fc7ff14f41b4eef96b219142e76866e1037282feb6377a0978a4",
+        "row_aligned": true,
+        "target_bytes": 200000,
+        "parts": [
+          {
+            "path": "part-0000.txt",
+            "bytes": 388,
+            "sha256": "98b9a256c263fc7ff14f41b4eef96b219142e76866e1037282feb6377a0978a4"
+          }
+        ]
+      },
+      "import-closure-loaded.txt": {
+        "source": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-20261018/test-evidence/6cf5530aa281491bb792274db989b6be/case-045/work/audit/ci-evidence/import-closure-loaded.txt",
+        "bytes": 103,
+        "sha256": "c6e062fe421ab6315739dd12c5bb833ab01c862ebaec946c04fe1c44603d9c50",
+        "row_aligned": true,
+        "target_bytes": 200000,
+        "parts": [
+          {
+            "path": "part-0000.txt",
+            "bytes": 103,
+            "sha256": "c6e062fe421ab6315739dd12c5bb833ab01c862ebaec946c04fe1c44603d9c50"
+          }
+        ]
+      },
+      "strict-violations.txt": {
+        "source": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-20261018/test-evidence/6cf5530aa281491bb792274db989b6be/case-045/work/audit/ci-evidence/strict-violations.txt",
+        "bytes": 1,
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "row_aligned": true,
+        "target_bytes": 200000,
+        "parts": [
+          {
+            "path": "part-0000.txt",
+            "bytes": 1,
+            "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+          }
+        ]
+      },
+      "raw.log": {
+        "source": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-20261018/test-evidence/6cf5530aa281491bb792274db989b6be/case-045/evidence/audit/raw.log",
+        "bytes": 104,
+        "sha256": "b3a07d65070f023f3b88dde6743c78a4723567d3065e6bd708999f4a17736b34",
+        "row_aligned": true,
+        "target_bytes": 200000,
+        "parts": [
+          {
+            "path": "part-0000.txt",
+            "bytes": 104,
+            "sha256": "b3a07d65070f023f3b88dde6743c78a4723567d3065e6bd708999f4a17736b34"
+          }
+        ]
+      }
+    },
+    "input_export": {
+      "source": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-20261018/test-evidence/6cf5530aa281491bb792274db989b6be/case-045/evidence/inputs.jsonl",
+      "bytes": 5472,
+      "sha256": "a04ce2f6f32ea5438cc050b095f280c48e83113c7316b45c00ea9cb8ba499031",
+      "row_aligned": true,
+      "target_bytes": 200000,
+      "parts": [
+        {
+          "path": "part-0000.txt",
+          "bytes": 5472,
+          "sha256": "a04ce2f6f32ea5438cc050b095f280c48e83113c7316b45c00ea9cb8ba499031"
+        }
+      ]
+    },
+    "preserved": true
+  },
+  "preservation_failed": false
+}

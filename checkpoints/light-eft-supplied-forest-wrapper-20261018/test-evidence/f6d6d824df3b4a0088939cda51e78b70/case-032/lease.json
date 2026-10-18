@@ -1,0 +1,31 @@
+{
+  "epoch": "f2a289feeeca46209bf84e839fd076c0",
+  "path": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-20261018/test-evidence/f6d6d824df3b4a0088939cda51e78b70/case-032/lock",
+  "device": 27,
+  "inode": 48219,
+  "fd": 4,
+  "acquired_ns": 4329346700088,
+  "supervisor_pid": 2421,
+  "supervisor_start_ticks": "432695",
+  "boot_id": "c776d020-d6ff-4d4a-9020-f22ff8c32be6",
+  "namespace": {
+    "pid": "pid:[4026532200]",
+    "mnt": "mnt:[4026532212]",
+    "cgroup": "cgroup:[4026532205]"
+  },
+  "directory_identity": [
+    27,
+    48218
+  ],
+  "historical_continuity": false,
+  "synthetic_fixture": true,
+  "state": "released",
+  "release_errors": [
+    "RuntimeError('Kernel child remains: [0, 0]')",
+    "RuntimeError('Kernel child remains: [0, 0]')",
+    "RuntimeError('Kernel child remains: [0, 0]')",
+    "RuntimeError('Kernel child remains: [2441, 0]')"
+  ],
+  "kernel_echild": true,
+  "release_ns": 4329556280581
+}

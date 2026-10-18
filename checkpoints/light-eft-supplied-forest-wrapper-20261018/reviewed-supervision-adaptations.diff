@@ -1,0 +1,105 @@
+--- checkpoints/light-eft-audit-adapter-review-20261018/child_runner.py
++++ checkpoints/light-eft-supplied-forest-wrapper-20261018/child_runner.py
+@@ -5,12 +5,20 @@
+ HERE=Path(__file__).resolve().parent
+ REPO=HERE.parents[1]
+ sys.path.insert(0,str(REPO/'scripts'))
+-import LightEFTProcessLifecycle as life
++# Bind and execute the reviewed Python lifecycle source, never an inherited .pyc.
++import hashlib,types
++LIFECYCLE_SOURCE_SHA='c77d6e9bd48de674aaa50852451627d09693fec7bdcca903a015fdab96f99fdd'
++_life_path=REPO/'scripts/LightEFTProcessLifecycle.py'
++_life_bytes=_life_path.read_bytes()
++if hashlib.sha256(_life_bytes).hexdigest()!=LIFECYCLE_SOURCE_SHA:raise RuntimeError('Reviewed lifecycle source changed')
++life=types.ModuleType('ReviewedLightEFTProcessLifecycle')
++exec(compile(_life_bytes,str(_life_path),'exec'),life.__dict__)
++del _life_bytes
+ from pilot_accounting import VisibleAccounting
+ from pilot_child import LIMITS
+ import decision_telemetry as telemetry
+ import exit_transition as exits
+-from audit_outputs import runtime_errors as audit_output_errors
++from output_guards import runtime_errors as audit_output_errors
+ LOCK=Path('/tmp/distance-sparsification-single-compiler.lock')
+ SOURCE='78cb40c7837db049d645d73696f2e0b724ce8a3b'
+ ADMISSION_HEADROOM=3221225472
+@@ -78,6 +86,8 @@
+     record.setdefault('idle_verifications',[]).append({'phase':label,'monotonic_ns':time.monotonic_ns(),'processes':raw})
+ 
+ def check_memory(now,baseline,minimum):
++    for key in ['namespace','membership','identities']:
++        if now[key]!=baseline[key]:raise MemoryGuardError('Visible accounting identity changed: '+key)
+     if now['headroom']<minimum:raise MemoryGuardError('Visible headroom below required floor')
+     for a,b in zip(now['nodes'],baseline['nodes'],strict=True):
+         if a['path']!=b['path'] or a['limit']!=b['limit']:raise RuntimeError('Accounting limit changed')
+@@ -129,7 +139,8 @@
+ 
+ def run_child(plan,pilot,evidence,shared,accounting=None):
+     """Private testable supervisor. Production uses run_once with fixed paths/plan."""
+-    record={'attempt_id':uuid.uuid4().hex,'scope':'AUDIT_ONLY_SINGLE_OFFICIAL_LEAN_INVOCATION','stage':plan['stage'],'source_commit':SOURCE,'argv':plan['argv'],'environment':plan['env'],'memory_policy':{'as_bytes':LIMITS['RLIMIT_AS'],'file_size_bytes':LIMITS['RLIMIT_FSIZE'],'admission_visible_bytes':shared.visible_gate(plan),'admission_host_bytes':ADMISSION_HEADROOM,'stop_visible_host_bytes':STOP_HEADROOM,'rss_observed_stop_bytes':RSS_STOP,'per_cgroup_anon_growth_stop_bytes':ANON_GROWTH_STOP,'sample_seconds':INTERVAL,'immediate_group_signal':'SIGKILL','M_qualification':'Intermittent runtime RSS check, not a kernel heap cap'},'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
++    record={'attempt_id':uuid.uuid4().hex,'scope':'SUPPLIED_FOREST_FOUR_STAGE_INCREMENTAL','stage':plan['stage'],'source_commit':shared.source_commit,'frozen_import_source':SOURCE,'wrapper_commit':shared.wrapper_commit,'synthetic_fixture':shared.fixture,'argv':plan['argv'],'environment':plan['env'],'memory_policy':{'as_bytes':LIMITS['RLIMIT_AS'],'file_size_bytes':LIMITS['RLIMIT_FSIZE'],'admission_visible_bytes':shared.visible_gate(plan),'admission_host_bytes':ADMISSION_HEADROOM,'stop_visible_host_bytes':STOP_HEADROOM,'rss_observed_stop_bytes':RSS_STOP,'per_cgroup_anon_growth_stop_bytes':ANON_GROWTH_STOP,'sample_seconds':INTERVAL,'immediate_group_signal':'SIGKILL','M_qualification':'Intermittent runtime RSS check, not a kernel heap cap'},'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
++    LIMITS["RLIMIT_FSIZE"]=(64 if plan["stage"]=="audit" else 16)*1024**2
+     evidence.mkdir(exist_ok=False,parents=True)
+     child=None;old=None;handlers={};fds=[];before=[];anon_baseline=None
+     accounting=VisibleAccounting() if accounting is None else accounting
+@@ -144,10 +155,8 @@
+     save()
+     # Existing universal inode only; never create/replace the production lock.
+     with nullcontext(shared.lock) as lock:
+-        try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+-        except BlockingIOError:
+-            record.update(state='refused-lock',failure='Universal lock busy; no child spawned');save();raise
+-        st=os.fstat(lock.fileno());record['lock']={'path':str(LOCK),'device':st.st_dev,'inode':st.st_ino,'fd':lock.fileno(),'child_entry_ns':time.monotonic_ns(),'outer_acquired_ns':shared.acquired_ns};save()
++        shared.lease.check()
++        st=os.fstat(lock.fileno());record['lock']={'path':str(shared.lease.path),'device':st.st_dev,'inode':st.st_ino,'fd':lock.fileno(),'child_entry_ns':time.monotonic_ns(),'outer_acquired_ns':shared.acquired_ns};save()
+         try:
+             for sig in (signal.SIGTERM,signal.SIGINT,signal.SIGHUP):
+                 handlers[sig]=signal.getsignal(sig)
+@@ -161,7 +170,7 @@
+             old=life.set_subreaper(True)
+             if life.descendants():raise RuntimeError('Unexpected child before spawn')
+             cfg_r,cfg_w=os.pipe();ready_r,ready_w=os.pipe();ack_r,ack_w=os.pipe();fds=[cfg_r,cfg_w,ready_r,ready_w,ack_r,ack_w]
+-            config=json.dumps({'argv':plan['argv'],'env':plan['env']}).encode()
++            config=json.dumps({'argv':plan['argv'],'env':plan['env'],'stage':plan['stage']}).encode()
+             if len(config)>4096:raise RuntimeError('Launcher config too long')
+             os.write(cfg_w,config);os.close(cfg_w);fds.remove(cfg_w)
+             started=time.monotonic();record['runtime_wall_started_ns']=time.monotonic_ns();record['deadline_seconds']=DEADLINE
+@@ -189,13 +198,16 @@
+                                 if len(buffer)>8192:raise RuntimeError('Oversized handshake')
+                                 if b'\n' in buffer:
+                                     packet=json.loads(buffer)
++                                    shared.preexec(plan,record,save)
+                                     fresh,pre_current=runtime_sample(child,baseline,None,accounting,record,save,samples,shared.visible_gate(plan),ADMISSION_HEADROOM)
+                                     verify_ready(packet,child,lock.fileno(),first,pre_current)
++                                    record['kernel_limits_verified']=True
+                                     anon_baseline={node['path']:node['memory_stat']['anon'] for node in fresh['nodes']}
+                                     record['anonymous_preexec_baseline']=anon_baseline
+                                     record['preexec_decision_sample']=record['latest_decision_sample']
+                                     record['preexec_admission']=fresh
+                                     record['handshake']=packet;record['preexec_verified_ns']=time.monotonic_ns();save()
++                                    if time.monotonic()-started>=DEADLINE:raise TimeoutError('Child wall deadline before exec')
+                                     os.write(ack_w,b'G');os.close(ack_w);fds.remove(ack_w);approved=True;record['state']='exec-authorized'
+                                 elif not chunk:raise RuntimeError('Launcher exited without handshake')
+                         if finish_confirmed(child,record,approved):break
+--- checkpoints/light-eft-audit-adapter-review-20261018/pilot_child.py
++++ checkpoints/light-eft-supplied-forest-wrapper-20261018/pilot_child.py
+@@ -4,7 +4,9 @@
+ import json,os,resource,sys
+ LIMITS={'RLIMIT_AS':12884901888,'RLIMIT_CPU':60,'RLIMIT_FSIZE':64*1024**2,'RLIMIT_CORE':0}
+ 
+-def configure():
++def configure(stage):
++    if stage not in ("compile","resolve","replay","audit"):raise RuntimeError("Invalid stage")
++    LIMITS["RLIMIT_FSIZE"]=(64 if stage=="audit" else 16)*1024**2
+     result={}
+     for name,value in LIMITS.items():
+         key=getattr(resource,name)
+@@ -18,7 +20,7 @@
+     configfd,readyfd,ackfd,lockfd=map(int,sys.argv[1:])
+     try:
+         with os.fdopen(configfd) as f:plan=json.load(f)
+-        actual=configure()
++        actual=configure(plan["stage"])
+         st=os.fstat(lockfd)
+         packet=dict(limits=actual,pid=os.getpid(),ppid=os.getppid(),sid=os.getsid(0),pgid=os.getpgrp(),lock_fd=lockfd,lock_device=st.st_dev,lock_inode=st.st_ino,lock_inheritable=os.get_inheritable(lockfd))
+         os.write(readyfd,(json.dumps(packet)+'\n').encode());os.close(readyfd)

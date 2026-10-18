@@ -1,0 +1,57 @@
+test_01_complete_harmless_chain (__main__.Fixtures.test_01_complete_harmless_chain) ... ok
+test_02_first_failure_stops_and_preserves (__main__.Fixtures.test_02_first_failure_stops_and_preserves) ... Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-20261018/driver.py", line 79, in _run_batch
+    r=child_runner.run_child(plan,cwd,evidence/plan['stage'],context)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-20261018/child_runner.py", line 248, in run_child
+    if 'failure' in record:raise RuntimeError(record['failure'])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: RuntimeError('Child failed before/after exec')
+ok
+test_03_descendant_failure_is_reaped (__main__.Fixtures.test_03_descendant_failure_is_reaped) ... Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-20261018/driver.py", line 79, in _run_batch
+    r=child_runner.run_child(plan,cwd,evidence/plan['stage'],context)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-20261018/child_runner.py", line 248, in run_child
+    if 'failure' in record:raise RuntimeError(record['failure'])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: MemoryGuardError("{'operation': 'whole-process supervision', 'error': 'Unexpected process descendant'}")
+ok
+test_admission_identity_events_capacity_and_pid_boundaries (__main__.Fixtures.test_admission_identity_events_capacity_and_pid_boundaries) ... ok
+test_audit_cannot_mutate_objects_or_resolution (__main__.Fixtures.test_audit_cannot_mutate_objects_or_resolution) ... ok
+test_chunk_order_path_missing_extra_and_truncation (__main__.Fixtures.test_chunk_order_path_missing_extra_and_truncation) ... ok
+test_closure_types_bodies_dangling_orphans_and_truncation (__main__.Fixtures.test_closure_types_bodies_dangling_orphans_and_truncation) ... ok
+test_command_snapshot_not_aliased_and_out_of_order (__main__.Fixtures.test_command_snapshot_not_aliased_and_out_of_order) ... ok
+test_complete_exports_reconstruction_and_tampering (__main__.Fixtures.test_complete_exports_reconstruction_and_tampering) ... ok
+test_dependency_missing_or_drift (__main__.Fixtures.test_dependency_missing_or_drift) ... ok
+test_exact_imports_missing_extra_duplicate_and_aggregate (__main__.Fixtures.test_exact_imports_missing_extra_duplicate_and_aggregate) ... ok
+test_exclusion_and_contention (__main__.Fixtures.test_exclusion_and_contention) ... ok
+test_fixed_fixture_program_only (__main__.Fixtures.test_fixed_fixture_program_only) ... ok
+test_focused_positive_and_hint_not_warning (__main__.Fixtures.test_focused_positive_and_hint_not_warning) ... ok
+test_fresh_identity_and_path_replacement (__main__.Fixtures.test_fresh_identity_and_path_replacement) ... ok
+test_fresh_stage_admission_host_disk_and_replay_floor (__main__.Fixtures.test_fresh_stage_admission_host_disk_and_replay_floor) ... ok
+test_independent_shadow_even_valid_resolver (__main__.Fixtures.test_independent_shadow_even_valid_resolver) ... ok
+test_inherited_handshake_each_identity_field (__main__.Fixtures.test_inherited_handshake_each_identity_field) ... ok
+test_input_hash_symlink_and_multilink_refusal (__main__.Fixtures.test_input_hash_symlink_and_multilink_refusal) ... ok
+test_kernel_echild_gates_release (__main__.Fixtures.test_kernel_echild_gates_release) ... ok
+test_live_guard_log_limit_signals_before_persistence (__main__.Fixtures.test_live_guard_log_limit_signals_before_persistence) ... ok
+test_new_object_and_resolution_are_protected (__main__.Fixtures.test_new_object_and_resolution_are_protected) ... ok
+test_output_whitelist_and_budgets (__main__.Fixtures.test_output_whitelist_and_budgets) ... ok
+test_owner_named_root_and_root_coverage (__main__.Fixtures.test_owner_named_root_and_root_coverage) ... ok
+test_prefix_sibling_even_singleton_count (__main__.Fixtures.test_prefix_sibling_even_singleton_count) ... ok
+test_production_entry_and_common_lock_disabled (__main__.Fixtures.test_production_entry_and_common_lock_disabled) ... ok
+test_real_readonly_authority_and_196_split (__main__.Fixtures.test_real_readonly_authority_and_196_split) ... ok
+test_receipt_tampering_and_complete_sources (__main__.Fixtures.test_receipt_tampering_and_complete_sources) ... ok
+test_receipt_wall_limits_samples_and_admission_rejection (__main__.Fixtures.test_receipt_wall_limits_samples_and_admission_rejection) ... ok
+test_resolution_wrong_count_target_object_and_roots (__main__.Fixtures.test_resolution_wrong_count_target_object_and_roots) ... ok
+test_review_authority_fresh_incarnation_boundaries (__main__.Fixtures.test_review_authority_fresh_incarnation_boundaries) ... ok
+test_runtime_rss_anon_host_and_partial_fail_closed (__main__.Fixtures.test_runtime_rss_anon_host_and_partial_fail_closed) ... ok
+test_safety_axioms_strict_and_counts (__main__.Fixtures.test_safety_axioms_strict_and_counts) ... ok
+test_uncoordinated_and_symlink_creation_refused (__main__.Fixtures.test_uncoordinated_and_symlink_creation_refused) ... ok
+test_wall_and_log_guards_are_retained (__main__.Fixtures.test_wall_and_log_guards_are_retained) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 5.624s
+
+OK
+PRESERVED_FIXTURE_RUN /workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-20261018/test-evidence/b876102c0b994e7f8dd8f2505d1ca1f8
