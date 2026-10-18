@@ -1,0 +1,45 @@
+# Light EFT distinct-package and exact released-lock repair
+
+**Preparation only; no Lean or production attempt.** The finite correction and focused tests are at implementation **`2d75404bfd140d0e8ecb13d3c2554b853b9a1640`**. It follows independent review of failed attempt `ef5c601dba6d23a2e68877c462f62a0e14f19b05`. The prior failure and its clean owned termination are recorded as accepted source/log/hash review, not fresh execution. No theorem or whole-paper acceptance is claimed. This checkpoint awaits review before any new Lean run.
+
+## Isolated physical module, unchanged theorem payload
+
+The staged source is now [LightEFTSuppliedForestStage.SuppliedForestGoodEvent](staged/LightEFTSuppliedForestStage/SuppliedForestGoodEvent.lean). It is **byte-identical**, 4,988 bytes, SHA256 **`6356a3b369813a155e824e471b0f7a48d29a66fb117db41eca767ed3300febee`**. Its public theorem remains **`LightEFTSpanners.SampledGreedy.voting_good_event_of_supplied_forests`**. The original source was not edited, moved away, promoted or discarded.
+
+The [staged audit](staged/SuppliedForestGoodEventAudit.lean) changes only the imported module and actual-owner expectation to the isolated physical module; the public theorem name and recursive traversal remain unchanged. The [staged resolver](staged/ResolveSuppliedForestTarget.lean) permits only that exact singleton target. Checker argv, resolution JSON, owner inventory, project-import closure and replay-log expectations use the same new module. The new top-level package is included in the project's audit-owner classification.
+
+[execution-proposal.json](execution-proposal.json) binds the relocated source/audit/resolver, fresh work root `.lake/supplied-forest-isolated-abfd6fb95b114c678e6d655e29a0ce82`, and this checkpoint's future `production-evidence` location. Neither runtime location has been created. Accepted input roots keep their order; **all 196 accepted dependency paths and hashes remain unchanged**, with 140 LightEFTSpanners and 56 LightSpanners modules. Source and helper/data changes are authenticated against an exact future reviewed Git commit. The original approved-input verifier is unchanged apart from its function name; it still verifies the original source graph, tool/pin/data bindings and all 196 objects before using the finite relocated proposal.
+
+`package_plan.py` requires exact transformations of the old proposal and staged artifacts. The source must equal the original payload. Audit changes must equal the old-to-new module replacement, and resolver changes must equal the specific exact-target condition. Tool hashes, resource profile, flags, limits and first-failure behavior are unchanged. Prepared launcher configurations remain below the unchanged 4,096-byte ceiling: compile **2,644**, resolve **2,576**, replay **2,230**, audit **2,340** bytes.
+
+## Package selection checks
+
+The local pinned [Path.lean evidence](package-selection-source.json) and [lines 58–72](package-selection-snippet.txt) match the independently identified source at Lean commit `293d5d0c0c3f3dded4688b3ccd6a33939ac5102b`: `.olean` lookup chooses the **first** root with a top-level package directory or root `.olean` marker, then forms the leaf path without fallback. The source hash is recorded as a local observation, not new distribution authentication.
+
+`package_selection.py` models that exact choice. `contracts.effective` retains independent physical duplicate-leaf, expected hash/path, target-prefix and sidecar checks, and adds package selection for every physical `.olean` in the configured roots plus the new target. Wrong-root and unknown target-prefix sidecars fail. Symlink package markers are rejected.
+
+The actual plan builder validates the **predicted post-output layout before activation**, overlaying only the planned target's top-level package directory/object without creating them. The under-lease Context uses actual package selection before **each child**, again in its other preservation checks, and records the selected paths in receipts. Thus file-only inventory membership cannot overlook a newly added empty package directory that masks a dependency.
+
+[Metadata-only prediction for the real 196 bindings](dependency-package-prediction.json) selects each exact accepted object path and the new target under the planned isolated output root. No compiled input contents were read for that prediction; accepted hashes were preserved as data, not freshly rehashed. There was no real full plan/inventory pass in this preparation. The complete builder function was exercised only with explicit synthetic inputs in a fixture.
+
+## Exact released-inode reacquisition
+
+[released-lock.json](released-lock.json) pins the ECHILD-verified released receipt from `ef5c601d`: common path `/tmp/distance-sparsification-single-compiler.lock`, device/inode **`33:3258`**, directory identity **`[33,1]`**, mode 0600, owner UID 1000, and prior ownership epoch. Future authority authenticates that receipt's exact Git blob/hash and released state.
+
+Fresh post-planning coordination is still required, with the unchanged **less-than-60-second** window, current ownership facts, sole-worker/idle-reviewer declarations and no timestamp refresh/retry. The new document must also explicitly set `allow_released_lock_reuse=true` and supply the exact `released_lock_identity`. Missing or different reuse authority fails.
+
+The production lease reopens **only** that known existing inode. It checks directory, owner/mode/link count, pre-open pathname, opened FD and pathname/directory identities; uses **nonblocking `LOCK_EX|LOCK_NB`**; and checks identities again after acquisition and throughout ownership. Production has no `O_CREAT`, `O_TRUNC`, unlink, alternate-inode adoption or missing-lock fallback. The old new-file branch is retained only for explicitly synthetic fixture paths, never the common production path. The existing owned-child/ECHILD release barrier remains.
+
+Actual-lock [initial](actual-lock-observation.json) and [final](actual-lock-observation-final.json) metadata inspections matched **33:3258** and **[33,1]**. **The actual common lock was not opened or acquired in this preparation.** No claim of a fresh free-lock test or unbroken inode continuity is made. A future mismatch or contention stops rather than adopting/replacing the lock.
+
+## Evidence and boundaries
+
+**25 focused tests passed**, exit 0. Two earlier 24-test runs also passed and remain preserved; the second updated inherited proposal metadata to describe the implemented wrapper/exact reuse gate, and the third added integrated synthetic builder coverage. [Commands](commands.txt), [raw final diagnostics](diagnostics/package-tests-attempt-3.log), [final fixture result](test-evidence/6f58af38ca2a4e1791ab2776c0336ffa/result.json), and per-run source snapshots are available.
+
+Regressions cover empty-directory and root `.olean` masking, reversed original roots, ineffective deeper namespaces, distinct-package success, duplicate leaves, wrong-root/unknown sidecars, predicted-layout rejection and success, actual selection in all four child hooks, unchanged public theorem with relocated owner/resolver/checker expectations, unchanged limits, private-lock nonblocking contention, missing/different lock rejection, symlink/hardlink rejection, FD/path/directory replacement and stale or wrong reuse coordination.
+
+Lock fixtures use private files and substituted authority. They exercise the production reuse branch, so raw helper records can contain `synthetic_fixture=false`; the enclosing fixture result, private pathname and source explicitly identify them as synthetic. They are **not** real production or compiler receipts. Audit rows and object bytes in these fixtures are synthetic; no Lean audit or kernel result is simulated as acceptance.
+
+[Small-file binding check](small-binding-check.json) verified implementation `2d75404b` helper/staged-data self-binding and the known released receipt using read-only Git metadata and explicit synthetic facts/time. It called no real plan builder, inventory scanner, activation or lock. [Scope reconciliation](preparation-reconciliation.json) records six changed base runtime files, eight unchanged runtime helpers and three unchanged inventory data files. Supervision, resource accounting, launcher limits and recursive audit algorithm were preserved. The signature supplement retains SHA256 `887fbf98a695a0b5992aa172cd098fc237bd6572d2a52491531c769bc73da964` and its **newly observed local** qualification; it proves neither historical preservation nor authenticated dependency provenance.
+
+[Failed-attempt preservation](failed-attempt-preservation.json) reverified all 215 prior outer entries and ten runtime files unchanged. No failure artifact, previous work directory, released common inode, reviewed source or historical manifest was changed. No Lean, checker, real production, rebuild, memory diagnostic, retrieval, CI, SCC or website work occurred. Publish with `[skip ci]` on the existing checkpoint branch and pause for independent review.

@@ -1,0 +1,11 @@
+Working directory: /workspace/light-eft-verification
+Python-only synthetic fixtures, all attempts preserved:
+python3 -B checkpoints/light-eft-supplied-forest-package-20261018/test_package.py > checkpoints/light-eft-supplied-forest-package-20261018/diagnostics/package-tests-attempt-1.log 2>&1
+Exit 0; 24 tests.
+python3 -B checkpoints/light-eft-supplied-forest-package-20261018/test_package.py > checkpoints/light-eft-supplied-forest-package-20261018/diagnostics/package-tests-attempt-2.log 2>&1
+Exit 0; 24 tests after correcting inherited proposal metadata to describe the implemented wrapper/exact released-inode gate.
+python3 -B checkpoints/light-eft-supplied-forest-package-20261018/test_package.py > checkpoints/light-eft-supplied-forest-package-20261018/diagnostics/package-tests-attempt-3.log 2>&1
+Exit 0; 25 tests including actual builder function with synthetic inputs only.
+Additional Python-only reads compare the unchanged 4988-byte source, exact proposal/limits, base helper/data hashes, original input-verifier AST after rename, 196 metadata-only predicted package paths, actual common-lock lstat identity, prior failure artifacts and small Git-bound helper/staged data. See preparation-reconciliation.json, dependency-package-prediction.json, actual-lock-observation*.json and small-binding-check.json.
+Small-file self-binding revision: 2d75404bfd140d0e8ecb13d3c2554b853b9a1640. No real complete plan construction or inventory scan was called. The authority self-binding check used explicit synthetic facts/time and made no lease/entry call.
+No Lean, checker, real production attempt, rebuild, resource-capacity/memory diagnostic, retrieval, common-lock open/acquisition/unlink/truncation, SCC or website operation was performed.

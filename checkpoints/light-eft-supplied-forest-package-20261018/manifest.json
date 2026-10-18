@@ -1,0 +1,27 @@
+{
+  "schema": "complete-checkpoint-git-blob-manifest-v1",
+  "entries": 225,
+  "parts": [
+    {
+      "path": "manifest-parts/part-000.jsonl",
+      "entries": 100,
+      "bytes": 19610,
+      "sha256": "5b00b1cf4b4f5f01b4e49f12f95d451e875d8d54d89876795bded226a5c28e53"
+    },
+    {
+      "path": "manifest-parts/part-001.jsonl",
+      "entries": 100,
+      "bytes": 23195,
+      "sha256": "bfff7f7721b90752208e385a08696592a009148189e1d06eb0603fb17dc19e0f"
+    },
+    {
+      "path": "manifest-parts/part-002.jsonl",
+      "entries": 25,
+      "bytes": 6141,
+      "sha256": "dcdcee6b23348f9e1a7dbe5e996164450cde665c112695e077c1e470cfd04d92"
+    }
+  ],
+  "reconstruction_bytes": 48946,
+  "reconstruction_sha256": "502cbba7a3305f2d6dfcd0d98347658fcc88afa4676ad4588f8da9c59ef08b01",
+  "reconstruction": "Concatenate listed part bytes; one JSON record per line. Symlink hashes cover target text without following links. Root manifest and part files are not listed recursively. Fixture hardlinks are represented as file bytes; topology is reconstructed by the fixture source, not claimed portable from Git."
+}
