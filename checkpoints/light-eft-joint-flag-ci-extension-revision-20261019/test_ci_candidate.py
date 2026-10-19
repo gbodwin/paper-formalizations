@@ -350,13 +350,25 @@ class Candidate(unittest.TestCase):
         self.assertIn('Function.update',body)
         self.assertIn('JointFlags n J m l → SampledGreedy.Assignment (Fin n) J m',body)
 
+    def test_decode_outside_exposes_cons_before_update_rewrite_and_recursion(self):
+        source=(ROOT/SPEC['sources']['source']['path']).read_text()
+        proof=source.split('theorem decodeAssignment_outside ',1)[1].split('\n/-- Existing single-host batch theorem',1)[0]
+        expected='''    change Function.update
+      (decodeAssignment ds (fun p => bits p.succ)) d
+      (decodeHost (bits 0)) e = (fun _ _ => ∅)
+    rw [Function.update_of_ne hne]
+    exact decodeAssignment_outside n m ds (fun p => bits p.succ) e
+      (fun h => he (List.mem_cons_of_mem d h))'''
+        self.assertIn(expected,proof)
+        self.assertNotIn('rw [decodeAssignment, Function.update_of_ne hne]',proof)
+
     def test_every_stage_binds_new_decode_source_and_stale_source_seal_refuses(self):
         row=SPEC['sources']['source'];source=ROOT/row['path'];actual=bind(source)
-        self.assertEqual(actual['sha256'],'b7718de506f41b46341ef4f846df8cebda48c810990e8d92a3ec75282c700f1d')
+        self.assertEqual(actual['sha256'],'1c290257acb41c8023c2ea163723dbbb36e4c58abc61d5efc2e645da00276a41')
         commands,_=gate.build_plans(self.root,self.root/'tool',self.root/'work',SPEC,'a'*40,bind)
         self.assertEqual([plan['stage'] for plan in commands],list(p.STAGES))
         for plan in commands:self.assertIn(actual,plan['source_bindings'])
-        stale=dict(row,bytes=12533,sha256='7187c40f88f68caa69ef7fb188acc29eba9bed4b5b065c62a994f2fc3118d901')
+        stale=dict(row,bytes=12669,sha256='b7718de506f41b46341ef4f846df8cebda48c810990e8d92a3ec75282c700f1d')
         with patch.object(gate.subprocess,'check_output',return_value=source.read_bytes()),self.assertRaisesRegex(ValueError,'Reviewed source/hash changed'):
             gate.exact_files(dict(sources={'source':stale},dependencies=[],engine_files=[]))
 

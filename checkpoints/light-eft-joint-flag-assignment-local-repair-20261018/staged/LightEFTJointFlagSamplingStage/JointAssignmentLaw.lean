@@ -198,7 +198,10 @@ theorem decodeAssignment_outside {J : Type*} [fintypeJ : Fintype J] [decidableEq
       intro h
       subst e
       exact he List.mem_cons_self
-    rw [decodeAssignment, Function.update_of_ne hne]
+    change Function.update
+      (decodeAssignment ds (fun p => bits p.succ)) d
+      (decodeHost (bits 0)) e = (fun _ _ => ∅)
+    rw [Function.update_of_ne hne]
     exact decodeAssignment_outside n m ds (fun p => bits p.succ) e
       (fun h => he (List.mem_cons_of_mem d h))
 
