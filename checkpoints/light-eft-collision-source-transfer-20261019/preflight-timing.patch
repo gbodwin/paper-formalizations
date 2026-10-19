@@ -1,0 +1,35 @@
+--- child_runner.py
++++ child_runner.py
+@@ -30,0 +31 @@
++PREFLIGHT_DEADLINE=300.0
+@@ -139,0 +141,26 @@
++def run_preflight(shared,plan,record,save,accounting):
++    """One full preservation/advice pass, bounded before any child exists."""
++    if signal.getitimer(signal.ITIMER_REAL)!=(0.0,0.0):
++        raise RuntimeError('Existing alarm; refuse preflight timer replacement')
++    previous=signal.getsignal(signal.SIGALRM)
++    started=time.monotonic()
++    record.update(preflight_started_ns=time.monotonic_ns(),preflight_deadline_seconds=PREFLIGHT_DEADLINE)
++    def expired(sig,frame):raise TimeoutError('Pre-spawn validation exceeded 300 seconds')
++    signal.signal(signal.SIGALRM,expired)
++    signal.setitimer(signal.ITIMER_REAL,PREFLIGHT_DEADLINE)
++    try:
++        shared.before_child(plan,record,save)
++        baseline=shared.prepare_child(plan,record,save,accounting)
++        if time.monotonic()-started>=PREFLIGHT_DEADLINE:
++            raise TimeoutError('Pre-spawn validation exceeded 300 seconds')
++        record['preflight_passed']=True
++        return baseline
++    except BaseException as exc:
++        record['preflight_failure']=repr(exc)
++        raise
++    finally:
++        signal.setitimer(signal.ITIMER_REAL,0)
++        signal.signal(signal.SIGALRM,previous)
++        record['preflight_ended_ns']=time.monotonic_ns()
++        save()
++
+@@ -166,2 +193 @@
+-            shared.before_child(plan,record,save)
+-            baseline=shared.prepare_child(plan,record,save,accounting)
++            baseline=run_preflight(shared,plan,record,save,accounting)
