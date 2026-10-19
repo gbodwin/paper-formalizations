@@ -28,6 +28,7 @@ ANON_GROWTH_STOP=3221225472
 DECISION_LOG_BOUND=16*1024**2
 INTERVAL=.1
 DEADLINE=90.0
+PREFLIGHT_DEADLINE=300.0
 class MemoryGuardError(RuntimeError):pass
 
 
@@ -137,6 +138,32 @@ def reap_direct(child,record,save):
         except ProcessLookupError:pass
         time.sleep(.02)
 
+def run_preflight(shared,plan,record,save,accounting):
+    """One full preservation/advice pass, bounded before any child exists."""
+    if signal.getitimer(signal.ITIMER_REAL)!=(0.0,0.0):
+        raise RuntimeError('Existing alarm; refuse preflight timer replacement')
+    previous=signal.getsignal(signal.SIGALRM)
+    started=time.monotonic()
+    record.update(preflight_started_ns=time.monotonic_ns(),preflight_deadline_seconds=PREFLIGHT_DEADLINE)
+    def expired(sig,frame):raise TimeoutError('Pre-spawn validation exceeded 300 seconds')
+    signal.signal(signal.SIGALRM,expired)
+    signal.setitimer(signal.ITIMER_REAL,PREFLIGHT_DEADLINE)
+    try:
+        shared.before_child(plan,record,save)
+        baseline=shared.prepare_child(plan,record,save,accounting)
+        if time.monotonic()-started>=PREFLIGHT_DEADLINE:
+            raise TimeoutError('Pre-spawn validation exceeded 300 seconds')
+        record['preflight_passed']=True
+        return baseline
+    except BaseException as exc:
+        record['preflight_failure']=repr(exc)
+        raise
+    finally:
+        signal.setitimer(signal.ITIMER_REAL,0)
+        signal.signal(signal.SIGALRM,previous)
+        record['preflight_ended_ns']=time.monotonic_ns()
+        save()
+
 def run_child(plan,pilot,evidence,shared,accounting=None):
     """Private testable supervisor. Production uses run_once with fixed paths/plan."""
     LIMITS["RLIMIT_FSIZE"]=(64 if plan["stage"]=="audit" else 16)*1024**2
@@ -163,8 +190,7 @@ def run_child(plan,pilot,evidence,shared,accounting=None):
                 def interrupted(s,f):raise InterruptedError('supervisor signal '+str(s))
                 signal.signal(sig,interrupted)
             if life.descendants():raise RuntimeError('Preexisting child process')
-            shared.before_child(plan,record,save)
-            baseline=shared.prepare_child(plan,record,save,accounting)
+            baseline=run_preflight(shared,plan,record,save,accounting)
             processes=subprocess.check_output(['ps','-eo','pid,ppid,stat,comm'],text=True);record['processes_before']=processes
             if any(row.split()[-1] in ('lean','lake','leanchecker','leantar') and not row.split()[2].startswith('Z') for row in processes.splitlines()[1:]):raise RuntimeError('Other compiler/checker/extractor active')
             old=life.set_subreaper(True)

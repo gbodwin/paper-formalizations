@@ -26,6 +26,7 @@ def validate(ci,expected_imports,raw):
  deprows=table(ci/'recursive-dependencies.tsv',['name','owner','kind','typeDependencies','bodyDependencies','unsafe','partial'])
  inv={r['name']:r for r in invrows};dep={r['name']:r for r in deprows}
  require(inv and len(inv)==len(invrows) and len(dep)==len(deprows),'Empty/duplicate roots/closure')
+ require(len(inv)==43,'Expected exactly 43 actual-owner declarations')
  require(THEOREM in inv and inv[THEOREM]['kind']=='theorem','Named theorem absent/wrong kind')
  for root in REQUIRED_ROOTS:require(root in inv and inv[root]['kind']=='theorem','Missing/wrong required theorem root: '+root)
  for r in invrows+deprows:
@@ -63,9 +64,11 @@ def validate(ci,expected_imports,raw):
  require(tuple(map(int,[a,b,c]))==counts,'Audit counts differ from exports')
  require({x.strip() for x in ax.split(',') if x.strip()}==axioms,'Printed axioms differ')
  require(not warning_lines(raw),'Actual Lean warning/error diagnostic')
+ from collision_coverage import validate_collision_coverage
+ collision=validate_collision_coverage(loaded,raw)
  return dict(new_owner_roots=counts[0],recursive_constants=counts[1],opaque_bodies=counts[2],
   axioms=sorted(axioms),project_imports=sorted(set(expected_imports)|{TARGET}),
-  strict_findings=0,recursive_types_and_bodies=True)
+  strict_findings=0,recursive_types_and_bodies=True,collision_coverage=collision)
 def chunk(source,directory,target=200000):
  source=Path(source);directory=Path(directory);directory.mkdir(parents=True,exist_ok=False)
  before=bind(source);parts=[];buf=bytearray()

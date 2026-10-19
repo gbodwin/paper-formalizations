@@ -26,6 +26,7 @@ def scope_contract(spec):
     require(collections.Counter(r['module'].split('.')[0] for r in rows)=={'LightEFTSpanners':70,'LightSpanners':7},'Dependency namespace scope differs')
     require(spec['target']==TARGET and spec['project_imports']==78 and spec['required_public_roots']==16 and spec['required_interfaces']==8,'Exact staged audit scope differs')
     require(spec['private_identity_helper_required'] is True,'Private helper cannot be omitted')
+    require(spec['expected_owner_declarations']==43,'Exact 43-owner contract differs')
     require(spec['resource_gates_GiB']==[3,3,4,4],'Admission gates differ')
     require(len(spec['pins'])==9 and spec['toolchain']=='leanprover/lean4:v4.34.0','Toolchain/dependency pins differ')
 

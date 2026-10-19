@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "status": "LOCAL_UNCOMMITTED_REVISION; ordinary events; review before publication",
+  "status": "SOURCE_ONLY_COHERENT_CI_CANDIDATE_REVIEW_REQUIRED_NO_EXECUTION",
   "target": "LightEFTJointFlagSamplingStage.JointAssignmentLaw",
   "sources": {
     "source": {
@@ -10,8 +10,8 @@
     },
     "audit": {
       "path": "checkpoints/light-eft-joint-flag-assignment-local-repair-20261018/staged/JointAssignmentLawAudit.lean",
-      "bytes": 6579,
-      "sha256": "b209015ffd54b89c1ad9a1b99a5e0b8832743c10ca0f060d4e578b453a148fd3"
+      "bytes": 13673,
+      "sha256": "d0a629c1d6af172ba961c30c1b15d8b0055eb4dcd8a6a4fe9a8c16f275a86a33"
     },
     "resolver": {
       "path": "checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/ResolveJointAssignmentLawTarget.lean",
@@ -500,8 +500,8 @@
     },
     {
       "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
-      "bytes": 18113,
-      "sha256": "a8005f021a9b334986eae082af79908fea676e0e47ec7371df3845992f3767e1"
+      "bytes": 19324,
+      "sha256": "22e80f6485da1a5e53c23a7c11371171994f62e21c7f9d9d1653a37bb8d22e21"
     },
     {
       "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/contracts.py",
@@ -530,8 +530,8 @@
     },
     {
       "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/focused_audit.py",
-      "bytes": 6793,
-      "sha256": "78954b050128cabee5187f2aa0207b3ea76702de92638615e53252814fc4790f"
+      "bytes": 7004,
+      "sha256": "95e71b629add31dd55aa4ce469e858ba3699682209516ff0d88850a851c0a6a6"
     },
     {
       "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/lease.py",
@@ -610,8 +610,8 @@
     },
     {
       "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_policy.py",
-      "bytes": 4527,
-      "sha256": "748466c26866849f7f48ee15f258cdc95c740c4f37f66d4494003a10bc795b95"
+      "bytes": 4614,
+      "sha256": "d64ba95be09fb2fae420cb98ff8b0110a637742e85aa1685984a7e1852f62f35"
     },
     {
       "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_receipts.py",
@@ -622,6 +622,11 @@
       "path": ".github/workflows/lean.yml",
       "bytes": 43328,
       "sha256": "02cf1b650367e5bc2bcab6d9091f4625e9f57a974b87a1912fad25ecdab4f893"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/collision_coverage.py",
+      "bytes": 3234,
+      "sha256": "08e928b7f80bf094a4a327690f5454fe6601738988e2cd76b0ddcc11d765f4cb"
     }
   ],
   "toolchain": "leanprover/lean4:v4.34.0",
@@ -654,5 +659,7 @@
     "GITHUB_RUN_ATTEMPT"
   ],
   "serialization_qualification": "Bounded independent pinned-source review of trusted Lake/compiler paths; not arbitrary future tasks or a distributed lock",
-  "coordination": "Operator-exclusive window established before normal publication; local executor parked until every resulting run terminates"
+  "coordination": "Operator-exclusive window established before normal publication; local executor parked until every resulting run terminates",
+  "expected_owner_declarations": 43,
+  "fresh_context_qualification": "New source-bound CI observations; historical decoder acceptance retained separately. Private archive is optional preservation only, never a fresh-route prerequisite."
 }
