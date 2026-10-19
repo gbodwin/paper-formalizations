@@ -1,0 +1,37 @@
+{
+  "observed_utc": "2026-10-19T11:15:36.565456+00:00",
+  "tested_source": "b2f6cbd033c8aa87597f09d11aa7f3655f1e245d",
+  "original_evidence_commit": "5b6873aa7061149b187bb5e8e7999181fff5b40d",
+  "manifest_entries": 69,
+  "chunks": 41,
+  "roots": 223,
+  "recursive_closure": 18871,
+  "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "lock": {
+    "path": "/tmp/distance-sparsification-single-compiler.lock",
+    "exists": true,
+    "historical_device": 33,
+    "historical_inode": 3849,
+    "acquired": false,
+    "device": 33,
+    "inode": 3258,
+    "uid": 1000,
+    "mode": "0o600",
+    "observed_locks": [],
+    "note": "Read-only current observation; no lock acquisition/replacement. Current inode is distinct from historical execution; no continuity claim."
+  },
+  "active_compilers": [],
+  "disk_free_bytes": 3850915840,
+  "mem_available_kib": 17380300,
+  "memory_limit_bytes": 17179869184,
+  "fresh_compiler_invocations": 0,
+  "remote_checkpoint_before": "6a786af41fd10a74a0ca642338161442d1791738\trefs/heads/checkpoint/scc-internal-20261016",
+  "warning_classification": {
+    "successful_compile_actual_warnings": 0,
+    "failed_attempt": "Subtype/Fintype cardinality elaboration mismatch; preserved proof repair, not mathematical counterexample"
+  }
+}
