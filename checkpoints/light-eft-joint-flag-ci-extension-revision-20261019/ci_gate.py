@@ -2,7 +2,7 @@
 No dispatch-only prerequisite, readiness flag or cross-host pause assertion.
 """
 from pathlib import Path
-import csv, datetime, hashlib, json, os, subprocess, sys, tomllib, traceback
+import csv, datetime, hashlib, json, os, shutil, subprocess, sys, time, tomllib, traceback
 from ci_policy import STAGES, TARGET, QUALIFICATION, require, ci_identity, scope_contract, plans, private_helper
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
@@ -45,6 +45,77 @@ def execute_four(commands,run_child,finish):
         r=run_child(p)  # exception => stop; no catch/retry/parallel worker
         completed.append(dict(stage=p['stage'],attempt_id=r['attempt_id']))
     return dict(stages=completed,result=finish())
+
+def context_type(base,work,evidence,commands,roots,deps,identity,inputs,inv,classified,bind):
+    """Actual CI context factory, called only after exact engine authentication.
+
+    Keeping construction separate lets regressions invoke this real preexec
+    hook without a CI claim, common lease, process launch or resource probe.
+    """
+    from ci_inventory import CIIdentityGuard
+    class CIContext(base):
+        def __init__(self,lease):
+            self.work=work;self.evidence=evidence;self.lease=lease;self.lock=lease.file;self.acquired_ns=lease.acquired_ns
+            self.plans=commands;self.roots=roots;self.dependencies=deps;self.fixture=False
+            self.source_commit=identity['GITHUB_SHA'];self.wrapper_commit=identity['GITHUB_SHA'];self.inputs=inputs
+            self.new={};self.resolved={};self.objects=roots[0];self.target=roots[0]/Path(*TARGET.split('.')).with_suffix('.olean')
+            self.resolution=work/'resolution.json';self.audit=work/'audit/ci-evidence';self.audit.mkdir(parents=True)
+            self.preservation_failed=False;self.seen=[];self.audit_result=None;self.inventory_policy=inv
+            self.members=classified['members'];self.signature_ref=dict(qualification=QUALIFICATION)
+            self.excluded_ref=None;self._preexec_guard=None
+            path=evidence/'excluded-metadata-initial.jsonl';self.write_metadata(path,classified['excluded']);self.excluded_ref=bind(path)
+            path=evidence/'inputs.jsonl'
+            with path.open('x') as f:
+                for row in self.inputs.values():f.write(json.dumps(row,separators=(',',':'))+'\n')
+            self.input_ref=bind(path)
+
+        def before_child(self,p,r,save_receipt):
+            r['CI_identity']=identity;r['dependency_qualification']=QUALIFICATION
+            return super().before_child(p,r,save_receipt)
+
+        def prepare_child(self,p,r,save_receipt,accounting):
+            # The inherited admission path still performs full content checks.
+            admission=super().prepare_child(p,r,save_receipt,accounting)
+            semantic=self.inventory_policy.original['semantic']
+            self._critical={path:dict(row) for path,row in self.inputs.items() if path not in semantic}
+            self._critical.update({path:dict(row) for path,row in {**self.new,**self.resolved}.items()})
+            for row in [self.input_ref,self.excluded_ref]:self._critical[row['path']]=dict(row)
+            for row in r['submitted_sources']:
+                require(row['snapshot']==row['sha256']+'.source','Submitted snapshot name differs')
+                path=self.stage_evidence/row['snapshot'];self._critical[str(path)]=bind(path,row)
+            tracked={**self.inputs,**self.inventory_policy.original['excluded'],**self.new,**self.resolved,**self._critical}
+            directories=self.inventory_policy.original['directories']
+            members={str(root):set(names)|{path for path in directories if path!=str(root) and Path(path).is_relative_to(root)}
+                     for root,names in self.members.items()}
+            output_dirs=set();parent=self.target.parent
+            while parent!=self.objects:
+                require(parent.is_relative_to(self.objects),'Target output parent outside root')
+                output_dirs.add(str(parent));parent=parent.parent
+            members[str(self.objects)]=set(self.new)|output_dirs
+            members[str(self.audit)]=set()  # No audit output exists before exec.
+            self._preexec_guard=CIIdentityGuard(tracked,members,directories)
+            self._preexec_plan=json.loads(json.dumps(p))
+            return admission
+
+        def preexec(self,p,r,save_receipt):
+            began=time.monotonic_ns();self.lease.check()
+            require(self._preexec_guard is not None and p==self._preexec_plan==self.plans[len(self.seen)],'Unprepared/mutated CI preexec')
+            self._preexec_guard.verify()
+            for path,row in self._critical.items():require(bind(path)==row,'Critical CI input changed: '+path)
+            self.lease.check()
+            free=shutil.disk_usage(self.work).free;require(free>2*1024**3,'Fresh preexec disk below boundary')
+            r.update(preexec_disk_bytes=free,preexec_binding_verified=True,
+                     preexec_binding_strategy='exact identity/membership plus critical hashes',
+                     preexec_identity_files=len(self._preexec_guard.bindings),preexec_critical_hashes=len(self._critical),
+                     preexec_validation_started_ns=began,preexec_validation_finished_ns=time.monotonic_ns())
+            save_receipt()
+
+        def after_child(self,p,r,save_receipt):
+            super().after_child(p,r,save_receipt)
+            if p['stage']=='audit' and r.get('exit')==0 and not r.get('failure'):
+                with (self.audit/'actual-owner-inventory.tsv').open() as f:rows=list(csv.DictReader(f,delimiter='\t'))
+                self.audit_result['private_identity_helper']=private_helper(rows)
+    return CIContext
 
 def run_stage(root,env,spec):
     scope_contract(spec)
@@ -97,31 +168,7 @@ def run_stage(root,env,spec):
     (root/'production-claim.json').open('x').write(json.dumps(identity)+'\n')
     work.mkdir();(work/'objects').mkdir();evidence.mkdir()
 
-    class CIContext(scope.Context):
-        def __init__(self,lease):
-            self.work=work;self.evidence=evidence;self.lease=lease;self.lock=lease.file;self.acquired_ns=lease.acquired_ns
-            self.plans=commands;self.roots=roots;self.dependencies=deps;self.fixture=False
-            self.source_commit=identity['GITHUB_SHA'];self.wrapper_commit=identity['GITHUB_SHA'];self.inputs=inputs
-            self.new={};self.resolved={};self.objects=roots[0];self.target=roots[0]/Path(*TARGET.split('.')).with_suffix('.olean')
-            self.resolution=work/'resolution.json';self.audit=work/'audit/ci-evidence';self.audit.mkdir(parents=True)
-            self.preservation_failed=False;self.seen=[];self.audit_result=None;self.inventory_policy=inv
-            self.members=classified['members'];self.signature_ref=dict(qualification=QUALIFICATION)
-            self.excluded_ref=None
-            path=evidence/'excluded-metadata-initial.jsonl';self.write_metadata(path,classified['excluded']);self.excluded_ref=bind(path)
-            path=evidence/'inputs.jsonl'
-            with path.open('x') as f:
-                for row in self.inputs.values():f.write(json.dumps(row,separators=(',',':'))+'\n')
-            self.input_ref=bind(path)
-
-        def before_child(self,p,r,save_receipt):
-            r['CI_identity']=identity;r['dependency_qualification']=QUALIFICATION
-            return super().before_child(p,r,save_receipt)
-
-        def after_child(self,p,r,save_receipt):
-            super().after_child(p,r,save_receipt)
-            if p['stage']=='audit' and r.get('exit')==0 and not r.get('failure'):
-                with (self.audit/'actual-owner-inventory.tsv').open() as f:rows=list(csv.DictReader(f,delimiter='\t'))
-                self.audit_result['private_identity_helper']=private_helper(rows)
+    CIContext=context_type(scope.Context,work,evidence,commands,roots,deps,identity,inputs,inv,classified,bind)
 
     state=dict(source_commit=identity['GITHUB_SHA'],harness_commit=identity['GITHUB_SHA'],CI_identity=identity,
         accepted=False,independent_review='pending',dependency_qualification=QUALIFICATION)

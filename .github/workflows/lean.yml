@@ -338,13 +338,13 @@ jobs:
         run: bash scripts/CheckModuleIndex.sh
       - name: Audit every declaration in all paper libraries
         run: lake env lean scripts/AxiomAudit.lean
-      - name: Replay every project module through the Lean kernel
-        run: bash scripts/KernelCheck.sh
       - name: Verify exact staged joint-flag source sequentially
         id: light_eft_staged
         env:
           PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-python-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -B checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py
+      - name: Replay every project module through the Lean kernel
+        run: bash scripts/KernelCheck.sh
       - name: Record workflow outcome independently of staged gate
         if: always()
         env:

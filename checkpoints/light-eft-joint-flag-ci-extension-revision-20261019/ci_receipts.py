@@ -3,6 +3,12 @@ from pathlib import Path
 import json
 from contracts import bind,require
 FROZEN='78cb40c7837db049d645d73696f2e0b724ce8a3b'
+def decision_log_contract(stage,record,data):
+ import child_runner as child
+ bound=child.decision_log_bound(stage)
+ require(record.get('decision_log_bound_bytes')==bound,'Decision log allowance differs')
+ require(data and data.endswith(b'\n') and len(data)<=bound,'Incomplete/oversize decision log')
+
 def verify_receipts(evidence,lease_record,plans,dependencies=None,wrapper_commit=None,expected_source=None):
  import child_runner as child
  import decision_telemetry as telemetry
@@ -20,6 +26,9 @@ def verify_receipts(evidence,lease_record,plans,dependencies=None,wrapper_commit
   require(r['attempt_id'] not in ids,'Duplicate UUID');ids.add(r['attempt_id'])
   require(r['state']=='finished' and r['exit']==0 and not r.get('failure') and not r.get('cleanup_errors'),'Failed child receipt')
   require(r.get('preexec_binding_verified') and r.get('between_child_preservation_passed') and r.get('waitid_wait4_status_match'),'Missing binding/terminal checks')
+  require(r.get('preexec_binding_strategy')=='exact identity/membership plus critical hashes','CI preexec strategy differs')
+  require(r.get('preexec_identity_files',0)>=len(inputs) and r.get('preexec_critical_hashes',0)>0,'CI preexec coverage missing')
+  require(r['runtime_wall_started_ns']<=r['preexec_validation_started_ns']<=r['preexec_validation_finished_ns']<=r['preexec_verified_ns'],'CI preexec validation timing differs')
   require(r.get('direct_reaped') and r.get('kernel_no_children_verified') and r.get('all_descendants_gone'),'Unreaped children')
   require((r['lock']['device'],r['lock']['inode'])==(lease_record['device'],lease_record['inode']),'Different lease identity')
   require(lease_record['acquired_ns']<=r['started_ns']<r['ended_ns']<=lease_record['release_ns'] and previous<r['started_ns'],'Receipt overlap/timing')
@@ -39,7 +48,7 @@ def verify_receipts(evidence,lease_record,plans,dependencies=None,wrapper_commit
   require(r['runtime_wall_started_ns']<=r['preexec_verified_ns']<=terminal['finished_ns']<r['runtime_wall_started_ns']+90*10**9,'Launched child exceeded90seconds or bad preexec ordering')
   for row in r['submitted_sources']:bind(folder/row['snapshot'],row)
   for path,row in r.get('completed_logs',{}).items():bind(folder/path,row)
-  data=(folder/'samples.jsonl').read_bytes();require(data and data.endswith(b'\n'),'No complete live runtime samples')
+  data=(folder/'samples.jsonl').read_bytes();decision_log_contract(p['stage'],r,data)
   samples=[json.loads(line) for line in data.splitlines()]
   require(samples[-1].get('exit_lifecycle',{}).get('terminal_confirmed'),'No final owned terminal sample')
   last=r['runtime_wall_started_ns']
