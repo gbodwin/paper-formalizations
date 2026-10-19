@@ -1,0 +1,19 @@
+# Operator-exclusive CI window and ordinary sequence — review proposal
+
+1. Independently review this local revision, complete diff and tests before any commit, push, compiler or CI execution. The preserved Lean repair is unchanged. No handoff input, readiness flag or dispatch-only prerequisite is part of this workflow. Existing checks and events remain usable.
+
+2. Record the accepted bounded pinned-source serialization finding. Apply job-wide `LEAN_NUM_THREADS=1` to the entire ordinary job, including initial build, cache bootstrap, `mk_all` and later checks. This covers the reviewed trusted paths, not arbitrary future custom tasks or cross-host workers. Keep all existing five-paper verification. Re-review changed compiler-spawn paths, task priorities or environment overrides.
+
+3. Before authorized normal publication, use the GitHub connector or normal UI to refresh all repository CI states. The independent 01:49 UTC observation was idle but is historical. Do not retry the denied tunnel. Establish a named operator-exclusive window, identify the intended immutable source/harness and publication ref, finish and park independent review, stop/reap any local compiler/checker, and explicitly park this ordinary executor. Do not acquire a lock merely to start this preparation; any later local compiler attempt requires separate coordination.
+
+4. Under later publication authorization, freeze the reviewed source and CI code and publish normally to an eligible CI-enabled route, with no skip marker or ignored-branch substitution and no protection change. Ordinary push/PR/manual events need no dispatch document. Preserve every existing target/check. No new research or extension on the other papers is authorized by their retained verification.
+
+5. Keep the ordinary executor parked while ALL resulting repository runs and attempts remain active or nonterminal. Track push and PR runs, queued/waiting/requested/pending jobs, later run attempts and cancellations. Shared GitHub workflow concurrency serializes CI runs; the operator window coordinates this separate machine. A successful first artifact does not release the window.
+
+6. CI executes the existing checks with the reviewed worker setting, then runs the staged gate. Bind each invocation to exact event SHA, run ID and attempt. Preserve the official pinned toolchain, strict flags, fresh CI source/object/input bindings and applicable resource/lifecycle controls. The four stages stop at the first failure, without internal retry. A separately initiated GitHub rerun uses a new attempt and fresh paths within the still-reserved window.
+
+7. After every resulting run/attempt is terminal, collect complete artifacts including failures. Verify event SHA, workflow identity, run/attempt, source/tool/object hashes, all source-bound receipts, terminal/reaping/limit evidence, one fresh CI lock identity per attempt, every export reconstruction and the complete manifest. Preserve the qualified dependency provenance and all private/generated owner roots. Missing/skipped staged execution is not proof acceptance.
+
+8. Independently review the exact CI outcome and elaborated repaired declarations, full recursive audit, private identity root, 16 public roots, eight interfaces and 78 project imports. Start any independent compiler replay only after the CI window is clear and the ordinary executor remains parked. Explicitly release or transfer the operator window before resuming any local compiler activity.
+
+Current state: preparation only. No source is compiled, no workflow is executed, no commit/push occurs, and no mathematical acceptance is claimed. Remaining questions are actual runner/resource compatibility and proof results, plus renewed serialization review for future paths outside the bounded trusted finding. There is no artificial broader-check blocker or impossible ordinary-event gate.
