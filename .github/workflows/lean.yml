@@ -341,15 +341,44 @@ jobs:
       - name: Replay every project module through the Lean kernel
         run: bash scripts/KernelCheck.sh
       - name: Verify exact staged joint-flag source sequentially
+        id: light_eft_staged
         env:
           PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-python-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -B checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py
+      - name: Record workflow outcome independently of staged gate
+        if: always()
+        env:
+          LIGHTEFT_SUMMARY_COMMIT: ${{ github.sha }}
+          LIGHTEFT_SUMMARY_RUN_ID: ${{ github.run_id }}
+          LIGHTEFT_SUMMARY_RUN_ATTEMPT: ${{ github.run_attempt }}
+          LIGHTEFT_SUMMARY_JOB: ${{ github.job }}
+          LIGHTEFT_SUMMARY_JOB_STATUS: ${{ job.status }}
+          LIGHTEFT_SUMMARY_STAGED_OUTCOME: ${{ steps.light_eft_staged.outcome }}
+        run: |
+          python3 -B - <<'PY'
+          from pathlib import Path
+          import json, os
+          record = {name: os.environ[key] for name, key in [
+              ('commit', 'LIGHTEFT_SUMMARY_COMMIT'),
+              ('run_id', 'LIGHTEFT_SUMMARY_RUN_ID'),
+              ('run_attempt', 'LIGHTEFT_SUMMARY_RUN_ATTEMPT'),
+              ('job', 'LIGHTEFT_SUMMARY_JOB'),
+              ('job_status', 'LIGHTEFT_SUMMARY_JOB_STATUS'),
+              ('staged_step_outcome', 'LIGHTEFT_SUMMARY_STAGED_OUTCOME')]}
+          output = Path(os.environ['RUNNER_TEMP']) / (
+              'light-eft-summary-' + record['run_id'] + '-' + record['run_attempt'])
+          output.mkdir(mode=0o700, exist_ok=False)
+          (output / 'workflow-summary.json').write_text(
+              json.dumps(record, sort_keys=True, indent=2) + '\n')
+          PY
       - name: Preserve complete staged-gate evidence including failures
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: light-eft-staged-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/light-eft-staged-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/light-eft-summary-${{ github.run_id }}-${{ github.run_attempt }}
+            ${{ runner.temp }}/light-eft-staged-${{ github.run_id }}-${{ github.run_attempt }}
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 30

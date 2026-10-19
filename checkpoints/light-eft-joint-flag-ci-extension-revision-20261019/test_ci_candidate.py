@@ -254,6 +254,65 @@ class Candidate(unittest.TestCase):
         self.assertNotIn('lake build -j1',new);self.assertNotIn('matrix:',new)
         self.assertIn('if: always()',new)
 
+    def summary_script(self):
+        workflow=(ROOT/'.github/workflows/lean.yml').read_text()
+        summary=workflow.split('      - name: Record workflow outcome independently of staged gate\n',1)[1]
+        body=summary.split("          python3 -B - <<'PY'\n",1)[1].split('\n          PY\n',1)[0]
+        return '\n'.join(line[10:] for line in body.splitlines())+'\n'
+
+    def test_import_index_is_exact_reviewed_429_line_sorted_permutation(self):
+        data=(ROOT/'Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners.lean').read_bytes()
+        lines=data.decode().splitlines(True)
+        self.assertEqual(len(lines),429);self.assertEqual(len(set(lines)),429)
+        self.assertTrue(all(line.startswith('import LightEFTSpanners.') for line in lines))
+        self.assertEqual(lines,sorted(lines));self.assertEqual(len(data),20221)
+        self.assertEqual(hashlib.sha256(data).hexdigest(),'c6ef5ff64cc9b6b4b3f4e8e8227490caa5fbb878c945cfa4bafe81d57c0be610')
+
+    def test_workflow_summary_records_exact_identity_and_each_staged_outcome(self):
+        for outcome in ['success','failure','cancelled','skipped']:
+            directory=self.root/outcome;directory.mkdir()
+            record=dict(commit='e'*40,run_id='39193216511',run_attempt='2',job='check',
+                job_status='failure' if outcome=='skipped' else outcome,staged_step_outcome=outcome)
+            env=dict(RUNNER_TEMP=str(directory),LIGHTEFT_SUMMARY_COMMIT=record['commit'],
+                LIGHTEFT_SUMMARY_RUN_ID=record['run_id'],LIGHTEFT_SUMMARY_RUN_ATTEMPT=record['run_attempt'],
+                LIGHTEFT_SUMMARY_JOB=record['job'],LIGHTEFT_SUMMARY_JOB_STATUS=record['job_status'],
+                LIGHTEFT_SUMMARY_STAGED_OUTCOME=outcome)
+            with patch.dict(os.environ,env,clear=True):exec(self.summary_script(),{})
+            summary=directory/'light-eft-summary-39193216511-2/workflow-summary.json'
+            with self.subTest(outcome=outcome):self.assertEqual(json.loads(summary.read_text()),record)
+            self.assertFalse((directory/'light-eft-staged-39193216511-2').exists())
+            self.assertEqual(list(directory.iterdir()),[summary.parent])
+
+    def test_workflow_summary_preserves_existing_gate_directory_and_refuses_reuse(self):
+        staged=self.root/'light-eft-staged-123-1';put(staged/'partial.log',b'preserve failed gate')
+        env=dict(RUNNER_TEMP=str(self.root),LIGHTEFT_SUMMARY_COMMIT='a'*40,LIGHTEFT_SUMMARY_RUN_ID='123',
+            LIGHTEFT_SUMMARY_RUN_ATTEMPT='1',LIGHTEFT_SUMMARY_JOB='check',LIGHTEFT_SUMMARY_JOB_STATUS='failure',
+            LIGHTEFT_SUMMARY_STAGED_OUTCOME='failure')
+        with patch.dict(os.environ,env,clear=True):
+            exec(self.summary_script(),{})
+            with self.assertRaises(FileExistsError):exec(self.summary_script(),{})
+        self.assertEqual((staged/'partial.log').read_bytes(),b'preserve failed gate')
+        self.assertEqual(list(staged.iterdir()),[staged/'partial.log'])
+
+    def test_always_summary_precedes_always_upload_with_both_independent_paths(self):
+        workflow=(ROOT/'.github/workflows/lean.yml').read_text()
+        staged=workflow.index('      - name: Verify exact staged joint-flag source sequentially\n')
+        summary=workflow.index('      - name: Record workflow outcome independently of staged gate\n')
+        upload=workflow.index('      - name: Preserve complete staged-gate evidence including failures\n')
+        self.assertLess(staged,summary);self.assertLess(summary,upload)
+        self.assertIn('        id: light_eft_staged\n',workflow[staged:summary])
+        self.assertIn('        if: always()\n',workflow[summary:upload])
+        self.assertIn('        if: always()\n',workflow[upload:])
+        for name,expression in [('COMMIT','github.sha'),('RUN_ID','github.run_id'),('RUN_ATTEMPT','github.run_attempt'),
+                ('JOB','github.job'),('JOB_STATUS','job.status'),('STAGED_OUTCOME','steps.light_eft_staged.outcome')]:
+            self.assertIn('          LIGHTEFT_SUMMARY_'+name+': ${{ '+expression+' }}\n',workflow[summary:upload])
+        for directory in ['summary','staged']:
+            self.assertIn('            ${{ runner.temp }}/light-eft-'+directory+'-${{ github.run_id }}-${{ github.run_attempt }}\n',workflow[upload:])
+        for unchanged in ['actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02',
+                '          include-hidden-files: true\n','          if-no-files-found: error\n','          retention-days: 30\n']:
+            self.assertIn(unchanged,workflow[upload:])
+        self.assertNotIn('continue-on-error',workflow[staged:])
+
     def test_ported_full_receipt_verifier_changes_only_explicit_source_parameter(self):
         old=(ROOT/SPEC['engine_directory']/'scope.py').read_text();new=(HERE/'ci_receipts.py').read_text()
         find=lambda text:next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef) and n.name=='verify_receipts')
