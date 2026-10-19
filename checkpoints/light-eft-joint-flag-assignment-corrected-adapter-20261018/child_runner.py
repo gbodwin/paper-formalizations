@@ -59,7 +59,8 @@ def runtime_sample(child,baseline,anon_baseline,accounting,record,save,samples,m
     decision=telemetry.collect(child,accounting)
     try:
         decision['collection_errors'] += [{'operation':'audit output budget','error':error}
-            for error in audit_output_errors(record,preexec=minimum_headroom>STOP_HEADROOM)]
+            for error in audit_output_errors(record,preexec=minimum_headroom>STOP_HEADROOM,
+                terminal=bool(before_probe and before_probe.get('terminal')))]
     except Exception as exc:
         decision['collection_errors'].append({'operation':'audit output budget','error':repr(exc)})
     # Capture the exact decision input in memory before any policy evaluation.
