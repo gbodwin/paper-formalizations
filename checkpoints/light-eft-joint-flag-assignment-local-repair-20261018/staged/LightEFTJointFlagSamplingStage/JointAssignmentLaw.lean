@@ -166,10 +166,16 @@ theorem decodeHost_typed {J : Type*} [fintypeJ : Fintype J] [decidableEqJ : Deci
   exact (StoredFlagSample.typed_edgeSet _).symm
 
 def decodeAssignment {n m : ℕ} :
-    (l : List (OriginalEdge n)) → JointFlags n J m l → SampledGreedy.Assignment (Fin n) J m
-  | [], _ => fun _ _ _ => ∅
-  | e::es, bits => Function.update
-      (decodeAssignment es (fun p => bits p.succ)) e (decodeHost (bits 0))
+    (l : List (OriginalEdge n)) → JointFlags n J m l →
+      SampledGreedy.Assignment (Fin n) J m :=
+  List.rec
+    (motive := fun l =>
+      JointFlags n J m l → SampledGreedy.Assignment (Fin n) J m)
+    (fun _ => fun _ _ _ => ∅)
+    (fun e _es decodeTail bits =>
+      Function.update
+        (decodeTail (fun p => bits p.succ)) e
+        (decodeHost (bits 0)))
 
 /-- This applies even when e occurs again in es: the head batch wins. -/
 theorem decodeAssignment_head {J : Type*} [fintypeJ : Fintype J] [decidableEqJ : DecidableEq J]

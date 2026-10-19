@@ -338,6 +338,43 @@ class Candidate(unittest.TestCase):
         for row in [*SPEC['sources'].values(),*SPEC['dependencies'],*SPEC['engine_files']]:
             b=(ROOT/row['path']).read_bytes();self.assertEqual(len(b),row['bytes']);self.assertEqual(hashlib.sha256(b).hexdigest(),row['sha256'])
 
+    def test_decode_assignment_uses_non_self_referential_recursor_with_same_type(self):
+        source=(ROOT/SPEC['sources']['source']['path']).read_text()
+        declaration=source.split('def decodeAssignment {n m : ℕ} :\n',1)[1].split('\n/-- This applies even when e occurs again in es:',1)[0]
+        header,body=declaration.split(':=',1)
+        self.assertEqual(' '.join(header.split()),'(l : List (OriginalEdge n)) → JointFlags n J m l → SampledGreedy.Assignment (Fin n) J m')
+        self.assertEqual(body.count('List.rec'),1);self.assertNotIn('decodeAssignment',body)
+        self.assertIn('(fun _ => fun _ _ _ => ∅)',body)
+        self.assertIn('(decodeTail (fun p => bits p.succ)) e',body)
+        self.assertIn('(decodeHost (bits 0))',body)
+        self.assertIn('Function.update',body)
+        self.assertIn('JointFlags n J m l → SampledGreedy.Assignment (Fin n) J m',body)
+
+    def test_every_stage_binds_new_decode_source_and_stale_source_seal_refuses(self):
+        row=SPEC['sources']['source'];source=ROOT/row['path'];actual=bind(source)
+        self.assertEqual(actual['sha256'],'b7718de506f41b46341ef4f846df8cebda48c810990e8d92a3ec75282c700f1d')
+        commands,_=gate.build_plans(self.root,self.root/'tool',self.root/'work',SPEC,'a'*40,bind)
+        self.assertEqual([plan['stage'] for plan in commands],list(p.STAGES))
+        for plan in commands:self.assertIn(actual,plan['source_bindings'])
+        stale=dict(row,bytes=12533,sha256='7187c40f88f68caa69ef7fb188acc29eba9bed4b5b065c62a994f2fc3118d901')
+        with patch.object(gate.subprocess,'check_output',return_value=source.read_bytes()),self.assertRaisesRegex(ValueError,'Reviewed source/hash changed'):
+            gate.exact_files(dict(sources={'source':stale},dependencies=[],engine_files=[]))
+
+    def test_strict_audit_still_rejects_generated_decode_runtime_partial_helper(self):
+        audit,ci,names,raw,_=self.audit_fixture()
+        for filename in ['actual-owner-inventory.tsv','recursive-dependencies.tsv']:
+            path=ci/filename
+            with path.open() as f:
+                reader=csv.DictReader(f,delimiter='\t');fields=reader.fieldnames;rows=list(reader)
+            found=0
+            for row in rows:
+                if row['name'].endswith('.extra_generated'):
+                    row.update(name='LightEFTSpanners.JointFlagSampling.decodeAssignment._unsafe_rec',kind='definition',partial='true');found+=1
+            self.assertEqual(found,1)
+            with path.open('w',newline='') as f:
+                writer=csv.DictWriter(f,fieldnames=fields,delimiter='\t',lineterminator='\n');writer.writeheader();writer.writerows(rows)
+        with self.assertRaisesRegex(Exception,'Unsafe/partial declaration'):audit.validate(ci,names,raw)
+
     def test_actual_reviewed_visible_gates_are_three_three_four_four(self):
         sys.path.insert(0,str(ROOT/SPEC['engine_directory']));import scope
         self.assertEqual([scope.Context.visible_gate(None,{'stage':s}) for s in p.STAGES],[3*1024**3,3*1024**3,4*1024**3,4*1024**3])
