@@ -36,7 +36,7 @@ def verify_receipts(evidence,lease_record,plans,dependencies=None,wrapper_commit
   require([row['path'] for row in r.get('submitted_sources',[])]==p['sources'],'Incomplete or different submitted sources')
   for row in r['submitted_sources']:require(row['path'] in inputs and all(row[k]==inputs[row['path']][k] for k in ['sha256','bytes','identity']),'Submitted source/journal mismatch')
   require(r.get('kernel_limits_verified'),'Kernel limits not verified')
-  expected_limits={'RLIMIT_AS':[12*1024**3]*2,'RLIMIT_CPU':[60]*2,'RLIMIT_FSIZE':[(64 if p['stage']=='audit' else 16)*1024**2]*2,'RLIMIT_CORE':[0,0]}
+  expected_limits={'RLIMIT_AS':[12*1024**3]*2,'RLIMIT_CPU':[(90 if p['stage']=='audit' else 60)]*2,'RLIMIT_FSIZE':[(64 if p['stage']=='audit' else 16)*1024**2]*2,'RLIMIT_CORE':[0,0]}
   require(r.get('handshake',{}).get('limits')==expected_limits,'Receipt limits differ')
   require(r.get('disk_admission_bytes',0)>2*1024**3 and r.get('preexec_disk_bytes',0)>2*1024**3,'No fresh disk admission')
   gate=(4 if p['stage'] in ['replay','audit'] else 3)*1024**3

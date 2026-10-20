@@ -173,6 +173,7 @@ def run_preflight(shared,plan,record,save,accounting):
 def run_child(plan,pilot,evidence,shared,accounting=None):
     """Private testable supervisor. Production uses run_once with fixed paths/plan."""
     LIMITS["RLIMIT_FSIZE"]=(64 if plan["stage"]=="audit" else 16)*1024**2
+    LIMITS["RLIMIT_CPU"]=90 if plan["stage"]=="audit" else 60
     record={'attempt_id':uuid.uuid4().hex,'scope':'SUPPLIED_FOREST_FOUR_STAGE_INCREMENTAL','stage':plan['stage'],'source_commit':shared.source_commit,'frozen_import_source':SOURCE,'wrapper_commit':shared.wrapper_commit,'synthetic_fixture':shared.fixture,'argv':plan['argv'],'environment':plan['env'],'memory_policy':{'as_bytes':LIMITS['RLIMIT_AS'],'file_size_bytes':LIMITS['RLIMIT_FSIZE'],'admission_visible_bytes':shared.visible_gate(plan),'admission_host_bytes':ADMISSION_HEADROOM,'stop_visible_host_bytes':STOP_HEADROOM,'rss_observed_stop_bytes':RSS_STOP,'per_cgroup_anon_growth_stop_bytes':ANON_GROWTH_STOP,'sample_seconds':INTERVAL,'immediate_group_signal':'SIGKILL','M_qualification':'Intermittent runtime RSS check, not a kernel heap cap'},'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
     record['decision_log_bound_bytes']=decision_log_bound(plan['stage'])
     evidence.mkdir(exist_ok=False,parents=True)

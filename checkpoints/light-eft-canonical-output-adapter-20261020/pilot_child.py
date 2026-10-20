@@ -7,6 +7,7 @@ LIMITS={'RLIMIT_AS':12884901888,'RLIMIT_CPU':60,'RLIMIT_FSIZE':64*1024**2,'RLIMI
 def configure(stage):
     if stage not in ("compile","resolve","replay","audit"):raise RuntimeError("Invalid stage")
     LIMITS["RLIMIT_FSIZE"]=(64 if stage=="audit" else 16)*1024**2
+    LIMITS["RLIMIT_CPU"]=90 if stage=="audit" else 60
     result={}
     for name,value in LIMITS.items():
         key=getattr(resource,name)
