@@ -37,6 +37,8 @@ jobs:
           axiom-audit: "true"
           axiom-audit-root: "VFTSpanners"
           axiom-audit-allow: "propext,Classical.choice,Quot.sound"
+      - name: Check all paper module indexes
+        run: bash scripts/CheckModuleIndex.sh
       - name: Verify paid flag serialization and stored filter composition
         id: light_eft_paid_focused
         env:
@@ -339,8 +341,6 @@ jobs:
           lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchTrace.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/verification/FlagBatchSafetyAudit.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/FlagBatchSmoke.lean"
-      - name: Check all paper module indexes
-        run: bash scripts/CheckModuleIndex.sh
       - name: Audit every declaration in all paper libraries
         run: lake env lean scripts/AxiomAudit.lean
       - name: Verify exact staged joint-flag source sequentially
