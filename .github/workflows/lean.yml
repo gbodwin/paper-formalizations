@@ -348,6 +348,20 @@ jobs:
         env:
           PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-python-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -B checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py
+      - name: Verify supplied response output against joint decoder
+        id: light_eft_paid_joint_bridge
+        env:
+          PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-paid-joint-bridge-python-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -B checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci_gate.py
+      - name: Preserve focused bridge evidence before remaining checks
+        if: ${{ always() && steps.light_eft_paid_joint_bridge.outcome != 'skipped' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: light-eft-paid-joint-bridge-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/light-eft-paid-joint-bridge-${{ github.run_id }}-${{ github.run_attempt }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
       - name: Verify canonical actual-output corollary after three context replays
         id: light_eft_corollary
         env:
@@ -393,6 +407,7 @@ jobs:
             ${{ runner.temp }}/light-eft-staged-${{ github.run_id }}-${{ github.run_attempt }}
             ${{ runner.temp }}/light-eft-corollary-${{ github.run_id }}-${{ github.run_attempt }}
             ${{ runner.temp }}/light-eft-paid-focused-${{ github.run_id }}-${{ github.run_attempt }}
+            ${{ runner.temp }}/light-eft-paid-joint-bridge-${{ github.run_id }}-${{ github.run_attempt }}
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 30
