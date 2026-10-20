@@ -38,9 +38,9 @@ theorem collect_trace {Key : Type*} (keys : List Key) (bits : List Bool)
       (.reverse ((keys.zip bits).reverse++acc) []) := by
   induction keys generalizing bits acc with
   | nil =>
-    have hb : bits = [] := List.length_eq_zero.mp hlen
-    subst bits
-    exact Trace.one rfl
+    cases bits with
+    | nil => exact Trace.one rfl
+    | cons bit bits => simp at hlen
   | cons key keys ih =>
     cases bits with
     | nil => simp at hlen
@@ -51,8 +51,10 @@ theorem collect_trace {Key : Type*} (keys : List Key) (bits : List Bool)
         ((Trace.one (show transition (.emit key bit keys bits acc) =
           some (.collect keys bits ((key,bit)::acc)) from rfl)).trans
           (ih bits hb ((key,bit)::acc)))
-      simpa [List.zip, Nat.mul_add, Nat.add_assoc, Nat.add_comm,
-        Nat.add_left_comm] using ht
+      have hcount : 1+(1+(2*keys.length+1)) = 2*(keys.length+1)+1 := by omega
+      rw [hcount] at ht
+      simpa only [List.length_cons, List.zip_cons_cons, List.reverse_cons,
+        List.append_assoc, List.cons_append, List.nil_append] using ht
 
 theorem reverse_trace {Key : Type*} (rows acc : List (Key × Bool)) :
     Trace transition (rows.length+1) (.reverse rows acc) (.halt (rows.reverse++acc)) := by
@@ -70,9 +72,13 @@ theorem full_trace {Key : Type*} (keys : List Key) (bits : List Bool)
   have hs := collect_trace keys bits hlen []
   simp only [List.append_nil] at hs
   have hr := reverse_trace (keys.zip bits).reverse []
+  simp only [List.length_reverse, List.reverse_reverse, List.append_nil] at hr
   have hz : (keys.zip bits).length = keys.length := by simp [hlen]
-  simpa [hz, Nat.mul_add, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm,
-    show 3*keys.length = 2*keys.length+keys.length by omega] using hs.trans hr
+  rw [hz] at hr
+  have ht := hs.trans hr
+  have hcount : (2*keys.length+1)+(keys.length+1) = 3*keys.length+2 := by omega
+  rw [hcount] at ht
+  exact ht
 
 def execute {Key : Type*} (keys : List Key) (bits : List Bool) : Option (List (Key × Bool)) :=
   match Controller.run transition (3*keys.length+2) (.collect keys bits []) with
