@@ -1,0 +1,2661 @@
+{
+  "schema": "canonical-output-finite-scope-v1",
+  "status": "SOURCE_ONLY_CONCRETE_HANDOFF_REPLAY_WORKFLOW_DELTA_REQUIRES_INDEPENDENT_REVIEW",
+  "accepted_source_base": "f8a2476ef4a910f0b0225ade418ab174f98d8e21",
+  "source_transfer_commit": "00a555ff9406bdc0a94da8338edb71c7818224d5",
+  "target": "LightEFTJointFlagOutputStage.PolynomialActualFailureProbability",
+  "sources": {
+    "source": {
+      "path": "checkpoints/light-eft-joint-flag-output-draft-20261019/staged/LightEFTJointFlagOutputStage/PolynomialActualFailureProbability.lean",
+      "bytes": 3567,
+      "sha256": "caa89c0d197131ffdc8405e63bfd56dfbc08468e8bec760f33736d1b4f08adf1"
+    },
+    "audit": {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/staged/CanonicalOutputAudit.lean",
+      "bytes": 18773,
+      "sha256": "e09fb338f4cc14844ad9d2bd5fca25973f107e3f089f495d02082f7c71f7ccb3"
+    },
+    "resolver": {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/staged/ResolveCanonicalOutputTarget.lean",
+      "bytes": 1399,
+      "sha256": "426579ed6d435c3644af7344c83eb320a7d4399769a8ae7a07a80ad78488f6dc"
+    }
+  },
+  "staged_root": "checkpoints/light-eft-joint-flag-output-draft-20261019/staged",
+  "engine_directory": "checkpoints/light-eft-canonical-output-adapter-20261020",
+  "frozen_project_source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "dependencies": [
+    {
+      "module": "LightEFTActualSuppliedForestProbabilityStage.PolynomialActualFailureProbability",
+      "path": "checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.lean",
+      "bytes": 4727,
+      "sha256": "faee0b34bdb811a7a1f97f3e7bd90b2e7e37dd0a2967fbddb06c2483e0ec5b86"
+    },
+    {
+      "module": "LightEFTJointFlagSamplingStage.JointAssignmentLaw",
+      "path": "checkpoints/light-eft-joint-flag-assignment-local-repair-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+      "bytes": 12780,
+      "sha256": "1c290257acb41c8023c2ea163723dbbb36e4c58abc61d5efc2e645da00276a41"
+    },
+    {
+      "module": "LightEFTSpanners.AdaptiveFiniteLaw",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AdaptiveFiniteLaw.lean",
+      "bytes": 1922,
+      "sha256": "b7de9b150e440f06a73f4ac813545092a6d7d80466000acea133faf1ef053648"
+    },
+    {
+      "module": "LightEFTSpanners.AdaptiveVotingConcentration",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AdaptiveVotingConcentration.lean",
+      "bytes": 3593,
+      "sha256": "b09042d0a9b3d818fb7eb422a5b445184c0a2367854fd2529f794c7f21a3d820"
+    },
+    {
+      "module": "LightEFTSpanners.AlgorithmSampleProbability",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AlgorithmSampleProbability.lean",
+      "bytes": 2599,
+      "sha256": "e7bbd4948e51cd3b1df2eeb6470e07c0ff650018308bf871e1c50b572b78cdb7"
+    },
+    {
+      "module": "LightEFTSpanners.AssignedHostExtremal",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AssignedHostExtremal.lean",
+      "bytes": 1936,
+      "sha256": "0ae45c759d3794dead44ba39f1de79605320d97593f8fe1a98927833112d66fa"
+    },
+    {
+      "module": "LightEFTSpanners.Basic",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/Basic.lean",
+      "bytes": 4311,
+      "sha256": "904afbdb6b764ba7c81bd0623cb38ee71ef0ddc3136454a8dc5197696ed1d66f"
+    },
+    {
+      "module": "LightEFTSpanners.BernoulliFlagEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BernoulliFlagEncoding.lean",
+      "bytes": 1278,
+      "sha256": "989511389ae934af9b23fc226c6f9bfede8b50520807aef4c28add1a6f2793b2"
+    },
+    {
+      "module": "LightEFTSpanners.BernoulliFlagLaw",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BernoulliFlagLaw.lean",
+      "bytes": 1312,
+      "sha256": "08913ce2079c8f57449f13a01feebc6e103a1403f152848e4a27575bdb2b90b5"
+    },
+    {
+      "module": "LightEFTSpanners.BernoulliTestConcentration",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BernoulliTestConcentration.lean",
+      "bytes": 5441,
+      "sha256": "953af70d0da704d05dda7dc8ad23fc18ef60729cd6d865f5feb862677b658c58"
+    },
+    {
+      "module": "LightEFTSpanners.BlockerSampling",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlockerSampling.lean",
+      "bytes": 4320,
+      "sha256": "47a6b5d729561b82e9b283aeb89ad3e7080f97eabcb465cf4f03e98621d7cc15"
+    },
+    {
+      "module": "LightEFTSpanners.BlockerTransport",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlockerTransport.lean",
+      "bytes": 3086,
+      "sha256": "17b104d28fa74990470003facb05e8576ecf0f74d4dfaaebace3704bc4744e77"
+    },
+    {
+      "module": "LightEFTSpanners.Blocking",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/Blocking.lean",
+      "bytes": 8135,
+      "sha256": "df64236a955614280d31007f7ba38b87c6f4c0bf8e06f221c87e14120da65f34"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableVotingSamples",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableVotingSamples.lean",
+      "bytes": 2397,
+      "sha256": "c46a38f169a18d19fe05f986d0c4afb8bba53fd102681656d363467ba23e9e88"
+    },
+    {
+      "module": "LightEFTSpanners.ConnectivityCuts",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConnectivityCuts.lean",
+      "bytes": 4418,
+      "sha256": "d6017b60478c35165be9f21833a72a5bcb184e06fac75848049f6ec8f08028f3"
+    },
+    {
+      "module": "LightEFTSpanners.ConnectivityOptimum",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConnectivityOptimum.lean",
+      "bytes": 2410,
+      "sha256": "2840e414eb2138431b47730c46205fc54708f3ef30d76f67b1d86ce5be6c83ad"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedSeededPacking",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedSeededPacking.lean",
+      "bytes": 1575,
+      "sha256": "87bc15ff3f98645efd334c8d65f00e1bc3a4997819df088bc0669d1b44cd83ad"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingCorrectness",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedVotingCorrectness.lean",
+      "bytes": 3306,
+      "sha256": "748b7ca96f83eac2322a87bc6e53228a61f1fb813bad9f9f6714aee09b83be12"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingHosts",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedVotingHosts.lean",
+      "bytes": 2772,
+      "sha256": "995db94d0207a5cd432a0e5c9a5b44b6fa5d7624df4ecf90c31eaded3489ac95"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingWeight",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedVotingWeight.lean",
+      "bytes": 2634,
+      "sha256": "c78d6367ba662b05f57beaeabe938834d06dd440e74d5d60270eddc42294fa0c"
+    },
+    {
+      "module": "LightEFTSpanners.ContractedCoreConnectivity",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ContractedCoreConnectivity.lean",
+      "bytes": 2902,
+      "sha256": "77a73fdb51ff800e707aa71009b44446b1fb0b455721f1edac623861df97783f"
+    },
+    {
+      "module": "LightEFTSpanners.ContractedCoreCuts",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ContractedCoreCuts.lean",
+      "bytes": 2885,
+      "sha256": "e4c66a2c55724fb6a258a98f6bf845881def24ef6c0a03ae4fae0c0595bca665"
+    },
+    {
+      "module": "LightEFTSpanners.ControllerTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ControllerTrace.lean",
+      "bytes": 2661,
+      "sha256": "d930771797f63dacf44fd9db6dd2a365a54fae4c7b1bee0697686235904436ae"
+    },
+    {
+      "module": "LightEFTSpanners.DisjointCycleFaults",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/DisjointCycleFaults.lean",
+      "bytes": 1351,
+      "sha256": "c0a84a6ceea2903462dbefa951c84bbf79ee42a6c305f6ee6ad64181ee8efbf7"
+    },
+    {
+      "module": "LightEFTSpanners.EmpiricalAlgorithmGuarantees",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EmpiricalAlgorithmGuarantees.lean",
+      "bytes": 5286,
+      "sha256": "8e8619c7edc8d9d5cf64e68f066c09ad9b0daee74566cd17bc951b9db8de3424"
+    },
+    {
+      "module": "LightEFTSpanners.EmpiricalVotingGreedy",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EmpiricalVotingGreedy.lean",
+      "bytes": 5290,
+      "sha256": "548a03dd73e37dabda1ed054a6a7d4c3a9c9e5489fae3d3c4fd1acf199687313"
+    },
+    {
+      "module": "LightEFTSpanners.EvenAdmissiblePair",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EvenAdmissiblePair.lean",
+      "bytes": 1567,
+      "sha256": "04cf8e01442e9b2feb65348a4f5604b0f44209441d5d295ffeff98e8a585f10c"
+    },
+    {
+      "module": "LightEFTSpanners.EvenCutRequirement",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EvenCutRequirement.lean",
+      "bytes": 3036,
+      "sha256": "d6ca3ad85caed574150d3a2241a84ee4816f85d5be08235eae1f579fb5a8373e"
+    },
+    {
+      "module": "LightEFTSpanners.EvenSplittingMass",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EvenSplittingMass.lean",
+      "bytes": 2142,
+      "sha256": "c7d17e10e7912767d5c09927b6ffb6d8fbc889173be3408a520725abcaf09a16"
+    },
+    {
+      "module": "LightEFTSpanners.EvenTightUncrossing",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EvenTightUncrossing.lean",
+      "bytes": 2788,
+      "sha256": "9d39806fa64614941d163b962f11e667a5d4731aca1849101172195823147ba6"
+    },
+    {
+      "module": "LightEFTSpanners.ExactOrderSubdivision",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactOrderSubdivision.lean",
+      "bytes": 1778,
+      "sha256": "39eb4cafb93ad380cc92982f6651228bc45ff172d3d6ba133ec6208628b9b9ee"
+    },
+    {
+      "module": "LightEFTSpanners.ExecutableVoting",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExecutableVoting.lean",
+      "bytes": 5082,
+      "sha256": "d6385ba1f850eaeee4cd1830e4462723ed4b58d849c9d2068dbcaf6e3bf414c7"
+    },
+    {
+      "module": "LightEFTSpanners.ExtremalHostBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHostBound.lean",
+      "bytes": 2643,
+      "sha256": "098b1f2d1e75a96fe15f468d71d32e43649368a22caa92b40871797050772a70"
+    },
+    {
+      "module": "LightEFTSpanners.ExtremalLightnessSpectrum",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalLightnessSpectrum.lean",
+      "bytes": 4058,
+      "sha256": "e77aa376cf6d820e04734b7c58cad074b062b1e6057dabbe145b80140b409201"
+    },
+    {
+      "module": "LightEFTSpanners.ExtremalReindex",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalReindex.lean",
+      "bytes": 2376,
+      "sha256": "f0d2e1f8104772dff3ed64579e2d65a098adf7351a23b2b129808cbde04bb7ae"
+    },
+    {
+      "module": "LightEFTSpanners.FaultBudgetSaturation",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FaultBudgetSaturation.lean",
+      "bytes": 2314,
+      "sha256": "528e752e6e1fb895b062ce95fc2d667e437bdbe47a97da1d3dc51ecdabb47ca1"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteHoeffding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteHoeffding.lean",
+      "bytes": 2466,
+      "sha256": "6148a9791c76a93d096e75a711d3d01541b7bae94d0ad634e077f652eb144cba"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteLaw",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteLaw.lean",
+      "bytes": 4358,
+      "sha256": "7c7f5ded9abec4a60ee9dfe5fa36c100e4bce0bfef26c474a98bbd6c5c6cc240"
+    },
+    {
+      "module": "LightEFTSpanners.FinitePartitionRefinement",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FinitePartitionRefinement.lean",
+      "bytes": 3699,
+      "sha256": "836d7ee5e691d3ea1f4faa621c6753e3058dc214e25420fca2df6f32f15e07fc"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteProductLaw",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteProductLaw.lean",
+      "bytes": 958,
+      "sha256": "285c96e7624cdcf26fe2561a941d9fc32c07965c8067dac29eb38bb56a2e169e"
+    },
+    {
+      "module": "LightEFTSpanners.ForestComponentPacking",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ForestComponentPacking.lean",
+      "bytes": 4869,
+      "sha256": "79e32b0c794467aeabdc7544eb10bc9c6d7ce3c6a21998b9167689a21dcc4edd"
+    },
+    {
+      "module": "LightEFTSpanners.ForestComponents",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ForestComponents.lean",
+      "bytes": 2701,
+      "sha256": "5d4d22c36c3b8545700f591700602d02f4b0d1f940f207e2e77eba9fd631918b"
+    },
+    {
+      "module": "LightEFTSpanners.FreshVotingTapes",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FreshVotingTapes.lean",
+      "bytes": 3192,
+      "sha256": "196db7ee6ee577057f0a53b083bc686805022d063bea646e19c40dd38dcd563a"
+    },
+    {
+      "module": "LightEFTSpanners.GraphPruning",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GraphPruning.lean",
+      "bytes": 5811,
+      "sha256": "31ad7152e39a7cb9260efbe29b8a1d95e679c82b07f07bcf2cead13f68a01e6b"
+    },
+    {
+      "module": "LightEFTSpanners.HostCounting",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostCounting.lean",
+      "bytes": 4238,
+      "sha256": "34e195c0dad811a3134a6cdfe561d1e34dec8e371b63003c0a7243c61b0ba405"
+    },
+    {
+      "module": "LightEFTSpanners.HostFamilyBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostFamilyBound.lean",
+      "bytes": 3758,
+      "sha256": "ad0abd9d2a24c13924375da6faa2e5759df7189ac6906b49bab02f5226ef3812"
+    },
+    {
+      "module": "LightEFTSpanners.HostGraphSampling",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostGraphSampling.lean",
+      "bytes": 5477,
+      "sha256": "0a50479e89429b47d9c8039277d4c992daec9038cf4dcbb75cbd0c781394afcb"
+    },
+    {
+      "module": "LightEFTSpanners.HostLocalBlocking",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostLocalBlocking.lean",
+      "bytes": 4137,
+      "sha256": "8496139629bc157ffc399516bb90234de0e720e56e8ce309e1de093835c1e7ac"
+    },
+    {
+      "module": "LightEFTSpanners.HostWeightTransport",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostWeightTransport.lean",
+      "bytes": 2909,
+      "sha256": "b9d7609e9d94e4885b73641b20bbca6fad0ca8e414f9282a7a709feecb8165a8"
+    },
+    {
+      "module": "LightEFTSpanners.InducedExtremalHost",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/InducedExtremalHost.lean",
+      "bytes": 4482,
+      "sha256": "21c5b91c699a2d52838c309fd34f1fb5304c70100f60aad66d1cf75eafab0c2f"
+    },
+    {
+      "module": "LightEFTSpanners.InducedHostSampling",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/InducedHostSampling.lean",
+      "bytes": 4108,
+      "sha256": "e021f0042e9839ec0de00166c62f78187f643ec3f6b24f9811a9a636c8853b3d"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceExecutable.lean",
+      "bytes": 2787,
+      "sha256": "bbf2ad4c31f34318c45b331f3fdb6e3c805b46f37137fce2dc0bf1f943741d90"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceInitialization",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceInitialization.lean",
+      "bytes": 3003,
+      "sha256": "09282e0afd37b8efd6effa496368fa4824d4014077b73011e50dc26c698be2b4"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceKernel",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceKernel.lean",
+      "bytes": 3721,
+      "sha256": "6b2002ff3fdd5e9601898a73d5a04c008ddf58fb911c4eb124917c24ccf5b810"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceMachine",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceMachine.lean",
+      "bytes": 4056,
+      "sha256": "178473f21f7496b64c05eda0d16135e684a1823c8aa6e9139fc24e05f99bf824"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceRefinement",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceRefinement.lean",
+      "bytes": 3529,
+      "sha256": "99ce54745c59db056e05e2b7437dbd37b4d81aaf571bc8634cc17543f44cb080"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceTrace.lean",
+      "bytes": 4476,
+      "sha256": "f2974e0d1416c01f921bb10e848e739efb972242637ae65d6ae9beb7dcae1686"
+    },
+    {
+      "module": "LightEFTSpanners.LogarithmicVotingSamples",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LogarithmicVotingSamples.lean",
+      "bytes": 3142,
+      "sha256": "15f5a225b5a7018af3418993d020ad78ce9b166edbfde5252b770ce010885735"
+    },
+    {
+      "module": "LightEFTSpanners.MinimalConnectivityCore",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/MinimalConnectivityCore.lean",
+      "bytes": 3601,
+      "sha256": "a28e1f64756d495a0bbaec1a50ac73af5b63ea7344d98afa6c65da5273992c40"
+    },
+    {
+      "module": "LightEFTSpanners.MissingEdgeConnectivity",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/MissingEdgeConnectivity.lean",
+      "bytes": 2339,
+      "sha256": "575ba0a68eaa5bfb7658eb857f6534c365fd317114e344b7fd2eee144f9cda24"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphContractionSize",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/MultigraphContractionSize.lean",
+      "bytes": 2133,
+      "sha256": "a58eda67d4f8a1a80d3ba07abfa1fd752580baefb6dd8891f4855b3e7a16d4fe"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphCutTransport",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/MultigraphCutTransport.lean",
+      "bytes": 2763,
+      "sha256": "ef5bf637f282ef4a89c15b4accec0c02ebb4bf660397e90e2c9f805d6cc9a64e"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphFaultConnectivity",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/MultigraphFaultConnectivity.lean",
+      "bytes": 5102,
+      "sha256": "79410110bdea325060c0577d55e0ac165a5c6d6f30a1e376b5e3c194a4f83828"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphPartitionCounts",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/MultigraphPartitionCounts.lean",
+      "bytes": 3848,
+      "sha256": "d37c36dbd4115c5eabeb921e2e3ed8309ac1aee9a678d50ed210cc9f914dd7e0"
+    },
+    {
+      "module": "LightEFTSpanners.NativeBasicCoreReduction",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeBasicCoreReduction.lean",
+      "bytes": 2922,
+      "sha256": "1631f130f3f7508e0598ae6f0e3be6e6e6e403c1bac7cc8d2815306b907a5493"
+    },
+    {
+      "module": "LightEFTSpanners.NativeBlockRefinement",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeBlockRefinement.lean",
+      "bytes": 3181,
+      "sha256": "88d722789c37306c30847d178143b41e36c773636d151cfa9b78e7d2c0cc34ca"
+    },
+    {
+      "module": "LightEFTSpanners.NativeBridgeSemantics",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeBridgeSemantics.lean",
+      "bytes": 3418,
+      "sha256": "605bacebc42d3d5b75713dc1444840065cd7a2265f340659e1f38a4e6a69f948"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterDecomposition",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCenterDecomposition.lean",
+      "bytes": 5466,
+      "sha256": "cbd50e549bb261a3489d602317960eaa4ed49f66125f25b95eb242e978d26fb3"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterElimination",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCenterElimination.lean",
+      "bytes": 3202,
+      "sha256": "b4fca2b0a51ef256ddbfb7de51afeeeac037ae9464e8d6e5ff95f8bb8025e8a6"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterSplit",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCenterSplit.lean",
+      "bytes": 3969,
+      "sha256": "3e9af99530ed5857548f60733a0a9a5155fc060fe6bb29f1fa4aea4f16f64ac4"
+    },
+    {
+      "module": "LightEFTSpanners.NativeColorCrossings",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeColorCrossings.lean",
+      "bytes": 2808,
+      "sha256": "bd3e1344c81c61020c90201bebeac118ad455fde81e2a6fd97f8bbafb2ef424c"
+    },
+    {
+      "module": "LightEFTSpanners.NativeColorExchange",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeColorExchange.lean",
+      "bytes": 6451,
+      "sha256": "937369a6786937e32282d4d682eb8f388654656988e476bea64c57a43e835ec6"
+    },
+    {
+      "module": "LightEFTSpanners.NativeColoredExchange",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeColoredExchange.lean",
+      "bytes": 5044,
+      "sha256": "5b9a2390a337224a5b49231f8ef80482b5906b63a569b7f0054ef7c7a4701cfa"
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionExpansion",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeContractionExpansion.lean",
+      "bytes": 2456,
+      "sha256": "f5ebdc6d438c83456a7db17787f526727518360c0f4bf9f582137446ac6de748"
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionForestJoin",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeContractionForestJoin.lean",
+      "bytes": 2904,
+      "sha256": "616ae25b351842e80a27b60d2788ef9321a8701df11030c6ff7f82ed2920c7c4"
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionInvariants",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeContractionInvariants.lean",
+      "bytes": 1196,
+      "sha256": "301007a820eea78f75b61a3594a23b986065f40922934a96f7559b27c0dacf88"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreContraction",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCoreContraction.lean",
+      "bytes": 4132,
+      "sha256": "b7db3b0264b5e1a2b9a5a13db61bf0552cf30297286c12fe5c8f01ce64dac8a8"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreForestExpansion",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCoreForestExpansion.lean",
+      "bytes": 2145,
+      "sha256": "f5e0ab49b997f3fbe4dabe8d517051cee591516c61f7e145e7327abe00ddbe85"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCorePackingCriterion",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCorePackingCriterion.lean",
+      "bytes": 3032,
+      "sha256": "6823faa67c1617b68258376828a742a3b589211f0be1f472ec23e7a41d8e6f54"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCorePartitionBudget",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCorePartitionBudget.lean",
+      "bytes": 2251,
+      "sha256": "688767548bb36eeeccbd37b64b02d1dd8831fc5f557a8074ed83bd2d332ee4d6"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreTreeConstruction",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCoreTreeConstruction.lean",
+      "bytes": 3318,
+      "sha256": "3827682cc185b9118844008ebc4f682bd431e8d728d4e4a16ffe4afab43c320d"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCrossingNonbridge",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCrossingNonbridge.lean",
+      "bytes": 1701,
+      "sha256": "474ae376273d59b18c2f631c2834eb86c3a5d5c7c7b4502b1740ec3dd98f3180"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCutUncrossing",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCutUncrossing.lean",
+      "bytes": 2394,
+      "sha256": "d38d6c7872d61387c1561026b76debc26d256a419606ea84c07a80e59b248e68"
+    },
+    {
+      "module": "LightEFTSpanners.NativeDecompositionMaximum",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeDecompositionMaximum.lean",
+      "bytes": 3340,
+      "sha256": "0209d5f21ff2f4ce5068846c121a52c739a6a9acc345dc088877ca13dd0e54a1"
+    },
+    {
+      "module": "LightEFTSpanners.NativeDeleteNonbridge",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeDeleteNonbridge.lean",
+      "bytes": 2198,
+      "sha256": "fbafd1c76490901cee95e3fd1f539d8349ea49258e2ecb976e4b5e86e5d24f9e"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEdgeLevelTransport",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEdgeLevelTransport.lean",
+      "bytes": 2358,
+      "sha256": "7bb49555bf284d18e2c019a1a7bd5c2c399eb8e10d96e81a5c7b37177cb54ea0"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEdgeLevels",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEdgeLevels.lean",
+      "bytes": 3809,
+      "sha256": "a88c2a4f14d3e42ded4b079520b5f6012edca5f9b5019f20501baabf874af56e"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianCuts",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEulerianCuts.lean",
+      "bytes": 3648,
+      "sha256": "26263fabb6bed738d7a3ce47132af8c7bf3ce123b951ac7c1e8bc3a145273cf6"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianForestPacking",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEulerianForestPacking.lean",
+      "bytes": 3327,
+      "sha256": "d2b9899530f98624a284054b9bcd61083329b772ccd5887f85545f83df5ec2ee"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianSplit",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEulerianSplit.lean",
+      "bytes": 5924,
+      "sha256": "989925e08fd4033c7acf2b351179f1bff4a27837fd051175bcf8849b33518235"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianStep",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEulerianStep.lean",
+      "bytes": 2639,
+      "sha256": "05ce9ce878c1b5b92d9d96172003c8ab7637ca61223d1eecd15f86054c6f34fd"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEvenAdmissibility",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEvenAdmissibility.lean",
+      "bytes": 2693,
+      "sha256": "1ed9159221fcb00ed8b7eeb757f8ef894a7d0dc1a37ee3aa1f62e14d9f5e9e60"
+    },
+    {
+      "module": "LightEFTSpanners.NativeExchangeConnectivity",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeExchangeConnectivity.lean",
+      "bytes": 2268,
+      "sha256": "2338e245a001de0f3734a38ef58dd1811549d337aa51b371909965c16135c890"
+    },
+    {
+      "module": "LightEFTSpanners.NativeExchangeImprovement",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeExchangeImprovement.lean",
+      "bytes": 3595,
+      "sha256": "2a4af48856d5abaf18044b08c0a33c92477611a52ea2a5518871f03f202b7ab1"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestCardinality",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeForestCardinality.lean",
+      "bytes": 3831,
+      "sha256": "1efc991892150e4d7a1c43a22b4b559c7a9a86797fb8f3a85adb6a579b4fd0f7"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestDensity",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeForestDensity.lean",
+      "bytes": 2433,
+      "sha256": "d9dd14a066d55dacd6962725af9f241db9b4884185178d3e94820c8a3737757d"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestPacking",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeForestPacking.lean",
+      "bytes": 3011,
+      "sha256": "295520327a90fda2dc4a20506ede42ec65b11115b1018990134432743c3d86ed"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestQuotient",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeForestQuotient.lean",
+      "bytes": 4384,
+      "sha256": "d8d54ad21dd2906d66c8b53c55b1ff3c92bab2a92c8b055d32a3b33feed45a19"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestSelection",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeForestSelection.lean",
+      "bytes": 5899,
+      "sha256": "c6d001e26d26f70b6197f1cb66401b8931414bd3d5301a0694904725596405c6"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestSemantics",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeForestSemantics.lean",
+      "bytes": 3245,
+      "sha256": "988a65afe1048cb78445504c137576dbea55963ecbd4497aed4e1b6c6d7bfedd"
+    },
+    {
+      "module": "LightEFTSpanners.NativeImprovingExchange",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeImprovingExchange.lean",
+      "bytes": 5796,
+      "sha256": "12a7a3b8c7ba84724ae1a9c376dc9475adbff1b88b3346441e97178cf33aa436"
+    },
+    {
+      "module": "LightEFTSpanners.NativeIsolatedIslandReduction",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeIsolatedIslandReduction.lean",
+      "bytes": 2503,
+      "sha256": "f7babc5e22c396dad0cd7f990a4f2732667e19938735d3eaa050d9d10b06258d"
+    },
+    {
+      "module": "LightEFTSpanners.NativeLevelExchangePreservation",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeLevelExchangePreservation.lean",
+      "bytes": 1418,
+      "sha256": "9b46b3ea88b0ba420cd9dec24c751c13b171d90c740eb18e63c1a59da4b9637d"
+    },
+    {
+      "module": "LightEFTSpanners.NativeLowerExchange",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeLowerExchange.lean",
+      "bytes": 6500,
+      "sha256": "81f435c6d948627d619d7df871301210f0919fafc4f6d2358ea3ca185f907802"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMaximalCountercase",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMaximalCountercase.lean",
+      "bytes": 3332,
+      "sha256": "b3e919dd1c0f64fc355f85a0c0f399680984d9e24956e832f64e41e2925a4612"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMinimumCycleLevel",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMinimumCycleLevel.lean",
+      "bytes": 3084,
+      "sha256": "ae8d13da621c2bca47514c669eedd9055cb2cc2fe35c7a60a33fc2ccd87c1be7"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMultigraphCore",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMultigraphCore.lean",
+      "bytes": 4648,
+      "sha256": "d896135be739caa2064175df1a24da0dde8424edf286a3a49474d6c60853d807"
+    },
+    {
+      "module": "LightEFTSpanners.NativeNonbridgeCore",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeNonbridgeCore.lean",
+      "bytes": 3739,
+      "sha256": "9529308a5272bbd5f1f2a5dd3bc35c4abdd6e873003feff27f084b1b3fdb71ef"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingExtension",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePackingExtension.lean",
+      "bytes": 2714,
+      "sha256": "d5d011dfce7338dbe4d5dfc580518459e382d5e62297b288d1e0c823b0ddae27"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingInduction",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePackingInduction.lean",
+      "bytes": 2971,
+      "sha256": "b2790fee8365dee464b5a5e44acf86ddd717935479b3e22db77010abbf2cdf16"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingVertexTransport",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePackingVertexTransport.lean",
+      "bytes": 2125,
+      "sha256": "46222ee9ed9b5a806e5559ed064f09015d38da6ea1e929de318bfec4b2c9a63a"
+    },
+    {
+      "module": "LightEFTSpanners.NativePartitionCriterion",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePartitionCriterion.lean",
+      "bytes": 3571,
+      "sha256": "3f154f0599ccd80a54a1c5632d85d6a7ec630f32578337bf4a3d2cb279f33dd7"
+    },
+    {
+      "module": "LightEFTSpanners.NativePartitionLabels",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePartitionLabels.lean",
+      "bytes": 3604,
+      "sha256": "c39e8c5fcc8a44034f71450ca3c6f92eb2e21770f091eeed38f2e85ec2b5bacc"
+    },
+    {
+      "module": "LightEFTSpanners.NativePriorityComparison",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePriorityComparison.lean",
+      "bytes": 4029,
+      "sha256": "0964c252c39a413963679290576f90f86aba7e04cf69b2cdf7f6a37774890996"
+    },
+    {
+      "module": "LightEFTSpanners.NativeQuotientCardinality",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeQuotientCardinality.lean",
+      "bytes": 2921,
+      "sha256": "af4f070ab7d4df55bbfebf903c1a6915d02c58188d9d8fa67de55c54aea18699"
+    },
+    {
+      "module": "LightEFTSpanners.NativeQuotientReachability",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeQuotientReachability.lean",
+      "bytes": 2620,
+      "sha256": "5dfa73d01b5874881663d7abe688c473086e35ad2a7327c462026fe8c7abdd46"
+    },
+    {
+      "module": "LightEFTSpanners.NativeRefinementCycleWitness",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeRefinementCycleWitness.lean",
+      "bytes": 2875,
+      "sha256": "6920fa7610d66f7c2d765a488db28428875bf450cf9cba21d20ba1882bc5848a"
+    },
+    {
+      "module": "LightEFTSpanners.NativeRefinementRigidity",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeRefinementRigidity.lean",
+      "bytes": 5056,
+      "sha256": "e32010cf62452911ee8376f81670d8eb3116de6a51c3f2d2b2a47b7e3db5f81e"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSignatureStages",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSignatureStages.lean",
+      "bytes": 2966,
+      "sha256": "4e1b930c85cd971a5c3d2246d188916153383478505969485b741a40dcb3a3e0"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitColor",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSplitColor.lean",
+      "bytes": 2300,
+      "sha256": "e39b8f989bf2c656e41cbf63ef4779b78a7d220696ecaa54558f6e7eca28f73a"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitForestExpansion",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSplitForestExpansion.lean",
+      "bytes": 4497,
+      "sha256": "e4465488d82b1a4de23127a8d0d60c81a322de2465f6b30909a668d4adb3cc2c"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitPullback",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSplitPullback.lean",
+      "bytes": 2473,
+      "sha256": "f157c1429d343c32b66bfabf1b07e85212bafcdeb22dc2fe37b60c63ff5b1035"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitReachability",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSplitReachability.lean",
+      "bytes": 2998,
+      "sha256": "a4795ccfb1ada80beb528911015accfe2032c377df525abf5801950d2fd5d8f9"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitTracePullback",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSplitTracePullback.lean",
+      "bytes": 2982,
+      "sha256": "9ef4d17064f03a5b263e223d3badb45a53c78a07b18bd1aee22b7f049bfeed9d"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSteinerPackingReduction",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSteinerPackingReduction.lean",
+      "bytes": 2425,
+      "sha256": "0a1b018e4afc75f4f12729b00e6c54ccab6ff56f88c60ad64873bfc0ea74ecd2"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSteinerReduction",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSteinerReduction.lean",
+      "bytes": 3527,
+      "sha256": "e367f2d4738b5ec096461d5953a83ff1d76ff1da9431b6af8ba063d847e8d705"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTerminalDensity",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeTerminalDensity.lean",
+      "bytes": 4308,
+      "sha256": "db7f8b77f4a02bc207ac9d7b61d79cf3a0c74441f979bda71d40040a619265d9"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreeCertification",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeTreeCertification.lean",
+      "bytes": 1659,
+      "sha256": "038ffd050fb6138afc702bbc649ecad5e649119f7bc40426df5620b82f944be1"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreeExchange",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeTreeExchange.lean",
+      "bytes": 3057,
+      "sha256": "c1fe6b4517d202d50587fc8bb93f777050b7d34a464e8c08488131187b81c201"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreePacking",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeTreePacking.lean",
+      "bytes": 2209,
+      "sha256": "d51dfdac7a33bc24fa1ba5e3da8de55c88216e6054ddf614694f6056a2c49d15"
+    },
+    {
+      "module": "LightEFTSpanners.ParallelSubdivision",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ParallelSubdivision.lean",
+      "bytes": 3070,
+      "sha256": "979027328eaeb4448148156612caa4c34469df3d7734361109b0214ae3b7b9c8"
+    },
+    {
+      "module": "LightEFTSpanners.PartitionRefinementTermination",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PartitionRefinementTermination.lean",
+      "bytes": 3471,
+      "sha256": "f0d4ec7a357e1a4b2f3550f36bbbdb8e7324b0f8a8d067c3ded45a8c14e6fff7"
+    },
+    {
+      "module": "LightEFTSpanners.ProductSampleConcentration",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ProductSampleConcentration.lean",
+      "bytes": 3998,
+      "sha256": "1d23b6a42010fd561a4efd082e4b9e0ebb4da85dc54447909bcffa88da4d532c"
+    },
+    {
+      "module": "LightEFTSpanners.RandomizedVotingGuarantees",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RandomizedVotingGuarantees.lean",
+      "bytes": 4602,
+      "sha256": "a27f68dd34cd8605060395a8d5cf57230faaa8959d4b08bcb9d5f4dfc47739bc"
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceTable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceTable.lean",
+      "bytes": 4404,
+      "sha256": "03163b1215234ee456db582146bdb698dfb2af8afd07831ff464635298198acb"
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceTest",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceTest.lean",
+      "bytes": 3012,
+      "sha256": "77184d55f1adeb9554ca7480e2a7450515dd1ce9ad999a6ee706bd32a7a57d9f"
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceValues",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceValues.lean",
+      "bytes": 1743,
+      "sha256": "14b64107d33ccae55f8f53288d0e073b33572be12aa2ff6ef2e31bff13b8088c"
+    },
+    {
+      "module": "LightEFTSpanners.RoundedCompetition",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RoundedCompetition.lean",
+      "bytes": 2898,
+      "sha256": "344bb7275afca41f22190505c6cc95379143ed8224f60b24c1f83ecffe19b6bd"
+    },
+    {
+      "module": "LightEFTSpanners.SampleMatrixMachine",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleMatrixMachine.lean",
+      "bytes": 2681,
+      "sha256": "05e2d9a3217b7c21d2581f794cc5d5203a6ca2c646cf9a69ea3b9746eebd59c1"
+    },
+    {
+      "module": "LightEFTSpanners.SampleMatrixTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleMatrixTrace.lean",
+      "bytes": 3239,
+      "sha256": "1a227497ff136dd1ae0be97b3783ffde4ec18faf7c6b395dd26188d279ca8165"
+    },
+    {
+      "module": "LightEFTSpanners.SampleRecordMatrix",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleRecordMatrix.lean",
+      "bytes": 2344,
+      "sha256": "198fef62799021d85917dc0c41cdde6c0cb41d6fe31cdd5ee496f4ced37daa56"
+    },
+    {
+      "module": "LightEFTSpanners.SampleVoteExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleVoteExecutable.lean",
+      "bytes": 4333,
+      "sha256": "2c017c3d1f18db4842e92e2640dc79cf2f19e8f6f7f053b35ce3a22a9ab341ff"
+    },
+    {
+      "module": "LightEFTSpanners.SampleVoteMachine",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleVoteMachine.lean",
+      "bytes": 2690,
+      "sha256": "3cb97822c18b1929cd83a9d4a9bd3e32272e1d55892158ace5feb88fd88f7590"
+    },
+    {
+      "module": "LightEFTSpanners.SampleVoteTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleVoteTrace.lean",
+      "bytes": 3471,
+      "sha256": "762cbc518f4a554b50051f2cc8ea3ec94e9a4521e64566dea8d739d03ff82294"
+    },
+    {
+      "module": "LightEFTSpanners.SampledHistoryCandidates",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampledHistoryCandidates.lean",
+      "bytes": 3902,
+      "sha256": "f0fa2c255487714b4af179e5069ba93e34841820c7396a91d2c8e85aeda3b8fc"
+    },
+    {
+      "module": "LightEFTSpanners.SampledHistoryWeight",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampledHistoryWeight.lean",
+      "bytes": 3503,
+      "sha256": "0bd355e89f2789c9948cc51a7e155cb78a8e1650b8355a64ab16772753d0ca3f"
+    },
+    {
+      "module": "LightEFTSpanners.SampledHostExpectation",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampledHostExpectation.lean",
+      "bytes": 4562,
+      "sha256": "efa8fa4672d4c8081525468c1b9e8038b2af5a729f0f655e104a3cb5a1630ceb"
+    },
+    {
+      "module": "LightEFTSpanners.SampledHostExtremal",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampledHostExtremal.lean",
+      "bytes": 4264,
+      "sha256": "afe1d5cb2d23bbd72e8ed299b3be982fa069174a5e458de301d7dcc01ad089e3"
+    },
+    {
+      "module": "LightEFTSpanners.SampledPrefixProbability",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampledPrefixProbability.lean",
+      "bytes": 2882,
+      "sha256": "5ccb6fb37754eaa9296d42f724d7b1becb3780420c9e68396482dea28be5c392"
+    },
+    {
+      "module": "LightEFTSpanners.SamplingFaultAvoidance",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SamplingFaultAvoidance.lean",
+      "bytes": 2481,
+      "sha256": "46aaf3e44dfef46927def5ffc073aefb012571809e2dbf5e03a0d6fca3de0dc6"
+    },
+    {
+      "module": "LightEFTSpanners.SamplingRestriction",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SamplingRestriction.lean",
+      "bytes": 4267,
+      "sha256": "c566cb046268d54d4237ff7e5db1c895591696dd3eccba2ae074eca50f0473a1"
+    },
+    {
+      "module": "LightEFTSpanners.SeededForestPacking",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededForestPacking.lean",
+      "bytes": 2748,
+      "sha256": "9da10b4e4eafcc37cb77e6ea5484f058a0727d1c7e568efc9721ed031e14cc33"
+    },
+    {
+      "module": "LightEFTSpanners.SeededGreedy",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededGreedy.lean",
+      "bytes": 5694,
+      "sha256": "0ac99a0ff6ee9864341acb5d6b1672cb8e059efb7a709a9748c0b4dbf002f862"
+    },
+    {
+      "module": "LightEFTSpanners.SeededSpanningPacking",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededSpanningPacking.lean",
+      "bytes": 2627,
+      "sha256": "aad87e7b6889dcebe765e3219ba4e08d99f86f362045de9d323e56086bf47e81"
+    },
+    {
+      "module": "LightEFTSpanners.SeededSubdivisionPacking",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededSubdivisionPacking.lean",
+      "bytes": 2014,
+      "sha256": "243c7f9e54e81df48429e633bf37a2216a27e5ae68642e0ed3e030df7b3de513"
+    },
+    {
+      "module": "LightEFTSpanners.SeededSubtreePacking",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededSubtreePacking.lean",
+      "bytes": 2623,
+      "sha256": "6e9e954b31ad41df975d725eaa9d0dfcd207ad8aca1bc77a8922df017cc676b3"
+    },
+    {
+      "module": "LightEFTSpanners.SimpleEulerianForestPacking",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SimpleEulerianForestPacking.lean",
+      "bytes": 1549,
+      "sha256": "6219205040006a2157df601999d50ff9a53568c470345dcc9970c9896bae05ac"
+    },
+    {
+      "module": "LightEFTSpanners.SimpleNativeForestTransport",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SimpleNativeForestTransport.lean",
+      "bytes": 2024,
+      "sha256": "ee6a7bd7ec9cbe004ed8c5e296dea78cb5183b315cedef2bf258a7ef9090f37d"
+    },
+    {
+      "module": "LightEFTSpanners.SpanningHostAssignments",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SpanningHostAssignments.lean",
+      "bytes": 2913,
+      "sha256": "e4b7578db11870ef7bc0ade317415f73bd3c34f7ecfc1ec4306d73f673628d3b"
+    },
+    {
+      "module": "LightEFTSpanners.StoredAssignmentDrawBank",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredAssignmentDrawBank.lean",
+      "bytes": 2405,
+      "sha256": "37f8b2074a5569f7310055ec2dde91e1eb4a9934aca7351b9a1b5001d9139290"
+    },
+    {
+      "module": "LightEFTSpanners.StoredAssignmentDrawList",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredAssignmentDrawList.lean",
+      "bytes": 1683,
+      "sha256": "05fc3ac636a23039a8ec92316feb56cde57fcb194fbb75d252507d3695cafa34"
+    },
+    {
+      "module": "LightEFTSpanners.StoredAssignmentExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredAssignmentExecutable.lean",
+      "bytes": 1613,
+      "sha256": "7f06172cda1f129773dbeac7e076dd020ed9f77c57538657bf3d69585561d784"
+    },
+    {
+      "module": "LightEFTSpanners.StoredAssignmentSchedule",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredAssignmentSchedule.lean",
+      "bytes": 2215,
+      "sha256": "bc94affdfbd6ee9e7d3b6a36aea3748cce15ce35d56aba3d6e05fe3540f956ee"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateBankEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateBankEncoding.lean",
+      "bytes": 1377,
+      "sha256": "98ad30d48e7b444c0ad777758bfd2b3928e7eacf048909303ca96ec411e7f6c7"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateBankPreparation",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateBankPreparation.lean",
+      "bytes": 4685,
+      "sha256": "e0b253c4b0548e16651e2f846349e6d02c19ad2b758df9f3bce0452b3bc99181"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateBound.lean",
+      "bytes": 2098,
+      "sha256": "7b049a9dbbdb12723db8c5021a06e3833fc220bc679d995bfa4807f4e404522e"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateExecutable.lean",
+      "bytes": 2729,
+      "sha256": "fb616042018ffe5d4acb273969980ec21b13fd5c6585faa7080a0d6d31538000"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateMachine",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateMachine.lean",
+      "bytes": 1707,
+      "sha256": "e9cc9a3790a56b76cc0bf4a4ecaa8b8bf03ae41c5dd8d2a9e511c8d347b31451"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateOriginal",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateOriginal.lean",
+      "bytes": 2207,
+      "sha256": "5da1e67271dc41f863877d1388f22c50912eb460195ba709c016e41b2df952a6"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidatePreparation",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidatePreparation.lean",
+      "bytes": 4214,
+      "sha256": "f5a1680ee03524facad3b122a28bed0446cd99581afca1c3b3be481a1eee2ca5"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidatePreparationEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidatePreparationEncoding.lean",
+      "bytes": 1913,
+      "sha256": "16a9b663ea4360ac00442799c829c063f1011f773857ec25ecae583996b1bc1d"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateRefinement",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateRefinement.lean",
+      "bytes": 4683,
+      "sha256": "dbbf61a390f4ccc9dccb3ea9aee64af125a7e88d780eb1829844ee2e70a8bbbb"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateTrace.lean",
+      "bytes": 4205,
+      "sha256": "f13d00a7fa5d0113bed03f79a2667d78d199af879fb52e30544a5cfc7e9affbf"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalAssignmentOutput",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalAssignmentOutput.lean",
+      "bytes": 2054,
+      "sha256": "731118e55a5cb97ea7af68089ced71730199890fde058f11ee869182542df6ff"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalComponentRoot",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalComponentRoot.lean",
+      "bytes": 2255,
+      "sha256": "cc1e192448c4f07cd498f95675b892774789928151cb37ddd28633ad48fc4441"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalEnumeration",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalEnumeration.lean",
+      "bytes": 4654,
+      "sha256": "09cd7bab0259c6e0f2d19ee72b2936e5ed79432748e344b888aff43b05ea7dd3"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalExecutable.lean",
+      "bytes": 1996,
+      "sha256": "dbbcf73b020591893b7940de43e76f5b50e040a98e067da2238de6933c05f859"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalHosts",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalHosts.lean",
+      "bytes": 4507,
+      "sha256": "5251aead178405646465e3d0fcc572a39ec9b22989fe320ca877d42ffc0a6458"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalHostsBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalHostsBound.lean",
+      "bytes": 1377,
+      "sha256": "7659387a2b248003d13fc017773395631002ba6c5c687055b55e5e30c2d3c778"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalIndices",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalIndices.lean",
+      "bytes": 1496,
+      "sha256": "fef34f166aad1ad84e6c5eadd43d139f6b41d48db2dc84739295aafbfbc44ac5"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalPartition",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalPartition.lean",
+      "bytes": 3566,
+      "sha256": "596a57ecec61ebf05dab8a695a4cde0345b465ab02049214bf640b71f6f65871"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalRepresentative",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalRepresentative.lean",
+      "bytes": 3162,
+      "sha256": "8a4651a4561a7bba233560c5cf45653493c96e4234b4912a0018d23f042d81aa"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalRoot",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalRoot.lean",
+      "bytes": 3712,
+      "sha256": "ec6d3bb901aa741fb8ddd9853161c485184754cd8142bb41f690986729296104"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentBank",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentBank.lean",
+      "bytes": 4930,
+      "sha256": "db9fe55e7178a0d4761d6428ce6af570098a5413e3a26068a434c06e8c5da6e7"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentBankEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentBankEncoding.lean",
+      "bytes": 1448,
+      "sha256": "8d11b3dd7b7e5b6978f64f5e84757eae0e39a553492bb2e2a186d984bea02d6a"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentCandidate",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCandidate.lean",
+      "bytes": 3134,
+      "sha256": "7cf278ba712af3036c5827e24d70313c71a5606037e550f2baf386af62941988"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentCandidateBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCandidateBound.lean",
+      "bytes": 2088,
+      "sha256": "7906e1fe568c93d7160ae45c33e5d1eff7c8a12f77ae94ee50f104a4f61717a2"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentCandidateExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCandidateExecutable.lean",
+      "bytes": 1811,
+      "sha256": "8f3b89458088e6cc9bde4fb8d4e87e108e15a5cfbb87155c5891064a2abd692c"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentCandidateTotalBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCandidateTotalBound.lean",
+      "bytes": 2535,
+      "sha256": "a86a9e2f5fe6cf77b4e38fcf03521782f5fc85e1db039742e4a8241b4d714183"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentCandidates",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCandidates.lean",
+      "bytes": 3974,
+      "sha256": "ad056e86620d56755da1970e6813c708ed340ef264afe310f9bebd784de4058d"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentCatalogue",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCatalogue.lean",
+      "bytes": 4101,
+      "sha256": "f8f36730ebc5eaedc8110295b66e17bc354f8d9de509cc6b19cc1ea0f53732e5"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentCatalogueEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCatalogueEncoding.lean",
+      "bytes": 1080,
+      "sha256": "242b0d90d67d305f635643eb00d029b64607fae0b0b7f2f7f5278bd7876db5ea"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentDiscovery",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentDiscovery.lean",
+      "bytes": 3647,
+      "sha256": "e9259dcf1bf98dd98acdc25b9a8c597d5253d4e8ca6ac62f1b79695583fec3b8"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostCorrect",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentHostCorrect.lean",
+      "bytes": 1178,
+      "sha256": "9c10dfed1d89a04088e23d1cd8ba7bef7e32c27185e3ab6a3f577bceabd5e7dd"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentHostEncoding.lean",
+      "bytes": 2317,
+      "sha256": "9020cfe248106623babf3a1ca31ecd65b85183de87b0507e7f63a20add980f84"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostFilter",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentHostFilter.lean",
+      "bytes": 4641,
+      "sha256": "8c95d2277097230f710aed4cf50be9f2af2630c04588b31abac8963b1bd050a3"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentHostTrace.lean",
+      "bytes": 2940,
+      "sha256": "dd0a5b429a43a5fda427b1d0b1f792a1ab61c78d93c55a505d29d4b7792e0165"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentOriginal",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentOriginal.lean",
+      "bytes": 3939,
+      "sha256": "914b4572ed8da9e5f3de6273364ddd069c165b083c7ded2923bb97723fbcc5b6"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentRecord",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentRecord.lean",
+      "bytes": 2356,
+      "sha256": "ca63a7cba3fa6b0ef61fb1531c3c1d0144937e39b71101f73d8faa10dbd38c11"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentVertices",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentVertices.lean",
+      "bytes": 1772,
+      "sha256": "da3b78d867af12bba2683fba3dc4db004e0d2bad473fefc723a83ee7211e572f"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDiscoveredHosts",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredDiscoveredHosts.lean",
+      "bytes": 2872,
+      "sha256": "8be1a506a3f166b5fecb8da0734e2a3354c0ea363af87c99e7df34afaa67584a"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDiscoveredHostsCorrect",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredDiscoveredHostsCorrect.lean",
+      "bytes": 1940,
+      "sha256": "56d16fa51273381623be825f3f697aa49421cff5472039e0ef47a827c82f27eb"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDiscoveredHostsTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredDiscoveredHostsTrace.lean",
+      "bytes": 3240,
+      "sha256": "4fb3494d16745315810f17f6f812fcd7ccfad043b11cc061efcac48904afb8de"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDrawLookup",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredDrawLookup.lean",
+      "bytes": 1999,
+      "sha256": "76907f4547d4d14aebde5e2e5c299a0903ea51534a2e582b938d9baf3a01d82e"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDrawLookupEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredDrawLookupEncoding.lean",
+      "bytes": 2417,
+      "sha256": "fb1e4a492617c4e3ae794974dd4bd28e22e8ca620ad829ecdfb55425af3e2d09"
+    },
+    {
+      "module": "LightEFTSpanners.StoredEdgeComponent",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredEdgeComponent.lean",
+      "bytes": 4409,
+      "sha256": "4e434accf567493b3532d156fb9b4d5143196bf5ed55781a723390c37f235981"
+    },
+    {
+      "module": "LightEFTSpanners.StoredEdgeMembership",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredEdgeMembership.lean",
+      "bytes": 3538,
+      "sha256": "7d8ba0a46fba239b53053042383ea93ee5a2d280f9a1c7de666f30b30eb106d9"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatch",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatch.lean",
+      "bytes": 1818,
+      "sha256": "cc7c61d153e32de8ba04ed245999abc129d51de5bd10dbd0a1e10bcee6a6012a"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchExecutable.lean",
+      "bytes": 1227,
+      "sha256": "0439a922b9f4ae25ed4e7b5a5fa4903425a46f5ffa8d123808c6c9979b777a34"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchProbability",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchProbability.lean",
+      "bytes": 2371,
+      "sha256": "e042b5e618f2c363a4aeeb073b3b1c86ada7eaae8510b5d91104caace6130a08"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchTrace.lean",
+      "bytes": 1762,
+      "sha256": "b00ae3d10871bd6129ef9a6b6761a68cf6431f7db2cdde8a6dd717fb82a8f795"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSample",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSample.lean",
+      "bytes": 2283,
+      "sha256": "6cc557da610dba865f00d60075c7262ed0f8d22f0ff1953f66ce9c0bf8062bfa"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleEncoding.lean",
+      "bytes": 1344,
+      "sha256": "55e47fb409acb749ce94b0f501c9ca62ac1cebea52a8ac83ea07696b72639dc9"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleExecutable.lean",
+      "bytes": 1288,
+      "sha256": "9d0a43d695626da9368e7b018c3b24e209fadc2df8c0c7d76db316ae40816f1a"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleProbability",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleProbability.lean",
+      "bytes": 1258,
+      "sha256": "511bf1809a5526ac9740667e64a47adf07a8639d71e4efe720070eb2379c7f00"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestAssignment",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestAssignment.lean",
+      "bytes": 3750,
+      "sha256": "d3594b93160b7088e4df7d2e5e19c33271009e245d21f781601a5aa54b53bd2f"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestBank",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestBank.lean",
+      "bytes": 3711,
+      "sha256": "814205db4554444bcc9aa03a23a7ef242e281ac4ecc11d9ea8f0529ca42bf7e3"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestBankExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestBankExecutable.lean",
+      "bytes": 2918,
+      "sha256": "1a46953ebbe32c63bc33dd87b03855bc500a5396fcbbeb52a0a15f99c0edb34e"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidate",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidate.lean",
+      "bytes": 3228,
+      "sha256": "5c7267a3a40b6b73ce95fc1f5cd6c6abb8550f4e75cd1e6f7895d5f4c8d3a457"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidateBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidateBound.lean",
+      "bytes": 1039,
+      "sha256": "8948710322b2a0c2fc18126db2507af9ccf3e4a72c9e0daf02f56d6a9397abb4"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidateEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidateEncoding.lean",
+      "bytes": 1551,
+      "sha256": "af5573015e7de39a2fd6374fae007d0933340a5c0d83b1858d70e1cc18800533"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidateTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidateTrace.lean",
+      "bytes": 2426,
+      "sha256": "90305b25a5c0882dbab194b71f0ebaa5ae272a9975233e607ef879b6e970000b"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidates",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidates.lean",
+      "bytes": 3998,
+      "sha256": "f85066a772f33a154f275d0b128597d255c1ad329a65c6201908541f55a5f088"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidatesExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidatesExecutable.lean",
+      "bytes": 4500,
+      "sha256": "4f869ccb2d8a02335c7637ea3a0c3d4af6dd0afbb32909d9a4df8acb9a978303"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestComponentIndices",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestComponentIndices.lean",
+      "bytes": 2165,
+      "sha256": "81201b3afbd62461685cc556d2b29fe75d807193c1f3074bd07508f51994bd16"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestDrawAttachment",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestDrawAttachment.lean",
+      "bytes": 3573,
+      "sha256": "b29f487066c9e2e4369c2cb7461ef7972673bee2d3c754103179226a50bea9f3"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestDrawAttachmentBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestDrawAttachmentBound.lean",
+      "bytes": 1842,
+      "sha256": "af8bf6e96d5c30e560cdaa1d066795a06cf721ef081cf50261bd43744f8a45cd"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestDrawSize",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestDrawSize.lean",
+      "bytes": 1209,
+      "sha256": "6e9201ddf4a8e1660c71dc13f91be5c9a40b31ca7f5f13f045a6e889bfb7ad14"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestGreedyGuarantee",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestGreedyGuarantee.lean",
+      "bytes": 3526,
+      "sha256": "c8fefa4c8276ca0a79385dfcdc4bd02925686c66c70844ba6139ba0bb8012ad8"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostSize",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostSize.lean",
+      "bytes": 1952,
+      "sha256": "e732771f7886d9f03fe69419f79b07a200ae0e808128bd8d3b68b6fcc2301b59"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHosts",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHosts.lean",
+      "bytes": 3108,
+      "sha256": "1abcf588b8ee33dd263413c1c57bf7ff60760301a2cfc409c80c7f5d601860e7"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsCoverage",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostsCoverage.lean",
+      "bytes": 1344,
+      "sha256": "7986b1dee59fc581a881c285d7a007119f0866fc61d990c340831cc1654bbd87"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostsExecutable.lean",
+      "bytes": 1295,
+      "sha256": "09318cb069a2a762f21fa8eace03252daeb51d4171466113807f65851c7d2abc"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsOriginal",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostsOriginal.lean",
+      "bytes": 1849,
+      "sha256": "cf8a920020f70d881d628e1042ef4d7662eca8c9939efb9e6810547ff86cfb6d"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostsTrace.lean",
+      "bytes": 2908,
+      "sha256": "eac6c30416f5e79d082ec924486d329e2b02537b8affd9abbdcddd32513fa173"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestIndexedRecords",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestIndexedRecords.lean",
+      "bytes": 2006,
+      "sha256": "4ebbed789dc03b7e54f23b4397de7690461ac0300e7b29d1d05095e080eff3e3"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInput",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInput.lean",
+      "bytes": 2948,
+      "sha256": "50af4174bca657e6eef741f68b0368fca28c22ba8bde4f96f617fc73ace908aa"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInputEncoding.lean",
+      "bytes": 1264,
+      "sha256": "bfcfebda452853d70a4c7e86c6da5d2c6a0b7a0eaf5685c4bd917cce770978d3"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputIndices",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInputIndices.lean",
+      "bytes": 1937,
+      "sha256": "ea91dd813a6556ea44c92593da52c8781eac87c8afabcc35e09c0e68a927581b"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputSize",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInputSize.lean",
+      "bytes": 967,
+      "sha256": "9e14930c73b95b345e104afe2628b2ea7b6194625b71dbd224abd320cb8aa633"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInputTrace.lean",
+      "bytes": 1941,
+      "sha256": "0d13145c636fee869c5d663513e4ceec7e5d32e464b42b4f59e6e2fdf00afb77"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestOutputLaw",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestOutputLaw.lean",
+      "bytes": 1814,
+      "sha256": "76e7dc69e9be78bf0fefd118495bddfed2c1b88c3f389a42aa914614d1c9feb2"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestProbabilityGuarantee",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestProbabilityGuarantee.lean",
+      "bytes": 3414,
+      "sha256": "906dd63f222a00b0572c0eebe514cf8b7c5c9903d1ddb87f1366d5f9b278584b"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestRepresentation",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestRepresentation.lean",
+      "bytes": 1512,
+      "sha256": "218ca526fc4ef952ace3b4de9fa8405defaa5bbcae246840cfad369f6b78f0b2"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestSelectionBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestSelectionBound.lean",
+      "bytes": 2542,
+      "sha256": "891768739568644608af253bc8f54892dd1e342549e2d1b1ac9666536d1b7548"
+    },
+    {
+      "module": "LightEFTSpanners.StoredGraphMatrix",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredGraphMatrix.lean",
+      "bytes": 3779,
+      "sha256": "876fb2cc959ad445095b29d9871fcbce804b1d596e67a0b75c2b9e5af322b578"
+    },
+    {
+      "module": "LightEFTSpanners.StoredGraphMatrixBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredGraphMatrixBound.lean",
+      "bytes": 1788,
+      "sha256": "7d9a0f76e47fb4e8a667597bbe093f4c040528772a75b2ac2c606bd5079d60e5"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostAdmission",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostAdmission.lean",
+      "bytes": 2444,
+      "sha256": "00cb56c52fbcc2393069f0050e352f1a5040b930642d0fb0d1719c40ce61169c"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostBound.lean",
+      "bytes": 1486,
+      "sha256": "e6879ae95732d2dfb094322b2ef9037ef276645e45dfa95c48d5791c15278597"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostCount",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostCount.lean",
+      "bytes": 1086,
+      "sha256": "ed6d6f2243eaf5d380a661fb8c6d087bb8f20f67458ebef172cdaf97d09a7235"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostExecutable.lean",
+      "bytes": 2609,
+      "sha256": "2e862da6b571efd854e2d338e5ad789ab8e976e76c97435be8f67475e9a1f633"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostMachine",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostMachine.lean",
+      "bytes": 2683,
+      "sha256": "436cfd42173f4bfdf5b1c9e09c1eb9d46f449350359f72102470fd7b2d9e93dc"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostPreparation",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostPreparation.lean",
+      "bytes": 4184,
+      "sha256": "0892da259bc18c5d5316d60503b8c4ed4156addb6528537dcc93a03b235b01bb"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostPreparationBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostPreparationBound.lean",
+      "bytes": 1857,
+      "sha256": "1a2779e4807ff0f20e0db9e56219de484d11d571b5f80947d85f69d2e3be48d3"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostPreparationEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostPreparationEncoding.lean",
+      "bytes": 1195,
+      "sha256": "9e53b79f2d33ed416baa72648893d6f6f8698f67f1753363af5db9e409b111a7"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostRealAdmission",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostRealAdmission.lean",
+      "bytes": 1225,
+      "sha256": "f72b50b1da89d0d9ae8d368eacddad757104509f8550c8900a008442e1bb7205"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostTrace.lean",
+      "bytes": 3453,
+      "sha256": "7e5500bdd234a2aeb002f7bdca561e2ed0621e37943229b5ff57a0a0e4c6dbef"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOutputLaw",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOutputLaw.lean",
+      "bytes": 2077,
+      "sha256": "420165577cafc9635a819722d2740039ff47dbb283b5b853a476a6df19599fba"
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedCandidateAssignment",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedCandidateAssignment.lean",
+      "bytes": 3812,
+      "sha256": "a9dc349fa192b25e4dd735499bca18f25d910ab034789bab6113e757060532e6"
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedCandidateBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedCandidateBound.lean",
+      "bytes": 2501,
+      "sha256": "f84dbe54740dfddbe9a4403152a02aad1ca80d565eb6d60e7dfe025429bf76af"
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedCandidateExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedCandidateExecutable.lean",
+      "bytes": 1697,
+      "sha256": "9a34e46142175ecc11cc93e852f275c2372ceac3b229f0807d58584b3d582117"
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedCandidateOriginal",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedCandidateOriginal.lean",
+      "bytes": 1513,
+      "sha256": "ef51fb9b99ea1c8b405e385a2dc05f0bb9f87519beef7d0675c11d04f90e32a4"
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedCandidates",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedCandidates.lean",
+      "bytes": 3821,
+      "sha256": "1e4a1eb6fcd7b12892d5aebca9ddbcd5182b4c14b880d7e8841d51f2f4dc1b6c"
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedHostExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedHostExecutable.lean",
+      "bytes": 1349,
+      "sha256": "6163b0d70b454830290f2903ff7baca8d71ab5e696fed05462fece4c17c23247"
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedHostOriginal",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedHostOriginal.lean",
+      "bytes": 3069,
+      "sha256": "8837f607ca841814c167f486f47e8e5e43efb770791c07ceb0abae1a2571604c"
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedHostRecords",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedHostRecords.lean",
+      "bytes": 5266,
+      "sha256": "a12b8d084f67ea67b3c324adfb3090361d0bba1cd4e4151408ea30b3709b15be"
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedHostVote",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedHostVote.lean",
+      "bytes": 5513,
+      "sha256": "cc6c812543d08d3f1a6f9b441522de49258c10bb43df1c79e8c463337b8c4555"
+    },
+    {
+      "module": "LightEFTSpanners.StoredReachability",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredReachability.lean",
+      "bytes": 2599,
+      "sha256": "44d3e7bf69730d94406190ff10de9f454099621c4fc01cf120a55779b2e6cea3"
+    },
+    {
+      "module": "LightEFTSpanners.StoredReachabilityTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredReachabilityTrace.lean",
+      "bytes": 3262,
+      "sha256": "c857094bbff0b2a72b3a42d28045e48963b26a272742d733b2d5eacbfa691632"
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRecordEncoding.lean",
+      "bytes": 2499,
+      "sha256": "97b139e0dc7465aab4a34a2675eee67341b3d3313b9ec5ba9d05a185a26bf084"
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRecordExecutable.lean",
+      "bytes": 1578,
+      "sha256": "e0b915c5e6c2b71c7fcfb0d00c2c6f1cfdeb1fd5348c29bb08415054066e2839"
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordMachine",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRecordMachine.lean",
+      "bytes": 6183,
+      "sha256": "ee6ead4ae4c1126d30dbcc1d7316ca7982e58bf153c8fa9e4ba15872a796fd6c"
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRecordTrace.lean",
+      "bytes": 4549,
+      "sha256": "6e80b56ea151fc23eefce031d9c6590f3a8637564e4ac6ebf0b00909323af1f1"
+    },
+    {
+      "module": "LightEFTSpanners.StoredSampleEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSampleEncoding.lean",
+      "bytes": 1162,
+      "sha256": "239828f9c0a69bc95828feafd5d4fd4dc72215e8e2de9de09673d85b284e57b4"
+    },
+    {
+      "module": "LightEFTSpanners.StoredSampleEntry",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSampleEntry.lean",
+      "bytes": 6068,
+      "sha256": "d768753c13db2c10f389201e2b9e364962c1fef04c8cda2e3765aefac3f6bc45"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVertexMembership",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVertexMembership.lean",
+      "bytes": 1950,
+      "sha256": "cfc0b2a548d20ad26c17ea6f79f6e55372ce91c7a71005f9be9a2283cc0205cf"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVertexMinimum",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVertexMinimum.lean",
+      "bytes": 1987,
+      "sha256": "94d18bde28ea00bf1788a7a087c7f45affd51c58cb9636876a010c1ce0022686"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVertexPairEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVertexPairEncoding.lean",
+      "bytes": 2039,
+      "sha256": "40bee3e506a7c01f8a7b16cec4e82316b005578c868c457d4b27b87e12766a42"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVertexPairs",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVertexPairs.lean",
+      "bytes": 3315,
+      "sha256": "27d6f41875a1f33c7a0759222aef7c2a15b7debeee7e61274adde3f8fdd22840"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVoteBound.lean",
+      "bytes": 1929,
+      "sha256": "75a2bdd3357f2fb4acf0886a03112ed53df3d42522e3e37c4c1bc3bb067c8ef0"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVoteEncoding.lean",
+      "bytes": 2797,
+      "sha256": "a6ec92c2d0c1bb7830f8de4cd6a373235af45ac00a959372fd9b024da009a2c0"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVoteExecutable.lean",
+      "bytes": 2411,
+      "sha256": "fdeab4554be66863a9bde680d159623c05836a81c569facee54011254aeffeba"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteMachine",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVoteMachine.lean",
+      "bytes": 3595,
+      "sha256": "0c1774a7267359f27bfef6d102b3f1bc540eddd26126c7dceb3f7e8d5c6ba890"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVoteTrace.lean",
+      "bytes": 2845,
+      "sha256": "4dfa816d042dd2a9bdf9ba405a480851af73e6555d6347ea53e3cc82b614c2d8"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightLookup",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightLookup.lean",
+      "bytes": 5131,
+      "sha256": "3bc9201021d2fd0a44d2a617057566701b2cc8f2cf70d08802f22aa4889fdfbe"
+    },
+    {
+      "module": "LightEFTSpanners.StoredZeroWeights",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredZeroWeights.lean",
+      "bytes": 1992,
+      "sha256": "0fc6be122a9f2642f90e20c618f220ffdb3f54b3c279d0cacf9d4150e22a40f0"
+    },
+    {
+      "module": "LightEFTSpanners.StretchParameters",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StretchParameters.lean",
+      "bytes": 2013,
+      "sha256": "4a094d806984bb0140b8c0aff30d3338a916a6f4a2810ce285c2d0fc9c29fb38"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionCleanColor",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionCleanColor.lean",
+      "bytes": 2596,
+      "sha256": "64d92c234fa997bb5dc13e0a3341625fd1362ddd6316e5739853f2abb631700b"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionConnectivity",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionConnectivity.lean",
+      "bytes": 2293,
+      "sha256": "ea3fb145906ab3cd43bc1ab86accae69131ce8f7b9d4f1dac4d865a610fe6980"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionCoreProjection",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionCoreProjection.lean",
+      "bytes": 2985,
+      "sha256": "5aafd7e3e8c06db69ac1cfe0de3df67a1875765c0e17f07b48d8f01389c65ce0"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionDegrees",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionDegrees.lean",
+      "bytes": 2951,
+      "sha256": "b29d303e62265d5899bb4034223f666b668b6ea230af7838a62d2f53900339a1"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionFaultProjection",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionFaultProjection.lean",
+      "bytes": 2906,
+      "sha256": "6924567cd2aec208a8a2cde18ee8e2ee10e08f8fc524ebceb95b80ccd7e8566c"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionPackingProjection",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionPackingProjection.lean",
+      "bytes": 3812,
+      "sha256": "b64688dca6ed1d4cacdbb0547b20ebb81d6db71e366145ae1e535a3a31e61484"
+    },
+    {
+      "module": "LightEFTSpanners.SubtreeAssignments",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubtreeAssignments.lean",
+      "bytes": 4385,
+      "sha256": "d72d4decda94a16ee734f2e43b10020ca9c92e84fcda399df6ad601b4451ecb1"
+    },
+    {
+      "module": "LightEFTSpanners.SubtreeHostFamily",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubtreeHostFamily.lean",
+      "bytes": 4710,
+      "sha256": "965734dd9cd67d8e28eea0b6a932a209513fbeedd2f23fcba9d7baf2bb36ab83"
+    },
+    {
+      "module": "LightEFTSpanners.TreePruning",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/TreePruning.lean",
+      "bytes": 2611,
+      "sha256": "0f575c914fb03aab80304358060fa19bb32ea44767a7ec45886c61cb3959f21f"
+    },
+    {
+      "module": "LightEFTSpanners.VotingAdmissionHistory",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingAdmissionHistory.lean",
+      "bytes": 4002,
+      "sha256": "4e780a61427e34058e9a8a736671969b71fd68525d7c400db90b3e2bd3cd6322"
+    },
+    {
+      "module": "LightEFTSpanners.VotingComponentCongestion",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingComponentCongestion.lean",
+      "bytes": 1372,
+      "sha256": "49b87de9f419acdfee3c569f12798e56821fac53c01378120343a9b1192ab113"
+    },
+    {
+      "module": "LightEFTSpanners.VotingFaultWitness",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingFaultWitness.lean",
+      "bytes": 1581,
+      "sha256": "b0bdf25d36cb4ebf3d5816c15f08bb567364b879782620672e138da94da6cbdc"
+    },
+    {
+      "module": "LightEFTSpanners.VotingGreedyCorrectness",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingGreedyCorrectness.lean",
+      "bytes": 3156,
+      "sha256": "6a0f526c35c6ae73ee966c2ceac891ff3b8501c00664da9069b7e7571014e8a0"
+    },
+    {
+      "module": "LightEFTSpanners.VotingOutput",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingOutput.lean",
+      "bytes": 2268,
+      "sha256": "a6bfa395b0881bfb9605bed17bd6f17aa1030034b25544bf2803c6cdbeeffe49"
+    },
+    {
+      "module": "LightEFTSpanners.VotingOutputWeight",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingOutputWeight.lean",
+      "bytes": 4895,
+      "sha256": "58570f3044e254d6c752961e377619901f50e7db6abd54846e3d99c79211039d"
+    },
+    {
+      "module": "LightEFTSpanners.VotingQueryCount",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingQueryCount.lean",
+      "bytes": 2944,
+      "sha256": "7efef78386bfa16cbd0f60db713df2db61bc59876400700f7c8d56e7182ab6af"
+    },
+    {
+      "module": "LightEFTSpanners.VotingSubtreeWeight",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingSubtreeWeight.lean",
+      "bytes": 3986,
+      "sha256": "6c2dbbaa3cc8b770def65c7d538668450eefc7c6edec96d37e3236d0e6783a0b"
+    },
+    {
+      "module": "LightEFTSpanners.VotingWeightIncidence",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingWeightIncidence.lean",
+      "bytes": 2598,
+      "sha256": "0613f14add8ab88a09c97f57be8e21bafe20e76da04ca38b231e4ffd16d979a1"
+    },
+    {
+      "module": "LightEFTSpanners.WeightedSampling",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/WeightedSampling.lean",
+      "bytes": 3149,
+      "sha256": "2133b2ee5dd3116c38793629035daf326d2d7199d5363de418fb0e59b6907980"
+    },
+    {
+      "module": "LightEFTSuppliedForestProbabilityStage.PolynomialFailureProbability",
+      "path": "checkpoints/light-eft-supplied-forest-probability-draft-20261018/staged/LightEFTSuppliedForestProbabilityStage/PolynomialFailureProbability.lean",
+      "bytes": 3378,
+      "sha256": "e1db9fb7e7b70d6287eee4df38d231fd882efd08ab8b29da0d7313c6ac4621fc"
+    },
+    {
+      "module": "LightEFTSuppliedForestStage.SuppliedForestGoodEvent",
+      "path": "checkpoints/light-eft-supplied-forest-package-20261018/staged/LightEFTSuppliedForestStage/SuppliedForestGoodEvent.lean",
+      "bytes": 4988,
+      "sha256": "6356a3b369813a155e824e471b0f7a48d29a66fb117db41eca767ed3300febee"
+    },
+    {
+      "module": "LightSpanners.Basic",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Basic.lean",
+      "bytes": 4943,
+      "sha256": "f7620d03b27f2c6ec13d048597ad4d87e6ff66a077bf41a3de27c20f1087103d"
+    },
+    {
+      "module": "LightSpanners.BridgeWords",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BridgeWords.lean",
+      "bytes": 10295,
+      "sha256": "72a5c551a4a1a9375b9951e8aaf4e52d1dadfa54fdf3646c11e3d351af79e284"
+    },
+    {
+      "module": "LightSpanners.BucketBudgets",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketBudgets.lean",
+      "bytes": 4410,
+      "sha256": "4875a7ba41b5478c21bb1512f3b3f21903c6ccbf1a96c5ebbf18a98ec913786b"
+    },
+    {
+      "module": "LightSpanners.BucketCycles",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketCycles.lean",
+      "bytes": 9490,
+      "sha256": "dc64243056790b830f7d3442aeedce4a3cc8b88dbece52087b268921c84a26fb"
+    },
+    {
+      "module": "LightSpanners.BucketDispersion",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketDispersion.lean",
+      "bytes": 5901,
+      "sha256": "5446a50964c3298c237614ca202447047a6c708ec100cc916dc0c7067272686c"
+    },
+    {
+      "module": "LightSpanners.BucketPadding",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketPadding.lean",
+      "bytes": 8396,
+      "sha256": "04c0e3c6657d517758ce908fdd7530221d2609f95febf3b8eccb61bbf95c1dbc"
+    },
+    {
+      "module": "LightSpanners.BucketPaths",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketPaths.lean",
+      "bytes": 7488,
+      "sha256": "76167a170269effdc761118cb6950f6f01d165c5898ecc0ce880aece8d603f79"
+    },
+    {
+      "module": "LightSpanners.BucketPrefix",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketPrefix.lean",
+      "bytes": 2727,
+      "sha256": "374adb5417716475b138fe20ae8d5995c89376d6446897faf45787c969752f95"
+    },
+    {
+      "module": "LightSpanners.BucketRestriction",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketRestriction.lean",
+      "bytes": 3903,
+      "sha256": "b97fe4b43c6f72963f09adc36a73687a97c524d3347383d50d06716875b641e7"
+    },
+    {
+      "module": "LightSpanners.BucketUniqueness",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketUniqueness.lean",
+      "bytes": 3241,
+      "sha256": "751fa8dfbfe6498ca423efce361fc158241048fd46176d904eed9e31b1f71b38"
+    },
+    {
+      "module": "LightSpanners.ChordPrefix",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/ChordPrefix.lean",
+      "bytes": 4678,
+      "sha256": "e35ea294ba8d0b249871713f7434da9f686ef2bd35205c49ab4b380516bb804d"
+    },
+    {
+      "module": "LightSpanners.ChordWords",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/ChordWords.lean",
+      "bytes": 5706,
+      "sha256": "282aec8d9c355288e53bed35668b70c1bdf94bdac59e211350ce0a9f76d4d8ce"
+    },
+    {
+      "module": "LightSpanners.Construction",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Construction.lean",
+      "bytes": 3067,
+      "sha256": "462bc3fe217309f3664f0f53207fd0898dc92fd04fcf4e06d722dcf65114df65"
+    },
+    {
+      "module": "LightSpanners.CopyWeights",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CopyWeights.lean",
+      "bytes": 7153,
+      "sha256": "9a0fa624e280e4fbf399a677b820b25362e945a119d1f8f991d32ff0c2fc717f"
+    },
+    {
+      "module": "LightSpanners.Counting",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Counting.lean",
+      "bytes": 2834,
+      "sha256": "0d71e438ad5ae678444626cf953f1a7348baa2febcb50a067aa96133b333c2c3"
+    },
+    {
+      "module": "LightSpanners.CycleBalance",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleBalance.lean",
+      "bytes": 4530,
+      "sha256": "94f972329f3289952c08498c9ef6f489c6dfc5a05078b793a3278f21daf6a8c4"
+    },
+    {
+      "module": "LightSpanners.CycleOrder",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleOrder.lean",
+      "bytes": 6795,
+      "sha256": "7136ee1c66787fcf479509c2ae09556c1b1f3b2f93504a36a69a8c9a176de6c7"
+    },
+    {
+      "module": "LightSpanners.CycleProjection",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleProjection.lean",
+      "bytes": 3086,
+      "sha256": "8433d9fb7151233392b45ee4388a2e7f19dd039bea83dbe9d9c60b5f29d06b65"
+    },
+    {
+      "module": "LightSpanners.CycleReduction",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleReduction.lean",
+      "bytes": 4119,
+      "sha256": "70a084886770ece234f7f6a5fd0b0fc2a41fed9e4c46223e6dfa8d6a618c63cd"
+    },
+    {
+      "module": "LightSpanners.CycleSegments",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleSegments.lean",
+      "bytes": 4342,
+      "sha256": "a2b3f3cd41a02c50243da67b8d642149c1b5875e4d76e71579a023aa4ca2d076"
+    },
+    {
+      "module": "LightSpanners.Distance",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Distance.lean",
+      "bytes": 5005,
+      "sha256": "06b9486a16f448676e0aa8e3c4bf42fbcbfedce2756f94cd469f36e69a5b371b"
+    },
+    {
+      "module": "LightSpanners.DyadicEnumeration",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/DyadicEnumeration.lean",
+      "bytes": 5631,
+      "sha256": "229256aca8e1a0144c17c3db93db8a387075486f816c8da932348d28b364f84e"
+    },
+    {
+      "module": "LightSpanners.EdgeSubdivision",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EdgeSubdivision.lean",
+      "bytes": 8969,
+      "sha256": "f7c94052eaabcf949511acaf576094cfb355495d4ad70d2ae0bc4a5c6581d500"
+    },
+    {
+      "module": "LightSpanners.EndpointCounting",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EndpointCounting.lean",
+      "bytes": 2796,
+      "sha256": "1c2ece9b9091e0c4d0f9d72c713c1b6570164e6468a21dc47a6a116982096b1b"
+    },
+    {
+      "module": "LightSpanners.EndpointSampling",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EndpointSampling.lean",
+      "bytes": 2867,
+      "sha256": "003e6ef16d6387ee4f8971a7d88195247f0391d5e6354c03c0235d38596ece5a"
+    },
+    {
+      "module": "LightSpanners.FiniteSampling",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/FiniteSampling.lean",
+      "bytes": 4495,
+      "sha256": "92a12e938f631d9d0811a8084c8d20430558916ccee2a0ad13c5ff05f6f112bc"
+    },
+    {
+      "module": "LightSpanners.Girth",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Girth.lean",
+      "bytes": 6252,
+      "sha256": "d4b125e64a4584f1df938399910935732de7a797af5f959dfbab528fcebacbd2"
+    },
+    {
+      "module": "LightSpanners.Greedy",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Greedy.lean",
+      "bytes": 5499,
+      "sha256": "13d0cc9ee2f791bd9722c5b31c1dd3328701b7a7cc8383599c899c6f4c9f875e"
+    },
+    {
+      "module": "LightSpanners.HikerCompletion",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/HikerCompletion.lean",
+      "bytes": 5325,
+      "sha256": "45cf7274e5f385e3f7194845ee8b8f98dad8ce8211b78281becb31e3b6d5466b"
+    },
+    {
+      "module": "LightSpanners.HikerDay",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/HikerDay.lean",
+      "bytes": 3079,
+      "sha256": "c9a5e3753413ae63c5865d83e0dd10cd345af476b2b186475d8c39f1a2df400e"
+    },
+    {
+      "module": "LightSpanners.HikerLayers",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/HikerLayers.lean",
+      "bytes": 7745,
+      "sha256": "639a5eb86419be4d4ad34da39670805a69a8d1576e55ccc54356d9b2bcbc2f1c"
+    },
+    {
+      "module": "LightSpanners.HikerSquads",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/HikerSquads.lean",
+      "bytes": 4915,
+      "sha256": "968912947379e5beb173d87922bc91c988debacbe7b017636acb86a8e80fb36a"
+    },
+    {
+      "module": "LightSpanners.HikerTour",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/HikerTour.lean",
+      "bytes": 4160,
+      "sha256": "b4c53d59cb80880593eca4b2e39ed443cb8d86f6e9dcbcb4e0adb77e849989a9"
+    },
+    {
+      "module": "LightSpanners.Kruskal",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Kruskal.lean",
+      "bytes": 6490,
+      "sha256": "aa4e15eb7210e655b41c41c574f6b1a5dc2791594508afbf7f40d4c13c0fcc8e"
+    },
+    {
+      "module": "LightSpanners.LightnessBound",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/LightnessBound.lean",
+      "bytes": 3210,
+      "sha256": "51849516f3a330dd09d3470d971d39a2710105ed7e797623778f64834f672ab2"
+    },
+    {
+      "module": "LightSpanners.MainTheorem",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MainTheorem.lean",
+      "bytes": 3300,
+      "sha256": "28ec66858e0aed70684b9f224fb67396789ef633f51c291b00349ba8cb409897"
+    },
+    {
+      "module": "LightSpanners.MediumCounting",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MediumCounting.lean",
+      "bytes": 2341,
+      "sha256": "b66b2c9665eafcd4ddaba32286fcec65f3b40c41a068cd9a9d176e8842b3370b"
+    },
+    {
+      "module": "LightSpanners.MinimumTree",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MinimumTree.lean",
+      "bytes": 7356,
+      "sha256": "f47ee9eb83902fb215cf6c112a62563aeb8926ed06c93bf2e2f745a20bd72ab4"
+    },
+    {
+      "module": "LightSpanners.MonotonePadding",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MonotonePadding.lean",
+      "bytes": 3819,
+      "sha256": "b95ddf5abcce3f3957849f966fcf06f9d517010d280315549991b9150dbfb106"
+    },
+    {
+      "module": "LightSpanners.PaddingPositions",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/PaddingPositions.lean",
+      "bytes": 2741,
+      "sha256": "c2c89de92a7675f9a7a1459b45b4e49f159346a13034ff72ba4f545aa7ac3e05"
+    },
+    {
+      "module": "LightSpanners.RetainedGraph",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/RetainedGraph.lean",
+      "bytes": 4370,
+      "sha256": "a6df38127c0480d48e619c108cd69d8cbaefed7a492f7498551001205d84c1ab"
+    },
+    {
+      "module": "LightSpanners.RoundingTree",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/RoundingTree.lean",
+      "bytes": 3763,
+      "sha256": "d2459c9fffa54e170dff74c95c41d39064d9f8da33f1b9c6bd21c0d97d5c5218"
+    },
+    {
+      "module": "LightSpanners.SamplingCounting",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SamplingCounting.lean",
+      "bytes": 7257,
+      "sha256": "7225b70d66f71abd01aa6886ad6b0b770ddd805bebc0f14111d3dc7255a3d3e9"
+    },
+    {
+      "module": "LightSpanners.Subdivision",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Subdivision.lean",
+      "bytes": 3433,
+      "sha256": "2a647e0e7e41d27ddafe46d94ef0ed5525bb63de5d377ac9a0b9b7a17588899a"
+    },
+    {
+      "module": "LightSpanners.SubdivisionCycles",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SubdivisionCycles.lean",
+      "bytes": 6487,
+      "sha256": "8fff56393f446ab5a5204a5084a55d5349c5804d39ef55882da23e4afad33ef7"
+    },
+    {
+      "module": "LightSpanners.SubdivisionGirth",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SubdivisionGirth.lean",
+      "bytes": 6628,
+      "sha256": "7f852347833c2f5a6ec9203bdd252e6546e26a29ba15e004990e828b6a54742b"
+    },
+    {
+      "module": "LightSpanners.SubdivisionTree",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SubdivisionTree.lean",
+      "bytes": 7372,
+      "sha256": "f4cd62bbe89dd68f682037727a9b76cc0dc1f22c14bcf17cdcd1942dc618bda1"
+    },
+    {
+      "module": "LightSpanners.TourCycle",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/TourCycle.lean",
+      "bytes": 4560,
+      "sha256": "d9fdd15798be1f0f67961edd52e3ecb62576b2eac0335944aadbf2ecd21fb05c"
+    },
+    {
+      "module": "LightSpanners.TreeReduction",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/TreeReduction.lean",
+      "bytes": 16438,
+      "sha256": "322ab5318fe6ac57dc9c464b7c6feddab4977342552b5a6da969fcdb53d8eba0"
+    },
+    {
+      "module": "LightSpanners.TreeTour",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/TreeTour.lean",
+      "bytes": 4838,
+      "sha256": "200b06b5547151770b25035947066f33288c87ecef7e309d6efb70e56c94e88d"
+    },
+    {
+      "module": "LightSpanners.UnitCycle",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/UnitCycle.lean",
+      "bytes": 4563,
+      "sha256": "9af7d86add25a49782d9c269405df471e27578204ff5ea85e38d2aed73215db0"
+    },
+    {
+      "module": "LightSpanners.UnitCycleWeight",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/UnitCycleWeight.lean",
+      "bytes": 2696,
+      "sha256": "5ca8ae836ca6dbb33d2dfc4e4a44ccf3533ba8156cbb52e8a8ac84d4afeb430a"
+    },
+    {
+      "module": "LightSpanners.UsefulFamily",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/UsefulFamily.lean",
+      "bytes": 2462,
+      "sha256": "8c4affbce0e27dad0f8998c56d7cb793e97d30f2e0f586dae0e0d3cb524448d2"
+    },
+    {
+      "module": "LightSpanners.VertexCopies",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/VertexCopies.lean",
+      "bytes": 6235,
+      "sha256": "16840ed2ef9477b0a01e5d87d3a1b3827ec9bb0c63a5f2198e2e1b8f463bb91d"
+    },
+    {
+      "module": "LightSpanners.WeakCounting",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/WeakCounting.lean",
+      "bytes": 1589,
+      "sha256": "22bb4af75e1aa7563bda114be01dcf5bf837c80f4f90c60c43240da70207fa07"
+    },
+    {
+      "module": "LightSpanners.Weight",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Weight.lean",
+      "bytes": 2776,
+      "sha256": "37686784def860677c669d43ee38476c835ff2e845597c4cb0b2835c95ea36bd"
+    }
+  ],
+  "dependency_count": 364,
+  "project_imports": 365,
+  "namespace_counts": {
+    "LightEFTActualSuppliedForestProbabilityStage": 1,
+    "LightEFTJointFlagSamplingStage": 1,
+    "LightEFTSpanners": 304,
+    "LightEFTSuppliedForestProbabilityStage": 1,
+    "LightEFTSuppliedForestStage": 1,
+    "LightSpanners": 56
+  },
+  "ordered_names_sha256": "f21106d5d3ee2aa8a853edbfa31079e10a979aef10792cec0fd66f4459784311",
+  "required_public_roots": 1,
+  "required_interfaces": 6,
+  "expected_owner_declarations": null,
+  "audit_roots": [
+    "LightEFTSpanners.StoredForestCandidates.polynomial_canonical_joint_flags_actual_output_failure_probability"
+  ],
+  "reachable_interfaces": [
+    "LightEFTSpanners.JointFlagSampling.decoded_assignment_probability",
+    "LightEFTSpanners.StoredForestCandidates.polynomial_actual_supplied_forest_package_failure_probability",
+    "LightEFTSpanners.StoredForestCandidates.graphEdges_edgeSet",
+    "LightEFTSpanners.StoredForestCandidates.assignmentBank_represents",
+    "LightEFTSpanners.StoredForestCandidates.pairList_represents",
+    "List.reverse_reverse"
+  ],
+  "toolchain": "leanprover/lean4:v4.34.0",
+  "tool_hashes": {
+    "lean": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+    "leanchecker": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe"
+  },
+  "pins": {
+    "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
+    "plausible": "118aa17ee84656b8bd727fef7c458ee8c833385c",
+    "LeanSearchClient": "ddf04cf3949fa556442341e87d47f9f6e6074707",
+    "importGraph": "e928b72544873815af278d38681b31c0293588e3",
+    "proofwidgets": "106ff4fafc74ef4ac99d81dbf3ab399118f497a5",
+    "aesop": "355695d523e41d0554926416cba2a2b3544fbbc9",
+    "Qq": "6a489d9af5d0c47e5b259e2e8bcdfc1811b5a259",
+    "batteries": "f2effa3d803fda822b1f97b806c47cf2adfbcbc2",
+    "Cli": "e92c9f15fdfacc8536f31cfb3b7ad26c3c8cd204"
+  },
+  "lake_manifest_sha256": "615d78a994009475b0e34cd0cd67325b2d863ae37e9f42d8ded7f9d575bf4b2f",
+  "resource_gates_GiB": [
+    3,
+    3,
+    4,
+    4
+  ],
+  "dependency_qualification": "NEWLY_OBSERVED_CI_INPUTS; neither historical preservation nor authenticated dependency provenance",
+  "accepted_staged_manifest_sha256": null,
+  "staged_dependency_source_roots": [
+    "checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged",
+    "checkpoints/light-eft-joint-flag-assignment-local-repair-20261018/staged",
+    "checkpoints/light-eft-supplied-forest-package-20261018/staged",
+    "checkpoints/light-eft-supplied-forest-probability-draft-20261018/staged"
+  ],
+  "engine_files": [
+    {
+      "path": ".github/workflows/lean.yml",
+      "bytes": 43936,
+      "sha256": "39336eb4587baa6ce0ce276001475feb86aec64f0a91b93d6171be39fb60ec14"
+    },
+    {
+      "path": "checkpoints/light-eft-actual-supplied-forest-probability-result-20261018/artifacts/objects/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.olean",
+      "bytes": 145656,
+      "sha256": "000a803f858c98d95c53b57011785f5c08fc687ee5af081161b595bd32974499"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+      "bytes": 19645,
+      "sha256": "d19a08c1e7e5414f18b63f154bbbe1acccc6b57b11de33243325ddce2a8ee9e0"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_accounting.py",
+      "bytes": 5927,
+      "sha256": "a4a5b697283a99abd310b7164531ddabd06f01308ff008e102bcc66ae17cb7b8"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_admission.py",
+      "bytes": 5604,
+      "sha256": "c4bcf87df59d2a439b2d0213bffbcf888a017d073f3f12ff2fa1a308cc7cbc1f"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_admission_receipts.py",
+      "bytes": 5866,
+      "sha256": "e15b17277cdda2816924261b271e42d6828932a34f213863317179f42c34c7de"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+      "bytes": 18000,
+      "sha256": "c3be43b364202c7fb2dcaf838cb17e50f93d35288c7868bf622512efa586f9d2"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_handoff.py",
+      "bytes": 13798,
+      "sha256": "0d1bccdf5f92e0314a838e48e51eb9bbe3cccb58250704b43a9df1bdbe0b17fa"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_handoff_contract.py",
+      "bytes": 3423,
+      "sha256": "d1bd67558926889200214b289cf214a7eff30f4d672b57a54f147eb8b96f9153"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_inventory.py",
+      "bytes": 6732,
+      "sha256": "a10205e759785f9a260de8129bbc6f34c590b00a2b49477f018c6d3b6a47c15a"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_lease.py",
+      "bytes": 3663,
+      "sha256": "d0e7331f4a18b3c69b2707b7892452f9c08c2619f82b204e602df8fd19011a8b"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_policy.py",
+      "bytes": 5869,
+      "sha256": "4bd3511fed7f3a7685a2f405982c9690e8322a59ee6d932d5a1b9106d55fbbe6"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_receipts.py",
+      "bytes": 5857,
+      "sha256": "46ddabf25e3951e3e6937e3d8b34e47945cf80c002ee1b589ae0bbafc1956f95"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_staged_inputs.py",
+      "bytes": 4011,
+      "sha256": "5d0c58a41306778d6951879f4d3e6eefb667d2be08102c3c0b0abaa92858452b"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/collision_coverage.py",
+      "bytes": 6685,
+      "sha256": "529d8ba0010cfb1fcd297b98a1f15882967a7a30bc2a2da8ff21bf50ea2d0e6b"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/contracts.py",
+      "bytes": 5765,
+      "sha256": "b4d7b52a08689426b45d6d2b482899faf9eebe5f6573566d3c49562a2b401134"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/decision_telemetry.py",
+      "bytes": 4899,
+      "sha256": "08ae50f987ba67655e21d504e561ff5a23eda79104f35fe4c0d48e6e59de87fe"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/exit_transition.py",
+      "bytes": 16452,
+      "sha256": "1135140dd7dd3d075953d5d621f727a7a7c13796985c27da0c5afba68f95e76a"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/focused_audit.py",
+      "bytes": 7788,
+      "sha256": "ed374c72b8ac4d37978b66adb94855c8530806633bf1eb2c6990c374962cb292"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/output_guards.py",
+      "bytes": 7548,
+      "sha256": "b53d429a85d0a4e8376f12ba363ecea08f13d398a6aa3edebddae98ddbc12559"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+      "bytes": 2095,
+      "sha256": "ccc7a20a97cc446fc464dbd88c9fb9067494661472988091fc954428fcf5e4fd"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/pilot_accounting.py",
+      "bytes": 4834,
+      "sha256": "826847768ca2e16fb2e4f19d912108790096f117d8a44a952b014cbaefeca824"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/pilot_child.py",
+      "bytes": 1702,
+      "sha256": "e5ece247f65ff168baaae65c7f8cfba5d5834fc70459029550f4fb2c49f79cff"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/probability_plan.py",
+      "bytes": 652,
+      "sha256": "1a5b89ef67f361775d20ff05debbe0bba147561529ebc34e73225c9c62e8d7f6"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+      "bytes": 6696,
+      "sha256": "8ab9e6b111f4958b8a91a920a40f9a6789ababad08ea9c570c8a0332f4c262d0"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/authority.py",
+      "bytes": 2953,
+      "sha256": "319e8bd1426e952fa227889ea4ec74770a1c578131606e2cebd0b4c3326c0c0e"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+      "bytes": 19645,
+      "sha256": "d19a08c1e7e5414f18b63f154bbbe1acccc6b57b11de33243325ddce2a8ee9e0"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/collision_coverage.py",
+      "bytes": 6685,
+      "sha256": "529d8ba0010cfb1fcd297b98a1f15882967a7a30bc2a2da8ff21bf50ea2d0e6b"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/contracts.py",
+      "bytes": 5555,
+      "sha256": "e092ba2fd3c2560dee64db1cc2085ec31a70eaf7c02bfd7d6c83c1a4b1cd2aa8"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/decision_telemetry.py",
+      "bytes": 4899,
+      "sha256": "08ae50f987ba67655e21d504e561ff5a23eda79104f35fe4c0d48e6e59de87fe"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/driver.py",
+      "bytes": 6905,
+      "sha256": "6bb35538f06308579a5ad7c71b8ef7d2719a7237f2a13d5f940ccae927bb8f7e"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/exit_transition.py",
+      "bytes": 16452,
+      "sha256": "1135140dd7dd3d075953d5d621f727a7a7c13796985c27da0c5afba68f95e76a"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/fixture_worker.py",
+      "bytes": 874,
+      "sha256": "ef78c03c76240afb6549143be4421d0413a4d9b8d1760502559e57f87b3f5879"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/focused_audit.py",
+      "bytes": 7004,
+      "sha256": "95e71b629add31dd55aa4ce469e858ba3699682209516ff0d88850a851c0a6a6"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/lease.py",
+      "bytes": 5370,
+      "sha256": "e942e88636f15fa55aaf2f01eaaaf72a1793871afa9865d41a88513354ed722d"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/output_guards.py",
+      "bytes": 7548,
+      "sha256": "b53d429a85d0a4e8376f12ba363ecea08f13d398a6aa3edebddae98ddbc12559"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/package_selection.py",
+      "bytes": 2095,
+      "sha256": "ccc7a20a97cc446fc464dbd88c9fb9067494661472988091fc954428fcf5e4fd"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/pilot_accounting.py",
+      "bytes": 4834,
+      "sha256": "826847768ca2e16fb2e4f19d912108790096f117d8a44a952b014cbaefeca824"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/pilot_child.py",
+      "bytes": 1702,
+      "sha256": "e5ece247f65ff168baaae65c7f8cfba5d5834fc70459029550f4fb2c49f79cff"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/probability_plan.py",
+      "bytes": 14469,
+      "sha256": "c9f162e52b681f684260ef1c11514987a38ae210d6a0eda1caaaa7d1fa0b541c"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/scope.py",
+      "bytes": 19192,
+      "sha256": "a00eeddd63f1380a8ed38ba9193a3039142e98f9da74733c7a524de5333f8704"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/semantic_inventory.py",
+      "bytes": 9550,
+      "sha256": "659da0ef137e27b4380b1ac767555ede2bb5f95c49e0083611fd93105eae06ea"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/test_adapter.py",
+      "bytes": 35490,
+      "sha256": "4fdcb3d88cba7c0b10084b4fd68936adf06b59ef19a4ca800274e71a86328d4d"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/ResolveJointAssignmentLawTarget.lean",
+      "bytes": 1385,
+      "sha256": "4f887745e6bc31d390fa04e2e3e91fa6fe6d3911623796974b24ca7a8fc6964a"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-local-repair-20261018/staged/JointAssignmentLawAudit.lean",
+      "bytes": 20429,
+      "sha256": "92332d4007cf25ced11dad4c77c94d9b33a8e2d0a039f4b6481b715798de0223"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-local-repair-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+      "bytes": 12780,
+      "sha256": "1c290257acb41c8023c2ea163723dbbb36e4c58abc61d5efc2e645da00276a41"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/CollisionClassifierFixtures.tail.lean",
+      "bytes": 9674,
+      "sha256": "7b149dd97d4fb676d92399de15338c41e6d074ee8d8f5a3ec1c63479eef441d5"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci-spec.json",
+      "bytes": 30822,
+      "sha256": "01a8366597132f7b0f3b146cbd6d7a326ce33643c45d1e8659eca1bc380b5ef3"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_accounting.py",
+      "bytes": 5927,
+      "sha256": "a4a5b697283a99abd310b7164531ddabd06f01308ff008e102bcc66ae17cb7b8"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py",
+      "bytes": 15514,
+      "sha256": "1327241fcb0a9bd902ca45c06fbec12cd66624d83c08ab8957b4f159a4b6e90a"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_inventory.py",
+      "bytes": 6732,
+      "sha256": "a10205e759785f9a260de8129bbc6f34c590b00a2b49477f018c6d3b6a47c15a"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_lease.py",
+      "bytes": 3663,
+      "sha256": "d0e7331f4a18b3c69b2707b7892452f9c08c2619f82b204e602df8fd19011a8b"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_policy.py",
+      "bytes": 4614,
+      "sha256": "d64ba95be09fb2fae420cb98ff8b0110a637742e85aa1685984a7e1852f62f35"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_receipts.py",
+      "bytes": 5857,
+      "sha256": "46ddabf25e3951e3e6937e3d8b34e47945cf80c002ee1b589ae0bbafc1956f95"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/test_ci_preexec_repair.py",
+      "bytes": 15939,
+      "sha256": "d9b1f3d46bf607448decae46236a38364c5d104ce3fcb27f509c0a7c9496dc1d"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/test_collision_classifier.py",
+      "bytes": 16290,
+      "sha256": "6fdb3c32a0be34bb756deefad223aad89a8d57f10f0c4fea1552991c77362a36"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/test_compile_temporary.py",
+      "bytes": 14254,
+      "sha256": "01f076d50223b3275128957a38ee0cfca40f0d598558dd5f02a4c6e36c6ea505"
+    },
+    {
+      "path": "checkpoints/light-eft-supplied-forest-package-attempt-20261018/produced-objects/LightEFTSuppliedForestStage/SuppliedForestGoodEvent.olean",
+      "bytes": 185576,
+      "sha256": "b5e18c2425b50a2b7008f2a5f9ab928f22daae1d530293d373691a0a378cbc18"
+    },
+    {
+      "path": "checkpoints/light-eft-supplied-forest-probability-result-20261018/artifacts/objects/LightEFTSuppliedForestProbabilityStage/PolynomialFailureProbability.olean",
+      "bytes": 76720,
+      "sha256": "0716fe2cc66dd6657243cfe6d5d34fb83722f59818d0cdb1838be0bf2d981eeb"
+    },
+    {
+      "path": "scripts/LightEFTCgroup.py",
+      "bytes": 5549,
+      "sha256": "3ab478f59bb27d32424c8aaf647de91901969fb48d3a56ddd74fd49e434bad07"
+    },
+    {
+      "path": "scripts/LightEFTProcessLifecycle.py",
+      "bytes": 4417,
+      "sha256": "c77d6e9bd48de674aaa50852451627d09693fec7bdcca903a015fdab96f99fdd"
+    }
+  ],
+  "max_new_target_attempts": 1,
+  "stage_order": [
+    "context-replay:LightEFTSuppliedForestStage.SuppliedForestGoodEvent",
+    "context-replay:LightEFTSuppliedForestProbabilityStage.PolynomialFailureProbability",
+    "context-replay:LightEFTActualSuppliedForestProbabilityStage.PolynomialActualFailureProbability",
+    "compile",
+    "resolve",
+    "replay",
+    "audit"
+  ],
+  "driver_qualification": "One same-run decoder handoff; three sequential current-context singleton replays then four corollary stages; no retry or historical exact-context claim",
+  "object_admission": {
+    "scope": "SAME_RUN_DECODER_THREE_CONTEXT_REPLAYS_THEN_FOUR_COROLLARY_STAGES",
+    "accepted_source_base": "f8a2476ef4a910f0b0225ade418ab174f98d8e21",
+    "static_objects": [
+      {
+        "module": "LightEFTSuppliedForestStage.SuppliedForestGoodEvent",
+        "source": {
+          "module": "LightEFTSuppliedForestStage.SuppliedForestGoodEvent",
+          "path": "checkpoints/light-eft-supplied-forest-package-20261018/staged/LightEFTSuppliedForestStage/SuppliedForestGoodEvent.lean",
+          "bytes": 4988,
+          "sha256": "6356a3b369813a155e824e471b0f7a48d29a66fb117db41eca767ed3300febee"
+        },
+        "object": {
+          "path": "checkpoints/light-eft-supplied-forest-package-attempt-20261018/produced-objects/LightEFTSuppliedForestStage/SuppliedForestGoodEvent.olean",
+          "bytes": 185576,
+          "sha256": "b5e18c2425b50a2b7008f2a5f9ab928f22daae1d530293d373691a0a378cbc18"
+        },
+        "layout": "legacy"
+      },
+      {
+        "module": "LightEFTSuppliedForestProbabilityStage.PolynomialFailureProbability",
+        "source": {
+          "module": "LightEFTSuppliedForestProbabilityStage.PolynomialFailureProbability",
+          "path": "checkpoints/light-eft-supplied-forest-probability-draft-20261018/staged/LightEFTSuppliedForestProbabilityStage/PolynomialFailureProbability.lean",
+          "bytes": 3378,
+          "sha256": "e1db9fb7e7b70d6287eee4df38d231fd882efd08ab8b29da0d7313c6ac4621fc"
+        },
+        "object": {
+          "path": "checkpoints/light-eft-supplied-forest-probability-result-20261018/artifacts/objects/LightEFTSuppliedForestProbabilityStage/PolynomialFailureProbability.olean",
+          "bytes": 76720,
+          "sha256": "0716fe2cc66dd6657243cfe6d5d34fb83722f59818d0cdb1838be0bf2d981eeb"
+        },
+        "layout": "legacy"
+      },
+      {
+        "module": "LightEFTActualSuppliedForestProbabilityStage.PolynomialActualFailureProbability",
+        "source": {
+          "module": "LightEFTActualSuppliedForestProbabilityStage.PolynomialActualFailureProbability",
+          "path": "checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.lean",
+          "bytes": 4727,
+          "sha256": "faee0b34bdb811a7a1f97f3e7bd90b2e7e37dd0a2967fbddb06c2483e0ec5b86"
+        },
+        "object": {
+          "path": "checkpoints/light-eft-actual-supplied-forest-probability-result-20261018/artifacts/objects/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.olean",
+          "bytes": 145656,
+          "sha256": "000a803f858c98d95c53b57011785f5c08fc687ee5af081161b595bd32974499"
+        },
+        "layout": "legacy"
+      }
+    ],
+    "decoder": {
+      "module": "LightEFTJointFlagSamplingStage.JointAssignmentLaw",
+      "spec_path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci-spec.json",
+      "policy_path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_policy.py",
+      "source": {
+        "module": "LightEFTJointFlagSamplingStage.JointAssignmentLaw",
+        "path": "checkpoints/light-eft-joint-flag-assignment-local-repair-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+        "bytes": 12780,
+        "sha256": "1c290257acb41c8023c2ea163723dbbb36e4c58abc61d5efc2e645da00276a41"
+      }
+    },
+    "replay_order": [
+      "LightEFTSuppliedForestStage.SuppliedForestGoodEvent",
+      "LightEFTSuppliedForestProbabilityStage.PolynomialFailureProbability",
+      "LightEFTActualSuppliedForestProbabilityStage.PolynomialActualFailureProbability"
+    ],
+    "corollary_stages": [
+      "compile",
+      "resolve",
+      "replay",
+      "audit"
+    ],
+    "context_qualification": "Historical objects replayed in newly observed current CI dependency context; no historical exact-context carryover claim"
+  }
+}

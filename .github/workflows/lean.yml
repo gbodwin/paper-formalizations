@@ -343,6 +343,11 @@ jobs:
         env:
           PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-python-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -B checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py
+      - name: Verify canonical actual-output corollary after three context replays
+        id: light_eft_corollary
+        env:
+          PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-corollary-python-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -B checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py
       - name: Replay every project module through the Lean kernel
         run: bash scripts/KernelCheck.sh
       - name: Record workflow outcome independently of staged gate
@@ -354,6 +359,7 @@ jobs:
           LIGHTEFT_SUMMARY_JOB: ${{ github.job }}
           LIGHTEFT_SUMMARY_JOB_STATUS: ${{ job.status }}
           LIGHTEFT_SUMMARY_STAGED_OUTCOME: ${{ steps.light_eft_staged.outcome }}
+          LIGHTEFT_SUMMARY_COROLLARY_OUTCOME: ${{ steps.light_eft_corollary.outcome }}
         run: |
           python3 -B - <<'PY'
           from pathlib import Path
@@ -364,7 +370,8 @@ jobs:
               ('run_attempt', 'LIGHTEFT_SUMMARY_RUN_ATTEMPT'),
               ('job', 'LIGHTEFT_SUMMARY_JOB'),
               ('job_status', 'LIGHTEFT_SUMMARY_JOB_STATUS'),
-              ('staged_step_outcome', 'LIGHTEFT_SUMMARY_STAGED_OUTCOME')]}
+              ('staged_step_outcome', 'LIGHTEFT_SUMMARY_STAGED_OUTCOME'),
+              ('corollary_step_outcome', 'LIGHTEFT_SUMMARY_COROLLARY_OUTCOME')]}
           output = Path(os.environ['RUNNER_TEMP']) / (
               'light-eft-summary-' + record['run_id'] + '-' + record['run_attempt'])
           output.mkdir(mode=0o700, exist_ok=False)
@@ -379,6 +386,7 @@ jobs:
           path: |
             ${{ runner.temp }}/light-eft-summary-${{ github.run_id }}-${{ github.run_attempt }}
             ${{ runner.temp }}/light-eft-staged-${{ github.run_id }}-${{ github.run_attempt }}
+            ${{ runner.temp }}/light-eft-corollary-${{ github.run_id }}-${{ github.run_attempt }}
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 30
