@@ -1,7 +1,7 @@
 """Scoped live metadata checks; completed hashes remain in the post-wait hooks."""
 from pathlib import Path
 import errno,os,stat
-from contracts import signature,require,Rejected,SUFFIXES,EXPORTS
+from contracts import signature,require,Rejected,SUFFIXES,EXPORTS,TARGET
 OBJECT_BOUND=16*1024**2
 
 def metadata(s):
@@ -97,6 +97,49 @@ def live_audit(root):
  check(sum(r['bytes'] for r in files.values())<=320*1024**2,'Live audit total size budget',root,observe(root))
  return files
 
+def live_empty_generated(root,target):
+ # The existing first-package selection model needs its precreated namespace
+ # directories. Permit only that scaffold and reject every generated file.
+ root,target=Path(root),Path(target)
+ require(target.is_relative_to(root) and target!=root,'Admission target outside generated root')
+ files=live_tree(root,{str(target)})
+ if files:
+  path=next(iter(files));raise LiveOutputRejected('Admission generated-output tree is not empty',path,files[path])
+ return files
+
+def live_absent_resolution(work):
+ path=Path(work)/'resolution.json'
+ try:s=path.lstat()
+ except FileNotFoundError as exc:
+  if exc.errno==errno.ENOENT:return
+  raise LiveOutputRejected('Admission resolution absence check failed',path,stat_error=repr(exc)) from exc
+ except OSError as exc:raise LiveOutputRejected('Admission resolution absence check failed',path,stat_error=repr(exc)) from exc
+ raise LiveOutputRejected('Admission resolution output appeared',path,s)
+
+def live_admission_outputs(record,spec):
+ from ci_handoff_contract import CONTRACT
+ contract=spec['admission_only']
+ require(isinstance(contract,dict) and set(contract)=={'module','object'},'Invalid admission-only output contract')
+ module,path=contract['module'],contract['object']
+ require(module in CONTRACT['replay_order'] and record.get('context_admission_module')==module,'Unreviewed admission module')
+ require(record.get('stage')==spec.get('stage')=='replay','Admission-only contract outside replay')
+ argv=record.get('argv',[])
+ require(len(argv)==3 and Path(argv[0]).name=='leanchecker' and argv[1:]==['-v',module],'Wrong admission-only checker command')
+ require(record.get('context_qualification')==CONTRACT['context_qualification'],'Admission context qualification differs')
+ selection=record.get('context_admission_selection',{})
+ require(selection.get('target')==module and selection.get('object')==path and
+         list(map(tuple,selection.get('prefix_matches',[])))==[(module,path)],'Admission singleton binding differs')
+ dependency=record.get('effective_dependencies',{}).get(module,{})
+ protected=spec['protected'].get(path,{})
+ require(dependency.get('path')==path and protected.get('path')==path and
+         all(k in protected and protected[k]==dependency.get(k) for k in ['bytes','sha256','identity']),
+         'Admission object is not a protected effective input')
+ root=Path(spec['objects']);target=Path(spec['target'])
+ require(root==Path(record['working_directory'])/'objects' and
+         target==root/Path(*TARGET.split('.')).with_suffix('.olean'),'Admission generated-output scope differs')
+ live_absent_resolution(record['working_directory'])
+ return live_empty_generated(root,target)
+
 def compile_temporary_pid(record,preexec,terminal):
  if (preexec or terminal or record.get('stage')!='compile' or record['output_guard_spec']['stage']!='compile'
      or record.get('state')!='exec-authorized' or record.get('kernel_limits_verified') is not True
@@ -120,7 +163,9 @@ def runtime_errors(record,preexec=False,terminal=False):
   for p,row in spec['protected'].items():
    s=observe(p);check(signature(s)==row['identity'],'Live protected object/resolution/input changed',p,s)
   pid=compile_temporary_pid(record,preexec,terminal)
-  events=[];live_objects(spec['objects'],spec['target'],spec['stage']!='compile',pid,events)
+  events=[]
+  if 'admission_only' in spec:live_admission_outputs(record,spec)
+  else:live_objects(spec['objects'],spec['target'],spec['stage']!='compile',pid,events)
   if events:record.setdefault('output_guard_atomic_renames',[]).extend(events)
   if spec['stage']=='audit':live_audit(spec['audit'])
   else:

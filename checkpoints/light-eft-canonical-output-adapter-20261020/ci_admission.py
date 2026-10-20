@@ -4,6 +4,7 @@ import json
 from contracts import bind,require
 from ci_handoff_contract import CONTRACT
 from package_selection import selected_path
+from output_guards import live_empty_generated,live_absent_resolution
 
 COMPLETION_FLAGS=('direct_reaped','all_descendants_gone','kernel_no_children_verified',
     'waitid_wait4_status_match','kernel_limits_verified','between_child_preservation_passed','preexec_binding_verified')
@@ -38,6 +39,8 @@ def context_type(ci_context,module,expected):
         def verify(self,compiled):
             require(not compiled and not self.target.exists(),'Admission cannot compile a corollary object')
             super().verify(False)
+            live_empty_generated(self.objects,self.target)
+            live_absent_resolution(self.work)
             self.admission_selection=singleton_selection(self.roots,module,expected)
 
         def before_child(self,plan,record,save_receipt):
@@ -45,6 +48,9 @@ def context_type(ci_context,module,expected):
             require(plan['stage']=='replay' and plan['module']==module and plan['argv'][-2:]==['-v',module],'Wrong admission replay')
             record.update(context_admission_module=module,context_admission_selection=self.admission_selection,
                 context_qualification=CONTRACT['context_qualification'])
+            spec=record['output_guard_spec']
+            spec['admission_only']=dict(module=module,object=str(expected))
+            spec['protected'][str(expected)]=dict(self.inputs[str(expected)])
             save_receipt()
 
         def after_child(self,plan,record,save_receipt):
