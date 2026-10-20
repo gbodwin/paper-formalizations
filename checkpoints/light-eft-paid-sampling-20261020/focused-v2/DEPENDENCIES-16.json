@@ -1,0 +1,766 @@
+{
+  "source_base": "a04960a8d9337df124272587cf71d31d7392bffe",
+  "chain_index": {
+    "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-evidence-index.json",
+    "bytes": 194773,
+    "sha256": "8919d2d230bd3f62dee66f95ff9044e53df95c43a8028ea8da8bea2c2531cd53"
+  },
+  "count": 16,
+  "topological_modules": [
+    "LightEFTSpanners.RationalDistanceValues",
+    "LightSpanners.Basic",
+    "LightSpanners.Greedy",
+    "LightSpanners.Distance",
+    "LightEFTSpanners.RationalDistanceTable",
+    "LightEFTSpanners.RationalDistanceTest",
+    "LightEFTSpanners.LinkedDistanceKernel",
+    "LightEFTSpanners.LinkedDistanceMachine",
+    "LightEFTSpanners.LinkedDistanceTrace",
+    "LightEFTSpanners.LinkedDistanceInitialization",
+    "LightEFTSpanners.LinkedDistanceRefinement",
+    "LightEFTSpanners.LinkedDistanceExecutable",
+    "LightEFTSpanners.ControllerTrace",
+    "LightEFTSpanners.StoredEdgeMembership",
+    "LightEFTSpanners.StoredFlagSample",
+    "LightEFTSpanners.StoredFlagSampleExecutable"
+  ],
+  "direct_external_imports": [
+    "Aesop",
+    "Mathlib.Algebra.Order.Field.Rat",
+    "Mathlib.Basic.ENNReal.Inv",
+    "Mathlib.Basic.ENNReal.Real",
+    "Mathlib.Basic.Real.Basic",
+    "Mathlib.Combinatorics.SimpleGraph.Paths",
+    "Mathlib.Combinatorics.SimpleGraph.Walk.Counting",
+    "Mathlib.Data.List.FinRange",
+    "Mathlib.Data.List.Sort",
+    "Mathlib.Data.Vector.Basic",
+    "Mathlib.Tactic.Linarith",
+    "Mathlib.Tactic.NormNum",
+    "Mathlib.Tactic.Push",
+    "Mathlib.Tactic.Ring"
+  ],
+  "dependencies": [
+    {
+      "module": "LightEFTSpanners.RationalDistanceValues",
+      "source": {
+        "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceValues.lean",
+        "bytes": 1743,
+        "sha256": "14b64107d33ccae55f8f53288d0e073b33572be12aa2ff6ef2e31bff13b8088c"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightEFTSpanners/RationalDistanceValues.olean",
+        "bytes": 134456,
+        "sha256": "63709595848a7fbb56c2a5b28834d75126cddbe34a5ccdf87a49bb16fc350276",
+        "identity": [
+          27,
+          1321214,
+          134456,
+          1792515142845396422,
+          1792515142845396422
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-batch100-entries172-271-20261017/preserved-objects/LightEFTSpanners/RationalDistanceValues.olean",
+      "matching_carriers": 7,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-01.json",
+        "bytes": 218458,
+        "sha256": "d8b7896c09dc9029dedb9678db5aba9328774a323c939a0c9ac96238f89b7ffa"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/013-LightEFTSpanners.RationalDistanceValues-compile/receipt.json",
+          "bytes": 93550,
+          "sha256": "715c9cf6a09e7d1a39860bc326a65d7ed69f3e25bc12a2f7767d88d1a43a43fa"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/014-LightEFTSpanners.RationalDistanceValues-resolve/receipt.json",
+          "bytes": 94960,
+          "sha256": "fba97de9b3329b7e71538497a5d5deb7ef97210c5f876eebd1fbf7f232c0e461"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/015-LightEFTSpanners.RationalDistanceValues-replay/receipt.json",
+          "bytes": 94046,
+          "sha256": "8a0f78a525917d06329f699d8fb5ca76deb9e9a6c8844ad494b6c1fecea5ad82"
+        }
+      }
+    },
+    {
+      "module": "LightSpanners.Basic",
+      "source": {
+        "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Basic.lean",
+        "bytes": 4943,
+        "sha256": "f7620d03b27f2c6ec13d048597ad4d87e6ff66a077bf41a3de27c20f1087103d"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightSpanners/Basic.olean",
+        "bytes": 298616,
+        "sha256": "97e72ff512b221e2d84cabd398863a42324fd91ffa2f1bd5bee94c8dfa7af94b",
+        "identity": [
+          27,
+          1321218,
+          298616,
+          1792515142854482210,
+          1792515142854482210
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-batch100-entries172-271-20261017/preserved-objects/LightSpanners/Basic.olean",
+      "matching_carriers": 12,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-00.json",
+        "bytes": 218623,
+        "sha256": "1d0e996c4140e01ac28e36a7304265b93cdd467f280be1368cf5bb6905198d37"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-batch18-effective-reread-20261017/attempts/012-LightSpanners.Basic-compile/receipt.json",
+          "bytes": 92884,
+          "sha256": "3d4fc0dd6491134b03cbeabf01ac6a949f84b9249a006657aec0ced2dbac37c4"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-batch18-effective-reread-20261017/attempts/013-LightSpanners.Basic-resolve/receipt.json",
+          "bytes": 94268,
+          "sha256": "8192096f7a1a07cfcf1773e685a0eb4f69d0882f3ed7ac3601dae2c7bf51b4db"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-batch18-effective-reread-20261017/attempts/014-LightSpanners.Basic-replay/receipt.json",
+          "bytes": 93344,
+          "sha256": "b25297c1e3ade86ae84c1c09eb24a8fee0fa51f62d89a08757405a62a03d2669"
+        }
+      }
+    },
+    {
+      "module": "LightSpanners.Greedy",
+      "source": {
+        "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Greedy.lean",
+        "bytes": 5499,
+        "sha256": "13d0cc9ee2f791bd9722c5b31c1dd3328701b7a7cc8383599c899c6f4c9f875e"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightSpanners/Greedy.olean",
+        "bytes": 310120,
+        "sha256": "a82dc16675476e41b7e1f70886f46219d1c5390fc15353d2908b7cfa46a03619",
+        "identity": [
+          27,
+          1321219,
+          310120,
+          1792515142862993671,
+          1792515142862993671
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-batch100-entries172-271-20261017/preserved-objects/LightSpanners/Greedy.olean",
+      "matching_carriers": 12,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-00.json",
+        "bytes": 218623,
+        "sha256": "1d0e996c4140e01ac28e36a7304265b93cdd467f280be1368cf5bb6905198d37"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-batch18-effective-reread-20261017/attempts/015-LightSpanners.Greedy-compile/receipt.json",
+          "bytes": 92748,
+          "sha256": "f79d6a9c645b0e445484ed33ba5971dcfd2882c8b5cb3651b7f1b5d814aee3a1"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-batch18-effective-reread-20261017/attempts/016-LightSpanners.Greedy-resolve/receipt.json",
+          "bytes": 94285,
+          "sha256": "cff1b41598f874f03a1e2f52d4e013b62f6ed9253ccaef4fe6fa6a9e4df6ef6e"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-batch18-effective-reread-20261017/attempts/017-LightSpanners.Greedy-replay/receipt.json",
+          "bytes": 93347,
+          "sha256": "df3a012d9e08d2a1b3902947428388c94fcf4c7c2e41dc5397de3e79686334ce"
+        }
+      }
+    },
+    {
+      "module": "LightSpanners.Distance",
+      "source": {
+        "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Distance.lean",
+        "bytes": 5005,
+        "sha256": "06b9486a16f448676e0aa8e3c4bf42fbcbfedce2756f94cd469f36e69a5b371b"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightSpanners/Distance.olean",
+        "bytes": 166000,
+        "sha256": "4a3737c3741ec85d6c36d84de462ae7f1a338db67268a7c2fc2e8d427e541c0d",
+        "identity": [
+          27,
+          1321260,
+          166000,
+          1792515142869606659,
+          1792515142869606659
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-batch100-entries172-271-20261017/preserved-objects/LightSpanners/Distance.olean",
+      "matching_carriers": 12,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-00.json",
+        "bytes": 218623,
+        "sha256": "1d0e996c4140e01ac28e36a7304265b93cdd467f280be1368cf5bb6905198d37"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-batch18-effective-reread-20261017/attempts/027-LightSpanners.Distance-compile/receipt.json",
+          "bytes": 93295,
+          "sha256": "1015466e2a2c06162ceba17a96d19798461675b17bb200038ae1d7ffd04026e6"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-batch18-effective-reread-20261017/attempts/028-LightSpanners.Distance-resolve/receipt.json",
+          "bytes": 99263,
+          "sha256": "54d1d924ae7baa8843354e21656912902ef788ccbcc2b9ef9ff49d13f6722cd7"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-batch18-effective-reread-20261017/attempts/029-LightSpanners.Distance-replay/receipt.json",
+          "bytes": 93352,
+          "sha256": "031ff433b6f6288bce7874e254f827e3ca6ecc379bcd5bf792757bf04ed68722"
+        }
+      }
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceTable",
+      "source": {
+        "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceTable.lean",
+        "bytes": 4404,
+        "sha256": "03163b1215234ee456db582146bdb698dfb2af8afd07831ff464635298198acb"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightEFTSpanners/RationalDistanceTable.olean",
+        "bytes": 422880,
+        "sha256": "127e5b4edd07619b4a4d220a35eb459ca4d7997a172261171ee71b6ddc83151a",
+        "identity": [
+          27,
+          1321261,
+          422880,
+          1792515142877548369,
+          1792515142877548369
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-batch100-entries172-271-20261017/preserved-objects/LightEFTSpanners/RationalDistanceTable.olean",
+      "matching_carriers": 7,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-01.json",
+        "bytes": 218458,
+        "sha256": "d8b7896c09dc9029dedb9678db5aba9328774a323c939a0c9ac96238f89b7ffa"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/016-LightEFTSpanners.RationalDistanceTable-compile/receipt.json",
+          "bytes": 93892,
+          "sha256": "6f14de346d92388c677287c50bb0b271a4b0b1c4d8349d948fd5a7878b25c6e7"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/017-LightEFTSpanners.RationalDistanceTable-resolve/receipt.json",
+          "bytes": 95558,
+          "sha256": "36e89a3713a50dfb609c96794d513cd96f09bc375234d82ca623641e3478d610"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/018-LightEFTSpanners.RationalDistanceTable-replay/receipt.json",
+          "bytes": 94049,
+          "sha256": "e9ab25db96f7b30a4cb0809e37bb911d6fafb0595e6b2f04ec945df9aad3491c"
+        }
+      }
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceTest",
+      "source": {
+        "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceTest.lean",
+        "bytes": 3012,
+        "sha256": "77184d55f1adeb9554ca7480e2a7450515dd1ce9ad999a6ee706bd32a7a57d9f"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightEFTSpanners/RationalDistanceTest.olean",
+        "bytes": 173752,
+        "sha256": "e970cc890b8ed003b53d651fee1ce14f6e1d2de7802c20dc9b3858e9bc816285",
+        "identity": [
+          27,
+          1321262,
+          173752,
+          1792515142883649803,
+          1792515142883649803
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-batch100-entries172-271-20261017/preserved-objects/LightEFTSpanners/RationalDistanceTest.olean",
+      "matching_carriers": 7,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-02.json",
+        "bytes": 222460,
+        "sha256": "cf14612f8b2d83bd96582b06178b2210cd6796bc317ecb16f74bcb7d5a5d3f47"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/019-LightEFTSpanners.RationalDistanceTest-compile/receipt.json",
+          "bytes": 93357,
+          "sha256": "7e08cebb78d7de2a10025bfd6bdba307d8106b7b242e69696ce43cb03b9ade50"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/020-LightEFTSpanners.RationalDistanceTest-resolve/receipt.json",
+          "bytes": 94955,
+          "sha256": "2e09be5418cfda053c1302a1f099afa6ae3c3aae39e99166043ca18a8f9e8803"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/021-LightEFTSpanners.RationalDistanceTest-replay/receipt.json",
+          "bytes": 94039,
+          "sha256": "8a0965ada05096b7931abea497d804a5a16f16608d0b6246fc44a27390da0b3c"
+        }
+      }
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceKernel",
+      "source": {
+        "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceKernel.lean",
+        "bytes": 3721,
+        "sha256": "6b2002ff3fdd5e9601898a73d5a04c008ddf58fb911c4eb124917c24ccf5b810"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightEFTSpanners/LinkedDistanceKernel.olean",
+        "bytes": 178800,
+        "sha256": "15529c11227cdaf4a672a3c436691ff91ddd2d3c3ab90a94ea08aa52a06e7b9a",
+        "identity": [
+          27,
+          1321263,
+          178800,
+          1792515142889520488,
+          1792515142889520488
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-batch100-entries172-271-20261017/preserved-objects/LightEFTSpanners/LinkedDistanceKernel.olean",
+      "matching_carriers": 7,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-02.json",
+        "bytes": 222460,
+        "sha256": "cf14612f8b2d83bd96582b06178b2210cd6796bc317ecb16f74bcb7d5a5d3f47"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/022-LightEFTSpanners.LinkedDistanceKernel-compile/receipt.json",
+          "bytes": 93858,
+          "sha256": "bb24ebeb7cb8f017cff735aff25aeb222979fb11659c0a2db531e06dbfe76f62"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/023-LightEFTSpanners.LinkedDistanceKernel-resolve/receipt.json",
+          "bytes": 94955,
+          "sha256": "1c28642e14d74453eec54b6598c9c9029d839c820255e334b9be24d6a8c75677"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/024-LightEFTSpanners.LinkedDistanceKernel-replay/receipt.json",
+          "bytes": 94038,
+          "sha256": "df463388aa0abb735bc9586fce36bae3b84b74bf571726a90451486da13dab70"
+        }
+      }
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceMachine",
+      "source": {
+        "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceMachine.lean",
+        "bytes": 4056,
+        "sha256": "178473f21f7496b64c05eda0d16135e684a1823c8aa6e9139fc24e05f99bf824"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightEFTSpanners/LinkedDistanceMachine.olean",
+        "bytes": 917280,
+        "sha256": "7f49d2f2206208a91a77d734e9c30312379abd7c60ba9401ae8bc954bbc13492",
+        "identity": [
+          27,
+          1321287,
+          917280,
+          1792515142902920057,
+          1792515142902920057
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-batch100-entries172-271-20261017/preserved-objects/LightEFTSpanners/LinkedDistanceMachine.olean",
+      "matching_carriers": 7,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-02.json",
+        "bytes": 222460,
+        "sha256": "cf14612f8b2d83bd96582b06178b2210cd6796bc317ecb16f74bcb7d5a5d3f47"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/025-LightEFTSpanners.LinkedDistanceMachine-compile/receipt.json",
+          "bytes": 93696,
+          "sha256": "9bcaa113f1c1110d0f00115f80accecb1252ce9b80104fdccb8dad8fca3d6871"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/026-LightEFTSpanners.LinkedDistanceMachine-resolve/receipt.json",
+          "bytes": 95563,
+          "sha256": "915ae7b77e471c74ab8e4d936c7e0da0d9f3afa207156a22a451ba04110f9c47"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/027-LightEFTSpanners.LinkedDistanceMachine-replay/receipt.json",
+          "bytes": 94047,
+          "sha256": "a58a333d415245ea4099b57dcab93d4594f268dda2ca68c0d2e2a618c3f29590"
+        }
+      }
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceTrace",
+      "source": {
+        "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceTrace.lean",
+        "bytes": 4476,
+        "sha256": "f2974e0d1416c01f921bb10e848e739efb972242637ae65d6ae9beb7dcae1686"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightEFTSpanners/LinkedDistanceTrace.olean",
+        "bytes": 498728,
+        "sha256": "65d2d6d3e4217b4773d9c078e0404ca74bcf3edebcaa18ce707483477ca3516c",
+        "identity": [
+          27,
+          1321288,
+          498728,
+          1792515142916664697,
+          1792515142916664697
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-batch100-entries172-271-20261017/preserved-objects/LightEFTSpanners/LinkedDistanceTrace.olean",
+      "matching_carriers": 7,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-02.json",
+        "bytes": 222460,
+        "sha256": "cf14612f8b2d83bd96582b06178b2210cd6796bc317ecb16f74bcb7d5a5d3f47"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/028-LightEFTSpanners.LinkedDistanceTrace-compile/receipt.json",
+          "bytes": 94283,
+          "sha256": "886ab35a1eb084958c5a18a5f3a9efa93c8cd5db96004d9927efb63696db313f"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/029-LightEFTSpanners.LinkedDistanceTrace-resolve/receipt.json",
+          "bytes": 94948,
+          "sha256": "5cdcf6ba158d07fbb11ca35b1bc3edab8b3a7eedbbf1683302c2afe15e5cc596"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/030-LightEFTSpanners.LinkedDistanceTrace-replay/receipt.json",
+          "bytes": 94034,
+          "sha256": "723588124b6f295fe65b6956443302e82f50b22684e9c4968b6cd28bfab1215b"
+        }
+      }
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceInitialization",
+      "source": {
+        "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceInitialization.lean",
+        "bytes": 3003,
+        "sha256": "09282e0afd37b8efd6effa496368fa4824d4014077b73011e50dc26c698be2b4"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightEFTSpanners/LinkedDistanceInitialization.olean",
+        "bytes": 447376,
+        "sha256": "634f9349340c594affe2ec57626bed42d71c193c0632d1461fb11eef00f9fcc5",
+        "identity": [
+          27,
+          1321289,
+          447376,
+          1792515142928669915,
+          1792515142928669915
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-batch100-entries172-271-20261017/preserved-objects/LightEFTSpanners/LinkedDistanceInitialization.olean",
+      "matching_carriers": 7,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-02.json",
+        "bytes": 222460,
+        "sha256": "cf14612f8b2d83bd96582b06178b2210cd6796bc317ecb16f74bcb7d5a5d3f47"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/031-LightEFTSpanners.LinkedDistanceInitialization-compile/receipt.json",
+          "bytes": 94337,
+          "sha256": "f512b8a874d7733e7756e76d5a757be819fc667a8d9460234c423b77259e6730"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/032-LightEFTSpanners.LinkedDistanceInitialization-resolve/receipt.json",
+          "bytes": 95594,
+          "sha256": "eff3b558116d088aafd63840f5117288074384e65613048e27757612bc085a75"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/033-LightEFTSpanners.LinkedDistanceInitialization-replay/receipt.json",
+          "bytes": 94099,
+          "sha256": "a38eb1f08d8d0dc4cf0e18be6af25194f4e8165ca64e33e8927305a369f8db9e"
+        }
+      }
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceRefinement",
+      "source": {
+        "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceRefinement.lean",
+        "bytes": 3529,
+        "sha256": "99ce54745c59db056e05e2b7437dbd37b4d81aaf571bc8634cc17543f44cb080"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightEFTSpanners/LinkedDistanceRefinement.olean",
+        "bytes": 269808,
+        "sha256": "caef4cc5f70320db40859fc061169db047aa2670f12d7811507322082dda32a2",
+        "identity": [
+          27,
+          1321290,
+          269808,
+          1792515142945214353,
+          1792515142945214353
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-batch100-entries172-271-20261017/preserved-objects/LightEFTSpanners/LinkedDistanceRefinement.olean",
+      "matching_carriers": 7,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-02.json",
+        "bytes": 222460,
+        "sha256": "cf14612f8b2d83bd96582b06178b2210cd6796bc317ecb16f74bcb7d5a5d3f47"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/034-LightEFTSpanners.LinkedDistanceRefinement-compile/receipt.json",
+          "bytes": 93387,
+          "sha256": "444bfe2e6c25cd85fe92e08a28d72d37885d2f635009d762abec7921049e3c22"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/035-LightEFTSpanners.LinkedDistanceRefinement-resolve/receipt.json",
+          "bytes": 94993,
+          "sha256": "9175aa936b1b0fcf92c896e268e120ebeb7cdb261e9d5a505954eb8ad50e22c8"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/036-LightEFTSpanners.LinkedDistanceRefinement-replay/receipt.json",
+          "bytes": 94072,
+          "sha256": "055123352af820b617d04b7eafab7ea4d84efb789447a993e32464beaf95ff42"
+        }
+      }
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceExecutable",
+      "source": {
+        "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceExecutable.lean",
+        "bytes": 2787,
+        "sha256": "bbf2ad4c31f34318c45b331f3fdb6e3c805b46f37137fce2dc0bf1f943741d90"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightEFTSpanners/LinkedDistanceExecutable.olean",
+        "bytes": 152184,
+        "sha256": "c5cc695fdbb1e4cdc544ad3bedba2989ce941a0c4d6c1a805af879c841b573b8",
+        "identity": [
+          27,
+          1321292,
+          152184,
+          1792515142951533275,
+          1792515142951533275
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-batch100-entries172-271-20261017/preserved-objects/LightEFTSpanners/LinkedDistanceExecutable.olean",
+      "matching_carriers": 7,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-02.json",
+        "bytes": 222460,
+        "sha256": "cf14612f8b2d83bd96582b06178b2210cd6796bc317ecb16f74bcb7d5a5d3f47"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/037-LightEFTSpanners.LinkedDistanceExecutable-compile/receipt.json",
+          "bytes": 93912,
+          "sha256": "3db5b456d0022efdb44426c1942256fd3b3aa53cd50335990478c64f9b2d135d"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/038-LightEFTSpanners.LinkedDistanceExecutable-resolve/receipt.json",
+          "bytes": 99945,
+          "sha256": "b9292b4aeaaa0f3f7a6711e4a7e23068b4b513d4da892434f5ccf1957fcbb451"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/039-LightEFTSpanners.LinkedDistanceExecutable-replay/receipt.json",
+          "bytes": 96443,
+          "sha256": "93df538d0a2a6a61c5e1e1b39c3f84fc4565c9da7b2cda9933e2945a6690bcde"
+        }
+      }
+    },
+    {
+      "module": "LightEFTSpanners.ControllerTrace",
+      "source": {
+        "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ControllerTrace.lean",
+        "bytes": 2661,
+        "sha256": "d930771797f63dacf44fd9db6dd2a365a54fae4c7b1bee0697686235904436ae"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightEFTSpanners/ControllerTrace.olean",
+        "bytes": 115520,
+        "sha256": "995b3292dd016df4e6d1e6f138c24d731f9eee35c4c8766e912dc1b2c279e8eb",
+        "identity": [
+          27,
+          1321293,
+          115520,
+          1792515142957165321,
+          1792515142957165321
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-batch100-entries172-271-20261017/preserved-objects/LightEFTSpanners/ControllerTrace.olean",
+      "matching_carriers": 7,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-02.json",
+        "bytes": 222460,
+        "sha256": "cf14612f8b2d83bd96582b06178b2210cd6796bc317ecb16f74bcb7d5a5d3f47"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/040-LightEFTSpanners.ControllerTrace-compile/receipt.json",
+          "bytes": 94223,
+          "sha256": "83c62813c7d55e05ace1a17af95726948cf889b62939067330fbb68a3e02271c"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/041-LightEFTSpanners.ControllerTrace-resolve/receipt.json",
+          "bytes": 94920,
+          "sha256": "3f9290351531bb6ac19d736248e28c0d0eb01c8620df07680ac2e77b0c63e86d"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/042-LightEFTSpanners.ControllerTrace-replay/receipt.json",
+          "bytes": 94003,
+          "sha256": "f061640d4d6bc0ddc454ac616b12d89da84d7eed179fa63ebe562eef6eab8624"
+        }
+      }
+    },
+    {
+      "module": "LightEFTSpanners.StoredEdgeMembership",
+      "source": {
+        "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredEdgeMembership.lean",
+        "bytes": 3538,
+        "sha256": "7d8ba0a46fba239b53053042383ea93ee5a2d280f9a1c7de666f30b30eb106d9"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightEFTSpanners/StoredEdgeMembership.olean",
+        "bytes": 345960,
+        "sha256": "9a6dd2ce775db8ed2e07013d4ae4a631764e285a14d84b0090cd686080e1d523",
+        "identity": [
+          27,
+          1321294,
+          345960,
+          1792515142963306526,
+          1792515142963306526
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-batch100-entries172-271-20261017/preserved-objects/LightEFTSpanners/StoredEdgeMembership.olean",
+      "matching_carriers": 7,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-02.json",
+        "bytes": 222460,
+        "sha256": "cf14612f8b2d83bd96582b06178b2210cd6796bc317ecb16f74bcb7d5a5d3f47"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/043-LightEFTSpanners.StoredEdgeMembership-compile/receipt.json",
+          "bytes": 93692,
+          "sha256": "3a5fe1440878f60bbf60faafe81a539a48ead2b7696a6225d0afb9e1810f9077"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/044-LightEFTSpanners.StoredEdgeMembership-resolve/receipt.json",
+          "bytes": 94948,
+          "sha256": "aefbd81365caea579ee0b365aabd8e5882b77b8436a3990be62574f293b01d2c"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-resume231-headroom45g-20261017/attempts/045-LightEFTSpanners.StoredEdgeMembership-replay/receipt.json",
+          "bytes": 94029,
+          "sha256": "385805162815421722b986611220003914206aa0c8510c4f7fbdfc8487a25d79"
+        }
+      }
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSample",
+      "source": {
+        "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSample.lean",
+        "bytes": 2283,
+        "sha256": "6cc557da610dba865f00d60075c7262ed0f8d22f0ff1953f66ce9c0bf8062bfa"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightEFTSpanners/StoredFlagSample.olean",
+        "bytes": 325472,
+        "sha256": "b127eb577550186211c0d59d572b9fe47036d874e56e810c40b730610c739a0a",
+        "identity": [
+          27,
+          1321295,
+          325472,
+          1792515142967953046,
+          1792515142967953046
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-resume206-reviewed-reread-20261018/preserved-objects/LightEFTSpanners/StoredFlagSample.olean",
+      "matching_carriers": 1,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-08.json",
+        "bytes": 224091,
+        "sha256": "83e8e6987c5d37b5dce4d092e46b167f95965a9a0235ce43058d6f767575c2f0"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/074-LightEFTSpanners.StoredFlagSample-compile/receipt.json",
+          "bytes": 95221,
+          "sha256": "1b5029ac63cb2dc65ae39aa2ab32d5aa9836c29212c2a196c49b7c4d3115a61d"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/075-LightEFTSpanners.StoredFlagSample-resolve/receipt.json",
+          "bytes": 96861,
+          "sha256": "a13d5193ea3a7a68ffc09b9bab0b6d1a1d1f0b3165af225ff76ab5e7164e217f"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/076-LightEFTSpanners.StoredFlagSample-replay/receipt.json",
+          "bytes": 95181,
+          "sha256": "4fe8bde7c8b5315046d908e6bd54776b8bd2ff7e4bdcbbe465c8259a58e7b494"
+        }
+      }
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleExecutable",
+      "source": {
+        "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleExecutable.lean",
+        "bytes": 1288,
+        "sha256": "9d0a43d695626da9368e7b018c3b24e209fadc2df8c0c7d76db316ae40816f1a"
+      },
+      "object": {
+        "path": "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects/LightEFTSpanners/StoredFlagSampleExecutable.olean",
+        "bytes": 110512,
+        "sha256": "0bafacfd4e5e17c6703c8753afecb87d24e043a511d1e05bf51596b279faa9da",
+        "identity": [
+          27,
+          1321296,
+          110512,
+          1792515142972470117,
+          1792515142972470117
+        ]
+      },
+      "observed_layout": "primary .olean only; legacy carrier association from preserved chain index; required parts must be confirmed by import admission",
+      "local_carrier": "checkpoints/light-eft-resume206-reviewed-reread-20261018/preserved-objects/LightEFTSpanners/StoredFlagSampleExecutable.olean",
+      "matching_carriers": 1,
+      "chain_part": {
+        "path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-08.json",
+        "bytes": 224091,
+        "sha256": "83e8e6987c5d37b5dce4d092e46b167f95965a9a0235ce43058d6f767575c2f0"
+      },
+      "historical_stages": {
+        "compile": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/077-LightEFTSpanners.StoredFlagSampleExecutable-compile/receipt.json",
+          "bytes": 95287,
+          "sha256": "961fc94df5cefe6f4c90536f97301deb69db76b7fba46c4a7931831d2a07b039"
+        },
+        "resolve": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/078-LightEFTSpanners.StoredFlagSampleExecutable-resolve/receipt.json",
+          "bytes": 96390,
+          "sha256": "8eeab456bf091d469ff3613991ad0d8775e396658ec38a734774376cbd8e791c"
+        },
+        "replay": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/079-LightEFTSpanners.StoredFlagSampleExecutable-replay/receipt.json",
+          "bytes": 95250,
+          "sha256": "95f5257bda2171ffee035e6338ea77c791f0fa0f56d0d8891eac19692ae575a8"
+        }
+      }
+    }
+  ],
+  "qualification": "Fresh byte/source associations to preserved chain carriers only; no repeated Lean validation, no historical runtime/path/inode continuity and no authenticated clean dependency provenance claimed"
+}

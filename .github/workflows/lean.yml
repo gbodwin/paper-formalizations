@@ -37,6 +37,11 @@ jobs:
           axiom-audit: "true"
           axiom-audit-root: "VFTSpanners"
           axiom-audit-allow: "propext,Classical.choice,Quot.sound"
+      - name: Verify paid flag serialization and stored filter composition
+        id: light_eft_paid_focused
+        env:
+          PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-paid-focused-python-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -B checkpoints/light-eft-paid-focused-adapter-20261020/ci_gate.py
       - name: Strictly verify actual stored-edge sample construction and voting
         run: |
           lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredEdgeMembership.lean"
@@ -387,6 +392,7 @@ jobs:
             ${{ runner.temp }}/light-eft-summary-${{ github.run_id }}-${{ github.run_attempt }}
             ${{ runner.temp }}/light-eft-staged-${{ github.run_id }}-${{ github.run_attempt }}
             ${{ runner.temp }}/light-eft-corollary-${{ github.run_id }}-${{ github.run_attempt }}
+            ${{ runner.temp }}/light-eft-paid-focused-${{ github.run_id }}-${{ github.run_attempt }}
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 30

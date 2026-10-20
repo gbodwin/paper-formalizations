@@ -1,0 +1,56 @@
+{
+  "status": "UNELABORATED_SOURCE_CHECKPOINT_BLOCKED_BEFORE_LEAN_EXECUTION",
+  "base": "a04960a8d9337df124272587cf71d31d7392bffe",
+  "accepted_parent_review": {
+    "payloads": 2680,
+    "parts": 2528,
+    "supervised_children": 11,
+    "global_replays": 567,
+    "public_interfaces": 6,
+    "allowed_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "qualification": "Attributed parent independent full-artifact review; no repeated validation"
+  },
+  "files": [
+    {
+      "path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean",
+      "bytes": 3332,
+      "sha256": "45fcf0e1d95e9eb8f35736c88d0d87af59522c911ae050de1c99e0fa340c7c14"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSerialization.lean",
+      "bytes": 4298,
+      "sha256": "9a55ccab554836aeee9a93927afc769ada43111a9da63b515b0b73cba49dc9b0"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-sampling-20261020/staged/PaidFlagFixtures.lean",
+      "bytes": 844,
+      "sha256": "123ef8134d20343e40e9b759ec404a229eb3aa0dcb973c914d728b7298d742cf"
+    }
+  ],
+  "existing_tracked_files_modified": [],
+  "focused_Lean_tests": 0,
+  "source_theorem_status": "draft; not elaborated or accepted",
+  "startup_refusal": "ExactSupervisor admit: non-initial cgroup namespace; hidden ancestor limits cannot be established",
+  "additional_visible_observation": {
+    "qualification": "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN",
+    "namespace": "cgroup:[4026532205]",
+    "headroom": 182665216,
+    "system_available": 17945497600
+  },
+  "local_compiler_checks": "none beyond --version and cache utility sysroot lookup; no Lean elaboration",
+  "runtime": {
+    "version": "Lean4.34.0",
+    "commit": "293d5d0c0c3f3dded4688b3ccd6a33939ac5102b",
+    "release_archive_sha256": "caaa98356098c85dc0fcbbd28e1ec66f39eb6551829972b752ff20e1286b646b",
+    "fresh_pid_proc_consistency": true
+  },
+  "fast_mode": false,
+  "additional_workers": 0,
+  "publication": false,
+  "CI_trigger": false,
+  "utc": "2026-10-20T16:38:54.684022+00:00"
+}

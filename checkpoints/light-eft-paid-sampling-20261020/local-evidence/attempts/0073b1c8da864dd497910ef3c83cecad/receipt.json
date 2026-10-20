@@ -1,0 +1,31 @@
+{
+  "attempt_id": "0073b1c8da864dd497910ef3c83cecad",
+  "label": "fresh-startup-no-child",
+  "argv": [],
+  "cwd": "/workspace/light-eft-paid-sampling-20261020",
+  "supervisor_pid": 5771,
+  "child_pid": null,
+  "exit": null,
+  "state": "failed",
+  "created_utc": "2026-10-20T16:33:44.098619+00:00",
+  "created_monotonic_ns": 12678950975919,
+  "submitted_sources": [],
+  "lean_environment": {
+    "LEAN_SYSROOT": null,
+    "LEAN_PATH": null,
+    "LEAN_SRC_PATH": null
+  },
+  "source_commit": null,
+  "harness_commit": null,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_device": 33,
+  "lock_inode": 32768,
+  "lock_fd": 3,
+  "lock_acquired_utc": "2026-10-20T16:33:44.099062+00:00",
+  "lock_acquired_monotonic_ns": 12678951416342,
+  "preflight_sha256": "3f4af198dd4a97b43ff79fd4cec1ed34ff0ac3af84f4ae0267b554f914b19a1a",
+  "failure": "RuntimeError(\"REFUSED: effective cgroup accounting unavailable: ValueError('Non-initial cgroup namespace: hidden ancestor limits cannot be established')\")",
+  "end_utc": "2026-10-20T16:33:44.106666+00:00",
+  "end_monotonic_ns": 12678959022059,
+  "child_reaped": false
+}

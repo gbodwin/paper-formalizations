@@ -1,0 +1,601 @@
+{
+  "schema": "SOURCE_REVIEW_PLAN_ONLY_v2",
+  "execution_enabled": false,
+  "accepted_base": "a04960a8d9337df124272587cf71d31d7392bffe",
+  "reviewed_source_parent": "1cd3bbf8d866c55a1b9ab1944ee58a2e535acbf7",
+  "source_review_correction": "simp only [List.append_nil] at hs immediately after collect_trace; before hs.trans hr",
+  "source_bindings": [
+    {
+      "module": "LightEFTPaidSamplingStage.PaidFlagSerialization",
+      "path": "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSerialization.lean",
+      "bytes": 4334,
+      "sha256": "129910b88b78ba5f8535ddda1ab814dabaa7d854691c18e338d383ccc4518195",
+      "repository_path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSerialization.lean"
+    },
+    {
+      "module": "LightEFTPaidSamplingStage.PaidFlagSampleComposition",
+      "path": "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean",
+      "bytes": 3332,
+      "sha256": "45fcf0e1d95e9eb8f35736c88d0d87af59522c911ae050de1c99e0fa340c7c14",
+      "repository_path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean"
+    },
+    {
+      "module": "PaidFlagFixtures",
+      "path": "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged/PaidFlagFixtures.lean",
+      "bytes": 844,
+      "sha256": "123ef8134d20343e40e9b759ec404a229eb3aa0dcb973c914d728b7298d742cf",
+      "repository_path": "checkpoints/light-eft-paid-sampling-20261020/staged/PaidFlagFixtures.lean"
+    }
+  ],
+  "dependencies_binding": {
+    "path": "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/focused-v2/DEPENDENCIES-16.json",
+    "bytes": 37320,
+    "sha256": "5c7d20cbb0781053c2734e543a1680e96715d1a763d8a0f0f665de5a773874a2"
+  },
+  "existing_project_dependency_count": 16,
+  "output_package_root": "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+  "output_namespace": "LightEFTPaidSamplingStage",
+  "fresh_work_must_be_absent": true,
+  "package_selection": "One first-package marker for both new modules; preserve first object at its original physical path/inode while compiling second",
+  "external_inputs_required": [
+    "Aesop",
+    "Mathlib.Algebra.Order.Field.Rat",
+    "Mathlib.Basic.ENNReal.Inv",
+    "Mathlib.Basic.ENNReal.Real",
+    "Mathlib.Basic.Real.Basic",
+    "Mathlib.Combinatorics.SimpleGraph.Paths",
+    "Mathlib.Combinatorics.SimpleGraph.Walk.Counting",
+    "Mathlib.Data.List.FinRange",
+    "Mathlib.Data.List.Sort",
+    "Mathlib.Data.Vector.Basic",
+    "Mathlib.Tactic.Linarith",
+    "Mathlib.Tactic.NormNum",
+    "Mathlib.Tactic.Push",
+    "Mathlib.Tactic.Ring"
+  ],
+  "toolchain": {
+    "root": "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux",
+    "version": "4.34.0",
+    "release_commit": "293d5d0c0c3f3dded4688b3ccd6a33939ac5102b",
+    "archive_sha256": "caaa98356098c85dc0fcbbd28e1ec66f39eb6551829972b752ff20e1286b646b",
+    "binaries": [
+      {
+        "path": "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/bin/lean",
+        "bytes": 9024,
+        "sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550"
+      },
+      {
+        "path": "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/bin/leanchecker",
+        "bytes": 51080,
+        "sha256": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe"
+      }
+    ]
+  },
+  "resource_contract": {
+    "admission_GiB": {
+      "compile": 3,
+      "resolve": 3,
+      "replay": 4,
+      "audit": 4
+    },
+    "cpu_seconds": {
+      "compile": 60,
+      "resolve": 60,
+      "replay": 60,
+      "audit": 90
+    },
+    "wall_seconds": 90,
+    "prespawn_seconds": 300,
+    "address_space_bytes": 12884901888,
+    "Lean_heap_MiB": 5120,
+    "Lean_stack_KiB": 65536,
+    "workers": 1,
+    "stop_headroom_bytes": 1073741824,
+    "RSS_stop_bytes": 6442450944,
+    "anonymous_growth_stop_bytes": 3221225472,
+    "output_bytes": {
+      "compile": 16777216,
+      "audit_file": 67108864,
+      "audit_total": 335544320
+    },
+    "core_dump_bytes": 0,
+    "PID_and_OOM_policy": "unchanged; bind and monitor current full accounting view",
+    "lease": "nonblocking exclusive; inherited FD verified; release only after owned reaping/ECHILD and final evidence"
+  },
+  "steps": [
+    {
+      "id": "LightEFTPaidSamplingStage.PaidFlagSerialization:compile",
+      "stage": "compile",
+      "module": "LightEFTPaidSamplingStage.PaidFlagSerialization",
+      "source_binding": {
+        "module": "LightEFTPaidSamplingStage.PaidFlagSerialization",
+        "path": "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSerialization.lean",
+        "bytes": 4334,
+        "sha256": "129910b88b78ba5f8535ddda1ab814dabaa7d854691c18e338d383ccc4518195",
+        "repository_path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSerialization.lean"
+      },
+      "output_package_root": "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+      "expected_target": "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSerialization.olean",
+      "search_roots": [
+        "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+        "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects",
+        "@QUALIFIED_LOCKED_DEPENDENCY_OBJECT_ROOTS@",
+        "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/lib/lean"
+      ],
+      "protected_completed_output_ledgers": [],
+      "all_completed_nonobject_outputs_immutable": true,
+      "expected_project_imports": 13,
+      "expected_project_import_set": [
+        "LightEFTSpanners.ControllerTrace",
+        "LightEFTSpanners.LinkedDistanceExecutable",
+        "LightEFTSpanners.LinkedDistanceInitialization",
+        "LightEFTSpanners.LinkedDistanceKernel",
+        "LightEFTSpanners.LinkedDistanceMachine",
+        "LightEFTSpanners.LinkedDistanceRefinement",
+        "LightEFTSpanners.LinkedDistanceTrace",
+        "LightEFTSpanners.RationalDistanceTable",
+        "LightEFTSpanners.RationalDistanceTest",
+        "LightEFTSpanners.RationalDistanceValues",
+        "LightSpanners.Basic",
+        "LightSpanners.Distance",
+        "LightSpanners.Greedy"
+      ],
+      "argv": [
+        "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "--root=/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged",
+        "-o",
+        "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSerialization.olean",
+        "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSerialization.lean"
+      ],
+      "output_authority": {
+        "previous_complete_parts": "protected immutable union from ledgers",
+        "new_target_parts": [
+          "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSerialization.olean",
+          "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSerialization.olean.private",
+          "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSerialization.olean.server",
+          "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSerialization.ilean",
+          "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSerialization.ir",
+          "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSerialization.ir.sig"
+        ],
+        "new_temporary": "only exact current target .olean.tmp.<verified exec-authorized compiler PID>",
+        "resolution_file": null,
+        "audit_directory": null
+      }
+    },
+    {
+      "id": "LightEFTPaidSamplingStage.PaidFlagSerialization:resolve",
+      "stage": "resolve",
+      "module": "LightEFTPaidSamplingStage.PaidFlagSerialization",
+      "source_binding": {
+        "module": "LightEFTPaidSamplingStage.PaidFlagSerialization",
+        "path": "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSerialization.lean",
+        "bytes": 4334,
+        "sha256": "129910b88b78ba5f8535ddda1ab814dabaa7d854691c18e338d383ccc4518195",
+        "repository_path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSerialization.lean"
+      },
+      "output_package_root": "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+      "expected_target": "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSerialization.olean",
+      "search_roots": [
+        "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+        "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects",
+        "@QUALIFIED_LOCKED_DEPENDENCY_OBJECT_ROOTS@",
+        "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/lib/lean"
+      ],
+      "protected_completed_output_ledgers": [
+        "LightEFTPaidSamplingStage.PaidFlagSerialization:compile"
+      ],
+      "all_completed_nonobject_outputs_immutable": true,
+      "expected_project_imports": 14,
+      "expected_project_import_set": [
+        "LightEFTSpanners.ControllerTrace",
+        "LightEFTSpanners.LinkedDistanceExecutable",
+        "LightEFTSpanners.LinkedDistanceInitialization",
+        "LightEFTSpanners.LinkedDistanceKernel",
+        "LightEFTSpanners.LinkedDistanceMachine",
+        "LightEFTSpanners.LinkedDistanceRefinement",
+        "LightEFTSpanners.LinkedDistanceTrace",
+        "LightEFTSpanners.RationalDistanceTable",
+        "LightEFTSpanners.RationalDistanceTest",
+        "LightEFTSpanners.RationalDistanceValues",
+        "LightSpanners.Basic",
+        "LightSpanners.Distance",
+        "LightSpanners.Greedy",
+        "LightEFTPaidSamplingStage.PaidFlagSerialization"
+      ],
+      "required_helper": "exact singleton resolver",
+      "output_authority": {
+        "previous_complete_parts": "protected immutable union from ledgers",
+        "new_target_parts": [],
+        "new_temporary": null,
+        "resolution_file": "/workspace/light-eft-paid-focused-v2-20261020/work/resolution/PaidFlagSerialization.json",
+        "audit_directory": null
+      }
+    },
+    {
+      "id": "LightEFTPaidSamplingStage.PaidFlagSerialization:replay",
+      "stage": "replay",
+      "module": "LightEFTPaidSamplingStage.PaidFlagSerialization",
+      "source_binding": {
+        "module": "LightEFTPaidSamplingStage.PaidFlagSerialization",
+        "path": "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSerialization.lean",
+        "bytes": 4334,
+        "sha256": "129910b88b78ba5f8535ddda1ab814dabaa7d854691c18e338d383ccc4518195",
+        "repository_path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSerialization.lean"
+      },
+      "output_package_root": "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+      "expected_target": "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSerialization.olean",
+      "search_roots": [
+        "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+        "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects",
+        "@QUALIFIED_LOCKED_DEPENDENCY_OBJECT_ROOTS@",
+        "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/lib/lean"
+      ],
+      "protected_completed_output_ledgers": [
+        "LightEFTPaidSamplingStage.PaidFlagSerialization:compile"
+      ],
+      "all_completed_nonobject_outputs_immutable": true,
+      "expected_project_imports": 14,
+      "expected_project_import_set": [
+        "LightEFTSpanners.ControllerTrace",
+        "LightEFTSpanners.LinkedDistanceExecutable",
+        "LightEFTSpanners.LinkedDistanceInitialization",
+        "LightEFTSpanners.LinkedDistanceKernel",
+        "LightEFTSpanners.LinkedDistanceMachine",
+        "LightEFTSpanners.LinkedDistanceRefinement",
+        "LightEFTSpanners.LinkedDistanceTrace",
+        "LightEFTSpanners.RationalDistanceTable",
+        "LightEFTSpanners.RationalDistanceTest",
+        "LightEFTSpanners.RationalDistanceValues",
+        "LightSpanners.Basic",
+        "LightSpanners.Distance",
+        "LightSpanners.Greedy",
+        "LightEFTPaidSamplingStage.PaidFlagSerialization"
+      ],
+      "argv": [
+        "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/bin/leanchecker",
+        "-v",
+        "LightEFTPaidSamplingStage.PaidFlagSerialization"
+      ],
+      "output_authority": {
+        "previous_complete_parts": "protected immutable union from ledgers",
+        "new_target_parts": [],
+        "new_temporary": null,
+        "resolution_file": null,
+        "audit_directory": null
+      }
+    },
+    {
+      "id": "LightEFTPaidSamplingStage.PaidFlagSerialization:audit",
+      "stage": "audit",
+      "module": "LightEFTPaidSamplingStage.PaidFlagSerialization",
+      "source_binding": {
+        "module": "LightEFTPaidSamplingStage.PaidFlagSerialization",
+        "path": "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSerialization.lean",
+        "bytes": 4334,
+        "sha256": "129910b88b78ba5f8535ddda1ab814dabaa7d854691c18e338d383ccc4518195",
+        "repository_path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSerialization.lean"
+      },
+      "output_package_root": "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+      "expected_target": "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSerialization.olean",
+      "search_roots": [
+        "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+        "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects",
+        "@QUALIFIED_LOCKED_DEPENDENCY_OBJECT_ROOTS@",
+        "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/lib/lean"
+      ],
+      "protected_completed_output_ledgers": [
+        "LightEFTPaidSamplingStage.PaidFlagSerialization:compile"
+      ],
+      "all_completed_nonobject_outputs_immutable": true,
+      "expected_project_imports": 14,
+      "expected_project_import_set": [
+        "LightEFTSpanners.ControllerTrace",
+        "LightEFTSpanners.LinkedDistanceExecutable",
+        "LightEFTSpanners.LinkedDistanceInitialization",
+        "LightEFTSpanners.LinkedDistanceKernel",
+        "LightEFTSpanners.LinkedDistanceMachine",
+        "LightEFTSpanners.LinkedDistanceRefinement",
+        "LightEFTSpanners.LinkedDistanceTrace",
+        "LightEFTSpanners.RationalDistanceTable",
+        "LightEFTSpanners.RationalDistanceTest",
+        "LightEFTSpanners.RationalDistanceValues",
+        "LightSpanners.Basic",
+        "LightSpanners.Distance",
+        "LightSpanners.Greedy",
+        "LightEFTPaidSamplingStage.PaidFlagSerialization"
+      ],
+      "required_helper": "complete actual-owner recursive audit; all generated/private owners; no guessed owner count",
+      "output_authority": {
+        "previous_complete_parts": "protected immutable union from ledgers",
+        "new_target_parts": [],
+        "new_temporary": null,
+        "resolution_file": null,
+        "audit_directory": "/workspace/light-eft-paid-focused-v2-20261020/work/audit/PaidFlagSerialization"
+      }
+    },
+    {
+      "id": "LightEFTPaidSamplingStage.PaidFlagSampleComposition:compile",
+      "stage": "compile",
+      "module": "LightEFTPaidSamplingStage.PaidFlagSampleComposition",
+      "source_binding": {
+        "module": "LightEFTPaidSamplingStage.PaidFlagSampleComposition",
+        "path": "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean",
+        "bytes": 3332,
+        "sha256": "45fcf0e1d95e9eb8f35736c88d0d87af59522c911ae050de1c99e0fa340c7c14",
+        "repository_path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean"
+      },
+      "output_package_root": "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+      "expected_target": "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSampleComposition.olean",
+      "search_roots": [
+        "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+        "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects",
+        "@QUALIFIED_LOCKED_DEPENDENCY_OBJECT_ROOTS@",
+        "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/lib/lean"
+      ],
+      "protected_completed_output_ledgers": [
+        "LightEFTPaidSamplingStage.PaidFlagSerialization:compile"
+      ],
+      "all_completed_nonobject_outputs_immutable": true,
+      "expected_project_imports": 17,
+      "expected_project_import_set": [
+        "LightEFTPaidSamplingStage.PaidFlagSerialization",
+        "LightEFTSpanners.ControllerTrace",
+        "LightEFTSpanners.LinkedDistanceExecutable",
+        "LightEFTSpanners.LinkedDistanceInitialization",
+        "LightEFTSpanners.LinkedDistanceKernel",
+        "LightEFTSpanners.LinkedDistanceMachine",
+        "LightEFTSpanners.LinkedDistanceRefinement",
+        "LightEFTSpanners.LinkedDistanceTrace",
+        "LightEFTSpanners.RationalDistanceTable",
+        "LightEFTSpanners.RationalDistanceTest",
+        "LightEFTSpanners.RationalDistanceValues",
+        "LightEFTSpanners.StoredEdgeMembership",
+        "LightEFTSpanners.StoredFlagSample",
+        "LightEFTSpanners.StoredFlagSampleExecutable",
+        "LightSpanners.Basic",
+        "LightSpanners.Distance",
+        "LightSpanners.Greedy"
+      ],
+      "argv": [
+        "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "--root=/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged",
+        "-o",
+        "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSampleComposition.olean",
+        "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean"
+      ],
+      "output_authority": {
+        "previous_complete_parts": "protected immutable union from ledgers",
+        "new_target_parts": [
+          "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSampleComposition.olean",
+          "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSampleComposition.olean.private",
+          "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSampleComposition.olean.server",
+          "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSampleComposition.ilean",
+          "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSampleComposition.ir",
+          "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSampleComposition.ir.sig"
+        ],
+        "new_temporary": "only exact current target .olean.tmp.<verified exec-authorized compiler PID>",
+        "resolution_file": null,
+        "audit_directory": null
+      }
+    },
+    {
+      "id": "LightEFTPaidSamplingStage.PaidFlagSampleComposition:resolve",
+      "stage": "resolve",
+      "module": "LightEFTPaidSamplingStage.PaidFlagSampleComposition",
+      "source_binding": {
+        "module": "LightEFTPaidSamplingStage.PaidFlagSampleComposition",
+        "path": "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean",
+        "bytes": 3332,
+        "sha256": "45fcf0e1d95e9eb8f35736c88d0d87af59522c911ae050de1c99e0fa340c7c14",
+        "repository_path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean"
+      },
+      "output_package_root": "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+      "expected_target": "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSampleComposition.olean",
+      "search_roots": [
+        "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+        "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects",
+        "@QUALIFIED_LOCKED_DEPENDENCY_OBJECT_ROOTS@",
+        "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/lib/lean"
+      ],
+      "protected_completed_output_ledgers": [
+        "LightEFTPaidSamplingStage.PaidFlagSerialization:compile",
+        "LightEFTPaidSamplingStage.PaidFlagSampleComposition:compile"
+      ],
+      "all_completed_nonobject_outputs_immutable": true,
+      "expected_project_imports": 18,
+      "expected_project_import_set": [
+        "LightEFTPaidSamplingStage.PaidFlagSerialization",
+        "LightEFTSpanners.ControllerTrace",
+        "LightEFTSpanners.LinkedDistanceExecutable",
+        "LightEFTSpanners.LinkedDistanceInitialization",
+        "LightEFTSpanners.LinkedDistanceKernel",
+        "LightEFTSpanners.LinkedDistanceMachine",
+        "LightEFTSpanners.LinkedDistanceRefinement",
+        "LightEFTSpanners.LinkedDistanceTrace",
+        "LightEFTSpanners.RationalDistanceTable",
+        "LightEFTSpanners.RationalDistanceTest",
+        "LightEFTSpanners.RationalDistanceValues",
+        "LightEFTSpanners.StoredEdgeMembership",
+        "LightEFTSpanners.StoredFlagSample",
+        "LightEFTSpanners.StoredFlagSampleExecutable",
+        "LightSpanners.Basic",
+        "LightSpanners.Distance",
+        "LightSpanners.Greedy",
+        "LightEFTPaidSamplingStage.PaidFlagSampleComposition"
+      ],
+      "required_helper": "exact singleton resolver",
+      "output_authority": {
+        "previous_complete_parts": "protected immutable union from ledgers",
+        "new_target_parts": [],
+        "new_temporary": null,
+        "resolution_file": "/workspace/light-eft-paid-focused-v2-20261020/work/resolution/PaidFlagSampleComposition.json",
+        "audit_directory": null
+      }
+    },
+    {
+      "id": "LightEFTPaidSamplingStage.PaidFlagSampleComposition:replay",
+      "stage": "replay",
+      "module": "LightEFTPaidSamplingStage.PaidFlagSampleComposition",
+      "source_binding": {
+        "module": "LightEFTPaidSamplingStage.PaidFlagSampleComposition",
+        "path": "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean",
+        "bytes": 3332,
+        "sha256": "45fcf0e1d95e9eb8f35736c88d0d87af59522c911ae050de1c99e0fa340c7c14",
+        "repository_path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean"
+      },
+      "output_package_root": "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+      "expected_target": "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSampleComposition.olean",
+      "search_roots": [
+        "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+        "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects",
+        "@QUALIFIED_LOCKED_DEPENDENCY_OBJECT_ROOTS@",
+        "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/lib/lean"
+      ],
+      "protected_completed_output_ledgers": [
+        "LightEFTPaidSamplingStage.PaidFlagSerialization:compile",
+        "LightEFTPaidSamplingStage.PaidFlagSampleComposition:compile"
+      ],
+      "all_completed_nonobject_outputs_immutable": true,
+      "expected_project_imports": 18,
+      "expected_project_import_set": [
+        "LightEFTPaidSamplingStage.PaidFlagSerialization",
+        "LightEFTSpanners.ControllerTrace",
+        "LightEFTSpanners.LinkedDistanceExecutable",
+        "LightEFTSpanners.LinkedDistanceInitialization",
+        "LightEFTSpanners.LinkedDistanceKernel",
+        "LightEFTSpanners.LinkedDistanceMachine",
+        "LightEFTSpanners.LinkedDistanceRefinement",
+        "LightEFTSpanners.LinkedDistanceTrace",
+        "LightEFTSpanners.RationalDistanceTable",
+        "LightEFTSpanners.RationalDistanceTest",
+        "LightEFTSpanners.RationalDistanceValues",
+        "LightEFTSpanners.StoredEdgeMembership",
+        "LightEFTSpanners.StoredFlagSample",
+        "LightEFTSpanners.StoredFlagSampleExecutable",
+        "LightSpanners.Basic",
+        "LightSpanners.Distance",
+        "LightSpanners.Greedy",
+        "LightEFTPaidSamplingStage.PaidFlagSampleComposition"
+      ],
+      "argv": [
+        "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/bin/leanchecker",
+        "-v",
+        "LightEFTPaidSamplingStage.PaidFlagSampleComposition"
+      ],
+      "output_authority": {
+        "previous_complete_parts": "protected immutable union from ledgers",
+        "new_target_parts": [],
+        "new_temporary": null,
+        "resolution_file": null,
+        "audit_directory": null
+      }
+    },
+    {
+      "id": "LightEFTPaidSamplingStage.PaidFlagSampleComposition:audit",
+      "stage": "audit",
+      "module": "LightEFTPaidSamplingStage.PaidFlagSampleComposition",
+      "source_binding": {
+        "module": "LightEFTPaidSamplingStage.PaidFlagSampleComposition",
+        "path": "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean",
+        "bytes": 3332,
+        "sha256": "45fcf0e1d95e9eb8f35736c88d0d87af59522c911ae050de1c99e0fa340c7c14",
+        "repository_path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean"
+      },
+      "output_package_root": "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+      "expected_target": "/workspace/light-eft-paid-focused-v2-20261020/work/objects/LightEFTPaidSamplingStage/PaidFlagSampleComposition.olean",
+      "search_roots": [
+        "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+        "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects",
+        "@QUALIFIED_LOCKED_DEPENDENCY_OBJECT_ROOTS@",
+        "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/lib/lean"
+      ],
+      "protected_completed_output_ledgers": [
+        "LightEFTPaidSamplingStage.PaidFlagSerialization:compile",
+        "LightEFTPaidSamplingStage.PaidFlagSampleComposition:compile"
+      ],
+      "all_completed_nonobject_outputs_immutable": true,
+      "expected_project_imports": 18,
+      "expected_project_import_set": [
+        "LightEFTPaidSamplingStage.PaidFlagSerialization",
+        "LightEFTSpanners.ControllerTrace",
+        "LightEFTSpanners.LinkedDistanceExecutable",
+        "LightEFTSpanners.LinkedDistanceInitialization",
+        "LightEFTSpanners.LinkedDistanceKernel",
+        "LightEFTSpanners.LinkedDistanceMachine",
+        "LightEFTSpanners.LinkedDistanceRefinement",
+        "LightEFTSpanners.LinkedDistanceTrace",
+        "LightEFTSpanners.RationalDistanceTable",
+        "LightEFTSpanners.RationalDistanceTest",
+        "LightEFTSpanners.RationalDistanceValues",
+        "LightEFTSpanners.StoredEdgeMembership",
+        "LightEFTSpanners.StoredFlagSample",
+        "LightEFTSpanners.StoredFlagSampleExecutable",
+        "LightSpanners.Basic",
+        "LightSpanners.Distance",
+        "LightSpanners.Greedy",
+        "LightEFTPaidSamplingStage.PaidFlagSampleComposition"
+      ],
+      "required_helper": "complete actual-owner recursive audit; all generated/private owners; no guessed owner count",
+      "output_authority": {
+        "previous_complete_parts": "protected immutable union from ledgers",
+        "new_target_parts": [],
+        "new_temporary": null,
+        "resolution_file": null,
+        "audit_directory": "/workspace/light-eft-paid-focused-v2-20261020/work/audit/PaidFlagSampleComposition"
+      }
+    },
+    {
+      "id": "PaidFlagFixtures:elaborate",
+      "stage": "compile",
+      "module": "PaidFlagFixtures",
+      "source_binding": {
+        "module": "PaidFlagFixtures",
+        "path": "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged/PaidFlagFixtures.lean",
+        "bytes": 844,
+        "sha256": "123ef8134d20343e40e9b759ec404a229eb3aa0dcb973c914d728b7298d742cf",
+        "repository_path": "checkpoints/light-eft-paid-sampling-20261020/staged/PaidFlagFixtures.lean"
+      },
+      "output_package_root": "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+      "search_roots": [
+        "/workspace/light-eft-paid-focused-v2-20261020/work/objects",
+        "/workspace/light-eft-paid-focused-v2-inputs-20261020/objects",
+        "@QUALIFIED_LOCKED_DEPENDENCY_OBJECT_ROOTS@",
+        "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/lib/lean"
+      ],
+      "protected_completed_output_ledgers": [
+        "LightEFTPaidSamplingStage.PaidFlagSerialization:compile",
+        "LightEFTPaidSamplingStage.PaidFlagSampleComposition:compile"
+      ],
+      "all_completed_nonobject_outputs_immutable": true,
+      "argv": [
+        "/workspace/light-eft-runtime-20261020/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "--root=/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged",
+        "/workspace/light-eft-paid-sampling-20261020/checkpoints/light-eft-paid-sampling-20261020/staged/PaidFlagFixtures.lean"
+      ],
+      "output_authority": "no generated object/resolution/audit output; preserve both prior output ledgers",
+      "expected_project_imports": 18
+    }
+  ],
+  "readiness_blockers": [
+    "Full initial cgroup hierarchy not verified: current non-initial namespace and truncated /.. mount",
+    "Observed visible headroom below unchanged3/4GiB; no launch retried",
+    "Local external object closure is not supplied; ordinary CI build supplies its current locked objects to the focused adapter",
+    "Finite shared-package adapter and exact audit/resolver helpers are implemented in checkpoints/light-eft-paid-focused-adapter-20261020; sequential independent review is required before push/CI"
+  ],
+  "qualification": "Frozen local source/object byte plan, not production authorization or production manifest; no historical absolute path or runtime identity resumed"
+}
