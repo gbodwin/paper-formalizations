@@ -1,0 +1,83 @@
+diff --git a/.github/workflows/lean.yml b/.github/workflows/lean.yml
+--- a/.github/workflows/lean.yml
++++ b/.github/workflows/lean.yml
+@@ -348,6 +348,20 @@
+         env:
+           PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-python-${{ github.run_id }}-${{ github.run_attempt }}
+         run: python3 -B checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py
++      - name: Verify supplied response output against joint decoder
++        id: light_eft_paid_joint_bridge
++        env:
++          PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-paid-joint-bridge-python-${{ github.run_id }}-${{ github.run_attempt }}
++        run: python3 -B checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci_gate.py
++      - name: Preserve focused bridge evidence before remaining checks
++        if: ${{ always() && steps.light_eft_paid_joint_bridge.outcome != 'skipped' }}
++        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
++        with:
++          name: light-eft-paid-joint-bridge-${{ github.run_id }}-${{ github.run_attempt }}
++          path: ${{ runner.temp }}/light-eft-paid-joint-bridge-${{ github.run_id }}-${{ github.run_attempt }}
++          include-hidden-files: true
++          if-no-files-found: error
++          retention-days: 30
+       - name: Verify canonical actual-output corollary after three context replays
+         id: light_eft_corollary
+         env:
+@@ -393,6 +407,7 @@
+             ${{ runner.temp }}/light-eft-staged-${{ github.run_id }}-${{ github.run_attempt }}
+             ${{ runner.temp }}/light-eft-corollary-${{ github.run_id }}-${{ github.run_attempt }}
+             ${{ runner.temp }}/light-eft-paid-focused-${{ github.run_id }}-${{ github.run_attempt }}
++            ${{ runner.temp }}/light-eft-paid-joint-bridge-${{ github.run_id }}-${{ github.run_attempt }}
+           include-hidden-files: true
+           if-no-files-found: error
+           retention-days: 30
+diff --git a/checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json b/checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json
+--- a/checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json
++++ b/checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json
+@@ -157,8 +157,8 @@
+   "engine_files": [
+     {
+       "path": ".github/workflows/lean.yml",
+-      "bytes": 44374,
+-      "sha256": "60e73eaff3974059b2b5ccd62fc24430d022b823f05d5d511f3fdc498caea374"
++      "bytes": 45380,
++      "sha256": "3fc2e3237b4a9ff6a95055d90faf7e6514ac1ac1b199df4738ee2e2b0d1e03fe"
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+diff --git a/checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci-spec.json b/checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci-spec.json
+--- a/checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci-spec.json
++++ b/checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci-spec.json
+@@ -620,8 +620,8 @@
+     },
+     {
+       "path": ".github/workflows/lean.yml",
+-      "bytes": 44374,
+-      "sha256": "60e73eaff3974059b2b5ccd62fc24430d022b823f05d5d511f3fdc498caea374"
++      "bytes": 45380,
++      "sha256": "3fc2e3237b4a9ff6a95055d90faf7e6514ac1ac1b199df4738ee2e2b0d1e03fe"
+     },
+     {
+       "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/collision_coverage.py",
+diff --git a/checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json b/checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json
+--- a/checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json
++++ b/checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json
+@@ -2269,8 +2269,8 @@
+   "engine_files": [
+     {
+       "path": ".github/workflows/lean.yml",
+-      "bytes": 44374,
+-      "sha256": "60e73eaff3974059b2b5ccd62fc24430d022b823f05d5d511f3fdc498caea374"
++      "bytes": 45380,
++      "sha256": "3fc2e3237b4a9ff6a95055d90faf7e6514ac1ac1b199df4738ee2e2b0d1e03fe"
+     },
+     {
+       "path": "checkpoints/light-eft-actual-supplied-forest-probability-result-20261018/artifacts/objects/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.olean",
+@@ -2505,7 +2505,7 @@
+     {
+       "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci-spec.json",
+       "bytes": 30822,
+-      "sha256": "a629b1eba51fd998b61ef934625d9f2b086c4dae21e8066ef5b85a8b1b7eba18"
++      "sha256": "916a8a20075632be02b36c5e313ce93810293aef10e0e54e5addb0a0bcde42ea"
+     },
+     {
+       "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_accounting.py",
