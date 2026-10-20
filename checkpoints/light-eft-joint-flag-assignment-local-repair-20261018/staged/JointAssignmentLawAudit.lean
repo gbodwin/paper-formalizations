@@ -33,8 +33,21 @@ def marker (text : String) : IO Unit := do
   out.putStrLn text
   out.flush
 
+/- Only fresh keys and scalar locations escape a reader frame. Locations refer
+to the pre-existing environment's selected ModuleData, whose regions remain
+owned by that environment for the entire scan. No newly read ConstantInfo,
+Expr, Name, String or ModuleData is retained by State. -/
+structure Location where
+  owner : Nat
+  slot : Nat
+
+structure RawClaim where
+  owner : Nat
+  auxiliary : Bool
+
 structure State where
-  claims : Std.HashMap ByteArray Nat := {}
+  claims : Std.HashMap ByteArray RawClaim := {}
+  declarations : Std.HashMap ByteArray Location := {}
   issues : Array String := #[]
   modules : Nat := 0
   constNames : Nat := 0
@@ -44,6 +57,55 @@ structure State where
   peakRegions : Nat := 0
   repetitions : Nat := 0
   collisions : Nat := 0
+  metadataOverlaps : Nat := 0
+  auxiliaryOverlaps : Nat := 0
+  actualDeclarations : Nat := 0
+  actualNames : Nat := 0
+  duplicateDeclarations : Nat := 0
+  compatible : Nat := 0
+  incompatible : Nat := 0
+  unclassified : Nat := 0
+
+/- Same predicate as the pinned Environment.subsumesInfo. Expr BEq is Lean's
+alpha-equivalence (not definitional equality); proof values are intentionally
+absent from this theorem-compatibility rule. No name-pattern exceptions. -/
+def isPropCheap (lookup : Name → Option ConstantInfo) (ty : Expr) : Bool := Id.run do
+  let mut body := ty
+  while body.isForall do
+    let .forallE (body := next) .. := body | return false
+    body := next
+  let .const name .. := body.getAppFn | return false
+  let some decl := lookup name | return false
+  let mut result := decl.type
+  for _ in 0...body.getAppNumArgs do
+    let .forallE (body := next) .. := result | return false
+    result := next
+  return result.isProp
+
+def subsumesInfo (lookup : Name → Option ConstantInfo) (new prior : ConstantInfo) : Bool :=
+  new.name == prior.name && new.type == prior.type &&
+    new.levelParams == prior.levelParams &&
+    match new, prior with
+    | .thmInfo a, .thmInfo b => a.all == b.all
+    | .thmInfo a, .axiomInfo b => a.all == [b.name] && !b.isUnsafe
+    | .axiomInfo a, .axiomInfo b =>
+      a.isUnsafe == b.isUnsafe && isPropCheap lookup a.type
+    | _, _ => false
+
+private def infoAt (data : Array ModuleData) (loc : Location) : Option ConstantInfo := do
+  let mod ← data[loc.owner]?
+  mod.constants[loc.slot]?
+
+private def lookupDeclaration (data : Array ModuleData) (state : State)
+    (name : Name) : Option ConstantInfo := do
+  let loc ← state.declarations.get? (ownedKey name)
+  infoAt data loc
+
+private def unclassified (state : State) (owner : Nat) (scope : String) : IO State := do
+  marker s!"COLLISION-UNCLASSIFIED: {state.unclassified} owner={owner} scope={scope}"
+  return { state with
+    unclassified := state.unclassified + 1
+    issues := state.issues.push s!"unclassified collision metadata: owner={owner} scope={scope}" }
 
 private structure OwnedParts where
   data : IO.Ref (Array ModuleData)
@@ -65,33 +127,79 @@ private structure OwnedParts where
     readPart parts (OLeanLevel.server.adjustFileName file)
     readPart parts (OLeanLevel.private.adjustFileName file)
 
-private def addClaim (state : State) (owner : Nat) (key : ByteArray) : State := Id.run do
-  let mut state := state
+private def addClaim (state : State) (owner : Nat) (key : ByteArray)
+    (auxiliary : Bool) : IO State := do
   if let some prior := state.claims.get? key then
-    if prior == owner then
-      state := { state with repetitions := state.repetitions + 1 }
+    if prior.owner == owner then
+      return { state with repetitions := state.repetitions + 1 }
     else
-      state := { state with
+      let category := if auxiliary || prior.auxiliary then "auxiliary-ownership" else "constant-name-metadata"
+      marker s!"COLLISION-CLAIM: {state.collisions} key={hexKey key} prior={prior.owner} owner={owner} class={category}"
+      return { state with
         collisions := state.collisions + 1
-        issues := state.issues.push s!"imported-name collision: key={hexKey key}: module indices {prior}, {owner}" }
+        metadataOverlaps := state.metadataOverlaps + (if auxiliary || prior.auxiliary then 0 else 1)
+        auxiliaryOverlaps := state.auxiliaryOverlaps + (if auxiliary || prior.auxiliary then 1 else 0) }
   else
-    state := { state with claims := state.claims.insert key owner }
-  return state
+    return { state with claims := state.claims.insert key { owner, auxiliary } }
 
 @[noinline] private def consumeNames (parts : OwnedParts) (owner : Nat) (initial : State) : IO State := do
   let data ← parts.data.get
   let mut state := initial
   for part in data do
+    if part.constNames.size != part.constants.size then
+      state ← unclassified state owner "raw-shape"
+    for slot in [:part.constants.size] do
+      if part.constNames[slot]? != some part.constants[slot]!.name then
+        state ← unclassified state owner "raw-name"
     for name in part.constNames do
-      state := addClaim state owner (ownedKey name)
+      state ← addClaim state owner (ownedKey name) false
       state := { state with constNames := state.constNames + 1 }
     for name in part.extraConstNames do
-      state := addClaim state owner (ownedKey name)
+      state ← addClaim state owner (ownedKey name) true
       state := { state with extraConstNames := state.extraConstNames + 1 }
   return state
-  -- The non-inlined call ends before data.set #[] and any free operation.
-  -- Only independently allocated ByteArray keys, scalar counts/owners and
-  -- strings built from those keys escape; no ModuleData/Name/borrowed UTF8 does.
+  -- Only independently allocated keys, scalar counts/owners and strings built
+  -- from them escape. Reader frames return before data clearing or release.
+
+@[noinline] private def consumeDeclarations (data : Array ModuleData) (owner : Nat)
+    (initial : State) : IO State := do
+  let some mod := data[owner]? | return ← unclassified initial owner "module-count"
+  let mut state := initial
+  if mod.constNames.size != mod.constants.size then
+    state ← unclassified state owner "effective-shape"
+  state := { state with actualNames := state.actualNames + mod.constNames.size }
+  for slot in [:mod.constants.size] do
+    let info := mod.constants[slot]!
+    state := { state with actualDeclarations := state.actualDeclarations + 1 }
+    if mod.constNames[slot]? != some info.name then
+      state ← unclassified state owner "effective-name"
+    let freshKey := ownedKey info.name
+    let key := (state.claims.getKey? freshKey).getD freshKey
+    if let some loc := state.declarations.get? key then
+      let some prior := infoAt data loc |
+        state ← unclassified state owner "location"
+        continue
+      -- Just as finalizeImport, duplicate processing sees the old map; update
+      -- only if the new representation subsumes the previous representative.
+      let lookup := lookupDeclaration data state
+      let replace := subsumesInfo lookup info prior
+      let retain := if replace then false else subsumesInfo lookup prior info
+      let result := if replace then "compatible-update" else if retain then "compatible-retain" else "incompatible"
+      marker s!"COLLISION-DECL: {state.duplicateDeclarations} key={hexKey key} prior={loc.owner} owner={owner} result={result}"
+      state := { state with duplicateDeclarations := state.duplicateDeclarations + 1 }
+      if replace || retain then
+        state := { state with compatible := state.compatible + 1 }
+        if replace then
+          state := { state with declarations := state.declarations.insert key { owner, slot } }
+      else
+        state := { state with
+          incompatible := state.incompatible + 1
+          issues := state.issues.push s!"incompatible imported declaration: key={hexKey key} module indices {loc.owner}, {owner}" }
+    else
+      state := { state with declarations := state.declarations.insert key { owner, slot } }
+  return state
+  -- ConstantInfo/Expr/Name values here belong to the still-live input
+  -- environment, not newly read parts. Only owned keys and Nat locations escape.
 
 @[noinline] private def countRegions (parts : OwnedParts) : IO Nat := do
   return (← parts.regions.get).size
@@ -121,13 +229,21 @@ private def addClaim (state : State) (owner : Nat) (key : ByteArray) : State := 
     freed := freed + 1
   return freed
 
-@[noinline] private unsafe def scanOne (owner : Nat) (file : System.FilePath) (initial : State) : IO State := do
+@[noinline] private unsafe def scanOne (data : Array ModuleData)
+    (owner : Nat) (file : System.FilePath) (initial : State) : IO State := do
   let parts : OwnedParts := { data := (← IO.mkRef #[]), regions := (← IO.mkRef #[]) }
   let beforeConst := initial.constNames
   let beforeExtra := initial.extraConstNames
+  let beforeActual := initial.actualDeclarations
+  let beforeNames := initial.actualNames
+  let beforeDuplicates := initial.duplicateDeclarations
+  let beforeCompatible := initial.compatible
+  let beforeIncompatible := initial.incompatible
+  let beforeUnclassified := initial.unclassified
   let result : Except IO.Error State ← try
     loadParts parts file
-    pure (.ok (← consumeNames parts owner initial))
+    let state ← consumeNames parts owner initial
+    pure (.ok (← consumeDeclarations data owner state))
   catch error => pure (.error error)
   let read ← countRegions parts
   let freed ← releaseParts parts
@@ -140,6 +256,7 @@ private def addClaim (state : State) (owner : Nat) (key : ByteArray) : State := 
     let constCount := state.constNames - beforeConst
     let extraCount := state.extraConstNames - beforeExtra
     marker s!"COLLISION-MODULE: {owner} {read} parts, {constCount} constNames, {extraCount} extraConstNames, {freed} regions freed"
+    marker s!"COLLISION-ACTUAL: {owner} {state.actualDeclarations - beforeActual} declarations, {state.actualNames - beforeNames} constNames, {state.duplicateDeclarations - beforeDuplicates} duplicates, {state.compatible - beforeCompatible} compatible, {state.incompatible - beforeIncompatible} incompatible, {state.unclassified - beforeUnclassified} unclassified"
     return { state with
       modules := state.modules + 1
       parts := state.parts + read
@@ -149,16 +266,21 @@ private def addClaim (state : State) (owner : Nat) (key : ByteArray) : State := 
 structure Report where
   issues : Array String
 
-@[noinline] unsafe def scan (modules : Array Name) : IO Report := do
+@[noinline] unsafe def scan (env : Environment) : IO Report := do
+  let modules := env.allImportedModuleNames
+  let data := env.header.moduleData
   marker s!"AUDIT-PHASE: collision-start modules={modules.size}"
   let mut state : State := {}
+  if data.size != modules.size then
+    state ← unclassified state 0 "module-count"
   for index in [:modules.size] do
-    state ← scanOne index (← findOLean modules[index]!) state
+    state ← scanOne data index (← findOLean modules[index]!) state
   let count := state.constNames + state.extraConstNames
   marker s!"COLLISION-COVERAGE: {state.modules} modules, {count} declarations/extra-name claims, {state.parts} parts read, {state.freed} regions freed, {state.peakRegions} peak owned regions, {state.claims.size} independent keys, {state.constNames} constNames, {state.extraConstNames} extraConstNames, {state.repetitions} same-module repetitions, {state.collisions} cross-module collisions"
+  marker s!"COLLISION-CLASSIFICATION: {state.metadataOverlaps} constant-name metadata overlaps, {state.auxiliaryOverlaps} auxiliary ownership overlaps, {state.actualDeclarations} effective declarations, {state.actualNames} effective constNames, {state.duplicateDeclarations} duplicate declarations, {state.compatible} compatible, {state.incompatible} incompatible, {state.unclassified} unclassified, {state.declarations.size} effective keys"
   return { issues := state.issues }
-  -- The hash table is ordinary owned memory and is dropped at this boundary,
-  -- before the independent owner/recursive audit phases start.
+  -- The original imported environment stays alive throughout this call. Its
+  -- regions are never freed here. Only independently owned scan state is dropped.
 
 end LightEFTAuditCollision
 
@@ -170,7 +292,7 @@ open Lean in
 run_cmd do
   let env := (← getEnv).setExporting false
   let modules := env.allImportedModuleNames
-  let collisionReport ← LightEFTAuditCollision.scan modules
+  let collisionReport ← LightEFTAuditCollision.scan env
   let target := "LightEFTJointFlagSamplingStage.JointAssignmentLaw".toName
   unless modules.contains target do throwError "Missing new target module"
   let allowed : Array Name := #["propext".toName, "Classical.choice".toName, "Quot.sound".toName]
