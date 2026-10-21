@@ -1,0 +1,28 @@
+--- a/scripts/KernelCheck.sh
++++ b/scripts/KernelCheck.sh
+@@ -11 +11,2 @@
+-    exec lake env /bin/bash --noprofile --norc -p -euo pipefail -c '
++    exec /usr/bin/python3 -I -B checkpoints/light-eft-replay-admission-plan-20261021/replay_preflight.py before-lake /bin/bash --noprofile --norc -p -euo pipefail -c '
++/usr/bin/python3 -I -B checkpoints/light-eft-replay-admission-plan-20261021/replay_preflight.py verify "$-" "$BASH_VERSION"
+--- a/.github/workflows/lean.yml
++++ b/.github/workflows/lean.yml
+@@ -407,0 +408,11 @@
++      - name: Observe replay launcher admission on this runner
++        shell: /usr/bin/python3 -I -B {0}
++        env:
++          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
++          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
++          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
++          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
++        run: |
++          import runpy, sys
++          sys.argv = ['checkpoints/light-eft-replay-admission-plan-20261021/replay_preflight.py', 'bootstrap']
++          runpy.run_path('checkpoints/light-eft-replay-admission-plan-20261021/replay_preflight.py', run_name='__main__')
+@@ -408,0 +420,5 @@
++        env:
++          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
++          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
++          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
++          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+@@ -457,0 +474 @@
++            ${{ runner.temp }}/light-eft-replay-admission-${{ github.run_id }}-${{ github.run_attempt }}

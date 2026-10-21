@@ -1,0 +1,96 @@
+{
+  "status": "SOURCE_ONLY_ADMISSION_PROPOSAL; NOT_WIRED_OR_RUN",
+  "base": "0747b30af2bafcc57ae2ab89289af59d670c8068",
+  "production_unchanged": true,
+  "placement": "Immediately after canonical corollary gate and immediately before global replay; ordinary build and earlier resource gates unchanged",
+  "phases": [
+    {
+      "name": "bootstrap",
+      "actual_runner_boundary": "isolated absolute Python runner step before the new outer privileged Bash starts",
+      "observes": [
+        "fresh CI/job/source identity",
+        "normal inherited OS exports",
+        "equal real/effective uid/gid",
+        "actual Bash and Python identities/symlink targets",
+        "exact source/configuration bindings"
+      ]
+    },
+    {
+      "name": "before-lake",
+      "actual_runner_boundary": "in outer admitted Bash, before the ONE Lake environment setup",
+      "observes": [
+        "same bootstrap/source/platform",
+        "same inherited five-key projection",
+        "same observed Lake/elan carrier identity"
+      ],
+      "then": "exec that carrier with exact env/Python enter/fixed inner-shell command; no extra Lake probe"
+    },
+    {
+      "name": "enter",
+      "actual_runner_boundary": "under the ONE actual pinned Lake environment, before inner Bash",
+      "observes": [
+        "same bootstrap host/source/platform",
+        "actual five-key Lake environment projection",
+        "pinned lean/leanchecker bytes and actual PATH resolution",
+        "same bound before-Lake receipt"
+      ],
+      "then": "exec fixed inner /bin/bash -p with pinned complete loop body; cancel admission-only timer before exec"
+    },
+    {
+      "name": "verify",
+      "actual_runner_boundary": "first command inside actual inner Bash, before any checker",
+      "observes": [
+        "same CI/job/bootstrap and baseline record",
+        "actual effective environment equals Lake baseline including None/empty",
+        "same selected executable and tool identities",
+        "actual Bash flags/version"
+      ],
+      "then": "success returns to unchanged567-target loop; every error stops before first checker"
+    }
+  ],
+  "actual_projection_fields": [
+    "PATH",
+    "LEAN_PATH",
+    "LEAN_SRC_PATH",
+    "LEAN_SYSROOT",
+    "LD_LIBRARY_PATH"
+  ],
+  "required_absent_inherited_exports": [
+    "SHELLOPTS",
+    "BASHOPTS",
+    "CDPATH",
+    "GLOBIGNORE",
+    "BASH_ENV",
+    "ENV"
+  ],
+  "new_script_sha256": "b7dac23e6300e3c34d6192887f52d6f780b2bef9720f43b94d4c0f1b3116d77d",
+  "loop_sha256": "53717997a6a67054021e6b82a61113676e62b2f2ed134868ffd622eb86874bbb",
+  "Lake_setups": 1,
+  "fresh_checker_processes": 567,
+  "job_envelopes_minutes": [
+    120,
+    120,
+    5
+  ],
+  "existing_child_wall_seconds": 90,
+  "admission_observation_mode_deadline_seconds": 90,
+  "integration_prerequisites": [
+    "Apply only reviewed proposed script/workflow delta",
+    "Add this helper to all five production engine input sets and refresh existing acyclic binding cascade",
+    "Update exact_controls to bind helper and replay_launch_controls to pin the new script and adjacent bootstrap/global metadata-bearing block",
+    "Update finite integration source/control assertions to require adjacency, isolated Python bootstrap, before-first-checker hook and final evidence path",
+    "Sequential independent source/control review before any new bounded execution approval"
+  ],
+  "cannot_run_as_current_candidate": "Unchanged production five-spec rows do not contain this helper; checked_sources therefore refuses. Current production workflow and replay launcher remain0747 unchanged.",
+  "external_prerequisites_not_replaced": [
+    "fresh explicit execution approval; previous allowance consumed",
+    "fresh remote source/queues/reservation and no duplicate attempt/compiler",
+    "existing CI concurrency and all bounded native memory/ownership/lifecycle guards",
+    "no writers to configuration/build/toolchain/relevant environment during entire replay"
+  ],
+  "coverage_qualification": "Only the NEW launcher behavior. New admission does not retroactively cover unchanged build or prove immutable all-file state against hostile writers. Existing accepted build/resource boundary stays in place.",
+  "native_observations": "none made here; local prior observations do not admit hosted runner",
+  "Fast": "off",
+  "open_36_bodies": "unelaborated",
+  "carrier_qualification": "Lake/elan carrier and actual LAKE identity freshly observed and kept stable. Existing pinned-action installation provenance boundary is retained, not upgraded to reproducible/authenticated Lake binary provenance."
+}
