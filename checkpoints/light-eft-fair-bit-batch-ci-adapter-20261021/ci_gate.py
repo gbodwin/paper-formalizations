@@ -141,6 +141,7 @@ def verify_schedule(plans, evidence, lease, context, handoff, identity, verify_r
 def workflow_identity(env, head):
     from ci_policy import ci_identity
     identity = ci_identity(env, head)
+    require(env.get('LIGHTEFT_VALIDATION_ROLE') == 'focused', 'Batch requires the separate focused job')
     require(env.get('GITHUB_JOB') == 'check', 'Bridge must run in the single bound check job')
     return identity
 

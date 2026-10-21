@@ -22,7 +22,18 @@ def ci_identity(env,head):
     require(env.get('GITHUB_EVENT_NAME') in ['push','pull_request','workflow_dispatch'],'Unreviewed trigger')
     require(env.get('LEAN_NUM_THREADS')=='1','Reviewed job-wide worker setting required')
     require(env.get('GITHUB_REF')!='refs/heads/light-eft-spanners-checkpoints','Ignored checkpoint branch is not the publication route')
-    return {k:env.get(k) for k in ['GITHUB_SHA','GITHUB_REF','GITHUB_EVENT_NAME','GITHUB_RUN_ID','GITHUB_RUN_ATTEMPT','GITHUB_WORKFLOW','GITHUB_WORKFLOW_SHA','GITHUB_WORKFLOW_REF','GITHUB_ACTOR','GITHUB_REPOSITORY','LEAN_NUM_THREADS']}
+    role=env.get('LIGHTEFT_VALIDATION_ROLE')
+    paths={'full':'.github/workflows/lean.yml','focused':'.github/workflows/light-eft-fair-bit-focused.yml'}
+    require(role in paths and env.get('GITHUB_JOB')=='check','Unreviewed validation role/job')
+    require(env.get('LIGHTEFT_EXPECTED_SOURCE')==head,'Scheduled exact source differs')
+    repo=env['GITHUB_REPOSITORY'];ref=env.get('GITHUB_REF','')
+    require(env.get('GITHUB_WORKFLOW')=='Lean' and env.get('GITHUB_WORKFLOW_SHA')==head and
+        env.get('GITHUB_WORKFLOW_REF')==repo+'/.github/workflows/lean.yml@'+ref,'Exact caller workflow differs')
+    require(env.get('LIGHTEFT_JOB_WORKFLOW_REPOSITORY')==repo and env.get('LIGHTEFT_JOB_WORKFLOW_PATH')==paths[role] and
+        env.get('LIGHTEFT_JOB_WORKFLOW_SHA')==head,'Actual job workflow repository/path/SHA differs')
+    require(env.get('LIGHTEFT_JOB_WORKFLOW_REF') in [repo+'/'+paths[role]+'@'+ref,repo+'/'+paths[role]+'@'+head],
+        'Actual job workflow ref differs')
+    return {k:env.get(k) for k in ['GITHUB_SHA','GITHUB_REF','GITHUB_EVENT_NAME','GITHUB_RUN_ID','GITHUB_RUN_ATTEMPT','GITHUB_WORKFLOW','GITHUB_WORKFLOW_SHA','GITHUB_WORKFLOW_REF','GITHUB_ACTOR','GITHUB_REPOSITORY','LEAN_NUM_THREADS','GITHUB_JOB','LIGHTEFT_VALIDATION_ROLE','LIGHTEFT_EXPECTED_SOURCE','LIGHTEFT_JOB_WORKFLOW_REF','LIGHTEFT_JOB_WORKFLOW_SHA','LIGHTEFT_JOB_WORKFLOW_PATH','LIGHTEFT_JOB_WORKFLOW_REPOSITORY']}
 
 def scope_contract(spec):
     import hashlib

@@ -1,0 +1,137 @@
+{
+  "status": "SOURCE_ONLY_SCHEDULING_REDESIGN_FOR_REVIEW; NO_EXECUTION_AUTHORITY",
+  "accepted_kernel_baseline": "c1aaa0a00c0c943cec4b2753a937023e9884db04",
+  "reviewed_implementation_base": "642ae01aa7fdad947d815eec400cd2d7c79fa855",
+  "reviewed_mathematics": "4f06895ec9473b88b595904b77a453646f52f1e1",
+  "unelaborated_proofs": 36,
+  "workflow_sequence": [
+    "Lean/check:complete inherited full validation",
+    "Lean/focused:local reusable workflow, new runner, fresh build + external inputs + index then 17 producers and12batch children",
+    "Lean/acceptance:always-run status conjunction"
+  ],
+  "caller": ".github/workflows/lean.yml",
+  "called": ".github/workflows/light-eft-fair-bit-focused.yml",
+  "called_trigger": "workflow_call only; no independent push/PR/dispatch route",
+  "relative_reference": "./.github/workflows/light-eft-fair-bit-focused.yml; same immutable caller commit",
+  "events": "existing push/pull_request/workflow_dispatch unchanged; ignored checkpoint branch unchanged",
+  "concurrency": "existing caller-wide paper-formalizations-single-compiler/cancel-in-progress=false retained across full, focused and aggregation; focused needs successful full; no nested competing lock",
+  "identities": "Exact checkout/event SHA, caller workflow ref/SHA/name, actual job.workflow repository/path/ref/SHA, check job, role, source input; recorded in every producer/batch CI_identity. Empty context fails closed.",
+  "dependency_authority": "Fresh per-job ordinary build/cache observations and same-job paid9+decoder4+bridge4; zero object/evidence transfer from full job. Existing provenance qualification unchanged.",
+  "focused_order": [
+    "fresh checkout exact source",
+    "bind actual caller/job refs and bytes",
+    "pinned ordinary lean-action build",
+    "3 pinned explicit external targets",
+    "unchanged index check",
+    "paid9",
+    "immediate upload",
+    "decoder4",
+    "immediate upload",
+    "bridge4",
+    "immediate upload",
+    "batch12",
+    "immediate upload",
+    "exact focused commit marker",
+    "always summary + complete upload"
+  ],
+  "mandatory_success": "check and focused must both have result success and validated_commit equal github.sha; missing/skipped/failure/cancelled/mismatched output rejects; aggregation and independent artifact review required",
+  "immediate_evidence": "All four focused gates; paid and decoder also newly immediate in full. Existing bridge/final uploads remain. No continue-on-error.",
+  "job_limits_minutes": {
+    "full": 120,
+    "focused": 120,
+    "aggregation": 5
+  },
+  "child_resource_changes": false,
+  "budget": {
+    "primary_measurement_run": 39507492456,
+    "primary_measurement_job": 118919963785,
+    "source_commit": "c1aaa0a00c0c943cec4b2753a937023e9884db04",
+    "job_seconds": 6534,
+    "full_observed_margin_seconds": 666,
+    "measured_steps": [
+      {
+        "number": 1,
+        "name": "Set up job",
+        "seconds": 1
+      },
+      {
+        "number": 2,
+        "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+        "seconds": 87
+      },
+      {
+        "number": 3,
+        "name": "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5",
+        "seconds": 158
+      },
+      {
+        "number": 4,
+        "name": "Check all paper module indexes",
+        "seconds": 33
+      },
+      {
+        "number": 5,
+        "name": "Verify paid flag serialization and stored filter composition",
+        "seconds": 597
+      },
+      {
+        "number": 37,
+        "name": "Verify exact staged joint-flag source sequentially",
+        "seconds": 540
+      },
+      {
+        "number": 38,
+        "name": "Verify supplied response output against joint decoder",
+        "seconds": 353
+      },
+      {
+        "number": 39,
+        "name": "Preserve focused bridge evidence before remaining checks",
+        "seconds": 3
+      },
+      {
+        "number": 41,
+        "name": "Replay every project module through the Lean kernel",
+        "seconds": 3200
+      }
+    ],
+    "observed_focused_reused_setup_seconds": 279,
+    "observed_producers_seconds": 1490,
+    "observed_reused_subtotal_seconds": 1769,
+    "planning_allocation_seconds": {
+      "setup": 600,
+      "producers": 3000,
+      "new_external_preparation": 900,
+      "new_batch": 1800,
+      "evidence_and_status": 600
+    },
+    "planning_total_seconds": 6900,
+    "unallocated_seconds": 300,
+    "qualification": "115-minute planning envelope within unchanged120; setup allowance exceeds2x279, producer allowance exceeds2x1490. New dependency preparation,batch and extra evidence costs remain unmeasured. Allocations are forecasts, not extra execution deadlines or a proved worst-case bound. Native prespawn/wall bounds can sum beyond120; job timeout remains failure.",
+    "known_reused_setup_excludes": "New job scheduling and runner variance; original checkout/build/cache provenance and ordinary dependency source changes are not assumed identical",
+    "no_claim": "No guaranteed runtime fit, Lean acceptance, child admission or CI success is inferred from this source plan"
+  },
+  "references": [
+    {
+      "url": "https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows",
+      "supports": "local relative workflow uses exact caller commit"
+    },
+    {
+      "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/reusing-workflow-configurations",
+      "supports": "caller context, needs, permissions and nested concurrency semantics"
+    },
+    {
+      "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/contexts",
+      "supports": "job.workflow_* actual defining workflow identity on github.com"
+    }
+  ],
+  "Fast": "off",
+  "open": [
+    "shared-stream refinement",
+    "joint state/cost composition",
+    "arithmetic bit costs",
+    "bank/caller handoff",
+    "aggregate costs",
+    "whole paper"
+  ]
+}

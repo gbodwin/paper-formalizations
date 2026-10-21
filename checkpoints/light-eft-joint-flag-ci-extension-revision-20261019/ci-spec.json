@@ -494,6 +494,16 @@
   "private_identity_helper_required": true,
   "engine_files": [
     {
+      "path": ".github/workflows/lean.yml",
+      "bytes": 49763,
+      "sha256": "7cae5bc034aff50c28fbfdd12ed39780d9308c7fada2382d9dc26d1c45dbd7ad"
+    },
+    {
+      "path": ".github/workflows/light-eft-fair-bit-focused.yml",
+      "bytes": 8420,
+      "sha256": "c0c9af0476019df6c05c2de409330fea55d8f1919a391a56eec5170ffba99f5d"
+    },
+    {
       "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/authority.py",
       "bytes": 2953,
       "sha256": "319e8bd1426e952fa227889ea4ec74770a1c578131606e2cebd0b4c3326c0c0e"
@@ -502,6 +512,11 @@
       "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
       "bytes": 19707,
       "sha256": "c84a0cbb21a40edaa11c89e119ffad2a84321278537b7893465a796269c2dccb"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/collision_coverage.py",
+      "bytes": 6685,
+      "sha256": "529d8ba0010cfb1fcd297b98a1f15882967a7a30bc2a2da8ff21bf50ea2d0e6b"
     },
     {
       "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/contracts.py",
@@ -579,14 +594,9 @@
       "sha256": "4fdcb3d88cba7c0b10084b4fd68936adf06b59ef19a4ca800274e71a86328d4d"
     },
     {
-      "path": "scripts/LightEFTProcessLifecycle.py",
-      "bytes": 4417,
-      "sha256": "c77d6e9bd48de674aaa50852451627d09693fec7bdcca903a015fdab96f99fdd"
-    },
-    {
-      "path": "scripts/LightEFTCgroup.py",
-      "bytes": 5549,
-      "sha256": "3ab478f59bb27d32424c8aaf647de91901969fb48d3a56ddd74fd49e434bad07"
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/CollisionClassifierFixtures.tail.lean",
+      "bytes": 9674,
+      "sha256": "7b149dd97d4fb676d92399de15338c41e6d074ee8d8f5a3ec1c63479eef441d5"
     },
     {
       "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_accounting.py",
@@ -610,8 +620,8 @@
     },
     {
       "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_policy.py",
-      "bytes": 4614,
-      "sha256": "d64ba95be09fb2fae420cb98ff8b0110a637742e85aa1685984a7e1852f62f35"
+      "bytes": 5786,
+      "sha256": "64cd9e105e29e5c711a4f4455fda3f372291a3086bd424f62f021dfc0f6fd610"
     },
     {
       "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_receipts.py",
@@ -619,19 +629,14 @@
       "sha256": "90bf08f108217ee8c73972edd314d836a65dba5b0e517fe4f03eb1457b06af97"
     },
     {
-      "path": ".github/workflows/lean.yml",
-      "bytes": 46730,
-      "sha256": "92215b6cacdbe9bde2173ec10dcfb817e61ff0dc369aee651e5e057724607f9c"
-    },
-    {
-      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/collision_coverage.py",
-      "bytes": 6685,
-      "sha256": "529d8ba0010cfb1fcd297b98a1f15882967a7a30bc2a2da8ff21bf50ea2d0e6b"
-    },
-    {
       "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/test_ci_preexec_repair.py",
       "bytes": 15939,
       "sha256": "d9b1f3d46bf607448decae46236a38364c5d104ce3fcb27f509c0a7c9496dc1d"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/test_collision_classifier.py",
+      "bytes": 16290,
+      "sha256": "6fdb3c32a0be34bb756deefad223aad89a8d57f10f0c4fea1552991c77362a36"
     },
     {
       "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/test_compile_temporary.py",
@@ -639,14 +644,24 @@
       "sha256": "01f076d50223b3275128957a38ee0cfca40f0d598558dd5f02a4c6e36c6ea505"
     },
     {
-      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/CollisionClassifierFixtures.tail.lean",
-      "bytes": 9674,
-      "sha256": "7b149dd97d4fb676d92399de15338c41e6d074ee8d8f5a3ec1c63479eef441d5"
+      "path": "checkpoints/light-eft-sequential-validation-schedule-20261021/acceptance.py",
+      "bytes": 3751,
+      "sha256": "5ac30d010f58e09172cc0f08bf6ab44e9bb1ad9649caf494b357d8a4377d1687"
     },
     {
-      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/test_collision_classifier.py",
-      "bytes": 16290,
-      "sha256": "6fdb3c32a0be34bb756deefad223aad89a8d57f10f0c4fea1552991c77362a36"
+      "path": "checkpoints/light-eft-sequential-validation-schedule-20261021/workflow_identity.py",
+      "bytes": 1985,
+      "sha256": "2e0ac87c1c3602731876e2d322d4c454c6a9e9ed989a7083f11e6674ccdbd602"
+    },
+    {
+      "path": "scripts/LightEFTCgroup.py",
+      "bytes": 5549,
+      "sha256": "3ab478f59bb27d32424c8aaf647de91901969fb48d3a56ddd74fd49e434bad07"
+    },
+    {
+      "path": "scripts/LightEFTProcessLifecycle.py",
+      "bytes": 4417,
+      "sha256": "c77d6e9bd48de674aaa50852451627d09693fec7bdcca903a015fdab96f99fdd"
     }
   ],
   "toolchain": "leanprover/lean4:v4.34.0",

@@ -1,0 +1,153 @@
+name: LightEFT fair-bit bounded focused validation
+on:
+  workflow_call:
+    inputs:
+      source:
+        required: true
+        type: string
+    outputs:
+      validated_commit:
+        value: ${{ jobs.check.outputs.validated_commit }}
+permissions:
+  contents: read
+jobs:
+  check:
+    if: inputs.source == github.sha && github.ref != 'refs/heads/light-eft-spanners-checkpoints'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    outputs:
+      validated_commit: ${{ steps.focused_validated.outputs.commit }}
+    env:
+      LEAN_NUM_THREADS: '1'
+      LIGHTEFT_VALIDATION_ROLE: focused
+      LIGHTEFT_EXPECTED_SOURCE: ${{ inputs.source }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - name: Bind actual caller and focused workflow identities before build
+        env:
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+        run: python3 -B checkpoints/light-eft-sequential-validation-schedule-20261021/workflow_identity.py
+      - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
+        with:
+          auto-config: "false"
+          build: "true"
+          test: "false"
+          lint: "false"
+          use-mathlib-cache: "true"
+          mk_all-check: "false"
+          axiom-audit: "true"
+          axiom-audit-root: "VFTSpanners"
+          axiom-audit-allow: "propext,Classical.choice,Quot.sound"
+      - name: Build exact external inputs for fair-bit batch
+        run: lake build +Mathlib.Analysis.SpecificLimits.Normed +Mathlib.Topology.Algebra.InfiniteSum.ENNReal +Mathlib.Tactic.FieldSimp
+      - name: Check all paper module indexes
+        run: bash scripts/CheckModuleIndex.sh
+      - name: Verify paid flag serialization and stored filter composition
+        id: light_eft_paid_focused
+        env:
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+          PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-paid-focused-python-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -B checkpoints/light-eft-paid-focused-adapter-20261020/ci_gate.py
+      - name: Preserve paid producer evidence immediately
+        if: ${{ always() && steps.light_eft_paid_focused.outcome != 'skipped' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: light-eft-focused-paid-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/light-eft-paid-focused-${{ github.run_id }}-${{ github.run_attempt }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+      - name: Verify exact staged joint-flag source sequentially
+        id: light_eft_staged
+        env:
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+          PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-python-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -B checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py
+      - name: Preserve decoder producer evidence immediately
+        if: ${{ always() && steps.light_eft_staged.outcome != 'skipped' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: light-eft-focused-decoder-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/light-eft-staged-${{ github.run_id }}-${{ github.run_attempt }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+      - name: Verify supplied response output against joint decoder
+        id: light_eft_paid_joint_bridge
+        env:
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+          PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-paid-joint-bridge-python-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -B checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci_gate.py
+      - name: Preserve focused bridge evidence before remaining checks
+        if: ${{ always() && steps.light_eft_paid_joint_bridge.outcome != 'skipped' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: light-eft-focused-bridge-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/light-eft-paid-joint-bridge-${{ github.run_id }}-${{ github.run_attempt }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+      - name: Verify reviewed flat tape and fair-bit sampler batch
+        id: light_eft_fair_bit_batch
+        env:
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+          PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-fair-bit-batch-python-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -B checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/ci_gate.py
+      - name: Preserve fair-bit batch evidence before remaining checks
+        if: ${{ always() && steps.light_eft_fair_bit_batch.outcome != 'skipped' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: light-eft-fair-bit-batch-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/light-eft-fair-bit-batch-${{ github.run_id }}-${{ github.run_attempt }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+      - name: Bind completed focused validation to this exact commit
+        id: focused_validated
+        env:
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+        run: python3 -B checkpoints/light-eft-sequential-validation-schedule-20261021/acceptance.py mark focused
+      - name: Preserve focused job identity and outcomes
+        if: always()
+        env:
+          LIGHTEFT_FOCUSED_OUTCOMES: ${{ toJSON(steps) }}
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+        run: python3 -B checkpoints/light-eft-sequential-validation-schedule-20261021/acceptance.py summary
+      - name: Preserve complete focused job evidence including failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: light-eft-focused-complete-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/light-eft-focused-summary-${{ github.run_id }}-${{ github.run_attempt }}
+            ${{ runner.temp }}/light-eft-paid-focused-${{ github.run_id }}-${{ github.run_attempt }}
+            ${{ runner.temp }}/light-eft-staged-${{ github.run_id }}-${{ github.run_attempt }}
+            ${{ runner.temp }}/light-eft-paid-joint-bridge-${{ github.run_id }}-${{ github.run_attempt }}
+            ${{ runner.temp }}/light-eft-fair-bit-batch-${{ github.run_id }}-${{ github.run_attempt }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30

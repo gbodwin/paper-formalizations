@@ -1,3 +1,6 @@
+Current scheduling revision: ../light-eft-sequential-validation-schedule-20261021/README.md.
+The original inline workflow/budget description below records the reviewed642ae01a design; it is superseded by the separate same-job-producer focused route. The source/model controls are retained.
+
 # Focused validation implementation — review before execution
 
 This finite adapter proposes validation of source-reviewed commit
