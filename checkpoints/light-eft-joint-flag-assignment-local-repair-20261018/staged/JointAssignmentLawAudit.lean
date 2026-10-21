@@ -285,6 +285,32 @@ structure Report where
 end LightEFTAuditCollision
 
 
+/- Serialization-only memoization. Keys are full imported-environment Names,
+not their display strings. The imported environment stays alive for this entire
+run_cmd; no Name from collision-reader-owned regions enters this cache. -/
+namespace LightEFTAuditText
+open Lean
+
+abbrev Cache := Std.HashMap Name String
+
+@[inline] def renderName (cache : Cache) (name : Name) : String × Cache :=
+  match cache.get? name with
+  | some text => (text, cache)
+  | none =>
+    let text := toString name
+    (text, cache.insert name text)
+
+def renderNames (initial : Cache) (names : Array Name) : String × Cache := Id.run do
+  let mut cache := initial
+  let mut texts : Array String := #[]
+  for name in names do
+    let (text, next) := renderName cache name
+    cache := next
+    texts := texts.push text
+  return (String.intercalate "," texts.toList, cache)
+
+end LightEFTAuditText
+
 /- Unexecuted focused audit draft. Reuses the accepted recursive traversal.
 Inventories every declaration owned by the new module, then follows all types,
 definition/theorem/opaque bodies and inductive/recursor links into imports. -/
@@ -327,11 +353,15 @@ run_cmd do
     | .inductInfo _ => "inductive"
     | .ctorInfo _ => "constructor"
     | .recInfo _ => "recursor"
+  let mut textCache : LightEFTAuditText.Cache := {}
   let mut inventory := "owner\tname\tkind\tunsafe\tpartial\n"
   let mut issues : Array String := collisionReport.issues
   for n in roots do
     let some c := env.find? n | throwError "Missing inventoried declaration {n}"
-    inventory := inventory ++ s!"{owner n}\t{n}\t{kind c}\t{c.isUnsafe}\t{c.isPartial}\n"
+    let (ownerText, afterOwner) := LightEFTAuditText.renderName textCache (owner n)
+    let (nameText, afterName) := LightEFTAuditText.renderName afterOwner n
+    textCache := afterName
+    inventory := inventory ++ s!"{ownerText}\t{nameText}\t{kind c}\t{c.isUnsafe}\t{c.isPartial}\n"
     if c.isUnsafe then issues := issues.push s!"root unsafe: {n}"
     if c.isPartial then issues := issues.push s!"root partial: {n}"
     if let .axiomInfo _ := c then issues := issues.push s!"root axiom: {n}"
@@ -361,8 +391,12 @@ run_cmd do
       | .recInfo v => v.rules.foldl (fun acc r => (acc.push r.ctor) ++ r.rhs.getUsedConstants) v.all.toArray
       | _ => #[]
     if let .opaqueInfo _ := c then opaqueCount := opaqueCount + 1
-    let fmt := fun (ns : Array Name) => String.intercalate "," (ns.toList.map toString)
-    dependencies := dependencies ++ s!"{n}\t{owner n}\t{kind c}\t{fmt typeDeps}\t{fmt bodyDeps}\t{c.isUnsafe}\t{c.isPartial}\n"
+    let (nameText, afterName) := LightEFTAuditText.renderName textCache n
+    let (ownerText, afterOwner) := LightEFTAuditText.renderName afterName (owner n)
+    let (typeText, afterType) := LightEFTAuditText.renderNames afterOwner typeDeps
+    let (bodyText, afterBody) := LightEFTAuditText.renderNames afterType bodyDeps
+    textCache := afterBody
+    dependencies := dependencies ++ s!"{nameText}\t{ownerText}\t{kind c}\t{typeText}\t{bodyText}\t{c.isUnsafe}\t{c.isPartial}\n"
     todo := typeDeps.toList ++ bodyDeps.toList ++ todo
   -- Require the exact reviewed deterministic and probability interfaces.
   let required : Array Name := #["LightEFTSpanners.StoredFlagBatch.original_probability".toName, "LightEFTSpanners.StoredFlagSample.typed_edgeSet".toName, "LightEFTSpanners.FiniteProbability.productLaw".toName, "LightEFTSpanners.FiniteProbability.productLaw_measure".toName, "LightEFTSpanners.FiniteProbability.Law.prob_map".toName, "LightEFTSpanners.FiniteProbability.Law.prob_bind".toName, "LightEFTSpanners.SampledGreedy.freshBatchLaw".toName, "LightEFTSpanners.SampledGreedy.executionLaw".toName]
