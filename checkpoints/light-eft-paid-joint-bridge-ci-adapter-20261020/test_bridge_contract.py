@@ -9,6 +9,7 @@ ENGINE = ROOT / 'checkpoints/light-eft-canonical-output-adapter-20261020'
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(ENGINE)); sys.path.insert(0, str(HERE)); sys.path.insert(0, str(ROOT / 'scripts'))
 import ci_gate, output_guards, prior_guard, same_run, audit_check
+import bridge_fixture
 from bridge_context import FocusedContext
 from finite_contract import CONTRACT
 from contracts import bind, tree
@@ -64,6 +65,8 @@ class Models(unittest.TestCase):
             path = put(ctx.target(CONTRACT['modules'][0])); ctx.new[str(path)] = bind(path)
         if index >= 2:
             path = put(work / 'resolution/SuppliedResponseJointBridge.json', b'MODEL COMPLETED RESOLUTION'); ctx.resolved[str(path)] = bind(path)
+            # Model only: earlier successful resolve is now also a key fixture.
+            ctx.bridge_fixture_result = bridge_fixture.validate_log(bridge_fixture.MARKER+'\n'+bridge_fixture.RESOLUTION_MARKER+'\n')
         ctx.seen = plans[:index]
         f = types.SimpleNamespace(base=base, root=root, work=work, ctx=ctx, plans=plans, plan=plans[index], producers=producers, identity=identity)
         self.prepare(f)
@@ -244,6 +247,8 @@ class Models(unittest.TestCase):
             for i,p in enumerate(f.plans):
                 r=dict(CI_identity=f.identity,workflow_job='check',focused_module=p['module'],focused_case=p['case'],attempt_id='new-%d'%i,started_ns=110+i*10,ended_ns=115+i*10)
                 if i==1:
+                    raw=put(f.ctx.evidence/p['case']/p['stage']/'raw.log',(bridge_fixture.MARKER+'\n'+bridge_fixture.RESOLUTION_MARKER+'\n').encode())
+                    r.update(state='finished',exit=0,completed_logs={'raw.log':bind(raw)},bridge_key_equivalence_fixture=bridge_fixture.validate_log(raw.read_text()))
                     if mutation=='duplicate':r['attempt_id']='prior-0'
                     elif mutation=='overlap':r['started_ns']=111
                     elif mutation=='identity':r['CI_identity']={}
@@ -407,8 +412,19 @@ class HandoffModels(unittest.TestCase):
         env=dict(GITHUB_ACTIONS='true',GITHUB_REPOSITORY='gbodwin/paper-formalizations',GITHUB_SHA='a'*40,
                  GITHUB_RUN_ID='1',GITHUB_RUN_ATTEMPT='1',GITHUB_EVENT_NAME='push',LEAN_NUM_THREADS='1',
                  GITHUB_REF='refs/heads/integration/light-eft-joint-flag-ci-20261019',GITHUB_JOB='check')
-        identity=ci_gate.workflow_identity(env,'a'*40);self.assertNotIn('GITHUB_JOB',identity)
-        for key in ['GITHUB_JOB','GITHUB_SHA','GITHUB_ACTIONS','GITHUB_REPOSITORY','LEAN_NUM_THREADS']:
+        # Existing accepted full/focused schedule identity, not the older
+        # pre-split model that omitted actual workflow and role bindings.
+        env.update(LIGHTEFT_VALIDATION_ROLE='full',LIGHTEFT_EXPECTED_SOURCE='a'*40,GITHUB_WORKFLOW='Lean',
+            GITHUB_WORKFLOW_SHA='a'*40,GITHUB_WORKFLOW_REF=env['GITHUB_REPOSITORY']+'/.github/workflows/lean.yml@'+env['GITHUB_REF'],
+            LIGHTEFT_JOB_WORKFLOW_REPOSITORY=env['GITHUB_REPOSITORY'],LIGHTEFT_JOB_WORKFLOW_PATH='.github/workflows/lean.yml',
+            LIGHTEFT_JOB_WORKFLOW_SHA='a'*40,LIGHTEFT_JOB_WORKFLOW_REF=env['GITHUB_REPOSITORY']+'/.github/workflows/lean.yml@'+env['GITHUB_REF'])
+        identity=ci_gate.workflow_identity(env,'a'*40);self.assertEqual(identity['GITHUB_JOB'],'check')
+        focused=dict(env,LIGHTEFT_VALIDATION_ROLE='focused',LIGHTEFT_JOB_WORKFLOW_PATH='.github/workflows/light-eft-fair-bit-focused.yml',
+            LIGHTEFT_JOB_WORKFLOW_REF=env['GITHUB_REPOSITORY']+'/.github/workflows/light-eft-fair-bit-focused.yml@'+env['GITHUB_REF'])
+        self.assertEqual(ci_gate.workflow_identity(focused,'a'*40)['LIGHTEFT_VALIDATION_ROLE'],'focused')
+        for key in ['GITHUB_JOB','GITHUB_SHA','GITHUB_ACTIONS','GITHUB_REPOSITORY','LEAN_NUM_THREADS','LIGHTEFT_VALIDATION_ROLE',
+                    'LIGHTEFT_EXPECTED_SOURCE','GITHUB_WORKFLOW','GITHUB_WORKFLOW_REF','GITHUB_WORKFLOW_SHA',
+                    'LIGHTEFT_JOB_WORKFLOW_PATH','LIGHTEFT_JOB_WORKFLOW_REPOSITORY','LIGHTEFT_JOB_WORKFLOW_SHA','LIGHTEFT_JOB_WORKFLOW_REF']:
             bad=dict(env);bad[key]='WRONG'
             with self.assertRaises(ValueError):ci_gate.workflow_identity(bad,'a'*40)
 

@@ -25,6 +25,16 @@ def save(path, data):
 def git(*args):
     return subprocess.check_output(['git', *args], cwd=ROOT, text=True).strip()
 
+def fixture_policy():
+    # Use this bound sibling even during batch same-run reconstruction. No
+    # sys.path/sys.modules mutation or alternate compiler route is introduced.
+    import types
+    path = HERE / 'bridge_fixture.py'
+    module = types.ModuleType('_bound_bridge_key_fixture')
+    module.__file__ = str(path)
+    exec(compile(path.read_bytes(), str(path), 'exec'), module.__dict__)
+    return module
+
 def bound_spec():
     path = HERE / 'ci-spec.json'
     raw = subprocess.check_output(['git', 'show', 'HEAD:' + str(path.relative_to(ROOT))], cwd=ROOT)
@@ -37,10 +47,12 @@ def bound_spec():
         require(not any(q.is_symlink() for q in [p, *p.parents]), 'Symlink bound bridge source')
         require(p.is_file() and p.stat().st_size == row['bytes'] and digest(p) == row['sha256'], 'Bridge source byte binding changed: ' + str(rel))
         require(subprocess.check_output(['git', 'show', 'HEAD:' + str(rel)], cwd=ROOT) == p.read_bytes(), 'Bound bridge input differs from Git HEAD')
+    fixture_policy().validate_sources(ROOT, spec)
     return spec
 
 def build_plans(tool, work, spec, roots, head, bind):
     from finite_contract import CONTRACT
+    fixture_policy().contract(spec)
     module = CONTRACT['modules'][0]
     case = module.rsplit('.', 1)[-1]
     source = {r['role']: ROOT / r['path'] for r in spec['sources']}
@@ -56,7 +68,7 @@ def build_plans(tool, work, spec, roots, head, bind):
         [str(tool / 'bin/lean'), *FLAGS, str(resolver)],
         [str(tool / 'bin/leanchecker'), '-v', module], [str(tool / 'bin/lean'), *FLAGS, str(audit)]]
     result = []
-    for kind, argv, submitted in zip(['compile', 'resolve', 'replay', 'audit'], commands, [[proof], [resolver, proof], [proof], [audit, proof]], strict=True):
+    for kind, argv, submitted in zip(['compile', 'resolve', 'replay', 'audit'], commands, [[proof], [resolver, source['key_fixture'], source['original_resolver'], proof], [proof], [audit, proof]], strict=True):
         e = env.copy()
         if kind == 'resolve':
             e.update(LIGHTEFT_CHECKER_TARGET=module, LIGHTEFT_CHECKER_RESOLUTION_FILE=str(work / 'resolution' / (case + '.json')))
@@ -109,7 +121,8 @@ def finite_scope(spec):
     require({m: origin for m, origin in origins.items() if origin != 'ordinary_build'} == CONTRACT['staged_origins'], 'Bridge staged module origins differ')
     expected_source_roots = list(dict.fromkeys(r['path'].split('/staged/',1)[0]+'/staged' for r in spec['dependencies'] if r['origin']!='ordinary_build'))
     require(spec['dependency_staged_roots'] == expected_source_roots, 'Bound staged source roots differ')
-    require(len(spec['sources']) == 3 and {r['role'] for r in spec['sources']} == {'bridge','resolver','audit'}, 'Bridge submitted source roles differ')
+    require(len(spec['sources']) == 5 and {r['role'] for r in spec['sources']} == {'bridge','resolver','audit','key_fixture','original_resolver'}, 'Bridge submitted source roles differ')
+    fixture_policy().contract(spec)
     proof = next(row for row in spec['sources'] if row['role'] == 'bridge')
     require({k: proof[k] for k in ['path', 'bytes', 'sha256']} == CONTRACT['reviewed_source'], 'Reviewed bridge source fingerprint differs')
     require(spec['resource_contract'] == CONTRACT['resources'] and spec['execution_order'] == ['compile','resolve','replay','audit'], 'Accepted resource/schedule metadata differs')
@@ -126,12 +139,19 @@ def verify_schedule(plans, evidence, lease, dependencies, handoff, identity, ver
     head = identity['GITHUB_SHA']
     verify_receipts(evidence / case, lease, plans, dependencies, head, expected_source=head)
     ids, previous = set(handoff['prior_attempt_ids']), handoff['last_release_ns']
+    prerequisite = False
     require(len(ids) == 13 and handoff['last_release_ns'] < lease['acquired_ns'], 'Producer identities/new lease boundary differs')
     for p in plans:
         r = load(evidence / case / p['stage'] / 'receipt.json')
+        if p['stage'] in ['replay','audit']:
+            require(prerequisite, 'No prior bridge key fixture receipt')
+        if p['stage'] == 'resolve':
+            fixture_policy().receipt_prerequisite(p['stage'], r, evidence / case / p['stage'])
+            prerequisite = True
         require(r.get('CI_identity') == identity and r.get('workflow_job') == 'check' and r.get('focused_module') == CONTRACT['modules'][0] and r.get('focused_case') == case, 'Bridge receipt identity differs')
         require(r['attempt_id'] not in ids and previous < r['started_ns'], 'Duplicate/overlapping bridge child')
         ids.add(r['attempt_id']); previous = r['ended_ns']
+    require(prerequisite, 'Bridge key fixture receipt missing')
     require(len(ids) == 17 and lease['state'] == 'released' and lease.get('kernel_echild') and not lease.get('release_errors'), 'Bridge schedule/release incomplete')
 
 def workflow_identity(env, head):

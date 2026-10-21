@@ -1,6 +1,31 @@
 import Lean
 import LightEFTPaidJointBridgeStage.SuppliedResponseJointBridge
 
+section LightEFTBridgeAuditDiagnosticChannel
+set_option stderrAsMessages false
+
+/- Diagnostic only: fixed labels and a monotonic-millisecond clock modulo2^64.
+No imported names, paths, expressions, payloads or environment variables are logged.
+Each marker is flushed; all existing limits/checks and four exports are unchanged. -/
+open Lean in
+run_cmd do
+  let now := (← IO.monoMsNow) % 18446744073709551616
+  let out ← IO.getStderr
+  out.putStrLn s!"BRIDGE-AUDIT-TIMING: phase=frontend-ready mono-ms-mod64={now}"
+  out.flush
+
+namespace LightEFTBridgeAuditTiming
+def mark (phase : String) : IO Unit := do
+  let now := (← IO.monoMsNow) % 18446744073709551616
+  let out ← IO.getStderr
+  out.putStrLn s!"BRIDGE-AUDIT-TIMING: phase={phase} mono-ms-mod64={now}"
+  out.flush
+end LightEFTBridgeAuditTiming
+
+open Lean in
+run_cmd do
+  LightEFTBridgeAuditTiming.mark "timing-helper-ready"
+
 /- Verification helper only. No declaration in this namespace is a paper premise.
 Keys contain fresh scalar bytes, never borrowed Names/Strings from loaded parts.
 Only regions explicitly returned by this helper's reads are ever freed.
@@ -23,6 +48,21 @@ private partial def appendName (out : ByteArray) (name : Name) : ByteArray :=
 
 @[noinline] def ownedKey (name : Name) : ByteArray :=
   appendName (ByteArray.emptyWithCapacity 64) name
+
+/- Per-module keys are seeded exclusively from the still-live environment,
+before reading any new part. Raw-reader Names are lookup arguments only, never
+inserted. Values are independently allocated bytes from the unchanged encoder.
+This cache never enters State, so it cannot retain a newly read region. -/
+abbrev KeyCache := Std.HashMap Name ByteArray
+
+@[inline] def rememberKey (cache : KeyCache) (name : Name) : KeyCache :=
+  if cache.contains name then cache
+  else cache.insert name (ownedKey name)
+
+@[inline] def keyFor (cache : KeyCache) (name : Name) : ByteArray :=
+  match cache.get? name with
+  | some key => key
+  | none => ownedKey name
 
 private def hexKey (key : ByteArray) : String :=
   let digits := "0123456789abcdef".toList.toArray
@@ -142,7 +182,7 @@ private def addClaim (state : State) (owner : Nat) (key : ByteArray)
   else
     return { state with claims := state.claims.insert key { owner, auxiliary } }
 
-@[noinline] private def consumeNames (parts : OwnedParts) (owner : Nat) (initial : State) : IO State := do
+@[noinline] private def consumeNames (parts : OwnedParts) (keys : KeyCache) (owner : Nat) (initial : State) : IO State := do
   let data ← parts.data.get
   let mut state := initial
   for part in data do
@@ -152,16 +192,16 @@ private def addClaim (state : State) (owner : Nat) (key : ByteArray)
       if part.constNames[slot]? != some part.constants[slot]!.name then
         state ← unclassified state owner "raw-name"
     for name in part.constNames do
-      state ← addClaim state owner (ownedKey name) false
+      state ← addClaim state owner (keyFor keys name) false
       state := { state with constNames := state.constNames + 1 }
     for name in part.extraConstNames do
-      state ← addClaim state owner (ownedKey name) true
+      state ← addClaim state owner (keyFor keys name) true
       state := { state with extraConstNames := state.extraConstNames + 1 }
   return state
   -- Only independently allocated keys, scalar counts/owners and strings built
   -- from them escape. Reader frames return before data clearing or release.
 
-@[noinline] private def consumeDeclarations (data : Array ModuleData) (owner : Nat)
+@[noinline] private def consumeDeclarations (data : Array ModuleData) (keys : KeyCache) (owner : Nat)
     (initial : State) : IO State := do
   let some mod := data[owner]? | return ← unclassified initial owner "module-count"
   let mut state := initial
@@ -173,7 +213,7 @@ private def addClaim (state : State) (owner : Nat) (key : ByteArray)
     state := { state with actualDeclarations := state.actualDeclarations + 1 }
     if mod.constNames[slot]? != some info.name then
       state ← unclassified state owner "effective-name"
-    let freshKey := ownedKey info.name
+    let freshKey := keyFor keys info.name
     let key := (state.claims.getKey? freshKey).getD freshKey
     if let some loc := state.declarations.get? key then
       let some prior := infoAt data loc |
@@ -231,6 +271,10 @@ private def addClaim (state : State) (owner : Nat) (key : ByteArray)
 
 @[noinline] private unsafe def scanOne (data : Array ModuleData)
     (owner : Nat) (file : System.FilePath) (initial : State) : IO State := do
+  let mut keys : KeyCache := {}
+  if let some mod := data[owner]? then
+    for info in mod.constants do
+      keys := rememberKey keys info.name
   let parts : OwnedParts := { data := (← IO.mkRef #[]), regions := (← IO.mkRef #[]) }
   let beforeConst := initial.constNames
   let beforeExtra := initial.extraConstNames
@@ -242,8 +286,8 @@ private def addClaim (state : State) (owner : Nat) (key : ByteArray)
   let beforeUnclassified := initial.unclassified
   let result : Except IO.Error State ← try
     loadParts parts file
-    let state ← consumeNames parts owner initial
-    pure (.ok (← consumeDeclarations data owner state))
+    let state ← consumeNames parts keys owner initial
+    pure (.ok (← consumeDeclarations data keys owner state))
   catch error => pure (.error error)
   let read ← countRegions parts
   let freed ← releaseParts parts
@@ -284,15 +328,22 @@ structure Report where
 
 end LightEFTAuditCollision
 
+open Lean in
+run_cmd do
+  LightEFTBridgeAuditTiming.mark "scan-helper-ready"
+
 
 /- Unexecuted focused audit draft. Reuses the accepted recursive traversal.
 Inventories every declaration owned by the new module, then follows all types,
 definition/theorem/opaque bodies and inductive/recursor links into imports. -/
 open Lean in
 run_cmd do
+  LightEFTBridgeAuditTiming.mark "audit-run-start"
   let env := (← getEnv).setExporting false
   let modules := env.allImportedModuleNames
+  LightEFTBridgeAuditTiming.mark "environment-ready"
   let collisionReport ← LightEFTAuditCollision.scan env
+  LightEFTBridgeAuditTiming.mark "scan-complete"
   let target := "LightEFTPaidJointBridgeStage.SuppliedResponseJointBridge".toName
   unless modules.contains target do throwError "Missing new target module"
   let allowed : Array Name := #["propext".toName, "Classical.choice".toName, "Quot.sound".toName]
@@ -316,6 +367,7 @@ run_cmd do
     | .inductInfo _ => "inductive"
     | .ctorInfo _ => "constructor"
     | .recInfo _ => "recursor"
+  LightEFTBridgeAuditTiming.mark "roots-complete"
   let mut inventory := "owner\tname\tkind\tunsafe\tpartial\n"
   let mut issues : Array String := collisionReport.issues
   for n in roots do
@@ -324,6 +376,7 @@ run_cmd do
     if c.isUnsafe then issues := issues.push s!"root unsafe: {n}"
     if c.isPartial then issues := issues.push s!"root partial: {n}"
     if let .axiomInfo _ := c then issues := issues.push s!"root axiom: {n}"
+  LightEFTBridgeAuditTiming.mark "inventory-complete"
   let mut visited : NameSet := {}
   let mut todo := roots.toList
   let mut dependencies := "name\towner\tkind\ttypeDependencies\tbodyDependencies\tunsafe\tpartial\n"
@@ -353,15 +406,24 @@ run_cmd do
     let fmt := fun (ns : Array Name) => String.intercalate "," (ns.toList.map toString)
     dependencies := dependencies ++ s!"{n}\t{owner n}\t{kind c}\t{fmt typeDeps}\t{fmt bodyDeps}\t{c.isUnsafe}\t{c.isPartial}\n"
     todo := typeDeps.toList ++ bodyDeps.toList ++ todo
+  LightEFTBridgeAuditTiming.mark "recursive-complete"
   -- Require the exact reviewed deterministic and probability interfaces.
   let required : Array Name := #["LightEFTSpanners.PaidFlagSerialization.execute_eq".toName, "LightEFTSpanners.PaidFlagSampleComposition.full_trace".toName, "LightEFTSpanners.PaidFlagSampleComposition.execute_eq".toName, "LightEFTSpanners.StoredFlagSample.execute_encoded".toName, "LightEFTSpanners.StoredFlagSample.typed_edgeSet".toName, "LightEFTSpanners.JointFlagSampling.decoded_assignment_probability".toName]
   for n in required do
     unless visited.contains n do issues := issues.push s!"Missing required reachable interface: {n}"
+  LightEFTBridgeAuditTiming.mark "interfaces-complete"
   IO.FS.writeFile "ci-evidence/actual-owner-inventory.tsv" inventory
+  LightEFTBridgeAuditTiming.mark "inventory-written"
   IO.FS.writeFile "ci-evidence/recursive-dependencies.tsv" dependencies
+  LightEFTBridgeAuditTiming.mark "dependencies-written"
   IO.FS.writeFile "ci-evidence/import-closure-loaded.txt"
     (String.intercalate "\n" (modules.toList.map toString) ++ "\n")
+  LightEFTBridgeAuditTiming.mark "imports-written"
   IO.FS.writeFile "ci-evidence/strict-violations.txt"
     (String.intercalate "\n" issues.toList ++ "\n")
+  LightEFTBridgeAuditTiming.mark "findings-written"
   if !issues.isEmpty then throwError "Strict focused audit rejected {issues.size} findings"
+  LightEFTBridgeAuditTiming.mark "strict-checks-complete"
   logInfo m!"PASS: {roots.size} new-module actual-owner declarations; {visited.size} recursive constants, {opaqueCount} opaque bodies; axioms {axioms.toArray}"
+
+end LightEFTBridgeAuditDiagnosticChannel

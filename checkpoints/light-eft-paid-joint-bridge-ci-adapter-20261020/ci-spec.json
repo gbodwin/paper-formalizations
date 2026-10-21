@@ -28,15 +28,27 @@
     },
     {
       "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/staged/BridgeAudit.lean",
-      "bytes": 19354,
-      "sha256": "36288246972b10f2bc1eaeb2a32d1ab0515a2007320dc7ef1ca318878d0021db",
+      "bytes": 21848,
+      "sha256": "097f7af45ca9bcfe135e459e3180a9c0a4a4297b77f97e21614daa6014a3b408",
       "role": "audit"
+    },
+    {
+      "path": "checkpoints/light-eft-bridge-audit-key-cache-20261021/staged/ResolveAfterBridgeEquivalence.lean",
+      "bytes": 4492,
+      "sha256": "7a233bb04c37766093b5dfe21e1e1b79a1f628ee1b6eee0fba648e6717ee3410",
+      "role": "resolver"
+    },
+    {
+      "path": "checkpoints/light-eft-bridge-audit-key-cache-20261021/staged/BridgeKeyEquivalenceFixtures.lean",
+      "bytes": 3008,
+      "sha256": "20759f3a9e7170d4fc08f4c26726b27335d33af3c781dc2b1875cf18f7130f79",
+      "role": "key_fixture"
     },
     {
       "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/staged/ResolveBridgeTarget.lean",
       "bytes": 1403,
       "sha256": "dd5741670280fc6b3a0f67791c23f6bf799730decf0e5c72342ed901c7fd6529",
-      "role": "resolver"
+      "role": "original_resolver"
     }
   ],
   "dependency_staged_roots": [
@@ -850,6 +862,16 @@
       "sha256": "6cdafabcc22c5d4df16b086597d9a857f4d893ae661d72cbc7158322cdb9272e"
     },
     {
+      "path": "checkpoints/light-eft-bridge-audit-key-cache-20261021/staged/BridgeKeyEquivalenceFixtures.lean",
+      "bytes": 3008,
+      "sha256": "20759f3a9e7170d4fc08f4c26726b27335d33af3c781dc2b1875cf18f7130f79"
+    },
+    {
+      "path": "checkpoints/light-eft-bridge-audit-key-cache-20261021/staged/ResolveAfterBridgeEquivalence.lean",
+      "bytes": 4492,
+      "sha256": "7a233bb04c37766093b5dfe21e1e1b79a1f628ee1b6eee0fba648e6717ee3410"
+    },
+    {
       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
       "bytes": 19707,
       "sha256": "c84a0cbb21a40edaa11c89e119ffad2a84321278537b7893465a796269c2dccb"
@@ -1221,8 +1243,13 @@
     },
     {
       "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/bridge_context.py",
-      "bytes": 11882,
-      "sha256": "ad93e9627b9cbf2219c05b8ce4dfe8372c79992153eb9f2faf569096cf1479df"
+      "bytes": 12210,
+      "sha256": "de64cd70663d1a0e11a3f4c574616b1471c2842a3d6bdd1eb616fa3f4b981cf4"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/bridge_fixture.py",
+      "bytes": 3483,
+      "sha256": "37b85c017f556070f51634f133f7c38374f6074c637fa6044e8b1386af0ca82a"
     },
     {
       "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/check_implementation.py",
@@ -1231,8 +1258,8 @@
     },
     {
       "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci_gate.py",
-      "bytes": 16672,
-      "sha256": "121dbe5f3d496fe8417d3b9c070b637f368487d442a99ba7b8dd42687cc0876d"
+      "bytes": 17664,
+      "sha256": "635a13b3a2e4eef9a5ed980d4a6cc55c088bc4a793bb46580f9321fa52cd6411"
     },
     {
       "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/finite_contract.py",
@@ -1260,9 +1287,14 @@
       "sha256": "85515d15484528a543e8a1ffe0cd2c6fa168cb1d376ea38fa849139a15a6c550"
     },
     {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/staged/ResolveBridgeTarget.lean",
+      "bytes": 1403,
+      "sha256": "dd5741670280fc6b3a0f67791c23f6bf799730decf0e5c72342ed901c7fd6529"
+    },
+    {
       "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/test_bridge_contract.py",
-      "bytes": 35531,
-      "sha256": "ede41edc89d9807f31783f520208f08e0a95bfb8003a35c554d1417ffbfd6bf3"
+      "bytes": 37414,
+      "sha256": "3e5b1a4d86c147177fa4f08b87628980d681327ed324fcdca17686d79dec6872"
     },
     {
       "path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean",

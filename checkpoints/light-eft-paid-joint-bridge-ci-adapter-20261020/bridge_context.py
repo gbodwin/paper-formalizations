@@ -7,6 +7,7 @@ from package_selection import selected_path
 from finite_contract import CONTRACT
 from output_guards import focused_contract,live_objects,live_tree
 from audit_check import validate,export_all,chunk
+import bridge_fixture
 
 class FocusedContext:
  def __init__(self,lease,work,evidence,plans,roots,dependencies,identity,inputs,inventory,classified,prior_trees,prior_protected):
@@ -19,6 +20,7 @@ class FocusedContext:
   self.evidence_files={}
   self.seen=[];self.audit_results={};self.preservation_failed=False;self.active=None
   self.journals={};self.excluded={}
+  self.bridge_fixture_result=None
   for case in [m.rsplit('.',1)[-1] for m in CONTRACT['modules']]:
    folder=self.evidence/case;folder.mkdir(parents=True)
    for name,rows in [('inputs.jsonl',inputs),('excluded-metadata-initial.jsonl',classified['excluded'])]:
@@ -79,6 +81,7 @@ class FocusedContext:
   self.check_selection(p)
  def before_child(self,p,r,save):
   require(p==self.plans[len(self.seen)],'Out-of-order/extra focused stage');self.active=p
+  if p['stage'] in ['replay','audit']:require(self.bridge_fixture_result is not None,'No bridge key fixture prerequisite')
   self.verify(p)
   if p['stage']=='compile' and p['module']!='PaidFlagFixtures':
    require(not any(Path(x).exists() or Path(x).is_symlink() for x in self.parts(p['module'])),'Current target outputs not absent before compile')
@@ -126,9 +129,11 @@ class FocusedContext:
     observed=tree(self.objects);new={k:v for k,v in observed.items() if k in self.parts(module)}
     require(str(self.target(module)) in new,'Missing focused compiled object');self.new.update(new)
    if stage=='resolve':
+    fixture_result=bridge_fixture.validate_log(raw)
     path=self.work/'resolution'/(p['case']+'.json');data=json.loads(path.read_text())
     require(data['target']==module and data['count']==1 and data['resolved']==[dict(module=module,object=str(self.target(module)))],'Official singleton resolution differs')
     require(list(dict.fromkeys(data['search_path']))==list(map(str,self.roots)),'Official search path differs');self.resolved[str(path)]=bind(path)
+    r['bridge_key_equivalence_fixture']=fixture_result;self.bridge_fixture_result=fixture_result
    if stage=='replay':require(raw.strip()=='replaying '+module,'Not exact singleton replay diagnostic')
    if stage=='audit':
     directory=self.work/'audit'/p['case']/'ci-evidence';self.audit_results[module]=validate(directory,self.dependencies(p),raw,module)
