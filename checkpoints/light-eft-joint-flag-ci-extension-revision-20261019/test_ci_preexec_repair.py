@@ -48,6 +48,9 @@ class Fixture:
         for p in [self.control,*(self.tool/'bin'/n for n in ['lean','leanchecker']),
                   *(self.root/row['path'] for row in SPEC['sources'].values())]:
             self.inputs[str(p)]=contracts.bind(p)
+        import ci_text_fixture
+        for rel in [ci_text_fixture.FIXTURE,ci_text_fixture.ORIGINAL,ci_text_fixture.COMPOSITE]:
+            q=self.root/rel;q.write_bytes((REPO/rel).read_bytes());self.inputs[str(q)]=contracts.bind(q)
         self.commands=ci_policy.plans(self.root,self.tool,self.work,SPEC,self.roots,'a'*40)
         for p in self.commands:p['source_bindings']=[contracts.bind(s) for s in p['sources']]
         self.hashed=[]
@@ -65,6 +68,7 @@ class Fixture:
                 resolved=[dict(module=contracts.TARGET,object=str(self.ctx.target))],
                 search_path=list(map(str,self.roots)))).encode())
             self.ctx.resolved={str(self.ctx.resolution):contracts.resolution(self.ctx.resolution,self.roots,self.ctx.target)}
+        if index>=2:self.ctx.serialization_fixture_result={'simulated_prefix_for_filesystem_tests_only':True}
         self.ctx.seen=self.commands[:index];self.plan=self.commands[index]
         (self.evidence/stage).mkdir();self.record={}
         self.saves=0

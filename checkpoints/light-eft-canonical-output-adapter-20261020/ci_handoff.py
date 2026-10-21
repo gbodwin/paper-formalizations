@@ -111,6 +111,7 @@ def verify_decoder(repo,tool,env,identity,spec,verify_receipts):
     dependencies={r['module']:dict(bind(Path(repo)/'.lake/build/lib/lean'/Path(*r['module'].split('.')).with_suffix('.olean')),module=r['module']) for r in oldspec['dependencies']}
     verify_receipts(root/'runtime',lease,commands,dependencies,identity['GITHUB_SHA'],expected_source=identity['GITHUB_SHA'])
     receipts=[document('runtime/'+p['stage']+'/receipt.json') for p in commands]
+    policy.fixture_receipt('resolve',receipts[1],root/'runtime/resolve')
     expected_stages=[dict(stage=p['stage'],attempt_id=r['attempt_id']) for p,r in zip(commands,receipts,strict=True)]
     require(result.get('stages')==expected_stages,'Decoder result/receipt stage schedule differs')
     for r in receipts:require(r.get('CI_identity')==identity and r.get('dependency_qualification')==QUALIFICATION,'Decoder child CI identity/source context differs')

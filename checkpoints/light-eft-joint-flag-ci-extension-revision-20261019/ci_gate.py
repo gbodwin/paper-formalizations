@@ -4,6 +4,7 @@ No dispatch-only prerequisite, readiness flag or cross-host pause assertion.
 from pathlib import Path
 import csv, datetime, hashlib, json, os, shutil, subprocess, sys, time, tomllib, traceback
 from ci_policy import STAGES, TARGET, QUALIFICATION, require, ci_identity, scope_contract, plans, private_helper
+from ci_policy import fixture_log
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
 
@@ -58,6 +59,7 @@ def context_type(base,work,evidence,commands,roots,deps,identity,inputs,inv,clas
             self.work=work;self.evidence=evidence;self.lease=lease;self.lock=lease.file;self.acquired_ns=lease.acquired_ns
             self.plans=commands;self.roots=roots;self.dependencies=deps;self.fixture=False
             self.source_commit=identity['GITHUB_SHA'];self.wrapper_commit=identity['GITHUB_SHA'];self.inputs=inputs
+            self.serialization_fixture_result=None
             self.new={};self.resolved={};self.objects=roots[0];self.target=roots[0]/Path(*TARGET.split('.')).with_suffix('.olean')
             self.resolution=work/'resolution.json';self.audit=work/'audit/ci-evidence';self.audit.mkdir(parents=True)
             self.preservation_failed=False;self.seen=[];self.audit_result=None;self.inventory_policy=inv
@@ -70,6 +72,8 @@ def context_type(base,work,evidence,commands,roots,deps,identity,inputs,inv,clas
             self.input_ref=bind(path)
 
         def before_child(self,p,r,save_receipt):
+            if p['stage'] in ['replay','audit']:
+                require(self.serialization_fixture_result is not None,'Serialization fixture prerequisite has not passed')
             r['CI_identity']=identity;r['dependency_qualification']=QUALIFICATION
             return super().before_child(p,r,save_receipt)
 
@@ -111,7 +115,12 @@ def context_type(base,work,evidence,commands,roots,deps,identity,inputs,inv,clas
             save_receipt()
 
         def after_child(self,p,r,save_receipt):
+            if p['stage']=='resolve' and r.get('exit')==0 and 'failure' not in r:
+                result=fixture_log((self.stage_evidence/'raw.log').read_text())
+                r['serialization_equivalence_fixture']=result;save_receipt()
             super().after_child(p,r,save_receipt)
+            if p['stage']=='resolve' and r.get('exit')==0 and 'failure' not in r:
+                self.serialization_fixture_result=result
             if p['stage']=='audit' and r.get('exit')==0 and not r.get('failure'):
                 with (self.audit/'actual-owner-inventory.tsv').open() as f:rows=list(csv.DictReader(f,delimiter='\t'))
                 self.audit_result['private_identity_helper']=private_helper(rows)

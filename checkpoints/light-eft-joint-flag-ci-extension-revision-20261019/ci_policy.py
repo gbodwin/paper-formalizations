@@ -1,5 +1,11 @@
 """Exact ordinary-event binding and staged contracts; no dispatch-only admission gate."""
 import collections, re
+from pathlib import Path
+import importlib.util
+_fixture_spec=importlib.util.spec_from_file_location('_decoder_serialization_prerequisite',Path(__file__).with_name('ci_text_fixture.py'))
+_fixture_module=importlib.util.module_from_spec(_fixture_spec);_fixture_spec.loader.exec_module(_fixture_module)
+fixture_contract=_fixture_module.contract;fixture_sources=_fixture_module.validate_sources
+fixture_log=_fixture_module.validate_log;fixture_receipt=_fixture_module.receipt_prerequisite
 
 STAGES=('compile','resolve','replay','audit')
 FLAGS=['-j1','-s65536','-M5120','-DautoImplicit=false','-DwarningAsError=true']
@@ -32,6 +38,7 @@ def require(condition,message):
     if not condition:raise ValueError(message)
 
 def scope_contract(spec):
+    fixture_contract(spec)
     rows=spec['dependencies']
     require(len(rows)==len({r['module'] for r in rows})==77,'Exactly 77 distinct dependencies required')
     require(collections.Counter(r['module'].split('.')[0] for r in rows)=={'LightEFTSpanners':70,'LightSpanners':7},'Dependency namespace scope differs')
@@ -42,6 +49,7 @@ def scope_contract(spec):
     require(len(spec['pins'])==9 and spec['toolchain']=='leanprover/lean4:v4.34.0','Toolchain/dependency pins differ')
 
 def plans(root,tool,work,spec,roots,source_commit):
+    fixture_sources(root,spec)
     root,tool,work=map(str,[root,tool,work]);source={k:root+'/'+v['path'] for k,v in spec['sources'].items()}
     env=dict(LANG='C.UTF-8',LC_ALL='C.UTF-8',LEAN_NUM_THREADS='1',LEAN_SYSROOT=tool,LEAN_PATH=':'.join(map(str,roots)),
         LEAN_SRC_PATH=':'.join([root+'/'+spec['staged_root'],root+'/Light Edge Fault Tolerant Graph Spanners',root+'/An Alternate Proof of Near-Optimal Light Spanners',tool+'/src/lean']),
@@ -51,7 +59,7 @@ def plans(root,tool,work,spec,roots,source_commit):
     argvs=[[tool+'/bin/lean',*FLAGS,'--root='+root+'/'+spec['staged_root'],'-o',target,source['source']],
            [tool+'/bin/lean',*FLAGS,source['resolver']],[tool+'/bin/leanchecker','-v',TARGET],
            [tool+'/bin/lean',*FLAGS,source['audit']]]
-    roles=[['source'],['resolver','source'],['source'],['audit','source']];result=[]
+    roles=[['source'],['resolver','serialization_fixture','original_resolver','source'],['source'],['audit','source']];result=[]
     for stage,argv,role in zip(STAGES,argvs,roles,strict=True):
         e=env.copy()
         if stage=='resolve':e.update(LIGHTEFT_CHECKER_TARGET=TARGET,LIGHTEFT_CHECKER_RESOLUTION_FILE=work+'/resolution.json')

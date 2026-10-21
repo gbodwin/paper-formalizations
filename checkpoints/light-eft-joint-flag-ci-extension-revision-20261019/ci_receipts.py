@@ -2,6 +2,7 @@
 from pathlib import Path
 import json
 from contracts import bind,require
+from ci_policy import fixture_receipt as receipt_prerequisite
 FROZEN='78cb40c7837db049d645d73696f2e0b724ce8a3b'
 def decision_log_contract(stage,record,data):
  import child_runner as child
@@ -12,11 +13,12 @@ def decision_log_contract(stage,record,data):
 def verify_receipts(evidence,lease_record,plans,dependencies=None,wrapper_commit=None,expected_source=None):
  import child_runner as child
  import decision_telemetry as telemetry
- previous=0;ids=set()
+ previous=0;ids=set();fixture_passed=False
  inventory=Path(evidence)/'inputs.jsonl';iref=bind(inventory)
  inputs={row['path']:row for row in map(json.loads,inventory.read_text().splitlines())}
  for p in plans:
   folder=Path(evidence)/p['stage'];r=json.loads((folder/'receipt.json').read_text())
+  if p['stage'] in ['replay','audit']:require(fixture_passed,'No prior serialization fixture receipt')
   require(r.get('source_commit')==expected_source and r.get('frozen_import_source')==FROZEN,'Receipt source commits differ')
   if wrapper_commit is not None:require(r.get('wrapper_commit')==wrapper_commit,'Receipt wrapper commit differs')
   if dependencies is not None:require(r.get('effective_dependencies')==dependencies,'Receipt effective dependency binding differs')
@@ -48,6 +50,8 @@ def verify_receipts(evidence,lease_record,plans,dependencies=None,wrapper_commit
   require(r['runtime_wall_started_ns']<=r['preexec_verified_ns']<=terminal['finished_ns']<r['runtime_wall_started_ns']+90*10**9,'Launched child exceeded90seconds or bad preexec ordering')
   for row in r['submitted_sources']:bind(folder/row['snapshot'],row)
   for path,row in r.get('completed_logs',{}).items():bind(folder/path,row)
+  if p['stage']=='resolve':
+   receipt_prerequisite(p['stage'],r,folder);fixture_passed=True
   data=(folder/'samples.jsonl').read_bytes();decision_log_contract(p['stage'],r,data)
   samples=[json.loads(line) for line in data.splitlines()]
   require(samples[-1].get('exit_lifecycle',{}).get('terminal_confirmed'),'No final owned terminal sample')
@@ -60,5 +64,6 @@ def verify_receipts(evidence,lease_record,plans,dependencies=None,wrapper_commit
    errors=telemetry.policy_errors(sample,r['admission'],anonymous,1024**3,6*1024**3,3*1024**3,child.check_memory)
    require(not errors,'Persisted live sample failed reviewed policy')
    require(sample['sample_finished_ns']<r['runtime_wall_started_ns']+90*10**9,'Runtime sample after wall deadline')
+ require(fixture_passed,'Serialization prerequisite receipt missing')
  require(len(ids)==4 and lease_record['state']=='released' and lease_record.get('kernel_echild') and not lease_record.get('release_errors'),'No clean owned ECHILD release')
  return True
