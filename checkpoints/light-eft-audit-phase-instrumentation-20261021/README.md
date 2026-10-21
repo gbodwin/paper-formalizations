@@ -1,5 +1,37 @@
 # Audit phase instrumentation — source review only
 
+Delivery repair against preserved e90f172f653b90817418c7712432818fb2f34062:
+the pinned Frontend.runFrontend uses Language.Lean.process/doElab, which always
+isolates command stdout through IO.FS.Stream.ofBuffer. Its flush is a no-op,
+and buffered output is reported only after the command returns. The earlier
+stdout markers therefore did not qualify timeout observability. Default
+stderrAsMessages=true also isolates Lean stderr. Parent review evidence is
+libfile_f8a27d8873248191bec0c0ea3d42af11,1,683,888bytes, SHA256
+07324630a3da1c0a3905f76029e1846b4738cc5ca61e27d539702639195a414f.
+
+Only the two diagnostic stream getters now use IO.getStderr. A named section
+and standalone `set_option stderrAsMessages false` occur before the first
+run_cmd, so doElab reads false before choosing streams. A local option inside
+that run_cmd would be too late. Command.runCore reads the same scope options,
+so Core.wrapAsyncAsSnapshot also leaves stderr unisolated. The final named end
+restores the caller's original option on normal completion, whether originally
+true or false; there is no forced global true. No standard warning/error policy
+or strict flag is changed. Original collision stdout, final PASS and export
+code are byte-identical. Stdout remains command-buffered as before; only the
+bounded diagnostic side channel is intended to bypass that buffer.
+
+The unchanged child_runner Popen sets stdout=log and stderr=subprocess.STDOUT
+inside the exclusive raw.log writer. The unchanged pilot_child execve preserves
+those descriptors. Thus the source-supported route is Lean getStderr/flush,
+inherited descriptor2 merged into raw.log. No new descriptor, file, channel
+authority, resource allowance, compiler route or retry is added. Seven new
+process-blocked models cover capture/no-op flush, too-late options, kill-before-
+command-completion, scope restoration, merged logs and negative channel/scope
+mutations. These are faithful source models and launcher AST checks, not a native
+Lean delivery qualification. Native timeout observability remains pending.
+check_delivery_source.py proves the exact two-getter/standalone-scope repair
+against e90f172f, and checks the unchanged launcher/exec source bindings.
+
 Parent independent receipt review establishes that run39549447443 attempt1
 failed in decoder audit PID24486 at90.063123seconds, with4.262444seconds preexec,
 861samples, peakRSS4,817,195,008bytes and minimum headroom14,386,495,488bytes.
@@ -13,7 +45,7 @@ SHA25611ce767c1152ca3df260a6643d73203afab015c06375f7f39be134de954d8943.
 Both old/new attempts are timeout-censored; performance improvement is unknown.
 Prior failures, source, native artifact references and local evidence are preserved.
 
-This candidate adds only diagnostic stdout timing to the audit source. Removing
+This candidate adds only diagnostic stderr timing to the audit source. Removing
 the exact insertions restores every byte of reviewed7a7993f5. The entire collision
 namespace, owned key/region cleanup, pure cache namespace, all traversal/checks,
 four export write arguments and final PASS remain unchanged. No optimization,
@@ -28,7 +60,7 @@ scan-helper-ready, serialization-helper-ready, audit-run-start,
 environment-ready, scan-complete, roots-complete, inventory-complete,
 recursive-complete, interfaces-complete, inventory-written, dependencies-written,
 imports-written, findings-written and strict-checks-complete. Every marker is
-flushed immediately. The clocks are IO.monoMsNow reduced modulo2^64, explicitly
+flushed to the unisolated stderr stream. The clocks are IO.monoMsNow reduced modulo2^64, explicitly
 reported as mono-ms-mod64. Thus each decimal clock has at most20digits, and all new
 marker lines together have a fixed bound below2048bytes. No per-row/module/read
 clock calls or counters are added. Existing collision output remains intact.

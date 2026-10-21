@@ -16,7 +16,11 @@ assert tuple(labels)==PHASES and len(labels)==len(set(labels))==16 and MAX_BYTES
 assert all(not any(token in label for token in ['COLLISION','collision-']) for label in labels)
 assert actual.count('IO.monoMsNow')==2 and actual.count('out.flush')==base.count('out.flush')+2
 new_helper=actual.split('namespace LightEFTAuditTiming',1)[1].split('end LightEFTAuditTiming',1)[0]
-assert new_helper.count('IO.monoMsNow')==1 and new_helper.count('IO.getStdout')==1
+assert new_helper.count('IO.monoMsNow')==1 and new_helper.count('IO.getStderr')==1
+assert actual.count('IO.getStderr')==2 and actual.count('IO.getStdout')==base.count('IO.getStdout')
+assert actual.count('set_option stderrAsMessages false\n')==1
+assert actual.index('set_option stderrAsMessages false\n')<actual.index('run_cmd do\n')
+assert actual.endswith('\nend LightEFTAuditDiagnosticChannel\n')
 assert all(text not in new_helper for text in ['IO.getEnv','IO.FS.','unsafe','partial','while ','for ','getEnv','getUsedConstants'])
 names=['light-eft-paid-focused-adapter-20261020','light-eft-joint-flag-ci-extension-revision-20261019',
        'light-eft-canonical-output-adapter-20261020','light-eft-paid-joint-bridge-ci-adapter-20261020','light-eft-fair-bit-batch-ci-adapter-20261021']
@@ -38,7 +42,7 @@ assert all(path in allowed or path.startswith(str(H.relative_to(R))+'/') for pat
 for p in H.glob('*.py'):ast.parse(p.read_text())
 git('diff','--check',BASE)
 print(json.dumps(dict(status='PASS_EXACT_SOURCE_ONLY',baseline=BASE,audit_sha256=row(AUDIT)['sha256'],
-    phases=len(labels),max_additional_stdout_bytes=MAX_BYTES,hot_loop_clock_reads=0,
+    phases=len(labels),max_additional_diagnostic_bytes=MAX_BYTES,channel='stderr; standalone scoped stderrAsMessages=false',hot_loop_clock_reads=0,
     exact_inverse_restores_entire_audit=True,collision_and_cache_namespaces='byte-identical',
     production_binding_rows=bound,changed_specifications=changed,
     limits_checks_outputs_workflows_runtime_engines='unchanged',Lean_elaboration='not attempted',

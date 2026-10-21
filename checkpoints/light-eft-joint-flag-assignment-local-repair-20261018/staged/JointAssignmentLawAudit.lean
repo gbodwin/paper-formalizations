@@ -1,20 +1,23 @@
 import Lean
 import LightEFTJointFlagSamplingStage.JointAssignmentLaw
 
+section LightEFTAuditDiagnosticChannel
+set_option stderrAsMessages false
+
 /- Diagnostic only: fixed labels and a monotonic-millisecond clock modulo2^64.
 No imported names, paths, expressions, payloads or environment variables are logged.
 Each marker is flushed; all existing limits/checks and four exports are unchanged. -/
 open Lean in
 run_cmd do
   let now := (← IO.monoMsNow) % 18446744073709551616
-  let out ← IO.getStdout
+  let out ← IO.getStderr
   out.putStrLn s!"AUDIT-TIMING: phase=frontend-ready mono-ms-mod64={now}"
   out.flush
 
 namespace LightEFTAuditTiming
 def mark (phase : String) : IO Unit := do
   let now := (← IO.monoMsNow) % 18446744073709551616
-  let out ← IO.getStdout
+  let out ← IO.getStderr
   out.putStrLn s!"AUDIT-TIMING: phase={phase} mono-ms-mod64={now}"
   out.flush
 end LightEFTAuditTiming
@@ -452,3 +455,5 @@ run_cmd do
   if !issues.isEmpty then throwError "Strict focused audit rejected {issues.size} findings"
   LightEFTAuditTiming.mark "strict-checks-complete"
   logInfo m!"PASS: {roots.size} new-module actual-owner declarations; {visited.size} recursive constants, {opaqueCount} opaque bodies; axioms {axioms.toArray}"
+
+end LightEFTAuditDiagnosticChannel

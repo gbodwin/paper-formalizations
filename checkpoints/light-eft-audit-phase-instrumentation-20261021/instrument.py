@@ -7,20 +7,22 @@ PHASES=('frontend-ready','timing-helper-ready','scan-helper-ready','serializatio
         'audit-run-start','environment-ready','scan-complete','roots-complete','inventory-complete',
         'recursive-complete','interfaces-complete','inventory-written','dependencies-written',
         'imports-written','findings-written','strict-checks-complete')
-FIRST='''/- Diagnostic only: fixed labels and a monotonic-millisecond clock modulo2^64.
+CHANNEL_SCOPE='section LightEFTAuditDiagnosticChannel\nset_option stderrAsMessages false\n\n'
+CHANNEL_END='\nend LightEFTAuditDiagnosticChannel\n'
+FIRST=CHANNEL_SCOPE+'''/- Diagnostic only: fixed labels and a monotonic-millisecond clock modulo2^64.
 No imported names, paths, expressions, payloads or environment variables are logged.
 Each marker is flushed; all existing limits/checks and four exports are unchanged. -/
 open Lean in
 run_cmd do
   let now := (← IO.monoMsNow) % 18446744073709551616
-  let out ← IO.getStdout
+  let out ← IO.getStderr
   out.putStrLn s!"AUDIT-TIMING: phase=frontend-ready mono-ms-mod64={now}"
   out.flush
 
 namespace LightEFTAuditTiming
 def mark (phase : String) : IO Unit := do
   let now := (← IO.monoMsNow) % 18446744073709551616
-  let out ← IO.getStdout
+  let out ← IO.getStderr
   out.putStrLn s!"AUDIT-TIMING: phase={phase} mono-ms-mod64={now}"
   out.flush
 end LightEFTAuditTiming
@@ -62,9 +64,11 @@ def instrument(baseline):
     for index,(anchor,addition) in enumerate(INSERTIONS):
         assert text.count(anchor)==1,('Insertion anchor not unique',index)
         text=text.replace(anchor,replacement(index,anchor,addition),1)
-    return text
+    return text+CHANNEL_END
 
 def uninstrument(text):
+    assert text.endswith(CHANNEL_END),'Diagnostic channel scope not restored'
+    text=text[:-len(CHANNEL_END)]
     for index in reversed(range(len(INSERTIONS))):
         anchor,addition=INSERTIONS[index];added=replacement(index,anchor,addition)
         assert text.count(added)==1,('Instrumented insertion not unique',index)
