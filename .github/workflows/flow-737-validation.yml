@@ -1,0 +1,99 @@
+name: Ordinary Flow 737 candidate validation
+on:
+  workflow_dispatch:
+    inputs:
+      expected_sha:
+        description: Reviewed full commit SHA; must equal the dispatched ref SHA
+        required: true
+        type: string
+      baseline_run_id:
+        description: Successful unchanged baseline workflow run at that same SHA
+        required: true
+        type: string
+      positive_attempt_cap:
+        description: Parent-approved positive physical fixture attempt cap
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: ordinary-flow-737-validation
+  cancel-in-progress: false
+jobs:
+  validate-union:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    env:
+      LEAN_NUM_THREADS: '1'
+      EXPECTED_SHA: ${{ inputs.expected_sha }}
+      BASELINE_RUN_ID: ${{ inputs.baseline_run_id }}
+      POSITIVE_ATTEMPT_CAP: ${{ inputs.positive_attempt_cap }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Establish independent setup evidence directory
+        run: mkdir -p "$RUNNER_TEMP/flow-737-setup"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        id: checkout
+        with:
+          fetch-depth: 0
+      - name: Require exact reviewed workflow and source commit
+        id: preflight
+        run: |
+          test "$GITHUB_SHA" = "$EXPECTED_SHA"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          git fetch --no-tags origin f853a31d941c5466647c14dca86e928164ca8c27
+          python3 flow-continuation-drafts/20261021-validation/validate.py
+      - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
+        id: setup
+        with:
+          auto-config: 'false'
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-github-cache: 'false'
+          use-mathlib-cache: 'false'
+      - name: Restore only the successful exact-commit baseline dependency cache
+        id: dependency-cache
+        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25
+        with:
+          path: .lake
+          key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
+          fail-on-cache-miss: true
+      - name: Sequential strict compilation, exhaustive audits, 737 kernel replays and fixtures
+        id: validation
+        run: |
+          python3 flow-continuation-drafts/20261021-validation/validate.py \
+            --execute --expected-commit "$EXPECTED_SHA" \
+            --baseline-run-id "$BASELINE_RUN_ID" \
+            --positive-attempt-cap "$POSITIVE_ATTEMPT_CAP" \
+            --output "$RUNNER_TEMP/flow-737-evidence"
+      - name: Preserve workflow setup and command outcomes even on early failure
+        if: always()
+        env:
+          STEP_OUTCOMES: ${{ toJSON(steps) }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          p = Path(os.environ['RUNNER_TEMP']) / 'flow-737-setup'
+          p.mkdir(parents=True, exist_ok=True)
+          (p / 'setup-receipt.json').write_text(json.dumps({
+              'workflow_sha': os.environ['GITHUB_SHA'],
+              'expected_sha': os.environ['EXPECTED_SHA'],
+              'run_id': os.environ['GITHUB_RUN_ID'],
+              'run_attempt': os.environ['GITHUB_RUN_ATTEMPT'],
+              'job_status': os.environ['JOB_STATUS'],
+              'steps': json.loads(os.environ['STEP_OUTCOMES']),
+              'acceptance': False}, indent=2) + '\n')
+          PY
+      - name: Preserve exact-commit evidence, including failed attempts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: flow-737-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/flow-737-evidence
+            ${{ runner.temp }}/flow-737-setup
+          if-no-files-found: error
