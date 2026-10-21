@@ -1,0 +1,135 @@
+{
+  "status": "SOURCE_ONLY_PROPOSAL_NOT_INTEGRATED_OR_EXECUTED",
+  "base": "d031f60c681650e48b409115adaffd240ec6493a",
+  "accepted_kernel_baseline": "c1aaa0a00c0c943cec4b2753a937023e9884db04",
+  "parent_thread": "01a15f30-961d-76aa-ac49-cc77e20f80e9",
+  "proposed_production_delta": [
+    "scripts/KernelCheck.sh"
+  ],
+  "checkpoint_is_additive_only": true,
+  "method": "Hoist one Lake environment setup around the unchanged complete singleton replay loop. Still 567 fresh sequential official checker processes, with PATH hash cleared before each binary lookup.",
+  "unchanged": {
+    "full_job_minutes": 120,
+    "focused_job_minutes": 120,
+    "aggregation_job_minutes": 5,
+    "job_count": 3,
+    "native_wall_seconds": 90,
+    "all_existing_child_limits_and_admission": true,
+    "all_567_global_kernel_replays": true,
+    "all_declaration_axiom_audits": true,
+    "full_then_focused_same_exact_commit": true,
+    "fresh_same_job_17_producers_and_12_batch_children": true,
+    "independent_result_review": true,
+    "exact_commit_binding_and_aggregation": true
+  },
+  "no_result_cache": true,
+  "no_import_or_kernel_scan_cache": true,
+  "launches": {
+    "old_lake_env": 567,
+    "new_lake_env": 1,
+    "removed_workspace_loads": 566,
+    "old_checkers": 567,
+    "new_checkers": 567,
+    "native_checker_search_path_scans_retained": 567
+  },
+  "cadence_observation": {
+    "run": 39618998763,
+    "attempt": 1,
+    "commit": "d031f60c681650e48b409115adaffd240ec6493a",
+    "pre_global_seconds": 3951.0,
+    "start_diagnostics": 453,
+    "start_intervals": 452,
+    "first": [
+      "2026-10-21T15:47:08.0201169Z",
+      "VFTSpanners.BlockingSet"
+    ],
+    "last": [
+      "2026-10-21T16:41:23.4658959Z",
+      "LightEFTSpanners.StoredForestInputEncoding"
+    ],
+    "inter_start_seconds": {
+      "sum": 3255.445779,
+      "mean": 7.202313670353982,
+      "median": 7.386697,
+      "minimum": 6.330702,
+      "maximum": 7.746171
+    },
+    "linear_total_forecast_seconds": 8041.731968090708,
+    "linear_total_forecast_minutes": 134.02886613484512,
+    "forecast_excess_over_7200_seconds": 841.7319680907076,
+    "forecast_excess_divided_by_566_removed_lake_setups_seconds": 1.487158954223865,
+    "qualification": "Cadence extrapolation only, not a bound or isolated Lake/checker timing. Does not establish target completion or exact cancellation cause. Tail cost, filesystem/runner variance and new batch work unmeasured.",
+    "optimization_count": {
+      "old_lake_env": 567,
+      "new_lake_env": 1,
+      "removed_workspace_loads": 566,
+      "old_checkers": 567,
+      "new_checkers": 567,
+      "native_checker_search_path_scans_retained": 567
+    },
+    "input_log_sha256": "802de080f6b9c846d648c31fe860d88d7aec122add37b9e24eb43a03b15fc8dc"
+  },
+  "environment_assumptions": [
+    "Immutable ordinary build outputs, package configuration and toolchain throughout global replay; no writer/compiler overlap.",
+    "Same Lake configuration and parent environment for each original invocation.",
+    "Pinned Linux runner Bash. Candidate rejects nonempty BASH_ENV/ENV before the new inner shell; actual admitted CI environment still needs source/runtime review. Shell-only SHLVL/_ changes do not authorize search-path or tool differences.",
+    "Native checker executable and effective library/dynamic-library environment must match original Lake environment. Model equivalence is not a native observation."
+  ],
+  "primary_sources": [
+    {
+      "upstream_path": "src/LeanChecker.lean",
+      "upstream_commit": "293d5d0c0c3f3dded4688b3ccd6a33939ac5102b",
+      "git_blob": "e6491d6e0a7fc9130b3b9ace89218e2f277100bf",
+      "bytes": 4806,
+      "sha256": "2d18ec111d73c536b0bdee2533556bb9548c349f386797d3d3837b1f84d55dae",
+      "url": "https://github.com/leanprover/lean4/blob/293d5d0c0c3f3dded4688b3ccd6a33939ac5102b/src/LeanChecker.lean",
+      "local_distribution_match": "/workspace/toolchains/lean-4.34.0-linux/src/lean/LeanChecker.lean",
+      "evidence_path": "primary/src/LeanChecker.lean"
+    },
+    {
+      "upstream_path": "src/lake/Lake/CLI/Main.lean",
+      "upstream_commit": "293d5d0c0c3f3dded4688b3ccd6a33939ac5102b",
+      "git_blob": "dc3f0d0f62616e54ae54208d7ca767d2cf96eb80",
+      "bytes": 52941,
+      "sha256": "3afad780df8292a7153465b51470af6ea00cf8a2345b9d8758922026237ac094",
+      "url": "https://github.com/leanprover/lean4/blob/293d5d0c0c3f3dded4688b3ccd6a33939ac5102b/src/lake/Lake/CLI/Main.lean",
+      "local_distribution_match": "/workspace/toolchains/lean-4.34.0-linux/src/lean/lake/Lake/CLI/Main.lean",
+      "evidence_path": "primary/src/lake/Lake/CLI/Main.lean"
+    },
+    {
+      "upstream_path": "src/lake/Lake/Config/Workspace.lean",
+      "upstream_commit": "293d5d0c0c3f3dded4688b3ccd6a33939ac5102b",
+      "git_blob": "92df575a8aa0cd7ea4a85b0831986359d40a735f",
+      "bytes": 19291,
+      "sha256": "80ae4168ce567b9292998b520c473302bd3913aeb859b431855090c66ef2949f",
+      "url": "https://github.com/leanprover/lean4/blob/293d5d0c0c3f3dded4688b3ccd6a33939ac5102b/src/lake/Lake/Config/Workspace.lean",
+      "local_distribution_match": "/workspace/toolchains/lean-4.34.0-linux/src/lean/lake/Lake/Config/Workspace.lean",
+      "evidence_path": "primary/src/lake/Lake/Config/Workspace.lean"
+    }
+  ],
+  "native_checker_binary": {
+    "bytes": 51080,
+    "sha256": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe"
+  },
+  "limits_and_coverage_changes": false,
+  "performance": "No native timing performed; no claim that removing Lake setup is sufficient for 120 minutes. Approximate break-even requires 1.49s saved per removed setup, derived from censored cadence and subject to variance.",
+  "preflight_and_receipt_target": "Parent observed169.853s preflight+90.561s post-terminal for bridge. Every full verification observation and post-child check is retained in this proposal. Those are separately identified possible targets; no rehash pass, identity check, sample or receipt work is removed here.",
+  "rejected_routes": [
+    "Additional job that merely resets120-minute ceiling",
+    "Multimodule native checker invocation: pinned main schedules all targets as tasks; changes ownership/memory behavior",
+    "Custom direct replay helper: would add new native verification implementation",
+    "Reusing prior compiled/replayed objects or receipts to claim this commit verified",
+    "Hoisting full input hash checks across preflight/post-child observations"
+  ],
+  "verification": "Offline differential fake-launcher tests plus source/patch bindings; no Lean, Lake, leanchecker, compiler, CI, push or dispatch execution.",
+  "next_authorization": "Sequential independent proposal review first. Prior one-shot CI allowance consumed. Any native measurement or physical attempt requires a fresh explicit bounded authorization; this checkpoint grants none.",
+  "open": [
+    "All36 new proof bodies unelaborated",
+    "Shared-stream refinement",
+    "Joint state/cost composition",
+    "Arithmetic bit costs",
+    "Bank/caller handoff",
+    "Aggregate costs",
+    "Whole paper"
+  ]
+}

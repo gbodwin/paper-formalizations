@@ -1,0 +1,16 @@
+--- a/scripts/KernelCheck.sh
++++ b/scripts/KernelCheck.sh
+@@ -3,0 +4,7 @@
++# Proposal only: load the unchanged Lake environment once.
++# Each target still gets a fresh, sequential official checker process.
++if [[ -n ${BASH_ENV-} || -n ${ENV-} ]]; then
++  printf "%s\n" "Kernel replay requires absent shell startup hooks" >&2
++  exit 2
++fi
++exec lake env "$BASH" --noprofile --norc -euo pipefail -c '
+@@ -20 +27,2 @@
+-    lake env leanchecker -v "$module"
++    hash -r
++    command leanchecker -v "$module"
+@@ -22,0 +31 @@
++'
