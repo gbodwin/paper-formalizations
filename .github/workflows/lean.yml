@@ -406,7 +406,8 @@ jobs:
           PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-corollary-python-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -B checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py
       - name: Replay every project module through the Lean kernel
-        run: bash scripts/KernelCheck.sh
+        shell: /bin/bash --noprofile --norc -p -e -o pipefail {0}
+        run: /bin/bash --noprofile --norc -p -e -o pipefail scripts/KernelCheck.sh
       - name: Bind completed full validation to this exact commit
         id: full_validated
         env:
