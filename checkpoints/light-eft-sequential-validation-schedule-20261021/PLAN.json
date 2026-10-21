@@ -16,7 +16,7 @@
   "events": "existing push/pull_request/workflow_dispatch unchanged; ignored checkpoint branch unchanged",
   "concurrency": "existing caller-wide paper-formalizations-single-compiler/cancel-in-progress=false retained across full, focused and aggregation; focused needs successful full; no nested competing lock",
   "identities": "Exact checkout/event SHA, caller workflow ref/SHA/name, actual job.workflow repository/path/ref/SHA, check job, role, source input; recorded in every producer/batch CI_identity. Empty context fails closed.",
-  "dependency_authority": "Fresh per-job ordinary build/cache observations and same-job paid9+decoder4+bridge4; zero object/evidence transfer from full job. Existing provenance qualification unchanged.",
+  "dependency_authority": "Prebuild .lake absence and use-github-cache=false prohibit inherited repository object trees; upstream accepted Mathlib cache remains newly observed. Fresh local ordinary build plus same-job paid9+decoder4+bridge4, zero full-job object/evidence transfer.",
   "focused_order": [
     "fresh checkout exact source",
     "bind actual caller/job refs and bytes",
@@ -95,21 +95,21 @@
         "seconds": 3200
       }
     ],
-    "observed_focused_reused_setup_seconds": 279,
     "observed_producers_seconds": 1490,
-    "observed_reused_subtotal_seconds": 1769,
     "planning_allocation_seconds": {
-      "setup": 600,
+      "uncached_ordinary_setup": 1500,
       "producers": 3000,
-      "new_external_preparation": 900,
-      "new_batch": 1800,
-      "evidence_and_status": 600
+      "new_external_preparation": 600,
+      "new_batch": 1500,
+      "evidence_and_status": 300
     },
     "planning_total_seconds": 6900,
     "unallocated_seconds": 300,
-    "qualification": "115-minute planning envelope within unchanged120; setup allowance exceeds2x279, producer allowance exceeds2x1490. New dependency preparation,batch and extra evidence costs remain unmeasured. Allocations are forecasts, not extra execution deadlines or a proved worst-case bound. Native prespawn/wall bounds can sum beyond120; job timeout remains failure.",
-    "known_reused_setup_excludes": "New job scheduling and runner variance; original checkout/build/cache provenance and ordinary dependency source changes are not assumed identical",
-    "no_claim": "No guaranteed runtime fit, Lean acceptance, child admission or CI success is inferred from this source plan"
+    "qualification": "115-minute source-review planning envelope in unchanged120. Producer allowance exceeds2x1490. Cold ordinary setup/build,external preparation,batch and extra evidence costs remain unmeasured. Historical279second setup used repository cache and does not bound uncached build time. Allocations are forecasts, not new deadlines or a proved worst-case bound. Native prespawn/wall maxima can sum beyond120; timeout remains failure.",
+    "no_claim": "No guaranteed runtime fit, Lean acceptance, child admission or CI success is inferred from this source plan",
+    "observed_historical_cached_setup_seconds": 279,
+    "observed_historical_cached_subtotal_seconds": 1769,
+    "known_historical_setup_excludes": "New job scheduling and runner variance; original checkout/build/cache provenance and ordinary dependency source changes are not assumed identical"
   },
   "references": [
     {
@@ -123,6 +123,10 @@
     {
       "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/contexts",
       "supports": "job.workflow_* actual defining workflow identity on github.com"
+    },
+    {
+      "url": "https://github.com/leanprover/lean-action/blob/a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5/action.yml",
+      "supports": "use-github-cache defaults true and wraps .lake restore/save; focused false disables both"
     }
   ],
   "Fast": "off",
@@ -133,5 +137,10 @@
     "bank/caller handoff",
     "aggregate costs",
     "whole paper"
-  ]
+  ],
+  "focused_cache_policy": {
+    "repository_lake_cache": "disabled restore/save via use-github-cache=false",
+    "prebuild": "lstat-style lexists absence of .lake",
+    "upstream_mathlib_cache": "existing accepted route unchanged; newly observed, no clean provenance assertion"
+  }
 }

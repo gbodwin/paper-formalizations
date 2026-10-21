@@ -6,6 +6,7 @@ H=Path(__file__).resolve().parent;R=H.parents[1]
 sys.dont_write_bytecode=True
 sys.path.insert(0,str(H))
 import acceptance
+import workflow_identity
 from acceptance import aggregate
 def policy(name):
     s=importlib.util.spec_from_file_location(name,R/'checkpoints'/name/'ci_policy.py')
@@ -99,4 +100,18 @@ class Models(unittest.TestCase):
                      patch.object(acceptance,'head',return_value='a'*40),patch.object(acceptance,'exact_controls',return_value={'MODEL':'control'}):
                     with self.assertRaises(ValueError):acceptance.main()
                 self.assertEqual(output.read_text(),'')
+    def test_focused_prebuild_rejects_any_existing_lake_tree(self):
+        for mode in ['absent','file','directory','dangling']:
+            with tempfile.TemporaryDirectory() as tmp:
+                root=Path(tmp);path=root/'.lake'
+                if mode=='file':path.write_text('MODEL inherited cache')
+                elif mode=='directory':path.mkdir()
+                elif mode=='dangling':path.symlink_to(root/'missing')
+                with patch.dict(os.environ,env(),clear=True),patch.object(workflow_identity,'ROOT',root),\
+                     patch.object(workflow_identity,'exact_controls',return_value={'MODEL':'control'}),\
+                     patch.object(workflow_identity,'identity',return_value={'MODEL':'identity'}),\
+                     patch.object(workflow_identity,'head',return_value='a'*40),patch('builtins.print'):
+                    if mode=='absent':workflow_identity.main()
+                    else:
+                        with self.assertRaises(ValueError):workflow_identity.main()
 if __name__=='__main__':unittest.main(verbosity=2)

@@ -26,8 +26,13 @@ ordinary lean-action setup, builds the same three explicit external inputs,
 then performs the unchanged module-index check before any producer snapshot.
 It runs paid9, decoder4, bridge4 and batch12 strictly sequentially, all in this
 one check job. No objects, producer receipts, leases or filesystem identities
-come from the full job. No download-artifact step exists. Ordinary/cache inputs
-are newly observed, not asserted to have authenticated clean-build provenance.
+come from the full job. The focused action explicitly sets use-github-cache=false:
+the pinned action otherwise restores and saves .lake by default, which could
+reuse the preceding full job's ordinary objects. The prebuild binding check
+requires .lake absent (including dangling symlinks). No download-artifact step
+exists. The existing upstream Mathlib cache route remains newly observed and
+does not establish authenticated clean-build provenance. Local project outputs
+are built in the focused job rather than restored from another job's .lake.
 All17 producer children are reconstructed and authenticated by the existing
 same-run machinery before the batch. Full retained-context equality and the
 growing owned output root are unchanged. Evidence uploads immediately follow
@@ -60,10 +65,11 @@ acceptance procedure, followed by independent terminal review.
 The accepted run39507492456 job118919963785 measured6534seconds, leaving666seconds
 inside its120-minute job. Reused focused setup/index measured279seconds; paid,
 decoder and bridge measured597/540/353seconds, totaling1490. Thus the reused
-focused subtotal is1769seconds (29m29s), without the53m20s global replay or other
-full checks. PLAN.json conservatively allocates600seconds setup and3000seconds
-producers, each above twice observation, plus900seconds unmeasured external
-preparation,1800seconds unmeasured batch and600seconds evidence/status. The
+historical cached subtotal is1769seconds (29m29s), without the53m20s global replay
+or other full checks. This is not a cold-build measurement. PLAN.json allocates
+1500seconds unmeasured uncached ordinary setup/build and3000seconds producers
+(above twice1490), plus600seconds unmeasured external preparation,1500seconds
+unmeasured batch and300seconds evidence/status. The
 115-minute planning envelope leaves5minutes inside the unchanged120-minute
 focused limit. These are forecasts rather than new deadlines or a worst-case
 proof; prespawn/wall maxima can sum beyond the job limit. New-module elaboration,
@@ -72,9 +78,10 @@ remain unmeasured. Timeout remains a failure. No automatic retry or resource
 relaxation follows. This is sufficient scheduling evidence to review, not a
 claim of execution qualification or kernel acceptance.
 
-The12 original blocked batch models remain; seven added scheduling models exercise
+The12 original blocked batch models remain; eight added scheduling models exercise
 both strengthened policies, all trigger/role combinations, actual workflow-field
-failures, status/commit conjunction and the actual aggregation/marker entrypoints.
+failures, status/commit conjunction, the actual aggregation/marker entrypoints and
+rejection of inherited .lake files/directories/dangling symlinks.
 The offline checker verifies exact full
 check preservation, order, concurrency, trigger graph, unique artifact names,
 binding cascades, unchanged mathematical/runtime sources and original resources.

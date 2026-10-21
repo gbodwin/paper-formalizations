@@ -583,21 +583,21 @@
         "seconds": 3200
       }
     ],
-    "observed_focused_reused_setup_seconds": 279,
     "observed_producers_seconds": 1490,
-    "observed_reused_subtotal_seconds": 1769,
     "planning_allocation_seconds": {
-      "setup": 600,
+      "uncached_ordinary_setup": 1500,
       "producers": 3000,
-      "new_external_preparation": 900,
-      "new_batch": 1800,
-      "evidence_and_status": 600
+      "new_external_preparation": 600,
+      "new_batch": 1500,
+      "evidence_and_status": 300
     },
     "planning_total_seconds": 6900,
     "unallocated_seconds": 300,
-    "qualification": "115-minute planning envelope within unchanged120; setup allowance exceeds2x279, producer allowance exceeds2x1490. New dependency preparation,batch and extra evidence costs remain unmeasured. Allocations are forecasts, not extra execution deadlines or a proved worst-case bound. Native prespawn/wall bounds can sum beyond120; job timeout remains failure.",
-    "known_reused_setup_excludes": "New job scheduling and runner variance; original checkout/build/cache provenance and ordinary dependency source changes are not assumed identical",
+    "qualification": "115-minute source-review planning envelope in unchanged120. Producer allowance exceeds2x1490. Cold ordinary setup/build,external preparation,batch and extra evidence costs remain unmeasured. Historical279second setup used repository cache and does not bound uncached build time. Allocations are forecasts, not new deadlines or a proved worst-case bound. Native prespawn/wall maxima can sum beyond120; timeout remains failure.",
     "no_claim": "No guaranteed runtime fit, Lean acceptance, child admission or CI success is inferred from this source plan",
+    "observed_historical_cached_setup_seconds": 279,
+    "observed_historical_cached_subtotal_seconds": 1769,
+    "known_historical_setup_excludes": "New job scheduling and runner variance; original checkout/build/cache provenance and ordinary dependency source changes are not assumed identical",
     "job_timeout_minutes": 120,
     "timeout_policy": "failure; no blind rerun or limit relaxation"
   },

@@ -63,7 +63,10 @@ for g in gate_names:
 before=[s.get('name','') for s in steps[:next(i for i,s in enumerate(steps) if s.get('id')==gate_names[0])]]
 assert before[-2:]==['Build exact external inputs for fair-bit batch','Check all paper module indexes']
 assert next(s for s in steps if s.get('name')=='Build exact external inputs for fair-bit batch')==next(s for s in oldinline if s.get('name')=='Build exact external inputs for fair-bit batch')
-assert [s for s in steps if s.get('uses','').startswith('leanprover/lean-action')]==[s for s in old['jobs']['check']['steps'] if s.get('uses','').startswith('leanprover/lean-action')]
+action=next(s for s in steps if s.get('uses','').startswith('leanprover/lean-action'))
+expected=copy.deepcopy(next(s for s in old['jobs']['check']['steps'] if s.get('uses','').startswith('leanprover/lean-action')))
+expected['with']['use-github-cache']='false'
+assert action==expected,'Only focused repository build cache may differ from accepted ordinary setup'
 assert steps[0]['with']=={'ref':'${{ inputs.source }}','persist-credentials':'false'}
 assert sum('ci_gate.py' in s.get('run','') for s in steps)==4
 artifacts=[]
@@ -109,7 +112,7 @@ assert p.read_text()==before.replace('    identity = ci_identity(env, head)\n',
 assert {p.name for p in H.iterdir()}=={'PLAN.json','README.md','acceptance.py','workflow_identity.py','check_schedule.py','test_schedule.py','refresh_bindings.py'}
 for p in H.glob('*.py'):ast.parse(p.read_text())
 plan=json.loads((H/'PLAN.json').read_text());budget=plan['budget']
-assert budget['observed_producers_seconds']==1490 and budget['observed_reused_subtotal_seconds']==1769
+assert budget['observed_producers_seconds']==1490 and budget['observed_historical_cached_subtotal_seconds']==1769
 assert sum(budget['planning_allocation_seconds'].values())==budget['planning_total_seconds']==6900
 assert plan['job_limits_minutes']=={'full':120,'focused':120,'aggregation':5} and not plan['child_resource_changes']
 assert plan['unelaborated_proofs']==36
@@ -117,5 +120,5 @@ git('diff','--check',BASE)
 print(json.dumps(dict(status='PASS_SOURCE_SCHEDULE_BINDINGS_ONLY',all_full_checks_preserved=True,producer_children_same_focused_job=17,
  batch_children=12,global_replays_preserved=567,engine_binding_rows_checked=bound,unique_artifact_names=len(artifacts),
  exact_job_workflow_bound=True,mandatory_full_and_focused=True,resource_limits_unchanged=True,
- measured_reused_subtotal_seconds=1769,planning_envelope_seconds=6900,new_costs_unmeasured=True,
+ measured_historical_cached_subtotal_seconds=1769,planning_envelope_seconds=6900,new_costs_unmeasured=True,
  kernel_acceptance=False,independent_review='pending',no_compiler_push_CI=True),indent=2))

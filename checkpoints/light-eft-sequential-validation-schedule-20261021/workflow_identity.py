@@ -37,7 +37,10 @@ def identity(env,head):
 def head():return subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
 
 def main():
-    controls=exact_controls();ci=identity(dict(os.environ),head())
+    env=dict(os.environ)
+    controls=exact_controls();ci=identity(env,head())
+    require(env.get('LIGHTEFT_VALIDATION_ROLE')=='focused' and not os.path.lexists(ROOT/'.lake'),
+            'Focused setup requires an absent .lake tree; no inherited repository build cache')
     print(json.dumps(dict(status='EXACT_WORKFLOW_SOURCE_BINDING_ONLY',CI_identity=ci,controls=controls)))
 
 if __name__=='__main__':main()
