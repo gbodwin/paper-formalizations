@@ -37,6 +37,41 @@ def git(*args):
     return subprocess.check_output(['git', *args], cwd=REPO, timeout=30)
 
 
+def validator_snapshot():
+    files = {p for p in HERE.rglob('*') if p.is_file()}
+    files.add(REPO / '.github/workflows/flow-737-validation.yml')
+    return {str(p.relative_to(REPO)): digest(p.read_bytes()) for p in sorted(files)}
+
+
+def postflight_identity(report, expected_commit, source, output):
+    """Common fail-closed final identity check, including after failed attempts."""
+    errors = {}
+    def check(field, action):
+        try:
+            report[field] = bool(action())
+        except Exception as exc:
+            report[field] = False
+            errors[field] = str(exc)
+    check('head_postflight_passed',
+          lambda: git('rev-parse', 'HEAD').decode().strip() == expected_commit)
+    check('validator_postflight_passed',
+          lambda: validator_snapshot() == report['validator_bindings'])
+    def overlay_matches():
+        root = output / 'src'
+        expected = {n.replace('.', '/') + '.lean': digest(data) for n, data in source.items()}
+        actual = {str(p.relative_to(root)): digest(p.read_bytes())
+                  for p in root.rglob('*') if p.is_file()}
+        return actual == expected
+    check('overlay_postflight_passed', overlay_matches)
+    if errors:
+        report['identity_postflight_errors'] = errors
+    passed = all(report[k] for k in ['head_postflight_passed',
+                 'validator_postflight_passed', 'overlay_postflight_passed'])
+    if not passed:
+        report['status'] = 'failed'
+    return passed
+
+
 def blob(entry):
     data = git('show', entry['commit'] + ':' + entry['repository_path'])
     need(digest(data) == entry['sha256'], 'Source binding mismatch: ' + entry['repository_path'])
@@ -168,7 +203,7 @@ def execute(args, m, base, new, source, order, fixtures):
     report = {'status': 'running', 'commit': args.expected_commit, 'baseline_ci': ci,
               'compiled': [], 'replayed': [], 'commands': [], 'acceptance': False,
               'source_bindings': m,
-              'validator_bindings': {p.name: digest(p.read_bytes()) for p in HERE.iterdir() if p.is_file()}}
+              'validator_bindings': validator_snapshot()}
     started = time.monotonic()
     lock = open('/tmp/flow-ordinary-compiler.lock', 'a')
     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -269,16 +304,14 @@ def execute(args, m, base, new, source, order, fixtures):
             cmd = [lean, '-j1', '-DautoImplicit=false', '-DwarningAsError=true']
             cmd += fixture_arguments(name, out / (name + '.lean'), args.positive_attempt_cap)
             fixture_pass(name, command('fixture-' + name, cmd, 120))
-        # Recheck frozen Git bindings, source inputs and runtime after execution.
-        plan()
-        need(not git('status', '--porcelain', '--untracked-files=all').strip(), 'Checkout changed during validation')
-        need(runtime_snapshot() == snapshots, 'Runtime bytes changed during validation')
+        # Common final postflight below decides whether this status may survive.
         report['status'] = 'gates_passed_pending_independent_review'
     except BaseException as exc:
         report['status'] = 'failed'
         report['error'] = str(exc)
         raise
     finally:
+        postflight_identity(report, args.expected_commit, source, out)
         try:
             plan()
             report['source_postflight_passed'] = not git('status', '--porcelain', '--untracked-files=all').strip()
@@ -321,7 +354,7 @@ def main():
                 receipt.write_text(json.dumps({'status': 'failed_preflight',
                     'expected_commit': args.expected_commit, 'baseline_run_id': args.baseline_run_id,
                     'error': str(exc), 'acceptance': False, 'compiled': [], 'replayed': [],
-                    'validator_bindings': {p.name: digest(p.read_bytes()) for p in HERE.iterdir() if p.is_file()}},
+                    'validator_bindings': validator_snapshot()},
                     indent=2) + '\n')
             raise
         finally:

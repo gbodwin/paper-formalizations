@@ -66,6 +66,13 @@ setup receipt records checkout, setup, cache and validation step outcomes even
 if the runner never starts; full setup logs remain in GitHub's workflow log.
 Runner logs and both kinds of receipts are uploaded on success or failure.
 
+The common final postflight rechecks HEAD against the expected commit, compares
+the complete current validator file-set/hash mapping (including the additive CI
+workflow) with its initial snapshot, and compares every emitted overlay source
+path/hash with the frozen source map. A clean checkout switch, validator change,
+or added/changed overlay file marks the receipt failed. These identity checks
+also run after failed attempts and never promote an existing failure to success.
+
 Success is labelled `gates_passed_pending_independent_review`, never acceptance.
 The exact new CI run, artifacts, inherited baseline CI logs, and complete source
 must receive sequential independent post-execution review before acceptance.
@@ -81,6 +88,13 @@ The Lean audit and runner remain unexecuted source candidates and may require
 repairs after authorized validation. No baseline or preserved draft is promoted.
 Light EFT continues to own integration until the parent releases it. Do not
 dispatch the workflow or invoke `--execute` before that release and approval.
+The identity repair adds regressions for a clean changed HEAD, changed validator
+bytes/file set, changed workflow bytes, changed overlay bytes/file set, and the
+failed-attempt path. All fourteen source-only tests pass. The parent review at
+`libfile_4079549b17948191a66f036f94a67047` motivated this repair; the earlier
+6d7c7ea candidate is not silently treated as repaired. Light EFT's latest CI is
+under diagnosis; integration release and an explicit positive physical attempt
+cap remain prerequisites.
 
 Source-only check:
 

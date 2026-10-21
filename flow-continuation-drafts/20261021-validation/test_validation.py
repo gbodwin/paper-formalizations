@@ -102,6 +102,83 @@ class ValidationTests(unittest.TestCase):
             self.assertFalse(report['acceptance'])
             self.assertTrue((out / 'SHA256SUMS').exists())
 
+    def identity_case(self, mutation=None, initial_status='gates_passed_pending_independent_review'):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            here = root / 'validation'
+            here.mkdir()
+            (here / 'validate.py').write_text('original validator bytes')
+            workflow = root / '.github/workflows/flow-737-validation.yml'
+            workflow.parent.mkdir(parents=True)
+            workflow.write_text('original workflow bytes')
+            output = root / 'output'
+            src = output / 'src/DirectedFlowCutGap/A.lean'
+            src.parent.mkdir(parents=True)
+            source = {'DirectedFlowCutGap.A': b'original Lean source'}
+            src.write_bytes(source['DirectedFlowCutGap.A'])
+            expected = 'a' * 40
+            current = expected
+            with patch.object(v, 'HERE', here), patch.object(v, 'REPO', root):
+                report = {'status': initial_status, 'validator_bindings': v.validator_snapshot(),
+                          'commit': expected, 'acceptance': False}
+                if mutation == 'head':
+                    current = 'b' * 40
+                elif mutation == 'validator':
+                    (here / 'validate.py').write_text('changed validator bytes')
+                elif mutation == 'added-validator':
+                    (here / 'extra.py').write_text('new file')
+                elif mutation == 'workflow':
+                    workflow.write_text('changed workflow bytes')
+                elif mutation == 'overlay':
+                    src.write_bytes(b'changed Lean source')
+                elif mutation == 'extra-overlay':
+                    (src.parent / 'Extra.lean').write_text('new source')
+                def clean_git(*args):
+                    if args == ('rev-parse', 'HEAD'):
+                        return (current + '\n').encode()
+                    if args[0] == 'status':
+                        return b''  # A clean switch must still be rejected.
+                    raise AssertionError(args)
+                with patch.object(v, 'git', side_effect=clean_git):
+                    passed = v.postflight_identity(report, expected, source, output)
+                return passed, report
+
+    def test_unchanged_postflight_identity(self):
+        passed, report = self.identity_case()
+        self.assertTrue(passed)
+        self.assertEqual(report['status'], 'gates_passed_pending_independent_review')
+
+    def test_clean_changed_head_cannot_pass(self):
+        passed, report = self.identity_case('head')
+        self.assertFalse(passed)
+        self.assertFalse(report['head_postflight_passed'])
+        self.assertEqual(report['status'], 'failed')
+
+    def test_changed_validator_set_or_bytes_cannot_pass(self):
+        for mutation in ['validator', 'added-validator', 'workflow']:
+            with self.subTest(mutation=mutation):
+                passed, report = self.identity_case(mutation)
+                self.assertFalse(passed)
+                self.assertFalse(report['validator_postflight_passed'])
+                self.assertEqual(report['status'], 'failed')
+
+    def test_changed_overlay_set_or_bytes_cannot_pass(self):
+        for mutation in ['overlay', 'extra-overlay']:
+            with self.subTest(mutation=mutation):
+                passed, report = self.identity_case(mutation)
+                self.assertFalse(passed)
+                self.assertFalse(report['overlay_postflight_passed'])
+                self.assertEqual(report['status'], 'failed')
+
+    def test_failed_attempt_still_checks_identity_and_is_never_promoted(self):
+        passed, report = self.identity_case('head', initial_status='failed')
+        self.assertFalse(passed)
+        self.assertFalse(report['head_postflight_passed'])
+        self.assertEqual(report['status'], 'failed')
+        passed, report = self.identity_case(initial_status='failed')
+        self.assertTrue(passed)
+        self.assertEqual(report['status'], 'failed')
+
 
 if __name__ == '__main__':
     unittest.main()
