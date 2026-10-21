@@ -1,6 +1,28 @@
 import Lean
 import LightEFTJointFlagSamplingStage.JointAssignmentLaw
 
+/- Diagnostic only: fixed labels and a monotonic-millisecond clock modulo2^64.
+No imported names, paths, expressions, payloads or environment variables are logged.
+Each marker is flushed; all existing limits/checks and four exports are unchanged. -/
+open Lean in
+run_cmd do
+  let now := (← IO.monoMsNow) % 18446744073709551616
+  let out ← IO.getStdout
+  out.putStrLn s!"AUDIT-TIMING: phase=frontend-ready mono-ms-mod64={now}"
+  out.flush
+
+namespace LightEFTAuditTiming
+def mark (phase : String) : IO Unit := do
+  let now := (← IO.monoMsNow) % 18446744073709551616
+  let out ← IO.getStdout
+  out.putStrLn s!"AUDIT-TIMING: phase={phase} mono-ms-mod64={now}"
+  out.flush
+end LightEFTAuditTiming
+
+open Lean in
+run_cmd do
+  LightEFTAuditTiming.mark "timing-helper-ready"
+
 /- Verification helper only. No declaration in this namespace is a paper premise.
 Keys contain fresh scalar bytes, never borrowed Names/Strings from loaded parts.
 Only regions explicitly returned by this helper's reads are ever freed.
@@ -284,6 +306,10 @@ structure Report where
 
 end LightEFTAuditCollision
 
+open Lean in
+run_cmd do
+  LightEFTAuditTiming.mark "scan-helper-ready"
+
 
 /- Serialization-only memoization. Keys are full imported-environment Names,
 not their display strings. The imported environment stays alive for this entire
@@ -311,14 +337,21 @@ def renderNames (initial : Cache) (names : Array Name) : String × Cache := Id.r
 
 end LightEFTAuditText
 
+open Lean in
+run_cmd do
+  LightEFTAuditTiming.mark "serialization-helper-ready"
+
 /- Unexecuted focused audit draft. Reuses the accepted recursive traversal.
 Inventories every declaration owned by the new module, then follows all types,
 definition/theorem/opaque bodies and inductive/recursor links into imports. -/
 open Lean in
 run_cmd do
+  LightEFTAuditTiming.mark "audit-run-start"
   let env := (← getEnv).setExporting false
   let modules := env.allImportedModuleNames
+  LightEFTAuditTiming.mark "environment-ready"
   let collisionReport ← LightEFTAuditCollision.scan env
+  LightEFTAuditTiming.mark "scan-complete"
   let target := "LightEFTJointFlagSamplingStage.JointAssignmentLaw".toName
   unless modules.contains target do throwError "Missing new target module"
   let allowed : Array Name := #["propext".toName, "Classical.choice".toName, "Quot.sound".toName]
@@ -353,6 +386,7 @@ run_cmd do
     | .inductInfo _ => "inductive"
     | .ctorInfo _ => "constructor"
     | .recInfo _ => "recursor"
+  LightEFTAuditTiming.mark "roots-complete"
   let mut textCache : LightEFTAuditText.Cache := {}
   let mut inventory := "owner\tname\tkind\tunsafe\tpartial\n"
   let mut issues : Array String := collisionReport.issues
@@ -365,6 +399,7 @@ run_cmd do
     if c.isUnsafe then issues := issues.push s!"root unsafe: {n}"
     if c.isPartial then issues := issues.push s!"root partial: {n}"
     if let .axiomInfo _ := c then issues := issues.push s!"root axiom: {n}"
+  LightEFTAuditTiming.mark "inventory-complete"
   let mut visited : NameSet := {}
   let mut todo := roots.toList
   let mut dependencies := "name\towner\tkind\ttypeDependencies\tbodyDependencies\tunsafe\tpartial\n"
@@ -398,15 +433,22 @@ run_cmd do
     textCache := afterBody
     dependencies := dependencies ++ s!"{nameText}\t{ownerText}\t{kind c}\t{typeText}\t{bodyText}\t{c.isUnsafe}\t{c.isPartial}\n"
     todo := typeDeps.toList ++ bodyDeps.toList ++ todo
+  LightEFTAuditTiming.mark "recursive-complete"
   -- Require the exact reviewed deterministic and probability interfaces.
   let required : Array Name := #["LightEFTSpanners.StoredFlagBatch.original_probability".toName, "LightEFTSpanners.StoredFlagSample.typed_edgeSet".toName, "LightEFTSpanners.FiniteProbability.productLaw".toName, "LightEFTSpanners.FiniteProbability.productLaw_measure".toName, "LightEFTSpanners.FiniteProbability.Law.prob_map".toName, "LightEFTSpanners.FiniteProbability.Law.prob_bind".toName, "LightEFTSpanners.SampledGreedy.freshBatchLaw".toName, "LightEFTSpanners.SampledGreedy.executionLaw".toName]
   for n in required do
     unless visited.contains n do issues := issues.push s!"Missing required reachable interface: {n}"
+  LightEFTAuditTiming.mark "interfaces-complete"
   IO.FS.writeFile "ci-evidence/actual-owner-inventory.tsv" inventory
+  LightEFTAuditTiming.mark "inventory-written"
   IO.FS.writeFile "ci-evidence/recursive-dependencies.tsv" dependencies
+  LightEFTAuditTiming.mark "dependencies-written"
   IO.FS.writeFile "ci-evidence/import-closure-loaded.txt"
     (String.intercalate "\n" (modules.toList.map toString) ++ "\n")
+  LightEFTAuditTiming.mark "imports-written"
   IO.FS.writeFile "ci-evidence/strict-violations.txt"
     (String.intercalate "\n" issues.toList ++ "\n")
+  LightEFTAuditTiming.mark "findings-written"
   if !issues.isEmpty then throwError "Strict focused audit rejected {issues.size} findings"
+  LightEFTAuditTiming.mark "strict-checks-complete"
   logInfo m!"PASS: {roots.size} new-module actual-owner declarations; {visited.size} recursive constants, {opaqueCount} opaque bodies; axioms {axioms.toArray}"
