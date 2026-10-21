@@ -37,6 +37,8 @@ jobs:
           axiom-audit: "true"
           axiom-audit-root: "VFTSpanners"
           axiom-audit-allow: "propext,Classical.choice,Quot.sound"
+      - name: Build exact external inputs for fair-bit batch
+        run: lake build +Mathlib.Analysis.SpecificLimits.Normed +Mathlib.Topology.Algebra.InfiniteSum.ENNReal +Mathlib.Tactic.FieldSimp
       - name: Check all paper module indexes
         run: bash scripts/CheckModuleIndex.sh
       - name: Verify paid flag serialization and stored filter composition
@@ -362,6 +364,20 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 30
+      - name: Verify reviewed flat tape and fair-bit sampler batch
+        id: light_eft_fair_bit_batch
+        env:
+          PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-fair-bit-batch-python-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -B checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/ci_gate.py
+      - name: Preserve fair-bit batch evidence before remaining checks
+        if: ${{ always() && steps.light_eft_fair_bit_batch.outcome != 'skipped' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: light-eft-fair-bit-batch-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/light-eft-fair-bit-batch-${{ github.run_id }}-${{ github.run_attempt }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
       - name: Verify canonical actual-output corollary after three context replays
         id: light_eft_corollary
         env:
@@ -378,6 +394,7 @@ jobs:
           LIGHTEFT_SUMMARY_JOB: ${{ github.job }}
           LIGHTEFT_SUMMARY_JOB_STATUS: ${{ job.status }}
           LIGHTEFT_SUMMARY_STAGED_OUTCOME: ${{ steps.light_eft_staged.outcome }}
+          LIGHTEFT_SUMMARY_BATCH_OUTCOME: ${{ steps.light_eft_fair_bit_batch.outcome }}
           LIGHTEFT_SUMMARY_COROLLARY_OUTCOME: ${{ steps.light_eft_corollary.outcome }}
         run: |
           python3 -B - <<'PY'
@@ -390,7 +407,8 @@ jobs:
               ('job', 'LIGHTEFT_SUMMARY_JOB'),
               ('job_status', 'LIGHTEFT_SUMMARY_JOB_STATUS'),
               ('staged_step_outcome', 'LIGHTEFT_SUMMARY_STAGED_OUTCOME'),
-              ('corollary_step_outcome', 'LIGHTEFT_SUMMARY_COROLLARY_OUTCOME')]}
+              ('corollary_step_outcome', 'LIGHTEFT_SUMMARY_COROLLARY_OUTCOME'),
+              ('fair_bit_batch_step_outcome', 'LIGHTEFT_SUMMARY_BATCH_OUTCOME')]}
           output = Path(os.environ['RUNNER_TEMP']) / (
               'light-eft-summary-' + record['run_id'] + '-' + record['run_attempt'])
           output.mkdir(mode=0o700, exist_ok=False)
@@ -408,6 +426,7 @@ jobs:
             ${{ runner.temp }}/light-eft-corollary-${{ github.run_id }}-${{ github.run_attempt }}
             ${{ runner.temp }}/light-eft-paid-focused-${{ github.run_id }}-${{ github.run_attempt }}
             ${{ runner.temp }}/light-eft-paid-joint-bridge-${{ github.run_id }}-${{ github.run_attempt }}
+            ${{ runner.temp }}/light-eft-fair-bit-batch-${{ github.run_id }}-${{ github.run_attempt }}
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 30

@@ -1,0 +1,553 @@
+{
+  "status": "IMPLEMENTATION_AND_PLAN_FOR_REVIEW_ONLY; NOT EXECUTION AUTHORITY",
+  "reviewed_source_commit": "4f06895ec9473b88b595904b77a453646f52f1e1",
+  "accepted_kernel_CI_baseline": "c1aaa0a00c0c943cec4b2753a937023e9884db04",
+  "source_review_bundle": {
+    "library_file_id": "libfile_3b33237b15ec81919ff8cf75cf382ba8",
+    "bytes": 641724,
+    "sha256": "d74e8d75723e07e35e106011f7870ccab77ce43db1c6697d730b456f8730ef85",
+    "qualification": "mathematical/source acceptance only; all36 proofs unelaborated"
+  },
+  "targets": [
+    "LightEFTFlatTapeStage.FlatTapeLaw",
+    "LightEFTFairBitStage.FairBitDigitSampler",
+    "LightEFTFairBitStage.IndependentTapeLaw"
+  ],
+  "per_target_scope": {
+    "LightEFTFlatTapeStage.FlatTapeLaw": {
+      "imports": 81,
+      "including_target": 82,
+      "required_theorem_roots": [
+        "LightEFTSpanners.FlatTape.tapeLength_eq",
+        "LightEFTSpanners.FlatTape.coordinateEquiv_apply",
+        "LightEFTSpanners.FlatTape.distinct_occurrence_indices",
+        "LightEFTSpanners.FlatTape.tapeEquiv_apply",
+        "LightEFTSpanners.FlatTape.tapeEquiv_at_position",
+        "LightEFTSpanners.FlatTape.idealTapeLaw_mass",
+        "LightEFTSpanners.FlatTape.tape_mass_eq_joint_mass",
+        "LightEFTSpanners.FlatTape.tape_event_probability",
+        "LightEFTSpanners.FlatTape.tape_joint_law",
+        "LightEFTSpanners.FlatTape.tape_supplied_assignment_probability"
+      ],
+      "required_interfaces": [
+        "LightEFTSpanners.JointFlagSampling.samplingSchedule",
+        "LightEFTSpanners.JointFlagSampling.samplingSchedule_nodup",
+        "LightEFTSpanners.JointFlagSampling.mem_samplingSchedule",
+        "LightEFTSpanners.JointFlagSampling.samplingSchedule_length",
+        "LightEFTSpanners.JointFlagSampling.jointSourceLaw_mass",
+        "LightEFTSpanners.PaidJointBridge.supplied_assignment_event_probability"
+      ]
+    },
+    "LightEFTFairBitStage.FairBitDigitSampler": {
+      "imports": 82,
+      "including_target": 83,
+      "required_theorem_roots": [
+        "LightEFTSpanners.FairBitDigit.transcript_length",
+        "LightEFTSpanners.FairBitDigit.run_transcript",
+        "LightEFTSpanners.FairBitDigit.fraction_nonneg",
+        "LightEFTSpanners.FairBitDigit.fraction_lt_one",
+        "LightEFTSpanners.FairBitDigit.digit_fraction",
+        "LightEFTSpanners.FairBitDigit.fuel_wait_succ",
+        "LightEFTSpanners.FairBitDigit.fuel_true_succ",
+        "LightEFTSpanners.FairBitDigit.fuel_wait_mass",
+        "LightEFTSpanners.FairBitDigit.fuel_true_formula",
+        "LightEFTSpanners.FairBitDigit.half_pow_tendsto_zero",
+        "LightEFTSpanners.FairBitDigit.nontermination_mass_tendsto_zero",
+        "LightEFTSpanners.FairBitDigit.fuel_true_tendsto",
+        "LightEFTSpanners.FairBitDigit.first_halt_mass",
+        "LightEFTSpanners.FairBitDigit.finite_true_sum",
+        "LightEFTSpanners.FairBitDigit.halting_trace_mass_one",
+        "LightEFTSpanners.FairBitDigit.expected_fair_bits_two",
+        "LightEFTSpanners.FairBitDigit.true_trace_mass",
+        "LightEFTSpanners.FairBitDigit.outputLaw_execution_mass",
+        "LightEFTSpanners.FairBitDigit.initial_fraction",
+        "LightEFTSpanners.FairBitDigit.sampler_exact_bias"
+      ],
+      "required_interfaces": [
+        "LightEFTSpanners.FiniteProbability.Law.bind",
+        "LightEFTSpanners.FiniteProbability.Law.pure",
+        "hasSum_geometric_two",
+        "hasSum_coe_mul_geometric_of_norm_lt_one",
+        "hasSum_iff_tendsto_nat_of_nonneg",
+        "squeeze_zero"
+      ]
+    },
+    "LightEFTFairBitStage.IndependentTapeLaw": {
+      "imports": 83,
+      "including_target": 84,
+      "required_theorem_roots": [
+        "LightEFTSpanners.FairBitDigit.independentCalls_probability",
+        "LightEFTSpanners.FairBitDigit.independentCalls_eq_product",
+        "LightEFTSpanners.FairBitDigit.samplerLaw_mass",
+        "LightEFTSpanners.FairBitDigit.samplerLaw_execution_mass",
+        "LightEFTSpanners.FairBitDigit.independentCalls_flat_law",
+        "LightEFTSpanners.FairBitDigit.independentCalls_assignment_probability"
+      ],
+      "required_interfaces": [
+        "LightEFTSpanners.FairBitDigit.outputLaw_execution_mass",
+        "LightEFTSpanners.FairBitDigit.initial_fraction",
+        "LightEFTSpanners.JointFlagSampling.Transport.fin_cons_probability",
+        "LightEFTSpanners.FiniteProbability.productLaw",
+        "LightEFTSpanners.FlatTape.idealTapeLaw",
+        "LightEFTSpanners.FlatTape.tape_supplied_assignment_probability"
+      ]
+    }
+  },
+  "source_hashes": {
+    "LightEFTFlatTapeStage.FlatTapeLaw": {
+      "path": "checkpoints/light-eft-flat-tape-law-20261021/staged/LightEFTFlatTapeStage/FlatTapeLaw.lean",
+      "bytes": 7347,
+      "sha256": "b1d3beaa25f9528611b7ae85c86a41e4feda57b53c62b3a1ccb2cf6c28360ee9"
+    },
+    "LightEFTFairBitStage.FairBitDigitSampler": {
+      "path": "checkpoints/light-eft-fair-bit-digit-sampler-20261021/staged/LightEFTFairBitStage/FairBitDigitSampler.lean",
+      "bytes": 10269,
+      "sha256": "aca49ebab1fe98c22f87cbadf22b6eeb5673fba70ed9c7d77fd2eccd573194b0"
+    },
+    "LightEFTFairBitStage.IndependentTapeLaw": {
+      "path": "checkpoints/light-eft-fair-bit-digit-sampler-20261021/staged/LightEFTFairBitStage/IndependentTapeLaw.lean",
+      "bytes": 3954,
+      "sha256": "a4129fe7dec3081a16f99e44ce0963d7dcd3d221f7f5b76b91b236bba74189ba"
+    }
+  },
+  "base_dependencies": {
+    "ordinary_fresh_build": 77,
+    "same_run_paid": 2,
+    "same_run_decoder": 1,
+    "same_run_bridge": 1,
+    "total": 81
+  },
+  "new_shared_output_dependencies": {
+    "second_target": [
+      "LightEFTFlatTapeStage.FlatTapeLaw"
+    ],
+    "third_target": [
+      "LightEFTFlatTapeStage.FlatTapeLaw",
+      "LightEFTFairBitStage.FairBitDigitSampler"
+    ]
+  },
+  "external_boundary": [
+    {
+      "module": "Aesop",
+      "package": "aesop",
+      "source": ".lake/packages/aesop/Aesop.lean",
+      "object": ".lake/packages/aesop/.lake/build/lib/lean/Aesop.olean",
+      "package_commit": "355695d523e41d0554926416cba2a2b3544fbbc9",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 95,
+      "source_sha256": "6806b32ad8ef01dd86cbf70d72a64ab731858956522a336409804ac303b14260"
+    },
+    {
+      "module": "Mathlib.Algebra.BigOperators.Fin",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Fin.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Algebra/BigOperators/Fin.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 31730,
+      "source_sha256": "798914333dd97eada9032afc50a9106cc5cf481b57477c4a6f198220ffd17304"
+    },
+    {
+      "module": "Mathlib.Algebra.BigOperators.Group.Finset.Piecewise",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Piecewise.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Algebra/BigOperators/Group/Finset/Piecewise.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 14243,
+      "source_sha256": "779ebdd8b88d494a840fead5fb43ab2143e2121d4df7502de63a20d049c7b763"
+    },
+    {
+      "module": "Mathlib.Algebra.BigOperators.Group.Finset.Powerset",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Powerset.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Algebra/BigOperators/Group/Finset/Powerset.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 2882,
+      "source_sha256": "83ef256b00eaabc046b2d245e2adc8c1576f7ab1aa25321266acbd7fdf864470"
+    },
+    {
+      "module": "Mathlib.Algebra.BigOperators.Group.Finset.Sigma",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Sigma.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Algebra/BigOperators/Group/Finset/Sigma.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 6459,
+      "source_sha256": "28b9560a240b13e9458dcb4f48515071c1649917b4742fcce3359dec9ee536fb"
+    },
+    {
+      "module": "Mathlib.Algebra.BigOperators.Ring.Finset",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Ring/Finset.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Algebra/BigOperators/Ring/Finset.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 16322,
+      "source_sha256": "3260deb025880a9c56b258bc0d9c53106aab2452599141b1e1c8f5bb0f589aa3"
+    },
+    {
+      "module": "Mathlib.Algebra.Order.Field.Rat",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Algebra/Order/Field/Rat.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Algebra/Order/Field/Rat.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 731,
+      "source_sha256": "4c389212000adf82aa2a5f88af0a4db1f10a3a856d418fee5d844403e6cf1d0c"
+    },
+    {
+      "module": "Mathlib.Basic.ENNReal.Inv",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Basic/ENNReal/Inv.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Basic/ENNReal/Inv.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 44176,
+      "source_sha256": "024c956d19cb36cc510d615ca8737fc3bcc1e9c4e50e6ec67176c7aad18ba370"
+    },
+    {
+      "module": "Mathlib.Basic.ENNReal.Real",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Basic/ENNReal/Real.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Basic/ENNReal/Real.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 15959,
+      "source_sha256": "4bb9840c7c118b021d6a07eb8d98bed975570fd431abc81e5144a70bb9fc6572"
+    },
+    {
+      "module": "Mathlib.Basic.Real.Basic",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Basic/Real/Basic.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Basic/Real/Basic.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 19177,
+      "source_sha256": "b10f715c299e6c3f468e916cad97620e921dc432e31269217954d94191fc7829"
+    },
+    {
+      "module": "Mathlib.Combinatorics.SimpleGraph.Acyclic",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Combinatorics/SimpleGraph/Acyclic.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Combinatorics/SimpleGraph/Acyclic.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 33292,
+      "source_sha256": "886ca3a81cb337405afb33948ffe31481efce7395a8b41251e5dee669c6c43e7"
+    },
+    {
+      "module": "Mathlib.Combinatorics.SimpleGraph.Paths",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Combinatorics/SimpleGraph/Paths.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Combinatorics/SimpleGraph/Paths.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 50168,
+      "source_sha256": "58431c0f97ab3ace75fdf0cf95ac832202d2b023427c6b737a05f4eec0e1998d"
+    },
+    {
+      "module": "Mathlib.Combinatorics.SimpleGraph.Walk.Counting",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Combinatorics/SimpleGraph/Walk/Counting.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Combinatorics/SimpleGraph/Walk/Counting.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 7857,
+      "source_sha256": "a168a9c128d11d50db33631488983469e9ff64eaeb4c4c08d39d0c6ddda1582e"
+    },
+    {
+      "module": "Mathlib.Data.Fin.Tuple.Basic",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Data/Fin/Tuple/Basic.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/Fin/Tuple/Basic.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 56256,
+      "source_sha256": "041399716b52e8892ae463b3cc6c66a3eea0f799734b75facd5a8e415ee82cf8"
+    },
+    {
+      "module": "Mathlib.Data.Finset.Card",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Data/Finset/Card.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/Finset/Card.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 41446,
+      "source_sha256": "64bcf8d1632513cb27a30c2cc151b544ace823bb88cf8ede997665f990c559b8"
+    },
+    {
+      "module": "Mathlib.Data.List.FinRange",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Data/List/FinRange.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/List/FinRange.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 2270,
+      "source_sha256": "7e7bbea5337f6b370add308e70dc6936368ec7028a0cb7d9da9eb68b114559b8"
+    },
+    {
+      "module": "Mathlib.Data.List.Nodup",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Data/List/Nodup.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/List/Nodup.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 16643,
+      "source_sha256": "28692ae2a68f3ba6e8a826bfe15cf3ef8397ff4f284347d0829872cd7056f81e"
+    },
+    {
+      "module": "Mathlib.Data.List.ProdSigma",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Data/List/ProdSigma.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/List/ProdSigma.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 2531,
+      "source_sha256": "6d14a53c89ceedf8fdc211fa474370698532792d974cd7aecfc721711170cc1d"
+    },
+    {
+      "module": "Mathlib.Data.List.Sort",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Data/List/Sort.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/List/Sort.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 35335,
+      "source_sha256": "054c3fd69c9756013d6c895c70b45c8a25d62d68e87bcd1dca5aef3d7d86eca0"
+    },
+    {
+      "module": "Mathlib.Data.Vector.Basic",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Data/Vector/Basic.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/Vector/Basic.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 27401,
+      "source_sha256": "c1b729fe06aa832e524ef23c0df69da97266c63d6060482304d845dbbc2d345f"
+    },
+    {
+      "module": "Mathlib.Probability.Moments.SubGaussian",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Probability/Moments/SubGaussian.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 44876,
+      "source_sha256": "60038d9a57340ed4b38a7ec780d0470bcd68cbc3482decb9cdbaaa03ee2694ea"
+    },
+    {
+      "module": "Mathlib.Probability.ProbabilityMassFunction.Integrals",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Probability/ProbabilityMassFunction/Integrals.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Probability/ProbabilityMassFunction/Integrals.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 2378,
+      "source_sha256": "174951d99036d6995b4ac6d486de807bedb58f340aa902f02502a7216515bf63"
+    },
+    {
+      "module": "Mathlib.Tactic",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Tactic.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Tactic.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 17901,
+      "source_sha256": "f45622ca1381833c77e9659a0b2ec07e5b667d0d4667cb2a28a58e9540634e85"
+    },
+    {
+      "module": "Mathlib.Tactic.Linarith",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Tactic/Linarith.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Tactic/Linarith.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 391,
+      "source_sha256": "0581fd9f80f34d728ad628e7c1fb5a93d36cb9cb48d469fbc797869e83ebe0a6"
+    },
+    {
+      "module": "Mathlib.Tactic.NormNum",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Tactic/NormNum.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Tactic/NormNum.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 430,
+      "source_sha256": "dca9500572c6d887000f3de17c7145b53bf35233afc1ad8026cca908cec7a2fe"
+    },
+    {
+      "module": "Mathlib.Tactic.Push",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Tactic/Push.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Tactic/Push.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 18509,
+      "source_sha256": "697e3a233e245e2642a7dff36f60baf4fc55df2e43dd6ef188f227ae46e46ba2"
+    },
+    {
+      "module": "Mathlib.Tactic.Ring",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Tactic/Ring.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Tactic/Ring.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 166,
+      "source_sha256": "d3ef5c49ebbd1108ce3f935e5ad95485e143abf02f28c027dba4bb6f3be8196e"
+    },
+    {
+      "module": "Mathlib.Analysis.SpecificLimits.Normed",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Analysis/SpecificLimits/Normed.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Analysis/SpecificLimits/Normed.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 60354,
+      "source_sha256": "281b0bb77fdc58f9c98d50cc626303bf30d7302c48d3ae8522d071ad07d40480"
+    },
+    {
+      "module": "Mathlib.Topology.Algebra.InfiniteSum.ENNReal",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Topology/Algebra/InfiniteSum/ENNReal.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Topology/Algebra/InfiniteSum/ENNReal.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 31635,
+      "source_sha256": "823322a1f5870ffa289cfcbdcadb5e914e12a9904a11b2e766d49ceeadf9f4e7"
+    },
+    {
+      "module": "Mathlib.Tactic.FieldSimp",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Tactic/FieldSimp.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Tactic/FieldSimp.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan",
+      "source_bytes": 42079,
+      "source_sha256": "924a11d74ca2851409f1d78284affbd60c21c9d54ac5bb4fb4676f17cbecb679"
+    }
+  ],
+  "ordinary_dependency_preparation": [
+    "lake",
+    "build",
+    "+Mathlib.Analysis.SpecificLimits.Normed",
+    "+Mathlib.Topology.Algebra.InfiniteSum.ENNReal",
+    "+Mathlib.Tactic.FieldSimp"
+  ],
+  "ordinary_dependency_preparation_order": "after ordinary lean-action build, before unchanged index check and paid gate; no new mathematical module is a Lake build target",
+  "runtime_objects": "only fresh ordinary-CI selected objects plus fully authenticated same-run paid/decoder/bridge physical objects; no artifact/review transport input",
+  "stage_order": [
+    [
+      "LightEFTFlatTapeStage.FlatTapeLaw",
+      "compile"
+    ],
+    [
+      "LightEFTFlatTapeStage.FlatTapeLaw",
+      "resolve"
+    ],
+    [
+      "LightEFTFlatTapeStage.FlatTapeLaw",
+      "replay"
+    ],
+    [
+      "LightEFTFlatTapeStage.FlatTapeLaw",
+      "audit"
+    ],
+    [
+      "LightEFTFairBitStage.FairBitDigitSampler",
+      "compile"
+    ],
+    [
+      "LightEFTFairBitStage.FairBitDigitSampler",
+      "resolve"
+    ],
+    [
+      "LightEFTFairBitStage.FairBitDigitSampler",
+      "replay"
+    ],
+    [
+      "LightEFTFairBitStage.FairBitDigitSampler",
+      "audit"
+    ],
+    [
+      "LightEFTFairBitStage.IndependentTapeLaw",
+      "compile"
+    ],
+    [
+      "LightEFTFairBitStage.IndependentTapeLaw",
+      "resolve"
+    ],
+    [
+      "LightEFTFairBitStage.IndependentTapeLaw",
+      "replay"
+    ],
+    [
+      "LightEFTFairBitStage.IndependentTapeLaw",
+      "audit"
+    ]
+  ],
+  "resource_contract": {
+    "admission_GiB": {
+      "compile": 3,
+      "resolve": 3,
+      "replay": 4,
+      "audit": 4
+    },
+    "cpu_seconds": {
+      "compile": 60,
+      "resolve": 60,
+      "replay": 60,
+      "audit": 90
+    },
+    "wall_seconds": 90,
+    "prespawn_seconds": 300,
+    "address_space_bytes": 12884901888,
+    "heap_MiB": 5120,
+    "stack_KiB": 65536,
+    "workers": 1,
+    "stop_headroom_bytes": 1073741824,
+    "RSS_stop_bytes": 6442450944,
+    "anonymous_growth_stop_bytes": 3221225472,
+    "core_bytes": 0,
+    "ordinary_FSIZE_bytes": 16777216,
+    "audit_file_bytes": 67108864,
+    "audit_total_bytes": 335544320,
+    "job_timeout_minutes": 120,
+    "policy": "unchanged full initial cgroup accounting, host/disk/PID/OOM, inherited lease FD, owned waitid/wait4/descendants and ECHILD release"
+  },
+  "owned_children": {
+    "prior": 17,
+    "new": 12,
+    "before_corollary": 29,
+    "after_existing_corollary": 36
+  },
+  "preservation": [
+    "three complete producer membership/identity trees and every indexed file",
+    "unchanged retained-context two-way membership and byte/identity equality",
+    "single output root with growing object-family ledger",
+    "prior generated objects/resolutions/audits protected through later checks",
+    "fail first child and preserve all receipts/logs/chunks",
+    "never convert timeout into success or raise controls"
+  ],
+  "budget_qualification": {
+    "job_timeout_minutes": 120,
+    "accepted_run_39507492456_minutes": 108.9,
+    "observed_remaining_minutes": 11.1,
+    "new_batch_duration": "unmeasured; no claim that twelve children plus dependency preparation fit",
+    "review_required": "parent must resolve/accept finite job-margin qualification before any publication or execution; source acceptance alone is insufficient",
+    "timeout_policy": "failure; no rerun or limit relaxation without further review"
+  },
+  "current_environment": "unqualified cgroup namespace/headroom; no admission attempted",
+  "next_executable_step": "sequential independent review of exact implementation, bindings, source preservation and aggregate budget; execution not yet authorized",
+  "Fast": "off",
+  "math_scope_unchanged": true,
+  "open": [
+    "shared-stream runner refinement",
+    "joint state/cost composition",
+    "arithmetic bit costs",
+    "bank/caller handoff",
+    "aggregate costs",
+    "whole paper"
+  ]
+}
