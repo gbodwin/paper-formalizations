@@ -1,0 +1,88 @@
+{
+  "status": "SOURCE_ONLY_CORRECTION_NOT_INTEGRATED",
+  "parent": "d3ab441d7698f93248a0011d2ba996219b5a79a2",
+  "production_base": "d031f60c681650e48b409115adaffd240ec6493a",
+  "accepted_kernel_baseline": "c1aaa0a00c0c943cec4b2753a937023e9884db04",
+  "preserves_prior_candidate": true,
+  "production_delta_if_later_approved": [
+    "scripts/KernelCheck.sh",
+    ".github/workflows/lean.yml"
+  ],
+  "trusted_launch": {
+    "runner_shell": "/bin/bash --noprofile --norc -p -e -o pipefail {0}",
+    "step_body": "/bin/bash --noprofile --norc -p -e -o pipefail scripts/KernelCheck.sh",
+    "script_shebang": "#!/bin/bash -p",
+    "inner_argv": [
+      "/bin/bash",
+      "--noprofile",
+      "--norc",
+      "-p",
+      "-euo",
+      "pipefail",
+      "-c"
+    ],
+    "requirement": "-p must be present at process creation for all three shells. No late set -p or inference solely from $- accepted. Existing exact-workflow binding must include these full bytes during any later integration."
+  },
+  "proof_argument": [
+    "Runner spawns absolute /bin/bash with literal -p, before any run-script commands.",
+    "Privileged startup excludes inherited shell functions and startup hooks; none are defined/evaluated/sourced by accepted code.",
+    "Step starts script in a second /bin/bash with literal -p. Script mode case is a secondary check, not proof of startup origin.",
+    "Outer set/printf/exit/exec and Lake lookup execute in a function-free shell. Lake is an external executable.",
+    "Lake environment command starts fixed /bin/bash with literal -p, including when BASH_FUNC_* variables persist or are introduced in its environment.",
+    "Inner hash and command are genuine builtins; every target launches a fresh official checker binary. command_not_found_handle cannot be imported to suppress lookup failure.",
+    "No new function definitions, eval, source, trap, aliases or dynamic code interpolation occur. Quoted module arguments stay data."
+  ],
+  "shell_primitives": {
+    "outer": [
+      "case/in/esac reserved syntax",
+      "[[ ]] conditional syntax",
+      "set builtin",
+      "printf builtin",
+      "exit builtin",
+      "exec builtin",
+      "lake external command"
+    ],
+    "inner": [
+      "for/in/do/done reserved syntax",
+      "assignments and parameter expansion",
+      "hash builtin",
+      "command builtin",
+      "leanchecker external command"
+    ],
+    "unsupported_mode": [
+      "(( 0 )) reserved arithmetic; body not entered",
+      "Mode guard is not a replacement for trusted privileged process argv; arbitrary unprivileged startup is outside the contract"
+    ]
+  },
+  "resources_unchanged": {
+    "full_minutes": 120,
+    "focused_minutes": 120,
+    "aggregate_minutes": 5,
+    "native_wall_seconds": 90,
+    "all_child_admission_CPU_AS_FSIZE_threads_allocator_stack_lifecycle": true,
+    "jobs_added": 0
+  },
+  "coverage": {
+    "Lake_environment_setups": 1,
+    "fresh_sequential_checker_processes": 567,
+    "source_module_names": "unchanged prior MODULES.json:567 unique prefix-free targets",
+    "all_existing_audits_full_focused_exact_commit_binding_independent_review": true
+  },
+  "negative_models": [
+    "individual imported functions for every invoked shell command/builtin",
+    "combined initial functions",
+    "combined functions introduced in Lake environment",
+    "command_not_found_handle with missing/non-executable checker",
+    "explicit exits126/127 and37",
+    "SIGTERM/SIGKILL; zero successors",
+    "startup hook rejection",
+    "unprivileged entry and altered trusted launch rejected",
+    "v1 command/exec false-success controls"
+  ],
+  "runtime_qualification": "PATH/LEAN_PATH/executable equality and time saving remain unmeasured; no budget-fit or native acceptance claim",
+  "no_writer_contract": "One immutable ordinary build/configuration/toolchain/environment through replay; no compiler/writer overlap",
+  "physical_attempt_allowance": "consumed; no new execution authority",
+  "production_source_or_workflow_modified": false,
+  "open_36_proofs": "unelaborated; focused job not reached",
+  "Fast": "off"
+}
