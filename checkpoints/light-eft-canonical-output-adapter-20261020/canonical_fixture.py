@@ -79,8 +79,11 @@ def completed_prerequisite(record, plan, folder, identity, lease):
     require(record.get('deadline_seconds') == 90.0 and record['handshake']['limits'] == {
         'RLIMIT_AS': [12 * 1024**3] * 2, 'RLIMIT_CPU': [60] * 2,
         'RLIMIT_FSIZE': [16 * 1024**2] * 2, 'RLIMIT_CORE': [0, 0]}, 'Canonical prerequisite child limits differ')
-    require(record['runtime_wall_started_ns'] <= record['preexec_verified_ns'] <= record['terminal_confirmation']['finished_ns'] <
-            record['runtime_wall_started_ns'] + 90 * 10**9 and record['terminal_confirmation']['status'] == 0, 'Canonical prerequisite deadline/terminal differs')
+    who, terminal, pid = record['child_identity'], record['terminal_confirmation'], record['child_pid']
+    require(who['pid'] == pid and who['ppid'] == record['supervisor_pid'] and who['sid'] == who['pgid'] == pid and
+            terminal['terminal'] is True and terminal['pid'] == pid and terminal['status'] == 0, 'Canonical prerequisite owned terminal differs')
+    require(record['runtime_wall_started_ns'] <= record['preexec_verified_ns'] <= terminal['finished_ns'] <
+            record['runtime_wall_started_ns'] + 90 * 10**9, 'Canonical prerequisite deadline/terminal differs')
     observed = bind(folder / 'raw.log')
     require(record.get('completed_logs', {}).get('raw.log') == observed, 'Canonical prerequisite completed log binding differs')
     result = validate_log((folder / 'raw.log').read_text())

@@ -32,7 +32,7 @@ for actual, proposed in [
     (HERE / 'staged/CanonicalKeyEquivalenceFixtures.lean', PROPOSAL / 'PROPOSED-CanonicalKeyEquivalenceFixtures.lean'),
     (HERE / 'staged/ResolveAfterCanonicalEquivalence.lean', PROPOSAL / 'PROPOSED-ResolveAfterCanonicalEquivalence.lean')]:
     assert actual.read_bytes() == proposed.read_bytes()
-assert row(HELPER)['sha256'] == '82db47c1a19958e796af4c7d2a6de685678ed3e6faae58663dbe7d9a26b478c2'
+assert row(HELPER)['sha256'] == 'afec43578ea586a28b814a2b245d3ee1574ef1b3f099fee4c0d81f1c6cb4e52d'
 
 regular = recursive = 0
 for name in NAMES:
