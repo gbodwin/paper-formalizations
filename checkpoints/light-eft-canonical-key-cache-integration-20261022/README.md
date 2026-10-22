@@ -93,7 +93,7 @@ two source roles. The seven nested rows are preserved rather than omitted.
 
 Only file/hash comparisons, source parsing and offline binding refresh occurred.
 The new check_source.py is finite source assertions for this delta; it is not
-executed in this unit. ADVERSARIAL-MODELS.json contains27 text-only positive/
+executed in this unit. ADVERSARIAL-MODELS.json contains28 text-only positive/
 negative contract cases; none was executed. Old checkpoint validators and
 their historical authority remain unchanged. No model/native/Lean/kernel/audit
 test, compiler, admission, reservation, push, CI or retry occurred; Fast is off.

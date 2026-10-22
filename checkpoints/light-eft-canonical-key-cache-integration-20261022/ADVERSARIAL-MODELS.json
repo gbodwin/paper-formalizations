@@ -163,6 +163,12 @@
       "mutation_or_context": "Each existing context admission module differs from canonical TARGET",
       "expected": "Admission-only empty-output/resolution-absence guards unchanged; no canonical fixture imposed",
       "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "mutated-unbound-plan-module",
+      "mutation_or_context": "Alter/remove only the auxiliary module field while retaining the actual canonical checker argv",
+      "expected": "Canonical branch still selected from bound argv; exact canonical schedule rejects the altered/missing module",
+      "execution": "NOT RUN; source-only adversarial model description"
     }
   ]
 }

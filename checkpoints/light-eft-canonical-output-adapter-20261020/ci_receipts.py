@@ -61,7 +61,7 @@ def verify_receipts(evidence,lease_record,plans,dependencies=None,wrapper_commit
    require(not errors,'Persisted live sample failed reviewed policy')
    require(sample['sample_finished_ns']<r['runtime_wall_started_ns']+90*10**9,'Runtime sample after wall deadline')
  require(len(ids)==4 and lease_record['state']=='released' and lease_record.get('kernel_echild') and not lease_record.get('release_errors'),'No clean owned ECHILD release')
- if plans[0].get('module')==TARGET:
+ if any(p.get('module')==TARGET or TARGET in p['argv'] for p in plans):
   from canonical_fixture import verify_schedule
   require(expected_identity is not None and expected_identity.get('GITHUB_SHA')==expected_source,'Canonical current-run identity required')
   verify_schedule(evidence,lease_record,plans,expected_identity)
