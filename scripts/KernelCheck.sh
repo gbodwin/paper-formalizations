@@ -8,7 +8,8 @@ case $- in
       printf "%s\n" "Kernel replay requires absent shell startup hooks" >&2
       exit 2
     fi
-    exec lake env /bin/bash --noprofile --norc -p -euo pipefail -c '
+    exec /usr/bin/python3 -I -B checkpoints/light-eft-replay-admission-plan-20261021/replay_preflight.py before-lake /bin/bash --noprofile --norc -p -euo pipefail -c '
+/usr/bin/python3 -I -B checkpoints/light-eft-replay-admission-plan-20261021/replay_preflight.py verify "$-" "$BASH_VERSION"
 # Sequential replay avoids retaining all module environments simultaneously.
 # Run from the repository root after lake build.
 paper_source_dirs=(

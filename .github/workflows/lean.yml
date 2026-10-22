@@ -405,7 +405,23 @@ jobs:
           LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
           PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-corollary-python-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -B checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py
+      - name: Observe replay launcher admission on this runner
+        shell: /usr/bin/python3 -I -B {0}
+        env:
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+        run: |
+          import runpy, sys
+          sys.argv = ['checkpoints/light-eft-replay-admission-plan-20261021/replay_preflight.py', 'bootstrap']
+          runpy.run_path('checkpoints/light-eft-replay-admission-plan-20261021/replay_preflight.py', run_name='__main__')
       - name: Replay every project module through the Lean kernel
+        env:
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
         shell: /bin/bash --noprofile --norc -p -e -o pipefail {0}
         run: /bin/bash --noprofile --norc -p -e -o pipefail scripts/KernelCheck.sh
       - name: Bind completed full validation to this exact commit
@@ -455,6 +471,7 @@ jobs:
           name: light-eft-staged-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             ${{ runner.temp }}/light-eft-summary-${{ github.run_id }}-${{ github.run_attempt }}
+            ${{ runner.temp }}/light-eft-replay-admission-${{ github.run_id }}-${{ github.run_attempt }}
             ${{ runner.temp }}/light-eft-staged-${{ github.run_id }}-${{ github.run_attempt }}
             ${{ runner.temp }}/light-eft-corollary-${{ github.run_id }}-${{ github.run_attempt }}
             ${{ runner.temp }}/light-eft-paid-focused-${{ github.run_id }}-${{ github.run_attempt }}

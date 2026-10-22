@@ -7,7 +7,8 @@ NAMES=['light-eft-paid-focused-adapter-20261020','light-eft-joint-flag-ci-extens
        'light-eft-fair-bit-batch-ci-adapter-20261021']
 def row(p):
     raw=p.read_bytes();return dict(path=str(p.relative_to(R)),bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest())
-extra=[R/'.github/workflows/light-eft-fair-bit-focused.yml',R/'scripts/KernelCheck.sh',H/'workflow_identity.py',H/'acceptance.py']
+extra=[R/'.github/workflows/light-eft-fair-bit-focused.yml',R/'scripts/KernelCheck.sh',
+       R/'checkpoints/light-eft-replay-admission-plan-20261021/replay_preflight.py',H/'workflow_identity.py',H/'acceptance.py']
 for i,n in enumerate(NAMES):
     p=R/'checkpoints'/n/'ci-spec.json';d=json.loads(p.read_text())
     paths={R/r['path'] for r in d['engine_files']}|set(extra)
