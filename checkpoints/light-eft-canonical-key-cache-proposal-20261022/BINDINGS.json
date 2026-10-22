@@ -1,0 +1,83 @@
+{
+  "schema": "source-only-canonical-key-cache-proposal-v1",
+  "base_commit": "8cdc62e577e29561e441538e96e426aa31f3b7c0",
+  "failed_run": 39809387613,
+  "attempt": 1,
+  "failed_child": "342f9e721db346acba201ea561476c64",
+  "change_kind": "one-file helper port proposed, production files untouched",
+  "production_destination": "checkpoints/light-eft-canonical-output-adapter-20261020/staged/CanonicalOutputAudit.lean",
+  "existing_bridge_reference": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/staged/BridgeAudit.lean",
+  "baseline_sha256": "e09fb338f4cc14844ad9d2bd5fca25973f107e3f089f495d02082f7c71f7ccb3",
+  "proposed_sha256": "577b3f09c0702855d1f01e051574d8912c35565468b4e18611463b7b28d6ccec",
+  "patch_sha256": "1bf4714bc4b7def915862fc6e570870581eaab872a10025d01433489dbfb428b",
+  "old_namespace_sha256": "98fd83cb008cb64f00eda43d5a7b77f10e7f2d4ee3484fb1ded674edec6cda53",
+  "proposed_namespace_sha256": "be44f6728f033b4c0c8a15cab40913ae3e9be15f87b311ecc2e3f26d160b4c8e",
+  "canonical_tail_sha256": "64bb621b59ff1d529f2324100f97eae44a00894052f32d6eb0db3fe6df7fe139",
+  "proposed_tail_byte_identical": true,
+  "proposed_helper_byte_identical_to_existing_bridge": true,
+  "fixture_marker": "PASS: canonical owned-key serialization differential fixtures",
+  "fixture_sha256": "90c17220d76d30fa31ab2de59c129ec216c1202911db188c94f100373445a41e",
+  "composite_sha256": "20cf4392c2b711ba0cdb496f8a861d49a8eef28645334bb7e93bd53260e5a3c1",
+  "prior_binding_rows": 1027,
+  "ordinary_fresh_sequential_checkers": 567,
+  "native_or_model_execution": false,
+  "kernel_acceptance": false,
+  "runtime_benefit_measured": false,
+  "hotspot_identified": false,
+  "brief_read": false,
+  "brief_blocker": "Library preparation succeeded; supported compact download failed; Library read reports no readable ZIP content. No large artifact downloaded. Coordinator REPAIR-BRIEF must be reconciled before proposal acceptance.",
+  "coordinator_diagnosis_library": "libfile_ebd3c17998c8819185b9c4a829de7b38",
+  "coordinator_diagnosis_sha256": "2529acb824efeb90db0cd5847758f0b3b17945c14482a68a086e1f8f5b176882",
+  "coordinator_manifest_sha256": "b5bd3e98ab149d4aabca6bf5654ed848d26e0efb95f0acc6004a324b689ed735",
+  "production_bindings": [
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/staged/CanonicalOutputAudit.lean",
+      "bytes": 18773,
+      "sha256": "e09fb338f4cc14844ad9d2bd5fca25973f107e3f089f495d02082f7c71f7ccb3",
+      "git_blob": "81f0ec31a25ec00bc36c60bd2c70291a787d213e"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/staged/BridgeAudit.lean",
+      "bytes": 21848,
+      "sha256": "097f7af45ca9bcfe135e459e3180a9c0a4a4297b77f97e21614daa6014a3b408",
+      "git_blob": "1e542f0883b8bf412341df29ff93e0b0477e07c1"
+    },
+    {
+      "path": "checkpoints/light-eft-bridge-audit-key-cache-20261021/staged/BridgeKeyEquivalenceFixtures.lean",
+      "bytes": 3008,
+      "sha256": "20759f3a9e7170d4fc08f4c26726b27335d33af3c781dc2b1875cf18f7130f79",
+      "git_blob": "d18bd87b9bed79790758fc4d0d70bae7a86d12b2"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/staged/ResolveCanonicalOutputTarget.lean",
+      "bytes": 1399,
+      "sha256": "426579ed6d435c3644af7344c83eb320a7d4399769a8ae7a07a80ad78488f6dc",
+      "git_blob": "353e16b2cc301067e91493991ba0b7f896c4ae32"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json",
+      "bytes": 124741,
+      "sha256": "ddf9b7e89c809a4c9a6d991f5fa75085e46c18a114991f84d86c218fdde3bf24",
+      "git_blob": "7d90378078923d0a981624b33f738115a836d0a1"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+      "bytes": 19707,
+      "sha256": "c84a0cbb21a40edaa11c89e119ffad2a84321278537b7893465a796269c2dccb",
+      "git_blob": "ae849cecbca4fd0d5b3a906afec890b634783399"
+    },
+    {
+      "path": "scripts/KernelCheck.sh",
+      "bytes": 1632,
+      "sha256": "b7dac23e6300e3c34d6192887f52d6f780b2bef9720f43b94d4c0f1b3116d77d",
+      "git_blob": "fbcb093d88d8bf1cef4f56a0f1861f3e9e8034ad"
+    },
+    {
+      "path": ".github/workflows/lean.yml",
+      "bytes": 50913,
+      "sha256": "dcdb866fe302827d78d037771edc0e04034e2d90b176d642badeb84c6f594f29",
+      "git_blob": "c107b2bc30bf1c16e9f83aa2b4feecc33ea098a5"
+    }
+  ],
+  "Fast": "off"
+}
