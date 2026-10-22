@@ -1,0 +1,38 @@
+{
+  "schema": "light-eft-source-transfer-v1",
+  "status": "SOURCE_REVIEWED_LEAN_FIXTURE_UNEXECUTED",
+  "files": [
+    {
+      "path": "CollisionNativeFixtures.lean",
+      "bytes": 11092,
+      "sha256": "16413fd75f117ae6ca6263d8ab4e7b3b949302c581dc0573402e2b07e1f3cc35"
+    },
+    {
+      "path": "OwnedCollisionScan.inc.lean",
+      "bytes": 6867,
+      "sha256": "f991d14257549185b83331843924d7055c479f966f595e86788f82d86df902be"
+    },
+    {
+      "path": "preflight-timing.patch",
+      "bytes": 1578,
+      "sha256": "fb522d7ff006758f7796d6282b65029cec4e9e5668fd7afa7859e1d14867ddef"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2318,
+      "sha256": "de215c11c69ad44f4d9a4a0aff34907d6b1acd9b2a97ba5dc09eebca3b17c5d3"
+    }
+  ],
+  "supervisor_baseline": {
+    "repository": "gbodwin/paper-formalizations",
+    "commit": "c66b8f879008262139f6d09f7130b3a6e055a866",
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "bytes": 18113,
+    "sha256": "a8005f021a9b334986eae082af79908fea676e0e47ec7371df3845992f3767e1"
+  },
+  "reconstructed_supervisor": {
+    "path": "child_runner.py",
+    "bytes": 19324,
+    "sha256": "22e80f6485da1a5e53c23a7c11371171994f62e21c7f9d9d1653a37bb8d22e21"
+  }
+}

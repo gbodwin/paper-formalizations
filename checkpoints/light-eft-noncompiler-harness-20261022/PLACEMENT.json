@@ -1,0 +1,208 @@
+{
+  "scope": "UNPUBLISHED_SOURCE_ONLY_MERGE_PLACEMENT",
+  "intended_ref": "refs/heads/light-eft-spanners-checkpoints",
+  "merge_parents": [
+    "f9c3526f55ac3a48bed32dc4e85d0ea85d27ff2b",
+    "00a555ff9406bdc0a94da8338edb71c7818224d5"
+  ],
+  "production_preservation_base": "ed86a6e8a5fc62e7d807b10dca43669f3cd848a6",
+  "remote_merge_base": "c66b8f879008262139f6d09f7130b3a6e055a866",
+  "excluded_unique_additions_preserved": [
+    {
+      "path": "checkpoints/light-eft-canonical-output-source-transfer-20261020/README.md",
+      "blob": "1c63f8a634a9020d2ee7b839f2c13fd5437aa74f",
+      "bytes": 2255,
+      "sha256": "b28d1d3c0fe12f9b2aff7477c2867c46e5769e5587e005c7a8dd232ccff2606d"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-source-transfer-20261020/dependency-and-audit-bindings.json",
+      "blob": "a55e2af44b4e762a73b8b9632e680123d725f45f",
+      "bytes": 154785,
+      "sha256": "77e5053445a2f4a9426c153b0ef02983d51fadd08cdb66676cedc066302b4eca"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-source-transfer-20261020/manifest.json",
+      "blob": "8f638a3f4068159cede58ec803b792318172ae52",
+      "bytes": 693,
+      "sha256": "1b00504f1f040b8b87bcc54bdfc23ccc9afaf41d85e622d8cd808eda2bfc8258"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-source-transfer-20261020/staged/LightEFTJointFlagOutputStage/PolynomialActualFailureProbability.lean",
+      "blob": "fd8f9a432f82e67258155e36768eeed8578834d6",
+      "bytes": 3567,
+      "sha256": "caa89c0d197131ffdc8405e63bfd56dfbc08468e8bec760f33736d1b4f08adf1"
+    },
+    {
+      "path": "checkpoints/light-eft-collision-source-transfer-20261019/CollisionNativeFixtures.lean",
+      "blob": "ef170cdb8ad52666e7f3f2fc9ba4da164d3a7481",
+      "bytes": 11092,
+      "sha256": "16413fd75f117ae6ca6263d8ab4e7b3b949302c581dc0573402e2b07e1f3cc35"
+    },
+    {
+      "path": "checkpoints/light-eft-collision-source-transfer-20261019/OwnedCollisionScan.inc.lean",
+      "blob": "08fb98358fdfa2def5084fa1de91c7d65c070ec9",
+      "bytes": 6867,
+      "sha256": "f991d14257549185b83331843924d7055c479f966f595e86788f82d86df902be"
+    },
+    {
+      "path": "checkpoints/light-eft-collision-source-transfer-20261019/README.md",
+      "blob": "6dcbcc5d22d7d59a29694454c755374ff64b2080",
+      "bytes": 2318,
+      "sha256": "de215c11c69ad44f4d9a4a0aff34907d6b1acd9b2a97ba5dc09eebca3b17c5d3"
+    },
+    {
+      "path": "checkpoints/light-eft-collision-source-transfer-20261019/manifest.json",
+      "blob": "51264f4fd424442c2f1f74bb1d6cb3478c3c98a0",
+      "bytes": 1258,
+      "sha256": "2290ea73f6c77d97fc204ce50cbaf5c20a9cc9d5643cd8f8ffd0a5a607bf9bfc"
+    },
+    {
+      "path": "checkpoints/light-eft-collision-source-transfer-20261019/preflight-timing.patch",
+      "blob": "d43ca53eed9722722090a55273aedbbf2f280860",
+      "bytes": 1578,
+      "sha256": "fb522d7ff006758f7796d6282b65029cec4e9e5668fd7afa7859e1d14867ddef"
+    }
+  ],
+  "conflicts": [],
+  "workflow_inventory": [
+    {
+      "path": ".github/workflows/lean.yml",
+      "sha256": "dcdb866fe302827d78d037771edc0e04034e2d90b176d642badeb84c6f594f29",
+      "git_blob": "c107b2bc30bf1c16e9f83aa2b4feecc33ea098a5",
+      "bytes": 50913,
+      "on": {
+        "push": {
+          "branches-ignore": [
+            "light-eft-spanners-checkpoints"
+          ]
+        },
+        "pull_request": "",
+        "workflow_dispatch": ""
+      },
+      "concurrency": {
+        "group": "paper-formalizations-single-compiler",
+        "cancel-in-progress": "false"
+      },
+      "jobs": {
+        "check": {
+          "if": "github.ref != 'refs/heads/light-eft-spanners-checkpoints'",
+          "timeout-minutes": "120"
+        },
+        "focused": {
+          "if": "github.ref != 'refs/heads/light-eft-spanners-checkpoints'",
+          "uses": "./.github/workflows/light-eft-fair-bit-focused.yml",
+          "needs": "check"
+        },
+        "acceptance": {
+          "if": "${{ always() && github.ref != 'refs/heads/light-eft-spanners-checkpoints' }}",
+          "needs": [
+            "check",
+            "focused"
+          ],
+          "timeout-minutes": "5"
+        }
+      },
+      "excluded_branch_push": "workflow excluded by branches-ignore; no full/focused/aggregate job"
+    },
+    {
+      "path": ".github/workflows/light-eft-exact.yml",
+      "sha256": "ea8c088449b4ecaed3462357b875074ff3f0f452323d7f45961714b1f0978081",
+      "git_blob": "96e4aba5b094304aae804889c33b4a372a67308d",
+      "bytes": 2288,
+      "on": {
+        "workflow_dispatch": {
+          "inputs": {
+            "source": {
+              "description": "Frozen exact source commit",
+              "required": "true",
+              "type": "string"
+            },
+            "harness": {
+              "description": "Reviewed immutable verification-harness commit",
+              "required": "true",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "concurrency": {
+        "group": "paper-formalizations-single-compiler",
+        "cancel-in-progress": "false"
+      },
+      "jobs": {
+        "verify": {
+          "if": "inputs.source == '78cb40c7837db049d645d73696f2e0b724ce8a3b' && inputs.harness == 'ded293f2e4b17405cd009c5ba65acf913154b139'",
+          "timeout-minutes": "120"
+        }
+      },
+      "excluded_branch_push": "manual dispatch only; none authorized or proposed"
+    },
+    {
+      "path": ".github/workflows/light-eft-fair-bit-focused.yml",
+      "sha256": "908a8b915db345d7e9775c819fc1a20fe38600c8498a024721d253cfc53cc470",
+      "git_blob": "a98ecceedf6aa20f21bc194c9cb8d28b650ee9f7",
+      "bytes": 8456,
+      "on": {
+        "workflow_call": {
+          "inputs": {
+            "source": {
+              "required": "true",
+              "type": "string"
+            }
+          },
+          "outputs": {
+            "validated_commit": {
+              "value": "${{ jobs.check.outputs.validated_commit }}"
+            }
+          }
+        }
+      },
+      "concurrency": null,
+      "jobs": {
+        "check": {
+          "if": "inputs.source == github.sha && github.ref != 'refs/heads/light-eft-spanners-checkpoints'",
+          "timeout-minutes": "120"
+        }
+      },
+      "excluded_branch_push": "no push event; only called by excluded full workflow, and own job excludes branch"
+    },
+    {
+      "path": ".github/workflows/light-eft-noncompiler-diagnostics.yml",
+      "sha256": "8846339a39ed7e19ffeebdc874e7420fdbbce0e85d857b1d75351c6f4a3323be",
+      "git_blob": "d39bf305f61040d9904f8b67c25189b0fbdec352",
+      "bytes": 2346,
+      "on": {
+        "push": {
+          "branches": [
+            "light-eft-spanners-checkpoints"
+          ],
+          "paths": [
+            ".github/workflows/light-eft-noncompiler-diagnostics.yml",
+            "checkpoints/light-eft-noncompiler-harness-20261022/**"
+          ]
+        }
+      },
+      "concurrency": {
+        "group": "paper-formalizations-single-compiler",
+        "cancel-in-progress": "false"
+      },
+      "jobs": {
+        "diagnostic": {
+          "if": "github.ref == 'refs/heads/light-eft-spanners-checkpoints' && github.event_name == 'push'",
+          "timeout-minutes": "5"
+        }
+      },
+      "excluded_branch_push": "sole eligible handler: bounded diagnostic Python only; exact new workflow path matches paths filter"
+    }
+  ],
+  "all_four_workflows_inventoried": true,
+  "production_workflows_unchanged": true,
+  "compiler_jobs_eligible_on_direct_excluded_push": 0,
+  "diagnostic_workflow_installed_locally_only": true,
+  "remaining_confirmation": "coordinator exact source review and placement confirmation required before any ref write",
+  "trigger_qualification": "direct push event only; freshly recheck no open pull request from branch before publication, to exclude synchronize event; no dispatch or PR creation authorized",
+  "references": [
+    "https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#onpushbranchesbranches-ignoretags-tags-ignore",
+    "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#workflow_call"
+  ]
+}

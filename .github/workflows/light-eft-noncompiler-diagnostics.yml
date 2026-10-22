@@ -1,0 +1,53 @@
+# Local review candidate only: never pushed, dispatched or executed.
+name: Light EFT noncompiler component diagnostics
+on:
+  push:
+    branches:
+      - light-eft-spanners-checkpoints
+    paths:
+      - .github/workflows/light-eft-noncompiler-diagnostics.yml
+      - checkpoints/light-eft-noncompiler-harness-20261022/**
+concurrency:
+  group: paper-formalizations-single-compiler
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  diagnostic:
+    if: github.ref == 'refs/heads/light-eft-spanners-checkpoints' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      LEAN_NUM_THREADS: '1'
+      LIGHTEFT_DIAGNOSTIC_BINDINGS_SHA: 9d45c995e3d377e43d8cbab82753d7c113dc7dc69439e5b7de5703ef0d70c823
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Authenticate and run reviewed noncompiler Python entry only
+        env:
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+        shell: /bin/bash --noprofile --norc -p -e -o pipefail {0}
+        run: |
+          /usr/bin/python3 -I -B - <<'PY'
+          from pathlib import Path
+          import hashlib
+          p = Path('checkpoints/light-eft-noncompiler-harness-20261022/launcher.py').resolve()
+          b = p.read_bytes()
+          if hashlib.sha256(b).hexdigest() != '794f4bcbbb7aa286a2462f9e5373f625689213c0e7a80b7888e94aed080b9273':
+              raise SystemExit('Unreviewed diagnostic entry bytes')
+          exec(compile(b, str(p), 'exec'), {'__name__': '__main__', '__file__': str(p)})
+          PY
+      - name: Preserve diagnostic evidence including admission or component failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: light-eft-noncompiler-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/light-eft-noncompiler-${{ github.run_id }}-${{ github.run_attempt }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30

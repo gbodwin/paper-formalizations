@@ -1,0 +1,11 @@
+# Canonical Light EFT actual-output corollary: source-only recovery
+
+The exact preserved theorem draft is `staged/LightEFTJointFlagOutputStage/PolynomialActualFailureProbability.lean`: 3,567 UTF-8 bytes, SHA256 caa89c0d197131ffdc8405e63bfd56dfbc08468e8bec760f33736d1b4f08adf1. It is uncompiled and unchanged from its original source-only preparation. This checkpoint is a transport and preservation record, not proof acceptance or execution authorization.
+
+`dependency-and-audit-bindings.json` contains 364 historical source bindings, their direct project imports, the expected 365-module closure including the target, one required public root and six required reachable interfaces. The sorted dependency-name SHA256 is f21106d5d3ee2aa8a853edbfa31079e10a979aef10792cec0fd66f4459784311. These are source-graph predictions; current object resolution and Lean-loaded imports remain to be verified.
+
+The 355-source union is derived from the exact manifests at `checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/project-dependency-bindings.json` (SHA256 ac4e12c866ef75ecf0a4afc0f6b88d0d6239b46a5758f8aad30937d76ae52bc0) and `checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/project-dependency-bindings.json` (SHA256 5749edbc6a8e3701585ca2a78565deb671b5ab4e864af326ff89ac70b8fc4cd7). Seven additional frozen modules and the two named staged interfaces complete the 364 dependencies. All nine added source files match the historical hashes at commit f8a2476ef4a910f0b0225ade418ab174f98d8e21, whose decoder CI run 39348113252 passed independent review.
+
+Next: reconcile every source binding against the intended current base, then prepare the narrow compile, exact resolution, singleton kernel replay and complete actual-owner audit using the accepted current classifier and resource/lifecycle controls. Do not infer cross-context compiled-object reuse from source hashes alone. No launcher, compiled object, runtime evidence, private transfer metadata or machine path is supplied here.
+
+The supplied-forest assumptions remain. Paid sampling and serialization, seed construction, efficient packing, runtime composition and the general Theorem 34 repair remain open. This checkpoint does not claim whole-paper completion.
