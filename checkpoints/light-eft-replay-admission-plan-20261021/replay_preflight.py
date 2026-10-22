@@ -20,7 +20,7 @@ SPECS = ('light-eft-paid-focused-adapter-20261020', 'light-eft-joint-flag-ci-ext
          'light-eft-canonical-output-adapter-20261020', 'light-eft-paid-joint-bridge-ci-adapter-20261020',
          'light-eft-fair-bit-batch-ci-adapter-20261021')
 SCRIPT_SHA = 'b7dac23e6300e3c34d6192887f52d6f780b2bef9720f43b94d4c0f1b3116d77d'
-LOOP_SHA = '53717997a6a67054021e6b82a61113676e62b2f2ed134868ffd622eb86874bbb'
+LOOP_SHA = '1fa6ae14282686d2b21fab4e3cdf011b6124c8daed587b2d23a5f42b1e9c5e62'
 LIMIT = 64 * 1024**2
 
 def require(ok, message):

@@ -19,16 +19,16 @@ def replay_launch_controls(script,workflow,helper):
             'b7dac23e6300e3c34d6192887f52d6f780b2bef9720f43b94d4c0f1b3116d77d',
             'Reviewed privileged replay script differs')
     require(hashlib.sha256(helper).hexdigest()==
-            '72f33cd3676552f902cc7361ae805186971bbdf07e1f3fcc13a45a81b3797425',
+            '2bcbe3ba3a4154d61ff01a19b0dfc615a6b50f64b3eb09020765a299af7fe4be',
             'Reviewed replay admission helper differs')
-    parts=script.split(b"-c '\n")
+    parts=script.split(b"-c '")
     require(len(parts)==2,'Replay loop boundary differs')
     loop=parts[1].split(b"'\n    ;;",1)[0]
     require(hashlib.sha256(loop).hexdigest()==
-            '53717997a6a67054021e6b82a61113676e62b2f2ed134868ffd622eb86874bbb',
+            '1fa6ae14282686d2b21fab4e3cdf011b6124c8daed587b2d23a5f42b1e9c5e62',
             'Reviewed before-first-checker loop differs')
     for line in [b"SCRIPT_SHA = 'b7dac23e6300e3c34d6192887f52d6f780b2bef9720f43b94d4c0f1b3116d77d'\n",
-                 b"LOOP_SHA = '53717997a6a67054021e6b82a61113676e62b2f2ed134868ffd622eb86874bbb'\n"]:
+                 b"LOOP_SHA = '1fa6ae14282686d2b21fab4e3cdf011b6124c8daed587b2d23a5f42b1e9c5e62'\n"]:
         require(helper.count(line)==1,'Mutual helper/script/loop pin differs')
     env=(b'        env:\n'
          b'          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}\n'
