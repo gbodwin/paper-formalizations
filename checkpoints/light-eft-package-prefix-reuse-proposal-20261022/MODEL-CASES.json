@@ -1,0 +1,94 @@
+{
+  "model_execution": false,
+  "native_or_policy_execution": false,
+  "cases": [
+    {
+      "case": "no marker in any root",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "directory marker before root olean marker",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "earlier root missing leaf: reject, never fall back",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "earlier root marker masks later complete package",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "root olean marker without directory",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "same package many modules",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "multiple packages with different selected roots",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "top-level module versus nested module",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "missing/nonregular/symlink leaf",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "dangling symlink directory marker",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "dangling symlink root-olean marker",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "predicted target scaffold before compile",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "actual target after compile",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "invalid empty module component",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "Unicode-distinct namespaces without normalization",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "duplicate/overlapping roots preserve first choice",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "persistent package selection change before final recheck",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "symlink introduced before final recheck",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "transient concurrent writer: outside existing no-writer premise, no equivalence claim",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "full per-module selected-map equality and order",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "same module/leaf file checks count M",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    },
+    {
+      "case": "namespace lookups M versus at most2K under immutable input",
+      "status": "TEXT ONLY; NOT EXECUTED"
+    }
+  ]
+}

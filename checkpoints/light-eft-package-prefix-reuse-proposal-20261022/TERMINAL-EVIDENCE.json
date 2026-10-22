@@ -1,0 +1,107 @@
+{
+  "run_id": 39845888749,
+  "attempt": 1,
+  "commit": "ed86a6e8a5fc62e7d807b10dca43669f3cd848a6",
+  "run_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/39845888749",
+  "measurements": {
+    "observed_start_diagnostics": 337,
+    "distinct_names": 337,
+    "exact_expected_order_prefix": true,
+    "required_total": 567,
+    "not_announced": 230,
+    "last_announced": [
+      "2026-10-22T22:07:47.3529436Z",
+      "LightEFTSpanners.PreparedOutputLaw"
+    ],
+    "first_announced": [
+      "2026-10-22T21:26:22.3538226Z",
+      "VFTSpanners.BlockingSet"
+    ],
+    "diagnostic_span_seconds": 2484.999121,
+    "adjacent_diagnostic_intervals": {
+      "count": 336,
+      "sum": 2484.999121,
+      "median": 7.511626,
+      "last20_median": 7.6781115,
+      "min": 6.836233,
+      "max": 8.056504
+    },
+    "interpretation": "Diagnostics announce checks, not per-check completion receipts. Prior exits0 are a strict-sequential-loop inference only. Last announced checker was later listed as an orphan killed during runner cleanup. No complete567-check acceptance.",
+    "cancellation_log": "The operation was canceled.",
+    "explicit_timeout_message_found": [],
+    "orphan_termination_lines": [
+      "2026-10-22T22:08:15.4372124Z Terminate orphan process: pid (26171) (lake)",
+      "2026-10-22T22:08:15.4437387Z Terminate orphan process: pid (26232) (bash)",
+      "2026-10-22T22:08:15.4596079Z Terminate orphan process: pid (28186) (leanchecker)"
+    ],
+    "decoded_full_log_sha256": "4f88ab5044d402c9d0baf604cceb506bfe822809666366a5f6e6751ad8d5b249"
+  },
+  "timing": {
+    "job_started_at": "2026-10-22T20:06:18Z",
+    "job_completed_at": "2026-10-22T22:08:17Z",
+    "job_elapsed_seconds": 7319.0,
+    "reviewed_job_limit_seconds": 7200,
+    "global_step": {
+      "number": 44,
+      "name": "Replay every project module through the Lean kernel",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "started_at": "2026-10-22T21:26:14Z",
+      "completed_at": "2026-10-22T22:07:50Z",
+      "seconds": 2496.0
+    },
+    "before_global_seconds": 4796.0,
+    "first_diagnostic_delay_seconds": 8.353822,
+    "median_based_full_global_seconds_estimate": 4259.091942,
+    "median_based_total_seconds_estimate": 9055.091942,
+    "estimate_qualification": "Cadence extrapolation only, not a measured complete runtime or guaranteed lower bound; future modules/hosts can differ. Cannot justify blind retry.",
+    "timeout_cause_qualification": "No explicit timeout message found in decoded job log. Cancellation at roughly configured job envelope is consistent with budget exhaustion, not independent proof of cancellation trigger."
+  },
+  "jobs": [
+    {
+      "id": 120058918089,
+      "status": "completed",
+      "conclusion": "cancelled"
+    },
+    {
+      "id": 120117083064,
+      "status": "completed",
+      "conclusion": "failure"
+    },
+    {
+      "id": 120117085101,
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "official_full_artifact": {
+    "id": 12461279638,
+    "bytes": 167590065,
+    "metadata_sha256": "6dfe7bc1ac1514dca4d371e7ddf5852b1c3eb161e06d65fa8cc40c6320d116b8",
+    "native_file_id": "file_00000000642481f98c78a4c3344b4103",
+    "author_local_zip_verified": false,
+    "workspace_placement_path": null
+  },
+  "reservation_release": {
+    "owner": "ordinary Light EFT / coordinator 01a15f32-2810-73a3-883e-0b72cb8c10dc",
+    "candidate": "ed86a6e8a5fc62e7d807b10dca43669f3cd848a6",
+    "state": "released",
+    "pid": 7149,
+    "device": 27,
+    "inode": 805648,
+    "boot_id": "6e9c0081-69e4-4850-bfe8-f25677f74883",
+    "acquired_utc": "2026-10-22T20:05:38.815407+00:00",
+    "release_condition": "all resulting CI attempts terminal and evidence preserved",
+    "Fast": "off",
+    "local_compiler": false,
+    "released_utc": "2026-10-22T22:23:46.747816+00:00"
+  },
+  "qualifications": {
+    "explicit_cancellation_trigger_confirmed": false,
+    "global567_complete": false,
+    "global_owned_reaping_proven": false,
+    "supervised_receipts_independently_reviewed": false,
+    "physical_retry_started": false,
+    "source_only_proposal": true
+  }
+}
