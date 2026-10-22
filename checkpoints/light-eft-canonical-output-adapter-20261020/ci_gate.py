@@ -61,6 +61,7 @@ def context_type(base,work,evidence,commands,roots,deps,identity,inputs,inv,clas
             self.new={};self.resolved={};self.objects=roots[0];self.target=roots[0]/Path(*TARGET.split('.')).with_suffix('.olean')
             self.resolution=work/'resolution.json';self.audit=work/'audit/ci-evidence';self.audit.mkdir(parents=True)
             self.preservation_failed=False;self.seen=[];self.audit_result=None;self.inventory_policy=inv
+            self.canonical_fixture_result=None;self.canonical_fixture_attempt=None
             self.members=classified['members'];self.signature_ref=dict(qualification=QUALIFICATION)
             self.excluded_ref=None;self._preexec_guard=None
             path=evidence/'excluded-metadata-initial.jsonl';self.write_metadata(path,classified['excluded']);self.excluded_ref=bind(path)
@@ -71,7 +72,27 @@ def context_type(base,work,evidence,commands,roots,deps,identity,inputs,inv,clas
 
         def before_child(self,p,r,save_receipt):
             r['CI_identity']=identity;r['dependency_qualification']=QUALIFICATION
+            if p['module']==TARGET and p['stage'] in ['replay','audit']:
+                from canonical_fixture import completed_prerequisite
+                require(self.canonical_fixture_result is not None,'No canonical key fixture prerequisite')
+                prior=load(self.evidence/'resolve/receipt.json')
+                require(prior['attempt_id']==self.canonical_fixture_attempt and
+                        prior.get('canonical_key_equivalence_fixture')==self.canonical_fixture_result,
+                        'Canonical live prerequisite differs from completed resolve')
+                link=completed_prerequisite(prior,self.plans[1],self.evidence/'resolve',identity,self.lease.record)
+                require(link['resolve_ended_ns']<r['started_ns'],'Canonical resolve must precede replay/audit')
+                r['canonical_key_equivalence_prerequisite']=link
             return super().before_child(p,r,save_receipt)
+
+        def after_child(self,p,r,save_receipt):
+            result=None
+            if p['module']==TARGET and p['stage']=='resolve' and r.get('exit')==0 and 'failure' not in r:
+                from canonical_fixture import validate_log
+                result=validate_log((self.evidence/'resolve/raw.log').read_text())
+            super().after_child(p,r,save_receipt)
+            if result is not None:
+                self.canonical_fixture_result=result;self.canonical_fixture_attempt=r['attempt_id']
+                r['canonical_key_equivalence_fixture']=result;save_receipt()
 
         def prepare_child(self,p,r,save_receipt,accounting):
             # The inherited admission path still performs full content checks.
@@ -118,6 +139,8 @@ def run_stage(root,env,spec):
     def identity_check():
         require(ci_identity(dict(os.environ),head)==identity,'CI event/run/attempt binding changed')
     exact_files(spec)
+    from canonical_fixture import validate_sources
+    validate_sources(ROOT,spec)
     # Authenticate every imported runtime file before importing it. All are the
     # preserved reviewed engine; CI adapters below do not rewrite those files.
     engine=ROOT/spec['engine_directory'];sys.path.insert(0,str(engine));sys.path.insert(0,str(ROOT/'scripts'))
@@ -215,7 +238,7 @@ def run_stage(root,env,spec):
             require(all(r.get(k) for k in ['direct_reaped','all_descendants_gone','kernel_no_children_verified','waitid_wait4_status_match','kernel_limits_verified','between_child_preservation_passed']),'CI lifecycle/preservation check missing')
         require(lease.record['state']=='released' and lease.record['kernel_echild'] and not lease.record.get('release_errors'),'CI lease not cleanly released')
         from ci_receipts import verify_receipts
-        verify_receipts(evidence,lease.record,commands,deps,identity['GITHUB_SHA'],expected_source=identity['GITHUB_SHA'])
+        verify_receipts(evidence,lease.record,commands,deps,identity['GITHUB_SHA'],expected_source=identity['GITHUB_SHA'],expected_identity=identity)
         admission_receipts=[]
         for a in admissions:
             verify_singleton_receipt(a['evidence'],lease.record,[a['plan']],deps,identity['GITHUB_SHA'],expected_source=identity['GITHUB_SHA'])

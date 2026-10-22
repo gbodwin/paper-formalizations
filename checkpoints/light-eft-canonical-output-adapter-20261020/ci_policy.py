@@ -56,6 +56,8 @@ def scope_contract(spec):
     require(spec.get('stage_order')==['context-replay:'+m for m in CONTRACT['replay_order']]+list(STAGES),'Admission/corollary schedule differs')
 
 def plans(root,tool,work,spec,roots,source_commit):
+    from canonical_fixture import contract
+    contract(spec)
     root,tool,work=map(str,[root,tool,work]);source={k:root+'/'+v['path'] for k,v in spec['sources'].items()}
     source_roots=list(dict.fromkeys([spec['staged_root'],*spec['staged_dependency_source_roots'],'Light Edge Fault Tolerant Graph Spanners','An Alternate Proof of Near-Optimal Light Spanners']))
     env=dict(LANG='C.UTF-8',LC_ALL='C.UTF-8',LEAN_NUM_THREADS='1',LEAN_SYSROOT=tool,LEAN_PATH=':'.join(map(str,roots)),
@@ -66,7 +68,7 @@ def plans(root,tool,work,spec,roots,source_commit):
     argvs=[[tool+'/bin/lean',*FLAGS,'--root='+root+'/'+spec['staged_root'],'-o',target,source['source']],
            [tool+'/bin/lean',*FLAGS,source['resolver']],[tool+'/bin/leanchecker','-v',TARGET],
            [tool+'/bin/lean',*FLAGS,source['audit']]]
-    roles=[['source'],['resolver','source'],['source'],['audit','source']];result=[]
+    roles=[['source'],['resolver','key_fixture','original_resolver','source'],['source'],['audit','source']];result=[]
     for stage,argv,role in zip(STAGES,argvs,roles,strict=True):
         e=env.copy()
         if stage=='resolve':e.update(LIGHTEFT_CHECKER_TARGET=TARGET,LIGHTEFT_CHECKER_RESOLUTION_FILE=work+'/resolution.json')

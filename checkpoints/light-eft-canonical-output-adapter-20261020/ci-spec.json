@@ -12,13 +12,23 @@
     },
     "audit": {
       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/staged/CanonicalOutputAudit.lean",
-      "bytes": 18773,
-      "sha256": "e09fb338f4cc14844ad9d2bd5fca25973f107e3f089f495d02082f7c71f7ccb3"
+      "bytes": 19624,
+      "sha256": "577b3f09c0702855d1f01e051574d8912c35565468b4e18611463b7b28d6ccec"
     },
     "resolver": {
+      "path": "checkpoints/light-eft-canonical-key-cache-integration-20261022/staged/ResolveAfterCanonicalEquivalence.lean",
+      "bytes": 4494,
+      "sha256": "20cf4392c2b711ba0cdb496f8a861d49a8eef28645334bb7e93bd53260e5a3c1"
+    },
+    "original_resolver": {
       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/staged/ResolveCanonicalOutputTarget.lean",
       "bytes": 1399,
       "sha256": "426579ed6d435c3644af7344c83eb320a7d4399769a8ae7a07a80ad78488f6dc"
+    },
+    "key_fixture": {
+      "path": "checkpoints/light-eft-canonical-key-cache-integration-20261022/staged/CanonicalKeyEquivalenceFixtures.lean",
+      "bytes": 3011,
+      "sha256": "90c17220d76d30fa31ab2de59c129ec216c1202911db188c94f100373445a41e"
     }
   },
   "staged_root": "checkpoints/light-eft-joint-flag-output-draft-20261019/staged",
@@ -2293,6 +2303,11 @@
       "sha256": "6cdafabcc22c5d4df16b086597d9a857f4d893ae661d72cbc7158322cdb9272e"
     },
     {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/canonical_fixture.py",
+      "bytes": 8047,
+      "sha256": "82db47c1a19958e796af4c7d2a6de685678ed3e6faae58663dbe7d9a26b478c2"
+    },
+    {
       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
       "bytes": 19707,
       "sha256": "c84a0cbb21a40edaa11c89e119ffad2a84321278537b7893465a796269c2dccb"
@@ -2314,8 +2329,8 @@
     },
     {
       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
-      "bytes": 18000,
-      "sha256": "c3be43b364202c7fb2dcaf838cb17e50f93d35288c7868bf622512efa586f9d2"
+      "bytes": 19652,
+      "sha256": "cb5404be203df72f082f45758d733c05b7cb28f988fc6306435bb8f235b51b85"
     },
     {
       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_handoff.py",
@@ -2339,13 +2354,13 @@
     },
     {
       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_policy.py",
-      "bytes": 7041,
-      "sha256": "1ee12437d4bad89f699ff9581088885fb91d8ac0472dd1f6fb1247007bbf7fe0"
+      "bytes": 7137,
+      "sha256": "289333c6ff8c29bec542dd3993100193b5a601a0a1fb13b85774daf70120d48b"
     },
     {
       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_receipts.py",
-      "bytes": 5890,
-      "sha256": "90bf08f108217ee8c73972edd314d836a65dba5b0e517fe4f03eb1457b06af97"
+      "bytes": 6212,
+      "sha256": "bd245c81083a9560e866c67fa30f200d0508deb002105080fe3818bc756f2958"
     },
     {
       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_staged_inputs.py",
@@ -2529,8 +2544,8 @@
     },
     {
       "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci-spec.json",
-      "bytes": 33225,
-      "sha256": "7640d557dacbf5ff4de1c0845e18a3869c1caa868156f731d447a1c1a5b584f1"
+      "bytes": 33436,
+      "sha256": "1277da49ea75829977c3c5e2f9306a08e4a674f55f651a2ab70fd1452345df6e"
     },
     {
       "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_accounting.py",

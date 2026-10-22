@@ -1,0 +1,168 @@
+{
+  "status": "TEXT ONLY; NOT EXECUTED",
+  "boundary": "no compiler, policy execution, model run, process/lease/resource probe or physical test",
+  "cases": [
+    {
+      "case": "valid-existing-resolve-child",
+      "mutation_or_context": "Exact current-run resolve, fixture then singleton PASS, exit0, complete resource/lifecycle/log/source bindings",
+      "expected": "Live replay/audit eligible; full four-stage verifier still mandatory",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "missing-fixture",
+      "mutation_or_context": "Remove fixture PASS",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "missing-singleton",
+      "mutation_or_context": "Remove singleton PASS",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "duplicate-fixture",
+      "mutation_or_context": "Repeat fixture PASS",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "duplicate-singleton",
+      "mutation_or_context": "Repeat singleton PASS",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "reordered",
+      "mutation_or_context": "Singleton PASS precedes fixture PASS",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "unframed-marker",
+      "mutation_or_context": "Embed otherwise valid marker in a different line",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "partial-final-line",
+      "mutation_or_context": "Remove final newline",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "warning-error",
+      "mutation_or_context": "Add Lean warning or error diagnostic",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "nonzero-or-killed",
+      "mutation_or_context": "Resolve exits1 or-9 despite both marker lines",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "failed-or-incomplete",
+      "mutation_or_context": "Resolve state not finished or any failure/cleanup error",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "missing-lifecycle",
+      "mutation_or_context": "Remove/false any required completion flag",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "historical-run-attempt",
+      "mutation_or_context": "Keep source SHA but replace GITHUB_RUN_ID/ATTEMPT/role/job metadata",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "missing-current-identity",
+      "mutation_or_context": "Reconstruct canonical receipts without explicit expected_identity",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "other-source",
+      "mutation_or_context": "Different source/wrapper commit",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "different-lease",
+      "mutation_or_context": "Wrong lock device/inode or acquisition interval",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "late-terminal",
+      "mutation_or_context": "Terminal at/after runtime_start+90seconds",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "changed-limits",
+      "mutation_or_context": "Alter AS/CPU/FSIZE/CORE or child deadline",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "unbound-log",
+      "mutation_or_context": "Change completed log bytes/hash/path/identity",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "unbound-source",
+      "mutation_or_context": "Change source snapshot/path/bytes/hash/identity or resolve command/env/cwd",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "fabricated-link",
+      "mutation_or_context": "Replay/audit link differs from exact completed resolve attempt/ended time/log/fixture/CI identity",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "missing-link",
+      "mutation_or_context": "Remove replay/audit prerequisite link",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "out-of-order-link",
+      "mutation_or_context": "Resolve ends at/after replay/audit started",
+      "expected": "reject",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "fixture-audit-diverge",
+      "mutation_or_context": "Replace fixture helper while audit helpers remain fixed",
+      "expected": "reject before native execution",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "composite-diverge",
+      "mutation_or_context": "Use reordered/changed fixture or changed original resolver in composite",
+      "expected": "reject before native execution",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "noncanonical-producers",
+      "mutation_or_context": "Existing paid/decoder/bridge plans and generic verifier with module != canonical TARGET",
+      "expected": "Generic checks unchanged; no canonical fixture imposed",
+      "execution": "NOT RUN; source-only adversarial model description"
+    },
+    {
+      "case": "admission-replays",
+      "mutation_or_context": "Each existing context admission module differs from canonical TARGET",
+      "expected": "Admission-only empty-output/resolution-absence guards unchanged; no canonical fixture imposed",
+      "execution": "NOT RUN; source-only adversarial model description"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
-"""Reviewed complete receipt verifier, with an explicit CI source argument only."""
+"""Reviewed complete receipt verifier plus canonical same-run fixture prerequisite."""
 from pathlib import Path
 import json
-from contracts import bind,require
+from contracts import bind,require,TARGET
 FROZEN='78cb40c7837db049d645d73696f2e0b724ce8a3b'
 def decision_log_contract(stage,record,data):
  import child_runner as child
@@ -9,7 +9,7 @@ def decision_log_contract(stage,record,data):
  require(record.get('decision_log_bound_bytes')==bound,'Decision log allowance differs')
  require(data and data.endswith(b'\n') and len(data)<=bound,'Incomplete/oversize decision log')
 
-def verify_receipts(evidence,lease_record,plans,dependencies=None,wrapper_commit=None,expected_source=None):
+def verify_receipts(evidence,lease_record,plans,dependencies=None,wrapper_commit=None,expected_source=None,expected_identity=None):
  import child_runner as child
  import decision_telemetry as telemetry
  previous=0;ids=set()
@@ -61,4 +61,8 @@ def verify_receipts(evidence,lease_record,plans,dependencies=None,wrapper_commit
    require(not errors,'Persisted live sample failed reviewed policy')
    require(sample['sample_finished_ns']<r['runtime_wall_started_ns']+90*10**9,'Runtime sample after wall deadline')
  require(len(ids)==4 and lease_record['state']=='released' and lease_record.get('kernel_echild') and not lease_record.get('release_errors'),'No clean owned ECHILD release')
+ if plans[0].get('module')==TARGET:
+  from canonical_fixture import verify_schedule
+  require(expected_identity is not None and expected_identity.get('GITHUB_SHA')==expected_source,'Canonical current-run identity required')
+  verify_schedule(evidence,lease_record,plans,expected_identity)
  return True
