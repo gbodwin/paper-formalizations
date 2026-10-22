@@ -70,7 +70,8 @@ def prepare(root,case,target_name):
  root.mkdir(mode=0o700);roots=[root/'r0',root/'r1']
  for r in roots:r.mkdir()
  target=roots[0]/Path(*target_name.split('.')).with_suffix('.olean')
- target.parent.mkdir(parents=True);modules={}
+ if case!='predicted':target.parent.mkdir(parents=True)
+ modules={}
  def add(module,index=0):
   p=roots[index]/Path(*module.split('.')).with_suffix('.olean')
   p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b'fixture bytes, never Lean objects\n')
@@ -100,8 +101,18 @@ def prepare(root,case,target_name):
  if compiled:target.write_bytes(b'fixture target, never a Lean object\n')
  return roots,modules,target,compiled,case=='predicted'
 
+def predicted_absent(roots,target_name):
+ """lstat absence also excludes dangling physical marker/leaf symlinks."""
+ package=target_name.split('.')[0]
+ for r in roots:
+  for p in [r/package,r/(package+'.olean'),r/Path(*target_name.split('.')).with_suffix('.olean')]:
+   try:p.lstat()
+   except FileNotFoundError:continue
+   raise RuntimeError('Predicted overlay has a physical target marker/leaf: '+str(p))
+
 def outcome(module,contracts,root,case,profiled):
  roots,physical,target,compiled,predicted=prepare(root,case,contracts.TARGET)
+ if predicted:predicted_absent(roots,contracts.TARGET)
  original_require=module.require;drifted=False;leaf_checks=[]
  def require(ok,message):
   nonlocal drifted
@@ -124,7 +135,10 @@ def outcome(module,contracts,root,case,profiled):
    except contracts.Rejected as error:
     answer=dict(status='reject',exception_type=type(error).__name__,exception_module=type(error).__module__,
        message=str(error).replace(str(root),'<scratch>'),traceback=traceback.format_exc(limit=12))
- finally:module.require=original_require
+ finally:
+  module.require=original_require
+  if predicted:predicted_absent(roots,contracts.TARGET)
+ if predicted:answer['predicted_physical_absence_before_and_after']=True
  answer.update(elapsed_ns=time.perf_counter_ns()-started,profile=profiler.rows if profiled else None,
    leaf_checks=leaf_checks,
    classification='controlled persistent drift' if drifted else 'synthetic immutable')
