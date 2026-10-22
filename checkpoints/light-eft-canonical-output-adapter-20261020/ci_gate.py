@@ -46,15 +46,39 @@ def execute_four(commands,run_child,finish):
         completed.append(dict(stage=p['stage'],attempt_id=r['attempt_id']))
     return dict(stages=completed,result=finish())
 
-def context_type(base,work,evidence,commands,roots,deps,identity,inputs,inv,classified,bind):
+def context_type(base,work,evidence,commands,roots,deps,identity,inputs,inv,classified,bind,*,admission_module=None):
     """Actual CI context factory, called only after exact engine authentication.
 
     Keeping construction separate lets regressions invoke this real preexec
     hook without a CI claim, common lease, process launch or resource probe.
     """
     from ci_inventory import CIIdentityGuard
+    from ci_handoff_contract import CONTRACT
+    # Mode is explicit constructor authority, never inferred from a mutable
+    # plan's module field. Serialized strings recursively detach all plan data.
+    canonical_context=admission_module is None
+    if canonical_context:
+        expected_identity=tuple((TARGET,stage) for stage in STAGES)
+    else:
+        require(admission_module in tuple(CONTRACT['replay_order']),'Unreviewed singleton admission context')
+        expected_identity=((admission_module,'replay'),)
+    require(tuple((p.get('module'),p.get('stage')) for p in commands)==expected_identity,
+            'Canonical/admission constructor plan identity differs')
+    if not canonical_context:
+        require(len(commands[0]['argv'])==3 and Path(commands[0]['argv'][0]).name=='leanchecker' and
+                commands[0]['argv'][-2:]==['-v',admission_module],'Singleton admission constructor command differs')
+    def encoded(plan):
+        return json.dumps(plan,sort_keys=True,separators=(',',':'))
+    frozen_plans=tuple(encoded(p) for p in commands)
+    def checked_plan(plans,index,plan):
+        require(tuple(encoded(p) for p in commands)==frozen_plans and
+                tuple(encoded(p) for p in plans)==frozen_plans,'Constructor plan authority changed')
+        require(0<=index<len(frozen_plans) and encoded(plan)==frozen_plans[index],
+                'Out-of-order/mutated immutable context plan')
+        return json.loads(frozen_plans[index])
     class CIContext(base):
         def __init__(self,lease):
+            require(tuple(encoded(p) for p in commands)==frozen_plans,'Plans changed before context construction')
             self.work=work;self.evidence=evidence;self.lease=lease;self.lock=lease.file;self.acquired_ns=lease.acquired_ns
             self.plans=commands;self.roots=roots;self.dependencies=deps;self.fixture=False
             self.source_commit=identity['GITHUB_SHA'];self.wrapper_commit=identity['GITHUB_SHA'];self.inputs=inputs
@@ -71,22 +95,24 @@ def context_type(base,work,evidence,commands,roots,deps,identity,inputs,inv,clas
             self.input_ref=bind(path)
 
         def before_child(self,p,r,save_receipt):
+            expected=checked_plan(self.plans,len(self.seen),p)
             r['CI_identity']=identity;r['dependency_qualification']=QUALIFICATION
-            if p['module']==TARGET and p['stage'] in ['replay','audit']:
+            if canonical_context and expected['stage'] in ['replay','audit']:
                 from canonical_fixture import completed_prerequisite
                 require(self.canonical_fixture_result is not None,'No canonical key fixture prerequisite')
                 prior=load(self.evidence/'resolve/receipt.json')
                 require(prior['attempt_id']==self.canonical_fixture_attempt and
                         prior.get('canonical_key_equivalence_fixture')==self.canonical_fixture_result,
                         'Canonical live prerequisite differs from completed resolve')
-                link=completed_prerequisite(prior,self.plans[1],self.evidence/'resolve',identity,self.lease.record)
+                link=completed_prerequisite(prior,json.loads(frozen_plans[1]),self.evidence/'resolve',identity,self.lease.record)
                 require(link['resolve_ended_ns']<r['started_ns'],'Canonical resolve must precede replay/audit')
                 r['canonical_key_equivalence_prerequisite']=link
             return super().before_child(p,r,save_receipt)
 
         def after_child(self,p,r,save_receipt):
+            expected=checked_plan(self.plans,len(self.seen),p)
             result=None
-            if p['module']==TARGET and p['stage']=='resolve' and r.get('exit')==0 and 'failure' not in r:
+            if canonical_context and expected['stage']=='resolve' and r.get('exit')==0 and 'failure' not in r:
                 from canonical_fixture import validate_log
                 result=validate_log((self.evidence/'resolve/raw.log').read_text())
             super().after_child(p,r,save_receipt)
@@ -95,6 +121,7 @@ def context_type(base,work,evidence,commands,roots,deps,identity,inputs,inv,clas
                 r['canonical_key_equivalence_fixture']=result;save_receipt()
 
         def prepare_child(self,p,r,save_receipt,accounting):
+            checked_plan(self.plans,len(self.seen),p)
             # The inherited admission path still performs full content checks.
             admission=super().prepare_child(p,r,save_receipt,accounting)
             semantic=self.inventory_policy.original['semantic']
@@ -120,6 +147,7 @@ def context_type(base,work,evidence,commands,roots,deps,identity,inputs,inv,clas
 
         def preexec(self,p,r,save_receipt):
             began=time.monotonic_ns();self.lease.check()
+            checked_plan(self.plans,len(self.seen),p)
             require(self._preexec_guard is not None and p==self._preexec_plan==self.plans[len(self.seen)],'Unprepared/mutated CI preexec')
             self._preexec_guard.verify()
             for path,row in self._critical.items():require(bind(path)==row,'Critical CI input changed: '+path)
@@ -164,6 +192,7 @@ def run_stage(root,env,spec):
     from ci_handoff import verify_decoder,prepare_inputs,admit_carrier,retained_context
     from ci_receipts import verify_receipts
     from ci_admission import replay_plans,context_type as admission_type,execute_sequence,verify_schedule
+    from ci_handoff_contract import CONTRACT
     from ci_admission_receipts import verify_singleton_receipt
     decoder=verify_decoder(ROOT,tool,env,identity,spec,verify_receipts)
     carrier=prepare_inputs(root,ROOT,spec,decoder)
@@ -203,6 +232,7 @@ def run_stage(root,env,spec):
 
     CIContext=context_type(scope.Context,work,evidence,commands,roots,deps,identity,inputs,inv,classified,bind)
     admissions=replay_plans(root,ROOT,tool,spec,commands,roots)
+    admission_authority=tuple(zip(admissions,tuple(CONTRACT['replay_order']),strict=True))
 
     state=dict(source_commit=identity['GITHUB_SHA'],harness_commit=identity['GITHUB_SHA'],CI_identity=identity,
         accepted=False,independent_review='pending',dependency_qualification=QUALIFICATION)
@@ -211,11 +241,13 @@ def run_stage(root,env,spec):
             require(decoder['lease']['release_ns']<lease.record['acquired_ns'],'Decoder release must precede the corollary lease')
             accounting=CIAccounting(memory_snapshot)
             def admit(a):
+                module=next((module for entry,module in admission_authority if entry is a),None)
+                require(module is not None,'Admission entry lacks constructor authority')
                 admit_carrier(carrier['manifest'],carrier['reference'],spec,carrier['objects'])
                 w=a['work'];e=a['evidence'];w.mkdir(parents=True);(w/'objects').mkdir();e.mkdir(parents=True)
-                typ=context_type(scope.Context,w,e,[a['plan']],a['roots'],deps,identity,inputs,inv,classified,bind)
-                expected=deps[a['plan']['module']]['path']
-                ctx=admission_type(typ,a['plan']['module'],expected)(lease);ctx.target.parent.mkdir(parents=True)
+                typ=context_type(scope.Context,w,e,[a['plan']],a['roots'],deps,identity,inputs,inv,classified,bind,admission_module=module)
+                expected=deps[module]['path']
+                ctx=admission_type(typ,module,expected)(lease);ctx.target.parent.mkdir(parents=True)
                 return child_runner.run_child(a['plan'],w,e/'replay',ctx,accounting=accounting)
             context=CIContext(lease);context.target.parent.mkdir(parents=True)
             def child(p):

@@ -1,0 +1,143 @@
+{
+  "status": "UNEXECUTED TEXT-ONLY CONTRACT MODELS",
+  "cases": [
+    {
+      "case": "valid-canonical",
+      "context_or_mutation": "Default canonical mode; exactly four TARGET plans in compile/resolve/replay/audit order, normal fixture/resolver prerequisite",
+      "expected": "Existing four children and fixture requirement preserved",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "constructor-missing-module",
+      "context_or_mutation": "Omit module from any canonical plan before factory call",
+      "expected": "Reject at factory shape validation before context side effects/native launch",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "constructor-altered-module",
+      "context_or_mutation": "Change a canonical module to any other module, including an allowed admission module",
+      "expected": "Reject at factory shape validation; explicit default mode stays canonical",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "constructor-altered-stage",
+      "context_or_mutation": "Omit/alter/reorder any canonical stage",
+      "expected": "Reject at factory shape validation",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "constructor-singleton-impostor",
+      "context_or_mutation": "Pass a singleton in default canonical mode",
+      "expected": "Reject; singleton is not inferred to be admission",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "between-factory-and-instance",
+      "context_or_mutation": "Mutate/remove module after factory returns but before class instantiation",
+      "expected": "Reject against serialized closure snapshot before context journal/scaffold writes",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "live-module-alias-mutation",
+      "context_or_mutation": "Change/remove canonical module on p and self.plans entry that alias the same mutable object",
+      "expected": "Reject against independent frozen snapshot in before_child before launch",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "live-future-module",
+      "context_or_mutation": "Change/remove module in a later plan while beginning an earlier child",
+      "expected": "Reject full list snapshot comparison before the current launch",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "live-stage-mutation",
+      "context_or_mutation": "Mutate stage on both live plan objects",
+      "expected": "Reject snapshot identity; cannot change fixture gate selection",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "live-argv-env-cwd-source",
+      "context_or_mutation": "Mutate a nested argv/env/cwd/source-binding field through an alias",
+      "expected": "Reject recursive serialized snapshot comparison",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "replacement-plan-list",
+      "context_or_mutation": "Replace self.plans with altered/cloned mutable entries",
+      "expected": "Reject against immutable closure authority",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "between-before-and-prepare",
+      "context_or_mutation": "Mutate canonical module between before_child and prepare_child",
+      "expected": "Reject repeated snapshot comparison before native launch",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "between-prepare-and-preexec",
+      "context_or_mutation": "Mutate canonical module between prepare_child and preexec",
+      "expected": "Reject repeated snapshot comparison before native exec authorization",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "resolve-observation-selector",
+      "context_or_mutation": "Alter/remove resolve module before after_child despite valid marker text",
+      "expected": "Reject snapshot; fixture observation selected from canonical closure/expected stage, not mutable module",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "replay-prerequisite-selector",
+      "context_or_mutation": "Alter/remove replay or audit module to try to avoid missing/failed/historical/unbound prerequisite",
+      "expected": "Reject snapshot before fixture check/native launch; late verifier also remains",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "valid-admission-0",
+      "context_or_mutation": "Explicit independently captured first CONTRACT replay_order module; one replay plan",
+      "expected": "Existing admission-only guards unchanged; no canonical fixture prerequisite",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "valid-admission-1",
+      "context_or_mutation": "Explicit independently captured second CONTRACT replay_order module; one replay plan",
+      "expected": "Existing admission-only guards unchanged; no canonical fixture prerequisite",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "valid-admission-2",
+      "context_or_mutation": "Explicit independently captured third CONTRACT replay_order module; one replay plan",
+      "expected": "Existing admission-only guards unchanged; no canonical fixture prerequisite",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "invalid-admission-authority",
+      "context_or_mutation": "Explicit admission_module is TARGET or outside CONTRACT replay_order",
+      "expected": "Reject constructor authority",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "admission-module-only-mutation",
+      "context_or_mutation": "Alter a live admission plan module while its independent captured contract module is unchanged",
+      "expected": "Reject shape at construction or frozen snapshot at preflight",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "admission-entry-substitution",
+      "context_or_mutation": "Supply admit callback an entry not identical to any captured admission entry",
+      "expected": "Reject before building/launching its context",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "late-verifier-regression",
+      "context_or_mutation": "Attempt changed/missing canonical module with real TARGET argv after any live failure",
+      "expected": "Existing late generic verifier/current-identity/prerequisite checks remain byte-identical; no substitution for live guard",
+      "execution": "NOT RUN; TEXT ONLY"
+    },
+    {
+      "case": "admission-command-mismatch",
+      "context_or_mutation": "Explicit admission authority but checker argv has extra tokens/wrong checker or another target such as canonical TARGET",
+      "expected": "Reject constructor shape; the singleton command must be exactly checker,-v,independently authorized admission module",
+      "execution": "NOT RUN; TEXT ONLY"
+    }
+  ]
+}
