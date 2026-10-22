@@ -1,0 +1,24 @@
+{
+  "utc": "2026-10-22T22:36:06.198803+00:00",
+  "phase": "fresh read-only admission inspection; diagnostic harness not executed",
+  "guard_path": "scripts/LightEFTCgroup.py",
+  "guard_sha256": "3ab478f59bb27d32424c8aaf647de91901969fb48d3a56ddd74fd49e434bad07",
+  "guard_matches_published_baseline": true,
+  "observed_cgroup_namespace_inode": 4026532205,
+  "required_initial_cgroup_namespace_inode": 4026531835,
+  "namespace_admission_pass": false,
+  "cgroup_membership": "0::/\n",
+  "cgroup_mounts": [
+    "90 89 0:24 /.. /sys/fs/cgroup ro,nosuid,nodev,noexec,relatime master:8 - cgroup2 cgroup2 rw,nsdelegate"
+  ],
+  "boot_id": "6e9c0081-69e4-4850-bfe8-f25677f74883",
+  "visible_memory_max": "17179869184",
+  "visible_memory_current": "953724928",
+  "visible_memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n",
+  "qualification": "visible memory is not full ancestor authority; no namespace or hidden-ancestor gate relaxed",
+  "blocked_action": "bounded non-compiler differential/profile diagnostics",
+  "reason": "existing LightEFTCgroup.discover rejects non-initial namespace; hidden ancestor limits cannot be established",
+  "outcome": "not launched; no physical diagnostic child/attempt",
+  "security_denial": false,
+  "Fast": "off"
+}
