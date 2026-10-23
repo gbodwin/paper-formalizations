@@ -1,4 +1,4 @@
-"""Bounded source-proposal diagnostic, never a native production plan.
+"""Bounded joint source-proposal diagnostic, never a native production plan.
 
 Actual initialized constructors and verification methods run only on inert
 owned fixture bytes. No process launch, toolchain/cache or kernel/audit work.
@@ -44,9 +44,9 @@ CASES=[
  'critical-extra','runtime-shape-valid','excluded-metadata','unknown-family','orphan-family','missing-runtime',
  'input-journal','excluded-journal','compiled-new','new-object-drift','resolved','resolved-drift','members-authority',
  'root-shadow','package-mask','target-prefix','dependency-leaf','physical-leaf-missing','inventory-none',
- 'persistent-content','persistent-member','final-seal','final-lease',
+ 'persistent-content','persistent-member','final-seal','final-lease','joint-package-final',
  'admission-0','admission-1','admission-2']
-STRENGTHENED={'persistent-content','persistent-member','final-seal','final-lease'}
+STRENGTHENED={'persistent-content','persistent-member','final-seal','final-lease','joint-package-final'}
 VALID={'valid','runtime-shape-valid','compiled-new','resolved','inventory-none','admission-0','admission-1','admission-2'}
 
 def run(root,contracts,baseline_package,load_source,bindings,repo,engine,profiler,representative,result):
@@ -59,19 +59,25 @@ def run(root,contracts,baseline_package,load_source,bindings,repo,engine,profile
    sys.modules[n]=load_source(n,engine/(n+'.py'),bindings)
   sys.modules['package_selection']=baseline_package
   inventory=sys.modules['ci_inventory'];gate=load_source('DiagnosticFactory',engine/'ci_gate.py',bindings)
-  admission=load_source('DiagnosticAdmissions',engine/'ci_admission.py',bindings)
   lease_module=load_source('DiagnosticLease',engine/'ci_lease.py',bindings)
   scopes=[load_source('BaselineScope',repo/PROPOSAL/'BASELINE-scope.py',bindings),
           load_source('ProposedScope',repo/PROPOSAL/'PROPOSED-scope.py',bindings)]
+  packages=[baseline_package,load_source('JointProposedPackage',repo/
+    'checkpoints/light-eft-package-prefix-reuse-proposal-20261022/PROPOSED-package_selection.py',bindings)]
+  admissions=[]
+  for v,package in enumerate(packages):
+   sys.modules['package_selection']=package
+   admissions.append(load_source('DiagnosticAdmissions'+str(v),engine/'ci_admission.py',bindings))
   identity=json.loads(os.environ['LIGHTEFT_DIAGNOSTIC_IDENTITY'])
   packet=json.loads(os.environ['LIGHTEFT_DIAGNOSTIC_LEASE'])
   view=representative.BorrowedLeaseView(lease_module.CILease);view.check()
   if (packet['path']!=str(view.path) or [packet['device'],packet['inode']]!=view.identity or
       packet['supervisor_pid']!=os.getppid() or packet['state']!='held'):
    raise FatalLeaseFault('Transported actual lease authority differs')
-  result.update(scope='SEMANTIC_REUSE_DIFFERENTIAL',production_acceptance=False,
+  result.update(scope='JOINT_SEMANTIC_PACKAGE_REUSE_DIFFERENTIAL',production_acceptance=False,
    actual_populated_roots='UNAVAILABLE',native_authentication_and_kernel_paths='NOT EXECUTED',
-   package_prefix_optimization='NOT INTEGRATED; original package implementation used',cases=[],scales=[])
+   package_prefix_optimization='ISOLATED PAIR: baseline scope+package versus reviewed proposed scope+package; no production replacement',
+   plain_timing='No profiler; identical bounded leaf-observer wrapper present in both versions',cases=[],scales=[])
 
   def persist():
    # Full maps/tracebacks stay in final result. Bounded partial progress retains
@@ -87,6 +93,7 @@ def run(root,contracts,baseline_package,load_source,bindings,repo,engine,profile
    os.replace(temp,root/'progress.json')
 
   def prepare(scope,folder,count,case):
+   version=scopes.index(scope);sys.modules['package_selection']=packages[version];admission=admissions[version]
    folder.mkdir();work=folder/'work';work.mkdir();evidence=folder/'runtime';evidence.mkdir()
    objects=work/'objects';objects.mkdir();inputs=folder/'inputs';inputs.mkdir()
    runtime_shape=case in ['runtime-shape-valid','excluded-metadata','missing-runtime','orphan-family']
@@ -152,8 +159,21 @@ def run(root,contracts,baseline_package,load_source,bindings,repo,engine,profile
      enumeration=enumeration,semantic=len(classified['semantic']),critical=1,new=len(ctx.new),resolved=len(ctx.resolved))
 
   def invoke(scope,f,case,expected,profile=False):
+   version=scopes.index(scope);package=packages[version];sys.modules['package_selection']=package
    original_effective=scope.effective;original_seal=inventory.CIIdentityGuard.verify
+   original_require=package.require;leaf_checks=[]
    ctx=f['ctx'];owner=f['owner'];owner.calls=0;mutation_done=False
+   def leaf_require(ok,message):
+    nonlocal mutation_done
+    prefix='Selected package leaf missing/nonregular: '
+    if message.startswith(prefix):leaf_checks.append(message[len(prefix):])
+    original_require(ok,message)
+    # Separate persistent mutation AFTER the last physical leaf predicate.
+    # The baseline has no package/final-seal recheck; the joint proposal must
+    # reject before verify returns. Never used in immutable/timing cases.
+    if case=='joint-package-final' and message==prefix+'SyntheticB.M1' and not mutation_done:
+     (f['inputs']/'SyntheticB').rename(f['inputs']/'SyntheticB-moved');mutation_done=True
+   package.require=leaf_require
    if case=='final-lease':owner.fail_after=2
    def effective(*args,**kwargs):
     nonlocal mutation_done
@@ -169,7 +189,9 @@ def run(root,contracts,baseline_package,load_source,bindings,repo,engine,profile
     'contracts.unchanged':contracts.unchanged,'contracts.effective':contracts.effective,
     'contracts.regular':contracts.regular,'contracts.bind':contracts.bind,
     'seal.entry':inventory.CIIdentityGuard.__init__,'seal.snapshot':inventory.CIIdentityGuard.snapshot,
-    'seal.final':inventory.CIIdentityGuard.verify}
+    'seal.final':inventory.CIIdentityGuard.verify,
+    'package.validate':package.validate,'package.selected_path':package.selected_path}
+   if hasattr(package,'_selected_root'):functions['package.selected_root']=package._selected_root
    collector=profiler.Collector(functions);start=time.perf_counter_ns()
    try:
     try:
@@ -182,6 +204,7 @@ def run(root,contracts,baseline_package,load_source,bindings,repo,engine,profile
      if isinstance(error,FileNotFoundError) and (case!='physical-leaf-missing' or error.errno!=2 or error.filename!=str(f['primary'])):raise
      if case in ['final-seal','final-lease'] and not isinstance(error,ControlledFault):raise
      if case in ['persistent-content','persistent-member'] and not mutation_done:raise
+     if case=='joint-package-final' and not mutation_done:raise
      trace=traceback.format_exc().encode()
      if len(trace)>16384:raise RuntimeError('Expected-rejection traceback bound; no truncation')
      trace_path=root/'traces'/(f['folder'].name+'.txt');budget.write(trace_path,trace)
@@ -191,14 +214,18 @@ def run(root,contracts,baseline_package,load_source,bindings,repo,engine,profile
     else:
      if value is not None:raise RuntimeError('Unexpected verification return')
      ordered=list(ctx.package_selection['selected'].items())
+     expected_leaves=[m for m,p in ordered if m!=contracts.TARGET or f['compiled']]
+     if leaf_checks!=expected_leaves:raise RuntimeError('Joint call omitted/reordered complete physical leaf checks')
      answer=dict(status='accept',ordered=[(m,str(Path(p).relative_to(f['folder']))) for m,p in ordered],
        raw_ordered_sha256=hashlib.sha256(json.dumps(ordered,separators=(',',':')).encode()).hexdigest())
-    answer.update(elapsed_ns=ended-start,real_lease_checks=owner.calls)
+    answer.update(elapsed_ns=ended-start,real_lease_checks=owner.calls,
+      package_leaf_attempts=len(leaf_checks),package_leaf_order_sha256=
+       hashlib.sha256(json.dumps(leaf_checks,separators=(',',':')).encode()).hexdigest())
     if profile:answer['profile']=collector.snapshot()
     if answer['status']!=expected:raise RuntimeError('Unexpected '+case+' outcome: '+answer['status'])
     return answer
    finally:
-    scope.effective=original_effective;inventory.CIIdentityGuard.verify=original_seal
+    scope.effective=original_effective;inventory.CIIdentityGuard.verify=original_seal;package.require=original_require
 
   for case in CASES:
    row=dict(case=case,kind='separate controlled drift/fault' if case in STRENGTHENED else 'immutable validation',versions={})
@@ -214,7 +241,9 @@ def run(root,contracts,baseline_package,load_source,bindings,repo,engine,profile
     answer=invoke(scope,f,case,expected);row['versions'][str(version)]=answer;persist()
    left,right=(row['versions'][str(v)] for v in [0,1])
    if case not in STRENGTHENED and (left['status']!=right['status'] or
-       (left['status']=='accept' and left['ordered']!=right['ordered'])):
+       (left['status']=='accept' and (left['ordered']!=right['ordered'] or
+        left['package_leaf_attempts']!=right['package_leaf_attempts'] or
+        left['package_leaf_order_sha256']!=right['package_leaf_order_sha256']))):
     raise RuntimeError('Immutable semantic/ordered-map difference: '+case)
 
   for count in SCALES:
@@ -233,6 +262,22 @@ def run(root,contracts,baseline_package,load_source,bindings,repo,engine,profile
      expected=f['critical']+f['new']+f['resolved']+(f['semantic'] if v==0 else 0)
      if p['regular_reads'].get('contracts.unchanged',{}).get('completed',0)!=expected:
       raise RuntimeError('Critical/content pass coverage differs')
+     if p['regular_reads'].get('contracts.effective',{}).get('completed',0)!=count or p['regular_reads'].get('scope.Context.verify',{}).get('completed',0)!=2:
+      raise RuntimeError('Independent dependency/journal content reads omitted')
+     if sum(x['completed'] for x in p['regular_reads'].values())!=(9 if v==0 else 5)*count+3:
+      raise RuntimeError('Joint full content-read accounting differs')
+     counters=p['counters']
+     if counters.get('package.validate',{}).get('calls',0)!=1 or observed['package_leaf_attempts']!=count:
+      raise RuntimeError('Joint effective/physical leaf coverage differs')
+     if v==0:
+      if counters.get('package.selected_path',{}).get('calls',0)!=count+1:
+       raise RuntimeError('Baseline must select every physical module plus target')
+     else:
+      # SyntheticA, SyntheticB, target package; first selection AND final recheck.
+      if counters.get('package.selected_root',{}).get('calls',0)!=6 or counters.get('package.selected_path',{}).get('calls',0)!=0:
+       raise RuntimeError('Joint local package selection/final recheck coverage differs')
+      for name,n in [('seal.entry',1),('seal.snapshot',2),('seal.final',1)]:
+       if counters.get(name,{}).get('calls',0)!=n:raise RuntimeError('Joint seal coverage differs: '+name)
      if repeat and p['path_read_multiset_sha256']!=data['calls'][1]['profile']['path_read_multiset_sha256']:
       raise RuntimeError('Repeated invocation did not redo the same complete read multiset')
      data['calls'].append(observed);persist()

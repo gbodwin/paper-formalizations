@@ -1,0 +1,24 @@
+{
+  "status": "TEXT ONLY; not executed",
+  "immutable": "all prior 30 scope cases excluding four separated strengthening cases; all prior 20 immutable package cases; singleton metadata paths 0/1/2; inventory None; exact maps and complete leaf order",
+  "strengthening": [
+    "persistent-content",
+    "persistent-member",
+    "final-seal",
+    "final-lease",
+    "joint-package-final: rename final physical package after its last passing leaf check; baseline accepts, composed rejects"
+  ],
+  "prior_package_drift": [
+    "persistent-between-leaves: reject/reject",
+    "persistent-final-recheck: accept/reject"
+  ],
+  "timing": "one plain warm pair per scale, two profiled repeats per version, fresh roots/state per version, alternate scale order",
+  "fresh_calls": "every repeat redoes scan, complete content authority, all nonsemantic/new/resolved/journal/dependency reads, all module/leaf checks, local package-root first and final checks and entry/final seal",
+  "not_equivalence": [
+    "multiply-invalid first-error/message precedence",
+    "uninitialized or custom mutable inventory",
+    "arbitrary transient writers",
+    "native process authentication or kernel proofs"
+  ],
+  "caps_unchanged": true
+}
