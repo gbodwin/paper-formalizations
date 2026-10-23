@@ -1,0 +1,41 @@
+--- a/checkpoints/light-eft-canonical-output-adapter-20261020/scope.py
++++ b/checkpoints/light-eft-canonical-output-adapter-20261020/scope.py
+@@ -6,16 +6,36 @@
+ class Context:
+  def visible_gate(self,plan):return (4 if plan['stage'] in ['replay','audit'] else 3)*1024**3
+  def verify(self,compiled):
+-  self.lease.check();unchanged(self.inputs);unchanged(self.new);unchanged(self.resolved)
++  self.lease.check();seal=None
++  if self.inventory_policy is None:
++   unchanged(self.inputs)
++  else:
++   from ci_inventory import CIIdentityGuard
++   original=self.inventory_policy.original
++   require(original is not None,'No initial verified semantic inventory')
++   directories=original['directories']
++   members={root:set(files)|{p for p in directories if p!=str(root) and Path(p).is_relative_to(root)}
++            for root,files in original['members'].items()}
++   protected={**self.inputs,**original['excluded'],**self.new,**self.resolved,
++              self.input_ref['path']:self.input_ref,self.excluded_ref['path']:self.excluded_ref}
++   # The seal is local to this invocation. It retains full file/parent/tree
++   # metadata before and AFTER consuming the one freshly hashed inventory.
++   seal=CIIdentityGuard(protected,members,directories)
++   classified=self.inventory_policy.scan()
++   # scan() freshly binds every semantic input with the original regular/bind
++   # checks. The semantic/input row equality below must still pass in full.
++   unchanged({p:r for p,r in self.inputs.items() if p not in classified['semantic']})
++  unchanged(self.new);unchanged(self.resolved)
+   require(bind(self.input_ref['path'])==self.input_ref,'Canonical input journal changed')
+   if self.inventory_policy is None:
+    for root,files in self.members.items():require(set(tree(root))==files,'Accepted search-tree membership drift')
+   else:
+-   classified=self.inventory_policy.scan()
+    require(classified['members']==self.members,'Classified search-tree membership drift')
+    require(all(self.inputs.get(k)==v for k,v in classified['semantic'].items()),'Semantic input changed')
+    require(bind(self.excluded_ref['path'])==self.excluded_ref,'Initial excluded metadata journal changed')
+   self.package_selection=effective(self.roots,self.dependencies,self.target,compiled)
++  if seal is not None:
++   self.lease.check();seal.verify()
+  def write_metadata(self,path,rows):
+   with Path(path).open('x') as f:
+    for p in sorted(rows):f.write(json.dumps(rows[p],separators=(',',':'))+'\n')

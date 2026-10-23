@@ -1,0 +1,106 @@
+{
+  "executed": false,
+  "kind": "TEXT_ONLY_REVIEW_REQUIREMENTS",
+  "cases": [
+    {
+      "case": "valid initialized inventory, semantic and extra critical inputs",
+      "requirement": "Same outcome and ordered selection; all content obligations covered; final seal completes",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "inventory_policy None",
+      "requirement": "Original ordinary branch/check order unchanged; no semantic reuse",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "missing original inventory authority",
+      "requirement": "Reject before reuse; no initialization inferred from transport metadata",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "semantic path missing from context inputs",
+      "requirement": "Retained complete row-equality check rejects",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "context semantic digest/bytes/identity differs",
+      "requirement": "Reject via entry identity, fresh scan/original comparison or full-row equality",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "nonsemantic source or extra input changed",
+      "requirement": "Original nonsemantic unchanged check rejects",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "unexpected/missing tree member",
+      "requirement": "Original full classification/member comparison or entry/final seal rejects",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "orphan sidecar/unknown family/required runtime missing",
+      "requirement": "Original unchanged scanner rejects",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "new object, resolution or journal changed",
+      "requirement": "Original independent content checks and final identity seal reject",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "excluded metadata identity or family drift",
+      "requirement": "Original scanner comparison and seal reject; excluded bytes not reclassified",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "dependency/target/root shadow, prefix sibling, missing leaf",
+      "requirement": "Original effective and dependency/target content reads unchanged; reject",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "persistent semantic edit after scan",
+      "requirement": "Final identity/ctime snapshot comparison rejects",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "persistent add/remove/rename after scan",
+      "requirement": "Final exact membership/directory/parent comparison rejects",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "symlink or hard-link or mode/owner drift",
+      "requirement": "Original scanner/regular checks and final seal reject",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "final seal or final lease check raises",
+      "requirement": "Exception propagates; no successful return or child launch",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "repeat verify calls",
+      "requirement": "Each performs its own fresh scan, critical hashes and final seal; no reused prior result",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "valid three admission singleton contexts",
+      "requirement": "Same base verification plus unchanged output-absence/singleton checks",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "multiple simultaneous invalid conditions",
+      "requirement": "Fail closed; first diagnostic precedence may differ",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "transient concurrent writer or mutable authority during call",
+      "requirement": "Outside immutable/no-writer premise; no equivalence claim or permission to run",
+      "status": "NOT EXECUTED"
+    },
+    {
+      "case": "large semantic tree",
+      "requirement": "Same checks under unchanged caps; measure metadata overhead, do not assume speed or budget fit",
+      "status": "NOT EXECUTED"
+    }
+  ]
+}
