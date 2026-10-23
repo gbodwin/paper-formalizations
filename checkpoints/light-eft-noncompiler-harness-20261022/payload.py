@@ -183,8 +183,9 @@ def main(work):
   # Additional real-method attribution is explicitly controlled/synthetic.
   phase=load_source('PhaseProfile',HERE/'phase_profile.py',bindings)
   representative=load_source('RepresentativeComponents',HERE/'representative.py',bindings)
-  result['representative_components']={}
-  representative.run(work/'representative',contracts,modules[0],load_source,bindings,ENGINE,phase,result['representative_components'])
+  differential=load_source('ScopeDifferential',HERE/'scope_differential.py',bindings)
+  result['scope_differential']={}
+  differential.run(work/'scope-differential',contracts,modules[0],load_source,bindings,REPO,ENGINE,phase,representative,result['scope_differential'])
   result['accepted']=True
  except BaseException as error:
   result['failure']=dict(type=type(error).__name__,message=str(error),traceback=traceback.format_exc(limit=12));raise

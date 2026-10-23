@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 5
     env:
       LEAN_NUM_THREADS: '1'
-      LIGHTEFT_DIAGNOSTIC_BINDINGS_SHA: a2afc16d0d1fa2fcd50c82a7eb58cff12f56d68e139017ee656a2145a5e90c1c
+      LIGHTEFT_DIAGNOSTIC_BINDINGS_SHA: 6c68e71c49fff592d4f5d29c1a3cdec719be353eb45741ca173849121d04919a
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -38,7 +38,7 @@ jobs:
           import hashlib
           p = Path('checkpoints/light-eft-noncompiler-harness-20261022/launcher.py').resolve()
           b = p.read_bytes()
-          if hashlib.sha256(b).hexdigest() != '794f4bcbbb7aa286a2462f9e5373f625689213c0e7a80b7888e94aed080b9273':
+          if hashlib.sha256(b).hexdigest() != 'df88070a9178474d941751a8a13d6f8c0f7a85463ddbf01a2f4ce4fd2528ef50':
               raise SystemExit('Unreviewed diagnostic entry bytes')
           exec(compile(b, str(p), 'exec'), {'__name__': '__main__', '__file__': str(p)})
           PY

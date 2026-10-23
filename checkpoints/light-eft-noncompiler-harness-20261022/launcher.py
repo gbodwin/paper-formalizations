@@ -132,6 +132,8 @@ def main():
  try:
   with CILease(root,save,check_identity) as lease:
    plan['env'].update(LIGHTEFT_DIAGNOSTIC_LOCK_FD=str(lease.file.fileno()),LIGHTEFT_DIAGNOSTIC_LOCK_PATH=str(lease.path))
+   plan['env'].update(LIGHTEFT_DIAGNOSTIC_IDENTITY=json.dumps(identity,separators=(',',':')),
+                     LIGHTEFT_DIAGNOSTIC_LEASE=json.dumps(lease.record,separators=(',',':')))
    frozen=json.dumps(plan,sort_keys=True)
    save(root/'submitted-diagnostic-plan.json',dict(identity=identity,plan=plan,source_bindings=source_bindings))
    ctx=DiagnosticContext(lease)
