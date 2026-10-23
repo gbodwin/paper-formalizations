@@ -12,7 +12,16 @@ def require(ok, message):
         raise ValueError(message)
 
 def digest(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    with Path(path).open(mode='rb') as source:
+        hasher = hashlib.sha256()
+        block = bytearray(65536)
+        view = memoryview(block)
+        while True:
+            count = source.readinto(block)
+            if count == 0:
+                break
+            hasher.update(view[:count])
+    return hasher.hexdigest()
 
 def load(path):
     return json.loads(Path(path).read_text())
