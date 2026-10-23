@@ -1,0 +1,390 @@
+{
+  "scope": "PAID_FLAG_SERIALIZATION_AND_STORED_FILTER_COMPOSITION",
+  "source_base": "a04960a8d9337df124272587cf71d31d7392bffe",
+  "toolchain": "leanprover/lean4:v4.34.0",
+  "tool_hashes": {
+    "lean": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+    "leanchecker": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe"
+  },
+  "pins": {
+    "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
+    "plausible": "118aa17ee84656b8bd727fef7c458ee8c833385c",
+    "LeanSearchClient": "ddf04cf3949fa556442341e87d47f9f6e6074707",
+    "importGraph": "e928b72544873815af278d38681b31c0293588e3",
+    "proofwidgets": "106ff4fafc74ef4ac99d81dbf3ab399118f497a5",
+    "aesop": "355695d523e41d0554926416cba2a2b3544fbbc9",
+    "Qq": "6a489d9af5d0c47e5b259e2e8bcdfc1811b5a259",
+    "batteries": "f2effa3d803fda822b1f97b806c47cf2adfbcbc2",
+    "Cli": "e92c9f15fdfacc8536f31cfb3b7ad26c3c8cd204"
+  },
+  "staged_root": "checkpoints/light-eft-paid-sampling-20261020/staged",
+  "sources": [
+    {
+      "path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSerialization.lean",
+      "bytes": 4554,
+      "sha256": "c7c4722ad7198a4f87516fabb88b82ff0962459a65e2377cc51be7ad3263e679",
+      "role": "serialization"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean",
+      "bytes": 3332,
+      "sha256": "45fcf0e1d95e9eb8f35736c88d0d87af59522c911ae050de1c99e0fa340c7c14",
+      "role": "composition"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-sampling-20261020/staged/PaidFlagFixtures.lean",
+      "bytes": 844,
+      "sha256": "123ef8134d20343e40e9b759ec404a229eb3aa0dcb973c914d728b7298d742cf",
+      "role": "fixtures"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/staged/ResolveFocusedTarget.lean",
+      "bytes": 1448,
+      "sha256": "732d445ffb55a8861cfd7db5ee2d93fa36f0311307320d1bca6341d44288595b",
+      "role": "resolver"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/staged/SerializationAudit.lean",
+      "bytes": 18670,
+      "sha256": "2db3105b6955a5df0cf88771c491642431de874a9dc8939d174b5cea16d16927",
+      "role": "serialization_audit"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/staged/CompositionAudit.lean",
+      "bytes": 18671,
+      "sha256": "789f50a7dbebdbff8f0e95d416dc9ae22788de8db375e2bced0c9b92aae843e8",
+      "role": "composition_audit"
+    }
+  ],
+  "dependencies": [
+    {
+      "module": "LightEFTSpanners.RationalDistanceValues",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceValues.lean",
+      "bytes": 1743,
+      "sha256": "14b64107d33ccae55f8f53288d0e073b33572be12aa2ff6ef2e31bff13b8088c"
+    },
+    {
+      "module": "LightSpanners.Basic",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Basic.lean",
+      "bytes": 4943,
+      "sha256": "f7620d03b27f2c6ec13d048597ad4d87e6ff66a077bf41a3de27c20f1087103d"
+    },
+    {
+      "module": "LightSpanners.Greedy",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Greedy.lean",
+      "bytes": 5499,
+      "sha256": "13d0cc9ee2f791bd9722c5b31c1dd3328701b7a7cc8383599c899c6f4c9f875e"
+    },
+    {
+      "module": "LightSpanners.Distance",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Distance.lean",
+      "bytes": 5005,
+      "sha256": "06b9486a16f448676e0aa8e3c4bf42fbcbfedce2756f94cd469f36e69a5b371b"
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceTable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceTable.lean",
+      "bytes": 4404,
+      "sha256": "03163b1215234ee456db582146bdb698dfb2af8afd07831ff464635298198acb"
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceTest",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceTest.lean",
+      "bytes": 3012,
+      "sha256": "77184d55f1adeb9554ca7480e2a7450515dd1ce9ad999a6ee706bd32a7a57d9f"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceKernel",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceKernel.lean",
+      "bytes": 3721,
+      "sha256": "6b2002ff3fdd5e9601898a73d5a04c008ddf58fb911c4eb124917c24ccf5b810"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceMachine",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceMachine.lean",
+      "bytes": 4056,
+      "sha256": "178473f21f7496b64c05eda0d16135e684a1823c8aa6e9139fc24e05f99bf824"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceTrace.lean",
+      "bytes": 4476,
+      "sha256": "f2974e0d1416c01f921bb10e848e739efb972242637ae65d6ae9beb7dcae1686"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceInitialization",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceInitialization.lean",
+      "bytes": 3003,
+      "sha256": "09282e0afd37b8efd6effa496368fa4824d4014077b73011e50dc26c698be2b4"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceRefinement",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceRefinement.lean",
+      "bytes": 3529,
+      "sha256": "99ce54745c59db056e05e2b7437dbd37b4d81aaf571bc8634cc17543f44cb080"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceExecutable.lean",
+      "bytes": 2787,
+      "sha256": "bbf2ad4c31f34318c45b331f3fdb6e3c805b46f37137fce2dc0bf1f943741d90"
+    },
+    {
+      "module": "LightEFTSpanners.ControllerTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ControllerTrace.lean",
+      "bytes": 2661,
+      "sha256": "d930771797f63dacf44fd9db6dd2a365a54fae4c7b1bee0697686235904436ae"
+    },
+    {
+      "module": "LightEFTSpanners.StoredEdgeMembership",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredEdgeMembership.lean",
+      "bytes": 3538,
+      "sha256": "7d8ba0a46fba239b53053042383ea93ee5a2d280f9a1c7de666f30b30eb106d9"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSample",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSample.lean",
+      "bytes": 2283,
+      "sha256": "6cc557da610dba865f00d60075c7262ed0f8d22f0ff1953f66ce9c0bf8062bfa"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleExecutable.lean",
+      "bytes": 1288,
+      "sha256": "9d0a43d695626da9368e7b018c3b24e209fadc2df8c0c7d76db316ae40816f1a"
+    }
+  ],
+  "engine_files": [
+    {
+      "path": ".github/workflows/lean.yml",
+      "bytes": 50913,
+      "sha256": "dcdb866fe302827d78d037771edc0e04034e2d90b176d642badeb84c6f594f29"
+    },
+    {
+      "path": ".github/workflows/light-eft-fair-bit-focused.yml",
+      "bytes": 8456,
+      "sha256": "908a8b915db345d7e9775c819fc1a20fe38600c8498a024721d253cfc53cc470"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/canonical_fixture.py",
+      "bytes": 8338,
+      "sha256": "afec43578ea586a28b814a2b245d3ee1574ef1b3f099fee4c0d81f1c6cb4e52d"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+      "bytes": 19707,
+      "sha256": "c84a0cbb21a40edaa11c89e119ffad2a84321278537b7893465a796269c2dccb"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_accounting.py",
+      "bytes": 5927,
+      "sha256": "a4a5b697283a99abd310b7164531ddabd06f01308ff008e102bcc66ae17cb7b8"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_admission.py",
+      "bytes": 5978,
+      "sha256": "05fadeda4e9feacf029f7d0393837b10bb19b95357c73c0cc29b67c07e05585e"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_admission_receipts.py",
+      "bytes": 5899,
+      "sha256": "8133ed538edbee2c6d7e73ee5d789e018bb8e63a3ca6cf39381214530ff932de"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+      "bytes": 21844,
+      "sha256": "f825f46389874775b22812afc1f3764a63997656a2df016143fe2bfa69cfb5dc"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_handoff.py",
+      "bytes": 13871,
+      "sha256": "e54ff6b9afc1636d0193657426acfed9dedfde296fc0942ee0f2a242adb78c91"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_handoff_contract.py",
+      "bytes": 3423,
+      "sha256": "d1bd67558926889200214b289cf214a7eff30f4d672b57a54f147eb8b96f9153"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_inventory.py",
+      "bytes": 6732,
+      "sha256": "a10205e759785f9a260de8129bbc6f34c590b00a2b49477f018c6d3b6a47c15a"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_lease.py",
+      "bytes": 3663,
+      "sha256": "d0e7331f4a18b3c69b2707b7892452f9c08c2619f82b204e602df8fd19011a8b"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_policy.py",
+      "bytes": 7137,
+      "sha256": "289333c6ff8c29bec542dd3993100193b5a601a0a1fb13b85774daf70120d48b"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_receipts.py",
+      "bytes": 6248,
+      "sha256": "290ee660d4b3eef581b48be0ff41730f6de1c51266e0417dd543277579f8197c"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_staged_inputs.py",
+      "bytes": 4011,
+      "sha256": "5d0c58a41306778d6951879f4d3e6eefb667d2be08102c3c0b0abaa92858452b"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/collision_coverage.py",
+      "bytes": 6685,
+      "sha256": "529d8ba0010cfb1fcd297b98a1f15882967a7a30bc2a2da8ff21bf50ea2d0e6b"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/contracts.py",
+      "bytes": 5765,
+      "sha256": "b4d7b52a08689426b45d6d2b482899faf9eebe5f6573566d3c49562a2b401134"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/decision_telemetry.py",
+      "bytes": 4899,
+      "sha256": "08ae50f987ba67655e21d504e561ff5a23eda79104f35fe4c0d48e6e59de87fe"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/exit_transition.py",
+      "bytes": 16452,
+      "sha256": "1135140dd7dd3d075953d5d621f727a7a7c13796985c27da0c5afba68f95e76a"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/focused_audit.py",
+      "bytes": 7788,
+      "sha256": "ed374c72b8ac4d37978b66adb94855c8530806633bf1eb2c6990c374962cb292"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/output_guards.py",
+      "bytes": 10319,
+      "sha256": "200d21beeda7ab34e931ba0c25880a8fe9b42d7a642690618ea7e879d3bb9530"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+      "bytes": 2095,
+      "sha256": "ccc7a20a97cc446fc464dbd88c9fb9067494661472988091fc954428fcf5e4fd"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/pilot_accounting.py",
+      "bytes": 4834,
+      "sha256": "826847768ca2e16fb2e4f19d912108790096f117d8a44a952b014cbaefeca824"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/pilot_child.py",
+      "bytes": 1756,
+      "sha256": "0cb433136f6c894667c7edc9403bf057897e69905b6b6c8d4cfaf313f8c53eaf"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/probability_plan.py",
+      "bytes": 652,
+      "sha256": "1a5b89ef67f361775d20ff05debbe0bba147561529ebc34e73225c9c62e8d7f6"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+      "bytes": 6696,
+      "sha256": "8ab9e6b111f4958b8a91a920a40f9a6789ababad08ea9c570c8a0332f4c262d0"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/test_admission_output_contract.py",
+      "bytes": 12098,
+      "sha256": "bf2ea4f37475a4a56e2048cceb662aafe72658beb0920b07932563b06654f670"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/test_audit_cpu_limits.py",
+      "bytes": 11951,
+      "sha256": "8f9f175333031f282d882110cd30f9565c3e298c9c4fca532f3969bc4bc1f515"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/audit_check.py",
+      "bytes": 6927,
+      "sha256": "f49b0a3080cdc41bdfda64e3039e99757de501eeab501566440d67ca063eb9be"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/ci_gate.py",
+      "bytes": 10740,
+      "sha256": "485fce576f6a6281e5d9cd47dad64c2e696fcb9363aaac3c5da01e5eeea33022"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/finite_contract.py",
+      "bytes": 2937,
+      "sha256": "47f4e8a496841f3934d7a653ef757446f85270a8988146a9788f52772c224aa3"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/focused_context.py",
+      "bytes": 11709,
+      "sha256": "cb2e0d645c1fda16258069bca235e5abfbfdd3bc73a2e9fd6cd4c828abc2b52f"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/output_guards.py",
+      "bytes": 13483,
+      "sha256": "99fa4305b42c815852eaca5abd322bd976414d42f87e298a245676787a180edf"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/refresh_spec.py",
+      "bytes": 2912,
+      "sha256": "4d172b4cf0b6cd0760f21c645764117bfddd7ad8632b80f01155c8c23f96302e"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/test_focused_contract.py",
+      "bytes": 14798,
+      "sha256": "105496ae9ca8ab57123b76cb6f12734a7a2b6a3c03787e041f3e3641e2b5e3ea"
+    },
+    {
+      "path": "checkpoints/light-eft-replay-admission-plan-20261021/replay_preflight.py",
+      "bytes": 12922,
+      "sha256": "2bcbe3ba3a4154d61ff01a19b0dfc615a6b50f64b3eb09020765a299af7fe4be"
+    },
+    {
+      "path": "checkpoints/light-eft-sequential-validation-schedule-20261021/acceptance.py",
+      "bytes": 3751,
+      "sha256": "5ac30d010f58e09172cc0f08bf6ab44e9bb1ad9649caf494b357d8a4377d1687"
+    },
+    {
+      "path": "checkpoints/light-eft-sequential-validation-schedule-20261021/workflow_identity.py",
+      "bytes": 5532,
+      "sha256": "5a26de4cc09168e1d6717c8f7615840f7df715b092973c003cd28912274c1d11"
+    },
+    {
+      "path": "lake-manifest.json",
+      "bytes": 3168,
+      "sha256": "615d78a994009475b0e34cd0cd67325b2d863ae37e9f42d8ded7f9d575bf4b2f"
+    },
+    {
+      "path": "lean-toolchain",
+      "bytes": 25,
+      "sha256": "8733782dc070a99b312039cda424f601b80f3be6f6f512627da5ba25adc27632"
+    },
+    {
+      "path": "scripts/KernelCheck.sh",
+      "bytes": 1632,
+      "sha256": "b7dac23e6300e3c34d6192887f52d6f780b2bef9720f43b94d4c0f1b3116d77d"
+    },
+    {
+      "path": "scripts/LightEFTCgroup.py",
+      "bytes": 5549,
+      "sha256": "3ab478f59bb27d32424c8aaf647de91901969fb48d3a56ddd74fd49e434bad07"
+    },
+    {
+      "path": "scripts/LightEFTProcessLifecycle.py",
+      "bytes": 4417,
+      "sha256": "c77d6e9bd48de674aaa50852451627d09693fec7bdcca903a015fdab96f99fdd"
+    }
+  ],
+  "execution_order": [
+    "serialization:compile",
+    "serialization:resolve",
+    "serialization:replay",
+    "serialization:audit",
+    "composition:compile",
+    "composition:resolve",
+    "composition:replay",
+    "composition:audit",
+    "fixtures:compile"
+  ],
+  "existing_dependencies": 16,
+  "serialization_project_imports": 14,
+  "composition_project_imports": 18,
+  "resource_policy": "Accepted a04960a8 engine and limits unchanged; complete receipt verification retained",
+  "dependency_qualification": "Fresh ordinary-CI build; retained review carriers are not production inputs"
+}

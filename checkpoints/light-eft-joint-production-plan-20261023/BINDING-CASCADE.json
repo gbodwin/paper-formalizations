@@ -1,0 +1,276 @@
+{
+  "source_parent": "be922736be5ffda865c36e99962fafc27a8ee8db",
+  "production_reference": "ed86a6e8a5fc62e7d807b10dca43669f3cd848a6",
+  "source_pairs": [
+    {
+      "target": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+      "proposal": "checkpoints/light-eft-semantic-reuse-proposal-20261023/PROPOSED-scope.py",
+      "baseline_sha256": "8ab9e6b111f4958b8a91a920a40f9a6789ababad08ea9c570c8a0332f4c262d0",
+      "proposed_sha256": "c6efb0bfa4169d67d871634bdf098e099edc0462672f5e745f725541e365d901"
+    },
+    {
+      "target": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+      "proposal": "checkpoints/light-eft-package-prefix-reuse-proposal-20261022/PROPOSED-package_selection.py",
+      "baseline_sha256": "ccc7a20a97cc446fc464dbd88c9fb9067494661472988091fc954428fcf5e4fd",
+      "proposed_sha256": "870bf2a872a314d41ded3cecf5e15e5b76165835ce4645fce0c7662598f4e65a"
+    }
+  ],
+  "order": [
+    "light-eft-paid-focused-adapter-20261020",
+    "light-eft-joint-flag-ci-extension-revision-20261019",
+    "light-eft-canonical-output-adapter-20261020",
+    "light-eft-paid-joint-bridge-ci-adapter-20261020",
+    "light-eft-fair-bit-batch-ci-adapter-20261021"
+  ],
+  "specs": [
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json",
+      "changed": true,
+      "before_bytes": 16156,
+      "before_sha256": "0fdc974ebf84a2149297e82546d86b72b1c1c95973d3e0aa9dbc295a6dd5486a",
+      "after_bytes": 16156,
+      "after_sha256": "b4a7b3da901e0022213f5b0c812a1ea96111e95992564ef5260abad6ad047b1c",
+      "changed_engine_rows": 2,
+      "non_engine_fields_unchanged": true,
+      "path_inventory_order_unchanged": true
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci-spec.json",
+      "changed": false,
+      "before_bytes": 33436,
+      "before_sha256": "9d1264d6e9d6ab82e1a60f06829047102beb12f93b3ed4dcb7eb70e1069d33c3",
+      "after_bytes": 33436,
+      "after_sha256": "9d1264d6e9d6ab82e1a60f06829047102beb12f93b3ed4dcb7eb70e1069d33c3",
+      "changed_engine_rows": 0,
+      "non_engine_fields_unchanged": true,
+      "path_inventory_order_unchanged": true
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json",
+      "changed": true,
+      "before_bytes": 125471,
+      "before_sha256": "61788edd49d64c28c3ca3e82f38ccd2b784fef28744a942768b4ff00e1056f0a",
+      "after_bytes": 125471,
+      "after_sha256": "92bfd5ea20c83cd746c04a7b2424d61c088ae9c70c6e53184413c0c526a5c817",
+      "changed_engine_rows": 2,
+      "non_engine_fields_unchanged": true,
+      "path_inventory_order_unchanged": true
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci-spec.json",
+      "changed": true,
+      "before_bytes": 65293,
+      "before_sha256": "6af62f977e555e74a615905e2fdd2ca3ec9b52b52707a5745ad6e84adb631f56",
+      "after_bytes": 65293,
+      "after_sha256": "fe3800ce2c040c7ec74323f8ac239507df2ce19f7ed021393205bdca9dd430f5",
+      "changed_engine_rows": 4,
+      "non_engine_fields_unchanged": true,
+      "path_inventory_order_unchanged": true
+    },
+    {
+      "path": "checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/ci-spec.json",
+      "changed": true,
+      "before_bytes": 79203,
+      "before_sha256": "34d7c013e85d5323b5e66010ab7eda4b95b977d6b3e47181d2b4f8a5678fe35e",
+      "after_bytes": 79203,
+      "after_sha256": "3fe695bbb1b453c9000d190ad487310acbc3627db1e890ac75370c601a545137",
+      "changed_engine_rows": 5,
+      "non_engine_fields_unchanged": true,
+      "path_inventory_order_unchanged": true
+    }
+  ],
+  "changed_rows": [
+    {
+      "spec": "checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json",
+      "index": 21,
+      "before": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+        "bytes": 2095,
+        "sha256": "ccc7a20a97cc446fc464dbd88c9fb9067494661472988091fc954428fcf5e4fd"
+      },
+      "after": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+        "bytes": 3083,
+        "sha256": "870bf2a872a314d41ded3cecf5e15e5b76165835ce4645fce0c7662598f4e65a"
+      }
+    },
+    {
+      "spec": "checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json",
+      "index": 25,
+      "before": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+        "bytes": 6696,
+        "sha256": "8ab9e6b111f4958b8a91a920a40f9a6789ababad08ea9c570c8a0332f4c262d0"
+      },
+      "after": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+        "bytes": 7797,
+        "sha256": "c6efb0bfa4169d67d871634bdf098e099edc0462672f5e745f725541e365d901"
+      }
+    },
+    {
+      "spec": "checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json",
+      "index": 24,
+      "before": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+        "bytes": 2095,
+        "sha256": "ccc7a20a97cc446fc464dbd88c9fb9067494661472988091fc954428fcf5e4fd"
+      },
+      "after": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+        "bytes": 3083,
+        "sha256": "870bf2a872a314d41ded3cecf5e15e5b76165835ce4645fce0c7662598f4e65a"
+      }
+    },
+    {
+      "spec": "checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json",
+      "index": 28,
+      "before": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+        "bytes": 6696,
+        "sha256": "8ab9e6b111f4958b8a91a920a40f9a6789ababad08ea9c570c8a0332f4c262d0"
+      },
+      "after": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+        "bytes": 7797,
+        "sha256": "c6efb0bfa4169d67d871634bdf098e099edc0462672f5e745f725541e365d901"
+      }
+    },
+    {
+      "spec": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci-spec.json",
+      "index": 9,
+      "before": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json",
+        "bytes": 125471,
+        "sha256": "61788edd49d64c28c3ca3e82f38ccd2b784fef28744a942768b4ff00e1056f0a"
+      },
+      "after": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json",
+        "bytes": 125471,
+        "sha256": "92bfd5ea20c83cd746c04a7b2424d61c088ae9c70c6e53184413c0c526a5c817"
+      }
+    },
+    {
+      "spec": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci-spec.json",
+      "index": 27,
+      "before": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+        "bytes": 2095,
+        "sha256": "ccc7a20a97cc446fc464dbd88c9fb9067494661472988091fc954428fcf5e4fd"
+      },
+      "after": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+        "bytes": 3083,
+        "sha256": "870bf2a872a314d41ded3cecf5e15e5b76165835ce4645fce0c7662598f4e65a"
+      }
+    },
+    {
+      "spec": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci-spec.json",
+      "index": 31,
+      "before": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+        "bytes": 6696,
+        "sha256": "8ab9e6b111f4958b8a91a920a40f9a6789ababad08ea9c570c8a0332f4c262d0"
+      },
+      "after": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+        "bytes": 7797,
+        "sha256": "c6efb0bfa4169d67d871634bdf098e099edc0462672f5e745f725541e365d901"
+      }
+    },
+    {
+      "spec": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci-spec.json",
+      "index": 71,
+      "before": {
+        "path": "checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json",
+        "bytes": 16156,
+        "sha256": "0fdc974ebf84a2149297e82546d86b72b1c1c95973d3e0aa9dbc295a6dd5486a"
+      },
+      "after": {
+        "path": "checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json",
+        "bytes": 16156,
+        "sha256": "b4a7b3da901e0022213f5b0c812a1ea96111e95992564ef5260abad6ad047b1c"
+      }
+    },
+    {
+      "spec": "checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/ci-spec.json",
+      "index": 9,
+      "before": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json",
+        "bytes": 125471,
+        "sha256": "61788edd49d64c28c3ca3e82f38ccd2b784fef28744a942768b4ff00e1056f0a"
+      },
+      "after": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json",
+        "bytes": 125471,
+        "sha256": "92bfd5ea20c83cd746c04a7b2424d61c088ae9c70c6e53184413c0c526a5c817"
+      }
+    },
+    {
+      "spec": "checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/ci-spec.json",
+      "index": 27,
+      "before": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+        "bytes": 2095,
+        "sha256": "ccc7a20a97cc446fc464dbd88c9fb9067494661472988091fc954428fcf5e4fd"
+      },
+      "after": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+        "bytes": 3083,
+        "sha256": "870bf2a872a314d41ded3cecf5e15e5b76165835ce4645fce0c7662598f4e65a"
+      }
+    },
+    {
+      "spec": "checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/ci-spec.json",
+      "index": 31,
+      "before": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+        "bytes": 6696,
+        "sha256": "8ab9e6b111f4958b8a91a920a40f9a6789ababad08ea9c570c8a0332f4c262d0"
+      },
+      "after": {
+        "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+        "bytes": 7797,
+        "sha256": "c6efb0bfa4169d67d871634bdf098e099edc0462672f5e745f725541e365d901"
+      }
+    },
+    {
+      "spec": "checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/ci-spec.json",
+      "index": 83,
+      "before": {
+        "path": "checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json",
+        "bytes": 16156,
+        "sha256": "0fdc974ebf84a2149297e82546d86b72b1c1c95973d3e0aa9dbc295a6dd5486a"
+      },
+      "after": {
+        "path": "checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json",
+        "bytes": 16156,
+        "sha256": "b4a7b3da901e0022213f5b0c812a1ea96111e95992564ef5260abad6ad047b1c"
+      }
+    },
+    {
+      "spec": "checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/ci-spec.json",
+      "index": 98,
+      "before": {
+        "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci-spec.json",
+        "bytes": 65293,
+        "sha256": "6af62f977e555e74a615905e2fdd2ca3ec9b52b52707a5745ad6e84adb631f56"
+      },
+      "after": {
+        "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci-spec.json",
+        "bytes": 65293,
+        "sha256": "fe3800ce2c040c7ec74323f8ac239507df2ce19f7ed021393205bdca9dd430f5"
+      }
+    }
+  ],
+  "recursive_scope": {
+    "total": 1041,
+    "regular": 1034,
+    "nested_object_admission": 7,
+    "changed": 13,
+    "added": 0,
+    "removed": 0
+  },
+  "production_files_written": false,
+  "diagnostic_monkeypatches_or_instrumentation_in_proposed_sources": false
+}

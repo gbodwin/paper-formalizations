@@ -1,0 +1,236 @@
+--- a/checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json
++++ b/checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json
+@@ -2399,8 +2399,8 @@
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+-      "bytes": 2095,
+-      "sha256": "ccc7a20a97cc446fc464dbd88c9fb9067494661472988091fc954428fcf5e4fd"
++      "bytes": 3083,
++      "sha256": "870bf2a872a314d41ded3cecf5e15e5b76165835ce4645fce0c7662598f4e65a"
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/pilot_accounting.py",
+@@ -2419,8 +2419,8 @@
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+-      "bytes": 6696,
+-      "sha256": "8ab9e6b111f4958b8a91a920a40f9a6789ababad08ea9c570c8a0332f4c262d0"
++      "bytes": 7797,
++      "sha256": "c6efb0bfa4169d67d871634bdf098e099edc0462672f5e745f725541e365d901"
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/test_admission_output_contract.py",
+--- a/checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py
++++ b/checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py
+@@ -7,18 +7,21 @@
+ import stat
+ from contracts import require,TARGET
+ def exists(path):return Path(path).exists() or Path(path).is_symlink()
+-def selected_path(roots,module,predicted_dirs=(),predicted_files=()):
+- parts=module.split('.');require(parts and all(parts),'Invalid package/module name')
++def _selected_root(roots,package,predicted_dirs=(),predicted_files=()):
+  dirs=set(map(str,predicted_dirs));files=set(map(str,predicted_files))
+  for root in map(Path,roots):
+-  directory=root/parts[0];marker=root/(parts[0]+'.olean')
++  directory=root/package;marker=root/(package+'.olean')
+   for p in [directory,marker]:
+    if exists(p):require(not p.is_symlink(),'Symlink package marker')
+   # Lean checks directory first OR root .olean pathExists, then constructs the
+   # entire leaf path. It does not continue if that leaf is absent.
+   if str(directory) in dirs or directory.is_dir() or str(marker) in files or marker.exists():
+-   return root/Path(*parts).with_suffix('.olean')
++   return root
+  return None
++def selected_path(roots,module,predicted_dirs=(),predicted_files=()):
++ parts=module.split('.');require(parts and all(parts),'Invalid package/module name')
++ root=_selected_root(roots,parts[0],predicted_dirs,predicted_files)
++ return None if root is None else root/Path(*parts).with_suffix('.olean')
+ def validate(roots,physical_modules,target,compiled,predicted=False):
+  roots=list(map(Path,roots));target=Path(target);dirs=[];files=[]
+  if predicted:
+@@ -27,11 +30,23 @@
+  expected={m:Path(p) for m,p in physical_modules.items()}
+  require(TARGET not in expected or expected[TARGET]==target,'Physical target differs')
+  expected[TARGET]=target
+- selected={}
++ selected={};package_roots={}
+  for module,path in expected.items():
+-  actual=selected_path(roots,module,dirs,files)
++  parts=module.split('.');require(parts and all(parts),'Invalid package/module name')
++  package=parts[0]
++  # Only this validation call's immutable package-marker decision is reused.
++  # Every module/path/leaf comparison below still runs; no audit/checker result
++  # or content verification is cached, and no state survives this call.
++  if package not in package_roots:
++   package_roots[package]=_selected_root(roots,package,dirs,files)
++  root=package_roots[package]
++  actual=None if root is None else root/Path(*parts).with_suffix('.olean')
+   require(actual==path,'Package selection masks/wrong root: '+module+' -> '+str(actual)+'; expected '+str(path))
+   if module!=TARGET or compiled:
+    require(path.is_file() and not path.is_symlink(),'Selected package leaf missing/nonregular: '+module)
+   selected[module]=str(actual)
++ # The input/no-writer contract is still required. Revisit every used package
++ # before return; persistent selection/symlink changes fail closed.
++ for package,root in package_roots.items():
++  require(_selected_root(roots,package,dirs,files)==root,'Package marker selection changed during validation')
+  return {'model':'Lean SearchPath.findWithExt olean; first top-level marker; no leaf fallback','predicted':predicted,'selected':selected}
+--- a/checkpoints/light-eft-canonical-output-adapter-20261020/scope.py
++++ b/checkpoints/light-eft-canonical-output-adapter-20261020/scope.py
+@@ -6,16 +6,36 @@
+ class Context:
+  def visible_gate(self,plan):return (4 if plan['stage'] in ['replay','audit'] else 3)*1024**3
+  def verify(self,compiled):
+-  self.lease.check();unchanged(self.inputs);unchanged(self.new);unchanged(self.resolved)
++  self.lease.check();seal=None
++  if self.inventory_policy is None:
++   unchanged(self.inputs)
++  else:
++   from ci_inventory import CIIdentityGuard
++   original=self.inventory_policy.original
++   require(original is not None,'No initial verified semantic inventory')
++   directories=original['directories']
++   members={root:set(files)|{p for p in directories if p!=str(root) and Path(p).is_relative_to(root)}
++            for root,files in original['members'].items()}
++   protected={**self.inputs,**original['excluded'],**self.new,**self.resolved,
++              self.input_ref['path']:self.input_ref,self.excluded_ref['path']:self.excluded_ref}
++   # The seal is local to this invocation. It retains full file/parent/tree
++   # metadata before and AFTER consuming the one freshly hashed inventory.
++   seal=CIIdentityGuard(protected,members,directories)
++   classified=self.inventory_policy.scan()
++   # scan() freshly binds every semantic input with the original regular/bind
++   # checks. The semantic/input row equality below must still pass in full.
++   unchanged({p:r for p,r in self.inputs.items() if p not in classified['semantic']})
++  unchanged(self.new);unchanged(self.resolved)
+   require(bind(self.input_ref['path'])==self.input_ref,'Canonical input journal changed')
+   if self.inventory_policy is None:
+    for root,files in self.members.items():require(set(tree(root))==files,'Accepted search-tree membership drift')
+   else:
+-   classified=self.inventory_policy.scan()
+    require(classified['members']==self.members,'Classified search-tree membership drift')
+    require(all(self.inputs.get(k)==v for k,v in classified['semantic'].items()),'Semantic input changed')
+    require(bind(self.excluded_ref['path'])==self.excluded_ref,'Initial excluded metadata journal changed')
+   self.package_selection=effective(self.roots,self.dependencies,self.target,compiled)
++  if seal is not None:
++   self.lease.check();seal.verify()
+  def write_metadata(self,path,rows):
+   with Path(path).open('x') as f:
+    for p in sorted(rows):f.write(json.dumps(rows[p],separators=(',',':'))+'\n')
+--- a/checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/ci-spec.json
++++ b/checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/ci-spec.json
+@@ -992,7 +992,7 @@
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json",
+       "bytes": 125471,
+-      "sha256": "61788edd49d64c28c3ca3e82f38ccd2b784fef28744a942768b4ff00e1056f0a"
++      "sha256": "92bfd5ea20c83cd746c04a7b2424d61c088ae9c70c6e53184413c0c526a5c817"
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_accounting.py",
+@@ -1081,8 +1081,8 @@
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+-      "bytes": 2095,
+-      "sha256": "ccc7a20a97cc446fc464dbd88c9fb9067494661472988091fc954428fcf5e4fd"
++      "bytes": 3083,
++      "sha256": "870bf2a872a314d41ded3cecf5e15e5b76165835ce4645fce0c7662598f4e65a"
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/pilot_accounting.py",
+@@ -1101,8 +1101,8 @@
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+-      "bytes": 6696,
+-      "sha256": "8ab9e6b111f4958b8a91a920a40f9a6789ababad08ea9c570c8a0332f4c262d0"
++      "bytes": 7797,
++      "sha256": "c6efb0bfa4169d67d871634bdf098e099edc0462672f5e745f725541e365d901"
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/staged/CanonicalOutputAudit.lean",
+@@ -1362,7 +1362,7 @@
+     {
+       "path": "checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json",
+       "bytes": 16156,
+-      "sha256": "0fdc974ebf84a2149297e82546d86b72b1c1c95973d3e0aa9dbc295a6dd5486a"
++      "sha256": "b4a7b3da901e0022213f5b0c812a1ea96111e95992564ef5260abad6ad047b1c"
+     },
+     {
+       "path": "checkpoints/light-eft-paid-focused-adapter-20261020/ci_gate.py",
+@@ -1437,7 +1437,7 @@
+     {
+       "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci-spec.json",
+       "bytes": 65293,
+-      "sha256": "6af62f977e555e74a615905e2fdd2ca3ec9b52b52707a5745ad6e84adb631f56"
++      "sha256": "fe3800ce2c040c7ec74323f8ac239507df2ce19f7ed021393205bdca9dd430f5"
+     },
+     {
+       "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci_gate.py",
+--- a/checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json
++++ b/checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json
+@@ -262,8 +262,8 @@
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+-      "bytes": 2095,
+-      "sha256": "ccc7a20a97cc446fc464dbd88c9fb9067494661472988091fc954428fcf5e4fd"
++      "bytes": 3083,
++      "sha256": "870bf2a872a314d41ded3cecf5e15e5b76165835ce4645fce0c7662598f4e65a"
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/pilot_accounting.py",
+@@ -282,8 +282,8 @@
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+-      "bytes": 6696,
+-      "sha256": "8ab9e6b111f4958b8a91a920a40f9a6789ababad08ea9c570c8a0332f4c262d0"
++      "bytes": 7797,
++      "sha256": "c6efb0bfa4169d67d871634bdf098e099edc0462672f5e745f725541e365d901"
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/test_admission_output_contract.py",
+--- a/checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci-spec.json
++++ b/checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci-spec.json
+@@ -884,7 +884,7 @@
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json",
+       "bytes": 125471,
+-      "sha256": "61788edd49d64c28c3ca3e82f38ccd2b784fef28744a942768b4ff00e1056f0a"
++      "sha256": "92bfd5ea20c83cd746c04a7b2424d61c088ae9c70c6e53184413c0c526a5c817"
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_accounting.py",
+@@ -973,8 +973,8 @@
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+-      "bytes": 2095,
+-      "sha256": "ccc7a20a97cc446fc464dbd88c9fb9067494661472988091fc954428fcf5e4fd"
++      "bytes": 3083,
++      "sha256": "870bf2a872a314d41ded3cecf5e15e5b76165835ce4645fce0c7662598f4e65a"
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/pilot_accounting.py",
+@@ -993,8 +993,8 @@
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+-      "bytes": 6696,
+-      "sha256": "8ab9e6b111f4958b8a91a920a40f9a6789ababad08ea9c570c8a0332f4c262d0"
++      "bytes": 7797,
++      "sha256": "c6efb0bfa4169d67d871634bdf098e099edc0462672f5e745f725541e365d901"
+     },
+     {
+       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/staged/CanonicalOutputAudit.lean",
+@@ -1194,7 +1194,7 @@
+     {
+       "path": "checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json",
+       "bytes": 16156,
+-      "sha256": "0fdc974ebf84a2149297e82546d86b72b1c1c95973d3e0aa9dbc295a6dd5486a"
++      "sha256": "b4a7b3da901e0022213f5b0c812a1ea96111e95992564ef5260abad6ad047b1c"
+     },
+     {
+       "path": "checkpoints/light-eft-paid-focused-adapter-20261020/ci_gate.py",

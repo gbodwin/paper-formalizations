@@ -1,0 +1,45 @@
+{
+  "exact_historical_run": 39845888749,
+  "attempt": 1,
+  "commit": "ed86a6e8a5fc62e7d807b10dca43669f3cd848a6",
+  "job": 120058918089,
+  "decoded_job_log_sha256": "4f88ab5044d402c9d0baf604cceb506bfe822809666366a5f6e6751ad8d5b249",
+  "cancellation_origin": "UNVERIFIED; only operation-canceled message; timing is not independent timeout evidence",
+  "observed": {
+    "before_global_seconds": 4796,
+    "paid_step_seconds": 928.0,
+    "decoder_step_seconds": 834.0,
+    "bridge_step_seconds": 566.0,
+    "canonical_step_seconds": 1423.0,
+    "all_four_gate_seconds": 3751.0,
+    "outside_gate_pre_global_seconds": 1045.0,
+    "global_partial_seconds": 2496,
+    "replay_start_diagnostics": 337,
+    "unannounced": 230,
+    "adjacent_intervals": 336,
+    "adjacent_interval_median_seconds": 7.511626,
+    "announcements_are_not_complete567_receipts": true
+  },
+  "conditional_arithmetic": {
+    "assumption": "Future entire native567 cadence equals historical median interval, other timings fixed; NO lower/upper runtime guarantee",
+    "estimated_full_global_seconds": 4259.091942,
+    "estimated_original_total_seconds": 9055.091942,
+    "unattainably_optimistic_remove_entire_canonical_step_seconds": 1423.0,
+    "remaining_pre_global_seconds": 3373.0,
+    "even_zero_canonical_estimated_total_seconds": 7632.091942,
+    "over_7200_seconds": 432.091942,
+    "qualification": "Sensitivity arithmetic ONLY; not an admitted budget, forecast or evidence of future fit"
+  },
+  "receipt_phase_totals": {
+    "provenance": "Coordinator independently verified24 official receipts from same exact run; Library libfile_755ed3d1e4348191bcabb866206a8bc8 SHA f0ce30e1f2d38267f8b5000708f0af0025d8c21e16ce95f7253b2570ee230bf7; author did not extract them",
+    "preflight_seconds": 1754.885,
+    "whole_child_seconds": 554.22,
+    "preexec_included_in_whole_child_seconds": 110.069,
+    "postterminal_to_receipt_seconds": 942.416,
+    "sum_of_exclusive_phase_windows_seconds": 3251.521,
+    "remaining_four_gate_window_seconds": 499.4789999999998,
+    "remaining_window_not_attributed_to_a_hotspot": true
+  },
+  "fit_established": false,
+  "qualification_retry_recommended": false
+}

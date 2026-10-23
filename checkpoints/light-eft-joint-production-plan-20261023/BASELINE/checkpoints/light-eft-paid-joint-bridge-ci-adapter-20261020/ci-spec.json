@@ -1,0 +1,1431 @@
+{
+  "scope": "SUPPLIED_RESPONSE_OUTPUT_TO_IDEAL_JOINT_DECODER_EXACT_SINGLETON",
+  "reviewed_source_commit": "cc147275808c734c93154bd397ca7e0d018dc5dd",
+  "source_plan_commit": "eab618b2e043bd5509e814357c1b8c9305ac74cd",
+  "toolchain": "leanprover/lean4:v4.34.0",
+  "tool_hashes": {
+    "lean": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+    "leanchecker": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe"
+  },
+  "pins": {
+    "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
+    "plausible": "118aa17ee84656b8bd727fef7c458ee8c833385c",
+    "LeanSearchClient": "ddf04cf3949fa556442341e87d47f9f6e6074707",
+    "importGraph": "e928b72544873815af278d38681b31c0293588e3",
+    "proofwidgets": "106ff4fafc74ef4ac99d81dbf3ab399118f497a5",
+    "aesop": "355695d523e41d0554926416cba2a2b3544fbbc9",
+    "Qq": "6a489d9af5d0c47e5b259e2e8bcdfc1811b5a259",
+    "batteries": "f2effa3d803fda822b1f97b806c47cf2adfbcbc2",
+    "Cli": "e92c9f15fdfacc8536f31cfb3b7ad26c3c8cd204"
+  },
+  "staged_root": "checkpoints/light-eft-paid-joint-bridge-20261020/staged",
+  "sources": [
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-20261020/staged/LightEFTPaidJointBridgeStage/SuppliedResponseJointBridge.lean",
+      "bytes": 7120,
+      "sha256": "b3ba8f73669c5eea04e58cdb545866382771b6e12537a32cd437d8f13d5b7664",
+      "role": "bridge"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/staged/BridgeAudit.lean",
+      "bytes": 21848,
+      "sha256": "097f7af45ca9bcfe135e459e3180a9c0a4a4297b77f97e21614daa6014a3b408",
+      "role": "audit"
+    },
+    {
+      "path": "checkpoints/light-eft-bridge-audit-key-cache-20261021/staged/ResolveAfterBridgeEquivalence.lean",
+      "bytes": 4492,
+      "sha256": "7a233bb04c37766093b5dfe21e1e1b79a1f628ee1b6eee0fba648e6717ee3410",
+      "role": "resolver"
+    },
+    {
+      "path": "checkpoints/light-eft-bridge-audit-key-cache-20261021/staged/BridgeKeyEquivalenceFixtures.lean",
+      "bytes": 3008,
+      "sha256": "20759f3a9e7170d4fc08f4c26726b27335d33af3c781dc2b1875cf18f7130f79",
+      "role": "key_fixture"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/staged/ResolveBridgeTarget.lean",
+      "bytes": 1403,
+      "sha256": "dd5741670280fc6b3a0f67791c23f6bf799730decf0e5c72342ed901c7fd6529",
+      "role": "original_resolver"
+    }
+  ],
+  "dependency_staged_roots": [
+    "checkpoints/light-eft-joint-flag-assignment-local-repair-20261018/staged",
+    "checkpoints/light-eft-paid-sampling-20261020/staged"
+  ],
+  "dependencies": [
+    {
+      "module": "LightEFTJointFlagSamplingStage.JointAssignmentLaw",
+      "path": "checkpoints/light-eft-joint-flag-assignment-local-repair-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+      "bytes": 12780,
+      "sha256": "1c290257acb41c8023c2ea163723dbbb36e4c58abc61d5efc2e645da00276a41",
+      "origin": "decoder"
+    },
+    {
+      "module": "LightEFTPaidSamplingStage.PaidFlagSampleComposition",
+      "path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean",
+      "bytes": 3332,
+      "sha256": "45fcf0e1d95e9eb8f35736c88d0d87af59522c911ae050de1c99e0fa340c7c14",
+      "origin": "paid"
+    },
+    {
+      "module": "LightEFTPaidSamplingStage.PaidFlagSerialization",
+      "path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSerialization.lean",
+      "bytes": 4554,
+      "sha256": "c7c4722ad7198a4f87516fabb88b82ff0962459a65e2377cc51be7ad3263e679",
+      "origin": "paid"
+    },
+    {
+      "module": "LightEFTSpanners.AdaptiveFiniteLaw",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AdaptiveFiniteLaw.lean",
+      "bytes": 1922,
+      "sha256": "b7de9b150e440f06a73f4ac813545092a6d7d80466000acea133faf1ef053648",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.AdaptiveVotingConcentration",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AdaptiveVotingConcentration.lean",
+      "bytes": 3593,
+      "sha256": "b09042d0a9b3d818fb7eb422a5b445184c0a2367854fd2529f794c7f21a3d820",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.AlgorithmSampleProbability",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AlgorithmSampleProbability.lean",
+      "bytes": 2599,
+      "sha256": "e7bbd4948e51cd3b1df2eeb6470e07c0ff650018308bf871e1c50b572b78cdb7",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.Basic",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/Basic.lean",
+      "bytes": 4311,
+      "sha256": "904afbdb6b764ba7c81bd0623cb38ee71ef0ddc3136454a8dc5197696ed1d66f",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.BernoulliFlagEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BernoulliFlagEncoding.lean",
+      "bytes": 1278,
+      "sha256": "989511389ae934af9b23fc226c6f9bfede8b50520807aef4c28add1a6f2793b2",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.BernoulliFlagLaw",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BernoulliFlagLaw.lean",
+      "bytes": 1312,
+      "sha256": "08913ce2079c8f57449f13a01feebc6e103a1403f152848e4a27575bdb2b90b5",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.BernoulliTestConcentration",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BernoulliTestConcentration.lean",
+      "bytes": 5441,
+      "sha256": "953af70d0da704d05dda7dc8ad23fc18ef60729cd6d865f5feb862677b658c58",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.BlockerSampling",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlockerSampling.lean",
+      "bytes": 4320,
+      "sha256": "47a6b5d729561b82e9b283aeb89ad3e7080f97eabcb465cf4f03e98621d7cc15",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.ControllerTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ControllerTrace.lean",
+      "bytes": 2661,
+      "sha256": "d930771797f63dacf44fd9db6dd2a365a54fae4c7b1bee0697686235904436ae",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.EmpiricalVotingGreedy",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EmpiricalVotingGreedy.lean",
+      "bytes": 5290,
+      "sha256": "548a03dd73e37dabda1ed054a6a7d4c3a9c9e5489fae3d3c4fd1acf199687313",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.ExecutableVoting",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExecutableVoting.lean",
+      "bytes": 5082,
+      "sha256": "d6385ba1f850eaeee4cd1830e4462723ed4b58d849c9d2068dbcaf6e3bf414c7",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteHoeffding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteHoeffding.lean",
+      "bytes": 2466,
+      "sha256": "6148a9791c76a93d096e75a711d3d01541b7bae94d0ad634e077f652eb144cba",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteLaw",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteLaw.lean",
+      "bytes": 4358,
+      "sha256": "7c7f5ded9abec4a60ee9dfe5fa36c100e4bce0bfef26c474a98bbd6c5c6cc240",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteProductLaw",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteProductLaw.lean",
+      "bytes": 958,
+      "sha256": "285c96e7624cdcf26fe2561a941d9fc32c07965c8067dac29eb38bb56a2e169e",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.FreshVotingTapes",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FreshVotingTapes.lean",
+      "bytes": 3192,
+      "sha256": "196db7ee6ee577057f0a53b083bc686805022d063bea646e19c40dd38dcd563a",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceExecutable.lean",
+      "bytes": 2787,
+      "sha256": "bbf2ad4c31f34318c45b331f3fdb6e3c805b46f37137fce2dc0bf1f943741d90",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceInitialization",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceInitialization.lean",
+      "bytes": 3003,
+      "sha256": "09282e0afd37b8efd6effa496368fa4824d4014077b73011e50dc26c698be2b4",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceKernel",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceKernel.lean",
+      "bytes": 3721,
+      "sha256": "6b2002ff3fdd5e9601898a73d5a04c008ddf58fb911c4eb124917c24ccf5b810",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceMachine",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceMachine.lean",
+      "bytes": 4056,
+      "sha256": "178473f21f7496b64c05eda0d16135e684a1823c8aa6e9139fc24e05f99bf824",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceRefinement",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceRefinement.lean",
+      "bytes": 3529,
+      "sha256": "99ce54745c59db056e05e2b7437dbd37b4d81aaf571bc8634cc17543f44cb080",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceTrace.lean",
+      "bytes": 4476,
+      "sha256": "f2974e0d1416c01f921bb10e848e739efb972242637ae65d6ae9beb7dcae1686",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.ProductSampleConcentration",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ProductSampleConcentration.lean",
+      "bytes": 3998,
+      "sha256": "1d23b6a42010fd561a4efd082e4b9e0ebb4da85dc54447909bcffa88da4d532c",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceTable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceTable.lean",
+      "bytes": 4404,
+      "sha256": "03163b1215234ee456db582146bdb698dfb2af8afd07831ff464635298198acb",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceTest",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceTest.lean",
+      "bytes": 3012,
+      "sha256": "77184d55f1adeb9554ca7480e2a7450515dd1ce9ad999a6ee706bd32a7a57d9f",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceValues",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceValues.lean",
+      "bytes": 1743,
+      "sha256": "14b64107d33ccae55f8f53288d0e073b33572be12aa2ff6ef2e31bff13b8088c",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.SampleMatrixMachine",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleMatrixMachine.lean",
+      "bytes": 2681,
+      "sha256": "05e2d9a3217b7c21d2581f794cc5d5203a6ca2c646cf9a69ea3b9746eebd59c1",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.SampleMatrixTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleMatrixTrace.lean",
+      "bytes": 3239,
+      "sha256": "1a227497ff136dd1ae0be97b3783ffde4ec18faf7c6b395dd26188d279ca8165",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.SampleRecordMatrix",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleRecordMatrix.lean",
+      "bytes": 2344,
+      "sha256": "198fef62799021d85917dc0c41cdde6c0cb41d6fe31cdd5ee496f4ced37daa56",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.SampleVoteExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleVoteExecutable.lean",
+      "bytes": 4333,
+      "sha256": "2c017c3d1f18db4842e92e2640dc79cf2f19e8f6f7f053b35ce3a22a9ab341ff",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.SampleVoteMachine",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleVoteMachine.lean",
+      "bytes": 2690,
+      "sha256": "3cb97822c18b1929cd83a9d4a9bd3e32272e1d55892158ace5feb88fd88f7590",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.SampleVoteTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleVoteTrace.lean",
+      "bytes": 3471,
+      "sha256": "762cbc518f4a554b50051f2cc8ea3ec94e9a4521e64566dea8d739d03ff82294",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.SamplingFaultAvoidance",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SamplingFaultAvoidance.lean",
+      "bytes": 2481,
+      "sha256": "46aaf3e44dfef46927def5ffc073aefb012571809e2dbf5e03a0d6fca3de0dc6",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.SamplingRestriction",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SamplingRestriction.lean",
+      "bytes": 4267,
+      "sha256": "c566cb046268d54d4237ff7e5db1c895591696dd3eccba2ae074eca50f0473a1",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.SeededGreedy",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededGreedy.lean",
+      "bytes": 5694,
+      "sha256": "0ac99a0ff6ee9864341acb5d6b1672cb8e059efb7a709a9748c0b4dbf002f862",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredAssignmentExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredAssignmentExecutable.lean",
+      "bytes": 1613,
+      "sha256": "7f06172cda1f129773dbeac7e076dd020ed9f77c57538657bf3d69585561d784",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredAssignmentSchedule",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredAssignmentSchedule.lean",
+      "bytes": 2215,
+      "sha256": "bc94affdfbd6ee9e7d3b6a36aea3748cce15ce35d56aba3d6e05fe3540f956ee",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateBound.lean",
+      "bytes": 2098,
+      "sha256": "7b049a9dbbdb12723db8c5021a06e3833fc220bc679d995bfa4807f4e404522e",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateExecutable.lean",
+      "bytes": 2729,
+      "sha256": "fb616042018ffe5d4acb273969980ec21b13fd5c6585faa7080a0d6d31538000",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateMachine",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateMachine.lean",
+      "bytes": 1707,
+      "sha256": "e9cc9a3790a56b76cc0bf4a4ecaa8b8bf03ae41c5dd8d2a9e511c8d347b31451",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateOriginal",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateOriginal.lean",
+      "bytes": 2207,
+      "sha256": "5da1e67271dc41f863877d1388f22c50912eb460195ba709c016e41b2df952a6",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateRefinement",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateRefinement.lean",
+      "bytes": 4683,
+      "sha256": "dbbf61a390f4ccc9dccb3ea9aee64af125a7e88d780eb1829844ee2e70a8bbbb",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateTrace.lean",
+      "bytes": 4205,
+      "sha256": "f13d00a7fa5d0113bed03f79a2667d78d199af879fb52e30544a5cfc7e9affbf",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredEdgeMembership",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredEdgeMembership.lean",
+      "bytes": 3538,
+      "sha256": "7d8ba0a46fba239b53053042383ea93ee5a2d280f9a1c7de666f30b30eb106d9",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatch",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatch.lean",
+      "bytes": 1818,
+      "sha256": "cc7c61d153e32de8ba04ed245999abc129d51de5bd10dbd0a1e10bcee6a6012a",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchExecutable.lean",
+      "bytes": 1227,
+      "sha256": "0439a922b9f4ae25ed4e7b5a5fa4903425a46f5ffa8d123808c6c9979b777a34",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchProbability",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchProbability.lean",
+      "bytes": 2371,
+      "sha256": "e042b5e618f2c363a4aeeb073b3b1c86ada7eaae8510b5d91104caace6130a08",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchTrace.lean",
+      "bytes": 1762,
+      "sha256": "b00ae3d10871bd6129ef9a6b6761a68cf6431f7db2cdde8a6dd717fb82a8f795",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSample",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSample.lean",
+      "bytes": 2283,
+      "sha256": "6cc557da610dba865f00d60075c7262ed0f8d22f0ff1953f66ce9c0bf8062bfa",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleEncoding.lean",
+      "bytes": 1344,
+      "sha256": "55e47fb409acb749ce94b0f501c9ca62ac1cebea52a8ac83ea07696b72639dc9",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleExecutable.lean",
+      "bytes": 1288,
+      "sha256": "9d0a43d695626da9368e7b018c3b24e209fadc2df8c0c7d76db316ae40816f1a",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleProbability",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleProbability.lean",
+      "bytes": 1258,
+      "sha256": "511bf1809a5526ac9740667e64a47adf07a8639d71e4efe720070eb2379c7f00",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostAdmission",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostAdmission.lean",
+      "bytes": 2444,
+      "sha256": "00cb56c52fbcc2393069f0050e352f1a5040b930642d0fb0d1719c40ce61169c",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostBound.lean",
+      "bytes": 1486,
+      "sha256": "e6879ae95732d2dfb094322b2ef9037ef276645e45dfa95c48d5791c15278597",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostCount",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostCount.lean",
+      "bytes": 1086,
+      "sha256": "ed6d6f2243eaf5d380a661fb8c6d087bb8f20f67458ebef172cdaf97d09a7235",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostExecutable.lean",
+      "bytes": 2609,
+      "sha256": "2e862da6b571efd854e2d338e5ad789ab8e976e76c97435be8f67475e9a1f633",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostMachine",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostMachine.lean",
+      "bytes": 2683,
+      "sha256": "436cfd42173f4bfdf5b1c9e09c1eb9d46f449350359f72102470fd7b2d9e93dc",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostRealAdmission",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostRealAdmission.lean",
+      "bytes": 1225,
+      "sha256": "f72b50b1da89d0d9ae8d368eacddad757104509f8550c8900a008442e1bb7205",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostTrace.lean",
+      "bytes": 3453,
+      "sha256": "7e5500bdd234a2aeb002f7bdca561e2ed0621e37943229b5ff57a0a0e4c6dbef",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOutputLaw",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOutputLaw.lean",
+      "bytes": 2077,
+      "sha256": "420165577cafc9635a819722d2740039ff47dbb283b5b853a476a6df19599fba",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRecordEncoding.lean",
+      "bytes": 2499,
+      "sha256": "97b139e0dc7465aab4a34a2675eee67341b3d3313b9ec5ba9d05a185a26bf084",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRecordExecutable.lean",
+      "bytes": 1578,
+      "sha256": "e0b915c5e6c2b71c7fcfb0d00c2c6f1cfdeb1fd5348c29bb08415054066e2839",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordMachine",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRecordMachine.lean",
+      "bytes": 6183,
+      "sha256": "ee6ead4ae4c1126d30dbcc1d7316ca7982e58bf153c8fa9e4ba15872a796fd6c",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRecordTrace.lean",
+      "bytes": 4549,
+      "sha256": "6e80b56ea151fc23eefce031d9c6590f3a8637564e4ac6ebf0b00909323af1f1",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredSampleEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSampleEncoding.lean",
+      "bytes": 1162,
+      "sha256": "239828f9c0a69bc95828feafd5d4fd4dc72215e8e2de9de09673d85b284e57b4",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredSampleEntry",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSampleEntry.lean",
+      "bytes": 6068,
+      "sha256": "d768753c13db2c10f389201e2b9e364962c1fef04c8cda2e3765aefac3f6bc45",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteBound",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVoteBound.lean",
+      "bytes": 1929,
+      "sha256": "75a2bdd3357f2fb4acf0886a03112ed53df3d42522e3e37c4c1bc3bb067c8ef0",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteEncoding",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVoteEncoding.lean",
+      "bytes": 2797,
+      "sha256": "a6ec92c2d0c1bb7830f8de4cd6a373235af45ac00a959372fd9b024da009a2c0",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteExecutable",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVoteExecutable.lean",
+      "bytes": 2411,
+      "sha256": "fdeab4554be66863a9bde680d159623c05836a81c569facee54011254aeffeba",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteMachine",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVoteMachine.lean",
+      "bytes": 3595,
+      "sha256": "0c1774a7267359f27bfef6d102b3f1bc540eddd26126c7dceb3f7e8d5c6ba890",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteTrace",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVoteTrace.lean",
+      "bytes": 2845,
+      "sha256": "4dfa816d042dd2a9bdf9ba405a480851af73e6555d6347ea53e3cc82b614c2d8",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightSpanners.Basic",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Basic.lean",
+      "bytes": 4943,
+      "sha256": "f7620d03b27f2c6ec13d048597ad4d87e6ff66a077bf41a3de27c20f1087103d",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightSpanners.Construction",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Construction.lean",
+      "bytes": 3067,
+      "sha256": "462bc3fe217309f3664f0f53207fd0898dc92fd04fcf4e06d722dcf65114df65",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightSpanners.Distance",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Distance.lean",
+      "bytes": 5005,
+      "sha256": "06b9486a16f448676e0aa8e3c4bf42fbcbfedce2756f94cd469f36e69a5b371b",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightSpanners.FiniteSampling",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/FiniteSampling.lean",
+      "bytes": 4495,
+      "sha256": "92a12e938f631d9d0811a8084c8d20430558916ccee2a0ad13c5ff05f6f112bc",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightSpanners.Greedy",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Greedy.lean",
+      "bytes": 5499,
+      "sha256": "13d0cc9ee2f791bd9722c5b31c1dd3328701b7a7cc8383599c899c6f4c9f875e",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightSpanners.Kruskal",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Kruskal.lean",
+      "bytes": 6490,
+      "sha256": "aa4e15eb7210e655b41c41c574f6b1a5dc2791594508afbf7f40d4c13c0fcc8e",
+      "origin": "ordinary_build"
+    },
+    {
+      "module": "LightSpanners.MinimumTree",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MinimumTree.lean",
+      "bytes": 7356,
+      "sha256": "f47ee9eb83902fb215cf6c112a62563aeb8926ed06c93bf2e2f745a20bd72ab4",
+      "origin": "ordinary_build"
+    }
+  ],
+  "external_boundary_sources": [
+    {
+      "module": "Aesop",
+      "package": "aesop",
+      "source": ".lake/packages/aesop/Aesop.lean",
+      "object": ".lake/packages/aesop/.lake/build/lib/lean/Aesop.olean",
+      "package_commit": "355695d523e41d0554926416cba2a2b3544fbbc9",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Algebra.BigOperators.Fin",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Fin.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Algebra/BigOperators/Fin.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Algebra.BigOperators.Group.Finset.Piecewise",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Piecewise.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Algebra/BigOperators/Group/Finset/Piecewise.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Algebra.BigOperators.Group.Finset.Powerset",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Powerset.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Algebra/BigOperators/Group/Finset/Powerset.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Algebra.BigOperators.Group.Finset.Sigma",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Sigma.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Algebra/BigOperators/Group/Finset/Sigma.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Algebra.BigOperators.Ring.Finset",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Ring/Finset.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Algebra/BigOperators/Ring/Finset.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Algebra.Order.Field.Rat",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Algebra/Order/Field/Rat.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Algebra/Order/Field/Rat.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Basic.ENNReal.Inv",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Basic/ENNReal/Inv.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Basic/ENNReal/Inv.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Basic.ENNReal.Real",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Basic/ENNReal/Real.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Basic/ENNReal/Real.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Basic.Real.Basic",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Basic/Real/Basic.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Basic/Real/Basic.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Combinatorics.SimpleGraph.Acyclic",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Combinatorics/SimpleGraph/Acyclic.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Combinatorics/SimpleGraph/Acyclic.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Combinatorics.SimpleGraph.Paths",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Combinatorics/SimpleGraph/Paths.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Combinatorics/SimpleGraph/Paths.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Combinatorics.SimpleGraph.Walk.Counting",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Combinatorics/SimpleGraph/Walk/Counting.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Combinatorics/SimpleGraph/Walk/Counting.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Data.Fin.Tuple.Basic",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Data/Fin/Tuple/Basic.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/Fin/Tuple/Basic.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Data.Finset.Card",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Data/Finset/Card.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/Finset/Card.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Data.List.FinRange",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Data/List/FinRange.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/List/FinRange.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Data.List.Nodup",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Data/List/Nodup.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/List/Nodup.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Data.List.ProdSigma",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Data/List/ProdSigma.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/List/ProdSigma.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Data.List.Sort",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Data/List/Sort.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/List/Sort.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Data.Vector.Basic",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Data/Vector/Basic.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/Vector/Basic.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Probability.Moments.SubGaussian",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Probability/Moments/SubGaussian.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Probability/Moments/SubGaussian.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Probability.ProbabilityMassFunction.Integrals",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Probability/ProbabilityMassFunction/Integrals.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Probability/ProbabilityMassFunction/Integrals.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Tactic",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Tactic.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Tactic.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Tactic.Linarith",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Tactic/Linarith.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Tactic/Linarith.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Tactic.NormNum",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Tactic/NormNum.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Tactic/NormNum.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Tactic.Push",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Tactic/Push.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Tactic/Push.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    },
+    {
+      "module": "Mathlib.Tactic.Ring",
+      "package": "mathlib",
+      "source": ".lake/packages/mathlib/Mathlib/Tactic/Ring.lean",
+      "object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Tactic/Ring.olean",
+      "package_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+      "object_binding": "fresh actual identity/bytes/hash plus all emitted semantic companions; no current bytes guessed in this plan"
+    }
+  ],
+  "engine_files": [
+    {
+      "path": ".github/workflows/lean.yml",
+      "bytes": 50913,
+      "sha256": "dcdb866fe302827d78d037771edc0e04034e2d90b176d642badeb84c6f594f29"
+    },
+    {
+      "path": ".github/workflows/light-eft-fair-bit-focused.yml",
+      "bytes": 8456,
+      "sha256": "908a8b915db345d7e9775c819fc1a20fe38600c8498a024721d253cfc53cc470"
+    },
+    {
+      "path": "checkpoints/light-eft-actual-supplied-forest-probability-result-20261018/artifacts/objects/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.olean",
+      "bytes": 145656,
+      "sha256": "000a803f858c98d95c53b57011785f5c08fc687ee5af081161b595bd32974499"
+    },
+    {
+      "path": "checkpoints/light-eft-audit-text-cache-20261021/staged/SerializationEquivalenceFixtures.lean",
+      "bytes": 5764,
+      "sha256": "4145f3211fec079581cc3b4f6645c77f1620abb02f503b12a4e1cdd333d944c0"
+    },
+    {
+      "path": "checkpoints/light-eft-audit-text-fixture-adapter-20261021/staged/ResolveAfterTextEquivalence.lean",
+      "bytes": 7227,
+      "sha256": "6cdafabcc22c5d4df16b086597d9a857f4d893ae661d72cbc7158322cdb9272e"
+    },
+    {
+      "path": "checkpoints/light-eft-bridge-audit-key-cache-20261021/staged/BridgeKeyEquivalenceFixtures.lean",
+      "bytes": 3008,
+      "sha256": "20759f3a9e7170d4fc08f4c26726b27335d33af3c781dc2b1875cf18f7130f79"
+    },
+    {
+      "path": "checkpoints/light-eft-bridge-audit-key-cache-20261021/staged/ResolveAfterBridgeEquivalence.lean",
+      "bytes": 4492,
+      "sha256": "7a233bb04c37766093b5dfe21e1e1b79a1f628ee1b6eee0fba648e6717ee3410"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/canonical_fixture.py",
+      "bytes": 8338,
+      "sha256": "afec43578ea586a28b814a2b245d3ee1574ef1b3f099fee4c0d81f1c6cb4e52d"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+      "bytes": 19707,
+      "sha256": "c84a0cbb21a40edaa11c89e119ffad2a84321278537b7893465a796269c2dccb"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json",
+      "bytes": 125471,
+      "sha256": "61788edd49d64c28c3ca3e82f38ccd2b784fef28744a942768b4ff00e1056f0a"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_accounting.py",
+      "bytes": 5927,
+      "sha256": "a4a5b697283a99abd310b7164531ddabd06f01308ff008e102bcc66ae17cb7b8"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_admission.py",
+      "bytes": 5978,
+      "sha256": "05fadeda4e9feacf029f7d0393837b10bb19b95357c73c0cc29b67c07e05585e"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_admission_receipts.py",
+      "bytes": 5899,
+      "sha256": "8133ed538edbee2c6d7e73ee5d789e018bb8e63a3ca6cf39381214530ff932de"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+      "bytes": 21844,
+      "sha256": "f825f46389874775b22812afc1f3764a63997656a2df016143fe2bfa69cfb5dc"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_handoff.py",
+      "bytes": 13871,
+      "sha256": "e54ff6b9afc1636d0193657426acfed9dedfde296fc0942ee0f2a242adb78c91"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_handoff_contract.py",
+      "bytes": 3423,
+      "sha256": "d1bd67558926889200214b289cf214a7eff30f4d672b57a54f147eb8b96f9153"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_inventory.py",
+      "bytes": 6732,
+      "sha256": "a10205e759785f9a260de8129bbc6f34c590b00a2b49477f018c6d3b6a47c15a"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_lease.py",
+      "bytes": 3663,
+      "sha256": "d0e7331f4a18b3c69b2707b7892452f9c08c2619f82b204e602df8fd19011a8b"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_policy.py",
+      "bytes": 7137,
+      "sha256": "289333c6ff8c29bec542dd3993100193b5a601a0a1fb13b85774daf70120d48b"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_receipts.py",
+      "bytes": 6248,
+      "sha256": "290ee660d4b3eef581b48be0ff41730f6de1c51266e0417dd543277579f8197c"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_staged_inputs.py",
+      "bytes": 4011,
+      "sha256": "5d0c58a41306778d6951879f4d3e6eefb667d2be08102c3c0b0abaa92858452b"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/collision_coverage.py",
+      "bytes": 6685,
+      "sha256": "529d8ba0010cfb1fcd297b98a1f15882967a7a30bc2a2da8ff21bf50ea2d0e6b"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/contracts.py",
+      "bytes": 5765,
+      "sha256": "b4d7b52a08689426b45d6d2b482899faf9eebe5f6573566d3c49562a2b401134"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/decision_telemetry.py",
+      "bytes": 4899,
+      "sha256": "08ae50f987ba67655e21d504e561ff5a23eda79104f35fe4c0d48e6e59de87fe"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/exit_transition.py",
+      "bytes": 16452,
+      "sha256": "1135140dd7dd3d075953d5d621f727a7a7c13796985c27da0c5afba68f95e76a"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/focused_audit.py",
+      "bytes": 7788,
+      "sha256": "ed374c72b8ac4d37978b66adb94855c8530806633bf1eb2c6990c374962cb292"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/output_guards.py",
+      "bytes": 10319,
+      "sha256": "200d21beeda7ab34e931ba0c25880a8fe9b42d7a642690618ea7e879d3bb9530"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/package_selection.py",
+      "bytes": 2095,
+      "sha256": "ccc7a20a97cc446fc464dbd88c9fb9067494661472988091fc954428fcf5e4fd"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/pilot_accounting.py",
+      "bytes": 4834,
+      "sha256": "826847768ca2e16fb2e4f19d912108790096f117d8a44a952b014cbaefeca824"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/pilot_child.py",
+      "bytes": 1756,
+      "sha256": "0cb433136f6c894667c7edc9403bf057897e69905b6b6c8d4cfaf313f8c53eaf"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/probability_plan.py",
+      "bytes": 652,
+      "sha256": "1a5b89ef67f361775d20ff05debbe0bba147561529ebc34e73225c9c62e8d7f6"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+      "bytes": 6696,
+      "sha256": "8ab9e6b111f4958b8a91a920a40f9a6789ababad08ea9c570c8a0332f4c262d0"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/staged/CanonicalOutputAudit.lean",
+      "bytes": 19624,
+      "sha256": "577b3f09c0702855d1f01e051574d8912c35565468b4e18611463b7b28d6ccec"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/staged/ResolveCanonicalOutputTarget.lean",
+      "bytes": 1399,
+      "sha256": "426579ed6d435c3644af7344c83eb320a7d4399769a8ae7a07a80ad78488f6dc"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/test_admission_output_contract.py",
+      "bytes": 12098,
+      "sha256": "bf2ea4f37475a4a56e2048cceb662aafe72658beb0920b07932563b06654f670"
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/test_audit_cpu_limits.py",
+      "bytes": 11951,
+      "sha256": "8f9f175333031f282d882110cd30f9565c3e298c9c4fca532f3969bc4bc1f515"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/authority.py",
+      "bytes": 2953,
+      "sha256": "319e8bd1426e952fa227889ea4ec74770a1c578131606e2cebd0b4c3326c0c0e"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+      "bytes": 19707,
+      "sha256": "c84a0cbb21a40edaa11c89e119ffad2a84321278537b7893465a796269c2dccb"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/collision_coverage.py",
+      "bytes": 6685,
+      "sha256": "529d8ba0010cfb1fcd297b98a1f15882967a7a30bc2a2da8ff21bf50ea2d0e6b"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/contracts.py",
+      "bytes": 5555,
+      "sha256": "e092ba2fd3c2560dee64db1cc2085ec31a70eaf7c02bfd7d6c83c1a4b1cd2aa8"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/decision_telemetry.py",
+      "bytes": 4899,
+      "sha256": "08ae50f987ba67655e21d504e561ff5a23eda79104f35fe4c0d48e6e59de87fe"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/driver.py",
+      "bytes": 6905,
+      "sha256": "6bb35538f06308579a5ad7c71b8ef7d2719a7237f2a13d5f940ccae927bb8f7e"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/exit_transition.py",
+      "bytes": 16452,
+      "sha256": "1135140dd7dd3d075953d5d621f727a7a7c13796985c27da0c5afba68f95e76a"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/fixture_worker.py",
+      "bytes": 874,
+      "sha256": "ef78c03c76240afb6549143be4421d0413a4d9b8d1760502559e57f87b3f5879"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/focused_audit.py",
+      "bytes": 7004,
+      "sha256": "95e71b629add31dd55aa4ce469e858ba3699682209516ff0d88850a851c0a6a6"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/lease.py",
+      "bytes": 5370,
+      "sha256": "e942e88636f15fa55aaf2f01eaaaf72a1793871afa9865d41a88513354ed722d"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/output_guards.py",
+      "bytes": 7548,
+      "sha256": "b53d429a85d0a4e8376f12ba363ecea08f13d398a6aa3edebddae98ddbc12559"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/package_selection.py",
+      "bytes": 2095,
+      "sha256": "ccc7a20a97cc446fc464dbd88c9fb9067494661472988091fc954428fcf5e4fd"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/pilot_accounting.py",
+      "bytes": 4834,
+      "sha256": "826847768ca2e16fb2e4f19d912108790096f117d8a44a952b014cbaefeca824"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/pilot_child.py",
+      "bytes": 1756,
+      "sha256": "0cb433136f6c894667c7edc9403bf057897e69905b6b6c8d4cfaf313f8c53eaf"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/probability_plan.py",
+      "bytes": 14469,
+      "sha256": "c9f162e52b681f684260ef1c11514987a38ae210d6a0eda1caaaa7d1fa0b541c"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/scope.py",
+      "bytes": 19225,
+      "sha256": "186476909d1a4999837788e3b4c272b8c5044cfd2de5ac631caafbae948f43dd"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/semantic_inventory.py",
+      "bytes": 9550,
+      "sha256": "659da0ef137e27b4380b1ac767555ede2bb5f95c49e0083611fd93105eae06ea"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/test_adapter.py",
+      "bytes": 35490,
+      "sha256": "4fdcb3d88cba7c0b10084b4fd68936adf06b59ef19a4ca800274e71a86328d4d"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/ResolveJointAssignmentLawTarget.lean",
+      "bytes": 1385,
+      "sha256": "4f887745e6bc31d390fa04e2e3e91fa6fe6d3911623796974b24ca7a8fc6964a"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-local-repair-20261018/staged/JointAssignmentLawAudit.lean",
+      "bytes": 24263,
+      "sha256": "11c610a12f9b5fd92092c6bd8bd4bccf7159832a1583e381257b837d2bf422f6"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-assignment-local-repair-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+      "bytes": 12780,
+      "sha256": "1c290257acb41c8023c2ea163723dbbb36e4c58abc61d5efc2e645da00276a41"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/CollisionClassifierFixtures.tail.lean",
+      "bytes": 9674,
+      "sha256": "7b149dd97d4fb676d92399de15338c41e6d074ee8d8f5a3ec1c63479eef441d5"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci-spec.json",
+      "bytes": 33436,
+      "sha256": "9d1264d6e9d6ab82e1a60f06829047102beb12f93b3ed4dcb7eb70e1069d33c3"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_accounting.py",
+      "bytes": 5927,
+      "sha256": "a4a5b697283a99abd310b7164531ddabd06f01308ff008e102bcc66ae17cb7b8"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py",
+      "bytes": 16149,
+      "sha256": "2d6e6f0b92cd92b4c104292a713c5880c5ed9b7ef4fb1d9725a618fe6ec16ef4"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_inventory.py",
+      "bytes": 6732,
+      "sha256": "a10205e759785f9a260de8129bbc6f34c590b00a2b49477f018c6d3b6a47c15a"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_lease.py",
+      "bytes": 3663,
+      "sha256": "d0e7331f4a18b3c69b2707b7892452f9c08c2619f82b204e602df8fd19011a8b"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_policy.py",
+      "bytes": 6372,
+      "sha256": "350af88e4fcfc6f8b93336530ca6fdb23c07d16f037807385fbbc1e7e1250977"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_receipts.py",
+      "bytes": 6239,
+      "sha256": "949759821d66b8086a34fbc2376b41ac7cac8371f9b5622a3a47469895f797be"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_text_fixture.py",
+      "bytes": 3653,
+      "sha256": "999e9d7fbff29187a05f671276acb37b455f56a4ea5076cd168e41eb1e6c9f9e"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/test_ci_preexec_repair.py",
+      "bytes": 16282,
+      "sha256": "a94642a65f925f03fb43f44b4b27b2bfe2d255dee54be9a54a5c3f554d6e2651"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/test_collision_classifier.py",
+      "bytes": 16290,
+      "sha256": "6fdb3c32a0be34bb756deefad223aad89a8d57f10f0c4fea1552991c77362a36"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/test_compile_temporary.py",
+      "bytes": 14254,
+      "sha256": "01f076d50223b3275128957a38ee0cfca40f0d598558dd5f02a4c6e36c6ea505"
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-output-draft-20261019/staged/LightEFTJointFlagOutputStage/PolynomialActualFailureProbability.lean",
+      "bytes": 3567,
+      "sha256": "caa89c0d197131ffdc8405e63bfd56dfbc08468e8bec760f33736d1b4f08adf1"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/audit_check.py",
+      "bytes": 6927,
+      "sha256": "f49b0a3080cdc41bdfda64e3039e99757de501eeab501566440d67ca063eb9be"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json",
+      "bytes": 16156,
+      "sha256": "0fdc974ebf84a2149297e82546d86b72b1c1c95973d3e0aa9dbc295a6dd5486a"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/ci_gate.py",
+      "bytes": 10740,
+      "sha256": "485fce576f6a6281e5d9cd47dad64c2e696fcb9363aaac3c5da01e5eeea33022"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/finite_contract.py",
+      "bytes": 2937,
+      "sha256": "47f4e8a496841f3934d7a653ef757446f85270a8988146a9788f52772c224aa3"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/focused_context.py",
+      "bytes": 11709,
+      "sha256": "cb2e0d645c1fda16258069bca235e5abfbfdd3bc73a2e9fd6cd4c828abc2b52f"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/output_guards.py",
+      "bytes": 13483,
+      "sha256": "99fa4305b42c815852eaca5abd322bd976414d42f87e298a245676787a180edf"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/refresh_spec.py",
+      "bytes": 2912,
+      "sha256": "4d172b4cf0b6cd0760f21c645764117bfddd7ad8632b80f01155c8c23f96302e"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/staged/CompositionAudit.lean",
+      "bytes": 18671,
+      "sha256": "789f50a7dbebdbff8f0e95d416dc9ae22788de8db375e2bced0c9b92aae843e8"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/staged/ResolveFocusedTarget.lean",
+      "bytes": 1448,
+      "sha256": "732d445ffb55a8861cfd7db5ee2d93fa36f0311307320d1bca6341d44288595b"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/staged/SerializationAudit.lean",
+      "bytes": 18670,
+      "sha256": "2db3105b6955a5df0cf88771c491642431de874a9dc8939d174b5cea16d16927"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/test_focused_contract.py",
+      "bytes": 14798,
+      "sha256": "105496ae9ca8ab57123b76cb6f12734a7a2b6a3c03787e041f3e3641e2b5e3ea"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/audit_check.py",
+      "bytes": 6927,
+      "sha256": "f49b0a3080cdc41bdfda64e3039e99757de501eeab501566440d67ca063eb9be"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/bridge_context.py",
+      "bytes": 12210,
+      "sha256": "de64cd70663d1a0e11a3f4c574616b1471c2842a3d6bdd1eb616fa3f4b981cf4"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/bridge_fixture.py",
+      "bytes": 3483,
+      "sha256": "37b85c017f556070f51634f133f7c38374f6074c637fa6044e8b1386af0ca82a"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/check_implementation.py",
+      "bytes": 5794,
+      "sha256": "f092cda4f7204369da33d20414b56ec99384ca4d43e4741ccb1c9ad056ca9b04"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci_gate.py",
+      "bytes": 17664,
+      "sha256": "635a13b3a2e4eef9a5ed980d4a6cc55c088bc4a793bb46580f9321fa52cd6411"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/finite_contract.py",
+      "bytes": 18368,
+      "sha256": "d010bbbf6c76826da0c3b9e9beb78325737c8561ae214f7ce22312f4c33daf21"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/output_guards.py",
+      "bytes": 12686,
+      "sha256": "68d72ea5ee5008a3d6ff7ce3a655d1c7e20fe84d67307cf44cd0b389281eea7c"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/prior_guard.py",
+      "bytes": 2365,
+      "sha256": "be4e173fc6c56d739f02402199f7b192e50f413a41264e30a3f63ef1bd98e367"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/refresh_spec.py",
+      "bytes": 3523,
+      "sha256": "9279401863b4081daebde3f8e91368bd90d51dd3101a4356e2747b1187dd9253"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/same_run.py",
+      "bytes": 10602,
+      "sha256": "85515d15484528a543e8a1ffe0cd2c6fa168cb1d376ea38fa849139a15a6c550"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/staged/ResolveBridgeTarget.lean",
+      "bytes": 1403,
+      "sha256": "dd5741670280fc6b3a0f67791c23f6bf799730decf0e5c72342ed901c7fd6529"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/test_bridge_contract.py",
+      "bytes": 37414,
+      "sha256": "3e5b1a4d86c147177fa4f08b87628980d681327ed324fcdca17686d79dec6872"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSampleComposition.lean",
+      "bytes": 3332,
+      "sha256": "45fcf0e1d95e9eb8f35736c88d0d87af59522c911ae050de1c99e0fa340c7c14"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-sampling-20261020/staged/LightEFTPaidSamplingStage/PaidFlagSerialization.lean",
+      "bytes": 4554,
+      "sha256": "c7c4722ad7198a4f87516fabb88b82ff0962459a65e2377cc51be7ad3263e679"
+    },
+    {
+      "path": "checkpoints/light-eft-paid-sampling-20261020/staged/PaidFlagFixtures.lean",
+      "bytes": 844,
+      "sha256": "123ef8134d20343e40e9b759ec404a229eb3aa0dcb973c914d728b7298d742cf"
+    },
+    {
+      "path": "checkpoints/light-eft-replay-admission-plan-20261021/replay_preflight.py",
+      "bytes": 12922,
+      "sha256": "2bcbe3ba3a4154d61ff01a19b0dfc615a6b50f64b3eb09020765a299af7fe4be"
+    },
+    {
+      "path": "checkpoints/light-eft-sequential-validation-schedule-20261021/acceptance.py",
+      "bytes": 3751,
+      "sha256": "5ac30d010f58e09172cc0f08bf6ab44e9bb1ad9649caf494b357d8a4377d1687"
+    },
+    {
+      "path": "checkpoints/light-eft-sequential-validation-schedule-20261021/workflow_identity.py",
+      "bytes": 5532,
+      "sha256": "5a26de4cc09168e1d6717c8f7615840f7df715b092973c003cd28912274c1d11"
+    },
+    {
+      "path": "checkpoints/light-eft-supplied-forest-package-attempt-20261018/produced-objects/LightEFTSuppliedForestStage/SuppliedForestGoodEvent.olean",
+      "bytes": 185576,
+      "sha256": "b5e18c2425b50a2b7008f2a5f9ab928f22daae1d530293d373691a0a378cbc18"
+    },
+    {
+      "path": "checkpoints/light-eft-supplied-forest-probability-result-20261018/artifacts/objects/LightEFTSuppliedForestProbabilityStage/PolynomialFailureProbability.olean",
+      "bytes": 76720,
+      "sha256": "0716fe2cc66dd6657243cfe6d5d34fb83722f59818d0cdb1838be0bf2d981eeb"
+    },
+    {
+      "path": "lake-manifest.json",
+      "bytes": 3168,
+      "sha256": "615d78a994009475b0e34cd0cd67325b2d863ae37e9f42d8ded7f9d575bf4b2f"
+    },
+    {
+      "path": "lean-toolchain",
+      "bytes": 25,
+      "sha256": "8733782dc070a99b312039cda424f601b80f3be6f6f512627da5ba25adc27632"
+    },
+    {
+      "path": "scripts/KernelCheck.sh",
+      "bytes": 1632,
+      "sha256": "b7dac23e6300e3c34d6192887f52d6f780b2bef9720f43b94d4c0f1b3116d77d"
+    },
+    {
+      "path": "scripts/LightEFTCgroup.py",
+      "bytes": 5549,
+      "sha256": "3ab478f59bb27d32424c8aaf647de91901969fb48d3a56ddd74fd49e434bad07"
+    },
+    {
+      "path": "scripts/LightEFTProcessLifecycle.py",
+      "bytes": 4417,
+      "sha256": "c77d6e9bd48de674aaa50852451627d09693fec7bdcca903a015fdab96f99fdd"
+    }
+  ],
+  "project_imports": 80,
+  "project_modules_including_target": 81,
+  "required_theorem_roots": [
+    "LightEFTSpanners.PaidJointBridge.response_length",
+    "LightEFTSpanners.PaidJointBridge.rawKeys_length",
+    "LightEFTSpanners.PaidJointBridge.zip_eq_entries",
+    "LightEFTSpanners.PaidJointBridge.serialize_eq_entries",
+    "LightEFTSpanners.PaidJointBridge.value_eq_encoded",
+    "LightEFTSpanners.PaidJointBridge.batch_trace",
+    "LightEFTSpanners.PaidJointBridge.batch_execute",
+    "LightEFTSpanners.PaidJointBridge.execute_occurrence_batch",
+    "LightEFTSpanners.PaidJointBridge.storedHost_eq_decodeHost",
+    "LightEFTSpanners.PaidJointBridge.storedAssignment_eq_decoder",
+    "LightEFTSpanners.PaidJointBridge.storedAssignment_head",
+    "LightEFTSpanners.PaidJointBridge.supplied_assignment_event_probability"
+  ],
+  "required_interfaces": [
+    "LightEFTSpanners.PaidFlagSerialization.execute_eq",
+    "LightEFTSpanners.PaidFlagSampleComposition.full_trace",
+    "LightEFTSpanners.PaidFlagSampleComposition.execute_eq",
+    "LightEFTSpanners.StoredFlagSample.execute_encoded",
+    "LightEFTSpanners.StoredFlagSample.typed_edgeSet",
+    "LightEFTSpanners.JointFlagSampling.decoded_assignment_probability"
+  ],
+  "resource_contract": {
+    "admission_GiB": {
+      "compile": 3,
+      "resolve": 3,
+      "replay": 4,
+      "audit": 4
+    },
+    "cpu_seconds": {
+      "compile": 60,
+      "resolve": 60,
+      "replay": 60,
+      "audit": 90
+    },
+    "wall_seconds": 90,
+    "prespawn_seconds": 300,
+    "address_space_bytes": 12884901888,
+    "heap_MiB": 5120,
+    "stack_KiB": 65536,
+    "workers": 1,
+    "stop_headroom_bytes": 1073741824,
+    "RSS_stop_bytes": 6442450944,
+    "anonymous_growth_stop_bytes": 3221225472,
+    "core_bytes": 0,
+    "ordinary_FSIZE_bytes": 16777216,
+    "audit_file_bytes": 67108864,
+    "audit_total_bytes": 335544320,
+    "job_timeout_minutes": 120,
+    "policy": "unchanged full initial cgroup accounting, host/disk/PID/OOM, inherited lease FD, owned waitid/wait4/descendants and ECHILD release"
+  },
+  "execution_order": [
+    "compile",
+    "resolve",
+    "replay",
+    "audit"
+  ],
+  "dependency_qualification": "Fresh ordinary-CI build and authenticated same-run paid/decoder outputs; no historical preservation or authenticated clean-cache provenance",
+  "runtime_route": "Accepted bounded CI child runner/accounting/lease/receipt engine only; no local mode, dispatch or artifact download"
+}

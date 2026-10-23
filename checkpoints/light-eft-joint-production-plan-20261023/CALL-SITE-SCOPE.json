@@ -1,0 +1,56 @@
+{
+  "inspected_edges": [
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+      "class_bases": [
+        {
+          "name": "CIContext",
+          "bases": [
+            "base"
+          ]
+        }
+      ],
+      "scope_context_references": 2,
+      "selected_path_calls": 0
+    },
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/focused_context.py",
+      "class_bases": [
+        {
+          "name": "FocusedContext",
+          "bases": []
+        }
+      ],
+      "scope_context_references": 0,
+      "selected_path_calls": 2
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/bridge_context.py",
+      "class_bases": [
+        {
+          "name": "FocusedContext",
+          "bases": []
+        }
+      ],
+      "scope_context_references": 0,
+      "selected_path_calls": 2
+    },
+    {
+      "path": "checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/batch_context.py",
+      "class_bases": [
+        {
+          "name": "FocusedContext",
+          "bases": []
+        }
+      ],
+      "scope_context_references": 0,
+      "selected_path_calls": 2
+    }
+  ],
+  "canonical_base": "scope.Context used by canonical four-stage context and three singleton admission contexts",
+  "paid_bridge_batch": "Independent FocusedContext classes; no semantic-pass integration here; their public selected_path calls do not use the per-validate root cache",
+  "decoder": "Separate older engine unchanged",
+  "global567": "Unchanged KernelCheck privileged loop and pinned checker; no Context.verify invocation",
+  "smallest_future_integration_paths": 6,
+  "source_or_test_execution": false
+}
