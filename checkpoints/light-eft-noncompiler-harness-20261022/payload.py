@@ -156,7 +156,7 @@ def main(work):
  result=dict(scope='NON_COMPILER_COMPONENT_DIAGNOSTIC',accepted=False,cases=[],
    hosted_full_job_savings_established=False,
    actual_populated_root_profile='UNAVAILABLE: no build/cache/compiler setup permitted',
-   actual_receipt_IO_profile='UNAVAILABLE: no bound receipt file supplied')
+   actual_receipt_IO_profile='Exact final production receipt-save shape only; no historical call-count or whole-job claim')
  try:
   modules=[load_source('Baseline',SOURCE/'BASELINE-package_selection.py',bindings),
            load_source('Proposal',SOURCE/'PROPOSED-package_selection.py',bindings)]
@@ -180,12 +180,10 @@ def main(work):
   with profiler:files=[contracts.regular(p)[0] for p in paths]
   result['actual_checkout_source_component']=dict(files=len(files),bytes=sum(r['bytes'] for r in files),
     profile=profiler.rows,qualification='Actual supplied source files, not hosted build inventory')
-  # Additional real-method attribution is explicitly controlled/synthetic.
-  phase=load_source('PhaseProfile',HERE/'phase_profile.py',bindings)
-  representative=load_source('RepresentativeComponents',HERE/'representative.py',bindings)
-  differential=load_source('ScopeDifferential',HERE/'scope_differential.py',bindings)
-  result['scope_differential']={}
-  differential.run(work/'scope-differential',contracts,modules[0],load_source,bindings,REPO,ENGINE,phase,representative,result['scope_differential'])
+  # REPLACE the synthetic scope phase, never append another child/phase.
+  receipt=load_source('ExactReceiptSave',HERE/'receipt_save.py',bindings)
+  result['receipt_save']={}
+  receipt.run(work/'receipt-save',work,HERE,ENGINE,REPO,bindings,contracts,result['receipt_save'])
   result['accepted']=True
  except BaseException as error:
   result['failure']=dict(type=type(error).__name__,message=str(error),traceback=traceback.format_exc(limit=12));raise
