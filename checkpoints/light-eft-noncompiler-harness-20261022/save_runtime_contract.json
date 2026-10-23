@@ -1,0 +1,43 @@
+{
+  "schema": "ACTUAL_DUMP_ENCODER_CONTRACT_V1",
+  "normalizer": "AST fields in order; omit locations/docstring and empty type_params; tuple repr SHA256",
+  "accepted_cpython_minors": [
+    [
+      3,
+      11
+    ],
+    [
+      3,
+      12
+    ]
+  ],
+  "profiles": [
+    {
+      "name": "reviewed-cpython-v3.12.3-semantic-AST",
+      "components": {
+        "dump": "4ab13c513f2abf5fb1c963921f5a0cc33f06dc4f9cd944797597eb0f31d8e2bc",
+        "JSONEncoder": "9e6b32091875aaf96a2898c64bab2c11f92a763bce7f387dd1dda83d4b258623",
+        "_make_iterencode": "0e02d48a726009bc7eeabd48c99e2196aab94239baba9262d7afcb432ec26e09"
+      },
+      "reference_sources": [
+        {
+          "repository": "python/cpython",
+          "ref": "v3.12.3",
+          "path": "Lib/json/__init__.py",
+          "blob": "ed2c74771ea87ddc9349099c37b17d3cda213040",
+          "bytes": 14020,
+          "sha256": "d5d41e2c29049515d295d81a6d40b4890fbec8d8482cfb401630f8ef2f77e4d5"
+        },
+        {
+          "repository": "python/cpython",
+          "ref": "v3.12.3",
+          "path": "Lib/json/encoder.py",
+          "blob": "597849eca0524a33c3f495c6dd56baa94032a2d0",
+          "bytes": 16070,
+          "sha256": "af7bd40a0d0d0a3e726a9b4b3a2a543019f6ab97a340d0162a9c29ca9da97869"
+        }
+      ]
+    }
+  ],
+  "claim": "Reference pins are not hosted attestation: actual loaded code must match actual on-disk source AND these semantic ASTs before trials; file/code/default/link checks repeated at end"
+}

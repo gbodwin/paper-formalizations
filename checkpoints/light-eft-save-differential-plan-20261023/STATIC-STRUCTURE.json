@@ -1,0 +1,97 @@
+{
+  "utc": "2026-10-23T05:02:57.037345+00:00",
+  "source_operation": "AST/literal/data/Git/hash analysis only; no diagnostic/model/body execution",
+  "runtime_rows": 44,
+  "runtime_source_bytes": 563475,
+  "manifest_sha256": "f568cb16a812414ddc776ad09f461bfeb1f0ab31d680f39457ac4c38250b1014",
+  "finite_cases": [
+    "success",
+    "encoder-type",
+    "encoder-circle",
+    "write-first",
+    "write-third",
+    "write-eintr",
+    "flush",
+    "file-fsync",
+    "rename",
+    "dir-open",
+    "dir-fsync",
+    "dir-close"
+  ],
+  "proposed_and_baseline_differ_only_nested_save": true,
+  "durability_tail_AST_equal": true,
+  "actual_supervisor_launcher_original_decoder_original": true,
+  "production_ancestor_entries_preserved": 110597,
+  "specs": [
+    {
+      "path": "checkpoints/light-eft-paid-focused-adapter-20261020/ci-spec.json",
+      "bytes": 16156,
+      "sha256": "0fdc974ebf84a2149297e82546d86b72b1c1c95973d3e0aa9dbc295a6dd5486a",
+      "recursive_path_hash_rows": 65
+    },
+    {
+      "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci-spec.json",
+      "bytes": 33436,
+      "sha256": "9d1264d6e9d6ab82e1a60f06829047102beb12f93b3ed4dcb7eb70e1069d33c3",
+      "recursive_path_hash_rows": 123
+    },
+    {
+      "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci-spec.json",
+      "bytes": 65293,
+      "sha256": "6af62f977e555e74a615905e2fdd2ca3ec9b52b52707a5745ad6e84adb631f56",
+      "recursive_path_hash_rows": 191
+    },
+    {
+      "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci-spec.json",
+      "bytes": 125471,
+      "sha256": "61788edd49d64c28c3ca3e82f38ccd2b784fef28744a942768b4ff00e1056f0a",
+      "recursive_path_hash_rows": 448
+    },
+    {
+      "path": "checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/ci-spec.json",
+      "bytes": 79203,
+      "sha256": "34d7c013e85d5323b5e66010ab7eda4b95b977d6b3e47181d2b4f8a5678fe35e",
+      "recursive_path_hash_rows": 214
+    }
+  ],
+  "total_recursive_path_hash_rows": 1041,
+  "workflows": [
+    {
+      "path": ".github/workflows/lean.yml",
+      "bytes": 50913,
+      "sha256": "dcdb866fe302827d78d037771edc0e04034e2d90b176d642badeb84c6f594f29",
+      "unchanged_qualification": true,
+      "event_text": "name: Lean\non:\n  push:\n    branches-ignore:\n      - light-eft-spanners-checkpoints\n  pull_request:\n  workflow_dispatch:\n\n"
+    },
+    {
+      "path": ".github/workflows/light-eft-exact.yml",
+      "bytes": 2288,
+      "sha256": "ea8c088449b4ecaed3462357b875074ff3f0f452323d7f45961714b1f0978081",
+      "unchanged_qualification": true,
+      "event_text": "name: LightEFT exact-source sequential gate\non:\n  workflow_dispatch:\n    inputs:\n      source:\n        description: Frozen exact source commit\n        required: true\n        type: string\n      harness:\n        description: Reviewed immutable verification-harness commit\n        required: true\n        type: string\npermissions:\n  contents: read\n"
+    },
+    {
+      "path": ".github/workflows/light-eft-fair-bit-focused.yml",
+      "bytes": 8456,
+      "sha256": "908a8b915db345d7e9775c819fc1a20fe38600c8498a024721d253cfc53cc470",
+      "unchanged_qualification": true,
+      "event_text": "name: LightEFT fair-bit bounded focused validation\non:\n  workflow_call:\n    inputs:\n      source:\n        required: true\n        type: string\n    outputs:\n      validated_commit:\n        value: ${{ jobs.check.outputs.validated_commit }}\npermissions:\n  contents: read\njobs:\n  check:\n    if: inputs.source == github.sha && github.ref != 'refs/heads/light-eft-spanners-checkpoints'\n    runs-on: ubuntu-latest\n    timeout-minutes: 120\n    outputs:\n      validated_commit: ${{ steps.focused_validated.outputs.commit }}\n    env:\n      LEAN_NUM_THREADS: '1'\n      LIGHTEFT_VALIDATION_ROLE: focused\n      LIGHTEFT_EXPECTED_SOURCE: ${{ inputs.source }}\n    steps:\n      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262\n        with:\n          ref: ${{ inputs.source }}\n          persist-credentials: false\n      - name: Bind actual caller and focused workflow identities before build\n        env:\n          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}\n          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}\n          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}\n          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}\n        run: python3 -B checkpoints/light-eft-sequential-validation-schedule-20261021/workflow_identity.py\n      - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5\n        with:\n          auto-config: \"false\"\n          build: \"true\"\n          test: \"false\"\n          lint: \"false\"\n          use-mathlib-cache: \"true\"\n          use-github-cache: \"false\"\n          mk_all-check: \"false\"\n          axiom-audit: \"true\"\n          axiom-audit-root: \"VFTSpanners\"\n          axiom-audit-allow: \"propext,Classical.choice,Quot.sound\"\n      - name: Build exact external inputs for fair-bit batch\n        run: lake build +Mathlib.Analysis.SpecificLimits.Normed +Mathlib.Topology.Algebra.InfiniteSum.ENNReal +Mathlib.Tactic.FieldSimp\n      - name: Check all paper module indexes\n        run: bash scripts/CheckModuleIndex.sh\n      - name: Verify paid flag serialization and stored filter composition\n        id: light_eft_paid_focused\n        env:\n          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}\n          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}\n          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}\n          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}\n          PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-paid-focused-python-${{ github.run_id }}-${{ github.run_attempt }}\n        run: python3 -B checkpoints/light-eft-paid-focused-adapter-20261020/ci_gate.py\n      - name: Preserve paid producer evidence immediately\n        if: ${{ always() && steps.light_eft_paid_focused.outcome != 'skipped' }}\n        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02\n        with:\n          name: light-eft-focused-paid-${{ github.run_id }}-${{ github.run_attempt }}\n          path: ${{ runner.temp }}/light-eft-paid-focused-${{ github.run_id }}-${{ github.run_attempt }}\n          include-hidden-files: true\n          if-no-files-found: error\n          retention-days: 30\n      - name: Verify exact staged joint-flag source sequentially\n        id: light_eft_staged\n        env:\n          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}\n          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}\n          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}\n          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}\n          PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-python-${{ github.run_id }}-${{ github.run_attempt }}\n        run: python3 -B checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py\n      - name: Preserve decoder producer evidence immediately\n        if: ${{ always() && steps.light_eft_staged.outcome != 'skipped' }}\n        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02\n        with:\n          name: light-eft-focused-decoder-${{ github.run_id }}-${{ github.run_attempt }}\n          path: ${{ runner.temp }}/light-eft-staged-${{ github.run_id }}-${{ github.run_attempt }}\n          include-hidden-files: true\n          if-no-files-found: error\n          retention-days: 30\n      - name: Verify supplied response output against joint decoder\n        id: light_eft_paid_joint_bridge\n        env:\n          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}\n          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}\n          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}\n          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}\n          PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-paid-joint-bridge-python-${{ github.run_id }}-${{ github.run_attempt }}\n        run: python3 -B checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/ci_gate.py\n      - name: Preserve focused bridge evidence before remaining checks\n        if: ${{ always() && steps.light_eft_paid_joint_bridge.outcome != 'skipped' }}\n        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02\n        with:\n          name: light-eft-focused-bridge-${{ github.run_id }}-${{ github.run_attempt }}\n          path: ${{ runner.temp }}/light-eft-paid-joint-bridge-${{ github.run_id }}-${{ github.run_attempt }}\n          include-hidden-files: true\n          if-no-files-found: error\n          retention-days: 30\n      - name: Verify reviewed flat tape and fair-bit sampler batch\n        id: light_eft_fair_bit_batch\n        env:\n          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}\n          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}\n          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}\n          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}\n          PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-fair-bit-batch-python-${{ github.run_id }}-${{ github.run_attempt }}\n        run: python3 -B checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/ci_gate.py\n      - name: Preserve fair-bit batch evidence before remaining checks\n        if: ${{ always() && steps.light_eft_fair_bit_batch.outcome != 'skipped' }}\n        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02\n        with:\n          name: light-eft-fair-bit-batch-${{ github.run_id }}-${{ github.run_attempt }}\n          path: ${{ runner.temp }}/light-eft-fair-bit-batch-${{ github.run_id }}-${{ github.run_attempt }}\n          include-hidden-files: true\n          if-no-files-found: error\n          retention-days: 30\n      - name: Bind completed focused validation to this exact commit\n        id: focused_validated\n        env:\n          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}\n          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}\n          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}\n          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}\n        run: python3 -B checkpoints/light-eft-sequential-validation-schedule-20261021/acceptance.py mark focused\n      - name: Preserve focused job identity and outcomes\n        if: always()\n        env:\n          LIGHTEFT_FOCUSED_OUTCOMES: ${{ toJSON(steps) }}\n          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}\n          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}\n          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}\n          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}\n        run: python3 -B checkpoints/light-eft-sequential-validation-schedule-20261021/acceptance.py summary\n      - name: Preserve complete focused job evidence including failures\n        if: always()\n        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02\n        with:\n          name: light-eft-focused-complete-${{ github.run_id }}-${{ github.run_attempt }}\n          path: |\n            ${{ runner.temp }}/light-eft-focused-summary-${{ github.run_id }}-${{ github.run_attempt }}\n            ${{ runner.temp }}/light-eft-paid-focused-${{ github.run_id }}-${{ github.run_attempt }}\n            ${{ runner.temp }}/light-eft-staged-${{ github.run_id }}-${{ github.run_attempt }}\n            ${{ runner.temp }}/light-eft-paid-joint-bridge-${{ github.run_id }}-${{ github.run_attempt }}\n            ${{ runner.temp }}/light-eft-fair-bit-batch-${{ github.run_id }}-${{ github.run_attempt }}\n          include-hidden-files: true\n          if-no-files-found: error\n          retention-days: 30\n"
+    },
+    {
+      "path": ".github/workflows/light-eft-noncompiler-diagnostics.yml",
+      "bytes": 2346,
+      "sha256": "e3216eeb192ce38ae486ba60ea938e35551d449124785f04ba8803be613efcb9",
+      "unchanged_qualification": false,
+      "event_text": "# Local review candidate only: never pushed, dispatched or executed.\nname: Light EFT noncompiler component diagnostics\non:\n  push:\n    branches:\n      - light-eft-spanners-checkpoints\n    paths:\n      - .github/workflows/light-eft-noncompiler-diagnostics.yml\n      - checkpoints/light-eft-noncompiler-harness-20261022/**\n"
+    }
+  ],
+  "claims_unexecuted": [
+    "actual runtime attestation",
+    "complete byte/chunk differential",
+    "fault/synchronous sticky checks",
+    "plain/profile timing",
+    "future admission",
+    "whole-job fit",
+    "36 mathematical bodies"
+  ]
+}

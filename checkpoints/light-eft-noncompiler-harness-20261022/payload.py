@@ -156,7 +156,7 @@ def main(work):
  result=dict(scope='NON_COMPILER_COMPONENT_DIAGNOSTIC',accepted=False,cases=[],
    hosted_full_job_savings_established=False,
    actual_populated_root_profile='UNAVAILABLE: no build/cache/compiler setup permitted',
-   actual_receipt_IO_profile='Exact final production receipt-save shape only; no historical call-count or whole-job claim')
+   actual_receipt_IO_profile='Two exact isolated save bodies; one final shape and finite synchronous faults; no historical call-count or whole-job claim')
  try:
   modules=[load_source('Baseline',SOURCE/'BASELINE-package_selection.py',bindings),
            load_source('Proposal',SOURCE/'PROPOSED-package_selection.py',bindings)]
@@ -180,8 +180,8 @@ def main(work):
   with profiler:files=[contracts.regular(p)[0] for p in paths]
   result['actual_checkout_source_component']=dict(files=len(files),bytes=sum(r['bytes'] for r in files),
     profile=profiler.rows,qualification='Actual supplied source files, not hosted build inventory')
-  # REPLACE the synthetic scope phase, never append another child/phase.
-  receipt=load_source('ExactReceiptSave',HERE/'receipt_save.py',bindings)
+  # REPLACE the previous original-only receipt phase in the SAME guarded child.
+  receipt=load_source('SaveDifferential',HERE/'save_differential.py',bindings)
   result['receipt_save']={}
   receipt.run(work/'receipt-save',work,HERE,ENGINE,REPO,bindings,contracts,result['receipt_save'])
   result['accepted']=True

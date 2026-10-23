@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-23T05:01:05.040303+00:00",
+  "actual_compilers": [],
+  "current_cgroup_namespace": "cgroup:[4026532205]",
+  "local_admission": false,
+  "operator_acquired": false,
+  "code_or_model_executed": false,
+  "source_AST_hash_Git_analysis_only": true,
+  "reference_AST_and_Git_hashes_verified": true,
+  "source_analysis_corrections": [
+    "AST dump list wrapper corrected",
+    "Durability tail is three statements, not four",
+    "Historical symlink Git blobs compared with readlink bytes, without following links"
+  ],
+  "historical_saves": "13 canonical and conditional317 source-derived;264 on proposed runner/53 on other unchanged decoder; not observed traces",
+  "measured_before_this_turn": "Coordinator original-only single final-record plain0.269509528s vs separately instrumented1.029693296s; not a new measurement",
+  "new_performance": "UNMEASURED; proposed loop may be neutral or slower",
+  "review": "Coordinator independent source/runtime-contract/fault/placement review pending",
+  "Fast": "off"
+}
