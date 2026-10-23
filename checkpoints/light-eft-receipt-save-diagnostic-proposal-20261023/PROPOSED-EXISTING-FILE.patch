@@ -1,0 +1,84 @@
+--- a/checkpoints/light-eft-noncompiler-harness-20261022/payload.py
++++ b/checkpoints/light-eft-noncompiler-harness-20261022/payload.py
+@@ -156,7 +156,7 @@
+  result=dict(scope='NON_COMPILER_COMPONENT_DIAGNOSTIC',accepted=False,cases=[],
+    hosted_full_job_savings_established=False,
+    actual_populated_root_profile='UNAVAILABLE: no build/cache/compiler setup permitted',
+-   actual_receipt_IO_profile='UNAVAILABLE: no bound receipt file supplied')
++   actual_receipt_IO_profile='Exact final production receipt-save shape only; no historical call-count or whole-job claim')
+  try:
+   modules=[load_source('Baseline',SOURCE/'BASELINE-package_selection.py',bindings),
+            load_source('Proposal',SOURCE/'PROPOSED-package_selection.py',bindings)]
+@@ -180,12 +180,10 @@
+   with profiler:files=[contracts.regular(p)[0] for p in paths]
+   result['actual_checkout_source_component']=dict(files=len(files),bytes=sum(r['bytes'] for r in files),
+     profile=profiler.rows,qualification='Actual supplied source files, not hosted build inventory')
+-  # Additional real-method attribution is explicitly controlled/synthetic.
+-  phase=load_source('PhaseProfile',HERE/'phase_profile.py',bindings)
+-  representative=load_source('RepresentativeComponents',HERE/'representative.py',bindings)
+-  differential=load_source('ScopeDifferential',HERE/'scope_differential.py',bindings)
+-  result['scope_differential']={}
+-  differential.run(work/'scope-differential',contracts,modules[0],load_source,bindings,REPO,ENGINE,phase,representative,result['scope_differential'])
++  # REPLACE the synthetic scope phase, never append another child/phase.
++  receipt=load_source('ExactReceiptSave',HERE/'receipt_save.py',bindings)
++  result['receipt_save']={}
++  receipt.run(work/'receipt-save',work,HERE,ENGINE,REPO,bindings,contracts,result['receipt_save'])
+   result['accepted']=True
+  except BaseException as error:
+   result['failure']=dict(type=type(error).__name__,message=str(error),traceback=traceback.format_exc(limit=12));raise
+--- a/checkpoints/light-eft-noncompiler-harness-20261022/bindings.json
++++ b/checkpoints/light-eft-noncompiler-harness-20261022/bindings.json
+@@ -133,19 +133,29 @@
+       "sha256": "8f9f175333031f282d882110cd30f9565c3e298c9c4fca532f3969bc4bc1f515"
+     },
+     {
++      "path": "checkpoints/light-eft-noncompiler-harness-20261022/canonical-audit-ed86.receipt.json.gz",
++      "bytes": 193510,
++      "sha256": "acab398f6626ed13f0c3b3021fdf3e3d8e7e9b514e6e8a132985d6ea601e88db"
++    },
++    {
+       "path": "checkpoints/light-eft-noncompiler-harness-20261022/launcher.py",
+       "bytes": 10956,
+       "sha256": "df88070a9178474d941751a8a13d6f8c0f7a85463ddbf01a2f4ce4fd2528ef50"
+     },
+     {
+       "path": "checkpoints/light-eft-noncompiler-harness-20261022/payload.py",
+-      "bytes": 12192,
+-      "sha256": "30e4f7cabf3a3cae088ec421f565aca5cfbc3cd314a5b275903393fc9883211f"
++      "bytes": 12009,
++      "sha256": "a3af8f88e9feb3b736b2e4127afd5637816ff6591908c6f495ea113d40657be1"
+     },
+     {
+       "path": "checkpoints/light-eft-noncompiler-harness-20261022/phase_profile.py",
+       "bytes": 4447,
+       "sha256": "8ef62d4dad70794a8a56a5d6b8116c1f074866b089af7f27c4a5d6e15b6875d4"
++    },
++    {
++      "path": "checkpoints/light-eft-noncompiler-harness-20261022/receipt_save.py",
++      "bytes": 11007,
++      "sha256": "9267064b7832822f80e21d470af573aaef645958d346d2fedc62559251e640c2"
+     },
+     {
+       "path": "checkpoints/light-eft-noncompiler-harness-20261022/representative.py",
+--- a/checkpoints/light-eft-noncompiler-harness-20261022/PROPOSED-workflow.yml
++++ b/checkpoints/light-eft-noncompiler-harness-20261022/PROPOSED-workflow.yml
+@@ -19,7 +19,7 @@
+     timeout-minutes: 5
+     env:
+       LEAN_NUM_THREADS: '1'
+-      LIGHTEFT_DIAGNOSTIC_BINDINGS_SHA: 455035af219af48ab89c6a3b8ab7301bf754e25c150765178b25cf0dde97c6f9
++      LIGHTEFT_DIAGNOSTIC_BINDINGS_SHA: 29e0d459e71157b3c21717764f51b1c621819adc7945843436bd8b1ba6964491
+     steps:
+       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+         with:
+--- a/.github/workflows/light-eft-noncompiler-diagnostics.yml
++++ b/.github/workflows/light-eft-noncompiler-diagnostics.yml
+@@ -19,7 +19,7 @@
+     timeout-minutes: 5
+     env:
+       LEAN_NUM_THREADS: '1'
+-      LIGHTEFT_DIAGNOSTIC_BINDINGS_SHA: 455035af219af48ab89c6a3b8ab7301bf754e25c150765178b25cf0dde97c6f9
++      LIGHTEFT_DIAGNOSTIC_BINDINGS_SHA: 29e0d459e71157b3c21717764f51b1c621819adc7945843436bd8b1ba6964491
+     steps:
+       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+         with:

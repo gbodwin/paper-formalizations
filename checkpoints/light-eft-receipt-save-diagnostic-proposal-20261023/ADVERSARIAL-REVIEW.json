@@ -1,0 +1,11 @@
+{
+  "status": "TEXT-ONLY source-review cases; no decoder/model/harness execution",
+  "compressed_authentication": ["absent/nonregular/symlink/multilink source", "changed compressed bytes/length/hash", "missing declared input row"],
+  "bounded_stream_contract": ["decompression exceeds RAW_BYTES by one or more", "short expansion", "truncated header/body/trailer", "CRC/ISIZE mismatch", "complete member plus arbitrary suffix or padding", "concatenated second gzip member", "wrong exact raw digest", "EOF false or any unused/unconsumed data"],
+  "before_json": "Every authentication/stream/length/hash predicate must complete before json.loads; no alternate parse path",
+  "historical_data": ["source/attempt/stage/state/exit metadata differs", "historical paths and environment must remain uninterpreted JSON data", "never use historical lease identity for current admission"],
+  "save_source": ["runner hash/signature/definition count differs", "nested save AST node changed", "record/evidence no longer closure cells", "actual source module/runner/launcher accidentally invoked"],
+  "plain_and_profile": ["profiler already active before plain path", "body does not reproduce exact complete bytes", "same output directory reused", "temp output remains", "missing/extra selected label or call count", "replaced/broken/unclosed profile callback", "native C time mislabeled as pure Python or isolated syscall CPU", "nested inclusive spans added twice"],
+  "budget_and_failure": ["aggregate source bytes above2MiB", "conservative fixture bytes above30MiB plus original2MiB reserve", "progress above64KiB or final result above1MiB", "ordinary16MiB file bound or90s whole-child/CPU60/resource guard fires", "exception or partial output accepted", "source proposal published before exact gzip Git binding and sequential review"],
+  "all_original_acceptance_and_resource_guards_retained": true
+}

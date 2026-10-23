@@ -1,0 +1,29 @@
+# Exact compressed receipt-save diagnostic: SOURCE overlay, DATA BLOCKED
+
+Parent `f2c49a155719f071f3dde96a02cc431edf69deb9` received an independent qualified inert SOURCE PLAN PASS. That pass did not admit production integration or a physical run. The authentic canonical audit receipt is2,585,054 bytes, exceeding that plan's1-MiB raw source admission. This proposal preserves the rejected admission and all earlier evidence. It does not truncate the receipt, change either source cap, integrate production or run a diagnostic.
+
+The revised design authenticates the exact193,510-byte gzip as SOURCE DATA (within the unchanged2-MiB aggregate source limit) and expands the full2,585,054 bytes as an inert FIXTURE inside the existing32-MiB child budget. Raw bytes/hash, gzip bytes/hash, single-member EOF and no suffix are enforced BEFORE JSON parsing. Source/fixture/output caps remain separate and unchanged. No compiler object, cache, toolchain or historical environment is reconstructed.
+
+## Current access and readiness
+
+The owning coordinator independently verified Library packet `libfile_c1e59f2b634481919a09d60a38c8595b`,197,477 bytes,SHA25629d82e803f464c44ec4386c01323218c36cf740a039d924a9eab7c9a8774c328. It contains the exact compressed receipt, SHA256acab398f6626ed13f0c3b3021fdf3e3d8e7e9b514e6e8a132985d6ea601e88db, and full original provenance/index. Those byte assertions are attributed to the coordinator; the author has not extracted that packet.
+
+One direct Library workspace preparation returned `workspace_path:null` and a signed download URL. The Library text reader reported no readable archive content. The parent explicitly forbids repeating the worker's known failed download route, so no transfer helper/alternate download was invoked. No data placeholder or guessed gzip was created. `INPUT-REQUIREMENTS.json` preserves this precise missing prerequisite. Code/design work proceeded independently.
+
+`PROPOSED/` is an inert source overlay, NOT an installed harness. Its planned39-row runtime manifest has38 locally verified available source rows plus one explicitly missing exact gzip row. Its manifest/workflow pins can be reviewed as source, but this is NOT a complete publication-ready placement commit. The live harness, live diagnostic workflow, all production files,1,041 bindings/five specs and three qualification workflows remain unchanged. No source unit, decoder, fixture, model, native/compiler/kernel call, reservation, push or CI ran here; only source/Git/hash/AST/data-design operations occurred. Fast stays off.
+
+The remaining supported action is consumer-local placement of the exact already-authenticated gzip at the declared overlay target, with its exact length/hash verified. The filename in `INPUT-REQUIREMENTS.json` is a controlled installation target, not an invented assertion about the unread archive member name. No recompression is permitted. A data-bound installed descendant, its Git tree and actual workflow pins must then be frozen for coordinator sequential review BEFORE any publication. Nothing in this source overlay renews execution authority or authorizes a production/full-CI retry.
+
+## One exact final-record shape
+
+The source overlay replaces the prior synthetic scope differential/timing phase with `receipt_save.run`. Earlier package cases and the bounded source mini-profile remain; no second phase/job/child/timer is appended. Historical comparisons stay historical. The original launcher/supervisor/accounting/lifecycle/lease/identity/command source is unchanged. Same isolated Python argv/env/bootstrap and diagnostic PASS marker; only exact diagnostic source/input/manifest/workflow pins would change after completed placement.
+
+The module reads the authenticated original `child_runner.py`, verifies its exact bound SHA and extracts ONLY the nested `run_child.save` AST node. It never imports/executes the runner module or invokes run_child. A minimal factory binds record/evidence as closure cells and returns the unchanged save body, preserving those original closure variables. JSON/os remain the original standard modules. Historical record paths/environment/identity are serialized DATA only; they never determine an I/O path, command, current lease or source authority.
+
+The original save body runs once plain and once separately profiled, with a fresh parsed record, closure and distinct new owned output directory each time. Each complete output must equal all original receipt bytes and match the raw hash; leftover temp output, incomplete profile, overflow or exception rejects. The plain path has NO profiler and no patched body, wrapper around I/O, alternate encoder or acceptance cache. Fixture construction, decoding, AST extraction, fresh-record parsing, byte verification and progress remain inside the one child but outside the measured save intervals.
+
+## Honest profiling
+
+Selected Python-frame labels are runner.save, json.dump and Path.open. Separate fixed builtin C-call labels are io.open, os.open, os.fsync, os.replace and os.close. Their actual expected call counts must match, or the observation rejects. C-call spans are call wall latency, NOT isolated kernel/syscall CPU. Python frame spans contain unregistered native writes/buffering/flush/stream-close work. The residual Python exclusive time is not claimed to be pure Python CPU or free of I/O. Observer overhead is included; plain and observed timings must be reported separately. Nested inclusive spans are never added to parent inclusive times; only exclusive selected spans may be summed.
+
+This is ONE final-record shape, not historical save count, intermediate-record distribution, all post-terminal persistence/handoff cost, Context.verify cost, full-production timing or120-minute fit. Full567 native/kernel/type/body/axiom/collision checks and120/120/5-minute qualification remain mandatory and unchanged. All36 bodies and whole-paper acceptance remain open.
