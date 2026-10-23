@@ -1,0 +1,1074 @@
+[
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 55,
+    "scope": "kill_memory_group",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 80,
+    "scope": "runtime_sample",
+    "expression": "kill_memory_group(child, record, save, '; '.join(errors))",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 87,
+    "scope": "runtime_sample",
+    "expression": "kill_memory_group(child, record, save, repr(exc))",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 158,
+    "scope": "run_preflight",
+    "expression": "shared.before_child(plan, record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 159,
+    "scope": "run_preflight",
+    "expression": "shared.prepare_child(plan, record, save, accounting)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 171,
+    "scope": "run_preflight",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 190,
+    "scope": "run_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 194,
+    "scope": "run_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 201,
+    "scope": "run_child",
+    "expression": "run_preflight(shared, plan, record, save, accounting)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 218,
+    "scope": "run_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 221,
+    "scope": "run_child",
+    "expression": "runtime_sample(child, baseline, None, accounting, record, save, samples)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 222,
+    "scope": "run_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 225,
+    "scope": "run_child",
+    "expression": "runtime_sample(child, baseline, anon_baseline, accounting, record, save, samples)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 235,
+    "scope": "run_child",
+    "expression": "shared.preexec(plan, record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 236,
+    "scope": "run_child",
+    "expression": "runtime_sample(child, baseline, None, accounting, record, save, samples, shared.visible_gate(plan), ADMISSION_HEADROOM)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 243,
+    "scope": "run_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 250,
+    "scope": "run_child",
+    "expression": "kill_memory_group(child, record, save, repr(exc))",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 257,
+    "scope": "run_child",
+    "expression": "life.retry_locked('ignore-cleanup-signal', lambda sig=sig: signal.signal(sig, signal.SIG_IGN), record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 263,
+    "scope": "run_child",
+    "expression": "life.retry_locked('runner-direct-wait4', lambda: reap_direct(child, record, save), record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 263,
+    "scope": "run_child",
+    "expression": "reap_direct(child, record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 265,
+    "scope": "run_child",
+    "expression": "life.cleanup(child, record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 273,
+    "scope": "run_child",
+    "expression": "shared.after_child(plan, record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 280,
+    "scope": "run_child",
+    "expression": "shared.complete_log(path, record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 284,
+    "scope": "run_child",
+    "expression": "life.retry_locked('restore-subreaper', lambda: life.set_subreaper(old), record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 286,
+    "scope": "run_child",
+    "expression": "life.retry_locked('finalize', save, record, save)",
+    "callback_args": [
+      "save",
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 287,
+    "scope": "run_child",
+    "expression": "life.retry_locked('restore-signals', lambda sig=sig, handler=handler: signal.signal(sig, handler), record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+    "line": 289,
+    "scope": "run_child",
+    "expression": "life.cleanup_error('pilot-finalization-barrier', e, record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_admission.py",
+    "line": 47,
+    "scope": "context_type.AdmissionContext.before_child",
+    "expression": "super().before_child(plan, record, save_receipt)",
+    "callback_args": [
+      "save_receipt"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_admission.py",
+    "line": 54,
+    "scope": "context_type.AdmissionContext.before_child",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_admission.py",
+    "line": 62,
+    "scope": "context_type.AdmissionContext.after_child",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+    "line": 110,
+    "scope": "context_type.CIContext.before_child",
+    "expression": "super().before_child(p, r, save_receipt)",
+    "callback_args": [
+      "save_receipt"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+    "line": 118,
+    "scope": "context_type.CIContext.after_child",
+    "expression": "super().after_child(p, r, save_receipt)",
+    "callback_args": [
+      "save_receipt"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+    "line": 121,
+    "scope": "context_type.CIContext.after_child",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+    "line": 126,
+    "scope": "context_type.CIContext.prepare_child",
+    "expression": "super().prepare_child(p, r, save_receipt, accounting)",
+    "callback_args": [
+      "save_receipt"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+    "line": 160,
+    "scope": "context_type.CIContext.preexec",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+    "line": 217,
+    "scope": "run_stage",
+    "expression": "save(root / 'same-run-handoff.json', dict(CI_identity=identity, decoder_root=str(decoder['root']), decoder_stages=decoder['stages'], decoder_release_ns=decoder['lease']['release_ns'], carrier_manifest=carrier['reference'], objects=carrier['objects'], retained_context=matched, qualification=spec['object_admission']['context_qualification']))",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Different module-level manifest/progress writer, NOT nested run_child.save"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+    "line": 225,
+    "scope": "run_stage",
+    "expression": "save(root / 'fresh-CI-owner.json', dict(identity=identity, supervisor_pid=os.getpid(), issued_ns=__import__('time').monotonic_ns(), source_commit=identity['GITHUB_SHA'], boot_id=Path('/proc/sys/kernel/random/boot_id').read_text().strip(), namespaces={n: os.readlink('/proc/self/ns/' + n) for n in ['pid', 'mnt', 'cgroup']}, qualification='Fresh CI environment; pre-publication operator window is external'))",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Different module-level manifest/progress writer, NOT nested run_child.save"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+    "line": 257,
+    "scope": "run_stage.progress",
+    "expression": "save(root / 'admission-progress.json', dict(completed=rows, CI_identity=identity))",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Different module-level manifest/progress writer, NOT nested run_child.save"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+    "line": 283,
+    "scope": "run_stage",
+    "expression": "save(root / 'result.json', state)",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Different module-level manifest/progress writer, NOT nested run_child.save"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+    "line": 290,
+    "scope": "run_stage",
+    "expression": "save(root / 'available-export-index.json', exports)",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Different module-level manifest/progress writer, NOT nested run_child.save"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+    "line": 305,
+    "scope": "main",
+    "expression": "save(root / 'stage-failure.json', dict(error=repr(e), CI_identity=identity))",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Different module-level manifest/progress writer, NOT nested run_child.save"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py",
+    "line": 314,
+    "scope": "main",
+    "expression": "save(root / 'evidence-sha256.json', rows)",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Different module-level manifest/progress writer, NOT nested run_child.save"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+    "line": 44,
+    "scope": "Context.before_child",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+    "line": 52,
+    "scope": "Context.prepare_child",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+    "line": 56,
+    "scope": "Context.preexec",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+    "line": 78,
+    "scope": "Context.after_child",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-canonical-output-adapter-20261020/scope.py",
+    "line": 80,
+    "scope": "Context.complete_log",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/batch_context.py",
+    "line": 97,
+    "scope": "FocusedContext.before_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/batch_context.py",
+    "line": 111,
+    "scope": "FocusedContext.prepare_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/batch_context.py",
+    "line": 118,
+    "scope": "FocusedContext.preexec",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/batch_context.py",
+    "line": 143,
+    "scope": "FocusedContext.after_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/batch_context.py",
+    "line": 145,
+    "scope": "FocusedContext.complete_log",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 55,
+    "scope": "kill_memory_group",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 80,
+    "scope": "runtime_sample",
+    "expression": "kill_memory_group(child, record, save, '; '.join(errors))",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 87,
+    "scope": "runtime_sample",
+    "expression": "kill_memory_group(child, record, save, repr(exc))",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 158,
+    "scope": "run_preflight",
+    "expression": "shared.before_child(plan, record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 159,
+    "scope": "run_preflight",
+    "expression": "shared.prepare_child(plan, record, save, accounting)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 171,
+    "scope": "run_preflight",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 190,
+    "scope": "run_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 194,
+    "scope": "run_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 201,
+    "scope": "run_child",
+    "expression": "run_preflight(shared, plan, record, save, accounting)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 218,
+    "scope": "run_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 221,
+    "scope": "run_child",
+    "expression": "runtime_sample(child, baseline, None, accounting, record, save, samples)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 222,
+    "scope": "run_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 225,
+    "scope": "run_child",
+    "expression": "runtime_sample(child, baseline, anon_baseline, accounting, record, save, samples)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 235,
+    "scope": "run_child",
+    "expression": "shared.preexec(plan, record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 236,
+    "scope": "run_child",
+    "expression": "runtime_sample(child, baseline, None, accounting, record, save, samples, shared.visible_gate(plan), ADMISSION_HEADROOM)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 243,
+    "scope": "run_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 250,
+    "scope": "run_child",
+    "expression": "kill_memory_group(child, record, save, repr(exc))",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 257,
+    "scope": "run_child",
+    "expression": "life.retry_locked('ignore-cleanup-signal', lambda sig=sig: signal.signal(sig, signal.SIG_IGN), record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 263,
+    "scope": "run_child",
+    "expression": "life.retry_locked('runner-direct-wait4', lambda: reap_direct(child, record, save), record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 263,
+    "scope": "run_child",
+    "expression": "reap_direct(child, record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 265,
+    "scope": "run_child",
+    "expression": "life.cleanup(child, record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 273,
+    "scope": "run_child",
+    "expression": "shared.after_child(plan, record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 280,
+    "scope": "run_child",
+    "expression": "shared.complete_log(path, record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 284,
+    "scope": "run_child",
+    "expression": "life.retry_locked('restore-subreaper', lambda: life.set_subreaper(old), record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 286,
+    "scope": "run_child",
+    "expression": "life.retry_locked('finalize', save, record, save)",
+    "callback_args": [
+      "save",
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 287,
+    "scope": "run_child",
+    "expression": "life.retry_locked('restore-signals', lambda sig=sig, handler=handler: signal.signal(sig, handler), record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+    "line": 289,
+    "scope": "run_child",
+    "expression": "life.cleanup_error('pilot-finalization-barrier', e, record, save)",
+    "callback_args": [
+      "save"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/scope.py",
+    "line": 150,
+    "scope": "Context.before_child",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/scope.py",
+    "line": 158,
+    "scope": "Context.prepare_child",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/scope.py",
+    "line": 162,
+    "scope": "Context.preexec",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/scope.py",
+    "line": 184,
+    "scope": "Context.after_child",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/scope.py",
+    "line": 186,
+    "scope": "Context.complete_log",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py",
+    "line": 78,
+    "scope": "context_type.CIContext.before_child",
+    "expression": "super().before_child(p, r, save_receipt)",
+    "callback_args": [
+      "save_receipt"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py",
+    "line": 82,
+    "scope": "context_type.CIContext.prepare_child",
+    "expression": "super().prepare_child(p, r, save_receipt, accounting)",
+    "callback_args": [
+      "save_receipt"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py",
+    "line": 115,
+    "scope": "context_type.CIContext.preexec",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py",
+    "line": 120,
+    "scope": "context_type.CIContext.after_child",
+    "expression": "save_receipt()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py",
+    "line": 121,
+    "scope": "context_type.CIContext.after_child",
+    "expression": "super().after_child(p, r, save_receipt)",
+    "callback_args": [
+      "save_receipt"
+    ],
+    "direct_persist_call": false,
+    "classification": "Receipt callback forwarding; not an additional write merely because callback is passed"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py",
+    "line": 172,
+    "scope": "run_stage",
+    "expression": "save(root / 'fresh-CI-owner.json', dict(identity=identity, supervisor_pid=os.getpid(), issued_ns=__import__('time').monotonic_ns(), source_commit=identity['GITHUB_SHA'], boot_id=Path('/proc/sys/kernel/random/boot_id').read_text().strip(), namespaces={n: os.readlink('/proc/self/ns/' + n) for n in ['pid', 'mnt', 'cgroup']}, qualification='Fresh CI environment; pre-publication operator window is external'))",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Different module-level manifest/progress writer, NOT nested run_child.save"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py",
+    "line": 208,
+    "scope": "run_stage",
+    "expression": "save(root / 'result.json', state)",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Different module-level manifest/progress writer, NOT nested run_child.save"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py",
+    "line": 215,
+    "scope": "run_stage",
+    "expression": "save(root / 'available-export-index.json', exports)",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Different module-level manifest/progress writer, NOT nested run_child.save"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py",
+    "line": 230,
+    "scope": "main",
+    "expression": "save(root / 'stage-failure.json', dict(error=repr(e), CI_identity=identity))",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Different module-level manifest/progress writer, NOT nested run_child.save"
+  },
+  {
+    "path": "checkpoints/light-eft-joint-flag-ci-extension-revision-20261019/ci_gate.py",
+    "line": 239,
+    "scope": "main",
+    "expression": "save(root / 'evidence-sha256.json', rows)",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Different module-level manifest/progress writer, NOT nested run_child.save"
+  },
+  {
+    "path": "checkpoints/light-eft-paid-focused-adapter-20261020/focused_context.py",
+    "line": 96,
+    "scope": "FocusedContext.before_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-paid-focused-adapter-20261020/focused_context.py",
+    "line": 110,
+    "scope": "FocusedContext.prepare_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-paid-focused-adapter-20261020/focused_context.py",
+    "line": 117,
+    "scope": "FocusedContext.preexec",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-paid-focused-adapter-20261020/focused_context.py",
+    "line": 142,
+    "scope": "FocusedContext.after_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-paid-focused-adapter-20261020/focused_context.py",
+    "line": 144,
+    "scope": "FocusedContext.complete_log",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/bridge_context.py",
+    "line": 100,
+    "scope": "FocusedContext.before_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/bridge_context.py",
+    "line": 114,
+    "scope": "FocusedContext.prepare_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/bridge_context.py",
+    "line": 121,
+    "scope": "FocusedContext.preexec",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/bridge_context.py",
+    "line": 148,
+    "scope": "FocusedContext.after_child",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "checkpoints/light-eft-paid-joint-bridge-ci-adapter-20261020/bridge_context.py",
+    "line": 150,
+    "scope": "FocusedContext.complete_log",
+    "expression": "save()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Receipt closure direct call or context/lifecycle callback invocation; path-specific count required"
+  },
+  {
+    "path": "scripts/LightEFTProcessLifecycle.py",
+    "line": 33,
+    "scope": "cleanup_error",
+    "expression": "persist()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Persistence error handler or callback forwarding; retry operation is save only at finalize"
+  },
+  {
+    "path": "scripts/LightEFTProcessLifecycle.py",
+    "line": 44,
+    "scope": "retry_locked",
+    "expression": "operation()",
+    "callback_args": [],
+    "direct_persist_call": true,
+    "classification": "Persistence error handler or callback forwarding; retry operation is save only at finalize"
+  },
+  {
+    "path": "scripts/LightEFTProcessLifecycle.py",
+    "line": 46,
+    "scope": "retry_locked",
+    "expression": "cleanup_error(stage, exc, record, persist)",
+    "callback_args": [
+      "persist"
+    ],
+    "direct_persist_call": false,
+    "classification": "Persistence error handler or callback forwarding; retry operation is save only at finalize"
+  },
+  {
+    "path": "scripts/LightEFTProcessLifecycle.py",
+    "line": 87,
+    "scope": "cleanup",
+    "expression": "cleanup_error('terminate-discover-reap', exc, record, persist)",
+    "callback_args": [
+      "persist"
+    ],
+    "direct_persist_call": false,
+    "classification": "Persistence error handler or callback forwarding; retry operation is save only at finalize"
+  }
+]

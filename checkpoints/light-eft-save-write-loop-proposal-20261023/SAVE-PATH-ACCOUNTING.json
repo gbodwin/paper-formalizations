@@ -1,0 +1,124 @@
+{
+  "source_sha256": "c84a0cbb21a40edaa11c89e119ffad2a84321278537b7893465a796269c2dccb",
+  "historical_run": 39845888749,
+  "attempt": 1,
+  "commit": "ed86a6e8a5fc62e7d807b10dca43669f3cd848a6",
+  "canonical_audit_attempt": "70abff84960944f49cae97c845c69810",
+  "actual_counter_or_intermediate_save_trace_available": false,
+  "normal_canonical_audit_source_count": 13,
+  "trace": [
+    {
+      "ordinal": 1,
+      "site": "child_runner.py:190",
+      "state": "created",
+      "growth": "Initial record; no package map"
+    },
+    {
+      "ordinal": 2,
+      "site": "child_runner.py:194",
+      "state": "created + lock",
+      "growth": "Owned lock descriptor/identity"
+    },
+    {
+      "ordinal": 3,
+      "site": "scope.py:44 via CIContext.before_child",
+      "state": "before-child complete",
+      "growth": "Package map/effective dependencies/source/output guard added; large fixed map begins here"
+    },
+    {
+      "ordinal": 4,
+      "site": "scope.py:52 via CIContext.prepare_child",
+      "state": "admission recorded",
+      "growth": "Host/cgroup admission and input journal reference"
+    },
+    {
+      "ordinal": 5,
+      "site": "child_runner.py:171 run_preflight finally",
+      "state": "preflight ended",
+      "growth": "Deadline/status/timing; timer canceled"
+    },
+    {
+      "ordinal": 6,
+      "site": "child_runner.py:218",
+      "state": "handshake-wait",
+      "growth": "Child PID/runtime wall start/launch evidence"
+    },
+    {
+      "ordinal": 7,
+      "site": "child_runner.py:222",
+      "state": "first child identity",
+      "growth": "First decision sample/identity"
+    },
+    {
+      "ordinal": 8,
+      "site": "ci_gate.py:160 CIContext.preexec",
+      "state": "preexec preservation",
+      "growth": "Fresh identity/critical hash/disk observations; inherited base preexec is NOT additionally called"
+    },
+    {
+      "ordinal": 9,
+      "site": "child_runner.py:243",
+      "state": "limits+handshake verified",
+      "growth": "Kernel limits/anonymous baseline/preexec sample/admission/handshake; still before exec authorization write"
+    },
+    {
+      "ordinal": 10,
+      "site": "scope.py:78 via CIContext.after_child",
+      "state": "post-child preservation",
+      "growth": "Terminal/latest samples, reaping/cleanup flags, audit checks, preservation; no audit fixture extra save"
+    },
+    {
+      "ordinal": 11,
+      "site": "scope.py:80 complete_log raw.log",
+      "state": "first completed log bound",
+      "growth": "raw.log binding appended"
+    },
+    {
+      "ordinal": 12,
+      "site": "scope.py:80 complete_log samples.jsonl",
+      "state": "second completed log bound",
+      "growth": "samples log binding appended"
+    },
+    {
+      "ordinal": 13,
+      "site": "child_runner.py:286 life.retry_locked('finalize',save)",
+      "state": "finished",
+      "growth": "Output summary/end time/final state; one operation call on no-error path"
+    }
+  ],
+  "conditions": [
+    "Exact historical source and callback classes",
+    "Finished/exit0/no sticky failure or cleanup_errors; no retry recovery",
+    "Successful single preflight and one handshake/preexec",
+    "Both raw.log and samples.jsonl exist and are completed",
+    "No source/config/writer mutation"
+  ],
+  "error_paths": {
+    "memory_stop": "kill_memory_group persists once on first stop, only after signaling; not taken in this clean record",
+    "preflight_failure": "finally save still executes; failure cleanup may persist; not this clean record",
+    "lifecycle_retry": "cleanup_error calls persist on each retry; sticky failure, unbounded until recovery; cannot use13 if errors present",
+    "reap_direct": "save callback parameter unused; no normal write",
+    "normal_runtime_samples": "Update memory record and append+flush samples log; DO NOT invoke receipt save",
+    "global_ci_gate_save": "Separate JSON manifest/progress writer, not this closure"
+  },
+  "conditional_full_run_counts": {
+    "qualification": "Source-derived clean-path accounting, NOT observed per-save counters or durations; all historical clean completion facts beyond the one parsed receipt attributed to coordinator/accepted stage outcomes",
+    "paid9": 117,
+    "decoder4": 53,
+    "bridge4": 52,
+    "canonical7": 95,
+    "total24": 317,
+    "decoder_resolve_extra_fixture_save": 1,
+    "canonical_resolve_extra_fixture_save": 1,
+    "admission_before_child_extra": 3,
+    "base_normal_per_child": 13,
+    "not_run_fair_bit_batch": "Focused job skipped in this historical attempt; no12-child counts included"
+  },
+  "unavailable": [
+    "Actual per-save timestamps/durations and intermediate byte lengths",
+    "Historical serializer chunk/write counts or I/O syscall traces",
+    "Complete23 other raw receipt records locally",
+    "Attribution of942.416s postterminal window to serialization",
+    "A conservative current full/focused job budget"
+  ]
+}

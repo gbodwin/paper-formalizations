@@ -1,0 +1,648 @@
+{
+  "source_commit": "ed86a6e8a5fc62e7d807b10dca43669f3cd848a6",
+  "stage": "audit",
+  "attempt": "70abff84960944f49cae97c845c69810",
+  "state": "finished",
+  "exit": 0,
+  "raw_bytes": 2585054,
+  "raw_sha256": "3d5bdae23f840b8e840f7a763b06572b996f9965e8dc172ba7dfa5ed6ba9d555",
+  "gzip_bytes": 193510,
+  "gzip_sha256": "acab398f6626ed13f0c3b3021fdf3e3d8e7e9b514e6e8a132985d6ea601e88db",
+  "provenance": "Existing exact authentic historical record, passively decoded/read for source accounting; not fixture/model/serializer execution",
+  "top_level_value_spans": [
+    {
+      "key": "package_selection",
+      "encoded_value_bytes": 2258686,
+      "kind": "dict",
+      "items": 3
+    },
+    {
+      "key": "effective_dependencies",
+      "encoded_value_bytes": 179712,
+      "kind": "dict",
+      "items": 364
+    },
+    {
+      "key": "latest_decision_sample",
+      "encoded_value_bytes": 33950,
+      "kind": "dict",
+      "items": 9
+    },
+    {
+      "key": "preexec_decision_sample",
+      "encoded_value_bytes": 31164,
+      "kind": "dict",
+      "items": 9
+    },
+    {
+      "key": "admission",
+      "encoded_value_bytes": 22996,
+      "kind": "dict",
+      "items": 14
+    },
+    {
+      "key": "preexec_admission",
+      "encoded_value_bytes": 22996,
+      "kind": "dict",
+      "items": 14
+    },
+    {
+      "key": "idle_verifications",
+      "encoded_value_bytes": 6019,
+      "kind": "list",
+      "items": 1
+    },
+    {
+      "key": "processes_before",
+      "encoded_value_bytes": 5949,
+      "kind": "str",
+      "items": 5793
+    },
+    {
+      "key": "tid_catalog",
+      "encoded_value_bytes": 2724,
+      "kind": "dict",
+      "items": 7
+    },
+    {
+      "key": "environment",
+      "encoded_value_bytes": 2679,
+      "kind": "dict",
+      "items": 11
+    },
+    {
+      "key": "child_identity",
+      "encoded_value_bytes": 2446,
+      "kind": "dict",
+      "items": 21
+    },
+    {
+      "key": "canonical_key_equivalence_prerequisite",
+      "encoded_value_bytes": 2305,
+      "kind": "dict",
+      "items": 5
+    },
+    {
+      "key": "output_guard_spec",
+      "encoded_value_bytes": 1882,
+      "kind": "dict",
+      "items": 5
+    },
+    {
+      "key": "CI_identity",
+      "encoded_value_bytes": 1108,
+      "kind": "dict",
+      "items": 18
+    },
+    {
+      "key": "submitted_sources",
+      "encoded_value_bytes": 1062,
+      "kind": "list",
+      "items": 2
+    },
+    {
+      "key": "planned_source_bindings",
+      "encoded_value_bytes": 876,
+      "kind": "list",
+      "items": 2
+    },
+    {
+      "key": "outputs_after",
+      "encoded_value_bytes": 859,
+      "kind": "dict",
+      "items": 2
+    },
+    {
+      "key": "completed_logs",
+      "encoded_value_bytes": 744,
+      "kind": "dict",
+      "items": 2
+    },
+    {
+      "key": "new_object_bindings",
+      "encoded_value_bytes": 557,
+      "kind": "dict",
+      "items": 1
+    },
+    {
+      "key": "handshake",
+      "encoded_value_bytes": 447,
+      "kind": "dict",
+      "items": 9
+    },
+    {
+      "key": "memory_policy",
+      "encoded_value_bytes": 436,
+      "kind": "dict",
+      "items": 10
+    },
+    {
+      "key": "resolution_bindings",
+      "encoded_value_bytes": 431,
+      "kind": "dict",
+      "items": 1
+    },
+    {
+      "key": "excluded_initial_metadata",
+      "encoded_value_bytes": 344,
+      "kind": "dict",
+      "items": 4
+    },
+    {
+      "key": "argv",
+      "encoded_value_bytes": 331,
+      "kind": "list",
+      "items": 7
+    },
+    {
+      "key": "terminal_confirmation",
+      "encoded_value_bytes": 326,
+      "kind": "dict",
+      "items": 11
+    },
+    {
+      "key": "input_inventory_ref",
+      "encoded_value_bytes": 325,
+      "kind": "dict",
+      "items": 4
+    },
+    {
+      "key": "lock",
+      "encoded_value_bytes": 234,
+      "kind": "dict",
+      "items": 6
+    },
+    {
+      "key": "process_teardown",
+      "encoded_value_bytes": 199,
+      "kind": "dict",
+      "items": 5
+    },
+    {
+      "key": "signature_supplement",
+      "encoded_value_bytes": 126,
+      "kind": "dict",
+      "items": 1
+    },
+    {
+      "key": "anonymous_preexec_baseline",
+      "encoded_value_bytes": 125,
+      "kind": "dict",
+      "items": 2
+    },
+    {
+      "key": "last_task_census",
+      "encoded_value_bytes": 104,
+      "kind": "dict",
+      "items": 2
+    },
+    {
+      "key": "dependency_qualification",
+      "encoded_value_bytes": 99,
+      "kind": "str",
+      "items": 97
+    },
+    {
+      "key": "vm_peak_qualification",
+      "encoded_value_bytes": 71,
+      "kind": "str",
+      "items": 69
+    },
+    {
+      "key": "working_directory",
+      "encoded_value_bytes": 70,
+      "kind": "str",
+      "items": 68
+    },
+    {
+      "key": "preexec_binding_strategy",
+      "encoded_value_bytes": 48,
+      "kind": "str",
+      "items": 46
+    },
+    {
+      "key": "source_commit",
+      "encoded_value_bytes": 42,
+      "kind": "str",
+      "items": 40
+    },
+    {
+      "key": "frozen_import_source",
+      "encoded_value_bytes": 42,
+      "kind": "str",
+      "items": 40
+    },
+    {
+      "key": "wrapper_commit",
+      "encoded_value_bytes": 42,
+      "kind": "str",
+      "items": 40
+    },
+    {
+      "key": "scope",
+      "encoded_value_bytes": 40,
+      "kind": "str",
+      "items": 38
+    },
+    {
+      "key": "attempt_id",
+      "encoded_value_bytes": 34,
+      "kind": "str",
+      "items": 32
+    },
+    {
+      "key": "created_utc",
+      "encoded_value_bytes": 34,
+      "kind": "str",
+      "items": 32
+    },
+    {
+      "key": "ended_utc",
+      "encoded_value_bytes": 34,
+      "kind": "str",
+      "items": 32
+    },
+    {
+      "key": "stage_kind",
+      "encoded_value_bytes": 23,
+      "kind": "str",
+      "items": 21
+    },
+    {
+      "key": "direct_wait_owner",
+      "encoded_value_bytes": 14,
+      "kind": "str",
+      "items": 12
+    },
+    {
+      "key": "started_ns",
+      "encoded_value_bytes": 13,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "preflight_started_ns",
+      "encoded_value_bytes": 13,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "preflight_ended_ns",
+      "encoded_value_bytes": 13,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "runtime_wall_started_ns",
+      "encoded_value_bytes": 13,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "preexec_validation_started_ns",
+      "encoded_value_bytes": 13,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "preexec_validation_finished_ns",
+      "encoded_value_bytes": 13,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "preexec_verified_ns",
+      "encoded_value_bytes": 13,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "ended_ns",
+      "encoded_value_bytes": 13,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "disk_admission_bytes",
+      "encoded_value_bytes": 11,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "preexec_disk_bytes",
+      "encoded_value_bytes": 11,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "state",
+      "encoded_value_bytes": 10,
+      "kind": "str",
+      "items": 8
+    },
+    {
+      "key": "sampled_rss_peak_bytes",
+      "encoded_value_bytes": 10,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "sampled_vm_peak_bytes",
+      "encoded_value_bytes": 10,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "decision_log_bound_bytes",
+      "encoded_value_bytes": 8,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "stage",
+      "encoded_value_bytes": 7,
+      "kind": "str",
+      "items": 5
+    },
+    {
+      "key": "wait4_maxrss_kib",
+      "encoded_value_bytes": 7,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "preexec_identity_files",
+      "encoded_value_bytes": 6,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "synthetic_fixture",
+      "encoded_value_bytes": 5,
+      "kind": "bool",
+      "items": null
+    },
+    {
+      "key": "supervisor_pid",
+      "encoded_value_bytes": 5,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "preflight_deadline_seconds",
+      "encoded_value_bytes": 5,
+      "kind": "float",
+      "items": null
+    },
+    {
+      "key": "child_pid",
+      "encoded_value_bytes": 5,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "source_outputs_absent_before_exec",
+      "encoded_value_bytes": 4,
+      "kind": "bool",
+      "items": null
+    },
+    {
+      "key": "between_child_preservation_passed",
+      "encoded_value_bytes": 4,
+      "kind": "bool",
+      "items": null
+    },
+    {
+      "key": "preflight_passed",
+      "encoded_value_bytes": 4,
+      "kind": "bool",
+      "items": null
+    },
+    {
+      "key": "deadline_seconds",
+      "encoded_value_bytes": 4,
+      "kind": "float",
+      "items": null
+    },
+    {
+      "key": "preexec_binding_verified",
+      "encoded_value_bytes": 4,
+      "kind": "bool",
+      "items": null
+    },
+    {
+      "key": "preexec_critical_hashes",
+      "encoded_value_bytes": 4,
+      "kind": "int",
+      "items": null
+    },
+    {
+      "key": "kernel_limits_verified",
+      "encoded_value_bytes": 4,
+      "kind": "bool",
+      "items": null
+    },
+    {
+      "key": "direct_reaped",
+      "encoded_value_bytes": 4,
+      "kind": "bool",
+      "items": null
+    },
+    {
+      "key": "waitid_wait4_status_match",
+      "encoded_value_bytes": 4,
+      "kind": "bool",
+      "items": null
+    },
+    {
+      "key": "all_descendants_gone",
+      "encoded_value_bytes": 4,
+      "kind": "bool",
+      "items": null
+    },
+    {
+      "key": "kernel_no_children_verified",
+      "encoded_value_bytes": 4,
+      "kind": "bool",
+      "items": null
+    },
+    {
+      "key": "sample_interval_seconds",
+      "encoded_value_bytes": 3,
+      "kind": "float",
+      "items": null
+    },
+    {
+      "key": "descendants_observed",
+      "encoded_value_bytes": 2,
+      "kind": "list",
+      "items": 0
+    },
+    {
+      "key": "adopted_descendants_reaped",
+      "encoded_value_bytes": 2,
+      "kind": "list",
+      "items": 0
+    },
+    {
+      "key": "exit",
+      "encoded_value_bytes": 1,
+      "kind": "int",
+      "items": null
+    }
+  ],
+  "keys": [
+    "attempt_id",
+    "scope",
+    "stage",
+    "source_commit",
+    "frozen_import_source",
+    "wrapper_commit",
+    "synthetic_fixture",
+    "argv",
+    "environment",
+    "memory_policy",
+    "state",
+    "started_ns",
+    "created_utc",
+    "supervisor_pid",
+    "decision_log_bound_bytes",
+    "lock",
+    "preflight_started_ns",
+    "preflight_deadline_seconds",
+    "CI_identity",
+    "dependency_qualification",
+    "canonical_key_equivalence_prerequisite",
+    "submitted_sources",
+    "working_directory",
+    "planned_source_bindings",
+    "package_selection",
+    "signature_supplement",
+    "excluded_initial_metadata",
+    "stage_kind",
+    "output_guard_spec",
+    "effective_dependencies",
+    "new_object_bindings",
+    "resolution_bindings",
+    "source_outputs_absent_before_exec",
+    "between_child_preservation_passed",
+    "idle_verifications",
+    "disk_admission_bytes",
+    "admission",
+    "input_inventory_ref",
+    "preflight_passed",
+    "preflight_ended_ns",
+    "processes_before",
+    "runtime_wall_started_ns",
+    "deadline_seconds",
+    "child_pid",
+    "latest_decision_sample",
+    "tid_catalog",
+    "last_task_census",
+    "sampled_rss_peak_bytes",
+    "sampled_vm_peak_bytes",
+    "child_identity",
+    "sample_interval_seconds",
+    "vm_peak_qualification",
+    "preexec_disk_bytes",
+    "preexec_binding_verified",
+    "preexec_binding_strategy",
+    "preexec_identity_files",
+    "preexec_critical_hashes",
+    "preexec_validation_started_ns",
+    "preexec_validation_finished_ns",
+    "kernel_limits_verified",
+    "anonymous_preexec_baseline",
+    "preexec_decision_sample",
+    "preexec_admission",
+    "handshake",
+    "preexec_verified_ns",
+    "process_teardown",
+    "terminal_confirmation",
+    "exit",
+    "direct_wait_owner",
+    "direct_reaped",
+    "wait4_maxrss_kib",
+    "waitid_wait4_status_match",
+    "descendants_observed",
+    "adopted_descendants_reaped",
+    "all_descendants_gone",
+    "kernel_no_children_verified",
+    "completed_logs",
+    "outputs_after",
+    "ended_ns",
+    "ended_utc"
+  ],
+  "clean_up": {
+    "failure": null,
+    "cleanup_errors": null,
+    "diagnostic_persistence_error": null,
+    "memory_stop_attempted": null,
+    "direct_reaped": true,
+    "all_descendants_gone": true,
+    "kernel_no_children_verified": true,
+    "kernel_limits_verified": true,
+    "preflight_passed": true,
+    "preexec_binding_verified": true,
+    "between_child_preservation_passed": true
+  },
+  "completed_logs": {
+    "raw.log": {
+      "path": "/home/runner/work/_temp/light-eft-corollary-39845888749-1/runtime/audit/raw.log",
+      "bytes": 1532418,
+      "sha256": "922454fccb38bf366666633ede1c80651867982b97eb2ab684130f7a7274df68",
+      "identity": [
+        2049,
+        10759554,
+        1532418,
+        1792704122547594957,
+        1792704122547594957
+      ]
+    },
+    "samples.jsonl": {
+      "path": "/home/runner/work/_temp/light-eft-corollary-39845888749-1/runtime/audit/samples.jsonl",
+      "bytes": 31533869,
+      "sha256": "089d37d257602c91e2ba91c9522976e0f3506255103997e47a11ce363039db6f",
+      "identity": [
+        2049,
+        10759556,
+        31533869,
+        1792704122818595161,
+        1792704122818595161
+      ]
+    }
+  },
+  "times": {
+    "started_ns": 4388814841752,
+    "preflight_started_ns": 4388822860874,
+    "preflight_ended_ns": 4484939372218,
+    "runtime_wall_started_ns": 4484975629537,
+    "preexec_validation_started_ns": 4485044973966,
+    "preexec_validation_finished_ns": 4489722252224,
+    "preexec_verified_ns": 4489756117888,
+    "ended_ns": 4703743794776
+  },
+  "argv": [
+    "/home/runner/.elan/toolchains/leanprover--lean4---v4.34.0/bin/lean",
+    "-j1",
+    "-s65536",
+    "-M5120",
+    "-DautoImplicit=false",
+    "-DwarningAsError=true",
+    "/home/runner/work/paper-formalizations/paper-formalizations/checkpoints/light-eft-canonical-output-adapter-20261020/staged/CanonicalOutputAudit.lean"
+  ],
+  "record_shapes": {
+    "submitted_sources": 2,
+    "effective_dependencies": 364,
+    "tid_catalog": 7
+  },
+  "save_call_count_recorded": false,
+  "historical_intermediate_receipts_available": false,
+  "package_selected_modules": 12028,
+  "package_mapping_key_order_sha256": "7075f8d97c9641dc89a3d1a6ccd61bf5082a4d79180945cc75b38af6df958153",
+  "large_field_fraction_of_raw": {
+    "package_selection_value": 0.8737480919160683,
+    "effective_dependencies_value": 0.06951963092453775
+  },
+  "no_historical_serializer_or_save_invoked": true
+}

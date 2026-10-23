@@ -1,0 +1,19 @@
+{
+  "role": "Analytical primary-source reference, not attestation of historical/next runner stdlib identity",
+  "version": "CPython v3.12.3",
+  "references": [
+    {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/json/__init__.py",
+      "function": "dump",
+      "lines": "149-165",
+      "finding": "indent2 takes the ordinary fresh JSONEncoder path; its iterator is consumed by a Python loop calling the supplied writer for each chunk"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Modules/_io/iobase.c",
+      "function": "_io__IOBase_writelines",
+      "lines": "757-790",
+      "finding": "Consumes chunks in C but adds an EINTR retry around write; this prevents assuming unchanged failure behavior"
+    }
+  ],
+  "future_requirement": "Review exact active interpreter/default JSON encoder/writer semantics; no stdlib/runtime replacement or source change performed"
+}

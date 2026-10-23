@@ -1,0 +1,19 @@
+{
+  "target": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+  "other_identical_source": "checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py",
+  "both_baseline_sha256": "c84a0cbb21a40edaa11c89e119ffad2a84321278537b7893465a796269c2dccb",
+  "proposed_only_target_path": true,
+  "historical_source_callers": {
+    "paid_children": 9,
+    "bridge_children": 4,
+    "canonical_and_admission_children": 7,
+    "decoder_uses_different_path_children": 4
+  },
+  "proposed_historical_count_scope": 20,
+  "proposed_scope_clean_path_saves": 264,
+  "decoder_unmodified_clean_path_saves": 53,
+  "future_batch": "Uses target shared runner, but12 batch children unrun in historical full attempt",
+  "production_binding_scope_current": 1041,
+  "production_integration": false,
+  "source_or_diagnostic_bindings_rebound": false
+}

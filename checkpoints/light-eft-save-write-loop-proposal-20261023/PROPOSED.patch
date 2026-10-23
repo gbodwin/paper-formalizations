@@ -1,0 +1,18 @@
+--- a/checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py
++++ b/checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py
+@@ -182,7 +182,14 @@
+     def save():
+         t=evidence/'receipt.tmp'
+         with t.open('w') as f:
+-            json.dump(record,f,indent=2);f.write('\n');f.flush();os.fsync(f.fileno())
++            # One fresh encoder and a private bound writer per saved state.
++            # Keep original chunk boundaries: no EINTR retry or write batching.
++            write=f.write
++            for chunk in json.JSONEncoder(skipkeys=False,ensure_ascii=True,
++                    check_circular=True,allow_nan=True,indent=2,separators=None,
++                    default=None,sort_keys=False).iterencode(record):
++                write(chunk)
++            f.write('\n');f.flush();os.fsync(f.fileno())
+         os.replace(t,evidence/'receipt.json')
+         fd=os.open(evidence,os.O_RDONLY|os.O_DIRECTORY)
+         try:os.fsync(fd)

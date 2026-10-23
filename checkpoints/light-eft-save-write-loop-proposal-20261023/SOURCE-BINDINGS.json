@@ -1,0 +1,19 @@
+{
+  "base": "0b355efe40b9ace947710f743f314571e1f01651",
+  "target": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
+  "baseline_sha256": "c84a0cbb21a40edaa11c89e119ffad2a84321278537b7893465a796269c2dccb",
+  "proposed_sha256": "9ac0305166036a1ccdbe8f0e21d47bc4f8461b47c93f7bc0bcefe0dec57d9c60",
+  "patch_sha256": "a5ba1039e400a2d92e94cd599bb4d88d76692e335db19d3905667500bf1f009e",
+  "only_nested_save_AST_changed": true,
+  "streaming_chunks": true,
+  "cross_save_cache": false,
+  "cross_state_batching": false,
+  "full_record_materialization": false,
+  "all_callsites_and_durability_tail_unchanged": true,
+  "source_only": true,
+  "serializer_or_proposed_code_or_models_executed": false,
+  "production_integrated": false,
+  "performance_benefit": "UNMEASURED",
+  "whole_job_fit": "UNPROVED",
+  "scope": "Conditional exact-byte/ordered-chunk equivalence on original supported JSON/basic record and private TextIOWrapper, with default stdlib encoder semantics; future independent review and guarded differential/failure validation required"
+}
