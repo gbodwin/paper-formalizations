@@ -180,6 +180,11 @@ def main(work):
   with profiler:files=[contracts.regular(p)[0] for p in paths]
   result['actual_checkout_source_component']=dict(files=len(files),bytes=sum(r['bytes'] for r in files),
     profile=profiler.rows,qualification='Actual supplied source files, not hosted build inventory')
+  # Additional real-method attribution is explicitly controlled/synthetic.
+  phase=load_source('PhaseProfile',HERE/'phase_profile.py',bindings)
+  representative=load_source('RepresentativeComponents',HERE/'representative.py',bindings)
+  result['representative_components']={}
+  representative.run(work/'representative',contracts,modules[0],load_source,bindings,ENGINE,phase,result['representative_components'])
   result['accepted']=True
  except BaseException as error:
   result['failure']=dict(type=type(error).__name__,message=str(error),traceback=traceback.format_exc(limit=12));raise
