@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 5
     env:
       LEAN_NUM_THREADS: '1'
-      LIGHTEFT_DIAGNOSTIC_BINDINGS_SHA: f568cb16a812414ddc776ad09f461bfeb1f0ab31d680f39457ac4c38250b1014
+      LIGHTEFT_DIAGNOSTIC_BINDINGS_SHA: ee4534d5872aee4e92994633ac09fe192b88e65790682bdd026b2765547ae98e
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:

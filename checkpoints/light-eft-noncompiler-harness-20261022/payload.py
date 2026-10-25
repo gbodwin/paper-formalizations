@@ -3,7 +3,7 @@
 No subprocess, Lean/Lake/checker/audit, network or hosted-root reconstruction.
 """
 from pathlib import Path
-import contextlib, hashlib, json, os, resource, stat, sys, time, traceback, types
+import contextlib, errno, hashlib, json, os, resource, stat, sys, time, traceback, types
 HERE=Path(__file__).resolve().parent
 REPO=HERE.parents[1]
 SOURCE=REPO/'checkpoints/light-eft-package-prefix-reuse-proposal-20261022'
@@ -149,6 +149,150 @@ def semantic(answer):
  # Only the known fixture-root bijection is used for differential comparison.
  return {k:v for k,v in answer.items() if k not in ['elapsed_ns','profile','selected_exact','scratch_root','traceback']}
 
+def qualify_streaming_digest(work,bindings,contracts,result):
+ """The exact production helper only; never its CI entry or producer route.
+
+ Real-file hash checks are uninstrumented. Separate module-local reader probes
+ observe one success and one synchronous read fault; they are not performance
+ measurements or a proof about arbitrary faults, concurrent writers or schedules.
+ """
+ def need(ok,message):
+  if not ok:raise RuntimeError('Streaming digest qualification: '+message)
+ relative='checkpoints/light-eft-fair-bit-batch-ci-adapter-20261021/ci_gate.py'
+ source=REPO/relative
+ source_sha='72bb508e23dda4bf49cff9e06781ff1122adf299c0b68a50378499ee5ba154fe'
+ compressed=HERE/'canonical-audit-ed86.receipt.json.gz'
+ compressed_sha='acab398f6626ed13f0c3b3021fdf3e3d8e7e9b514e6e8a132985d6ea601e88db'
+ sizes=(0,1,65535,65536,65537,131073)
+ planned=sum(sizes)
+ result.update(scope='EXACT_PRODUCTION_STREAMING_DIGEST_HELPER_ONLY',passed=False,
+   qualification_acceptance=False,production_acceptance=False,
+   whole_adapter_and_job_fit='UNMEASURED',phase='source and footprint admission',
+   source=dict(path=relative,bytes=17927,sha256=source_sha),
+   generated_sizes=list(sizes),generated_bytes=planned,cases=[],reader_probes=[])
+ source_row,_=contracts.regular(source)
+ need(source_row['bytes']==17927 and source_row['sha256']==source_sha and
+   bindings[relative]==dict(path=relative,bytes=17927,sha256=source_sha),'production source pin')
+ compressed_row,_=contracts.regular(compressed)
+ need(compressed_row['bytes']==193510 and compressed_row['sha256']==compressed_sha and
+   bindings[str(compressed.relative_to(REPO))]==dict(path=str(compressed.relative_to(REPO)),
+     bytes=193510,sha256=compressed_sha),'existing compressed data pin')
+ need(sys.getprofile() is None and planned==327682,'observer or fixed footprint differs')
+ work=Path(work)
+ need(work.is_absolute() and work.is_dir() and not work.is_symlink(),'owned work directory')
+ for parent in work.parents:need(not parent.is_symlink(),'work parent symlink')
+ existing=0
+ for path in work.rglob('*'):
+  info=path.lstat()
+  if not stat.S_ISDIR(info.st_mode):
+   need(stat.S_ISREG(info.st_mode) or stat.S_ISLNK(info.st_mode),'nonregular existing fixture')
+   existing+=info.st_size
+ # Use the same 32-MiB ceiling and 2-MiB metadata reserve as the unchanged
+ # receipt phase. Its later, larger future-output reservation still runs too.
+ need(existing+planned<=30*1024**2,'unchanged fixture allowance would overflow')
+ root=work/'streaming-digest';root.mkdir(mode=0o700)
+ result['fixture_budget']=dict(existing_bytes=existing,generated_bytes=planned,
+   ceiling=32*1024**2,metadata_reserve=2*1024**2)
+ module=load_source('FairBitDigestQualification_12892174',source,bindings)
+ need(module.__name__=='FairBitDigestQualification_12892174' and
+   module.__file__==str(source) and module.ROOT==REPO and
+   module.digest.__code__.co_filename==str(source),'non-main production module identity')
+ original_path=module.Path;original_digest=module.digest
+ need(original_path is Path and module.hashlib is hashlib,'production helper globals')
+ inputs=[];generated=0
+ for size in sizes:
+  path=root/('size-'+str(size)+'.bin')
+  data=bytes(range(256))*(size//256)+bytes(range(size%256))
+  need(len(data)==size,'fixed bytes length')
+  fd=os.open(path,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+  with os.fdopen(fd,'wb') as output:output.write(data)
+  generated+=size;inputs.append(('fixed-'+str(size),path,size,hashlib.sha256(data).hexdigest()))
+ need(generated==planned,'generated footprint differs')
+ inputs.extend([('bound-production-source',source,17927,source_sha),
+   ('bound-existing-compressed-data',compressed,193510,compressed_sha)])
+ result['phase']='uninstrumented fixed and bound-file cases'
+ for name,path,size,expected in inputs:
+  row,data=contracts.regular(path)
+  baseline=hashlib.sha256(data).hexdigest()
+  need(row['bytes']==size and baseline==expected,'baseline bytes/hash '+name)
+  observed=module.digest(path)
+  need(observed==expected,'production digest differs '+name)
+  result['cases'].append(dict(case=name,bytes=size,expected_sha256=expected,
+    actual_sha256=observed,plain_unobserved=True))
+ large=root/'size-131073.bin';large_expected=next(x[3] for x in inputs if x[0]=='fixed-131073')
+ def reader_probe(inject):
+  opened=[];reads=[];exits=[];buffers=[];fault=OSError(errno.EIO,'bounded qualification read fault')
+  class Reader:
+   def __init__(self,raw):self.raw=raw
+   def __enter__(self):self.raw.__enter__();return self
+   def __exit__(self,kind,value,tb):
+    try:return self.raw.__exit__(kind,value,tb)
+    finally:exits.append(dict(exception=None if kind is None else kind.__name__,closed=self.raw.closed))
+   def readinto(self,block):
+    need(type(block) is bytearray and len(block)==65536,'readinto buffer type/size')
+    if not buffers:buffers.append(block)
+    need(block is buffers[0],'readinto did not reuse the same buffer')
+    need(len(reads)<8,'finite read observation bound')
+    entry=dict(buffer_bytes=len(block));reads.append(entry)
+    if inject and len(reads)==2:
+     entry['injected_errno']=errno.EIO;raise fault
+    count=self.raw.readinto(block)
+    need(type(count) is int and 0<=count<=len(block),'real readinto count')
+    entry['returned']=count;return count
+  class ProbePath:
+   def __init__(self,path):
+    self.path=Path(path);need(self.path==large,'probe escaped fixed owned case')
+   def open(self,*args,**kwargs):
+    need(not args and kwargs==dict(mode='rb') and not opened,'one exact binary open')
+    raw=self.path.open(*args,**kwargs);opened.append(raw);return Reader(raw)
+  caught=None;value=None
+  # Only the newly loaded module's Path name is rebound, then restored even
+  # on error. Shared pathlib/hashlib and production source bytes never change.
+  try:
+   module.Path=ProbePath
+   try:value=module.digest(large)
+   except OSError as error:
+    if not inject:raise
+    caught=error
+  finally:module.Path=original_path
+  need(len(opened)==1 and opened[0].closed and len(exits)==1 and exits[0]['closed'],
+    'context manager did not close the real handle')
+  if inject:
+   need(caught is fault and len(reads)==2 and reads[0].get('returned',0)>0 and
+     exits[0]['exception']=='OSError','read fault changed, retried or swallowed')
+  else:
+   need(value==large_expected and reads[-1].get('returned')==0 and
+     sum(x['returned'] for x in reads)==131073 and exits[0]['exception'] is None,
+     'observed success/EOF differs')
+  return dict(case='read-error' if inject else 'successful-readinto',
+    module_local_instrumentation=True,real_handle_closed=True,opens=len(opened),
+    distinct_readinto_buffers=len(buffers),
+    reads=reads,context_exit=exits[0],
+    propagated_same_error=caught is fault if inject else None)
+ result['phase']='finite handle and error observations'
+ for inject in (False,True):result['reader_probes'].append(reader_probe(inject))
+ missing=root/'never-created.bin'
+ errors=[]
+ for name,call in [('baseline',lambda:hashlib.sha256(missing.read_bytes()).hexdigest()),
+                   ('production',lambda:module.digest(missing))]:
+  try:call()
+  except FileNotFoundError as error:
+   need(error.errno==errno.ENOENT and error.filename==str(missing),'missing-file error differs')
+   errors.append(dict(version=name,type=type(error).__name__,errno=error.errno))
+  else:raise RuntimeError('Streaming digest qualification: missing file accepted')
+ result['missing_file']=dict(observations=errors,matched=True)
+ need(module.Path is original_path and module.digest is original_digest and
+   module.hashlib is hashlib and sys.getprofile() is None,'helper binding/observer drift')
+ need(contracts.bind(source)==source_row and contracts.bind(compressed)==compressed_row,
+   'bound production/data input drift')
+ result.update(phase='complete',limitations=[
+   'Only the exact digest helper; no bound_spec, main, Lean or producer handoff executed',
+   'Finite regular-file and synchronous error cases; not every read/error/concurrent schedule',
+   'Module-local reader probes are instrumentation, not native performance measurements',
+   'No total-RSS/pagecache benefit, actual populated roots, whole-adapter/job fit or final qualification'])
+ need(len(json.dumps(result,separators=(',',':')).encode())<=64*1024,'helper result metadata cap')
+ result['passed']=True
+
 def main(work):
  bindings={r['path']:r for r in json.loads((HERE/'bindings.json').read_text())['files']}
  contracts=load_source('DiagnosticContracts',ENGINE/'contracts.py',bindings)
@@ -180,6 +324,8 @@ def main(work):
   with profiler:files=[contracts.regular(p)[0] for p in paths]
   result['actual_checkout_source_component']=dict(files=len(files),bytes=sum(r['bytes'] for r in files),
     profile=profiler.rows,qualification='Actual supplied source files, not hosted build inventory')
+  result['streaming_digest']={}
+  qualify_streaming_digest(work,bindings,contracts,result['streaming_digest'])
   # REPLACE the previous original-only receipt phase in the SAME guarded child.
   receipt=load_source('SaveDifferential',HERE/'save_differential.py',bindings)
   result['receipt_save']={}
