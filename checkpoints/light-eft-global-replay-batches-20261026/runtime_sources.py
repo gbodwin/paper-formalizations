@@ -27,7 +27,28 @@ def main():
         raise ValueError('Route controller differs from actual Git source')
     spec = importlib.util.spec_from_file_location('_bound_source_setup_status', path)
     route = importlib.util.module_from_spec(spec); spec.loader.exec_module(route)
-    bound = route.controls(); ci = route.identity('global_replay'); cl = route.contract()
+    bound = route.controls(); cl = route.contract()
+    selected_purpose = os.environ.get('LIGHTEFT_HANDOFF_PURPOSE')
+    if selected_purpose == 'reacquisition_qualification':
+        adapter_path = HERE / 'qualification_adapter.py'
+        raw = adapter_path.read_bytes()
+        require_source = subprocess.run(['git', 'show', 'HEAD:' + adapter_path.relative_to(ROOT).as_posix()],
+                                       cwd=ROOT, capture_output=True, check=True, timeout=10).stdout
+        if raw != require_source or any(p.is_symlink() for p in [adapter_path, *adapter_path.parents]):
+            raise ValueError('Qualification source adapter changed')
+        cl.controls()
+        spec = importlib.util.spec_from_file_location('_source_setup_qualification_identity', adapter_path)
+        adapter = importlib.util.module_from_spec(spec); spec.loader.exec_module(adapter)
+    def current_identity():
+        route.require(os.environ.get('LIGHTEFT_HANDOFF_PURPOSE') == selected_purpose,
+                      'Source setup purpose changed')
+        if selected_purpose == 'reacquisition_qualification':
+            actual = adapter.identity(cl)
+            cl.require(actual['LIGHTEFT_REACQUISITION_ROLE'] == 'consumer', 'Wrong qualification source setup')
+            return dict(run_id=actual['GITHUB_RUN_ID'], run_attempt=actual['GITHUB_RUN_ATTEMPT'],
+                        purpose=adapter.PURPOSE, actual_identity=actual)
+        return route.identity('global_replay')
+    ci = current_identity()
     require = route.require
     require(not os.path.lexists(ROOT / '.lake'), 'Fresh source setup requires absent .lake')
     require((ROOT / 'lean-toolchain').read_text().strip() == 'leanprover/lean4:v4.34.0',
@@ -98,7 +119,7 @@ def main():
                     'Package checkout not exact and clean')
             require(not os.path.lexists(dest / '.lake'), 'Source checkout supplies a package build/cache tree')
             result['packages'].append(dict(name=name, revision=fetched, url=p['url']))
-        require(route.controls() == bound and route.identity('global_replay') == ci,
+        require(route.controls() == bound and current_identity() == ci,
                 'Source/identity changed during ordinary setup')
         result['status'] = 'EXACT_PACKAGE_SOURCES_ONLY_NOT_COMPILED_INPUT_ACCEPTANCE'
     except BaseException as error:

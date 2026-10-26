@@ -45,7 +45,7 @@ JSON_LIMIT = 16 * 1024 * 1024
 # actual closure above this bound must be reported and reviewed, never omitted.
 PAYLOAD_LIMIT = 1024 * 1024 * 1024
 CONTROL_NAMES = ('closure_contract.py', 'HeaderProbe.lean', 'targets.json',
-                 'strict_download.cjs', 'package.json', 'package-lock.json')
+                 'strict_download.cjs', 'package.json', 'package-lock.json', 'qualification_adapter.py')
 SUFFIXES = ('', '.server', '.private', '.ir.sig', '.ir')
 ACQUISITION_POLICY = dict(
     schema='PROJECT_TRANSFER_PINNED_DEPENDENCIES_EXACT_PRODUCER_BYTES_V1',
@@ -874,8 +874,19 @@ def no_symlink_parents(path):
             'Symlink data path/parent: ' + str(p))
 
 
-def transport(ci, bound):
+def transport(ci, bound, purpose='production'):
     e = os.environ
+    require(purpose in ['production', 'reacquisition_qualification'], 'Unknown transport purpose')
+    qualification = purpose == 'reacquisition_qualification'
+    if qualification:
+        require(e.get('LIGHTEFT_HANDOFF_PURPOSE') == purpose and
+                e.get('LIGHTEFT_REACQUISITION_ROLE') == 'consumer' and
+                e.get('GITHUB_JOB') == 'native_reacquisition_consumer' and
+                e.get('GITHUB_WORKFLOW') == 'LightEFT probe main profile qualification' and
+                e.get('GITHUB_REF') == 'refs/heads/light-eft-spanners-checkpoints' and
+                e.get('LIGHTEFT_JOB_WORKFLOW_PATH') == '.github/workflows/light-eft-probe-main-qualification.yml' and
+                e.get('LIGHTEFT_JOB_WORKFLOW_SHA') == ci['GITHUB_SHA'],
+                'Wrong actual qualification transport context')
     require(all(e.get(k) == ci[v] for k, v in
                 [('LIGHTEFT_HANDOFF_PRODUCER_SHA', 'GITHUB_SHA'),
                  ('LIGHTEFT_HANDOFF_PRODUCER_RUN_ID', 'GITHUB_RUN_ID'),
@@ -888,7 +899,8 @@ def transport(ci, bound):
     manifest_sha = e.get('LIGHTEFT_HANDOFF_MANIFEST_SHA256', '')
     require(re.fullmatch('[0-9a-f]{64}', manifest_sha), 'Missing producer manifest output')
     parent = Path(e['RUNNER_TEMP']).resolve(strict=True)
-    home = parent / ('light-eft-handoff-' + ci['GITHUB_RUN_ID'] + '-' + ci['GITHUB_RUN_ATTEMPT'] + '-' + text_id)
+    prefix = 'light-eft-handoff-qualification-' if qualification else 'light-eft-handoff-'
+    home = parent / (prefix + ci['GITHUB_RUN_ID'] + '-' + ci['GITHUB_RUN_ATTEMPT'] + '-' + text_id)
     path = home / 'transport.json'
     require(e.get('LIGHTEFT_HANDOFF_TRANSPORT_RECORD') == str(path), 'Not the fixed actual transport record')
     no_symlink_parents(path)
@@ -902,7 +914,8 @@ def transport(ci, bound):
             row['run_id'] == ci['GITHUB_RUN_ID'] and row['run_attempt'] == ci['GITHUB_RUN_ATTEMPT'],
             'Actual transport context differs')
     require(type(row['artifact_id']) is int and row['artifact_id'] == int(text_id) and
-            row['artifact_name'] == 'light-eft-replay-handoff-' + ci['GITHUB_RUN_ID'] + '-' + ci['GITHUB_RUN_ATTEMPT'] and
+            row.get('purpose') == purpose and
+            row['artifact_name'] == ('light-eft-reacquisition-handoff-' if qualification else 'light-eft-replay-handoff-') + ci['GITHUB_RUN_ID'] + '-' + ci['GITHUB_RUN_ATTEMPT'] and
             type(row['artifact_bytes']) is int and row['artifact_bytes'] > 0 and
             row['artifact_digest'] == expected_digest and row['manifest_sha256'] == manifest_sha,
             'Actual SDK metadata differs from producer outputs')
@@ -915,10 +928,19 @@ def transport(ci, bound):
             row['sdk_entry'].startswith('node_modules/@actions/artifact/') and
             row['dependency_qualification'] == 'Pinned lockfile CI installation; not authenticated build/cache provenance',
             'Actual local SDK capture is incomplete')
+    dependency_root = ROOT / '.lake' / ('light-eft-qualification-sdk-' + ci['GITHUB_RUN_ID'] + '-' + ci['GITHUB_RUN_ATTEMPT']) if qualification else HERE
+    require(row.get('dependency_root') == str(dependency_root), 'SDK dependency domain differs')
+    no_symlink_parents(dependency_root)
+    if qualification:
+        ds = dependency_root.lstat()
+        require(stat.S_ISDIR(ds.st_mode) and ds.st_uid == os.getuid() and stat.S_IMODE(ds.st_mode) == 0o700,
+                'Unsafe qualification SDK domain')
+        for filename in ['package.json', 'package-lock.json']:
+            require(digest(dependency_root / filename) == digest(HERE / filename), 'Qualification SDK lock bytes differ')
     for rel, value in row['loaded_code'].items():
         safe_relative(rel)
         require(rel.startswith('node_modules/'), 'SDK code path outside dependency tree')
-        binding(value, allow_empty=True); p = HERE / rel; no_symlink_parents(p)
+        binding(value, allow_empty=True); p = dependency_root / rel; no_symlink_parents(p)
         require(digest(p) == value, 'Loaded SDK code changed after transport')
     bundle = home / 'bundle'
     no_symlink_parents(bundle)
@@ -963,9 +985,11 @@ def expected_file_set(manifest, nodes, all_names, kinds):
     return expected
 
 
-def bundle_entries(bundle, expected_parts):
+def bundle_entries(bundle, expected_parts, extra_entries=()):
     no_symlink_parents(bundle)
-    require(bundle.is_dir() and {p.name for p in bundle.iterdir()} == {'manifest.json', 'parts', 'metadata'},
+    require(extra_entries in [(), ('qualification-attestation.json',)], 'Unknown finite bundle extension')
+    require(bundle.is_dir() and {p.name for p in bundle.iterdir()} ==
+            {'manifest.json', 'parts', 'metadata', *extra_entries},
             'Unknown/missing top-level bundle entries')
     directory = bundle / 'parts'
     require(directory.is_dir() and not directory.is_symlink(), 'Unsafe parts directory')
@@ -979,7 +1003,7 @@ def bundle_entries(bundle, expected_parts):
     require(actual == expected_parts, 'Unlisted/missing payload part')
 
 
-def verify_files(bundle, manifest, expected, metadata_paths, metadata_bytes):
+def verify_files(bundle, manifest, expected, metadata_paths, metadata_bytes, extra_entries=()):
     rows = manifest['files']; require(type(rows) is list and len(rows) == len(expected), 'Required companion count differs')
     by_key = {}; all_parts = set(); paths = list(metadata_paths); total = 0
     for index, row in enumerate(rows):
@@ -1013,7 +1037,7 @@ def verify_files(bundle, manifest, expected, metadata_paths, metadata_bytes):
         by_key[key] = row
     require(set(by_key) == set(expected) and total == manifest['payload_bytes'] and
             total + metadata_bytes <= PAYLOAD_LIMIT, 'Hidden required object omission/total budget differs')
-    bundle_entries(bundle, all_parts)
+    bundle_entries(bundle, all_parts, extra_entries)
     return by_key, paths
 
 
@@ -1095,6 +1119,33 @@ def actual_companions(needed, objects, roots):
     return values, paths
 
 
+def restore_project_rows(bundle, selected_rows, roots, before, progress, report):
+    """Create-only project stream restore, shared without changing read trust."""
+    for row in selected_rows:
+        if not row['transfer']:
+            continue
+        dest = roots[row['root']] / safe_relative(row['relative'])
+        no_symlink_parents(dest)
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        no_symlink_parents(dest.parent)
+        fd = os.open(dest, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+        whole = hashlib.sha256()
+        with os.fdopen(fd, 'wb') as output:
+            for part in row['chunks']:
+                p = bundle / part['path']
+                require(observation(p) == before[str(p)], 'Authenticated part changed before use')
+                with p.open('rb') as stream:
+                    while data := stream.read(CHUNK):
+                        output.write(data); whole.update(data)
+                require(observation(p) == before[str(p)], 'Authenticated part changed during use')
+            output.flush(); os.fsync(output.fileno())
+        require(whole.hexdigest() == row['sha256'] and digest(dest) ==
+                {k: row[k] for k in ['bytes', 'sha256']}, 'Restored object differs')
+        progress.append(dict(module=row['module'], suffix=row['suffix'], destination=str(dest), **digest(dest)))
+        if len(progress) % 64 == 0:
+            create(report / ('progress-%05d.json' % (len(progress) // 64)), encoded(progress[-64:]))
+
+
 def restore_body(bundle, report, ci, bound, tool, tools, roots, kinds, names, selected_names,
                  transport_path, transport_state, transport_row, progress):
     expected_sha = os.environ['LIGHTEFT_HANDOFF_MANIFEST_SHA256']
@@ -1144,29 +1195,7 @@ def restore_body(bundle, report, ci, bound, tool, tools, roots, kinds, names, se
     stable_paths += [HERE / n for n in CONTROL_NAMES] + [tool / 'bin' / n for n in ['lean', 'leanchecker', 'lake']]
     require(observation(transport_path) == transport_state, 'Transport record changed before restoration')
     before = snapshot(stable_paths); before_index = write_snapshot(report / 'inputs-before', before)
-    for row in selected_rows:
-        if not row['transfer']:
-            continue
-        dest = roots[row['root']] / safe_relative(row['relative'])
-        no_symlink_parents(dest)
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        no_symlink_parents(dest.parent)
-        fd = os.open(dest, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
-        whole = hashlib.sha256()
-        with os.fdopen(fd, 'wb') as output:
-            for part in row['chunks']:
-                p = bundle / part['path']
-                require(observation(p) == before[str(p)], 'Authenticated part changed before use')
-                with p.open('rb') as stream:
-                    while data := stream.read(CHUNK):
-                        output.write(data); whole.update(data)
-                require(observation(p) == before[str(p)], 'Authenticated part changed during use')
-            output.flush(); os.fsync(output.fileno())
-        require(whole.hexdigest() == row['sha256'] and digest(dest) ==
-                {k: row[k] for k in ['bytes', 'sha256']}, 'Restored object differs')
-        progress.append(dict(module=row['module'], suffix=row['suffix'], destination=str(dest), **digest(dest)))
-        if len(progress) % 64 == 0:
-            create(report / ('progress-%05d.json' % (len(progress) // 64)), encoded(progress[-64:]))
+    restore_project_rows(bundle, selected_rows, roots, before, progress, report)
     actual_available, actual_paths = actual_companions(needed, manifest['objects'], roots)
     for name in needed:
         require(required_suffixes(name, nodes[name], actual_available[name], seeds, imported) ==

@@ -1,67 +1,169 @@
-name: LightEFT probe main profile qualification
-on:
-  push:
-    branches:
-      - light-eft-spanners-checkpoints
-    paths:
-      - .github/workflows/light-eft-probe-main-qualification.yml
-      - checkpoints/light-eft-probe-main-qualification-20261026/**
-concurrency:
-  group: paper-formalizations-single-compiler
-  cancel-in-progress: false
-permissions:
-  contents: read
-jobs:
-  native_probe_main:
-    if: github.ref == 'refs/heads/light-eft-spanners-checkpoints' && github.event_name == 'push'
-    runs-on: ubuntu-latest
-    timeout-minutes: 120
-    env:
-      LEAN_NUM_THREADS: '1'
-      LIGHTEFT_QUALIFICATION_BINDINGS_SHA: 536a7b860500c691ce76a9ce961250c015507161c231f8c949facc75ab7801da
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-        with:
-          ref: ${{ github.sha }}
-          fetch-depth: 2
-          persist-credentials: false
-      # Exact existing ordinary setup boundary; no child-admission claim here.
-      - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
-        with:
-          auto-config: "false"
-          build: "true"
-          test: "false"
-          lint: "false"
-          use-mathlib-cache: "true"
-          mk_all-check: "false"
-          axiom-audit: "true"
-          axiom-audit-root: "VFTSpanners"
-          axiom-audit-allow: "propext,Classical.choice,Quot.sound"
-      - name: Authenticate and supervise one genuine full-census metadata child
-        env:
-          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
-          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
-          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
-          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
-        shell: /bin/bash --noprofile --norc -p -e -o pipefail {0}
-        run: |
-          /usr/bin/python3 -I -B - <<'PYTHON'
-          from pathlib import Path
-          import hashlib
-          p = Path('checkpoints/light-eft-probe-main-qualification-20261026/lake_capture.py').resolve()
-          b = p.read_bytes()
-          if hashlib.sha256(b).hexdigest() != '315773e386ca8a79d54a2b55c7b561e0173e147aa88a617c5fcf16ec4109074f':
-              raise SystemExit('Unreviewed metadata qualification entry')
-          exec(compile(b, str(p), 'exec'), {'__name__': '__main__', '__file__': str(p)})
-          PYTHON
-      - name: Preserve genuine metadata profile evidence including refusals
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        with:
-          name: light-eft-probe-main-profile-${{ github.run_id }}-${{ github.run_attempt }}
-          path: |
-            ${{ runner.temp }}/light-eft-probe-main-profile-${{ github.run_id }}-${{ github.run_attempt }}
-            ${{ runner.temp }}/light-eft-probe-main-capture-${{ github.run_id }}-${{ github.run_attempt }}
-          include-hidden-files: true
-          if-no-files-found: error
-          retention-days: 30
+"name": "LightEFT probe main profile qualification"
+"on":
+  "push":
+    "branches":
+      - "light-eft-spanners-checkpoints"
+    "paths":
+      - ".github/workflows/light-eft-probe-main-qualification.yml"
+      - "checkpoints/light-eft-probe-main-qualification-20261026/**"
+"concurrency":
+  "group": "paper-formalizations-single-compiler"
+  "cancel-in-progress": false
+"permissions":
+  "contents": "read"
+"jobs":
+  "native_probe_main":
+    "if": "github.ref == 'refs/heads/light-eft-spanners-checkpoints' && github.event_name == 'push'"
+    "runs-on": "ubuntu-latest"
+    "timeout-minutes": 120
+    "env":
+      "LEAN_NUM_THREADS": "1"
+      "LIGHTEFT_HANDOFF_PURPOSE": "reacquisition_qualification"
+      "LIGHTEFT_QUALIFICATION_BINDINGS_SHA": "b5c0d71662bcc1ff0578531f531a474f127495f7aa33bc70f7619c94a1552e89"
+      "LIGHTEFT_REACQUISITION_ROLE": "producer"
+    "outputs":
+      "artifact_id": "${{ steps.handoff.outputs.artifact-id }}"
+      "artifact_digest": "${{ steps.handoff.outputs.artifact-digest }}"
+      "manifest_sha256": "${{ steps.profile.outputs.handoff_manifest_sha256 }}"
+      "attestation_sha256": "${{ steps.profile.outputs.handoff_attestation_sha256 }}"
+      "producer_sha": "${{ steps.profile.outputs.handoff_producer_sha }}"
+      "producer_run_id": "${{ steps.profile.outputs.handoff_producer_run_id }}"
+      "producer_run_attempt": "${{ steps.profile.outputs.handoff_producer_run_attempt }}"
+    "steps":
+      -
+        "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+        "with":
+          "ref": "${{ github.sha }}"
+          "fetch-depth": 2
+          "persist-credentials": false
+      -
+        "uses": "leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5"
+        "with":
+          "auto-config": "false"
+          "build": "true"
+          "test": "false"
+          "lint": "false"
+          "use-mathlib-cache": "true"
+          "mk_all-check": "false"
+          "axiom-audit": "true"
+          "axiom-audit-root": "VFTSpanners"
+          "axiom-audit-allow": "propext,Classical.choice,Quot.sound"
+      -
+        "name": "Authenticate genuine producer metadata and seal qualification data"
+        "env":
+          "LIGHTEFT_JOB_WORKFLOW_SHA": "${{ job.workflow_sha }}"
+          "LIGHTEFT_JOB_WORKFLOW_PATH": "${{ job.workflow_file_path }}"
+          "LIGHTEFT_JOB_WORKFLOW_REPOSITORY": "${{ job.workflow_repository }}"
+          "LIGHTEFT_JOB_WORKFLOW_REF": "${{ job.workflow_ref }}"
+        "shell": "/bin/bash --noprofile --norc -p -e -o pipefail {0}"
+        "run": "/usr/bin/python3 -I -B - <<'PYTHON'\nfrom pathlib import Path\nimport hashlib\np = Path('checkpoints/light-eft-probe-main-qualification-20261026/lake_capture.py').resolve()\nb = p.read_bytes()\nif hashlib.sha256(b).hexdigest() != '7b6109de1a19f5603afbeca60224df4ac75bd1f9b9a35156255e509fb348785e':\n    raise SystemExit('Unreviewed qualification capture')\nexec(compile(b, str(p), 'exec'), {'__name__': '__main__', '__file__': str(p)})\nPYTHON\n"
+        "id": "profile"
+      -
+        "name": "light-eft-reacquisition-handoff"
+        "if": "success()"
+        "uses": "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02"
+        "with":
+          "name": "light-eft-reacquisition-handoff-${{ github.run_id }}-${{ github.run_attempt }}"
+          "path": "${{ runner.temp }}/light-eft-probe-main-profile-${{ github.run_id }}-${{ github.run_attempt }}/bundle"
+          "include-hidden-files": true
+          "if-no-files-found": "error"
+          "retention-days": 30
+        "id": "handoff"
+      -
+        "name": "light-eft-reacquisition-producer-evidence"
+        "if": "always()"
+        "uses": "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02"
+        "with":
+          "name": "light-eft-reacquisition-producer-evidence-${{ github.run_id }}-${{ github.run_attempt }}"
+          "path": "${{ runner.temp }}/light-eft-probe-main-profile-${{ github.run_id }}-${{ github.run_attempt }}\n${{ runner.temp }}/light-eft-probe-main-capture-${{ github.run_id }}-${{ github.run_attempt }}"
+          "include-hidden-files": true
+          "if-no-files-found": "error"
+          "retention-days": 30
+  "native_reacquisition_consumer":
+    "needs": "native_probe_main"
+    "if": "needs.native_probe_main.result == 'success'"
+    "runs-on": "ubuntu-latest"
+    "timeout-minutes": 120
+    "env":
+      "LEAN_NUM_THREADS": "1"
+      "LIGHTEFT_HANDOFF_PURPOSE": "reacquisition_qualification"
+      "LIGHTEFT_QUALIFICATION_BINDINGS_SHA": "b5c0d71662bcc1ff0578531f531a474f127495f7aa33bc70f7619c94a1552e89"
+      "LIGHTEFT_REACQUISITION_ROLE": "consumer"
+      "LIGHTEFT_EXPECTED_SOURCE": "${{ github.sha }}"
+      "LIGHTEFT_HANDOFF_ARTIFACT_ID": "${{ needs.native_probe_main.outputs.artifact_id }}"
+      "LIGHTEFT_HANDOFF_ARTIFACT_DIGEST": "${{ needs.native_probe_main.outputs.artifact_digest }}"
+      "LIGHTEFT_HANDOFF_MANIFEST_SHA256": "${{ needs.native_probe_main.outputs.manifest_sha256 }}"
+      "LIGHTEFT_QUALIFICATION_ATTESTATION_SHA256": "${{ needs.native_probe_main.outputs.attestation_sha256 }}"
+      "LIGHTEFT_HANDOFF_PRODUCER_SHA": "${{ needs.native_probe_main.outputs.producer_sha }}"
+      "LIGHTEFT_HANDOFF_PRODUCER_RUN_ID": "${{ needs.native_probe_main.outputs.producer_run_id }}"
+      "LIGHTEFT_HANDOFF_PRODUCER_RUN_ATTEMPT": "${{ needs.native_probe_main.outputs.producer_run_attempt }}"
+    "steps":
+      -
+        "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+        "with":
+          "ref": "${{ github.sha }}"
+          "fetch-depth": 2
+          "persist-credentials": false
+      -
+        "name": "Materialize nine exact source pins for actual consumer"
+        "env":
+          "LIGHTEFT_JOB_WORKFLOW_SHA": "${{ job.workflow_sha }}"
+          "LIGHTEFT_JOB_WORKFLOW_PATH": "${{ job.workflow_file_path }}"
+          "LIGHTEFT_JOB_WORKFLOW_REPOSITORY": "${{ job.workflow_repository }}"
+          "LIGHTEFT_JOB_WORKFLOW_REF": "${{ job.workflow_ref }}"
+        "run": "/usr/bin/python3 -I -B checkpoints/light-eft-global-replay-batches-20261026/runtime_sources.py"
+      -
+        "uses": "leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5"
+        "with":
+          "auto-config": "false"
+          "build": "false"
+          "test": "false"
+          "lint": "false"
+          "use-mathlib-cache": "true"
+          "mk_all-check": "false"
+          "axiom-audit": "false"
+          "use-github-cache": "false"
+          "leanchecker": "false"
+          "lean4checker": "false"
+          "nanoda": "false"
+          "check-reservoir-eligibility": "false"
+      -
+        "name": "Prepare pinned SDK in fixed owned ignored data domain"
+        "env":
+          "LIGHTEFT_JOB_WORKFLOW_SHA": "${{ job.workflow_sha }}"
+          "LIGHTEFT_JOB_WORKFLOW_PATH": "${{ job.workflow_file_path }}"
+          "LIGHTEFT_JOB_WORKFLOW_REPOSITORY": "${{ job.workflow_repository }}"
+          "LIGHTEFT_JOB_WORKFLOW_REF": "${{ job.workflow_ref }}"
+        "run": "/usr/bin/python3 -I -B checkpoints/light-eft-global-replay-batches-20261026/qualification_adapter.py sdk-prepare"
+      -
+        "name": "Install exact SDK without package scripts"
+        "run": "npm ci --prefix .lake/light-eft-qualification-sdk-${{ github.run_id }}-${{ github.run_attempt }} --omit=dev --ignore-scripts --no-audit --no-fund"
+      -
+        "name": "Authenticate actual same-run qualification artifact"
+        "id": "transport"
+        "env":
+          "LIGHTEFT_JOB_WORKFLOW_SHA": "${{ job.workflow_sha }}"
+          "LIGHTEFT_JOB_WORKFLOW_PATH": "${{ job.workflow_file_path }}"
+          "LIGHTEFT_JOB_WORKFLOW_REPOSITORY": "${{ job.workflow_repository }}"
+          "LIGHTEFT_JOB_WORKFLOW_REF": "${{ job.workflow_ref }}"
+        "run": "node checkpoints/light-eft-global-replay-batches-20261026/strict_download.cjs"
+      -
+        "name": "Validate exact dependencies and supervise genuine consumer metadata"
+        "env":
+          "LIGHTEFT_JOB_WORKFLOW_SHA": "${{ job.workflow_sha }}"
+          "LIGHTEFT_JOB_WORKFLOW_PATH": "${{ job.workflow_file_path }}"
+          "LIGHTEFT_JOB_WORKFLOW_REPOSITORY": "${{ job.workflow_repository }}"
+          "LIGHTEFT_JOB_WORKFLOW_REF": "${{ job.workflow_ref }}"
+          "LIGHTEFT_HANDOFF_TRANSPORT_RECORD": "${{ steps.transport.outputs.transport_record }}"
+        "shell": "/bin/bash --noprofile --norc -p -e -o pipefail {0}"
+        "run": "/usr/bin/python3 -I -B - <<'PYTHON'\nfrom pathlib import Path\nimport hashlib\np = Path('checkpoints/light-eft-probe-main-qualification-20261026/lake_capture.py').resolve()\nb = p.read_bytes()\nif hashlib.sha256(b).hexdigest() != '7b6109de1a19f5603afbeca60224df4ac75bd1f9b9a35156255e509fb348785e':\n    raise SystemExit('Unreviewed qualification capture')\nexec(compile(b, str(p), 'exec'), {'__name__': '__main__', '__file__': str(p)})\nPYTHON\n"
+      -
+        "name": "light-eft-reacquisition-consumer-evidence"
+        "if": "always()"
+        "uses": "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02"
+        "with":
+          "name": "light-eft-reacquisition-consumer-evidence-${{ github.run_id }}-${{ github.run_attempt }}"
+          "path": "${{ runner.temp }}/light-eft-probe-main-profile-${{ github.run_id }}-${{ github.run_attempt }}\n${{ runner.temp }}/light-eft-probe-main-capture-${{ github.run_id }}-${{ github.run_attempt }}\n${{ runner.temp }}/light-eft-replay-source-setup-${{ github.run_id }}-${{ github.run_attempt }}\n${{ runner.temp }}/light-eft-handoff-qualification-${{ github.run_id }}-${{ github.run_attempt }}-${{ needs.native_probe_main.outputs.artifact_id }}/transport.json\n${{ runner.temp }}/light-eft-handoff-qualification-${{ github.run_id }}-${{ github.run_attempt }}-${{ needs.native_probe_main.outputs.artifact_id }}/transport-failure.json\n.lake/light-eft-qualification-sdk-${{ github.run_id }}-${{ github.run_attempt }}/sdk-preparation.json"
+          "include-hidden-files": true
+          "if-no-files-found": "error"
+          "retention-days": 30

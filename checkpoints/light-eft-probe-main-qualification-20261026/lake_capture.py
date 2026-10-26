@@ -18,13 +18,13 @@ import traceback
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-PARENT = 'd693a938306d260e673dacb6dfe9d697b748c265'
+PARENT = 'fd4ae2ac18d414a813b6aec1ac5d0f6cccd35e29'
 PUBLIC_FIELDS = ('LEAN_SYSROOT', 'LAKE', 'LEAN_PATH', 'LEAN_SRC_PATH')
 IDENTITY_FIELDS = ('GITHUB_REPOSITORY', 'GITHUB_SHA', 'GITHUB_REF',
     'GITHUB_RUN_ID', 'GITHUB_RUN_ATTEMPT', 'GITHUB_JOB', 'GITHUB_WORKFLOW',
     'GITHUB_WORKFLOW_SHA', 'GITHUB_WORKFLOW_REF', 'LEAN_NUM_THREADS',
     'LIGHTEFT_JOB_WORKFLOW_REPOSITORY', 'LIGHTEFT_JOB_WORKFLOW_PATH',
-    'LIGHTEFT_JOB_WORKFLOW_SHA', 'LIGHTEFT_JOB_WORKFLOW_REF')
+    'LIGHTEFT_JOB_WORKFLOW_SHA', 'LIGHTEFT_JOB_WORKFLOW_REF', 'LIGHTEFT_REACQUISITION_ROLE')
 HELPER = '''import json,os,sys
 keys=('LEAN_SYSROOT','LAKE','LEAN_PATH','LEAN_SRC_PATH')
 values={k:os.environ[k] for k in keys}
@@ -246,7 +246,11 @@ def main():
     require('LIGHTEFT_LAKE_CAPTURE_DIR' not in e and e.get('GITHUB_ACTIONS') == 'true' and
             e.get('GITHUB_REPOSITORY') == 'gbodwin/paper-formalizations' and
             e.get('GITHUB_REF') == 'refs/heads/light-eft-spanners-checkpoints' and
-            e.get('GITHUB_EVENT_NAME') == 'push' and e.get('GITHUB_JOB') == 'native_probe_main' and
+            e.get('GITHUB_EVENT_NAME') == 'push' and
+            e.get('LIGHTEFT_HANDOFF_PURPOSE') == 'reacquisition_qualification' and
+            e.get('LIGHTEFT_REACQUISITION_ROLE') in ['producer', 'consumer'] and
+            e.get('GITHUB_JOB') == {'producer': 'native_probe_main',
+                'consumer': 'native_reacquisition_consumer'}.get(e.get('LIGHTEFT_REACQUISITION_ROLE')) and
             all(e.get(k, '').isdecimal() and int(e[k]) > 0 for k in
                 ['GITHUB_RUN_ID', 'GITHUB_RUN_ATTEMPT']), 'Wrong fresh actual capture caller')
     temp = Path(e['RUNNER_TEMP'])

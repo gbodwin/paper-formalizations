@@ -163,14 +163,17 @@ def live_metadata_outputs(record,spec):
  require(e.get('GITHUB_ACTIONS')=='true' and
          e.get('GITHUB_REPOSITORY')=='gbodwin/paper-formalizations' and
          e.get('GITHUB_REF')=='refs/heads/light-eft-spanners-checkpoints' and
-         e.get('GITHUB_EVENT_NAME')=='push' and e.get('GITHUB_JOB')=='native_probe_main' and
+         e.get('GITHUB_EVENT_NAME')=='push' and
+         e.get('LIGHTEFT_HANDOFF_PURPOSE')=='reacquisition_qualification' and
+         e.get('LIGHTEFT_REACQUISITION_ROLE') in ['producer','consumer'] and
+         e.get('GITHUB_JOB')=={'producer':'native_probe_main','consumer':'native_reacquisition_consumer'}.get(e.get('LIGHTEFT_REACQUISITION_ROLE')) and
          e.get('GITHUB_WORKFLOW')=='LightEFT probe main profile qualification',
          'Wrong actual metadata qualification identity')
  require(set(meta)=={'identity','program','request','output','ordered_targets_sha256','namespace_witness'} and
          set(identity)=={'GITHUB_REPOSITORY','GITHUB_SHA','GITHUB_REF','GITHUB_RUN_ID',
              'GITHUB_RUN_ATTEMPT','GITHUB_JOB','GITHUB_WORKFLOW','GITHUB_WORKFLOW_SHA',
              'GITHUB_WORKFLOW_REF','LEAN_NUM_THREADS','LIGHTEFT_JOB_WORKFLOW_REPOSITORY',
-             'LIGHTEFT_JOB_WORKFLOW_PATH','LIGHTEFT_JOB_WORKFLOW_SHA','LIGHTEFT_JOB_WORKFLOW_REF'} and
+             'LIGHTEFT_JOB_WORKFLOW_PATH','LIGHTEFT_JOB_WORKFLOW_SHA','LIGHTEFT_JOB_WORKFLOW_REF','LIGHTEFT_REACQUISITION_ROLE'} and
          all(e.get(k)==v for k,v in identity.items()) and
          record.get('source_commit')==record.get('wrapper_commit')==identity.get('GITHUB_SHA') and
          identity.get('LIGHTEFT_JOB_WORKFLOW_SHA')==identity.get('GITHUB_SHA') and

@@ -1,91 +1,79 @@
-# Genuine HeaderProbe main profile: completed ordinary Lake capture
+# Actual producer to fresh consumer reacquisition qualification
 
-This is an unexecuted descendant of exact 6badfae09b91d990f3c469650e8e7cc46e2ac81b.
-The rejected run 40290211335/1 and all raw/log/source evidence remain preserved.
-Its historical offending PID is unknown. A live waiting Lake wrapper is a
-source-supported hypothesis, not exclusive process attribution.
+SOURCE ONLY; exact parent fd4ae2ac18d414a813b6aec1ac5d0f6cccd35e29.
+This candidate measures the V3 contract with actual qualification identities.
+It neither impersonates nor invokes full/global_replay/focused authority.
+No source, native child, SDK, package acquisition or workflow has executed in
+this source unit. Historical failed receipts and PID10732/session92779
+unreaped/lost-session/unknown-exit debt remain preserved.
 
-The only intended route remains the checkpoint-only native_probe_main job.
-Pinned ordinary five-library setup/build/cache/audit is unchanged and remains
-outside later native-child admission. No cache byte becomes proof provenance.
-The workflow starts the hash-bound lake_capture.py using direct Python -I -B.
-It source-authenticates the exact clean sole-parent checkout, actual job/workflow
-identity and bounded source seals. It runs one real `lake env` metadata command,
-which writes only LEAN_SYSROOT, LAKE, LEAN_PATH and LEAN_SRC_PATH. It never dumps
-or serializes the environment or tokens. The actual ordinary setup Lake entry is
-resolved normally; real installed tool hashes, nine package pins, source and
-ordered namespace are validated by the unchanged production runtime contract
-before any protected native work. Metadata is not build/producer authority.
+The checkpoint push route retains its global one-compiler concurrency group.
+The actual native_probe_main producer job must succeed, including genuine
+native exit/reaping/input preservation and released real CILease/ECHILD, before
+its project-only handoff can be uploaded or the needs-chained actual
+native_reacquisition_consumer job can run. Each job keeps120 minutes. The
+ordinary producer setup is the same pinned action/build/cache/VFT audit; the
+consumer clones nine exact source pins then uses ordinary pinned mathlib-cache
+acquisition with project build, tests, lint, checkers, audit and GitHub cache
+disabled. No100-minute staged producer is repeated for this qualification.
+Ordinary setup/SDK/data preparation are outside the later native-child boundary.
 
-The caller budget is 90 seconds, its Lake command 30 seconds, each metadata file
-has a 64 KiB hard child file limit, and accepted public JSON is at most16 KiB.
-Exit observation uses Linux WNOWAIT without reaping. A failure may signal its
-owned group only before any reap attempt and only after successful waitable-child
-observation. Every wait is preceded by a sticky reap-attempt marker, so an async
-interruption after kernel reaping never authorizes a recycled-group signal.
-Uncertain ownership/reaping forbids group signals and records failure. A permitted
-failure cleanup waits its direct child for at most5 seconds. Failure stops the job and records
-cleanup uncertainty; it does not claim native descendant/ECHILD qualification.
-No successful wait means no supervisor exec. A successful wait precedes same-PID
-os.execve of the direct authenticated launcher, with only the four public captured
-fields added to the original actual CI environment. No GitHub identity is forged.
+Each actual job uses the same waited public Lake capture and direct supervisor.
+Actual workflow, SHA, sole parent, branch, run/attempt, job and explicit
+reacquisition role are source-checked. No GITHUB_JOB or production role is set
+to a false value. The expected producer identity is compared as a data record
+of the other real job; it is not injected into the consumer environment.
+The native program,567 ordered targets, argv/public environment/config4096,
+source/namespace guards, outer and preexec8GiB admission, disk floor, CPU60,
+child90/preflight300, AS12GiB/FSIZE16MiB/RSS6GiB/anon3GiB/headroom1GiB,
+idle guard, true CILease, input preservation and cleanup rules remain unchanged.
 
-The capture record binds actual source/run/attempt/job, caller PID/start/boot,
-source and binding seals, exact public bytes and successful command wait. Direct
-exec preserves that caller identity. The launcher validates the record and actual
-namespace, source/tool/package pins, then protects capture evidence alongside its
-other native inputs. Search-root order and multiplicity remain intact. Only
-physical inventory traversal is deduplicated as previously reviewed.
+The producer builds the complete logical object/source/companion manifest from
+its actual normalized native graph and protected input observations. It transfers
+only project objects; all required package/toolchain rows remain authenticated.
+One real qualification capture is labelled honestly as such. Its manifest is
+NOT a production three-capture full handoff and cannot pass production identity,
+qualification or capture-chain checks. After successful child and lease cleanup,
+a final manifest-bound attestation records actual native lifecycle fields and
+hashes of the final runtime/lease receipts. Its SHA is an independent job output.
+Only a successful producer step may expose handoff outputs/upload the artifact.
 
-A bounded `ps -eo pid,ppid,stat,comm` snapshot completes and is saved immediately
-before the original assert_idle call. The canonical function and decision are
-unchanged: there is no PID/name/Lake whitelist. Refusal saves the snapshot bindings
-and timestamp. The snapshot is not atomic with the guard's own process read, so
-it aids attribution without falsely identifying the exact offending historical
-PID or excluding other processes. A failed/oversized snapshot stops the route.
-Selected capture/process evidence must total at most1 MiB before protected work.
+The actual consumer uses the strict pinned current-run SDK, exact producer
+source/run/attempt/artifact ID/digest/index and attestation output. Qualification
+SDK files live in a fixed fresh owned .lake data directory, with copied exact
+package/lock bytes and scripts disabled; this preserves the unchanged clean-Git
+guard without adding ignore rules. Loaded code root/version/hashes remain
+checked; production SDK placement and default transport authority are unchanged.
+No token/findBy/cross-run override or new permission is granted. Runtime SDK
+behavior remains a qualification input, not a source-pass fact.
 
-Native CPU60/child90/preflight300, AS12 GiB/FSIZE16 MiB/RSS6 GiB/anon3 GiB/live
-headroom1 GiB, fresh8 GiB host/constrained admission, disk>2 GiB, source/no-writer,
-real CILease, kernel identity/limits, preservation and reaping gates are unchanged.
-The global one-compiler concurrency and120-minute job cap remain. The actual
-HeaderProbe,567 ordered targets, five production specs/original1041 logical rows,
-fresh focused/full replay and final kernel/audit conjunction are unchanged.
+Before its own native child, the consumer authenticates all indexed metadata,
+checks the real producer attestation, preserves every required row, verifies
+all producer-declared package modules and all five companion slots in place,
+and strictly rechecks sources/Git/pins/tools and namespace prefixes. Project
+objects are create-only, never overwrite an existing destination, and exact
+part/whole hashes and collisions are checked. Absent package slots retain their
+semantic role; no fake directory or dropped search entry is used. The actual
+consumer native graph then must match producer imports, effective roots,
+source resolution, prefix expansion, required read sets and package-name census.
+All prepared artifact/dependency/project inputs and package namespace state are
+correlated before/after under the actual external no-writer scope. These finite
+observations are not hostile-writer or all-schedules proofs.
 
-This source unit grants no execution/publication/window. Actual metadata capture
-behavior, mapped-region API time/memory, graph and selected-input footprint,
-SDK/export/import/repeated189-case and whole-job fit remain unqualified. A future
-reviewed invocation still needs fresh coordination/holder/source/ref/queue checks,
-real hosted native admission, exact raw evidence audit and truthful cleanup.
+The single1GiB TOTAL bound covers project payload plus complete indexed metadata,
+index AND qualification attestation. It is not a perpart/batch cap. The16MiB
+graph/index,64-record/4MiB metadata/part and64KiB streaming bounds remain. Early
+serialization/capacity refusals preserve bounded attempted size/hash/accounting;
+the broad protected-inventory profile is labelled separately from transferbytes.
+Actual package byte reproduction, SDK behavior, complete metadata/footprint,
+mapped-region/time/page-cache cost and budget fit remain unmeasured.
 
-Parent released the previous MAIN hold08:44:43 on verified normal local release;
-no new holder/window exists. Older PID10732/session92779 zombie/reaping/unknown-exit
-debt remains distinct and is not cleaned up or claimed resolved here.
-
-## Lossless same-cwd configuration repair
-
-The rejected run 40301127484/1 reached the unchanged 4096-byte native configuration ceiling before any native child or CILease. The exact audited public stdout is preserved separately: 3943 bytes, SHA256 1108e611a0f505c88f9c7407a8cedb8986fc96cce4b41b1e456338f9d13bdf55. A source-only reconstruction gives 4500 bytes originally, 4147 with equivalent namespace spellings alone, and 4003 with request.json and graph/headers.json under the same original native cwd. These are reconstructed bytes, not saved historical plan measurements or runtime fit acceptance.
-
-The qualification-local path_config adapter chooses the shorter default-JSON spelling of each original absolute directory or its same-cwd relative path. All 11 object and 30 source entries, their order and duplicates remain. The actual filesystem canonical identity is checked when constructing and verifying the plan. Lean, HeaderProbe, sysroot and absolute protected input/output guards remain pinned. There is no compact serializer, alternate configuration channel or hidden environment. The original child runner independently enforces the same 4096-byte bound. Bounded exact attempted configuration bytes and total length/hash are persisted before refusal, without tokens or a general environment dump.
-
-Lean may report relative graph file paths because its actual namespace contains relative spellings. The raw native graph remains immutable evidence. Only path fields in an in-memory view are resolved under the exact child cwd, checked against actual pre-exec protected regular inputs, and then passed through the original complete namespace, target, header, import, companion, source and closure validation. Ordered effective search/source roots must match the originals including Lean's automatically appended roots. No module, target, import, flag, prefix expansion, row or duplicate is removed or reordered. The raw graph and canonical-view/mapping digests are bound separately; the existing 16 MiB graph allowance remains.
-
-Canonical production controls, HeaderProbe, all 567 targets and 1041 logical bindings are untouched. Ordinary pinned setup remains outside later native-child admission. Every genuine idle/source/tool/package/no-writer/resource/CILease/preservation/cleanup gate is retained. Actual filesystem equivalence, API behavior, mapped-region memory, graph/closure footprint and job fit remain unqualified until a separately authorized fresh authentic run. SDK transport, replay batches, fresh focused and whole-paper acceptance are not established here.
-
-## Genuine absent namespace entries
-
-Run 40309146139/1 failed before config/native/CILease when strict resolution found the Cli package build root absent. Its raw artifact and authenticated log are preserved. Pinned Lean retains these search entries and checks directory/prefix existence during lookup/census; absence is not permission to create a root or remove its slot.
-
-The qualification-local witness now records every effective ordered slot and duplicate, its original/public, encoded and default spelling, and explicit present/absent state. Only the exact admitted package build-root catalog may be absent. A nofollow component walk records the first ENOENT, existing ancestor identity and bounded exact immediate membership fingerprint, and the remaining safe suffix. Permission/type/symlink errors refuse; parent traversal across a missing component refuses. Both spellings must reach the same state. All traversed ancestor identities are retained.
-
-Present unique physical roots go through the original strict CIInventory and CIIdentityGuard. Absent slots remain in the semantic namespace and empty prefix census, protected by the bound witness rather than represented as fake empty directories. Toolchain runtime and source roots remain present/strict. The witness is rechecked in plan verification, preflight/preexec, qualification-local live output preservation, reported-root comparison and post-inventory validation. Appearance, disappearance, replacement or membership drift refuses. These finite observations do not prove all schedules.
-
-Raw graph namespace spellings must match this full ordered state; actual consumed object/source/companion files still use strict resolution and pre-exec protection. Original first-prefix/header/import/target/Git-source and native resource/lease/reaping checks remain. No canonical scanner, closure contract, Lean program or production control changes. Actual witness bytes are counted before writing the exact default-JSON audit representation plus newline under the unchanged 64 KiB ceiling; the 4096-byte child config and all resource limits remain. Runtime footprint, guard overhead, API/closure and job fit are unmeasured. No execution is authorized by this source.
-
-## Canonical-view encoding identity
-
-The failed D693 run 40316800325/1 remains FAILED with between-child preservation false. Its raw graph was 15,759,880 bytes and fits the unchanged 16,777,216-byte native/canonical allowance; the default-whitespace canonical path view was 17,021,617 bytes and was refused at the existing post-capture size guard. Native cleanup success is not MAIN/closure qualification acceptance.
-
-This repair changes only whitespace separators in the canonical-view encoder: sort_keys=True, separators=(',', ':'), unchanged default ensure_ascii=True, UTF-8 bytes, no trailing newline. Every field, value, list order, duplicate and input remains. The report is explicitly RAW_GRAPH_CANONICAL_PATH_VIEW_V2 and carries canonical_view_encoding from the actual encoder attributes; the caller checks that descriptor before the same unchanged 16 MiB size guard, at the same saved-report/pre-graph-validation boundary. The normalized report file hash still binds the descriptor, canonical byte count/digest and unchanged raw graph binding. No raw/native output, namespace validation or graph semantics change. Native configuration serialization/4096 is untouched.
-
-A coordinator data-only reconstruction of the same complete object yielded 15,918,288 bytes, SHA256 6edc6f04560c1fe14cb8f4a1a86814d07f27aa574798e296997f243f724a3a60, 858,928 bytes below the unchanged allowance. These are preserved reconstruction facts, not a new runtime success or acceptance upgrade. Actual fresh namespace/admission/resource/API/full-closure and higher gates require a separately authorized attempt.
+The five-spec cascade retains all1041 original logical identities, all prior
+1106 rows, all567 ordered targets and the existing8-edge DAG, appending only
+the one new adapter source per spec. Qualification bindings depend on the final
+specs, then the workflow binds those bindings and capture source. The workflow
+is not linked back into those specs, avoiding a hash cycle. The original serial
+full producer/replay1/replay2/replay3/fresh-focused/aggregate route and120/120/5
+limits remain; no qualification receipt replaces any567 fresh checker process,
+1041 binding/kernel/declaration/axiom/collision audit, or fresh focused same-job
+17 producer+12 batch children. No production or paper acceptance is implied.

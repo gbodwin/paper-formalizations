@@ -24,7 +24,7 @@ WORKFLOW = '.github/workflows/light-eft-probe-main-qualification.yml'
 BRANCH = 'refs/heads/light-eft-spanners-checkpoints'
 PROBE = 'checkpoints/light-eft-global-replay-batches-20261026/HeaderProbe.lean'
 PROBE_SHA = '715aa2055684da6eff491bf4de5d6646275d62c3197ce4d00d5072c9bb794567'
-PARENT = 'd693a938306d260e673dacb6dfe9d697b748c265'
+PARENT = 'fd4ae2ac18d414a813b6aec1ac5d0f6cccd35e29'
 LEAN = 'e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
 CHECKER = 'ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe'
 
@@ -45,7 +45,10 @@ def main():
     require(e.get('GITHUB_ACTIONS') == 'true' and
             e.get('GITHUB_REPOSITORY') == 'gbodwin/paper-formalizations' and
             e.get('GITHUB_REF') == BRANCH and e.get('GITHUB_EVENT_NAME') == 'push' and
-            e.get('GITHUB_JOB') == 'native_probe_main' and e.get('LEAN_NUM_THREADS') == '1',
+            e.get('LIGHTEFT_HANDOFF_PURPOSE') == 'reacquisition_qualification' and
+            e.get('LIGHTEFT_REACQUISITION_ROLE') in ['producer', 'consumer'] and
+            e.get('GITHUB_JOB') == {'producer': 'native_probe_main',
+                'consumer': 'native_reacquisition_consumer'}.get(e.get('LIGHTEFT_REACQUISITION_ROLE')) and e.get('LEAN_NUM_THREADS') == '1',
             'Wrong actual native qualification source/job')
     require(len(head) == 40 and all(c in '0123456789abcdef' for c in head) and
             all(e.get(k, '').isdecimal() and int(e[k]) > 0
@@ -64,7 +67,7 @@ def main():
                 'GITHUB_RUN_ID', 'GITHUB_RUN_ATTEMPT', 'GITHUB_JOB', 'GITHUB_WORKFLOW',
                 'GITHUB_WORKFLOW_SHA', 'GITHUB_WORKFLOW_REF', 'LEAN_NUM_THREADS',
                 'LIGHTEFT_JOB_WORKFLOW_REPOSITORY', 'LIGHTEFT_JOB_WORKFLOW_PATH',
-                'LIGHTEFT_JOB_WORKFLOW_SHA', 'LIGHTEFT_JOB_WORKFLOW_REF']}
+                'LIGHTEFT_JOB_WORKFLOW_SHA', 'LIGHTEFT_JOB_WORKFLOW_REF', 'LIGHTEFT_REACQUISITION_ROLE']}
     temp = Path(e['RUNNER_TEMP'])
     require(temp.is_absolute() and temp.is_dir() and not temp.is_symlink(), 'Unsafe temporary root')
     root = temp / ('light-eft-probe-main-profile-' + e['GITHUB_RUN_ID'] + '-' + e['GITHUB_RUN_ATTEMPT'])
@@ -121,7 +124,7 @@ def main():
                 profile['production_acceptance'] is False, 'Wrong finite metadata profile')
         sys.pycache_prefix = str(root / 'absent-python-cache')
         require(not os.path.lexists(sys.pycache_prefix) and
-                all(n not in sys.modules for n in ['child_runner', 'output_guards', 'closure_contract', 'lake_capture', 'path_config']),
+                all(n not in sys.modules for n in ['child_runner', 'output_guards', 'closure_contract', 'lake_capture', 'path_config', 'qualification_adapter']),
                 'Inherited qualification module/cache')
         replay = (ROOT / PROBE).parent
         sys.path[:0] = [str(HERE), str(ENGINE), str(ROOT / 'scripts'), str(replay)]
@@ -134,6 +137,7 @@ def main():
         import child_runner
         from pilot_child import LIMITS
         import closure_contract as cl
+        import qualification_adapter as qualification
         import lake_capture as caller_capture
         import path_config as path_representation
         require(Path(qualified_outputs.__file__).resolve() == HERE / 'output_guards.py' and
@@ -153,6 +157,8 @@ def main():
                 'Accepted native resource/lifecycle envelope changed')
         # These are data/runtime functions, not a forged full/global producer entry.
         production_controls = cl.controls()
+        require(Path(qualification.__file__).resolve() == replay / 'qualification_adapter.py' and
+                qualification.identity(cl) == identity, 'Explicit qualification adapter identity differs')
         names = cl.targets()
         tool, tools, roots, kinds = cl.runtime()
         require(len(names) == 567 and hashlib.sha256(('\n'.join(names) + '\n').encode()).hexdigest() ==
@@ -194,6 +200,13 @@ def main():
         require(sum(p.stat().st_size for p in [*capture_guard_paths, *ps_paths,
                     root / 'idle-guard-success.json']) <= 1024**2,
                 'Public capture/process evidence exceeds1MiB')
+        consumer_state = None
+        if identity['LIGHTEFT_REACQUISITION_ROLE'] == 'consumer':
+            # Authenticated data preparation, outside later native-child admission.
+            consumer_state = qualification.prepare_consumer(
+                cl, identity, root, tool, tools, roots, kinds, names, production_controls)
+            for path in consumer_state['protected_paths']:
+                source[str(path)] = bind(path)
         work = root / 'work'; work.mkdir(mode=0o700)
         objects = work / 'objects'; objects.mkdir(mode=0o700)
         audit = work / 'empty-audit'; audit.mkdir(mode=0o700)
@@ -382,12 +395,23 @@ def main():
                      target_count=567, nodes=len(nodes), census=len(graph['census']),
                     regions_retained=graph['regions_retained'], actual_roots=list(map(str, roots)),
                     prefix_claims=claims, closure_files=len(selected), payload_bytes=payload,
+                    payload_bytes_legacy_protected_inventory_not_transfer=True,
                     closure_chunks=chunks, actual_tools=tools, actual_package_pins=cl.PINS,
                     actual_case_only=True, batch_native_cases=0, export_or_transport_invoked=False,
                     no_authenticated_cache_provenance=True, production_acceptance=False)
                 save(root / 'graph-profile.json', out)  # Preserve measured refusal before evaluating ceiling.
-                require(payload <= cl.PAYLOAD_LIMIT, 'Actual full closure exceeds unchanged1GiB transfer allowance')
-                return out
+                if identity['LIGHTEFT_REACQUISITION_ROLE'] == 'producer':
+                    result = qualification.seal_observed(cl, graph, names, tool, tools,
+                        roots, kinds, production_controls, identity, root, receipt, self.inputs,
+                        (objs, sources, claims, paths))
+                else:
+                    result = qualification.verify_consumer(cl, identity, graph, names, tool,
+                        tools, roots, kinds, production_controls, consumer_state)
+                # The broad protected input profile is not the transfer payload.
+                # The V3 helpers enforce project+allmetadata+attestation TOTAL1GiB.
+                self.guard.verify(); unchanged(source)
+                save(root / 'qualification-data-result.json', result)
+                return dict(out, explicit_reacquisition_qualification=result)
             def after_child(self, p, receipt, persist):
                 self.verify(p)
                 if self.guard is not None:
@@ -433,6 +457,11 @@ def main():
                     not receipt.get('cleanup_errors'), 'Incomplete genuine native child lifecycle')
         require(lease.record['state'] == 'released' and lease.record.get('kernel_echild') is True and
                 not lease.record.get('release_errors'), 'Incomplete genuine lease release')
+        if identity['LIGHTEFT_REACQUISITION_ROLE'] == 'producer':
+            qualification.finish_producer(cl, identity, root, receipt, lease.record,
+                ctx.outputs['explicit_reacquisition_qualification'])
+        else:
+            qualification.clean_lifecycle(cl, receipt, lease.record)
         save(root / 'result-summary.json', dict(native_probe_main_profile_passed=True,
              qualification_only=True, synthetic_fixture=False, API_runtime_exercised=True,
              production_acceptance=False, identity=identity, attempt=receipt['attempt_id'],
