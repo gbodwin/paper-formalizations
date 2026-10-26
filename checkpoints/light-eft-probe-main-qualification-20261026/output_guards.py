@@ -177,6 +177,8 @@ def live_metadata_outputs(record,spec):
          meta['ordered_targets_sha256']=='aacaaa23315dda4923b1407fc1336bffc7feb541c392e5eb1fbd1e6de6a1ccda',
          'Metadata actual source/workflow/target binding differs')
  work=Path(record['working_directory']);program=Path(meta['program'])
+ require(work.is_absolute() and work.resolve(strict=True)==work and
+         record.get('planned_command',{}).get('cwd')==str(work),'Changed actual metadata cwd')
  request=work/'request.json';output=work/'graph'/'headers.json'
  require(Path(meta['request'])==request and Path(meta['output'])==output and
          Path(spec['objects'])==work/'objects' and Path(spec['audit'])==work/'empty-audit',
@@ -187,7 +189,9 @@ def live_metadata_outputs(record,spec):
  argv=record.get('argv',[])
  require(len(argv)==10 and Path(argv[0]).name=='lean' and
          argv[1:7]==['-j1','-s65536','-M5120','-DautoImplicit=false','-DwarningAsError=true','--run'] and
-         argv[7:]==[str(program),str(request),str(output)], 'Changed actual metadata command')
+         argv[7:]==[str(program),'request.json','graph/headers.json'] and
+         (work/argv[8]).resolve(strict=True)==request and
+         (work/argv[9]).resolve(strict=False)==output, 'Changed actual metadata command')
  files=live_tree(output.parent,{str(output)})
  for path,row in files.items():
   check(0<=row['bytes']<=OBJECT_BOUND,'Live metadata JSON size budget',path,row)

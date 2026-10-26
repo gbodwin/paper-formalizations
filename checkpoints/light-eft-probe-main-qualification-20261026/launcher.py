@@ -24,7 +24,7 @@ WORKFLOW = '.github/workflows/light-eft-probe-main-qualification.yml'
 BRANCH = 'refs/heads/light-eft-spanners-checkpoints'
 PROBE = 'checkpoints/light-eft-global-replay-batches-20261026/HeaderProbe.lean'
 PROBE_SHA = '715aa2055684da6eff491bf4de5d6646275d62c3197ce4d00d5072c9bb794567'
-PARENT = '6badfae09b91d990f3c469650e8e7cc46e2ac81b'
+PARENT = '1ab0f0fcb6aab7416f5260b269e1e6a98e37ac8c'
 LEAN = 'e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
 CHECKER = 'ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe'
 
@@ -121,7 +121,7 @@ def main():
                 profile['production_acceptance'] is False, 'Wrong finite metadata profile')
         sys.pycache_prefix = str(root / 'absent-python-cache')
         require(not os.path.lexists(sys.pycache_prefix) and
-                all(n not in sys.modules for n in ['child_runner', 'output_guards', 'closure_contract', 'lake_capture']),
+                all(n not in sys.modules for n in ['child_runner', 'output_guards', 'closure_contract', 'lake_capture', 'path_config']),
                 'Inherited qualification module/cache')
         replay = (ROOT / PROBE).parent
         sys.path[:0] = [str(HERE), str(ENGINE), str(ROOT / 'scripts'), str(replay)]
@@ -135,12 +135,15 @@ def main():
         from pilot_child import LIMITS
         import closure_contract as cl
         import lake_capture as caller_capture
+        import path_config as path_representation
         require(Path(qualified_outputs.__file__).resolve() == HERE / 'output_guards.py' and
                 child_runner.audit_output_errors is qualified_outputs.runtime_errors and
                 Path(cl.__file__).resolve() == replay / 'closure_contract.py',
                 'Actual qualification module source binding differs')
         require(Path(caller_capture.__file__).resolve() == HERE / 'lake_capture.py',
                 'Actual Lake capture validator source differs')
+        require(Path(path_representation.__file__).resolve() == HERE / 'path_config.py',
+                'Actual path/config adapter source differs')
         capture_guard_paths = caller_capture.validate_capture(e)
         require(LIMITS['RLIMIT_AS'] == 12 * 1024**3 and LIMITS['RLIMIT_CPU'] == 60 and
                 LIMITS['RLIMIT_CORE'] == 0 and child_runner.DEADLINE == 90 and
@@ -198,18 +201,35 @@ def main():
         request = work / 'request.json'; output = graphdir / 'headers.json'
         raw = cl.encoded(dict(targets=names)); require(len(raw) <= 1024**2, 'Probe request exceeds source allowance')
         cl.create(request, raw); source[str(request)] = bind(request)
-        # Explicit public Lean environment only. No credential/environment dump.
+        object_path, object_witness = path_representation.spell_entries(roots[:-1], work, 'LEAN_PATH')
+        source_path, source_witness = path_representation.spell_entries(srcroots, work, 'LEAN_SRC_PATH')
+        # Explicit public Lean environment only. Same namespace, no credential dump.
         plan = dict(stage='resolve', module='HeaderProbeMain567',
                     argv=[str(tool / 'bin/lean'), '-j1', '-s65536', '-M5120',
                           '-DautoImplicit=false', '-DwarningAsError=true', '--run',
-                          str(ROOT / PROBE), str(request), str(output)],
+                          str(ROOT / PROBE), 'request.json', 'graph/headers.json'],
                     env=dict(LANG='C.UTF-8', LC_ALL='C.UTF-8', LEAN_NUM_THREADS='1',
-                             LEAN_SYSROOT=str(tool), LEAN_PATH=':'.join(map(str, roots[:-1])),
-                             LEAN_SRC_PATH=':'.join(map(str, srcroots)),
+                             LEAN_SYSROOT=str(tool), LEAN_PATH=object_path,
+                             LEAN_SRC_PATH=source_path,
                              MIMALLOC_ARENA_RESERVE='128MiB', MIMALLOC_VERBOSE='1'), cwd=str(work))
         frozen = json.dumps(plan, sort_keys=True)
-        require(len(json.dumps({k: plan[k] for k in ['stage', 'argv', 'env']}).encode()) <= 4096,
-                'Existing native launcher configuration bound exceeded')
+        path_representation.verify_arguments(plan, work, ROOT / PROBE, request, output)
+        configuration, config_evidence = path_representation.preserve_attempt(
+            plan, root, caller_capture.create, save)
+        path_witness = dict(schema='SAME_CWD_PATH_SPELLINGS_V1', cwd=str(work),
+             object_entries=object_witness, source_entries=source_witness,
+             all_entries_order_duplicates_preserved=True,
+             argv=dict(program=str(ROOT / PROBE), request_absolute=str(request),
+                       request_spelling='request.json', output_absolute=str(output),
+                       output_spelling='graph/headers.json'),
+             exact_config_bytes=len(configuration))
+        require(len(json.dumps(path_witness).encode()) <= 65536, 'Path evidence exceeds64KiB')
+        save(root / 'path-encoding.json', path_witness)
+        for p in [*config_evidence, root / 'path-encoding.json']:
+            source[str(p)] = bind(p)
+        require(sum(p.stat().st_size for p in [*capture_guard_paths, *ps_paths,
+                    root / 'idle-guard-success.json', *config_evidence, root / 'path-encoding.json']) <= 1024**2,
+                'Selected public/config evidence exceeds unchanged1MiB allowance')
         save(root / 'submitted-plan.json', dict(identity=identity, plan=plan, profile=profile,
              source_bindings=source, actual_tools=tools, actual_roots=list(map(str, roots)),
              ordinary_setup_not_child_admission=True, production_acceptance=False))
@@ -246,8 +266,12 @@ def main():
             def verify(self, p):
                 require(json.dumps(p, sort_keys=True) == frozen and p['stage'] == 'resolve' and
                         p['argv'][0] == str(tool / 'bin/lean') and p['argv'][6:] ==
-                        ['--run', str(ROOT / PROBE), str(request), str(output)],
+                        ['--run', str(ROOT / PROBE), 'request.json', 'graph/headers.json'] and
+                        path_representation.config_bytes(p) == configuration,
                         'Changed actual metadata command/env/resource class')
+                path_representation.verify_arguments(p, work, ROOT / PROBE, request, output)
+                path_representation.verify_entries(p['env']['LEAN_PATH'], roots[:-1], work)
+                path_representation.verify_entries(p['env']['LEAN_SRC_PATH'], srcroots, work)
                 self.lease.check(); authenticate(); unchanged(source)
                 require(not list(audit.iterdir()), 'Unexpected audit export')
             def before_child(self, p, receipt, persist):
@@ -291,10 +315,17 @@ def main():
                 receipt.update(preexec_binding_verified=True, preexec_disk_bytes=free,
                                preexec_native_qualification_admission=now); persist()
             def profile_graph(self, receipt):
-                graph = cl.read_json(output); nodes, _ = cl.validate_graph(graph, names)
+                raw_graph = cl.read_json(output)
+                expected_sources = srcroots + [(tool / 'src/lean/lake').resolve(strict=True),
+                                               (tool / 'src/lean').resolve(strict=True)]
+                graph, normalization = path_representation.canonical_graph(
+                    raw_graph, work, roots, expected_sources, self.inputs)
+                normalization['raw_graph'] = bind(output)
+                save(root / 'graph-path-normalization.json', normalization)
+                require(normalization['canonical_view_bytes'] <= 16 * 1024**2,
+                        'Canonical graph view exceeds unchanged16MiB graph allowance')
+                nodes, _ = cl.validate_graph(graph, names)
                 self.api_exercised = True
-                require([str(Path(x).resolve()) for x in graph['search_path']] == list(map(str, roots)),
-                        'Actual probe namespace ordering differs from Lake')
                 require(cl.prefixes(roots) == prefix_before, 'Object prefix census changed')
                 objs, sources, claims, paths = cl.inventory(graph, names, tool, roots, kinds)
                 selected = {}
@@ -318,7 +349,8 @@ def main():
                     path = folder / ('bindings-%04d.json' % (offset // 64))
                     save(path, sorted(selected.items())[offset:offset + 64]); chunks.append(bind(path))
                 out = dict(schema='NATIVE_567_GRAPH_PROFILE_ONLY_V1', graph=bind(output),
-                    target_count=567, nodes=len(nodes), census=len(graph['census']),
+                    path_normalization=bind(root / 'graph-path-normalization.json'),
+                     target_count=567, nodes=len(nodes), census=len(graph['census']),
                     regions_retained=graph['regions_retained'], actual_roots=list(map(str, roots)),
                     prefix_claims=claims, closure_files=len(selected), payload_bytes=payload,
                     closure_chunks=chunks, actual_tools=tools, actual_package_pins=cl.PINS,

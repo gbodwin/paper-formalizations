@@ -18,7 +18,7 @@ jobs:
     timeout-minutes: 120
     env:
       LEAN_NUM_THREADS: '1'
-      LIGHTEFT_QUALIFICATION_BINDINGS_SHA: 271ca79a9cb22076a38787f6c5798925d7c9f3e7a79f33717bebcaa87d770d84
+      LIGHTEFT_QUALIFICATION_BINDINGS_SHA: 84369570c2a30926b83ba19b59ec434ec6e74b11c9f8eeef0aa9772eea75a566
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -50,7 +50,7 @@ jobs:
           import hashlib
           p = Path('checkpoints/light-eft-probe-main-qualification-20261026/lake_capture.py').resolve()
           b = p.read_bytes()
-          if hashlib.sha256(b).hexdigest() != '017eb79a6c72f88e222d0b6f13736908885dec1c947547ca79b5342567c1ffb5':
+          if hashlib.sha256(b).hexdigest() != 'c1d5a3f0daccca6d849f723b82a7125803ba9f9bdd986e1c13eaf09f6f27bea4':
               raise SystemExit('Unreviewed metadata qualification entry')
           exec(compile(b, str(p), 'exec'), {'__name__': '__main__', '__file__': str(p)})
           PYTHON
