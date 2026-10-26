@@ -8,6 +8,7 @@ Transport, actual fresh launcher admission and final batch receipts remain
 separate reviewed integration obligations. Nothing in this file has run.
 """
 from pathlib import Path, PurePosixPath
+import errno
 import hashlib
 import json
 import os
@@ -46,6 +47,11 @@ PAYLOAD_LIMIT = 1024 * 1024 * 1024
 CONTROL_NAMES = ('closure_contract.py', 'HeaderProbe.lean', 'targets.json',
                  'strict_download.cjs', 'package.json', 'package-lock.json')
 SUFFIXES = ('', '.server', '.private', '.ir.sig', '.ir')
+ACQUISITION_POLICY = dict(
+    schema='PROJECT_TRANSFER_PINNED_DEPENDENCIES_EXACT_PRODUCER_BYTES_V1',
+    project='project_transfer', package='package_reacquire_exact_producer_bytes',
+    toolchain='toolchain_reverify', total_transfer_limit_bytes=PAYLOAD_LIMIT,
+    ordinary_acquisition_is_not_cache_provenance=True)
 
 
 def require(ok, message):
@@ -396,6 +402,110 @@ def required_suffixes(name, node, available, seeds, imported):
     return result
 
 
+def acquisition(kind):
+    require(kind in {'project', 'toolchain', *('package:' + n for n in PINS)},
+            'Unknown object acquisition owner')
+    return ACQUISITION_POLICY['package' if kind.startswith('package:') else kind]
+
+
+def package_namespace(roots, kinds):
+    """Finite root/absence and prefix observation, under external no-writer scope.
+
+    Directory timestamps are not a lease or hostile-writer proof. An absent
+    root retains its first missing suffix and existing ancestor identity; no
+    mkdir, error-to-absence conversion or dropping of semantic slots occurs.
+    """
+    result = []
+    def directory_identity(path):
+        s = path.lstat()
+        require(stat.S_ISDIR(s.st_mode), 'Unsafe package namespace ancestor')
+        return [s.st_dev, s.st_ino, s.st_uid, s.st_gid,
+                stat.S_IMODE(s.st_mode), s.st_nlink]
+    for index, (root, kind) in enumerate(zip(roots, kinds, strict=True)):
+        if not kind.startswith('package:'):
+            continue
+        require(root.is_absolute(), 'Relative package namespace root')
+        no_symlink_parents(root)
+        current = root; suffix = []
+        while True:
+            try:
+                observed = directory_identity(current)
+                break
+            except FileNotFoundError as error:
+                require(error.errno == errno.ENOENT and current != current.parent,
+                        'Package namespace absence is not ENOENT')
+                suffix.insert(0, current.name); current = current.parent
+        row = dict(root=index, kind=kind, anchor=str(current),
+                   anchor_identity=observed, missing_suffix=suffix,
+                   state='absent' if suffix else 'directory',
+                   prefixes=prefixes([root])[0])
+        # Reobserve the first missing component, or the actual present root.
+        if suffix:
+            try:
+                (current / suffix[0]).lstat()
+            except FileNotFoundError as error:
+                require(error.errno == errno.ENOENT, 'Package namespace absence changed')
+            else:
+                raise ValueError('Absent package namespace appeared during observation')
+        require(directory_identity(current) == observed, 'Package namespace identity changed')
+        result.append(row)
+    return result
+
+
+def package_census(graph, kinds):
+    """Compare native package-name observations across relocated exact roots.
+
+    Sorting removes filesystem enumeration order only. Duplicate census rows
+    and duplicate search-root slots remain represented; no object bytes gain
+    trust from being named here.
+    """
+    paths = graph['search_path']
+    require(len(paths) == len(kinds), 'Package census search-root slots differ')
+    roots = [PurePosixPath(p) for p in paths]
+    require(all(type(p) is str and r.is_absolute() and p == r.as_posix() and
+                '..' not in r.parts for p, r in zip(paths, roots, strict=True)),
+            'Noncanonical native package census root')
+    result = []
+    for row in graph['census']:
+        path = PurePosixPath(row['file'])
+        for index, (root, kind) in enumerate(zip(roots, kinds, strict=True)):
+            if kind.startswith('package:') and path.is_relative_to(root):
+                relative = path.relative_to(root).as_posix()
+                require(relative == module_path(row['module']),
+                        'Package census module/file mapping differs')
+                result.append([index, row['module'], relative])
+    return sorted(result)
+
+
+def reacquired_package_paths(manifest, nodes, roots, kinds):
+    """Verify ALL producer-declared package families, never cache provenance.
+
+    Required companions remain explicit manifest rows. The complete five-slot
+    availability observation also rejects missing/extra optional companions
+    which could change a native read set. No package file is installed here.
+    """
+    paths = []
+    for name in sorted(nodes):
+        obj = manifest['objects'][name]
+        if not kinds[obj['root']].startswith('package:'):
+            continue
+        base = roots[obj['root']] / obj['relative']; actual = {}
+        for suffix in SUFFIXES:
+            path = part_path(base, suffix); no_symlink_parents(path)
+            try:
+                path.lstat()
+            except FileNotFoundError as error:
+                require(error.errno == errno.ENOENT, 'Package companion absence is not ENOENT')
+                actual[suffix] = None
+            else:
+                actual[suffix] = digest(path)
+            if actual[suffix] is not None:
+                paths.append(path)
+        require(actual == obj['available'],
+                'Reacquired package companion presence/bytes differ: ' + name)
+    return sorted(set(paths), key=str)
+
+
 def run_probe(folder, names, tool, ci):
     folder.mkdir(mode=0o700, exist_ok=False)
     request = folder / 'request.json'; output = folder / 'headers.json'
@@ -502,6 +612,157 @@ def copy_parts(path, bundle, index, expected):
     return row
 
 
+def seal_manifest(bundle, manifest):
+    """Hash-index complete metadata; never split the total payload allowance.
+
+    The graph remains one bounded JSON object. Objects/sources/file rows retain
+    all fields, list order and duplicate file rows in fixed <=64-record chunks.
+    Only their location changes; one same-run producer output binds the index.
+    """
+    directory = bundle / 'metadata'; directory.mkdir(mode=0o700, exist_ok=False)
+    metadata = {}; metadata_bytes = 0; records_written = 0; sequence = 0
+    attempts = bundle.parent / 'metadata-attempts'; attempts.mkdir(mode=0o700, exist_ok=False)
+    def attempted(phase, details):
+        nonlocal sequence
+        sequence += 1
+        record = dict(schema='EXACT_METADATA_SERIALIZATION_ATTEMPT_V1',
+                      status='PARTIAL_ATTEMPT_NOT_SEALED_OR_ACCEPTED', phase=phase,
+                      sequence=sequence, metadata_records_committed=records_written,
+                      project_payload_bytes=manifest['payload_bytes'],
+                      metadata_committed_bytes=metadata_bytes,
+                      index_bytes=None, index_sha256=None, exact_complete_total_bytes=None,
+                      unknown_fields='Index and complete total not yet computed',
+                      total_limit_bytes=PAYLOAD_LIMIT, per_JSON_limit_bytes=JSON_LIMIT,
+                      record_limit_bytes=PART, **details)
+        raw = encoded(record)
+        require(len(raw) <= PART, 'Bounded metadata attempt evidence exceeds part allowance')
+        create(attempts / ('attempt-%05d.json' % sequence), raw)
+    def put(name, value, ceiling):
+        nonlocal metadata_bytes, records_written
+        raw = encoded(value)
+        attempted('record-before-ceilings', dict(
+                  record_name='metadata/' + name, attempted_encoded_bytes=len(raw),
+                  attempted_encoded_sha256=hashlib.sha256(raw).hexdigest(),
+                  attempted_record_limit_bytes=ceiling,
+                  metadata_bytes_if_written=metadata_bytes + len(raw),
+                  total_lower_bound_without_index=manifest['payload_bytes'] + metadata_bytes + len(raw)))
+        require(len(raw) <= ceiling, 'Metadata record exceeds unchanged bound: ' + name)
+        require(metadata_bytes + len(raw) + manifest['payload_bytes'] <= PAYLOAD_LIMIT,
+                'Metadata plus project payload exceeds unchanged total transfer allowance')
+        path = directory / name; create(path, raw); row = dict(path='metadata/' + name, **digest(path))
+        metadata_bytes += len(raw); records_written += 1
+        return row
+    metadata['graph'] = put('graph.json', manifest['graph'], JSON_LIMIT)
+    for field, maximum in [('objects', 32768), ('sources', 32768), ('files', 5 * 32768)]:
+        value = manifest[field]
+        rows = value if field == 'files' else sorted(value.items())
+        attempted('collection-before-count-ceiling', dict(
+                  collection=field, observed_count=len(rows), maximum_count=maximum,
+                  attempted_encoded_bytes=None, attempted_encoded_sha256=None,
+                  encoding_status='Not encoded; count is checked before bounded chunks'))
+        require(0 < len(rows) <= maximum, 'Metadata collection count exceeds graph bound')
+        chunks = []
+        for offset in range(0, len(rows), 64):
+            chunk = rows[offset:offset + 64]
+            row = put('%s-%05d.json' % (field, offset // 64), chunk, PART)
+            chunks.append(dict(count=len(chunk), **row))
+        metadata[field] = dict(count=len(rows), chunks=chunks)
+    index = {k: v for k, v in manifest.items() if k not in metadata}
+    index.update(schema='LIGHT_SAME_RUN_REPLAY_HANDOFF_V3_INDEXED_METADATA',
+                 metadata=metadata, metadata_bytes=metadata_bytes)
+    raw = encoded(index)
+    profile = dict(schema='EXACT_PROJECT_AND_METADATA_TRANSFER_PROFILE_V1',
+                   status='COMPLETE_SERIALIZED_COUNTS_BEFORE_FINAL_CEILINGS',
+                   project_payload_bytes=manifest['payload_bytes'], metadata_bytes=metadata_bytes,
+                   index_bytes=len(raw), total_bytes=manifest['payload_bytes'] + metadata_bytes + len(raw),
+                   total_limit_bytes=PAYLOAD_LIMIT, per_JSON_limit_bytes=JSON_LIMIT,
+                   index_sha256=hashlib.sha256(raw).hexdigest(),
+                   required_companions=len(manifest['files']), acquisition_policy=ACQUISITION_POLICY)
+    # Refusal evidence lives outside the bundle; no failed export is promoted.
+    create(bundle.parent / 'transfer-profile.json', encoded(profile))
+    require(len(raw) <= JSON_LIMIT and profile['total_bytes'] <= PAYLOAD_LIMIT,
+            'Indexed metadata/project handoff exceeds unchanged total or JSON allowance')
+    create(bundle / 'manifest.json', raw)
+    return dict(manifest_sha256=profile['index_sha256'],
+                total_transfer_bytes=profile['total_bytes'], metadata_bytes=metadata_bytes)
+
+
+def load_manifest(bundle, expected_sha):
+    """Authenticate index and every metadata byte before reconstructing rows."""
+    path = bundle / 'manifest.json'; no_symlink_parents(path); index_before = observation(path)
+    require(index_before['sha256'] == expected_sha, 'Manifest index digest differs')
+    index = read_json(path)
+    require(observation(path) == index_before and set(index) == {
+            'schema', 'producer', 'controls', 'tools', 'packages', 'root_kinds',
+            'prefix_claims', 'payload_bytes', 'qualification', 'snapshot', 'captures',
+            'acquisition_policy', 'metadata', 'metadata_bytes'} and
+            index['schema'] == 'LIGHT_SAME_RUN_REPLAY_HANDOFF_V3_INDEXED_METADATA' and
+            type(index['payload_bytes']) is int and 0 < index['payload_bytes'] <= PAYLOAD_LIMIT and
+            type(index['metadata_bytes']) is int and 0 < index['metadata_bytes'] <= PAYLOAD_LIMIT,
+            'Unknown/oversized indexed handoff fields')
+    records = index['metadata']
+    require(type(records) is dict and set(records) == {'graph', 'objects', 'sources', 'files'},
+            'Incomplete metadata collection index')
+    paths = [path]; seen = set(); metadata_bytes = 0
+    def get(row, name, ceiling):
+        nonlocal metadata_bytes
+        require(type(row) is dict and set(row) == {'path', 'bytes', 'sha256'} and
+                row['path'] == 'metadata/' + name and row['path'] not in seen,
+                'Metadata path/duplicate differs from fixed index')
+        binding({k: row[k] for k in ['bytes', 'sha256']})
+        require(row['bytes'] <= ceiling, 'Indexed metadata record exceeds finite bound')
+        p = bundle / row['path']; no_symlink_parents(p); before = observation(p)
+        require({k: before[k] for k in ['bytes', 'sha256']} ==
+                {k: row[k] for k in ['bytes', 'sha256']}, 'Authenticated metadata bytes differ')
+        metadata_bytes += row['bytes']
+        require(metadata_bytes + index['payload_bytes'] + index_before['bytes'] <= PAYLOAD_LIMIT,
+                'Metadata/project bytes exceed unchanged total transfer allowance')
+        value = read_json(p)
+        require(observation(p) == before, 'Metadata changed while decoding')
+        seen.add(row['path']); paths.append(p)
+        return value
+    values = {'graph': get(records['graph'], 'graph.json', JSON_LIMIT)}
+    for field, maximum in [('objects', 32768), ('sources', 32768), ('files', 5 * 32768)]:
+        record = records[field]
+        require(type(record) is dict and set(record) == {'count', 'chunks'} and
+                type(record['count']) is int and 0 < record['count'] <= maximum and
+                type(record['chunks']) is list and len(record['chunks']) ==
+                (record['count'] + 63) // 64, 'Metadata collection index count differs')
+        rows = []
+        for number, chunk in enumerate(record['chunks']):
+            require(type(chunk) is dict and set(chunk) == {'path', 'count', 'bytes', 'sha256'} and
+                    type(chunk['count']) is int and chunk['count'] ==
+                    min(64, record['count'] - len(rows)), 'Metadata chunk count/order differs')
+            row = {k: chunk[k] for k in ['path', 'bytes', 'sha256']}
+            part = get(row, '%s-%05d.json' % (field, number), PART)
+            require(type(part) is list and len(part) == chunk['count'], 'Metadata chunk rows differ')
+            rows.extend(part)
+        require(len(rows) == record['count'], 'Metadata collection incomplete')
+        if field == 'files':
+            values[field] = rows  # Keep every list ordinal; never deduplicate.
+        else:
+            require(all(type(row) is list and len(row) == 2 and type(row[0]) is str for row in rows),
+                    'Metadata mapping row differs')
+            keys = [row[0] for row in rows]
+            require(keys == sorted(set(keys)), 'Metadata mapping duplicate/order differs')
+            values[field] = dict(rows)
+    directory = bundle / 'metadata'; no_symlink_parents(directory)
+    require(directory.is_dir(), 'Missing metadata directory')
+    actual = set()
+    for p in directory.iterdir():
+        s = p.lstat()
+        require(stat.S_ISREG(s.st_mode) and s.st_nlink == 1 and not p.is_symlink(),
+                'Unsafe/unlisted metadata entry')
+        actual.add('metadata/' + p.name)
+        require(len(actual) <= 1 + (32768 + 63) // 64 * 2 + (5 * 32768 + 63) // 64,
+                'Metadata directory entry bound exceeded')
+    require(actual == seen and metadata_bytes == index['metadata_bytes'] and
+            observation(path) == index_before, 'Hidden/missing/changed indexed metadata')
+    manifest = {k: v for k, v in index.items() if k not in ['metadata', 'metadata_bytes']}
+    manifest.update(schema='LIGHT_SAME_RUN_REPLAY_HANDOFF_V3', **values)
+    return manifest, paths, metadata_bytes + index_before['bytes']
+
+
 def export_body(destination, ci, bound, names, tool, tools, roots, kinds):
     capture = destination / 'capture'; capture.mkdir(mode=0o700)
     bundle = destination / 'bundle'; bundle.mkdir(mode=0o700)
@@ -525,7 +786,8 @@ def export_body(destination, ci, bound, names, tool, tools, roots, kinds):
             require(observation(path) == before[str(path)], 'Object changed before sealing')
             row = dict(module=name, suffix=suffix, root=index,
                        relative=path.relative_to(roots[index]).as_posix(),
-                       transfer=kinds[index] != 'toolchain', chunks=[], **binding)
+                       acquisition=acquisition(kinds[index]),
+                       transfer=kinds[index] == 'project', chunks=[], **binding)
             if row['transfer']:
                 require(payload_bytes + binding['bytes'] <= PAYLOAD_LIMIT,
                         'Exact required closure exceeds proposed transfer bound: ' + str(path))
@@ -544,16 +806,16 @@ def export_body(destination, ci, bound, names, tool, tools, roots, kinds):
     after_index = write_snapshot(capture / 'inputs-after', snapshot(input_paths))
     require(before_index['ordered_records_sha256'] == after_index['ordered_records_sha256'],
             'Sealed snapshot correlation differs')
-    manifest = dict(schema='LIGHT_SAME_RUN_REPLAY_HANDOFF_V2', producer=ci, controls=bound,
+    manifest = dict(schema='LIGHT_SAME_RUN_REPLAY_HANDOFF_V3', producer=ci, controls=bound,
+                    acquisition_policy=ACQUISITION_POLICY,
                     tools=tools, packages=PINS, root_kinds=kinds, graph=graph, sources=sources,
                     objects=objects, prefix_claims=claims, files=files, payload_bytes=payload_bytes,
                     qualification=QUALIFICATION, snapshot=dict(before=before_index, after=after_index,
                     observed_inputs_unchanged=True, graph_sha256=graph_fingerprint(graph),
                     external_no_writer_required=True, hostile_writer_absence_not_proved=True),
                     captures=[read_json(capture / n / 'capture.json') for n in ['discovery', 'confirmed', 'sealed']])
-    raw = encoded(manifest); require(len(raw) <= JSON_LIMIT, 'Manifest exceeds bound')
-    create(bundle / 'manifest.json', raw)
-    summary = dict(manifest_sha256=hashlib.sha256(raw).hexdigest(), payload_bytes=payload_bytes,
+    index_binding = seal_manifest(bundle, manifest)
+    summary = dict(**index_binding, payload_bytes=payload_bytes,
                    target_count=567, object_module_count=len(nodes), producer=ci)
     create(destination / 'export-summary.json', encoded(summary))
     return summary
@@ -695,14 +957,15 @@ def expected_file_set(manifest, nodes, all_names, kinds):
                 'Header/explicit companion census differs')
         for suffix in required_suffixes(name, node, obj['available'], seeds, imported):
             expected[(name, suffix)] = dict(root=obj['root'], relative=companion_relative(name, suffix),
-                                          transfer=kinds[obj['root']] != 'toolchain',
+                                          acquisition=acquisition(kinds[obj['root']]),
+                                          transfer=kinds[obj['root']] == 'project',
                                           **binding(obj['available'][suffix]))
     return expected
 
 
 def bundle_entries(bundle, expected_parts):
     no_symlink_parents(bundle)
-    require(bundle.is_dir() and {p.name for p in bundle.iterdir()} == {'manifest.json', 'parts'},
+    require(bundle.is_dir() and {p.name for p in bundle.iterdir()} == {'manifest.json', 'parts', 'metadata'},
             'Unknown/missing top-level bundle entries')
     directory = bundle / 'parts'
     require(directory.is_dir() and not directory.is_symlink(), 'Unsafe parts directory')
@@ -716,11 +979,12 @@ def bundle_entries(bundle, expected_parts):
     require(actual == expected_parts, 'Unlisted/missing payload part')
 
 
-def verify_files(bundle, manifest, expected):
+def verify_files(bundle, manifest, expected, metadata_paths, metadata_bytes):
     rows = manifest['files']; require(type(rows) is list and len(rows) == len(expected), 'Required companion count differs')
-    by_key = {}; all_parts = set(); paths = [bundle / 'manifest.json']; total = 0
+    by_key = {}; all_parts = set(); paths = list(metadata_paths); total = 0
     for index, row in enumerate(rows):
-        require(set(row) == {'module', 'suffix', 'root', 'relative', 'transfer', 'chunks', 'bytes', 'sha256'},
+        require(set(row) == {'module', 'suffix', 'root', 'relative', 'acquisition',
+                            'transfer', 'chunks', 'bytes', 'sha256'},
                 'Unknown/missing object stream fields')
         key = (row['module'], row['suffix'])
         require(key in expected and key not in by_key, 'Unexpected/duplicate required companion')
@@ -742,11 +1006,13 @@ def verify_files(bundle, manifest, expected):
                 while data := stream.read(CHUNK):
                     whole.update(data)
             paths.append(path); all_parts.add(part['path']); copied += part['bytes']; total += part['bytes']
-            require(total <= PAYLOAD_LIMIT, 'Decoded payload exceeds proposed transfer bound')
+            require(total + metadata_bytes <= PAYLOAD_LIMIT,
+                    'Decoded project/metadata payload exceeds unchanged total transfer bound')
         require(copied == (row['bytes'] if row['transfer'] else 0) and
                 (not row['transfer'] or whole.hexdigest() == row['sha256']), 'Whole object stream differs')
         by_key[key] = row
-    require(set(by_key) == set(expected) and total == manifest['payload_bytes'], 'Hidden required object omission')
+    require(set(by_key) == set(expected) and total == manifest['payload_bytes'] and
+            total + metadata_bytes <= PAYLOAD_LIMIT, 'Hidden required object omission/total budget differs')
     bundle_entries(bundle, all_parts)
     return by_key, paths
 
@@ -832,13 +1098,13 @@ def actual_companions(needed, objects, roots):
 def restore_body(bundle, report, ci, bound, tool, tools, roots, kinds, names, selected_names,
                  transport_path, transport_state, transport_row, progress):
     expected_sha = os.environ['LIGHTEFT_HANDOFF_MANIFEST_SHA256']
-    no_symlink_parents(bundle / 'manifest.json')
-    require(digest(bundle / 'manifest.json')['sha256'] == expected_sha, 'Manifest digest differs')
-    manifest = read_json(bundle / 'manifest.json')
+    manifest, metadata_paths, metadata_bytes = load_manifest(bundle, expected_sha)
     require(set(manifest) == {'schema', 'producer', 'controls', 'tools', 'packages', 'root_kinds',
             'graph', 'sources', 'objects', 'prefix_claims', 'files', 'payload_bytes',
-            'qualification', 'snapshot', 'captures'}, 'Unknown/missing V2 manifest fields')
-    require(manifest['schema'] == 'LIGHT_SAME_RUN_REPLAY_HANDOFF_V2' and
+            'qualification', 'snapshot', 'captures', 'acquisition_policy'},
+            'Unknown/missing V3 manifest fields')
+    require(manifest['schema'] == 'LIGHT_SAME_RUN_REPLAY_HANDOFF_V3' and
+            manifest['acquisition_policy'] == ACQUISITION_POLICY and
             manifest['producer'] == {**ci, 'LIGHTEFT_VALIDATION_ROLE': 'full'} and
             manifest['controls'] == bound and manifest['packages'] == PINS and
             manifest['tools'] == tools and manifest['root_kinds'] == kinds and
@@ -847,13 +1113,20 @@ def restore_body(bundle, report, ci, bound, tool, tools, roots, kinds, names, se
     graph = manifest['graph']; nodes, _ = validate_graph(graph, names)
     capture_facts(manifest, manifest['producer'], graph)
     expected_files = expected_file_set(manifest, nodes, names, kinds)
-    by_key, part_paths = verify_files(bundle, manifest, expected_files)
+    by_key, part_paths = verify_files(bundle, manifest, expected_files, metadata_paths, metadata_bytes)
     source_paths = verify_sources(manifest, nodes, tool)
     needed, seeds, imported, _ = selection(graph, selected_names)
     selected_keys = {(name, suffix) for name in needed for suffix in
                      required_suffixes(name, nodes[name], manifest['objects'][name]['available'], seeds, imported)}
     require(selected_keys <= set(by_key), 'Batch required companion omitted from full handoff')
     selected_rows = [row for key, row in by_key.items() if key in selected_keys]
+    package_namespace_before = package_namespace(roots, kinds)
+    require(all(row['prefixes'] == manifest['prefix_claims'][row['root']]
+                for row in package_namespace_before),
+            'Reacquired package namespace prefixes differ from producer')
+    package_paths = reacquired_package_paths(manifest, nodes, roots, kinds)
+    require(package_namespace(roots, kinds) == package_namespace_before,
+            'Package namespace changed during producer-byte validation')
     selected_destinations = []; in_place = []
     # Preflight the complete batch before the first compiled-object write.
     for row in selected_rows:
@@ -865,9 +1138,9 @@ def restore_body(bundle, report, ci, bound, tool, tools, roots, kinds, names, se
             require(not os.path.lexists(dest), 'Existing compiled object is not overwritten: ' + str(dest))
         else:
             require(digest(dest) == {k: row[k] for k in ['bytes', 'sha256']},
-                    'Fresh installed toolchain object differs: ' + str(dest))
+                    'Fresh dependency object differs from producer: ' + str(dest))
             in_place.append(dest)
-    stable_paths = part_paths + source_paths + in_place + [transport_path]
+    stable_paths = part_paths + source_paths + in_place + package_paths + [transport_path]
     stable_paths += [HERE / n for n in CONTROL_NAMES] + [tool / 'bin' / n for n in ['lean', 'leanchecker', 'lake']]
     require(observation(transport_path) == transport_state, 'Transport record changed before restoration')
     before = snapshot(stable_paths); before_index = write_snapshot(report / 'inputs-before', before)
@@ -903,6 +1176,8 @@ def restore_body(bundle, report, ci, bound, tool, tools, roots, kinds, names, se
     actual = run_probe(report / 'restored-header-probe', selected_names, tool, ci)
     verify_restored_graph(actual, graph, selected_names, nodes, manifest['sources'],
                           manifest['objects'], roots, tool)
+    require(package_census(actual, kinds) == package_census(graph, kinds),
+            'Reacquired package native object-name census differs from producer')
     # Re-derive the required set and verify actual observed presence at its
     # effective root. Native loader prefix semantics are checked by the probe.
     for row in selected_rows:
@@ -913,6 +1188,8 @@ def restore_body(bundle, report, ci, bound, tool, tools, roots, kinds, names, se
     available_after, paths_after = actual_companions(needed, manifest['objects'], roots)
     require(available_after == actual_available and set(map(str, paths_after)) == set(map(str, actual_paths)) and
             snapshot(actual_paths) == restored_before and snapshot(stable_paths) == before and
+            reacquired_package_paths(manifest, nodes, roots, kinds) == package_paths and
+            package_namespace(roots, kinds) == package_namespace_before and
             observation(transport_path) == transport_state and identity('global_replay') == ci and
             controls() == bound and runtime()[1:] == (tools, roots, kinds),
             'Restored/source/transport/runtime snapshot correlation failed')
@@ -928,7 +1205,15 @@ def restore_body(bundle, report, ci, bound, tool, tools, roots, kinds, names, se
                 whole_target_count=567, batch_target_count=len(selected_names),
                 ordered_batch_targets_sha256=hashlib.sha256(('\n'.join(selected_names) + '\n').encode()).hexdigest(),
                 object_module_count=len(needed), transferred_companions=len(progress),
-                verified_in_place_toolchain_companions=len(in_place),
+                verified_in_place_toolchain_companions=sum(
+                    kinds[row['root']] == 'toolchain' for row in selected_rows),
+                producer_authenticated_required_package_companions=sum(
+                    row['acquisition'] == ACQUISITION_POLICY['package'] for row in by_key.values()),
+                verified_available_package_files=len(package_paths),
+                package_namespace=package_namespace_before,
+                acquisition_policy=ACQUISITION_POLICY,
+                authenticated_metadata_bytes=metadata_bytes,
+                total_transfer_bytes=manifest['payload_bytes'] + metadata_bytes,
                 snapshots=dict(before=before_index, after=after_index),
                 observed_inputs_unchanged=True, external_no_writer_required=True,
                 hostile_writer_absence_not_proved=True, qualification=QUALIFICATION)

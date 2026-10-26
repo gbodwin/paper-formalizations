@@ -204,9 +204,23 @@ def run(route, cl, old, ci, bound):
         objects = read_snapshot(route, cl, restore_home / 'restored-inputs')
         tool, tools, roots, kinds = cl.runtime(); claims = cl.prefixes(roots)
         bundle, transport_path, transport_saved, transport_row = cl.transport(cl.identity('global_replay'), cl.controls())
-        manifest = cl.read_json(bundle / 'manifest.json')
+        manifest, metadata_paths, metadata_bytes = cl.load_manifest(bundle, binding['manifest_sha256'])
+        route.require(all(str(path) in stable for path in metadata_paths) and
+                      metadata_bytes == restored['authenticated_metadata_bytes'] and
+                      manifest['payload_bytes'] + metadata_bytes == restored['total_transfer_bytes'] <= cl.PAYLOAD_LIMIT,
+                      'Authenticated metadata snapshot/total transfer budget differs')
         nodes, _ = cl.validate_graph(manifest['graph'], names)
         needed, seeds, imported, _ = cl.selection(manifest['graph'], selected)
+        route.require(manifest['schema'] == 'LIGHT_SAME_RUN_REPLAY_HANDOFF_V3' and
+                      manifest['acquisition_policy'] == cl.ACQUISITION_POLICY and
+                      restored['acquisition_policy'] == cl.ACQUISITION_POLICY,
+                      'Restored dependency acquisition policy differs')
+        package_namespace_before = cl.package_namespace(roots, kinds)
+        route.require(package_namespace_before == restored['package_namespace'],
+                      'Package namespace changed after authenticated restoration')
+        package_paths = cl.reacquired_package_paths(manifest, nodes, roots, kinds)
+        route.require(all(str(path) in stable for path in package_paths),
+                      'Producer-validated package input was not preserved by restoration')
         available, object_paths = cl.actual_companions(needed, manifest['objects'], roots)
         # Reestablish companion absence as well as presence for loader read-set
         # equivalence; a receipt alone cannot grant acceptance to new files.
@@ -225,6 +239,9 @@ def run(route, cl, old, ci, bound):
                                       cl.identity('global_replay'))
         native_fingerprint = cl.graph_fingerprint(replay_headers)
         route.require(native_fingerprint == cl.graph_fingerprint(restored_headers) and
+                      cl.package_census(replay_headers, kinds) ==
+                      cl.package_census(manifest['graph'], kinds) and
+                      cl.package_namespace(roots, kinds) == package_namespace_before and
                       cl.snapshot(stable) == stable and cl.snapshot(objects) == objects,
                       'Native object census/expansions changed after restoration')
         receipt_hash = hashlib.sha256()
@@ -261,6 +278,10 @@ def run(route, cl, old, ci, bound):
         route.require(state['completed'] == 189 and cl.snapshot(stable) == stable and
                       cl.snapshot(objects) == objects and cl.prefixes(roots) == claims and
                       after_available == available and set(map(str, after_paths)) == set(map(str, object_paths)) and
+                      cl.reacquired_package_paths(manifest, nodes, roots, kinds) == package_paths and
+                      cl.package_namespace(roots, kinds) == package_namespace_before and
+                      cl.package_census(replay_after, kinds) ==
+                      cl.package_census(manifest['graph'], kinds) and
                       cl.observation(transport_path) == transport_saved and cl.runtime()[1:] == (tools, roots, kinds) and
                       route.controls() == bound and route.identity('global_replay') == ci and
                       platform(old) == boot['platform'], 'Final no-writer/source/runtime/object correlation differs')

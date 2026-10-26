@@ -1,3 +1,99 @@
+# V3 dependency reacquisition and project-only same-run handoff
+
+This bounded SOURCE unit is based on exact parent
+`9f39195d7067213eae19af0446a5f2a2a271a362`, tree
+`02be1f014970f4d982d0c6fc4889c4108a7b0c7d`. It has not executed. The changed
+controls intentionally do not match the five unchanged specification seals;
+the exact acyclic binding cascade must be reviewed before any invocation.
+All original 1041 logical rows, 567 ordered targets, fresh focused producers
+and replay/final gates remain present in the parent. This unit accepts none.
+
+The following V3 contract supersedes the transfer/restoration paragraphs of
+the preserved historical V2 design below. The historical text is evidence of
+that earlier draft, not current runtime status or an instruction to run it.
+
+## Exact dependency boundary
+
+The producer still observes all reachable serialized headers and every required
+object/companion, source, owner, package pin, namespace and no-writer snapshot.
+Every required companion remains an authenticated manifest row. Its root kind
+determines one fixed acquisition class; a payload cannot choose its own trust:
+
+- Project companions are streamed in the same-run artifact and remain strictly
+  create-only at import. An existing project destination is a refusal.
+- Package companions are acquired by ordinary pinned dependency setup, then
+  verified in place against the exact same-run producer bytes and SHA256.
+  The importer checks every producer-declared package module, not merely a
+  convenient subset, and all five declared companion presence/absence slots.
+  Missing, different, extra, symlink or non-regular companions refuse; package
+  files are never overwritten or accepted merely because a cache supplied them.
+- Toolchain companions retain the existing pinned, freshly installed in-place
+  verification. Neither package nor toolchain objects are silently omitted
+  from required-file or source bindings.
+
+Complete package input files join the existing before/after preservation
+snapshots. Ordered package root slots retain directory or first-missing-suffix
+state and existing ancestor identity. Present roots must have the producer's
+namespace claims. Actual post-restore native package-name censuses, including
+duplicate observations, must match the producer after root relocation. The
+existing effective-root, source/Git, loader read-set, import/header and target
+expansion checks remain. The same package state is rechecked at restoration
+and the original pre/post replay correlation boundaries. These observations
+depend on the actual external no-writer scope; they prove no hostile schedule.
+
+## Authenticated bounded metadata and total allowance
+
+The transport's producer manifest output now hashes one fixed V3 index. The
+index binds the complete graph JSON plus deterministic <=64-record chunks of
+all object, source and ordered file records. Every metadata file has an exact
+path, size and SHA256. The consumer verifies the strict same-run SDK record and
+index hash before decoding these files, rejects duplicate/missing/extra entries,
+and reconstructs the complete logical manifest before its existing validation.
+List order, duplicate rows, graph fields and import/companion data are retained.
+No downloaded metadata is executed as code.
+
+The graph and index each retain the 16 MiB JSON ceiling. Record chunks retain
+the existing 4 MiB part ceiling and <=64 records. The one 1 GiB TOTAL transfer
+ceiling applies to project object bytes PLUS all metadata and index bytes;
+there is no per-batch or per-part reinterpretation. A transfer profile is saved
+outside the bundle before final rejection. Bounded create-only partial records
+also preserve each attempted encoded size/SHA and cumulative accounting before
+early record/count/total ceilings, with uncomputed index/total fields explicit.
+Fresh artifact digest, producer
+commit/run/attempt, source control and all ordinary/native admission, resource,
+lease, cleanup and kernel gates remain required.
+
+## Ordinary acquisition and measured limitations
+
+The reusable caller first requires an absent inherited `.lake`, then uses the
+unchanged source helper to materialize all nine exact clean package pins. The
+same pinned Lean action performs ordinary dependency acquisition with
+`use-mathlib-cache: true`, `use-github-cache: false`, and project build, tests,
+lint, audit and checkers disabled. At the pinned action revision this invokes
+`lake exe cache get`. It does not rerun the 100-minute project producer per
+replay batch. Downloaded bytes remain provisional until the checks above pass.
+This ordinary setup is outside the later original launcher/native admission
+boundaries; no retrospective child-resource coverage is claimed.
+
+Coordinator raw/source audit of failed run 40323506161/1 observed 567 required
+project files / 134111472 bytes, while required non-toolchain bytes totaled
+3080309624 and all three 189-target closures remained about 3 GiB. The broad
+33531-file / 4538416642-byte protected profile is not the transfer payload.
+Historical equality of 23058 package files across two runs is not future cache
+provenance. The compact canonical graph passed its ceiling, but overall
+qualification FAILED with preservationfalse on the later total-size guard.
+That failed receipt and the older PID10732/session92779 reaping debt remain.
+
+No V3 exporter/importer, SDK, package reacquisition or new native probe has run.
+Actual metadata size, package byte equality, census/companion equivalence,
+mapped-region/RSS/page-cache/time cost and 120-minute job fit require a reviewed
+authentic qualification. Neither source inspection nor historical size
+arithmetic is runtime or paper acceptance. The 120/120/5-minute caps and
+original full 567-process, 1041-binding, axiom/declaration/kernel, fresh focused
+same-job 17 producer + 12 batch child gates remain unchanged.
+
+## Preserved historical V2 draft
+
 # Same-run replay handoff: source contract only
 
 This contract is an unexecuted source proposal based on exact parent
