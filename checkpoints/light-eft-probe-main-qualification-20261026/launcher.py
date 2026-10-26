@@ -24,7 +24,7 @@ WORKFLOW = '.github/workflows/light-eft-probe-main-qualification.yml'
 BRANCH = 'refs/heads/light-eft-spanners-checkpoints'
 PROBE = 'checkpoints/light-eft-global-replay-batches-20261026/HeaderProbe.lean'
 PROBE_SHA = '715aa2055684da6eff491bf4de5d6646275d62c3197ce4d00d5072c9bb794567'
-PARENT = 'cbce60ba7534ad55afeb5170f4cd979ca6ce9cc0'
+PARENT = '42d83b6ad3e823f55324b46fb73c8c67d6141d5b'
 LEAN = 'e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
 CHECKER = 'ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe'
 
