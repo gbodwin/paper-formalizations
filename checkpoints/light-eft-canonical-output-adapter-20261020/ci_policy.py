@@ -23,7 +23,8 @@ def ci_identity(env,head):
     require(env.get('LEAN_NUM_THREADS')=='1','Reviewed job-wide worker setting required')
     require(env.get('GITHUB_REF')!='refs/heads/light-eft-spanners-checkpoints','Ignored checkpoint branch is not the publication route')
     role=env.get('LIGHTEFT_VALIDATION_ROLE')
-    paths={'full':'.github/workflows/lean.yml','focused':'.github/workflows/light-eft-fair-bit-focused.yml'}
+    paths={'full':'.github/workflows/lean.yml','focused':'.github/workflows/light-eft-fair-bit-focused.yml',
+           'global_replay':'.github/workflows/light-eft-global-replay.yml'}
     require(role in paths and env.get('GITHUB_JOB')=='check','Unreviewed validation role/job')
     require(env.get('LIGHTEFT_EXPECTED_SOURCE')==head,'Scheduled exact source differs')
     repo=env['GITHUB_REPOSITORY'];ref=env.get('GITHUB_REF','')

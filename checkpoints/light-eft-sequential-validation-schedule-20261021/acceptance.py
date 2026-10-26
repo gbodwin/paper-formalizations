@@ -26,22 +26,9 @@ def destination(env,prefix):
 def main():
     env=dict(os.environ);mode=sys.argv[1]
     if mode=='aggregate':
-        root=destination(env,'light-eft-combined-acceptance')
-        record=dict(accepted=False,commit=env.get('GITHUB_SHA'),run_id=env['GITHUB_RUN_ID'],
-                    run_attempt=env['GITHUB_RUN_ATTEMPT'])
-        try:
-            record['needs']=json.loads(env['LIGHTEFT_NEEDS_JSON'])
-            record['controls']=exact_controls()
-            require(head()==env.get('GITHUB_SHA') and env.get('GITHUB_JOB')=='acceptance','Aggregation checkout/job differs')
-            require(env.get('GITHUB_ACTIONS')=='true' and env.get('GITHUB_REPOSITORY')=='gbodwin/paper-formalizations' and
-                    env.get('GITHUB_WORKFLOW')=='Lean' and env.get('GITHUB_WORKFLOW_SHA')==env.get('GITHUB_SHA') and
-                    env.get('GITHUB_WORKFLOW_REF')=='gbodwin/paper-formalizations/.github/workflows/lean.yml@'+env.get('GITHUB_REF',''),
-                    'Aggregation caller workflow differs')
-            record.update(aggregate(record['needs'],env['GITHUB_SHA']))
-        except BaseException as e:
-            record['failure']=repr(e);raise
-        finally:(root/'result.json').write_text(json.dumps(record,indent=2)+'\n')
+        raise ValueError('Two-job conjunction retired; use exact serial route_status.py aggregate')
     elif mode=='mark':
+        require(sys.argv[2]=='focused','Full acceptance now requires all3complete replay jobs')
         controls=exact_controls();commit=head();ci=identity(env,commit)
         require(sys.argv[2]==env['LIGHTEFT_VALIDATION_ROLE'],'Mark role differs')
         with open(env['GITHUB_OUTPUT'],'a') as f:f.write('commit='+commit+'\n')

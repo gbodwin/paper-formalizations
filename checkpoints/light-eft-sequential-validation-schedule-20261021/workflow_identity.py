@@ -13,45 +13,28 @@ def git_bytes(path):
     return subprocess.check_output(['git','show','HEAD:'+str(path.relative_to(ROOT))],cwd=ROOT)
 
 def replay_launch_controls(script,workflow,helper):
-    # Reviewed adeaa012 admission: bootstrap precedes the privileged launcher;
-    # helper/script/loop bytes are an inseparable exact-source contract.
+    # Preserve the original actual launcher primitives; the old full-job loop
+    # remains source-bound but is no longer the workflow's replay entrypoint.
     require(hashlib.sha256(script).hexdigest()==
             'b7dac23e6300e3c34d6192887f52d6f780b2bef9720f43b94d4c0f1b3116d77d',
-            'Reviewed privileged replay script differs')
+            'Original privileged replay script differs')
     require(hashlib.sha256(helper).hexdigest()==
             '2bcbe3ba3a4154d61ff01a19b0dfc615a6b50f64b3eb09020765a299af7fe4be',
-            'Reviewed replay admission helper differs')
-    parts=script.split(b"-c '")
-    require(len(parts)==2,'Replay loop boundary differs')
-    loop=parts[1].split(b"'\n    ;;",1)[0]
-    require(hashlib.sha256(loop).hexdigest()==
-            '1fa6ae14282686d2b21fab4e3cdf011b6124c8daed587b2d23a5f42b1e9c5e62',
-            'Reviewed before-first-checker loop differs')
-    for line in [b"SCRIPT_SHA = 'b7dac23e6300e3c34d6192887f52d6f780b2bef9720f43b94d4c0f1b3116d77d'\n",
-                 b"LOOP_SHA = '1fa6ae14282686d2b21fab4e3cdf011b6124c8daed587b2d23a5f42b1e9c5e62'\n"]:
-        require(helper.count(line)==1,'Mutual helper/script/loop pin differs')
-    env=(b'        env:\n'
-         b'          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}\n'
-         b'          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}\n'
-         b'          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}\n'
-         b'          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}\n')
-    boot_name=b'      - name: Observe replay launcher admission on this runner\n'
-    boot=(boot_name+b'        shell: /usr/bin/python3 -I -B {0}\n'+env+
-          b'        run: |\n'
-          b'          import runpy, sys\n'
-          b"          sys.argv = ['checkpoints/light-eft-replay-admission-plan-20261021/replay_preflight.py', 'bootstrap']\n"
-          b"          runpy.run_path('checkpoints/light-eft-replay-admission-plan-20261021/replay_preflight.py', run_name='__main__')\n")
-    name=b'      - name: Replay every project module through the Lean kernel\n'
-    step=(name+env+b'        shell: /bin/bash --noprofile --norc -p -e -o pipefail {0}\n'
-          b'        run: /bin/bash --noprofile --norc -p -e -o pipefail scripts/KernelCheck.sh\n')
-    require(workflow.count(name)==1 and workflow.count(boot_name)==1 and workflow.count(boot+step)==1,
-            'Adjacent same-job bootstrap/privileged replay contract differs')
-    upload=b'      - name: Preserve complete staged-gate evidence including failures\n'
-    require(workflow.count(upload)==1,'Full evidence upload differs')
-    block=workflow.split(upload,1)[1].split(b'  focused:\n',1)[0]
-    path=b'            ${{ runner.temp }}/light-eft-replay-admission-${{ github.run_id }}-${{ github.run_attempt }}\n'
-    require(workflow.count(path)==1 and path in block and block.startswith(b'        if: always()\n'),
-            'Always-uploaded replay admission evidence path differs')
+            'Original launcher observation primitives differ')
+    path=ROOT/'checkpoints/light-eft-global-replay-batches-20261026/route_status.py'
+    raw=path.read_bytes();row=dict(path=str(path.relative_to(ROOT)),bytes=len(raw),
+                                 sha256=hashlib.sha256(raw).hexdigest())
+    rows={r['path']:r for r in json.loads(SPEC.read_text())['engine_files']}
+    require(not any(p.is_symlink() for p in [path,*path.parents]) and
+            rows.get(row['path'])==row and raw==git_bytes(path),'New route controller not source-bound')
+    spec=importlib.util.spec_from_file_location('_exact_serial_route_controls',path)
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    module.controls()  # Every exact caller/launcher byte is bound in all5specs.
+    require(workflow.count(b'  replay1:\n')==1 and workflow.count(b'  replay2:\n')==1 and
+            workflow.count(b'  replay3:\n')==1 and
+            b'    needs: [check, replay1, replay2, replay3]\n' in workflow and
+            b'    needs: [check, replay1, replay2, replay3, focused]\n' in workflow,
+            'Serial coverage/fresh focused conjunction differs')
 
 def exact_controls():
     require(SPEC.read_bytes()==git_bytes(SPEC),'Scheduling specification differs from HEAD')

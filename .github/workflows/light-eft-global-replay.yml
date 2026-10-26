@@ -1,0 +1,151 @@
+name: LightEFT immutable same-run global replay batch
+on:
+  workflow_call:
+    inputs:
+      source:
+        required: true
+        type: string
+      batch:
+        required: true
+        type: string
+      artifact_id:
+        required: true
+        type: string
+      artifact_digest:
+        required: true
+        type: string
+      manifest_sha256:
+        required: true
+        type: string
+      producer_sha:
+        required: true
+        type: string
+      producer_run_id:
+        required: true
+        type: string
+      producer_run_attempt:
+        required: true
+        type: string
+      previous_coverage:
+        required: false
+        type: string
+        default: ''
+      previous_coverage_sha256:
+        required: false
+        type: string
+        default: ''
+    outputs:
+      validated_commit:
+        value: ${{ jobs.check.outputs.validated_commit }}
+      coverage:
+        value: ${{ jobs.check.outputs.coverage }}
+      coverage_sha256:
+        value: ${{ jobs.check.outputs.coverage_sha256 }}
+permissions:
+  contents: read
+jobs:
+  check:
+    if: inputs.source == github.sha && github.ref != 'refs/heads/light-eft-spanners-checkpoints'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    outputs:
+      validated_commit: ${{ steps.replay.outputs.validated_commit }}
+      coverage: ${{ steps.replay.outputs.coverage }}
+      coverage_sha256: ${{ steps.replay.outputs.coverage_sha256 }}
+    env:
+      LEAN_NUM_THREADS: '1'
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
+      LIGHTEFT_VALIDATION_ROLE: global_replay
+      LIGHTEFT_EXPECTED_SOURCE: ${{ inputs.source }}
+      LIGHTEFT_REPLAY_BATCH: ${{ inputs.batch }}
+      LIGHTEFT_HANDOFF_PRODUCER_SHA: ${{ inputs.producer_sha }}
+      LIGHTEFT_HANDOFF_PRODUCER_RUN_ID: ${{ inputs.producer_run_id }}
+      LIGHTEFT_HANDOFF_PRODUCER_RUN_ATTEMPT: ${{ inputs.producer_run_attempt }}
+      LIGHTEFT_HANDOFF_ARTIFACT_ID: ${{ inputs.artifact_id }}
+      LIGHTEFT_HANDOFF_ARTIFACT_DIGEST: ${{ inputs.artifact_digest }}
+      LIGHTEFT_HANDOFF_MANIFEST_SHA256: ${{ inputs.manifest_sha256 }}
+      LIGHTEFT_PREVIOUS_COVERAGE: ${{ inputs.previous_coverage }}
+      LIGHTEFT_PREVIOUS_COVERAGE_SHA256: ${{ inputs.previous_coverage_sha256 }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - name: Require exact actual caller and absent inherited package tree
+        env:
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+        run: /usr/bin/python3 -I -B checkpoints/light-eft-global-replay-batches-20261026/route_status.py source
+      # Ordinary pinned toolchain installation, not the later launcher boundary.
+      # No producer build/audit, Mathlib cache, GitHub cache or external checker.
+      - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
+        with:
+          auto-config: 'false'
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+          use-github-cache: 'false'
+          mk_all-check: 'false'
+          leanchecker: 'false'
+          lean4checker: 'false'
+          nanoda: 'false'
+          axiom-audit: 'false'
+          check-reservoir-eligibility: 'false'
+      - name: Materialize nine exact package source pins without build caches
+        env:
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+        run: /usr/bin/python3 -I -B checkpoints/light-eft-global-replay-batches-20261026/runtime_sources.py
+      - name: Install exact locked artifact runtime without package scripts
+        working-directory: checkpoints/light-eft-global-replay-batches-20261026
+        run: npm ci --omit=dev --ignore-scripts --no-audit --no-fund
+      - name: Observe fresh original launcher boundary on this runner
+        env:
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+        shell: /usr/bin/python3 -I -B {0}
+        run: |
+          import runpy, sys
+          sys.argv = ['checkpoints/light-eft-global-replay-batches-20261026/batch_runtime.py', 'bootstrap']
+          runpy.run_path('checkpoints/light-eft-global-replay-batches-20261026/batch_runtime.py', run_name='__main__')
+      - name: Strictly download only actual same-run immutable artifact
+        env:
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+        id: transport
+        run: node checkpoints/light-eft-global-replay-batches-20261026/strict_download.cjs
+      - name: Restore selected closure and replay every original batch target
+        id: replay
+        env:
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+          LIGHTEFT_HANDOFF_TRANSPORT_RECORD: ${{ steps.transport.outputs.transport_record }}
+        shell: /bin/bash --noprofile --norc -p -e -o pipefail {0}
+        run: /bin/bash --noprofile --norc -p -e -o pipefail checkpoints/light-eft-global-replay-batches-20261026/batch_launcher.sh
+      - name: Preserve actual batch and launcher evidence including partial failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: light-eft-global-replay-${{ inputs.batch }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/light-eft-replay-source-setup-${{ github.run_id }}-${{ github.run_attempt }}
+            ${{ runner.temp }}/light-eft-batch-admission-${{ github.run_id }}-${{ github.run_attempt }}-${{ inputs.batch }}
+            ${{ runner.temp }}/light-eft-replay-restore-${{ github.run_id }}-${{ github.run_attempt }}-${{ inputs.batch }}
+            ${{ runner.temp }}/light-eft-replay-batch-${{ github.run_id }}-${{ github.run_attempt }}-${{ inputs.batch }}
+            ${{ runner.temp }}/light-eft-handoff-${{ github.run_id }}-${{ github.run_attempt }}-${{ inputs.artifact_id }}/transport.json
+            ${{ runner.temp }}/light-eft-handoff-${{ github.run_id }}-${{ github.run_attempt }}-${{ inputs.artifact_id }}/transport-failure.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30

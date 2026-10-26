@@ -16,11 +16,17 @@ permissions:
 jobs:
   check:
     outputs:
-      validated_commit: ${{ steps.full_validated.outputs.commit }}
+      producer_commit: ${{ steps.producer_completed.outputs.producer_commit }}
+      producer_marker: ${{ steps.producer_completed.outputs.producer_marker }}
+      artifact_id: ${{ steps.replay_handoff.outputs.artifact-id }}
+      artifact_digest: ${{ steps.replay_handoff.outputs.artifact-digest }}
+      manifest_sha256: ${{ steps.replay_export.outputs.handoff_manifest_sha256 }}
+      producer_sha: ${{ steps.replay_export.outputs.handoff_producer_sha }}
+      producer_run_id: ${{ steps.replay_export.outputs.handoff_producer_run_id }}
+      producer_run_attempt: ${{ steps.replay_export.outputs.handoff_producer_run_attempt }}
     if: github.ref != 'refs/heads/light-eft-spanners-checkpoints'
     runs-on: ubuntu-latest
-    # Full sequential kernel replay grows with the all-papers library.
-    # Keep every replay; the preceding 30-minute ceiling interrupted clean progress.
+    # Producer work only; all 567 replays follow in three serial jobs.
     timeout-minutes: 120
     # Bounded pinned-source review: trusted Lake/compiler paths serialize
     # with one task worker. Not a semaphore for arbitrary future custom tasks.
@@ -405,7 +411,7 @@ jobs:
           LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
           PYTHONPYCACHEPREFIX: ${{ runner.temp }}/light-eft-corollary-python-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -B checkpoints/light-eft-canonical-output-adapter-20261020/ci_gate.py
-      - name: Observe replay launcher admission on this runner
+      - name: Fresh launcher observation before immutable metadata export
         shell: /usr/bin/python3 -I -B {0}
         env:
           LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
@@ -414,24 +420,40 @@ jobs:
           LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
         run: |
           import runpy, sys
-          sys.argv = ['checkpoints/light-eft-replay-admission-plan-20261021/replay_preflight.py', 'bootstrap']
-          runpy.run_path('checkpoints/light-eft-replay-admission-plan-20261021/replay_preflight.py', run_name='__main__')
-      - name: Replay every project module through the Lean kernel
+          sys.argv = ['checkpoints/light-eft-global-replay-batches-20261026/batch_runtime.py', 'bootstrap']
+          runpy.run_path('checkpoints/light-eft-global-replay-batches-20261026/batch_runtime.py', run_name='__main__')
+      - name: Seal exact same-run minimal replay handoff
+        id: replay_export
         env:
           LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
           LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
           LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
           LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
         shell: /bin/bash --noprofile --norc -p -e -o pipefail {0}
-        run: /bin/bash --noprofile --norc -p -e -o pipefail scripts/KernelCheck.sh
-      - name: Bind completed full validation to this exact commit
-        id: full_validated
+        run: /bin/bash --noprofile --norc -p -e -o pipefail checkpoints/light-eft-global-replay-batches-20261026/batch_launcher.sh
+      - name: Upload immutable sealed replay bundle
+        id: replay_handoff
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: light-eft-replay-handoff-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/light-eft-replay-export-${{ github.run_id }}-${{ github.run_attempt }}/bundle
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+      - name: Mark producer body and actual upload only
+        id: producer_completed
         env:
           LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
           LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
           LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
           LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
-        run: python3 -B checkpoints/light-eft-sequential-validation-schedule-20261021/acceptance.py mark full
+          LIGHTEFT_HANDOFF_PRODUCER_SHA: ${{ steps.replay_export.outputs.handoff_producer_sha }}
+          LIGHTEFT_HANDOFF_PRODUCER_RUN_ID: ${{ steps.replay_export.outputs.handoff_producer_run_id }}
+          LIGHTEFT_HANDOFF_PRODUCER_RUN_ATTEMPT: ${{ steps.replay_export.outputs.handoff_producer_run_attempt }}
+          LIGHTEFT_HANDOFF_MANIFEST_SHA256: ${{ steps.replay_export.outputs.handoff_manifest_sha256 }}
+          LIGHTEFT_HANDOFF_ARTIFACT_ID: ${{ steps.replay_handoff.outputs.artifact-id }}
+          LIGHTEFT_HANDOFF_ARTIFACT_DIGEST: ${{ steps.replay_handoff.outputs.artifact-digest }}
+        run: /usr/bin/python3 -I -B checkpoints/light-eft-global-replay-batches-20261026/route_status.py producer
       - name: Record workflow outcome independently of staged gate
         if: always()
         env:
@@ -471,7 +493,10 @@ jobs:
           name: light-eft-staged-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             ${{ runner.temp }}/light-eft-summary-${{ github.run_id }}-${{ github.run_attempt }}
-            ${{ runner.temp }}/light-eft-replay-admission-${{ github.run_id }}-${{ github.run_attempt }}
+            ${{ runner.temp }}/light-eft-batch-admission-${{ github.run_id }}-${{ github.run_attempt }}-producer
+            ${{ runner.temp }}/light-eft-replay-export-${{ github.run_id }}-${{ github.run_attempt }}/capture
+            ${{ runner.temp }}/light-eft-replay-export-${{ github.run_id }}-${{ github.run_attempt }}/export-summary.json
+            ${{ runner.temp }}/light-eft-replay-export-${{ github.run_id }}-${{ github.run_attempt }}/export-result.json
             ${{ runner.temp }}/light-eft-staged-${{ github.run_id }}-${{ github.run_attempt }}
             ${{ runner.temp }}/light-eft-corollary-${{ github.run_id }}-${{ github.run_attempt }}
             ${{ runner.temp }}/light-eft-paid-focused-${{ github.run_id }}-${{ github.run_attempt }}
@@ -479,8 +504,57 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 30
-  focused:
+  replay1:
     needs: check
+    if: github.ref != 'refs/heads/light-eft-spanners-checkpoints'
+    uses: ./.github/workflows/light-eft-global-replay.yml
+    permissions:
+      contents: read
+    with:
+      source: ${{ github.sha }}
+      batch: '1'
+      artifact_id: ${{ needs.check.outputs.artifact_id }}
+      artifact_digest: ${{ needs.check.outputs.artifact_digest }}
+      manifest_sha256: ${{ needs.check.outputs.manifest_sha256 }}
+      producer_sha: ${{ needs.check.outputs.producer_sha }}
+      producer_run_id: ${{ needs.check.outputs.producer_run_id }}
+      producer_run_attempt: ${{ needs.check.outputs.producer_run_attempt }}
+  replay2:
+    needs: [check, replay1]
+    if: github.ref != 'refs/heads/light-eft-spanners-checkpoints'
+    uses: ./.github/workflows/light-eft-global-replay.yml
+    permissions:
+      contents: read
+    with:
+      source: ${{ github.sha }}
+      batch: '2'
+      artifact_id: ${{ needs.check.outputs.artifact_id }}
+      artifact_digest: ${{ needs.check.outputs.artifact_digest }}
+      manifest_sha256: ${{ needs.check.outputs.manifest_sha256 }}
+      producer_sha: ${{ needs.check.outputs.producer_sha }}
+      producer_run_id: ${{ needs.check.outputs.producer_run_id }}
+      producer_run_attempt: ${{ needs.check.outputs.producer_run_attempt }}
+      previous_coverage: ${{ needs.replay1.outputs.coverage }}
+      previous_coverage_sha256: ${{ needs.replay1.outputs.coverage_sha256 }}
+  replay3:
+    needs: [check, replay2]
+    if: github.ref != 'refs/heads/light-eft-spanners-checkpoints'
+    uses: ./.github/workflows/light-eft-global-replay.yml
+    permissions:
+      contents: read
+    with:
+      source: ${{ github.sha }}
+      batch: '3'
+      artifact_id: ${{ needs.check.outputs.artifact_id }}
+      artifact_digest: ${{ needs.check.outputs.artifact_digest }}
+      manifest_sha256: ${{ needs.check.outputs.manifest_sha256 }}
+      producer_sha: ${{ needs.check.outputs.producer_sha }}
+      producer_run_id: ${{ needs.check.outputs.producer_run_id }}
+      producer_run_attempt: ${{ needs.check.outputs.producer_run_attempt }}
+      previous_coverage: ${{ needs.replay2.outputs.coverage }}
+      previous_coverage_sha256: ${{ needs.replay2.outputs.coverage_sha256 }}
+  focused:
+    needs: [check, replay1, replay2, replay3]
     if: github.ref != 'refs/heads/light-eft-spanners-checkpoints'
     uses: ./.github/workflows/light-eft-fair-bit-focused.yml
     permissions:
@@ -489,7 +563,7 @@ jobs:
       source: ${{ github.sha }}
   acceptance:
     name: Full and focused exact-commit acceptance
-    needs: [check, focused]
+    needs: [check, replay1, replay2, replay3, focused]
     if: ${{ always() && github.ref != 'refs/heads/light-eft-spanners-checkpoints' }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -501,7 +575,7 @@ jobs:
       - name: Require full and focused successes at the same event commit
         env:
           LIGHTEFT_NEEDS_JSON: ${{ toJSON(needs) }}
-        run: python3 -B checkpoints/light-eft-sequential-validation-schedule-20261021/acceptance.py aggregate
+        run: /usr/bin/python3 -I -B checkpoints/light-eft-global-replay-batches-20261026/route_status.py aggregate
       - name: Preserve exact acceptance status including rejection
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
