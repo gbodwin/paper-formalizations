@@ -24,7 +24,7 @@ WORKFLOW = '.github/workflows/light-eft-probe-main-qualification.yml'
 BRANCH = 'refs/heads/light-eft-spanners-checkpoints'
 PROBE = 'checkpoints/light-eft-global-replay-batches-20261026/HeaderProbe.lean'
 PROBE_SHA = '715aa2055684da6eff491bf4de5d6646275d62c3197ce4d00d5072c9bb794567'
-PARENT = 'd2fdf2011ebb97c86bc5840b4df6617a53b8d4f9'
+PARENT = 'cbce60ba7534ad55afeb5170f4cd979ca6ce9cc0'
 LEAN = 'e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
 CHECKER = 'ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe'
 
@@ -444,6 +444,93 @@ def main():
                         aggregate_cap_seconds=90, maximum_marks=16,
                         state='running', active_phase=None, marks=[])
                     receipt['post_capture_phase_timing'] = timing
+                    # Only diagnostic phase checkpoints use this small sidecar.
+                    # Original supervisor/full-receipt persist boundaries remain.
+                    attempt = receipt['attempt_id']
+                    require(isinstance(attempt, str) and len(attempt) == 32 and
+                            all(c in '0123456789abcdef' for c in attempt),
+                            'Invalid native attempt for timing evidence')
+                    folder = root / ('post-capture-timing-' + attempt)
+                    folder.mkdir(mode=0o700, exist_ok=False)
+                    directory = folder.lstat()
+                    directory_identity = (directory.st_dev, directory.st_ino, directory.st_uid,
+                                          stat.S_IMODE(directory.st_mode))
+                    require(stat.S_ISDIR(directory.st_mode) and
+                            directory_identity[2:] == (os.getuid(), 0o700),
+                            'Unsafe new timing directory')
+                    sidecar = dict(path=str(folder / 'progress.json'), maximum_bytes=16384,
+                                   maximum_writes=16, completed_writes=0,
+                                   scope='Last durable phase-start checkpoint, not terminal acceptance')
+                    timing['sidecar'] = sidecar
+                    prior_sidecar = None
+                    def checkpoint():
+                        nonlocal prior_sidecar
+                        sequence = len(timing['marks'])
+                        require(1 <= sequence <= 16, 'Timing sidecar write count exceeds bound')
+                        value = dict(schema='POST_CAPTURE_TIMING_PROGRESS_V1',
+                            source_commit=head, launcher_sha256=source[str(HERE / 'launcher.py')]['sha256'],
+                            identity=identity, native_attempt=attempt, sequence=sequence,
+                            aggregate_cap_seconds=90, maximum_marks=16,
+                            started_ns=timing['started_ns'], active_phase=timing['active_phase'],
+                            marks=timing['marks'], state='phase-start-only')
+                        data = (json.dumps(value, sort_keys=True, indent=2) + '\n').encode()
+                        require(len(data) <= 16384, 'Timing sidecar exceeds16KiB')
+                        temporary = 'progress-%02d.tmp' % sequence
+                        sidecar['pending'] = dict(sequence=sequence, temporary=temporary,
+                            bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
+                        stage = 'open-directory'
+                        fd = None
+                        try:
+                            fd = os.open(folder, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW | os.O_CLOEXEC)
+                            def directory_check():
+                                for current in (os.fstat(fd), folder.lstat()):
+                                    require(stat.S_ISDIR(current.st_mode) and
+                                        (current.st_dev, current.st_ino, current.st_uid,
+                                         stat.S_IMODE(current.st_mode)) == directory_identity,
+                                        'Timing directory identity changed')
+                            directory_check()
+                            stage = 'check-prior'
+                            if prior_sidecar is None:
+                                require(not os.path.lexists(folder / 'progress.json'),
+                                        'Unexpected existing timing sidecar')
+                            else:
+                                require(caller_capture.read_regular(folder / 'progress.json', 16384) ==
+                                        prior_sidecar, 'Prior timing checkpoint changed')
+                            stage = 'create-temporary'
+                            output_fd = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL |
+                                                os.O_NOFOLLOW | os.O_CLOEXEC, 0o600, dir_fd=fd)
+                            with os.fdopen(output_fd, 'wb') as stream:
+                                created = os.fstat(stream.fileno())
+                                require(stat.S_ISREG(created.st_mode) and created.st_uid == os.getuid() and
+                                        stat.S_IMODE(created.st_mode) == 0o600 and created.st_nlink == 1,
+                                        'Unsafe timing checkpoint file')
+                                stage = 'write-temporary'
+                                stream.write(data); stream.flush(); os.fsync(stream.fileno())
+                            stage = 'verify-temporary'
+                            require(caller_capture.read_regular(folder / temporary, 16384) == data,
+                                    'Timing checkpoint temporary changed')
+                            directory_check()
+                            stage = 'atomic-replace'
+                            os.replace(temporary, 'progress.json', src_dir_fd=fd, dst_dir_fd=fd)
+                            stage = 'sync-directory'
+                            os.fsync(fd)
+                            stage = 'verify-installed'
+                            require(caller_capture.read_regular(folder / 'progress.json', 16384) == data,
+                                    'Installed timing checkpoint changed')
+                            directory_check()
+                            prior_sidecar = data
+                            sidecar['completed_writes'] = sequence
+                            sidecar['last_completed'] = sidecar.pop('pending')
+                        except BaseException as error:
+                            # No retry, unlink or terminal sidecar rewrite after an
+                            # uncertain write. Keep old checkpoint/partial temp;
+                            # original supervisor persists full final timing/error.
+                            sidecar['failure'] = dict(stage=stage, error=repr(error),
+                                write_outcome_requires_reconciliation=True)
+                            raise
+                        finally:
+                            if fd is not None:
+                                os.close(fd)
                     phase_names = ('read-raw-graph', 'canonical-graph', 'validate-graph',
                         'prefix-census', 'closure-inventory', 'protected-companions',
                         'object-namespace', 'source-namespace', 'profile-guard',
@@ -457,7 +544,7 @@ def main():
                         timing['active_phase'] = name
                         timing['marks'].append(dict(phase=name, started_ns=now,
                             since_start_ns=now - timing['started_ns']))
-                        persist()  # Fixed phase transitions only, never per chunk/file.
+                        checkpoint()  # Small atomic diagnostic only; no full-record rewrite.
                     def post_timeout(*_):
                         raise TimeoutError('Post-capture validation90s')
                     signal.signal(signal.SIGALRM, post_timeout)
