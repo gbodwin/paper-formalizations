@@ -21,11 +21,12 @@ jobs:
     timeout-minutes: 120
     env:
       LEAN_NUM_THREADS: '1'
-      LIGHTEFT_QUALIFICATION_BINDINGS_SHA: ba12a04abc525c3c53aff947fbb8cd8027eb00b48e7879206a41049bdc9b5492
+      LIGHTEFT_QUALIFICATION_BINDINGS_SHA: 3493f74890b0637dbfd71a338565d8ede400c3d05809cda97ddda5a8e8090b50
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           ref: ${{ github.sha }}
+          fetch-depth: 2
           persist-credentials: false
       # Existing official hash-pinned ordinary setup, outside child admission.
       # No Lake/package/cache/build command is performed by this step.
@@ -55,7 +56,7 @@ jobs:
           import hashlib
           p = Path('checkpoints/light-eft-probe-qualification-20261026/launcher.py').resolve()
           b = p.read_bytes()
-          if hashlib.sha256(b).hexdigest() != '34cbcc013c95fd95c08281860270e8e20288a985f24fbfbb3ab8ec1f499d3f98':
+          if hashlib.sha256(b).hexdigest() != '283a4ccb2048d40931ddf7923c348b5edfceb5a4913368814396131e8651fe2e':
               raise SystemExit('Unreviewed native qualification entry bytes')
           exec(compile(b, str(p), 'exec'), {'__name__': '__main__', '__file__': str(p)})
           PY
