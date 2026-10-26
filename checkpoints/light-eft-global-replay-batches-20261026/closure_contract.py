@@ -45,7 +45,7 @@ JSON_LIMIT = 16 * 1024 * 1024
 # actual closure above this bound must be reported and reviewed, never omitted.
 PAYLOAD_LIMIT = 1024 * 1024 * 1024
 CONTROL_NAMES = ('closure_contract.py', 'HeaderProbe.lean', 'targets.json',
-                 'strict_download.cjs', 'package.json', 'package-lock.json', 'qualification_adapter.py')
+                 'strict_download.cjs', 'package.json', 'package-lock.json', 'qualification_adapter.py', 'action.yml')
 SUFFIXES = ('', '.server', '.private', '.ir.sig', '.ir')
 ACQUISITION_POLICY = dict(
     schema='PROJECT_TRANSFER_PINNED_DEPENDENCIES_EXACT_PRODUCER_BYTES_V1',
@@ -923,6 +923,8 @@ def transport(ci, bound, purpose='production'):
             row['compressed_digest_verified'] is True and row['digest_mismatch'] is False and
             row['sdk_version'] == '2.3.2' and row['source_controls'] == bound,
             'Transport is not the exact strict current-run source-bound SDK capture')
+    require(re.fullmatch(r'24\.[0-9]+\.[0-9]+', row.get('node_version', '')) is not None,
+            'Actual JavaScript action Node runtime differs')
     require(row['loaded_code_unchanged'] is True and type(row['loaded_code']) is dict and
             0 < len(row['loaded_code']) <= 8192 and row['sdk_entry'] in row['loaded_code'] and
             row['sdk_entry'].startswith('node_modules/@actions/artifact/') and

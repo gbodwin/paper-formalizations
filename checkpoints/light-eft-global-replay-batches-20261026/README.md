@@ -251,3 +251,28 @@ manifest entries and seven genuine children with released/ECHILD lease. Its fina
 audit took 89.136620311 seconds under the unchanged 90-second cap, max wait4 RSS
 4772200 KiB. This narrow margin is recorded without a future-robustness or current
 capacity claim. Per-job caps and every genuine native child gate stay unchanged.
+
+
+### Genuine JavaScript action transport context
+
+The strict transport is invoked through this directory's source-bound `action.yml`
+in both the qualification consumer and reusable production replay caller. It is
+a real `runs.using: node24` action with `strict_download.cjs` as its direct main,
+not a composite or shell `run: node` wrapper. Step identity/environment and the two
+existing GITHUB_OUTPUT mappings are retained. The runner supplies its own action
+runtime authority to the SDK; there is no token input, extraction, forwarding,
+manual environment injection, findBy override or permissions increase. Read-only
+Git child processes receive only the explicit public Git environment, not runner
+runtime credentials. Node.js 24 is required and its public exact version enters
+the verified transport receipt; SDK2.3.2, lock integrity and loaded paths/bytes are
+unchanged. Unsupported runner/runtime, missing authority or mismatching SDK/API
+digest results still refuse without accepting partial data.
+
+Failure history remains exact: run40358456991/attempt1 at3ad passed the producer
+but its plain shell consumer SDK invocation could not obtain ACTIONS_RUNTIME_TOKEN;
+the consumer native step was skipped. Producer raw audit passed genuine cleanup
+and the complete163281888-byte handoff under the existing single1GiB total cap;
+that does not qualify the consumer or production route. This source repair has
+not been executed. A new exact-commit coordinated qualification must exercise the
+real action SDK/list/download/digest behavior and consumer byte/namespace/native
+guards. No historical handoff, limit change or whole-paper acceptance is implied.

@@ -24,7 +24,7 @@ SPECS = ('light-eft-paid-focused-adapter-20261020',
 NAMES = ('closure_contract.py', 'HeaderProbe.lean', 'targets.json',
          'strict_download.cjs', 'package.json', 'package-lock.json',
          'route_status.py', 'batch_runtime.py', 'runtime_sources.py',
-         'batch_launcher.sh', 'qualification_adapter.py')
+         'batch_launcher.sh', 'qualification_adapter.py', 'action.yml')
 EXTRA = ('.github/workflows/lean.yml',
          '.github/workflows/light-eft-global-replay.yml',
          '.github/workflows/light-eft-fair-bit-focused.yml',

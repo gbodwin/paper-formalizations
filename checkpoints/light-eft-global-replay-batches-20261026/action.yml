@@ -1,0 +1,10 @@
+name: LightEFT strict same-run artifact transport
+description: Execute the pinned strict SDK transport in the genuine runner JavaScript action context.
+outputs:
+  transport_record:
+    description: Exact source-bound current-run transport receipt path.
+  download_directory:
+    description: Exact authenticated artifact bundle directory.
+runs:
+  using: node24
+  main: strict_download.cjs

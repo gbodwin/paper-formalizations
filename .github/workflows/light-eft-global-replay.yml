@@ -125,7 +125,7 @@ jobs:
           LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
           LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
         id: transport
-        run: node checkpoints/light-eft-global-replay-batches-20261026/strict_download.cjs
+        uses: ./checkpoints/light-eft-global-replay-batches-20261026
       - name: Restore selected closure and replay every original batch target
         id: replay
         env:

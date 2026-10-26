@@ -11,7 +11,7 @@ const {execFileSync} = require('node:child_process')
 const here = __dirname
 const root = path.resolve(here, '../..')
 const controls = ['closure_contract.py', 'HeaderProbe.lean', 'targets.json',
-  'strict_download.cjs', 'package.json', 'package-lock.json', 'qualification_adapter.py']
+  'strict_download.cjs', 'package.json', 'package-lock.json', 'qualification_adapter.py', 'action.yml']
 const specs = ['light-eft-paid-focused-adapter-20261020',
   'light-eft-joint-flag-ci-extension-revision-20261019',
   'light-eft-canonical-output-adapter-20261020',
@@ -19,7 +19,10 @@ const specs = ['light-eft-paid-focused-adapter-20261020',
   'light-eft-fair-bit-batch-ci-adapter-20261021']
 function need(ok, message) { if (!ok) throw new Error(message) }
 function hash(raw) { return crypto.createHash('sha256').update(raw).digest('hex') }
-function git(...args) { return execFileSync('git', args, {cwd: root, timeout: 10000}) }
+// Read-only Git children receive public controls only, never runner runtime authority.
+const publicGitEnv = {PATH: process.env.PATH, LANG: 'C', LC_ALL: 'C',
+  GIT_NO_LAZY_FETCH: '1', GIT_NO_REPLACE_OBJECTS: '1', GIT_TERMINAL_PROMPT: '0'}
+function git(...args) { return execFileSync('git', args, {cwd: root, timeout: 10000, env: publicGitEnv}) }
 function digest(value) {
   need(typeof value === 'string', 'Missing artifact digest')
   const result = value.replace(/^sha256:/, '')
@@ -110,6 +113,8 @@ async function main() {
   const destination = path.join(home, 'bundle')
   fs.mkdirSync(destination, {mode: 0o700})
   try {
+    need(/^24\.[0-9]+\.[0-9]+$/.test(process.versions.node),
+      'Reviewed local JavaScript action requires Node.js 24')
     // No findBy: the supported SDK uses this job's existing runtime authority.
     need(!e.NODE_PATH && !e.NODE_OPTIONS, 'Inherited Node module/hook override is forbidden')
     const dependencyRoot = qualification ? path.join(root, '.lake',
@@ -155,7 +160,7 @@ async function main() {
       artifact_digest: expectedDigest, manifest_sha256: e.LIGHTEFT_HANDOFF_MANIFEST_SHA256,
       current_run_client: true, findBy_used: false, compressed_digest_verified: true,
       digest_mismatch: outcome.digestMismatch, source_controls: sourceControls,
-      sdk_version: '2.3.2', sdk_entry: path.relative(dependencyRoot, entry).split(path.sep).join('/'),
+      node_version: process.versions.node, sdk_version: '2.3.2', sdk_entry: path.relative(dependencyRoot, entry).split(path.sep).join('/'),
       loaded_code: loadedAfter, loaded_code_unchanged: true,
       dependency_qualification: 'Pinned lockfile CI installation; not authenticated build/cache provenance',
       destination: fs.realpathSync(destination)}
