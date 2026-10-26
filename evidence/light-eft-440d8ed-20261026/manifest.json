@@ -1,0 +1,99 @@
+{
+  "artifacts": [
+    {
+      "encoding": "RFC4648 base64 via encodebytes,76columnsLF; decode parts separately then concatenate exactindexorder",
+      "label": "source",
+      "original_bytes": 390022,
+      "original_file": "source-repair.zip",
+      "original_sha256": "2a01399358b6386d1ef74d011e93c6a3620c7a5c42be139a419a9c52cd7e6270",
+      "parts": [
+        {
+          "bytes": 88534,
+          "git_blob_oid": "e23faf289f8f30df9a7282b3dcc661e3d12dc271",
+          "index": 0,
+          "path": "evidence/light-eft-440d8ed-20261026/source.part-000.b64",
+          "raw_bytes": 65536,
+          "raw_offset": 0,
+          "raw_sha256": "c3455305abb9d71c2fe6bbce8607b0d23e4ad19d2958ba5647c63a2ad2b570d1",
+          "sha256": "9ef50b5f0521e47da53c0dcf2b45ffa59dec7aa594f643bad9aa65070b7739e6"
+        },
+        {
+          "bytes": 88534,
+          "git_blob_oid": "1e7ae5de7fcc7ac8208a66e83e97455c536ceadc",
+          "index": 1,
+          "path": "evidence/light-eft-440d8ed-20261026/source.part-001.b64",
+          "raw_bytes": 65536,
+          "raw_offset": 65536,
+          "raw_sha256": "c607f39c50cd8a49e79643a9852b067a70017ba3455c252b02a1c3588d31b762",
+          "sha256": "1645eb454697038d07064444aa3fd986732f01d39d321d6c37bc4e51a6b4c882"
+        },
+        {
+          "bytes": 88534,
+          "git_blob_oid": "b0ba011d55dee763ea5c426a05fe414ef5a7e6d1",
+          "index": 2,
+          "path": "evidence/light-eft-440d8ed-20261026/source.part-002.b64",
+          "raw_bytes": 65536,
+          "raw_offset": 131072,
+          "raw_sha256": "9a62b2b2cb02980052b3daddf37329dc13981974855e0cbb60eb6608520c3c12",
+          "sha256": "5d714fe0bbe5fd917c12815ceda0ca1aaa8ee30b153010659c8cc73391aa8c46"
+        },
+        {
+          "bytes": 88534,
+          "git_blob_oid": "b3e47ca9497d066b69465dfaee6b2edc0bceb252",
+          "index": 3,
+          "path": "evidence/light-eft-440d8ed-20261026/source.part-003.b64",
+          "raw_bytes": 65536,
+          "raw_offset": 196608,
+          "raw_sha256": "1b3cb97702111b36ce669ca81ceea972ba91df9763a46e15132e43b130ad9f40",
+          "sha256": "9e1ecfc44c5cc56f8e588c0a41e78511c5e9aca732ee959e8b5198235bdde771"
+        },
+        {
+          "bytes": 88534,
+          "git_blob_oid": "79a49b04f38072c1ca48c73a8506b7081bed8e50",
+          "index": 4,
+          "path": "evidence/light-eft-440d8ed-20261026/source.part-004.b64",
+          "raw_bytes": 65536,
+          "raw_offset": 262144,
+          "raw_sha256": "47ad291777dbdff87735593eecb4f4efd42e5a74fccef3cb108c54ccd25eb738",
+          "sha256": "223753cc67251e612ecf05c23e532e15017f4b78a9cd09d945d79e525655e190"
+        },
+        {
+          "bytes": 84218,
+          "git_blob_oid": "a7cef3021c0cc83cef910ef4221844d5b56256e7",
+          "index": 5,
+          "path": "evidence/light-eft-440d8ed-20261026/source.part-005.b64",
+          "raw_bytes": 62342,
+          "raw_offset": 327680,
+          "raw_sha256": "69aadbcbd2df201da2d716cab6cc4e7e7c45bc5a66af26e741052e90e69e5758",
+          "sha256": "2ca9b1ee45989c371f5e3106d63373e70b061c9f6811006a2a1f84a6f8c19d54"
+        }
+      ]
+    },
+    {
+      "encoding": "RFC4648 base64 via encodebytes,76columnsLF; decode parts separately then concatenate exactindexorder",
+      "label": "review",
+      "original_bytes": 12505,
+      "original_file": "review-complete.zip",
+      "original_sha256": "399704432807c07f2a35eeb1c4a224a04ff33bb36c5127251fd376b038d9a89c",
+      "parts": [
+        {
+          "bytes": 16896,
+          "git_blob_oid": "7795014d5083436473fcded8167f410ee54c8f00",
+          "index": 0,
+          "path": "evidence/light-eft-440d8ed-20261026/review.part-000.b64",
+          "raw_bytes": 12505,
+          "raw_offset": 0,
+          "raw_sha256": "399704432807c07f2a35eeb1c4a224a04ff33bb36c5127251fd376b038d9a89c",
+          "sha256": "0655f6647e921bbc36c9e8350fa88c236fbd450c04b6691353222ad4a42d2fb4"
+        }
+      ]
+    }
+  ],
+  "evidence_only": true,
+  "intended_tag": "refs/tags/evidence-light-eft-440d8ed-20261026",
+  "schema": "LIGHT_EFT_ORIGINAL_ZIP_ARCHIVAL_CARRIERS_V1",
+  "scope": "Exact original bounded source/review ZIPs only; no repackage of repository history; no runtime or source acceptance from transfer.",
+  "source_candidate": "440d8edcd4bc7798788004290cfb339a5284f425",
+  "source_parent": "42d83b6ad3e823f55324b46fb73c8c67d6141d5b",
+  "source_tree": "6bcd262501224f526128ab51f6ce730297a89e4b"
+}
