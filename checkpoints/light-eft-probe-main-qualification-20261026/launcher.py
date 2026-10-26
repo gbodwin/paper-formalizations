@@ -24,7 +24,7 @@ WORKFLOW = '.github/workflows/light-eft-probe-main-qualification.yml'
 BRANCH = 'refs/heads/light-eft-spanners-checkpoints'
 PROBE = 'checkpoints/light-eft-global-replay-batches-20261026/HeaderProbe.lean'
 PROBE_SHA = '715aa2055684da6eff491bf4de5d6646275d62c3197ce4d00d5072c9bb794567'
-PARENT = 'c7e3c3ecf634dcb6ad877afe8c6a990f977e2772'
+PARENT = '6badfae09b91d990f3c469650e8e7cc46e2ac81b'
 LEAN = 'e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
 CHECKER = 'ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe'
 
@@ -86,6 +86,7 @@ def main():
                 git('show', '-s', '--format=%P', 'HEAD').decode().strip() == PARENT and
                 not git('status', '--porcelain'), 'Exact clean sole-parent checkout differs')
         require(Path.cwd().resolve() == ROOT, 'Wrong working directory')
+        capture_guard_paths = []
         def authenticate():
             require(git('rev-parse', 'HEAD').decode().strip() == head and
                     git('show', '-s', '--format=%P', 'HEAD').decode().strip() == PARENT and
@@ -106,6 +107,10 @@ def main():
                     wf.read_bytes() == git('show', 'HEAD:' + WORKFLOW), 'Actual workflow bytes differ')
             require({k: os.environ.get(k) for k in identity} == identity,
                     'Native qualification identity changed')
+            if capture_guard_paths:
+                require(caller_capture.validate_capture(e) == capture_guard_paths and
+                        os.environ.get('LIGHTEFT_LAKE_CAPTURE_DIR') == e.get('LIGHTEFT_LAKE_CAPTURE_DIR'),
+                        'Same-process waited Lake capture changed')
         authenticate()
         require((ROOT / PROBE).stat().st_size == 5895 and
                 hashlib.sha256((ROOT / PROBE).read_bytes()).hexdigest() == PROBE_SHA,
@@ -116,7 +121,7 @@ def main():
                 profile['production_acceptance'] is False, 'Wrong finite metadata profile')
         sys.pycache_prefix = str(root / 'absent-python-cache')
         require(not os.path.lexists(sys.pycache_prefix) and
-                all(n not in sys.modules for n in ['child_runner', 'output_guards', 'closure_contract']),
+                all(n not in sys.modules for n in ['child_runner', 'output_guards', 'closure_contract', 'lake_capture']),
                 'Inherited qualification module/cache')
         replay = (ROOT / PROBE).parent
         sys.path[:0] = [str(HERE), str(ENGINE), str(ROOT / 'scripts'), str(replay)]
@@ -129,10 +134,14 @@ def main():
         import child_runner
         from pilot_child import LIMITS
         import closure_contract as cl
+        import lake_capture as caller_capture
         require(Path(qualified_outputs.__file__).resolve() == HERE / 'output_guards.py' and
                 child_runner.audit_output_errors is qualified_outputs.runtime_errors and
                 Path(cl.__file__).resolve() == replay / 'closure_contract.py',
                 'Actual qualification module source binding differs')
+        require(Path(caller_capture.__file__).resolve() == HERE / 'lake_capture.py',
+                'Actual Lake capture validator source differs')
+        capture_guard_paths = caller_capture.validate_capture(e)
         require(LIMITS['RLIMIT_AS'] == 12 * 1024**3 and LIMITS['RLIMIT_CPU'] == 60 and
                 LIMITS['RLIMIT_CORE'] == 0 and child_runner.DEADLINE == 90 and
                 child_runner.PREFLIGHT_DEADLINE == 300 and child_runner.RSS_STOP == 6 * 1024**3 and
@@ -156,13 +165,32 @@ def main():
                     (p.resolve().is_relative_to(ROOT) or p.resolve().is_relative_to(tool / 'src/lean'))
                     for p in srcroots), 'Source search roots outside exact checkout/toolchain')
         source = {str(ROOT / r['path']): bind(ROOT / r['path'], r) for r in rows}
-        for p in [HERE / 'bindings.json', ROOT / WORKFLOW, *[tool / 'bin' / n for n in ['lean', 'leanchecker', 'lake']]]:
+        for p in [*capture_guard_paths, HERE / 'bindings.json', ROOT / WORKFLOW,
+                  *[tool / 'bin' / n for n in ['lean', 'leanchecker', 'lake']]]:
             source[str(p)] = bind(p)
         account = CIAccounting(memory_snapshot); baseline = account.sample()
         save(root / 'initial-admission-sample.json', baseline)
         require(baseline['headroom'] >= 8 * 1024**3 and baseline['system_available'] >= 8 * 1024**3,
                 'Fresh outer8GiB constrained/host admission failed')
-        child_runner.assert_idle('native-probe-main-before-claim', {})
+        ps_paths = caller_capture.process_snapshot(root)
+        for p in ps_paths:
+            source[str(p)] = bind(p)
+        idle_record = {}
+        try:
+            # Same unchanged guard/decision; snapshot is evidence, never a whitelist.
+            child_runner.assert_idle('native-probe-main-before-claim', idle_record)
+        except BaseException as idle_error:
+            save(root / 'idle-guard-refusal.json', dict(error=repr(idle_error),
+                 pre_guard_snapshot={str(p): source[str(p)] for p in ps_paths},
+                 monotonic_ns=time.monotonic_ns(),
+                 snapshot_not_atomic_with_guard=True, no_exclusive_PID_attribution=True))
+            raise
+        require(len(json.dumps(idle_record).encode()) <= 65536, 'Idle evidence allowance exceeded')
+        save(root / 'idle-guard-success.json', idle_record)
+        source[str(root / 'idle-guard-success.json')] = bind(root / 'idle-guard-success.json')
+        require(sum(p.stat().st_size for p in [*capture_guard_paths, *ps_paths,
+                    root / 'idle-guard-success.json']) <= 1024**2,
+                'Public capture/process evidence exceeds1MiB')
         work = root / 'work'; work.mkdir(mode=0o700)
         objects = work / 'objects'; objects.mkdir(mode=0o700)
         audit = work / 'empty-audit'; audit.mkdir(mode=0o700)

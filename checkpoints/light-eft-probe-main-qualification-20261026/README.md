@@ -1,63 +1,63 @@
-# Genuine HeaderProbe main / full-census profile — source only
+# Genuine HeaderProbe main profile: completed ordinary Lake capture
 
-This proposed checkpoint-only qualification has its own actual workflow/job
-identity: light-eft-probe-main-qualification.yml / native_probe_main. It runs
-one actual `lean --run HeaderProbe.lean request.json headers.json` over the
-source-bound ordered 567 targets. It never forges full/global_replay/focused
-identity, calls a producer export entry, restores a historical handoff or emits
-a replay/producer completion marker. SDK transport is not a prerequisite here.
+This is an unexecuted descendant of exact 6badfae09b91d990f3c469650e8e7cc46e2ac81b.
+The rejected run 40290211335/1 and all raw/log/source evidence remain preserved.
+Its historical offending PID is unknown. A live waiting Lake wrapper is a
+source-supported hypothesis, not exclusive process attribution.
 
-Ordinary setup reuses the pinned lean-action and its five default library build,
-ordinary mathlib cache use and existing VFT audit configuration. These are
-ordinary setup, outside the later native-child resource/admission boundary.
-Setup/cache bytes are not authenticated build or proof provenance. Exact Lean,
-checker, Lake, nine package heads, all 567 source OIDs and effective namespace
-roots are checked before the protected case. No 100-minute staged producer/audit
-sequence is repeated. Preserve the 120-minute whole-job cap and one-worker /
-global compiler concurrency; setup or source refusal stops without retry.
+The only intended route remains the checkpoint-only native_probe_main job.
+Pinned ordinary five-library setup/build/cache/audit is unchanged and remains
+outside later native-child admission. No cache byte becomes proof provenance.
+The workflow starts the hash-bound lake_capture.py using direct Python -I -B.
+It source-authenticates the exact clean sole-parent checkout, actual job/workflow
+identity and bounded source seals. It runs one real `lake env` metadata command,
+which writes only LEAN_SYSROOT, LAKE, LEAN_PATH and LEAN_SRC_PATH. It never dumps
+or serializes the environment or tokens. The actual ordinary setup Lake entry is
+resolved normally; real installed tool hashes, nine package pins, source and
+ordered namespace are validated by the unchanged production runtime contract
+before any protected native work. Metadata is not build/producer authority.
 
-The native child uses the unchanged CPU60, whole-child90, preflight300, AS12GiB,
-FSIZE16MiB, RSS6GiB, anon-growth3GiB and live headroom1GiB refusal limits, fresh
-8GiB host/constrained admission and disk>2GiB. Stage `resolve` is the existing
-non-audit resource class, not production resolution/import authority. Actual
-operation and truthful qualification identity are recorded independently.
+The caller budget is 90 seconds, its Lake command 30 seconds, each metadata file
+has a 64 KiB hard child file limit, and accepted public JSON is at most16 KiB.
+Exit observation uses Linux WNOWAIT without reaping. A failure may signal its
+owned group only before any reap attempt and only after successful waitable-child
+observation. Every wait is preceded by a sticky reap-attempt marker, so an async
+interruption after kernel reaping never authorizes a recycled-group signal.
+Uncertain ownership/reaping forbids group signals and records failure. A permitted
+failure cleanup waits its direct child for at most5 seconds. Failure stops the job and records
+cleanup uncertainty; it does not claim native descendant/ECHILD qualification.
+No successful wait means no supervisor exec. A successful wait precedes same-PID
+os.execve of the direct authenticated launcher, with only the four public captured
+fields added to the original actual CI environment. No GitHub identity is forged.
 
-`output_guards.py` is a qualification-local copy of the exact original guard,
-with one strict metadata-output branch. The caller binds the actual imported
-file before child_runner import. No runtime function is monkeypatched; canonical
-production guards/controllers/five specifications are unchanged. The new branch
-requires actual GitHub source/job/workflow binding, nonfixture identity, the
-exact production program/request/argv, only graph/headers.json <=16MiB, empty
-generated-object/audit trees and preservation of every protected input. Existing
-legacy guard branches remain identical when metadata_only is absent.
+The capture record binds actual source/run/attempt/job, caller PID/start/boot,
+source and binding seals, exact public bytes and successful command wait. Direct
+exec preserves that caller identity. The launcher validates the record and actual
+namespace, source/tool/package pins, then protects capture evidence alongside its
+other native inputs. Search-root order and multiplicity remain intact. Only
+physical inventory traversal is deduplicated as previously reviewed.
 
-The child receives the full actual Lake search paths normalized against the
-checkout for its owned work cwd. Namespace order and multiplicity remain intact
-for probing and validation. Only physical inventory traversal is deduplicated
-in first-occurrence order; both effective and inventory root lists are saved.
+A bounded `ps -eo pid,ppid,stat,comm` snapshot completes and is saved immediately
+before the original assert_idle call. The canonical function and decision are
+unchanged: there is no PID/name/Lake whitelist. Refusal saves the snapshot bindings
+and timestamp. The snapshot is not atomic with the guard's own process read, so
+it aids attribution without falsely identifying the exact offending historical
+PID or excluding other processes. A failed/oversized snapshot stops the route.
+Selected capture/process evidence must total at most1 MiB before protected work.
 
-The child gets only explicit public Lean path/locale/allocator variables; no
-GitHub/runtime credential is serialized into the fully logged plan. Native
-kernel-limit, input-tree preservation, direct/descendant reaping, no-children and
-genuine CILease/ECHILD requirements are unchanged. Ordinary toolchain/package
-setup is not represented as a protected child operation.
+Native CPU60/child90/preflight300, AS12 GiB/FSIZE16 MiB/RSS6 GiB/anon3 GiB/live
+headroom1 GiB, fresh8 GiB host/constrained admission, disk>2 GiB, source/no-writer,
+real CILease, kernel identity/limits, preservation and reaping gates are unchanged.
+The global one-compiler concurrency and120-minute job cap remain. The actual
+HeaderProbe,567 ordered targets, five production specs/original1041 logical rows,
+fresh focused/full replay and final kernel/audit conjunction are unchanged.
 
-A successful finite case validates the real serialized-header graph, effective
-namespace/prefix/companion/source bindings and protected input identity. It
-records actual mapped-region child RSS/VM/time/accounting, JSON bytes, closure
-family/source/tool/control bindings and actual full export-input byte count.
-32768 nodes, 200000 census, 16MiB JSON and 1GiB payload are inherited proposed
-refusal ceilings, not demonstrated fit. The full graph and observed profile
-are saved before payload-ceiling refusal; no target/file is dropped to fit.
+This source unit grants no execution/publication/window. Actual metadata capture
+behavior, mapped-region API time/memory, graph and selected-input footprint,
+SDK/export/import/repeated189-case and whole-job fit remain unqualified. A future
+reviewed invocation still needs fresh coordination/holder/source/ref/queue checks,
+real hosted native admission, exact raw evidence audit and truthful cleanup.
 
-One capture does not qualify repeated producer snapshots, the three actual
-189-target consumer captures, SDK download/digest behavior, immutable bundle
-copy/restore, whole-job fit or paper correctness. Production run_probe is not
-rewired by this unit. Later production integration needs separate reviewed
-supervision and unchanged authentic full/focused/source/567-kernel conjunction.
-No execution, publication, window or admission is authorized by this document.
-
-Old local reporter debt remains preserved: PID10732 was an unreaped zombie,
-session92779 was lost, and normal exit was unknown. Parent released that old
-hold07:08:35 on operational cessation only. No cleanup/signal/reacquisition of
-that old holder is part of this source unit.
+Parent released the previous MAIN hold08:44:43 on verified normal local release;
+no new holder/window exists. Older PID10732/session92779 zombie/reaping/unknown-exit
+debt remains distinct and is not cleaned up or claimed resolved here.

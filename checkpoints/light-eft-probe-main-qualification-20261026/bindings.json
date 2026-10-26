@@ -1,6 +1,6 @@
 {
   "schema": "LIGHT_NATIVE_PROBE_MAIN_SOURCE_BINDINGS_V1",
-  "parent": "c7e3c3ecf634dcb6ad877afe8c6a990f977e2772",
+  "parent": "6badfae09b91d990f3c469650e8e7cc46e2ac81b",
   "files": [
     {
       "path": "checkpoints/light-eft-canonical-output-adapter-20261020/child_runner.py",
@@ -194,8 +194,8 @@
     },
     {
       "path": "checkpoints/light-eft-probe-main-qualification-20261026/launcher.py",
-      "bytes": 23622,
-      "sha256": "e254f0098375d9f888ab580c601def4e780bfec2c3c84560389d7cc840c6a66c"
+      "bytes": 25354,
+      "sha256": "5cf132a30dea9c5f98739790d75f05ea8965e855ed10bd6b3c4c728d6246142e"
     },
     {
       "path": "checkpoints/light-eft-probe-main-qualification-20261026/output_guards.py",
@@ -204,9 +204,14 @@
     },
     {
       "path": "checkpoints/light-eft-probe-main-qualification-20261026/profile.json",
-      "bytes": 1480,
-      "sha256": "d5976988efe722f07c41e8c63d7eaca89c3d0b3fc6ca13ace2aca35708a587cc"
+      "bytes": 1959,
+      "sha256": "e0643bc758436e8da95b86a05d970d0803d97fb9b0fb44f045ef868b0d8e320a"
+    },
+    {
+      "path": "checkpoints/light-eft-probe-main-qualification-20261026/lake_capture.py",
+      "bytes": 17446,
+      "sha256": "017eb79a6c72f88e222d0b6f13736908885dec1c947547ca79b5342567c1ffb5"
     }
   ],
-  "scope": "Actual main567 qualification only; unchanged original production roles, source and native supervisor; qualification-local output namespace adapter explicitly bound."
+  "scope": "Direct same-process supervisor after successfully waited bounded public Lake capture; unchanged native guards and production controls."
 }
