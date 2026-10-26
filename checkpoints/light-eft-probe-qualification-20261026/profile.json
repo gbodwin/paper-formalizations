@@ -1,0 +1,27 @@
+{
+  "schema": "LIGHT_NATIVE_PROBE_ELABORATION_QUALIFICATION_V1",
+  "scope": "NATIVE_HEADER_PROBE_ELABORATION_ONLY",
+  "source_parent": "f2c88aef8f952c068ae6f99ac6ce1089632f4246",
+  "synthetic_fixture": false,
+  "API_runtime_exercised": false,
+  "production_acceptance": false,
+  "source": "checkpoints/light-eft-global-replay-batches-20261026/HeaderProbe.lean",
+  "source_bytes": 5883,
+  "source_sha256": "135bec064c23826304376471a89eb630360d9db75b22154be9e109e9294355c9",
+  "ordinary_setup": "Existing SHA256-pinned official Lean4.34.0 archive only; no Lake/package/cache/build operation",
+  "native_budget": {
+    "cpu_seconds": 60,
+    "whole_child_seconds": 90,
+    "preflight_seconds": 300,
+    "address_space_bytes": 12884901888,
+    "file_size_bytes": 16777216,
+    "sampled_rss_stop_bytes": 6442450944,
+    "per_cgroup_anon_growth_stop_bytes": 3221225472,
+    "runtime_headroom_stop_bytes": 1073741824,
+    "sample_interval_seconds": 0.1,
+    "outer_admission_visible_and_host_bytes": 8589934592,
+    "minimum_free_disk_exclusive_bytes": 2147483648,
+    "job_minutes": 120
+  },
+  "qualification": "Finite inherited refusal envelope, not demonstrated fit. Elaboration only; no serialized-header/API-runtime, SDK, closure, replay, whole-job or paper acceptance."
+}

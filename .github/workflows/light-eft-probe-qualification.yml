@@ -1,0 +1,72 @@
+name: LightEFT probe native elaboration qualification
+on:
+  push:
+    branches:
+      - light-eft-spanners-checkpoints
+    paths:
+      - .github/workflows/light-eft-probe-qualification.yml
+      - checkpoints/light-eft-probe-qualification-20261026/launcher.py
+      - checkpoints/light-eft-probe-qualification-20261026/profile.json
+      - checkpoints/light-eft-probe-qualification-20261026/bindings.json
+      - checkpoints/light-eft-global-replay-batches-20261026/HeaderProbe.lean
+concurrency:
+  group: paper-formalizations-single-compiler
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  native_probe_compile:
+    if: github.ref == 'refs/heads/light-eft-spanners-checkpoints' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      LEAN_NUM_THREADS: '1'
+      LIGHTEFT_QUALIFICATION_BINDINGS_SHA: ba12a04abc525c3c53aff947fbb8cd8027eb00b48e7879206a41049bdc9b5492
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      # Existing official hash-pinned ordinary setup, outside child admission.
+      # No Lake/package/cache/build command is performed by this step.
+      - name: Install exact official toolchain and retain ordinary setup log
+        shell: bash
+        run: |
+          set -euo pipefail
+          setup_evidence="$RUNNER_TEMP/light-eft-probe-setup-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          test ! -e "$setup_evidence"
+          mkdir -m 700 "$setup_evidence"
+          {
+            test ! -e "$RUNNER_TEMP/lean-4.34.0-linux"
+            curl -fLSs --retry 3 https://github.com/leanprover/lean4/releases/download/v4.34.0/lean-4.34.0-linux.tar.zst -o "$RUNNER_TEMP/light-eft-probe-lean.tar.zst"
+            echo "caaa98356098c85dc0fcbbd28e1ec66f39eb6551829972b752ff20e1286b646b  $RUNNER_TEMP/light-eft-probe-lean.tar.zst" | sha256sum -c -
+            tar --zstd -xf "$RUNNER_TEMP/light-eft-probe-lean.tar.zst" -C "$RUNNER_TEMP"
+          } 2>&1 | tee "$setup_evidence/toolchain-install.log"
+      - name: Authenticate and supervise one genuine Lean elaboration child
+        env:
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+        shell: /bin/bash --noprofile --norc -p -e -o pipefail {0}
+        run: |
+          /usr/bin/python3 -I -B - <<'PY'
+          from pathlib import Path
+          import hashlib
+          p = Path('checkpoints/light-eft-probe-qualification-20261026/launcher.py').resolve()
+          b = p.read_bytes()
+          if hashlib.sha256(b).hexdigest() != '34cbcc013c95fd95c08281860270e8e20288a985f24fbfbb3ab8ec1f499d3f98':
+              raise SystemExit('Unreviewed native qualification entry bytes')
+          exec(compile(b, str(p), 'exec'), {'__name__': '__main__', '__file__': str(p)})
+          PY
+      - name: Preserve genuine elaboration evidence including refusals
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: light-eft-probe-elaboration-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/light-eft-probe-setup-${{ github.run_id }}-${{ github.run_attempt }}
+            ${{ runner.temp }}/light-eft-probe-elaboration-${{ github.run_id }}-${{ github.run_attempt }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
