@@ -24,7 +24,7 @@ WORKFLOW = '.github/workflows/light-eft-probe-main-qualification.yml'
 BRANCH = 'refs/heads/light-eft-spanners-checkpoints'
 PROBE = 'checkpoints/light-eft-global-replay-batches-20261026/HeaderProbe.lean'
 PROBE_SHA = '715aa2055684da6eff491bf4de5d6646275d62c3197ce4d00d5072c9bb794567'
-PARENT = '1ab0f0fcb6aab7416f5260b269e1e6a98e37ac8c'
+PARENT = '81d897b4ccdbcdb01a047b655418c834bd56d547'
 LEAN = 'e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
 CHECKER = 'ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe'
 
@@ -201,8 +201,21 @@ def main():
         request = work / 'request.json'; output = graphdir / 'headers.json'
         raw = cl.encoded(dict(targets=names)); require(len(raw) <= 1024**2, 'Probe request exceeds source allowance')
         cl.create(request, raw); source[str(request)] = bind(request)
-        object_path, object_witness = path_representation.spell_entries(roots[:-1], work, 'LEAN_PATH')
-        source_path, source_witness = path_representation.spell_entries(srcroots, work, 'LEAN_SRC_PATH')
+        expected_sources = srcroots + [(tool / 'src/lean/lake').resolve(strict=True),
+                                       (tool / 'src/lean').resolve(strict=True)]
+        source_defaults = [str(tool / 'bin/../src/lean/lake'), str(tool / 'bin/../src/lean')]
+        original_objects = [str(Path(x) if Path(x).is_absolute() else ROOT / x)
+                            for x in e['LEAN_PATH'].split(':')] + [str(tool / 'lib/lean')]
+        original_sources = [str(Path(x) if Path(x).is_absolute() else ROOT / x)
+                            for x in rawsrc.split(':')] + source_defaults
+        absent_allowed = [str(ROOT / '.lake/packages' / name / '.lake/build/lib/lean')
+                          for name in cl.PINS]
+        object_path, object_witness = path_representation.spell_entries(
+            roots, work, 'LEAN_PATH', len(roots) - 1, [str(tool / 'lib/lean')],
+            absent_allowed=absent_allowed, original_spellings=original_objects)
+        source_path, source_witness = path_representation.spell_entries(
+            expected_sources, work, 'LEAN_SRC_PATH', len(srcroots), source_defaults,
+            original_spellings=original_sources)
         # Explicit public Lean environment only. Same namespace, no credential dump.
         plan = dict(stage='resolve', module='HeaderProbeMain567',
                     argv=[str(tool / 'bin/lean'), '-j1', '-s65536', '-M5120',
@@ -216,29 +229,38 @@ def main():
         path_representation.verify_arguments(plan, work, ROOT / PROBE, request, output)
         configuration, config_evidence = path_representation.preserve_attempt(
             plan, root, caller_capture.create, save)
-        path_witness = dict(schema='SAME_CWD_PATH_SPELLINGS_V1', cwd=str(work),
+        path_witness = dict(schema='SAME_CWD_PATH_SPELLINGS_V2_ABSENCE', cwd=str(work),
              object_entries=object_witness, source_entries=source_witness,
              all_entries_order_duplicates_preserved=True,
              argv=dict(program=str(ROOT / PROBE), request_absolute=str(request),
                        request_spelling='request.json', output_absolute=str(output),
                        output_spelling='graph/headers.json'),
              exact_config_bytes=len(configuration))
-        require(len(json.dumps(path_witness).encode()) <= 65536, 'Path evidence exceeds64KiB')
-        save(root / 'path-encoding.json', path_witness)
-        for p in [*config_evidence, root / 'path-encoding.json']:
+        witness_bytes = (json.dumps(path_witness) + '\n').encode()
+        save(root / 'path-encoding-attempt.json', dict(bytes=len(witness_bytes),
+             sha256=hashlib.sha256(witness_bytes).hexdigest(), bound=65536,
+             actual_save_encoding=True, no_runtime_fit_claim=True))
+        require(len(witness_bytes) <= 65536, 'Path evidence exceeds unchanged64KiB')
+        caller_capture.create(root / 'path-encoding.json', witness_bytes)
+        for p in [*config_evidence, root / 'path-encoding.json', root / 'path-encoding-attempt.json']:
             source[str(p)] = bind(p)
         require(sum(p.stat().st_size for p in [*capture_guard_paths, *ps_paths,
-                    root / 'idle-guard-success.json', *config_evidence, root / 'path-encoding.json']) <= 1024**2,
+                    root / 'idle-guard-success.json', *config_evidence, root / 'path-encoding.json',
+                    root / 'path-encoding-attempt.json']) <= 1024**2,
                 'Selected public/config evidence exceeds unchanged1MiB allowance')
         save(root / 'submitted-plan.json', dict(identity=identity, plan=plan, profile=profile,
              source_bindings=source, actual_tools=tools, actual_roots=list(map(str, roots)),
              ordinary_setup_not_child_admission=True, production_acceptance=False))
         prefix_before = cl.prefixes(roots)
         # Namespace order/multiplicity is semantic; inventory visits each physical root once.
-        inventory_roots = list(dict.fromkeys(roots))
+        inventory_roots = path_representation.physical_roots(object_witness, work)
+        require(tool / 'lib/lean' in inventory_roots, 'Required toolchain runtime root is absent')
         save(root / 'physical-inventory-roots.json', dict(
             ordered_effective_roots=list(map(str, roots)),
-            unique_physical_roots=list(map(str, inventory_roots))))
+            unique_physical_roots=list(map(str, inventory_roots)),
+            absent_slots=[r['index'] for r in object_witness['slots']
+                          if object_witness['roots'][r['absolute']]['state'] == 'absent'],
+            namespace_witness=bind(root / 'path-encoding.json'), semantic_slots_never_dropped=True))
 
         def add_source_inputs(inputs):
             # Complete tracked package Lean source membership is discovered from pinned Git.
@@ -270,8 +292,8 @@ def main():
                         path_representation.config_bytes(p) == configuration,
                         'Changed actual metadata command/env/resource class')
                 path_representation.verify_arguments(p, work, ROOT / PROBE, request, output)
-                path_representation.verify_entries(p['env']['LEAN_PATH'], roots[:-1], work)
-                path_representation.verify_entries(p['env']['LEAN_SRC_PATH'], srcroots, work)
+                path_representation.verify_entries(p['env']['LEAN_PATH'], roots[:-1], work, object_witness)
+                path_representation.verify_entries(p['env']['LEAN_SRC_PATH'], srcroots, work, source_witness)
                 self.lease.check(); authenticate(); unchanged(source)
                 require(not list(audit.iterdir()), 'Unexpected audit export')
             def before_child(self, p, receipt, persist):
@@ -283,7 +305,8 @@ def main():
                     output_guard_implementation=bind(HERE / 'output_guards.py'),
                     output_guard_spec=dict(stage='resolve', objects=str(objects), audit=str(audit),
                         protected=self.inputs, metadata_only=dict(identity=identity, program=str(ROOT / PROBE),
-                            request=str(request), output=str(output), ordered_targets_sha256=profile['ordered_targets_sha256'])))
+                            request=str(request), output=str(output), ordered_targets_sha256=profile['ordered_targets_sha256'],
+                            namespace_witness=str(root / 'path-encoding.json'))))
                 persist()
                 add_source_inputs(self.inputs)
                 observed = self.inventory.scan()
@@ -316,10 +339,8 @@ def main():
                                preexec_native_qualification_admission=now); persist()
             def profile_graph(self, receipt):
                 raw_graph = cl.read_json(output)
-                expected_sources = srcroots + [(tool / 'src/lean/lake').resolve(strict=True),
-                                               (tool / 'src/lean').resolve(strict=True)]
                 graph, normalization = path_representation.canonical_graph(
-                    raw_graph, work, roots, expected_sources, self.inputs)
+                    raw_graph, work, roots, expected_sources, self.inputs, object_witness, source_witness)
                 normalization['raw_graph'] = bind(output)
                 save(root / 'graph-path-normalization.json', normalization)
                 require(normalization['canonical_view_bytes'] <= 16 * 1024**2,
@@ -341,6 +362,8 @@ def main():
                             old = selected[str(cl.part_path(base, suffix))]
                             require(all(old[k] == value[k] for k in ['bytes', 'sha256']),
                                     'Companion bytes changed during capture')
+                path_representation.verify_namespace(object_witness, work)
+                path_representation.verify_namespace(source_witness, work)
                 self.guard.verify(); unchanged(source)
                 payload = sum(r['bytes'] for r in selected.values())
                 folder = root / 'closure-profile'; folder.mkdir(mode=0o700)

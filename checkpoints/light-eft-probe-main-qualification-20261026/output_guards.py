@@ -1,6 +1,7 @@
 """Scoped live metadata checks; completed hashes remain in the post-wait hooks."""
 from pathlib import Path
-import errno,os,stat
+import errno,os,stat,json,hashlib
+import path_config as namespace_paths
 from contracts import signature,require,Rejected,SUFFIXES,EXPORTS,TARGET
 OBJECT_BOUND=16*1024**2
 
@@ -165,7 +166,7 @@ def live_metadata_outputs(record,spec):
          e.get('GITHUB_EVENT_NAME')=='push' and e.get('GITHUB_JOB')=='native_probe_main' and
          e.get('GITHUB_WORKFLOW')=='LightEFT probe main profile qualification',
          'Wrong actual metadata qualification identity')
- require(set(meta)=={'identity','program','request','output','ordered_targets_sha256'} and
+ require(set(meta)=={'identity','program','request','output','ordered_targets_sha256','namespace_witness'} and
          set(identity)=={'GITHUB_REPOSITORY','GITHUB_SHA','GITHUB_REF','GITHUB_RUN_ID',
              'GITHUB_RUN_ATTEMPT','GITHUB_JOB','GITHUB_WORKFLOW','GITHUB_WORKFLOW_SHA',
              'GITHUB_WORKFLOW_REF','LEAN_NUM_THREADS','LIGHTEFT_JOB_WORKFLOW_REPOSITORY',
@@ -179,6 +180,23 @@ def live_metadata_outputs(record,spec):
  work=Path(record['working_directory']);program=Path(meta['program'])
  require(work.is_absolute() and work.resolve(strict=True)==work and
          record.get('planned_command',{}).get('cwd')==str(work),'Changed actual metadata cwd')
+ witness_path=Path(meta['namespace_witness'])
+ require(witness_path==work.parent/'path-encoding.json' and str(witness_path) in spec['protected'] and
+         Path(namespace_paths.__file__).resolve(strict=True)==Path(__file__).resolve(strict=True).with_name('path_config.py') and
+         str(Path(namespace_paths.__file__).resolve(strict=True)) in spec['protected'],
+         'Unbound namespace witness or qualification helper')
+ try:
+  data=witness_path.read_bytes()
+  require(len(data)<=65536 and hashlib.sha256(data).hexdigest()==spec['protected'][str(witness_path)]['sha256'],
+          'Namespace witness bytes changed')
+  witness=json.loads(data)
+  require(witness['schema']=='SAME_CWD_PATH_SPELLINGS_V2_ABSENCE' and witness['cwd']==str(work),
+          'Namespace witness schema/cwd differs')
+  namespace_paths.verify_namespace(witness['object_entries'],work)
+  namespace_paths.verify_namespace(witness['source_entries'],work)
+ except BaseException as error:
+  raise LiveOutputRejected('Live namespace directory/absence preservation failed',witness_path,
+                           stat_error=repr(error)) from error
  request=work/'request.json';output=work/'graph'/'headers.json'
  require(Path(meta['request'])==request and Path(meta['output'])==output and
          Path(spec['objects'])==work/'objects' and Path(spec['audit'])==work/'empty-audit',
