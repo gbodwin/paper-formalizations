@@ -1,0 +1,65 @@
+name: LightEFT probe main profile qualification
+on:
+  push:
+    branches:
+      - light-eft-spanners-checkpoints
+    paths:
+      - .github/workflows/light-eft-probe-main-qualification.yml
+      - checkpoints/light-eft-probe-main-qualification-20261026/**
+concurrency:
+  group: paper-formalizations-single-compiler
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  native_probe_main:
+    if: github.ref == 'refs/heads/light-eft-spanners-checkpoints' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      LEAN_NUM_THREADS: '1'
+      LIGHTEFT_QUALIFICATION_BINDINGS_SHA: 06dcdcf1847d96064a954eff3bab56abc6a293c9ba37ae29c2112b1a96c115ad
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      # Exact existing ordinary setup boundary; no child-admission claim here.
+      - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
+        with:
+          auto-config: "false"
+          build: "true"
+          test: "false"
+          lint: "false"
+          use-mathlib-cache: "true"
+          mk_all-check: "false"
+          axiom-audit: "true"
+          axiom-audit-root: "VFTSpanners"
+          axiom-audit-allow: "propext,Classical.choice,Quot.sound"
+      - name: Authenticate and supervise one genuine full-census metadata child
+        env:
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+        shell: /bin/bash --noprofile --norc -p -e -o pipefail {0}
+        run: |
+          lake env /usr/bin/python3 -I -B - <<'PYTHON'
+          from pathlib import Path
+          import hashlib
+          p = Path('checkpoints/light-eft-probe-main-qualification-20261026/launcher.py').resolve()
+          b = p.read_bytes()
+          if hashlib.sha256(b).hexdigest() != 'e254f0098375d9f888ab580c601def4e780bfec2c3c84560389d7cc840c6a66c':
+              raise SystemExit('Unreviewed metadata qualification entry')
+          exec(compile(b, str(p), 'exec'), {'__name__': '__main__', '__file__': str(p)})
+          PYTHON
+      - name: Preserve genuine metadata profile evidence including refusals
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: light-eft-probe-main-profile-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/light-eft-probe-main-profile-${{ github.run_id }}-${{ github.run_attempt }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
