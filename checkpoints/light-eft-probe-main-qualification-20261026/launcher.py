@@ -24,7 +24,7 @@ WORKFLOW = '.github/workflows/light-eft-probe-main-qualification.yml'
 BRANCH = 'refs/heads/light-eft-spanners-checkpoints'
 PROBE = 'checkpoints/light-eft-global-replay-batches-20261026/HeaderProbe.lean'
 PROBE_SHA = '715aa2055684da6eff491bf4de5d6646275d62c3197ce4d00d5072c9bb794567'
-PARENT = '3ad261a9989333efb219bc9c5886d0e529cf4419'
+PARENT = 'd2fdf2011ebb97c86bc5840b4df6617a53b8d4f9'
 LEAN = 'e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
 CHECKER = 'ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe'
 
@@ -350,8 +350,10 @@ def main():
                         'Fresh preexec host/disk admission failed')
                 receipt.update(preexec_binding_verified=True, preexec_disk_bytes=free,
                                preexec_native_qualification_admission=now); persist()
-            def profile_graph(self, receipt):
+            def profile_graph(self, receipt, phase):
+                phase('read-raw-graph')
                 raw_graph = cl.read_json(output)
+                phase('canonical-graph')
                 graph, normalization = path_representation.canonical_graph(
                     raw_graph, work, roots, expected_sources, self.inputs, object_witness, source_witness)
                 normalization['raw_graph'] = bind(output)
@@ -364,10 +366,14 @@ def main():
                         'Canonical graph view encoding binding differs')
                 require(normalization['canonical_view_bytes'] <= 16 * 1024**2,
                         'Canonical graph view exceeds unchanged16MiB graph allowance')
+                phase('validate-graph')
                 nodes, _ = cl.validate_graph(graph, names)
                 self.api_exercised = True
+                phase('prefix-census')
                 require(cl.prefixes(roots) == prefix_before, 'Object prefix census changed')
+                phase('closure-inventory')
                 objs, sources, claims, paths = cl.inventory(graph, names, tool, roots, kinds)
+                phase('protected-companions')
                 selected = {}
                 for path in set(map(str, paths)):
                     require(path in self.inputs and not self.inputs[path].get('metadata_only'),
@@ -381,15 +387,24 @@ def main():
                             old = selected[str(cl.part_path(base, suffix))]
                             require(all(old[k] == value[k] for k in ['bytes', 'sha256']),
                                     'Companion bytes changed during capture')
+                phase('object-namespace')
                 path_representation.verify_namespace(object_witness, work)
+                phase('source-namespace')
                 path_representation.verify_namespace(source_witness, work)
-                self.guard.verify(); unchanged(source)
+                phase('profile-guard')
+                self.guard.verify()
+                phase('profile-source')
+                unchanged(source)
+                phase('write-profile')
                 payload = sum(r['bytes'] for r in selected.values())
                 folder = root / 'closure-profile'; folder.mkdir(mode=0o700)
                 chunks = []
+                # selected is unchanged throughout this loop; preserve the exact
+                # former per-chunk ordering without repeating the identical sort.
+                ordered_selected = sorted(selected.items())
                 for offset in range(0, len(selected), 64):
                     path = folder / ('bindings-%04d.json' % (offset // 64))
-                    save(path, sorted(selected.items())[offset:offset + 64]); chunks.append(bind(path))
+                    save(path, ordered_selected[offset:offset + 64]); chunks.append(bind(path))
                 out = dict(schema='NATIVE_567_GRAPH_PROFILE_ONLY_V1', graph=bind(output),
                     path_normalization=bind(root / 'graph-path-normalization.json'),
                      target_count=567, nodes=len(nodes), census=len(graph['census']),
@@ -401,15 +416,21 @@ def main():
                     no_authenticated_cache_provenance=True, production_acceptance=False)
                 save(root / 'graph-profile.json', out)  # Preserve measured refusal before evaluating ceiling.
                 if identity['LIGHTEFT_REACQUISITION_ROLE'] == 'producer':
+                    phase('qualification-seal')
                     result = qualification.seal_observed(cl, graph, names, tool, tools,
                         roots, kinds, production_controls, identity, root, receipt, self.inputs,
                         (objs, sources, claims, paths))
                 else:
+                    phase('qualification-compare')
                     result = qualification.verify_consumer(cl, identity, graph, names, tool,
                         tools, roots, kinds, production_controls, consumer_state)
                 # The broad protected input profile is not the transfer payload.
                 # The V3 helpers enforce project+allmetadata+attestation TOTAL1GiB.
-                self.guard.verify(); unchanged(source)
+                phase('final-guard')
+                self.guard.verify()
+                phase('final-source')
+                unchanged(source)
+                phase('write-qualification-result')
                 save(root / 'qualification-data-result.json', result)
                 return dict(out, explicit_reacquisition_qualification=result)
             def after_child(self, p, receipt, persist):
@@ -419,13 +440,41 @@ def main():
                 if receipt.get('exit') == 0 and 'failure' not in receipt:
                     # Finite post-capture validation; no new native process or export.
                     prior = signal.getsignal(signal.SIGALRM)
+                    timing = dict(schema='POST_CAPTURE_PHASE_TIMING_V1',
+                        aggregate_cap_seconds=90, maximum_marks=16,
+                        state='running', active_phase=None, marks=[])
+                    receipt['post_capture_phase_timing'] = timing
+                    phase_names = ('read-raw-graph', 'canonical-graph', 'validate-graph',
+                        'prefix-census', 'closure-inventory', 'protected-companions',
+                        'object-namespace', 'source-namespace', 'profile-guard',
+                        'profile-source', 'write-profile', 'qualification-seal',
+                        'qualification-compare', 'final-guard', 'final-source',
+                        'write-qualification-result', 'returned')
+                    def phase(name):
+                        require(name in phase_names and len(timing['marks']) < 16,
+                                'Post-capture timing mark bound exceeded')
+                        now = time.monotonic_ns()
+                        timing['active_phase'] = name
+                        timing['marks'].append(dict(phase=name, started_ns=now,
+                            since_start_ns=now - timing['started_ns']))
+                        persist()  # Fixed phase transitions only, never per chunk/file.
                     def post_timeout(*_):
                         raise TimeoutError('Post-capture validation90s')
                     signal.signal(signal.SIGALRM, post_timeout)
                     signal.setitimer(signal.ITIMER_REAL, 90)
+                    timing['started_ns'] = time.monotonic_ns()
                     try:
-                        self.outputs = self.profile_graph(receipt)
+                        self.outputs = self.profile_graph(receipt, phase)
+                        phase('returned')
+                        timing['state'] = 'completed'
+                    except BaseException as error:
+                        timing['state'] = 'failed'
+                        timing['failure_phase'] = timing['active_phase']
+                        timing['failure_type'] = type(error).__name__
+                        raise
                     finally:
+                        timing['ended_ns'] = time.monotonic_ns()
+                        timing['elapsed_ns'] = timing['ended_ns'] - timing['started_ns']
                         signal.setitimer(signal.ITIMER_REAL, 0); signal.signal(signal.SIGALRM, prior)
                     receipt['native_metadata_graph'] = self.outputs
                 receipt['native_inventory_completed'] = self.guard is not None
