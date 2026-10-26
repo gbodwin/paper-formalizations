@@ -24,7 +24,7 @@ WORKFLOW = '.github/workflows/light-eft-probe-main-qualification.yml'
 BRANCH = 'refs/heads/light-eft-spanners-checkpoints'
 PROBE = 'checkpoints/light-eft-global-replay-batches-20261026/HeaderProbe.lean'
 PROBE_SHA = '715aa2055684da6eff491bf4de5d6646275d62c3197ce4d00d5072c9bb794567'
-PARENT = '81d897b4ccdbcdb01a047b655418c834bd56d547'
+PARENT = 'd693a938306d260e673dacb6dfe9d697b748c265'
 LEAN = 'e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
 CHECKER = 'ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe'
 
@@ -343,6 +343,12 @@ def main():
                     raw_graph, work, roots, expected_sources, self.inputs, object_witness, source_witness)
                 normalization['raw_graph'] = bind(output)
                 save(root / 'graph-path-normalization.json', normalization)
+                require(normalization.get('schema') == 'RAW_GRAPH_CANONICAL_PATH_VIEW_V2' and
+                        normalization.get('canonical_view_encoding') == dict(
+                            tag='SORTED_COMPACT_DEFAULT_ASCII_JSON_UTF8_NO_NEWLINE_V1',
+                            sort_keys=True, ensure_ascii=True, separators=[',', ':'],
+                            text_encoding='utf-8', trailing_newline=False),
+                        'Canonical graph view encoding binding differs')
                 require(normalization['canonical_view_bytes'] <= 16 * 1024**2,
                         'Canonical graph view exceeds unchanged16MiB graph allowance')
                 nodes, _ = cl.validate_graph(graph, names)

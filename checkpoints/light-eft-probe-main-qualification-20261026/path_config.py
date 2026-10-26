@@ -309,9 +309,15 @@ def canonical_graph(raw, work, roots, source_roots, protected, object_witness, s
         result['nodes'].append(copy)
     # No imports, flags, expansions, node/module order or duplicate census rows change.
     digest = hashlib.sha256(); size = 0
-    for part in json.JSONEncoder(sort_keys=True).iterencode(result):
+    encoder = json.JSONEncoder(sort_keys=True, separators=(',', ':'))
+    encoding = dict(tag='SORTED_COMPACT_DEFAULT_ASCII_JSON_UTF8_NO_NEWLINE_V1',
+                    sort_keys=encoder.sort_keys, ensure_ascii=encoder.ensure_ascii,
+                    separators=[encoder.item_separator, encoder.key_separator],
+                    text_encoding='utf-8', trailing_newline=False)
+    for part in encoder.iterencode(result):
         data = part.encode(); size += len(data); digest.update(data)
-    report = dict(schema='RAW_GRAPH_CANONICAL_PATH_VIEW_V1',
+    report = dict(schema='RAW_GRAPH_CANONICAL_PATH_VIEW_V2',
+        canonical_view_encoding=encoding,
         canonical_view_bytes=size, canonical_view_sha256=digest.hexdigest(),
         path_occurrences=occurrences, unique_spellings=len(memo),
         path_mapping_sha256=mapping_hash.hexdigest(),
