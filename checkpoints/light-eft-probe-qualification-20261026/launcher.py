@@ -21,8 +21,8 @@ ENGINE = ROOT / 'checkpoints/light-eft-canonical-output-adapter-20261020'
 WORKFLOW = '.github/workflows/light-eft-probe-qualification.yml'
 BRANCH = 'refs/heads/light-eft-spanners-checkpoints'
 PROBE = 'checkpoints/light-eft-global-replay-batches-20261026/HeaderProbe.lean'
-PROBE_SHA = '135bec064c23826304376471a89eb630360d9db75b22154be9e109e9294355c9'
-PARENT = '6f4513da54ffa6bf82ef0c58030341cfb417f33c'
+PROBE_SHA = '715aa2055684da6eff491bf4de5d6646275d62c3197ce4d00d5072c9bb794567'
+PARENT = '3920626ddfceeab59c476466625b9f3ac3e4772d'
 LEAN = 'e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
 CHECKER = 'ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe'
 
@@ -105,7 +105,7 @@ def main():
             require({k: os.environ.get(k) for k in identity} == identity,
                     'Native qualification identity changed')
         authenticate()
-        require((ROOT / PROBE).stat().st_size == 5883 and
+        require((ROOT / PROBE).stat().st_size == 5895 and
                 hashlib.sha256((ROOT / PROBE).read_bytes()).hexdigest() == PROBE_SHA,
                 'Actual production HeaderProbe source differs')
         profile = json.loads((HERE / 'profile.json').read_bytes())

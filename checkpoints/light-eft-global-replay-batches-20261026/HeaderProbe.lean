@@ -8,7 +8,7 @@ import Lean
 
 open Lean
 
-private def fail (s : String) : IO α := throw <| IO.userError s
+private def fail {α : Type} (s : String) : IO α := throw <| IO.userError s
 
 private def stringArray (xs : Array String) : Json :=
   Json.arr <| xs.map Json.str

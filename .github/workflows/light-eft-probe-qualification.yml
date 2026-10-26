@@ -21,7 +21,7 @@ jobs:
     timeout-minutes: 120
     env:
       LEAN_NUM_THREADS: '1'
-      LIGHTEFT_QUALIFICATION_BINDINGS_SHA: 3493f74890b0637dbfd71a338565d8ede400c3d05809cda97ddda5a8e8090b50
+      LIGHTEFT_QUALIFICATION_BINDINGS_SHA: 760b4b4bcbf9b23278572ce1638a051e1cb5c50ae24eb39bb8764359e3248b24
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -56,7 +56,7 @@ jobs:
           import hashlib
           p = Path('checkpoints/light-eft-probe-qualification-20261026/launcher.py').resolve()
           b = p.read_bytes()
-          if hashlib.sha256(b).hexdigest() != '283a4ccb2048d40931ddf7923c348b5edfceb5a4913368814396131e8651fe2e':
+          if hashlib.sha256(b).hexdigest() != '083a8acbcbc3ff6d4c447811379653299640ada02380b700630be9a66e3d12d1':
               raise SystemExit('Unreviewed native qualification entry bytes')
           exec(compile(b, str(p), 'exec'), {'__name__': '__main__', '__file__': str(p)})
           PY

@@ -2,8 +2,8 @@
 
 This separate qualification route has its own actual workflow/job identity and
 one genuine Lean child. It does not use the noncompiler fixture, forge a full
-producer identity, run probe main or accept a paper. Exact parent 6f4513da54ffa6bf82ef0c58030341cfb417f33c
-and unchanged HeaderProbe source are bound in the launcher/profile/manifests.
+producer identity, run probe main or accept a paper. Exact parent 3920626ddfceeab59c476466625b9f3ac3e4772d
+and exact HeaderProbe source are bound in the launcher/profile/manifests.
 
 The adapter reuses existing native compiler limits, CIAccounting, CIInventory,
 CIIdentityGuard, CILease, child_runner, output guards and lifecycle unchanged.
