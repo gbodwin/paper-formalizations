@@ -86,14 +86,16 @@ jobs:
           LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
           LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
         run: /usr/bin/python3 -I -B checkpoints/light-eft-global-replay-batches-20261026/runtime_sources.py
-      # Ordinary pinned dependency acquisition, outside the later launcher boundary.
-      # No project producer build/audit, GitHub cache, test or external checker.
+      # Ordinary pinned dependency acquisition and fixed module-index tool build,
+      # outside the later launcher boundary; no project producer build/audit,
+      # GitHub cache, test or external checker.
       # Downloaded package bytes remain untrusted until the same-run producer
       # manifest, complete companions, namespace and snapshots are verified.
       - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
         with:
           auto-config: 'false'
-          build: 'false'
+          build: 'true'
+          build-args: 'mk_all'
           test: 'false'
           lint: 'false'
           use-mathlib-cache: 'true'
