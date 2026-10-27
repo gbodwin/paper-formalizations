@@ -19,7 +19,7 @@
     "env":
       "LEAN_NUM_THREADS": "1"
       "LIGHTEFT_HANDOFF_PURPOSE": "reacquisition_qualification"
-      "LIGHTEFT_QUALIFICATION_BINDINGS_SHA": "ea9ac0687b5c29fd212e33862d95e6bc16050dddd200444e2b0ec24d2b66d783"
+      "LIGHTEFT_QUALIFICATION_BINDINGS_SHA": "6b1f275e3fea78d0460cb77966ce2de20dc3d48b8e6d96b6064b9d17d10bd95d"
       "LIGHTEFT_REACQUISITION_ROLE": "producer"
     "outputs":
       "artifact_id": "${{ steps.handoff.outputs.artifact-id }}"
@@ -56,7 +56,7 @@
           "LIGHTEFT_JOB_WORKFLOW_REPOSITORY": "${{ job.workflow_repository }}"
           "LIGHTEFT_JOB_WORKFLOW_REF": "${{ job.workflow_ref }}"
         "shell": "/bin/bash --noprofile --norc -p -e -o pipefail {0}"
-        "run": "/usr/bin/python3 -I -B - <<'PYTHON'\nfrom pathlib import Path\nimport hashlib\np = Path('checkpoints/light-eft-probe-main-qualification-20261026/lake_capture.py').resolve()\nb = p.read_bytes()\nif hashlib.sha256(b).hexdigest() != '8a093a817360ff2e1641eeea0918b1afb75b347022ed2f6ca807787d066baa2d':\n    raise SystemExit('Unreviewed qualification capture')\nexec(compile(b, str(p), 'exec'), {'__name__': '__main__', '__file__': str(p)})\nPYTHON\n"
+        "run": "/usr/bin/python3 -I -B - <<'PYTHON'\nfrom pathlib import Path\nimport hashlib\np = Path('checkpoints/light-eft-probe-main-qualification-20261026/lake_capture.py').resolve()\nb = p.read_bytes()\nif hashlib.sha256(b).hexdigest() != 'c99d301d7c7c72333bc7bf91f0ab4417350e0a14a899de098b290f83dbefe996':\n    raise SystemExit('Unreviewed qualification capture')\nexec(compile(b, str(p), 'exec'), {'__name__': '__main__', '__file__': str(p)})\nPYTHON\n"
         "id": "profile"
       -
         "name": "light-eft-reacquisition-handoff"
@@ -87,7 +87,7 @@
     "env":
       "LEAN_NUM_THREADS": "1"
       "LIGHTEFT_HANDOFF_PURPOSE": "reacquisition_qualification"
-      "LIGHTEFT_QUALIFICATION_BINDINGS_SHA": "ea9ac0687b5c29fd212e33862d95e6bc16050dddd200444e2b0ec24d2b66d783"
+      "LIGHTEFT_QUALIFICATION_BINDINGS_SHA": "6b1f275e3fea78d0460cb77966ce2de20dc3d48b8e6d96b6064b9d17d10bd95d"
       "LIGHTEFT_REACQUISITION_ROLE": "consumer"
       "LIGHTEFT_EXPECTED_SOURCE": "${{ github.sha }}"
       "LIGHTEFT_HANDOFF_ARTIFACT_ID": "${{ needs.native_probe_main.outputs.artifact_id }}"
@@ -156,7 +156,7 @@
           "LIGHTEFT_JOB_WORKFLOW_REF": "${{ job.workflow_ref }}"
           "LIGHTEFT_HANDOFF_TRANSPORT_RECORD": "${{ steps.transport.outputs.transport_record }}"
         "shell": "/bin/bash --noprofile --norc -p -e -o pipefail {0}"
-        "run": "/usr/bin/python3 -I -B - <<'PYTHON'\nfrom pathlib import Path\nimport hashlib\np = Path('checkpoints/light-eft-probe-main-qualification-20261026/lake_capture.py').resolve()\nb = p.read_bytes()\nif hashlib.sha256(b).hexdigest() != '8a093a817360ff2e1641eeea0918b1afb75b347022ed2f6ca807787d066baa2d':\n    raise SystemExit('Unreviewed qualification capture')\nexec(compile(b, str(p), 'exec'), {'__name__': '__main__', '__file__': str(p)})\nPYTHON\n"
+        "run": "/usr/bin/python3 -I -B - <<'PYTHON'\nfrom pathlib import Path\nimport hashlib\np = Path('checkpoints/light-eft-probe-main-qualification-20261026/lake_capture.py').resolve()\nb = p.read_bytes()\nif hashlib.sha256(b).hexdigest() != 'c99d301d7c7c72333bc7bf91f0ab4417350e0a14a899de098b290f83dbefe996':\n    raise SystemExit('Unreviewed qualification capture')\nexec(compile(b, str(p), 'exec'), {'__name__': '__main__', '__file__': str(p)})\nPYTHON\n"
       -
         "name": "light-eft-reacquisition-consumer-evidence"
         "if": "always()"
