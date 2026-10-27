@@ -22,7 +22,7 @@ jobs:
       LEAN_NUM_THREADS: '1'
       LANG: C.UTF-8
       LC_ALL: C.UTF-8
-      LIGHTEFT_CENSUS_BINDINGS_SHA: e87cea1b7414088cf3ad8dbab9aff0a855fcfd3c98042cda112cda11a94ad859
+      LIGHTEFT_CENSUS_BINDINGS_SHA: 80bbb845acf86e3322244cabf7f9685c8b5e2d5a720a1a8bc7a1c2648f86d230
     steps:
       - name: Check out immutable tested source independently from harness event
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -48,7 +48,7 @@ jobs:
           from pathlib import Path
           import hashlib, os
           p = Path('diagnostic-control/checkpoints/light-eft-namespace-census-diagnostic-20261027/launcher.py').resolve()
-          if hashlib.sha256(p.read_bytes()).hexdigest() != '6f1e431fbbd7a6b4541b8c4da0df777ad48cfb2b3a4c2a01c487fe8af0c6a535':
+          if hashlib.sha256(p.read_bytes()).hexdigest() != '25f25e8a42b79b1c9a52e6fa9d42c3122cf9e93637d486582be29e0cbd162fea':
               raise SystemExit('Unreviewed census launcher')
           os.execv('/usr/bin/python3', ['/usr/bin/python3', '-I', '-B', str(p), 'source-setup'])
       # Ordinary pinned acquisition remains outside later Python-child admission.
@@ -56,7 +56,8 @@ jobs:
       - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
         with:
           auto-config: 'false'
-          build: 'false'
+          build: 'true'
+          build-args: 'mk_all'
           test: 'false'
           lint: 'false'
           use-mathlib-cache: 'true'
@@ -78,7 +79,7 @@ jobs:
           from pathlib import Path
           import hashlib, os
           p = Path('diagnostic-control/checkpoints/light-eft-namespace-census-diagnostic-20261027/launcher.py').resolve()
-          if hashlib.sha256(p.read_bytes()).hexdigest() != '6f1e431fbbd7a6b4541b8c4da0df777ad48cfb2b3a4c2a01c487fe8af0c6a535':
+          if hashlib.sha256(p.read_bytes()).hexdigest() != '25f25e8a42b79b1c9a52e6fa9d42c3122cf9e93637d486582be29e0cbd162fea':
               raise SystemExit('Unreviewed census launcher')
           os.execv('/usr/bin/python3', ['/usr/bin/python3', '-I', '-B', str(p), 'capture-and-census'])
       - name: Preserve source capture admission lease census and failure evidence
