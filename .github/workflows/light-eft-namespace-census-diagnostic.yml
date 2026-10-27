@@ -1,0 +1,92 @@
+name: LightEFT fresh namespace census diagnostic
+on:
+  push:
+    branches:
+      - light-eft-spanners-checkpoints
+    paths:
+      - .github/workflows/light-eft-namespace-census-diagnostic.yml
+      - checkpoints/light-eft-namespace-census-diagnostic-20261027/launcher.py
+      - checkpoints/light-eft-namespace-census-diagnostic-20261027/payload.py
+      - checkpoints/light-eft-namespace-census-diagnostic-20261027/bindings.json
+concurrency:
+  group: paper-formalizations-single-compiler
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  observe_reacquired_namespace:
+    if: github.ref == 'refs/heads/light-eft-spanners-checkpoints' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      LEAN_NUM_THREADS: '1'
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
+      LIGHTEFT_CENSUS_BINDINGS_SHA: e87cea1b7414088cf3ad8dbab9aff0a855fcfd3c98042cda112cda11a94ad859
+    steps:
+      - name: Check out immutable tested source independently from harness event
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: 2bc06c4aca8ba1e0d48e4e4a879f93944a17d4db
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Check out actual event harness in explicit non-search-root directory
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          path: diagnostic-control
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Authenticate both sources and materialize nine exact package source pins
+        env:
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+        shell: /usr/bin/python3 -I -B {0}
+        run: |
+          from pathlib import Path
+          import hashlib, os
+          p = Path('diagnostic-control/checkpoints/light-eft-namespace-census-diagnostic-20261027/launcher.py').resolve()
+          if hashlib.sha256(p.read_bytes()).hexdigest() != '6f1e431fbbd7a6b4541b8c4da0df777ad48cfb2b3a4c2a01c487fe8af0c6a535':
+              raise SystemExit('Unreviewed census launcher')
+          os.execv('/usr/bin/python3', ['/usr/bin/python3', '-I', '-B', str(p), 'source-setup'])
+      # Ordinary pinned acquisition remains outside later Python-child admission.
+      # Cache retrieval may compile its own tooling; no project build/audit is requested.
+      - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
+        with:
+          auto-config: 'false'
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'true'
+          use-github-cache: 'false'
+          mk_all-check: 'false'
+          leanchecker: 'false'
+          lean4checker: 'false'
+          nanoda: 'false'
+          axiom-audit: 'false'
+          check-reservoir-eligibility: 'false'
+      - name: Wait public Lake capture then supervise one actual Python namespace census
+        env:
+          LIGHTEFT_JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+          LIGHTEFT_JOB_WORKFLOW_PATH: ${{ job.workflow_file_path }}
+          LIGHTEFT_JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+          LIGHTEFT_JOB_WORKFLOW_REF: ${{ job.workflow_ref }}
+        shell: /usr/bin/python3 -I -B {0}
+        run: |
+          from pathlib import Path
+          import hashlib, os
+          p = Path('diagnostic-control/checkpoints/light-eft-namespace-census-diagnostic-20261027/launcher.py').resolve()
+          if hashlib.sha256(p.read_bytes()).hexdigest() != '6f1e431fbbd7a6b4541b8c4da0df777ad48cfb2b3a4c2a01c487fe8af0c6a535':
+              raise SystemExit('Unreviewed census launcher')
+          os.execv('/usr/bin/python3', ['/usr/bin/python3', '-I', '-B', str(p), 'capture-and-census'])
+      - name: Preserve source capture admission lease census and failure evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: light-eft-namespace-census-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/light-eft-namespace-census-${{ github.run_id }}-${{ github.run_attempt }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
