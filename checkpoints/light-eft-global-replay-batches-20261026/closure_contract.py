@@ -1174,6 +1174,24 @@ def restore_body(bundle, report, ci, bound, tool, tools, roots, kinds, names, se
     require(selected_keys <= set(by_key), 'Batch required companion omitted from full handoff')
     selected_rows = [row for key, row in by_key.items() if key in selected_keys]
     package_namespace_before = package_namespace(roots, kinds)
+    # Preserve the actual observation before the unchanged fail-closed check.
+    # This is diagnostic evidence, not a historical census or replay acceptance.
+    namespace_evidence = dict(
+        schema='LIGHT_PACKAGE_NAMESPACE_COMPARISON_V1', diagnostic_only=True,
+        CI_identity=ci, producer=manifest['producer'], controls=bound,
+        manifest_sha256=expected_sha, root_kinds=kinds, replay_invoked=False,
+        rows=[dict(root=row['root'], kind=row['kind'],
+                   path=str(roots[row['root']]),
+                   expected_prefixes=manifest['prefix_claims'][row['root']],
+                   observed=row,
+                   missing_prefixes=sorted(set(manifest['prefix_claims'][row['root']]) -
+                                           set(row['prefixes'])),
+                   unexpected_prefixes=sorted(set(row['prefixes']) -
+                                              set(manifest['prefix_claims'][row['root']])))
+              for row in package_namespace_before])
+    namespace_raw = encoded(namespace_evidence)
+    require(len(namespace_raw) <= JSON_LIMIT, 'Package namespace diagnostic exceeds JSON bound')
+    create(report / 'package-namespace-comparison.json', namespace_raw)
     require(all(row['prefixes'] == manifest['prefix_claims'][row['root']]
                 for row in package_namespace_before),
             'Reacquired package namespace prefixes differ from producer')
