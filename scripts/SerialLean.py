@@ -41,9 +41,14 @@ def output(*args):
 def wrapper_text(state, tool):
     command = [sys.executable, str(Path(__file__).resolve()), "invoke",
                "--state", str(state), "--tool", tool, "--"]
+    prefix_command = [sys.executable, str(Path(__file__).resolve()), "metadata-prefix",
+                      "--state", str(state), "--wrapper"]
     return "\n".join([
         "#!/usr/bin/env bash", "set -euo pipefail",
         'if [[ -n "${GREEDY_SERIAL_ACTIVE:-}" ]]; then',
+        *(['  if [[ "$#" == 1 && "$1" == "--print-prefix" ]]; then',
+           "    exec " + shlex.join(prefix_command) + ' "$0"',
+           "  fi"] if tool == "lean" else []),
         '  echo "Nested compiler invocation rejected by serial admission" >&2',
         "  exit 97", "fi",
         "exec 9>>" + shlex.quote(str(state / "compiler.lock")),
@@ -63,9 +68,19 @@ def setup(state):
     state.mkdir(parents=True, exist_ok=False)
     mirror = state / "toolchain"
     shutil.copytree(source, mirror, symlinks=True)
+    verified_prefix = output(str(mirror / "bin/lean"), "--print-prefix")
+    leantar = mirror / "bin/leantar"
+    if verified_prefix != str(mirror) or not leantar.is_file() or leantar.is_symlink() or not os.access(leantar, os.X_OK):
+        raise RuntimeError("Copied toolchain prefix/leantar verification failed")
     (state / "compiler.lock").touch(exist_ok=False)
+    name = "greedy-serial-" + os.environ["GITHUB_RUN_ID"] + "-" + os.environ["GITHUB_RUN_ATTEMPT"]
+    elan_home = Path(os.environ.get("ELAN_HOME", str(Path.home() / ".elan"))).absolute()
     metadata = {"source_sysroot": str(source), "mirror": str(mirror),
-                "helper_sha256": digest(__file__), "tools": {}}
+                "helper_sha256": digest(__file__), "tools": {},
+                "verified_prefix": verified_prefix,
+                "metadata_wrapper_paths": [str(mirror / "bin/lean"),
+                                           str(elan_home / "toolchains" / name / "bin/lean")],
+                "leantar": {"path": str(leantar), "sha256": digest(leantar)}}
     for tool in TOOLS:
         path = mirror / "bin" / tool
         if not path.is_file() or path.is_symlink():
@@ -77,7 +92,6 @@ def setup(state):
         metadata["tools"][tool] = {"real": str(real), "real_sha256": digest(real),
                                    "wrapper": str(path), "wrapper_sha256": digest(path)}
     (state / "metadata.json").write_text(json.dumps(metadata, sort_keys=True, indent=2) + "\n")
-    name = "greedy-serial-" + os.environ["GITHUB_RUN_ID"] + "-" + os.environ["GITHUB_RUN_ATTEMPT"]
     subprocess.run(["elan", "toolchain", "link", name, str(mirror)], check=True)
     values = {"ELAN_TOOLCHAIN": name, "LEAN_SYSROOT": str(mirror),
               "LAKE_OVERRIDE_LEAN": "true", "LEAN": str(mirror / "bin/lean"),
@@ -88,6 +102,41 @@ def setup(state):
     with open(os.environ["GITHUB_PATH"], "a") as f:
         f.write(str(mirror / "bin") + "\n")
     print(json.dumps({"serial_toolchain_ready": values, "metadata_sha256": digest(state / "metadata.json")}))
+
+
+def metadata_prefix(state, wrapper):
+    """Reply to the one pinned cache-initializer query without a subprocess."""
+    try:
+        metadata = json.loads((state / "metadata.json").read_text())
+        spec = metadata["tools"]["lean"]
+        prefix = str(state / "toolchain")
+        leantar = Path(prefix) / "bin/leantar"
+        if not os.environ.get("GREEDY_SERIAL_ACTIVE"):
+            raise RuntimeError("Not a nested metadata query")
+        # Only the mirror and its registered Elan route to THIS inode are valid.
+        if str(Path(wrapper).absolute()) not in metadata["metadata_wrapper_paths"]:
+            raise RuntimeError("Unexpected metadata executable path")
+        if Path(wrapper).resolve() != Path(spec["wrapper"]) or not os.path.samefile(wrapper, spec["wrapper"]):
+            raise RuntimeError("Unexpected metadata executable")
+        if metadata["verified_prefix"] != prefix or metadata["mirror"] != prefix:
+            raise RuntimeError("Unverified metadata prefix")
+        if digest(__file__) != metadata["helper_sha256"] or digest(wrapper) != spec["wrapper_sha256"]:
+            raise RuntimeError("Metadata route changed")
+        if digest(spec["real"]) != spec["real_sha256"]:
+            raise RuntimeError("Underlying Lean changed")
+        if metadata["leantar"]["path"] != str(leantar) or not leantar.is_file() or leantar.is_symlink() or not os.access(leantar, os.X_OK):
+            raise RuntimeError("Missing verified leantar")
+        if digest(leantar) != metadata["leantar"]["sha256"]:
+            raise RuntimeError("leantar changed")
+    except (OSError, ValueError, KeyError, RuntimeError) as error:
+        print(f"Nested metadata query rejected: {error}", file=sys.stderr)
+        return 97
+    with (state / "metadata-queries.jsonl").open("a") as f:
+        f.write(json.dumps({"query": ["--print-prefix"], "prefix": prefix,
+                            "active_token": os.environ["GREEDY_SERIAL_ACTIVE"],
+                            "time_ns": time.time_ns()}, sort_keys=True) + "\n")
+    print(prefix)
+    return 0
 
 
 def invoke(state, tool, args):
@@ -145,6 +194,15 @@ def verify(state, commit, dependencies):
 
 
 def report(state):
+    # Emit the original UTF-8 evidence even when subsequent validation fails.
+    for name in ("metadata.json", "events.jsonl", "metadata-queries.jsonl"):
+        print(f"SERIAL_TRACE_BEGIN {name}", flush=True)
+        path = state / name
+        if path.is_file():
+            print(path.read_text(), end="", flush=True)
+        else:
+            print("(absent)", flush=True)
+        print(f"SERIAL_TRACE_END {name}", flush=True)
     metadata = json.loads((state / "metadata.json").read_text())
     if digest(__file__) != metadata["helper_sha256"]:
         raise RuntimeError("Serial helper changed")
@@ -177,12 +235,14 @@ def report(state):
 def main():
     parser = argparse.ArgumentParser()
     commands = parser.add_subparsers(dest="command", required=True)
-    for name in ("setup", "invoke", "verify", "report"):
+    for name in ("setup", "invoke", "metadata-prefix", "verify", "report"):
         sub = commands.add_parser(name)
         sub.add_argument("--state", type=Path, required=True)
         if name == "invoke":
             sub.add_argument("--tool", choices=TOOLS, required=True)
             sub.add_argument("args", nargs=argparse.REMAINDER)
+        if name == "metadata-prefix":
+            sub.add_argument("--wrapper", required=True)
         if name == "verify":
             sub.add_argument("--commit", required=True)
             sub.add_argument("--dependencies", action="store_true")
@@ -191,6 +251,8 @@ def main():
     elif args.command == "invoke":
         tail = args.args[1:] if args.args[:1] == ["--"] else args.args
         return invoke(args.state.resolve(), args.tool, tail)
+    elif args.command == "metadata-prefix":
+        return metadata_prefix(args.state.resolve(), args.wrapper)
     elif args.command == "verify": verify(args.state.resolve(), args.commit, args.dependencies)
     else: report(args.state.resolve())
     return 0
