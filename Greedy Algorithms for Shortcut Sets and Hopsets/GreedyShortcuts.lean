@@ -49,10 +49,12 @@ import GreedyShortcuts.ChainSaturatedTransport
 import GreedyShortcuts.ChainSaturationCapacity
 import GreedyShortcuts.ChainSaturationSteps
 import GreedyShortcuts.ChainSaturationTermination
+import GreedyShortcuts.ChainSharedPivotGuardV2
 import GreedyShortcuts.ChainShortRowCapacity
 import GreedyShortcuts.ChainShortcutChoices
 import GreedyShortcuts.ChainSourceSupport
 import GreedyShortcuts.ChainStableRectangle
+import GreedyShortcuts.ChainStrictJoinGuardV2
 import GreedyShortcuts.ChainSubwalk
 import GreedyShortcuts.ChainSuffixCharging
 import GreedyShortcuts.ChainTailRowSupport

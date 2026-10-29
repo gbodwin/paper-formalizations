@@ -9,6 +9,9 @@ permissions:
 
 jobs:
   check:
+    if: >-
+      github.ref != 'refs/heads/greedy-strict-join-checkpoint-20261029' &&
+      github.head_ref != 'greedy-strict-join-checkpoint-20261029'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -32,3 +35,60 @@ jobs:
         run: bash scripts/CheckGreedyExecutable.sh
       - name: Replay every project module through the Lean kernel
         run: bash scripts/KernelCheck.sh
+
+  greedy-serial-checkpoint:
+    if: >-
+      github.ref == 'refs/heads/greedy-strict-join-checkpoint-20261029' ||
+      github.head_ref == 'greedy-strict-join-checkpoint-20261029'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    concurrency:
+      group: greedy-checkpoint-compiler-lane
+      cancel-in-progress: false
+    env:
+      CHECKPOINT_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      # Bootstrap only: these flags perform installation/version queries, not
+      # project builds. Every inherited verification check runs below the gate.
+      - name: Install pinned toolchain before compiler admission setup
+        uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
+        with:
+          auto-config: "false"
+          build: "false"
+          test: "false"
+          lint: "false"
+          use-mathlib-cache: "false"
+          use-github-cache: "false"
+          axiom-audit: "false"
+      - name: Install disposable serial compiler gate
+        run: python3 scripts/SerialLean.py setup --state "$RUNNER_TEMP/greedy-serial-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+      - name: Verify exact checkout and guarded compiler routes
+        run: python3 scripts/SerialLean.py verify --state "$GREEDY_SERIAL_STATE" --commit "$CHECKPOINT_SHA"
+      - name: Build and audit with the inherited verification settings
+        uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
+        with:
+          auto-config: "false"
+          build: "true"
+          test: "false"
+          lint: "false"
+          use-mathlib-cache: "true"
+          mk_all-check: "false"
+          axiom-audit: "true"
+          axiom-audit-root: "VFTSpanners"
+          axiom-audit-allow: "propext,Classical.choice,Quot.sound"
+      - name: Recheck exact source, dependency pins and compiler routes
+        run: python3 scripts/SerialLean.py verify --state "$GREEDY_SERIAL_STATE" --commit "$CHECKPOINT_SHA" --dependencies
+      - name: Check all paper module indexes
+        run: bash scripts/CheckModuleIndex.sh
+      - name: Audit every declaration in all paper libraries
+        run: lake env lean scripts/AxiomAudit.lean
+      - name: Audit every declaration in both checkpoint modules
+        run: lake env lean scripts/GreedyCheckpointAudit.lean
+      - name: Check executable Greedy objective and actual evaluation fixtures
+        run: bash scripts/CheckGreedyExecutable.sh
+      - name: Replay every project module through the Lean kernel
+        run: bash scripts/KernelCheck.sh
+      - name: Verify serial admission and retain its evidence
+        if: always()
+        run: python3 scripts/SerialLean.py report --state "$GREEDY_SERIAL_STATE"
