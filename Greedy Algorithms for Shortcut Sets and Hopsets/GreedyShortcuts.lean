@@ -37,6 +37,7 @@ import GreedyShortcuts.ChainMomentProgress
 import GreedyShortcuts.ChainMomentSharp
 import GreedyShortcuts.ChainNewSaturation
 import GreedyShortcuts.ChainNormalization
+import GreedyShortcuts.ChainOwnerLastRootTail
 import GreedyShortcuts.ChainPositiveChoices
 import GreedyShortcuts.ChainPrefix
 import GreedyShortcuts.ChainPrefixSavings
