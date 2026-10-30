@@ -2,6 +2,7 @@ import GreedyShortcuts.BenchmarkParameters
 import GreedyShortcuts.CanonicalSavings
 import GreedyShortcuts.CanonicalSegments
 import GreedyShortcuts.CanonicalSuffixPath
+import GreedyShortcuts.ChainCertifiedRootProjection
 import GreedyShortcuts.ChainComputedFilter
 import GreedyShortcuts.ChainCounting
 import GreedyShortcuts.ChainCover
@@ -50,6 +51,7 @@ import GreedyShortcuts.ChainSaturationCapacity
 import GreedyShortcuts.ChainSaturationSteps
 import GreedyShortcuts.ChainSaturationTermination
 import GreedyShortcuts.ChainSharedPivotGuardV2
+import GreedyShortcuts.ChainSharedPivotRootProjectionV2
 import GreedyShortcuts.ChainShortRowCapacity
 import GreedyShortcuts.ChainShortcutChoices
 import GreedyShortcuts.ChainSourceSupport
