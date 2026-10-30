@@ -2,6 +2,8 @@ import GreedyShortcuts.BenchmarkParameters
 import GreedyShortcuts.CanonicalSavings
 import GreedyShortcuts.CanonicalSegments
 import GreedyShortcuts.CanonicalSuffixPath
+import GreedyShortcuts.ChainCanonicalOwnerCut
+import GreedyShortcuts.ChainCanonicalOwnerGroup
 import GreedyShortcuts.ChainCertifiedRootProjection
 import GreedyShortcuts.ChainCoalescingRootSuffix
 import GreedyShortcuts.ChainComputedFilter

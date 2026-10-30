@@ -23,6 +23,9 @@ import GreedyShortcuts.ChainOriginalOwnerTailExterior
 import GreedyShortcuts.ChainTailInteriorSavings
 import GreedyShortcuts.ChainInteriorSavings
 import GreedyShortcuts.ChainOriginalCutCandidate
+import GreedyShortcuts.ChainCanonicalOwnerGroup
+import GreedyShortcuts.ChainRectangleCharging
+import GreedyShortcuts.ChainCanonicalOwnerCut
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
@@ -45,6 +48,12 @@ coexist with the separately named conjunction API; no old declaration is replace
 The owner-cut extension adds17 source-level declarations constructing ONE actual
 fixed-H/one-owner legal candidate offer. It supplies no cumulative payment,
 useful-population, weighted/time or phase conclusion, nor any runtime refinement.
+The canonical-cohort extension proves an actual same-edge physical rectangle
+with each original source OLD minimum and FIRST admission derived. Its selected
+cut supplies the literal cohort factor; only cohort.card>=1 is guaranteed.
+Useful cohort coverage, weighted/copy/time payment and runtime refinement remain
+open. Eight original Group theorem statements are unchanged (seven by-proof
+headers plus the unchanged term-bodied witness). No phase bound is asserted.
 All 18 existing executable modules, three fixtures and standard CI controls
 remain mandatory and unchanged. No original-paper operational contract is waived.
 Original-scale, weighted owner/copy/time payment and whole-phase/paper obligations
@@ -94,7 +103,10 @@ run_cmd do
                                   (`GreedyShortcuts.ChainOriginalOwnerTailExterior, 20),
                                   (`GreedyShortcuts.ChainTailInteriorSavings, 13),
                                   (`GreedyShortcuts.ChainInteriorSavings, 5),
-                                  (`GreedyShortcuts.ChainOriginalCutCandidate, 17)] do
+                                  (`GreedyShortcuts.ChainOriginalCutCandidate, 17),
+                                  (`GreedyShortcuts.ChainCanonicalOwnerGroup, 16),
+                                  (`GreedyShortcuts.ChainRectangleCharging, 2),
+                                  (`GreedyShortcuts.ChainCanonicalOwnerCut, 17)] do
     let some idx := env.getModuleIdx? moduleName
       | throwError "Missing checkpoint module {moduleName}"
     let decls := env.constants.toList.filter (fun x => env.getModuleIdxFor? x.1 == some idx)
@@ -141,6 +153,44 @@ run_cmd do
           "GreedyShortcuts.ChainDistance.Context.originalOwnerCut_short_or_positive_bank._proof_1_3",
           "GreedyShortcuts.ChainDistance.Context.originalOwnerCut_short_or_positive_bank._proof_1_4",
           "_private.GreedyShortcuts.ChainOriginalCutCandidate.0.GreedyShortcuts.ChainDistance.Context.rootImportant_mem_tailHeads"]
+      else if moduleName == `GreedyShortcuts.ChainCanonicalOwnerGroup then
+        #["GreedyShortcuts.ChainDistance.Context.mem_originalOwnerCanonicalGroup",
+          "GreedyShortcuts.ChainDistance.Context.mem_originalOwnerCanonicalGroup._simp_1_2",
+          "GreedyShortcuts.ChainDistance.Context.mem_originalOwnerCanonicalGroup._simp_1_3",
+          "GreedyShortcuts.ChainDistance.Context.originalOwnerCanonicalGroup",
+          "GreedyShortcuts.ChainDistance.Context.originalOwnerCanonicalGroup.eq_1",
+          "GreedyShortcuts.ChainDistance.Context.originalOwnerCanonicalGroup_coalesces",
+          "GreedyShortcuts.ChainDistance.Context.originalOwnerCanonicalGroup_row",
+          "GreedyShortcuts.ChainDistance.Context.originalOwnerCanonicalGroup_terminal",
+          "GreedyShortcuts.ChainDistance.Context.originalOwnerCanonicalGroup_witness",
+          "GreedyShortcuts.ChainDistance.Context.originalOwnerCanonicalPrefix",
+          "GreedyShortcuts.ChainDistance.Context.originalOwnerCanonicalTail",
+          "GreedyShortcuts.ChainDistance.Context.originalOwnerCanonicalTail._proof_1",
+          "GreedyShortcuts.ChainDistance.Context.originalOwnerCanonicalTail_display",
+          "GreedyShortcuts.ChainDistance.Context.originalOwnerSharedSuffix",
+          "GreedyShortcuts.ChainDistance.Context.originalOwnerSharedSuffix_root",
+          "GreedyShortcuts.ChainDistance.Context.originalOwnerSharedSuffix_terminal"]
+      else if moduleName == `GreedyShortcuts.ChainRectangleCharging then
+        #["GreedyShortcuts.ChainDistance.Context.rectangle_drop_lower_bound",
+          "GreedyShortcuts.ChainDistance.Context.rectangle_insertion_drop"]
+      else if moduleName == `GreedyShortcuts.ChainCanonicalOwnerCut then
+        #["GreedyShortcuts.ChainDistance.Context.originalCanonicalCutHeads",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalCutHeads_bound",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalCutHeads_bound._proof_1_1",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalCutSources",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalCutSources_card",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalCut_short_or_cohort_offer",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalCut_short_or_cohort_offer._proof_1_1",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalCut_short_or_cohort_offer._proof_1_2",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalCut_short_or_cohort_offer._proof_1_3",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalCut_short_or_cohort_offer._proof_1_4",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalCut_short_or_cohort_offer._proof_1_5",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalCut_short_or_cohort_offer._proof_1_6",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalCut_short_or_cohort_offer._proof_1_7",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalCut_short_or_cohort_offer._proof_1_8",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalGroup_cut_bank",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalGroup_cut_bank._proof_1_1",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalGroup_cut_bank._proof_1_2"]
       else #[]
     for required in requiredNames do
       unless stableDecls.any (fun x => x.1.toString == required) do
