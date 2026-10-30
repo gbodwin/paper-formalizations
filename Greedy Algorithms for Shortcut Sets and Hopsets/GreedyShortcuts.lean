@@ -42,6 +42,8 @@ import GreedyShortcuts.ChainNewSaturation
 import GreedyShortcuts.ChainNormalization
 import GreedyShortcuts.ChainOriginalMinimumTailStep
 import GreedyShortcuts.ChainOriginalRankBand
+import GreedyShortcuts.ChainOriginalRetiredBands
+import GreedyShortcuts.ChainOriginalTraceRemoval
 import GreedyShortcuts.ChainOwnerLastRootTail
 import GreedyShortcuts.ChainPositiveChoices
 import GreedyShortcuts.ChainPrefix

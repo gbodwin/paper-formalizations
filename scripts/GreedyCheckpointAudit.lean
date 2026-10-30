@@ -17,9 +17,26 @@ import GreedyShortcuts.ChainRootMinimumCorridor
 import GreedyShortcuts.ChainOriginalMinimumTailStep
 import GreedyShortcuts.ChainFiniteOriginalSelectorHistory
 import GreedyShortcuts.ChainOriginalRankBand
+import GreedyShortcuts.ChainOriginalRetiredBands
+import GreedyShortcuts.ChainOriginalTraceRemoval
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
+
+/-
+Logical/static checkpoint only: fixed-H/original-ROOT mathematical trace bookkeeping.
+The 20-theorem stored dependency finding concerns pinned preintegration artifacts
+identified by independent metadata receipt SHA256
+2ca6f629746470c5976322dcf46b3d841e36bc9df22379a3e7a39f8a08c566be;
+it is not a metadata rerun on future CI oleans. Standard pinned replay excludes
+two generated partial helpers and provides no per-declaration skip counts.
+This checkpoint makes no compiled execution-equivalence or termination claim
+for originalTraceStepAt, its _sunfold, or either partial implementation.
+All 18 existing executable modules, three fixtures and standard CI controls
+remain mandatory and unchanged. No original-paper operational contract is waived.
+Original-scale, weighted owner/copy/time payment and whole-phase/paper obligations
+remain open. The unfiltered axiom audit below still covers both partial helpers.
+-/
 
 run_cmd do
   let env ← getEnv
@@ -58,7 +75,9 @@ run_cmd do
                                   (`GreedyShortcuts.ChainRootMinimumCorridor, 27),
                                   (`GreedyShortcuts.ChainOriginalMinimumTailStep, 21),
                                   (`GreedyShortcuts.ChainFiniteOriginalSelectorHistory, 114),
-                                  (`GreedyShortcuts.ChainOriginalRankBand, 38)] do
+                                  (`GreedyShortcuts.ChainOriginalRankBand, 38),
+                                  (`GreedyShortcuts.ChainOriginalRetiredBands, 33),
+                                  (`GreedyShortcuts.ChainOriginalTraceRemoval, 61)] do
     let some idx := env.getModuleIdx? moduleName
       | throwError "Missing checkpoint module {moduleName}"
     let decls := env.constants.toList.filter (fun x => env.getModuleIdxFor? x.1 == some idx)
