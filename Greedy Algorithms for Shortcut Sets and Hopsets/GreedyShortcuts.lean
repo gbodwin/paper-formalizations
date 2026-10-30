@@ -39,6 +39,7 @@ import GreedyShortcuts.ChainMomentProgress
 import GreedyShortcuts.ChainMomentSharp
 import GreedyShortcuts.ChainNewSaturation
 import GreedyShortcuts.ChainNormalization
+import GreedyShortcuts.ChainOriginalMinimumTailStep
 import GreedyShortcuts.ChainOwnerLastRootTail
 import GreedyShortcuts.ChainPositiveChoices
 import GreedyShortcuts.ChainPrefix
@@ -50,6 +51,7 @@ import GreedyShortcuts.ChainQuadraticSharp
 import GreedyShortcuts.ChainQuadraticSize
 import GreedyShortcuts.ChainRectangleCharging
 import GreedyShortcuts.ChainRelativeProgress
+import GreedyShortcuts.ChainRootMinimumCorridor
 import GreedyShortcuts.ChainRootTailHeadOrder
 import GreedyShortcuts.ChainSaturatedRedundancy
 import GreedyShortcuts.ChainSaturatedTransport
