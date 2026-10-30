@@ -3,6 +3,7 @@ import GreedyShortcuts.CanonicalSavings
 import GreedyShortcuts.CanonicalSegments
 import GreedyShortcuts.CanonicalSuffixPath
 import GreedyShortcuts.ChainCertifiedRootProjection
+import GreedyShortcuts.ChainCoalescingRootSuffix
 import GreedyShortcuts.ChainComputedFilter
 import GreedyShortcuts.ChainCounting
 import GreedyShortcuts.ChainCover
