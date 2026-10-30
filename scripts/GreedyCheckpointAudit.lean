@@ -15,6 +15,8 @@ import GreedyShortcuts.ChainLevels
 import GreedyShortcuts.ChainEntryLevels
 import GreedyShortcuts.ChainRootMinimumCorridor
 import GreedyShortcuts.ChainOriginalMinimumTailStep
+import GreedyShortcuts.ChainFiniteOriginalSelectorHistory
+import GreedyShortcuts.ChainOriginalRankBand
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
@@ -54,7 +56,9 @@ run_cmd do
                                   (`GreedyShortcuts.ChainLevels, 18),
                                   (`GreedyShortcuts.ChainEntryLevels, 12),
                                   (`GreedyShortcuts.ChainRootMinimumCorridor, 27),
-                                  (`GreedyShortcuts.ChainOriginalMinimumTailStep, 21)] do
+                                  (`GreedyShortcuts.ChainOriginalMinimumTailStep, 21),
+                                  (`GreedyShortcuts.ChainFiniteOriginalSelectorHistory, 114),
+                                  (`GreedyShortcuts.ChainOriginalRankBand, 38)] do
     let some idx := env.getModuleIdx? moduleName
       | throwError "Missing checkpoint module {moduleName}"
     let decls := env.constants.toList.filter (fun x => env.getModuleIdxFor? x.1 == some idx)
