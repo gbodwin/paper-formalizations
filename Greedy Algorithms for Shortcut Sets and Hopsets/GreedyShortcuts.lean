@@ -32,6 +32,7 @@ import GreedyShortcuts.ChainInsertionFrontier
 import GreedyShortcuts.ChainInteriorSavings
 import GreedyShortcuts.ChainInternalRedundancy
 import GreedyShortcuts.ChainLevels
+import GreedyShortcuts.ChainMaximumChildSelector
 import GreedyShortcuts.ChainMomentProgress
 import GreedyShortcuts.ChainMomentSharp
 import GreedyShortcuts.ChainNewSaturation
