@@ -9,6 +9,7 @@ import GreedyShortcuts.ChainMaximumChildSelector
 import GreedyShortcuts.ChainOwnerLastRootTail
 import GreedyShortcuts.ChainFixedRootSuffix
 import GreedyShortcuts.ChainCoalescingRootSuffix
+import GreedyShortcuts.ChainRootTailHeadOrder
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
@@ -25,7 +26,8 @@ run_cmd do
                                   (`GreedyShortcuts.ChainMaximumChildSelector, 9),
                                   (`GreedyShortcuts.ChainOwnerLastRootTail, 44),
                                   (`GreedyShortcuts.ChainFixedRootSuffix, 15),
-                                  (`GreedyShortcuts.ChainCoalescingRootSuffix, 25)] do
+                                  (`GreedyShortcuts.ChainCoalescingRootSuffix, 25),
+                                  (`GreedyShortcuts.ChainRootTailHeadOrder, 24)] do
     let some idx := env.getModuleIdx? moduleName
       | throwError "Missing checkpoint module {moduleName}"
     let decls := env.constants.toList.filter (fun x => env.getModuleIdxFor? x.1 == some idx)
