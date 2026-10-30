@@ -20,6 +20,7 @@ import GreedyShortcuts.ChainExecutableMoment
 import GreedyShortcuts.ChainExecutableObjective
 import GreedyShortcuts.ChainFirst
 import GreedyShortcuts.ChainFirstLayerCapacity
+import GreedyShortcuts.ChainFixedRootSuffix
 import GreedyShortcuts.ChainGreedy
 import GreedyShortcuts.ChainGuard
 import GreedyShortcuts.ChainGuardCone
