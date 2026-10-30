@@ -2,6 +2,8 @@ import GreedyShortcuts.ChainStrictJoinGuardV2
 import GreedyShortcuts.ChainSharedPivotGuardV2
 import GreedyShortcuts.ChainCertifiedRootProjection
 import GreedyShortcuts.ChainSharedPivotRootProjectionV2
+import GreedyShortcuts.ChainGuardCone
+import GreedyShortcuts.ChainProjectedConeOwners
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
@@ -11,7 +13,9 @@ run_cmd do
   for (moduleName, expected) in #[(`GreedyShortcuts.ChainStrictJoinGuardV2, 10),
                                   (`GreedyShortcuts.ChainSharedPivotGuardV2, 3),
                                   (`GreedyShortcuts.ChainCertifiedRootProjection, 5),
-                                  (`GreedyShortcuts.ChainSharedPivotRootProjectionV2, 1)] do
+                                  (`GreedyShortcuts.ChainSharedPivotRootProjectionV2, 1),
+                                  (`GreedyShortcuts.ChainGuardCone, 9),
+                                  (`GreedyShortcuts.ChainProjectedConeOwners, 7)] do
     let some idx := env.getModuleIdx? moduleName
       | throwError "Missing checkpoint module {moduleName}"
     let decls := env.constants.toList.filter (fun x => env.getModuleIdxFor? x.1 == some idx)
