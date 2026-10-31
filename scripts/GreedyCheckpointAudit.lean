@@ -28,6 +28,7 @@ import GreedyShortcuts.ChainRectangleCharging
 import GreedyShortcuts.ChainCanonicalOwnerCut
 import GreedyShortcuts.ChainCanonicalExteriorIncidence
 import GreedyShortcuts.ChainCanonicalCohortCoverage
+import GreedyShortcuts.ChainCanonicalProfitableEndpoints
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
@@ -60,6 +61,12 @@ The physical nonterminal incidence extension reindexes actual (owner,head)
 pairs after deleting W and proves total cohort incidence >=OwnerCount*(Delta-2).
 Its maximum-cardinality witness is not assumed long or profitable. No payment
 or runtime refinement follows; all previous holds remain.
+The profitable-endpoint extension discards at most one additional short
+center per row. It derives active incidence >=OwnerCount*(Delta-3), and every
+active center supplies a legal fresh endpoint edge paying its cohort. Finite
+averaging selects ONE actual candidate with the active-center-card denominator;
+alternative scores are never spent as summed progress. Cohort size>=1, useful
+scale, cumulative payment, runtime refinement and phase holds remain unchanged.
 All 18 existing executable modules, three fixtures and standard CI controls
 remain mandatory and unchanged. No original-paper operational contract is waived.
 Original-scale, weighted owner/copy/time payment and whole-phase/paper obligations
@@ -114,7 +121,8 @@ run_cmd do
                                   (`GreedyShortcuts.ChainRectangleCharging, 2),
                                   (`GreedyShortcuts.ChainCanonicalOwnerCut, 17),
                                   (`GreedyShortcuts.ChainCanonicalExteriorIncidence, 19),
-                                  (`GreedyShortcuts.ChainCanonicalCohortCoverage, 5)] do
+                                  (`GreedyShortcuts.ChainCanonicalCohortCoverage, 5),
+                                  (`GreedyShortcuts.ChainCanonicalProfitableEndpoints, 18)] do
     let some idx := env.getModuleIdx? moduleName
       | throwError "Missing checkpoint module {moduleName}"
     let decls := env.constants.toList.filter (fun x => env.getModuleIdxFor? x.1 == some idx)
@@ -225,6 +233,25 @@ run_cmd do
           "GreedyShortcuts.ChainDistance.Context.originalCanonical_nonterminal_coverage",
           "GreedyShortcuts.ChainDistance.Context.originalCanonical_nonterminal_coverage._proof_1_1",
           "GreedyShortcuts.ChainDistance.Context.originalCanonical_nonterminal_incidence"]
+      else if moduleName == `GreedyShortcuts.ChainCanonicalProfitableEndpoints then
+        #["GreedyShortcuts.ChainDistance.Context.exists_originalCanonical_profitable_endpoint_pressure",
+          "GreedyShortcuts.ChainDistance.Context.exists_originalCanonical_profitable_endpoint_pressure._proof_1_1",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalLongCenters",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_earlier_is_long",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_earlier_is_long._simp_1_1",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_earlier_is_long._simp_1_2",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_long_endpoint_bank",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_long_endpoint_bank._proof_1_4",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_long_endpoint_bank._proof_1_5",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_long_endpoint_bank._simp_1_1",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_long_endpoint_card",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_long_incidence_coverage",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_long_row_coverage",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_long_row_coverage._proof_1_1",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_short_centers_card",
+          "GreedyShortcuts.ChainDistance.Context.originalOwnerCanonicalPrefix.congr_simp",
+          "GreedyShortcuts.ChainDistance.Context.originalOwnerSharedSuffix.congr_simp",
+          "_private.GreedyShortcuts.ChainCanonicalProfitableEndpoints.0.GreedyShortcuts.ChainDistance.Context.endpoint_important_head"]
       else #[]
     for required in requiredNames do
       unless stableDecls.any (fun x => x.1.toString == required) do
