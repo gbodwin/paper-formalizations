@@ -8,6 +8,7 @@ import GreedyShortcuts.ChainCanonicalExteriorIncidence
 import GreedyShortcuts.ChainCanonicalOwnerCut
 import GreedyShortcuts.ChainCanonicalOwnerGroup
 import GreedyShortcuts.ChainCanonicalProfitableEndpoints
+import GreedyShortcuts.ChainCanonicalTracePressure
 import GreedyShortcuts.ChainCertifiedRootProjection
 import GreedyShortcuts.ChainCoalescingRootSuffix
 import GreedyShortcuts.ChainComputedFilter

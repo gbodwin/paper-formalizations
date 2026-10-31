@@ -30,6 +30,7 @@ import GreedyShortcuts.ChainCanonicalExteriorIncidence
 import GreedyShortcuts.ChainCanonicalCohortCoverage
 import GreedyShortcuts.ChainCanonicalProfitableEndpoints
 import GreedyShortcuts.ChainCanonicalEndpointPressure
+import GreedyShortcuts.ChainCanonicalTracePressure
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
@@ -74,6 +75,15 @@ step/owner hypotheses with Delta>=4, ONE actual maximum endpoint gain satisfies
 OwnerCount*(Delta-2)*(Delta-3)<=2*LongCenters.card*actual_gain. LongCenters.card
 is retained; only original target W is counted. Useful-scale amplification,
 cumulative weighted/copy/time payment and runtime/phase holds remain open.
+The trace-pressure extension adds50 safe/nonpartial declarations for ONE
+fixed H/ROOT trace. Actual Delta>=4 centers retain their pooled cardinality:
+Mass<=2*Family.card*ONE actual maximum gain, with the zero-mass alternative
+Drop<=3*traceLength. Family.card equals the sum of qualifying LongCenters.card
+and Family.card+traceLength+terminalCone.card<=initialCone.card. This is
+candidate pressure, not cumulative selected payment or extra cone stock.
+Any separate HAND sharpness example is an UNVERIFIED ILLUSTRATION, outside
+kernel-checked claims; it is not acceptance evidence for an unproved claim.
+Target amplification, weighted/time payment, runtime and phase remain open.
 All 18 existing executable modules, three fixtures and standard CI controls
 remain mandatory and unchanged. No original-paper operational contract is waived.
 Original-scale, weighted owner/copy/time payment and whole-phase/paper obligations
@@ -130,7 +140,8 @@ run_cmd do
                                   (`GreedyShortcuts.ChainCanonicalExteriorIncidence, 19),
                                   (`GreedyShortcuts.ChainCanonicalCohortCoverage, 5),
                                   (`GreedyShortcuts.ChainCanonicalProfitableEndpoints, 18),
-                                  (`GreedyShortcuts.ChainCanonicalEndpointPressure, 17)] do
+                                  (`GreedyShortcuts.ChainCanonicalEndpointPressure, 17),
+                                  (`GreedyShortcuts.ChainCanonicalTracePressure, 50)] do
     let some idx := env.getModuleIdx? moduleName
       | throwError "Missing checkpoint module {moduleName}"
     let decls := env.constants.toList.filter (fun x => env.getModuleIdxFor? x.1 == some idx)
@@ -278,6 +289,57 @@ run_cmd do
           "_private.GreedyShortcuts.ChainCanonicalEndpointPressure.0.GreedyShortcuts.ChainDistance.Context.twice_sum_later._simp_1_1",
           "_private.GreedyShortcuts.ChainCanonicalEndpointPressure.0.GreedyShortcuts.ChainDistance.Context.twice_sum_later._simp_1_2",
           "_private.GreedyShortcuts.ChainCanonicalEndpointPressure.0.GreedyShortcuts.ChainDistance.Context.twice_sum_later._simp_1_3"]
+      else if moduleName == `GreedyShortcuts.ChainCanonicalTracePressure then
+        #["GreedyShortcuts.ChainDistance.Context.originalQualifiedStepCenters",
+          "GreedyShortcuts.ChainDistance.Context.originalQualifiedStepCenters.eq_1",
+          "GreedyShortcuts.ChainDistance.Context.originalQualifiedStepCenters_subset",
+          "GreedyShortcuts.ChainDistance.Context.originalQualifiedStepCenters_target_debit",
+          "GreedyShortcuts.ChainDistance.Context.originalQualifiedStepCenters_target_debit._proof_1_1",
+          "GreedyShortcuts.ChainDistance.Context.originalStepEndpointMass",
+          "GreedyShortcuts.ChainDistance.Context.originalStepEndpointMass.eq_1",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointCenterCount",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointCenterCount._f",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointCenterCount._sunfold",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointCenterCount.eq_1",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointCenterCount.eq_2",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointCenterCount.eq_def",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointFamily",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointFamily._f",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointFamily._sunfold",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointFamily.eq_1",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointFamily.eq_2",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointFamily.eq_def",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointFamily.match_1",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointFamily_bank",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointFamily_injective_card",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointFamily_removed",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointMass",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointMass._f",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointMass._sunfold",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointMass.eq_1",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointMass.eq_2",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpointMass.eq_def",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpoint_mass_inventory",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpoint_pool_capacity",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpoint_pool_capacity._proof_1_4",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpoint_pool_capacity._proof_1_5",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpoint_pressure_alternative",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpoint_pressure_alternative._proof_1_1",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpoint_pressure_alternative._proof_1_2",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpoint_pressure_alternative._proof_1_3",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpoint_rank_debit",
+          "GreedyShortcuts.ChainDistance.Context.originalTraceEndpoint_rank_debit._proof_1_4",
+          "_private.GreedyShortcuts.ChainCanonicalTracePressure.0.GreedyShortcuts.ChainDistance.Context.originalTraceEndpointFamily.match_1.eq_1",
+          "_private.GreedyShortcuts.ChainCanonicalTracePressure.0.GreedyShortcuts.ChainDistance.Context.originalTraceEndpointFamily.match_1.eq_2",
+          "_private.GreedyShortcuts.ChainCanonicalTracePressure.0.GreedyShortcuts.ChainDistance.Context.originalTraceEndpointFamily.match_1.splitter",
+          "_private.GreedyShortcuts.ChainCanonicalTracePressure.0.GreedyShortcuts.ChainDistance.Context.step_endpoint_inventory",
+          "_private.GreedyShortcuts.ChainCanonicalTracePressure.0.GreedyShortcuts.ChainDistance.Context.step_endpoint_inventory._proof_1_2",
+          "_private.GreedyShortcuts.ChainCanonicalTracePressure.0.GreedyShortcuts.ChainDistance.Context.step_endpoint_rank_debit",
+          "_private.GreedyShortcuts.ChainCanonicalTracePressure.0.GreedyShortcuts.ChainDistance.Context.step_endpoint_rank_debit._proof_1_1",
+          "_private.GreedyShortcuts.ChainCanonicalTracePressure.0.GreedyShortcuts.ChainDistance.Context.step_endpoint_rank_debit._proof_1_3",
+          "_private.GreedyShortcuts.ChainCanonicalTracePressure.0.GreedyShortcuts.ChainDistance.Context.step_endpoint_rank_debit._proof_1_4",
+          "_private.GreedyShortcuts.ChainCanonicalTracePressure.0.GreedyShortcuts.ChainDistance.Context.step_endpoint_rank_debit._simp_1_2",
+          "_private.GreedyShortcuts.ChainCanonicalTracePressure.0.GreedyShortcuts.ChainDistance.Context.trace_endpoint_separated"]
       else #[]
     for required in requiredNames do
       unless stableDecls.any (fun x => x.1.toString == required) do
@@ -286,7 +348,8 @@ run_cmd do
       throwError "Unexpected stable declaration coverage for {moduleName}: {stableDecls.length}"
     for (name, info) in decls do
       if info.isAxiom then throwError "Declared axiom {name}"
-      if moduleName == `GreedyShortcuts.ChainCanonicalEndpointPressure &&
+      if (moduleName == `GreedyShortcuts.ChainCanonicalEndpointPressure ||
+          moduleName == `GreedyShortcuts.ChainCanonicalTracePressure) &&
           (info.isUnsafe || info.isPartial) then
         throwError "Unsafe or partial endpoint-pressure declaration {name}"
       let axioms ← collectAxioms name
