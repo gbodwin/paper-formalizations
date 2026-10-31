@@ -31,6 +31,8 @@ import GreedyShortcuts.ChainCanonicalCohortCoverage
 import GreedyShortcuts.ChainCanonicalProfitableEndpoints
 import GreedyShortcuts.ChainCanonicalEndpointPressure
 import GreedyShortcuts.ChainCanonicalTracePressure
+import GreedyShortcuts.ChainCanonicalSuffixCounts
+import GreedyShortcuts.ChainCanonicalMidpointPressure
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
@@ -362,3 +364,71 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.strict_join_last_guard_offpath_v2
 #print axioms GreedyShortcuts.ChainDistance.Context.selected_pivot_suffix_prices_v2
 #print axioms GreedyShortcuts.ChainDistance.Context.selected_shared_pivot_last_guard_offpath_v2
+
+/-
+For ONE actual canonical cohort and its shared fixed-ROOT suffix q with N>=3,
+choose a real attained middle chain level. Remaining distinct physical target
+heads are derived, not assumed. The same fresh legal edge satisfies
+4*gain >= cohort.card*(N-2)^2 while retaining each original-source OLD minimum,
+FIRST filter and both joins. Only cohort.card>=1 is inherited: useful cohort
+coverage, original-scale/source amplification, cumulative weighted/time payment,
+lookup implementation refinement and whole-phase/paper conclusions stay open.
+The standalone objects have15+12 declarations. The one shared generated
+originalOwnerSharedSuffix.congr_simp theorem is already audited and required
+by the unchanged earlier ProfitableEndpoints block. Its complete stored type,
+proof and axioms matched in pinned standalone/combined local observations.
+This added block requires all26 genuinely new Names; future import attribution
+changes must be diagnosed from actual names/types/axioms, never waived by a
+blind count adjustment. Standard replay shortcut qualifications remain unchanged.
+-/
+run_cmd do
+  let env ← getEnv
+  for (moduleName, expected) in #[(`GreedyShortcuts.ChainCanonicalSuffixCounts,15),
+      (`GreedyShortcuts.ChainCanonicalMidpointPressure,11)] do
+    let some idx := env.getModuleIdx? moduleName
+      | throwError "Missing midpoint checkpoint module {moduleName}"
+    let decls := env.constants.toList.filter fun x => env.getModuleIdxFor? x.1 == some idx
+    let requiredNames : Array String :=
+      if moduleName == `GreedyShortcuts.ChainCanonicalSuffixCounts then
+        #["GreedyShortcuts.ChainDistance.Context.fixedRootSuffixMinimum_prefix",
+          "GreedyShortcuts.ChainDistance.Context.fixedRootSuffixMinimum_prefix._proof_1_1",
+          "GreedyShortcuts.ChainDistance.Context.fixedRootSuffix_level_split",
+          "GreedyShortcuts.ChainDistance.Context.fixedRootSuffix_level_split._proof_1_1",
+          "GreedyShortcuts.ChainDistance.Context.fixedRootSuffix_level_split._proof_1_2",
+          "GreedyShortcuts.ChainDistance.Context.fixedRootSuffix_level_split._proof_1_3",
+          "GreedyShortcuts.ChainDistance.Context.rootSuffix_exists_important_prefix_count",
+          "GreedyShortcuts.ChainDistance.Context.rootSuffix_exists_important_prefix_count._proof_1_1",
+          "GreedyShortcuts.ChainDistance.Context.rootSuffix_exists_important_prefix_count._proof_1_2",
+          "GreedyShortcuts.ChainDistance.Context.rootSuffix_exists_important_prefix_count._proof_1_3",
+          "GreedyShortcuts.ChainDistance.Context.rootSuffix_prefix_level_important",
+          "GreedyShortcuts.ChainDistance.Context.rootSuffix_prefix_level_important._proof_1_1",
+          "GreedyShortcuts.ChainDistance.Context.rootTailHeads_of_important_mem",
+          "GreedyShortcuts.ChainDistance.Context.rootTailHeads_physical",
+          "GreedyShortcuts.ChainDistance.Context.rootTailHeads_suffix_targets"]
+      else if moduleName == `GreedyShortcuts.ChainCanonicalMidpointPressure then
+        #["GreedyShortcuts.ChainDistance.Context.originalCanonicalGroup_exact_level_pressure",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalGroup_exact_level_pressure._proof_1_1",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalGroup_exact_level_pressure._proof_1_2",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalGroup_exact_level_pressure._proof_1_3",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalGroup_midpoint_pressure",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalGroup_midpoint_pressure._proof_1_1",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalGroup_midpoint_pressure._proof_1_2",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalGroup_midpoint_pressure._proof_1_3",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalGroup_midpoint_pressure._proof_1_4",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalGroup_midpoint_pressure._proof_1_6",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonicalGroup_midpoint_pressure._proof_1_7"]
+      else #[]
+    unless decls.length == expected do
+      throwError "Unexpected midpoint declaration coverage for {moduleName}: {decls.length}"
+    for required in requiredNames do
+      unless decls.any (fun x => x.1.toString == required) do
+        throwError "Missing required midpoint declaration {required} from {moduleName}"
+    for (name, info) in decls do
+      if info.isAxiom || info.isUnsafe || info.isPartial then
+        throwError "Rejected midpoint checkpoint declaration {name}"
+      let axioms ← collectAxioms name
+      for ax in axioms do
+        unless ax == `propext || ax == `Classical.choice || ax == `Quot.sound do
+          throwError "Unexpected midpoint axiom {ax} in {name}"
+      logInfo m!"CHECKPOINT_DECL {name} AXIOMS {axioms}"
+    logInfo m!"CHECKPOINT_MODULE {moduleName} DECLARATIONS {decls.length} STABLE_DECLARATIONS {decls.length}"
