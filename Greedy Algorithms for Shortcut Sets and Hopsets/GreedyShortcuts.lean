@@ -3,6 +3,7 @@ import GreedyShortcuts.CanonicalSavings
 import GreedyShortcuts.CanonicalSegments
 import GreedyShortcuts.CanonicalSuffixPath
 import GreedyShortcuts.ChainCanonicalCohortCoverage
+import GreedyShortcuts.ChainCanonicalEndpointPressure
 import GreedyShortcuts.ChainCanonicalExteriorIncidence
 import GreedyShortcuts.ChainCanonicalOwnerCut
 import GreedyShortcuts.ChainCanonicalOwnerGroup

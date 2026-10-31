@@ -29,6 +29,7 @@ import GreedyShortcuts.ChainCanonicalOwnerCut
 import GreedyShortcuts.ChainCanonicalExteriorIncidence
 import GreedyShortcuts.ChainCanonicalCohortCoverage
 import GreedyShortcuts.ChainCanonicalProfitableEndpoints
+import GreedyShortcuts.ChainCanonicalEndpointPressure
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
@@ -67,6 +68,12 @@ active center supplies a legal fresh endpoint edge paying its cohort. Finite
 averaging selects ONE actual candidate with the active-center-card denominator;
 alternative scores are never spent as summed progress. Cohort size>=1, useful
 scale, cumulative payment, runtime refinement and phase holds remain unchanged.
+The endpoint-pressure extension adds17 safe/nonpartial declarations deriving
+a triangular actual-row saving inventory, not new coverage. Under SAME actual
+step/owner hypotheses with Delta>=4, ONE actual maximum endpoint gain satisfies
+OwnerCount*(Delta-2)*(Delta-3)<=2*LongCenters.card*actual_gain. LongCenters.card
+is retained; only original target W is counted. Useful-scale amplification,
+cumulative weighted/copy/time payment and runtime/phase holds remain open.
 All 18 existing executable modules, three fixtures and standard CI controls
 remain mandatory and unchanged. No original-paper operational contract is waived.
 Original-scale, weighted owner/copy/time payment and whole-phase/paper obligations
@@ -122,7 +129,8 @@ run_cmd do
                                   (`GreedyShortcuts.ChainCanonicalOwnerCut, 17),
                                   (`GreedyShortcuts.ChainCanonicalExteriorIncidence, 19),
                                   (`GreedyShortcuts.ChainCanonicalCohortCoverage, 5),
-                                  (`GreedyShortcuts.ChainCanonicalProfitableEndpoints, 18)] do
+                                  (`GreedyShortcuts.ChainCanonicalProfitableEndpoints, 18),
+                                  (`GreedyShortcuts.ChainCanonicalEndpointPressure, 17)] do
     let some idx := env.getModuleIdx? moduleName
       | throwError "Missing checkpoint module {moduleName}"
     let decls := env.constants.toList.filter (fun x => env.getModuleIdxFor? x.1 == some idx)
@@ -252,6 +260,24 @@ run_cmd do
           "GreedyShortcuts.ChainDistance.Context.originalOwnerCanonicalPrefix.congr_simp",
           "GreedyShortcuts.ChainDistance.Context.originalOwnerSharedSuffix.congr_simp",
           "_private.GreedyShortcuts.ChainCanonicalProfitableEndpoints.0.GreedyShortcuts.ChainDistance.Context.endpoint_important_head"]
+      else if moduleName == `GreedyShortcuts.ChainCanonicalEndpointPressure then
+        #["GreedyShortcuts.ChainDistance.Context.exists_originalCanonical_triangular_endpoint_pressure",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_endpoint_owner_sum",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_later_heads_saving",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_later_heads_saving._proof_1_2",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_later_heads_saving._simp_1_1",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_owner_target_important",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_row_triangular_pressure",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_row_triangular_pressure._proof_1_1",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_row_triangular_pressure._proof_1_2",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_row_triangular_pressure._proof_1_3",
+          "GreedyShortcuts.ChainDistance.Context.originalCanonical_triangular_endpoint_inventory",
+          "_private.GreedyShortcuts.ChainCanonicalEndpointPressure.0.GreedyShortcuts.ChainDistance.Context.twice_sum_later",
+          "_private.GreedyShortcuts.ChainCanonicalEndpointPressure.0.GreedyShortcuts.ChainDistance.Context.twice_sum_later._proof_1_4",
+          "_private.GreedyShortcuts.ChainCanonicalEndpointPressure.0.GreedyShortcuts.ChainDistance.Context.twice_sum_later._proof_1_5",
+          "_private.GreedyShortcuts.ChainCanonicalEndpointPressure.0.GreedyShortcuts.ChainDistance.Context.twice_sum_later._simp_1_1",
+          "_private.GreedyShortcuts.ChainCanonicalEndpointPressure.0.GreedyShortcuts.ChainDistance.Context.twice_sum_later._simp_1_2",
+          "_private.GreedyShortcuts.ChainCanonicalEndpointPressure.0.GreedyShortcuts.ChainDistance.Context.twice_sum_later._simp_1_3"]
       else #[]
     for required in requiredNames do
       unless stableDecls.any (fun x => x.1.toString == required) do
@@ -260,6 +286,9 @@ run_cmd do
       throwError "Unexpected stable declaration coverage for {moduleName}: {stableDecls.length}"
     for (name, info) in decls do
       if info.isAxiom then throwError "Declared axiom {name}"
+      if moduleName == `GreedyShortcuts.ChainCanonicalEndpointPressure &&
+          (info.isUnsafe || info.isPartial) then
+        throwError "Unsafe or partial endpoint-pressure declaration {name}"
       let axioms ← collectAxioms name
       logInfo m!"CHECKPOINT_DECL {name} AXIOMS {axioms}"
       for ax in axioms do
