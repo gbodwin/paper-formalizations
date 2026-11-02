@@ -13,6 +13,7 @@ import GreedyShortcuts.ChainCanonicalProfitableEndpoints
 import GreedyShortcuts.ChainCanonicalStepSummation
 import GreedyShortcuts.ChainCanonicalSuffixCounts
 import GreedyShortcuts.ChainCanonicalTracePressure
+import GreedyShortcuts.ChainCanonicalTraceSummation
 import GreedyShortcuts.ChainCertifiedRootProjection
 import GreedyShortcuts.ChainCoalescingRootSuffix
 import GreedyShortcuts.ChainComputedFilter
@@ -54,6 +55,7 @@ import GreedyShortcuts.ChainNewSaturation
 import GreedyShortcuts.ChainNormalization
 import GreedyShortcuts.ChainOriginalCutCandidate
 import GreedyShortcuts.ChainOriginalMinimumTailStep
+import GreedyShortcuts.ChainOriginalOwnerPopulation
 import GreedyShortcuts.ChainOriginalOwnerTailExterior
 import GreedyShortcuts.ChainOriginalRankBand
 import GreedyShortcuts.ChainOriginalRetiredBands

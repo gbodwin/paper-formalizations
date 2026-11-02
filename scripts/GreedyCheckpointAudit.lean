@@ -36,6 +36,8 @@ import GreedyShortcuts.ChainCanonicalMidpointPressure
 import GreedyShortcuts.ChainCanonicalIncidenceWeights
 import GreedyShortcuts.ChainFiniteSuffixCard
 import GreedyShortcuts.ChainCanonicalStepSummation
+import GreedyShortcuts.ChainOriginalOwnerPopulation
+import GreedyShortcuts.ChainCanonicalTraceSummation
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
@@ -550,3 +552,61 @@ run_cmd do
         throwError "Unexpected summation axiom {ax} in {name}"
     logInfo m!"CHECKPOINT_DECL {name} AXIOMS {axioms}"
   logInfo m!"CHECKPOINT_MODULE {moduleName} DECLARATIONS {decls.length} STABLE_DECLARATIONS {decls.length}"
+
+run_cmd do
+  let env ← getEnv
+  let moduleName := `GreedyShortcuts.ChainOriginalOwnerPopulation
+  let some idx := env.getModuleIdx? moduleName
+    | throwError "Missing trace checkpoint module {moduleName}"
+  let decls := env.constants.toList.filter (fun x => env.getModuleIdxFor? x.1 == some idx)
+  unless decls.length == 3 do
+    throwError "Unexpected trace checkpoint declaration coverage for {moduleName}: {decls.length}"
+  let required : Array Name := #[
+    `GreedyShortcuts.ChainDistance.Context.rootOwner_card_eq,
+    `GreedyShortcuts.ChainDistance.Context.originalSelector_owner_prefix_heads,
+    `GreedyShortcuts.ChainDistance.Context.originalSelector_owner_population]
+  for n in required do
+    unless decls.any (fun x => x.1 == n) do
+      throwError "Missing trace checkpoint declaration {n}"
+  for (name, info) in decls do
+    if info.isAxiom || info.isUnsafe || info.isPartial then
+      throwError "Rejected trace checkpoint declaration {name}"
+    let axioms ← collectAxioms name
+    for ax in axioms do
+      unless ax == `propext || ax == `Classical.choice || ax == `Quot.sound do
+        throwError "Forbidden trace checkpoint axiom {ax} in {name}"
+    logInfo m!"CHECKPOINT_DECL {name}"
+
+run_cmd do
+  let env ← getEnv
+  let moduleName := `GreedyShortcuts.ChainCanonicalTraceSummation
+  let some idx := env.getModuleIdx? moduleName
+    | throwError "Missing trace checkpoint module {moduleName}"
+  let decls := env.constants.toList.filter (fun x => env.getModuleIdxFor? x.1 == some idx)
+  unless decls.length == 45 do
+    throwError "Unexpected trace checkpoint declaration coverage for {moduleName}: {decls.length}"
+  let required : Array Name := #[
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalTraceWeight,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalTracePopulationLower,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalTraceMarkerSum,
+    `GreedyShortcuts.ChainDistance.Context.originalTraceNonWCenterCardSum,
+    `GreedyShortcuts.ChainDistance.Context.originalTraceNonWCenters,
+    `GreedyShortcuts.ChainDistance.Context.originalTraceNonWCenters_subset,
+    `GreedyShortcuts.ChainDistance.Context.originalTraceNonWCenters_card,
+    `GreedyShortcuts.ChainDistance.Context.originalTraceNonWCenterCardSum_debit,
+    `GreedyShortcuts.ChainDistance.Context.originalTrace_oldEndpoints_distinct,
+    `GreedyShortcuts.ChainDistance.Context.originalTraceNonWCenters_exact,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalTrace_record_bounds,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalTrace_population_coefficient,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalTrace_sandwich]
+  for n in required do
+    unless decls.any (fun x => x.1 == n) do
+      throwError "Missing trace checkpoint declaration {n}"
+  for (name, info) in decls do
+    if info.isAxiom || info.isUnsafe || info.isPartial then
+      throwError "Rejected trace checkpoint declaration {name}"
+    let axioms ← collectAxioms name
+    for ax in axioms do
+      unless ax == `propext || ax == `Classical.choice || ax == `Quot.sound do
+        throwError "Forbidden trace checkpoint axiom {ax} in {name}"
+    logInfo m!"CHECKPOINT_DECL {name}"
