@@ -34,6 +34,8 @@ import GreedyShortcuts.ChainCanonicalTracePressure
 import GreedyShortcuts.ChainCanonicalSuffixCounts
 import GreedyShortcuts.ChainCanonicalMidpointPressure
 import GreedyShortcuts.ChainCanonicalIncidenceWeights
+import GreedyShortcuts.ChainFiniteSuffixCard
+import GreedyShortcuts.ChainCanonicalStepSummation
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
@@ -480,5 +482,71 @@ run_cmd do
     for ax in axioms do
       unless ax == `propext || ax == `Classical.choice || ax == `Quot.sound do
         throwError "Unexpected incidence axiom {ax} in {name}"
+    logInfo m!"CHECKPOINT_DECL {name} AXIOMS {axioms}"
+  logInfo m!"CHECKPOINT_MODULE {moduleName} DECLARATIONS {decls.length} STABLE_DECLARATIONS {decls.length}"
+
+/- Actual finite-order/row summation only; all population, marker and center
+multipliers remain. No cumulative weighted/time payment, runtime refinement
+or phase conclusion. Standard replay/imported-base qualifications remain. -/
+run_cmd do
+  let env ← getEnv
+  let moduleName := `GreedyShortcuts.ChainFiniteSuffixCard
+  let some idx := env.getModuleIdx? moduleName
+    | throwError "Missing summation checkpoint module {moduleName}"
+  let decls := env.constants.toList.filter (fun x => env.getModuleIdxFor? x.1 == some idx)
+  let required : Array Name := #[`GreedyShortcuts.ChainDistance.Context.finiteSuffixCard,
+    `GreedyShortcuts.ChainDistance.Context.finiteSuffixCard_sum,
+    `GreedyShortcuts.ChainDistance.Context.canonicalMidpointSum,
+    `GreedyShortcuts.ChainDistance.Context.canonicalMidpointSum_zero,
+    `GreedyShortcuts.ChainDistance.Context.canonicalMidpointSum_succ,
+    `GreedyShortcuts.ChainDistance.Context.canonicalMidpointSum_mono]
+  unless decls.length == 14 do
+    throwError "Unexpected summation declaration coverage for {moduleName}: {decls.length}"
+  for name in required do
+    unless decls.any (fun x => x.1 == name) do
+      throwError "Missing summation checkpoint declaration {name}"
+  for (name, info) in decls do
+    if info.isAxiom || info.isUnsafe || info.isPartial then
+      throwError "Rejected summation checkpoint declaration {name}"
+    let axioms ← collectAxioms name
+    for ax in axioms do
+      unless ax == `propext || ax == `Classical.choice || ax == `Quot.sound do
+        throwError "Unexpected summation axiom {ax} in {name}"
+    logInfo m!"CHECKPOINT_DECL {name} AXIOMS {axioms}"
+  logInfo m!"CHECKPOINT_MODULE {moduleName} DECLARATIONS {decls.length} STABLE_DECLARATIONS {decls.length}"
+
+/- Actual finite-order/row summation only; all population, marker and center
+multipliers remain. No cumulative weighted/time payment, runtime refinement
+or phase conclusion. Standard replay/imported-base qualifications remain. -/
+run_cmd do
+  let env ← getEnv
+  let moduleName := `GreedyShortcuts.ChainCanonicalStepSummation
+  let some idx := env.getModuleIdx? moduleName
+    | throwError "Missing summation checkpoint module {moduleName}"
+  let decls := env.constants.toList.filter (fun x => env.getModuleIdxFor? x.1 == some idx)
+  let required : Array Name := #[`GreedyShortcuts.ChainDistance.Context.originalCanonicalPhysicalExterior_suffix_order,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalRemainingCount_suffixCard,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonical_row_distribution,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonical_row_summatory,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonical_row_marker_lower,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalStepWeight,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalStepWeight_incidence,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalStepWeight_cap,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalStepWeight_cap_without_W,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonical_cut_W_card,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalStepWeight_population_lower,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalStepWeight_sandwich]
+  unless decls.length == 16 do
+    throwError "Unexpected summation declaration coverage for {moduleName}: {decls.length}"
+  for name in required do
+    unless decls.any (fun x => x.1 == name) do
+      throwError "Missing summation checkpoint declaration {name}"
+  for (name, info) in decls do
+    if info.isAxiom || info.isUnsafe || info.isPartial then
+      throwError "Rejected summation checkpoint declaration {name}"
+    let axioms ← collectAxioms name
+    for ax in axioms do
+      unless ax == `propext || ax == `Classical.choice || ax == `Quot.sound do
+        throwError "Unexpected summation axiom {ax} in {name}"
     logInfo m!"CHECKPOINT_DECL {name} AXIOMS {axioms}"
   logInfo m!"CHECKPOINT_MODULE {moduleName} DECLARATIONS {decls.length} STABLE_DECLARATIONS {decls.length}"

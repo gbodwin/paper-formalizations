@@ -1,0 +1,83 @@
+{
+  "accepted_remote_parent": "ead1d5d5990977133c2e3d10e9c26ba3286da82e",
+  "ci": {
+    "all_inherited_gates_retained": true,
+    "automatic_push_trigger": true,
+    "branch": "greedy-strict-join-checkpoint-20261029",
+    "expected_focused_unique": 764,
+    "expected_library_declarations": 4893,
+    "expected_project_kernel_replays": 288,
+    "local_compiler_idle_during_CI": true,
+    "one_serial_compiler_job": "greedy-serial-checkpoint",
+    "ordinary_job_excluded": true,
+    "status": "NOT_LAUNCHED_EXACT_COMMIT_RESULT_SEPARATE",
+    "unchanged_workflow_controls": {
+      ".github/workflows/lean.yml": "1086a65046b19c3fb65ad95b9a7a2377045d2e6a5ca7f0cee0feee684892223d",
+      "lakefile.toml": "e1fb2513ecfe22f4c96afb59e47e139a0964086c7c03982f98a795f35d67c5f7",
+      "scripts/CheckGreedyExecutable.sh": "cf9d4774cfa28b78c924475d7a1a0a699114e284e2dd61abe6064882cde6ec7e",
+      "scripts/SerialLean.py": "0de04cf9e3c97a6b43646132afb918f5ab5855c396792ad2b94ffe2bc7888751"
+    }
+  },
+  "compiled_outputs_not_committed": {
+    "ChainCanonicalStepSummation": "647cbe3384d22c883226acf6fb9f67db36f5085dd392ed39656cdd7b7459f187",
+    "ChainFiniteSuffixCard": "e9d4bdae749af0da03f9162d62373c61d4a132d64a77a683f4818a1524bf5bd3"
+  },
+  "local_gates": {
+    "base_present": [
+      0,
+      0
+    ],
+    "base_target_names": [
+      14,
+      16
+    ],
+    "compile_exits": [
+      0,
+      0
+    ],
+    "declaration_audits": [
+      14,
+      16
+    ],
+    "focused_unique_declarations": 764,
+    "forbidden_axioms_new_targets": 0,
+    "production_audit_exit": 0,
+    "production_audit_log_sha256": "a769da0acddd7c1e971f24191506ae83bcb8be754746cbbad56b112f19d4734c",
+    "production_path_failure_preserved": true,
+    "required_public_declarations": [
+      6,
+      12
+    ],
+    "standard_pinned_replay_exits": [
+      0,
+      0
+    ],
+    "unsafe_partial_new_targets": 0,
+    "warnings": [
+      0,
+      0
+    ]
+  },
+  "open_obligations": [
+    "Useful-scale source/target amplification and population control",
+    "Cumulative weighted/copy/time payment",
+    "Option lookup runtime refinement and termination",
+    "Original phase and whole-paper theorem"
+  ],
+  "replay_qualification": "Standard module-local pinned replay succeeds. New target names initially absent/safe/nonpartial in local observations; no per-declaration skip telemetry, fresh transitive every-proof claim or runtime machine-code equivalence. All prior partial-helper/runtime holds remain.",
+  "schema": "canonical-finite-suffix-and-step-summation-checkpoint-v1",
+  "scope": "Actual finite suffix-card distribution and SAME-H/original-ROOT actual-row summation. S(Delta-1) marker debit, real owner population and (fullcut minus W).card cap multiplier retained; no candidate-score sum collapsed to one M.",
+  "sole_parent": "8f792eeccb3a6335321740df830f37e40cbb4f0a",
+  "source_freezes": {
+    "step": "01b8704baa45f9ae0510dd633f63c47e6402f61b8d732a18b25e760b2ccd44e4",
+    "suffix": "ee9f13051c5f2839c3cc776d95a7cbadb9c56e8c91887c490ee94d58df5f2f5c"
+  },
+  "source_reviews": {
+    "ChainCanonicalStepSummation": "3c5799faf12505c5eb5b4860b10b764e126df23ccbe0439ed2df39761a5b5721",
+    "ChainFiniteSuffixCard": "22c2021f69aaaaa7f6dd01b96842b0df6872f0ee42daa11a45affbfc6858752b"
+  },
+  "sources": {
+    "Greedy Algorithms for Shortcut Sets and Hopsets/GreedyShortcuts/ChainCanonicalStepSummation.lean": "bbb36317a2031bb2516e309d8fc408659cd4dad979ac35a3b4d76f2cde5bc1cf",
+    "Greedy Algorithms for Shortcut Sets and Hopsets/GreedyShortcuts/ChainFiniteSuffixCard.lean": "0ce97fe803de3def2850984af8e2505e3bc971cc42d9f19b17a987e4b9500206"
+  }
+}
