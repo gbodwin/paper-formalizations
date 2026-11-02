@@ -1,0 +1,168 @@
+{
+  "author_freeze_sha256": "268c3a0edd5c69d910132394a6c4e66b7a07817ba637914374161cc0056cb119",
+  "ci": {
+    "all_inherited_build_index_audit_executable_fixture_kernel_gates_retained": true,
+    "automatic_push_trigger": true,
+    "branch": "greedy-strict-join-checkpoint-20261029",
+    "compiler_gate": "Existing unchanged SerialLean.py/flock and LEAN_NUM_THREADS=1",
+    "concurrency_group": "greedy-checkpoint-compiler-lane",
+    "exact_commit_binding": "Workflow CHECKPOINT_SHA=github.sha verified against checkoutHEAD; terminal CI receipt is separate.",
+    "local_compiler_idle_while_CI": true,
+    "one_serial_job": "greedy-serial-checkpoint",
+    "ordinary_job_excluded_by_existing_route": true,
+    "workflow_controls_unchanged_sha256": {
+      ".github/workflows/lean.yml": "1086a65046b19c3fb65ad95b9a7a2377045d2e6a5ca7f0cee0feee684892223d",
+      "lakefile.toml": "e1fb2513ecfe22f4c96afb59e47e139a0964086c7c03982f98a795f35d67c5f7",
+      "scripts/CheckGreedyExecutable.sh": "cf9d4774cfa28b78c924475d7a1a0a699114e284e2dd61abe6064882cde6ec7e",
+      "scripts/SerialLean.py": "0de04cf9e3c97a6b43646132afb918f5ab5855c396792ad2b94ffe2bc7888751"
+    }
+  },
+  "compiled_olean_bytes": 694776,
+  "compiled_olean_sha256": "4ecc2c0c1b8090d2e2a21305256990cad21e5fda7ec34588fe50ff9cd1c13f56",
+  "independent_review_sha256": "04412c738cab9a0539515131022eaf54e124cf73fd38e861509b8ff6cbc9a19e",
+  "local_gate_results": {
+    "all9_theorem_statements_and3_definitions_unchanged": true,
+    "all_declarations": 19,
+    "axiom_audit_exit": 0,
+    "compile_exit": 0,
+    "initial_base_present": 0,
+    "official_standard_replay_exit": 0,
+    "required_source_declarations": 12,
+    "three_deprecation_warnings_unsuppressed": true,
+    "unsafe_partial_target": 0
+  },
+  "module": "GreedyShortcuts.ChainCanonicalIncidenceWeights",
+  "olean_not_committed": true,
+  "open_obligations": [
+    "Useful source/target amplification or favorable-population coverage",
+    "Cumulative weighted/copy/owner/time payment",
+    "Option lookup implementation equivalence/termination",
+    "Whole phase and original-paper completion",
+    "Exact-commit CI results pending at preparation; local results are not CI acceptance"
+  ],
+  "parent": "975f2b7e097ba28546fd17b70a9b46b723bdfdd8",
+  "peak_qualification": "Command-tree maxRSS measurements are not isolated compiler/cgroup peak; smaller batches do not prove baseline memory affordable.",
+  "pins": {
+    "dependency_revisions": [
+      {
+        "configFile": "lakefile.lean",
+        "inherited": false,
+        "inputRev": "5ed2965256430c3649e86755f9576b54eca72435",
+        "manifestFile": "lake-manifest.json",
+        "name": "mathlib",
+        "rev": "5ed2965256430c3649e86755f9576b54eca72435",
+        "scope": "",
+        "subDir": null,
+        "type": "git",
+        "url": "https://github.com/leanprover-community/mathlib4.git"
+      },
+      {
+        "configFile": "lakefile.toml",
+        "inherited": true,
+        "inputRev": "main",
+        "manifestFile": "lake-manifest.json",
+        "name": "plausible",
+        "rev": "118aa17ee84656b8bd727fef7c458ee8c833385c",
+        "scope": "leanprover-community",
+        "subDir": null,
+        "type": "git",
+        "url": "https://github.com/leanprover-community/plausible"
+      },
+      {
+        "configFile": "lakefile.toml",
+        "inherited": true,
+        "inputRev": "main",
+        "manifestFile": "lake-manifest.json",
+        "name": "LeanSearchClient",
+        "rev": "ddf04cf3949fa556442341e87d47f9f6e6074707",
+        "scope": "leanprover-community",
+        "subDir": null,
+        "type": "git",
+        "url": "https://github.com/leanprover-community/LeanSearchClient"
+      },
+      {
+        "configFile": "lakefile.toml",
+        "inherited": true,
+        "inputRev": "main",
+        "manifestFile": "lake-manifest.json",
+        "name": "importGraph",
+        "rev": "e928b72544873815af278d38681b31c0293588e3",
+        "scope": "leanprover-community",
+        "subDir": null,
+        "type": "git",
+        "url": "https://github.com/leanprover-community/import-graph"
+      },
+      {
+        "configFile": "lakefile.lean",
+        "inherited": true,
+        "inputRev": "main",
+        "manifestFile": "lake-manifest.json",
+        "name": "proofwidgets",
+        "rev": "106ff4fafc74ef4ac99d81dbf3ab399118f497a5",
+        "scope": "leanprover-community",
+        "subDir": null,
+        "type": "git",
+        "url": "https://github.com/leanprover-community/ProofWidgets4"
+      },
+      {
+        "configFile": "lakefile.toml",
+        "inherited": true,
+        "inputRev": "master",
+        "manifestFile": "lake-manifest.json",
+        "name": "aesop",
+        "rev": "355695d523e41d0554926416cba2a2b3544fbbc9",
+        "scope": "leanprover-community",
+        "subDir": null,
+        "type": "git",
+        "url": "https://github.com/leanprover-community/aesop"
+      },
+      {
+        "configFile": "lakefile.toml",
+        "inherited": true,
+        "inputRev": "master",
+        "manifestFile": "lake-manifest.json",
+        "name": "Qq",
+        "rev": "6a489d9af5d0c47e5b259e2e8bcdfc1811b5a259",
+        "scope": "leanprover-community",
+        "subDir": null,
+        "type": "git",
+        "url": "https://github.com/leanprover-community/quote4"
+      },
+      {
+        "configFile": "lakefile.toml",
+        "inherited": true,
+        "inputRev": "main",
+        "manifestFile": "lake-manifest.json",
+        "name": "batteries",
+        "rev": "f2effa3d803fda822b1f97b806c47cf2adfbcbc2",
+        "scope": "leanprover-community",
+        "subDir": null,
+        "type": "git",
+        "url": "https://github.com/leanprover-community/batteries"
+      },
+      {
+        "configFile": "lakefile.toml",
+        "inherited": true,
+        "inputRev": "v4.34.0",
+        "manifestFile": "lake-manifest.json",
+        "name": "Cli",
+        "rev": "e92c9f15fdfacc8536f31cfb3b7ad26c3c8cd204",
+        "scope": "leanprover",
+        "subDir": null,
+        "type": "git",
+        "url": "https://github.com/leanprover/lean4-cli"
+      }
+    ],
+    "lean_binary_sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+    "lean_revision": "293d5d0c0c3f3dded4688b3ccd6a33939ac5102b",
+    "leanchecker_binary_sha256": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe",
+    "local_input_pin_count": 624,
+    "local_input_pin_map_sha256": "b39abd1930fe3b9110312477e207a3219bcbfa2e44d88bcedc3bf35deb871b77",
+    "toolchain": "leanprover/lean4:v4.34.0"
+  },
+  "replay_qualification": "Standard pinned replay preserves duplicate-theorem shortcuts and unsafe/partial exclusions. Target input accounting19 eligible/0 initially present/0 target unsafe-partial; no per-declaration skip telemetry or fresh imported-transitive assertion.",
+  "reviewed_local_checkpoint_sha256": "bbbb3a7ec857cfcba870c70585390a122459f1f832c3b0d1a66b9421305946f4",
+  "schema": "qualified-local-canonical-incidence-checkpoint-v1",
+  "scope": "Fixed-H/original-ROOT incidence identities and pointwise cap conditional on SAME-current FULL legal-edge cap.",
+  "source_sha256": "af5dd5f83f4156618f93f23b60200fd0047fe8f07505c7045d173dadb2e8922c"
+}

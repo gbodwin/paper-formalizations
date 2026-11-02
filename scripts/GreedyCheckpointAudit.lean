@@ -33,6 +33,7 @@ import GreedyShortcuts.ChainCanonicalEndpointPressure
 import GreedyShortcuts.ChainCanonicalTracePressure
 import GreedyShortcuts.ChainCanonicalSuffixCounts
 import GreedyShortcuts.ChainCanonicalMidpointPressure
+import GreedyShortcuts.ChainCanonicalIncidenceWeights
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
@@ -432,3 +433,52 @@ run_cmd do
           throwError "Unexpected midpoint axiom {ax} in {name}"
       logInfo m!"CHECKPOINT_DECL {name} AXIOMS {axioms}"
     logInfo m!"CHECKPOINT_MODULE {moduleName} DECLARATIONS {decls.length} STABLE_DECLARATIONS {decls.length}"
+
+/-
+Fixed-H/original-ROOT physical incidence and exact midpoint-weight reindexing.
+The center cap is conditional on the supplied SAME-current FULL legal-edge cap.
+No useful population, source/target amplification, cumulative weighted/copy/time
+payment, lookup runtime refinement or phase bound follows. The nineteen target
+constants below were locally audited; all were absent from the imported base
+and safe/nonpartial in the pinned observation. Standard replay shortcuts remain;
+this is not per-declaration skip telemetry or fresh imported-transitive checking.
+-/
+run_cmd do
+  let env ← getEnv
+  let moduleName := `GreedyShortcuts.ChainCanonicalIncidenceWeights
+  let some idx := env.getModuleIdx? moduleName
+    | throwError "Missing incidence checkpoint module {moduleName}"
+  let decls := env.constants.toList.filter (fun x => env.getModuleIdxFor? x.1 == some idx)
+  let required : Array Name := #[`GreedyShortcuts.ChainDistance.Context.canonicalMidpointWeight,
+    `GreedyShortcuts.ChainDistance.Context.canonicalMidpointWeight.eq_1,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalExterior_marker_sum,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalPhysicalExterior_card_sum,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalPhysicalExterior_remaining,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalPhysicalExterior_sum,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalPhysicalExterior_sum._simp_1_1,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalPhysicalExterior_weighted_sum,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalRemainingCount,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalRemainingCount._proof_1,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalRemainingCount.eq_1,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalRemainingCount_W_weight,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalRemainingCount_W_weight._proof_1_1,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalRemainingCount_eq,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalRowWeight,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalRowWeight.eq_1,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonicalRowWeight_eq,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonical_center_cap,
+    `GreedyShortcuts.ChainDistance.Context.originalCanonical_center_cap._proof_1_2]
+  unless decls.length == required.size do
+    throwError "Unexpected incidence declaration coverage: {decls.length}"
+  for name in required do
+    unless decls.any (fun x => x.1 == name) do
+      throwError "Missing incidence checkpoint declaration {name}"
+  for (name, info) in decls do
+    if info.isAxiom || info.isUnsafe || info.isPartial then
+      throwError "Rejected incidence checkpoint declaration {name}"
+    let axioms ← collectAxioms name
+    for ax in axioms do
+      unless ax == `propext || ax == `Classical.choice || ax == `Quot.sound do
+        throwError "Unexpected incidence axiom {ax} in {name}"
+    logInfo m!"CHECKPOINT_DECL {name} AXIOMS {axioms}"
+  logInfo m!"CHECKPOINT_MODULE {moduleName} DECLARATIONS {decls.length} STABLE_DECLARATIONS {decls.length}"
