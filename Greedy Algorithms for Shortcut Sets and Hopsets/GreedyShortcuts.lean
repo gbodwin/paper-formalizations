@@ -2,6 +2,7 @@ import GreedyShortcuts.BenchmarkParameters
 import GreedyShortcuts.CanonicalSavings
 import GreedyShortcuts.CanonicalSegments
 import GreedyShortcuts.CanonicalSuffixPath
+import GreedyShortcuts.ChainActualGreedyTraceBudget
 import GreedyShortcuts.ChainCanonicalCohortCoverage
 import GreedyShortcuts.ChainCanonicalEndpointPressure
 import GreedyShortcuts.ChainCanonicalExteriorIncidence

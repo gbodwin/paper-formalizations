@@ -38,6 +38,7 @@ import GreedyShortcuts.ChainFiniteSuffixCard
 import GreedyShortcuts.ChainCanonicalStepSummation
 import GreedyShortcuts.ChainOriginalOwnerPopulation
 import GreedyShortcuts.ChainCanonicalTraceSummation
+import GreedyShortcuts.ChainActualGreedyTraceBudget
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
@@ -610,3 +611,39 @@ run_cmd do
       unless ax == `propext || ax == `Classical.choice || ax == `Quot.sound do
         throwError "Forbidden trace checkpoint axiom {ax} in {name}"
     logInfo m!"CHECKPOINT_DECL {name}"
+
+/- SAME-state logical caller only. The actual selected raw-greedy FULL drop
+supplies the cap at literal run(n), for an attained maximum important demand
+and any fixed permitted selector policy. Reference-demand maximum and selected
+edge argmax are distinct. This proves no useful profile mass, cumulative
+weighted/copy/time payment, lookup implementation refinement or phase bound.
+Standard pinned replay reuses imported dependencies and may shortcut duplicate
+proofs; initially absent target names do not establish zero skips or a fresh
+transitive replay. All previous runtime and original operational holds remain. -/
+run_cmd do
+  let env ← getEnv
+  let moduleName := `GreedyShortcuts.ChainActualGreedyTraceBudget
+  let some idx := env.getModuleIdx? moduleName
+    | throwError "Missing actual greedy budget checkpoint module {moduleName}"
+  let decls := env.constants.toList.filter (fun x => env.getModuleIdxFor? x.1 == some idx)
+  let required : Array Name := #[
+    `GreedyShortcuts.ChainDistance.Context.actualGreedyState_drop_cap,
+    `GreedyShortcuts.ChainDistance.Context.greedy_maximum_canonical_budget,
+    `GreedyShortcuts.ChainDistance.Context.greedy_maximum_canonical_budget._proof_1_1,
+    `GreedyShortcuts.ChainDistance.Context.exists_run_maximum_canonical_budget,
+    `GreedyShortcuts.ChainDistance.Context.exists_run_maximum_canonical_budget._simp_1_1,
+    `GreedyShortcuts.ChainDistance.Context.exists_run_maximum_canonical_budget._simp_1_2]
+  unless decls.length == required.size do
+    throwError "Unexpected actual greedy budget declaration coverage: {decls.length}"
+  for n in required do
+    unless decls.any (fun x => x.1 == n) do
+      throwError "Missing actual greedy budget checkpoint declaration {n}"
+  for (name, info) in decls do
+    if info.isAxiom || info.isUnsafe || info.isPartial then
+      throwError "Rejected actual greedy budget checkpoint declaration {name}"
+    let axioms ← collectAxioms name
+    for ax in axioms do
+      unless ax == `propext || ax == `Classical.choice || ax == `Quot.sound do
+        throwError "Forbidden actual greedy budget checkpoint axiom {ax} in {name}"
+    logInfo m!"CHECKPOINT_DECL {name} AXIOMS {axioms}"
+  logInfo m!"CHECKPOINT_MODULE {moduleName} DECLARATIONS {decls.length} STABLE_DECLARATIONS {decls.length}"
