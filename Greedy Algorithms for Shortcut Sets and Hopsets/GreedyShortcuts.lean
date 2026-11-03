@@ -72,6 +72,7 @@ import GreedyShortcuts.ChainQuadraticSharp
 import GreedyShortcuts.ChainQuadraticSize
 import GreedyShortcuts.ChainRectangleCharging
 import GreedyShortcuts.ChainRelativeProgress
+import GreedyShortcuts.ChainRelayRetainedPopulation
 import GreedyShortcuts.ChainRootMinimumCorridor
 import GreedyShortcuts.ChainRootTailHeadOrder
 import GreedyShortcuts.ChainSaturatedRedundancy

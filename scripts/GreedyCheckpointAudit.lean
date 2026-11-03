@@ -39,6 +39,7 @@ import GreedyShortcuts.ChainCanonicalStepSummation
 import GreedyShortcuts.ChainOriginalOwnerPopulation
 import GreedyShortcuts.ChainCanonicalTraceSummation
 import GreedyShortcuts.ChainActualGreedyTraceBudget
+import GreedyShortcuts.ChainRelayRetainedPopulation
 import Lean.Util.CollectAxioms
 
 open Lean Elab Command
@@ -645,5 +646,37 @@ run_cmd do
     for ax in axioms do
       unless ax == `propext || ax == `Classical.choice || ax == `Quot.sound do
         throwError "Forbidden actual greedy budget checkpoint axiom {ax} in {name}"
+    logInfo m!"CHECKPOINT_DECL {name} AXIOMS {axioms}"
+  logInfo m!"CHECKPOINT_MODULE {moduleName} DECLARATIONS {decls.length} STABLE_DECLARATIONS {decls.length}"
+
+/- Conditional SAME-state relay implication only. The native selector permits
+U = d.maxOwner as a left alternative; no native graph/context/state witness,
+occurrence theorem or coverage statement is established here. Actual child-cone
+inclusion yields its population-sensitive budget and exact non-W cut debit.
+No useful-scale amplification, cumulative weighted/copy/time payment, lookup
+runtime refinement or phase bound follows. Standard pinned replay keeps imported
+dependency reuse and duplicate-proof shortcuts; initially absent target names
+are not zero-skip or fresh-every-proof evidence. Previous holds remain intact. -/
+run_cmd do
+  let env ← getEnv
+  let moduleName := `GreedyShortcuts.ChainRelayRetainedPopulation
+  let some idx := env.getModuleIdx? moduleName
+    | throwError "Missing relay retained-population checkpoint module {moduleName}"
+  let decls := env.constants.toList.filter (fun x => env.getModuleIdxFor? x.1 == some idx)
+  let required : Array Name := #[
+    `GreedyShortcuts.ChainDistance.Context.originalRelay_retained_population_budget,
+    `GreedyShortcuts.ChainDistance.Context.originalRelay_retained_population_budget._proof_1_1]
+  unless decls.length == required.size do
+    throwError "Unexpected relay retained-population declaration coverage: {decls.length}"
+  for n in required do
+    unless decls.any (fun x => x.1 == n) do
+      throwError "Missing relay retained-population checkpoint declaration {n}"
+  for (name, info) in decls do
+    if info.isAxiom || info.isUnsafe || info.isPartial then
+      throwError "Rejected relay retained-population checkpoint declaration {name}"
+    let axioms ← collectAxioms name
+    for ax in axioms do
+      unless ax == `propext || ax == `Classical.choice || ax == `Quot.sound do
+        throwError "Forbidden relay retained-population checkpoint axiom {ax} in {name}"
     logInfo m!"CHECKPOINT_DECL {name} AXIOMS {axioms}"
   logInfo m!"CHECKPOINT_MODULE {moduleName} DECLARATIONS {decls.length} STABLE_DECLARATIONS {decls.length}"
