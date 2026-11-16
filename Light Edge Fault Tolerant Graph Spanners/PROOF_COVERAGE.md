@@ -1,4 +1,20 @@
-# Current exact-source evidence — 2026-10-18
+# Corrected-paper edition — 2026-11-16
+
+The current interfaces and reproducible checks are documented in
+[CORRECTED_LIGHT_EFT.md](../CORRECTED_LIGHT_EFT.md). The corrected source adds
+the cf-cloud lower bound at arbitrary real stretch and prescribed sufficiently
+large order, the accepted 1/f sampling law and voting constants, the two-approximate
+seed baseline, corrected introduction parameters, and explicitly scoped rational
+execution bridges. `CorrectedLightEFTSpanners` collects this edition.
+
+The dated reports below describe their original snapshots. Their earlier cache
+failures, memory admission rules, pending replacement proof, and review pauses
+are historical observations; use the current source-derived validation harness
+and its receipts for this edition.
+
+---
+
+# Historical exact-source evidence — 2026-10-18
 
 Frozen mathematical source: `78cb40c7837db049d645d73696f2e0b724ce8a3b`. The reviewed incremental evidence covers **485 ordinary compile / exact-resolution / singleton-replay chains**, with the aggregate compiled separately. Full-audit binding `c7f33d7ece117ddc7d20e4f7a5dad2f870e9d41f` records **8,950 project roots, 60,369 closure constants and zero unsafe/partial/project-axiom findings**, using only the three standard axioms. This dated layer reconciles existing evidence; no new Lean execution occurred.
 

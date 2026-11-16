@@ -2,6 +2,13 @@
 
 Lean 4 formalizations of Greg Bodwin's papers, using mathlib.
 
+The November 2026 corrected Light EFT edition is documented in
+[CORRECTED_LIGHT_EFT.md](CORRECTED_LIGHT_EFT.md), with the cloud lower bound,
+accepted sampling constants, precise runtime scope, and source-derived
+verification commands. Its aggregate target is `CorrectedLightEFTSpanners`.
+Earlier checkpoint reports below retain their original dates and refer to
+their own source snapshots.
+
 ## Bodwin–Patel: A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners
 
 The implementation lives in the top-level [A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners](<A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/>) folder.

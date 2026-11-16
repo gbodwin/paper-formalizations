@@ -1,0 +1,56 @@
+name: Corrected Light EFT compile and audit
+
+on:
+  push:
+    branches:
+      - corrected-light-eft-*
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: corrected-light-eft-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  corrected-library:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    env:
+      LEAN_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/checkpoints/
+      - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
+        with:
+          auto-config: 'false'
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'true'
+          mk_all-check: 'false'
+          axiom-audit: 'false'
+      - name: Strictly compile the complete corrected import closure
+        run: >-
+          python3 scripts/CorrectedLightEFTCheck.py
+          --state ci-evidence/corrected
+          --phase compile
+          --lock "${RUNNER_TEMP}/corrected-lean.lock"
+      - name: Audit actual owners, recursive proof bodies, and axioms
+        run: >-
+          python3 scripts/CorrectedLightEFTCheck.py
+          --state ci-evidence/corrected
+          --phase audit
+          --lock "${RUNNER_TEMP}/corrected-lean.lock"
+      - name: Preserve source-bound validation receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: corrected-light-eft-${{ github.sha }}
+          path: ci-evidence/corrected
+          if-no-files-found: error

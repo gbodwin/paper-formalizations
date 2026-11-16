@@ -3,6 +3,8 @@ on:
   push:
     branches-ignore:
       - light-eft-spanners-checkpoints
+      # The corrected edition has its own source-derived bounded workflow.
+      - corrected-light-eft-*
   pull_request:
   workflow_dispatch:
 
