@@ -22,7 +22,8 @@ same denominator \(11b-4b^2-3\). From \(b=2/3\) they give \(16/23\) and
 \(0.701\) in one step. The intended numerator gives the printed cubic
 \(4b^3-13b^2+10b-2\) by clearing the denominator in the fixed-point equation.
 The last paragraph also requests an exponent strictly above the limiting
-exponent. Approximation for convergence should be from below.
+exponent. Approximation for convergence should be from below. Its proposed
+exponent slack changes signs between the two consecutive displays.
 [ExponentLimits](OnlineReachabilityPreservers/ExponentLimits.lean) verifies
 the root bracket, the increase of the corrected sequence from below, and
 the limits of both online exponents.
@@ -113,6 +114,12 @@ uses this to prove the upper caps with at most twice the ambient budgets.
 - Lemma 34's first two moment displays omit the \(+d\) in the linear
   contribution \(n_x(\ell+d)\) from Lemma 31. The inequality before the
   case analysis restores it. The sampled moment estimate retains both terms.
+- Lemma 35 describes the number of tuples charged to each important
+  incidence as \(\Theta(xd)\). The count uses an upper bound because the
+  qualifying middle path and order conditions can remove choices.
+  The arbitrary induced family has its own source-restricted incidence
+  proof. The common vertex order places its first vertex in the predecessor
+  support.
 - Lemmas 40–42 print a free exponent \(a\) on the first power of \(p\). The
   integrand and the starting/target bounds use \(p^{1/2}\). The recurrence
   uses \(2/3\le b<1/\sqrt2\). This is within the range where the integral

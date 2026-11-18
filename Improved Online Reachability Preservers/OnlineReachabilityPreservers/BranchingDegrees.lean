@@ -66,7 +66,7 @@ noncomputable def branchesThrough (paths : I → Finset V) (b : I) (h : ℕ) (v 
   exact univ.filter fun w => InBranchWindow paths b w.1 h w.2 v
 
 omit [LinearOrder I] in
-private theorem mem_branchesThrough {paths : I → Finset V} {b : I} {h : ℕ} {v : V} {i : I} {u : V} :
+theorem mem_branchesThrough {paths : I → Finset V} {b : I} {h : ℕ} {v : V} {i : I} {u : V} :
     (i, u) ∈ branchesThrough paths b h v ↔ InBranchWindow paths b i h u v := by
   classical
   simp [branchesThrough]
@@ -431,10 +431,10 @@ theorem lemma34_weighted_path_bound (paths : I → Finset V) (b : I) (h : ℕ) :
   exact card_image_le.trans (by rw [card_product, card_sigma, pow_two])
 
 omit [LinearOrder V] [Fintype V] in
-private theorem weighted_dyadic_square (S : Finset V) (D : V → ℕ) (L : ℕ)
+private theorem weighted_dyadic_sum (S : Finset V) (D : V → ℕ) (L : ℕ)
     (covers : ∀ v ∈ S, Nat.log 2 (D v) < L) :
-    (∑ v ∈ S, D v)^2 ≤ 4*L * ∑ j ∈ range L,
-      (2^j)^2 * (S.filter fun v => 0 < D v ∧ Nat.log 2 (D v) = j).card^2 := by
+    (∑ v ∈ S, D v) ≤ 2*∑ j ∈ range L,
+      (2^j) * (S.filter fun v => 0 < D v ∧ Nat.log 2 (D v) = j).card := by
   let positive := S.filter fun v => 0 < D v
   let part (j : ℕ) := positive.filter fun v => Nat.log 2 (D v) = j
   let upper (j : ℕ) := 2^j * (part j).card
@@ -460,6 +460,15 @@ private theorem weighted_dyadic_square (S : Finset V) (D : V → ℕ) (L : ℕ)
   have bound : (∑ v ∈ S, D v) ≤ 2*∑ j ∈ range L, upper j := by
     rw [splitSum, mul_sum]
     exact sum_le_sum fun j _ => hpart j
+  simpa only [upper, part, positive, filter_filter] using bound
+
+omit [LinearOrder V] [Fintype V] in
+private theorem weighted_dyadic_square (S : Finset V) (D : V → ℕ) (L : ℕ)
+    (covers : ∀ v ∈ S, Nat.log 2 (D v) < L) :
+    (∑ v ∈ S, D v)^2 ≤ 4*L * ∑ j ∈ range L,
+      (2^j)^2 * (S.filter fun v => 0 < D v ∧ Nat.log 2 (D v) = j).card^2 := by
+  let upper (j : ℕ) := 2^j * (S.filter fun v => 0 < D v ∧ Nat.log 2 (D v) = j).card
+  have bound : (∑ v ∈ S, D v) ≤ 2*∑ j ∈ range L, upper j := weighted_dyadic_sum S D L covers
   have CS := sum_mul_sq_le_sq_mul_sq (R := ℕ) (range L) (fun _ => 1) upper
   have hsq : (∑ j ∈ range L, upper j)^2 ≤ L * ∑ j ∈ range L, (upper j)^2 := by
     simpa using CS
@@ -472,7 +481,7 @@ private theorem weighted_dyadic_square (S : Finset V) (D : V → ℕ) (L : ℕ)
       congr 1
       apply sum_congr rfl
       intro j _
-      simp only [upper, part, positive, filter_filter, mul_pow]
+      simp only [upper, mul_pow]
 
 /-- The off-base dyadic sets whose restricted path moments occur in Lemma 34. -/
 noncomputable def degreeBucket (paths : I → Finset V) (b : I) (h j : ℕ) : Finset V := by
@@ -520,6 +529,86 @@ theorem lemma34_dyadic_moment {paths : I → Finset V} (free : HalfBridgeFree (P
     _ = _ := by
       rw [← mul_sum, sum_comm]
       simp only [mul_sum, L]
+
+private theorem sqrt_sum_sq_triangle {A B : Type*} (s : Finset A) (t : Finset B)
+    (f : A → B → ℝ) :
+    Real.sqrt (∑ a ∈ s, (∑ b ∈ t, f a b)^2) ≤
+      ∑ b ∈ t, Real.sqrt (∑ a ∈ s, (f a b)^2) := by
+  let norm (b : B) := Real.sqrt (∑ a ∈ s, (f a b)^2)
+  have bound : (∑ a ∈ s, (∑ b ∈ t, f a b)^2) ≤ (∑ b ∈ t, norm b)^2 := calc
+    _ = ∑ a ∈ s, ∑ b ∈ t, ∑ c ∈ t, f a b*f a c := by
+      apply sum_congr rfl
+      intro a _
+      rw [pow_two, sum_mul]
+      simp only [mul_sum]
+    _ = ∑ b ∈ t, ∑ c ∈ t, ∑ a ∈ s, f a b*f a c := by
+      rw [sum_comm]
+      apply sum_congr rfl
+      intro b _
+      exact sum_comm
+    _ ≤ ∑ b ∈ t, ∑ c ∈ t, norm b*norm c :=
+      sum_le_sum fun b _ => sum_le_sum fun c _ =>
+        Real.sum_mul_le_sqrt_mul_sqrt s (fun a => f a b) (fun a => f a c)
+    _ = _ := by rw [pow_two, sum_mul]; simp only [mul_sum]
+  exact (Real.sqrt_le_sqrt bound).trans_eq
+    (Real.sqrt_sq (sum_nonneg (fun b _ => Real.sqrt_nonneg _) : 0 ≤ ∑ b ∈ t, norm b))
+
+/-- A dyadic square-root bound summed jointly over base and middle paths.
+The triangle inequality retains the individual bucket moments. -/
+theorem lemma34_minkowski {paths : I → Finset V} (free : HalfBridgeFree (PathBefore paths) 4)
+    (h D : ℕ) (degree : ∀ v, (occurrences paths v).card ≤ D) :
+    Real.sqrt (∑ base : I, ((offBaseBranchTuples paths base h).card:ℝ)) ≤
+      2*∑ j ∈ range (Nat.log 2 D+1), (2:ℝ)^j *
+        Real.sqrt (∑ base : I, ∑ i, ((paths i ∩ degreeBucket paths base h j).card:ℝ)^2) := by
+  classical
+  let L := Nat.log 2 D+1
+  let W (a : I × I) : ℝ := ∑ v ∈ paths a.2 \ paths a.1, ((branchesThrough paths a.1 h v).card:ℝ)
+  let U (a : I × I) (j : ℕ) : ℝ := ((2^j*(paths a.2 ∩ degreeBucket paths a.1 h j).card : ℕ):ℝ)
+  have perIndex (a : I × I) : W a ≤ 2*∑ j ∈ range L, U a j := by
+    let d (v : V) := (branchesThrough paths a.1 h v).card
+    have covers (v : V) (hv : v ∈ paths a.2 \ paths a.1) : Nat.log 2 (d v) < L :=
+      Nat.lt_succ_of_le (Nat.log_mono_right
+        ((branchesThrough_le_degree free (mem_sdiff.mp hv).2).trans (degree v)))
+    have same (j : ℕ) :
+        ((paths a.2 \ paths a.1).filter fun v => 0 < d v ∧ Nat.log 2 (d v) = j) =
+          paths a.2 ∩ degreeBucket paths a.1 h j := by
+      ext v
+      simp only [degreeBucket, mem_filter, mem_sdiff, mem_inter, mem_univ, true_and, d]
+      tauto
+    have bound := weighted_dyadic_sum (paths a.2 \ paths a.1) d L covers
+    simp only [same] at bound
+    dsimp only [W, U]
+    exact_mod_cast bound
+  have hw (a : I × I) : 0 ≤ W a := sum_nonneg (fun _ _ => Nat.cast_nonneg _)
+  have hu (a : I × I) : 0 ≤ ∑ j ∈ range L, U a j := sum_nonneg (fun _ _ => Nat.cast_nonneg _)
+  have first :
+      (∑ base : I, ((offBaseBranchTuples paths base h).card:ℝ)) ≤ ∑ a : I × I, (W a)^2 := by
+    rw [Fintype.sum_prod_type]
+    apply sum_le_sum
+    intro base _
+    dsimp only [W]
+    exact_mod_cast lemma34_weighted_path_bound paths base h
+  have second : (∑ a : I × I, (W a)^2) ≤ 4*∑ a : I × I, (∑ j ∈ range L, U a j)^2 := calc
+    _ ≤ ∑ a : I × I, (2*∑ j ∈ range L, U a j)^2 :=
+      sum_le_sum fun a _ => (sq_le_sq₀ (hw a) (mul_nonneg (by norm_num) (hu a))).mpr (perIndex a)
+    _ = _ := by
+      conv_rhs => rw [mul_sum]
+      apply sum_congr rfl
+      intro a _
+      rw [mul_pow]
+      norm_num
+  have norms (j : ℕ) : Real.sqrt (∑ a : I × I, (U a j)^2) =
+      (2:ℝ)^j * Real.sqrt (∑ base : I, ∑ i, ((paths i ∩ degreeBucket paths base h j).card:ℝ)^2) := by
+    simp only [U, Nat.cast_mul, Nat.cast_pow, Nat.cast_ofNat, mul_pow, ← mul_sum]
+    rw [Real.sqrt_mul (sq_nonneg _), Real.sqrt_sq (by positivity), Fintype.sum_prod_type]
+  calc
+    _ ≤ Real.sqrt (4*∑ a : I × I, (∑ j ∈ range L, U a j)^2) := Real.sqrt_le_sqrt (first.trans second)
+    _ = 2*Real.sqrt (∑ a : I × I, (∑ j ∈ range L, U a j)^2) := by
+      rw [Real.sqrt_mul (by norm_num : (0:ℝ) ≤ 4)]
+      norm_num
+    _ ≤ 2*∑ j ∈ range L, Real.sqrt (∑ a : I × I, (U a j)^2) :=
+      mul_le_mul_of_nonneg_left (sqrt_sum_sq_triangle univ (range L) U) (by norm_num)
+    _ = _ := by simp only [norms, L]
 
 omit [Fintype V] in
 /-- The second-moment estimate on any nonempty sampled vertex set.

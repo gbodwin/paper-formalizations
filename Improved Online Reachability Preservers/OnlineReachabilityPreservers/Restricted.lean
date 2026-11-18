@@ -161,7 +161,8 @@ theorem forwardRun_card_square {G : Arcs V} (dag : IsDAG G)
   have h := incidence_square (marks G D) (D.length * S.card) (bound_collisions G D S sinks)
   rwa [sum_marks_card dag] at h
 
-private theorem sqrt_budget {n m q : ℕ} (h : m ^ 2 ≤ n * (m + 2 * q)) :
+/-- Solve a finite incidence inequality for the size of its marked set. -/
+theorem sqrt_budget {n m q : ℕ} (h : m ^ 2 ≤ n * (m + 2 * q)) :
     (m : ℝ) ≤ n + Real.sqrt (2 * n * q) := by
   have hs : (m : ℝ) ^ 2 ≤ n * ((m : ℝ) + 2 * q) := by exact_mod_cast h
   by_contra! hn

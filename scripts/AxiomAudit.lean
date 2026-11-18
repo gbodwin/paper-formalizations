@@ -140,6 +140,7 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.pairwise_initial
 #print axioms OnlineReachabilityPreservers.lemma28_from_incidence
 #print axioms OnlineReachabilityPreservers.lemma28_mean_lower
+#print axioms OnlineReachabilityPreservers.lemma28_scaled_mean_lower
 #print axioms OnlineReachabilityPreservers.lemma41_branch_count
 #print axioms OnlineReachabilityPreservers.theorem38_root
 #print axioms OnlineReachabilityPreservers.theorem38_exponent_limits
@@ -163,6 +164,10 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.lemma33_deterministic
 #print axioms OnlineReachabilityPreservers.lemma33_expected_count
 #print axioms OnlineReachabilityPreservers.lemma34_dyadic_moment
+#print axioms OnlineReachabilityPreservers.lemma34_minkowski
+#print axioms OnlineReachabilityPreservers.source_restricted_square
+#print axioms OnlineReachabilityPreservers.lemma35_important_upper
+#print axioms OnlineReachabilityPreservers.lemma35_on_base_dyadic_count
 #print axioms OnlineReachabilityPreservers.sampled_vertex_moment
 #print axioms OnlineReachabilityPreservers.SourceAudit.lemma31_printed_intervals_overlap
 #print axioms OnlineReachabilityPreservers.SourceAudit.lemma40_printed_intervals_overlap

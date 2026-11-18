@@ -294,9 +294,9 @@ theorem lemma28_from_incidence {paths : I → Finset V} (free : HalfBridgeFree (
   change (2*a*p^2) * (2048*n^2*p) ≤ ((h+1)*(rChains paths).card) * (2048*n^2*p)
   nlinarith only [h1, h2, h3]
 
-/-- The uniform mean of the qualifying tuple counts controls the squared product
-of the average length and degree, with denominators cleared. -/
-theorem lemma28_mean_lower {paths : I → Finset V} (free : HalfBridgeFree (PathBefore paths) 4)
+/-- The lower bound on the uniform mean grows linearly with the
+window parameter. The statement clears the mean and average denominators. -/
+theorem lemma28_scaled_mean_lower {paths : I → Finset V} (free : HalfBridgeFree (PathBefore paths) 4)
     (L h : ℕ) (length : ∀ i, (paths i).card ≤ L)
     (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
     (hdense : 16 * Fintype.card V ≤ ∑ i, (paths i).card)
@@ -305,7 +305,8 @@ theorem lemma28_mean_lower {paths : I → Finset V} (free : HalfBridgeFree (Path
     (window_le_avg : h * Fintype.card I ≤ ∑ i, (paths i).card)
     (window_large : 40960 * (Fintype.card V)^2 * (Fintype.card I)^2 ≤
       (h + 1) * (∑ i, (paths i).card)^3) :
-    (∑ i, (paths i).card)^4 ≤ 4096 * (Fintype.card V)^2 * Fintype.card I *
+    (h+1)*(∑ i, (paths i).card)^7 ≤
+      (40*2048^2)*(Fintype.card V)^4*(Fintype.card I)^3*
       ∑ base : I, (branchTuples paths base h).card := by
   let n := Fintype.card V
   let p := Fintype.card I
@@ -325,17 +326,43 @@ theorem lemma28_mean_lower {paths : I → Finset V} (free : HalfBridgeFree (Path
     _ = (2048^2*n^4*p^2)*R^2 := by ring
     _ ≤ (2048^2*n^4*p^2)*(p^2*S) := Nat.mul_le_mul_left _ (rChains_square_le paths)
     _ = _ := by ring
-  change M^4 ≤ 4096*n^2*p*Q
-  apply Nat.le_of_mul_le_mul_right (c := 40960*n^2*p^3*M) _ (by positivity)
+  change (h+1)*M^7 ≤ (40*2048^2)*n^4*p^3*Q
+  apply Nat.le_of_mul_le_mul_right (c := M*p) _ (Nat.mul_pos hM hp)
   calc
-    _ = (40960*n^2*p^2)*(M^5*p) := by ring
-    _ ≤ ((h+1)*M^3)*(M^5*p) := Nat.mul_le_mul_right _ window_large
     _ = ((h+1)*p)*M^8 := by ring
     _ ≤ ((h+1)*p)*(2048^2*n^4*p^4*S) := Nat.mul_le_mul_left _ square
     _ = (2048^2*n^4*p^5)*((h+1)*S) := by ring
     _ ≤ (2048^2*n^4*p^5)*(4*a*Q) := Nat.mul_le_mul_left _ close
     _ = (4*2048^2*n^4*p^4*Q)*(a*p) := by ring
     _ ≤ (4*2048^2*n^4*p^4*Q)*(10*M) := Nat.mul_le_mul_left _ hwindow
+    _ = _ := by ring
+
+/-- The uniform mean of the qualifying tuple counts controls the squared product
+of the average length and degree, with denominators cleared. -/
+theorem lemma28_mean_lower {paths : I → Finset V} (free : HalfBridgeFree (PathBefore paths) 4)
+    (L h : ℕ) (length : ∀ i, (paths i).card ≤ L)
+    (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
+    (hdense : 16 * Fintype.card V ≤ ∑ i, (paths i).card)
+    (hlong : 8 * Fintype.card I ≤ ∑ i, (paths i).card)
+    (avg_length : L * Fintype.card I ≤ 4 * ∑ i, (paths i).card)
+    (window_le_avg : h * Fintype.card I ≤ ∑ i, (paths i).card)
+    (window_large : 40960 * (Fintype.card V)^2 * (Fintype.card I)^2 ≤
+      (h + 1) * (∑ i, (paths i).card)^3) :
+    (∑ i, (paths i).card)^4 ≤ 4096 * (Fintype.card V)^2 * Fintype.card I *
+      ∑ base : I, (branchTuples paths base h).card := by
+  let n := Fintype.card V
+  let p := Fintype.card I
+  let M := ∑ i, (paths i).card
+  let Q := ∑ base : I, (branchTuples paths base h).card
+  have scaled := lemma28_scaled_mean_lower free L h length hn hp hdense hlong avg_length
+    window_le_avg window_large
+  change M^4 ≤ 4096*n^2*p*Q
+  apply Nat.le_of_mul_le_mul_right (c := 40960*n^2*p^2) _ (by positivity)
+  calc
+    _ = (40960*n^2*p^2)*M^4 := by ring
+    _ ≤ ((h+1)*M^3)*M^4 := Nat.mul_le_mul_right _ window_large
+    _ = (h+1)*M^7 := by ring
+    _ ≤ (40*2048^2)*n^4*p^3*Q := scaled
     _ = _ := by ring
 
 omit [Fintype V] [Fintype I] in

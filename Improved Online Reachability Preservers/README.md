@@ -40,7 +40,8 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   and B for systems with a common vertex order. Summing over the base paths
   gives the numerator of the uniform expectation. In the dense regime the
   expectation is at least the squared product of the two averages divided by
-  `4096`. The full-bridge-free proof
+  `4096`. The proof also retains the factor that grows with the window size.
+  The full-bridge-free proof
   bounds the contribution by the ordered pairs of vertices on the restricted paths.
 - [`theorem38_root`, `theorem38_exponent_limits`, and `theorem43_exponent_limit`](OnlineReachabilityPreservers/ExponentLimits.lean)
   check the online cubic root and both arithmetic iterations.
@@ -75,7 +76,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   checks the predecessor count and average in Lemmas 32–33 under the
   inductive size bound and a maximum-degree cap. It also proves the dyadic
   upper bound on off-base tuples in terms of the path moments of sampled
-  vertex sets, supplying the first steps of Lemma 34.
+  vertex sets. A finite square-root triangle inequality retains each bucket
+  moment without a separate factor for the number of buckets.
+- [OnBaseCounting](OnlineReachabilityPreservers/OnBaseCounting.lean)
+  proves the source-restricted bound for the actual systems in Lemma 35
+  and counts tuples with their second endpoint on the base. The proof
+  groups them by the left branching degree and charges each group to
+  important incidences in the induced system.
 - [Regularization](OnlineReachabilityPreservers/Regularization.lean)
   verifies an acyclic upper-cap reduction for Appendices A and B. Splitting
   vertices and consecutive path blocks preserves every incidence and both
