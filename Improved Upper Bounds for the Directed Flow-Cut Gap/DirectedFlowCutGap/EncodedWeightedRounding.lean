@@ -80,6 +80,25 @@ theorem tree_within {n : ℕ} (D : Input n) :
     have hs := input_size_le D h
     gcongr
 
+def drawWidth (n : ℕ) : ℕ :=
+  RetainedDrawTrees.sampleWidth (6 * (4 * n ^ 2)) (3 * (4 * n ^ 2))
+
+theorem drawWidth_mono {n m : ℕ} (h : n ≤ m) : drawWidth n ≤ drawWidth m := by
+  unfold drawWidth
+  apply EncodedUniformRounding.sampleWidth_mono <;> gcongr
+
+theorem tree_widths {n : ℕ} (D : Input n) :
+    LazyFairBitTrees.WidthsLE (drawWidth n) (tree D) := by
+  by_cases h : (build D).data.totals.objective.num = 0
+  · rw [tree_zero D h]
+    exact .pure _
+  · rw [tree_positive D h]
+    have hn := input_size_le D h
+    apply EncodedUniformRounding.widths_weaken
+      (LazyFairBitTrees.widths_map (EncodedUniformRounding.tree_widths (replica D).input) _)
+    unfold drawWidth
+    apply EncodedUniformRounding.sampleWidth_mono <;> gcongr
+
 theorem bitTree_binary {n : ℕ} (T : ℕ) (D : Input n) :
     LazyFairBitTrees.Binary (bitTree T D) := LazyFairBitTrees.lower_binary T _
 

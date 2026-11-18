@@ -110,6 +110,16 @@ theorem best_within {n : ℕ} (costs : RawRow n) (ts : List (FiniteDrawTrees.Tre
 noncomputable def optionPrice {n : ℕ} (costs : RawRow n) : Option (Flags n) → ℝ :=
   fun x => x.elim 0 (cutPrice costs)
 
+theorem best_widths {n w : ℕ} (costs : RawRow n) (ts : List (FiniteDrawTrees.Tree (Flags n)))
+    (h : ∀ t ∈ ts, LazyFairBitTrees.WidthsLE w t) : LazyFairBitTrees.WidthsLE w (best costs ts) := by
+  induction ts with
+  | nil => exact .pure _
+  | cons t ts ih =>
+    unfold best
+    apply LazyFairBitTrees.widths_bind (h t (List.mem_cons_self ..))
+    intro a
+    exact LazyFairBitTrees.widths_map (ih (fun u hu => h u (List.mem_cons_of_mem t hu))) _
+
 private theorem expected_map_le {A B : Type} [Fintype A] [Fintype B] (p : PMF A)
     (f : A → B) (c : B → ℝ) (g : A → ℝ) (h : ∀ a ∈ p.support, c (f a) ≤ g a) :
     expectedCost (p.map f) c ≤ expectedCost p g := by

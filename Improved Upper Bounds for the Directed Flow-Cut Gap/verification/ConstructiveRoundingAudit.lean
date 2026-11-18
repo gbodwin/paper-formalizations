@@ -8,6 +8,7 @@ import DirectedFlowCutGap.EncodedVertexAmplification
 import DirectedFlowCutGap.EncodedEdgeRounding
 import DirectedFlowCutGap.EncodedEdgeSolver
 import DirectedFlowCutGap.WeakDecompositionExactWeight
+import DirectedFlowCutGap.EncodedSourceExecution
 import Lean.Compiler.Old
 import Lean.Util.CollectAxioms
 import Lean.Util.FoldConsts
@@ -32,7 +33,9 @@ run_cmd do
     `DirectedFlowCutGap.EncodedVertexAmplification, `DirectedFlowCutGap.EncodedEdgeLabels,
     `DirectedFlowCutGap.EncodedEdgeGadget, `DirectedFlowCutGap.EncodedEdgeRounding,
     `DirectedFlowCutGap.EdgeLineReduction, `DirectedFlowCutGap.EncodedEdgeLineInput,
-    `DirectedFlowCutGap.EncodedEdgeSolver, `DirectedFlowCutGap.WeakDecompositionExactWeight]
+    `DirectedFlowCutGap.EncodedEdgeSolver, `DirectedFlowCutGap.WeakDecompositionExactWeight,
+    `DirectedFlowCutGap.EncodedEdgeInput, `DirectedFlowCutGap.EncodedSolverBits,
+    `DirectedFlowCutGap.EncodedSourceExecution]
   let allowed := #[`propext, `Classical.choice, `Quot.sound]
   let mut counts : NameMap Nat := {}
   let mut compilerEntries : Nat := 0
@@ -95,7 +98,15 @@ run_cmd do
     `DirectedFlowCutGap.EncodedEdgeSolver.mass_expected_uniform,
     `DirectedFlowCutGap.EncodedEdgeSolver.size_expected_uniform,
     `DirectedFlowCutGap.EncodedEdgeSolver.polynomial_failure_le,
-    `DirectedFlowCutGap.WeakDecomposition.edge_law_of_exact_weight_factor] do
+    `DirectedFlowCutGap.WeakDecomposition.edge_law_of_exact_weight_factor,
+    `DirectedFlowCutGap.EncodedVertexAmplification.polynomialFromBinaryOutput_eq,
+    `DirectedFlowCutGap.EncodedEdgeInput.parse_encode,
+    `DirectedFlowCutGap.EncodedSolverBits.amplifier_le_polynomial,
+    `DirectedFlowCutGap.EncodedSolverBits.run_support,
+    `DirectedFlowCutGap.EncodedSourceExecution.vertexMass_complete,
+    `DirectedFlowCutGap.EncodedSourceExecution.vertexSize_complete,
+    `DirectedFlowCutGap.EncodedSourceExecution.edgeMass_complete,
+    `DirectedFlowCutGap.EncodedSourceExecution.edgeSize_complete] do
     let some (.thmInfo _) := env.find? theoremName | throwError "Missing theorem {theoremName}"
     unless roots.contains theoremName do throwError "Unselected theorem {theoremName}"
   let mut todo := roots

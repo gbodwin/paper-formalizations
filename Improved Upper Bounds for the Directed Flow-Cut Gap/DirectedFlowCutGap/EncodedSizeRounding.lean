@@ -48,6 +48,13 @@ theorem tree_within {n : ℕ} (D : Input n) :
   have hb := build_size_le D (threshold n)
   gcongr
 
+theorem tree_widths {n : ℕ} (D : Input n) :
+    LazyFairBitTrees.WidthsLE (EncodedWeightedRounding.drawWidth n) (tree D) := by
+  simp only [tree, prepare_value]
+  exact EncodedUniformRounding.widths_weaken
+    (LazyFairBitTrees.widths_map (EncodedWeightedRounding.tree_widths _) _)
+    (EncodedWeightedRounding.drawWidth_mono (build_size_le D _))
+
 theorem bit_event_le {n : ℕ} (T : ℕ) (D : Input n) (P : Flags n → Prop) :
     probability (ideal (bitTree T D)) P ≤
       probability (ideal (tree D)) P +

@@ -47,15 +47,29 @@ theorem codePrice_value {n : ℕ} (D : GraphInput n) (out : Output n) :
 
 def roundDrawBound (n : ℕ) : ℕ := EncodedUniformRounding.drawBound (4 * n ^ 2)
 
-def boundedBitTree {n : ℕ} (roundBound extraSamples confidence : ℕ) (D : GraphInput n)
-    (round : Rounding n) :
+def boundedFromOutput {n : ℕ} (roundBound extraSamples confidence : ℕ) (D : GraphInput n)
+    (round : Rounding n) (out : FractionalCoverRawGuesses.Output n) :
     FiniteDrawTrees.Tree (Output n) :=
-  EncodedAmplification.bitTree (codePrice D) (tree D round)
+  EncodedAmplification.bitTree (codePrice D) (roundOutput D round out)
     (drawBound D roundBound) extraSamples confidence
+
+def boundedBitTree {n : ℕ} (roundBound extraSamples confidence : ℕ) (D : GraphInput n)
+    (round : Rounding n) : FiniteDrawTrees.Tree (Output n) :=
+  boundedFromOutput roundBound extraSamples confidence D round (FractionalCoverRawGuesses.solveInput D)
 
 def bitTree {n : ℕ} (extraSamples confidence : ℕ) (D : GraphInput n) (round : Rounding n) :
     FiniteDrawTrees.Tree (Output n) :=
   boundedBitTree (roundDrawBound n) extraSamples confidence D round
+
+theorem boundedBit_within {n : ℕ} (roundBound extraSamples confidence width : ℕ)
+    (D : GraphInput n) (round : Rounding n)
+    (hround : ∀ r : RoundingInput n, Within roundBound (round r))
+    (hwidth : ∀ r : RoundingInput n, LazyFairBitTrees.WidthsLE width (round r)) :
+    let Q := (extraSamples + 1) * drawBound D roundBound
+    Within (Q * FairBitConfidence.trials Q confidence * width)
+      (boundedBitTree roundBound extraSamples confidence D round) :=
+  EncodedAmplification.bitTree_within _ _ _ _ _ _
+    (tree_within D round roundBound hround) (tree_widths D round hwidth)
 
 theorem boundedBit_support_subset {n : ℕ} (roundBound extraSamples confidence : ℕ) (D : GraphInput n)
     (round : Rounding n) :
@@ -132,6 +146,17 @@ def polynomialBitTree {n : ℕ} (κ : ℕ) (D : GraphInput n) (round : Rounding 
   let e := confidenceExponent n κ
   bitTree e (e + 1) D round
 
+theorem polynomialBit_within {n : ℕ} (κ : ℕ) (D : GraphInput n) (round : Rounding n)
+    (hround : ∀ r : RoundingInput n, Within (roundDrawBound n) (round r))
+    (hwidth : ∀ r : RoundingInput n,
+      LazyFairBitTrees.WidthsLE (EncodedWeightedRounding.drawWidth n) (round r)) :
+    let e := confidenceExponent n κ + 1
+    let Q := e * drawBound D (roundDrawBound n)
+    Within (Q * FairBitConfidence.trials Q e * EncodedWeightedRounding.drawWidth n)
+      (polynomialBitTree κ D round) :=
+  boundedBit_within (roundDrawBound n) (confidenceExponent n κ) (confidenceExponent n κ + 1) _
+    D round hround hwidth
+
 theorem confidence_power (n κ : ℕ) :
     ((1 : ℝ) / 2) ^ (confidenceExponent n κ) ≤
       ((max 1 n : ℕ) : ℝ) ^ (-(κ : ℝ)) := by
@@ -155,17 +180,32 @@ theorem polynomial_failure_le {n : ℕ} (κ : ℕ) (D : GraphInput n) (round : R
     _ = ((1 : ℝ) / 2) ^ e := by rw [pow_succ]; ring
     _ ≤ _ := confidence_power n κ
 
-/-- Decode the existing wire format, then run the amplified solver in the chosen mode. -/
+/-- Rounding can consume returned binary covering data directly. -/
+def polynomialFromBinaryOutput (κ : ℕ) {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Rounding n)
+    (out : BinaryFractionalGuesses.Output n) : FiniteDrawTrees.Tree (Output n) :=
+  let e := confidenceExponent n κ
+  boundedFromOutput (roundDrawBound n) e (e + 1) (BinaryFractionalGuesses.decodeInput D)
+    round (BinaryFractionalGuesses.decodeOutput out)
+
+theorem polynomialFromBinaryOutput_eq (κ : ℕ) {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : Rounding n) :
+    polynomialFromBinaryOutput κ D round (BinaryFractionalGuesses.solveInput D).1 =
+      polynomialBitTree κ (BinaryFractionalGuesses.decodeInput D) round := by
+  simp only [polynomialFromBinaryOutput, BinaryFractionalGuesses.solveInput_refines,
+    polynomialBitTree, bitTree, boundedBitTree]
+
+/-- Decode the existing wire format, solve the binary fractional instance,
+and pass the returned covers to amplified rounding. -/
 def sourcePolynomialBitTree (κ : ℕ) (round : (n : ℕ) → Rounding n)
     (source : BinaryArithmetic.Bits) :
     Option (Σ n, FiniteDrawTrees.Tree (Output n)) :=
   (EncodedVertexInput.parse source).map fun ⟨n, D⟩ =>
-    ⟨n, polynomialBitTree κ (BinaryFractionalGuesses.decodeInput D) (round n)⟩
+    ⟨n, polynomialFromBinaryOutput κ D (round n) (BinaryFractionalGuesses.solveInput D).1⟩
 
 theorem sourcePolynomialBitTree_encode (κ : ℕ) (round : (n : ℕ) → Rounding n)
     {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
     sourcePolynomialBitTree κ round (SourcePacking.encode D.costs D.adjacency D.demands) =
       some ⟨n, polynomialBitTree κ (BinaryFractionalGuesses.decodeInput D) (round n)⟩ := by
-  simp [sourcePolynomialBitTree, EncodedVertexInput.parse_encode]
+  simp [sourcePolynomialBitTree, EncodedVertexInput.parse_encode, polynomialFromBinaryOutput_eq]
 
 end DirectedFlowCutGap.EncodedVertexAmplification

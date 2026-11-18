@@ -116,21 +116,21 @@ theorem parse_wire (capacity matrix demands : Table) :
   simp only [List.append_nil] at h
   simp [parse, h]
 
-private theorem mapM_encoded {A B : Type} (encoder : A → B) (decoder : B → Option A) (xs : List A)
+theorem mapM_encoded {A B : Type} (encoder : A → B) (decoder : B → Option A) (xs : List A)
     (h : ∀ a, decoder (encoder a) = some a) :
     (xs.map encoder).mapM decoder = some xs := by
   induction xs with
   | nil => rfl
   | cons a xs ih => simp [h, ih]
 
-private theorem readFraction_fields (r : BinaryRational.Fraction) :
+theorem readFraction_fields (r : BinaryRational.Fraction) :
     readFraction (r.num, r.den) = some r := by
   have hz : (isZero r.den).1 ≠ true :=
     fun h => (Nat.ne_of_gt r.den_pos) ((isZero_spec r.den).1.mp h)
   cases r
   simp [readFraction, BinaryRational.fromBits, hz]
 
-private theorem readMatrixRow_fields {n : ℕ} (row : Vector Bool n) :
+theorem readMatrixRow_fields {n : ℕ} (row : Vector Bool n) :
     readMatrixRow n (row.toList, []) = some row := by
   have h : row.toList.length = n ∧ ([] : Bits) = [] := by simp
   rw [readMatrixRow, dite_eq_left h]
@@ -138,7 +138,7 @@ private theorem readMatrixRow_fields {n : ℕ} (row : Vector Bool n) :
   apply Vector.toList_inj.mp
   simp
 
-private theorem readDemand_fields {n : ℕ} (d : Fin n × Fin n) :
+theorem readDemand_fields {n : ℕ} (d : Fin n × Fin n) :
     readDemand n (RowVertices.vertexLabel d.1, RowVertices.vertexLabel d.2) = some d := by
   obtain ⟨s, t⟩ := d
   simp [readDemand, RowVertices.label_numeric, s.isLt, t.isLt]

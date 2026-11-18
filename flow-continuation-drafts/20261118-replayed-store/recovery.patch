@@ -1,0 +1,42 @@
+--- a/DirectedFlowCutGap/OriginalStoreDispatch.lean
++++ b/DirectedFlowCutGap/OriginalStoreDispatch.lean
+@@ -80 +80 @@
+-      simp only [viewPolynomial,Polynomial.eval_add,Polynomial.eval_mul,Polynomial.eval_pow,
++      simp only [viewPolynomial,Polynomial.eval_add,Polynomial.eval_mul,
+@@ -123 +123 @@
+-  have hL := heapCells_bound adjacency costs ds
++  have hL : heapCells adjacency costs ds ≤ 32*N^2 := heapCells_bound adjacency costs ds
+@@ -132 +132,2 @@
+-  have preparation := preparation_le_eval adjacency costs ds
++  have preparation : preparationBound adjacency costs ds ≤ preparationPolynomial.eval N :=
++    preparation_le_eval adjacency costs ds
+@@ -136 +137 @@
+-  omega
++  exact total.trans (add_le_add preparation physical)
+--- a/DirectedFlowCutGap/OriginalStoreInitial.lean
++++ b/DirectedFlowCutGap/OriginalStoreInitial.lean
+@@ -2 +2 @@
+-import DirectedFlowCutGap.LambdaRowProgram
++import DirectedFlowCutGap.LambdaRowBound
+--- a/DirectedFlowCutGap/OriginalStoreInputViews.lean
++++ b/DirectedFlowCutGap/OriginalStoreInputViews.lean
+@@ -91 +91 @@
+-            gcongr <;> omega
++            gcongr
+@@ -98 +98 @@
+-            gcongr <;> omega
++            gcongr
+--- a/DirectedFlowCutGap/PackedOriginalStore.lean
++++ b/DirectedFlowCutGap/PackedOriginalStore.lean
+@@ -131,3 +131,5 @@
+-        have ht := ih.length
+-        have hl := hw.length
+-        simp only [rowBits,List.map_cons,List.sum_cons,List.length_cons] at *
++        have ht : t.heap.length = s.heap.length + 1 + 2 * rows.length + 2 * rowBits rows :=
++          ih.length
++        have hl : w.heap.length = t.heap.length + 1 + 2 * row.length := hw.length
++        rw [hl, ht]
++        simp only [rowBits, List.map_cons, List.sum_cons, List.length_cons]
+@@ -237 +239 @@
+-  refine ⟨?_,rfl,rfl,rfl,h.bound.next_value,h.cost_table,h.matrix_table,h.demand_table,?_⟩
++  refine ⟨?_,trivial,trivial,trivial,h.bound.next_value,h.cost_table,h.matrix_table,h.demand_table,?_⟩

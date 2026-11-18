@@ -1,0 +1,78 @@
+{
+  "baseline": "a501d1c841b0dc28544c80f183f3ab940ebf792b",
+  "inherited_ci": 39593987470,
+  "original_manifest_sha256": "40a0eedf1ea23ba48baf5e6bb64abf8e4a6b81822ddd2dd1beab6559cc1218a9",
+  "accepted_frozen_gate": false,
+  "compiled_modules": 737,
+  "strict_new_module_count": 15,
+  "repaired_modules": {
+    "DirectedFlowCutGap.OriginalStoreInputViews": {
+      "before": "c7149a60652a109f2788cdfdf897c637d391cf55813c50dae885f0410e772807",
+      "after": "e9fe92ccc03d6f0a2d6add73a826b536536c89725896f0070a57c70523835cf1",
+      "change": "Remove two unused terminal omega tactics."
+    },
+    "DirectedFlowCutGap.PackedOriginalStore": {
+      "before": "a402ee1aeebd21134ba999e12aaf5d494f1390e32dad14f6012b19e73527edff",
+      "after": "095b567c96d8e01228b2492772b31524438a34806759bff999e79fad3ec8661f",
+      "change": "State matrix append length equalities explicitly and discharge already simplified True goals."
+    },
+    "DirectedFlowCutGap.OriginalStoreInitial": {
+      "before": "ad6f8822a6e968ea2c50c442749d452d84f8f23eca653c03ea64edf64537612b",
+      "after": "35a1a68b14a234e0b5c6f53de6b6a69eb8b2fd45bed70ca4744910a7ab4a4706",
+      "change": "Import LambdaRowBound, which owns the rowBits declaration used by the cell formulas."
+    },
+    "DirectedFlowCutGap.OriginalStoreDispatch": {
+      "before": "67f8f2ccb4a263fafe95be51497c82ae34659b273c23c5715ab6e621eea5ec41",
+      "after": "a2581ded28fd22353e34d3f277b00d238b6c67fa3b98eb3f5447de651bcde67a",
+      "change": "Use one let-bound size across the polynomial inequalities and compose the charged bounds explicitly."
+    }
+  },
+  "kernel_replayed_new_modules": [
+    "DirectedFlowCutGap.ActualFinalDispatch",
+    "DirectedFlowCutGap.FinalDispatchCallLift",
+    "DirectedFlowCutGap.FinalDispatchCalls",
+    "DirectedFlowCutGap.FinalDispatchEnvelope",
+    "DirectedFlowCutGap.FinalDispatchOutput",
+    "DirectedFlowCutGap.FinalDispatchPositive",
+    "DirectedFlowCutGap.FinalDispatchPrefix",
+    "DirectedFlowCutGap.FinalDispatchProgram",
+    "DirectedFlowCutGap.FinalDispatchTail",
+    "DirectedFlowCutGap.FinalDispatchTrace",
+    "DirectedFlowCutGap.OriginalStoreCorrectness",
+    "DirectedFlowCutGap.OriginalStoreDispatch",
+    "DirectedFlowCutGap.OriginalStoreInitial",
+    "DirectedFlowCutGap.OriginalStoreInputViews",
+    "DirectedFlowCutGap.PackedOriginalStore"
+  ],
+  "original_flags_for_722": true,
+  "logical_audit": {
+    "declarations": 26570,
+    "new_roots": 480,
+    "closure": 26835,
+    "baseline_declarations": 26090,
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "receipts": {
+    "original_recovery_sha256": "f0a16a58750a8aa6e77fd79476d19c20f9edbb668443820f0488b5c4dc9b2b4a"
+  },
+  "fixtures": {
+    "degenerate": "passed",
+    "envelopes": "passed",
+    "positive_natural": {
+      "exit": 124,
+      "seconds_limit": 120,
+      "logged_instructions": 487000,
+      "sha256": "0feb5668a2afb8be1e21043787e2b62c6d982a2a9fdfc80c8c6867ce34c86ec9"
+    },
+    "positive_physical": {
+      "exit": 124,
+      "seconds_limit": 120,
+      "logged_instructions": 23000,
+      "sha256": "f3cba68b5913deac0dee5e86f6b39abe7172fadee5e381fe6683f2d699d8f945"
+    }
+  }
+}

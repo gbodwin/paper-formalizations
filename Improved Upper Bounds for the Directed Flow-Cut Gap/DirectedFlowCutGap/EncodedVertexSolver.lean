@@ -44,14 +44,19 @@ private def finish {n : ℕ} (result : Option (Flags n)) : Output n :=
 
 abbrev Rounding (n : ℕ) := RoundingInput n → FiniteDrawTrees.Tree (Flags n)
 
-def tree {n : ℕ} (D : GraphInput n) (round : Rounding n) :
+def roundOutput {n : ℕ} (D : GraphInput n) (round : Rounding n)
+    (out : FractionalCoverRawGuesses.Output n) :
     FiniteDrawTrees.Tree (Output n) :=
-  match solveInput D with
+  match out with
   | .infeasible d => .pure (.infeasible d)
   | .zero X => .pure (.cut (maskOfSet X))
   | .invalid => .pure .invalid
   | .covers states =>
     map finish (best D.costs (states.map (fun s => round (roundingInput D s.best))))
+
+def tree {n : ℕ} (D : GraphInput n) (round : Rounding n) :
+    FiniteDrawTrees.Tree (Output n) :=
+  roundOutput D round (solveInput D)
 
 def bitTree {n : ℕ} (T : ℕ) (D : GraphInput n) (round : Rounding n) :
     FiniteDrawTrees.Tree (Output n) :=
@@ -102,13 +107,13 @@ theorem support_valid_on_input {n : ℕ} (D : GraphInput n) (round : Rounding n)
   have h := solveInput_correct D
   cases hs : solveInput D with
   | infeasible d =>
-    have he : out = .infeasible d := by simpa [tree, hs, ideal, law] using hout
+    have he : out = .infeasible d := by simpa [tree, hs, roundOutput, ideal, law] using hout
     subst out
     simp only [Correct, hs, decodeOutput] at h
     rintro ⟨w, hw⟩
     exact h ⟨_, comparator_feasible D w hw⟩
   | zero X =>
-    have he : out = .cut (maskOfSet X) := by simpa [tree, hs, ideal, law] using hout
+    have he : out = .cut (maskOfSet X) := by simpa [tree, hs, roundOutput, ideal, law] using hout
     subst out
     simp only [Correct, hs, decodeOutput] at h
     simpa only [Valid, selectedSet_maskOfSet] using h.1
@@ -116,7 +121,7 @@ theorem support_valid_on_input {n : ℕ} (D : GraphInput n) (round : Rounding n)
     exact (solveInput_not_invalid D hs).elim
   | covers states =>
     simp only [Correct, hs, decodeOutput] at h
-    simp only [tree, hs, ideal, law_map] at hout
+    simp only [tree, hs, roundOutput, ideal, law_map] at hout
     obtain ⟨result, hr, rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp hout
     cases result with
     | none =>
@@ -159,17 +164,32 @@ theorem tree_within {n : ℕ} (D : GraphInput n) (round : Rounding n) (roundBoun
     (hround : ∀ r : RoundingInput n, Within roundBound (round r)) :
     Within (drawBound D roundBound) (tree D round) := by
   cases hs : solveInput D with
-  | infeasible d => rw [tree, hs]; exact .pure _ _
-  | zero X => rw [tree, hs]; exact .pure _ _
-  | invalid => rw [tree, hs]; exact .pure _ _
+  | infeasible d => rw [tree, hs, roundOutput]; exact .pure _ _
+  | zero X => rw [tree, hs, roundOutput]; exact .pure _ _
+  | invalid => rw [tree, hs, roundOutput]; exact .pure _ _
   | covers states =>
     have hc := solveInput_correct D
     simp only [Correct, hs, decodeOutput, List.length_map] at hc
-    rw [tree, hs, drawBound, ← hc.1]
+    rw [tree, hs, roundOutput, drawBound, ← hc.1]
     have hb := best_within D.costs (states.map (fun s => round (roundingInput D s.best)))
       roundBound (by rintro _ h; obtain ⟨s, _, rfl⟩ := List.mem_map.mp h; exact hround _)
     simp only [List.length_map] at hb
     exact within_map hb finish
+
+theorem tree_widths {n width : ℕ} (D : GraphInput n) (round : Rounding n)
+    (hround : ∀ r : RoundingInput n, LazyFairBitTrees.WidthsLE width (round r)) :
+    LazyFairBitTrees.WidthsLE width (tree D round) := by
+  cases hs : solveInput D with
+  | infeasible d => rw [tree, hs, roundOutput]; exact .pure _
+  | zero X => rw [tree, hs, roundOutput]; exact .pure _
+  | invalid => rw [tree, hs, roundOutput]; exact .pure _
+  | covers states =>
+    rw [tree, hs, roundOutput]
+    apply LazyFairBitTrees.widths_map
+    apply best_widths
+    intro t ht
+    obtain ⟨s, _, rfl⟩ := List.mem_map.mp ht
+    exact hround _
 
 noncomputable def capacity {n : ℕ} (D : GraphInput n) (i : Fin n) : ℝ≥0 :=
   (get D.costs i).realValue
@@ -249,14 +269,14 @@ theorem expected_comparison {n : ℕ} (D : GraphInput n) (round : Rounding n)
   | invalid => exact (solveInput_not_invalid D hs).elim
   | zero X =>
     simp only [Correct, hs, decodeOutput] at hc
-    simp only [expectedPrice, tree, hs, ideal, law, PMF.pure_map, expectedCost_pure, outputMask,
+    simp only [expectedPrice, tree, hs, roundOutput, ideal, law, PMF.pure_map, expectedCost_pure, outputMask,
       optionPrice, Option.elim_some, decode_zero_price D.costs X hc.2]
     exact hB
   | covers states =>
     simp only [Correct, hs, decodeOutput] at hc
     obtain ⟨s, hmem, _, hprice, hmass⟩ := hc.2.2 (fun i => (w i : ℝ)) hf
     obtain ⟨state, hin, rfl⟩ := List.mem_map.mp hmem
-    simp only [expectedPrice, tree, hs, ideal, law_map, PMF.map_comp]
+    simp only [expectedPrice, tree, hs, roundOutput, ideal, law_map, PMF.map_comp]
     have he : (outputMask : Output n → Option (Flags n)) ∘ finish = id := by
       funext x
       cases x <;> rfl

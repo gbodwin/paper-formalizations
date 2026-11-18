@@ -102,20 +102,30 @@ theorem tree_within {n : ℕ} (D : Input n) : Within (drawBound n) (tree D) := b
   · rw [tree_trivial D h]
     exact .pure _ _
 
-theorem bitTree_within {n : ℕ} (T : ℕ) (D : Input n) :
-    Within (drawBound n * T * RetainedDrawTrees.sampleWidth (6 * n) (3 * n)) (bitTree T D) := by
-  unfold bitTree
+theorem widths_weaken {A : Type} {t : FiniteDrawTrees.Tree A} {w w' : ℕ}
+    (ht : LazyFairBitTrees.WidthsLE w t) (h : w ≤ w') : LazyFairBitTrees.WidthsLE w' t := by
+  induction ht with
+  | pure a => exact .pure a
+  | draw hw _ ih => exact .draw (hw.trans h) ih
+
+theorem sampleWidth_mono {a b L M : ℕ} (h : a ≤ b) (hL : L ≤ M) :
+    RetainedDrawTrees.sampleWidth a L ≤ RetainedDrawTrees.sampleWidth b M :=
+  LazyFairBitTrees.width_mono (max_le_max (Nat.mul_le_mul h h) hL)
+
+theorem tree_widths {n : ℕ} (D : Input n) :
+    LazyFairBitTrees.WidthsLE (RetainedDrawTrees.sampleWidth (6 * n) (3 * n)) (tree D) := by
   by_cases h : nontrivial D = true
   · have hn := expand_size_bound D (total_pos D h)
     have hL : (expand D).cutoff ≤ 3 * n := cutoff_le_ports D h
-    have hw : LazyFairBitTrees.WidthsLE
-        (RetainedDrawTrees.sampleWidth (expand D).size (expand D).cutoff) (tree D) := by
-      rw [tree_expand D h]
-      exact LazyFairBitTrees.widths_map (EncodedIntegerRounding.tree_widths ..) _
-    apply within_mono (LazyFairBitTrees.lower_within (tree_within D) hw T)
-    exact Nat.mul_le_mul_left _ (LazyFairBitTrees.width_mono (max_le_max (Nat.mul_le_mul hn hn) hL))
-  · rw [tree_trivial D h, LazyFairBitTrees.lower]
-    exact .pure _ _
+    rw [tree_expand D h]
+    exact widths_weaken (LazyFairBitTrees.widths_map (EncodedIntegerRounding.tree_widths ..) _)
+      (sampleWidth_mono hn hL)
+  · rw [tree_trivial D h]
+    exact .pure _
+
+theorem bitTree_within {n : ℕ} (T : ℕ) (D : Input n) :
+    Within (drawBound n * T * RetainedDrawTrees.sampleWidth (6 * n) (3 * n)) (bitTree T D) :=
+  LazyFairBitTrees.lower_within (tree_within D) (tree_widths D) T
 
 theorem bit_event_le {n : ℕ} (T : ℕ) (D : Input n) (P : Flags n → Prop) :
     probability (ideal (bitTree T D)) P ≤

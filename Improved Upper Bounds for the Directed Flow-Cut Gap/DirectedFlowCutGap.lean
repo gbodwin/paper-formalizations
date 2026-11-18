@@ -69,6 +69,7 @@ import DirectedFlowCutGap.EncodedCubeRootThreshold
 import DirectedFlowCutGap.EncodedCutSelection
 import DirectedFlowCutGap.EncodedDyadicRoot
 import DirectedFlowCutGap.EncodedEdgeGadget
+import DirectedFlowCutGap.EncodedEdgeInput
 import DirectedFlowCutGap.EncodedEdgeLabels
 import DirectedFlowCutGap.EncodedEdgeLineInput
 import DirectedFlowCutGap.EncodedEdgeRounding
@@ -92,6 +93,8 @@ import DirectedFlowCutGap.EncodedSampledRounding
 import DirectedFlowCutGap.EncodedSequenceAccess
 import DirectedFlowCutGap.EncodedShortcutReachability
 import DirectedFlowCutGap.EncodedSizeRounding
+import DirectedFlowCutGap.EncodedSolverBits
+import DirectedFlowCutGap.EncodedSourceExecution
 import DirectedFlowCutGap.EncodedTablePreparation
 import DirectedFlowCutGap.EncodedTapeMaterialization
 import DirectedFlowCutGap.EncodedUniformChain

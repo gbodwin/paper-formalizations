@@ -72,10 +72,43 @@ private theorem round_within {n : ℕ} (D : Input n) (mode : Mode)
   unfold drawBound EncodedUniformRounding.drawBound
   gcongr
 
+def drawWidth (n : ℕ) : ℕ :=
+  EncodedWeightedRounding.drawWidth (2 * n * (Nat.log2 n + 4))
+
+private theorem round_widths {n : ℕ} (D : Input n) (mode : Mode)
+    (h : ∀ m (I : EncodedUnitCostReplication.Input m),
+      LazyFairBitTrees.WidthsLE (EncodedWeightedRounding.drawWidth m) (mode m I))
+    (r : EncodedUnitCostReplication.Input (lineSize n)) :
+    LazyFairBitTrees.WidthsLE (drawWidth n) (round D mode r) := by
+  let I := roundingInput D r.weights
+  let g := EncodedEdgeGadget.build I
+  apply EncodedUniformRounding.widths_weaken (LazyFairBitTrees.widths_map
+    (LazyFairBitTrees.widths_map (h g.size g.data) _) _)
+  exact EncodedWeightedRounding.drawWidth_mono (EncodedEdgeGadget.build_size_le I)
+
 def bitTree {n : ℕ} (κ : ℕ) (D : Input n) (mode : Mode) : FiniteDrawTrees.Tree (Output n) :=
   let e := EncodedVertexAmplification.confidenceExponent n κ
   map (outputFor D)
     (EncodedVertexAmplification.boundedBitTree (drawBound n) e (e + 1) (lineInput D) (round D mode))
+
+theorem bitTree_binary {n : ℕ} (κ : ℕ) (D : Input n) (mode : Mode) :
+    LazyFairBitTrees.Binary (bitTree κ D mode) :=
+  LazyFairBitTrees.binary_map (EncodedAmplification.bitTree_binary ..) _
+
+theorem bitTree_within {n : ℕ} (κ : ℕ) (D : Input n) (mode : Mode)
+    (hmode : ∀ m (I : EncodedUnitCostReplication.Input m),
+      Within (EncodedUniformRounding.drawBound (4 * m ^ 2)) (mode m I))
+    (hwidth : ∀ m (I : EncodedUnitCostReplication.Input m),
+      LazyFairBitTrees.WidthsLE (EncodedWeightedRounding.drawWidth m) (mode m I)) :
+    let e := EncodedVertexAmplification.confidenceExponent n κ + 1
+    let Q := e * EncodedVertexSolver.drawBound (lineInput D) (drawBound n)
+    Within (Q * FairBitConfidence.trials Q e * drawWidth n) (bitTree κ D mode) :=
+  within_map
+    (EncodedVertexAmplification.boundedBit_within (drawBound n)
+      (EncodedVertexAmplification.confidenceExponent n κ)
+      (EncodedVertexAmplification.confidenceExponent n κ + 1) (drawWidth n)
+      (lineInput D) (round D mode) (round_within D mode hmode) (round_widths D mode hwidth))
+    (outputFor D)
 
 def Valid {n : ℕ} (D : Input n) : Output n → Prop
   | .infeasible _ => ¬ ∃ w : EncodedEdgeGadget.Pair n → ℝ≥0,
