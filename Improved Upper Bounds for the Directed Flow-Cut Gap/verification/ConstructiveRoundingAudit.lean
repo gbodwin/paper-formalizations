@@ -4,6 +4,8 @@ import DirectedFlowCutGap.SparsestVertexCorollary
 import DirectedFlowCutGap.SparsestEdgeCorollary
 import DirectedFlowCutGap.EncodedWeightedRounding
 import DirectedFlowCutGap.EncodedVertexSolver
+import DirectedFlowCutGap.EncodedVertexAmplification
+import DirectedFlowCutGap.EncodedEdgeRounding
 import Lean.Compiler.Old
 import Lean.Util.CollectAxioms
 import Lean.Util.FoldConsts
@@ -23,7 +25,10 @@ run_cmd do
     `DirectedFlowCutGap.EncodedIntegerRounding, `DirectedFlowCutGap.EncodedUniformRounding,
     `DirectedFlowCutGap.EncodedWeightedRounding, `DirectedFlowCutGap.EncodedSizeRounding,
     `DirectedFlowCutGap.EncodedCutSelection, `DirectedFlowCutGap.EncodedVertexSolver,
-    `DirectedFlowCutGap.FractionalCoverRawGuesses]
+    `DirectedFlowCutGap.FractionalCoverRawGuesses,
+    `DirectedFlowCutGap.EncodedVertexInput, `DirectedFlowCutGap.EncodedAmplification,
+    `DirectedFlowCutGap.EncodedVertexAmplification, `DirectedFlowCutGap.EncodedEdgeLabels,
+    `DirectedFlowCutGap.EncodedEdgeGadget, `DirectedFlowCutGap.EncodedEdgeRounding]
   let allowed := #[`propext, `Classical.choice, `Quot.sound]
   let mut counts : NameMap Nat := {}
   let mut compilerEntries : Nat := 0
@@ -66,7 +71,18 @@ run_cmd do
     `DirectedFlowCutGap.EncodedVertexSolver.sizeBit_support_valid,
     `DirectedFlowCutGap.EncodedVertexSolver.mass_expected_uniform,
     `DirectedFlowCutGap.EncodedVertexSolver.size_expected_uniform,
-    `DirectedFlowCutGap.EncodedVertexSolver.bit_bad_cost_le] do
+    `DirectedFlowCutGap.EncodedVertexSolver.bit_bad_cost_le,
+    `DirectedFlowCutGap.EncodedVertexInput.parse_encode,
+    `DirectedFlowCutGap.EncodedVertexAmplification.sourcePolynomialBitTree_encode,
+    `DirectedFlowCutGap.EncodedVertexAmplification.polynomial_failure_le,
+    `DirectedFlowCutGap.EncodedAmplification.samples_law,
+    `DirectedFlowCutGap.EncodedAmplification.bitTree_within,
+    `DirectedFlowCutGap.EncodedEdgeGadget.build_size_le,
+    `DirectedFlowCutGap.EncodedEdgeGadget.threshold_transfer,
+    `DirectedFlowCutGap.EncodedEdgeRounding.massBit_support_valid,
+    `DirectedFlowCutGap.EncodedEdgeRounding.sizeBit_support_valid,
+    `DirectedFlowCutGap.EncodedEdgeRounding.size_expected_uniform,
+    `DirectedFlowCutGap.EncodedEdgeRounding.mass_expected_uniform] do
     let some (.thmInfo _) := env.find? theoremName | throwError "Missing theorem {theoremName}"
     unless roots.contains theoremName do throwError "Unselected theorem {theoremName}"
   let mut todo := roots

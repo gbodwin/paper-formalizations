@@ -11,7 +11,7 @@ env:
 jobs:
   rounding:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 70
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Bind exact source
@@ -30,6 +30,8 @@ jobs:
             +DirectedFlowCutGap.SparsestEdgeCorollary
             +DirectedFlowCutGap.EncodedWeightedRounding
             +DirectedFlowCutGap.EncodedVertexSolver
+            +DirectedFlowCutGap.EncodedVertexAmplification
+            +DirectedFlowCutGap.EncodedEdgeRounding
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"

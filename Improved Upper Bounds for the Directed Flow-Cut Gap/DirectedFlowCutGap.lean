@@ -59,6 +59,7 @@ import DirectedFlowCutGap.EdgeFlow
 import DirectedFlowCutGap.EdgeModel
 import DirectedFlowCutGap.EdgeRounding
 import DirectedFlowCutGap.EdgeToVertexReduction
+import DirectedFlowCutGap.EncodedAmplification
 import DirectedFlowCutGap.EncodedArrayStorage
 import DirectedFlowCutGap.EncodedCandidateCapacity
 import DirectedFlowCutGap.EncodedCandidateOutput
@@ -66,6 +67,9 @@ import DirectedFlowCutGap.EncodedCellAccess
 import DirectedFlowCutGap.EncodedCubeRootThreshold
 import DirectedFlowCutGap.EncodedCutSelection
 import DirectedFlowCutGap.EncodedDyadicRoot
+import DirectedFlowCutGap.EncodedEdgeGadget
+import DirectedFlowCutGap.EncodedEdgeLabels
+import DirectedFlowCutGap.EncodedEdgeRounding
 import DirectedFlowCutGap.EncodedEpochParameters
 import DirectedFlowCutGap.EncodedFlagUnion
 import DirectedFlowCutGap.EncodedHeavyVertexOutput
@@ -94,6 +98,8 @@ import DirectedFlowCutGap.EncodedUniformWeightParameters
 import DirectedFlowCutGap.EncodedUnitCostOutput
 import DirectedFlowCutGap.EncodedUnitCostPreparation
 import DirectedFlowCutGap.EncodedUnitCostReplication
+import DirectedFlowCutGap.EncodedVertexAmplification
+import DirectedFlowCutGap.EncodedVertexInput
 import DirectedFlowCutGap.EncodedVertexSolver
 import DirectedFlowCutGap.EncodedWeightedRounding
 import DirectedFlowCutGap.EpochAccounting
