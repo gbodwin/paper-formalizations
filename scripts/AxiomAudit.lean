@@ -143,6 +143,12 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.theorem38_root
 #print axioms OnlineReachabilityPreservers.theorem38_exponent_limits
 #print axioms OnlineReachabilityPreservers.theorem43_exponent_limit
+#print axioms OnlineReachabilityPreservers.theorem14_dag_compression
+#print axioms OnlineReachabilityPreservers.offline_pairwise_initial
+#print axioms OnlineReachabilityPreservers.lemma37_first_term
+#print axioms OnlineReachabilityPreservers.lemma37_third_term
+#print axioms OnlineReachabilityPreservers.lemma42_third_term
+#print axioms OnlineReachabilityPreservers.lemma42_printed_vertex_exponent_ne
 #print axioms OnlineReachabilityPreservers.lemma20_opt_squared
 #print axioms OnlineReachabilityPreservers.lemma22_hub_count
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum

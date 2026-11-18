@@ -43,6 +43,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
 - [`theorem38_root`, `theorem38_exponent_limits`, and `theorem43_exponent_limit`](OnlineReachabilityPreservers/ExponentLimits.lean)
   check the online cubic root and both arithmetic iterations. The extremal
   estimates that make the updates valid for preserver bounds remain open.
+- [`theorem14_dag_compression` and `offline_pairwise_initial`](OnlineReachabilityPreservers/OfflineIndependence.lean)
+  prove the constructive independence reduction on DAGs and its initial
+  offline pairwise consequence on arbitrary digraphs. The algorithm deletes
+  each dispensable edge and the proof assigns the surviving edges to requests
+  that require them. The resulting acyclic system has size `m+p` and is fully
+  bridge-free. The sharp offline bound and extremal lower direction remain open.
+- [`lemma37_first_term`, `lemma37_third_term`, and `lemma42_third_term`](OnlineReachabilityPreservers/BootstrapArithmetic.lean)
+  verify the rearrangements of those individual branching-count terms.
+  The third term of Lemma 42 gives vertex exponent `1/(b+1)`, the exponent
+  implicit in Theorem 43.
 - [`lemma20_opt_squared` and `lemma22_hub_count`](OnlineReachabilityPreservers/SteinerCounting.lean)
   prove the terminal-counting lower bounds used in the Steiner application.
   [`lemma29_square_sum`](OnlineReachabilityPreservers/Majorization.lean) proves

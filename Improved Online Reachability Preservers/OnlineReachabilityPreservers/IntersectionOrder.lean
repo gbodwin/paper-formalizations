@@ -192,6 +192,44 @@ theorem lemma24_right_strict {paths : I → Finset V}
   exact free.no_three (by decide) hb.left_ne_middle ha.left_ne_middle.symm hab
     ⟨ha.on_left, hb.on_left, hx⟩ hb.middle_step ha.middle_step
 
+section TopologicalOrder
+
+variable [Fintype V]
+
+/-- Break ties in decreasing reach rank using the vertex order. -/
+def reverseTopologicalKey (G : Arcs V) (x : V) : (ℕ ×ₗ V)ᵒᵈ :=
+  OrderDual.toDual (toLex ((reaches G x).card, x))
+
+noncomputable def topologicalEquiv (G : Arcs V) : V ≃ Set.range (reverseTopologicalKey G) :=
+  Equiv.ofInjective (reverseTopologicalKey G) fun _ _ eq =>
+    congrArg (fun a => (ofLex (OrderDual.ofDual a)).2) eq
+
+/-- Represent a family by finsets on the same vertices in reverse topological order. -/
+noncomputable def topologicalPaths (G : Arcs V) (paths : I → Finset V)
+    (i : I) : Finset (Set.range (reverseTopologicalKey G)) :=
+  (paths i).map (topologicalEquiv G).toEmbedding
+
+omit [LinearOrder I] in
+theorem topologicalPaths_step {G : Arcs V} (dag : IsDAG G) {paths : I → Finset V}
+    (total : ∀ i {u v}, u ∈ paths i → v ∈ paths i → u ≠ v →
+      BeforeIn G (paths i) u v ∨ BeforeIn G (paths i) v u)
+    {i : I} {x y : Set.range (reverseTopologicalKey G)}
+    (h : PathBefore (topologicalPaths G paths) i x y) :
+    BeforeIn G (paths i) ((topologicalEquiv G).symm y) ((topologicalEquiv G).symm x) := by
+  obtain ⟨hx, hy, hlt⟩ := h
+  obtain ⟨u, hu, rfl⟩ := mem_map.mp hx
+  obtain ⟨v, hv, rfl⟩ := mem_map.mp hy
+  change (topologicalEquiv G u) < (topologicalEquiv G v) at hlt
+  have hne : v ≠ u := fun eq => hlt.ne (congrArg (topologicalEquiv G) eq.symm)
+  simp only [Equiv.toEmbedding_apply, Equiv.symm_apply_apply]
+  rcases total i hv hu hne with h | h
+  · exact h
+  · have hf : (toLex ((reaches G u).card, u)) < toLex ((reaches G v).card, v) :=
+      Prod.Lex.toLex_lt_toLex.mpr (Or.inl (h.rank_lt dag))
+    exact (lt_asymm hf hlt).elim
+
+end TopologicalOrder
+
 variable [Fintype V] [Fintype I]
 
 /-- Keep the two intersection vertices to make the finite counts explicit. -/

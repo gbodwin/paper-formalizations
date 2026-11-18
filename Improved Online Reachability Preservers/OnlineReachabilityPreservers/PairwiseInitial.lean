@@ -217,43 +217,17 @@ theorem lemma27_acyclic (paths : I → Finset V) (free : HalfBridgeFree (PathBef
   refine Or.inr (Or.inr (Nat.le_of_mul_le_mul_right ?_ hm))
   convert h using 1 <;> ring
 
-private def reverseTopologicalKey (G : Arcs V) (x : V) : (ℕ ×ₗ V)ᵒᵈ :=
-  OrderDual.toDual (toLex ((reaches G x).card, x))
-
-private noncomputable def topologicalEquiv (G : Arcs V) : V ≃ Set.range (reverseTopologicalKey G) :=
-  Equiv.ofInjective (reverseTopologicalKey G) fun _ _ eq =>
-    congrArg (fun a => (ofLex (OrderDual.ofDual a)).2) eq
-
-private noncomputable def orderedCompression (G : Arcs V) (D : List (V × V))
-    (i : Fin D.length) : Finset (Set.range (reverseTopologicalKey G)) :=
-  (compressed G D i).map (topologicalEquiv G).toEmbedding
-
-private theorem orderedCompression_step {G : Arcs V} (dag : IsDAG G) {D : List (V × V)}
-    {i : Fin D.length} {x y : Set.range (reverseTopologicalKey G)}
-    (h : PathBefore (orderedCompression G D) i x y) :
-    CompressedBefore G D i ((topologicalEquiv G).symm y) ((topologicalEquiv G).symm x) := by
-  obtain ⟨hx, hy, hlt⟩ := h
-  obtain ⟨u, hu, rfl⟩ := mem_map.mp hx
-  obtain ⟨v, hv, rfl⟩ := mem_map.mp hy
-  change (topologicalEquiv G u) < (topologicalEquiv G v) at hlt
-  have hne : v ≠ u := fun eq => hlt.ne (congrArg (topologicalEquiv G) eq.symm)
-  simp only [Equiv.toEmbedding_apply, Equiv.symm_apply_apply]
-  rcases compressedBefore_total hv hu hne with h | h
-  · exact h
-  · have hf : (toLex ((reaches G u).card, u)) < toLex ((reaches G v).card, v) :=
-      Prod.Lex.toLex_lt_toLex.mpr (Or.inl (compressedBefore_topological dag h))
-    exact (lt_asymm hf hlt).elim
-
 private theorem orderedCompression_free {G : Arcs V} (dag : IsDAG G) (D : List (V × V)) :
-    HalfBridgeFree (PathBefore (orderedCompression G D)) 4 := by
+    HalfBridgeFree (PathBefore (topologicalPaths G (compressed G D))) 4 := by
   intro k _ b
   let old : Bridge (CompressedBefore G D) k :=
     b.reverse.mapVertices (topologicalEquiv G).symm (topologicalEquiv G).symm.injective
-      (fun _ _ _ h => orderedCompression_step dag h)
+      (fun _ _ _ h => topologicalPaths_step dag
+        (fun i {_ _} hx hy ne => compressedBefore_total (G := G) (D := D) (i := i) hx hy ne) h)
   simpa [old, Bridge.mapVertices, Bridge.reverse, Function.comp_def, Fin.rev_zero] using
     no_earlier_first_arc dag old
 
-private theorem edge_bound_of_incidence {m n p : ℕ} (cap : m ≤ n^2)
+theorem edge_bound_of_incidence {m n p : ℕ} (cap : m ≤ n^2)
     (h : m + p ≤ 16*n ∨ m + p ≤ 8*p ∨ (m + p)^3 ≤ 2048 * (n*p)^2) :
     m ≤ 16*n ∨ m^3 ≤ 2048 * (n*p)^2 := by
   rcases h with h | h | h
@@ -275,8 +249,8 @@ theorem forwardRun_pairwise_initial {G : Arcs V} (dag : IsDAG G) (D : List (V ×
     m ≤ 16*n ∨ m^3 ≤ 2048 * (n*p)^2 := by
   let : Fintype (Set.range (reverseTopologicalKey G)) :=
     Fintype.ofEquiv V (topologicalEquiv G)
-  have h := lemma27_acyclic (orderedCompression G D) (orderedCompression_free dag D)
-  simp only [← Fintype.card_congr (topologicalEquiv G), Fintype.card_fin, orderedCompression, card_map,
+  have h := lemma27_acyclic (topologicalPaths G (compressed G D)) (orderedCompression_free dag D)
+  simp only [← Fintype.card_congr (topologicalEquiv G), Fintype.card_fin, topologicalPaths, card_map,
     compressed_total dag D] at h
   have cap := card_le_univ (forwardRun G D)
   rw [Fintype.card_prod, ← pow_two] at cap

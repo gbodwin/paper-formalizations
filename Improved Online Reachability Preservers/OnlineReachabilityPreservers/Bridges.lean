@@ -48,14 +48,12 @@ def Bridge.mapVertices {V W I : Type*} {before : I → V → V → Prop}
 
 variable {V : Type*} [LinearOrder V] [Fintype V]
 
-/-- The forward compression keeps new-edge tails and the terminal.
-An ignored unreachable request can be recorded as a singleton terminal. -/
-def compressed (G : Arcs V) (D : List (V × V)) (i : Fin D.length) : Finset V :=
-  insert (D.get i).2 (marks G D i)
+/-- The new-edge or critical-edge tails of a walk, together with its end. -/
+def markedPath (A : Arcs V) (t : V) : Finset V := insert t (A.image Prod.fst)
 
-/-- On a DAG walk the order on its vertices is the restriction of strict reachability. -/
-def CompressedBefore (G : Arcs V) (D : List (V × V)) (i : Fin D.length) (u v : V) : Prop :=
-  u ∈ compressed G D i ∧ v ∈ compressed G D i ∧ u ≠ v ∧ Reach G u v
+/-- Strict reach order restricted to a set of vertices on a path. -/
+def BeforeIn (G : Arcs V) (S : Finset V) (u v : V) : Prop :=
+  u ∈ S ∧ v ∈ S ∧ u ≠ v ∧ Reach G u v
 
 omit [LinearOrder V] [Fintype V] in
 theorem dag_reach_antisymm {G : Arcs V} (dag : IsDAG G) {u v : V}
@@ -64,9 +62,8 @@ theorem dag_reach_antisymm {G : Arcs V} (dag : IsDAG G) {u v : V}
   · exact eq
   · exact (dag edge (rest.trans back)).elim
 
-theorem compressedBefore_topological {G : Arcs V} (dag : IsDAG G)
-    {D : List (V × V)} {i : Fin D.length} {u v : V} (h : CompressedBefore G D i u v) :
-    (reaches G u).card < (reaches G v).card := by
+theorem BeforeIn.rank_lt {G : Arcs V} (dag : IsDAG G) {S : Finset V}
+    {u v : V} (h : BeforeIn G S u v) : (reaches G u).card < (reaches G v).card := by
   rcases h.2.2.2.cases_head with eq | ⟨w, edge, rest⟩
   · exact (h.2.2.1 eq).elim
   · apply (reaches_card_lt dag edge).trans_le
@@ -74,67 +71,100 @@ theorem compressedBefore_topological {G : Arcs V} (dag : IsDAG G)
     intro x hx
     exact mem_reaches.mpr ((mem_reaches.mp hx).trans rest)
 
-private theorem compressed_to_target {G : Arcs V} {D : List (V × V)} {i : Fin D.length}
-    {u : V} (hu : u ∈ compressed G D i) : Reach G u (D.get i).2 := by
+theorem markedPath_to_target {G H A : Arcs V} {d : V × V}
+    (sub : H ⊆ G) (chosen : A ⊆ forwardEdges G H d)
+    {u : V} (hu : u ∈ markedPath A d.2) : Reach G u d.2 := by
   rcases mem_insert.mp hu with eq | hm
   · exact eq ▸ ReflTransGen.refl
   · obtain ⟨e, he, rfl⟩ := mem_image.mp hm
-    have edge : Edge G e.1 e.2 :=
-      forwardEdges_subset (before_subset G D i) _ (mem_sdiff.mp he).1
-    exact (new_edge_reaches_target he).head edge
+    exact (forward_edge_to_end sub (chosen he)).head (forwardEdges_subset sub _ (chosen he))
+
+theorem markedPath_total {G H A : Arcs V} {d : V × V}
+    (sub : H ⊆ G) (chosen : A ⊆ forwardEdges G H d)
+    {u v : V} (hu : u ∈ markedPath A d.2) (hv : v ∈ markedPath A d.2) (ne : u ≠ v) :
+    BeforeIn G (markedPath A d.2) u v ∨ BeforeIn G (markedPath A d.2) v u := by
+  by_cases hut : u = d.2
+  · exact Or.inr ⟨hv, hu, ne.symm, hut.symm ▸ markedPath_to_target sub chosen hv⟩
+  by_cases hvt : v = d.2
+  · exact Or.inl ⟨hu, hv, ne, hvt.symm ▸ markedPath_to_target sub chosen hu⟩
+  obtain ⟨a, ha, rfl⟩ := mem_image.mp ((mem_insert.mp hu).resolve_left hut)
+  obtain ⟨b, hb, rfl⟩ := mem_image.mp ((mem_insert.mp hv).resolve_left hvt)
+  rcases forward_edge_order sub (chosen ha) (chosen hb) (fun h => ne (congrArg Prod.fst h)) with h | h
+  · exact Or.inl ⟨hu, hv, ne, h.head (forwardEdges_subset sub _ (chosen ha))⟩
+  · exact Or.inr ⟨hv, hu, ne.symm, h.head (forwardEdges_subset sub _ (chosen hb))⟩
+
+theorem markedPath_card {G H A : Arcs V} {d : V × V} (dag : IsDAG G)
+    (sub : H ⊆ G) (chosen : A ⊆ forwardEdges G H d) :
+    (markedPath A d.2).card = A.card + 1 := by
+  have target : d.2 ∉ A.image Prod.fst := by
+    intro hw
+    obtain ⟨e, he, eq⟩ := mem_image.mp hw
+    exact dag (forwardEdges_subset sub _ (chosen he))
+      (eq.symm ▸ forward_edge_to_end sub (chosen he))
+  rw [markedPath, card_insert_of_notMem target]
+  congr 1
+  apply card_image_of_injOn
+  intro e he f hf eq
+  by_contra hne
+  rcases forward_edge_order sub (chosen he) (chosen hf) hne with h | h
+  · exact dag (forwardEdges_subset sub _ (chosen he)) (eq.symm ▸ h)
+  · exact dag (forwardEdges_subset sub _ (chosen hf)) (eq ▸ h)
+
+theorem markedPath_exit {G H A : Arcs V} {d : V × V} (dag : IsDAG G)
+    (sub : H ⊆ G) (chosen : A ⊆ forwardEdges G H d)
+    {u v : V} (h : BeforeIn G (markedPath A d.2) u v) :
+    ∃ e ∈ A, e.1 = u ∧ Reach G e.2 v := by
+  obtain ⟨hu, hv, ne, huv⟩ := h
+  have hut : u ≠ d.2 := fun eq =>
+    ne (dag_reach_antisymm dag huv (eq.symm ▸ markedPath_to_target sub chosen hv))
+  obtain ⟨e, he, rfl⟩ := mem_image.mp ((mem_insert.mp hu).resolve_left hut)
+  refine ⟨e, he, rfl, ?_⟩
+  rcases mem_insert.mp hv with eq | hm
+  · exact eq ▸ forward_edge_to_end sub (chosen he)
+  · obtain ⟨f, hf, rfl⟩ := mem_image.mp hm
+    rcases forward_edge_order sub (chosen he) (chosen hf) (fun eq => ne (congrArg Prod.fst eq)) with hr | hr
+    · exact hr
+    · exact (ne (dag_reach_antisymm dag huv (hr.head (forwardEdges_subset sub _ (chosen hf))))).elim
+
+/-- The forward compression keeps new-edge tails and the terminal.
+An ignored unreachable request can be recorded as a singleton terminal. -/
+def compressed (G : Arcs V) (D : List (V × V)) (i : Fin D.length) : Finset V :=
+  markedPath (newEdges G D i) (D.get i).2
+
+/-- On a DAG walk the order on its vertices is the restriction of strict reachability. -/
+def CompressedBefore (G : Arcs V) (D : List (V × V)) (i : Fin D.length) (u v : V) : Prop :=
+  BeforeIn G (compressed G D i) u v
+
+theorem compressedBefore_topological {G : Arcs V} (dag : IsDAG G)
+    {D : List (V × V)} {i : Fin D.length} {u v : V} (h : CompressedBefore G D i u v) :
+    (reaches G u).card < (reaches G v).card :=
+  BeforeIn.rank_lt dag h
+
+private theorem newEdges_on_path (G : Arcs V) (D : List (V × V)) (i : Fin D.length) :
+    newEdges G D i ⊆ forwardEdges G (before G D i) (D.get i) :=
+  fun _ h => (mem_sdiff.mp h).1
+
+private theorem compressed_to_target {G : Arcs V} {D : List (V × V)} {i : Fin D.length}
+    {u : V} (hu : u ∈ compressed G D i) : Reach G u (D.get i).2 :=
+  markedPath_to_target (before_subset G D i) (newEdges_on_path G D i) hu
 
 theorem compressedBefore_total {G : Arcs V} {D : List (V × V)} {i : Fin D.length}
     {u v : V} (hu : u ∈ compressed G D i) (hv : v ∈ compressed G D i) (ne : u ≠ v) :
-    CompressedBefore G D i u v ∨ CompressedBefore G D i v u := by
-  by_cases hat : u = (D.get i).2
-  · exact Or.inr ⟨hv, hu, ne.symm, hat.symm ▸ compressed_to_target hv⟩
-  by_cases hbt : v = (D.get i).2
-  · exact Or.inl ⟨hu, hv, ne, hbt.symm ▸ compressed_to_target hu⟩
-  obtain ⟨a, ha, rfl⟩ := mem_image.mp ((mem_insert.mp hu).resolve_left hat)
-  obtain ⟨b, hb, rfl⟩ := mem_image.mp ((mem_insert.mp hv).resolve_left hbt)
-  have sub := before_subset G D i
-  have ha' := (mem_sdiff.mp ha).1
-  have hb' := (mem_sdiff.mp hb).1
-  have hab : a ≠ b := fun h => ne (congrArg Prod.fst h)
-  rcases forward_edge_order sub ha' hb' hab with h | h
-  · exact Or.inl ⟨hu, hv, ne, h.head (forwardEdges_subset sub _ ha')⟩
-  · exact Or.inr ⟨hv, hu, ne.symm, h.head (forwardEdges_subset sub _ hb')⟩
-
-private theorem target_not_mark {G : Arcs V} (dag : IsDAG G) (D : List (V × V))
-    (i : Fin D.length) : (D.get i).2 ∉ marks G D i := by
-  intro h
-  obtain ⟨e, he, heq⟩ := mem_image.mp h
-  have edge : Edge G e.1 e.2 :=
-    forwardEdges_subset (before_subset G D i) _ (mem_sdiff.mp he).1
-  exact dag edge (heq.symm ▸ new_edge_reaches_target he)
+    CompressedBefore G D i u v ∨ CompressedBefore G D i v u :=
+  markedPath_total (before_subset G D i) (newEdges_on_path G D i) hu hv ne
 
 /-- Each chosen path contributes one terminal in addition to its new-edge tails. -/
 theorem compressed_total {G : Arcs V} (dag : IsDAG G) (D : List (V × V)) :
     (∑ i : Fin D.length, (compressed G D i).card) = (forwardRun G D).card + D.length := by
-  have h (i : Fin D.length) : (compressed G D i).card = (marks G D i).card + 1 :=
-    card_insert_of_notMem (target_not_mark dag D i)
-  simp only [h, sum_add_distrib, sum_marks_card dag, sum_const, card_univ, Fintype.card_fin,
+  have h (i : Fin D.length) : (compressed G D i).card = (newEdges G D i).card + 1 :=
+    markedPath_card dag (before_subset G D i) (newEdges_on_path G D i)
+  simp only [h, sum_add_distrib, sum_newEdges_card, sum_const, card_univ, Fintype.card_fin,
     smul_eq_mul, mul_one]
 
 private theorem compressed_exit {G : Arcs V} (dag : IsDAG G) {D : List (V × V)}
     {i : Fin D.length} {u v : V} (h : CompressedBefore G D i u v) :
-    ∃ e ∈ newEdges G D i, e.1 = u ∧ Reach G e.2 v := by
-  obtain ⟨hu, hv, ne, huv⟩ := h
-  have hut : u ≠ (D.get i).2 := by
-    intro eq
-    exact ne (dag_reach_antisymm dag huv (eq.symm ▸ compressed_to_target hv))
-  obtain ⟨e, he, rfl⟩ := mem_image.mp ((mem_insert.mp hu).resolve_left hut)
-  refine ⟨e, he, rfl, ?_⟩
-  rcases mem_insert.mp hv with eq | mark
-  · exact eq ▸ new_edge_reaches_target he
-  · obtain ⟨f, hf, rfl⟩ := mem_image.mp mark
-    have hne : e ≠ f := fun eq => ne (congrArg Prod.fst eq)
-    rcases forward_edge_order (before_subset G D i) (mem_sdiff.mp he).1
-        (mem_sdiff.mp hf).1 hne with hr | hr
-    · exact hr
-    · have edge : Edge G f.1 f.2 :=
-        forwardEdges_subset (before_subset G D i) _ (mem_sdiff.mp hf).1
-      exact (ne (dag_reach_antisymm dag huv (hr.head edge))).elim
+    ∃ e ∈ newEdges G D i, e.1 = u ∧ Reach G e.2 v :=
+  markedPath_exit dag (before_subset G D i) (newEdges_on_path G D i) h
 
 /-- Under forward growth, the first arc of a bridge cannot precede its river. -/
 theorem no_earlier_first_arc {G : Arcs V} (dag : IsDAG G) {D : List (V × V)} {k : ℕ}

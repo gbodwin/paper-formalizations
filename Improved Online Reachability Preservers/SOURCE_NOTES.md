@@ -27,6 +27,19 @@ exponent. Approximation for convergence should be from below.
 the root bracket, the increase of the corrected sequence from below, and
 the limits of both online exponents.
 
+## Lemma 42 doubles the displayed vertex exponent
+
+Write \(M=\ell p=dn\) and \(h=Cp/(\ell d^2)\). The third term of the
+comparison \(\ell^2d^2\lesssim\ell^{1/b}d^2h^{1/b}\) yields
+\(M^{2b+2}\lesssim n^2p^{2b+1}\). The resulting vertex exponent is
+\(1/(b+1)\). Lemma 42 prints \(2/(b+1)\) in the statement and the
+concluding rearrangement. Theorem 43 uses the correct value through
+\(2-2b'\) for \(b'=(2b+1)/(2b+2)\).
+[BootstrapArithmetic](OnlineReachabilityPreservers/BootstrapArithmetic.lean)
+checks the rearrangement from that term, with explicit positive parameters,
+and its agreement with the recurrence. The other terms and second-moment
+estimates still need proofs for the full bound.
+
 ## The path split can create a forbidden bridge
 
 Take the ordered path family `[(0,1,2,3), (3,0), (2,1)]`.

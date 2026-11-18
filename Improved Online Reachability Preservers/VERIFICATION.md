@@ -52,6 +52,13 @@ An exact-source replay grants no coverage to a paper statement outside the
   review confirmed the collision count, the bridge orientation, and the
   application to prefix purchases with shared SCC connectors.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44400107019).
+- [7b80446b](https://github.com/gbodwin/paper-formalizations/commit/7b80446bfef33bc86e8c5291af571f059cc79d15)
+  checks the acyclic lower branching count of Lemma 28, the combinatorial
+  bound of Lemma 41, and the arithmetic exponent limits. The 651-declaration
+  paper audit and replay of the changed modules passed. Independent review
+  confirmed the branch window convention, injective charge, density
+  comparison, and the scalar limits.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44404138536).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

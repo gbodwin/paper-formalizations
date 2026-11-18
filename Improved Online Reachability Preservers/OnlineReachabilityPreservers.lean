@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.Basic
+import OnlineReachabilityPreservers.BootstrapArithmetic
 import OnlineReachabilityPreservers.Bridges
 import OnlineReachabilityPreservers.ClosePairs
 import OnlineReachabilityPreservers.Components
@@ -11,6 +12,7 @@ import OnlineReachabilityPreservers.IndexSensitive
 import OnlineReachabilityPreservers.IntersectionOrder
 import OnlineReachabilityPreservers.KnownBudget
 import OnlineReachabilityPreservers.Majorization
+import OnlineReachabilityPreservers.OfflineIndependence
 import OnlineReachabilityPreservers.Online
 import OnlineReachabilityPreservers.PairwiseInitial
 import OnlineReachabilityPreservers.PathAssignments
