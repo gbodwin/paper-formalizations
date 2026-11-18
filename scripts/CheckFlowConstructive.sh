@@ -11,12 +11,14 @@ targets=(
   EncodedSizeRounding EncodedCutSelection EncodedVertexSolver FractionalCoverRawGuesses
   EncodedVertexInput EncodedAmplification EncodedVertexAmplification
   EncodedEdgeLabels EncodedEdgeGadget EncodedEdgeRounding
+  EdgeLineReduction EncodedEdgeLineInput EncodedEdgeSolver WeakDecompositionExactWeight
 )
 new_sources=(
   EncodedIntegerRounding EncodedUniformRounding EncodedWeightedRounding
   EncodedSizeRounding EncodedCutSelection EncodedVertexSolver
   EncodedVertexInput EncodedAmplification EncodedVertexAmplification
   EncodedEdgeLabels EncodedEdgeGadget EncodedEdgeRounding
+  EdgeLineReduction EncodedEdgeLineInput EncodedEdgeSolver WeakDecompositionExactWeight
 )
 for target in "${new_sources[@]}"; do
   lake env lean "${flags[@]}" "$paper/DirectedFlowCutGap/$target.lean"
@@ -30,4 +32,5 @@ lake env lean "${flags[@]}" --run "$paper/verification/EncodedVertexSolverSmoke.
 lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/EncodedAmplificationSmoke.lean"
 lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/EncodedEdgeRoundingSmoke.lean"
 lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/EncodedVertexInputSmoke.lean"
+lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/EncodedEdgeSolverSmoke.lean"
 git diff --exit-code HEAD --

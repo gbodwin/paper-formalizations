@@ -93,9 +93,11 @@ theorem cover_feasible {n : ℕ} (D : GraphInput n) (y : RawRow n)
     exact (decode_value_real y i).symm
   rwa [he]
 
-theorem support_valid {n : ℕ} (D : GraphInput n) (round : Rounding n)
-    (hround : ∀ (r : RoundingInput n) (a : Flags n), a ∈ (ideal (round r)).support →
-      IsIntegralCut r.graph (selectedSet a) (thresholdDemands r.graph r.weight))
+theorem support_valid_on_input {n : ℕ} (D : GraphInput n) (round : Rounding n)
+    (hround : ∀ (y : RawRow n) (a : Flags n),
+      a ∈ (ideal (round (roundingInput D y))).support →
+      IsFractionalCut D.graph (roundingInput D y).weight {d | d ∈ D.demands} →
+      IsIntegralCut D.graph (selectedSet a) {d | d ∈ D.demands})
     {out : Output n} (hout : out ∈ (ideal (tree D round)).support) : Valid D out := by
   have h := solveInput_correct D
   cases hs : solveInput D with
@@ -125,10 +127,15 @@ theorem support_valid {n : ℕ} (D : GraphInput n) (round : Rounding n)
       obtain ⟨t, ht, hm⟩ := best_support D.costs _ hr
       obtain ⟨state, hstate, rfl⟩ := List.mem_map.mp ht
       have hfeasible := h.2.1 (decodeState state) (List.mem_map.mpr ⟨state, hstate, rfl⟩)
-      have hf := cover_feasible D state.best hfeasible
-      have hc := hround _ _ hm
-      intro s t hst
-      exact hc s t (hf s t hst)
+      exact hround _ _ hm (cover_feasible D state.best hfeasible)
+
+theorem support_valid {n : ℕ} (D : GraphInput n) (round : Rounding n)
+    (hround : ∀ (r : RoundingInput n) (a : Flags n), a ∈ (ideal (round r)).support →
+      IsIntegralCut r.graph (selectedSet a) (thresholdDemands r.graph r.weight))
+    {out : Output n} (hout : out ∈ (ideal (tree D round)).support) : Valid D out := by
+  apply support_valid_on_input D round _ hout
+  intro y a ha hf s t hst
+  exact hround (roundingInput D y) a ha s t (hf s t hst)
 
 theorem massBit_support_valid {n : ℕ} (T : ℕ) (D : GraphInput n) {out : Output n}
     (hout : out ∈ (ideal (massBitTree T D)).support) : Valid D out :=
@@ -224,7 +231,7 @@ private theorem decode_zero_price {n : ℕ} (c : RawRow n) (X : Finset (Fin n))
 
 /-- The optimum comparison uses a single returned cover which meets both
 bicriteria inequalities. The minimum is taken over the actual sampled cuts. -/
-private theorem expected_comparison {n : ℕ} (D : GraphInput n) (round : Rounding n)
+theorem expected_comparison {n : ℕ} (D : GraphInput n) (round : Rounding n)
     (w : Fin n → ℝ≥0) (hw : IsFractionalCut D.graph w {d | d ∈ D.demands})
     (B : ℝ) (hB : 0 ≤ B)
     (bound : ∀ y : RawRow n,

@@ -56,6 +56,7 @@ import DirectedFlowCutGap.CountedTabulatedFlow
 import DirectedFlowCutGap.DyadicEdgeWeights
 import DirectedFlowCutGap.EarlyStopRetainedFlow
 import DirectedFlowCutGap.EdgeFlow
+import DirectedFlowCutGap.EdgeLineReduction
 import DirectedFlowCutGap.EdgeModel
 import DirectedFlowCutGap.EdgeRounding
 import DirectedFlowCutGap.EdgeToVertexReduction
@@ -69,7 +70,9 @@ import DirectedFlowCutGap.EncodedCutSelection
 import DirectedFlowCutGap.EncodedDyadicRoot
 import DirectedFlowCutGap.EncodedEdgeGadget
 import DirectedFlowCutGap.EncodedEdgeLabels
+import DirectedFlowCutGap.EncodedEdgeLineInput
 import DirectedFlowCutGap.EncodedEdgeRounding
+import DirectedFlowCutGap.EncodedEdgeSolver
 import DirectedFlowCutGap.EncodedEpochParameters
 import DirectedFlowCutGap.EncodedFlagUnion
 import DirectedFlowCutGap.EncodedHeavyVertexOutput
@@ -198,6 +201,7 @@ import DirectedFlowCutGap.VertexRounding
 import DirectedFlowCutGap.VertexToEdgeReduction
 import DirectedFlowCutGap.WeakDecomposition
 import DirectedFlowCutGap.WeakDecompositionBounds
+import DirectedFlowCutGap.WeakDecompositionExactWeight
 import DirectedFlowCutGap.WeightSelfReduction
 import DirectedFlowCutGap.WitnessPrefix
 import DirectedFlowCutGap.WitnessSystem

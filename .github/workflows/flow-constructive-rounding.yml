@@ -31,7 +31,8 @@ jobs:
             +DirectedFlowCutGap.EncodedWeightedRounding
             +DirectedFlowCutGap.EncodedVertexSolver
             +DirectedFlowCutGap.EncodedVertexAmplification
-            +DirectedFlowCutGap.EncodedEdgeRounding
+            +DirectedFlowCutGap.EncodedEdgeSolver
+            +DirectedFlowCutGap.WeakDecompositionExactWeight
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"

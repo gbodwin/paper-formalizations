@@ -6,6 +6,8 @@ import DirectedFlowCutGap.EncodedWeightedRounding
 import DirectedFlowCutGap.EncodedVertexSolver
 import DirectedFlowCutGap.EncodedVertexAmplification
 import DirectedFlowCutGap.EncodedEdgeRounding
+import DirectedFlowCutGap.EncodedEdgeSolver
+import DirectedFlowCutGap.WeakDecompositionExactWeight
 import Lean.Compiler.Old
 import Lean.Util.CollectAxioms
 import Lean.Util.FoldConsts
@@ -28,7 +30,9 @@ run_cmd do
     `DirectedFlowCutGap.FractionalCoverRawGuesses,
     `DirectedFlowCutGap.EncodedVertexInput, `DirectedFlowCutGap.EncodedAmplification,
     `DirectedFlowCutGap.EncodedVertexAmplification, `DirectedFlowCutGap.EncodedEdgeLabels,
-    `DirectedFlowCutGap.EncodedEdgeGadget, `DirectedFlowCutGap.EncodedEdgeRounding]
+    `DirectedFlowCutGap.EncodedEdgeGadget, `DirectedFlowCutGap.EncodedEdgeRounding,
+    `DirectedFlowCutGap.EdgeLineReduction, `DirectedFlowCutGap.EncodedEdgeLineInput,
+    `DirectedFlowCutGap.EncodedEdgeSolver, `DirectedFlowCutGap.WeakDecompositionExactWeight]
   let allowed := #[`propext, `Classical.choice, `Quot.sound]
   let mut counts : NameMap Nat := {}
   let mut compilerEntries : Nat := 0
@@ -82,7 +86,16 @@ run_cmd do
     `DirectedFlowCutGap.EncodedEdgeRounding.massBit_support_valid,
     `DirectedFlowCutGap.EncodedEdgeRounding.sizeBit_support_valid,
     `DirectedFlowCutGap.EncodedEdgeRounding.size_expected_uniform,
-    `DirectedFlowCutGap.EncodedEdgeRounding.mass_expected_uniform] do
+    `DirectedFlowCutGap.EncodedEdgeRounding.mass_expected_uniform,
+    `DirectedFlowCutGap.EdgeLineReduction.distance_eq_arcWeight,
+    `DirectedFlowCutGap.EncodedEdgeLineInput.feasible_lineInput,
+    `DirectedFlowCutGap.EncodedEdgeLineInput.toEdges_cost,
+    `DirectedFlowCutGap.EncodedEdgeSolver.mass_support_valid,
+    `DirectedFlowCutGap.EncodedEdgeSolver.size_support_valid,
+    `DirectedFlowCutGap.EncodedEdgeSolver.mass_expected_uniform,
+    `DirectedFlowCutGap.EncodedEdgeSolver.size_expected_uniform,
+    `DirectedFlowCutGap.EncodedEdgeSolver.polynomial_failure_le,
+    `DirectedFlowCutGap.WeakDecomposition.edge_law_of_exact_weight_factor] do
     let some (.thmInfo _) := env.find? theoremName | throwError "Missing theorem {theoremName}"
     unless roots.contains theoremName do throwError "Unselected theorem {theoremName}"
   let mut todo := roots

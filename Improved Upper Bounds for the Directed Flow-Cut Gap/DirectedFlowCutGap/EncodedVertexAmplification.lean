@@ -47,10 +47,21 @@ theorem codePrice_value {n : ℕ} (D : GraphInput n) (out : Output n) :
 
 def roundDrawBound (n : ℕ) : ℕ := EncodedUniformRounding.drawBound (4 * n ^ 2)
 
-def bitTree {n : ℕ} (extraSamples confidence : ℕ) (D : GraphInput n) (round : Rounding n) :
+def boundedBitTree {n : ℕ} (roundBound extraSamples confidence : ℕ) (D : GraphInput n)
+    (round : Rounding n) :
     FiniteDrawTrees.Tree (Output n) :=
   EncodedAmplification.bitTree (codePrice D) (tree D round)
-    (drawBound D (roundDrawBound n)) extraSamples confidence
+    (drawBound D roundBound) extraSamples confidence
+
+def bitTree {n : ℕ} (extraSamples confidence : ℕ) (D : GraphInput n) (round : Rounding n) :
+    FiniteDrawTrees.Tree (Output n) :=
+  boundedBitTree (roundDrawBound n) extraSamples confidence D round
+
+theorem boundedBit_support_subset {n : ℕ} (roundBound extraSamples confidence : ℕ) (D : GraphInput n)
+    (round : Rounding n) :
+    (ideal (boundedBitTree roundBound extraSamples confidence D round)).support ⊆
+      (ideal (tree D round)).support :=
+  EncodedAmplification.support_selected ..
 
 def massBitTree {n : ℕ} (extraSamples confidence : ℕ) (D : GraphInput n) :
     FiniteDrawTrees.Tree (Output n) :=
@@ -78,19 +89,27 @@ theorem sizeBit_support_valid {n : ℕ} (extraSamples confidence : ℕ) (D : Gra
   exact support_valid D EncodedSizeRounding.tree
     (fun r _ hr => EncodedSizeRounding.support_valid r hr) h
 
+theorem bounded_failure_le {n : ℕ} (roundBound extraSamples confidence : ℕ) (D : GraphInput n)
+    (round : Rounding n) (hround : ∀ r : RoundingInput n, Within roundBound (round r))
+    (B : ℝ) (hB : 0 < B) (hcost : expectedPrice D round ≤ B) :
+    probability (ideal (boundedBitTree roundBound extraSamples confidence D round))
+      (fun out => 2 * B < outputPrice D out) ≤
+      ((1 : ℝ) / 2) ^ (extraSamples + 1) + ((1 : ℝ) / 2) ^ confidence := by
+  have hb := EncodedAmplification.failure_le (codePrice D) (tree D round)
+    (drawBound D roundBound) extraSamples confidence
+    (tree_within D round roundBound hround) B hB
+  simp only [codePrice_value] at hb
+  apply hb
+  rw [expectedPrice, expectedCost_map] at hcost
+  exact hcost
+
 theorem failure_le {n : ℕ} (extraSamples confidence : ℕ) (D : GraphInput n) (round : Rounding n)
     (hround : ∀ r : RoundingInput n, Within (roundDrawBound n) (round r))
     (B : ℝ) (hB : 0 < B) (hcost : expectedPrice D round ≤ B) :
     probability (ideal (bitTree extraSamples confidence D round))
       (fun out => 2 * B < outputPrice D out) ≤
-      ((1 : ℝ) / 2) ^ (extraSamples + 1) + ((1 : ℝ) / 2) ^ confidence := by
-  have hb := EncodedAmplification.failure_le (codePrice D) (tree D round)
-    (drawBound D (roundDrawBound n)) extraSamples confidence
-    (tree_within D round (roundDrawBound n) hround) B hB
-  simp only [codePrice_value] at hb
-  apply hb
-  rw [expectedPrice, expectedCost_map] at hcost
-  exact hcost
+      ((1 : ℝ) / 2) ^ (extraSamples + 1) + ((1 : ℝ) / 2) ^ confidence :=
+  bounded_failure_le (roundDrawBound n) extraSamples confidence D round hround B hB hcost
 
 theorem massBit_failure_le {n : ℕ} (extraSamples confidence : ℕ) (D : GraphInput n)
     (B : ℝ) (hB : 0 < B) (hcost : expectedPrice D EncodedWeightedRounding.tree ≤ B) :
@@ -113,7 +132,7 @@ def polynomialBitTree {n : ℕ} (κ : ℕ) (D : GraphInput n) (round : Rounding 
   let e := confidenceExponent n κ
   bitTree e (e + 1) D round
 
-private theorem confidence_power (n κ : ℕ) :
+theorem confidence_power (n κ : ℕ) :
     ((1 : ℝ) / 2) ^ (confidenceExponent n κ) ≤
       ((max 1 n : ℕ) : ℝ) ^ (-(κ : ℝ)) := by
   let m := max 1 n
