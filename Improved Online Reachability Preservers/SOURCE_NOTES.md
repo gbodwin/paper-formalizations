@@ -23,6 +23,9 @@ same denominator \(11b-4b^2-3\). From \(b=2/3\) they give \(16/23\) and
 \(4b^3-13b^2+10b-2\) by clearing the denominator in the fixed-point equation.
 The last paragraph also requests an exponent strictly above the limiting
 exponent. Approximation for convergence should be from below.
+[ExponentLimits](OnlineReachabilityPreservers/ExponentLimits.lean) verifies
+the root bracket, the increase of the corrected sequence from below, and
+the limits of both online exponents.
 
 ## The path split can create a forbidden bridge
 
@@ -56,6 +59,14 @@ any original bridge and the presence of the new half-4-bridge.
 - Lemma 28 writes a difference of a right-hand intersection position with
   itself in the definition of close pairs. Its collision argument instead
   bounds the difference between the two right-hand intersection positions.
+  The [finite branching count](OnlineReachabilityPreservers/ClosePairs.lean)
+  uses this corrected condition, including a zero right displacement, and
+  preserves the identity of each branching segment through its start vertex.
+- Appendix B's branching-degree assertion applies off the base path for the
+  \(Q\) count. Using the convention that a branching segment contains its
+  start, several segments can share that start on the base. The proof shows
+  both vertices of each \(Q\) tuple are off the base under full bridge-freeness
+  and a common vertex order.
 - Lemmas 40–42 print a free exponent \(a\) on the first power of \(p\). The
   integrand and the starting/target bounds use \(p^{1/2}\). The recurrence
   uses \(2/3\le b<1/\sqrt2\). This is within the range where the integral

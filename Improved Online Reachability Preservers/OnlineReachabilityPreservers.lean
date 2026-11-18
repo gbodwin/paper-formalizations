@@ -1,9 +1,11 @@
 import OnlineReachabilityPreservers.Basic
 import OnlineReachabilityPreservers.Bridges
+import OnlineReachabilityPreservers.ClosePairs
 import OnlineReachabilityPreservers.Components
 import OnlineReachabilityPreservers.Connectors
 import OnlineReachabilityPreservers.DagReduction
 import OnlineReachabilityPreservers.EndpointBudget
+import OnlineReachabilityPreservers.ExponentLimits
 import OnlineReachabilityPreservers.Growth
 import OnlineReachabilityPreservers.IndexSensitive
 import OnlineReachabilityPreservers.IntersectionOrder

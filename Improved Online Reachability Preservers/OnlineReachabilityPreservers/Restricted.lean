@@ -59,7 +59,7 @@ private theorem collision_count (marks : I → Finset V) :
         ⟨mem_univ _, hlt, (mem_filter.mp hi).2, (mem_filter.mp hj).2⟩, rfl⟩
   rw [fiber, card_map, card_product_filter_lt]
 
-private theorem square_choose (n : ℕ) : n ^ 2 = n + 2 * n.choose 2 := by
+theorem square_choose (n : ℕ) : n ^ 2 = n + 2 * n.choose 2 := by
   rw [Nat.choose_two_right, mul_comm 2, Nat.div_two_mul_two_of_even (Nat.even_mul_pred_self n)]
   cases n with
   | zero => simp

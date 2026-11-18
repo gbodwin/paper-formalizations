@@ -45,6 +45,13 @@ An exact-source replay grants no coverage to a paper statement outside the
   review confirmed the four assignment models, one simple path per reachable
   request, the union bound in the original graph, and prefix monotonicity.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44398649036).
+- [72680592](https://github.com/gbodwin/paper-formalizations/commit/72680592486fd47e054b8672ccc9f02c7f9053df)
+  adds the common-order versions of Lemmas 24, 26, and 27 and the resulting
+  pairwise baseline for the actual online algorithm on general digraphs.
+  The 549-declaration paper audit and kernel replay passed. Independent
+  review confirmed the collision count, the bridge orientation, and the
+  application to prefix purchases with shared SCC connectors.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44400107019).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

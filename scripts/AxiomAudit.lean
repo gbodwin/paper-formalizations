@@ -138,6 +138,11 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.lemma26_chain_lower
 #print axioms OnlineReachabilityPreservers.lemma27_acyclic
 #print axioms OnlineReachabilityPreservers.pairwise_initial
+#print axioms OnlineReachabilityPreservers.lemma28_from_incidence
+#print axioms OnlineReachabilityPreservers.lemma41_branch_count
+#print axioms OnlineReachabilityPreservers.theorem38_root
+#print axioms OnlineReachabilityPreservers.theorem38_exponent_limits
+#print axioms OnlineReachabilityPreservers.theorem43_exponent_limit
 #print axioms OnlineReachabilityPreservers.lemma20_opt_squared
 #print axioms OnlineReachabilityPreservers.lemma22_hub_count
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum

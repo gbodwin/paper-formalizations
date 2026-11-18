@@ -12,9 +12,6 @@ variable {V I : Type*} [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
 private def highDegree (paths : I → Finset V) (d : ℕ) (i : I) : Finset V :=
   (paths i).filter (fun v => d ≤ (occurrences paths v).card)
 
-private def predecessors (s : Finset V) (y : V) : Finset V :=
-  s.filter (· < y)
-
 private def goodVertices (paths : I → Finset V) (d ℓ : ℕ) (i : I) : Finset V :=
   (highDegree paths d i).filter fun y => ℓ ≤ (predecessors (highDegree paths d i) y).card
 
@@ -44,20 +41,6 @@ private theorem highDegree_sum (paths : I → Finset V) (d : ℕ) :
     _ = ∑ i, ((highDegree paths d i).card + (low i).card) :=
       sum_congr rfl fun i _ => (card_filter_add_card_filter_not _).symm
     _ ≤ _ := by rw [sum_add_distrib]; gcongr
-
-omit [Fintype V] in
-private theorem predecessor_count_strict {s : Finset V} {x y : V} (hx : x ∈ s) (hxy : x < y) :
-    (predecessors s x).card < (predecessors s y).card := by
-  apply card_lt_card
-  rw [ssubset_iff_subset_ne]
-  constructor
-  · intro v hv
-    obtain ⟨hvs, hlt⟩ := mem_filter.mp hv
-    exact mem_filter.mpr ⟨hvs, hlt.trans hxy⟩
-  · intro eq
-    have h : x ∈ predecessors s y := mem_filter.mpr ⟨hx, hxy⟩
-    rw [← eq] at h
-    exact lt_irrefl _ (mem_filter.mp h).2
 
 omit [Fintype V] in
 private theorem early_count (s : Finset V) (ℓ : ℕ) :
