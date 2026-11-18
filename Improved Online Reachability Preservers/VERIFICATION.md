@@ -84,6 +84,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   paper audit and local replay passed. Independent review checked projection
   of bridges, the incidence caps, and the moments on actual samples.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44416098982).
+- [2ff66b52](https://github.com/gbodwin/paper-formalizations/commit/2ff66b52ed4d27f0951354a0fa8f9db6f6c5c591)
+  checks the lower mean count, the three-term offline comparison, and the
+  overlap in Lemma 40. The 877-declaration paper audit and replay of the
+  changed modules passed. Independent review confirmed the exact mean,
+  exponent range, and types of constants in the comparison.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44417701299).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

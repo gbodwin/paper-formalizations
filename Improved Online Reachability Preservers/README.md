@@ -43,14 +43,21 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   `4096`. The full-bridge-free proof
   bounds the contribution by the ordered pairs of vertices on the restricted paths.
 - [`theorem38_root`, `theorem38_exponent_limits`, and `theorem43_exponent_limit`](OnlineReachabilityPreservers/ExponentLimits.lean)
-  check the online cubic root and both arithmetic iterations. The extremal
-  estimates that make the updates valid for preserver bounds remain open.
+  check the online cubic root and both arithmetic iterations.
+  [OfflineBound](OnlineReachabilityPreservers/OfflineBound.lean) applies each
+  Appendix B update to acyclic full-bridge-free systems, including the
+  integer branching window, split budgets, and sparse regimes.
 - [`theorem14_dag_compression` and `offline_pairwise_initial`](OnlineReachabilityPreservers/OfflineIndependence.lean)
   prove the constructive independence reduction on DAGs and its initial
   offline pairwise consequence on arbitrary digraphs. The algorithm deletes
   each dispensable edge and the proof assigns the surviving edges to requests
   that require them. The resulting acyclic system has size `m+p` and is fully
-  bridge-free. The sharp offline bound and extremal lower direction remain open.
+  bridge-free. The extremal lower direction remains open.
+- [`theorem4_rounded`](OnlineReachabilityPreservers/OfflineSharp.lean)
+  proves the paper's rounded offline edge bound
+  `O(n + n^0.75 p^0.5 + n^0.59 p^0.71)` for the constructed preserver on
+  arbitrary finite digraphs. It uses two checked acyclic updates and the
+  SCC lift. The unrounded rate and formal runtime remain open.
 - [`lemma37_first_term`, `lemma37_third_term`, and `lemma42_third_term`](OnlineReachabilityPreservers/BootstrapArithmetic.lean)
   verify the rearrangements of those individual branching-count terms.
   The third term of Lemma 42 gives vertex exponent `1/(b+1)`, the exponent
@@ -108,5 +115,6 @@ The library is included in the repository's module index, declaration audit,
 and kernel replay.
 
 The [companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
-includes an interactive trace and a source-linked proof map. The pairwise
-extremal estimates and the full Steiner competitive guarantee remain open.
+includes an interactive trace and a source-linked proof map. The sharp online
+pairwise rate, unrestricted extremal estimates, and full Steiner competitive
+guarantee remain open.
