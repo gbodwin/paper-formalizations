@@ -8,8 +8,9 @@ paper_source_dirs=(
   "New Results on Linear Size Distance Preservers"
   "An Alternate Proof of Near-Optimal Light Spanners"
   "Unconditional Lower Bounds for Degree Fault Tolerant Spanners"
+  "Improved Online Reachability Preservers"
 )
-paper_libraries=(VFTSpanners LinearDistancePreservers LightSpanners DegreeFaultSpanners)
+paper_libraries=(VFTSpanners LinearDistancePreservers LightSpanners DegreeFaultSpanners OnlineReachabilityPreservers)
 for i in "${!paper_libraries[@]}"; do
   paper_source_dir="${paper_source_dirs[$i]}"
   for source in "$paper_source_dir/${paper_libraries[$i]}"/*.lean; do
@@ -18,4 +19,5 @@ for i in "${!paper_libraries[@]}"; do
     module="${module//\//.}"
     lake env leanchecker -v "$module"
   done
+  lake env leanchecker -v "${paper_libraries[$i]}"
 done

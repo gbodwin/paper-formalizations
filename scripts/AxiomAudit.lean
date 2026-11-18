@@ -2,6 +2,7 @@ import VFTSpanners
 import LinearDistancePreservers
 import LightSpanners
 import DegreeFaultSpanners
+import OnlineReachabilityPreservers
 import Lean.Util.CollectAxioms
 
 /-! Audit all declarations by defining module, including private/generated
@@ -11,7 +12,8 @@ run_cmd do
   let env ← getEnv
   let moduleNames := env.allImportedModuleNames
   let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]
-  for root in #[`VFTSpanners, `LinearDistancePreservers, `LightSpanners, `DegreeFaultSpanners] do
+  for root in #[`VFTSpanners, `LinearDistancePreservers, `LightSpanners, `DegreeFaultSpanners,
+      `OnlineReachabilityPreservers] do
     let mut count : Nat := 0
     for (name, _) in env.constants.toList do
       let fromProject := match env.getModuleIdxFor? name with
@@ -108,3 +110,10 @@ run_cmd do
 #print axioms LinearDistancePreservers.UnweightedClique.complete_rigid
 #print axioms LinearDistancePreservers.UnweightedClique.clique_lower_bound
 #print axioms LinearDistancePreservers.TheoremFourDense.displayed_bound_of_small_deficit
+
+#print axioms OnlineReachabilityPreservers.mem_reaches
+#print axioms OnlineReachabilityPreservers.forwardPath_spec
+#print axioms OnlineReachabilityPreservers.forwardPath_succeeds
+#print axioms OnlineReachabilityPreservers.SourceAudit.lemma25_printed_counterexample
+#print axioms OnlineReachabilityPreservers.SourceAudit.lemma25_tail_count
+#print axioms OnlineReachabilityPreservers.SourceAudit.corrected_fixed_point_iff

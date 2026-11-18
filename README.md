@@ -113,6 +113,17 @@ The [paper library](<Unconditional Lower Bounds for Degree Fault Tolerant Spanne
 
 All 18 modules and the aggregate compile, all 440 declarations pass the allowed-axiom audit, all 19 modules pass separate official kernel replay, and independent semantic review passes. The paper folder records the precise scope, source hashes and verification evidence. Cited background Theorems 2 and 4 are not claimed formalized.
 
+## Improved Online Reachability Preservers
+
+The [paper library](<Improved Online Reachability Preservers/>) develops
+Bodwin–Le's online reachability preservers. Its initial checkpoint verifies the
+deterministic path-growth rule and the two orientations of the restricted bound
+on DAGs. The result applies to every demand prefix. A
+[statement map](<Improved Online Reachability Preservers/STATEMENT_MAP.md>)
+tracks the main results, dependencies, and remaining work. The
+[source notes](<Improved Online Reachability Preservers/SOURCE_NOTES.md>)
+record discrepancies in the arXiv version.
+
 ## Verification
 
 The repository pins Lean 4.34.0 and mathlib commit
