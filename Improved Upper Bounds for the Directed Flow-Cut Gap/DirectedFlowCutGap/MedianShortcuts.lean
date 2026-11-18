@@ -85,11 +85,28 @@ run_cmd Command.liftTermElabM do
             throwError "Failed to construct the retained tree matcher"
           result.addMatcher
 
+-- Use the same kernel projections as structural recursion's generated step.
+open Lean Elab Term in
+local elab "leftResult% " below:ident : term => do
+  let treeResults ← elabTerm below none
+  pure (mkProj ``PProd 0 (mkProj ``PProd 0 treeResults))
+
+open Lean Elab Term in
+local elab "rightResult% " below:ident : term => do
+  let treeResults ← elabTerm below none
+  pure (mkProj ``PProd 0 (mkProj ``PProd 1 treeResults))
+
+open Lean Elab Term in
+local elab "normalizeTreeStep% " body:term : term <= expectedType => do
+  let value ← elabTermEnsuringType body expectedType
+  synthesizeSyntheticMVarsNoPostponing
+  Lean.Core.betaReduce (← instantiateMVars value)
+
 @[reducible] def vertices._f (x : Tree α) (f : Tree.below (motive := fun _ => List α) x) : List α :=
-  (match (motive := (x : Tree α) → Tree.below (motive := fun _ => List α) x → List α) x with
+  normalizeTreeStep% (match (motive := (x : Tree α) → Tree.below (motive := fun _ => List α) x → List α) x with
     | .empty => fun _ => []
     | .node l m r => fun (below : Tree.below (motive := fun _ => List α) (.node l m r)) =>
-        below.1.1 ++ m :: below.2.1) f
+        (leftResult% below) ++ m :: (rightResult% below)) f
 
 /-- Inorder traversal with the original kernel equations and a verified executable fold. -/
 @[implemented_by verticesImpl]
@@ -98,18 +115,18 @@ def vertices : Tree α → List α := fun x => Tree.brecOn x vertices._f
 private def heightImpl : Tree α → ℕ := fold 0 (fun _ _ _ l r => max l r + 1)
 
 @[reducible] def height._f (x : Tree α) (f : Tree.below (motive := fun _ => ℕ) x) : ℕ :=
-  (match (motive := (x : Tree α) → Tree.below (motive := fun _ => ℕ) x → ℕ) x with
+  normalizeTreeStep% (match (motive := (x : Tree α) → Tree.below (motive := fun _ => ℕ) x → ℕ) x with
     | .empty => fun _ => 0
     | .node l a r => fun (below : Tree.below (motive := fun _ => ℕ) (.node l a r)) =>
-        max below.1.1 below.2.1 + 1) f
+        max (leftResult% below) (rightResult% below) + 1) f
 
 @[implemented_by heightImpl]
 def height : Tree α → ℕ := fun x => Tree.brecOn x height._f
 
 @[reducible] def Balanced._f (x : Tree α) (f : Tree.below (motive := fun _ => Prop) x) : Prop :=
-  (match (motive := (x : Tree α) → Tree.below (motive := fun _ => Prop) x → Prop) x with
+  normalizeTreeStep% (match (motive := (x : Tree α) → Tree.below (motive := fun _ => Prop) x → Prop) x with
     | .empty => fun _ => True
-    | .node l m r => fun below => below.1.1 ∧ below.2.1 ∧
+    | .node l m r => fun below => (leftResult% below) ∧ (rightResult% below) ∧
         l.vertices.length = (l.vertices ++ m :: r.vertices).length / 2) f
 
 /-- At every nonempty node, the pivot is the middle entry of its inorder list. -/

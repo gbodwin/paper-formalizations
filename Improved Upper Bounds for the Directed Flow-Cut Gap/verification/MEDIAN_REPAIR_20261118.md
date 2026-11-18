@@ -19,16 +19,23 @@ Strict compilation, a separate official kernel replay, and a complete
 type-and-body dependency audit passed for the revised MedianShortcuts
 module. The comparison binds the original public source and the repaired
 source, whose SHA-256 is
-`a35d67c3d626f483d1c593f7629378d1877b9991a36e81a5e54cd1b1f164eaed`.
+`72bbc58ac01800476625a037e349d1e02514db5ce203724e509d959f940c64a6`.
 
 | Check | Result |
 | --- | --- |
-| Logical declaration audit | 119 declarations, with no unsafe or partial entries |
-| Type-and-body audit | 5,157 nodes, 64,010 edges, axioms propext, Classical.choice, Quot.sound |
-| Retained matcher | Same full type, value and universe parameters, with the original dependent matcher metadata |
-| Retained declarations | 80 checked types and all five matcher-consumer theorem types and values match |
-| Compiler-only inventory | 42 entries recorded separately from logical declarations |
+| Logical declaration audit | 125 declarations, with no unsafe or partial entries |
+| Type-and-body audit | 12,781 nodes, 191,355 edges, axioms propext, Classical.choice, Quot.sound |
+| Retained matcher | Full type and value match apart from binder names, with matching universe parameters and dependent matcher metadata |
+| Retained declarations | 80 checked types and all five matcher-consumer theorem types and proof bodies match apart from binder names |
+| Compiler-only inventory | 90 entries recorded separately from logical declarations |
 | Compiled evaluation | Inorder traversal and height agree on empty, balanced and skewed trees |
+
+The first comparison in `1edb12e` used Lean's default opaque-value accessor,
+which omitted theorem bodies. That commit's CI runs were cancelled. The
+corrected audit reads `TheoremVal.value` directly. The projection terms in the
+retained tree steps use the same kernel projections and beta-reduced form as
+the baseline structural elaborator. The corrected audit also checks that all
+four retained tree and edge steps refer to the restored matcher.
 
 The comparison excludes generated simp and nested-proof certificates from the
 retained type inventory. All revised logical declarations, including generated
