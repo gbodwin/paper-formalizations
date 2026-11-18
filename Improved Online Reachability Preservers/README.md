@@ -53,6 +53,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   verify the rearrangements of those individual branching-count terms.
   The third term of Lemma 42 gives vertex exponent `1/(b+1)`, the exponent
   implicit in Theorem 43.
+- [`lemma30_integral_square_sum`](OnlineReachabilityPreservers/IntegralMajorization.lean)
+  checks the integral majorization step with explicit integrability hypotheses.
+  [`lemma31_acyclic_moment`](OnlineReachabilityPreservers/SecondMoment.lean)
+  proves the second-moment estimate given the inductive bound on subfamilies.
+  It orders the actual path lengths and bounds four clipped powers with
+  finite sums and integrals.
 - [`lemma20_opt_squared` and `lemma22_hub_count`](OnlineReachabilityPreservers/SteinerCounting.lean)
   prove the terminal-counting lower bounds used in the Steiner application.
   [`lemma29_square_sum`](OnlineReachabilityPreservers/Majorization.lean) proves

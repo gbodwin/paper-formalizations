@@ -59,6 +59,13 @@ An exact-source replay grants no coverage to a paper statement outside the
   confirmed the branch window convention, injective charge, density
   comparison, and the scalar limits.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44404138536).
+- [4c61e637](https://github.com/gbodwin/paper-formalizations/commit/4c61e637816f9ee537635d61350dfb4537e05787)
+  adds deterministic offline pruning, the constructive DAG upper reduction
+  in Lemma 14, the offline initial bound, and individual exponent
+  rearrangements for Lemmas 37 and 42. The 721-declaration paper audit and
+  local replay passed. Independent review confirmed the critical-edge
+  argument, SCC lift, and the corrected Lemma 42 exponent.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44406935877).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

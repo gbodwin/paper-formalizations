@@ -149,6 +149,8 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.lemma37_third_term
 #print axioms OnlineReachabilityPreservers.lemma42_third_term
 #print axioms OnlineReachabilityPreservers.lemma42_printed_vertex_exponent_ne
+#print axioms OnlineReachabilityPreservers.lemma30_integral_square_sum
+#print axioms OnlineReachabilityPreservers.lemma31_acyclic_moment
 #print axioms OnlineReachabilityPreservers.lemma20_opt_squared
 #print axioms OnlineReachabilityPreservers.lemma22_hub_count
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum

@@ -75,6 +75,9 @@ any original bridge and the presence of the new half-4-bridge.
   The [finite branching count](OnlineReachabilityPreservers/ClosePairs.lean)
   uses this corrected condition, including a zero right displacement, and
   preserves the identity of each branching segment through its start vertex.
+  The definition follows the detailed Appendix A.3 sampling. All paths
+  meeting the base can branch. The overview in Section 3.3 describes only
+  paths earlier than the base, which is a different restriction.
 - Appendix B's branching-degree assertion applies off the base path for the
   \(Q\) count. Using the convention that a branching segment contains its
   start, several segments can share that start on the base. The proof shows
@@ -99,6 +102,8 @@ any original bridge and the presence of the new half-4-bridge.
   At the dense end, \(p\) of order \(n^2/\log n\) also leaves no fixed
   power of \(n\) to absorb the loss. The graph cap \(n^2\) alone does not
   bridge the gap between this sharp asymptotic statement and the rounded bound.
-- Appendix A's and B's second-moment estimates, dyadic sums and regime
-  reductions require proofs. The notes on printed intermediate statements
-  do not furnish counterexamples to Theorems 1, 2, 4, 5 or 8.
+- The [second-moment estimate](OnlineReachabilityPreservers/SecondMoment.lean)
+  of Appendix A is checked for a common vertex order under the inductive
+  subfamily bound. The offline second moment, branching-degree sums, and
+  regime reductions remain open. The intermediate discrepancies do not
+  furnish counterexamples to Theorems 1, 2, 4, 5 or 8.

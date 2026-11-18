@@ -9,6 +9,7 @@ import OnlineReachabilityPreservers.EndpointBudget
 import OnlineReachabilityPreservers.ExponentLimits
 import OnlineReachabilityPreservers.Growth
 import OnlineReachabilityPreservers.IndexSensitive
+import OnlineReachabilityPreservers.IntegralMajorization
 import OnlineReachabilityPreservers.IntersectionOrder
 import OnlineReachabilityPreservers.KnownBudget
 import OnlineReachabilityPreservers.Majorization
@@ -18,6 +19,7 @@ import OnlineReachabilityPreservers.PairwiseInitial
 import OnlineReachabilityPreservers.PathAssignments
 import OnlineReachabilityPreservers.Restricted
 import OnlineReachabilityPreservers.RestrictedNonAdaptive
+import OnlineReachabilityPreservers.SecondMoment
 import OnlineReachabilityPreservers.SimplePaths
 import OnlineReachabilityPreservers.SourceAudit
 import OnlineReachabilityPreservers.SplitAudit

@@ -54,6 +54,14 @@ theorem BridgeFree.halfFree {before : I → V → V → Prop} {size : ℕ}
     (free : BridgeFree before size) : HalfBridgeFree before size :=
   fun _ h b => (free h).false b |>.elim
 
+theorem HalfBridgeFree.restrict_paths {paths : I → Finset V} {size : ℕ}
+    (free : HalfBridgeFree (PathBefore paths) size) (J : Finset I) :
+    HalfBridgeFree (PathBefore fun j : J => paths j.val) size := by
+  intro k hk b earlier
+  let c : Bridge (PathBefore paths) k :=
+    b.mapPaths Subtype.val Subtype.val_injective (fun _ _ _ h => h)
+  exact free hk c earlier
+
 private def orderedBridge {paths : I → Finset V} {k : ℕ}
     (v : Fin (k + 2) → V) (a : Fin (k + 1) → I) (r : I)
     (ha : Function.Injective a) (hr : ∀ i, r ≠ a i)

@@ -46,6 +46,20 @@ def Bridge.mapVertices {V W I : Type*} {before : I → V → V → Prop}
   riverStep := h _ _ _ b.riverStep
   arcStep i := h _ _ _ (b.arcStep i)
 
+/-- Relabel the paths of a bridge while preserving their steps. -/
+def Bridge.mapPaths {V I J : Type*} {before : I → V → V → Prop}
+    {after : J → V → V → Prop} {k : ℕ} (b : Bridge before k)
+    (f : I → J) (hf : Function.Injective f) (h : ∀ i u v, before i u v → after (f i) u v) :
+    Bridge after k where
+  vertex := b.vertex
+  arc := f ∘ b.arc
+  river := f b.river
+  distinctVertices := b.distinctVertices
+  distinctArcs := hf.comp b.distinctArcs
+  river_ne_arc := fun i eq => b.river_ne_arc i (hf eq)
+  riverStep := h _ _ _ b.riverStep
+  arcStep i := h _ _ _ (b.arcStep i)
+
 variable {V : Type*} [LinearOrder V] [Fintype V]
 
 /-- The new-edge or critical-edge tails of a walk, together with its end. -/
