@@ -33,6 +33,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   The interval of this review is Definition 1, Algorithms 1–2, Lemma 10,
   Theorems 9 and 11, and the restricted size and reachability clauses of Theorem 2.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44389748461).
+- [c54962da](https://github.com/gbodwin/paper-formalizations/commit/c54962da3ba37706ddbd166ca73abd84922c823d)
+  adds the transfers in Theorems 15 and 16, the Steiner counting lemmas, weak
+  majorization, and the path-split counterexample. Local replay and the
+  374-declaration audit passed. Independent review checked those source
+  correspondences and the scope of the counterexample.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44392779212).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

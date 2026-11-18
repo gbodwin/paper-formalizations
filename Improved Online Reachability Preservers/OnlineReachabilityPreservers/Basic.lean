@@ -38,6 +38,25 @@ namespace Walk
 
 variable {G : Arcs V} {s t : V} {path : List (V × V)}
 
+theorem mono {H : Arcs V} (walk : Walk H s t path) (sub : H ⊆ G) :
+    Walk G s t path := by
+  induction walk with
+  | nil => exact .nil _
+  | cons h _ ih => exact .cons (sub h) ih
+
+theorem append {u : V} {q : List (V × V)} (w : Walk G s t path) (z : Walk G t u q) :
+    Walk G s u (path ++ q) := by
+  induction w with
+  | nil => exact z
+  | cons h _ ih => exact .cons h (ih z)
+
+theorem vertex_list (walk : Walk G s t path) :
+    s :: path.map Prod.snd = path.map Prod.fst ++ [t] := by
+  induction walk with
+  | nil => rfl
+  | cons h w ih =>
+    simpa only [List.map_cons, List.cons_append, List.cons.injEq, true_and] using ih
+
 theorem reachable (walk : Walk G s t path) : Reach G s t := by
   induction walk with
   | nil => exact .refl
@@ -224,5 +243,13 @@ theorem reverseArcs_reverseArcs (G : Arcs V) : reverseArcs (reverseArcs G) = G :
 
 theorem reverseArcs_mono {G H : Arcs V} (sub : H ⊆ G) :
     reverseArcs H ⊆ reverseArcs G := image_subset_image sub
+
+theorem Walk.reverse {G : Arcs V} {s t : V} {path : List (V × V)}
+    (walk : Walk G s t path) : Walk (reverseArcs G) t s (path.reverse.map Prod.swap) := by
+  induction walk with
+  | nil => exact .nil _
+  | cons he _ ih =>
+    rw [List.reverse_cons, List.map_append]
+    exact ih.append (.cons (edge_reverseArcs.mpr he) (.nil _))
 
 end OnlineReachabilityPreservers

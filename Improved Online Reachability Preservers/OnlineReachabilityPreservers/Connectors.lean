@@ -11,10 +11,11 @@ variable {V : Type*} [LinearOrder V] [Fintype V]
 private def hopCandidates (G : Arcs V) (s t : V) : Finset ℕ :=
   (range (Fintype.card V + 1)).filter (fun k => s ∈ reachIn G t k)
 
-private def hops (G : Arcs V) (s t : V) : ℕ :=
+/-- Least successful reverse-search depth, or one more than the vertex count. -/
+def hops (G : Arcs V) (s t : V) : ℕ :=
   (least? (hopCandidates G s t)).getD (Fintype.card V + 1)
 
-private theorem hops_spec {G : Arcs V} {s t : V} (h : Reach G s t) :
+theorem hops_spec {G : Arcs V} {s t : V} (h : Reach G s t) :
     hops G s t ≤ Fintype.card V ∧ s ∈ reachIn G t (hops G s t) := by
   have hmem : Fintype.card V ∈ hopCandidates G s t :=
     mem_filter.mpr ⟨mem_range.mpr (Nat.lt_succ_self _), mem_reaches.mpr h⟩
@@ -32,6 +33,34 @@ private theorem hops_le {G : Arcs V} {s t : V} {k : ℕ}
   have hh : hops G s t = j := by simp [hops, hj]
   rw [hh]
   exact least?_le hj hmem
+
+private theorem hops_pos {G : Arcs V} {s t : V} (h : Reach G s t) (hne : s ≠ t) :
+    0 < hops G s t := by
+  have hm := (hops_spec h).2
+  by_contra! hz
+  have heq : hops G s t = 0 := Nat.eq_zero_of_le_zero hz
+  rw [heq, reachIn, mem_singleton] at hm
+  exact hne hm
+
+/-- A reachable vertex different from the target has a successor on an earlier layer. -/
+private theorem hopCandidates_nonempty (G : Arcs V) {s t : V} (h : Reach G s t)
+    (hne : s ≠ t) : ((reachIn G t (hops G s t - 1)).filter (Edge G s)).Nonempty := by
+  obtain ⟨hk, hm⟩ := hops_spec h
+  have hpos := hops_pos h hne
+  have hm' : s ∈ reachIn G t ((hops G s t - 1) + 1) := by
+    rwa [Nat.sub_add_cancel hpos]
+  rcases reachIn_succ.mp hm' with hs | ⟨v, he, hv⟩
+  · have := hops_le ((Nat.sub_le _ _).trans hk) hs
+    omega
+  · exact ⟨v, mem_filter.mpr ⟨hv, he⟩⟩
+
+theorem exists_decreasing_hop {G : Arcs V} {s t : V} (h : Reach G s t) (hne : s ≠ t) :
+    ∃ v, Edge G s v ∧ Reach G v t ∧ hops G v t < hops G s t := by
+  obtain ⟨v, hv⟩ := hopCandidates_nonempty G h hne
+  obtain ⟨hr, he⟩ := mem_filter.mp hv
+  have hk := hops_le ((Nat.sub_le _ _).trans (hops_spec h).1) hr
+  have hd := hops_pos h hne
+  exact ⟨v, he, reachIn_sound hr, by omega⟩
 
 /-- For each nonroot vertex, choose one edge descending toward its SCC root. -/
 private def towardRoot (G : Arcs V) (s : V) : Arcs V :=
@@ -64,31 +93,18 @@ private theorem towardRoot_decreases (G : Arcs V) (s : V) (hne : s ≠ component
   let t := componentLabel G s
   let k := hops G s t
   have hr : Reach G s t := (componentLabel_same s).1
-  obtain ⟨hk, hm⟩ := hops_spec hr
-  have hk' : 0 < k := by
-    by_contra! h
-    have hzero : k = 0 := Nat.eq_zero_of_le_zero h
-    change s ∈ reachIn G t k at hm
-    rw [hzero, reachIn, mem_singleton] at hm
-    exact hne hm
-  have hm' : s ∈ reachIn G t ((k - 1) + 1) := by
-    rwa [Nat.sub_add_cancel hk']
-  have hprev : k - 1 ≤ Fintype.card V :=
-    (Nat.sub_le _ _).trans hk
-  have hnonempty : ((reachIn G t (k - 1)).filter (Edge G s)).Nonempty := by
-    rcases reachIn_succ.mp hm' with hs | ⟨v, he, hv⟩
-    · have bad : k ≤ k - 1 := hops_le hprev hs
-      omega
-    · exact ⟨v, mem_filter.mpr ⟨hv, he⟩⟩
+  have hnonempty := hopCandidates_nonempty G hr (show s ≠ t from hne)
+  have hprev : k - 1 ≤ Fintype.card V := (Nat.sub_le _ _).trans (hops_spec hr).1
+  have hk' : 0 < k := hops_pos hr hne
   obtain ⟨v, hv⟩ := least?_some hnonempty
   obtain ⟨hvr, edge⟩ := mem_filter.mp (least?_mem hv)
   have hsc : SameComponent G v s :=
     ⟨(reachIn_sound hvr).trans (componentLabel_same s).2, .single edge⟩
   have hdist : hops G v t ≤ k - 1 := hops_le hprev hvr
   refine ⟨v, ?_, componentLabel_eq.mpr hsc, ?_⟩
-  · have hs : s ≠ t := hne
-    simp [Edge, towardRoot, ← show t = componentLabel G s from rfl,
-      ← show k = hops G s t from rfl, hv, hs]
+  · have hv' : least? ((reachIn G (componentLabel G s)
+        (hops G s (componentLabel G s) - 1)).filter (Edge G s)) = some v := hv
+    simp [Edge, towardRoot, hv', hne]
   · change hops G v t < k
     omega
 

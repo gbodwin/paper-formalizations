@@ -30,6 +30,34 @@ theorem indexLevel_covers {base : ℕ} (hbase : 0 < base) (i : ℕ) :
   obtain ⟨k, hk⟩ := least?_some ⟨i, index_in_coveringLevels hbase i⟩
   simpa [indexLevel, hk] using (mem_filter.mp (least?_mem hk)).2
 
+theorem indexLevel_le_of_cover {base i k : ℕ} (hbase : 0 < base)
+    (cover : i + 1 ≤ dyadicQuota base k) : indexLevel base i ≤ k := by
+  obtain ⟨j, hj⟩ := least?_some ⟨i, index_in_coveringLevels hbase i⟩
+  have hj' := least?_le hj (index_in_coveringLevels hbase i)
+  have h : j ≤ k := by
+    by_cases hki : k ≤ i
+    · exact least?_le hj (mem_filter.mpr ⟨mem_range.mpr (Nat.lt_succ_of_le hki), cover⟩)
+    · omega
+  simpa [indexLevel, hj] using h
+
+theorem dyadicQuota_succ (base k : ℕ) :
+    dyadicQuota base (k + 1) = 2 * dyadicQuota base k := by
+  simp only [dyadicQuota, pow_succ]
+  ring
+
+theorem finalQuota_le {base p : ℕ} (hbase : 0 < base) (hp : 0 < p) :
+    dyadicQuota base (indexLevel base (p - 1)) ≤ max base (2 * p) := by
+  cases hlevel : indexLevel base (p - 1) with
+  | zero => simp [dyadicQuota]
+  | succ k =>
+    have hprev : dyadicQuota base k < p := by
+      by_contra! h
+      have hc : p - 1 + 1 ≤ dyadicQuota base k := by omega
+      have hmin := indexLevel_le_of_cover hbase hc
+      omega
+    rw [dyadicQuota_succ]
+    exact (Nat.mul_le_mul_left 2 hprev.le).trans (le_max_right base (2 * p))
+
 theorem indexLevel_mono {base : ℕ} (hbase : 0 < base) : Monotone (indexLevel base) := by
   intro i j hij
   obtain ⟨k, hk⟩ := least?_some ⟨i, index_in_coveringLevels hbase i⟩

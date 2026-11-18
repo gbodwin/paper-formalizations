@@ -18,11 +18,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   and the revealed prefix. The proof uses `S` only to bound the actual output by
   `3n + sqrt(2npσ)`, with `σ = |S|`. The functions retain all previously bought
   edges and preserve original reachability for every demand in the prefix.
-
 - [`theorem15_known_budget`](OnlineReachabilityPreservers/KnownBudget.lean) verifies
   the known-budget path assignment and the factor-two union bound.
   [`theorem16_index_sensitive`](OnlineReachabilityPreservers/IndexSensitive.lean)
   verifies dyadic assignment using the two growth inequalities in footnote 4.
+- [`theorem5_sinks_known_p`, `theorem5_sources_known_p`, `theorem5_sinks_indexed`, and `theorem5_sources_indexed`](OnlineReachabilityPreservers/RestrictedNonAdaptive.lean)
+  verify the endpoint-restricted size and path guarantees of Theorem 5 on
+  general digraphs. Write `F = n + floor(sqrt(2npσ))`. The guarantees are
+  `2n + 2F` with known `p` and `2n + 48F` with the arrival index, where `p`
+  is the prefix length in the indexed bound. The preserver is precisely the
+  union of the assigned simple paths, and the assignments give prefix monotonicity.
 - [`lemma20_opt_squared` and `lemma22_hub_count`](OnlineReachabilityPreservers/SteinerCounting.lean)
   prove the terminal-counting lower bounds used in the Steiner application.
   [`lemma29_square_sum`](OnlineReachabilityPreservers/Majorization.lean) proves

@@ -128,6 +128,11 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.backwardCompressed_total
 #print axioms OnlineReachabilityPreservers.theorem15_known_budget
 #print axioms OnlineReachabilityPreservers.theorem16_index_sensitive
+#print axioms OnlineReachabilityPreservers.plannedArcs_prefix
+#print axioms OnlineReachabilityPreservers.theorem5_sinks_known_p
+#print axioms OnlineReachabilityPreservers.theorem5_sources_known_p
+#print axioms OnlineReachabilityPreservers.theorem5_sinks_indexed
+#print axioms OnlineReachabilityPreservers.theorem5_sources_indexed
 #print axioms OnlineReachabilityPreservers.lemma20_opt_squared
 #print axioms OnlineReachabilityPreservers.lemma22_hub_count
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum
