@@ -58,9 +58,13 @@ halves `(0,1)` and `(2,3)`, before the other two paths, creates a 4-bridge.
 Its arcs are `(2,3)`, `(3,0)`, `(0,1)`, and its river is `(2,1)`. The last
 arc precedes the river. This disproves preservation under the displayed split
 in the general path-system scope of Lemmas 23 and 39. The example has no common
-vertex order and leaves the cleaning result on acyclic systems open to a separate proof.
+vertex order.
 [SplitAudit](OnlineReachabilityPreservers/SplitAudit.lean) checks both the absence of
 any original bridge and the presence of the new half-4-bridge.
+[SplitPreservation](OnlineReachabilityPreservers/SplitPreservation.lean) proves
+that disjoint consecutive splits preserve the bridge condition through size four
+in the acyclic scope. [Regularization](OnlineReachabilityPreservers/Regularization.lean)
+uses this to prove the upper caps with at most twice the ambient budgets.
 
 ## Matters requiring proof or clarification
 
@@ -70,8 +74,8 @@ any original bridge and the presence of the new half-4-bridge.
   while the restricted preserver size bound has an alternative counting proof.
 - Lemmas 23 and 39 use splitting steps, which increase vertex or path count
   before any additional restriction. The displayed proof does not establish
-  its exact output budgets. The needed constant-factor cleaning and preservation
-  of the ordering through splits should be proved explicitly.
+  its exact output budgets. The constant-factor acyclic proof establishes the
+  upper caps used in the counts. The lower caps and exact budgets remain open.
 - Lemma 24 needs a common vertex order to infer that any two paths meet in
   at most one vertex from 2-bridge-freeness. The paths `(0,1,2)` and
   `(2,1,0)` share three vertices without a bridge. The growth path systems
@@ -93,6 +97,9 @@ any original bridge and the presence of the new half-4-bridge.
   start, several segments can share that start on the base. The proof shows
   both vertices of each \(Q\) tuple are off the base under full bridge-freeness
   and a common vertex order.
+- Lemma 34's first two moment displays omit the \(+d\) in the linear
+  contribution \(n_x(\ell+d)\) from Lemma 31. The inequality before the
+  case analysis restores it. The sampled moment estimate retains both terms.
 - Lemmas 40–42 print a free exponent \(a\) on the first power of \(p\). The
   integrand and the starting/target bounds use \(p^{1/2}\). The recurrence
   uses \(2/3\le b<1/\sqrt2\). This is within the range where the integral
@@ -114,7 +121,7 @@ any original bridge and the presence of the new half-4-bridge.
   bridge the gap between this sharp asymptotic statement and the rounded bound.
 - The [second-moment estimate](OnlineReachabilityPreservers/SecondMoment.lean)
   of Appendix A is checked for a common vertex order under the inductive
-  subfamily bound. The offline second moment, the expectation of the
-  dyadic moment sum, and the remaining regime reductions are open.
+  subfamily bound. The expectation of the dyadic moment sum and the
+  remaining regime reductions are open.
   The intermediate discrepancies do not
   furnish counterexamples to Theorems 1, 2, 4, 5 or 8.

@@ -72,6 +72,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   and local kernel replay passed. Independent review checked the sorted
   subfamilies, retained path order, and continuous and discrete estimates.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44409841296).
+- [c7489db5](https://github.com/gbodwin/paper-formalizations/commit/c7489db56d05ecf38d57a41b506e54b059090f24)
+  adds the predecessor estimates, finite expected count, dyadic moment bound,
+  and check of the overlap in Lemma 31. The 793-declaration paper audit
+  and local kernel replay passed. Independent review confirmed the
+  branch multiplicities and the actual induced vertex sets.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44412599474).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

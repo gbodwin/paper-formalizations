@@ -93,6 +93,22 @@ theorem branchesThrough_card {paths : I → Finset V} (free : HalfBridgeFree (Pa
     obtain ⟨i, hvi, hui, hlt, near⟩ := mem_predecessorSupport.mp hp
     exact ⟨(i, u), mem_branchesThrough.mpr ⟨hub, hui, hvi, hlt.le, near⟩, rfl⟩
 
+/-- Each off-base branch uses a different path through its vertex. -/
+theorem branchesThrough_le_degree {paths : I → Finset V} (free : HalfBridgeFree (PathBefore paths) 4)
+    {base : I} {v : V} {h : ℕ} (outside : v ∉ paths base) :
+    (branchesThrough paths base h v).card ≤ (occurrences paths v).card := by
+  apply card_le_card_of_injOn Prod.fst
+  · rintro ⟨i, u⟩ hi
+    exact mem_occurrences.mpr (mem_branchesThrough.mp hi).2.2.1
+  · rintro ⟨i, u⟩ hu ⟨j, z⟩ hz eq
+    change i = j at eq
+    subst j
+    have a := mem_branchesThrough.mp hu
+    have b := mem_branchesThrough.mp hz
+    have distinct : i ≠ base := fun e => outside (e ▸ a.2.2.1)
+    obtain rfl := path_intersection_unique (by decide) free distinct a.2.1 a.1 b.2.1 b.1
+    rfl
+
 /-- Base paths off v whose intersection with its predecessor subsystem has at least x vertices. -/
 def largeBranchBases (paths : I → Finset V) (v : V) (h x : ℕ) : Finset I :=
   univ.filter fun b => v ∉ paths b ∧ x ≤ (paths b ∩ predecessorSupport paths v h).card
@@ -221,6 +237,15 @@ theorem HalfBridgeFree.induced_vertices {paths : I → Finset V} {size : ℕ}
       ⟨(mem_filter.mp h.1).2, (mem_filter.mp h.2.1).2, h.2.2⟩
   exact free hk old earlier
 
+omit [Fintype V] [Fintype I] [LinearOrder I] in
+theorem BridgeFree.induced_vertices {paths : I → Finset V} {size : ℕ}
+    (free : BridgeFree (PathBefore paths) size) (S : Finset V) :
+    BridgeFree (PathBefore (inducedPath paths S)) size := by
+  intro k hk
+  exact ⟨fun b => (free hk).false
+    (b.mapVertices Subtype.val Subtype.val_injective fun _ _ _ h =>
+      ⟨(mem_filter.mp h.1).2, (mem_filter.mp h.2.1).2, h.2.2⟩)⟩
+
 omit [Fintype V] [Fintype I] in
 theorem HalfBridgeFree.induced {paths : I → Finset V} {size : ℕ}
     (free : HalfBridgeFree (PathBefore paths) size) (S : Finset V) (J : Finset I) :
@@ -245,6 +270,15 @@ omit [Fintype V] [LinearOrder I] [Fintype I] in
 theorem inducedPaths_card (paths : I → Finset V) (S : Finset V) {J : Finset I} (i : J) :
     (inducedPaths paths S J i).card = (paths i.val ∩ S).card :=
   inducedPath_card paths S i.val
+
+omit [Fintype V] [LinearOrder I] in
+theorem inducedPath_mass_le (paths : I → Finset V) (S : Finset V) (D : ℕ)
+    (degree_cap : ∀ u ∈ S, (occurrences paths u).card ≤ D) :
+    (∑ i, (inducedPath paths S i).card) ≤ S.card*D := calc
+  _ = ∑ u ∈ S, (occurrences paths u).card := by
+    simpa only [inducedPath_card, occurrences] using incidence_on_support paths univ S
+  _ ≤ ∑ _ ∈ S, D := sum_le_sum fun u hu => degree_cap u hu
+  _ = _ := by simp
 
 omit [Fintype V] [LinearOrder I] in
 /-- The lower incidence count for applying the inductive extremal bound in Lemma 32. -/
@@ -510,11 +544,7 @@ theorem sampled_vertex_moment {paths : I → Finset V} (free : HalfBridgeFree (P
     have smaller : ((paths i ∩ S).card : ℝ) ≤ (paths i).card := by
       exact_mod_cast card_le_card (inter_subset_left : paths i ∩ S ⊆ paths i)
     exact smaller.trans (cap i)
-  have htotal : (∑ i, (restricted i).card) ≤ S.card*D := calc
-    _ = ∑ u ∈ S, (occurrences paths u).card := by
-      simpa only [restricted, inducedPath_card, occurrences] using incidence_on_support paths univ S
-    _ ≤ ∑ _ ∈ S, D := sum_le_sum fun u hu => degree_cap u hu
-    _ = _ := by simp
+  have htotal : (∑ i, (restricted i).card) ≤ S.card*D := inducedPath_mass_le paths S D degree_cap
   have htotalR : (∑ i, ((restricted i).card : ℝ)) ≤ (Fintype.card S : ℝ) * D := by
     rw [eqCard]
     exact_mod_cast htotal

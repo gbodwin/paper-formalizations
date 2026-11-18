@@ -284,6 +284,36 @@ private theorem descending_rank (paths : I → Finset V) :
     exact numbered.monotone (Fin.rev_le_rev.mpr hij)
   exact Prod.Lex.monotone_fst _ _ key_le
 
+omit [LinearOrder V] [Fintype V] in
+/-- List the path lengths in decreasing order. Every prefix corresponds to
+an actual subfamily, whose indices keep their original path order. -/
+theorem ranked_path_lengths (paths : I → Finset V) :
+    ∃ values : ℕ → ℝ,
+      (∀ i j, i ≤ j → j < Fintype.card I → values j ≤ values i) ∧
+      (∀ i < Fintype.card I, ∃ j : I, values i = (paths j).card) ∧
+      ∀ k ≤ Fintype.card I, ∃ J : Finset I, J.card = k ∧
+        ∀ f : ℝ → ℝ, (∑ i ∈ range k, f (values i)) = ∑ j ∈ J, f ((paths j).card : ℝ) := by
+  classical
+  obtain ⟨rank, order⟩ := descending_rank paths
+  let values (i : ℕ) : ℝ := if h : i < Fintype.card I then ((paths (rank ⟨i, h⟩)).card : ℝ) else 0
+  refine ⟨values, ?_, ?_, ?_⟩
+  · intro i j h hlt
+    have hi : i < Fintype.card I := h.trans_lt hlt
+    have hfin : (⟨i, hi⟩ : Fin (Fintype.card I)) ≤ ⟨j, hlt⟩ := h
+    simp only [values, dite_eq_left hi, dite_eq_left hlt]
+    exact_mod_cast (order hfin)
+  · intro i hi
+    exact ⟨rank ⟨i, hi⟩, by simp [values, hi]⟩
+  · intro k hk
+    let J := (univ : Finset (Fin k)).map ((Fin.castLEEmb hk).trans rank.toEmbedding)
+    refine ⟨J, by simp [J], fun f => ?_⟩
+    dsimp only [J]
+    rw [sum_map, ← Fin.sum_univ_eq_sum_range (fun i => f (values i)) k]
+    apply sum_congr rfl
+    intro i _
+    have hi : i.1 < Fintype.card I := i.2.trans_le hk
+    simp [values, hi, Function.Embedding.trans_apply, Fin.castLE]
+
 /-- Lemma 31 on ordered paths with a common vertex order. The input bound
 is the inductive incidence-size envelope applied to each subfamily. -/
 theorem lemma31_acyclic_moment (paths : I → Finset V) (free : HalfBridgeFree (PathBefore paths) 4)
@@ -300,44 +330,22 @@ theorem lemma31_acyclic_moment (paths : I → Finset V) (free : HalfBridgeFree (
       2*C*n*(L+d) +
       (1/(3-4*a)+1)*C^(1/(2-2*a))*n^(3/2 : ℝ)*d^((3-4*a)/(2-2*a)) +
       (1/(2*b-1)+1)*C^(1/b)*n^(1/b)*d^((2*b-1)/b) := by
-  classical
   let p := Fintype.card I
-  obtain ⟨rank, order⟩ := descending_rank paths
-  let values (i : ℕ) : ℝ := if h : i < p then ((paths (rank ⟨i, h⟩)).card : ℝ) else 0
-  let top (k : ℕ) (hk : k ≤ p) :=
-    (univ : Finset (Fin k)).map ((Fin.castLEEmb hk).trans rank.toEmbedding)
-  have hsize (k : ℕ) (hk : k ≤ p) : (top k hk).card = k := by simp [top]
-  have ht (f : ℝ → ℝ) (k : ℕ) (hk : k ≤ p) :
-      (∑ i ∈ range k, f (values i)) = ∑ j ∈ top k hk, f ((paths j).card : ℝ) := by
-    dsimp only [top]
-    rw [sum_map]
-    calc
-      _ = ∑ i : Fin k, f (values i.1) := (Fin.sum_univ_eq_sum_range (fun i => f (values i)) k).symm
-      _ = _ := by
-        apply sum_congr rfl
-        intro i _
-        have hi : i.1 < p := i.2.trans_le hk
-        simp [values, hi, Function.Embedding.trans_apply, Fin.castLE]
-  have hv (k : ℕ) (hk : k ≤ p) :
-      (∑ i ∈ range k, values i) = ∑ j ∈ top k hk, ((paths j).card : ℝ) :=
-    ht id k hk
-  have all_top : top p le_rfl = (Finset.univ : Finset I) :=
-    Finset.eq_univ_of_card _ (hsize _ _)
-  have average : (∑ i ∈ range p, values i) ≤ (Fintype.card V : ℝ)*d := by
-    rw [hv p le_rfl, all_top]
-    exact mass
+  obtain ⟨values, order, listed, prefixes⟩ := ranked_path_lengths paths
+  obtain ⟨all, hc, sums⟩ := prefixes p le_rfl
+  have heq : all = (Finset.univ : Finset I) := Finset.eq_univ_of_card _ hc
+  have total : (∑ i ∈ range p, values i) = ∑ j, ((paths j).card : ℝ) := by
+    simpa only [heq, id_eq] using sums id
   have positive : (0 : ℝ) < (Fintype.card V : ℝ) := by exact_mod_cast hn
   have bound := lemma31_ranked_moment p values positive hd hL hC ha₀ ha₁ hb₀ hb₁
-    (fun i hi => by simp [values, hi]) (fun i j le hi => by
-      have hj : i < p := le.trans_lt hi
-      simp only [values, dite_eq_left hi, dite_eq_left hj, Nat.cast_le]
-      exact order le)
-    (fun i hi => by simpa [values, hi] using cap (rank ⟨i, hi⟩)) average (by
+    (fun i hi => by obtain ⟨j, eq⟩ := listed i hi; rw [eq]; positivity) order
+    (fun i hi => by obtain ⟨j, eq⟩ := listed i hi; rw [eq]; exact cap j) (total.le.trans mass) (by
       intro k hk
-      rw [hv k hk]
-      have h := subfamily (top k hk) (free.restrict_paths (top k hk))
-      simpa only [hsize] using h)
-  rw [ht (· ^ 2) p le_rfl, all_top] at bound
+      obtain ⟨J, hJ, hsum⟩ := prefixes k hk
+      have eq : (∑ i ∈ range k, values i) = ∑ j ∈ J, ((paths j).card : ℝ) := hsum id
+      rw [eq]
+      simpa only [hJ] using subfamily J (free.restrict_paths J))
+  rw [sums (· ^ 2), heq] at bound
   exact bound
 
 end OnlineReachabilityPreservers

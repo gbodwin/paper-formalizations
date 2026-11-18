@@ -62,7 +62,15 @@ theorem HalfBridgeFree.restrict_paths {paths : I → Finset V} {size : ℕ}
     b.mapPaths Subtype.val Subtype.val_injective (fun _ _ _ h => h)
   exact free hk c earlier
 
-private def orderedBridge {paths : I → Finset V} {k : ℕ}
+omit [LinearOrder I] in
+theorem BridgeFree.restrict_paths {paths : I → Finset V} {size : ℕ}
+    (free : BridgeFree (PathBefore paths) size) (J : Finset I) :
+    BridgeFree (PathBefore fun j : J => paths j.val) size := by
+  intro k hk
+  exact ⟨fun b => (free hk).false (b.mapPaths Subtype.val Subtype.val_injective (fun _ _ _ h => h))⟩
+
+/-- Construct a bridge from an increasing chain of path steps and its river. -/
+def orderedBridge {paths : I → Finset V} {k : ℕ}
     (v : Fin (k + 2) → V) (a : Fin (k + 1) → I) (r : I)
     (ha : Function.Injective a) (hr : ∀ i, r ≠ a i)
     (river : PathBefore paths r (v 0) (v (Fin.last (k + 1))))

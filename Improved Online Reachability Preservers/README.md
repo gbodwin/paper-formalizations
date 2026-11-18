@@ -64,6 +64,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   inductive size bound and a maximum-degree cap. It also proves the dyadic
   upper bound on off-base tuples in terms of the path moments of sampled
   vertex sets, supplying the first steps of Lemma 34.
+- [Regularization](OnlineReachabilityPreservers/Regularization.lean)
+  verifies an acyclic upper-cap reduction for Appendices A and B. Splitting
+  vertices and consecutive path blocks preserves every incidence and both
+  bridge conditions through size four. The new sizes are at most twice their
+  original values, and each cap is at most four times the corresponding new average.
+- [OfflineMoment](OnlineReachabilityPreservers/OfflineMoment.lean)
+  checks the logarithmic second-moment bound and the resulting upper count
+  on the actual offline sample. The proof uses the inductive size bound on
+  full-bridge-free subfamilies and an ambient sample size at least the degree cap.
 - [`lemma20_opt_squared` and `lemma22_hub_count`](OnlineReachabilityPreservers/SteinerCounting.lean)
   prove the terminal-counting lower bounds used in the Steiner application.
   [`lemma29_square_sum`](OnlineReachabilityPreservers/Majorization.lean) proves

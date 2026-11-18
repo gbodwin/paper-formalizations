@@ -15,6 +15,11 @@ variable {V I : Type*} [Fintype V] [DecidableEq V] [Fintype I] [LinearOrder I]
 def occurrences (marks : I → Finset V) (v : V) : Finset I :=
   univ.filter (fun i => v ∈ marks i)
 
+omit [LinearOrder I] [Fintype V] in
+theorem mem_occurrences {marks : I → Finset V} {v : V} {i : I} :
+    i ∈ occurrences marks v ↔ v ∈ marks i := by
+  simp [occurrences, mem_filter]
+
 /-- A marked vertex and two distinct path indices in increasing order. -/
 def collisions (marks : I → Finset V) : Finset (V × I × I) :=
   univ.filter (fun x => x.2.1 < x.2.2 ∧ x.1 ∈ marks x.2.1 ∧ x.1 ∈ marks x.2.2)
