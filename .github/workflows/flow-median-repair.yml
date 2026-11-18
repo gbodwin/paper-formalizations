@@ -1,0 +1,40 @@
+name: Flow median repair
+on:
+  push:
+    branches:
+      - codex/flow-median-repair-20261118
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  median:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      LEAN_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Bind exact source
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          python3 scripts/CheckReferenceRecovery.py
+      - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
+        with:
+          auto-config: 'false'
+          build: 'true'
+          build-args: '+DirectedFlowCutGap.PathSystemCharging +DirectedFlowCutGap.CandidateSchedule'
+          test: 'false'
+          lint: 'false'
+          use-github-cache: 'false'
+          use-mathlib-cache: 'true'
+      - name: Check retained matcher consumers, axioms and kernel replay
+        run: bash scripts/CheckFlowMedianRepair.sh
+      - name: Strictly recheck the immediate downstream consumer
+        run: |
+          lake env lean -j1 -DautoImplicit=false -DwarningAsError=true \
+            "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PathSystemCharging.lean"
+      - name: Check source identity after verification
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git diff --exit-code
+          python3 scripts/CheckReferenceRecovery.py

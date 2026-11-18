@@ -1,9 +1,11 @@
+import Init.WFComputable
 import Mathlib.Data.List.Pairwise
 import Mathlib.Data.List.Chain
 import Mathlib.Data.List.TakeDrop
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Nat.Log
 import Mathlib.Tactic
+import Lean.Elab.PreDefinition.Structural.SmartUnfolding
 
 /-!
 # Balanced median shortcuts (Lemma 20)
@@ -33,19 +35,136 @@ inductive Tree (α : Type*) where
 
 namespace Tree
 
-def vertices : Tree α → List α
+/-- The recursive calls descend to children. Lean's computable well-founded
+fixpoint compiles the fold without generating partial declarations here. -/
+private def fold {β : Type*} (base : β)
+    (combine : Tree α → α → Tree α → β → β → β) : Tree α → β :=
+  WellFounded.fix (measure (sizeOf : Tree α → ℕ)).wf fun x ih =>
+    Tree.casesOn (motive := fun t => ((y : Tree α) → sizeOf y < sizeOf t → β) → β) x
+      (fun _ => base)
+      (fun l m r recurse =>
+        combine l m r (recurse l (by simp only [Tree.node.sizeOf_spec]; omega))
+          (recurse r (by simp only [Tree.node.sizeOf_spec]; omega))) ih
+
+private theorem fold_empty {β : Type*} (base : β)
+    (combine : Tree α → α → Tree α → β → β → β) : fold base combine .empty = base := by
+  unfold fold
+  rw [WellFounded.fix_eq]
+
+private theorem fold_node {β : Type*} (base : β)
+    (combine : Tree α → α → Tree α → β → β → β) (l r : Tree α) (m : α) :
+    fold base combine (.node l m r) = combine l m r (fold base combine l) (fold base combine r) := by
+  unfold fold
+  rw [WellFounded.fix_eq]
+
+private def verticesImpl : Tree α → List α := fold [] (fun _ m _ l r => l ++ m :: r)
+
+-- Build the retained matcher with Lean's dependent match compiler so importers
+-- keep its universe-polymorphic type, reduction body and matcher metadata.
+open Lean Elab Meta in
+run_cmd Command.liftTermElabM do
+  let u := Level.param `u_1
+  withLocalDecl `α .implicit (.sort (.succ u)) fun α => do
+    let tree := mkApp (mkConst ``Tree [u]) α
+    withLocalDeclD `l tree fun l =>
+      withLocalDeclD `m α fun m =>
+        withLocalDeclD `r tree fun r => do
+          let matcherName := `DirectedFlowCutGap.MedianShortcuts.Tree.vertices.match_1
+          let nodeVars := [l.fvarId!, m.fvarId!, r.fvarId!]
+          let nodeDecls ← nodeVars.mapM (fun id => do return ← id.getDecl)
+          let result ← Match.mkMatcher {
+            matcherName, matchType := mkForall `x .default tree (mkConst ``Nat)
+            discrInfos := #[{}]
+            lhss := [
+              { ref := .missing, fvarDecls := [], patterns := [.ctor ``empty [u] [α] []] },
+              { ref := .missing, fvarDecls := nodeDecls,
+                patterns := [.ctor ``node [u] [α] (nodeVars.map Match.Pattern.var)] }]
+          }
+          unless result.matcher.getAppFn.constName? == some matcherName &&
+              result.counterExamples.isEmpty && result.unusedAltIdxs.isEmpty do
+            throwError "Failed to construct the retained tree matcher"
+          result.addMatcher
+
+@[reducible] def vertices._f (x : Tree α) (f : Tree.below (motive := fun _ => List α) x) : List α :=
+  (match (motive := (x : Tree α) → Tree.below (motive := fun _ => List α) x → List α) x with
+    | .empty => fun _ => []
+    | .node l m r => fun (below : Tree.below (motive := fun _ => List α) (.node l m r)) =>
+        below.1.1 ++ m :: below.2.1) f
+
+/-- Inorder traversal with the original kernel equations and a verified executable fold. -/
+@[implemented_by verticesImpl]
+def vertices : Tree α → List α := fun x => Tree.brecOn x vertices._f
+
+private def heightImpl : Tree α → ℕ := fold 0 (fun _ _ _ l r => max l r + 1)
+
+@[reducible] def height._f (x : Tree α) (f : Tree.below (motive := fun _ => ℕ) x) : ℕ :=
+  (match (motive := (x : Tree α) → Tree.below (motive := fun _ => ℕ) x → ℕ) x with
+    | .empty => fun _ => 0
+    | .node l a r => fun (below : Tree.below (motive := fun _ => ℕ) (.node l a r)) =>
+        max below.1.1 below.2.1 + 1) f
+
+@[implemented_by heightImpl]
+def height : Tree α → ℕ := fun x => Tree.brecOn x height._f
+
+@[reducible] def Balanced._f (x : Tree α) (f : Tree.below (motive := fun _ => Prop) x) : Prop :=
+  (match (motive := (x : Tree α) → Tree.below (motive := fun _ => Prop) x → Prop) x with
+    | .empty => fun _ => True
+    | .node l m r => fun below => below.1.1 ∧ below.2.1 ∧
+        l.vertices.length = (l.vertices ++ m :: r.vertices).length / 2) f
+
+/-- At every nonempty node, the pivot is the middle entry of its inorder list. -/
+def Balanced : Tree α → Prop := fun x => Tree.brecOn x Balanced._f
+
+private def verticesEquation : Tree α → List α
   | .empty => []
   | .node l m r => l.vertices ++ m :: r.vertices
 
-def height : Tree α → ℕ
+private def heightEquation : Tree α → ℕ
   | .empty => 0
   | .node l _ r => max l.height r.height + 1
 
-/-- At every nonempty node, the pivot is the middle entry of its inorder list. -/
-def Balanced : Tree α → Prop
+private def balancedEquation : Tree α → Prop
   | .empty => True
   | .node l m r => l.Balanced ∧ r.Balanced ∧
       l.vertices.length = (l.vertices ++ m :: r.vertices).length / 2
+
+-- Restore Lean's equation data for the retained structural definitions. The
+-- standard equation elaborator constructs and kernel-checks the named proofs.
+open Lean Elab in
+run_cmd Command.liftTermElabM do
+  for (name, equation) in #[(``vertices, ``verticesEquation), (``height, ``heightEquation),
+      (``Balanced, ``balancedEquation)] do
+    let info ← getConstInfoDefn equation
+    let preDef : PreDefinition := { (default : PreDefinition) with
+      declName := name, levelParams := info.levelParams, type := info.type, value := info.value }
+    let fixed ← getFixedParamPerms #[preDef]
+    Structural.registerEqnsInfo preDef #[name] 1 fixed
+    Lean.Meta.markAsRecursive name
+    Structural.addSmartUnfoldingDef (← getLCtx, ← Lean.Meta.getLocalInstances) preDef 1
+
+open Lean Elab Meta in
+run_cmd Command.liftTermElabM do
+  for name in #[``vertices, ``height, ``Balanced] do
+    unless (← getUnfoldEqnFor? name).isSome do
+      throwError "Missing unfolding theorem for {name}"
+
+private theorem verticesImpl_eq (t : Tree α) : verticesImpl t = vertices t := by
+  induction t with
+  | empty => exact fold_empty _ _
+  | node l m r il ir =>
+      calc
+        verticesImpl (.node l m r) = verticesImpl l ++ m :: verticesImpl r :=
+          fold_node _ _ _ _ _
+        _ = (Tree.node l m r).vertices := by rw [il, ir]; rfl
+
+private theorem heightImpl_eq (t : Tree α) : heightImpl t = height t := by
+  induction t with
+  | empty => exact fold_empty _ _
+  | node l m r il ir =>
+      calc
+        heightImpl (.node l m r) = max (heightImpl l) (heightImpl r) + 1 :=
+          fold_node _ _ _ _ _
+        _ = (Tree.node l m r).height := by rw [il, ir]; rfl
 
 /-- Explicit balanced-median construction, by recursion on its depth budget. -/
 theorem exists_balanced (p : List α) (d : ℕ) (hp : p.length < 2 ^ d) :
