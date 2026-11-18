@@ -124,3 +124,12 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.theorem9_lift
 #print axioms OnlineReachabilityPreservers.theorem2_sinks
 #print axioms OnlineReachabilityPreservers.theorem2_sources
+
+#print axioms OnlineReachabilityPreservers.backwardCompressed_total
+#print axioms OnlineReachabilityPreservers.theorem15_known_budget
+#print axioms OnlineReachabilityPreservers.theorem16_index_sensitive
+#print axioms OnlineReachabilityPreservers.lemma20_opt_squared
+#print axioms OnlineReachabilityPreservers.lemma22_hub_count
+#print axioms OnlineReachabilityPreservers.lemma29_square_sum
+#print axioms OnlineReachabilityPreservers.SourceAudit.splitExample_bridge_free
+#print axioms OnlineReachabilityPreservers.SourceAudit.splitExample_creates_half_four

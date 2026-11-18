@@ -33,6 +33,8 @@ Its arcs are `(2,3)`, `(3,0)`, `(0,1)`, and its river is `(2,1)`. The last
 arc precedes the river. This disproves preservation under the displayed split
 in the general path-system scope of Lemmas 23 and 39. The example has no common
 vertex order and leaves the cleaning result on acyclic systems open to a separate proof.
+[SplitAudit](OnlineReachabilityPreservers/SplitAudit.lean) checks both the absence of
+any original bridge and the presence of the new half-4-bridge.
 
 ## Matters requiring proof or clarification
 

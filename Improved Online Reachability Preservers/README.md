@@ -19,6 +19,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   `3n + sqrt(2npσ)`, with `σ = |S|`. The functions retain all previously bought
   edges and preserve original reachability for every demand in the prefix.
 
+- [`theorem15_known_budget`](OnlineReachabilityPreservers/KnownBudget.lean) verifies
+  the known-budget path assignment and the factor-two union bound.
+  [`theorem16_index_sensitive`](OnlineReachabilityPreservers/IndexSensitive.lean)
+  verifies dyadic assignment using the two growth inequalities in footnote 4.
+- [`lemma20_opt_squared` and `lemma22_hub_count`](OnlineReachabilityPreservers/SteinerCounting.lean)
+  prove the terminal-counting lower bounds used in the Steiner application.
+  [`lemma29_square_sum`](OnlineReachabilityPreservers/Majorization.lean) proves
+  the weak-majorization step used in Appendix A.
+
 Here `p` counts processed requests. For the paper's ordered set of distinct demands,
 this is its demand cardinality. The model admits self-pairs and unreachable pairs.
 For component contraction, unused vertex labels are isolated in the DAG, keeping
@@ -26,8 +35,8 @@ the budget parameter `n` equal to the original vertex count.
 
 The algorithms are executable bounded searches on finite sets. The graph searches
 iterate at most `n` times over finite vertex and edge sets, with a deterministic
-minimum choice. SCC labels, internal trees, and crossing representatives are fixed
-using the input before the requests. A formal time bound in a specified cost model
+minimum choice. SCC labels, internal trees, and crossing representatives depend only on the
+input graph and can be precomputed. A formal time bound in a specified cost model
 is outside the current checked coverage.
 
 ## Source and verification
@@ -36,7 +45,14 @@ The [statement map](STATEMENT_MAP.md) records the paper's claims, dependencies,
 and remaining proofs. The [source notes](SOURCE_NOTES.md) record exact discrepancies.
 [SourceAudit](OnlineReachabilityPreservers/SourceAudit.lean) verifies the counterexample
 and corrected tail inequality for Lemma 25 and the recurrence discrepancy in Theorem 38.
+[SplitAudit](OnlineReachabilityPreservers/SplitAudit.lean) checks that the path
+split printed in Lemmas 23 and 39 can introduce a forbidden bridge in a general
+path system.
 
 Build from the repository root with `lake build OnlineReachabilityPreservers`.
 The library is included in the repository's module index, declaration audit,
 and kernel replay.
+
+The [companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+includes an interactive trace and a source-linked proof map. The pairwise
+extremal estimates and the full Steiner competitive guarantee remain open.

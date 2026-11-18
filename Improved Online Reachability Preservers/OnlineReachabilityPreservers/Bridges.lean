@@ -1,4 +1,4 @@
-import OnlineReachabilityPreservers.Online
+import OnlineReachabilityPreservers.Restricted
 
 /-! Lemma 10 for the forward compressed path system and its reversed counterpart. -/
 
@@ -128,6 +128,11 @@ forward system in the reversed graph. -/
 def BackwardCompressedBefore (G : Arcs V) (D : List (V × V))
     (i : Fin (D.map Prod.swap).length) (u v : V) : Prop :=
   CompressedBefore (reverseArcs G) (D.map Prod.swap) i v u
+
+theorem backwardCompressed_total {G : Arcs V} (dag : IsDAG G) (D : List (V × V)) :
+    (∑ i : Fin (D.map Prod.swap).length,
+      (compressed (reverseArcs G) (D.map Prod.swap) i).card) = (backwardRun G D).card + D.length := by
+  simpa [backwardRun] using compressed_total (reverseArcs_dag dag) (D.map Prod.swap)
 
 /-- Under backward growth, the last arc of a bridge cannot precede its river. -/
 theorem no_earlier_last_arc {G : Arcs V} (dag : IsDAG G) {D : List (V × V)} {k : ℕ}
