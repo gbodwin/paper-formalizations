@@ -147,7 +147,8 @@ structure BranchTuple (V I : Type*) where
   y : V
   deriving Fintype
 
-private def QualifyingBranchTuple (paths : I → Finset V) (base : I) (h : ℕ)
+/-- The two windows and a middle path witness a tuple counted by Q. -/
+def QualifyingBranchTuple (paths : I → Finset V) (base : I) (h : ℕ)
     (w : BranchTuple V I) : Prop :=
   InBranchWindow paths base w.left h w.leftStart w.x ∧
     InBranchWindow paths base w.right h w.rightStart w.y ∧ w.x ∉ paths base ∧
@@ -158,7 +159,7 @@ noncomputable def branchTuples (paths : I → Finset V) (base : I) (h : ℕ) :
   classical
   exact univ.filter (QualifyingBranchTuple paths base h)
 
-private theorem mem_branchTuples {paths : I → Finset V} {base : I} {h : ℕ} {w : BranchTuple V I} :
+theorem mem_branchTuples {paths : I → Finset V} {base : I} {h : ℕ} {w : BranchTuple V I} :
     w ∈ branchTuples paths base h ↔ QualifyingBranchTuple paths base h w := by
   classical
   simp [branchTuples]
@@ -324,11 +325,12 @@ private theorem right_off_base {paths : I → Finset V} (free : BridgeFree (Path
   exact free.no_three (by decide) mid.left_ne_middle hbl hbm ⟨hsl, hxl, hlt⟩
     mid.middle_step ⟨hsb, hy, hlt.trans mid.middle_step.2.2⟩
 
-private def verticesInWindow (s : Finset V) (start : V) (h : ℕ) : Finset V :=
+/-- Vertices at offsets from zero to h on a path after a specified start. -/
+def verticesInWindow (s : Finset V) (start : V) (h : ℕ) : Finset V :=
   s.filter fun x => start ≤ x ∧ (predecessors s x).card ≤ (predecessors s start).card + h
 
 omit [Fintype V] in
-private theorem window_card (s : Finset V) (start : V) (h : ℕ) :
+theorem window_card (s : Finset V) (start : V) (h : ℕ) :
     (verticesInWindow s start h).card ≤ h + 1 := by
   let rank (x : V) := (predecessors s x).card
   calc

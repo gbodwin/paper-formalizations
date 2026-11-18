@@ -151,6 +151,13 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.lemma42_printed_vertex_exponent_ne
 #print axioms OnlineReachabilityPreservers.lemma30_integral_square_sum
 #print axioms OnlineReachabilityPreservers.lemma31_acyclic_moment
+#print axioms OnlineReachabilityPreservers.lemma32_degree_count
+#print axioms OnlineReachabilityPreservers.lemma32_extremal_count
+#print axioms OnlineReachabilityPreservers.lemma33_deterministic
+#print axioms OnlineReachabilityPreservers.lemma33_expected_count
+#print axioms OnlineReachabilityPreservers.lemma34_dyadic_moment
+#print axioms OnlineReachabilityPreservers.sampled_vertex_moment
+#print axioms OnlineReachabilityPreservers.SourceAudit.lemma31_printed_intervals_overlap
 #print axioms OnlineReachabilityPreservers.lemma20_opt_squared
 #print axioms OnlineReachabilityPreservers.lemma22_hub_count
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum

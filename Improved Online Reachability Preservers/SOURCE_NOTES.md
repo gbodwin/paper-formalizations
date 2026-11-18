@@ -40,6 +40,16 @@ checks the rearrangement from that term, with explicit positive parameters,
 and its agreement with the recurrence. The other terms and second-moment
 estimates still need proofs for the full bound.
 
+## The displayed derivative in Lemma 31 has overlapping cases
+
+Take \(n_1=16\), \(\ell=1\), \(d=4\), \(a=8/11\), \(b=7/10\), and \(x=8\).
+The first and third intervals both contain \(x\). Their values are
+\(C\) and \((6/11)2^{17/11}C\), respectively. The preceding envelope
+is \(Cx\) near \(x=8\).
+[SourceAudit](OnlineReachabilityPreservers/SourceAudit.lean) checks the overlap
+and the two values for positive \(C\). The [acyclic moment proof](OnlineReachabilityPreservers/SecondMoment.lean)
+orders the lengths and bounds clipped powers directly.
+
 ## The path split can create a forbidden bridge
 
 Take the ordered path family `[(0,1,2,3), (3,0), (2,1)]`.
@@ -104,6 +114,7 @@ any original bridge and the presence of the new half-4-bridge.
   bridge the gap between this sharp asymptotic statement and the rounded bound.
 - The [second-moment estimate](OnlineReachabilityPreservers/SecondMoment.lean)
   of Appendix A is checked for a common vertex order under the inductive
-  subfamily bound. The offline second moment, branching-degree sums, and
-  regime reductions remain open. The intermediate discrepancies do not
+  subfamily bound. The offline second moment, the expectation of the
+  dyadic moment sum, and the remaining regime reductions are open.
+  The intermediate discrepancies do not
   furnish counterexamples to Theorems 1, 2, 4, 5 or 8.

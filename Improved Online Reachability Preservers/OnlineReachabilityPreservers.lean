@@ -1,5 +1,6 @@
 import OnlineReachabilityPreservers.Basic
 import OnlineReachabilityPreservers.BootstrapArithmetic
+import OnlineReachabilityPreservers.BranchingDegrees
 import OnlineReachabilityPreservers.Bridges
 import OnlineReachabilityPreservers.ClosePairs
 import OnlineReachabilityPreservers.Components

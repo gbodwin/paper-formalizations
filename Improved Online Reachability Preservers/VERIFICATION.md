@@ -66,6 +66,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   local replay passed. Independent review confirmed the critical-edge
   argument, SCC lift, and the corrected Lemma 42 exponent.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44406935877).
+- [9958e5fa](https://github.com/gbodwin/paper-formalizations/commit/9958e5fafde86f75b06374b457ad4cf97dad163c)
+  checks Lemma 30 and the acyclic second-moment estimate of Lemma 31 using
+  a uniform inductive bound on subfamilies. The 742-declaration paper audit
+  and local kernel replay passed. Independent review checked the sorted
+  subfamilies, retained path order, and continuous and discrete estimates.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44409841296).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

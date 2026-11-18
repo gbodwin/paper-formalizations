@@ -59,6 +59,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   proves the second-moment estimate given the inductive bound on subfamilies.
   It orders the actual path lengths and bounds four clipped powers with
   finite sums and integrals.
+- [BranchingDegrees](OnlineReachabilityPreservers/BranchingDegrees.lean)
+  checks the predecessor count and average in Lemmas 32–33 under the
+  inductive size bound and a maximum-degree cap. It also proves the dyadic
+  upper bound on off-base tuples in terms of the path moments of sampled
+  vertex sets, supplying the first steps of Lemma 34.
 - [`lemma20_opt_squared` and `lemma22_hub_count`](OnlineReachabilityPreservers/SteinerCounting.lean)
   prove the terminal-counting lower bounds used in the Steiner application.
   [`lemma29_square_sum`](OnlineReachabilityPreservers/Majorization.lean) proves
