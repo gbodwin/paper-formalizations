@@ -3,6 +3,7 @@ import DirectedFlowCutGap.WeakDecompositionBounds
 import DirectedFlowCutGap.SparsestVertexCorollary
 import DirectedFlowCutGap.SparsestEdgeCorollary
 import DirectedFlowCutGap.EncodedWeightedRounding
+import DirectedFlowCutGap.EncodedVertexSolver
 import Lean.Compiler.Old
 import Lean.Util.CollectAxioms
 import Lean.Util.FoldConsts
@@ -20,7 +21,9 @@ run_cmd do
     `DirectedFlowCutGap.WeakDecompositionBounds, `DirectedFlowCutGap.SparsestVertexCorollary,
     `DirectedFlowCutGap.SparsestEdgeCorollary, `DirectedFlowCutGap.IntegerClosureAsymptotic,
     `DirectedFlowCutGap.EncodedIntegerRounding, `DirectedFlowCutGap.EncodedUniformRounding,
-    `DirectedFlowCutGap.EncodedWeightedRounding]
+    `DirectedFlowCutGap.EncodedWeightedRounding, `DirectedFlowCutGap.EncodedSizeRounding,
+    `DirectedFlowCutGap.EncodedCutSelection, `DirectedFlowCutGap.EncodedVertexSolver,
+    `DirectedFlowCutGap.FractionalCoverRawGuesses]
   let allowed := #[`propext, `Classical.choice, `Quot.sound]
   let mut counts : NameMap Nat := {}
   let mut compilerEntries : Nat := 0
@@ -57,7 +60,13 @@ run_cmd do
     `DirectedFlowCutGap.WeakDecomposition.edge_family_of_preprocessed_factor,
     `DirectedFlowCutGap.EncodedIntegerRounding.law_eq,
     `DirectedFlowCutGap.EncodedUniformRounding.expected_size_uniform,
-    `DirectedFlowCutGap.EncodedWeightedRounding.expected_cost_uniform] do
+    `DirectedFlowCutGap.EncodedWeightedRounding.expected_cost_uniform,
+    `DirectedFlowCutGap.EncodedSizeRounding.expected_cost_uniform,
+    `DirectedFlowCutGap.EncodedVertexSolver.massBit_support_valid,
+    `DirectedFlowCutGap.EncodedVertexSolver.sizeBit_support_valid,
+    `DirectedFlowCutGap.EncodedVertexSolver.mass_expected_uniform,
+    `DirectedFlowCutGap.EncodedVertexSolver.size_expected_uniform,
+    `DirectedFlowCutGap.EncodedVertexSolver.bit_bad_cost_le] do
     let some (.thmInfo _) := env.find? theoremName | throwError "Missing theorem {theoremName}"
     unless roots.contains theoremName do throwError "Unselected theorem {theoremName}"
   let mut todo := roots

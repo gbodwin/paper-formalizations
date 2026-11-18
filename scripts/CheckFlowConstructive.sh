@@ -8,8 +8,13 @@ targets=(
   OptimalFlowCutBounds AdaptiveVertexBound AdaptiveEdgeBound
   WeakDecomposition WeakDecompositionBounds SparsestVertexCorollary SparsestEdgeCorollary
   IntegerClosureAsymptotic EncodedIntegerRounding EncodedUniformRounding EncodedWeightedRounding
+  EncodedSizeRounding EncodedCutSelection EncodedVertexSolver FractionalCoverRawGuesses
 )
-for target in EncodedIntegerRounding EncodedUniformRounding EncodedWeightedRounding; do
+new_sources=(
+  EncodedIntegerRounding EncodedUniformRounding EncodedWeightedRounding
+  EncodedSizeRounding EncodedCutSelection EncodedVertexSolver
+)
+for target in "${new_sources[@]}"; do
   lake env lean "${flags[@]}" "$paper/DirectedFlowCutGap/$target.lean"
 done
 lake env lean "${flags[@]}" "$paper/verification/ConstructiveRoundingAudit.lean"
@@ -17,4 +22,5 @@ for target in "${targets[@]}"; do
   lake env leanchecker -v "DirectedFlowCutGap.$target"
 done
 lake env lean "${flags[@]}" --run "$paper/verification/EncodedRoundingJoinSmoke.lean"
+lake env lean "${flags[@]}" --run "$paper/verification/EncodedVertexSolverSmoke.lean"
 git diff --exit-code HEAD --

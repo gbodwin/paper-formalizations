@@ -64,6 +64,7 @@ import DirectedFlowCutGap.EncodedCandidateCapacity
 import DirectedFlowCutGap.EncodedCandidateOutput
 import DirectedFlowCutGap.EncodedCellAccess
 import DirectedFlowCutGap.EncodedCubeRootThreshold
+import DirectedFlowCutGap.EncodedCutSelection
 import DirectedFlowCutGap.EncodedDyadicRoot
 import DirectedFlowCutGap.EncodedEpochParameters
 import DirectedFlowCutGap.EncodedFlagUnion
@@ -83,6 +84,7 @@ import DirectedFlowCutGap.EncodedRoundingState
 import DirectedFlowCutGap.EncodedSampledRounding
 import DirectedFlowCutGap.EncodedSequenceAccess
 import DirectedFlowCutGap.EncodedShortcutReachability
+import DirectedFlowCutGap.EncodedSizeRounding
 import DirectedFlowCutGap.EncodedTablePreparation
 import DirectedFlowCutGap.EncodedTapeMaterialization
 import DirectedFlowCutGap.EncodedUniformChain
@@ -92,6 +94,7 @@ import DirectedFlowCutGap.EncodedUniformWeightParameters
 import DirectedFlowCutGap.EncodedUnitCostOutput
 import DirectedFlowCutGap.EncodedUnitCostPreparation
 import DirectedFlowCutGap.EncodedUnitCostReplication
+import DirectedFlowCutGap.EncodedVertexSolver
 import DirectedFlowCutGap.EncodedWeightedRounding
 import DirectedFlowCutGap.EpochAccounting
 import DirectedFlowCutGap.EpochParameterBridge
