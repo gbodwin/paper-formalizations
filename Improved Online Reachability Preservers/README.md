@@ -28,6 +28,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   `2n + 2F` with known `p` and `2n + 48F` with the arrival index, where `p`
   is the prefix length in the indexed bound. The preserver is precisely the
   union of the assigned simple paths, and the assignments give prefix monotonicity.
+- [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
+  order the intersection chains on each pair of outer paths in Appendix A.
+  [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)
+  prove the initial incidence bound on systems with a common vertex order by
+  counting high-degree incidences with enough predecessors. The same module's
+  `pairwise_initial` proves an online `O(n + (np)^(2/3))` edge bound on general
+  digraphs, with the exact cubic inequality stated in Lean.
 - [`lemma20_opt_squared` and `lemma22_hub_count`](OnlineReachabilityPreservers/SteinerCounting.lean)
   prove the terminal-counting lower bounds used in the Steiner application.
   [`lemma29_square_sum`](OnlineReachabilityPreservers/Majorization.lean) proves

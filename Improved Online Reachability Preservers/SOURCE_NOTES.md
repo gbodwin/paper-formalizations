@@ -49,7 +49,10 @@ any original bridge and the presence of the new half-4-bridge.
 - Lemma 24 needs a common vertex order to infer that any two paths meet in
   at most one vertex from 2-bridge-freeness. The paths `(0,1,2)` and
   `(2,1,0)` share three vertices without a bridge. The growth path systems
-  have the common vertex order.
+  have the common vertex order. The [intersection proof](OnlineReachabilityPreservers/IntersectionOrder.lean)
+  states this hypothesis explicitly. The [initial bound](OnlineReachabilityPreservers/PairwiseInitial.lean)
+  counts high-degree incidences and ordered pairs with sufficiently many
+  predecessors directly. It applies to the growth systems without a splitting lemma.
 - Lemma 28 writes a difference of a right-hand intersection position with
   itself in the definition of close pairs. Its collision argument instead
   bounds the difference between the two right-hand intersection positions.

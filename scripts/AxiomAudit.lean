@@ -133,6 +133,11 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.theorem5_sources_known_p
 #print axioms OnlineReachabilityPreservers.theorem5_sinks_indexed
 #print axioms OnlineReachabilityPreservers.theorem5_sources_indexed
+#print axioms OnlineReachabilityPreservers.lemma24_fiber_card
+#print axioms OnlineReachabilityPreservers.lemma24_right_monotone
+#print axioms OnlineReachabilityPreservers.lemma26_chain_lower
+#print axioms OnlineReachabilityPreservers.lemma27_acyclic
+#print axioms OnlineReachabilityPreservers.pairwise_initial
 #print axioms OnlineReachabilityPreservers.lemma20_opt_squared
 #print axioms OnlineReachabilityPreservers.lemma22_hub_count
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum

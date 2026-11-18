@@ -39,6 +39,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   374-declaration audit passed. Independent review checked those source
   correspondences and the scope of the counterexample.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44392779212).
+- [f1085830](https://github.com/gbodwin/paper-formalizations/commit/f1085830ed76f1c1aaa05f5c17db4cbfbb17f7ab)
+  proves the endpoint-restricted cases of Theorem 5. All 18 paper modules
+  replayed locally and the 465-declaration paper audit passed. Independent
+  review confirmed the four assignment models, one simple path per reachable
+  request, the union bound in the original graph, and prefix monotonicity.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44398649036).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

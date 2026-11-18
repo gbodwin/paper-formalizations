@@ -11,14 +11,16 @@ section Counting
 
 variable {V I : Type*} [Fintype V] [DecidableEq V] [Fintype I] [LinearOrder I]
 
-private def occurrences (marks : I → Finset V) (v : V) : Finset I :=
+/-- Path indices at which a vertex is marked. -/
+def occurrences (marks : I → Finset V) (v : V) : Finset I :=
   univ.filter (fun i => v ∈ marks i)
 
-private def collisions (marks : I → Finset V) : Finset (V × I × I) :=
+/-- A marked vertex and two distinct path indices in increasing order. -/
+def collisions (marks : I → Finset V) : Finset (V × I × I) :=
   univ.filter (fun x => x.2.1 < x.2.2 ∧ x.1 ∈ marks x.2.1 ∧ x.1 ∈ marks x.2.2)
 
 omit [LinearOrder I] in
-private theorem sum_occurrences (marks : I → Finset V) :
+theorem sum_occurrences (marks : I → Finset V) :
     (∑ v, (occurrences marks v).card) = ∑ i, (marks i).card := by
   simp only [occurrences, card_eq_sum_ones, sum_filter]
   rw [sum_comm]
@@ -64,7 +66,7 @@ private theorem square_choose (n : ℕ) : n ^ 2 = n + 2 * n.choose 2 := by
   | succ k => simp [pow_two, Nat.mul_succ, Nat.add_comm]
 
 /-- Finite double counting of repeated incidences and Cauchy–Schwarz. -/
-private theorem incidence_square (marks : I → Finset V) (B : ℕ)
+theorem incidence_square (marks : I → Finset V) (B : ℕ)
     (bound : (collisions marks).card ≤ B) :
     (∑ i, (marks i).card) ^ 2 ≤ Fintype.card V * ((∑ i, (marks i).card) + 2 * B) := by
   rw [← sum_occurrences]

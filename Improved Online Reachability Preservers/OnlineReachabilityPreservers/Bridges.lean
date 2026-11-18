@@ -17,6 +17,35 @@ structure Bridge {V I : Type*} (before : I → V → V → Prop) (k : ℕ) where
   riverStep : before river (vertex 0) (vertex (Fin.last (k + 1)))
   arcStep : ∀ i, before (arc i) (vertex i.castSucc) (vertex i.succ)
 
+/-- Reverse the chain and river while keeping the same path indices. -/
+def Bridge.reverse {V I : Type*} {before : I → V → V → Prop} {k : ℕ}
+    (b : Bridge before k) : Bridge (fun i u v => before i v u) k where
+  vertex := b.vertex ∘ Fin.rev
+  arc := b.arc ∘ Fin.rev
+  river := b.river
+  distinctVertices := b.distinctVertices.comp Fin.rev_injective
+  distinctArcs := b.distinctArcs.comp Fin.rev_injective
+  river_ne_arc := fun i => b.river_ne_arc i.rev
+  riverStep := by
+    simpa [Function.comp_def, Fin.rev_zero, Fin.rev_last] using b.riverStep
+  arcStep := by
+    intro i
+    simpa [Function.comp_def, Fin.rev_castSucc, Fin.rev_succ] using b.arcStep i.rev
+
+/-- Transport a bridge along an injective relabeling of its vertices. -/
+def Bridge.mapVertices {V W I : Type*} {before : I → V → V → Prop}
+    {after : I → W → W → Prop} {k : ℕ} (b : Bridge before k)
+    (f : V → W) (hf : Function.Injective f) (h : ∀ i u v, before i u v → after i (f u) (f v)) :
+    Bridge after k where
+  vertex := f ∘ b.vertex
+  arc := b.arc
+  river := b.river
+  distinctVertices := hf.comp b.distinctVertices
+  distinctArcs := b.distinctArcs
+  river_ne_arc := b.river_ne_arc
+  riverStep := h _ _ _ b.riverStep
+  arcStep i := h _ _ _ (b.arcStep i)
+
 variable {V : Type*} [LinearOrder V] [Fintype V]
 
 /-- The forward compression keeps new-edge tails and the terminal.
@@ -137,21 +166,8 @@ theorem backwardCompressed_total {G : Arcs V} (dag : IsDAG G) (D : List (V × V)
 /-- Under backward growth, the last arc of a bridge cannot precede its river. -/
 theorem no_earlier_last_arc {G : Arcs V} (dag : IsDAG G) {D : List (V × V)} {k : ℕ}
     (b : Bridge (BackwardCompressedBefore G D) k) : ¬ b.arc (Fin.last k) < b.river := by
-  let rev : Bridge (CompressedBefore (reverseArcs G) (D.map Prod.swap)) k := {
-    vertex := b.vertex ∘ Fin.rev
-    arc := b.arc ∘ Fin.rev
-    river := b.river
-    distinctVertices := b.distinctVertices.comp Fin.rev_injective
-    distinctArcs := b.distinctArcs.comp Fin.rev_injective
-    river_ne_arc := fun i => b.river_ne_arc i.rev
-    riverStep := by
-      simpa [BackwardCompressedBefore, Function.comp_def, Fin.rev_zero, Fin.rev_last] using b.riverStep
-    arcStep := by
-      intro i
-      have hr := b.arcStep i.rev
-      change CompressedBefore (reverseArcs G) (D.map Prod.swap) (b.arc i.rev)
-        (b.vertex (i.rev.succ)) (b.vertex (i.rev.castSucc)) at hr
-      simpa [Function.comp_def, Fin.rev_castSucc, Fin.rev_succ] using hr }
-  simpa [rev, Function.comp_def, Fin.rev_zero] using no_earlier_first_arc (reverseArcs_dag dag) rev
+  let rev : Bridge (CompressedBefore (reverseArcs G) (D.map Prod.swap)) k := b.reverse
+  simpa [rev, Bridge.reverse, Function.comp_def, Fin.rev_zero] using
+    no_earlier_first_arc (reverseArcs_dag dag) rev
 
 end OnlineReachabilityPreservers
