@@ -1,0 +1,42 @@
+name: Flow constructive rounding
+on:
+  push:
+    branches:
+      - codex/flow-constructive-20261118
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  LEAN_NUM_THREADS: 1
+jobs:
+  rounding:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Bind exact source
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git diff --exit-code HEAD --
+          python3 scripts/CheckReferenceRecovery.py
+      - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
+        with:
+          auto-config: "false"
+          build: "true"
+          build-args: >-
+            +DirectedFlowCutGap.OptimalFlowCutBounds
+            +DirectedFlowCutGap.WeakDecompositionBounds
+            +DirectedFlowCutGap.SparsestVertexCorollary
+            +DirectedFlowCutGap.SparsestEdgeCorollary
+            +DirectedFlowCutGap.EncodedWeightedRounding
+          test: "false"
+          lint: "false"
+          use-mathlib-cache: "true"
+          mk_all-check: "false"
+          axiom-audit: "false"
+      - name: Strict elaboration, logical dependency audit, kernel replay and execution
+        run: bash scripts/CheckFlowConstructive.sh
+      - name: Recheck source identity
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          python3 scripts/CheckReferenceRecovery.py
