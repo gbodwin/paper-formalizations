@@ -53,11 +53,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   each dispensable edge and the proof assigns the surviving edges to requests
   that require them. The resulting acyclic system has size `m+p` and is fully
   bridge-free. The extremal lower direction remains open.
-- [`theorem4_rounded`](OnlineReachabilityPreservers/OfflineSharp.lean)
-  proves the paper's rounded offline edge bound
-  `O(n + n^0.75 p^0.5 + n^0.59 p^0.71)` for the constructed preserver on
-  arbitrary finite digraphs. It uses two checked acyclic updates and the
-  SCC lift. The unrounded rate and formal runtime remain open.
+- [`theorem4_rounded` and `theorem4_sharp`](OnlineReachabilityPreservers/OfflineSharp.lean)
+  prove both offline edge bounds for the constructed preserver on arbitrary
+  finite digraphs. Two acyclic updates suffice for the rounded bound.
+  A single invariant constant gives the limiting rate
+  `O(n + n^(3/4) p^(1/2) + n^(2−sqrt(2)) p^(1/sqrt(2)))`.
+  This gives the limiting exponents with zero slack. Formal runtime remains open.
 - [`lemma37_first_term`, `lemma37_third_term`, and `lemma42_third_term`](OnlineReachabilityPreservers/BootstrapArithmetic.lean)
   verify the rearrangements of those individual branching-count terms.
   The third term of Lemma 42 gives vertex exponent `1/(b+1)`, the exponent

@@ -152,7 +152,9 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.lemma42_comparison
 #print axioms OnlineReachabilityPreservers.lemma42_acyclic_update
 #print axioms OnlineReachabilityPreservers.theorem43_acyclic_iteration
+#print axioms OnlineReachabilityPreservers.theorem43_acyclic_limit
 #print axioms OnlineReachabilityPreservers.theorem4_rounded
+#print axioms OnlineReachabilityPreservers.theorem4_sharp
 #print axioms OnlineReachabilityPreservers.lemma42_printed_vertex_exponent_ne
 #print axioms OnlineReachabilityPreservers.lemma30_integral_square_sum
 #print axioms OnlineReachabilityPreservers.lemma31_acyclic_moment

@@ -1,7 +1,7 @@
 import OnlineReachabilityPreservers.OfflineBound
 import OnlineReachabilityPreservers.OfflineIndependence
 
-/-! The Appendix B graph application with the rounded paper exponents. -/
+/-! The Appendix B graph application with the rounded and limiting paper exponents. -/
 
 namespace OnlineReachabilityPreservers
 
@@ -133,5 +133,89 @@ theorem theorem4_rounded :
       le_add_of_nonneg_left (by positivity : 0 ≤ n+n^(3/4:ℝ)*p^(1/2:ℝ))
     exact cap.trans (mix.trans (hf.trans ((one_mul F).symm.le.trans
       (mul_le_mul_of_nonneg_right hB' (by unfold F; positivity)))))
+
+
+private theorem offline_rate_without_linear_demands {b n p : ℝ} (hb : b ≤ 1)
+    (hn : 0 ≤ n) (hp : 0 < p) (hpn : p ≤ n^2) :
+    offlineRate b n p ≤ n+n^(3/4:ℝ)*p^(1/2:ℝ)+n^(2-2*b)*p^b := by
+  have demand := demand_term_le_mixed hb hn hp hpn
+  have hF : 0 ≤ n^(3/4:ℝ)*p^(1/2:ℝ) := by positivity
+  have hG : 0 ≤ n^(2-2*b)*p^b := by positivity
+  exact max_le (by linarith) (max_le (by linarith) (max_le (by linarith) (by linarith)))
+
+private theorem offline_rate_cap {b n p : ℝ} (hb : 0 ≤ b) (hn : 0 < n) (hp : n^2 ≤ p) :
+    n^2 ≤ n^(2-2*b)*p^b := by
+  have pow := Real.rpow_le_rpow (sq_nonneg n) hp hb
+  rw [← Real.rpow_natCast_mul hn.le 2] at pow
+  push_cast at pow
+  calc
+    _ = n^(2:ℝ) := (Real.rpow_two n).symm
+    _ = n^(2-2*b)*n^(2*b) := by
+      rw [← Real.rpow_add hn, show 2-2*b+2*b = 2 by ring]
+    _ ≤ _ := mul_le_mul_of_nonneg_left pow (by positivity)
+
+private theorem offline_limit_vertex_exponent : 2-2*(1/Real.sqrt 2) = 2-Real.sqrt 2 := by
+  have h := Real.sqrt_pos.2 (by norm_num : (0:ℝ) < 2)
+  have eq : 2/Real.sqrt 2 = Real.sqrt 2 := (div_eq_iff h.ne').mpr
+    (by rw [← pow_two, Real.sq_sqrt (by norm_num)])
+  calc
+    _ = 2-2/Real.sqrt 2 := by ring
+    _ = _ := by rw [eq]
+
+/-- The unrounded cardinality bound of Theorem 4, with a single constant and
+the exact limiting exponents. The constructed output is the offline prune
+on the SCC condensation together with the shared internal connectors. -/
+theorem theorem4_sharp :
+    ∃ K > 0, ∀ (V : Type u) [LinearOrder V] [Fintype V] (G : Arcs V) (D : List (V × V)),
+      let H := offlinePreserver G D
+      let n : ℝ := Fintype.card V
+      let p : ℝ := D.length
+      H ⊆ G ∧ Preserves G H D ∧
+        (H.card : ℝ) ≤ K*(n+n^(3/4:ℝ)*p^(1/2:ℝ)+n^(2-Real.sqrt 2)*p^(1/Real.sqrt 2)) := by
+  obtain ⟨B, hB, prior⟩ := theorem43_acyclic_limit.{u,0}
+  let b : ℝ := 1/Real.sqrt 2
+  have blo : 0 ≤ b := by dsimp only [b]; positivity
+  have bhi : b ≤ 1 := by
+    have hs := Real.sqrt_pos.2 (by norm_num : (0:ℝ) < 2)
+    have h := (sq_le_sq₀ (by norm_num : (0:ℝ) ≤ 1) hs.le).mp
+      (by rw [Real.sq_sqrt (by norm_num)]; norm_num)
+    exact (div_le_iff₀ hs).mpr (by linarith only [h])
+  refine ⟨B+2, by linarith, ?_⟩
+  intro V _ _ G D
+  obtain ⟨sub, correct, hbound⟩ := offlinePreserver_rate prior G D
+  refine ⟨sub, correct, ?_⟩
+  let H := offlinePreserver G D
+  let n : ℝ := Fintype.card V
+  let p : ℝ := D.length
+  have hv : 2-Real.sqrt 2 = 2-2*b := offline_limit_vertex_exponent.symm
+  rw [hv]
+  let F := n+n^(3/4:ℝ)*p^(1/2:ℝ)+n^(2-2*b)*p^b
+  change (H.card : ℝ) ≤ (B+2)*F
+  have hB' : 1 ≤ B+2 := by linarith
+  have hF : 0 ≤ F := by unfold F; positivity
+  have cap : (H.card : ℝ) ≤ n^2 := by
+    have h := card_le_univ H
+    rw [Fintype.card_prod, ← pow_two] at h
+    change (H.card:ℝ) ≤ (Fintype.card V : ℝ)^2
+    exact_mod_cast h
+  by_cases hn : 0 < Fintype.card V
+  swap
+  · have z : n = 0 := by dsimp only [n]; exact_mod_cast (Nat.eq_zero_of_not_pos hn)
+    rw [z, zero_pow (by decide : 2 ≠ 0)] at cap
+    exact cap.trans (mul_nonneg (zero_le_one.trans hB') hF)
+  have npos : 0 < n := Nat.cast_pos.mpr hn
+  by_cases p0 : D = []
+  · have he : H = ∅ := by simp [H, offlinePreserver, liftedRun, p0]
+    rw [he, card_empty, Nat.cast_zero]
+    exact mul_nonneg (zero_le_one.trans hB') hF
+  have ppos : 0 < p := Nat.cast_pos.mpr (List.length_pos_iff.mpr p0)
+  by_cases hpn : p ≤ n^2
+  · exact hbound.trans (mul_le_mul_of_nonneg_left (offline_rate_without_linear_demands bhi npos.le ppos hpn)
+      (zero_le_one.trans hB'))
+  · have mix := offline_rate_cap blo npos (le_of_not_ge hpn)
+    have hf : n^(2-2*b)*p^b ≤ F :=
+      le_add_of_nonneg_left (by positivity : 0 ≤ n+n^(3/4:ℝ)*p^(1/2:ℝ))
+    exact cap.trans (mix.trans (hf.trans ((one_mul F).symm.le.trans
+      (mul_le_mul_of_nonneg_right hB' hF))))
 
 end OnlineReachabilityPreservers

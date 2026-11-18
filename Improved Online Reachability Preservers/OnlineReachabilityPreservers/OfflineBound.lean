@@ -105,8 +105,8 @@ private theorem offline_window_term_le {b n p : ℝ} (hb : b ≤ 3/4)
 
 /-- Insert the degree, length and window caps into the three moment terms.
 The logarithm of the sample size is bounded using its ambient vertex count. -/
-theorem offline_sample_scale {C b : ℝ} (hC : 1 ≤ C) (hb : 1/2 < b) :
-    ∃ K > 0, ∀ {M n p N L D : ℝ}, 0 < M → 1 ≤ n → 0 < p → p ≤ M →
+theorem offline_sample_scale {C : ℝ} (hC : 1 ≤ C) :
+    ∃ K ≥ 1, ∀ {b M n p N L D : ℝ}, 1/2 < b → b ≤ 1 → 0 < M → 1 ≤ n → 0 < p → p ≤ M →
       1 ≤ N → 0 < L → 0 < D →
       let ℓ := M/p; let d := M/n; let t := C*p/(ℓ*d^2)
       L ≤ 4*ℓ → D ≤ 4*d → N ≤ 48*ℓ*d*t →
@@ -114,20 +114,28 @@ theorem offline_sample_scale {C b : ℝ} (hC : 1 ≤ C) (hb : 1/2 < b) :
         K*(ℓ^2*d*t + (2+Real.log n)*ℓ^(3/2 : ℝ)*d^(3/2 : ℝ)*t^(3/2 : ℝ) +
           ℓ^(1/b)*d^2*t^(1/b)) := by
   let a := 1+Real.log (48*C)
-  let e := (2*b-1)/b
-  let w := 1/b
   let x := a * 48^(3/2 : ℝ)
-  let y := (48 : ℝ)^w*(4 : ℝ)^e
+  let y' : ℝ := 48^2*4
   have cpos : 0 < C := zero_lt_one.trans_le hC
-  have bpos : 0 < b := by linarith
-  have wpos : 0 < w := one_div_pos.mpr bpos
-  have enonneg : 0 ≤ e := div_nonneg (by linarith) bpos.le
   have hc48 : 1 ≤ 48*C := by linarith
   have logc := Real.log_nonneg hc48
   have ax : 0 ≤ x := by dsimp [x, a]; positivity
-  have ay : 0 ≤ y := by dsimp [y]; positivity
-  refine ⟨192+x+y, by linarith, ?_⟩
-  intro M n p N L D hM hn hp hpM hN hL hD
+  have hy' : 0 ≤ y' := by norm_num [y']
+  refine ⟨192+x+y', by linarith, ?_⟩
+  intro b M n p N L D hb hb_le hM hn hp hpM hN hL hD
+  let e := (2*b-1)/b
+  let w := 1/b
+  let y := (48 : ℝ)^w*(4 : ℝ)^e
+  have bpos : 0 < b := by linarith
+  have wpos : 0 < w := one_div_pos.mpr bpos
+  have wle : w ≤ 2 := (div_le_iff₀ bpos).mpr (by linarith)
+  have enonneg : 0 ≤ e := div_nonneg (by linarith) bpos.le
+  have ele : e ≤ 1 := (div_le_iff₀ bpos).mpr (by linarith)
+  have ay : y ≤ y' := by
+    change (48 : ℝ)^w*(4 : ℝ)^e ≤ 48^2*4
+    conv_rhs => rw [← Real.rpow_two (48 : ℝ), ← Real.rpow_one (4 : ℝ)]
+    exact mul_le_mul (Real.rpow_le_rpow_of_exponent_le (by norm_num) wle)
+      (Real.rpow_le_rpow_of_exponent_le (by norm_num) ele) (by positivity) (by positivity)
   dsimp only
   let ℓ := M/p
   let d := M/n
@@ -183,10 +191,10 @@ theorem offline_sample_scale {C b : ℝ} (hC : 1 ≤ C) (hb : 1/2 < b) :
     dsimp [Y]
     positivity
   have hZ : 0 ≤ Z := by dsimp [Z]; positivity
-  change N*L+(2+Real.log N)*N^(3/2 : ℝ)+N^w*D^e ≤ (192+x+y)*(X+Y+Z)
+  change N*L+(2+Real.log N)*N^(3/2 : ℝ)+N^w*D^e ≤ (192+x+y')*(X+Y+Z)
   calc
     _ ≤ 192*X+x*Y+y*Z := add_le_add (add_le_add first middle) last
-    _ ≤ (192+x+y)*X+(192+x+y)*Y+(192+x+y)*Z := by
+    _ ≤ (192+x+y')*X+(192+x+y')*Y+(192+x+y')*Z := by
       exact add_le_add
         (add_le_add (mul_le_mul_of_nonneg_right (by linarith) hX) (mul_le_mul_of_nonneg_right (by linarith) hY))
         (mul_le_mul_of_nonneg_right (by linarith) hZ)
@@ -293,10 +301,39 @@ private theorem offline_sample_mean {V : Type u} {I : Type v}
       change (∑ _ : I, E) = E*(Fintype.card I:ℝ)
       rw [sum_const, card_univ, nsmul_eq_mul, mul_comm]
 
-set_option maxHeartbeats 600000 in
-private theorem offline_regular_step {b B : ℝ} (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 71/100)
-    (hB : 0 < B) (prior : OfflineIncidenceBound.{u,v} b B) :
-    ∃ A > 0, ∀ {V : Type u} {I : Type v}
+private theorem offline_moment_weight_le {B b : ℝ} (hB : 1 ≤ B) (hb : 2/3 ≤ b) :
+    2*B + Real.exp 8*(max 1 B)^2 + (2*B+(1/(2*b-1)+1)*B^(1/b)) ≤
+      (8+Real.exp 8)*B^2 := by
+  have hBp := zero_lt_one.trans_le hB
+  have hb' : 0 < b := by linarith
+  have hden : 0 < 2*b-1 := by linarith
+  have e : 1/b ≤ 2 := (div_le_iff₀ hb').mpr (by linarith)
+  have f : 1/(2*b-1)+1 ≤ 4 := by
+    have h : 1/(2*b-1) ≤ 3 := (div_le_iff₀ hden).mpr (by linarith)
+    linarith
+  have Bsq : B ≤ B^2 := by
+    rw [pow_two]
+    exact (one_mul B).symm.le.trans (mul_le_mul_of_nonneg_right hB hBp.le)
+  have Bpow : B^(1/b) ≤ B^2 := by
+    rw [← Real.rpow_two]
+    exact Real.rpow_le_rpow_of_exponent_le hB e
+  have z := mul_le_mul f Bpow (Real.rpow_nonneg hBp.le _) (by norm_num : (0:ℝ) ≤ 4)
+  rw [max_eq_right hB]
+  linarith only [Bsq, z]
+
+private theorem sqrt_coefficient {B R : ℝ} (hB : 1 ≤ B) (hR : 0 ≤ R) (hle : R^2 ≤ B) :
+    R*B^(1/2:ℝ) ≤ B := by
+  have hBp := zero_le_one.trans hB
+  have hS : 0 ≤ B^(1/2:ℝ) := Real.rpow_nonneg hBp _
+  have heq : (B^(1/2:ℝ))^2 = B := by
+    rw [← Real.sqrt_eq_rpow, Real.sq_sqrt hBp]
+  have hr := (sq_le_sq₀ hR hS).mp (hle.trans_eq heq.symm)
+  exact (mul_le_mul_of_nonneg_right hr hS).trans_eq (by rw [← pow_two, heq])
+
+set_option maxHeartbeats 900000 in
+private theorem offline_regular_step :
+    ∃ R ≥ 1, ∀ {b B : ℝ}, 2/3 ≤ b → b ≤ 71/100 → 1 ≤ B →
+      OfflineIncidenceBound.{u,v} b B → ∀ {V : Type u} {I : Type v}
       [LinearOrder V] [LinearOrder I] [Fintype V] [Fintype I]
       (paths : I → Finset V) (_ : BridgeFree (PathBefore paths) 4) (L D : ℕ),
       0 < Fintype.card V → 0 < Fintype.card I → 0 < L → 0 < D →
@@ -304,17 +341,51 @@ private theorem offline_regular_step {b B : ℝ} (hb₀ : 2/3 ≤ b) (hb₁ : b 
       16*Fintype.card V < M → 8*Fintype.card I < M →
       L*Fintype.card I ≤ 4*M → D*Fintype.card V ≤ 4*M →
       (∀ i, (paths i).card ≤ L) → (∀ x, (occurrences paths x).card ≤ D) →
-      (M : ℝ) ≤ A*offlineRate (offlineExponentStep b) (Fintype.card V) (Fintype.card I) := by
+      (M : ℝ) ≤ R*B^(1/2:ℝ)*offlineRate (offlineExponentStep b) (Fintype.card V) (Fintype.card I) := by
   let C : ℝ := 40960
   have hC : 1 ≤ C := by norm_num [C]
   have hCp : 0 < C := zero_lt_one.trans_le hC
+  obtain ⟨K, hK, scale⟩ := offline_sample_scale hC
+  let K₀ := 4096*((8+Real.exp 8)*K)
+  have hK₀ : 1 ≤ K₀ := by
+    have he := Real.exp_nonneg 8
+    calc
+      (1 : ℝ) ≤ 4096*(8*1) := by norm_num
+      _ ≤ _ := by dsimp only [K₀]; gcongr; linarith
+  let U := (3*C)^(1/4 : ℝ)
+  have hU : 0 < U := by dsimp [U]; positivity
+  let A₀ := 1+3*K₀*C+253*(3*K₀*C^(3/2:ℝ))
+  have hA₀ : 1 ≤ A₀ := by
+    have hKp := zero_lt_one.trans_le hK₀
+    dsimp only [A₀]
+    have h₁ : 0 ≤ 3*K₀*C := by positivity
+    have h₂ : 0 ≤ 253*(3*K₀*C^(3/2:ℝ)) := by positivity
+    linarith only [h₁, h₂]
+  let R := U+2*A₀
+  have hR : 1 ≤ R := by dsimp only [R]; linarith only [hU, hA₀]
+  refine ⟨R, hR, ?_⟩
+  intro b B hb₀ hb₁ hB prior
+  have hBp := zero_lt_one.trans_le hB
+  let S := B^(1/2:ℝ)
+  have hS : 1 ≤ S := by
+    unfold S
+    conv_lhs => rw [← Real.one_rpow (1/2:ℝ)]
+    exact Real.rpow_le_rpow zero_le_one hB (by norm_num)
+  let A := offlineComparisonConstant C (K₀*B^2) b
+  have hKp := zero_lt_one.trans_le hK₀
+  have hA : 0 < A := offlineComparisonConstant_pos hCp (by positivity)
+  have coeff : U+2*A ≤ R*S := by
+    have hA' : A ≤ A₀*S := offlineComparisonConstant_le hC hK₀ hB hb₀ (by linarith)
+    have hU' : U ≤ U*S :=
+      (mul_one U).symm.le.trans (mul_le_mul_of_nonneg_left hS hU.le)
+    dsimp only [R]
+    nlinarith only [hA', hU']
   let β := offlineExponentStep b
   have hb : 1/2 < b := by linarith
   have b_le_one : b ≤ 1 := by linarith
   have beta_high : β ≤ 3/4 := by
     change (2*b+1)/(2*b+2) ≤ (3/4 : ℝ)
     exact (div_le_iff₀ (by positivity)).mpr (by linarith)
-  obtain ⟨K, hK, scale⟩ := offline_sample_scale hC hb
   let c₁ := 2*B
   let c₂ := Real.exp 8 * (max 1 B)^2
   let c₃ := 2*B+(1/(2*b-1)+1)*B^(1/b)
@@ -326,11 +397,11 @@ private theorem offline_regular_step {b B : ℝ} (hb₀ : 2/3 ≤ b) (hb₁ : b 
     dsimp [c₃]
     positivity
   have hW : 0 < W := by dsimp only [W]; linarith
-  obtain ⟨A, hA, comparison⟩ :=
-    lemma42_comparison hCp (show 0 < 4096*(W*K) by positivity) hb₀ hb₁
-  let U := (3*C)^(1/4 : ℝ)
-  have hU : 0 < U := by dsimp [U]; positivity
-  refine ⟨U+2*A, by positivity, ?_⟩
+  have Wle : W ≤ (8+Real.exp 8)*B^2 := offline_moment_weight_le hB hb₀
+  have Wscaled : 4096*(W*K) ≤ K₀*B^2 := calc
+    _ ≤ 4096*(((8+Real.exp 8)*B^2)*K) :=
+      mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_right Wle (zero_le_one.trans hK)) (by norm_num)
+    _ = _ := by dsimp only [K₀]; ring
   intro V I _ _ _ _ paths free L D hn hp hL hD
   dsimp only
   let n := Fintype.card V
@@ -360,7 +431,8 @@ private theorem offline_regular_step {b B : ℝ} (hb₀ : 2/3 ≤ b) (hb₁ : b 
   change 40960*n^2*p^2 ≤ (h+1)*M^3 at hlarge
   let F := offlineRate β (n : ℝ) (p : ℝ)
   have hF : 0 ≤ F := npos.le.trans (le_max_left _ _)
-  change (M : ℝ) ≤ (U+2*A)*F
+  change (M : ℝ) ≤ R*S*F
+  refine le_trans ?_ (mul_le_mul_of_nonneg_right coeff hF)
   by_cases window : h*p ≤ M
   swap
   · have houtside : ℓ ≤ 3*t := by
@@ -421,7 +493,7 @@ private theorem offline_regular_step {b B : ℝ} (hb₀ : 2/3 ≤ b) (hb₁ : b 
     have cards (base : I) : ((branchSupport paths base h).card : ℝ) ≤ N := by
       change ((branchSupport paths base h).card : ℝ) ≤ (L:ℝ)*(D:ℝ)*((h:ℝ)+1)
       exact_mod_cast (branchSupport_card_caps paths base h L D (lengths base) (fun x _ => degrees x))
-    have mean := offline_sample_mean prior hb b_le_one hB free L D h hp hnN hL hD hDN lengths degrees cards
+    have mean := offline_sample_mean prior hb b_le_one hBp free L D h hp hnN hL hD hDN lengths degrees cards
     have c₁W : c₁ ≤ W := by dsimp only [W]; linarith only [hc₂, hc₃]
     have c₂W : c₂ ≤ W := by dsimp only [W]; linarith only [hc₁, hc₃]
     have c₃W : c₃ ≤ W := by dsimp only [W]; linarith only [hc₁, hc₂]
@@ -431,14 +503,29 @@ private theorem offline_regular_step {b B : ℝ} (hb₀ : 2/3 ≤ b) (hb₁ : b 
         (add_le_add (mul_le_mul_of_nonneg_right c₁W j₁) (mul_le_mul_of_nonneg_right c₂W j₂))
         (mul_le_mul_of_nonneg_right c₃W j₃)
       _ = _ := by ring
-  have scaled := scale mpos hnr ppos (by exact_mod_cast (show p ≤ M by omega)) hnN hLr hDr capL capD sampleSize
+  have scaled := scale hb b_le_one mpos hnr ppos (by exact_mod_cast (show p ≤ M by omega)) hnN hLr hDr capL capD sampleSize
   have compare : ℓ^2*d^2 ≤ (4096*(W*K))*(ℓ^2*d*t +
       (2+Real.log n)*ℓ^(3/2 : ℝ)*d^(3/2 : ℝ)*t^(3/2 : ℝ) + ℓ^(1/b)*d^2*t^(1/b)) := calc
     _ ≤ 4096*q := lower
     _ ≤ 4096*(W*(J₁+J₂+J₃)) := mul_le_mul_of_nonneg_left upper (by norm_num)
     _ ≤ _ := (mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left scaled hW.le)
       (show (0 : ℝ) ≤ 4096 by norm_num)).trans_eq (by ring)
-  have mass := comparison mpos hnr ppos compare
+  have hlog : 0 ≤ 2+Real.log (n:ℝ) := by linarith [Real.log_nonneg hnr]
+  have tpos : 0 < t := div_pos (mul_pos hCp ppos) (mul_pos lpos (sq_pos_of_pos dpos))
+  have second :
+      0 ≤ (2+Real.log n)*ℓ^(3/2 : ℝ)*d^(3/2 : ℝ)*t^(3/2 : ℝ) :=
+    mul_nonneg (mul_nonneg (mul_nonneg hlog (Real.rpow_nonneg lpos.le _))
+      (Real.rpow_nonneg dpos.le _)) (Real.rpow_nonneg tpos.le _)
+  have third : 0 ≤ ℓ^(1/b)*d^2*t^(1/b) :=
+    mul_nonneg (mul_nonneg (Real.rpow_nonneg lpos.le _) (sq_nonneg _))
+      (Real.rpow_nonneg tpos.le _)
+  have compare' : ℓ^2*d^2 ≤ (K₀*B^2)*(ℓ^2*d*t +
+      (2+Real.log n)*ℓ^(3/2 : ℝ)*d^(3/2 : ℝ)*t^(3/2 : ℝ) + ℓ^(1/b)*d^2*t^(1/b)) :=
+    compare.trans (mul_le_mul_of_nonneg_right Wscaled
+      (add_nonneg (add_nonneg (mul_nonneg (mul_nonneg (sq_nonneg _) dpos.le) tpos.le) second) third))
+  have mass := lemma42_comparison hCp (mul_pos hKp (sq_pos_of_pos hBp)) hb₀ hb₁
+    mpos hnr ppos compare'
+  change (M:ℝ) ≤ A*((n:ℝ)^(3/4:ℝ)*(p:ℝ)^(1/2:ℝ)+(n:ℝ)^(2-2*β)*(p:ℝ)^β) at mass
   have term₁ : (n : ℝ)^(3/4 : ℝ)*(p : ℝ)^(1/2 : ℝ) ≤ F :=
     (le_max_left _ _).trans (le_max_right _ _)
   have term₂ : (n : ℝ)^(2-2*β)*(p : ℝ)^β ≤ F :=
@@ -449,9 +536,24 @@ private theorem offline_regular_step {b B : ℝ} (hb₀ : 2/3 ≤ b) (hb₁ : b 
 
 /-- The Appendix B step on all acyclic full-bridge-free systems. Sparse cases
 use the linear terms. In the dense case the verified splits supply the caps. -/
-theorem lemma42_acyclic_update {b B : ℝ} (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 71/100)
-    (hB : 0 < B) (prior : OfflineIncidenceBound.{u,v} b B) :
-    ∃ A > 0, OfflineIncidenceBound.{u,v} (offlineExponentStep b) A := by
+theorem lemma42_acyclic_update :
+    ∃ R ≥ 1, ∀ {b B : ℝ}, 2/3 ≤ b → b ≤ 71/100 → 1 ≤ B →
+      OfflineIncidenceBound.{u,v} b B →
+      OfflineIncidenceBound.{u,v} (offlineExponentStep b) (R*B^(1/2:ℝ)) := by
+  obtain ⟨R, hR, denseBound⟩ := offline_regular_step
+  let K := 32+4*R
+  refine ⟨K, by dsimp only [K]; linarith only [hR], ?_⟩
+  intro b B hb₀ hb₁ hB prior
+  let S := B^(1/2:ℝ)
+  have hS : 1 ≤ S := by
+    unfold S
+    conv_lhs => rw [← Real.one_rpow (1/2:ℝ)]
+    exact Real.rpow_le_rpow zero_le_one hB (by norm_num)
+  have hRS : 0 ≤ R*S := mul_nonneg (zero_le_one.trans hR) (zero_le_one.trans hS)
+  have hsmall : 32 ≤ K*S := by
+    have hK : 32 ≤ K := by dsimp only [K]; linarith only [hR]
+    exact hK.trans ((mul_one K).symm.le.trans
+      (mul_le_mul_of_nonneg_left hS ((by norm_num : (0:ℝ) ≤ 32).trans hK)))
   let β := offlineExponentStep b
   have beta_pos : 0 ≤ β := by
     have : 0 < b := by linarith
@@ -460,8 +562,6 @@ theorem lemma42_acyclic_update {b B : ℝ} (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 71
   have beta_le : β ≤ 1 := by
     change (2*b+1)/(2*b+2) ≤ (1 : ℝ)
     exact (div_le_iff₀ (by linarith)).mpr (by linarith)
-  obtain ⟨A, hA, denseBound⟩ := offline_regular_step hb₀ hb₁ hB prior
-  refine ⟨32+4*A, by linarith, ?_⟩
   intro V I _ _ _ _ paths free
   let n := Fintype.card V
   let p := Fintype.card I
@@ -473,15 +573,16 @@ theorem lemma42_acyclic_update {b B : ℝ} (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 71
   have hF : 0 ≤ F := (Nat.cast_nonneg n).trans hNF
   have castMass : (∑ i, ((paths i).card : ℝ)) = M := by simp only [M, Nat.cast_sum]
   rw [castMass]
-  change (M:ℝ) ≤ F*(32+4*A)
+  change (M:ℝ) ≤ F*(K*S)
+  have linCoeff := mul_le_mul_of_nonneg_right hsmall hF
   by_cases ndense : 32*n < M
   swap
   · have real : (M:ℝ) ≤ 32*n := by exact_mod_cast (le_of_not_gt ndense)
-    nlinarith only [real, hNF, mul_nonneg hF hA.le]
+    nlinarith only [real, hNF, linCoeff]
   by_cases nlong : 16*p < M
   swap
   · have real : (M:ℝ) ≤ 16*p := by exact_mod_cast (le_of_not_gt nlong)
-    nlinarith only [real, hPF, hF, mul_nonneg hF hA.le]
+    nlinarith only [real, hPF, hF, linCoeff]
   have cap : M ≤ p*n := by
     calc
       _ ≤ ∑ _i : I, n := sum_le_sum (fun i _ => card_le_univ (paths i))
@@ -505,14 +606,16 @@ theorem lemma42_acyclic_update {b B : ℝ} (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 71
   have len' : 8*p' < ∑ i, (after i).card := by rw [sameMass]; omega
   have capL : L*p' ≤ 4*∑ i, (after i).card := sameMass.symm ▸ lengthAvg
   have capD : D*n' ≤ 4*∑ i, (after i).card := sameMass.symm ▸ degreeAvg
-  have stage := denseBound after (regularization_free free D L) L D hn' hp'
+  have stage := denseBound hb₀ hb₁ hB prior after (regularization_free free D L) L D hn' hp'
     (Nat.succ_pos _) (Nat.succ_pos _) deg' len' capL capD pathCaps degreeCaps
   rw [sameMass] at stage
   have size : offlineRate β (n':ℝ) (p':ℝ) ≤ 4*F :=
     (offlineRate_mono beta_pos beta_le (by positivity) (by positivity)
       (by exact_mod_cast ncap) (by exact_mod_cast pcap)).trans
       (offlineRate_double beta_pos beta_le (by positivity) (by positivity))
-  exact stage.trans ((mul_le_mul_of_nonneg_left size hA.le).trans (by nlinarith only [hF]))
+  exact stage.trans ((mul_le_mul_of_nonneg_left size hRS).trans (by
+    dsimp only [K]
+    nlinarith only [mul_nonneg (zero_le_one.trans hS) hF]))
 
 set_option maxHeartbeats 500000 in
 private theorem offline_incidence_initial : OfflineIncidenceBound.{u,v} (2/3) 16 := by
@@ -566,18 +669,80 @@ private theorem offline_limit_lt : 1 / Real.sqrt 2 < (71/100 : ℝ) := by
   rw [eq]
   norm_num
 
-/-- Each step of Theorem 43 is a uniform bound on actual acyclic systems. -/
-theorem theorem43_acyclic_iteration (k : ℕ) :
-    ∃ B > 0, OfflineIncidenceBound.{u,v} (offlineExponent k) B := by
+/-- A single constant bounds every iterate in Theorem 43 for acyclic systems. -/
+theorem theorem43_acyclic_iteration_uniform :
+    ∃ B ≥ 1, ∀ k, OfflineIncidenceBound.{u,v} (offlineExponent k) B := by
+  obtain ⟨R, hR, step⟩ := lemma42_acyclic_update
+  let B := max 16 (R^2)
+  have base : 16 ≤ B := le_max_left _ _
+  have hB : 1 ≤ B := (by norm_num : (1:ℝ) ≤ 16).trans base
+  have coeff := sqrt_coefficient hB (zero_le_one.trans hR) (le_max_right 16 (R^2))
+  refine ⟨B, hB, ?_⟩
+  intro k
   induction k with
   | zero =>
-    exact ⟨16, by norm_num, offline_incidence_initial⟩
+    intro V I _ _ _ _ paths free
+    have h := offline_incidence_initial V I paths free
+    exact h.trans (mul_le_mul_of_nonneg_left base ((Nat.cast_nonneg _).trans (le_max_left _ _)))
   | succ k ih =>
-    obtain ⟨B, hB, prior⟩ := ih
     have bounds := theorem43_exponent_limit.2.1 k
-    have step := lemma42_acyclic_update bounds.1 (bounds.2.trans offline_limit_lt).le hB prior
+    have h := step bounds.1 (bounds.2.trans offline_limit_lt).le hB ih
     have eq : offlineExponent (k+1) = offlineExponentStep (offlineExponent k) :=
       Function.iterate_succ_apply' _ _ _
-    rwa [eq]
+    rw [eq]
+    intro V I _ _ _ _ paths free
+    exact (h V I paths free).trans (mul_le_mul_of_nonneg_left coeff
+      ((Nat.cast_nonneg _).trans (le_max_left _ _)))
+
+theorem theorem43_acyclic_iteration (k : ℕ) :
+    ∃ B > 0, OfflineIncidenceBound.{u,v} (offlineExponent k) B := by
+  obtain ⟨B, hB, bound⟩ := theorem43_acyclic_iteration_uniform
+  exact ⟨B, zero_lt_one.trans_le hB, bound k⟩
+
+
+open Filter
+open scoped Topology
+
+/-- The limiting Appendix B bound for acyclic full-bridge-free path systems.
+The single constant in the iteration permits taking the limit at fixed sizes. -/
+theorem theorem43_acyclic_limit :
+    ∃ B ≥ 1, OfflineIncidenceBound.{u,v} (1/Real.sqrt 2) B := by
+  obtain ⟨B, hB, all⟩ := theorem43_acyclic_iteration_uniform
+  refine ⟨B, hB, ?_⟩
+  intro V I _ _ _ _ paths free
+  let n : ℝ := Fintype.card V
+  let p : ℝ := Fintype.card I
+  let α := 1/Real.sqrt 2
+  let m : ℝ := ∑ i, ((paths i).card:ℝ)
+  change m ≤ offlineRate α n p * B
+  have zero_le_bound : 0 ≤ offlineRate α n p * B :=
+    mul_nonneg ((Nat.cast_nonneg _).trans (le_max_left _ _)) (zero_le_one.trans hB)
+  have mass : m ≤ p*n := calc
+    _ ≤ ∑ _i : I, n := sum_le_sum fun i _ => Nat.cast_le.mpr (card_le_univ (paths i))
+    _ = _ := by simp only [sum_const, card_univ, nsmul_eq_mul, p]
+  by_cases hn : 0 < Fintype.card V
+  swap
+  · have nz : n = 0 := by
+      change (Fintype.card V:ℝ)=0
+      exact_mod_cast (Nat.eq_zero_of_not_pos hn)
+    rw [nz, mul_zero] at mass
+    exact mass.trans zero_le_bound
+  by_cases hp : 0 < Fintype.card I
+  swap
+  · have pz : p = 0 := by
+      change (Fintype.card I:ℝ)=0
+      exact_mod_cast (Nat.eq_zero_of_not_pos hp)
+    rw [pz, zero_mul] at mass
+    exact mass.trans zero_le_bound
+  have hnr : 0 < n := Nat.cast_pos.mpr hn
+  have hpr : 0 < p := Nat.cast_pos.mpr hp
+  have continuous : Continuous (fun x : ℝ => offlineRate x n p * B) := by
+    unfold offlineRate
+    simp only [Real.rpow_def_of_pos hnr, Real.rpow_def_of_pos hpr]
+    fun_prop
+  have limit : Tendsto (fun k => offlineRate (offlineExponent k) n p * B) atTop
+      (𝓝 (offlineRate α n p * B)) :=
+    continuous.continuousAt.tendsto.comp theorem43_exponent_limit.2.2
+  exact ge_of_tendsto' limit (fun k => all k V I paths free)
 
 end OnlineReachabilityPreservers

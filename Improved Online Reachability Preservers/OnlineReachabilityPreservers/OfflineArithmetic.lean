@@ -89,16 +89,26 @@ private theorem lemma42_second_term {M n p C K : ℝ}
     Real.mul_rpow (by positivity) hlog] at h
   exact h.trans_eq (by ring)
 
+/-- The fixed coefficient of the three-term comparison. -/
+noncomputable def offlineComparisonConstant (C K b : ℝ) : ℝ :=
+  1+(3*K*C)^(1/4 : ℝ)+252*(3*K*C^(3/2 : ℝ))^(2/11 : ℝ)+
+    (3*K*C^(1/b))^(b/(2*b+2))
+
+theorem offlineComparisonConstant_pos {C K b : ℝ} (hC : 0 < C) (hK : 0 < K) :
+    0 < offlineComparisonConstant C K b := by
+  unfold offlineComparisonConstant
+  positivity
+
 /-- The three terms of the offline comparison imply the two updated rate terms. -/
 theorem lemma42_comparison {C K b : ℝ} (hC : 0 < C) (hK : 0 < K)
     (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 71/100) :
-    ∃ A > 0, ∀ {M n p : ℝ}, 0 < M → 1 ≤ n → 0 < p →
+    ∀ {M n p : ℝ}, 0 < M → 1 ≤ n → 0 < p →
       (let ℓ := M/p; let d := M/n; let t := C*p/(ℓ*d^2)
        ℓ^2*d^2 ≤ K*(ℓ^2*d*t +
          (2+Real.log n)*ℓ^(3/2 : ℝ)*d^(3/2 : ℝ)*t^(3/2 : ℝ) +
          ℓ^(1/b)*d^2*t^(1/b))) →
       let β := offlineExponentStep b
-      M ≤ A*(n^(3/4 : ℝ)*p^(1/2 : ℝ) + n^(2-2*β)*p^β) := by
+      M ≤ offlineComparisonConstant C K b * (n^(3/4 : ℝ)*p^(1/2 : ℝ) + n^(2-2*β)*p^β) := by
   let β := offlineExponentStep b
   let k := 3*K
   let a₁ := (k*C)^(1/4 : ℝ)
@@ -116,7 +126,6 @@ theorem lemma42_comparison {C K b : ℝ} (hC : 0 < C) (hK : 0 < K)
   have hhigh : β ≤ 177/250 := by
     change (2*b+1)/(2*b+2) ≤ (177/250 : ℝ)
     exact (div_le_iff₀ hden).mpr (by linarith)
-  refine ⟨1+a₁+a₂+a₃, by linarith, ?_⟩
   intro M n p hM hn hp comp
   let ℓ := M/p
   let d := M/n
@@ -159,5 +168,65 @@ theorem lemma42_comparison {C K b : ℝ} (hC : 0 < C) (hK : 0 < K)
   have h' : M ≤ a₃*G := h.trans_eq (by dsimp only [a₃, G]; rw [exp]; unfold β offlineExponentStep; ring)
   exact h'.trans ((mul_le_mul_of_nonneg_left (by linarith : G ≤ F+G) ha₃).trans
     (mul_le_mul_of_nonneg_right (by linarith) (add_nonneg hF hG)))
+
+
+/-- Under the quadratic moment coefficient, the exponent update costs at
+most a fixed multiple of the square root of the input coefficient. -/
+theorem offlineComparisonConstant_le {C K B b : ℝ}
+    (hC : 1 ≤ C) (hK : 1 ≤ K) (hB : 1 ≤ B) (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 1) :
+    offlineComparisonConstant C (K*B^2) b ≤
+      (1+3*K*C+253*(3*K*C^(3/2 : ℝ)))*B^(1/2 : ℝ) := by
+  have Cpos := zero_lt_one.trans_le hC
+  have Kpos := zero_lt_one.trans_le hK
+  have Bpos := zero_lt_one.trans_le hB
+  have hb : 0 < b := by linarith
+  let U := 3*K*C
+  let W := 3*K*C^(3/2 : ℝ)
+  let S := B^(1/2 : ℝ)
+  have hU : 1 ≤ U := by
+    dsimp [U]
+    calc
+      (1 : ℝ) ≤ 3*1*1 := by norm_num
+      _ ≤ _ := by gcongr
+  have hCr : 1 ≤ C^(3/2 : ℝ) := by
+    conv_lhs => rw [← Real.one_rpow (3/2 : ℝ)]
+    exact Real.rpow_le_rpow zero_le_one hC (by norm_num)
+  have hW : 1 ≤ W := by
+    dsimp [W]
+    calc
+      (1 : ℝ) ≤ 3*1*1 := by norm_num
+      _ ≤ _ := by gcongr
+  have hS : 1 ≤ S := by
+    unfold S
+    conv_lhs => rw [← Real.one_rpow (1/2 : ℝ)]
+    exact Real.rpow_le_rpow zero_le_one hB (by norm_num)
+  have factor {X s : ℝ} (hX : 1 ≤ X) (hs : 0 ≤ s) (hs' : s ≤ 1/4) :
+      (X*B^2)^s ≤ X*S := by
+    rw [Real.mul_rpow (zero_le_one.trans hX) (sq_nonneg B), ← Real.rpow_natCast_mul Bpos.le 2]
+    push_cast
+    apply mul_le_mul _ _ (by positivity) (zero_le_one.trans hX)
+    · conv_rhs => rw [← Real.rpow_one X]
+      exact Real.rpow_le_rpow_of_exponent_le hX (by linarith)
+    · exact Real.rpow_le_rpow_of_exponent_le hB (by linarith)
+  let K' := K*B^2
+  have first : (3*K'*C)^(1/4 : ℝ) ≤ U*S := by
+    rw [show 3*K'*C=U*B^2 by dsimp [K', U]; ring]
+    exact factor hU (by norm_num) (by norm_num)
+  have second : (3*K'*C^(3/2 : ℝ))^(2/11 : ℝ) ≤ W*S := by
+    rw [show 3*K'*C^(3/2 : ℝ)=W*B^2 by dsimp [K', W]; ring]
+    exact factor hW (by norm_num) (by norm_num)
+  have exp : 1/b ≤ 3/2 := (div_le_iff₀ hb).mpr (by linarith)
+  have z : 3*K'*C^(1/b) ≤ W*B^2 := calc
+    _ ≤ 3*K'*C^(3/2 : ℝ) := mul_le_mul_of_nonneg_left (Real.rpow_le_rpow_of_exponent_le hC exp)
+      (by dsimp [K']; positivity)
+    _ = _ := by dsimp [K', W]; ring
+  have hd : 0 < 2*b+2 := by positivity
+  have hde : 0 ≤ b/(2*b+2) := (div_pos hb hd).le
+  have hde' : b/(2*b+2) ≤ 1/4 := (div_le_iff₀ hd).mpr (by linarith)
+  have third := (Real.rpow_le_rpow (show 0 ≤ 3*K'*C^(1/b) by dsimp [K']; positivity) z hde).trans
+    (factor hW hde hde')
+  change 1+(3*K'*C)^(1/4 : ℝ)+252*(3*K'*C^(3/2 : ℝ))^(2/11 : ℝ)+
+    (3*K'*C^(1/b))^(b/(2*b+2)) ≤ (1+U+253*W)*S
+  nlinarith only [hS, first, second, third]
 
 end OnlineReachabilityPreservers

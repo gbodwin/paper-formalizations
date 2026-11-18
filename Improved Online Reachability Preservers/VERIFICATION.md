@@ -90,6 +90,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   changed modules passed. Independent review confirmed the exact mean,
   exponent range, and types of constants in the comparison.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44417701299).
+- [01446903](https://github.com/gbodwin/paper-formalizations/commit/014469039e70e9ae0c92a860d01f13242b454459)
+  applies the acyclic offline incidence update to the constructed offline
+  preserver and proves the rounded bound on general digraphs. The
+  917-declaration paper audit and kernel replay passed. Independent review
+  checked the normalization, integer window test, and graph construction.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44420859677).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
