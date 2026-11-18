@@ -19,5 +19,4 @@ for i in "${!paper_libraries[@]}"; do
     module="${module//\//.}"
     lake env leanchecker -v "$module"
   done
-  lake env leanchecker -v "${paper_libraries[$i]}"
 done

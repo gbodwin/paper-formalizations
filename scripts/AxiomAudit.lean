@@ -117,3 +117,10 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.SourceAudit.lemma25_printed_counterexample
 #print axioms OnlineReachabilityPreservers.SourceAudit.lemma25_tail_count
 #print axioms OnlineReachabilityPreservers.SourceAudit.corrected_fixed_point_iff
+
+#print axioms OnlineReachabilityPreservers.no_earlier_last_arc
+#print axioms OnlineReachabilityPreservers.theorem11_sinks
+#print axioms OnlineReachabilityPreservers.theorem11_sources
+#print axioms OnlineReachabilityPreservers.theorem9_lift
+#print axioms OnlineReachabilityPreservers.theorem2_sinks
+#print axioms OnlineReachabilityPreservers.theorem2_sources

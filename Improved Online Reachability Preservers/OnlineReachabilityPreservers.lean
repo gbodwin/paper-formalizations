@@ -1,4 +1,8 @@
 import OnlineReachabilityPreservers.Basic
+import OnlineReachabilityPreservers.Bridges
+import OnlineReachabilityPreservers.Components
+import OnlineReachabilityPreservers.Connectors
+import OnlineReachabilityPreservers.DagReduction
 import OnlineReachabilityPreservers.Growth
 import OnlineReachabilityPreservers.Online
 import OnlineReachabilityPreservers.Restricted

@@ -116,9 +116,11 @@ All 18 modules and the aggregate compile, all 440 declarations pass the allowed-
 ## Improved Online Reachability Preservers
 
 The [paper library](<Improved Online Reachability Preservers/>) develops
-Bodwin–Le's online reachability preservers. Its initial checkpoint verifies the
-deterministic path-growth rule and the two orientations of the restricted bound
-on DAGs. The result applies to every demand prefix. A
+Bodwin–Le's online reachability preservers. It proves the deterministic
+path-growth rule, its ordered bridge exclusions, the SCC reduction, and both
+orientations of the restricted size bound on arbitrary directed graphs.
+Every prefix keeps the required reachability and has at most
+`3n + sqrt(2npσ)` edges for `p` demands with `σ` allowed sources or sinks. A
 [statement map](<Improved Online Reachability Preservers/STATEMENT_MAP.md>)
 tracks the main results, dependencies, and remaining work. The
 [source notes](<Improved Online Reachability Preservers/SOURCE_NOTES.md>)

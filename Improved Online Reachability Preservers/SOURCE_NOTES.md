@@ -26,7 +26,7 @@ exponent. Approximation for convergence should be from below.
 
 ## The path split can create a forbidden bridge
 
-Take three indexed paths in this order: `(0,1,2,3)`, `(3,0)`, and `(2,1)`.
+Take the ordered path family `[(0,1,2,3), (3,0), (2,1)]`.
 There is no 2-, 3-, or 4-bridge. Splitting the first path into the consecutive
 halves `(0,1)` and `(2,3)`, before the other two paths, creates a 4-bridge.
 Its arcs are `(2,3)`, `(3,0)`, `(0,1)`, and its river is `(2,1)`. The last

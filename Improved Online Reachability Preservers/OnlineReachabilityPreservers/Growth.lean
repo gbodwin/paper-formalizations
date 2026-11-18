@@ -118,11 +118,40 @@ theorem growFrom_spec {G H : Arcs V} (sub : H ⊆ G) {R : Finset V} {t u : V}
           · exact old
           · exact priority e he
 
+theorem growFrom_length {G H : Arcs V} {R : Finset V} {t u : V}
+    {k : ℕ} {path : List (V × V)} (h : growFrom G H R t k u = some path) :
+    path.length ≤ k := by
+  induction k generalizing u path with
+  | zero =>
+    by_cases eq : u = t
+    · simp [growFrom, eq] at h
+      subst path
+      simp
+    · simp [growFrom, eq] at h
+  | succ k ih =>
+    by_cases eq : u = t
+    · simp [growFrom, eq] at h
+      subst path
+      simp
+    · cases hv : nextVertex G H R u with
+      | none => simp [growFrom, eq, hv] at h
+      | some v =>
+        cases ht : growFrom G H R t k v with
+        | none => simp [growFrom, eq, hv, ht] at h
+        | some rest =>
+          have hp : (u, v) :: rest = path := by simpa [growFrom, eq, hv, ht] using h
+          subst path
+          exact Nat.succ_le_succ (ih ht)
+
 variable [Fintype V]
 
 /-- The computation of Algorithm 1. A failed search is represented by `none`. -/
 def forwardPath (G H : Arcs V) (s t : V) : Option (List (V × V)) :=
   growFrom G H (reaches G t) t (Fintype.card V) s
+
+theorem forwardPath_length {G H : Arcs V} {s t : V} {path : List (V × V)}
+    (h : forwardPath G H s t = some path) : path.length ≤ Fintype.card V :=
+  growFrom_length h
 
 theorem forwardPath_spec {G H : Arcs V} (sub : H ⊆ G) {s t : V}
     {path : List (V × V)} (h : forwardPath G H s t = some path) :
