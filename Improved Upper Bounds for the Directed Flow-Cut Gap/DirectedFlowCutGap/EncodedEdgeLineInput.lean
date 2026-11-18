@@ -66,6 +66,24 @@ theorem lineInput_adj {n : ℕ} (D : Input n) (i j : Fin (lineSize n)) :
   simp only [FractionalCoverRawGraph.Input.graph, lineInput, Vector.getElem_ofFn]
   exact adjacent_iff ..
 
+theorem lineInput_cost_width {n B : ℕ} (D : Input n) (hB : 1 ≤ B)
+    (hc : ∀ u v : Fin n, (D.costs[u.val][v.val]).num.size ≤ B ∧
+      (D.costs[u.val][v.val]).den.size ≤ B) (i : Fin (lineSize n)) :
+    let q := get (lineInput D).costs i
+    q.num.size ≤ B ∧ q.den.size ≤ B := by
+  have hq : get (lineInput D).costs i = nodePrice D (index n i) := by
+    simp only [lineInput, FractionalCoverRawCore.get, Vector.getElem_ofFn]
+  dsimp only
+  rw [hq]
+  have hz : Code.zero.num.size ≤ B ∧ Code.zero.den.size ≤ B := by
+    exact ⟨Nat.zero_le B, hB⟩
+  rcases index n i with port | ⟨u, v⟩
+  · exact hz
+  · simp only [nodePrice]
+    split_ifs
+    · exact hc u v
+    · exact hz
+
 theorem lineInput_demand {n : ℕ} (D : Input n) (i j : Fin (lineSize n)) :
     (i, j) ∈ (lineInput D).demands ↔
       ∃ s t, (s, t) ∈ D.demands ∧ i = source s ∧ j = sink t := by

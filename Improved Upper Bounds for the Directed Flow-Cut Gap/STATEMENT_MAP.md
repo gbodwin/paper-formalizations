@@ -1,13 +1,16 @@
 # Source-to-Lean status map
 
 Pinned source: Bodwin–Samborska, arXiv:2604.03412v3 (9 July 2026).
-This is a partial checkpoint. The main vertex/edge rounding bounds and actual randomized output guarantees
-and attained optimum/corollary interfaces are proved; constructive runtime remains open. A checked component is not
-counted as an entire source theorem when other claims remain.
+This is a partial checkpoint. The main vertex and edge rounding bounds,
+randomized output guarantees, and attained optimum and corollary interfaces
+are proved. Both pipelines execute from graph source tables with a
+polynomial random-read bound. The charged physical fractional prefix has a
+separate deterministic polynomial. The complete source-to-cut bit-time
+bound remains open. [Physical execution scope](verification/PHYSICAL_SOURCE_DISPATCH_20261118.md)
 
 | Source item | Verified scope at this checkpoint | Still required |
 | --- | --- | --- |
-| Theorems 1–2 | Both main all-cost vertex and edge rounding bounds, uniform constants, actual randomized core guarantees and attained sum-flow duality | Constructive runtime and encoding |
+| Theorems 1–2 | Main all-cost vertex and edge bounds, actual randomized guarantees, attained sum-flow duality, and source execution with physical fractional dispatch | Complete deterministic bit-time bound and fixed-instruction rounding |
 | Theorems 3–5 | Actual finite unit-cost, uniform-weight, edge/vertex and self-reduction network | Complete algorithmic realization and runtime |
 | Corollaries 6–8 | Attained normalized sparsest/concurrent-flow optima, actual weak-decomposition PMF and both main factors | Polynomial LP computation, complete algorithmic realization and efficiency |
 | Lemma 9 | Actual all-regime randomized law, uniform ε expected-size and n^(-κ) high-probability size bounds | Constructive runtime |
@@ -30,7 +33,7 @@ counted as an entire source theorem when other claims remain.
 | Theorem 29 | Actual repaired finite reduction: 4n² vertices,3W weight,6αC cost, zero cases | Runtime; exact gap notation requires the stated bounded-instance interpretation |
 | Theorems30–31 | Actual dyadic edge-to-vertex and split-vertex constructions, all path/cut/count/weight/cost bridges and bounded-oracle forms | Constructive runtime |
 | Theorem 32 | Actual endpoint-safe self-reduction and uniform vertex n^(1/3+ε) composition | Runtime |
-| Theorem 33 | Corrected actual finite sampling family/PMF for both models, linear-in-n edge horizon via tiny-edge preprocessing, arbitrary Δ>0 normalization and explicit modified-weight oracle contract | Complete algorithmic runtime and bit complexity |
+| Theorem 33 | Corrected finite family and PMF for both models, linear-in-n edge horizon with tiny-edge preprocessing, and exact original-weight edge law with a quadratic horizon | Complete algorithmic runtime and efficient same-weight edge family |
 
 The aggregate imports every checked component. The exact source hashes and
 allowed-axiom/kernel results are in `verification/component-verification.json`.

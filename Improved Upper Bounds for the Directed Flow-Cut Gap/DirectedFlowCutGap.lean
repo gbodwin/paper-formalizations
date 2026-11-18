@@ -168,6 +168,8 @@ import DirectedFlowCutGap.PackingCovering
 import DirectedFlowCutGap.PathExtraction
 import DirectedFlowCutGap.PathSystemCharging
 import DirectedFlowCutGap.PathSystemCounting
+import DirectedFlowCutGap.PhysicalEdgeSolver
+import DirectedFlowCutGap.PhysicalVertexSolver
 import DirectedFlowCutGap.RawNonnegativeRational
 import DirectedFlowCutGap.RawWeightedMasses
 import DirectedFlowCutGap.ResidualPathRepresentation

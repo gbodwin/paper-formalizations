@@ -117,6 +117,16 @@ theorem bounded_failure_le {n : ℕ} (roundBound extraSamples confidence : ℕ) 
   rw [expectedPrice, expectedCost_map] at hcost
   exact hcost
 
+theorem bounded_zero_price_on_support {n : ℕ} (roundBound extraSamples confidence : ℕ)
+    (D : GraphInput n) (round : Rounding n) (hcost : expectedPrice D round ≤ 0)
+    {out : Output n} (hout : out ∈ (ideal (boundedBitTree roundBound extraSamples confidence D round)).support) :
+    outputPrice D out = 0 := by
+  rw [← codePrice_value]
+  apply EncodedAmplification.zero_price_on_support (codePrice D) (tree D round)
+    (drawBound D roundBound) extraSamples confidence _ hout
+  simp only [codePrice_value]
+  rwa [expectedPrice, expectedCost_map] at hcost
+
 theorem failure_le {n : ℕ} (extraSamples confidence : ℕ) (D : GraphInput n) (round : Rounding n)
     (hround : ∀ r : RoundingInput n, Within (roundDrawBound n) (round r))
     (B : ℝ) (hB : 0 < B) (hcost : expectedPrice D round ≤ B) :

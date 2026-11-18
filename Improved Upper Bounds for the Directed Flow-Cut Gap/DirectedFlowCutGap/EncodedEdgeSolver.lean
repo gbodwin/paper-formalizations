@@ -47,7 +47,7 @@ private def originalDemand {n : ℕ} (d : Fin (lineSize n) × Fin (lineSize n)) 
   | .inl (s, true), .inl (t, false) => some (s, t)
   | _, _ => none
 
-private def outputFor {n : ℕ} (D : Input n) : EncodedVertexSolver.Output (lineSize n) → Output n
+def outputFor {n : ℕ} (D : Input n) : EncodedVertexSolver.Output (lineSize n) → Output n
   | .infeasible d => .infeasible (originalDemand d)
   | .cut a => .cut (toEdges D a)
   | .invalid => .invalid
@@ -207,6 +207,16 @@ theorem expectedPrice_line {n : ℕ} (D : Input n) (mode : Mode) :
   cases a with
   | none => simp [f, edgeCutCost, EncodedCutSelection.optionPrice]
   | some a => exact cutPrice_toEdges D a
+
+theorem zero_price_on_support {n : ℕ} (κ : ℕ) (D : Input n) (mode : Mode)
+    (hcost : expectedPrice D mode ≤ 0) {out : Output n}
+    (hout : out ∈ (ideal (bitTree κ D mode)).support) : outputPrice D out = 0 := by
+  simp only [bitTree, ideal, law_map] at hout
+  obtain ⟨o, ho, rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp hout
+  rw [outputPrice_for]
+  apply EncodedVertexAmplification.bounded_zero_price_on_support (drawBound n) _ _
+    (lineInput D) (round D mode) _ ho
+  rwa [expectedPrice_line] at hcost
 
 private theorem expected_round {n : ℕ} (D : Input n) (mode : Mode) (y : RawRow (lineSize n)) :
     expectedCost (ideal (round D mode (EncodedVertexSolver.roundingInput (lineInput D) y)))

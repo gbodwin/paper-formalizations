@@ -4,16 +4,6 @@ set -euo pipefail
 export LEAN_NUM_THREADS=1
 paper='Improved Upper Bounds for the Directed Flow-Cut Gap'
 flags=(-j1 -DautoImplicit=false -DwarningAsError=true)
-targets=(
-  OptimalFlowCutBounds AdaptiveVertexBound AdaptiveEdgeBound
-  WeakDecomposition WeakDecompositionBounds SparsestVertexCorollary SparsestEdgeCorollary
-  IntegerClosureAsymptotic EncodedIntegerRounding EncodedUniformRounding EncodedWeightedRounding
-  EncodedSizeRounding EncodedCutSelection EncodedVertexSolver FractionalCoverRawGuesses
-  EncodedVertexInput EncodedAmplification EncodedVertexAmplification
-  EncodedEdgeLabels EncodedEdgeGadget EncodedEdgeRounding
-  EdgeLineReduction EncodedEdgeLineInput EncodedEdgeSolver WeakDecompositionExactWeight
-  EncodedEdgeInput EncodedSolverBits EncodedSourceExecution
-)
 new_sources=(
   EncodedIntegerRounding EncodedUniformRounding EncodedWeightedRounding
   EncodedSizeRounding EncodedCutSelection EncodedVertexSolver
@@ -21,6 +11,17 @@ new_sources=(
   EncodedEdgeLabels EncodedEdgeGadget EncodedEdgeRounding
   EdgeLineReduction EncodedEdgeLineInput EncodedEdgeSolver WeakDecompositionExactWeight
   EncodedEdgeInput EncodedSolverBits EncodedSourceExecution
+  FinalDispatchProgram FinalDispatchCallLift FinalDispatchCalls FinalDispatchPrefix
+  FinalDispatchOutput FinalDispatchPositive FinalDispatchTail FinalDispatchTrace
+  ActualFinalDispatch FinalDispatchEnvelope PackedOriginalStore OriginalStoreInputViews
+  OriginalStoreInitial OriginalStoreCorrectness OriginalStoreDispatch
+  PhysicalCoverReader PhysicalCoverExecution PhysicalSourceDispatch PhysicalVertexSolver PhysicalEdgeSolver
+)
+targets=(
+  OptimalFlowCutBounds AdaptiveVertexBound AdaptiveEdgeBound
+  WeakDecomposition WeakDecompositionBounds SparsestVertexCorollary SparsestEdgeCorollary
+  IntegerClosureAsymptotic FractionalCoverRawGuesses
+  "${new_sources[@]}"
 )
 for target in "${new_sources[@]}"; do
   lake env lean "${flags[@]}" "$paper/DirectedFlowCutGap/$target.lean"
@@ -36,4 +37,6 @@ lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/EncodedEdgeRo
 lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/EncodedVertexInputSmoke.lean"
 lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/EncodedEdgeSolverSmoke.lean"
 lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/EncodedSourceExecutionSmoke.lean"
+lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/PhysicalVertexSolverSmoke.lean"
+lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/PhysicalEdgeSolverSmoke.lean"
 git diff --exit-code HEAD --

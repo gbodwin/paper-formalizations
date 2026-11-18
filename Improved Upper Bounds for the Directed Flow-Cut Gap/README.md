@@ -1,3 +1,16 @@
+# Directed Flow-Cut Gap
+
+The current continuation proves the attained vertex and edge bounds and
+executes both forms of rounding from rational graph source tables. The
+original vertex bytes pass through a single charged physical parser and
+fractional dispatcher. The edge pipeline uses the physical fraction
+solver on its typed line graph. Each returns its exact unread random tape.
+The full deterministic bit-time obligation is still open.
+
+[Verification scope and entry points](verification/PHYSICAL_SOURCE_DISPATCH_20261118.md)
+
+---
+
 # Directed Flow-Cut Gap: polynomial original-input grid envelope
 
 One additive module derives the grid range and loop-word length invariants

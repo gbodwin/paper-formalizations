@@ -9,6 +9,7 @@ import DirectedFlowCutGap.EncodedEdgeRounding
 import DirectedFlowCutGap.EncodedEdgeSolver
 import DirectedFlowCutGap.WeakDecompositionExactWeight
 import DirectedFlowCutGap.EncodedSourceExecution
+import DirectedFlowCutGap.PhysicalEdgeSolver
 import Lean.Compiler.Old
 import Lean.Util.CollectAxioms
 import Lean.Util.FoldConsts
@@ -35,7 +36,17 @@ run_cmd do
     `DirectedFlowCutGap.EdgeLineReduction, `DirectedFlowCutGap.EncodedEdgeLineInput,
     `DirectedFlowCutGap.EncodedEdgeSolver, `DirectedFlowCutGap.WeakDecompositionExactWeight,
     `DirectedFlowCutGap.EncodedEdgeInput, `DirectedFlowCutGap.EncodedSolverBits,
-    `DirectedFlowCutGap.EncodedSourceExecution]
+    `DirectedFlowCutGap.EncodedSourceExecution,
+    `DirectedFlowCutGap.FinalDispatchProgram, `DirectedFlowCutGap.FinalDispatchCallLift,
+    `DirectedFlowCutGap.FinalDispatchCalls, `DirectedFlowCutGap.FinalDispatchPrefix,
+    `DirectedFlowCutGap.FinalDispatchOutput, `DirectedFlowCutGap.FinalDispatchPositive,
+    `DirectedFlowCutGap.FinalDispatchTail, `DirectedFlowCutGap.FinalDispatchTrace,
+    `DirectedFlowCutGap.ActualFinalDispatch, `DirectedFlowCutGap.FinalDispatchEnvelope,
+    `DirectedFlowCutGap.PackedOriginalStore, `DirectedFlowCutGap.OriginalStoreInputViews,
+    `DirectedFlowCutGap.OriginalStoreInitial, `DirectedFlowCutGap.OriginalStoreCorrectness,
+    `DirectedFlowCutGap.OriginalStoreDispatch, `DirectedFlowCutGap.PhysicalCoverReader,
+    `DirectedFlowCutGap.PhysicalCoverExecution, `DirectedFlowCutGap.PhysicalSourceDispatch,
+    `DirectedFlowCutGap.PhysicalVertexSolver, `DirectedFlowCutGap.PhysicalEdgeSolver]
   let allowed := #[`propext, `Classical.choice, `Quot.sound]
   let mut counts : NameMap Nat := {}
   let mut compilerEntries : Nat := 0
@@ -106,7 +117,21 @@ run_cmd do
     `DirectedFlowCutGap.EncodedSourceExecution.vertexMass_complete,
     `DirectedFlowCutGap.EncodedSourceExecution.vertexSize_complete,
     `DirectedFlowCutGap.EncodedSourceExecution.edgeMass_complete,
-    `DirectedFlowCutGap.EncodedSourceExecution.edgeSize_complete] do
+    `DirectedFlowCutGap.EncodedSourceExecution.edgeSize_complete,
+    `DirectedFlowCutGap.EncodedVertexAmplification.bounded_zero_price_on_support,
+    `DirectedFlowCutGap.EncodedEdgeSolver.zero_price_on_support,
+    `DirectedFlowCutGap.PhysicalCoverReader.readPlan_eq,
+    `DirectedFlowCutGap.PhysicalCoverExecution.run_eq,
+    `DirectedFlowCutGap.PhysicalSourceDispatch.bit_trace,
+    `DirectedFlowCutGap.PhysicalSourceDispatch.paidBound_polynomial,
+    `DirectedFlowCutGap.PhysicalSourceDispatch.run_eq,
+    `DirectedFlowCutGap.PhysicalVertexSolver.rawTree_eq,
+    `DirectedFlowCutGap.PhysicalVertexSolver.source_mass_complete,
+    `DirectedFlowCutGap.PhysicalVertexSolver.source_size_complete,
+    `DirectedFlowCutGap.PhysicalEdgeSolver.decode_binaryLineInput,
+    `DirectedFlowCutGap.PhysicalEdgeSolver.paidBound_original,
+    `DirectedFlowCutGap.PhysicalEdgeSolver.source_mass_complete,
+    `DirectedFlowCutGap.PhysicalEdgeSolver.source_size_complete] do
     let some (.thmInfo _) := env.find? theoremName | throwError "Missing theorem {theoremName}"
     unless roots.contains theoremName do throwError "Unselected theorem {theoremName}"
   let mut todo := roots
