@@ -1,6 +1,8 @@
 name: Polynomial original-input grid envelope
 on:
   push:
+    branches-ignore:
+      - codex/flow-constructive-20261118
   workflow_dispatch:
 permissions:
   contents: read

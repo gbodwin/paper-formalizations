@@ -59,3 +59,11 @@ mass. The one-sample bit-program tail includes the explicit rejection error.
 External byte parsing, an end-to-end bit-cost bound, amplified success
 probability, and the constructive edge and exact-mass weak-decomposition
 interfaces remain open.
+
+## Exact-commit checks
+
+The continuation branch runs its dedicated constructive audit and fixtures
+on push. The inherited reference-closure workflow remains available by
+manual dispatch on this branch. Its automatic trigger stays in place on
+the median repair branch and the historical branches. The continuation
+workflow rechecks all reference source hashes at the commit it builds.
