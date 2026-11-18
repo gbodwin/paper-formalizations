@@ -35,10 +35,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   counting high-degree incidences with enough predecessors. The same module's
   `pairwise_initial` proves an online `O(n + (np)^(2/3))` edge bound on general
   digraphs, with the exact cubic inequality stated in Lean.
-- [`lemma28_from_incidence` and `lemma41_branch_count`](OnlineReachabilityPreservers/ClosePairs.lean)
+- [`lemma28_from_incidence`, `lemma28_mean_lower`, and `lemma41_branch_count`](OnlineReachabilityPreservers/ClosePairs.lean)
   give the finite close-pair and sampled-subsystem counts used in Appendices A
   and B for systems with a common vertex order. Summing over the base paths
-  gives the numerator of the uniform expectation. The full-bridge-free proof
+  gives the numerator of the uniform expectation. In the dense regime the
+  expectation is at least the squared product of the two averages divided by
+  `4096`. The full-bridge-free proof
   bounds the contribution by the ordered pairs of vertices on the restricted paths.
 - [`theorem38_root`, `theorem38_exponent_limits`, and `theorem43_exponent_limit`](OnlineReachabilityPreservers/ExponentLimits.lean)
   check the online cubic root and both arithmetic iterations. The extremal
@@ -52,7 +54,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
 - [`lemma37_first_term`, `lemma37_third_term`, and `lemma42_third_term`](OnlineReachabilityPreservers/BootstrapArithmetic.lean)
   verify the rearrangements of those individual branching-count terms.
   The third term of Lemma 42 gives vertex exponent `1/(b+1)`, the exponent
-  implicit in Theorem 43.
+  implicit in Theorem 43. [OfflineArithmetic](OnlineReachabilityPreservers/OfflineArithmetic.lean)
+  checks the complete three-term scalar comparison, including absorption of the
+  logarithmic term into the two updated powers.
 - [`lemma30_integral_square_sum`](OnlineReachabilityPreservers/IntegralMajorization.lean)
   checks the integral majorization step with explicit integrability hypotheses.
   [`lemma31_acyclic_moment`](OnlineReachabilityPreservers/SecondMoment.lean)

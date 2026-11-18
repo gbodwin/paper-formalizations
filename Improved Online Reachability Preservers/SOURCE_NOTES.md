@@ -37,8 +37,9 @@ concluding rearrangement. Theorem 43 uses the correct value through
 \(2-2b'\) for \(b'=(2b+1)/(2b+2)\).
 [BootstrapArithmetic](OnlineReachabilityPreservers/BootstrapArithmetic.lean)
 checks the rearrangement from that term, with explicit positive parameters,
-and its agreement with the recurrence. The other terms and second-moment
-estimates still need proofs for the full bound.
+and its agreement with the recurrence.
+[OfflineArithmetic](OnlineReachabilityPreservers/OfflineArithmetic.lean)
+checks the full three-term rearrangement over the iteration's exponent range.
 
 ## The displayed derivative in Lemma 31 has overlapping cases
 
@@ -49,6 +50,15 @@ is \(Cx\) near \(x=8\).
 [SourceAudit](OnlineReachabilityPreservers/SourceAudit.lean) checks the overlap
 and the two values for positive \(C\). The [acyclic moment proof](OnlineReachabilityPreservers/SecondMoment.lean)
 orders the lengths and bounds clipped powers directly.
+
+## The displayed derivative in Lemma 40 has overlapping cases
+
+Take \(n_1=256\), \(\ell=4\), \(d=16\), \(h=4\), \(b=7/10\), and \(x=24\).
+The first and third intervals both contain \(x\) and give slopes \(4C\)
+and \(32C/\sqrt{24}\). The preceding envelope is \(4Cx\) near \(x=24\).
+The [checked overlap](OnlineReachabilityPreservers/SourceAudit.lean) and
+[offline moment proof](OnlineReachabilityPreservers/OfflineMoment.lean)
+give the discrepancy and a derivation of the estimate from a subcritical power.
 
 ## The path split can create a forbidden bridge
 
@@ -76,6 +86,9 @@ uses this to prove the upper caps with at most twice the ambient budgets.
   before any additional restriction. The displayed proof does not establish
   its exact output budgets. The constant-factor acyclic proof establishes the
   upper caps used in the counts. The lower caps and exact budgets remain open.
+- The proof of Lemma 23 writes \(\beta\) for the half-bridge-free extremum
+  \(H\). The statement of Lemma 39 writes \(H\) for the full-bridge-free
+  extremum \(\beta\) it is used to estimate.
 - Lemma 24 needs a common vertex order to infer that any two paths meet in
   at most one vertex from 2-bridge-freeness. The paths `(0,1,2)` and
   `(2,1,0)` share three vertices without a bridge. The growth path systems

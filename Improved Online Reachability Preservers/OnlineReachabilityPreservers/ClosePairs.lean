@@ -228,6 +228,14 @@ theorem lemma28_branch_lower {paths : I → Finset V} (free : HalfBridgeFree (Pa
       rw [← mul_sum, sum_add_distrib, ← mul_sum, rChains_card]
     _ ≤ _ := by gcongr; exact lemma28_charge free h
 
+theorem rChains_square_le (paths : I → Finset V) :
+    (rChains paths).card^2 ≤ Fintype.card I^2 *
+      ∑ lr : I × I, (rWitnesses paths lr.1 lr.2).card^2 := by
+  rw [rChains_card]
+  have hc := sum_mul_sq_le_sq_mul_sq (R := ℕ) (univ : Finset (I × I)) (fun _ => 1)
+    (fun lr => (rWitnesses paths lr.1 lr.2).card)
+  simpa [Fintype.card_prod, pow_two] using hc
+
 /-- A finite density condition under which the second moment controls the sampled Q count. -/
 theorem lemma28_branch_lower_dense {paths : I → Finset V} (free : HalfBridgeFree (PathBefore paths) 4)
     (L h : ℕ) (length : ∀ i, (paths i).card ≤ L) (hp : 0 < Fintype.card I)
@@ -240,12 +248,7 @@ theorem lemma28_branch_lower_dense {paths : I → Finset V} (free : HalfBridgeFr
   let q := ∑ base : I, (branchTuples paths base h).card
   let m := ∑ lr : I × I, (rWitnesses paths lr.1 lr.2).card^2
   have basic : (h + 1) * m ≤ a * (r + 2*q) := lemma28_branch_lower free L h length
-  have hCS : r^2 ≤ p^2 * m := by
-    change (rChains paths).card^2 ≤ p^2 * m
-    rw [rChains_card]
-    have hc := sum_mul_sq_le_sq_mul_sq (R := ℕ) (univ : Finset (I × I)) (fun _ => 1)
-      (fun lr => (rWitnesses paths lr.1 lr.2).card)
-    simpa [p, m, Fintype.card_prod, pow_two] using hc
+  have hCS : r^2 ≤ p^2 * m := rChains_square_le paths
   have linear : 2*a*r ≤ (h + 1)*m := by
     apply Nat.le_of_mul_le_mul_right (c := p^2) _ (Nat.pow_pos hp)
     have hd := Nat.mul_le_mul_right r dense
@@ -254,6 +257,12 @@ theorem lemma28_branch_lower_dense {paths : I → Finset V} (free : HalfBridgeFr
     nlinarith only [hd, hs]
   change (h + 1) * m ≤ 4*a*q
   nlinarith only [basic, linear]
+
+private theorem window_size_budget {L h p M : ℕ}
+    (length : L*p ≤ 4*M) (window : h*p ≤ M) (long : 8*p ≤ M) :
+    (2*L+h+1)*p ≤ 10*M := by
+  rw [Nat.add_mul, Nat.add_mul, Nat.mul_assoc, Nat.one_mul]
+  omega
 
 /-- The incidence lower count supplies the density condition of Lemma 28.
 The length and threshold inequalities use the average path length m/p
@@ -274,13 +283,7 @@ theorem lemma28_from_incidence {paths : I → Finset V} (free : HalfBridgeFree (
   let p := Fintype.card I
   let M := ∑ i, (paths i).card
   let a := 2*L + h + 1
-  have ha : a*p ≤ 10*M := by
-    dsimp only [a]
-    rw [Nat.add_mul, Nat.add_mul, Nat.mul_assoc, Nat.one_mul]
-    change L*p ≤ 4*M at avg_length
-    change h*p ≤ M at window_le_avg
-    change 8*p ≤ M at hlong
-    omega
+  have ha : a*p ≤ 10*M := window_size_budget avg_length window_le_avg hlong
   have lower : M^4 ≤ 2048 * n^2 * p * (rChains paths).card :=
     lemma26_chain_lower paths hn hp hdense hlong
   apply Nat.le_of_mul_le_mul_right (c := 2048*n^2*p) _ (by positivity)
@@ -290,6 +293,50 @@ theorem lemma28_from_incidence {paths : I → Finset V} (free : HalfBridgeFree (
   change (40960*n^2*p^2) * M ≤ ((h + 1)*M^3) * M at h2
   change (2*a*p^2) * (2048*n^2*p) ≤ ((h+1)*(rChains paths).card) * (2048*n^2*p)
   nlinarith only [h1, h2, h3]
+
+/-- The uniform mean of the qualifying tuple counts controls the squared product
+of the average length and degree, with denominators cleared. -/
+theorem lemma28_mean_lower {paths : I → Finset V} (free : HalfBridgeFree (PathBefore paths) 4)
+    (L h : ℕ) (length : ∀ i, (paths i).card ≤ L)
+    (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
+    (hdense : 16 * Fintype.card V ≤ ∑ i, (paths i).card)
+    (hlong : 8 * Fintype.card I ≤ ∑ i, (paths i).card)
+    (avg_length : L * Fintype.card I ≤ 4 * ∑ i, (paths i).card)
+    (window_le_avg : h * Fintype.card I ≤ ∑ i, (paths i).card)
+    (window_large : 40960 * (Fintype.card V)^2 * (Fintype.card I)^2 ≤
+      (h + 1) * (∑ i, (paths i).card)^3) :
+    (∑ i, (paths i).card)^4 ≤ 4096 * (Fintype.card V)^2 * Fintype.card I *
+      ∑ base : I, (branchTuples paths base h).card := by
+  let n := Fintype.card V
+  let p := Fintype.card I
+  let M := ∑ i, (paths i).card
+  let a := 2*L+h+1
+  let R := (rChains paths).card
+  let S := ∑ lr : I × I, (rWitnesses paths lr.1 lr.2).card^2
+  let Q := ∑ base : I, (branchTuples paths base h).card
+  have hM : 0 < M := (Nat.mul_pos (by decide) hp).trans_le hlong
+  have lower : M^4 ≤ 2048*n^2*p*R := lemma26_chain_lower paths hn hp hdense hlong
+  have close : (h+1)*S ≤ 4*a*Q :=
+    lemma28_from_incidence free L h length hn hp hdense hlong avg_length window_le_avg window_large
+  have hwindow : a*p ≤ 10*M := window_size_budget avg_length window_le_avg hlong
+  have square : M^8 ≤ 2048^2*n^4*p^4*S := calc
+    M^8 = (M^4)^2 := by ring
+    _ ≤ (2048*n^2*p*R)^2 := Nat.pow_le_pow_left lower 2
+    _ = (2048^2*n^4*p^2)*R^2 := by ring
+    _ ≤ (2048^2*n^4*p^2)*(p^2*S) := Nat.mul_le_mul_left _ (rChains_square_le paths)
+    _ = _ := by ring
+  change M^4 ≤ 4096*n^2*p*Q
+  apply Nat.le_of_mul_le_mul_right (c := 40960*n^2*p^3*M) _ (by positivity)
+  calc
+    _ = (40960*n^2*p^2)*(M^5*p) := by ring
+    _ ≤ ((h+1)*M^3)*(M^5*p) := Nat.mul_le_mul_right _ window_large
+    _ = ((h+1)*p)*M^8 := by ring
+    _ ≤ ((h+1)*p)*(2048^2*n^4*p^4*S) := Nat.mul_le_mul_left _ square
+    _ = (2048^2*n^4*p^5)*((h+1)*S) := by ring
+    _ ≤ (2048^2*n^4*p^5)*(4*a*Q) := Nat.mul_le_mul_left _ close
+    _ = (4*2048^2*n^4*p^4*Q)*(a*p) := by ring
+    _ ≤ (4*2048^2*n^4*p^4*Q)*(10*M) := Nat.mul_le_mul_left _ hwindow
+    _ = _ := by ring
 
 omit [Fintype V] [Fintype I] in
 /-- Off the base path, a vertex has at most one branching path in a full bridge-free system. -/

@@ -78,6 +78,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   and local kernel replay passed. Independent review confirmed the
   branch multiplicities and the actual induced vertex sets.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44412599474).
+- [4f743d67](https://github.com/gbodwin/paper-formalizations/commit/4f743d67d05f1cf47bef1ebe2bbb229db505ae66)
+  verifies the two acyclic splits, preserves all incidences, and proves the
+  logarithmic offline moment and sampled upper count. The 868-declaration
+  paper audit and local replay passed. Independent review checked projection
+  of bridges, the incidence caps, and the moments on actual samples.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44416098982).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

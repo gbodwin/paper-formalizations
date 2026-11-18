@@ -3,7 +3,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic
 
-/-! Exact checks of two arXiv v1 formulas used in Appendix A. -/
+/-! Exact checks of formulas used in the arXiv v1 appendices. -/
 
 namespace OnlineReachabilityPreservers.SourceAudit
 
@@ -108,5 +108,29 @@ theorem lemma31_overlap_envelope (C x : ℝ) (hx : x ≤ 16) :
     C * min x (min (max 16 (max (16^(8/11 : ℝ)*x^(6/11 : ℝ))
         (max (16^(3/5 : ℝ)*x^(7/10 : ℝ)) x))) 64) = C*x := by
   rw [min_eq_left (le_min (hx.trans (le_max_left _ _)) (hx.trans (by norm_num)))]
+
+/-- At n=256, ℓ=4, d=16, b=7/10 and x=24, the first and third printed
+cases of Lemma 40 overlap. Their slopes differ by more than zero for C>0. -/
+theorem lemma40_printed_intervals_overlap :
+    (24 : ℝ) ≤ min (256/4) (256^(3/2 : ℝ)/4^2) ∧
+      min (Real.sqrt 256) (256^(3/2 : ℝ)/4^2) ≤ 24 ∧
+      (24 : ℝ) ≤ min (256^(3/4 : ℝ)) (Real.sqrt 256 * 16^2) ∧
+      (4 : ℝ) < (1/2)*256^(3/4 : ℝ)/Real.sqrt 24 := by
+  have sqrt : Real.sqrt 256 = 16 := Real.sqrt_eq_iff_eq_sq (by norm_num) (by norm_num) |>.mpr (by norm_num)
+  have critical : (256 : ℝ)^(3/4 : ℝ) = 64 := calc
+    _ = ((2 : ℝ)^8)^(3/4 : ℝ) := by norm_num
+    _ = (2 : ℝ)^((8 : ℝ)*(3/4)) := (Real.rpow_natCast_mul (by norm_num) 8 (3/4)).symm
+    _ = (2 : ℝ)^(6 : ℝ) := by norm_num
+    _ = _ := by norm_num
+  have power : (256 : ℝ)^(3/2 : ℝ) = 4096 := calc
+    _ = (256 : ℝ)^(3/4 : ℝ)*(256 : ℝ)^(3/4 : ℝ) := by
+      rw [← Real.rpow_add (by norm_num : (0 : ℝ) < 256)]
+      norm_num
+    _ = _ := by rw [critical]; norm_num
+  rw [sqrt, critical, power]
+  refine ⟨by norm_num, by norm_num, by norm_num, ?_⟩
+  apply (lt_div_iff₀ (Real.sqrt_pos.2 (by norm_num))).mpr
+  have h : Real.sqrt 24 < 8 := (Real.sqrt_lt' (by norm_num)).mpr (by norm_num)
+  linarith
 
 end OnlineReachabilityPreservers.SourceAudit
