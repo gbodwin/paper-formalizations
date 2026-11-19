@@ -129,15 +129,20 @@ noncomputable def rejectionAtBitAttempt {N : ℕ} (positive : 0 < N) (k : ℕ) (
   (rejectionAtAttempt positive k t).map
     (Equiv.arrowCongr (Equiv.refl _) (uniformBitsEquiv (uniformProposalWidth N)).symm).toEmbedding
 
-theorem uniformBitRejection_target_probability {N : ℕ} (positive : 0 < N) (t : Fin N) :
-    (∑' k : ℕ, finiteProbability (rejectionAtBitAttempt positive k t)) = 1/(N:ℝ) := by
-  have same (k : ℕ) : finiteProbability (rejectionAtBitAttempt positive k t) =
+theorem rejectionAtBitAttempt_probability {N : ℕ} (positive : 0 < N) (k : ℕ) (t : Fin N) :
+    let total : ℝ := (2^uniformProposalWidth N : ℕ)
+    finiteProbability (rejectionAtBitAttempt positive k t) = ((total-N)/total)^k*(1/total) := by
+  have same : finiteProbability (rejectionAtBitAttempt positive k t) =
       finiteProbability (rejectionAtAttempt positive k t) := by
     simp only [rejectionAtBitAttempt, finiteProbability, Finset.card_map,
       ← Fintype.card_congr (Equiv.arrowCongr (Equiv.refl (Fin (k+1)))
         (uniformBitsEquiv (uniformProposalWidth N)).symm)]
-  simp_rw [same]
-  exact uniformRejection_target_probability positive t
+  exact same.trans (rejectionAtAttempt_probability positive k t)
+
+theorem uniformBitRejection_target_probability {N : ℕ} (positive : 0 < N) (t : Fin N) :
+    (∑' k : ℕ, finiteProbability (rejectionAtBitAttempt positive k t)) = 1/(N:ℝ) := by
+  simp_rw [rejectionAtBitAttempt_probability positive]
+  exact (uniformRejectionSeries positive).2.2.1
 
 variable {V : Type*} [LinearOrder V] [Fintype V]
 

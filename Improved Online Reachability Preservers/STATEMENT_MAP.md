@@ -182,7 +182,13 @@ represents the early coordinates by fixed-width fair bit words. It proves
 the exact uniform target probabilities for independent rejection proposals
 for hub and thin draws, with at most two proposals in expectation per
 coordinate. The expected number of bits for all three seeds has an explicit
-polynomial bound for each fixed height. The retry analysis is per coordinate.
+polynomial bound for each fixed height.
+The [retry evaluator](OnlineReachabilityPreservers/SteinerRetry.lean)
+reads finite fair-bit proposals until the first accepted word. Its checked
+first-success events give the uniform coordinate law and the expected
+number of bits. The probability of each finite joint attempt event factors,
+and the product of the resulting laws is uniform on the complete algorithm's
+three seed types. This model takes its fair bits as input.
 The [preassigned-path counter](OnlineReachabilityPreservers/AssignmentSearchWork.lean)
 combines the calls made by quota certification and path selection with the
 arc inspections and successor tests in each base rule and lifted path.

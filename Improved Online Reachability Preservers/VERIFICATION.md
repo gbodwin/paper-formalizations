@@ -511,6 +511,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   Independent review checked the shortcut's river and last path, and that
   one system meets all the caps and size bounds while preserving every exclusion.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44497008109).
+- [573b7928](https://github.com/gbodwin/paper-formalizations/commit/573b792880ed08a76a499f15f191f1263fcdccd2)
+  bounds the integers in the signed augmentation, capacity and rounding
+  routines. The 3508-declaration audit and local kernel replay passed.
+  Independent review checked the actual flow recursion, capacity cases and
+  rounding operands, including the zero-size cases.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44498327136).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
@@ -544,6 +550,13 @@ bounds. The deployed render and local controls passed. Production requires
 the owner's ChatGPT sign-in. The research entry linked to the arXiv manuscript.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44492464048).
+
+PaperLab version 19 pins 119 links to `19e4833e` and contains 15 boxed L
+notes. The displayed CI link matches the exact proof source. The deployed
+render and local controls passed. Production requires the owner's ChatGPT
+sign-in. The research entry linked to the arXiv manuscript.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44495797797).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
