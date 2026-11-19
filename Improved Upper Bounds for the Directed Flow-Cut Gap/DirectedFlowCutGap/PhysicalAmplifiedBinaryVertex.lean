@@ -104,6 +104,8 @@ theorem arithmeticPolynomial_eval (x : ℕ) :
     BinaryHeavyPreparation.budget,BinaryCubeThreshold.budget,BinaryCubeThreshold.testBudget,BinaryPortPreparation.portBudget,
     BinaryVertexReductionArithmetic.reductionBudget,BinaryVertexReductionArithmetic.aggregateWidth,
     BinaryVertexReductionArithmetic.normalizedWidth,BinaryUniformArithmetic.budget,VertexReductionWidths.uniformWidth,
+    BinaryIntegerCutoff.budget,BinaryEpochParameters.budget,BinaryEpochParameters.setupWidth,
+    BinaryEpochParameters.logBudget,BinaryEpochParameters.logStepBudget,
     BinaryRawRational.budget,eval_add,eval_mul,eval_pow,eval_X,eval_one,eval_ofNat]
 
 theorem runner_paid {n b T y : ℕ} (q : Polynomial ℕ)

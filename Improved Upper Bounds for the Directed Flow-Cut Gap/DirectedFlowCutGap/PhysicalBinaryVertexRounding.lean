@@ -1,6 +1,7 @@
 import DirectedFlowCutGap.BinaryPortPreparation
 import DirectedFlowCutGap.BinaryHeavyPreparation
 import DirectedFlowCutGap.PhysicalVertexRoundingCost
+import DirectedFlowCutGap.BinaryIntegerCutoff
 
 /-! Join the binary numerical preparation to the packed integer controller
 and reuse the physical cuts and pullbacks. The added counter records actual
@@ -39,8 +40,9 @@ def uniform {n : ℕ} (T : ℕ) (D : Input n) (tape : Bits) : Option (Result n) 
   if test.1 then
     let level := BinaryUniformArithmetic.cutoff p.average
     let chain := materializeWith p.ports p.average p.counts level.1
-    (PhysicalIntegerRounding.run T chain.data.adjacency chain.cutoff tape).map (fun r =>
-      ⟨PhysicalVertexRounding.project (originalMaskWithCost chain) (p.work+chain.work+10) r,ready.2+test.2+level.2+6⟩)
+    (BinaryIntegerCutoff.run T chain.data.adjacency chain.cutoff tape).map (fun r =>
+      ⟨PhysicalVertexRounding.project (originalMaskWithCost chain) (p.work+chain.work+10) r.1,
+        ready.2+test.2+level.2+r.2+6⟩)
   else some ⟨⟨Vector.replicate n false,tape,p.work+4*n+10⟩,ready.2+test.2+6⟩
 
 theorem uniform_cut {n : ℕ} (T : ℕ) (D : Input n) (tape : Bits) :
@@ -56,19 +58,26 @@ theorem uniform_cut {n : ℕ} (T : ℕ) (D : Input n) (tape : Bits) :
       readout p (BinaryRawRational.le Code.one p.total).1 (BinaryUniformArithmetic.cutoff p.average).1 := by
     unfold uniform readout
     dsimp only
-    split_ifs <;> simp only [Option.map_map,Function.comp_def,Option.map_some] <;> rfl
+    split_ifs
+    · rw [← BinaryIntegerCutoff.run_cut T _ _ tape]
+      simp only [Option.map_map,Function.comp_def]
+      rfl
+    · rfl
   rw [h,BinaryRawRational.le_value,BinaryUniformArithmetic.cutoff_value,
     show p=compute D from BinaryUniformArithmetic.compute_value D]
   rfl
 
 def uniformBudget {R : Type*} [Semiring R] (n b : R) : R :=
-  BinaryUniformArithmetic.budget n b+3*BinaryRawRational.budget (VertexReductionWidths.uniformWidth n b)+10
+  BinaryUniformArithmetic.budget n b+3*BinaryRawRational.budget (VertexReductionWidths.uniformWidth n b)+
+    BinaryIntegerCutoff.budget (6*n) (6*n)+10
 
 theorem uniformBudget_mono {n m a b : ℕ} (h : n ≤ m) (width : a ≤ b) : uniformBudget n a ≤ uniformBudget m b := by
   unfold uniformBudget BinaryUniformArithmetic.budget BinaryRawRational.budget
     BinaryVertexReductionArithmetic.aggregateWidth VertexReductionWidths.uniformWidth
+  have dimensions := Nat.mul_le_mul_left 6 h
   dsimp only
   gcongr
+  exact BinaryIntegerCutoff.budget_mono dimensions dimensions
 
 theorem uniform_paid {n b : ℕ} (T : ℕ) (D : Input n) (fits : InputFits D b) (tape : Bits) {r : Result n}
     (observed : uniform T D tape=some r) : r.arithmetic ≤ uniformBudget n b := by
@@ -87,15 +96,34 @@ theorem uniform_paid {n b : ℕ} (T : ℕ) (D : Input n) (fits : InputFits D b) 
   change ready.2 ≤ _ at measured
   change test.2 ≤ _ at cmp
   change level.2 ≤ _ at k
-  change (if test.1 then ((PhysicalIntegerRounding.run T chain.data.adjacency chain.cutoff tape).map fun out =>
-      ⟨PhysicalVertexRounding.project (originalMaskWithCost chain) (p.work+chain.work+10) out,ready.2+test.2+level.2+6⟩)
+  change (if test.1 then ((BinaryIntegerCutoff.run T chain.data.adjacency chain.cutoff tape).map fun out =>
+      ⟨PhysicalVertexRounding.project (originalMaskWithCost chain) (p.work+chain.work+10) out.1,
+        ready.2+test.2+level.2+out.2+6⟩)
     else some ⟨⟨Vector.replicate n false,tape,p.work+4*n+10⟩,ready.2+test.2+6⟩)=some r at observed
   by_cases h : test.1=true
   · rw [ite_eq_left h] at observed
-    cases call : PhysicalIntegerRounding.run T chain.data.adjacency chain.cutoff tape with
+    cases call : BinaryIntegerCutoff.run T chain.data.adjacency chain.cutoff tape with
     | none => simp [call] at observed
     | some out =>
       simp only [call,Option.map_some,Option.some.injEq] at observed
+      have positive : nontrivial D = true := by
+        change (BinaryRawRational.le Code.one p.total).1=true at h
+        rw [BinaryRawRational.le_value,eq] at h
+        exact h
+      have mass : 0 < (compute D).total.realValue := by
+        rw [compute_total]
+        exact lt_of_lt_of_le (by norm_num) ((nontrivial_iff D).mp positive)
+      let dimensions (parameters : Parameters n) (k : ℕ) : Prop :=
+        let c := materializeWith parameters.ports parameters.average parameters.counts k
+        c.cutoff ≤ c.size ∧ c.size ≤ 6*n
+      have hd : dimensions p level.1 := by
+        change dimensions p (BinaryUniformArithmetic.cutoff p.average).1
+        rw [BinaryUniformArithmetic.cutoff_value,eq]
+        exact ⟨(expand_cutoff_bounds D positive).2,expand_size_bound D mass⟩
+      change chain.cutoff ≤ chain.size ∧ chain.size ≤ 6*n at hd
+      have bound := (BinaryNaturalOperations.size_le_self chain.cutoff).trans (hd.1.trans hd.2)
+      have gate := (BinaryIntegerCutoff.run_paid T chain.data.adjacency bound tape call).trans
+        (BinaryIntegerCutoff.budget_mono hd.2 le_rfl)
       rw [← observed]
       unfold uniformBudget
       dsimp only

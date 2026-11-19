@@ -7,20 +7,20 @@ namespace DirectedFlowCutGap.BinaryCubeThreshold
 
 open BinaryArithmetic RawNonnegativeRational
 
-private def test (n : Bits) (k : ℕ) : Bool × ℕ :=
+def test (n : Bits) (k : ℕ) : Bool × ℕ :=
   let word := BinaryNaturalView.encode k
   let sq := mulCanonical word.1 word.1
   let cb := mulCanonical sq.1 word.1
   let cmp := lessEqual n cb.1
   (cmp.1,word.2+sq.2+cb.2+cmp.2+8)
 
-private theorem test_value (n : Bits) (k : ℕ) : (test n k).1=true ↔ value n ≤ EncodedCubeRootThreshold.cube k := by
+theorem test_value (n : Bits) (k : ℕ) : (test n k).1=true ↔ value n ≤ EncodedCubeRootThreshold.cube k := by
   simp only [test,(lessEqual_spec ..).1,(canonical_values ..).2.1,BinaryNaturalView.encode_value,
     EncodedCubeRootThreshold.cube]
 
 def testBudget {R : Type*} [Semiring R] (B : R) : R := 4096*(B+2)^2
 
-private theorem test_paid {n : Bits} {k B : ℕ} (width : n.length ≤ B) (index : k ≤ B) : (test n k).2 ≤ testBudget B := by
+theorem test_paid {n : Bits} {k B : ℕ} (width : n.length ≤ B) (index : k ≤ B) : (test n k).2 ≤ testBudget B := by
   let w := BinaryNaturalView.encode k
   let s := mulCanonical w.1 w.1
   let c := mulCanonical s.1 w.1
