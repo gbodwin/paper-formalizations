@@ -446,7 +446,13 @@ local-order upper bound and recurrence of Theorem 43.
   subsequent use in Sections 5.1–5.2 use \(T^{1/2+\varepsilon}\).
   The [cited online buy-at-bulk paper](https://arxiv.org/abs/1509.03212)
   gives the latter exponent with polylogarithmic factors in the graph size.
-  The Steiner application can absorb these factors into its final exponent slack.
+  The replacement unit-cost rule attains
+  \(K(1+\log n)^{h+4}T^{1/2+\varepsilon}\,\mathrm{OPT}\) in expectation on
+  each fixed feasible prefix of distinct non-self demands. The template height
+  \(h\) and constant \(K\) depend only on \(\varepsilon>0\). The bound includes
+  the empty prefix. The Steiner application can absorb the graph polylogarithm
+  into its final exponent slack.
+  [Checked demand-dependent bound](OnlineReachabilityPreservers/SteinerCompetitive.lean).
 - Lemma 2.12 in the full version of [24] prints both height-reduction
   cost inequalities in the direction opposite to the bounds used by its
   Theorem 2.5. The comparison used there bounds the auxiliary optimum by

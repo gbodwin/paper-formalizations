@@ -852,6 +852,12 @@ unchanged (M/119) bound for the earlier full-bridge cutoffs.
 [Reviewed partition proofs](OnlineReachabilityPreservers/VertexPartitionCleaning.lean)
 · [Reviewed frozen caps](OnlineReachabilityPreservers/LocalFrozenCleaning.lean).
 
+Independent review checked the demand-dependent early Steiner rate and the
+uniform choice of height and constant before the graph and demand trace.
+It also checked the empty prefix and positive comparator cost for nonempty
+feasible traces of non-self requests.
+[Reviewed demand-dependent proof](OnlineReachabilityPreservers/SteinerCompetitive.lean).
+
 ## Execution examples
 
 A finite execution check of the PaperLab example gave cumulative purchases
