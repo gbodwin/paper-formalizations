@@ -161,6 +161,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   Independent review checked signed flow with opposing arcs, the local cut
   equality, and both bounded update loops on the executed path.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44438527138).
+- [011d8742](https://github.com/gbodwin/paper-formalizations/commit/011d874234fc5bad19832672f9449c1a0f9c7bd5)
+  checks the counterexample to the cited inference of overlay uniqueness.
+  The 1355-declaration paper audit and local kernel replay passed. Independent
+  review verified the distinct-path bridge definition, the alternate route,
+  and the scope of the inference refuted by the example.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44438914059).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

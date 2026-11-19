@@ -84,8 +84,8 @@ demands are \((0,3),(3,0),(2,1)\), and their consecutive edges consist of
 the four-cycle \(0\to1\to2\to3\to0\) and the chord \(2\to1\). The cycle
 alone preserves all three demands. In particular, the original chord and
 the route \(2\to3\to0\to1\) give two distinct simple paths for the last
-demand. This falsifies the uniqueness step of the cited lower-bound
-construction. The asymptotic extremal lower bound remains a separate
+demand. This falsifies the inference of uniqueness from bridge-freeness
+alone. The asymptotic extremal lower bound remains a separate
 proof obligation.
 [Checked counterexample](OnlineReachabilityPreservers/SplitAudit.lean)
 · [Bridge Girth, Lemma 40](https://arxiv.org/pdf/2212.11944v4).
@@ -170,6 +170,12 @@ proof obligation.
   \(s\)-to-\(t\) path. In a cyclic graph two hub legs can concatenate to a
   walk. Their original edges still certify the required reachability.
   [Checked sampling and routing](OnlineReachabilityPreservers/SteinerHubs.lean).
+- The phase composition skips a hit when the hub phase already serves it.
+  The hub charge therefore uses the hub trace itself. The thin phase receives
+  every distinct non-self miss after the cutoff, so its trace depends on the
+  hubs and the early routine, independently of its edge thresholds. A missed
+  thick pair triggers a full-graph purchase charged to the bad hub event.
+  [Checked phase composition](OnlineReachabilityPreservers/SteinerAssembly.lean).
 - The [second-moment estimate](OnlineReachabilityPreservers/SecondMoment.lean)
   of Appendix A is checked for a common vertex order under the inductive
   subfamily bound. The [finite online iteration](OnlineReachabilityPreservers/OnlineBound.lean)

@@ -37,8 +37,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   proves the exact uniform sample failure count for a fixed pair and an
   inverse-power failure bound over all thick pairs. It serves both hub legs
   in original edges with prefix monotonicity and checks the logarithmic
-  competitive contribution at the thresholds of Theorem 21. The early and
-  thin phases carry separate obligations.
+  competitive contribution at the thresholds of Theorem 21.
 - [The thin-demand fractional cover](OnlineReachabilityPreservers/SteinerThinCover.lean)
   checks capacity doubling on the local directed cuts. Every request's cuts
   remain covered, and the capacity sum is bounded by
@@ -51,6 +50,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   uses at most `|E|` unit augmentations. When it stops early the residual
   reachable set supplies a violating cut. Lean checks the augmentation and
   doubling counts.
+- [The Steiner phase composition](OnlineReachabilityPreservers/SteinerAssembly.lean)
+  starts empty, serves every revealed demand, and preserves every purchased
+  edge. It checks the mean cost of the two late phases over independent finite
+  choices and adds an explicit early cost. The cited early competitive bound
+  and the full running time remain open.
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)

@@ -41,6 +41,7 @@ import OnlineReachabilityPreservers.SimplePaths
 import OnlineReachabilityPreservers.SourceAudit
 import OnlineReachabilityPreservers.SplitAudit
 import OnlineReachabilityPreservers.SplitPreservation
+import OnlineReachabilityPreservers.SteinerAssembly
 import OnlineReachabilityPreservers.SteinerCounting
 import OnlineReachabilityPreservers.SteinerCutFlow
 import OnlineReachabilityPreservers.SteinerCuts
