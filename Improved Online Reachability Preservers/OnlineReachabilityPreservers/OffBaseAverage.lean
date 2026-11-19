@@ -132,34 +132,32 @@ theorem off_base_predecessor_tail_shape {C a b ℓ d h x : ℝ}
       have row₃ : C^s*H ≤ (C+C^r+C^s)*H := mul_le_mul_of_nonneg_right (by linarith) nH
       nlinarith only [row₁, row₂, row₃]
 
-/-- The sum of square roots of the mean size powers of the actual buckets.
-No separate factor for the number of buckets is needed. -/
-theorem lemma34_size_sqrt_sum {C a b t : ℝ} (hC : 1 ≤ C) (ha₀ : 7/10 ≤ a)
+/-- Sum bucket sizes by their deterministic caps and first-moment bounds. -/
+theorem lemma34_size_sqrt_sum_from_counts {C a b t : ℝ} (hC : 1 ≤ C) (ha₀ : 7/10 ≤ a)
     (ha₁ : a < 3/4) (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 3/4) (ht₀ : 1 ≤ t) (ht₁ : t < 2) :
-    ∃ A > 0, ∀ {V I : Type*} [LinearOrder V] [LinearOrder I] [Fintype V] [Fintype I]
-      {paths : I → Finset V} (_ : HalfBridgeFree (PathBefore paths) 4) (L D h : ℕ),
-      0 < Fintype.card I → 0 < L → 0 < h → h ≤ D →
-      Fintype.card V*D ≤ 4*Fintype.card I*L →
-      (∀ i, (paths i).card ≤ L) →
-      (∀ v, (occurrences paths v).card ≤ D) → InducedSizeBound paths C a b →
+    ∃ A > 0, ∀ {I : Type*} [Fintype I] (n L D h : ℕ),
+      0 < Fintype.card I → 0 < L → 0 < h → h ≤ D → n*D ≤ 4*Fintype.card I*L →
+      ∀ S : ℕ → I → ℕ,
+      (∀ j i, S j i * 2^j ≤ L*D*(h+1)) →
+      (∀ j, C < (2:ℝ)^j →
+        let y : ℝ := (D:ℝ)*h
+        let x : ℝ := (2:ℝ)^j
+        uniformMean (fun i => (S j i : ℝ)) ≤
+          (n:ℝ)*(C*y/x+(C*y^a/x)^(1/(2*a-1))+(C*y^(2-2*b)/x)^(1/(1-b)))/(Fintype.card I:ℝ)) →
       let z : ℝ := (L:ℝ)*((D:ℝ)*h)
       let x₀ := (h:ℝ)^((1-b)/b)
       (∑ j ∈ range (Nat.log 2 D+1), (2:ℝ)^j*
-        Real.sqrt (uniformMean fun base => ((degreeBucket paths base h j).card:ℝ)^t)) ≤
-        A*z^(t/2)*x₀^(1-t/2) := by
+        Real.sqrt (uniformMean fun base => (S j base:ℝ)^t)) ≤ A*z^(t/2)*x₀^(1-t/2) := by
   let r := 1/(2*a-1)
   let s := 1/(1-b)
   let K := 4*(C+C^r+C^s)
-  have hc := zero_lt_one.trans_le hC
-  have ha : 1/2 < a := by linarith
-  have hb : b < 1 := by linarith
   have rlow : 2 < r := (lt_div_iff₀ (by linarith : 0 < 2*a-1)).mpr (by linarith)
   have slow : 3 ≤ s := (le_div_iff₀ (by linarith : 0 < 1-b)).mpr (by linarith)
   have hK : 0 ≤ K := by dsimp only [K]; positivity
   obtain ⟨A, hA, dyadic⟩ := dyadic_weighted_sqrt_sum hC hK ht₀ ht₁
     (show 3-t < r by linarith) (show 3-t < s by linarith)
   refine ⟨A, hA, ?_⟩
-  intro V I _ _ _ _ paths free L D h hp hl hh hd ratio lengths degree input
+  intro I _ terms L D h hp hl hh hd ratio sizes sizeBound tail
   dsimp only
   let ℓ : ℝ := L
   let d : ℝ := D
@@ -167,10 +165,10 @@ theorem lemma34_size_sqrt_sum {C a b t : ℝ} (hC : 1 ≤ C) (ha₀ : 7/10 ≤ a
   let y := d*u
   let z := ℓ*y
   let x₀ := u^((1-b)/b)
-  let n : ℝ := Fintype.card V
+  let n : ℝ := terms
   let p : ℝ := Fintype.card I
   let J := range (Nat.log 2 D+1)
-  let S (j : ℕ) (base : I) : ℝ := (degreeBucket paths base h j).card
+  let S (j : ℕ) (base : I) : ℝ := sizes j base
   let m (j : ℕ) := uniformMean (fun base => (S j base)^t)
   have ul : 1 ≤ u := by change (1:ℝ) ≤ h; exact_mod_cast (show 1 ≤ h from hh)
   have dl : u ≤ d := Nat.cast_le.mpr hd
@@ -192,9 +190,9 @@ theorem lemma34_size_sqrt_sum {C a b t : ℝ} (hC : 1 ≤ C) (ha₀ : 7/10 ≤ a
     exact_mod_cast hn
   have size (j : ℕ) (i : I) : S j i ≤ 2*z/(2:ℝ)^j := by
     apply (le_div_iff₀ (pow_pos (by norm_num) j)).mpr
-    have raw := degreeBucket_size_cap paths i h j L D (lengths i) degree
+    have raw := sizeBound j i
     have hsum : (L*D)*(h+1) ≤ L*D*(2*h) := Nat.mul_le_mul_left _ (by omega)
-    have final : (degreeBucket paths i h j).card*2^j ≤ 2*(L*(D*h)) :=
+    have final : sizes j i*2^j ≤ 2*(L*(D*h)) :=
       (raw.trans hsum).trans_eq (by ring)
     dsimp only [S, z, ℓ, y, d, u]
     exact_mod_cast final
@@ -214,18 +212,41 @@ theorem lemma34_size_sqrt_sum {C a b t : ℝ} (hC : 1 ≤ C) (ha₀ : 7/10 ≤ a
     have yPos : 0 < y := mul_pos dp up
     have Epos : 0 ≤ E := by dsimp only [E]; positivity
     have average : uniformMean (S j) ≤ n*E/p :=
-      lemma34_mean_bucket_size free h j D hp hc big ha hb degree input
+      tail j big
     have meanShape : uniformMean (S j) ≤ K*F := calc
       _ ≤ n*E/p := average
       _ = (n/p)*E := by ring
       _ ≤ (4*(ℓ/d))*E := mul_le_mul_of_nonneg_right nratio Epos
       _ = 4*((ℓ/d)*E) := by ring
       _ ≤ 4*((C+C^r+C^s)*F) := mul_le_mul_of_nonneg_left
-        (off_base_predecessor_tail_shape hc ha₀ ha₁.le hb₀ hb₁ lp xPos ul dl) (by norm_num)
+        (off_base_predecessor_tail_shape (zero_lt_one.trans_le hC) ha₀ ha₁.le hb₀ hb₁ lp xPos ul dl) (by norm_num)
       _ = _ := by dsimp only [K]; ring
-    have pow := uniformMean_power_bound ht₀ (fun i => Nat.cast_nonneg (degreeBucket paths i h j).card) (size j)
+    have pow := uniformMean_power_bound ht₀ (fun i => Nat.cast_nonneg (sizes j i)) (size j)
     have coef : 0 ≤ (2*z/x)^(t-1) := Real.rpow_nonneg (div_nonneg (mul_nonneg (by norm_num) zp.le) xPos.le) _
     exact pow.trans ((mul_le_mul_of_nonneg_left meanShape coef).trans_eq (by ring))
+
+/-- The sum of square roots of the mean size powers of the actual buckets.
+No separate factor for the number of buckets is needed. -/
+theorem lemma34_size_sqrt_sum {C a b t : ℝ} (hC : 1 ≤ C) (ha₀ : 7/10 ≤ a)
+    (ha₁ : a < 3/4) (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 3/4) (ht₀ : 1 ≤ t) (ht₁ : t < 2) :
+    ∃ A > 0, ∀ {V I : Type*} [LinearOrder V] [LinearOrder I] [Fintype V] [Fintype I]
+      {paths : I → Finset V} (_ : HalfBridgeFree (PathBefore paths) 4) (L D h : ℕ),
+      0 < Fintype.card I → 0 < L → 0 < h → h ≤ D →
+      Fintype.card V*D ≤ 4*Fintype.card I*L →
+      (∀ i, (paths i).card ≤ L) →
+      (∀ v, (occurrences paths v).card ≤ D) → InducedSizeBound paths C a b →
+      let z : ℝ := (L:ℝ)*((D:ℝ)*h)
+      let x₀ := (h:ℝ)^((1-b)/b)
+      (∑ j ∈ range (Nat.log 2 D+1), (2:ℝ)^j*
+        Real.sqrt (uniformMean fun base => ((degreeBucket paths base h j).card:ℝ)^t)) ≤
+        A*z^(t/2)*x₀^(1-t/2) := by
+  obtain ⟨A, hA, bound⟩ := lemma34_size_sqrt_sum_from_counts hC ha₀ ha₁ hb₀ hb₁ ht₀ ht₁
+  refine ⟨A, hA, ?_⟩
+  intro V I _ _ _ _ paths free L D h hp hl hh hd ratio lengths degree input
+  exact bound (Fintype.card V) L D h hp hl hh hd ratio (fun j i => (degreeBucket paths i h j).card)
+    (fun j i => degreeBucket_size_cap paths i h j L D (lengths i) degree)
+    (fun j big => lemma34_mean_bucket_size free h j D hp (zero_lt_one.trans_le hC) big
+      (by linarith) (by linarith) degree input)
 
 private theorem squared_weight {k A z x t : ℝ} (hk : 0 ≤ k) (hz : 0 ≤ z) (hx : 0 ≤ x) :
     (Real.sqrt k*(A*z^(t/2)*x^(1-t/2)))^2 = k*A^2*z^t*x^(2-t) := by
@@ -315,33 +336,39 @@ theorem lemma34_weighted_powers {ℓ d h a b : ℝ} (hl : 1 ≤ ℓ) (hd : 0 < d
 
 
 set_option maxHeartbeats 600000 in
-/-- The off-base tuple estimate of Lemma 34 at the uniform length and degree
-caps. Bounds on the ratio of ambient sizes supply the mean predecessor tails. -/
-theorem lemma34_off_base_cap_expectation {C a b : ℝ} (hC : 1 ≤ C) (ha₀ : 7/10 ≤ a)
+/-- Combine the bucket moment, size bounds, and dyadic norm bound. -/
+theorem lemma34_off_base_cap_from_moments {C a b : ℝ} (hC : 1 ≤ C) (ha₀ : 7/10 ≤ a)
     (ha₁ : a < 3/4) (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 3/4) :
-    ∃ A > 0, ∀ {V I : Type*} [LinearOrder V] [LinearOrder I] [Fintype V] [Fintype I]
-      {paths : I → Finset V} (_ : HalfBridgeFree (PathBefore paths) 4) (L D h : ℕ),
-      0 < Fintype.card I → 0 < h → h ≤ L → h ≤ D →
-      Fintype.card V*D ≤ 4*Fintype.card I*L →
-      (∀ i, (paths i).card ≤ L) →
-      (∀ v, (occurrences paths v).card ≤ D) → InducedSizeBound paths C a b →
+    ∃ A > 0, ∀ {I : Type*} [Fintype I] (n L D h : ℕ),
+      0 < Fintype.card I → 0 < h → h ≤ L → h ≤ D → n*D ≤ 4*Fintype.card I*L →
+      ∀ (sizes : ℕ → I → ℕ) (R : ℕ → ℝ) (Q : ℝ),
+      0 ≤ Q →
+      (∀ j i, sizes j i * 2^j ≤ L*D*(h+1)) →
+      (∀ j, C < (2:ℝ)^j →
+        let y : ℝ := (D:ℝ)*h
+        let x : ℝ := (2:ℝ)^j
+        uniformMean (fun i => (sizes j i : ℝ)) ≤
+          (n:ℝ)*(C*y/x+(C*y^a/x)^(1/(2*a-1))+(C*y^(2-2*b)/x)^(1/(1-b)))/(Fintype.card I:ℝ)) →
+      (∀ j, let P (t : ℝ) := uniformMean (fun i => (sizes j i : ℝ)^t)
+        R j ≤ (2*C*((L:ℝ)+D))*P 1 +
+          ((1/(3-4*a)+1)*C^(1/(2-2*a))*(D:ℝ)^((3-4*a)/(2-2*a)))*P (3/2) +
+          ((1/(2*b-1)+1)*C^(1/b)*(D:ℝ)^((2*b-1)/b))*P (1/b)) →
+      Real.sqrt Q ≤ 2*∑ j ∈ range (Nat.log 2 D+1), (2:ℝ)^j*Real.sqrt (R j) →
       let ℓ : ℝ := L
       let d : ℝ := D
       let u : ℝ := h
-      uniformMean (fun base => ((offBaseBranchTuples paths base h).card:ℝ)) ≤
-        A*(ℓ^2*d*u^(1/b) +
+      Q ≤ A*(ℓ^2*d*u^(1/b) +
           ℓ^(3/2:ℝ)*d^(3/2+(3-4*a)/(2-2*a))*u^((2*b+1)/(2*b)) +
           ℓ^(1/b)*d^2*u^((4*b-2*b^2-1)/b^2)) := by
-  have Cpos := zero_lt_one.trans_le hC
   have bpos : 0 < b := by linarith
   have hb : 1/2 < b := by linarith
   have ib₀ : 1 ≤ 1/b := (le_div_iff₀ bpos).mpr (by linarith)
   have ib₁ : 1/b < 2 := (div_lt_iff₀ bpos).mpr (by linarith)
-  obtain ⟨A₁, hA₁, root₁⟩ := lemma34_size_sqrt_sum hC ha₀ ha₁ hb₀ hb₁
+  obtain ⟨A₁, hA₁, root₁⟩ := lemma34_size_sqrt_sum_from_counts hC ha₀ ha₁ hb₀ hb₁
     (show (1:ℝ) ≤ 1 by norm_num) (by norm_num)
-  obtain ⟨A₂, hA₂, root₂⟩ := lemma34_size_sqrt_sum hC ha₀ ha₁ hb₀ hb₁
+  obtain ⟨A₂, hA₂, root₂⟩ := lemma34_size_sqrt_sum_from_counts hC ha₀ ha₁ hb₀ hb₁
     (show (1:ℝ) ≤ 3/2 by norm_num) (by norm_num)
-  obtain ⟨A₃, hA₃, root₃⟩ := lemma34_size_sqrt_sum hC ha₀ ha₁ hb₀ hb₁ ib₀ ib₁
+  obtain ⟨A₃, hA₃, root₃⟩ := lemma34_size_sqrt_sum_from_counts hC ha₀ ha₁ hb₀ hb₁ ib₀ ib₁
   let c₂ := (1/(3-4*a)+1)*C^(1/(2-2*a))
   let c₃ := (1/(2*b-1)+1)*C^(1/b)
   let k₁ := 2*C*A₁^2
@@ -357,12 +384,11 @@ theorem lemma34_off_base_cap_expectation {C a b : ℝ} (hC : 1 ≤ C) (ha₀ : 7
   have hk₃ : 0 ≤ k₃ := mul_nonneg hc₃ (sq_nonneg _)
   have hK : 0 < K := by dsimp only [K]; linarith only [hk₁,hk₂,hk₃]
   refine ⟨12*K, by positivity, ?_⟩
-  intro V I _ _ _ _ paths free L D h hp hh hL hD ratio lengths degree prior
+  intro I _ n L D h hp hh hL hD ratio sizes R Q q0 size tail moments normBound
   dsimp only
   let ℓ : ℝ := L
   let d : ℝ := D
   let u : ℝ := h
-  let Q := uniformMean (fun base => ((offBaseBranchTuples paths base h).card:ℝ))
   let z := ℓ*(d*u)
   let x₀ := u^((1-b)/b)
   let γ := (3-4*a)/(2-2*a)
@@ -371,7 +397,7 @@ theorem lemma34_off_base_cap_expectation {C a b : ℝ} (hC : 1 ≤ C) (ha₀ : 7
   let weight₂ := c₂*d^γ
   let weight₃ := c₃*d^e
   let J := range (Nat.log 2 D+1)
-  let P (j : ℕ) (base : I) := ((degreeBucket paths base h j).card:ℝ)
+  let P (j : ℕ) (base : I) := (sizes j base:ℝ)
   let M (t : ℝ) (j : ℕ) := uniformMean (fun base => (P j base)^t)
   let W (t : ℝ) := ∑ j ∈ J, (2:ℝ)^j*Real.sqrt (M t j)
   have L0 := hh.trans_le hL
@@ -386,14 +412,11 @@ theorem lemma34_off_base_cap_expectation {C a b : ℝ} (hC : 1 ≤ C) (ha₀ : 7
   have l₃ : 0 ≤ weight₃ := mul_nonneg hc₃ (Real.rpow_nonneg dp.le _)
   have m0 (t : ℝ) (j : ℕ) : 0 ≤ M t j :=
     div_nonneg (sum_nonneg fun _ _ => Real.rpow_nonneg (Nat.cast_nonneg _) _) (Nat.cast_nonneg _)
-  let R (j : ℕ) := uniformMean (fun base => ∑ i, ((paths i ∩ degreeBucket paths base h j).card:ℝ)^2)
   have per (j : ℕ) : Real.sqrt (R j) ≤
       Real.sqrt weight₁*Real.sqrt (M 1 j) +
       Real.sqrt weight₂*Real.sqrt (M (3/2) j) + Real.sqrt weight₃*Real.sqrt (M (1/b) j) := by
     have bound : R j ≤ weight₁*M 1 j+weight₂*M (3/2) j+weight₃*M (1/b) j := by
-      have w := lemma34_mean_bucket_moment free h j L D L0 D0 Cpos (by linarith) ha₁ hb
-        (by linarith) lengths degree prior
-      simpa only [R, weight₁, weight₂, weight₃, c₂, c₃, γ, e, M, P, d, ℓ, Real.rpow_one] using w
+      exact moments j
     calc
       _ ≤ Real.sqrt (weight₁*M 1 j+weight₂*M (3/2) j+weight₃*M (1/b) j) := Real.sqrt_le_sqrt bound
       _ ≤ Real.sqrt (weight₁*M 1 j)+Real.sqrt (weight₂*M (3/2) j)+Real.sqrt (weight₃*M (1/b) j) := by
@@ -419,20 +442,19 @@ theorem lemma34_off_base_cap_expectation {C a b : ℝ} (hC : 1 ≤ C) (ha₀ : 7
   let U₂ := Real.sqrt weight₂*(A₂*z^((3/2:ℝ)/2)*x₀^(1-(3/2:ℝ)/2))
   let U₃ := Real.sqrt weight₃*(A₃*z^((1/b)/2)*x₀^(1-(1/b)/2))
   have g₁ : W 1 ≤ A₁*z^(1/2:ℝ)*x₀^(1-1/2:ℝ) :=
-    root₁ free L D h hp L0 hh hD ratio lengths degree prior
+    root₁ n L D h hp L0 hh hD ratio sizes size tail
   have g₂ : W (3/2) ≤ A₂*z^((3/2:ℝ)/2)*x₀^(1-(3/2:ℝ)/2) :=
-    root₂ free L D h hp L0 hh hD ratio lengths degree prior
+    root₂ n L D h hp L0 hh hD ratio sizes size tail
   have g₃ : W (1/b) ≤ A₃*z^((1/b)/2)*x₀^(1-(1/b)/2) :=
-    root₃ free L D h hp L0 hh hD ratio lengths degree prior
+    root₃ n L D h hp L0 hh hD ratio sizes size tail
   have root : Real.sqrt Q ≤ 2*(U₁+U₂+U₃) := calc
-    _ ≤ 2*∑ j ∈ J, (2:ℝ)^j*Real.sqrt (R j) := lemma34_minkowski_mean free h D hp degree
+    _ ≤ 2*∑ j ∈ J, (2:ℝ)^j*Real.sqrt (R j) := normBound
     _ ≤ 2*(Real.sqrt weight₁*W 1+Real.sqrt weight₂*W (3/2)+Real.sqrt weight₃*W (1/b)) :=
       mul_le_mul_of_nonneg_left step (by norm_num)
     _ ≤ _ := mul_le_mul_of_nonneg_left (add_le_add
       (add_le_add (mul_le_mul_of_nonneg_left g₁ (Real.sqrt_nonneg _))
         (mul_le_mul_of_nonneg_left g₂ (Real.sqrt_nonneg _)))
       (mul_le_mul_of_nonneg_left g₃ (Real.sqrt_nonneg _))) (by norm_num)
-  have q0 : 0 ≤ Q := div_nonneg (sum_nonneg (fun _ _ => Nat.cast_nonneg _)) (Nat.cast_nonneg _)
   have nonneg₁ : 0 ≤ U₁ := by dsimp only [U₁]; positivity
   have nonneg₂ : 0 ≤ U₂ := by dsimp only [U₂]; positivity
   have nonneg₃ : 0 ≤ U₃ := by dsimp only [U₃]; positivity
@@ -473,6 +495,43 @@ theorem lemma34_off_base_cap_expectation {C a b : ℝ} (hC : 1 ≤ C) (ha₀ : 7
       _ = _ := by ring
   exact qBound.trans ((mul_le_mul_of_nonneg_left powers (by norm_num)).trans_eq (by ring))
 
+set_option maxHeartbeats 600000 in
+/-- The off-base tuple estimate of Lemma 34 at the uniform length and degree
+caps. Bounds on the ratio of ambient sizes supply the mean predecessor tails. -/
+theorem lemma34_off_base_cap_expectation {C a b : ℝ} (hC : 1 ≤ C) (ha₀ : 7/10 ≤ a)
+    (ha₁ : a < 3/4) (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 3/4) :
+    ∃ A > 0, ∀ {V I : Type*} [LinearOrder V] [LinearOrder I] [Fintype V] [Fintype I]
+      {paths : I → Finset V} (_ : HalfBridgeFree (PathBefore paths) 4) (L D h : ℕ),
+      0 < Fintype.card I → 0 < h → h ≤ L → h ≤ D →
+      Fintype.card V*D ≤ 4*Fintype.card I*L →
+      (∀ i, (paths i).card ≤ L) →
+      (∀ v, (occurrences paths v).card ≤ D) → InducedSizeBound paths C a b →
+      let ℓ : ℝ := L
+      let d : ℝ := D
+      let u : ℝ := h
+      uniformMean (fun base => ((offBaseBranchTuples paths base h).card:ℝ)) ≤
+        A*(ℓ^2*d*u^(1/b) +
+          ℓ^(3/2:ℝ)*d^(3/2+(3-4*a)/(2-2*a))*u^((2*b+1)/(2*b)) +
+          ℓ^(1/b)*d^2*u^((4*b-2*b^2-1)/b^2)) := by
+  obtain ⟨K, hK, bound⟩ := lemma34_off_base_cap_from_moments hC ha₀ ha₁ hb₀ hb₁
+  refine ⟨K, hK, ?_⟩
+  intro V I _ _ _ _ paths free L D h hp hh hL hD ratio lengths degree prior
+  let P (j : ℕ) (i : I) := (degreeBucket paths i h j).card
+  let R (j : ℕ) := uniformMean (fun base => ∑ i, ((paths i ∩ degreeBucket paths base h j).card:ℝ)^2)
+  let Q := uniformMean (fun base => ((offBaseBranchTuples paths base h).card:ℝ))
+  refine bound (Fintype.card V) L D h hp hh hL hD ratio P R Q
+    (div_nonneg (sum_nonneg (fun _ _ => Nat.cast_nonneg _)) (Nat.cast_nonneg _))
+    (fun j i => degreeBucket_size_cap paths i h j L D (lengths i) degree) ?_ ?_ ?_
+  · intro j big
+    exact lemma34_mean_bucket_size free h j D hp (zero_lt_one.trans_le hC) big
+      (by linarith) (by linarith) degree prior
+  · intro j
+    simpa only [R, P, Real.rpow_one] using
+      lemma34_mean_bucket_moment free h j L D (hh.trans_le hL) (hh.trans_le hD)
+        (zero_lt_one.trans_le hC) (show 1/2 ≤ a by linarith) ha₁ (show 1/2 < b by linarith)
+        (show b ≤ 1 by linarith) lengths degree prior
+  · exact lemma34_minkowski_mean free h D hp degree
+
 private theorem cap_rpow_le {x y r : ℝ} (hx : 0 ≤ x) (hy : 0 ≤ y) (hr : 0 ≤ r) (hr' : r ≤ 2)
     (cap : x ≤ 4*y) : x^r ≤ 16*y^r := calc
   _ ≤ (4*y)^r := Real.rpow_le_rpow hx cap hr
@@ -483,34 +542,20 @@ private theorem cap_rpow_le {x y r : ℝ} (hx : 0 ≤ x) (hy : 0 ≤ y) (hr : 0 
     exact mul_le_mul_of_nonneg_right h (Real.rpow_nonneg hy _)
 
 set_option maxHeartbeats 500000 in
-/-- The normalized off-base expectation of Lemma 34 on the actual acyclic
-sample. Both deterministic caps are within four times the original averages. -/
-theorem lemma34_off_base_expectation {C a b : ℝ} (hC : 1 ≤ C) (ha₀ : 7/10 ≤ a)
-    (ha₁ : a < 3/4) (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 3/4) :
-    ∃ A > 0, ∀ {V I : Type*} [LinearOrder V] [LinearOrder I] [Fintype V] [Fintype I]
-      {paths : I → Finset V} (_ : HalfBridgeFree (PathBefore paths) 4) (L D h : ℕ),
-      0 < Fintype.card V → 0 < Fintype.card I → 0 < h → h ≤ L → h ≤ D →
-      (∀ i, (paths i).card ≤ L) →
-      (∀ v, (occurrences paths v).card ≤ D) → InducedSizeBound paths C a b →
-      let n := Fintype.card V
-      let p := Fintype.card I
-      let M := ∑ i, (paths i).card
-      0 < M → L*p ≤ 4*M → D*n ≤ 4*M →
-      let ℓ : ℝ := (M:ℝ)/p
-      let d : ℝ := (M:ℝ)/n
-      let u : ℝ := h
-      uniformMean (fun base => ((offBaseBranchTuples paths base h).card:ℝ)) ≤
-        A*(ℓ^2*d*u^(1/b) +
-          ℓ^(3/2:ℝ)*d^(3/2+(3-4*a)/(2-2*a))*u^((2*b+1)/(2*b)) +
-          ℓ^(1/b)*d^2*u^((4*b-2*b^2-1)/b^2)) := by
-  obtain ⟨K, hK, bound⟩ := lemma34_off_base_cap_expectation hC ha₀ ha₁ hb₀ hb₁
-  refine ⟨256*K, by positivity, ?_⟩
-  intro V I _ _ _ _ paths free L D h hn hp hh hL hD length degree input
-  dsimp only
-  let n := Fintype.card V
-  let p := Fintype.card I
-  let M := ∑ i, (paths i).card
-  intro hm Lcap Dcap
+/-- Normalize the off-base bound from uniform caps to averages. -/
+theorem lemma34_off_base_average_from_caps {a b K Q : ℝ} (ha₀ : 7/10 ≤ a)
+    (ha₁ : a < 3/4) (hb₀ : 2/3 ≤ b) (hK : 0 ≤ K)
+    {n p M L D h : ℕ} (hn : 0 < n) (hp : 0 < p) (hm : 0 < M)
+    (Lcap : L*p ≤ 4*M) (Dcap : D*n ≤ 4*M)
+    (stage : Q ≤ K*((L:ℝ)^2*D*(h:ℝ)^(1/b) +
+      (L:ℝ)^(3/2:ℝ)*(D:ℝ)^(3/2+(3-4*a)/(2-2*a))*(h:ℝ)^((2*b+1)/(2*b)) +
+      (L:ℝ)^(1/b)*(D:ℝ)^2*(h:ℝ)^((4*b-2*b^2-1)/b^2))) :
+    let ℓ : ℝ := (M:ℝ)/p
+    let d : ℝ := (M:ℝ)/n
+    let u : ℝ := h
+    Q ≤ 256*K*(ℓ^2*d*u^(1/b) +
+      ℓ^(3/2:ℝ)*d^(3/2+(3-4*a)/(2-2*a))*u^((2*b+1)/(2*b)) +
+      ℓ^(1/b)*d^2*u^((4*b-2*b^2-1)/b^2)) := by
   let ℓ : ℝ := (M:ℝ)/p
   let d : ℝ := (M:ℝ)/n
   let u : ℝ := h
@@ -518,13 +563,6 @@ theorem lemma34_off_base_expectation {C a b : ℝ} (hC : 1 ≤ C) (ha₀ : 7/10 
   let r := 3/2+γ
   let s := (2*b+1)/(2*b)
   let w := (4*b-2*b^2-1)/b^2
-  have ratio : n*D ≤ 4*p*L := calc
-    _ ≤ 4*M := (Nat.mul_comm n D).le.trans Dcap
-    _ ≤ 4*(p*L) := Nat.mul_le_mul_left _ (by
-      calc
-        M ≤ ∑ _ : I, L := sum_le_sum (fun i _ => length i)
-        _ = _ := by simp [p])
-    _ = _ := by ring
   have ppos : (0:ℝ) < p := Nat.cast_pos.mpr hp
   have npos : (0:ℝ) < n := Nat.cast_pos.mpr hn
   have mpos : (0:ℝ) < M := Nat.cast_pos.mpr hm
@@ -561,10 +599,48 @@ theorem lemma34_off_base_expectation {C a b : ℝ} (hC : 1 ≤ C) (ha₀ : 7/10 
     lift (by norm_num) (by norm_num) r0 r1
   have h₃ : (L:ℝ)^(1/b)*(D:ℝ)^2*u^w ≤ 256*(ℓ^(1/b)*d^2*u^w) := by
     simpa only [Real.rpow_two] using lift (a := 1/b) (b := 2) (t := w) ib0 ib1 (by norm_num) le_rfl
-  have stage := bound free L D h hp hh hL hD ratio length degree input
-  exact stage.trans ((mul_le_mul_of_nonneg_left (add_le_add (add_le_add h₁ h₂) h₃) hK.le).trans_eq (by ring))
+  exact stage.trans ((mul_le_mul_of_nonneg_left (add_le_add (add_le_add h₁ h₂) h₃) hK).trans_eq (by ring))
 
 
+
+set_option maxHeartbeats 500000 in
+/-- The normalized off-base expectation of Lemma 34 on the actual acyclic
+sample. Both deterministic caps are within four times the original averages. -/
+theorem lemma34_off_base_expectation {C a b : ℝ} (hC : 1 ≤ C) (ha₀ : 7/10 ≤ a)
+    (ha₁ : a < 3/4) (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 3/4) :
+    ∃ A > 0, ∀ {V I : Type*} [LinearOrder V] [LinearOrder I] [Fintype V] [Fintype I]
+      {paths : I → Finset V} (_ : HalfBridgeFree (PathBefore paths) 4) (L D h : ℕ),
+      0 < Fintype.card V → 0 < Fintype.card I → 0 < h → h ≤ L → h ≤ D →
+      (∀ i, (paths i).card ≤ L) →
+      (∀ v, (occurrences paths v).card ≤ D) → InducedSizeBound paths C a b →
+      let n := Fintype.card V
+      let p := Fintype.card I
+      let M := ∑ i, (paths i).card
+      0 < M → L*p ≤ 4*M → D*n ≤ 4*M →
+      let ℓ : ℝ := (M:ℝ)/p
+      let d : ℝ := (M:ℝ)/n
+      let u : ℝ := h
+      uniformMean (fun base => ((offBaseBranchTuples paths base h).card:ℝ)) ≤
+        A*(ℓ^2*d*u^(1/b) +
+          ℓ^(3/2:ℝ)*d^(3/2+(3-4*a)/(2-2*a))*u^((2*b+1)/(2*b)) +
+          ℓ^(1/b)*d^2*u^((4*b-2*b^2-1)/b^2)) := by
+  obtain ⟨K, hK, bound⟩ := lemma34_off_base_cap_expectation hC ha₀ ha₁ hb₀ hb₁
+  refine ⟨256*K, by positivity, ?_⟩
+  intro V I _ _ _ _ paths free L D h hn hp hh hL hD length degree input
+  dsimp only
+  let n := Fintype.card V
+  let p := Fintype.card I
+  let M := ∑ i, (paths i).card
+  intro hm Lcap Dcap
+  have ratio : n*D ≤ 4*p*L := calc
+    _ ≤ 4*M := (Nat.mul_comm n D).le.trans Dcap
+    _ ≤ 4*(p*L) := Nat.mul_le_mul_left _ (by
+      calc
+        M ≤ ∑ _ : I, L := sum_le_sum (fun i _ => length i)
+        _ = _ := by simp [p])
+    _ = _ := by ring
+  exact lemma34_off_base_average_from_caps ha₀ ha₁ hb₀ hK.le hn hp hm Lcap Dcap
+    (bound free L D h hp hh hL hD ratio length degree input)
 
 /-- The complete upper count of Lemma 36 in the acyclic regime. The two
 coefficients keep the linear on-base contribution available for absorption. -/

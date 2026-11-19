@@ -423,6 +423,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   3177-declaration audit and local kernel replay passed. Independent review
   checked the actual support sizes, geometric sum and normalization.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44482679729).
+- [a9e847cf](https://github.com/gbodwin/paper-formalizations/commit/a9e847cf529da03768b708ba641edfa0307cf15f)
+  verifies the actual samples and dyadic triangle inequality in the
+  off-base second moment. The 3190-declaration audit and local kernel
+  replay passed. Independent review checked the actual ranked subfamilies,
+  inheritance of the envelope and the moment averaging.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44483573807).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
