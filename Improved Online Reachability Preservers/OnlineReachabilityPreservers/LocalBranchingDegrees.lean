@@ -133,24 +133,30 @@ theorem list_sum_large_branches {paths : I → List V}
   exact and_congr_right fun hv => by rw [listBranchesThrough_card unique hv]
 
 omit [LinearOrder I] [Fintype V] in
-/-- Lemma 32's estimate using only the uniform degree cap. -/
-theorem lemma32_list_degree_count (paths : I → List V) (v : V) (h x D : ℕ)
+/-- The degree-cap bound counts any subfamily of long induced paths. -/
+theorem lemma32_list_degree_count_subfamily (paths : I → List V) (v : V) (h x D : ℕ) (J : Finset I)
+    (long : ∀ i ∈ J, x ≤ ((paths i).toFinset ∩ listPredecessorSupport paths v h).card)
     (degrees : ∀ u, (occurrences (fun i => (paths i).toFinset) u).card ≤ D) :
-    (listLargeBranchBases paths v h x).card*x ≤ (occurrences (fun i => (paths i).toFinset) v).card*h*D := by
-  let J := listLargeBranchBases paths v h x
+    J.card*x ≤ (occurrences (fun i => (paths i).toFinset) v).card*h*D := by
   let S := listPredecessorSupport paths v h
   let marks (i : I) := (paths i).toFinset
   calc
-    _ = ∑ _ ∈ J, x := by simp [J]
+    _ = ∑ _ ∈ J, x := by simp
     _ ≤ ∑ i ∈ J, (inducedPath marks S i).card := by
       apply sum_le_sum
       intro i hi
       rw [inducedPath_card]
-      exact (mem_filter.mp hi).2.2
+      exact long i hi
     _ ≤ ∑ i : I, (inducedPath marks S i).card :=
       sum_le_sum_of_subset_of_nonneg (subset_univ _) (fun _ _ _ => Nat.zero_le _)
     _ ≤ S.card*D := inducedPath_mass_le marks S D (fun u _ => degrees u)
     _ ≤ _ := Nat.mul_le_mul_right _ (listPredecessorSupport_card paths v h)
+
+omit [LinearOrder I] [Fintype V] in
+theorem lemma32_list_degree_count (paths : I → List V) (v : V) (h x D : ℕ)
+    (degrees : ∀ u, (occurrences (fun i => (paths i).toFinset) u).card ≤ D) :
+    (listLargeBranchBases paths v h x).card*x ≤ (occurrences (fun i => (paths i).toFinset) v).card*h*D :=
+  lemma32_list_degree_count_subfamily paths v h x D _ (fun _ hi => (mem_filter.mp hi).2.2) degrees
 
 omit [LinearOrder I] in
 private theorem list_branch_incidence_bound (paths : I → List V) (b : I) (h : ℕ) :
@@ -222,15 +228,16 @@ def ListInducedSizeBound (paths : I → List V) (C a b : ℝ) : Prop :=
       C*max n (max (n^a*p^(2-2*a)) (max (n^(2-2*b)*p^b) p))
 
 omit [LinearOrder I] [Fintype V] in
-/-- The inductive bound for large branches uses the actual restricted lists. -/
-theorem lemma32_list_extremal_count {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
-    (v : V) (h x : ℕ) {C a b : ℝ} (hC : 0 < C) (hx : C < (x : ℝ))
+/-- The inductive bound counts any subfamily of long induced paths. -/
+theorem lemma32_list_extremal_count_subfamily {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
+    (v : V) (h x : ℕ) (J : Finset I)
+    (long : ∀ i ∈ J, x ≤ ((paths i).toFinset ∩ listPredecessorSupport paths v h).card)
+    {C a b : ℝ} (hC : 0 < C) (hx : C < (x : ℝ))
     (ha : 1/2 < a) (hb : b < 1) (prior : ListInducedSizeBound paths C a b) :
     let n : ℝ := (listPredecessorSupport paths v h).card
-    ((listLargeBranchBases paths v h x).card : ℝ) ≤
+    (J.card : ℝ) ≤
       C*n/x + (C*n^a/x)^(1/(2*a-1)) + (C*n^(2-2*b)/x)^(1/(1-b)) := by
   let S := listPredecessorSupport paths v h
-  let J := listLargeBranchBases paths v h x
   have natural : J.card*x ≤ ∑ i : J, (restrictListPaths paths S J i).length := by
     calc
       _ = ∑ _ : J, x := by simp
@@ -239,10 +246,20 @@ theorem lemma32_list_extremal_count {paths : I → List V} (simple : ∀ i, (pat
         intro i _
         change x ≤ (restrictListPath (paths i.val) S).length
         rw [restrictListPath_length (simple i.val)]
-        exact (mem_filter.mp i.property).2.2
+        exact long i.val i.property
   have lower : ((J.card : ℕ) : ℝ) * x ≤ ∑ i : J, ((restrictListPaths paths S J i).length : ℝ) := by
     exact_mod_cast natural
   exact count_from_size_envelope (by positivity) (by positivity) hC hx ha hb (lower.trans (prior S J))
+
+omit [LinearOrder I] [Fintype V] in
+theorem lemma32_list_extremal_count {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
+    (v : V) (h x : ℕ) {C a b : ℝ} (hC : 0 < C) (hx : C < (x : ℝ))
+    (ha : 1/2 < a) (hb : b < 1) (prior : ListInducedSizeBound paths C a b) :
+    let n : ℝ := (listPredecessorSupport paths v h).card
+    ((listLargeBranchBases paths v h x).card : ℝ) ≤
+      C*n/x + (C*n^a/x)^(1/(2*a-1)) + (C*n^(2-2*b)/x)^(1/(1-b)) :=
+  lemma32_list_extremal_count_subfamily simple v h x _ (fun _ hi => (mem_filter.mp hi).2.2)
+    hC hx ha hb prior
 
 /-- The uniform branching estimate in Lemma 33 for local path orders. -/
 theorem lemma33_list_expected_count {paths : I → List V} (simple : ∀ i, (paths i).Nodup)

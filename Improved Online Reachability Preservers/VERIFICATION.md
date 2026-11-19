@@ -406,6 +406,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   review checked equal outputs, the failed flow and final cut searches,
   and the scope of the operation counters.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44480003591).
+- [bbd7ad3c](https://github.com/gbodwin/paper-formalizations/commit/bbd7ad3cc5add798d78c98d1820335c4c1a56fda)
+  checks the local predecessor and weighted branching counts of Lemmas 32–34
+  and the source-restricted estimate. The 3140-declaration audit and local
+  kernel replay passed. Independent review checked inherited order, unique
+  intersections and the assumptions on the induced subfamilies.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44480859399).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

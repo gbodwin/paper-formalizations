@@ -177,16 +177,18 @@ whose source is `0`. The system has unique intersections and no bridges
 of any size. A directed 3-cycle invalidates the step asserting that every
 induced base path starts in the near-predecessor set.
 
-After pruning to unique intersections, every close-pair charge with its right endpoint on the base has its left
-start earlier on that base. This permits restricting the count to tuples
-whose right endpoint lies after a near predecessor. The suffix from the
-first such predecessor contains all of these right endpoints. In Appendix B,
-all close-pair charges have both endpoints off the base. Lean checks these
-lower-count restrictions. The filtered offline count gives the local-order
-upper bound and recurrence of Theorem 43. The filtered online upper proof
-remains open.
+After pruning to unique intersections, every close-pair charge with its
+right endpoint on the base has its left start earlier on that base. This
+permits counting only tuples whose right endpoint lies after a near
+predecessor. Lean checks that the suffix from the earliest near predecessor
+contains all of these endpoints and induces a family with a source in the
+predecessor set on each path. The source-restricted estimate bounds those
+incidences and hence the filtered on-base tuple count. In Appendix B, all
+close-pair charges have both endpoints off the base. The filtered offline
+count gives the local-order upper bound and recurrence of Theorem 43.
 [Checked cycle](OnlineReachabilityPreservers/SplitAudit.lean)
 · [Checked close-pair charges](OnlineReachabilityPreservers/LocalBranching.lean)
+· [Checked source restriction and upper count](OnlineReachabilityPreservers/LocalOnBaseCounting.lean)
 · [Unrestricted offline bound](OnlineReachabilityPreservers/LocalOfflineBound.lean).
 
 ## Matters requiring proof or clarification
