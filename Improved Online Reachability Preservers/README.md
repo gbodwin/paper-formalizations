@@ -22,6 +22,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   the known-budget path assignment and the factor-two union bound.
   [`theorem16_index_sensitive`](OnlineReachabilityPreservers/IndexSensitive.lean)
   verifies dyadic assignment using the two growth inequalities in footnote 4.
+  The search examines `i.log2 + 2` levels at zero-based index `i`.
 - [`theorem5_sinks_known_p`, `theorem5_sources_known_p`, `theorem5_sinks_indexed`, and `theorem5_sources_indexed`](OnlineReachabilityPreservers/RestrictedNonAdaptive.lean)
   verify the endpoint-restricted size and path guarantees of Theorem 5 on
   general digraphs. Write `F = n + floor(sqrt(2npσ))`. The guarantees are

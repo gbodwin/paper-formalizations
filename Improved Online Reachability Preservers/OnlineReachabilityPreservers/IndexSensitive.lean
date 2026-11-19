@@ -8,34 +8,33 @@ open Finset
 
 def dyadicQuota (base level : ℕ) : ℕ := base * 2 ^ level
 
-private def coveringLevels (base index : ℕ) : Finset ℕ :=
-  (range (index + 1)).filter (fun k => index + 1 ≤ dyadicQuota base k)
+/-- The covering levels among the first `index.log2 + 2` candidates. -/
+def coveringLevels (base index : ℕ) : Finset ℕ :=
+  (range (index.log2 + 2)).filter (fun k => index + 1 ≤ dyadicQuota base k)
 
 /-- The first dyadic budget that covers this index. -/
 def indexLevel (base index : ℕ) : ℕ := (least? (coveringLevels base index)).getD index
 
-private theorem index_in_coveringLevels {base : ℕ} (hbase : 0 < base) (i : ℕ) :
-    i ∈ coveringLevels base i := by
-  have hp : i + 1 ≤ 2 ^ i := by
-    induction i with
-    | zero => simp
-    | succ i ih =>
-      rw [pow_succ]
-      omega
+private theorem last_in_coveringLevels {base : ℕ} (hbase : 0 < base) (i : ℕ) :
+    i.log2 + 1 ∈ coveringLevels base i := by
+  have hp : i + 1 ≤ 2 ^ (i.log2 + 1) := by
+    by_cases hi : i = 0
+    · simp [hi]
+    · exact Nat.succ_le_of_lt ((Nat.log2_lt hi).mp (Nat.lt_succ_self _))
   refine mem_filter.mpr ⟨mem_range.mpr (Nat.lt_succ_self _), hp.trans ?_⟩
-  simpa [dyadicQuota] using Nat.mul_le_mul_right (2 ^ i) (show 1 ≤ base by omega)
+  simpa [dyadicQuota] using Nat.mul_le_mul_right (2 ^ (i.log2 + 1)) (show 1 ≤ base by omega)
 
 theorem indexLevel_covers {base : ℕ} (hbase : 0 < base) (i : ℕ) :
     i + 1 ≤ dyadicQuota base (indexLevel base i) := by
-  obtain ⟨k, hk⟩ := least?_some ⟨i, index_in_coveringLevels hbase i⟩
+  obtain ⟨k, hk⟩ := least?_some ⟨_, last_in_coveringLevels hbase i⟩
   simpa [indexLevel, hk] using (mem_filter.mp (least?_mem hk)).2
 
 theorem indexLevel_le_of_cover {base i k : ℕ} (hbase : 0 < base)
     (cover : i + 1 ≤ dyadicQuota base k) : indexLevel base i ≤ k := by
-  obtain ⟨j, hj⟩ := least?_some ⟨i, index_in_coveringLevels hbase i⟩
-  have hj' := least?_le hj (index_in_coveringLevels hbase i)
+  obtain ⟨j, hj⟩ := least?_some ⟨_, last_in_coveringLevels hbase i⟩
+  have hj' := least?_le hj (last_in_coveringLevels hbase i)
   have h : j ≤ k := by
-    by_cases hki : k ≤ i
+    by_cases hki : k ≤ i.log2 + 1
     · exact least?_le hj (mem_filter.mpr ⟨mem_range.mpr (Nat.lt_succ_of_le hki), cover⟩)
     · omega
   simpa [indexLevel, hj] using h
@@ -60,16 +59,15 @@ theorem finalQuota_le {base p : ℕ} (hbase : 0 < base) (hp : 0 < p) :
 
 theorem indexLevel_mono {base : ℕ} (hbase : 0 < base) : Monotone (indexLevel base) := by
   intro i j hij
-  obtain ⟨k, hk⟩ := least?_some ⟨i, index_in_coveringLevels hbase i⟩
-  obtain ⟨l, hl⟩ := least?_some ⟨j, index_in_coveringLevels hbase j⟩
-  have hk' := least?_le hk (index_in_coveringLevels hbase i)
-  have h : k ≤ l := by
-    by_cases hli : l ≤ i
-    · apply least?_le hk
-      refine mem_filter.mpr ⟨mem_range.mpr (Nat.lt_succ_of_le hli), ?_⟩
-      exact (Nat.succ_le_succ hij).trans (mem_filter.mp (least?_mem hl)).2
-    · omega
-  simpa [indexLevel, hk, hl] using h
+  exact indexLevel_le_of_cover hbase ((Nat.succ_le_succ hij).trans (indexLevel_covers hbase j))
+
+/-- The number of candidates remaining after checking the quota. -/
+theorem coveringLevels_card_le (base index : ℕ) : (coveringLevels base index).card ≤ index.log2 + 2 := by
+  exact card_filter_le _ _ |>.trans_eq (card_range _)
+
+theorem indexLevel_le_log2_succ {base : ℕ} (hbase : 0 < base) (i : ℕ) :
+    indexLevel base i ≤ i.log2 + 1 :=
+  indexLevel_le_of_cover hbase (mem_filter.mp (last_in_coveringLevels hbase i)).2
 
 variable {V : Type*} [LinearOrder V]
 

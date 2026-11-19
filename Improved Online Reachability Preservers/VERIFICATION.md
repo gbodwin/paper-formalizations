@@ -184,6 +184,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   paper audit and local kernel replay passed. Independent review checked the
   arborescences, heavy-demand elimination, and light edge charge.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44442385174).
+- [2bd2f519](https://github.com/gbodwin/paper-formalizations/commit/2bd2f5195b7add12bd21f05cac1734cb3f944e7b)
+  proves the acyclic overlay lower construction with exactly mass minus
+  path count necessary edges. The 1580-declaration paper audit and local
+  kernel replay passed. Independent review checked repeated-path shortcuts,
+  bridge extraction, and the required consecutive-arc count.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44442685627).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

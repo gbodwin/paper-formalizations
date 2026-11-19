@@ -128,6 +128,8 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.backwardCompressed_total
 #print axioms OnlineReachabilityPreservers.theorem15_known_budget
 #print axioms OnlineReachabilityPreservers.theorem16_index_sensitive
+#print axioms OnlineReachabilityPreservers.coveringLevels_card_le
+#print axioms OnlineReachabilityPreservers.indexLevel_le_log2_succ
 #print axioms OnlineReachabilityPreservers.plannedArcs_prefix
 #print axioms OnlineReachabilityPreservers.theorem5_sinks_known_p
 #print axioms OnlineReachabilityPreservers.theorem5_sources_known_p
