@@ -183,13 +183,13 @@ theorem sinkPreserver_prefixSearchReplay (G : Arcs V) (D : List (V × V)) :
         (Nat.mul_le_mul_right _ earlier.length_le))
 
 /-- The list test with the number of predicate calls up to its first match. -/
-private def anyWithChecks {A : Type*} (test : A → Bool) : List A → Bool × ℕ
+def anyWithChecks {A : Type*} (test : A → Bool) : List A → Bool × ℕ
   | [] => (false,0)
   | a::as => if test a then (true,1) else
     let result := anyWithChecks test as
     (result.1,result.2+1)
 
-private theorem anyWithChecks_spec {A : Type*} (test : A → Bool) (xs : List A) :
+theorem anyWithChecks_spec {A : Type*} (test : A → Bool) (xs : List A) :
     (anyWithChecks test xs).1 = xs.any test ∧ (anyWithChecks test xs).2 ≤ xs.length := by
   induction xs with
   | nil => simp [anyWithChecks]

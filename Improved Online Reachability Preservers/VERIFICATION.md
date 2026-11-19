@@ -858,10 +858,18 @@ It also checked the empty prefix and positive comparator cost for nonempty
 feasible traces of non-self requests.
 [Reviewed demand-dependent proof](OnlineReachabilityPreservers/SteinerCompetitive.lean).
 
+Independent review checked the list-backed deterministic forward run's
+prefix edge sets, duplicate-free invariant, and comparison polynomial.
+The generated code uses the charged list scans and purchase pass. The
+comparison model charges each pair equality or minimum call once.
+[Reviewed list evaluator](OnlineReachabilityPreservers/DeterministicListWork.lean).
+
 ## Execution examples
 
 A finite execution check of the PaperLab example gave cumulative purchases
-`[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
+`[0, 3, 4, 5, 5]`. The list-backed evaluator gave the same edge sets with
+cumulative comparison counts `[0, 657, 1383, 1967, 2553]`. A graph with a
+two-vertex SCC confirmed the internal and
 crossing edges on a cyclic input. The empty prefix has no edges, an
 unreachable forward request returns `none`, and a self-request returns an
 empty path. An execution of the complete Steiner draw evaluator on a

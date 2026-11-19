@@ -281,6 +281,20 @@ within the supplied prefix. A failed positive-width rejection phase consumes
 all complete proposals it can read. The cached replay starts at position zero. Integer
 arithmetic, finite container operations, and full execution time still
 require certification.
+The [list-backed forward run](OnlineReachabilityPreservers/DeterministicListWork.lean)
+returns the ordinary forward run's edge set on every prefix. It counts vertex
+equality tests, minimum comparisons and arc-pair equality tests in reverse
+reachability, the two successor scans, the walk, and each edge purchase. For
+\(n\) vertices, an input arc list of length \(m\), and \(p\) requests, its
+explicit comparison bound is
+\[
+p\bigl(2n^2m+(n+1)(1+n(m+n^2+2))+n^3\bigr).
+\]
+The preserver list stays duplicate-free. The forward-run bound measures key
+operations in this representation. Each pair equality or minimum call is
+one charged operation. General-digraph SCC preprocessing, the implementation
+cost of each key operation, other list operations, and arithmetic time are
+separate costs.
 The [preassigned-path counter](OnlineReachabilityPreservers/AssignmentSearchWork.lean)
 combines the calls made by quota certification and path selection with the
 arc inspections and successor tests in each base rule and lifted path.
