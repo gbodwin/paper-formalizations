@@ -126,8 +126,8 @@ theorem routePathWithSearchWork_spec (G : Arcs V) (s t : V) :
 
 /-- Count label calls in projection and lifting. Include allowances for
 one hop search and one bounded-depth search per vertex in each connector
-orientation. The call to the condensed algorithm is recorded separately
-through its ordinary output. -/
+orientation. The condensed algorithm runs once and its internal work
+is outside these counts. -/
 def liftedRunWithProjectionWork (run : Arcs V → List (V × V) → Arcs V)
     (G : Arcs V) (D : List (V × V)) : Arcs V × ℕ × ℕ × ℕ :=
   match D with

@@ -342,6 +342,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   quota meter recomputed each candidate trace in separate passes. The
   following checkpoint shares the evaluated candidate results.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44467887210).
+- [b0b09533](https://github.com/gbodwin/paper-formalizations/commit/b0b09533722123931ed1b85a0b7f082123a3ed4c)
+  shares quota candidates and meters hop, route, SCC, forward growth and
+  thin separators. The 2772-declaration audit and local kernel replay of
+  the changed modules passed. Independent review checked the shared
+  evaluations, output equalities and the scope of each count.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44469383213).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

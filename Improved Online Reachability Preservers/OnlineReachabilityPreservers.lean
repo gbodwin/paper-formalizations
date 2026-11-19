@@ -8,6 +8,7 @@ import OnlineReachabilityPreservers.Bridges
 import OnlineReachabilityPreservers.ClosePairs
 import OnlineReachabilityPreservers.Components
 import OnlineReachabilityPreservers.Connectors
+import OnlineReachabilityPreservers.CyclicIntersections
 import OnlineReachabilityPreservers.DagReduction
 import OnlineReachabilityPreservers.DyadicSums
 import OnlineReachabilityPreservers.EndpointBudget

@@ -161,13 +161,17 @@ guarantees are checked for this construction.
 - The proof of Lemma 23 writes \(\beta\) for the half-bridge-free extremum
   \(H\). The statement of Lemma 39 writes \(H\) for the full-bridge-free
   extremum \(\beta\) it is used to estimate.
-- Lemma 24 needs a common vertex order to infer that any two paths meet in
-  at most one vertex from 2-bridge-freeness. The paths `(0,1,2)` and
-  `(2,1,0)` share three vertices without a bridge. The growth path systems
-  have the common vertex order. The [intersection proof](OnlineReachabilityPreservers/IntersectionOrder.lean)
-  states this hypothesis explicitly. The [initial bound](OnlineReachabilityPreservers/PairwiseInitial.lean)
-  counts high-degree incidences and ordered pairs with sufficiently many
-  predecessors directly. It applies to the growth systems without a splitting lemma.
+- In Lemma 24, the paths `(0,1,2)` and `(2,1,0)` share three vertices without
+  a bridge. Lean proves the ordering and fiber bound for arbitrary simple paths
+  by choosing one witness for each middle path and using the 2-bridge exclusion
+  to rule out repeated corners in the proposed 4-bridge. Full bridge-freeness
+  gives strict order at the right. The paths `[(0), (2,1), (0,1,2)]` have
+  one middle path and two witnesses for the same outer paths. Lemma 26's
+  step from counted witnesses to distinct path triples needs a further argument
+  in this scope. The growth path systems have a common vertex order, which
+  makes their witnesses unique and allows a direct incidence count.
+  [General fiber and example](OnlineReachabilityPreservers/CyclicIntersections.lean)
+  · [Acyclic chain count](OnlineReachabilityPreservers/PairwiseInitial.lean).
 - Lemma 28 writes a difference of a right-hand intersection position with
   itself in the definition of close pairs. Its collision argument instead
   bounds the difference between the two right-hand intersection positions.
