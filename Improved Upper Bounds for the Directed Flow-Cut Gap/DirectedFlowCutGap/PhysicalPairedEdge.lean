@@ -183,6 +183,8 @@ private theorem selection_fields {n B : ℕ} (D : Input n) (positive : 1 ≤ B)
 private def selectionBudget {R : Type*} [Semiring R] (n l b : R) : R :=
   2*(l*(2048*((l+1)*(b+1)+1)^2+4)+1+128*(n+1)^4)+2048*(l*(b+1)+2)^2+16
 
+attribute [local irreducible] PhysicalSourceReadback.run PhysicalAmplifiedBinaryEdge.run
+
 set_option maxHeartbeats 700000 in
 theorem run_polynomial : ∃ p : Polynomial ℕ,
     ∀ {n B : ℕ} (κ : ℕ) (D : Input n) (bits : Bits) (_positive : 1 ≤ B),
@@ -206,6 +208,7 @@ theorem run_polynomial : ∃ p : Polynomial ℕ,
       (yes : one κ mode D bits=some r) : r.paid ≤ q.eval x := by
     obtain ⟨old,performed,rfl⟩ := Option.map_eq_some_iff.mp yes
     exact hq κ D mode bits positive fits performed
+  unfold run at ran
   obtain ⟨r,paid,rfl⟩ := Option.map_eq_some_iff.mp ran
   have both := PairedCutSearch.run_paid _ _ _ (each .mass) (each .size) (selection_fields D positive fits) bits paid
   have selection : 2*(BinaryFractionalRows.sumBound (lineSize n) B+128*(n+1)^4)+
@@ -235,17 +238,18 @@ theorem wire_polynomial : ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (source tape : 
   refine ⟨ChargedSourceAssembly.parsePolynomial+load+q.comp pad,?_⟩
   intro κ source tape n r ran
   let x := source.length+κ
+  simp only [withCost,PhysicalVertexSolver.prepareOn] at ran
   obtain ⟨⟨m,D⟩,parsed,result⟩ := Option.bind_eq_some_iff.mp ran
   obtain ⟨found,once,same⟩ := Option.map_eq_some_iff.mp result
   cases same
   obtain ⟨size,demands,fields⟩ := ChargedSourceAssembly.edge_dimensions parsed
   let G := (PhysicalBinaryEdgeWire.decodeWithCost D).1
-  have stored (i : Fin (n*n)) : StoredBounded (BinaryFractionalRows.get D.costs i) source.length := by
+  have stored (i : Fin (m*m)) : StoredBounded (BinaryFractionalRows.get D.costs i) source.length := by
     apply fields
     change D.costs[i.val] ∈ D.costs.toList
     have hi : i.val < D.costs.toList.length := by simp only [Vector.length_toList,i.isLt]
     simpa only [Vector.getElem_toList] using List.getElem_mem hi
-  have widths (u v : Fin n) :
+  have widths (u v : Fin m) :
       G.costs[u.val][v.val].num.size ≤ source.length+1 ∧ G.costs[u.val][v.val].den.size ≤ source.length+1 := by
     let i := finProdFinEquiv (u,v)
     let f := BinaryFractionalRows.get D.costs i
@@ -255,10 +259,12 @@ theorem wire_polynomial : ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (source tape : 
     change (value f.num).size ≤ _ ∧ (value f.den).size ≤ _
     exact ⟨((Nat.size_le.mpr (value_lt f.num)).trans a).trans (Nat.le_succ _),
       ((Nat.size_le.mpr (value_lt f.den)).trans b).trans (Nat.le_succ _)⟩
+  change runOn κ D tape=some found at once
+  unfold runOn at once
   obtain ⟨actual,call,rfl⟩ := Option.map_eq_some_iff.mp once
   have length : source.length ≤ x := Nat.le_add_right _ _
-  have ys : n+G.demands.length+(source.length+1)+κ ≤ pad.eval x := by
-    change n+D.demands.length+(source.length+1)+κ ≤ _
+  have ys : m+G.demands.length+(source.length+1)+κ ≤ pad.eval x := by
+    change m+D.demands.length+(source.length+1)+κ ≤ _
     simp only [pad,eval_mul,eval_add,eval_ofNat,eval_X,eval_one]
     omega
   have both := (hq κ G tape (Nat.le_add_left _ _) widths call).trans (eval_mono q ys)
@@ -266,7 +272,7 @@ theorem wire_polynomial : ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (source tape : 
     (ChargedSourceAssembly.parsePolynomial_eval _).symm).trans
     (eval_mono ChargedSourceAssembly.parsePolynomial length)
   have conversion := (PhysicalBinaryEdgeWire.decode_paid D stored).trans
-    (show PhysicalBinaryEdgeWire.decodeBudget n source.length ≤ load.eval x from by
+    (show PhysicalBinaryEdgeWire.decodeBudget m source.length ≤ load.eval x from by
       have hn := size.trans length
       simp only [load,PhysicalBinaryEdgeWire.decodeBudget,eval_add,eval_mul,eval_pow,eval_one,eval_ofNat,eval_X]
       gcongr)
