@@ -4,6 +4,11 @@ These notes concern [arXiv:2410.20471v1](https://arxiv.org/pdf/2410.20471v1).
 The SODA abstract agrees on the displayed rates. The full proceedings text was
 unavailable for comparison.
 
+Section 2.2 describes paths as nonempty vertex sequences. The path-system
+definition in [8] requires each vertex to occur at most once on a path.
+The Lean extremal statements use this convention and permit empty index
+positions as padding of mass zero. [Bridge Girth, Definition 6](https://arxiv.org/pdf/2212.11944v4).
+
 ## Lemma 25 has a false denominator
 
 For an upper bound \(m\), mean at least \(a\), and threshold \(t<a\), the printed
@@ -155,6 +160,24 @@ remain served. The expected rate and per-realization prefix
 guarantees are checked for this construction.
 [Complete construction](OnlineReachabilityPreservers/SteinerComplete.lean).
 
+## The source in Lemma 35 can follow a directed cycle
+
+Take the base path `(0,1)` and the paths `(1,2)` and `(2,0)`. With
+the fixed vertex `2` and window length one, `1` is a near predecessor
+and `0` is a successor. Both vertices remain in the induced base path,
+whose source is `0`. The system has unique intersections and no bridges
+of any size. A directed 3-cycle invalidates the step asserting that every
+induced base path starts in the near-predecessor set.
+
+Every close-pair charge with its right endpoint on the base has its left
+start earlier on that base. This permits restricting the count to tuples
+whose right endpoint lies after a near predecessor. The suffix from the
+first such predecessor contains all of these right endpoints. In Appendix B,
+all close-pair charges have both endpoints off the base. Lean checks these
+lower-count restrictions. The cyclic upper estimates remain open.
+[Checked cycle](OnlineReachabilityPreservers/SplitAudit.lean)
+· [Checked close-pair charges](OnlineReachabilityPreservers/LocalBranching.lean).
+
 ## Matters requiring proof or clarification
 
 - Lemma 13's pigeonhole step can pick two paths whose only intersection with
@@ -208,9 +231,8 @@ guarantees are checked for this construction.
 - Lemma 35 describes the number of tuples charged to each important
   incidence as \(\Theta(xd)\). The count uses an upper bound because the
   qualifying middle path and order conditions can remove choices.
-  The arbitrary induced family has its own source-restricted incidence
-  proof. The common vertex order places its first vertex in the predecessor
-  support.
+  In a common vertex order the induced family has its own source-restricted
+  incidence proof. The cyclic case needs the restrictions above.
 - Lemmas 40–42 print a free exponent \(a\) on the first power of \(p\). The
   integrand and the starting/target bounds use \(p^{1/2}\). The recurrence
   uses \(2/3\le b<1/\sqrt2\). This is within the range where the integral

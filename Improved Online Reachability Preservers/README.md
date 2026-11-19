@@ -251,5 +251,5 @@ The library is included in the repository's module index, declaration audit,
 and kernel replay.
 
 The [companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
-includes an interactive trace and a source-linked proof map. The unrestricted
+includes an interactive trace and a source-linked proof map. The sharp unrestricted
 path-system estimates and formal runtime remain open.

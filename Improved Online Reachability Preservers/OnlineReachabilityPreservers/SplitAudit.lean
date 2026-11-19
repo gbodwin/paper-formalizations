@@ -45,10 +45,10 @@ private theorem absent_below_four (k : ℕ) (h : k ≤ 1) : ¬ hasBridge k := by
     exact no_original_three (v 0) (v 1) (v 2) (a 0) (a 1) r h01 (hne 0) (hne 1)
       (ha 0) (ha 1) hr
 
-private def pathIndices {k : ℕ} (b : Bridge (BeforeIn splitExample) k) :
-    Fin (k + 2) → Fin 3 := Fin.cases b.river b.arc
+private def pathIndices {I V : Type*} {k : ℕ} {before : I → V → V → Prop} (b : Bridge before k) :
+    Fin (k + 2) → I := Fin.cases b.river b.arc
 
-private theorem pathIndices_injective {k : ℕ} (b : Bridge (BeforeIn splitExample) k) :
+private theorem pathIndices_injective {I V : Type*} {k : ℕ} {before : I → V → V → Prop} (b : Bridge before k) :
     Function.Injective (pathIndices b) := by
   intro i j h
   rcases Fin.eq_zero_or_eq_succ i with rfl | ⟨i, rfl⟩ <;>
@@ -58,10 +58,15 @@ private theorem pathIndices_injective {k : ℕ} (b : Bridge (BeforeIn splitExamp
   · exact (b.river_ne_arc i h.symm).elim
   · exact congrArg Fin.succ (b.distinctArcs h)
 
+/-- A bridge of size `k + 2` requires that many distinct paths. -/
+theorem bridge_path_count_le {I V : Type*} [Fintype I] {k : ℕ} {before : I → V → V → Prop}
+    (b : Bridge before k) : k + 2 ≤ Fintype.card I := by
+  simpa only [Fintype.card_fin] using Fintype.card_le_of_injective (pathIndices b) (pathIndices_injective b)
+
 /-- The original three paths have no bridge of any size. -/
 theorem splitExample_bridge_free (k : ℕ) : IsEmpty (Bridge (BeforeIn splitExample) k) := by
   refine ⟨fun b => ?_⟩
-  have hcard := Fintype.card_le_of_injective (pathIndices b) (pathIndices_injective b)
+  have hcard := bridge_path_count_le b
   simp only [Fintype.card_fin] at hcard
   exact absent_below_four k (by omega)
     ⟨b.vertex, b.arc, b.river, fun _ _ h => b.distinctVertices h, fun _ _ h => b.distinctArcs h,
@@ -112,5 +117,54 @@ theorem lemma14_overlay_counterexample :
     have allPairs : ∀ u v : Fin 4, u ∈ reaches cycleWithoutChord v := by decide
     intro d _
     exact ⟨reach_mono sub,fun _ => mem_reaches.mp (allPairs d.1 d.2)⟩
+
+/-- Three two-vertex paths forming a directed cycle. -/
+def lemma35_cycle : Fin 3 → List (Fin 3) := ![[0, 1], [1, 2], [2, 0]]
+
+private theorem lemma35_cycle_no_two :
+    ∀ (x y : Fin 3) (a r : Fin 3), r ≠ a →
+      BeforeIn lemma35_cycle a x y → BeforeIn lemma35_cycle r x y → False := by
+  unfold BeforeIn
+  decide
+
+set_option maxRecDepth 4096 in
+set_option synthInstance.maxSize 512 in
+set_option maxHeartbeats 1000000 in
+private theorem lemma35_cycle_no_three :
+    ∀ (x y z : Fin 3) (a b r : Fin 3), a ≠ b → r ≠ a → r ≠ b →
+      BeforeIn lemma35_cycle a x y → BeforeIn lemma35_cycle b y z →
+      BeforeIn lemma35_cycle r x z → False := by
+  unfold BeforeIn
+  decide
+
+set_option synthInstance.maxSize 512 in
+/-- The source-restriction step of Lemma 35 can fail even with unique
+intersections and full bridge-freeness. On the base path 0→1, its first
+vertex is a successor of 2 and only its second vertex precedes 2. -/
+theorem lemma35_cycle_counterexample :
+    (∀ k, IsEmpty (Bridge (BeforeIn lemma35_cycle) k)) ∧
+      (∀ i, (lemma35_cycle i).Nodup) ∧
+      (∀ i j : Fin 3, i ≠ j → ∀ x y : Fin 3,
+        x ∈ lemma35_cycle i → x ∈ lemma35_cycle j →
+        y ∈ lemma35_cycle i → y ∈ lemma35_cycle j → x = y) ∧
+      lemma35_cycle 0 = [0, 1] ∧ BeforeIn lemma35_cycle 1 1 2 ∧
+      BeforeIn lemma35_cycle 2 2 0 ∧ ¬ ∃ i, BeforeIn lemma35_cycle i 0 2 := by
+  refine ⟨?_, by decide, by decide, rfl, ?_, ?_, ?_⟩
+  · intro k
+    refine ⟨fun b => ?_⟩
+    have bound := bridge_path_count_le b
+    rw [Fintype.card_fin] at bound
+    have small : k ≤ 1 := by omega
+    interval_cases k
+    · exact lemma35_cycle_no_two _ _ _ _ (b.river_ne_arc 0) (b.arcStep 0) b.riverStep
+    · have distinct : b.arc 0 ≠ b.arc 1 := fun equal => (by decide : (0 : Fin 2) ≠ 1) (b.distinctArcs equal)
+      exact lemma35_cycle_no_three _ _ _ _ _ _ distinct (b.river_ne_arc 0) (b.river_ne_arc 1)
+        (b.arcStep 0) (b.arcStep 1) b.riverStep
+  · unfold BeforeIn
+    decide
+  · unfold BeforeIn
+    decide
+  · unfold BeforeIn
+    decide
 
 end OnlineReachabilityPreservers.SourceAudit

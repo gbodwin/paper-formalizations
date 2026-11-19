@@ -359,6 +359,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   audit and local kernel replay passed. Independent review checked the
   per-vertex charge, local order, and distinct parents in the short bridges.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44471767518).
+- [0ef5ca83](https://github.com/gbodwin/paper-formalizations/commit/0ef5ca834b492479a096d75305430e9b65ad55e9)
+  proves the unrestricted initial bound and the distinct-triple count.
+  The 2872-declaration audit and local kernel replay passed. Independent
+  review checked that retained witnesses inject into original path triples,
+  the sparse cases and preservation of the acyclic statements.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44472699012).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
