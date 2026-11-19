@@ -18,7 +18,7 @@ The physical source entry now counts serialization, binary dispatch fuel, valida
 | --- | --- | --- |
 | Theorems 1–2 | Main all-cost vertex and edge bounds, actual randomized guarantees, attained sum-flow duality, physical fractional dispatch and packed rounding on one literal tape. The original-input solvers preserve the verified output and unread suffix. | Complete deterministic bit-time bound for the outer composition |
 | Theorems 3–5 | Actual finite unit-cost, uniform-weight, edge/vertex and self-reduction network | Complete algorithmic realization and runtime |
-| Corollaries 6–8 | Attained normalized sparsest/concurrent-flow optima, actual weak-decomposition PMF and both main factors | Polynomial LP computation, complete algorithmic realization and efficiency |
+| Corollaries 6–8 | The executable paired vertex and edge solvers achieve the minimum of both Corollary 6 factors. Attained normalized sparsest/concurrent-flow optima and actual weak-decomposition PMFs establish the mathematical corollaries | Complete modeled bit time and the refined exact-weight decomposition horizon |
 | Lemma 9 | Actual all-regime randomized law, uniform ε expected-size and n^(-κ) high-probability size bounds. `PhysicalEpochInputProgram.physical_epoch_input` produces exact original-label order and grid assignments from the stored mask and literal fair tape. | Deterministic bit complexity of the full controller |
 | Theorem 10 | Cited background only | Not claimed formalized |
 | Lemma 11 | Actual indexed-path level crossing, including infinite distances | Complete |
@@ -49,6 +49,7 @@ The [binary vertex preparation](verification/BINARY_VERTEX_PREPARATION_20261119.
 The [binary edge preparation](verification/BINARY_EDGE_PREPARATION_20261119.md) composes the literal input with binary gadget weights, prices and row rounding, and bounds the returned counters. Its exact output and tape agree with the earlier edge solver.
 The [binary adaptive family](verification/BINARY_ADAPTIVE_FAMILY_20261119.md) joins exact parameter computation and normalized adaptive prices to the binary edge solver. The calibrated entry has the literal-tape law, original-weight frequency and confidence guarantees, and a polynomial for the returned operation counts.
 The [binary source and terminal reader](verification/BINARY_SOURCE_READBACK_20261119.md) frame the dispatcher input, evaluate its instruction bound on binary words, and pay for validation and conversion of each reached terminal row or witness.
+The [paired multicut solvers](verification/PAIRED_MULTICUT_20261119.md) run both modes on the same literal fair source, choose the cheaper cut at the original prices, and prove the Corollary 6 minimum bound with the original confidence.
 The manifest `verification/component-verification.json` records an earlier
 component checkpoint.
 Independent reviews record semantic scope and boundary cases. No desired

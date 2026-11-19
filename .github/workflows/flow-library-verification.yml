@@ -33,6 +33,7 @@ on:
       - codex/flow-binary-adaptive-family-20261119
       - codex/flow-binary-integer-cutoff-20261119
       - codex/flow-binary-source-readback-20261119
+      - codex/flow-paired-multicut-20261119
   workflow_dispatch:
 permissions:
   contents: read
@@ -139,8 +140,11 @@ jobs:
         if: github.ref_name == 'codex/flow-binary-integer-cutoff-20261119'
         run: bash scripts/CheckFlowBinaryIntegerCutoff.sh
       - name: Check the measured source setup and terminal conversions on all solver entries
-        if: github.ref_name == 'codex/flow-binary-source-readback-20261119'
+        if: github.ref_name == 'codex/flow-binary-source-readback-20261119' || github.ref_name == 'codex/flow-paired-multicut-20261119'
         run: bash scripts/CheckFlowBinarySourceReadback.sh
+      - name: Check the paired multicut approximation and wire entries
+        if: github.ref_name == 'codex/flow-paired-multicut-20261119'
+        run: bash scripts/CheckFlowPairedMulticut.sh
       - name: Recheck source identity
         run: |
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
