@@ -78,11 +78,17 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   upper bound on off-base tuples in terms of the path moments of sampled
   vertex sets. A finite square-root triangle inequality retains each bucket
   moment without a separate factor for the number of buckets.
+  [OffBaseMoment](OnlineReachabilityPreservers/OffBaseMoment.lean) expresses
+  those inequalities as uniform means of the actual bucket statistics.
 - [OnBaseCounting](OnlineReachabilityPreservers/OnBaseCounting.lean)
   proves the source-restricted bound for the actual systems in Lemma 35
   and counts tuples with their second endpoint on the base. The proof
   groups them by the left branching degree and charges each group to
   important incidences in the induced system.
+  [OnBaseAverage](OnlineReachabilityPreservers/OnBaseAverage.lean) sums both
+  sides of the dyadic threshold geometrically. Under the inductive incidence
+  bound and uniform caps, the resulting expectation is bounded by a constant
+  times `ℓ²d² + ℓ^(3/2)d²h^(5/4)` with no logarithmic loss.
 - [Regularization](OnlineReachabilityPreservers/Regularization.lean)
   verifies an acyclic upper-cap reduction for Appendices A and B. Splitting
   vertices and consecutive path blocks preserves every incidence and both

@@ -102,6 +102,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   Independent review confirmed the order of the constant and path-system
   quantifiers, the limiting operation, and the original-digraph guarantee.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44421721748).
+- [caba3625](https://github.com/gbodwin/paper-formalizations/commit/caba3625719fc79992b6b1a1be6668e906cb8a3b)
+  proves the on-base tuple count, the joint finite square-root triangle
+  inequality for off-base tuples, and the scaled mean lower bound. The
+  964-declaration paper audit and local kernel replay passed. Independent
+  review checked the source restriction, fiber multiplicities, and dyadic cover.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44423784108).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
