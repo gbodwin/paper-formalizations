@@ -1,0 +1,9 @@
+# Physical candidate-family refresh from the stored state
+
+`CandidateFamilyProgram.natural_family` flattens the actual remaining-demand rows. It creates one shared zero row from the stored vertex list, attaches the current removal mask to the grid word, and calculates the bound by shifting the stored scale twice. It uses the original pair list and mask to choose one raw graph solver call for each active pair and a reference to the shared zero row for each inactive pair. It stores the result in row-major order.
+
+`CandidateFamilyData.family_data` identifies that table with `RetainedGridState.buildFamily` for the deterministic tabulated optimizer. The certificate of the current retained state gives candidate feasibility for every active pair. The program does not require any candidate answer as input. `CandidateRefreshProgram.physical_refresh` passes the returned table to the fixed mass scan and returns the exact candidate family and optimum of `RetainedGridState.refresh`. It preserves the tape and input heap prefix and bounds the modeled operations including halt.
+
+The entry representation contains the original pair list, vertex list, graph and size, grid word, current masks and scale. The instruction bound is polynomial in the listed widths and the numerical grid size. Cached gates, stabilization, physical epoch iteration, controller initialization from original input, and the original-input bound are separate obligations.
+
+The executable test uses a two-vertex edgeless graph with grid size 1. With no active pairs the output is four references to one zero row, and the optimum is zero. With only `(0, 1)` active the program runs the actual raw solver and returns `[[0, 0], [1, 1], [0, 0], [0, 0]]`. Both vertices are removed, so the actual mass scan still returns zero. The active case takes 2,415,832 successful instructions and charges 41,853,715,470,767 modeled operations including halt.
