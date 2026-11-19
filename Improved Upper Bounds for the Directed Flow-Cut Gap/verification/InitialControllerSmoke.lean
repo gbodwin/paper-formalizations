@@ -44,7 +44,7 @@ private def build {n : ℕ} (adj : PairFlags n) (L : ℕ) (budgetCount : ℕ := 
     (fun (state,root) _ => let next := allocate (.pair s.root root) state; (next,next.root))
     (gates,s.root)
   let fuel := allocate (.pair spine spine) extended
-  let budget := allocate (.pair s.root fuel.root) fuel
+  let budget := allocate (.pair spine fuel.root) fuel
   let controls := allocate (.pair gates.root budget.root) budget
   return (controls,graph.root,gates.root,controls.root)
 
@@ -106,6 +106,15 @@ private def checkOriginal : IO Unit := do
   let (data,graph,_,controls) := build adj 1 2
   let tape := [false,true,true]
   let input : BitState 26259 := ⟨data.heap,data.next,⟨graph,controls,[],[]⟩,[],0,tape⟩
+  let heap := (eraseState input).heap
+  let some (_,bounds) := pair heap (value controls) | throw (IO.userError "missing control bounds")
+  let some (epochs,fuel) := pair heap bounds | throw (IO.userError "missing epoch and draw budgets")
+  let some (trials,restarts) := pair heap fuel | throw (IO.userError "missing trial and restart budgets")
+  for spine in [epochs,trials,restarts] do
+    let some (_,tail) := pair heap spine | throw (IO.userError "control spine is empty")
+    let some (_,nil) := pair heap tail | throw (IO.userError "control spine contains only one slot")
+    unless heap[nil]? == some .nil do
+      throw (IO.userError "control spine does not contain exactly two slots")
   let program := OriginalGraphControllerProgram.program
   let some (counted,steps,unguarded) := execute program 500000 (CachedReferenceExecution.FastState.ofReference input) 0 0
     | throw (IO.userError "original graph controller did not halt")
@@ -125,7 +134,7 @@ private def checkOriginal : IO Unit := do
       read optimum == some [] &&
       paid == unguarded+(steps+1)*GuardedReferenceExecution.guardCost 26259 do
     throw (IO.userError "the joined controller did not preserve the original heap, final cut, or fair tape")
-  IO.println s!"PASS guarded original graph controller computed its cache and stopped before drawing with positive control spines, {steps} instructions, paid {paid}"
+  IO.println s!"PASS guarded original graph controller computed its cache and stopped at zero optimum with two epoch, trial and restart slots, {steps} instructions, paid {paid}"
 
 def main : IO Unit := do
   checkMask 1 [[false,false,true],[true,false,false],[true,true,false]]
