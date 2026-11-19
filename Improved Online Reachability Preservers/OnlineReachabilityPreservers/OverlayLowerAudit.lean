@@ -140,58 +140,61 @@ theorem orderedLatticeVertex_card (steps slopes : ℕ) :
   simp only [LatticeVertex, Fintype.card_prod, Fintype.card_fin]
   ring
 
-private theorem latticeBefore_of_ordered {steps slopes : ℕ} {line : LatticeLine steps slopes} {u v : LatticeVertex steps slopes}
-    (left : u ∈ latticePaths line) (right : v ∈ latticePaths line)
-    (ordered : latticeVertexOrder steps slopes u < latticeVertexOrder steps slopes v) : ListBefore latticePaths line u v := by
-  obtain ⟨i,rfl⟩ := List.mem_ofFn.mp left
-  obtain ⟨j,rfl⟩ := List.mem_ofFn.mp right
-  have neither : i ≠ j := fun equal => (lt_irrefl _ : ¬ latticeVertexOrder steps slopes (latticeVertex line i) < _)
-    (equal.symm ▸ ordered)
-  have stage : i < j := by
-    change toLex (latticeVertex line i |>.1, toLex (latticeVertex line i |>.2)) <
-      toLex (latticeVertex line j |>.1, toLex (latticeVertex line j |>.2)) at ordered
-    rcases Prod.Lex.toLex_lt_toLex.mp ordered with less | ⟨equal,_⟩
-    · exact less
-    · exact (neither equal).elim
-  have injective : Function.Injective (latticeVertex line) := fun _ _ same => congrArg Prod.fst same
-  refine ⟨List.mem_ofFn.mpr ⟨i,rfl⟩, List.mem_ofFn.mpr ⟨j,rfl⟩, ?_⟩
-  simpa only [latticePaths, idxOf_ofFn_injective (latticeVertex line) injective i,
-    idxOf_ofFn_injective (latticeVertex line) injective j] using (show i.val < j.val from stage)
-
-/-- Independent layer and slope counts give exact demand and edge counts. -/
-theorem two_parameter_offline_lattice_lower {steps slopes : ℕ} (positive : 0 < steps) :
-    ∃ (G : Arcs (OrderedLatticeVertex steps slopes)) (D : Arcs (OrderedLatticeVertex steps slopes)),
-      IsDAG G ∧ D.card = steps^2*slopes^4 ∧ (∀ d ∈ D, Reach G d.1 d.2) ∧
-        ∀ H ⊆ G, Preserves G H D.toList → H.card = steps^3*slopes^4 := by
+/-- Each row visits all layers in order. Full bridge exclusion makes all of
+their consecutive arcs necessary for the endpoints in the layered overlay. -/
+private theorem offline_layered_paths {X W I : Type*} [DecidableEq X] [LinearOrder W] [Fintype W] [Fintype I]
+    {steps : ℕ} (positive : 0 < steps) (order : X ≃ W)
+    (row : I → Fin (steps+1) → Fin (steps+1) × X)
+    (first : ∀ i j, (row i j).1 = j)
+    (free : ∀ k, IsEmpty (Bridge (BeforeIn (fun i => List.ofFn (row i))) k)) :
+    ∃ (G D : Arcs (Fin (steps+1) ×ₗ W)),
+      IsDAG G ∧ D.card = Fintype.card I ∧ (∀ d ∈ D, Reach G d.1 d.2) ∧
+      ∀ H ⊆ G, Preserves G H D.toList → H.card = steps*Fintype.card I := by
   classical
-  let count := Fintype.card (LatticeLine steps slopes)
-  let line := (Fintype.equivFin (LatticeLine steps slopes)).symm
-  let vertex := latticeVertexOrder steps slopes
-  let paths (i : Fin count) := (latticePaths (line i)).toFinset.map vertex.toEmbedding
+  let count := Fintype.card I
+  let index := (Fintype.equivFin I).symm
+  let vertex : (Fin (steps+1) × X) ≃ (Fin (steps+1) ×ₗ W) :=
+    ((Equiv.refl _).prodCongr order).trans toLex
+  let paths (i : Fin count) := (List.ofFn (row (index i))).toFinset.map vertex.toEmbedding
+  have injective (i : I) : Function.Injective (row i) := by
+    intro j q same
+    simpa only [first] using congrArg Prod.fst same
   have pathSize (i : Fin count) : (paths i).card = steps+1 := by
-    rw [Finset.card_map, List.toFinset_card_of_nodup (latticePaths_simple _)]
-    simp [latticePaths]
+    rw [Finset.card_map, List.toFinset_card_of_nodup (List.nodup_ofFn.mpr (injective _))]
+    simp
   have nonempty (i : Fin count) : (paths i).Nonempty := Finset.card_pos.mp (by rw [pathSize]; omega)
-  have free (k : ℕ) : IsEmpty (Bridge (PathBefore paths) k) := by
-    refine ⟨fun b => (latticePaths_fullFree steps slopes k).false ?_⟩
-    have steps (i : Fin count) (u v : OrderedLatticeVertex steps slopes) (step : PathBefore paths i u v) :
-        ListBefore latticePaths (line i) (vertex.symm u) (vertex.symm v) := by
+  have legal (k : ℕ) : IsEmpty (Bridge (PathBefore paths) k) := by
+    refine ⟨fun b => (free k).false ?_⟩
+    have translate (i : Fin count) (u v : Fin (steps+1) ×ₗ W) (step : PathBefore paths i u v) :
+        BeforeIn (fun i => List.ofFn (row i)) (index i) (vertex.symm u) (vertex.symm v) := by
       obtain ⟨left,right,forward⟩ := step
       obtain ⟨a,ha,rfl⟩ := Finset.mem_map.mp left
       obtain ⟨b,hb,rfl⟩ := Finset.mem_map.mp right
-      simpa only [Equiv.toEmbedding_apply, Equiv.symm_apply_apply] using
-        latticeBefore_of_ordered (List.mem_toFinset.mp ha) (List.mem_toFinset.mp hb) forward
-    exact (b.mapVertices vertex.symm vertex.symm.injective steps).mapPaths line line.injective
+      obtain ⟨j,rfl⟩ := List.mem_ofFn.mp (List.mem_toFinset.mp ha)
+      obtain ⟨q,rfl⟩ := List.mem_ofFn.mp (List.mem_toFinset.mp hb)
+      have firstOrdered : j < q := by
+        change toLex ((row (index i) j).1, order (row (index i) j).2) <
+          toLex ((row (index i) q).1, order (row (index i) q).2) at forward
+        rcases Prod.Lex.toLex_lt_toLex.mp forward with less | ⟨equal,_⟩
+        · simpa only [first] using less
+        · simp only [first] at equal
+          subst q
+          exact (lt_irrefl _ forward).elim
+      simp only [Equiv.toEmbedding_apply, Equiv.symm_apply_apply]
+      refine ⟨List.mem_ofFn.mpr ⟨j,rfl⟩,List.mem_ofFn.mpr ⟨q,rfl⟩,?_⟩
+      simpa only [idxOf_ofFn_injective _ (injective (index i))]
+        using (show j.val < q.val from firstOrdered)
+    exact (b.mapVertices vertex.symm vertex.symm.injective translate).mapPaths index index.injective
       (fun _ _ _ h => h)
-  rw [show steps^2*slopes^4 = count from (by simp [count]; ring)]
-  obtain ⟨G, pairs, dag, length, service, all⟩ := theorem14_acyclic_overlay_lower nonempty free
+  obtain ⟨G, pairs, dag, length, service, all⟩ := theorem14_acyclic_overlay_lower nonempty legal
   have mass : (∑ i : Fin count, (paths i).card) = count*(steps+1) := by simp [pathSize]
-  have retain (H : Arcs (OrderedLatticeVertex steps slopes)) (sub : H ⊆ G) (preserved : Preserves G H pairs) : H.card = count*steps := by
+  have retain (H : Arcs (Fin (steps+1) ×ₗ W)) (sub : H ⊆ G) (preserved : Preserves G H pairs) :
+      H.card = count*steps := by
     have same := all H sub preserved
     rw [length, Fintype.card_fin, mass, Nat.mul_succ] at same
     omega
   have graph : G.card = count*steps := retain G Subset.rfl (fun _ _ => Iff.rfl)
-  let possible : Arcs (OrderedLatticeVertex steps slopes) := univ.filter fun d => Reach G d.1 d.2
+  let possible : Arcs (Fin (steps+1) ×ₗ W) := univ.filter fun d => Reach G d.1 d.2
   have enough : count ≤ possible.card := by
     have subset : G ⊆ possible := fun d edge => mem_filter.mpr ⟨mem_univ _, Relation.ReflTransGen.single edge⟩
     exact (Nat.le_mul_of_pos_right count positive).trans (graph ▸ card_le_card subset)
@@ -201,9 +204,21 @@ theorem two_parameter_offline_lattice_lower {steps slopes : ℕ} (positive : 0 <
   obtain ⟨D, original, possibleD, size⟩ := exists_subsuperset_card_eq included small enough
   refine ⟨G,D,dag,size,fun d hd => (mem_filter.mp (possibleD hd)).2,?_⟩
   intro H sub preserves
-  have result := retain H sub (fun d hd => preserves d (Finset.mem_toList.mpr (original (List.mem_toFinset.mpr hd))))
-  rw [result]
-  simp [count]
+  exact (retain H sub (fun d hd => preserves d (Finset.mem_toList.mpr (original (List.mem_toFinset.mpr hd))))).trans (mul_comm _ _)
+
+/-- Independent layer and slope counts give exact demand and edge counts. -/
+theorem two_parameter_offline_lattice_lower {steps slopes : ℕ} (positive : 0 < steps) :
+    ∃ (G : Arcs (OrderedLatticeVertex steps slopes)) (D : Arcs (OrderedLatticeVertex steps slopes)),
+      IsDAG G ∧ D.card = steps^2*slopes^4 ∧ (∀ d ∈ D, Reach G d.1 d.2) ∧
+        ∀ H ⊆ G, Preserves G H D.toList → H.card = steps^3*slopes^4 := by
+  obtain ⟨G,D,dag,count,service,lower⟩ :=
+    offline_layered_paths positive (toLex : (Fin (2*(steps*slopes)) × Fin (2*(steps*slopes^2))) ≃ _)
+      (@latticeVertex steps slopes) (fun _ _ => rfl) (latticePaths_fullFree steps slopes)
+  have labels : Fintype.card (LatticeLine steps slopes) = steps^2*slopes^4 := by
+    simp [LatticeLine]
+    ring
+  refine ⟨G,D,dag,count.trans labels,service,fun H sub preserves => ?_⟩
+  rw [lower H sub preserves, labels]
   ring
 
 abbrev LayerVertex (L : ℕ) := LatticeVertex L L
@@ -293,5 +308,177 @@ theorem layered_offline_lower {L : ℕ} (positive : 0 < L) :
         ∀ H ⊆ G, Preserves G H D.toList → H.card = L^7 := by
   rw [← show L^2*L^4 = L^6 by ring, ← show L^3*L^4 = L^7 by ring]
   exact two_parameter_offline_lattice_lower (slopes := L) positive
+
+private theorem grid_weighted_variance {I J : Type*} [Fintype I] [Fintype J]
+    (h : I → ℤ) (a : I → J → ℤ) (r : J → ℤ) (total : ℤ)
+    (positive : ∀ i, 0 < h i) (widths : ∑ i, h i = total)
+    (linear : ∀ j, ∑ i, h i*a i j = total*r j)
+    (energy : ∑ i, h i*(∑ j, (a i j)^2) = total*(∑ j, (r j)^2)) :
+    ∀ i, a i = r := by
+  have expand (i : I) (j : J) :
+      h i*(a i j-r j)^2 = h i*(a i j)^2-(2*r j)*(h i*a i j)+(r j)^2*h i := by ring
+  have first : (∑ i, ∑ j, h i*(a i j)^2) = total*(∑ j, (r j)^2) := by
+    simp_rw [← mul_sum]
+    exact energy
+  have second : (∑ i, ∑ j, (2*r j)*(h i*a i j)) = 2*total*(∑ j, (r j)^2) := by
+    rw [sum_comm]
+    simp_rw [← mul_sum, linear, mul_sum]
+    apply sum_congr rfl
+    intro j _
+    ring
+  have third : (∑ i, ∑ j, (r j)^2*h i) = total*(∑ j, (r j)^2) := by
+    rw [sum_comm]
+    simp_rw [← mul_sum, widths, mul_comm (total : ℤ), sum_mul]
+  have variance : (∑ i, ∑ j, h i*(a i j-r j)^2) = 0 := by
+    simp_rw [expand, sum_add_distrib, sum_sub_distrib]
+    rw [first,second,third]
+    ring
+  have nonneg (i : I) (j : J) : 0 ≤ h i*(a i j-r j)^2 :=
+    mul_nonneg (positive i).le (sq_nonneg _)
+  intro i
+  funext j
+  have rowZero := (sum_eq_zero_iff_of_nonneg
+    (fun i (_ : i ∈ univ) => sum_nonneg (fun j _ => nonneg i j))).mp variance i (mem_univ i)
+  have entryZero := (sum_eq_zero_iff_of_nonneg (fun j (_ : j ∈ univ) => nonneg i j)).mp rowZero j (mem_univ j)
+  exact sub_eq_zero.mp (sq_eq_zero_iff.mp ((mul_eq_zero.mp entryZero).resolve_left (positive i).ne'))
+
+abbrev GridGround (dimension steps slopes : ℕ) :=
+  (Fin dimension → Fin (2*(steps*slopes))) × Fin (2*(steps*dimension*slopes^2))
+
+abbrev GridVertex (dimension steps slopes : ℕ) :=
+  Fin (steps+1) × GridGround dimension steps slopes
+
+abbrev GridLine (dimension steps slopes : ℕ) :=
+  (Fin dimension → Fin slopes) × ((Fin dimension → Fin (steps*slopes)) × Fin (steps*dimension*slopes^2))
+
+private def gridEnergy {dimension slopes : ℕ} (s : Fin dimension → Fin slopes) : ℕ :=
+  ∑ j, (s j).val^2
+
+private theorem gridEnergy_le {dimension slopes : ℕ} (s : Fin dimension → Fin slopes) :
+    gridEnergy s ≤ dimension*slopes^2 := by
+  have each (j : Fin dimension) : (s j).val^2 ≤ slopes^2 :=
+    Nat.pow_le_pow_left (s j).isLt.le 2
+  unfold gridEnergy
+  calc
+    _ ≤ ∑ _ : Fin dimension, slopes^2 := sum_le_sum fun j _ => each j
+    _ = _ := by simp
+
+private def gridVertex {dimension steps slopes : ℕ} (line : GridLine dimension steps slopes)
+    (i : Fin (steps+1)) : GridVertex dimension steps slopes :=
+  (i, (fun j =>
+    ⟨(line.2.1 j).val + i.val*(line.1 j).val, by
+      have base := (line.2.1 j).isLt
+      have advance : i.val*(line.1 j).val ≤ steps*slopes :=
+        Nat.mul_le_mul (by omega) (line.1 j).isLt.le
+      omega⟩),
+    ⟨line.2.2.val + i.val*gridEnergy line.1, by
+      have base := line.2.2.isLt
+      have advance : i.val*gridEnergy line.1 ≤ steps*dimension*slopes^2 := by
+        simpa only [Nat.mul_assoc] using
+          (Nat.mul_le_mul (Nat.le_of_lt_succ i.isLt) (gridEnergy_le line.1))
+      omega⟩)
+
+private def gridPaths {dimension steps slopes : ℕ} (line : GridLine dimension steps slopes) :
+    List (GridVertex dimension steps slopes) :=
+  List.ofFn (gridVertex line)
+
+private theorem gridVertex_injective {dimension steps slopes : ℕ} (line : GridLine dimension steps slopes) :
+    Function.Injective (gridVertex line) := fun _ _ eq => congrArg Prod.fst eq
+
+private theorem gridBefore_geometry {dimension steps slopes : ℕ} {line : GridLine dimension steps slopes}
+    {u v : GridVertex dimension steps slopes} (step : BeforeIn gridPaths line u v) :
+    let h := (v.1.val : ℤ) - u.1.val
+    0 < h ∧ (∀ j, ((v.2.1 j).val : ℤ) - (u.2.1 j).val = h*(line.1 j).val) ∧
+      (v.2.2.val : ℤ) - u.2.2.val = h*∑ j, ((line.1 j).val : ℤ)^2 := by
+  obtain ⟨ha,hb,less⟩ := step
+  obtain ⟨i,rfl⟩ := List.mem_ofFn.mp ha
+  obtain ⟨j,rfl⟩ := List.mem_ofFn.mp hb
+  have stage : i.val < j.val := by
+    unfold gridPaths at less
+    simpa only [idxOf_ofFn_injective (gridVertex line) (gridVertex_injective line)] using less
+  refine ⟨by simpa [gridVertex, sub_pos] using (Int.ofNat_lt.mpr stage),?_,?_⟩
+  · intro q
+    simp only [gridVertex, Nat.cast_add, Nat.cast_mul]
+    ring
+  · simp only [gridVertex, gridEnergy, Nat.cast_add, Nat.cast_mul, Nat.cast_sum, Nat.cast_pow]
+    ring
+
+private theorem grid_line_eq_of_slope_of_mem {dimension steps slopes : ℕ} {a b : GridLine dimension steps slopes}
+    {w : GridVertex dimension steps slopes}
+    (slope : a.1 = b.1) (ha : w ∈ gridPaths a) (hb : w ∈ gridPaths b) : a = b := by
+  obtain ⟨i,ia⟩ := List.mem_ofFn.mp ha
+  obtain ⟨j,jb⟩ := List.mem_ofFn.mp hb
+  have equal := ia.trans jb.symm
+  have layer : i = j := congrArg Prod.fst equal
+  subst j
+  apply Prod.ext slope
+  apply Prod.ext
+  · funext q
+    apply Fin.ext
+    have same := congrArg (fun v : GridVertex dimension steps slopes => (v.2.1 q).val) equal
+    change (a.2.1 q).val + i.val*(a.1 q).val = (b.2.1 q).val + i.val*(b.1 q).val at same
+    rw [slope] at same
+    exact Nat.add_right_cancel same
+  · apply Fin.ext
+    have same := congrArg (fun v : GridVertex dimension steps slopes => v.2.2.val) equal
+    change a.2.2.val + i.val*gridEnergy a.1 = b.2.2.val + i.val*gridEnergy b.1 at same
+    rw [slope] at same
+    exact Nat.add_right_cancel same
+
+/-- The layer increments force the directional variance of every alleged
+bridge to vanish, even when the slope has several coordinates. -/
+theorem gridPaths_fullFree (dimension steps slopes k : ℕ) :
+    IsEmpty (Bridge (BeforeIn (@gridPaths dimension steps slopes)) k) := by
+  refine ⟨fun b => ?_⟩
+  let layer (j : Fin (k+2)) : ℤ := (b.vertex j).1.val
+  let coordinate (q : Fin dimension) (j : Fin (k+2)) : ℤ := ((b.vertex j).2.1 q).val
+  let squareCoordinate (j : Fin (k+2)) : ℤ := (b.vertex j).2.2.val
+  let h (i : Fin (k+1)) := layer i.succ-layer i.castSucc
+  let a (i : Fin (k+1)) (q : Fin dimension) : ℤ := ((b.arc i).1 q).val
+  let r (q : Fin dimension) : ℤ := (b.river.1 q).val
+  let total := layer (Fin.last (k+1))-layer 0
+  have step (i : Fin (k+1)) : 0 < h i ∧
+      (∀ q, coordinate q i.succ-coordinate q i.castSucc = h i*a i q) ∧
+      squareCoordinate i.succ-squareCoordinate i.castSucc = h i*∑ q, (a i q)^2 :=
+    gridBefore_geometry (b.arcStep i)
+  have river : (∀ q, coordinate q (Fin.last (k+1))-coordinate q 0 = total*r q) ∧
+      squareCoordinate (Fin.last (k+1))-squareCoordinate 0 = total*∑ q, (r q)^2 :=
+    (gridBefore_geometry b.riverStep).2
+  have widths : ∑ i, h i = total := fin_telescope layer
+  have linear (q : Fin dimension) : ∑ i, h i*a i q = total*r q := by
+    simp_rw [← (fun i => (step i).2.1 q)]
+    exact (fin_telescope (coordinate q)).trans (river.1 q)
+  have energy : ∑ i, h i*(∑ q, (a i q)^2) = total*(∑ q, (r q)^2) := by
+    simp_rw [← (fun i => (step i).2.2)]
+    exact (fin_telescope squareCoordinate).trans river.2
+  have same := grid_weighted_variance h a r total (fun i => (step i).1) widths linear energy
+  have label : (b.arc 0).1 = b.river.1 :=
+    funext fun q => Fin.ext (Int.ofNat_inj.mp (congrFun (same 0) q))
+  exact b.river_ne_arc 0 (grid_line_eq_of_slope_of_mem label (b.arcStep 0).1 b.riverStep.1).symm
+
+abbrev OrderedGridVertex (dimension steps slopes : ℕ) :=
+  Fin (steps+1) ×ₗ Fin (Fintype.card (GridGround dimension steps slopes))
+
+theorem orderedGridVertex_card (dimension steps slopes : ℕ) :
+    Fintype.card (OrderedGridVertex dimension steps slopes) =
+      (steps+1)*(2*(steps*slopes))^dimension*(2*(steps*dimension*slopes^2)) := by
+  simp [OrderedGridVertex, GridGround, Fintype.card_prod, Fintype.card_pi, mul_assoc]
+
+theorem gridLine_card (dimension steps slopes : ℕ) :
+    Fintype.card (GridLine dimension steps slopes) =
+      slopes^dimension*(steps*slopes)^dimension*(steps*dimension*slopes^2) := by
+  simp [GridLine, Fintype.card_prod, Fintype.card_pi, mul_assoc]
+
+/-- The multidimensional paraboloid gives an exact-size DAG with distinct
+reachable demands, each forcing all of its consecutive edges. -/
+theorem multidimensional_offline_lattice_lower {dimension steps slopes : ℕ} (positive : 0 < steps) :
+    ∃ (G D : Arcs (OrderedGridVertex dimension steps slopes)),
+      IsDAG G ∧ D.card = slopes^dimension*(steps*slopes)^dimension*(steps*dimension*slopes^2) ∧
+      (∀ d ∈ D, Reach G d.1 d.2) ∧ ∀ H ⊆ G, Preserves G H D.toList → H.card = steps*D.card := by
+  obtain ⟨G,D,dag,size,reachable,lower⟩ :=
+    offline_layered_paths positive (Fintype.equivFin (GridGround dimension steps slopes))
+      (@gridVertex dimension steps slopes) (fun _ _ => rfl) (gridPaths_fullFree dimension steps slopes)
+  exact ⟨G,D,dag,size.trans (gridLine_card _ _ _),reachable,fun H sub preserves =>
+    (lower H sub preserves).trans (congrArg (steps * ·) size.symm)⟩
 
 end OnlineReachabilityPreservers.SourceAudit
