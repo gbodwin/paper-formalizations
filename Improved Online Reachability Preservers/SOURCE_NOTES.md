@@ -77,6 +77,19 @@ that disjoint consecutive splits preserve the bridge condition through size four
 in the acyclic scope. [Regularization](OnlineReachabilityPreservers/Regularization.lean)
 uses this to prove the upper caps with at most twice the ambient budgets.
 
+## The cited consecutive-edge overlay can admit an alternate path
+
+The same three simple paths have no bridge of any size. Their endpoint
+demands are \((0,3),(3,0),(2,1)\), and their consecutive edges consist of
+the four-cycle \(0\to1\to2\to3\to0\) and the chord \(2\to1\). The cycle
+alone preserves all three demands. In particular, the original chord and
+the route \(2\to3\to0\to1\) give two distinct simple paths for the last
+demand. This falsifies the uniqueness step of the cited lower-bound
+construction. The asymptotic extremal lower bound remains a separate
+proof obligation.
+[Checked counterexample](OnlineReachabilityPreservers/SplitAudit.lean)
+· [Bridge Girth, Lemma 40](https://arxiv.org/pdf/2212.11944v4).
+
 ## Matters requiring proof or clarification
 
 - Lemma 13's pigeonhole step can pick two paths whose only intersection with

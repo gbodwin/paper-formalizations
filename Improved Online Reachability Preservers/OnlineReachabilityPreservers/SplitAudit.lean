@@ -1,9 +1,11 @@
 import OnlineReachabilityPreservers.Bridges
 import Mathlib.Data.Fin.VecNotation
 
-/-! A counterexample to the printed splitting step of Lemmas 23 and 39 on general path systems. -/
+/-! A cyclic example for the printed splitting step and the cited consecutive-edge overlay. -/
 
 namespace OnlineReachabilityPreservers.SourceAudit
+
+open Finset
 
 def splitExample : Fin 3 → List (Fin 4) := ![[0, 1, 2, 3], [3, 0], [2, 1]]
 
@@ -80,5 +82,35 @@ theorem splitExample_creates_half_four :
     unfold BeforeIn
     decide
   exact ⟨⟨v, a, 3, fun {_ _} => hv _ _, fun {_ _} => ha _ _, hr, hs, ht⟩, by change (0 : Fin 4) < 3; decide⟩
+
+/-- The consecutive-edge overlay of the three paths in the split example. -/
+def splitExampleOverlay : Arcs (Fin 4) :=
+  (univ : Finset (Fin 3)).biUnion fun i =>
+    ((splitExample i).zip ((splitExample i).drop 1)).toFinset
+
+def splitExampleDemands : List (Fin 4 × Fin 4) :=
+  (List.finRange 3).map fun i => ((splitExample i).headD 0,(splitExample i).getLastD 0)
+
+private def cycleWithoutChord : Arcs (Fin 4) := {(0,1),(1,2),(2,3),(3,0)}
+
+private theorem splitExampleOverlay_eq :
+    splitExampleOverlay = {(0,1),(1,2),(2,3),(3,0),(2,1)} := by decide
+
+/-- The consecutive-edge construction in Lemma 40 of Bridge Girth can lose
+an edge even for a full bridge-free system of simple paths. -/
+theorem lemma14_overlay_counterexample :
+    (∀ k, IsEmpty (Bridge (BeforeIn splitExample) k)) ∧
+    (∀ i, (splitExample i).Nodup) ∧ splitExampleDemands = [(0,3),(3,0),(2,1)] ∧
+    splitExampleOverlay.card = 5 ∧
+    ∃ H ⊆ splitExampleOverlay, H.card = 4 ∧ (2,1) ∉ H ∧
+      Preserves splitExampleOverlay H splitExampleDemands := by
+  refine ⟨splitExample_bridge_free,by decide,by decide,by rw [splitExampleOverlay_eq]; decide,
+    cycleWithoutChord,?_,by decide,by decide,?_⟩
+  · rw [splitExampleOverlay_eq]
+    decide
+  · have sub : cycleWithoutChord ⊆ splitExampleOverlay := by rw [splitExampleOverlay_eq]; decide
+    have allPairs : ∀ u v : Fin 4, u ∈ reaches cycleWithoutChord v := by decide
+    intro d _
+    exact ⟨reach_mono sub,fun _ => mem_reaches.mp (allPairs d.1 d.2)⟩
 
 end OnlineReachabilityPreservers.SourceAudit

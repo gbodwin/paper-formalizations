@@ -155,6 +155,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   replay passed. Independent review checked the marginals, cut and prefix
   failure events, and the fallback cost on fixed traces.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44437612106).
+- [d8973af3](https://github.com/gbodwin/paper-formalizations/commit/d8973af3071bd7156fa5c9b5e13491bc07b6ab95)
+  replaces cut enumeration in the thin routine with a verified residual
+  separator. The 1350-declaration paper audit and local kernel replay passed.
+  Independent review checked signed flow with opposing arcs, the local cut
+  equality, and both bounded update loops on the executed path.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44438527138).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
