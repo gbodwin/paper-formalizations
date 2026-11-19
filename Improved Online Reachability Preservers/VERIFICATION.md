@@ -206,6 +206,13 @@ An exact-source replay grants no coverage to a paper statement outside the
   passed. Independent review checked the transcript, lattice forcing,
   counting, rounding, and the finite constant.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44447445893).
+- [b07c0140](https://github.com/gbodwin/paper-formalizations/commit/b07c014083ec716ecc386e75cb70be035eed6fca)
+  verifies distinct roots, unique rootward routes, the terminal block count,
+  and the persistent virtual-terminal example. The 1775-declaration audit
+  and local kernel replay passed. Independent review checked all three
+  mathematical components and identified the leaf condition addressed
+  by the stronger example.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44448933901).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

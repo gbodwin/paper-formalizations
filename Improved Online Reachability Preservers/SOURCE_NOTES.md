@@ -108,11 +108,13 @@ before invoking ordinary online Steiner forest. Keeping these free
 attachments across rounds can make a later pair connected by a route
 that leaves its tree through earlier virtual terminals.
 
-Lean checks the example with paths `4–0–1–5` and `2–3`. The paid edges
-serve the first groups `{0,2}` and `{1,3}` through `2–3`. The second request
-has endpoints `4` and `5` and needs the unpaid arc between `0` and `1`
-in the original forest. Earlier attachments give a detour from `0`
-through `2–3` to `1`. The claim that ordinary connectivity recovers a
+Lean checks a two-tree example with roots `12` and `13` and all group
+representatives at leaves. The paid edges serve the first groups `{0,2}`
+and `{1,3}` through the tree rooted at `13`. The second request has
+endpoints `4` and `5` and needs the unpaid arc from `14` to `10` in the
+tree rooted at `12`. Both root-side attachments are present there.
+Earlier virtual terminals give a detour from `0` through the other
+tree to `1`. The claim that ordinary connectivity recovers a
 group solution under persistent attachments is false. A separate argument
 is needed for the deterministic competitive guarantee. The full arXiv
 version states a randomized result and uses group Steiner forest with

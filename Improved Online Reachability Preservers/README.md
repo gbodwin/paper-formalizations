@@ -73,7 +73,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   Merging pieces at the same root preserves their service without increasing
   cost. The [height-reduction count](OnlineReachabilityPreservers/SteinerHeightIntervals.lean)
   bounds the number of child blocks whose parent straddles either boundary
-  of a terminal interval. Constructing the full auxiliary forest and its
+  of a terminal interval. The [ordered routes](OnlineReachabilityPreservers/SteinerRootOrder.lean)
+  show that the terminals using any original arc form such an interval.
+  Constructing the full auxiliary forest and its
   online rounding algorithm remains open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
