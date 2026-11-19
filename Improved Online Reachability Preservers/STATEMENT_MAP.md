@@ -136,7 +136,12 @@ fractional run on the paired height forest \(H\) with \(p\)
 requests makes at most \(p((B+1)B+1)\) separator calls for
 \(B=\max(1,n|V(H)|^2)\).
 Each integer augmentation loop makes at most its supplied number
-of path searches. The [route counters](OnlineReachabilityPreservers/RouteWork.lean)
+of path searches. The [separator work](OnlineReachabilityPreservers/SeparatorWork.lean)
+bounds residual pair inspections and route tests within each augmentation,
+accounts for the final reachability search on a failed flow, and composes
+the work over a full weighted fractional run on the paired forest. The
+thin separator shares its reachability interval across capacity tests.
+The [route counters](OnlineReachabilityPreservers/RouteWork.lean)
 bound arc inspections for SCC labels and shortest routes, and
 sum the search work over greedy forwards growth. They also bound
 SCC projection and lift calls and the number of thin-flow separators.

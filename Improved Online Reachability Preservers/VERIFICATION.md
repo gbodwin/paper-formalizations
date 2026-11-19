@@ -394,6 +394,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   local kernel replay passed. Independent review checked the exact induced
   lists, the caps and preservation of the previous moment statement.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44477790171).
+- [da12bf52](https://github.com/gbodwin/paper-formalizations/commit/da12bf5247e2296bbc8264786ba5b2bb3d203ef0)
+  proves the unrestricted offline recurrence and Theorem 43 with zero
+  exponent slack. The 3041-declaration audit and local kernel replay
+  passed. Independent review checked the actual sampled subfamilies,
+  sparse and out-of-window cases, uniform constant and pointwise limit.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44478646760).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
