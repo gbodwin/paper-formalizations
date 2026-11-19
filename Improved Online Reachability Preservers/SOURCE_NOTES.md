@@ -151,6 +151,31 @@ excludes every half-bridge. This sets the limit for arbitrary simple paths
 of the checked vertex-split preservation through cutoff four.
 [Size-five vertex split](OnlineReachabilityPreservers/VertexSplitAudit.lean).
 
+## A common vertex partition preserves the bridge exclusions
+
+Restrict every path to each part of a fixed partition of the vertices.
+Every arc step stays in one part. In a bridge, adjacent arcs share a corner
+and the river starts at the first corner, so all its pieces use that part.
+Within one part, the pieces have distinct parents and retain their parents'
+arrival order. The projection gives a bridge with the same size and, for a
+half-bridge, the same earlier-last-arc relation. The partition preserves
+both the total mass and each vertex degree.
+
+The resulting path count must fit the budget. With positive budgets \(n,p\)
+and original mass \(M\ge\max(n,p)\), let \(L=\lfloor4M/p\rfloor>0\).
+A subfamily of \(r\) paths
+can use a partition into parts of size at most \(L\) when
+\(r\lceil n/L\rceil\le p\). Truncating every original path to length \(L\)
+is another way to cap lengths without creating bridges. Either method gives
+a cleaned witness with both original budgets, all four original-average caps,
+and at least \(M/16\) incidences when the capped subsystem retains at least
+\(3M/4\). If degrees still exceed the upper cap, the proof needs a vertex
+split. This step preserves full exclusion at every cutoff and half exclusion
+through cutoff four. With degrees already capped, peeling alone works at any
+cutoff. A general guarantee of a suitable length-capped subsystem remains open.
+[Partition and budget proofs](OnlineReachabilityPreservers/VertexPartitionCleaning.lean)
+· [Truncation and frozen caps](OnlineReachabilityPreservers/LocalFrozenCleaning.lean).
+
 ## The cited consecutive-edge overlay can admit an alternate path
 
 The paths `[(0,1,2,3), (3,0), (2,1)]` have no bridge of any size. Their endpoint

@@ -845,6 +845,13 @@ demand count used in the coefficient 24, and the dependency on the direct
 proof of Theorem 11.
 [Reviewed counting proofs](OnlineReachabilityPreservers/RestrictedIncidence.lean).
 
+Independent review checked the shared vertex partition, preservation of
+mass and degrees, the number of piece slots, and the original-mass caps.
+It confirmed the (M/16) bound under the preprocessing hypotheses and the
+unchanged (M/119) bound for the earlier full-bridge cutoffs.
+[Reviewed partition proofs](OnlineReachabilityPreservers/VertexPartitionCleaning.lean)
+· [Reviewed frozen caps](OnlineReachabilityPreservers/LocalFrozenCleaning.lean).
+
 ## Execution examples
 
 A finite execution check of the PaperLab example gave cumulative purchases

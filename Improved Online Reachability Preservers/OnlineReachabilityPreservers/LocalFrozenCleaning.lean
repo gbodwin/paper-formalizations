@@ -200,15 +200,16 @@ local notation "ListBefore" => SourceAudit.BeforeIn
 
 private theorem frozenListCaps_relabel {V I : Type*}
     [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] (paths : I → List V)
-    (simple : ∀ i, (paths i).Nodup) {n p M k : ℕ} (allowed : BridgeFree (ListBefore paths) k)
+    (simple : ∀ i, (paths i).Nodup) {n p M k : ℕ} {half : Bool}
+    (allowed : localOrderAdmissible half k paths)
     (caps : frozenListCaps n p M paths) :
     ∃ clean : Fin (Fintype.card I) → List (Fin (Fintype.card V)),
-      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       (∑ i, (clean i).length) = (∑ i, (paths i).length) ∧ frozenListCaps n p M clean := by
   let vIso : Fin (Fintype.card V) ≃o V := Fintype.orderIsoFinOfCardEq V rfl
   let iIso : Fin (Fintype.card I) ≃o I := Fintype.orderIsoFinOfCardEq I rfl
   obtain ⟨cleanSimple, cleanLegal, mass, degrees, lengths⟩ :=
-    relabelListPathsFin_spec paths simple (half := false) (k := k) allowed
+    relabelListPathsFin_spec paths simple (half := half) (k := k) allowed
   refine ⟨relabelListPathsFin paths, cleanSimple, cleanLegal, mass, ?_⟩
   exact ⟨fun v => by rw [degrees]; exact caps.1 (vIso v),
     fun i => by rw [lengths]; exact caps.2 (iIso i)⟩
@@ -223,36 +224,22 @@ variable {V I : Type*} [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
 
 local notation "ListBefore" => SourceAudit.BeforeIn
 
-private theorem frozen_cut_of_caps {k : ℕ} (pieces : I → List V) (pieceSimple : ∀ i, (pieces i).Nodup)
-    (piecesFree : BridgeFree (ListBefore pieces) k)
-    {M n p D L : ℕ} (hn : 0 < n) (hp : 0 < p)
-    (vertices : 11*Fintype.card V ≤ 14*n) (families : 11*Fintype.card I ≤ 17*p)
-    (total : (∑ i, (pieces i).toFinset.card) = M)
+private theorem frozen_cut_of_caps {k : ℕ} {half : Bool} (pieces : I → List V)
+    (pieceSimple : ∀ i, (pieces i).Nodup) (piecesFree : localOrderAdmissible half k pieces)
+    {M n p D L vNum vDen pNum pDen retention : ℕ} (hn : 0 < n) (hp : 0 < p)
+    (vPos : 0 < vDen) (pPos : 0 < pDen) (vRatio : vNum ≤ vDen) (pRatio : pNum ≤ pDen)
+    (vertices : vNum*Fintype.card V ≤ vDen*n) (families : pNum*Fintype.card I ≤ pDen*p)
+    (total : (∑ i, (pieces i).toFinset.card) ≤ M)
+    (enough : (vDen*pDen)*(retention+2)*M ≤ 2*(vNum*pNum)*retention*(∑ i, (pieces i).toFinset.card))
     (lengthCap : ∀ i : I, (pieces i).length ≤ L)
     (degreeCap : ∀ v : V, (occurrences (fun i => (pieces i).toFinset) v).card ≤ D)
     (capD : (D:ℝ) ≤ 4*(M:ℝ)/(n:ℝ)) (capL : (L:ℝ) ≤ 4*(M:ℝ)/(p:ℝ)) :
-    ∃ A : Finset V, ∃ B : Finset I,
-      let clean := restrictListPaths pieces A B
-      A.card ≤ n ∧ B.card ≤ p ∧ M ≤ 119*(∑ i, (clean i).length) ∧
-        (∑ i, (clean i).length) ≤ M ∧ (∀ i, (clean i).Nodup) ∧
-        (∀ v : A, (M:ℝ)/(4*(n:ℝ)) ≤ (occurrences (fun i => (clean i).toFinset) v).card ∧
-          ((occurrences (fun i => (clean i).toFinset) v).card : ℝ) ≤ 4*(M:ℝ)/(n:ℝ)) ∧
-        (∀ i : B, (M:ℝ)/(4*(p:ℝ)) ≤ ((clean i).length : ℝ) ∧
-          ((clean i).length : ℝ) ≤ 4*(M:ℝ)/(p:ℝ)) ∧ BridgeFree (ListBefore clean) k := by
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let Z (i : I) := (pieces i).toFinset
   obtain ⟨A,B,aCap,bCap,retained,minDegree,minLength⟩ :=
-    balancedRectangle_subsystem_of_ratios (retention := 119) Z hn hp
-      (by decide) (by decide) (by decide) (by decide) vertices families (by decide)
-  change (∑ i, (Z i).card) ≤ 119 * (∑ i : B, (rectanglePaths Z A B i).card) at retained
-  change ∀ v : A, ((∑ i, (Z i).card : ℕ) : ℝ)/(4*(n:ℝ)) ≤ (occurrences (rectanglePaths Z A B) v).card at minDegree
-  change ∀ i : B, ((∑ j, (Z j).card : ℕ) : ℝ)/(4*(p:ℝ)) ≤ (rectanglePaths Z A B i).card at minLength
-  have zTotal : (∑ i, (Z i).card) = M := total
-  have newRetained : M ≤ 119 * (∑ i : B, (rectanglePaths Z A B i).card) := by
-    simpa only [zTotal] using retained
-  have newMinDegree (v : A) : (M:ℝ)/(4*(n:ℝ)) ≤ (occurrences (rectanglePaths Z A B) v).card := by
-    simpa only [zTotal] using minDegree v
-  have newMinLength (i : B) : (M:ℝ)/(4*(p:ℝ)) ≤ ((rectanglePaths Z A B i).card:ℝ) := by
-    simpa only [zTotal] using minLength i
+    balancedRectangle_subsystem_of_ratios_frozen Z hn hp vPos pPos vRatio pRatio vertices families enough
   let clean := restrictListPaths pieces A B
   let rectangle := rectanglePaths Z A B
   have same (i : B) : (clean i).toFinset = rectangle i := restrictListPaths_toFinset pieces A B i
@@ -262,23 +249,146 @@ private theorem frozen_cut_of_caps {k : ℕ} (pieces : I → List V) (pieceSimpl
   have equals : (fun i => (clean i).toFinset) = rectangle := funext same
   have mass : (∑ i : B, (clean i).length) = ∑ i : B, (rectangle i).card :=
     sum_congr rfl (fun i _ => cleanLength i)
-  refine ⟨A,B,aCap,bCap,?_,?_,cleanSimple,?_,?_,?_⟩
-  · rw [mass]
-    exact newRetained
-  · rw [mass]
-    exact (rectanglePaths_mass_le Z A B).trans_eq total
-  · intro v
-    rw [equals]
-    exact ⟨newMinDegree v, (Nat.cast_le.mpr ((rectanglePaths_degree_le Z A B v).trans (degreeCap v.val))).trans capD⟩
-  · intro i
-    change (M:ℝ)/(4*(p:ℝ)) ≤ ((clean i).length : ℝ) ∧ _
-    refine ⟨by rw [cleanLength]; exact newMinLength i, ?_⟩
-    have cap : (clean i).length ≤ (pieces i.val).length := by
-      rw [show (clean i).length = ((pieces i.val).toFinset ∩ A).card from restrictListPath_length (pieceSimple i.val) A]
-      exact (card_le_card inter_subset_left).trans (List.toFinset_card_le _)
-    exact (Nat.cast_le.mpr (cap.trans (lengthCap i.val))).trans capL
-  · exact restrictListPaths_fullFree pieceSimple piecesFree A B
+  have caps : frozenListCaps n p M clean := by
+    constructor
+    · intro v
+      rw [equals]
+      exact ⟨minDegree v,
+        (Nat.cast_le.mpr ((rectanglePaths_degree_le Z A B v).trans (degreeCap v.val))).trans capD⟩
+    · intro i
+      refine ⟨by rw [cleanLength]; exact minLength i, ?_⟩
+      have cap : (clean i).length ≤ (pieces i.val).length := by
+        rw [show (clean i).length = ((pieces i.val).toFinset ∩ A).card from
+          restrictListPath_length (pieceSimple i.val) A]
+        exact (card_le_card inter_subset_left).trans (List.toFinset_card_le _)
+      exact (Nat.cast_le.mpr (cap.trans (lengthCap i.val))).trans capL
+  have legal : localOrderAdmissible half k clean := by
+    cases half
+    · exact restrictListPaths_fullFree pieceSimple piecesFree A B
+    · exact restrictListPaths_halfFree pieceSimple piecesFree A B
+  obtain ⟨relabeled, relabeledSimple, relabeledLegal, relabeledMass, relabeledCaps⟩ :=
+    frozenListCaps_relabel _ cleanSimple legal caps
+  refine ⟨Fintype.card A, ?_, Fintype.card B, ?_, relabeled, relabeledSimple, relabeledLegal,
+    ?_, ?_, relabeledCaps⟩
+  · simpa only [Fintype.card_coe] using aCap
+  · simpa only [Fintype.card_coe] using bCap
+  · rw [relabeledMass, mass]
+    exact retained
+  · rw [relabeledMass, mass]
+    exact (rectanglePaths_mass_le Z A B).trans total
 
+/-- If a length-capped subsystem retains three quarters of the original mass,
+peeling retains at least one sixteenth under both budgets. Split vertices
+when the bridge cutoff allows it, or use already capped degrees. -/
+theorem regularization_list_frozen_after_length_cap {half : Bool} {k n p M : ℕ}
+    (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k paths)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (vertices : Fintype.card V ≤ n) (families : Fintype.card I ≤ p)
+    (lengthCap : ∀ i, (paths i).length ≤ 4*M/p)
+    (degreeCondition : (half = true → k ≤ 4) ∨
+      (∀ v, (occurrences (fun i => (paths i).toFinset) v).card ≤ 4*M/n))
+    (loss : 3*M ≤ 4*(∑ i, (paths i).length)) (massCap : (∑ i, (paths i).length) ≤ M) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let D := 4*M/n
+  obtain ⟨dPos, dBudget, capD⟩ := four_average_width hn dense
+  obtain ⟨_, _, capL⟩ := four_average_width hp long
+  rcases degreeCondition with short | degreeCap
+  case inr =>
+    have total : (∑ i, (paths i).toFinset.card) = ∑ i, (paths i).length :=
+      sum_congr rfl fun i _ => List.toFinset_card_of_nodup (simple i)
+    exact frozen_cut_of_caps (retention := 16) paths simple allowed
+      (M := M) (n := n) (p := p) (D := D) (L := 4*M/p)
+      (vNum := 1) (vDen := 1) (pNum := 1) (pDen := 1)
+      hn hp (by decide) (by decide) (by decide) (by decide)
+      (by simpa only [one_mul] using vertices) (by simpa only [one_mul] using families)
+      (total.trans_le massCap) (by rw [total]; omega) lengthCap degreeCap capD capL
+  let copies := splitListVertices paths D
+  have copiesSimple (i : I) : (copies i).Nodup :=
+    List.Nodup.of_map (fun v => v.fst) ((splitListVertices_project paths D i).symm ▸ simple i)
+  have step {i : I} {x y : ListVertexBlockIndex paths D} (h : ListBefore copies i x y) :
+      ListBefore paths i x.fst y.fst := by
+    have orig := listBefore_map (fun v : ListVertexBlockIndex paths D => v.fst)
+      ((splitListVertices_project paths D i).symm ▸ simple i) h
+    simpa only [copies, splitListVertices_project] using orig
+  have legal : localOrderAdmissible half k copies := by
+    cases half
+    · exact (show BridgeFree (ListBefore paths) k from allowed).split_list_vertices_any (·.fst) step
+    · exact (show HalfBridgeFree (ListBefore paths) k from allowed).split_list_vertices_short
+        (short rfl) (·.fst) step
+  have total : (∑ i, (copies i).toFinset.card) = ∑ i, (paths i).length := by
+    apply sum_congr rfl
+    intro i _
+    rw [List.toFinset_card_of_nodup (copiesSimple i), splitListVertices_length]
+  have copiedVertices : 3*Fintype.card (ListVertexBlockIndex paths D) ≤ 4*n := by
+    have count := blockIndex_card_precise (occurrences (fun i => (paths i).toFinset)) dPos
+    rw [sum_occurrences] at count
+    simp only [List.toFinset_card_of_nodup (simple _)] at count
+    change Fintype.card (ListVertexBlockIndex paths D) ≤
+      Fintype.card V + (∑ i, (paths i).length)/D at count
+    have small := Nat.div_le_div_right (c := D) massCap
+    change 3*(M/D) ≤ n at dBudget
+    omega
+  have copiedDegree (v : ListVertexBlockIndex paths D) :
+      (occurrences (fun i => (copies i).toFinset) v).card ≤ D := by
+    simpa only [copies, splitListVertices_toFinset] using
+      (splitVertices_degree (fun i => (paths i).toFinset) dPos v)
+  exact frozen_cut_of_caps (retention := 16) copies copiesSimple legal
+      (M := M) (n := n) (p := p) (D := D) (L := 4*M/p)
+      (vNum := 3) (vDen := 4) (pNum := 1) (pDen := 1)
+      hn hp (by decide) (by decide) (by decide) (by decide) copiedVertices
+      (by simpa only [one_mul] using families) (total.trans_le massCap)
+      (by
+        change 4 * (16 + 2) * M ≤ 2 * 3 * 16 * (∑ i, (copies i).toFinset.card)
+        rw [total]
+        omega) (fun i => by simpa only [copies, splitListVertices_length] using lengthCap i)
+      copiedDegree capD capL
+
+/-- Truncating each path at the original upper length cap suffices when
+these prefixes retain at least three quarters of the incidences. -/
+theorem regularization_list_frozen_shortened_paths {half : Bool} {k : ℕ}
+    (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k paths)
+    (degreeCondition : (half = true → k ≤ 4) ∨
+      (∀ v, (occurrences (fun i => (paths i).toFinset) v).card ≤
+        4*(∑ i, (paths i).length)/Fintype.card V))
+    (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
+    (dense : Fintype.card V ≤ ∑ i, (paths i).length) (long : Fintype.card I ≤ ∑ i, (paths i).length)
+    (retained : 3*(∑ i, (paths i).length) ≤
+      4*(∑ i, min ((4 * ∑ j, (paths j).length) / Fintype.card I) (paths i).length)) :
+    let n := Fintype.card V
+    let p := Fintype.card I
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let L := 4*M/Fintype.card I
+  let shortened (i : I) := (paths i).take L
+  have sub (i : I) : List.Sublist (shortened i) (paths i) := List.take_sublist _ _
+  have step {i : I} {x y : V} (h : ListBefore shortened i x y) : ListBefore paths i x y :=
+    listBefore_of_sublist (simple i) (sub i) h
+  have valid : localOrderAdmissible half k shortened := by
+    cases half
+    · intro j hj
+      exact ⟨fun b => (allowed hj).false (b.mapPaths id Function.injective_id (fun _ _ _ h => step h))⟩
+    · intro j hj b earlier
+      exact allowed hj (b.mapPaths id Function.injective_id (fun _ _ _ h => step h)) earlier
+  have degrees (v : V) : (occurrences (fun i => (shortened i).toFinset) v).card ≤
+      (occurrences (fun i => (paths i).toFinset) v).card := by
+    apply card_le_card
+    intro i hi
+    simp only [mem_occurrences, List.mem_toFinset] at hi ⊢
+    exact (sub i).subset hi
+  exact regularization_list_frozen_after_length_cap shortened (fun i => (sub i).nodup (simple i)) valid
+    hn hp dense long le_rfl le_rfl (fun i => by
+      change ((paths i).take L).length ≤ L
+      rw [List.length_take]
+      exact min_le_left _ _) (degreeCondition.imp_right (fun cap v => (degrees v).trans (cap v)))
+    (by simpa [shortened, L, M] using retained)
+    (sum_le_sum fun i _ => (sub i).length_le)
 
 /-- Preserve both original budgets and the frozen four-factor caps for
 simple systems with full bridge exclusion through size five. -/
@@ -354,16 +464,12 @@ theorem regularization_list_balanced_full_short_dense {k : ℕ} (three : 3 ≤ k
       (splitVertices_degree (fun i => (paths i).toFinset) hD v)
   have piecesFree : BridgeFree (ListBefore pieces) k :=
     packedPathPiece_fullFree_short copiesSimple three five indexes copiesFree selected
-  obtain ⟨A,B,aCap,bCap,retained,upper,nodup,degree,length,legal⟩ :=
-    frozen_cut_of_caps pieces pieceSimple piecesFree (M := M) (n := n) (p := p) (D := D) (L := L)
-      hn hp vertices families total lengthCap degreeCap capD capL
-  have caps : frozenListCaps n p M (restrictListPaths pieces A B) := ⟨degree,length⟩
-  obtain ⟨clean,cleanSimple,cleanLegal,cleanMass,cleanCaps⟩ := frozenListCaps_relabel _ nodup legal caps
-  refine ⟨Fintype.card A, ?_, Fintype.card B, ?_, clean, cleanSimple, cleanLegal, ?_, ?_, cleanCaps⟩
-  · simpa only [Fintype.card_coe] using aCap
-  · simpa only [Fintype.card_coe] using bCap
-  · simpa only [cleanMass] using retained
-  · simpa only [cleanMass] using upper
+  exact frozen_cut_of_caps (half := false) (retention := 119) pieces pieceSimple piecesFree
+      (M := M) (n := n) (p := p) (D := D) (L := L)
+      hn hp (by decide) (by decide) (by decide) (by decide) vertices families total.le
+      (by
+        change (14*17) * (119+2) * M ≤ 2 * (11*11) * 119 * (∑ i, (Z i).card)
+        rw [total]) lengthCap degreeCap capD capL
 
 end OnlineReachabilityPreservers
 

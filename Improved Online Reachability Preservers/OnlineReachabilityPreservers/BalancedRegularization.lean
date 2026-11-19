@@ -341,24 +341,24 @@ theorem four_average_width {M q : ℕ} (hq : 0 < q) (dense : q ≤ M) :
     exact_mod_cast Nat.div_mul_le_self (4*M) q
   exact ⟨hw,trim,cap⟩
 
-/-- Trim by separate vertex and path ratios, then peel at the frozen lower caps. -/
-theorem balancedRectangle_subsystem_of_ratios (Z : I → Finset V) {n p vNum vDen pNum pDen retention : ℕ}
+/-- Trim by separate vertex and path ratios, then peel at lower caps set by
+an original mass. The active incidence rectangle may already have lost mass. -/
+theorem balancedRectangle_subsystem_of_ratios_frozen (Z : I → Finset V)
+    {n p M vNum vDen pNum pDen retention : ℕ}
     (hn : 0 < n) (hp : 0 < p)
     (vPos : 0 < vDen) (pPos : 0 < pDen) (vRatio : vNum ≤ vDen) (pRatio : pNum ≤ pDen)
     (vertices : vNum*Fintype.card V ≤ vDen*n) (families : pNum*Fintype.card I ≤ pDen*p)
-    (enough : (vDen*pDen)*(retention+2) ≤ 2*(vNum*pNum)*retention) :
-    let M := ∑ i, (Z i).card
+    (enough : (vDen*pDen)*(retention+2)*M ≤ 2*(vNum*pNum)*retention*(∑ i, (Z i).card)) :
     ∃ A : Finset V, ∃ B : Finset I,
       let clean := rectanglePaths Z A B
       A.card ≤ n ∧ B.card ≤ p ∧ M ≤ retention * (∑ i, (clean i).card) ∧
         (∀ v, (M : ℝ) / (4 * (n : ℝ)) ≤ (occurrences clean v).card) ∧
         (∀ i, (M : ℝ) / (4 * (p : ℝ)) ≤ (clean i).card) := by
-  let M := ∑ i, (Z i).card
   let A0 : Finset V := univ
   let B0 : Finset I := univ
   let d0 : ℝ := (M : ℝ) / (4 * (n : ℝ))
   let l0 : ℝ := (M : ℝ) / (4 * (p : ℝ))
-  have ZMass : rectangleMass Z A0 B0 = M := by simp [rectangleMass, A0, B0, M]
+  have ZMass : rectangleMass Z A0 B0 = ∑ i, (Z i).card := by simp [rectangleMass, A0, B0]
   have vCap : vNum * A0.card ≤ vDen * n := by simpa [A0] using vertices
   have iCap : pNum * B0.card ≤ pDen * p := by simpa [B0] using families
   obtain ⟨A1,_,B1,_,ac,bc,densePart⟩ := rectangle_trim_ratios Z A0 B0 vRatio pRatio vCap iCap
@@ -386,20 +386,20 @@ theorem balancedRectangle_subsystem_of_ratios (Z : I → Finset V) {n p vNum vDe
   let r : ℝ := retention
   have positive : 0 < b := mul_pos (Nat.cast_pos.mpr vPos) (Nat.cast_pos.mpr pPos)
   have rNonneg : 0 ≤ r := Nat.cast_nonneg _
-  have part : a*(M:ℝ) ≤ b*(rectangleMass Z A1 B1:ℝ) := by
+  have part : a*((∑ i, (Z i).card : ℕ) : ℝ) ≤ b*(rectangleMass Z A1 B1:ℝ) := by
     rw [ZMass] at densePart
     dsimp only [a,b]
     exact_mod_cast densePart
   have loss : (rectangleMass Z A1 B1:ℝ) ≤ (rectangleMass Z A B:ℝ)+(M:ℝ)/2 := by
     linarith only [keep,loseDegree,loseLength]
   have massBound := part.trans (mul_le_mul_of_nonneg_left loss positive.le)
-  have ratio : b*(r+2) ≤ 2*a*r := by
+  have budget : b*(r+2)*(M:ℝ) ≤ 2*a*r*((∑ i, (Z i).card : ℕ) : ℝ) := by
     dsimp only [a,b,r]
     exact_mod_cast enough
   have retain : b*(r+2)*(M:ℝ) ≤ (2*r)*(b*((rectangleMass Z A B:ℝ)+(M:ℝ)/2)) := by
     calc
-      _ ≤ (2*a*r)*(M:ℝ) := mul_le_mul_of_nonneg_right ratio (Nat.cast_nonneg _)
-      _ = (2*r)*(a*(M:ℝ)) := by ring
+      _ ≤ (2*a*r)*((∑ i, (Z i).card : ℕ) : ℝ) := budget
+      _ = (2*r)*(a*((∑ i, (Z i).card : ℕ) : ℝ)) := by ring
       _ ≤ _ := mul_le_mul_of_nonneg_left massBound (by positivity)
   have cancelled : (2*b)*(M:ℝ) ≤ (2*b)*(r*(rectangleMass Z A B:ℝ)) := by
     apply (add_le_add_iff_right (b*r*(M:ℝ))).mp
@@ -413,6 +413,21 @@ theorem balancedRectangle_subsystem_of_ratios (Z : I → Finset V) {n p vNum vDe
     change (M:ℝ) ≤ (retention:ℝ)*(rectangleMass Z A B:ℝ) at h
     exact_mod_cast h
   exact ⟨A, B, (card_le_card as).trans ac, (card_le_card bs).trans bc, finalMass, minDegree, minLength⟩
+
+/-- Trim by separate vertex and path ratios, then peel at the frozen lower caps. -/
+theorem balancedRectangle_subsystem_of_ratios (Z : I → Finset V) {n p vNum vDen pNum pDen retention : ℕ}
+    (hn : 0 < n) (hp : 0 < p)
+    (vPos : 0 < vDen) (pPos : 0 < pDen) (vRatio : vNum ≤ vDen) (pRatio : pNum ≤ pDen)
+    (vertices : vNum*Fintype.card V ≤ vDen*n) (families : pNum*Fintype.card I ≤ pDen*p)
+    (enough : (vDen*pDen)*(retention+2) ≤ 2*(vNum*pNum)*retention) :
+    let M := ∑ i, (Z i).card
+    ∃ A : Finset V, ∃ B : Finset I,
+      let clean := rectanglePaths Z A B
+      A.card ≤ n ∧ B.card ≤ p ∧ M ≤ retention * (∑ i, (clean i).card) ∧
+        (∀ v, (M : ℝ) / (4 * (n : ℝ)) ≤ (occurrences clean v).card) ∧
+        (∀ i, (M : ℝ) / (4 * (p : ℝ)) ≤ (clean i).card) :=
+  balancedRectangle_subsystem_of_ratios_frozen Z hn hp vPos pPos vRatio pRatio vertices families
+    (Nat.mul_le_mul_right _ enough)
 
 /-- Trim an incidence rectangle to the requested budgets and erase low
 rows and columns. The argument depends only on membership. -/
