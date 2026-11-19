@@ -144,6 +144,13 @@ uses this to prove the upper caps with at most twice the ambient budgets.
   The limiting bound keeps a fixed small-demand coefficient and chooses a
   vertex-count-dependent slack from the finite iteration bounds.
   [Checked online bounds](OnlineReachabilityPreservers/OnlineSharp.lean).
+- The pairwise instantiation of Algorithm 3 checks the number of pairs and
+  the edge count after the expensive phase and searches for the smallest
+  certified integer quota up to the size of the condensation. Every proven
+  upper bound on the adaptive prefix certifies a quota. The dyadic proof uses
+  the smaller of the initial and sharp rate envelopes to keep the first
+  quota linear even with vertex-count-dependent slack.
+  [Checked pairwise assignments](OnlineReachabilityPreservers/PairwiseNonAdaptive.lean).
 - The [second-moment estimate](OnlineReachabilityPreservers/SecondMoment.lean)
   of Appendix A is checked for a common vertex order under the inductive
   subfamily bound. The [finite online iteration](OnlineReachabilityPreservers/OnlineBound.lean)

@@ -140,6 +140,43 @@ theorem sinkPreserver_spec (G : Arcs V) (D : List (V × V)) :
   theorem9_lift forwardRun G D (fun _ _ P => forwardRunFrom_subset (empty_subset _) P)
     (fun _ => forwardRun_preserves)
 
+/-- On a DAG, the lifted preserver still pays for every edge bought by the
+forward-growth run. This transfers its edge bounds to a quotient path rule. -/
+theorem forwardRun_card_le_sinkPreserver {G : Arcs V} (dag : IsDAG G) (D : List (V × V)) :
+    (forwardRun G D).card ≤ (sinkPreserver G D).card := by
+  have label (v : V) : componentLabel G v = v := by
+    have h := componentLabel_same (G := G) v
+    rcases h.1.cases_tail with eq | ⟨x, vx, edge⟩
+    · exact eq
+    · exact (dag edge (h.2.trans vx)).elim
+  have project : projectDemand G = id := by
+    funext d
+    exact Prod.ext (label d.1) (label d.2)
+  have collapse : condensation G = G := by
+    ext ⟨a,b⟩
+    change Edge (condensation G) a b ↔ Edge G a b
+    rw [edge_condensation]
+    simp only [label]
+    constructor
+    · rintro ⟨_, u, v, uv, rfl, rfl⟩
+      exact uv
+    · intro ab
+      refine ⟨?_, a, b, ab, rfl, rfl⟩
+      rintro rfl
+      exact dag ab .refl
+  cases D with
+  | nil => simp [sinkPreserver, liftedRun, forwardRun, forwardRunFrom]
+  | cons d ds =>
+    let H := forwardRun G (d :: ds)
+    have sub : H ⊆ condensation G := collapse.symm ▸ forwardRunFrom_subset (empty_subset _) _
+    have imageSub : H ⊆ (liftedArcs G H).image (projectDemand G) := by
+      intro e he
+      obtain ⟨a, ha, _, _⟩ := liftOne_some (sub he)
+      exact mem_image.mpr ⟨a, mem_biUnion.mpr ⟨e, he, ha⟩, (liftOne_spec ha).2⟩
+    have count := (card_le_card imageSub).trans card_image_le
+    simpa only [sinkPreserver, liftedRun, collapse, project, List.map_id] using
+      count.trans (card_le_card (subset_union_right : liftedArcs G H ⊆ _))
+
 /-- The finite sink-restricted bound of Theorem 2, on every prefix of a demand trace. -/
 theorem theorem2_sinks (G : Arcs V) (D : List (V × V)) (S : Finset V)
     (sinks : ∀ d ∈ D, d.2 ∈ S) :

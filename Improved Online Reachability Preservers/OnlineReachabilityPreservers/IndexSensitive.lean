@@ -94,11 +94,10 @@ def indexSensitiveOutput (choose : PathRule V) (Q : Finset (V × V))
   (univ : Finset (Fin D.length)).biUnion fun i =>
     pathArcs (indexSensitivePath choose Q base F i (D.get i))
 
-/-- Finite bound before the two growth inequalities in Theorem 16, footnote 4. -/
-theorem indexSensitive_sum_bound (choose : PathRule V) (Q : Finset (V × V))
+/-- Finite bound using the certificate of each quota before the growth estimates. -/
+theorem indexSensitive_certified_sum_bound (choose : PathRule V) (Q : Finset (V × V))
     (base : ℕ) (F : ℕ → ℕ) (hbase : 0 < base)
-    (budget : ∀ (q : ℕ) (T : List (V × V)), T.Nodup → (∀ d ∈ T, d ∈ Q) →
-      T.length ≤ q → (runRule choose ∅ T).card ≤ F q)
+    (certified : ∀ q, 0 < q → KnownBudgetCertified choose Q q (F q))
     (D : List (V × V)) (sub : ∀ d ∈ D, d ∈ Q) :
     (indexSensitiveOutput choose Q base F D).card ≤
       ∑ k ∈ range (indexLevel base (D.length - 1) + 1), 2 * F (dyadicQuota base k) := by
@@ -137,9 +136,46 @@ theorem indexSensitive_sum_bound (choose : PathRule V) (Q : Finset (V × V))
         exact mem_range.mpr (by omega)
       rw [← card_image_of_injOn hinj, ← card_range (dyadicQuota base k)]
       exact card_le_card hs
-    exact theorem15_known_budget choose Q (dyadicQuota base k) (F (dyadicQuota base k))
-      (by unfold dyadicQuota; positivity) (budget _) _ hsub hnum
+    have hq : 0 < dyadicQuota base k := by unfold dyadicQuota; positivity
+    exact theorem15_certified_budget choose Q (dyadicQuota base k) (F (dyadicQuota base k))
+      hq (certified _ hq) _ hsub hnum
   exact (card_le_card hlevels).trans (card_biUnion_le.trans (sum_le_sum (fun k _ => hlevel k)))
+
+/-- Finite bound before the two growth inequalities in Theorem 16, footnote 4. -/
+theorem indexSensitive_sum_bound (choose : PathRule V) (Q : Finset (V × V))
+    (base : ℕ) (F : ℕ → ℕ) (hbase : 0 < base)
+    (budget : ∀ (q : ℕ) (T : List (V × V)), T.Nodup → (∀ d ∈ T, d ∈ Q) →
+      T.length ≤ q → (runRule choose ∅ T).card ≤ F q)
+    (D : List (V × V)) (sub : ∀ d ∈ D, d ∈ Q) :
+    (indexSensitiveOutput choose Q base F D).card ≤
+      ∑ k ∈ range (indexLevel base (D.length - 1) + 1), 2 * F (dyadicQuota base k) :=
+  indexSensitive_certified_sum_bound choose Q base F hbase
+    (fun q hq => knownBudget_certify choose Q q (F q) hq (budget q)) D sub
+
+/-- The index-sensitive algorithm can use certified quotas bounded by a common
+envelope. Only the envelope needs the two growth comparisons. -/
+theorem theorem16_certified_budget (choose : PathRule V) (Q : Finset (V × V))
+    (base : ℕ) (budget F : ℕ → ℕ) (hbase : 0 < base)
+    (certified : ∀ q, 0 < q → KnownBudgetCertified choose Q q (budget q))
+    (majorant : ∀ q, 0 < q → budget q ≤ F q)
+    (C₁ C₂ : ℕ)
+    (sumBound : ∀ k, (∑ j ∈ range (k + 1), F (dyadicQuota base j)) ≤ C₁ * F (dyadicQuota base k))
+    (lastBound : ∀ p, 0 < p → F (dyadicQuota base (indexLevel base (p - 1))) ≤ C₂ * F p)
+    (D : List (V × V)) (sub : ∀ d ∈ D, d ∈ Q) :
+    (indexSensitiveOutput choose Q base budget D).card ≤ 2 * C₁ * C₂ * F D.length := by
+  cases D with
+  | nil => simp [indexSensitiveOutput]
+  | cons d ds =>
+    apply (indexSensitive_certified_sum_bound choose Q base budget hbase certified (d :: ds) sub).trans
+    apply (sum_le_sum (g := fun k => 2 * F (dyadicQuota base k)) fun k _ =>
+      Nat.mul_le_mul_left 2 (majorant _ (by unfold dyadicQuota; positivity))).trans
+    rw [← mul_sum]
+    calc
+      _ ≤ 2 * (C₁ * F (dyadicQuota base (indexLevel base ((d :: ds).length - 1)))) :=
+        Nat.mul_le_mul_left _ (sumBound _)
+      _ ≤ 2 * (C₁ * (C₂ * F ((d :: ds).length))) :=
+        Nat.mul_le_mul_left _ (Nat.mul_le_mul_left _ (lastBound _ (by simp)))
+      _ = _ := by ac_rfl
 
 /-- Theorem 16 under the geometric-sum and final-budget comparisons stated
 in the paper's footnote. The assignment itself has no final-length input. -/
@@ -151,17 +187,9 @@ theorem theorem16_index_sensitive (choose : PathRule V) (Q : Finset (V × V))
     (sumBound : ∀ k, (∑ j ∈ range (k + 1), F (dyadicQuota base j)) ≤ C₁ * F (dyadicQuota base k))
     (lastBound : ∀ p, 0 < p → F (dyadicQuota base (indexLevel base (p - 1))) ≤ C₂ * F p)
     (D : List (V × V)) (sub : ∀ d ∈ D, d ∈ Q) :
-    (indexSensitiveOutput choose Q base F D).card ≤ 2 * C₁ * C₂ * F D.length := by
-  cases D with
-  | nil => simp [indexSensitiveOutput]
-  | cons d ds =>
-    apply (indexSensitive_sum_bound choose Q base F hbase budget (d :: ds) sub).trans
-    rw [← mul_sum]
-    calc
-      _ ≤ 2 * (C₁ * F (dyadicQuota base (indexLevel base ((d :: ds).length - 1)))) :=
-        Nat.mul_le_mul_left _ (sumBound _)
-      _ ≤ 2 * (C₁ * (C₂ * F ((d :: ds).length))) :=
-        Nat.mul_le_mul_left _ (Nat.mul_le_mul_left _ (lastBound _ (by simp)))
-      _ = _ := by ac_rfl
+    (indexSensitiveOutput choose Q base F D).card ≤ 2 * C₁ * C₂ * F D.length :=
+  theorem16_certified_budget choose Q base F F hbase
+    (fun q hq => knownBudget_certify choose Q q (F q) hq (budget q))
+    (fun _ _ => le_rfl) C₁ C₂ sumBound lastBound D sub
 
 end OnlineReachabilityPreservers

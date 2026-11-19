@@ -125,6 +125,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   replay passed. Independent review checked all four terms, the window
   exceptions, and the prefix guarantee.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44430372943).
+- [c5790e9f](https://github.com/gbodwin/paper-formalizations/commit/c5790e9f439539c6ad484ddf909b7a018124849b)
+  proves Theorem 1's exact limiting edge bound on arbitrary digraphs. The
+  1058-declaration paper audit and local kernel replay passed. Independent
+  review confirmed the cubic, the exponents, and the uniform vertex-count
+  slack with a single constant for all input sizes and prefixes.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44431318161).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

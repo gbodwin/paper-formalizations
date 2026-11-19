@@ -148,17 +148,24 @@ def knownBudgetPath (choose : PathRule V) (Q : Finset (V × V)) (p F : ℕ) (d :
     Option (List (V × V)) :=
   assignedPath choose ∅ (expensiveTrace choose p F p ∅ Q) d
 
-/-- Theorem 15. For any p-bounded set of requests, the preassigned paths have at most
-twice the prefix budget of the online path rule. -/
-theorem theorem15_known_budget (choose : PathRule V) (Q : Finset (V × V)) (p F : ℕ)
+/-- A budget is certified by running the expensive-pair phase and checking its
+length and edge count. Both checks depend only on the rule, domain, and quota. -/
+def KnownBudgetCertified (choose : PathRule V) (Q : Finset (V × V)) (p F : ℕ) : Prop :=
+  let T := expensiveTrace choose p F p ∅ Q
+  T.length < p ∧ (runRule choose ∅ T).card ≤ F
+
+instance (choose : PathRule V) (Q : Finset (V × V)) (p F : ℕ) :
+    Decidable (KnownBudgetCertified choose Q p F) := by
+  unfold KnownBudgetCertified
+  infer_instance
+
+theorem knownBudget_certify (choose : PathRule V) (Q : Finset (V × V)) (p F : ℕ)
     (hp : 0 < p)
     (budget : ∀ T : List (V × V), T.Nodup → (∀ d ∈ T, d ∈ Q) → T.length ≤ p →
-      (runRule choose ∅ T).card ≤ F)
-    (P : Finset (V × V)) (sub : P ⊆ Q) (hP : P.card ≤ p) :
-    (P.biUnion (fun d => pathArcs (knownBudgetPath choose Q p F d))).card ≤ 2 * F := by
+      (runRule choose ∅ T).card ≤ F) : KnownBudgetCertified choose Q p F := by
   let T := expensiveTrace choose p F p ∅ Q
   let A := runRule choose ∅ T
-  obtain ⟨hlt, hn, hQ, _, hprice, hfreeze⟩ := expensiveTrace_spec choose p F p ∅ Q
+  obtain ⟨hlt, hn, hQ, _, hprice, _⟩ := expensiveTrace_spec choose p F p ∅ Q
   have hA : A.card ≤ F := budget T hn hQ hlt
   have hshort : T.length < p := by
     by_contra! h
@@ -171,6 +178,38 @@ theorem theorem15_known_budget (choose : PathRule V) (Q : Finset (V × V)) (p F 
     change p * (∅ : Arcs V).card + F * T.length < p * A.card at hcost
     rw [he, card_empty, Nat.mul_zero, zero_add, mul_comm F p] at hcost
     exact (not_lt_of_ge (Nat.mul_le_mul_left p hA)) hcost
+  exact ⟨hshort,hA⟩
+
+/-- The smallest certified budget up to the given edge cap. -/
+def certifiedBudget (choose : PathRule V) (Q : Finset (V × V)) (p cap : ℕ) : ℕ :=
+  (least? ((range (cap+1)).filter (KnownBudgetCertified choose Q p))).getD cap
+
+theorem certifiedBudget_spec {choose : PathRule V} {Q : Finset (V × V)} {p cap : ℕ}
+    (hcap : KnownBudgetCertified choose Q p cap) :
+    KnownBudgetCertified choose Q p (certifiedBudget choose Q p cap) ∧
+      ∀ F, KnownBudgetCertified choose Q p F → certifiedBudget choose Q p cap ≤ F := by
+  let options := (range (cap+1)).filter (KnownBudgetCertified choose Q p)
+  have hc : cap ∈ options := mem_filter.mpr ⟨mem_range.mpr (Nat.lt_succ_self _), hcap⟩
+  obtain ⟨b,hb⟩ := least?_some ⟨cap,hc⟩
+  have eq : certifiedBudget choose Q p cap = b := by
+    change (least? options).getD cap = b
+    simp [hb]
+  rw [eq]
+  refine ⟨(mem_filter.mp (least?_mem hb)).2, fun F hF => ?_⟩
+  by_cases h : F ≤ cap
+  · exact least?_le hb (mem_filter.mpr ⟨mem_range.mpr (Nat.lt_succ_of_le h), hF⟩)
+  · exact (least?_le hb hc).trans (le_of_not_ge h)
+
+theorem theorem15_certified_budget (choose : PathRule V) (Q : Finset (V × V)) (p F : ℕ)
+    (hp : 0 < p) (certificate : KnownBudgetCertified choose Q p F)
+    (P : Finset (V × V)) (sub : P ⊆ Q) (hP : P.card ≤ p) :
+    (P.biUnion (fun d => pathArcs (knownBudgetPath choose Q p F d))).card ≤ 2 * F := by
+  let T := expensiveTrace choose p F p ∅ Q
+  let A := runRule choose ∅ T
+  obtain ⟨hshort,hA⟩ := certificate
+  change T.length < p at hshort
+  change A.card ≤ F at hA
+  obtain ⟨_, _, _, _, _, hfreeze⟩ := expensiveTrace_spec choose p F p ∅ Q
   let R d := pathArcs (knownBudgetPath choose Q p F d)
   have hmissing (d : V × V) (hd : d ∈ P) : p * (R d \ A).card ≤ F := by
     by_cases h : d ∈ T
@@ -198,6 +237,16 @@ theorem theorem15_known_budget (choose : PathRule V) (Q : Finset (V × V)) (p F 
     _ ≤ A.card + (P.biUnion (fun d => R d \ A)).card := card_union_le _ _
     _ ≤ A.card + (∑ d ∈ P, (R d \ A).card) := Nat.add_le_add_left card_biUnion_le _
     _ ≤ 2 * F := by omega
+
+/-- Theorem 15. For any p-bounded set of requests, the preassigned paths have at most
+twice the prefix budget of the online path rule. -/
+theorem theorem15_known_budget (choose : PathRule V) (Q : Finset (V × V)) (p F : ℕ)
+    (hp : 0 < p)
+    (budget : ∀ T : List (V × V), T.Nodup → (∀ d ∈ T, d ∈ Q) → T.length ≤ p →
+      (runRule choose ∅ T).card ≤ F)
+    (P : Finset (V × V)) (sub : P ⊆ Q) (hP : P.card ≤ p) :
+    (P.biUnion (fun d => pathArcs (knownBudgetPath choose Q p F d))).card ≤ 2 * F :=
+  theorem15_certified_budget choose Q p F hp (knownBudget_certify choose Q p F hp budget) P sub hP
 
 /-- A fixed path is produced by the original rule on one of the simulated substates. -/
 theorem knownBudgetPath_valid (choose : PathRule V) (G : Arcs V) (Q : Finset (V × V))

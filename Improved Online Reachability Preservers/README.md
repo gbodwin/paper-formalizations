@@ -28,6 +28,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   `2n + 2F` with known `p` and `2n + 48F` with the arrival index, where `p`
   is the prefix length in the indexed bound. The preserver is precisely the
   union of the assigned simple paths, and the assignments give prefix monotonicity.
+- [`theorem5_pairwise_rounded` and `theorem5_pairwise_limiting_rate`](OnlineReachabilityPreservers/PairwiseNonAdaptive.lean)
+  prove both pairwise rates for both assignment models. The executable rules
+  find a certified integer budget by simulating the expensive-pair phase.
+  The real-valued rates bound the budget in the proof. The indexed rule uses
+  dyadic quotas starting at `Nat.sqrt n + 1` and is correct at every prefix.
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)
@@ -143,6 +148,6 @@ The library is included in the repository's module index, declaration audit,
 and kernel replay.
 
 The [companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
-includes an interactive trace and a source-linked proof map. The pairwise
-non-adaptive instantiations, unrestricted extremal estimates, and full
-Steiner competitive guarantee remain open.
+includes an interactive trace and a source-linked proof map. The unrestricted
+path-system estimates, formal runtime, and full Steiner competitive guarantee
+remain open.
