@@ -123,6 +123,24 @@ flows that stay in a single root copy.
 · [Conference paper](https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.APPROX/RANDOM.2021.5)
 · [Full arXiv version](https://arxiv.org/pdf/2103.04543v3).
 
+## The early cutoff and the random seed
+
+Section 5.1 defines a nontrivial request using reachability in the
+current preserver. Section 5.2 also describes a cutoff after the first
+\(T\) demand pairs. If early arrivals are filtered by the randomized
+preserver, the resulting early input can depend on the same coins
+used to estimate its expected cost. A bound on fixed demand sequences
+does not by itself cover this filtering.
+
+The checked algorithm counts distinct non-self requests in arrival
+order and gives the first \(T\) to the early routine. The trace is
+fixed before the random samples. If the late phase starts, Lemma 20
+still gives \(T\le |Z|^2\) for every feasible offline solution \(Z\).
+Earlier feasible requests, repetitions, and self-requests all
+remain served. The expected rate and per-realization prefix
+guarantees are checked for this construction.
+[Complete construction](OnlineReachabilityPreservers/SteinerComplete.lean).
+
 ## Matters requiring proof or clarification
 
 - Lemma 13's pigeonhole step can pick two paths whose only intersection with

@@ -310,6 +310,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   every sample and the fixed-trace fallback estimate. It also identified
   the need for a seed-independent early trace in the full composition.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44462762946).
+- [532294af](https://github.com/gbodwin/paper-formalizations/commit/532294af915963f36b31fee987b769e790c438af)
+  verifies the full finite expected early edge bound against any feasible
+  original solution. The 2514-declaration audit and local kernel replay
+  passed. Independent review checked every trial and tier, the weighted
+  sum, original expansion and fallback, and the generalized late charge.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44464387136).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

@@ -59,9 +59,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   doubling counts.
 - [The Steiner phase composition](OnlineReachabilityPreservers/SteinerAssembly.lean)
   starts empty, serves every revealed demand, and preserves every purchased
-  edge. It checks the mean cost of the two late phases over independent finite
-  choices and adds an explicit early cost. The cited early competitive bound
-  and the full running time remain open.
+  edge. The [full online algorithm](OnlineReachabilityPreservers/SteinerComplete.lean)
+  uses a seed-independent cutoff on distinct non-self requests and
+  proves \(O(n^{3/5+arepsilon})\) expected competitiveness on every
+  fixed feasible demand sequence, against any offline solution.
+  Every realization serves all prefixes. Formal end-to-end runtime remains open.
 - [The late-phase exponent bound](OnlineReachabilityPreservers/SteinerRate.lean)
   uses integer thresholds for \(n^{6/5}\) and \(n^{3/5}\). It absorbs both
   logarithmic losses and the bad-hub cost into \(O(n^{3/5+\varepsilon})\)
@@ -93,7 +95,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   applies the online cut run to these templates with the two current
   groups' directed attachments. It proves full flow for each demand
   and compares the fractional cost to any feasible original solution.
-  Integral online rounding remains open.
+  [Integral rounding](OnlineReachabilityPreservers/SteinerEarlyRound.lean)
+  uses independent finite thresholds, reuses the same seeds across
+  prefixes, and retains all earlier purchases. The
+  [explicit mean cost](OnlineReachabilityPreservers/SteinerOnlineRounding.lean)
+  gives the finite early competitive estimate, with the rate conversion
+  checked in [SteinerCompetitive](OnlineReachabilityPreservers/SteinerCompetitive.lean).
 - [The weighted fractional cover](OnlineReachabilityPreservers/SteinerWeightedCover.lean)
   raises rational capacities as batches of cuts arrive. It verifies coverage
   and bounds both the update count and the cost against any fixed set that
