@@ -619,6 +619,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   the unchanged cutoff, and the distinction between failed splitting
   arguments and open existence statements.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44516744399).
+- [e7e8c7f3](https://github.com/gbodwin/paper-formalizations/commit/e7e8c7f3f2971ffed6ce6a4cac1d001d1f9e8473)
+  proves the general path-family converse in two demand regimes with
+  one uniform constant and exact distinct demand counts. The 3891-declaration
+  audit, kernel replay of both changed modules, and independent review
+  passed. The review checked the noncircular use of Theorem 43.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44523705923).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
@@ -677,6 +683,13 @@ The research publication entry linked to the arXiv manuscript.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44510793894).
 
+PaperLab version 22 pins 130 links to `33ed503f` and contains 15 boxed L
+notes. The deployed render and local controls passed. The production page
+requires owner sign-in. The public research entry linked to the arXiv
+manuscript.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44517165176).
+
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
 crossing edges on a cyclic input. The empty prefix has no edges, an
@@ -684,3 +697,12 @@ unreachable forward request returns `none`, and a self-request returns an
 empty path. An execution of the complete Steiner draw evaluator on a
 two-vertex graph, with a repeated demand and a self-request, gave
 cumulative purchases `[0, 1, 1, 1]`.
+
+The weighted-capacity replay builds a table once per separator and constructs
+residual graphs from the stored values and their unique keys. The two-vertex
+run with two weighted requests returned the same cut and charge as the ordinary
+run. Its measured search and table work was 174, compared with 141 measured
+search operations in the ordinary run. The complete replay's per-prefix
+charges were `[0, 541260, 541260, 541260]` and its three shared preparations
+cost 12, 20, and 19. [Checked separator comparison](OnlineReachabilityPreservers/SteinerCapacityWork.lean)
+· [Checked complete replay bound](OnlineReachabilityPreservers/SteinerDistanceReplay.lean).

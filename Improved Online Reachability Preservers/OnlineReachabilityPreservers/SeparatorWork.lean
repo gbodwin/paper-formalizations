@@ -8,112 +8,174 @@ open Finset
 
 variable {V : Type*} [LinearOrder V] [Fintype V]
 
+private def residualRouteWorkBound (n : ℕ) : ℕ :=
+  (n^2 * (2 * ((n + 1) * n * n^2)) + n * n^2) + 2 * n^2
+
 /-- The candidate visits and tests in one residual graph construction and
 its shortest route search, for a graph with `n` vertices. -/
 def residualStepWorkBound (n : ℕ) : ℕ :=
   n^2 + (n^2 * (2 * ((n + 1) * n * n^2)) + n * n^2) + 2 * n^2
 
-private def residualPathWithWork (c f : ArcFlow V) (s t : V) : Option (List (V × V)) × ℕ :=
-  let result := routePathWithSearchWork (residualArcs c f) s t
-  (result.1, Fintype.card V ^ 2 + result.2.1 + result.2.2)
+private def residualPathWithWork (build : ArcFlow V → Arcs V × ℕ)
+    (f : ArcFlow V) (s t : V) : Option (List (V × V)) × ℕ :=
+  let graph := build f
+  let result := routePathWithSearchWork graph.1 s t
+  (result.1, graph.2 + result.2.1 + result.2.2)
 
-private theorem residualPathWithWork_spec (c f : ArcFlow V) (s t : V) :
-    let result := residualPathWithWork c f s t
-    result.1 = routePath (residualArcs c f) s t ∧ result.2 ≤ residualStepWorkBound (Fintype.card V) := by
-  obtain ⟨path, scans, tests⟩ := routePathWithSearchWork_spec (residualArcs c f) s t
-  refine ⟨path, ?_⟩
+private theorem residualPathWithWork_spec (build : ArcFlow V → Arcs V × ℕ)
+    (c f : ArcFlow V) (s t : V) (same : (build f).1 = residualArcs c f) (B : ℕ)
+    (buildBound : (build f).2 ≤ B) :
+    let result := residualPathWithWork build f s t
+    result.1 = routePath (residualArcs c f) s t ∧ result.2 ≤ B + residualRouteWorkBound (Fintype.card V) := by
+  obtain ⟨path, scans, tests⟩ := routePathWithSearchWork_spec (build f).1 s t
+  refine ⟨path.trans (congrArg (fun edges => routePath edges s t) same), ?_⟩
   let n := Fintype.card V
-  let m := (residualArcs c f).card
+  let m := (build f).1.card
   have size : m ≤ n ^ 2 := by
-    simpa only [m, n, pow_two, Fintype.card_prod] using card_le_univ (residualArcs c f)
+    simpa only [m, n, pow_two, Fintype.card_prod] using card_le_univ (build f).1
   have scanBound : m * (2 * ((n + 1) * n * m)) + n * m ≤
       n^2 * (2 * ((n + 1) * n * n^2)) + n * n^2 := by gcongr
-  exact Nat.add_le_add (Nat.add_le_add_left (scans.trans scanBound) _) tests
+  simpa only [residualPathWithWork, residualRouteWorkBound, Nat.add_assoc] using
+    Nat.add_le_add (Nat.add_le_add buildBound (scans.trans scanBound)) tests
 
-/-- Repeat the ordinary integer augmentation while reporting residual
-arc visits and path successor tests. The failed final search is counted. -/
-def unitAugmentationsWithSearchWork (c : ArcFlow V) (s t : V) :
+/-- Repeat integer augmentation with a metered residual graph constructor.
+The failed final search is counted. -/
+private def unitAugmentationsWithResidualWork (build : ArcFlow V → Arcs V × ℕ) (s t : V) :
     ℕ → ArcFlow V → (ArcFlow V × ℕ) × ℕ
   | 0, f => ((f, 0), 0)
   | fuel + 1, f =>
-    let first := residualPathWithWork c f s t
+    let first := residualPathWithWork build f s t
     match first.1 with
     | none => ((f, 0), first.2)
     | some path =>
-      let rest := unitAugmentationsWithSearchWork c s t fuel (augmentArcFlow f path.toFinset)
+      let rest := unitAugmentationsWithResidualWork build s t fuel (augmentArcFlow f path.toFinset)
       ((rest.1.1, rest.1.2 + 1), first.2 + rest.2)
 
-theorem unitAugmentationsWithSearchWork_spec (c : ArcFlow V) (s t : V) (fuel : ℕ) (f : ArcFlow V) :
-    let result := unitAugmentationsWithSearchWork c s t fuel f
-    result.1 = unitAugmentations c s t fuel f ∧ result.2 ≤ fuel * residualStepWorkBound (Fintype.card V) := by
+private theorem unitAugmentationsWithResidualWork_spec (build : ArcFlow V → Arcs V × ℕ)
+    (c : ArcFlow V) (s t : V) (fuel : ℕ) (f : ArcFlow V) (B : ℕ)
+    (each : ∀ flow, (build flow).1 = residualArcs c flow ∧ (build flow).2 ≤ B) :
+    let result := unitAugmentationsWithResidualWork build s t fuel f
+    result.1 = unitAugmentations c s t fuel f ∧
+      result.2 ≤ fuel * (B + residualRouteWorkBound (Fintype.card V)) := by
   induction fuel generalizing f with
-  | zero => simp [unitAugmentationsWithSearchWork, unitAugmentations]
+  | zero => simp [unitAugmentationsWithResidualWork, unitAugmentations]
   | succ fuel ih =>
-    let step := residualPathWithWork c f s t
-    let B := residualStepWorkBound (Fintype.card V)
-    obtain ⟨pathEq, stepCap⟩ := residualPathWithWork_spec c f s t
+    let step := residualPathWithWork build f s t
+    let stepBound := B + residualRouteWorkBound (Fintype.card V)
+    obtain ⟨pathEq, stepCap⟩ := residualPathWithWork_spec build c f s t (each f).1 B (each f).2
     change step.1 = _ at pathEq
-    change step.2 ≤ B at stepCap
+    change step.2 ≤ stepBound at stepCap
     cases route : step.1 with
     | none =>
       have same : routePath (residualArcs c f) s t = none := pathEq.symm.trans route
-      simp only [unitAugmentationsWithSearchWork, unitAugmentations, ← show step =
-        residualPathWithWork c f s t from rfl, route, same, true_and]
+      simp only [unitAugmentationsWithResidualWork, unitAugmentations, ← show step =
+        residualPathWithWork build f s t from rfl, route, same, true_and]
       exact stepCap.trans (by rw [Nat.succ_mul]; exact Nat.le_add_left _ _)
     | some path =>
       have same : routePath (residualArcs c f) s t = some path := pathEq.symm.trans route
       obtain ⟨restEq, restCap⟩ := ih (augmentArcFlow f path.toFinset)
-      simp only [unitAugmentationsWithSearchWork, unitAugmentations, ← show step =
-        residualPathWithWork c f s t from rfl, route, same, restEq, true_and]
+      simp only [unitAugmentationsWithResidualWork, unitAugmentations, ← show step =
+        residualPathWithWork build f s t from rfl, route, same, restEq, true_and]
       exact (Nat.add_le_add stepCap restCap).trans_eq
-        ((Nat.add_comm _ _).trans (Nat.succ_mul fuel B).symm)
+        ((Nat.add_comm _ _).trans (Nat.succ_mul fuel stepBound).symm)
 
-private def residualCutSideWithWork (c f : ArcFlow V) (s : V) : Finset V × ℕ :=
+private def residualGraphWithPairVisits (c f : ArcFlow V) : Arcs V × ℕ :=
+  (residualArcs c f, Fintype.card V ^ 2)
+
+/-- Repeat the ordinary integer augmentation while reporting residual
+arc visits and path successor tests. -/
+def unitAugmentationsWithSearchWork (c : ArcFlow V) (s t : V) (fuel : ℕ) (f : ArcFlow V) :
+    (ArcFlow V × ℕ) × ℕ :=
+  unitAugmentationsWithResidualWork (residualGraphWithPairVisits c) s t fuel f
+
+theorem unitAugmentationsWithSearchWork_spec (c : ArcFlow V) (s t : V) (fuel : ℕ) (f : ArcFlow V) :
+    let result := unitAugmentationsWithSearchWork c s t fuel f
+    result.1 = unitAugmentations c s t fuel f ∧ result.2 ≤ fuel * residualStepWorkBound (Fintype.card V) := by
+  simpa only [unitAugmentationsWithSearchWork, residualStepWorkBound, residualRouteWorkBound, Nat.add_assoc]
+    using unitAugmentationsWithResidualWork_spec (residualGraphWithPairVisits c) c s t fuel f
+      (Fintype.card V^2) (fun _ => ⟨rfl,le_rfl⟩)
+
+private def residualCutSideWithWork (build : ArcFlow V → Arcs V × ℕ)
+    (f : ArcFlow V) (s : V) : Finset V × ℕ :=
   let n := Fintype.card V
-  let side := reachInWithArcInspections (reverseArcs (residualArcs c f)) s n
-  (side.1, 2 * n^2 + side.2)
+  let graph := build f
+  let side := reachInWithArcInspections (reverseArcs graph.1) s n
+  (side.1, graph.2 + n^2 + side.2)
 
-private theorem residualCutSideWithWork_spec (c f : ArcFlow V) (s : V) :
+private theorem residualCutSideWithWork_spec (build : ArcFlow V → Arcs V × ℕ)
+    (c f : ArcFlow V) (s : V) (same : (build f).1 = residualArcs c f)
+    (B : ℕ) (buildBound : (build f).2 ≤ B) :
     let n := Fintype.card V
-    let result := residualCutSideWithWork c f s
-    result.1 = residualReach c f s ∧ result.2 ≤ 2 * n^2 + n * n^2 := by
-  simp only [residualCutSideWithWork, reachInWithArcInspections_spec, residualReach, reaches,
+    let result := residualCutSideWithWork build f s
+    result.1 = residualReach c f s ∧ result.2 ≤ B + (n^2 + n * n^2) := by
+  simp only [residualCutSideWithWork, reachInWithArcInspections_spec, same, residualReach, reaches,
     reverseArcs_card, true_and]
   have size : (residualArcs c f).card ≤ Fintype.card V ^ 2 := by
     simpa only [pow_two, Fintype.card_prod] using card_le_univ (residualArcs c f)
-  exact Nat.add_le_add_left (Nat.mul_le_mul_left _ size) _
+  simpa only [Nat.add_assoc] using
+    Nat.add_le_add (Nat.add_le_add_right buildBound _) (Nat.mul_le_mul_left _ size)
+
+/-- Charge residual graph construction, route searches, and the final
+source-side search when the augmentation stops early. -/
+def findLowCapacityCutWithResidualWork (build : ArcFlow V → Arcs V × ℕ)
+    (s t : V) (supply : ℕ) : Option (Finset V) × ℕ :=
+  let aug := unitAugmentationsWithResidualWork build s t supply (fun _ => 0)
+  if aug.1.2 = supply then (none, aug.2)
+  else
+    let side := residualCutSideWithWork build aug.1.1 s
+    (some side.1, aug.2 + side.2)
+
+theorem findLowCapacityCutWithResidualWork_spec (build : ArcFlow V → Arcs V × ℕ)
+    (c : ArcFlow V) (s t : V) (supply extra : ℕ)
+    (each : ∀ flow, (build flow).1 = residualArcs c flow ∧ (build flow).2 ≤ Fintype.card V^2 + extra) :
+    let n := Fintype.card V
+    let result := findLowCapacityCutWithResidualWork build s t supply
+    result.1 = findLowCapacityCut c s t supply ∧
+      result.2 ≤ supply * residualStepWorkBound n + (2 * n^2 + n * n^2) + (supply+1)*extra := by
+  let n := Fintype.card V
+  let aug := unitAugmentationsWithResidualWork build s t supply (fun _ => 0)
+  let raw := unitAugmentations c s t supply (fun _ => 0)
+  obtain ⟨same, work⟩ := unitAugmentationsWithResidualWork_spec build c s t supply (fun _ => 0)
+    (n^2+extra) each
+  obtain ⟨side, finish⟩ := residualCutSideWithWork_spec build c aug.1.1 s (each _).1 (n^2+extra) (each _).2
+  change aug.1 = raw at same
+  have workTotal : supply * (n^2 + extra + residualRouteWorkBound n) +
+      (n^2 + extra + (n^2 + n*n^2)) =
+      supply * residualStepWorkBound n + (2*n^2 + n*n^2) + (supply+1)*extra := by
+    simp only [residualRouteWorkBound, residualStepWorkBound]
+    ring
+  by_cases enough : raw.2 = supply
+  · simp only [findLowCapacityCutWithResidualWork, findLowCapacityCut, ← show aug =
+      unitAugmentationsWithResidualWork build s t supply (fun _ => 0) from rfl, ← show raw =
+      unitAugmentations c s t supply (fun _ => 0) from rfl, same, enough, ite_true, true_and]
+    exact work.trans ((Nat.le_add_right _ _).trans_eq workTotal)
+  · rw [same] at side finish
+    simp only [findLowCapacityCutWithResidualWork, findLowCapacityCut, ← show aug =
+      unitAugmentationsWithResidualWork build s t supply (fun _ => 0) from rfl, ← show raw =
+      unitAugmentations c s t supply (fun _ => 0) from rfl,
+      same, enough, ite_false, side, true_and]
+    exact (Nat.add_le_add work finish).trans_eq workTotal
 
 /-- The ordinary low-capacity cut, including the search that recovers its
 source side when the augmentation stops early. -/
 def findLowCapacityCutWithSearchWork (c : ArcFlow V) (s t : V) (supply : ℕ) : Option (Finset V) × ℕ :=
-  let aug := unitAugmentationsWithSearchWork c s t supply (fun _ => 0)
-  if aug.1.2 = supply then (none, aug.2)
-  else
-    let side := residualCutSideWithWork c aug.1.1 s
-    (some side.1, aug.2 + side.2)
+  findLowCapacityCutWithResidualWork (residualGraphWithPairVisits c) s t supply
+
+theorem findLowCapacityCutWithResidualWork_eq (build : ArcFlow V → Arcs V × ℕ)
+    (c : ArcFlow V) (s t : V) (supply : ℕ)
+    (same : ∀ f, build f = (residualArcs c f, Fintype.card V^2)) :
+    findLowCapacityCutWithResidualWork build s t supply = findLowCapacityCutWithSearchWork c s t supply := by
+  rw [show build = residualGraphWithPairVisits c from funext same]
+  rfl
 
 theorem findLowCapacityCutWithSearchWork_spec (c : ArcFlow V) (s t : V) (supply : ℕ) :
     let n := Fintype.card V
     let result := findLowCapacityCutWithSearchWork c s t supply
     result.1 = findLowCapacityCut c s t supply ∧
       result.2 ≤ supply * residualStepWorkBound n + (2 * n^2 + n * n^2) := by
-  let aug := unitAugmentationsWithSearchWork c s t supply (fun _ => 0)
-  let raw := unitAugmentations c s t supply (fun _ => 0)
-  obtain ⟨same, work⟩ := unitAugmentationsWithSearchWork_spec c s t supply (fun _ => 0)
-  obtain ⟨side, finish⟩ := residualCutSideWithWork_spec c aug.1.1 s
-  change aug.1 = raw at same
-  change aug.2 ≤ _ at work
-  by_cases enough : raw.2 = supply
-  · simpa only [findLowCapacityCutWithSearchWork, findLowCapacityCut, ← show aug =
-      unitAugmentationsWithSearchWork c s t supply (fun _ => 0) from rfl, ← show raw =
-      unitAugmentations c s t supply (fun _ => 0) from rfl, same, enough, ite_true, true_and] using
-        work.trans (Nat.le_add_right _ (2 * Fintype.card V^2 + Fintype.card V * Fintype.card V^2))
-  · rw [same] at side finish
-    simp only [findLowCapacityCutWithSearchWork, findLowCapacityCut, ← show aug =
-      unitAugmentationsWithSearchWork c s t supply (fun _ => 0) from rfl, ← show raw =
-      unitAugmentations c s t supply (fun _ => 0) from rfl,
-      same, enough, ite_false, side, true_and]
-    exact Nat.add_le_add work finish
+  simpa only [findLowCapacityCutWithSearchWork, Nat.mul_zero, Nat.add_zero] using
+    findLowCapacityCutWithResidualWork_spec (residualGraphWithPairVisits c) c s t supply 0
+      (fun _ => ⟨rfl,le_rfl⟩)
 
 /-- The metered thin separator shares the interval before evaluating capacities.
 The additional term budgets arc inspections in the two reachability searches

@@ -1,6 +1,6 @@
 import OnlineReachabilityPreservers.SeparatorWork
 
-/-! Read each original weight once when preparing a weighted separator. -/
+/-! Materialize the weighted capacities once per separator call. -/
 
 namespace OnlineReachabilityPreservers
 
@@ -8,89 +8,124 @@ open Finset
 
 variable {V : Type*} [LinearOrder V] [Fintype V]
 
-private def lookupWeightedCapacity (rows : List ((V × V) × ℤ)) (e : V × V) : ℤ :=
-  match rows with
-  | [] => 0
-  | (a,value)::more => if a = e then value else lookupWeightedCapacity more e
+private def orderedPairKeys : List (V × V) :=
+  ((univ : Finset (V ×ₗ V)).sort).map ofLex
 
-omit [Fintype V] in
-private theorem lookupWeightedCapacity_map (L : List (V × V)) (value : V × V → ℤ) (e : V × V) :
-    lookupWeightedCapacity (L.map fun a => (a,value a)) e = if e ∈ L then value e else 0 := by
-  induction L with
-  | nil => simp [lookupWeightedCapacity]
-  | cons a L ih =>
-    by_cases same : a = e
-    · simp [lookupWeightedCapacity,same]
-    · simp [lookupWeightedCapacity,same,Ne.symm same,ih]
+private theorem mem_orderedPairKeys (e : V × V) : e ∈ orderedPairKeys (V := V) := by
+  unfold orderedPairKeys
+  exact List.mem_map.mpr ⟨toLex e, by simp, rfl⟩
 
-private def orderedPairs (edges : Arcs V) : List (V × V) :=
-  ((edges.map toLex.toEmbedding).sort).map ofLex
+private theorem orderedPairKeys_length : (orderedPairKeys (V := V)).length = Fintype.card V^2 := by
+  simp [orderedPairKeys, Fintype.card_prod, pow_two]
 
-omit [Fintype V] in
-private theorem mem_orderedPairs (edges : Arcs V) (e : V × V) : e ∈ orderedPairs edges ↔ e ∈ edges := by
-  constructor
-  · intro h
-    obtain ⟨key, inside, rfl⟩ := List.mem_map.mp h
-    obtain ⟨pair, present, rfl⟩ := mem_map.mp ((mem_sort _).mp inside)
-    exact present
-  · intro h
-    exact List.mem_map.mpr ⟨toLex e,(mem_sort _).mpr (mem_map_of_mem _ h),rfl⟩
+private theorem orderedPairKeys_nodup : (orderedPairKeys (V := V)).Nodup :=
+  (sort_nodup (s := (univ : Finset (V ×ₗ V))) (· ≤ ·)).map
+    (fun _ _ same => congrArg toLex same)
 
-private def prepareWeightedCapacity (edges : Arcs V) (d : WeightedNetworkDemand V)
-    (weight : V × V → ℕ × ℕ) (charges : V × V → ℕ) (scale : ℕ) : ArcFlow V × ℕ :=
-  let keys := orderedPairs edges
-  let evaluated := keys.map fun e =>
-    let w := weight e
-    (e, (roundedWeightedCapacity w.1 (charges e) : ℤ),w.2)
-  let rows := evaluated.map fun e => (e.1,e.2.1)
-  (fun e => if e ∈ d.free then scale else lookupWeightedCapacity rows e,
-    (evaluated.map fun e => e.2.2).sum)
+private abbrev CapacityRows (V : Type*) :=
+  {rows : List ((V × V) × ℤ) // (rows.map Prod.fst).Nodup}
 
-omit [Fintype V] in
-private theorem prepareWeightedCapacity_spec (edges : Arcs V) (d : WeightedNetworkDemand V)
+private def capacityWithWeightRead (edges : Arcs V) (d : WeightedNetworkDemand V)
+    (weight : V × V → ℕ × ℕ) (charges : V × V → ℕ) (scale : ℕ) (e : V × V) : ℤ × ℕ :=
+  if e ∈ d.free then (scale,0)
+  else if e ∈ edges then
+    let read := weight e
+    (roundedWeightedCapacity read.1 (charges e),read.2)
+  else (0,0)
+
+private def prepareWeightedCapacityRows (edges : Arcs V) (d : WeightedNetworkDemand V)
+    (weight : V × V → ℕ × ℕ) (charges : V × V → ℕ) (scale : ℕ) :
+    CapacityRows V × ℕ :=
+  let entries := orderedPairKeys.map fun e => (e, capacityWithWeightRead edges d weight charges scale e)
+  let rows := entries.map fun row => (row.1,row.2.1)
+  have nodup : (rows.map Prod.fst).Nodup := by
+    simpa only [rows, entries, List.map_map, Function.comp_def, List.map_id'] using
+      (orderedPairKeys_nodup (V := V))
+  (⟨rows,nodup⟩, entries.length + (entries.map fun row => row.2.2).sum)
+
+/-- One visit per ordered pair and at most `B` weight comparisons per priced arc. -/
+def capacityTableWorkBound (n m B : ℕ) : ℕ := n^2 + m*B
+
+private theorem prepareWeightedCapacityRows_spec (edges : Arcs V) (d : WeightedNetworkDemand V)
     (weight : V × V → ℕ × ℕ) (charges : V × V → ℕ) (scale B : ℕ)
     (each : ∀ e, (weight e).2 ≤ B) :
-    let cap := prepareWeightedCapacity edges d weight charges scale
-    cap.1 = weightedNetworkCapacity edges d (fun e => (weight e).1) charges scale ∧
-      cap.2 ≤ edges.card*B := by
-  let keys := orderedPairs edges
-  let val (e : V × V) : ℤ := roundedWeightedCapacity (weight e).1 (charges e)
-  have valueEq : ∀ e, lookupWeightedCapacity (keys.map fun a => (a,val a)) e =
-      if e ∈ edges then val e else 0 := by
-    intro e
-    simpa only [keys, mem_orderedPairs] using lookupWeightedCapacity_map keys val e
-  have rowBound (L : List (V × V)) : (L.map fun e => (weight e).2).sum ≤ L.length*B := by
-    induction L with
-    | nil => simp
-    | cons e more ih =>
-      simpa only [List.map_cons,List.sum_cons,List.length_cons,Nat.succ_mul,Nat.add_comm] using
-        Nat.add_le_add (each e) ih
+    let rows := prepareWeightedCapacityRows edges d weight charges scale
+    let capacity := weightedNetworkCapacity edges d (fun e => (weight e).1) charges scale
+    rows.1.val = orderedPairKeys.map (fun e => (e,capacity e)) ∧
+      rows.2 ≤ capacityTableWorkBound (Fintype.card V) edges.card B := by
+  let read := capacityWithWeightRead edges d weight charges scale
+  have same (e : V × V) : (read e).1 = weightedNetworkCapacity edges d (fun e => (weight e).1) charges scale e := by
+    unfold read capacityWithWeightRead weightedNetworkCapacity
+    split
+    · rfl
+    · split <;> rfl
+  have cost (e : V × V) : (read e).2 ≤ B := by
+    unfold read capacityWithWeightRead
+    split
+    · exact Nat.zero_le _
+    · split
+      · exact each e
+      · exact Nat.zero_le _
+  have costZero (e : V × V) (out : e ∉ edges) : (read e).2 = 0 := by
+    unfold read capacityWithWeightRead
+    by_cases free : e ∈ d.free
+    · rw [ite_eq_left free]
+    · rw [ite_eq_right free, ite_eq_right out]
   refine ⟨?_,?_⟩
-  · funext e
-    unfold prepareWeightedCapacity weightedNetworkCapacity
-    simp only [List.map_map]
-    exact congrArg (fun z : ℤ => if e ∈ d.free then (scale : ℤ) else z) (valueEq e)
-  · unfold prepareWeightedCapacity
-    simp only [List.map_map]
-    exact (rowBound keys).trans_eq (by simp [keys, orderedPairs])
+  · simp only [prepareWeightedCapacityRows, List.map_map, Function.comp_def]
+    exact List.map_congr_left (fun e _ => congrArg (Prod.mk e) (same e))
+  · have allKeys : (orderedPairKeys (V := V)).toFinset = univ := by
+      ext e
+      simp [mem_orderedPairKeys]
+    have sum : (orderedPairKeys.map fun e => (read e).2).sum ≤ edges.card*B := by
+      rw [← List.sum_toFinset _ orderedPairKeys_nodup, allKeys,
+        ← sum_subset (subset_univ edges) (fun e _ => costZero e)]
+      simpa only [sum_const, nsmul_eq_mul, Nat.cast_id] using
+        sum_le_sum (s := edges) (fun e _ => cost e)
+    simp only [prepareWeightedCapacityRows, List.length_map, List.map_map, Function.comp_def]
+    change (orderedPairKeys (V := V)).length + (orderedPairKeys.map fun e => (read e).2).sum ≤ _
+    rw [orderedPairKeys_length]
+    exact Nat.add_le_add_left sum _
 
-/-- Each separator computes its priced capacities once and shares the
-result throughout augmentation and the final residual reachability test. -/
+private def residualArcsFromCapacityRows (rows : CapacityRows V) (flow : ArcFlow V) : Arcs V × ℕ :=
+  let kept := rows.val.filter fun row => flow row.1 < row.2
+  let keys := kept.map Prod.fst
+  have sub : keys.Sublist (rows.val.map Prod.fst) := List.filter_sublist.map _
+  (⟨keys,sub.nodup rows.property⟩,rows.val.length)
+
+private theorem residualArcsFromCapacityRows_eq (rows : CapacityRows V) (capacity flow : ArcFlow V)
+    (same : rows.val = orderedPairKeys.map (fun e => (e,capacity e))) :
+    residualArcsFromCapacityRows rows flow =
+      (residualArcs capacity flow,Fintype.card V^2) := by
+  apply Prod.ext
+  · ext e
+    simp [residualArcsFromCapacityRows, residualArcs, same, List.mem_map, mem_orderedPairKeys]
+    exact ⟨by rintro ⟨_,_,rfl,h⟩; exact h, fun h => ⟨e.1,e.2,rfl,h⟩⟩
+  · simp [residualArcsFromCapacityRows, same, orderedPairKeys_length]
+
+/-- Build the full capacity table once. Residual graph searches reuse its
+values by a linear scan of the rows, with no searches by capacity key. -/
 def weightedNetworkViolationWithCapacityWork (edges : Arcs V) (d : WeightedNetworkDemand V)
     (weight : V × V → ℕ × ℕ) (scale : ℕ) (charges : V × V → ℕ) : Option (Arcs V) × ℕ :=
-  let cap := prepareWeightedCapacity edges d weight charges scale
-  let out := findLowCapacityCutWithSearchWork cap.1 d.source d.sink scale
-  (out.1.map (outgoingCut edges),out.2+edges.card+cap.2)
+  let table := prepareWeightedCapacityRows edges d weight charges scale
+  let out := findLowCapacityCutWithResidualWork (residualArcsFromCapacityRows table.1) d.source d.sink scale
+  (out.1.map (outgoingCut edges),out.2+edges.card+table.2)
 
 theorem weightedNetworkViolationWithCapacityWork_spec (edges : Arcs V) (d : WeightedNetworkDemand V)
     (weight : V × V → ℕ × ℕ) (scale B : ℕ) (charges : V × V → ℕ)
     (each : ∀ e, (weight e).2 ≤ B) :
     let out := weightedNetworkViolationWithCapacityWork edges d weight scale charges
     let old := weightedNetworkViolationWithSearchWork edges d (fun e => (weight e).1) scale charges
-    out.1 = old.1 ∧ out.2 ≤ old.2+edges.card*B := by
-  obtain ⟨same,work⟩ := prepareWeightedCapacity_spec edges d weight charges scale B each
-  simp only [weightedNetworkViolationWithCapacityWork,weightedNetworkViolationWithSearchWork,same,true_and]
-  exact Nat.add_le_add_left work _
+    out.1 = old.1 ∧ out.2 ≤ old.2 + capacityTableWorkBound (Fintype.card V) edges.card B := by
+  obtain ⟨rows,work⟩ := prepareWeightedCapacityRows_spec edges d weight charges scale B each
+  unfold weightedNetworkViolationWithCapacityWork weightedNetworkViolationWithSearchWork
+  dsimp only
+  have same := findLowCapacityCutWithResidualWork_eq
+    (residualArcsFromCapacityRows (prepareWeightedCapacityRows edges d weight charges scale).1)
+    (weightedNetworkCapacity edges d (fun e => (weight e).1) charges scale) d.source d.sink scale
+    (fun f => residualArcsFromCapacityRows_eq _ _ f rows)
+  rw [same]
+  exact ⟨rfl,Nat.add_le_add_left work _⟩
 
 private theorem weightedCoverLoop_compare {E : Type*} [DecidableEq E]
     (old new : (E → ℕ) → Option (Finset E) × ℕ) (fuel extra : ℕ)
@@ -114,7 +149,7 @@ private theorem weightedCoverLoop_compare {E : Type*} [DecidableEq E]
       omega
 
 /-- Run the weighted network on fixed inputs with one cached capacity
-row per priced arc in each separator call. -/
+row per ordered pair in each separator call. -/
 def weightedNetworkRunAtScaleWithCapacityWork (edges : Arcs V) (weight : V × V → ℕ × ℕ) (scale fuel : ℕ) :
     List (WeightedNetworkDemand V) → (V × V → ℕ) → ((V × V → ℕ) × List (Arcs V)) × ℕ
   | [], initial => ((initial,[]),0)
@@ -129,8 +164,9 @@ theorem weightedNetworkRunAtScaleWithCapacityWork_spec (edges : Arcs V) (weight 
     (charges : V × V → ℕ) :
     let out := weightedNetworkRunAtScaleWithCapacityWork edges weight scale fuel D charges
     let old := weightedNetworkRunAtScaleWithSearchWork edges (fun e => (weight e).1) scale fuel D charges
-    out.1 = old.1 ∧ out.2 ≤ old.2+D.length*(fuel*(edges.card*B)) := by
+    out.1 = old.1 ∧ out.2 ≤ old.2+D.length*(fuel*(capacityTableWorkBound (Fintype.card V) edges.card B)) := by
   let val := fun e => (weight e).1
+  let budget := capacityTableWorkBound (Fintype.card V) edges.card B
   induction D generalizing charges with
   | nil => simp [weightedNetworkRunAtScaleWithCapacityWork,weightedNetworkRunAtScaleWithSearchWork]
   | cons d D ih =>
@@ -138,24 +174,24 @@ theorem weightedNetworkRunAtScaleWithCapacityWork_spec (edges : Arcs V) (weight 
     let newCheck := weightedNetworkViolationWithCapacityWork edges d weight scale
     let oldFirst := weightedCoverLoopWithSearchWork oldCheck fuel charges
     let newFirst := weightedCoverLoopWithSearchWork newCheck fuel charges
-    obtain ⟨firstEq,firstBound⟩ := weightedCoverLoop_compare oldCheck newCheck fuel (edges.card*B)
+    obtain ⟨firstEq,firstBound⟩ := weightedCoverLoop_compare oldCheck newCheck fuel budget
       (fun s => weightedNetworkViolationWithCapacityWork_spec edges d weight scale B s each) charges
     change newFirst.1 = oldFirst.1 at firstEq
-    change newFirst.2 ≤ oldFirst.2+fuel*(edges.card*B) at firstBound
+    change newFirst.2 ≤ oldFirst.2+fuel*budget at firstBound
     obtain ⟨tailEq,tailBound⟩ := ih oldFirst.1.1
     let oldLast := weightedNetworkRunAtScaleWithSearchWork edges val scale fuel D oldFirst.1.1
     let newLast := weightedNetworkRunAtScaleWithCapacityWork edges weight scale fuel D oldFirst.1.1
     change newLast.1 = oldLast.1 at tailEq
-    change newLast.2 ≤ oldLast.2+D.length*(fuel*(edges.card*B)) at tailBound
+    change newLast.2 ≤ oldLast.2+D.length*(fuel*budget) at tailBound
     change ((weightedNetworkRunAtScaleWithCapacityWork edges weight scale fuel D newFirst.1.1).1.1,
         newFirst.1.2++(weightedNetworkRunAtScaleWithCapacityWork edges weight scale fuel D newFirst.1.1).1.2) =
       (oldLast.1.1,oldFirst.1.2++oldLast.1.2) ∧
       newFirst.2+(weightedNetworkRunAtScaleWithCapacityWork edges weight scale fuel D newFirst.1.1).2 ≤
-        oldFirst.2+oldLast.2+(D.length+1)*(fuel*(edges.card*B))
+        oldFirst.2+oldLast.2+(D.length+1)*(fuel*budget)
     rw [firstEq]
     change (newLast.1.1,oldFirst.1.2++newLast.1.2) = (oldLast.1.1,oldFirst.1.2++oldLast.1.2) ∧ _
     refine ⟨by rw [tailEq],?_⟩
-    change newFirst.2+newLast.2 ≤ oldFirst.2+oldLast.2+(D.length+1)*(fuel*(edges.card*B))
+    change newFirst.2+newLast.2 ≤ oldFirst.2+oldLast.2+(D.length+1)*(fuel*budget)
     rw [Nat.add_mul]
     omega
 

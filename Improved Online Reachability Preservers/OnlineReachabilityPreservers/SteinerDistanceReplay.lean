@@ -110,8 +110,8 @@ theorem completeSteinerPrefixSearchReplayWithRoundingWork_spec (G : Arcs V) (hei
     rw [prepEq]
     exact template
 
-/-- Include both the rounding and cached-capacity weight reads in the
-search charge at each prefix. The two shared preparation charges are separate. -/
+/-- Include the capacity table construction and both sets of weight reads
+in the search charge at each prefix. The shared preparation charges are separate. -/
 def completeSteinerPrefixSearchReplayWithCapacityWork (G : Arcs V) (height : ℕ)
     (sample : EarlyRoundSample G height) (draw : Fin (completeSteinerHubCount V) → V)
     (thin : ThinSample G) (D : List (V × V)) : List (Arcs V × ℕ) × ℕ × ℕ :=
@@ -152,8 +152,8 @@ theorem completeSteinerPrefixSearchReplayWithCapacityWork_spec (G : Arcs V) (hei
   · change next.2.2 ≤ _
     exact prepEq.symm ▸ template
 
-/-- Complete prefix replay with the original distance-table reads charged in
-template setup, weight preparation, weighted separation, and rounding. -/
+/-- Complete prefix replay with capacity table visits and the original
+distance-table reads in template setup, weight preparation, separation, and rounding. -/
 def completeSteinerPrefixSearchReplayWithWeightWork (G : Arcs V) (height : ℕ)
     (sample : EarlyRoundSample G height) (draw : Fin (completeSteinerHubCount V) → V)
     (thin : ThinSample G) (D : List (V × V)) : List (Arcs V × ℕ) × ℕ × ℕ × ℕ :=
@@ -191,8 +191,8 @@ theorem completeSteinerPrefixSearchReplayWithWeightWork_spec (G : Arcs V) (heigh
     completeSteinerPrefixSearchReplayWithCapacityWork_spec G height sample draw thin D feasible
   exact ⟨same.symm ▸ graphs,same.symm ▸ charges,buildEq.symm ▸ build,templateEq.symm ▸ template,weight⟩
 
-/-- Bound the measured searches and original table reads by one polynomial
-for fixed height. The three preparation terms are charged once. -/
+/-- Bound the measured searches, capacity table visits, and original table
+reads by one polynomial for fixed height. Charge the three preparations once. -/
 def completeSteinerWeightWorkPolynomial (n m height p : ℕ) : ℕ :=
   let H := (height+1)*n^height
   let F := (n*2)*H

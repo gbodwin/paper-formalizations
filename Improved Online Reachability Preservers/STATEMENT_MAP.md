@@ -223,10 +223,14 @@ The indexed pairwise evaluator returns the ordinary union of all assigned
 paths in one prefix and sums their search work. The quota count is bounded
 by a polynomial in the graph sizes and the known total or current index.
 The [weighted capacity counter](OnlineReachabilityPreservers/SteinerCapacityWork.lean)
-prepares one capacity row per priced arc before a separator call. It
-preserves the cut and fractional updates. For \(q\) requests, separator
+prepares one capacity row per ordered pair before a separator call.
+Each residual graph scans the stored values directly. Lean checks that
+the scan gives the same graph and pair-visit count, including when the
+last search recovers the cut. The keys are unique, so the residual graph
+is constructed without a deduplication pass. The cut and fractional updates agree with
+the ordinary run. With \(N\) network vertices, \(q\) requests, separator
 fuel \(f\), \(m_F\) priced arcs, and at most \(B\) comparisons per weight
-read, it adds at most \(qfm_F B\) to the measured search work. The
+read, preparation adds at most \(qf(N^2+m_F B)\) to the measured search work. The
 [capacity replay](OnlineReachabilityPreservers/SteinerDistanceReplay.lean)
 applies this at every early fractional state with weights from the original
 distance table. It additionally charges at most \(p(p+1)^2\) times the
@@ -236,10 +240,9 @@ The [complete weight-read replay](OnlineReachabilityPreservers/SteinerDistanceRe
 also charges the original table reads for the weighted link classes,
 scale, and fuel. One shared row per link suffices, so setup adds at most
 \(|E_F|n^2\) key comparisons. One fixed-height polynomial covers the
-reported searches and original table reads across the whole replay.
-Searches of cached capacity rows, finite container operations, arithmetic,
-and conversion from sampled indices to vertex values remain separate
-runtime costs.
+reported searches, capacity table visits, and original table reads across
+the whole replay. Finite container operations, arithmetic bit costs, and
+conversion from sampled indices to vertex values remain separate runtime costs.
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

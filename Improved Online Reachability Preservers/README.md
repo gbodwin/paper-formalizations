@@ -182,7 +182,8 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   that require them. The resulting acyclic system has size `m+p` and is fully
   bridge-free.
 - [`theorem14_extremal_lower_in_linear_regimes`](OnlineReachabilityPreservers/OfflineConverseRegimes.lean)
-  proves the unrestricted path-family converse when `p² ≤ K n` or `n² ≤ K p`.
+  proves the converse for arbitrary simple local path orders when `p² ≤ K n`
+  or `n² ≤ K p`, with `n ≥ 2`, `1 ≤ p ≤ n²`, and `K ≥ 1`.
   For a universal constant `C`, a DAG with exactly `n` vertices and `p`
   distinct demands forces at least `1/(C K)` of the mass of every simple
   path system that excludes full bridges through size four. Theorem 43
@@ -247,9 +248,11 @@ the budget parameter `n` equal to the original vertex count.
 
 The algorithms are executable bounded searches on finite sets. The graph searches
 iterate at most `n` times over finite vertex and edge sets, with a deterministic
-minimum choice. SCC labels, internal trees, and crossing representatives depend only on the
-input graph and can be precomputed. A formal time bound in a specified cost model
-is outside the current checked coverage.
+minimum choice. SCC labels, internal trees, and crossing representatives depend
+only on the input graph and can be precomputed. The [Steiner replay](OnlineReachabilityPreservers/SteinerDistanceReplay.lean)
+also bounds weighted capacity-table construction and reuse, graph searches, and
+original weight reads by a polynomial at fixed height. Finite container operations,
+arithmetic bit costs, and seed decoding still need end-to-end time bounds.
 
 ## Source and verification
 

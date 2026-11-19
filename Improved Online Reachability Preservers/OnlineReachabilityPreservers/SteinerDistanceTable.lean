@@ -496,7 +496,7 @@ def prepareEarlyDistanceTableWithRoundingWork (G : Arcs V) (height : ℕ) (sampl
     (List (V × V) → Arcs V × ℕ) × ℕ × ℕ :=
   prepareEarlyDistanceTableBy G height sample .rounding
 
-/-- Add the original weight reads for cached capacities as well as rounding. -/
+/-- Add capacity table construction and its original weight reads to the rounding work. -/
 def prepareEarlyDistanceTableWithCapacityWork (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
     (List (V × V) → Arcs V × ℕ) × ℕ × ℕ :=
   prepareEarlyDistanceTableBy G height sample .capacity
@@ -667,11 +667,12 @@ theorem prepareEarlyDistanceTableWithRoundingWork_spec (G : Arcs V) (height : �
   intro P
   exact earlyRoundedGraphWithSearchWorkFromMetric_compare G height oldMetric newMetric B metric P
 
-/-- One weighted request's capacity reads have this polynomial bound for fixed height. -/
+/-- One weighted request's capacity table visits and weight reads have this
+polynomial bound for fixed height. -/
 def capacityComparisonPolynomial (n height : ℕ) : ℕ :=
   let F := (n*2)*((height+1)*n^height)
   let S := 1+n*F^2
-  ((S+1)*S+1)*(F^2*n^2)
+  ((S+1)*S+1)*capacityTableWorkBound (3*F) (F^2) (n^2)
 
 private theorem capacityComparisonBound_le (G : Arcs V) (height : ℕ)
     (links : Arcs (HeightForestVertex V height))
@@ -680,7 +681,8 @@ private theorem capacityComparisonBound_le (G : Arcs V) (height : ℕ)
       (networkWeightFromForestWeights weight)).1 = forestScale G height) :
     let priced := pricedForestFromWeights links weight
     let sizes := preparedScaleAndFuel priced (networkWeightFromForestWeights weight)
-    sizes.2*(priced.card*Fintype.card V^2) ≤ capacityComparisonPolynomial (Fintype.card V) height := by
+    sizes.2*capacityTableWorkBound (Fintype.card (ForestNetworkVertex V height)) priced.card (Fintype.card V^2) ≤
+      capacityComparisonPolynomial (Fintype.card V) height := by
   let n := Fintype.card V
   let F := (n*2)*((height+1)*n^height)
   let S := 1+n*F^2
@@ -688,7 +690,9 @@ private theorem capacityComparisonBound_le (G : Arcs V) (height : ℕ)
     cases isEmpty_or_nonempty V with
     | inl empty => simp [HeightForestVertex]
     | inr ne => exact heightForestVertex_card_le V height
-  have bound : links.card ≤ F^2 := by
+  have network : Fintype.card (ForestNetworkVertex V height) ≤ 3*F := by
+    simpa [ForestNetworkVertex] using Nat.mul_le_mul_left 3 forest
+  have linkBound : links.card ≤ F^2 := by
     have atMost := card_le_univ links
     rw [Fintype.card_prod, ← pow_two] at atMost
     exact atMost.trans (Nat.pow_le_pow_left forest _)
@@ -696,7 +700,7 @@ private theorem capacityComparisonBound_le (G : Arcs V) (height : ℕ)
   have pricedBound : priced.card ≤ F^2 := by
     unfold priced pricedForestFromWeights
     rw [card_map]
-    exact (card_filter_le _ _).trans bound
+    exact (card_filter_le _ _).trans linkBound
   let total := ∑ a ∈ priced, networkWeightFromForestWeights weight a
   have scale : max 1 total ≤ S := by
     change (preparedScaleAndFuel priced (networkWeightFromForestWeights weight)).1 ≤ S
@@ -706,11 +710,14 @@ private theorem capacityComparisonBound_le (G : Arcs V) (height : ℕ)
     gcongr
   have totalBound : total ≤ S := (le_max_right 1 total).trans scale
   have logBound := (Nat.log2_le_self (max 1 total)).trans scale
-  change (( (max 1 total).log2+1)*total+1)*(priced.card*n^2) ≤ ((S+1)*S+1)*(F^2*n^2)
+  change (((max 1 total).log2+1)*total+1)*capacityTableWorkBound
+    (Fintype.card (ForestNetworkVertex V height)) priced.card (n^2) ≤
+    ((S+1)*S+1)*capacityTableWorkBound (3*F) (F^2) (n^2)
+  unfold capacityTableWorkBound
   gcongr
 
-/-- Cached weighted capacities preserve the rounded early graph. Only reads
-of original hop weights add to the reported per-prefix charge. -/
+/-- Capacity table construction preserves the rounded early graph and charges
+one pass over the ordered pairs and the original weight reads it makes. -/
 theorem prepareEarlyDistanceTableWithCapacityWork_spec (G : Arcs V) (height : ℕ)
     (sample : EarlyRoundSample G height) :
     let rounded := prepareEarlyDistanceTableWithRoundingWork G height sample
@@ -740,7 +747,8 @@ theorem prepareEarlyDistanceTableWithCapacityWork_spec (G : Arcs V) (height : �
   let oldMetric := earlyMetricWithPreparedRoundingWork links query priced free networkWeight scale fuel seed
   let newMetric := earlyMetricWithPreparedCapacityWork links query priced free scale fuel seed
   let B := capacityComparisonPolynomial (Fintype.card V) height
-  have weightBound : fuel*(priced.card*Fintype.card V^2) ≤ B :=
+  let C := capacityTableWorkBound (Fintype.card (ForestNetworkVertex V height)) priced.card (Fintype.card V^2)
+  have weightBound : fuel*C ≤ B :=
     capacityComparisonBound_le G height links weight scaleEq
   refine ⟨rfl,?_⟩
   intro P
@@ -755,7 +763,7 @@ theorem prepareEarlyDistanceTableWithCapacityWork_spec (G : Arcs V) (height : �
     scale fuel (Fintype.card V^2) (fun _ => (distanceTableReadWithSearchWork_spec G _).2)
     (Q.map (requestOnFreeForest free)) (fun _ => 0)
   have identical : out.1 = old.1 := same
-  have search : out.2 ≤ old.2+Q.length*(fuel*(priced.card*Fintype.card V^2)) := by
+  have search : out.2 ≤ old.2+Q.length*(fuel*C) := by
     have length : (Q.map (requestOnFreeForest free)).length = Q.length := List.length_map _
     rw [← length]
     exact charge
