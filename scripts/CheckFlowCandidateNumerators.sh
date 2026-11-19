@@ -14,4 +14,4 @@ for module in "${modules[@]}"; do
   printf 'PASS strict elaboration of %s\n' "$module"
 done
 
-lake env timeout 1500 lean "${flags[@]}" --run "$paper/verification/CandidatePreparedSolverSmoke.lean"
+lake env timeout --verbose 3600 lean "${flags[@]}" --run "$paper/verification/CandidatePreparedSolverSmoke.lean"
