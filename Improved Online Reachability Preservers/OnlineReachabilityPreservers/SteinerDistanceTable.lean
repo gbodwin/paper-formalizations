@@ -290,25 +290,37 @@ private theorem earlyMetricFromDistances_eq (G : Arcs V) (height : ℕ) (dist : 
 
 end ForestWeights
 
-/-- Construct original distances once before building the height forest.
-All separator and rounding queries use its stored values. -/
-def earlyRoundedGraphWithDistanceTable (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height)
-    (D : List (V × V)) : Arcs V × ℕ :=
+/-- Prepare one early evaluator for any number of prefixes. Its template,
+arc weights and scale share the same stored original distances. -/
+def prepareEarlyDistanceTable (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
+    (List (V × V) → Arcs V × ℕ) × ℕ :=
   let table := distanceTableWithSearchWork G
   let dist := fun d => (readDistanceRow table.1 d).1
   let known : ∀ d : V × V, dist d = hops G d.1 d.2 :=
     fun d => (distanceTableReadWithSearchWork_spec G d).1
-  let out := earlyRoundedGraphWithSearchWorkFromMetric G height
-    (earlyMetricFromDistances G height dist known sample) D
-  (out.1,out.2+table.2)
+  let metric := earlyMetricFromDistances G height dist known sample
+  (earlyRoundedGraphWithSearchWorkFromMetric G height metric,table.2)
+
+theorem prepareEarlyDistanceTable_eq (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
+    prepareEarlyDistanceTable G height sample =
+      (earlyRoundedGraphWithSearchWork G height sample,(distanceTableWithSearchWork G).2) := by
+  unfold prepareEarlyDistanceTable earlyRoundedGraphWithSearchWork
+  dsimp only
+  rw [earlyMetricFromDistances_eq]
+
+/-- Construct original distances once before building the height forest.
+The separator and rounding use stored values for original metric queries. -/
+def earlyRoundedGraphWithDistanceTable (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height)
+    (D : List (V × V)) : Arcs V × ℕ :=
+  let prepared := prepareEarlyDistanceTable G height sample
+  let out := prepared.1 D
+  (out.1,out.2+prepared.2)
 
 theorem earlyRoundedGraphWithDistanceTable_eq (G : Arcs V) (height : ℕ)
     (sample : EarlyRoundSample G height) (D : List (V × V)) :
     let ordinary := earlyRoundedGraphWithSearchWork G height sample D
     earlyRoundedGraphWithDistanceTable G height sample D = (ordinary.1,ordinary.2+(distanceTableWithSearchWork G).2) := by
-  unfold earlyRoundedGraphWithDistanceTable earlyRoundedGraphWithSearchWork
-  dsimp only
-  rw [earlyMetricFromDistances_eq]
+  simp only [earlyRoundedGraphWithDistanceTable, prepareEarlyDistanceTable_eq]
 
 theorem earlyRoundedGraphWithDistanceTable_spec (G : Arcs V) (height : ℕ)
     (sample : EarlyRoundSample G height) (D : List (V × V)) :

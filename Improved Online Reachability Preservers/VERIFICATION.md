@@ -523,6 +523,13 @@ An exact-source replay grants no coverage to a paper statement outside the
   Independent review checked the first-success counts, expected bits,
   finite joint event probabilities and empty-coordinate cases.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44501074024).
+- [a360f90e](https://github.com/gbodwin/paper-formalizations/commit/a360f90e4cffc1e2dafcddde42f78e7c184be2fd)
+  computes one table of original hop distances for the early evaluator.
+  The 3610-declaration audit and local kernel replay passed.
+  Independent review checked the unreachable sentinel, both tree directions,
+  exact separation and rounding, and the one-time graph inspections.
+  A two-vertex run returned the same graph and added 12 arc inspections.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44502188351).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

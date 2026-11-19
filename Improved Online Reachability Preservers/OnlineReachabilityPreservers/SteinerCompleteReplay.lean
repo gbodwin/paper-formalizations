@@ -16,16 +16,24 @@ private theorem distinctTrace_length_le (D : List (V × V)) : (distinctNonselfTr
   exact (card_le_card (fun _ h => List.mem_toFinset.mpr (mem_distinctNonselfTrace.mp
     (List.mem_toFinset.mp h)).1)).trans (List.toFinset_card_le D)
 
-/-- Compose exact graph outputs and search charges for all phases of one prefix. -/
-def completeSteinerDrawRunWithSearchWork (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height)
+/-- Compose the early evaluator with the ordinary split and late graph searches. -/
+def completeSteinerDrawRunWithSearchWorkFromEarly (G : Arcs V)
+    (early : List (V × V) → Arcs V × ℕ)
     (draw : Fin (completeSteinerHubCount V) → V) (thin : ThinSample G)
     (D : List (V × V)) : Arcs V × ℕ :=
   let n := Fintype.card V
   let T := steinerEarlyCutoff n
   let P := distinctNonselfTrace D
-  let early := earlyRoundedGraphWithSearchWork G height sample (P.take T)
+  let first := early (P.take T)
   let late := lateSteinerWithSearchWork G (steinerThinThreshold n) (sampledVertices draw) thin (P.drop T)
-  (early.1 ∪ late.1,early.2+late.2)
+  (first.1 ∪ late.1,first.2+late.2)
+
+/-- Compose exact graph outputs and search charges for all phases of one prefix. -/
+def completeSteinerDrawRunWithSearchWork (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height)
+    (draw : Fin (completeSteinerHubCount V) → V) (thin : ThinSample G)
+    (D : List (V × V)) : Arcs V × ℕ :=
+  completeSteinerDrawRunWithSearchWorkFromEarly G (earlyRoundedGraphWithSearchWork G height sample)
+    draw thin D
 
 /-- The runtime expression bounds the measured operations on every seed.
 Sampling is charged separately, as are arithmetic and container operations. -/

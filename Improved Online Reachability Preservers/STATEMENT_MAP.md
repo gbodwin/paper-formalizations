@@ -166,6 +166,8 @@ The [complete search counter](OnlineReachabilityPreservers/SteinerCompleteReplay
 returns the ordinary seeded algorithm's graph at every prefix of a feasible
 trace. Its measured operations have an explicit polynomial bound at fixed
 height, including when the whole list of prefixes is evaluated.
+The [shared-table replay](OnlineReachabilityPreservers/SteinerDistanceReplay.lean)
+adds one distance-table preparation to this bound for the whole list.
 The [route counters](OnlineReachabilityPreservers/RouteWork.lean)
 bound arc inspections for SCC labels and shortest routes, and
 sum the search work over greedy forwards growth. They also bound
