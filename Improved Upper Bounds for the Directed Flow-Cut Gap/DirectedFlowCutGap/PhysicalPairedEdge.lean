@@ -221,7 +221,9 @@ theorem run_polynomial : ∃ p : Polynomial ℕ,
     gcongr
   have build := line_paid D positive fits
   have buildBound : lineBudget (lineSize n) D.demands.length B ≤ setup.eval x := by
-    simp only [setup,lineBudget,lineAllowance,eval_add,eval_mul,eval_X,eval_ofNat,eval_pow,eval_one]
+    simp only [setup,lineBudget,lineAllowance,BinaryLineLabels.budget_eval,
+      BinaryLineLabels.demandBudget_eval,eval_add,eval_mul,eval_X,eval_ofNat,eval_pow,eval_one]
+    unfold BinaryLineLabels.budget BinaryLineLabels.demandBudget
     gcongr
   simp only [eval_add]
   change r.paid+(lineWithCost D).2 ≤ q.eval x+q.eval x+budget.eval x+setup.eval x

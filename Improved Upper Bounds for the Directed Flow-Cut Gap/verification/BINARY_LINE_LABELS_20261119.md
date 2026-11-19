@@ -5,7 +5,8 @@ binary comparisons, offsets and quotient and remainder. It reuses those
 labels for the adjacency matrix and price row. Binary endpoint labels
 retain demand order and repetitions. Lean identifies the exact graph,
 prices and demands with the previous line instance and includes the
-measured label work in the original-input polynomial.
+measured label work in the original-input polynomials for the direct
+edge solver and the paired solver.
 
 The native checks include zero dimension and a positive two-vertex
 instance with both original arcs, two different prices and a repeated
