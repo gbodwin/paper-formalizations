@@ -446,6 +446,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   Independent review checked the window, exact lower and upper tuple
   counts, split budgets, and the single pruning factor for every iterate.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44485409782).
+- [abada20c](https://github.com/gbodwin/paper-formalizations/commit/abada20c6c58a7c086b3966d4cbcb862d78aab4b)
+  proves the unrestricted limit of Theorem 38 with one vertex-dependent
+  exponent slack. The 3258-declaration audit and local kernel replay passed.
+  Independent review checked the two sparse ranges, the uniform coefficient,
+  and the domain of all finite ordered simple paths.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44486348837).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

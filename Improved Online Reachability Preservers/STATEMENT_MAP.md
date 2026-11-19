@@ -152,11 +152,15 @@ bounds reachability calls by \(2|E|p\). The
 [quota counter](OnlineReachabilityPreservers/KnownBudget.lean)
 bounds the number of base path-rule calls at each candidate budget
 and shares each evaluated candidate across selection and counting.
+The [deterministic search budgets](OnlineReachabilityPreservers/AlgorithmSearchWork.lean)
+compose the SCC and connector searches with the forward and reverse online
+runs and the offline pruning algorithm. The forward budget also covers
+evaluating the whole list of arrival prefixes.
 The [sample coordinates](OnlineReachabilityPreservers/SteinerSeedCoordinates.lean)
 are in bijection with the nested early seed and preserve the
 uniform finite probability. The counts cover these subroutines.
-The costs of finite containers, arithmetic, seed generation, and
-the composition of all online steps remain open in the runtime proof.
+The costs of finite containers, arithmetic, seed generation, and the
+composition of the remaining online steps remain open in the runtime proof.
 
 ## Appendix dependencies
 
