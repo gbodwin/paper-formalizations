@@ -323,9 +323,17 @@ An exact-source replay grants no coverage to a paper statement outside the
   Independent review checked the fixed-trace model, degenerate inputs,
   cutoff argument, and rate conversion.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44464960651).
+- [9d2c7255](https://github.com/gbodwin/paper-formalizations/commit/9d2c72558f8b497844c0e165d48d8b5722da094a)
+  moves the full Steiner evaluator to an integer hub budget. The
+  2566-declaration audit and local kernel replay passed. Independent
+  review checked the nonempty-graph estimates and found that an
+  empty graph needed a zero-draw case. The next checkpoint adds it.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44466253050).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
 crossing edges on a cyclic input. The empty prefix has no edges, an
 unreachable forward request returns `none`, and a self-request returns an
-empty path.
+empty path. An execution of the complete Steiner draw evaluator on a
+two-vertex graph, with a repeated demand and a self-request, gave
+cumulative purchases `[0, 1, 1, 1]`.

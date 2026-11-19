@@ -182,7 +182,8 @@ theorem log_le_log2_succ {n : ℕ} (positive : 0 < n) :
 
 /-- A computable number of hub draws for failure probability at most
 n to the power minus two. -/
-def steinerHubDraws (n τ : ℕ) : ℕ := (4 * (n.log2 + 1) * n) / (τ + 1) + 1
+def steinerHubDraws (n τ : ℕ) : ℕ :=
+  if n = 0 then 0 else (4 * (n.log2 + 1) * n) / (τ + 1) + 1
 
 private theorem steinerHubDraws_adequate {n τ : ℕ} (hn : 0 < n) :
     4 * Real.log (n : ℝ) * (n : ℝ) / ((τ : ℝ) + 1) ≤ steinerHubDraws n τ := by
@@ -195,6 +196,7 @@ private theorem steinerHubDraws_adequate {n τ : ℕ} (hn : 0 < n) :
     exact mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left (log_le_log2_succ hn) (by positivity))
       (by positivity)
   apply (div_le_iff₀ (by positivity)).mpr
+  simp only [steinerHubDraws, hn.ne', ↓reduceIte]
   exact comparison.trans (by exact_mod_cast step.le)
 
 theorem steinerHubDraws_probability (G : Arcs V)
@@ -246,6 +248,7 @@ theorem steinerHubDraws_balanced {n τ : ℕ} (hn : 0 < n)
       _ = (n : ℝ) ^ (1 : ℝ) / (n : ℝ) ^ (3/5 : ℝ) := by rw [Real.rpow_one]
       _ = _ := by rw [← Real.rpow_sub n0]; norm_num
   have pow : 1 ≤ (n : ℝ) ^ (2/5 : ℝ) := Real.one_le_rpow n1 (by norm_num)
+  simp only [steinerHubDraws, hn.ne', ↓reduceIte]
   change ((a / b + 1 : ℕ) : ℝ) ≤ _
   rw [Nat.cast_add, Nat.cast_one]
   calc

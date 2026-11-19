@@ -172,6 +172,15 @@ private theorem completeSteiner_late_opt {Z : Arcs V} (D : List (V × V))
 def completeSteinerHubCount (V : Type*) [Fintype V] : ℕ :=
   steinerHubDraws (Fintype.card V) (steinerThinThreshold (Fintype.card V))
 
+theorem completeSteinerHubCount_empty (V : Type*) [Fintype V] [IsEmpty V] :
+    completeSteinerHubCount V = 0 := by
+  simp [completeSteinerHubCount, steinerHubDraws]
+
+theorem completeSteinerHubDraw_empty (V : Type*) [Fintype V] [IsEmpty V] :
+    Nonempty (Fin (completeSteinerHubCount V) → V) := by
+  rw [completeSteinerHubCount_empty]
+  exact ⟨Fin.elim0⟩
+
 def completeSteinerDrawRun (G : Arcs V) (height : ℕ) (early : EarlyRoundSample G height)
     (draw : Fin (completeSteinerHubCount V) → V) (thin : ThinSample G) (D : List (V × V)) : Arcs V :=
   completeSteinerRun G height early (sampledVertices draw) thin D
