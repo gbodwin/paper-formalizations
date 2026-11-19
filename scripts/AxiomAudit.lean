@@ -243,6 +243,8 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.weightedCoverRun_bound
 #print axioms OnlineReachabilityPreservers.findLowCapacityCut_spec
 #print axioms OnlineReachabilityPreservers.findLowCapacityCut_eq_none
+#print axioms OnlineReachabilityPreservers.ValidArcFlow.decompose_paths
+#print axioms OnlineReachabilityPreservers.ValidArcFlow.decompose_capacity
 #print axioms OnlineReachabilityPreservers.roundedWeightedCapacity_bounds
 #print axioms OnlineReachabilityPreservers.roundedWeightedObjective_le
 #print axioms OnlineReachabilityPreservers.weightedNetworkViolation_some

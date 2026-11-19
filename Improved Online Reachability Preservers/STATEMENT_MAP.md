@@ -66,6 +66,8 @@ The [integer capacity comparison](OnlineReachabilityPreservers/SteinerRoundedCap
 checks an extra normalized cost of at most one. The
 [general cut separator](OnlineReachabilityPreservers/SteinerCutFlow.lean)
 supports the integer cutoff used for that comparison.
+Its `ValidArcFlow.decompose_capacity` extracts a list of simple unit routes
+whose incidence on every arc is bounded by that arc's capacity.
 The [weighted network run](OnlineReachabilityPreservers/SteinerWeightedNetwork.lean)
 uses actual separating cuts and certifies flow in the graph of each request
 with its own free attachments. The rounded normalized objective pays an

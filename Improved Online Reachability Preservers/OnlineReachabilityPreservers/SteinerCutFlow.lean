@@ -355,4 +355,140 @@ theorem findLowCapacityCut_eq_none {c : ArcFlow V} {s t : V} {supply : ℕ} (hc 
     · intro all
       exact (capacity.not_ge (all W start finish)).elim
 
+/-- The arcs carrying positive net flow. -/
+def positiveFlowArcs (flow : ArcFlow V) : Arcs V :=
+  univ.filter fun e => 0 < flow e
+
+private theorem ValidArcFlow.positive_reach {c flow : ArcFlow V} {s t : V} {value : ℕ}
+    (valid : ValidArcFlow c s t value flow) (positive : 0 < value) :
+    Reach (positiveFlowArcs flow) s t := by
+  by_contra stuck
+  let W := reaches (reverseArcs (positiveFlowArcs flow)) s
+  have follows (u : V) : u ∈ W ↔ Reach (positiveFlowArcs flow) s u := by
+    change u ∈ reaches (reverseArcs (positiveFlowArcs flow)) s ↔ Reach (positiveFlowArcs flow) s u
+    rw [mem_reaches, reach_reverseArcs]
+  have start : s ∈ W := (follows s).mpr .refl
+  have finish : t ∉ W := fun h => stuck ((follows t).mp h)
+  have total : cutArcFlow flow W ≤ 0 := by
+    unfold cutArcFlow
+    apply sum_nonpos
+    intro u hu
+    apply sum_nonpos
+    intro v hv
+    by_contra! h
+    have edge : Edge (positiveFlowArcs flow) u v := mem_filter.mpr ⟨mem_univ _, h⟩
+    exact (mem_compl.mp hv) ((follows v).mpr (((follows u).mp hu).tail edge))
+  rw [valid.cut_value start finish] at total
+  omega
+
+private def consumeArcFlow (flow : ArcFlow V) (path : Arcs V) : ArcFlow V :=
+  fun e => flow e - inPath path e + inPath path e.swap
+
+private theorem ValidArcFlow.consume {c flow : ArcFlow V} {s t : V} {value : ℕ}
+    (hc : ∀ e, 0 ≤ c e) (valid : ValidArcFlow c s t (value + 1) flow)
+    {p : List (V × V)} (path : SimpleWalk (positiveFlowArcs flow) s t p) :
+    ValidArcFlow c s t value (consumeArcFlow flow p.toFinset) := by
+  constructor
+  · intro a b
+    have fact := valid.skew a b
+    simp only [consumeArcFlow, Prod.swap_prod_mk]
+    omega
+  · intro e
+    have upper := valid.upper e
+    have zero := hc e
+    have nonnegative : 0 ≤ inPath p.toFinset e := by unfold inPath; split <;> norm_num
+    by_cases reverseUsed : e.swap ∈ p.toFinset
+    · have pos := (mem_filter.mp (path.1.mem (List.mem_toFinset.mp reverseUsed))).2
+      have opposite : flow e = -flow e.swap := valid.skew e.1 e.2
+      change flow e - inPath p.toFinset e + inPath p.toFinset e.swap ≤ c e
+      have reverseMark : inPath p.toFinset e.swap = 1 := by simp [inPath, reverseUsed]
+      omega
+    · change flow e - inPath p.toFinset e + inPath p.toFinset e.swap ≤ c e
+      have reverseMark : inPath p.toFinset e.swap = 0 := by simp [inPath, reverseUsed]
+      omega
+  · intro a
+    have hs := valid.balance a
+    have hd := pathDivergence path.1 path.2 a
+    simp only [divergence, consumeArcFlow, augmentArcFlow, Prod.swap_prod_mk,
+      sum_add_distrib, sum_sub_distrib, zero_add, Int.natCast_add, Int.cast_ofNat_Int] at hs hd ⊢
+    have split (r : V) : (if a = r then (value : ℤ) + 1 else 0) =
+        (if a = r then (value : ℤ) else 0) + (if a = r then (1 : ℤ) else 0) := by
+      by_cases eq : a = r <;> simp [eq]
+    rw [split s, split t] at hs
+    omega
+
+private theorem consume_max_add {c flow : ArcFlow V} {s t : V} {value : ℕ}
+    (valid : ValidArcFlow c s t value flow) {p : List (V × V)}
+    (path : SimpleWalk (positiveFlowArcs flow) s t p) (e : V × V) :
+    max 0 (consumeArcFlow flow p.toFinset e) + inPath p.toFinset e = max 0 (flow e) := by
+  have skew : flow e = -flow e.swap := valid.skew e.1 e.2
+  by_cases forwards : e ∈ p.toFinset
+  · have pos := (mem_filter.mp (path.1.mem (List.mem_toFinset.mp forwards))).2
+    have noReverse : e.swap ∉ p.toFinset := by
+      intro opposite
+      have reversePos := (mem_filter.mp (path.1.mem (List.mem_toFinset.mp opposite))).2
+      omega
+    simp only [consumeArcFlow, inPath, forwards, noReverse, ↓reduceIte, add_zero]
+    omega
+  · by_cases reverseUsed : e.swap ∈ p.toFinset
+    · have reversePos := (mem_filter.mp (path.1.mem (List.mem_toFinset.mp reverseUsed))).2
+      simp only [consumeArcFlow, inPath, forwards, reverseUsed, ↓reduceIte, sub_zero, add_zero]
+      omega
+    · simp [consumeArcFlow, inPath, forwards, reverseUsed]
+
+def arcUsage (paths : List (List (V × V))) (e : V × V) : ℕ :=
+  (paths.filter fun p => decide (e ∈ p)).length
+
+omit [Fintype V] in
+private theorem arcUsage_cons (p : List (V × V)) (paths : List (List (V × V))) (e : V × V) :
+    ((arcUsage (p :: paths) e : ℕ) : ℤ) =
+      (arcUsage paths e : ℤ) + inPath p.toFinset e := by
+  by_cases h : e ∈ p
+  · simp [arcUsage, inPath, h]
+  · simp [arcUsage, inPath, h]
+
+/-- An integer flow of value k supplies k unit paths. Their usage of every
+arc is at most the positive part of its original net flow. -/
+theorem ValidArcFlow.decompose_paths {c flow : ArcFlow V} {s t : V} {value : ℕ}
+    (hc : ∀ e, 0 ≤ c e) (valid : ValidArcFlow c s t value flow) :
+    ∃ paths : List (List (V × V)), paths.length = value ∧
+      (∀ p ∈ paths, SimpleWalk (positiveFlowArcs flow) s t p) ∧
+      (∀ e, (arcUsage paths e : ℤ) ≤ max 0 (flow e)) := by
+  induction value generalizing flow with
+  | zero => exact ⟨[], rfl, by simp, fun _ => by simp [arcUsage]⟩
+  | succ value ih =>
+    obtain ⟨p, found⟩ := routePath_succeeds.mpr (valid.positive_reach (Nat.succ_pos value))
+    have path := routePath_some found
+    let next := consumeArcFlow flow p.toFinset
+    have nextValid : ValidArcFlow c s t value next := valid.consume hc path
+    obtain ⟨rest, length, walks, load⟩ := ih nextValid
+    refine ⟨p :: rest, by simp [length], ?_, ?_⟩
+    · intro q used
+      rcases List.mem_cons.mp used with rfl | member
+      · exact path
+      · apply (walks q member).mono
+        intro e active
+        have pos := (mem_filter.mp active).2
+        have preserves := consume_max_add valid path e
+        have hNonneg : 0 ≤ inPath p.toFinset e := by unfold inPath; split <;> norm_num
+        have now : 0 < flow e := by
+          change 0 < next e at pos
+          change max 0 (next e) + inPath p.toFinset e = max 0 (flow e) at preserves
+          omega
+        exact mem_filter.mpr ⟨mem_univ _, now⟩
+    · intro e
+      rw [arcUsage_cons]
+      have eq := consume_max_add valid path e
+      exact (add_le_add (load e) le_rfl).trans_eq eq
+
+/-- The unit-path usage lies below the original capacity, including on
+arcs with zero capacity. -/
+theorem ValidArcFlow.decompose_capacity {c flow : ArcFlow V} {s t : V} {value : ℕ}
+    (hc : ∀ e, 0 ≤ c e) (valid : ValidArcFlow c s t value flow) :
+    ∃ paths : List (List (V × V)), paths.length = value ∧
+      (∀ p ∈ paths, SimpleWalk (positiveFlowArcs flow) s t p) ∧
+      (∀ e, (arcUsage paths e : ℤ) ≤ c e) := by
+  obtain ⟨paths, length, routes, load⟩ := valid.decompose_paths hc
+  exact ⟨paths, length, routes, fun e => (load e).trans (max_le (hc e) (valid.upper e))⟩
+
 end OnlineReachabilityPreservers
