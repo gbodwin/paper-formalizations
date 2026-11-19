@@ -295,12 +295,23 @@ local-order upper bound and recurrence of Theorem 43.
   keep one thirty-second of the mass within both original budgets. The
   lower caps are one eighth of the original averages and the upper caps
   are four times those averages. Half exclusion survives, and full
-  exclusion survives when present in the original family. The factor-four
-  lower caps through size four without unique intersections and the
-  arbitrary-size cyclic existence statements remain unproved.
+  exclusion survives when present in the original family.
   [Common-order extremum](OnlineReachabilityPreservers/CommonOrderExtremal.lean)
   · [Unrestricted extremum through size three](OnlineReachabilityPreservers/LocalOrderExtremal.lean)
   · [Checked local cleaning](OnlineReachabilityPreservers/LocalBalancedRegularization.lean).
+- At cutoff four, the existential bounds relative to the witness's own
+  averages hold for the unrestricted maximum in either bridge mode. In the
+  dense case, removing opposite intersections and restricting each support
+  to at most a quarter of its original budget leaves room for both splits.
+  Pruning then puts every degree
+  and path length between one quarter of its splitting width and that width,
+  so each lies within a factor of four of its output average. For small
+  budgets or low mass after restriction, a spanning path or singleton
+  paths supply the witness. Both budgets hold and the output mass is
+  between \(M/392\) and \(M\). The frozen
+  original-average lower caps through size four without unique intersections
+  and the arbitrary-size cyclic statements remain open.
+  [Checked output-average bounds](OnlineReachabilityPreservers/LocalAverageCleaning.lean).
 - The proof of Lemma 23 writes \(\beta\) for the half-bridge-free extremum
   \(H\). The statement of Lemma 39 writes \(H\) for the full-bridge-free
   extremum \(\beta\) it is used to estimate.

@@ -198,6 +198,7 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.localOrderExtremal_isDense
 #print axioms OnlineReachabilityPreservers.localOrderExtremal_balanced_short
 #print axioms OnlineReachabilityPreservers.localOrderExtremal_balanced_three
+#print axioms OnlineReachabilityPreservers.localOrderExtremal_output_average_four
 #print axioms OnlineReachabilityPreservers.Bridge.project_vertices
 #print axioms OnlineReachabilityPreservers.BridgeFree.split_list_vertices_any
 #print axioms OnlineReachabilityPreservers.HalfBridgeFree.split_list_vertices_short
@@ -338,6 +339,7 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.restrictListPaths_unique
 #print axioms OnlineReachabilityPreservers.regularization_list_balanced_caps
 #print axioms OnlineReachabilityPreservers.regularization_list_after_pruning
+#print axioms OnlineReachabilityPreservers.regularization_list_output_average_four
 #print axioms OnlineReachabilityPreservers.listRChains_to_triples_le
 #print axioms OnlineReachabilityPreservers.lemma27_list_unique
 #print axioms OnlineReachabilityPreservers.lemma40_moment_from_subfamily

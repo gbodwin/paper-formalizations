@@ -10,6 +10,23 @@ variable {V I : Type*} [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
 
 local notation "ListBefore" => SourceAudit.BeforeIn
 
+/-- The two split counts, before deleting any unused copies. -/
+theorem regularization_list_counts (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
+    {D L : ℕ} (hD : 0 < D) (hL : 0 < L) :
+    let M := ∑ i, (paths i).length
+    Fintype.card (ListVertexBlockIndex paths D) ≤ Fintype.card V + M/D ∧
+      Fintype.card (ListBlockIndex (splitListVertices paths D) L) ≤ Fintype.card I + M/L := by
+  have sourceLength (i : I) : (paths i).toFinset.card = (paths i).length := List.toFinset_card_of_nodup (simple i)
+  have copiedLength (i : I) : (splitListVertices paths D i).toFinset.card = (paths i).length := by
+    rw [splitListVertices_toFinset, splitVertices_length, sourceLength]
+  have vertices := blockIndex_card_precise (occurrences (fun i => (paths i).toFinset)) hD
+  rw [sum_occurrences] at vertices
+  have pathCount := blockIndex_card_precise (fun i => (splitListVertices paths D i).toFinset) hL
+  have copyMass : (∑ i, (splitListVertices paths D i).toFinset.card) = ∑ i, (paths i).length :=
+    sum_congr rfl (fun i _ => copiedLength i)
+  rw [copyMass] at pathCount
+  exact ⟨by simpa only [sourceLength] using vertices, pathCount⟩
+
 private theorem mass_le_average_width {M q : ℕ} (positive : 0 < q) (enough : q ≤ M) :
     M ≤ q * ((4 * M) / q) := by
   have lower := Nat.lt_mul_div_succ (4 * M) positive
@@ -53,24 +70,16 @@ private theorem regularization_list_balanced_caps_of_splits (paths : I → List 
   obtain ⟨hL, trimL, capL⟩ := four_average_width hp long
   obtain ⟨_, _, afterMass, length, degree⟩ := regularization_list_size paths simple D L hD hL
     (mass_le_average_width hn dense) (mass_le_average_width hp long)
-  have sourceLength (i : I) : (paths i).toFinset.card = (paths i).length := List.toFinset_card_of_nodup (simple i)
-  have copiedLength (i : I) : (copies i).toFinset.card = (paths i).length := by
-    rw [splitListVertices_toFinset, splitVertices_length, sourceLength]
   have afterSimple (i : ListBlockIndex copies L) : (after i).Nodup := listRegularizedPaths_simple paths simple D L i
   have total : (∑ i, (Z i).card) = M :=
     (sum_congr rfl (fun i _ => List.toFinset_card_of_nodup (afterSimple i))).trans afterMass
+  obtain ⟨countV,countI⟩ := regularization_list_counts paths simple hD hL
   have vertices : 3 * Fintype.card (ListVertexBlockIndex paths D) ≤ 4 * n := by
-    have estimate := blockIndex_card_precise (occurrences (fun i => (paths i).toFinset)) hD
-    rw [sum_occurrences] at estimate
-    simp only [sourceLength] at estimate
-    change Fintype.card (ListVertexBlockIndex paths D) ≤ n + M/D at estimate
+    change Fintype.card (ListVertexBlockIndex paths D) ≤ n + M/D at countV
     change 3*(M/D) ≤ n at trimD
     omega
   have pathsCap : 3 * Fintype.card (ListBlockIndex copies L) ≤ 4 * p := by
-    have estimate := blockIndex_card_precise (fun i => (copies i).toFinset) hL
-    have mass : (∑ i, (copies i).toFinset.card) = M := sum_congr rfl (fun i _ => copiedLength i)
-    rw [mass] at estimate
-    change Fintype.card (ListBlockIndex copies L) ≤ p+M/L at estimate
+    change Fintype.card (ListBlockIndex copies L) ≤ p+M/L at countI
     change 3*(M/L) ≤ p at trimL
     omega
   obtain ⟨A,B,aCap,bCap,retained,minDegree,minLength⟩ := balancedRectangle_subsystem Z hn hp vertices pathsCap
@@ -96,15 +105,7 @@ private theorem regularization_list_balanced_caps_of_splits (paths : I → List 
   · intro v
     change (M : ℝ)/(4*(n:ℝ)) ≤ _ ∧ _
     rw [equals]
-    refine ⟨minDegree v, ?_⟩
-    have sub : (occurrences rectangle v).card ≤ (occurrences Z v.val).card := by
-      apply card_le_card_of_injOn (fun i : B => i.val) _ Subtype.val_injective.injOn
-      intro i hi
-      apply mem_occurrences.mpr
-      have present := (mem_occurrences (marks := rectangle)).mp hi
-      rw [← same i] at present
-      exact List.mem_toFinset.mpr (mem_restrictListPath.mp (List.mem_toFinset.mp present))
-    exact (Nat.cast_le.mpr (sub.trans (degree v.val))).trans capD
+    exact ⟨minDegree v, (Nat.cast_le.mpr ((rectanglePaths_degree_le Z A B v).trans (degree v.val))).trans capD⟩
   · intro i
     change (M : ℝ)/(4*(p:ℝ)) ≤ ((clean i).length : ℝ) ∧ _
     refine ⟨by rw [cleanLength]; exact minLength i, ?_⟩

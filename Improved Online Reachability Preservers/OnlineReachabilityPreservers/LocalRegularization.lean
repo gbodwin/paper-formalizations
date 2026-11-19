@@ -377,6 +377,31 @@ theorem listRegularizedPaths_fullFree_three {paths : I → List V} (simple : ∀
     BridgeFree (ListBefore (listRegularizedPaths paths D L)) 3 :=
   listRegularizedPaths_fullFree_short simple free le_rfl D L
 
+/-- With positive widths, the two list splits preserve the incidence mass
+and bound every degree and length by the respective width. -/
+theorem regularization_list_mass_caps (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
+    (D L : ℕ) (hD : 0 < D) (hL : 0 < L) :
+    let after := listRegularizedPaths paths D L
+    (∑ i, (after i).length) = ∑ i, (paths i).length ∧
+      (∀ i, (after i).length ≤ L) ∧
+      ∀ v, (occurrences (fun i => (after i).toFinset) v).card ≤ D := by
+  let copies := splitListVertices paths D
+  have copiesSimple (i : I) : (copies i).Nodup := splitListVertices_simple paths D i (simple i)
+  refine ⟨?_, ?_, ?_⟩
+  · change (∑ i, (splitListPaths copies L i).length) = _
+    exact (splitListPaths_size copies copiesSimple L).trans (sum_congr rfl (fun i _ => splitListVertices_length paths D i))
+  · intro i
+    exact localPathBlock_length (copies i.fst) (copiesSimple i.fst) hL i.snd.val
+  · intro v
+    apply (splitListPaths_degree copies L v).trans
+    have inclusion : (occurrences (fun i => (copies i).toFinset) v) ⊆
+        occurrences (splitVertices (fun i => (paths i).toFinset) D) v := by
+      intro i hi
+      apply mem_occurrences.mpr
+      rw [← splitListVertices_toFinset paths D i]
+      exact (mem_occurrences (marks := fun j => (copies j).toFinset)).mp hi
+    exact (card_le_card inclusion).trans (splitVertices_degree (fun i => (paths i).toFinset) hD v)
+
 variable [Fintype V]
 
 /-- Splitting locally ordered simple paths preserves the mass and achieves
@@ -399,21 +424,9 @@ theorem regularization_list_size (paths : I → List V) (simple : ∀ i, (paths 
     (List.toFinset_card_of_nodup (copiesSimple i)).trans (splitListVertices_length paths D i)
   have lengthBound : (∑ i, (copies i).toFinset.card) ≤ Fintype.card I * L :=
     (sum_congr rfl (fun i _ => copiedLengths i)).trans_le length_mass
-  refine ⟨splitVertices_card _ hD (by simpa only [lengths] using degree_mass),
-    blockIndex_card_bound (fun i => (copies i).toFinset) hL lengthBound, ?_, ?_, ?_⟩
-  · change (∑ i, (splitListPaths copies L i).length) = _
-    exact (splitListPaths_size copies copiesSimple L).trans (sum_congr rfl (fun i _ => splitListVertices_length paths D i))
-  · intro i
-    exact localPathBlock_length (copies i.fst) (copiesSimple i.fst) hL i.snd.val
-  · intro v
-    apply (splitListPaths_degree copies L v).trans
-    have inclusion : (occurrences (fun i => (copies i).toFinset) v) ⊆
-        occurrences (splitVertices (fun i => (paths i).toFinset) D) v := by
-      intro i hi
-      apply mem_occurrences.mpr
-      rw [← splitListVertices_toFinset paths D i]
-      exact (mem_occurrences (marks := fun j => (copies j).toFinset)).mp hi
-    exact (card_le_card inclusion).trans (splitVertices_degree (fun i => (paths i).toFinset) hD v)
+  exact ⟨splitVertices_card _ hD (by simpa only [lengths] using degree_mass),
+    blockIndex_card_bound (fun i => (copies i).toFinset) hL lengthBound,
+    regularization_list_mass_caps paths simple D L hD hL⟩
 
 /-- The caps obtained from one plus the integer parts of the two averages
 are at most four times the averages in the split family. -/

@@ -55,24 +55,23 @@ private theorem trim_weights {A : Type*} [DecidableEq A] (s : Finset A) (weight 
       _ ≤ s.card*(r.card*T) := Nat.mul_le_mul_left s.card good
       _ = _ := by ring
 
-private theorem trim_weights_three_fourths {A : Type*} [DecidableEq A] (s : Finset A)
-    (weight : A → ℕ) (n : ℕ) (expanded : 3*s.card ≤ 4*n) :
-    ∃ t ⊆ s, t.card ≤ n ∧ 3*(∑ j ∈ s, weight j) ≤ 4*(∑ j ∈ t, weight j) := by
+private theorem trim_weights_ratio {A : Type*} [DecidableEq A] (s : Finset A)
+    (weight : A → ℕ) {n a b : ℕ} (ratio : a ≤ b) (expanded : a*s.card ≤ b*n) :
+    ∃ t ⊆ s, t.card ≤ n ∧ a*(∑ j ∈ s, weight j) ≤ b*(∑ j ∈ t, weight j) := by
   by_cases keep : s.card ≤ n
-  · refine ⟨s,Subset.rfl,keep,?_⟩
-    omega
+  · exact ⟨s,Subset.rfl,keep,Nat.mul_le_mul_right _ ratio⟩
   have h : n ≤ s.card := le_of_not_ge keep
   obtain ⟨t,sub,eq,weight_bound⟩ := trim_weights s weight h
   have s0 : 0 < s.card := (Nat.zero_le n).trans_lt (Nat.lt_of_not_ge keep)
   refine ⟨t,sub,eq.le,Nat.le_of_mul_le_mul_right ?_ s0⟩
   let M := ∑ j ∈ s, weight j
   let T := ∑ j ∈ t, weight j
-  change (3*M)*s.card ≤ (4*T)*s.card
+  change (a*M)*s.card ≤ (b*T)*s.card
   calc
-    _ = (3*s.card)*M := by ring
-    _ ≤ (4*n)*M := Nat.mul_le_mul_right M expanded
-    _ = 4*(n*M) := by ring
-    _ ≤ 4*(s.card*T) := Nat.mul_le_mul_left 4 weight_bound
+    _ = (a*s.card)*M := by ring
+    _ ≤ (b*n)*M := Nat.mul_le_mul_right M expanded
+    _ = b*(n*M) := by ring
+    _ ≤ b*(s.card*T) := Nat.mul_le_mul_left b weight_bound
     _ = _ := by ring
 
 section Rectangle
@@ -98,15 +97,21 @@ private theorem rectangleMass_swap (paths : I → Finset V) (A : Finset V) (B : 
   unfold rectangleMass
   simp only [inner,sum_comm (s := B) (t := A),outer]
 
-private theorem rectangle_trim (paths : I → Finset V) (A : Finset V) (B : Finset I) {n p : ℕ}
-    (aLarge : 3*A.card ≤ 4*n) (bLarge : 3*B.card ≤ 4*p) :
+private theorem rectangle_trim (paths : I → Finset V) (A : Finset V) (B : Finset I) {n p a b : ℕ}
+    (ratio : a ≤ b) (aLarge : a*A.card ≤ b*n) (bLarge : a*B.card ≤ b*p) :
     ∃ C ⊆ A, ∃ D ⊆ B, C.card ≤ n ∧ D.card ≤ p ∧
-      9*rectangleMass paths A B ≤ 16*rectangleMass paths C D := by
-  obtain ⟨C,hC,cSize,cMass⟩ := trim_weights_three_fourths A (rectangularDegree paths B) n aLarge
-  obtain ⟨D,hD,dSize,dMass⟩ := trim_weights_three_fourths B (fun i => (paths i ∩ C).card) p bLarge
+      a^2*rectangleMass paths A B ≤ b^2*rectangleMass paths C D := by
+  obtain ⟨C,hC,cSize,cMass⟩ := trim_weights_ratio A (rectangularDegree paths B) ratio aLarge
+  obtain ⟨D,hD,dSize,dMass⟩ := trim_weights_ratio B (fun i => (paths i ∩ C).card) ratio bLarge
   rw [← rectangleMass_swap,← rectangleMass_swap] at cMass
-  change 3*rectangleMass paths C B ≤ 4*rectangleMass paths C D at dMass
-  exact ⟨C,hC,D,hD,cSize,dSize,by omega⟩
+  change a*rectangleMass paths C B ≤ b*rectangleMass paths C D at dMass
+  refine ⟨C,hC,D,hD,cSize,dSize,?_⟩
+  calc
+    _ = a*(a*rectangleMass paths A B) := by ring
+    _ ≤ a*(b*rectangleMass paths C B) := Nat.mul_le_mul_left a cMass
+    _ = b*(a*rectangleMass paths C B) := by ring
+    _ ≤ b*(b*rectangleMass paths C D) := Nat.mul_le_mul_left b dMass
+    _ = _ := by ring
 
 private theorem rectangle_prune (paths : I → Finset V) (A : Finset V) (B : Finset I)
     {d l : ℝ} (d0 : 0 ≤ d) (l0 : 0 ≤ l) :
@@ -219,6 +224,33 @@ theorem rectanglePaths_mass_le [Fintype I] (paths : I → Finset V) (A : Finset 
     _ ≤ ∑ i ∈ B, (paths i).card := sum_le_sum (fun _ _ => card_le_card inter_subset_left)
     _ ≤ _ := sum_le_sum_of_subset_of_nonneg (subset_univ B) (fun _ _ _ => Nat.zero_le _)
 
+/-- Restricting the path indices does not increase any vertex degree. -/
+theorem rectanglePaths_degree_le [Fintype I] (paths : I → Finset V) (A : Finset V) (B : Finset I) (v : A) :
+    (occurrences (rectanglePaths paths A B) v).card ≤ (occurrences paths v.val).card := by
+  rw [rectanglePath_degree]
+  apply card_le_card
+  intro i hi
+  exact mem_occurrences.mpr (mem_filter.mp hi).2
+
+/-- Delete vertices and paths below the given minimum degree and length.
+The mass lost is at most the sum of the thresholds times the original counts. -/
+theorem rectanglePaths_prune (paths : I → Finset V) (A : Finset V) (B : Finset I)
+    {d l : ℝ} (d0 : 0 ≤ d) (l0 : 0 ≤ l) :
+    ∃ C ⊆ A, ∃ D ⊆ B,
+      ((∑ i : B, (rectanglePaths paths A B i).card : ℕ) : ℝ) - d*A.card - l*B.card ≤
+        ((∑ i : D, (rectanglePaths paths C D i).card : ℕ) : ℝ) ∧
+      (∀ v, d ≤ (occurrences (rectanglePaths paths C D) v).card) ∧
+      (∀ i, l ≤ (rectanglePaths paths C D i).card) := by
+  obtain ⟨C,cSub,D,dSub,mass,degree,length⟩ := rectangle_prune paths A B d0 l0
+  refine ⟨C,cSub,D,dSub,?_,?_,?_⟩
+  · simpa only [rectanglePath_mass] using mass
+  · intro v
+    rw [rectanglePath_degree]
+    exact degree v.val v.property
+  · intro i
+    rw [rectanglePath_card]
+    exact length i.val i.property
+
 private def rectangleBridge (paths : I → Finset V) (A : Finset V) (B : Finset I) {k : ℕ}
     (b : Bridge (PathBefore (rectanglePaths paths A B)) k) : Bridge (PathBefore paths) k := by
   have before {i : ↥B} {u v : ↥A} (h : PathBefore (rectanglePaths paths A B) i u v) :
@@ -242,6 +274,30 @@ private theorem rectangleFullFree {paths : I → Finset V} {size : ℕ} (A : Fin
   exact ⟨fun b => (free size).false (rectangleBridge paths A B b)⟩
 
 variable [Fintype V] [Fintype I]
+
+omit [LinearOrder I] in
+theorem rectanglePaths_univ_mass (paths : I → Finset V) :
+    ∑ i : (univ : Finset I), (rectanglePaths paths (univ : Finset V) univ i).card = ∑ i, (paths i).card := by
+  rw [rectanglePath_mass]
+  simp [rectangleMass]
+
+/-- With at least four vertices and four paths, a subfamily within one
+quarter of each budget retains at least one forty-ninth of the incidences. -/
+theorem rectanglePaths_quarter (paths : I → Finset V)
+    (hn : 4 ≤ Fintype.card V) (hp : 4 ≤ Fintype.card I) :
+    ∃ A : Finset V, ∃ B : Finset I,
+      A.card ≤ Fintype.card V/4 ∧ B.card ≤ Fintype.card I/4 ∧
+      (∑ i, (paths i).card) ≤ 49*(∑ i : B, (rectanglePaths paths A B i).card) := by
+  have vb : 1*(univ : Finset V).card ≤ 7*(Fintype.card V/4) := by
+    rw [card_univ,one_mul]
+    omega
+  have ib : 1*(univ : Finset I).card ≤ 7*(Fintype.card I/4) := by
+    rw [card_univ,one_mul]
+    omega
+  obtain ⟨A,_,B,_,ac,bc,mass⟩ := rectangle_trim paths univ univ (by decide) vb ib
+  refine ⟨A,B,ac,bc,?_⟩
+  rw [rectanglePath_mass]
+  simpa [rectangleMass] using mass
 
 omit [LinearOrder V] [LinearOrder I] [Fintype V] in
 /-- Upper bound on the exact number of block slots. -/
@@ -297,10 +353,11 @@ theorem balancedRectangle_subsystem (Z : I → Finset V) {n p : ℕ}
   have ZMass : rectangleMass Z A0 B0 = M := by simp [rectangleMass, A0, B0, M]
   have vCap : 3 * A0.card ≤ 4 * n := by simpa [A0] using vertices
   have iCap : 3 * B0.card ≤ 4 * p := by simpa [B0] using families
-  obtain ⟨A1,_,B1,_,ac,bc,densePart⟩ := rectangle_trim Z A0 B0 vCap iCap
+  obtain ⟨A1,_,B1,_,ac,bc,densePart⟩ := rectangle_trim Z A0 B0 (by decide) vCap iCap
   have d0_nonneg : 0 ≤ d0 := div_nonneg (Nat.cast_nonneg _) (mul_nonneg (by norm_num) (Nat.cast_nonneg _))
   have l0_nonneg : 0 ≤ l0 := div_nonneg (Nat.cast_nonneg _) (mul_nonneg (by norm_num) (Nat.cast_nonneg _))
-  obtain ⟨A,as,B,bs,keep,minDegree,minLength⟩ := rectangle_prune Z A1 B1 d0_nonneg l0_nonneg
+  obtain ⟨A,as,B,bs,keep,minDegree,minLength⟩ := rectanglePaths_prune Z A1 B1 d0_nonneg l0_nonneg
+  simp only [rectanglePath_mass] at keep
   let clean := rectanglePaths Z A B
   have loseDegree : d0*(A1.card:ℝ) ≤ (M:ℝ)/4 := by
     calc
@@ -324,13 +381,7 @@ theorem balancedRectangle_subsystem (Z : I → Finset V) {n p : ℕ}
     have h : (M:ℝ) ≤ 16*(rectangleMass Z A B:ℝ) := by
       linarith only [part,keep,loseDegree,loseLength]
     exact_mod_cast h
-  refine ⟨A, B, (card_le_card as).trans ac, (card_le_card bs).trans bc, finalMass, ?_, ?_⟩
-  · intro v
-    rw [rectanglePath_degree]
-    exact minDegree v.val v.property
-  · intro i
-    rw [rectanglePath_card]
-    exact minLength i.val i.property
+  exact ⟨A, B, (card_le_card as).trans ac, (card_le_card bs).trans bc, finalMass, minDegree, minLength⟩
 
 set_option maxHeartbeats 1000000 in
 /-- With a common vertex order and incidence mass at least both original counts,
@@ -394,12 +445,8 @@ theorem regularization_balanced_caps (paths : I → Finset V) (hn : 0 < Fintype.
   · intro v
     change d0 ≤ ((occurrences clean v).card : ℝ) ∧
       ((occurrences clean v).card : ℝ) ≤ 4 * (M : ℝ) / (n : ℝ)
-    rw [show (occurrences clean v).card = rectangularDegree Z B v.1 from
-      rectanglePath_degree Z A B v]
-    refine ⟨(rectanglePath_degree Z A B v) ▸ minDegree v, ?_⟩
-    have sub : B.filter (fun i => v.1 ∈ Z i) ⊆ occurrences Z v.1 :=
-      fun _ h => mem_occurrences.mpr (mem_filter.mp h).2
-    have cap := ((card_le_card sub).trans (splitPaths_degree s l v.1)).trans
+    refine ⟨minDegree v, ?_⟩
+    have cap := ((rectanglePaths_degree_le Z A B v).trans (splitPaths_degree s l v.1)).trans
       (splitVertices_degree paths hd v.1)
     exact (Nat.cast_le.mpr cap).trans dCap
   · intro i

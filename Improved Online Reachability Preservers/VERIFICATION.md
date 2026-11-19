@@ -631,6 +631,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   same complete prefix replay. The 3904-declaration audit, local kernel
   replay of the changed modules, and independent correspondence review passed.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44527803975).
+- [74fd8d97](https://github.com/gbodwin/paper-formalizations/commit/74fd8d97ae35aa8edb4d7d0c2e921f8a60efb53f)
+  checks fully bridge-free examples with an arbitrarily large gap between
+  the incidence mass minus the demand count and the minimum preserver size
+  for the specified overlay. The 4149-declaration audit, local kernel replay,
+  and independent correspondence review passed.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44532334205).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
@@ -701,6 +707,13 @@ notes. The live render and local controls passed. Production requires
 owner sign-in. The research entry linked to the arXiv manuscript.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44527803975).
+
+PaperLab version 24 pins 133 links to `74fd8d97` and contains 15 boxed L
+notes. The Lemma 14 note links the overlay gap and the relevant pages in
+the two papers. The deployed render and local controls passed. Production
+requires owner sign-in. The research entry linked to the arXiv manuscript.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44532334205).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
