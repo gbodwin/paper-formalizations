@@ -291,6 +291,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   review checked capacity clipping, the telescoping probabilities, group
   normalization and the degenerate thresholds.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44460812733).
+- [1bf0f3d1](https://github.com/gbodwin/paper-formalizations/commit/1bf0f3d13d18a2b2467bbe287179557a05b9bbb9)
+  implements the paired rounding trial and bounds its miss probability.
+  The 2407-declaration audit and local kernel replay passed. Independent
+  review checked the paid arcs, the shared same-root gate, the
+  independent threshold events, and the final exponential bound.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44461722723).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

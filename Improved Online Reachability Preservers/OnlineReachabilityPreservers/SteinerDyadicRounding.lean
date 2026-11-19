@@ -103,7 +103,7 @@ theorem historyCapacityUnits_bounded (tier : ℕ) (units : HeightNode V height �
   have := historyCapacityUnits_le tier units (u := heightRoot) (v := v) List.nil_prefix
   simpa [rootCappedCapacity] using this
 
-private theorem historyCapacityUnits_power (tier : ℕ) (units : HeightNode V height → ℕ)
+theorem historyCapacityUnits_power (tier : ℕ) (units : HeightNode V height → ℕ)
     (v : HeightNode V height) :
     historyCapacityUnits tier units v = 0 ∨ ∃ k ≤ tier, historyCapacityUnits tier units v = 2 ^ k := by
   apply inf'_mem {a | a = 0 ∨ ∃ k ≤ tier, a = 2 ^ k}

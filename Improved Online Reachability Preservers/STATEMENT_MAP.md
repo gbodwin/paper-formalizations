@@ -109,8 +109,11 @@ The [paired rounding trial](OnlineReachabilityPreservers/SteinerForestRounding.l
 selects actual metric links using shared root gates and independent
 thresholds within each side of a root. If the fractional state covers
 a request, one trial misses it with probability at most
-\(\exp(-1/(4(h+1)^2))\). The bound on cumulative purchases across online
-prefixes and the full early competitiveness result remain open.
+\(\exp(-1/(4(h+1)^2))\). A [fixed-tier cost bound](OnlineReachabilityPreservers/SteinerOnlineRounding.lean)
+controls the chance that a paid link is ever selected across prefixes.
+The proof counts ancestor capacity profiles and uses the final monotone
+capacities. Aggregating the bound over trials and linking it to the
+early competitive guarantee remain open.
 
 ## Appendix dependencies
 
