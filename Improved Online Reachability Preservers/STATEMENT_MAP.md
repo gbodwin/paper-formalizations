@@ -251,8 +251,13 @@ and zero cost when the offline optimum is zero. The cached replay shares
 one distance table and forest plan across budget calculation, decoding,
 and prefix evaluation. Its bound on measured searches and table operations
 includes preparation on both branches. The fallback computes the prefix
-graphs with one scan. The word, rejection, and seed-array readers have
-checked tail-recursive implementations. Integer arithmetic, finite container operations, and full execution time
+graphs with one scan. The [arithmetic history index](OnlineReachabilityPreservers/SteinerBitOrders.lean)
+keeps the canonical seed-coordinate order. The empty history occupies the
+first slot. Every first label starts a block of shorter histories with a size
+computed by recurrence. Ranking within these blocks avoids listing and sorting
+the history space. The cached replay uses sorted vertex and arc indexes.
+The word, rejection, and seed-array readers have checked tail-recursive
+implementations. Integer arithmetic, finite container operations, and full execution time
 still require certification.
 The [preassigned-path counter](OnlineReachabilityPreservers/AssignmentSearchWork.lean)
 combines the calls made by quota certification and path selection with the
@@ -282,9 +287,11 @@ scale, and fuel. One shared row per link suffices, so setup adds at most
 reported searches, capacity table visits, and original table reads across
 the whole replay. Finite container operations, arithmetic bit costs, and
 construction and application of the finite index enumerations remain separate
-runtime costs. The graph-based bit entry point also evaluates the forest
+runtime costs. The ordinary graph-based bit entry point evaluates the forest
 scale and the counts of finite seed coordinates before the measured replay.
-The bit and search bounds leave the costs of those preparations open.
+The cached bit entry point shares the measured preparation and uses an
+arithmetic coordinate count. Applying the indexes and materializing the
+finite bit word still need time bounds.
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

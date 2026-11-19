@@ -155,7 +155,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   operations. The cached replay shares one distance table and forest plan
   across budget calculation, decoding, and evaluation. It accounts for
   preparation even on the fallback branch, which scans requests in one pass.
-  Full time certification remains open.
+  The [arithmetic history index](OnlineReachabilityPreservers/SteinerBitOrders.lean)
+  gives the same seed coordinate order by ranking bounded histories one label
+  at a time. Full time certification remains open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

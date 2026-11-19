@@ -300,7 +300,7 @@ def completeSteinerReplayWithCachedBitBudget (G : Arcs V) (height : ℕ)
   let width := prepared.1.val.log2+1
   let widthEq := congrArg (fun scale : ℕ => scale.log2+1) prepared.1.property
   let vertices := steinerUniverseArrayIndex V
-  let coordinates := steinerEarlyCoordinateIndexAtWidth G height width widthEq vertices
+  let coordinates := steinerEarlyCoordinateIndexLex G height width widthEq vertices
   let arcs := steinerArcArrayIndex G
   let budget := completeSteinerSeedBitBoundAtWidth G height width * G.card
   let budgetEq : budget = steinerBitBudget G height :=
@@ -362,7 +362,8 @@ theorem completeSteinerReplayWithCachedBitBudget_spec (G : Arcs V) (height : ℕ
       (steinerVertexIndex V) (steinerArcIndex G) (List.ofFn (fun i : Fin budget => bits (Fin.cast budgetEq i))) =
         decodeBudgetSeed G height bits := by rw [rawEq, decodeBudgetSeed]
   simp only [completeSteinerReplayWithCachedBitBudget, decodeCompleteSteinerSeedAtWidth_eq,
-    steinerUniverseArrayIndex_eq, steinerArcArrayIndex_eq, steinerEarlyCoordinateIndexAtWidth_eq]
+    steinerUniverseArrayIndex_eq, steinerArcArrayIndex_eq, steinerEarlyCoordinateIndexLex_eq,
+    steinerEarlyCoordinateIndexAtWidth_eq]
   erw [readEq]
   cases read : decodeBudgetSeed G height bits with
   | none =>
