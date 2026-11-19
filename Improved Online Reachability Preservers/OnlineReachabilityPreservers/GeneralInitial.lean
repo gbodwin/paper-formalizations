@@ -76,6 +76,34 @@ theorem lemma26_list_chain_lower (paths : I → List V) (simple : ∀ i, (paths 
     hn hp (by simpa only [length] using hdense) (by simpa only [length] using hlong)
   simpa only [length] using lower
 
+/-- When distinct paths meet at most once, the witnesses count distinct triples. -/
+theorem listRChains_to_triples_le {paths : I → List V}
+    (unique : ∀ {i j x y}, i ≠ j → x ∈ paths i → x ∈ paths j → y ∈ paths i → y ∈ paths j → x = y) :
+    (listRChains paths).card ≤ (listRTriples paths).card := by
+  apply card_le_card_of_injOn (fun w => (w.1, w.2.1))
+  · rintro ⟨⟨l, r⟩, m, x, y⟩ inside
+    exact mem_listRTriples.mpr ⟨x, y, mem_listRChains.mp inside⟩
+  · rintro ⟨⟨l, r⟩, middle, x, y⟩ a ⟨⟨l', r'⟩, middle', x', y'⟩ b equal
+    cases equal
+    have one := mem_listRChains.mp a
+    have two := mem_listRChains.mp b
+    have sameX := unique one.left_ne_middle one.on_left one.middle_step.1 two.on_left two.middle_step.1
+    have sameY := unique one.right_earlier.ne one.on_right one.middle_step.2.1 two.on_right two.middle_step.2.1
+    change x = x' at sameX
+    change y = y' at sameY
+    subst x' y'
+    rfl
+
+omit [Fintype V] in
+/-- Every triple of a pathwise subsequence of simple paths is an original triple. -/
+theorem listRTriples_sublist {paths cut : I → List V} (simple : ∀ i, (paths i).Nodup)
+    (sub : ∀ i, List.Sublist (cut i) (paths i)) : listRTriples cut ⊆ listRTriples paths := by
+  rintro ⟨⟨l, r⟩, m⟩ inside
+  obtain ⟨x, y, chain⟩ := mem_listRTriples.mp inside
+  exact mem_listRTriples.mpr ⟨x, y, chain.left_ne_middle, chain.left_ne_right, chain.right_earlier,
+    (sub l).subset chain.on_left, (sub r).subset chain.on_right,
+    listBefore_of_sublist (simple m) (sub m) chain.middle_step⟩
+
 /-- Remove opposite intersections before counting witnesses, then forget
 the witnesses. This proves the Lemma 26 lower bound for distinct path
 triples in the original locally ordered simple paths. -/
@@ -95,26 +123,9 @@ theorem lemma26_list_triple_lower {p : ℕ} (paths : Fin p → List V) (simple :
     simpa only [Fintype.card_fin] using lemma26_list_chain_lower kept simpleKept hn
       (by simpa only [Fintype.card_fin] using hp) (by change 16 * n ≤ m; omega)
       (by rw [Fintype.card_fin]; change 8 * p ≤ m; omega)
-  have retainedCount : (listRChains kept).card ≤ (listRTriples paths).card := by
-    apply card_le_card_of_injOn (fun w => (w.1, w.2.1))
-    · rintro ⟨⟨l, r⟩, middle, x, y⟩ selected
-      have chain := mem_listRChains.mp selected
-      exact mem_listRTriples.mpr ⟨x, y, chain.left_ne_middle, chain.left_ne_right, chain.right_earlier,
-        (removeOppositeIntersections_sublist paths l).subset chain.on_left,
-        (removeOppositeIntersections_sublist paths r).subset chain.on_right,
-        removeOppositeIntersections_before simple chain.middle_step⟩
-    · rintro ⟨⟨l, r⟩, middle, x, y⟩ a ⟨⟨l', r'⟩, middle', x', y'⟩ b equal
-      cases equal
-      have one := mem_listRChains.mp a
-      have two := mem_listRChains.mp b
-      have sameX := removeOppositeIntersections_unique simple free (by decide) one.left_ne_middle
-        one.on_left one.middle_step.1 two.on_left two.middle_step.1
-      have sameY := removeOppositeIntersections_unique simple free (by decide) one.right_earlier.ne
-        one.on_right one.middle_step.2.1 two.on_right two.middle_step.2.1
-      change x = x' at sameX
-      change y = y' at sameY
-      subst x' y'
-      rfl
+  have retainedCount : (listRChains kept).card ≤ (listRTriples paths).card :=
+    (listRChains_to_triples_le (fun ne a b c d => removeOppositeIntersections_unique simple free (by decide) ne a b c d)).trans
+      (card_le_card (listRTriples_sublist simple (removeOppositeIntersections_sublist paths)))
   change mass^4 ≤ 32768 * n^2 * p * (listRTriples paths).card
   calc
     _ ≤ (2*m)^4 := Nat.pow_le_pow_left half 4
@@ -122,6 +133,37 @@ theorem lemma26_list_triple_lower {p : ℕ} (paths : Fin p → List V) (simple :
     _ ≤ 16 * (2048 * n^2 * p * (listRChains kept).card) := Nat.mul_le_mul_left _ lower
     _ ≤ 16 * (2048 * n^2 * p * (listRTriples paths).card) := by gcongr
     _ = _ := by ring
+
+/-- With unique intersections the initial count has the acyclic numerical constant. -/
+theorem lemma27_list_unique (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (ListBefore paths) 4)
+    (unique : ∀ {i j x y}, i ≠ j → x ∈ paths i → x ∈ paths j → y ∈ paths i → y ∈ paths j → x = y) :
+    let n := Fintype.card V
+    let p := Fintype.card I
+    let mass := ∑ i, (paths i).length
+    mass ≤ 16 * n ∨ mass ≤ 8 * p ∨ mass^3 ≤ 2048 * (n * p)^2 := by
+  dsimp only
+  let n := Fintype.card V
+  let p := Fintype.card I
+  let mass := ∑ i, (paths i).length
+  by_cases dense : mass ≤ 16 * n
+  · exact Or.inl dense
+  by_cases long : mass ≤ 8 * p
+  · exact Or.inr (Or.inl long)
+  have bounded : mass ≤ p * n := by
+    calc
+      _ = ∑ i : I, (paths i).toFinset.card := by
+        simp only [mass, List.toFinset_card_of_nodup (simple _)]
+      _ ≤ ∑ _ : I, n := sum_le_sum (fun _ _ => card_le_univ _)
+      _ = _ := by simp [p]
+  have posn : 0 < n := Nat.pos_of_ne_zero (by intro zero; rw [zero, mul_zero] at bounded; omega)
+  have posp : 0 < p := Nat.pos_of_ne_zero (by intro zero; rw [zero, zero_mul] at bounded; omega)
+  have positive : 0 < mass := by omega
+  have lower := lemma26_list_chain_lower paths simple posn posp (by omega) (by omega)
+  have upper : (listRChains paths).card ≤ p * mass := (listRChains_to_triples_le unique).trans (listRTriples_upper free)
+  have both : mass^4 ≤ 2048 * n^2 * p * (p * mass) := lower.trans (Nat.mul_le_mul_left _ upper)
+  refine Or.inr (Or.inr (Nat.le_of_mul_le_mul_right ?_ positive))
+  convert both using 1 <;> ring
 
 /-- Exact finite form of Lemma 27 for arbitrary ordered families of simple paths. -/
 theorem lemma27_list {p : ℕ} (paths : Fin p → List V) (simple : ∀ i, (paths i).Nodup)

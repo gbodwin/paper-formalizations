@@ -382,12 +382,24 @@ An exact-source replay grants no coverage to a paper statement outside the
   and kernel replay passed. Independent review checked the exact absorption,
   preservation of the acyclic bound and the off-base uniqueness.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44475741797).
+- [1b4fd730](https://github.com/gbodwin/paper-formalizations/commit/1b4fd7308b5b8e803ec363311300ed5775152984)
+  checks induced list subsystems and both original cleaning budgets.
+  The 3009-declaration audit and local kernel replay passed. Independent
+  review checked inherited order, the old acyclic statement, and the
+  different constants before and after opposite-intersection pruning.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44476586666).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
 publications entry linked to the arXiv manuscript at the deployment check.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [Research entry](https://gregbodwin.com/publications/index.html#publication-2410.20471).
+
+PaperLab version 15 pins 103 links to `bbca66ce` and contains 15 boxed L
+notes, including the Lemma 35 cycle. The deployment render and local
+controls passed. The research entry again linked to the arXiv manuscript.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44473906418).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

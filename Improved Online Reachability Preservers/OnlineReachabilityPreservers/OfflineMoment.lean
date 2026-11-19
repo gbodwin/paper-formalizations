@@ -98,14 +98,14 @@ theorem lemma40_ranked_moment (N : ℕ) (values : ℕ → ℝ) {n d L C b : ℝ}
 
 variable {V I : Type*} [LinearOrder V] [LinearOrder I] [Fintype I]
 
-/-- Lemma 40 for acyclic full bridge-free systems. The ambient size bound n
-also bounds the degree parameter d, as in the sampling application. -/
-theorem lemma40_acyclic_moment (paths : I → Finset V) (free : BridgeFree (PathBefore paths) 4)
+omit [LinearOrder V] in
+/-- The ordered-length moment from an upper bound on every subfamily. -/
+theorem lemma40_moment_from_subfamily (paths : I → Finset V)
     {n d L C b : ℝ} (hn : 1 ≤ n) (hd : 0 < d) (hdn : d ≤ n) (hL : 0 < L) (hC : 0 < C)
     (hb₀ : 1/2 < b) (hb₁ : b ≤ 1)
     (cap : ∀ i, ((paths i).card : ℝ) ≤ L)
     (mass : (∑ i, ((paths i).card : ℝ)) ≤ n*d)
-    (subfamily : ∀ J : Finset I, BridgeFree (PathBefore fun i : J => paths i.val) 4 →
+    (subfamily : ∀ J : Finset I,
       let p : ℝ := J.card
       (∑ i ∈ J, ((paths i).card : ℝ)) ≤
         C * max n (max (n^(3/4 : ℝ)*p^(1/2 : ℝ)) (max (n^(2-2*b)*p^b) p))) :
@@ -125,9 +125,26 @@ theorem lemma40_acyclic_moment (paths : I → Finset V) (free : BridgeFree (Path
       obtain ⟨J, hJ, hsum⟩ := prefixes k hk
       have eq : (∑ i ∈ range k, values i) = ∑ j ∈ J, ((paths j).card : ℝ) := hsum id
       rw [eq]
-      simpa only [hJ] using subfamily J (free.restrict_paths J))
+      simpa only [hJ] using subfamily J)
   rw [sums (· ^ 2), heq] at bound
   exact bound
+
+/-- Lemma 40 for acyclic full bridge-free systems. The ambient size bound n
+also bounds the degree parameter d, as in the sampling application. -/
+theorem lemma40_acyclic_moment (paths : I → Finset V) (free : BridgeFree (PathBefore paths) 4)
+    {n d L C b : ℝ} (hn : 1 ≤ n) (hd : 0 < d) (hdn : d ≤ n) (hL : 0 < L) (hC : 0 < C)
+    (hb₀ : 1/2 < b) (hb₁ : b ≤ 1)
+    (cap : ∀ i, ((paths i).card : ℝ) ≤ L)
+    (mass : (∑ i, ((paths i).card : ℝ)) ≤ n*d)
+    (subfamily : ∀ J : Finset I, BridgeFree (PathBefore fun i : J => paths i.val) 4 →
+      let p : ℝ := J.card
+      (∑ i ∈ J, ((paths i).card : ℝ)) ≤
+        C * max n (max (n^(3/4 : ℝ)*p^(1/2 : ℝ)) (max (n^(2-2*b)*p^b) p))) :
+    (∑ i, ((paths i).card : ℝ)^2) ≤
+      2*C*n*L + Real.exp 8 * (max 1 C)^2 * (2+Real.log n) * n^(3/2 : ℝ) +
+      (2*C+(1/(2*b-1)+1)*C^(1/b))*n^(1/b)*d^((2*b-1)/b) :=
+  lemma40_moment_from_subfamily paths hn hd hdn hL hC hb₀ hb₁ cap mass
+    (fun J => subfamily J (free.restrict_paths J))
 
 variable [Fintype V]
 
