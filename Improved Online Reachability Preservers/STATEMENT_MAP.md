@@ -222,16 +222,19 @@ This covers known totals and arrival indices in all three endpoint scopes.
 The indexed pairwise evaluator returns the ordinary union of all assigned
 paths in one prefix and sums their search work. The quota count is bounded
 by a polynomial in the graph sizes and the known total or current index.
-The remaining runtime costs include table reads for weighted setup and
-capacity evaluation, finite container operations, arithmetic, and
-converting sampled indices into vertex values.
 The [weighted capacity counter](OnlineReachabilityPreservers/SteinerCapacityWork.lean)
 prepares one capacity row per priced arc before a separator call. It
 preserves the cut and fractional updates. For \(q\) requests, separator
 fuel \(f\), \(m_F\) priced arcs, and at most \(B\) comparisons per weight
-read, it adds at most \(qfm_F B\) to the measured search work. It applies
-to the weighted subroutine with supplied weights. Searches of the capacity
-rows themselves are outside that count.
+read, it adds at most \(qfm_F B\) to the measured search work. The
+[capacity replay](OnlineReachabilityPreservers/SteinerDistanceReplay.lean)
+applies this at every early fractional state with weights from the original
+distance table. It additionally charges at most \(p(p+1)^2\) times the
+per-request capacity comparison polynomial for \(p\) arrivals. The prefix
+graphs and one-time preparation charges agree with the rounding replay.
+The remaining runtime costs include table reads for weighted setup,
+searches of cached capacity rows, finite container operations, arithmetic,
+and converting sampled indices into vertex values.
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

@@ -590,6 +590,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   capacity row in generated C. A one-arc, two-request example kept the
   same cut and charge while adding 21 in weight-read charges.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44513133106).
+- [d2bb0ed5](https://github.com/gbodwin/paper-formalizations/commit/d2bb0ed5fac3075f28f86d621ac0b80f4115782d)
+  chooses a maximizing simple-list family in each bridge mode and proves
+  both cleaning budgets, both mass bounds, and all four caps at cutoff
+  three. The 3823-declaration audit, local kernel replay, and independent
+  correspondence review passed.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44513724542).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

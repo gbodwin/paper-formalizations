@@ -110,4 +110,46 @@ theorem completeSteinerPrefixSearchReplayWithRoundingWork_spec (G : Arcs V) (hei
     rw [prepEq]
     exact template
 
+/-- Include both the rounding and cached-capacity weight reads in the
+search charge at each prefix. The two shared preparation charges are separate. -/
+def completeSteinerPrefixSearchReplayWithCapacityWork (G : Arcs V) (height : ℕ)
+    (sample : EarlyRoundSample G height) (draw : Fin (completeSteinerHubCount V) → V)
+    (thin : ThinSample G) (D : List (V × V)) : List (Arcs V × ℕ) × ℕ × ℕ :=
+  let prepared := prepareEarlyDistanceTableWithCapacityWork G height sample
+  let evaluate := completeSteinerDrawRunWithSearchWorkFromEarly G prepared.1 draw thin
+  (D.inits.map evaluate,prepared.2.1,prepared.2.2)
+
+theorem completeSteinerPrefixSearchReplayWithCapacityWork_spec (G : Arcs V) (height : ℕ)
+    (sample : EarlyRoundSample G height) (draw : Fin (completeSteinerHubCount V) → V)
+    (thin : ThinSample G) (D : List (V × V)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let n := Fintype.card V
+    let m := G.card
+    let p := D.length
+    let out := completeSteinerPrefixSearchReplayWithCapacityWork G height sample draw thin D
+    out.1.map Prod.fst = D.inits.map (completeSteinerDrawRun G height sample draw thin) ∧
+      (out.1.map Prod.snd).sum ≤ (p+1)*completeSteinerSearchPolynomial n m height p+
+        (p+1)*((p+1)*roundingComparisonPolynomial n height)+
+        (p+1)*((p+1)*(p*capacityComparisonPolynomial n height)) ∧
+      out.2.1 ≤ n^2*((n+1)*n*m) ∧
+      out.2.2 ≤ n*(2*Fintype.card (HeightNode V height)*height*n^2) := by
+  let prior := prepareEarlyDistanceTableWithRoundingWork G height sample
+  let next := prepareEarlyDistanceTableWithCapacityWork G height sample
+  let C := capacityComparisonPolynomial (Fintype.card V) height
+  obtain ⟨samePrep,early⟩ := prepareEarlyDistanceTableWithCapacityWork_spec G height sample
+  obtain ⟨graphs,charges,prepared,template⟩ :=
+    completeSteinerPrefixSearchReplayWithRoundingWork_spec G height sample draw thin D feasible
+  have compare (P : List (V × V)) (short : P.length ≤ D.length) :
+      (next.1 P).1 = (prior.1 P).1 ∧ (next.1 P).2 ≤ (prior.1 P).2+(P.length+1)*(D.length*C) := by
+    obtain ⟨same,extra⟩ := early P
+    exact ⟨same,extra.trans (Nat.add_le_add_left
+      (Nat.mul_le_mul_left _ (Nat.mul_le_mul_right C short)) _)⟩
+  obtain ⟨same,extra⟩ := completeSteinerPrefixSearchReplayFromEarly_compareOnLengths G prior.1 next.1
+    (D.length*C) draw thin D compare
+  have prepEq : next.2 = prior.2 := samePrep
+  refine ⟨same.trans graphs,extra.trans (Nat.add_le_add_right charges _),?_,?_⟩
+  · change next.2.1 ≤ _
+    exact prepEq.symm ▸ prepared
+  · change next.2.2 ≤ _
+    exact prepEq.symm ▸ template
+
 end OnlineReachabilityPreservers

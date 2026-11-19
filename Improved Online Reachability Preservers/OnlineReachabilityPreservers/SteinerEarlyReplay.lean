@@ -219,10 +219,10 @@ theorem earlyRoundedGraphWithSearchWork_spec (G : Arcs V) (height : ℕ)
 
 /-- Charge an additional per-metric cost without changing any graph or miss
 flag. The prefix rows share each metric result between all uses. -/
-theorem earlyRoundedGraphWithSearchWorkFromMetric_compare (G : Arcs V) (height : ℕ)
+theorem earlyRoundedGraphWithSearchWorkFromMetric_compareOnPrefixes (G : Arcs V) (height : ℕ)
     (original updated : List (V × V) → Arcs (HeightForestVertex V height) × ℕ) (K : ℕ)
-    (metric : ∀ P, (updated P).1 = (original P).1 ∧ (updated P).2 ≤ (original P).2+K)
-    (D : List (V × V)) :
+    (D : List (V × V))
+    (metric : ∀ P ∈ D.inits, (updated P).1 = (original P).1 ∧ (updated P).2 ≤ (original P).2+K) :
     let out := earlyRoundedGraphWithSearchWorkFromMetric G height updated D
     let old := earlyRoundedGraphWithSearchWorkFromMetric G height original D
     out.1 = old.1 ∧ out.2 ≤ old.2+(D.length+1)*K := by
@@ -231,11 +231,11 @@ theorem earlyRoundedGraphWithSearchWorkFromMetric_compare (G : Arcs V) (height :
   let readNew := earlyPrefixWorkRow G height updated
   let oldRows := A.map readOld
   let newRows := A.map readNew
-  have row (P : List (V × V)) :
+  have row (P : List (V × V)) (present : P ∈ A) :
       let prior := readOld P
       let next := readNew P
       next.2.1 = prior.2.1 ∧ next.2.2.1 = prior.2.2.1 ∧ next.2.2.2 ≤ prior.2.2.2+K := by
-    have ⟨graph, cost⟩ := metric P
+    have ⟨graph, cost⟩ := metric P (List.mem_toFinset.mp present)
     change (earlyPrefixWorkEntry G height updated P).2.1 = (earlyPrefixWorkEntry G height original P).2.1 ∧
       (earlyPrefixWorkEntry G height updated P).2.2.1 = (earlyPrefixWorkEntry G height original P).2.2.1 ∧
       (earlyPrefixWorkEntry G height updated P).2.2.2 ≤ (earlyPrefixWorkEntry G height original P).2.2.2+K
@@ -250,29 +250,29 @@ theorem earlyRoundedGraphWithSearchWorkFromMetric_compare (G : Arcs V) (height :
     · rintro ⟨r,hr⟩
       obtain ⟨seen,miss⟩ := mem_filter.mp hr
       obtain ⟨P,hP,rfl⟩ := mem_map.mp seen
-      exact ⟨readOld P, mem_filter.mpr ⟨mem_map_of_mem _ hP, (row P).2.1 ▸ miss⟩⟩
+      exact ⟨readOld P, mem_filter.mpr ⟨mem_map_of_mem _ hP, (row P hP).2.1 ▸ miss⟩⟩
     · rintro ⟨r,hr⟩
       obtain ⟨seen,miss⟩ := mem_filter.mp hr
       obtain ⟨P,hP,rfl⟩ := mem_map.mp seen
-      exact ⟨readNew P, mem_filter.mpr ⟨mem_map_of_mem _ hP, (row P).2.1.symm ▸ miss⟩⟩
+      exact ⟨readNew P, mem_filter.mpr ⟨mem_map_of_mem _ hP, (row P hP).2.1.symm ▸ miss⟩⟩
   have purchases : newRows.biUnion (fun r => r.2.1) = oldRows.biUnion (fun r => r.2.1) := by
     ext a
     constructor
     · intro bought
       obtain ⟨r,seen,used⟩ := mem_biUnion.mp bought
       obtain ⟨P,hP,rfl⟩ := mem_map.mp seen
-      exact mem_biUnion.mpr ⟨readOld P,mem_map_of_mem _ hP,(row P).1 ▸ used⟩
+      exact mem_biUnion.mpr ⟨readOld P,mem_map_of_mem _ hP,(row P hP).1 ▸ used⟩
     · intro bought
       obtain ⟨r,seen,used⟩ := mem_biUnion.mp bought
       obtain ⟨P,hP,rfl⟩ := mem_map.mp seen
-      exact mem_biUnion.mpr ⟨readNew P,mem_map_of_mem _ hP,(row P).1.symm ▸ used⟩
+      exact mem_biUnion.mpr ⟨readNew P,mem_map_of_mem _ hP,(row P hP).1.symm ▸ used⟩
   let oldSum := ∑ r ∈ oldRows, r.2.2.2
   let newSum := ∑ r ∈ newRows, r.2.2.2
   have summed : newSum ≤ oldSum+(D.length+1)*K := by
     change (∑ r ∈ A.map readNew, r.2.2.2) ≤ (∑ r ∈ A.map readOld, r.2.2.2)+(D.length+1)*K
     rw [sum_map, sum_map]
     calc
-      _ ≤ ∑ P ∈ A, ((readOld P).2.2.2+K) := sum_le_sum fun P _ => (row P).2.2
+      _ ≤ ∑ P ∈ A, ((readOld P).2.2.2+K) := sum_le_sum fun P hP => (row P hP).2.2
       _ = (∑ P ∈ A, (readOld P).2.2.2)+A.card*K := by rw [sum_add_distrib]; simp
       _ ≤ _ := by
         apply Nat.add_le_add_left
@@ -291,5 +291,14 @@ theorem earlyRoundedGraphWithSearchWorkFromMetric_compare (G : Arcs V) (height :
     exact summed
   · simp only [outNew, outOld, (not_congr failure).mpr failed, failed, ite_false, purchases, final, true_and]
     omega
+
+theorem earlyRoundedGraphWithSearchWorkFromMetric_compare (G : Arcs V) (height : ℕ)
+    (original updated : List (V × V) → Arcs (HeightForestVertex V height) × ℕ) (K : ℕ)
+    (metric : ∀ P, (updated P).1 = (original P).1 ∧ (updated P).2 ≤ (original P).2+K)
+    (D : List (V × V)) :
+    let out := earlyRoundedGraphWithSearchWorkFromMetric G height updated D
+    let old := earlyRoundedGraphWithSearchWorkFromMetric G height original D
+    out.1 = old.1 ∧ out.2 ≤ old.2+(D.length+1)*K :=
+  earlyRoundedGraphWithSearchWorkFromMetric_compareOnPrefixes G height original updated K D (fun P _ => metric P)
 
 end OnlineReachabilityPreservers
