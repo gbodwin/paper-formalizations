@@ -316,6 +316,13 @@ An exact-source replay grants no coverage to a paper statement outside the
   passed. Independent review checked every trial and tier, the weighted
   sum, original expansion and fallback, and the generalized late charge.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44464387136).
+- [534b7c3f](https://github.com/gbodwin/paper-formalizations/commit/534b7c3f33e49dd838345ba491e2f371b1e4f46c)
+  proves the combined expected rate of Theorems 8 and 21, uses a
+  seed-independent early boundary, and verifies prefix feasibility on
+  every seed. The 2551-declaration audit and local kernel replay passed.
+  Independent review checked the fixed-trace model, degenerate inputs,
+  cutoff argument, and rate conversion.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44464960651).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

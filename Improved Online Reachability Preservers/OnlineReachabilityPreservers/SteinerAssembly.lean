@@ -407,10 +407,10 @@ theorem steinerPhaseTraces_early_empty_at_zero {G : Arcs V} (early : EarlySteine
 
 /-- The verified conditional mean of the assembled phases on a good hub draw.
 The early routine enters only by the number of edges it actually bought. -/
-theorem assembledSteiner_good_sample_bound_of_opt {G Z : Arcs V} (early : EarlySteinerRule G)
-    {T τ cutoff : ℕ} {power : ℝ} (hp : 0 ≤ power) (hn : 0 < Fintype.card V)
-    (ht : (Fintype.card V:ℝ)^(6/5:ℝ) ≤ cutoff) (hτ : (Fintype.card V:ℝ)^(3/5:ℝ) ≤ (τ:ℝ)+1)
-    (draw : Fin (thickSampleCount (Fintype.card V) τ power) → V)
+theorem assembledSteiner_good_sample_bound_of_size {G Z : Arcs V} (early : EarlySteinerRule G)
+    {T τ cutoff k : ℕ} {C : ℝ} (hc : 0 ≤ C) (hn : 0 < Fintype.card V)
+    (ht : (Fintype.card V:ℝ)^(6/5:ℝ) ≤ cutoff)
+    (draw : Fin k → V) (sampleSize : (k : ℝ) ≤ C * (Fintype.card V : ℝ) ^ (2/5 : ℝ))
     (good : draw ∉ thickFailures G τ _) (D : List (V × V))
     (sub : Z ⊆ G) (feasible : ∀ d ∈ D, Reach Z d.1 d.2)
     (optLower : (steinerPhaseTraces early T (sampledVertices draw) D).hits ≠ [] → cutoff ≤ Z.card ^ 2) :
@@ -420,7 +420,7 @@ theorem assembledSteiner_good_sample_bound_of_opt {G Z : Arcs V} (early : EarlyS
     let n : ℝ := Fintype.card V
     thinMean G (fun sample => assembledSteiner early T τ S sample D) ≤
       ((early.run st.early).card:ℝ)+
-        ((6+4*((2+power)*Real.log n+1))*n^(3/5:ℝ)+((L:ℝ)*((G.card.log2:ℝ)+2)+1))*Z.card := by
+        ((6+4*C)*n^(3/5:ℝ)+((L:ℝ)*((G.card.log2:ℝ)+2)+1))*Z.card := by
   let S := sampledVertices draw
   let st := steinerPhaseTraces early T S D
   let L := thinRoundingFactor (Fintype.card V) τ
@@ -444,18 +444,15 @@ theorem assembledSteiner_good_sample_bound_of_opt {G Z : Arcs V} (early : EarlyS
   have hThin := thinRoundRun_competitive G Z sub τ st.thin facts.thin_distinct
     localThin facts.thin_nonself (fun d hd => feasible d (facts.thin_in d hd))
   have hHub : ((hubPreserver G S st.hits).card:ℝ) ≤
-      (6+4*((2+power)*Real.log n+1))*n^(3/5:ℝ)*Z.card := by
+      (6+4*C)*n^(3/5:ℝ)*Z.card := by
     by_cases empty : st.hits=[]
     · simp [empty,hubPreserver,hitRequests,sinkPreserver,sourcePreserver,liftedRun]
-      have n1 : 1 ≤ n := by
-        change (1:ℝ) ≤ (Fintype.card V:ℝ)
-        exact_mod_cast (show 1 ≤ Fintype.card V from hn)
-      have := Real.log_nonneg n1
       positivity
     · have hOpt := optLower empty
       let H (i : ℕ) := hubPreserver G S (st.hits.take i)
       have mono : Monotone H := fun _ _ hi => hubPreserver_prefix G S (List.take_prefix_take_left hi)
-      exact hubPreserver_balanced_bound G st.hits H mono hp hn hτ ht draw facts.hits_found
+      exact hubPreserver_balanced_bound_of_size G S st.hits H mono hn ht
+        ((Nat.cast_le.mpr (sampledVertices_card draw)).trans sampleSize) facts.hits_found
         facts.hits_nontrivial (fun _ => Subset.rfl) Z
         (fun i => feasible _ (facts.hits_in _ (st.hits.get_mem i))) hOpt
   have hUnion : (((early.run st.early ∪ hubPreserver G S st.hits).card:ℕ):ℝ) ≤
@@ -467,6 +464,25 @@ theorem assembledSteiner_good_sample_bound_of_opt {G Z : Arcs V} (early : EarlyS
   change (((early.run st.early ∪ hubPreserver G S st.hits).card:ℕ):ℝ)+
     thinMean G (fun sample => thinRoundRun G L sample st.thin) ≤ _
   linarith only [hThin,hHub,hUnion]
+
+theorem assembledSteiner_good_sample_bound_of_opt {G Z : Arcs V} (early : EarlySteinerRule G)
+    {T τ cutoff : ℕ} {power : ℝ} (hp : 0 ≤ power) (hn : 0 < Fintype.card V)
+    (ht : (Fintype.card V:ℝ)^(6/5:ℝ) ≤ cutoff) (hτ : (Fintype.card V:ℝ)^(3/5:ℝ) ≤ (τ:ℝ)+1)
+    (draw : Fin (thickSampleCount (Fintype.card V) τ power) → V)
+    (good : draw ∉ thickFailures G τ _) (D : List (V × V))
+    (sub : Z ⊆ G) (feasible : ∀ d ∈ D, Reach Z d.1 d.2)
+    (optLower : (steinerPhaseTraces early T (sampledVertices draw) D).hits ≠ [] → cutoff ≤ Z.card ^ 2) :
+    let S := sampledVertices draw
+    let st := steinerPhaseTraces early T S D
+    let L := thinRoundingFactor (Fintype.card V) τ
+    let n : ℝ := Fintype.card V
+    thinMean G (fun sample => assembledSteiner early T τ S sample D) ≤
+      ((early.run st.early).card:ℝ)+
+        ((6+4*((2+power)*Real.log n+1))*n^(3/5:ℝ)+((L:ℝ)*((G.card.log2:ℝ)+2)+1))*Z.card := by
+  have n1 : (1 : ℝ) ≤ Fintype.card V := by exact_mod_cast hn
+  have log0 := Real.log_nonneg n1
+  exact assembledSteiner_good_sample_bound_of_size early (by positivity) hn ht draw
+    (thickSampleCount_balanced hn hp hτ) good D sub feasible optLower
 
 theorem assembledSteiner_good_sample_bound {G Z : Arcs V} (early : EarlySteinerRule G)
     {T τ : ℕ} {power : ℝ} (hp : 0 ≤ power) (hn : 0 < Fintype.card V)
@@ -503,11 +519,14 @@ private theorem thinMean_le_graph {G : Arcs V} (output : ThinSample G → Arcs V
     _ = (G.card:ℝ)*q := by rw [sum_const,nsmul_eq_mul,card_univ,count,mul_comm]
 
 /-- Average over independent hub draws and edge thresholds. -/
-noncomputable def assembledSteinerMean {G : Arcs V} (early : EarlySteinerRule G)
-    (T τ : ℕ) (power : ℝ) (D : List (V × V)) : ℝ :=
-  let k := thickSampleCount (Fintype.card V) τ power
+noncomputable def assembledSteinerMeanOfDrawCount {G : Arcs V} (early : EarlySteinerRule G)
+    (T τ k : ℕ) (D : List (V × V)) : ℝ :=
   (∑ draw : Fin k → V, thinMean G (fun s =>
     assembledSteiner early T τ (sampledVertices draw) s D))/(Fintype.card V:ℝ)^k
+
+noncomputable def assembledSteinerMean {G : Arcs V} (early : EarlySteinerRule G)
+    (T τ : ℕ) (power : ℝ) (D : List (V × V)) : ℝ :=
+  assembledSteinerMeanOfDrawCount early T τ (thickSampleCount (Fintype.card V) τ power) D
 
 private theorem thickFailureBound_all {G : Arcs V} {τ : ℕ} {power : ℝ} (hn : 0 < Fintype.card V) :
     let n := Fintype.card V
@@ -525,6 +544,63 @@ private theorem thickFailureBound_all {G : Arcs V} {τ : ℕ} {power : ℝ} (hn 
 
 /-- The combined mean bound with the actual early purchase bounded separately.
 The stochastic estimate averages over both independent finite choices. -/
+theorem assembledSteiner_mean_transfer_of_draw_count {G Z : Arcs V} (early : EarlySteinerRule G)
+    {T τ cutoff k : ℕ} {C δ earlyCost : ℝ} (hc : 0 ≤ C) (hE : 0 ≤ earlyCost)
+    (hn : 0 < Fintype.card V) (ht : (Fintype.card V:ℝ)^(6/5:ℝ) ≤ cutoff)
+    (sampleSize : (k : ℝ) ≤ C * (Fintype.card V : ℝ) ^ (2/5 : ℝ))
+    (failure : ((thickFailures G τ k).card : ℝ) / (Fintype.card V : ℝ) ^ k ≤ δ)
+    (D : List (V × V)) (sub : Z ⊆ G) (feasible : ∀ d ∈ D, Reach Z d.1 d.2)
+    (optLower : ∀ S : Finset V, (steinerPhaseTraces early T S D).hits ≠ [] → cutoff ≤ Z.card ^ 2)
+    (earlyBound : ∀ S : Finset V,
+      ((early.run (steinerPhaseTraces early T S D).early).card:ℝ) ≤ earlyCost) :
+    let n : ℝ := Fintype.card V
+    let L := thinRoundingFactor (Fintype.card V) τ
+    assembledSteinerMeanOfDrawCount early T τ k D ≤ earlyCost+
+      ((6+4*C)*n^(3/5:ℝ)+((L:ℝ)*((G.card.log2:ℝ)+2)+1))*Z.card+
+      G.card*δ := by
+  classical
+  let n := Fintype.card V
+  let L := thinRoundingFactor n τ
+  let F := earlyCost+((6+4*C)*(n:ℝ)^(3/5:ℝ)+
+    ((L:ℝ)*((G.card.log2:ℝ)+2)+1))*Z.card
+  let bad := thickFailures G τ k
+  let out (sample : Fin k → V) :=
+    thinMean G (fun s => assembledSteiner early T τ (sampledVertices sample) s D)
+  let charge (sample : Fin k → V) := if sample ∈ bad then (G.card:ℝ) else 0
+  have n0 : (0:ℝ) < n := Nat.cast_pos.mpr hn
+  have F0 : 0 ≤ F := by dsimp [F]; positivity
+  have point (sample : Fin k → V) : out sample ≤ F+charge sample := by
+    by_cases badDraw : sample ∈ bad
+    · have h := thinMean_le_graph
+        (fun s => assembledSteiner early T τ (sampledVertices sample) s D)
+        (fun s => (assembledSteiner_correct early T τ (sampledVertices sample) s D
+          (fun d hd => reach_mono sub (feasible d hd))).1)
+      change out sample ≤ (G.card:ℝ) at h
+      simp only [charge,ite_eq_left badDraw]
+      linarith only [h,F0]
+    · have h := assembledSteiner_good_sample_bound_of_size early hc hn ht sample sampleSize badDraw D sub feasible
+        (optLower (sampledVertices sample))
+      have hEarc := earlyBound (sampledVertices sample)
+      simp only [charge,ite_eq_right badDraw,add_zero]
+      exact h.trans (add_le_add hEarc le_rfl)
+  let q := (n:ℝ)^k
+  have qpos : 0 < q := pow_pos n0 _
+  have count : (Fintype.card (Fin k → V):ℝ) = q := by
+    rw [Fintype.card_fun,Fintype.card_fin,Nat.cast_pow]
+  have chargeSum : (∑ sample : Fin k → V, charge sample) = (G.card:ℝ)*(bad.card:ℝ) := by
+    unfold charge
+    rw [← sum_filter,filter_mem_eq_inter,univ_inter,sum_const,nsmul_eq_mul,mul_comm]
+  have chance : (bad.card:ℝ)/q ≤ δ := failure
+  change (∑ sample : Fin k → V, out sample)/q ≤ F+(G.card:ℝ)*δ
+  calc
+    _ ≤ (∑ sample : Fin k → V, (F+charge sample))/q :=
+      div_le_div_of_nonneg_right (sum_le_sum (fun s _ => point s)) qpos.le
+    _ = F+(G.card:ℝ)*((bad.card:ℝ)/q) := by
+      rw [sum_add_distrib,add_div,chargeSum,sum_const,nsmul_eq_mul,card_univ,count]
+      have h : q*F/q = F := by rw [mul_comm q F,mul_div_assoc,div_self qpos.ne',mul_one]
+      rw [h,mul_div_assoc]
+    _ ≤ _ := add_le_add le_rfl (mul_le_mul_of_nonneg_left chance (by positivity))
+
 theorem assembledSteiner_mean_transfer_of_opt {G Z : Arcs V} (early : EarlySteinerRule G)
     {T τ cutoff : ℕ} {power earlyCost : ℝ} (hp : 0 ≤ power) (hE : 0 ≤ earlyCost)
     (hn : 0 < Fintype.card V) (ht : (Fintype.card V:ℝ)^(6/5:ℝ) ≤ cutoff)
@@ -538,53 +614,10 @@ theorem assembledSteiner_mean_transfer_of_opt {G Z : Arcs V} (early : EarlyStein
     assembledSteinerMean early T τ power D ≤ earlyCost+
       ((6+4*((2+power)*Real.log n+1))*n^(3/5:ℝ)+((L:ℝ)*((G.card.log2:ℝ)+2)+1))*Z.card+
       G.card*n^(-power) := by
-  classical
-  let n := Fintype.card V
-  let k := thickSampleCount n τ power
-  let L := thinRoundingFactor n τ
-  let F := earlyCost+((6+4*((2+power)*Real.log (n:ℝ)+1))*(n:ℝ)^(3/5:ℝ)+
-    ((L:ℝ)*((G.card.log2:ℝ)+2)+1))*Z.card
-  let bad := thickFailures G τ k
-  let out (sample : Fin k → V) :=
-    thinMean G (fun s => assembledSteiner early T τ (sampledVertices sample) s D)
-  let charge (sample : Fin k → V) := if sample ∈ bad then (G.card:ℝ) else 0
-  have n0 : (0:ℝ) < n := Nat.cast_pos.mpr hn
-  have n1 : (1:ℝ) ≤ n := by
-    change (1:ℝ) ≤ (Fintype.card V:ℝ)
-    exact_mod_cast (show 1 ≤ Fintype.card V from hn)
-  have log := Real.log_nonneg n1
-  have F0 : 0 ≤ F := by dsimp [F]; positivity
-  have point (sample : Fin k → V) : out sample ≤ F+charge sample := by
-    by_cases badDraw : sample ∈ bad
-    · have h := thinMean_le_graph
-        (fun s => assembledSteiner early T τ (sampledVertices sample) s D)
-        (fun s => (assembledSteiner_correct early T τ (sampledVertices sample) s D
-          (fun d hd => reach_mono sub (feasible d hd))).1)
-      change out sample ≤ (G.card:ℝ) at h
-      simp only [charge,ite_eq_left badDraw]
-      linarith only [h,F0]
-    · have h := assembledSteiner_good_sample_bound_of_opt early hp hn ht hτ sample badDraw D sub feasible
-        (optLower (sampledVertices sample))
-      have hEarc := earlyBound (sampledVertices sample)
-      simp only [charge,ite_eq_right badDraw,add_zero]
-      exact h.trans (add_le_add hEarc le_rfl)
-  let q := (n:ℝ)^k
-  have qpos : 0 < q := pow_pos n0 _
-  have count : (Fintype.card (Fin k → V):ℝ) = q := by
-    rw [Fintype.card_fun,Fintype.card_fin,Nat.cast_pow]
-  have chargeSum : (∑ sample : Fin k → V, charge sample) = (G.card:ℝ)*(bad.card:ℝ) := by
-    unfold charge
-    rw [← sum_filter,filter_mem_eq_inter,univ_inter,sum_const,nsmul_eq_mul,mul_comm]
-  have chance : (bad.card:ℝ)/q ≤ (n:ℝ)^(-power) := thickFailureBound_all hn
-  change (∑ sample : Fin k → V, out sample)/q ≤ F+(G.card:ℝ)*(n:ℝ)^(-power)
-  calc
-    _ ≤ (∑ sample : Fin k → V, (F+charge sample))/q :=
-      div_le_div_of_nonneg_right (sum_le_sum (fun s _ => point s)) qpos.le
-    _ = F+(G.card:ℝ)*((bad.card:ℝ)/q) := by
-      rw [sum_add_distrib,add_div,chargeSum,sum_const,nsmul_eq_mul,card_univ,count]
-      have h : q*F/q = F := by rw [mul_comm q F,mul_div_assoc,div_self qpos.ne',mul_one]
-      rw [h,mul_div_assoc]
-    _ ≤ _ := add_le_add le_rfl (mul_le_mul_of_nonneg_left chance (by positivity))
+  have n1 : (1 : ℝ) ≤ Fintype.card V := by exact_mod_cast hn
+  have log0 := Real.log_nonneg n1
+  exact assembledSteiner_mean_transfer_of_draw_count early (by positivity) hE hn ht
+    (thickSampleCount_balanced hn hp hτ) (thickFailureBound_all hn) D sub feasible optLower earlyBound
 
 theorem assembledSteiner_mean_transfer {G Z : Arcs V} (early : EarlySteinerRule G)
     {T τ : ℕ} {power earlyCost : ℝ} (hp : 0 ≤ power) (hE : 0 ≤ earlyCost)

@@ -246,18 +246,6 @@ theorem earlyFallback_probability (G : Arcs V) {height : ℕ} (heightPos : 0 < h
     _ ≤ _ := mul_le_mul_of_nonneg_right (by
       exact_mod_cast (List.toFinset_card_le (l := D.inits)).trans_eq (List.length_inits D)) (Real.exp_pos _).le
 
-private theorem log_le_log2_succ {n : ℕ} (positive : 0 < n) :
-    Real.log (n : ℝ) ≤ (n.log2 : ℝ) + 1 := by
-  have pow : (n : ℝ) ≤ (2 : ℝ) ^ (n.log2 + 1) := by exact_mod_cast (Nat.lt_log2_self (n := n)).le
-  have base : Real.log 2 ≤ 1 := by
-    have le := Real.log_le_sub_one_of_pos (show (0 : ℝ) < 2 by norm_num)
-    norm_num at le
-    exact le
-  calc
-    _ ≤ Real.log ((2 : ℝ) ^ (n.log2 + 1)) := Real.log_le_log (Nat.cast_pos.mpr positive) pow
-    _ = ((n.log2 : ℝ) + 1) * Real.log 2 := by rw [Real.log_pow, Nat.cast_add, Nat.cast_one]
-    _ ≤ _ := by simpa only [mul_one] using mul_le_mul_of_nonneg_left base (by positivity)
-
 private theorem earlyTrialCount_failure_le (V : Type*) [Fintype V] [Nonempty V] (height : ℕ) :
     Real.exp (-(earlyTrialCount V height : ℝ) / (4 * (height + 1 : ℝ) ^ 2)) ≤
       1 / (Fintype.card V : ℝ) ^ 4 := by

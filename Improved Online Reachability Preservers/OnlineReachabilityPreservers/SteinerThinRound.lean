@@ -427,19 +427,6 @@ theorem thinRoundRun_expected_bound (G Z : Arcs V) (sub : Z ⊆ G) (factor τ : 
 /-- Integer oversampling factor for all thin cuts and all distinct demands. -/
 def thinRoundingFactor (n τ : ℕ) : ℕ := τ+4*(n.log2+1)
 
-private theorem log_le_log2_succ {n : ℕ} (hn : 0 < n) :
-    Real.log (n:ℝ) ≤ (n.log2:ℝ)+1 := by
-  have n0 : (0:ℝ) < n := Nat.cast_pos.mpr hn
-  have two : Real.log 2 ≤ 1 := by
-    have h := Real.log_le_sub_one_of_pos (by norm_num : (0:ℝ)<2)
-    linarith
-  have hpow : (n:ℝ) ≤ (2:ℝ)^(n.log2+1) := by
-    exact_mod_cast ((Nat.log2_lt hn.ne').mp (Nat.lt_succ_self _)).le
-  calc
-    _ ≤ Real.log ((2:ℝ)^(n.log2+1)) := Real.log_le_log n0 hpow
-    _ = ((n.log2:ℝ)+1)*Real.log 2 := by rw [Real.log_pow]; push_cast; rfl
-    _ ≤ _ := by simpa using mul_le_mul_of_nonneg_left two (by positivity : 0 ≤ (n.log2:ℝ)+1)
-
 private theorem thinRoundingFactor_failure {n τ : ℕ} (hn : 0 < n) :
     (2:ℝ)^τ*Real.exp (-(thinRoundingFactor n τ:ℝ)) ≤ 1/(n:ℝ)^4 := by
   have n0 : (0:ℝ) < n := Nat.cast_pos.mpr hn

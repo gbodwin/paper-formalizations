@@ -192,6 +192,87 @@ private theorem lateCoefficient_polylog {n m τ : ℕ} (hn : 0 < n) (hm : m ≤ 
 
 universe u
 
+private theorem lateRate_absorb {ε : ℝ} (he : 0 < ε) (A : ℝ) (A0 : 0 ≤ A) :
+    ∃ K > 0, ∀ {n m z : ℕ} (_hn : 0 < n) (_hm : m ≤ n ^ 2) (_hz : 0 < z) {coefficient : ℝ},
+      coefficient ≤ A * (1 + Real.log (n : ℝ)) ^ 2 * (n : ℝ) ^ (3/5 : ℝ) →
+      coefficient * z + (m : ℝ) * (n : ℝ) ^ (-(2 : ℝ)) ≤ K * (n : ℝ) ^ (3/5 + ε) * z := by
+  obtain ⟨C, hC, logs⟩ := log_power_absorption he 2
+  have C0 := zero_le_one.trans hC
+  refine ⟨A * C + 1, by positivity, ?_⟩
+  intro n m z hn hm hz coefficient coeff
+  let Y := 1 + Real.log (n : ℝ)
+  let X := (n : ℝ) ^ (3/5 + ε)
+  have n1 : (1 : ℝ) ≤ n := by exact_mod_cast hn
+  have n0 := zero_lt_one.trans_le n1
+  have growth : A * Y^2 * (n : ℝ) ^ (3/5 : ℝ) ≤ A * C * X := by
+    calc
+      _ ≤ A * (C * (n : ℝ) ^ ε) * (n : ℝ) ^ (3/5 : ℝ) :=
+        mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left (logs n1) A0) (by positivity)
+      _ = _ := by
+        dsimp [X]
+        rw [Real.rpow_add n0]
+        ring
+  have tail : (m : ℝ) * (n : ℝ) ^ (-(2 : ℝ)) ≤ 1 := by
+    rw [Real.rpow_neg n0.le, Real.rpow_two]
+    exact (mul_le_mul_of_nonneg_right (by exact_mod_cast hm) (by positivity)).trans_eq
+      (mul_inv_cancel₀ (by positivity))
+  have X1 : 1 ≤ X := Real.one_le_rpow n1 (by linarith)
+  have z1 : (1 : ℝ) ≤ z := by exact_mod_cast hz
+  have tail' := tail.trans (one_le_mul_of_one_le_of_one_le X1 z1)
+  have costs := mul_le_mul_of_nonneg_right (coeff.trans growth) (show 0 ≤ (z : ℝ) by positivity)
+  change _ ≤ (A * C + 1) * X * z
+  linarith only [costs, tail']
+
+private theorem integerLateCoefficient_polylog {n m τ : ℕ} (hn : 0 < n) (hm : m ≤ n^2)
+    (thin : (τ : ℝ) ≤ (n : ℝ) ^ (3/5 : ℝ)) :
+    let A : ℝ := 1+4*(1/Real.log 2+1)
+    let B : ℝ := 2/Real.log 2+2
+    let C : ℝ := 4*(1/Real.log 2+1)+1
+    (6+4*(4*((n.log2 : ℝ)+1)+1))*(n : ℝ)^(3/5 : ℝ)+
+      ((thinRoundingFactor n τ : ℝ)*((m.log2 : ℝ)+2)+1) ≤
+      (A*B+17+4*C)*(1+Real.log (n : ℝ))^2*(n : ℝ)^(3/5 : ℝ) := by
+  let A : ℝ := 1+4*(1/Real.log 2+1)
+  let B : ℝ := 2/Real.log 2+2
+  let C : ℝ := 4*(1/Real.log 2+1)+1
+  let Y := 1 + Real.log (n : ℝ)
+  let X := (n : ℝ) ^ (3/5 : ℝ)
+  let R := ((thinRoundingFactor n τ : ℝ) * ((m.log2 : ℝ) + 2) + 1)
+  let Ck := 4*((n.log2 : ℝ)+1)+1
+  let C0 := 4*Real.log (n : ℝ)+1
+  have n1 : (1 : ℝ) ≤ n := by exact_mod_cast hn
+  have log0 := Real.log_nonneg n1
+  have logTwo := Real.log_pos (by norm_num : (1 : ℝ) < 2)
+  have Y1 : 1 ≤ Y := le_add_of_nonneg_right log0
+  have Y0 := zero_le_one.trans Y1
+  have X0 : 0 ≤ X := by dsimp [X]; positivity
+  have c0 : 0 ≤ C0 := by dsimp [C0]; positivity
+  have logBound : (n.log2 : ℝ) + 1 ≤ (1 / Real.log 2 + 1) * Y := by
+    calc
+      _ ≤ Real.log (n : ℝ) / Real.log 2 + 1 := add_le_add (nat_log2_le_log hn) le_rfl
+      _ ≤ Real.log (n : ℝ) / Real.log 2 + 1 + (1 / Real.log 2 + Real.log (n : ℝ)) :=
+        le_add_of_nonneg_right (by positivity)
+      _ = _ := by dsimp only [Y]; ring
+  have cBound : Ck ≤ C * Y := by
+    calc
+      _ ≤ 4 * ((1 / Real.log 2 + 1) * Y) + Y :=
+        add_le_add (mul_le_mul_of_nonneg_left logBound (by norm_num)) Y1
+      _ = _ := by dsimp [C]; ring
+  have Cpos : 0 ≤ C := by dsimp [C]; positivity
+  have powY : Y ≤ Y ^ 2 := by nlinarith only [mul_le_mul_of_nonneg_left Y1 Y0]
+  have orig : (6+4*C0)*X + R ≤ (A*B+17)*Y^2*X := by
+    simpa only [C0, R, X, Y, A, B, show (2 : ℝ) + 2 = 4 by norm_num]
+      using lateCoefficient_polylog hn hm thin
+  have extra : 4*Ck*X ≤ (4*C)*(Y^2*X) := by
+    have h := mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left
+      (cBound.trans (mul_le_mul_of_nonneg_left powY Cpos)) (by norm_num : (0 : ℝ) ≤ 4)) X0
+    linarith only [h]
+  change (6+4*Ck)*X + R ≤ (A*B+17+4*C)*Y^2*X
+  calc
+    _ ≤ ((6+4*C0)*X + R) + 4*Ck*X := by
+      nlinarith only [mul_nonneg c0 X0]
+    _ ≤ (A*B+17)*Y^2*X + (4*C)*(Y^2*X) := add_le_add orig extra
+    _ = _ := by ring
+
 /-- The summed expected late-phase contribution of Section 5, with the early
 budget still supplied separately. -/
 theorem assembledSteiner_late_rate_of_opt {ε : ℝ} (he : 0 < ε) :
@@ -206,55 +287,51 @@ theorem assembledSteiner_late_rate_of_opt {ε : ℝ} (he : 0 < ε) :
       assembledSteinerMean early T
         (steinerThinThreshold (Fintype.card V)) 2 D ≤
         earlyCost+K*(Fintype.card V:ℝ)^(3/5+ε)*Z.card := by
-  obtain ⟨C,hC,logs⟩ := log_power_absorption he 2
   let A : ℝ := 1+4*(1/Real.log 2+1)
   let B : ℝ := 2/Real.log 2+2
-  let K := (A*B+17)*C+1
   have logTwo : 0 < Real.log 2 := Real.log_pos (by norm_num)
-  have A0 : 0 ≤ A := by dsimp [A]; positivity
-  have B0 : 0 ≤ B := by dsimp [B]; positivity
-  have C0 : 0 ≤ C := zero_le_one.trans hC
-  refine ⟨K, by dsimp [K]; positivity,?_⟩
+  obtain ⟨K, Kpos, absorb⟩ := lateRate_absorb he (A*B+17) (by dsimp [A, B]; positivity)
+  refine ⟨K, Kpos, ?_⟩
   intro V _ _ G Z early T D earlyCost E0 hn hZ sub feasible optLower earlyBound
   let n := Fintype.card V
-  let τ := steinerThinThreshold n
-  let L := thinRoundingFactor n τ
-  let Y := 1+Real.log (n:ℝ)
-  let X := (n:ℝ)^(3/5+ε)
-  have n1 : (1:ℝ) ≤ n := by
-    change (1:ℝ) ≤ (Fintype.card V:ℝ)
-    exact_mod_cast (show 1 ≤ Fintype.card V from hn)
-  have n0 := zero_lt_one.trans_le n1
-  have cap : G.card ≤ n^2 := by
-    simpa [n,Fintype.card_prod,pow_two] using card_le_univ G
+  have cap : G.card ≤ n^2 := by simpa [n,Fintype.card_prod,pow_two] using card_le_univ G
   have bound := assembledSteiner_mean_transfer_of_opt (power := 2) early (by norm_num) E0 hn
     (steinerEarlyCutoff_bounds hn).1 (steinerThinThreshold_bounds hn).2.le D sub feasible optLower earlyBound
   have coeff := lateCoefficient_polylog hn cap (steinerThinThreshold_bounds hn).1
-  have growth : (A*B+17)*Y^2*(n:ℝ)^(3/5:ℝ) ≤ (A*B+17)*C*X := by
-    calc
-      _ ≤ (A*B+17)*(C*(n:ℝ)^ε)*(n:ℝ)^(3/5:ℝ) := by
-        exact mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left (logs n1) (by positivity))
-          (by positivity)
-      _ = _ := by
-        dsimp [X]
-        rw [show (A*B+17)*(C*(n:ℝ)^ε)*(n:ℝ)^(3/5:ℝ) =
-          (A*B+17)*C*((n:ℝ)^(3/5:ℝ)*(n:ℝ)^ε) by ring,← Real.rpow_add n0]
-  have tail : (G.card:ℝ)*(n:ℝ)^(-(2:ℝ)) ≤ 1 := by
-    rw [Real.rpow_neg n0.le,Real.rpow_two]
-    calc
-      _ ≤ ((n:ℝ)^2)*((n:ℝ)^2)⁻¹ :=
-        mul_le_mul_of_nonneg_right (by exact_mod_cast cap) (by positivity)
-      _ = _ := mul_inv_cancel₀ (by positivity)
-  have X1 : 1 ≤ X := Real.one_le_rpow n1 (by linarith)
-  have Z1 : (1:ℝ) ≤ Z.card := by exact_mod_cast hZ
-  have xz : 1 ≤ X*Z.card := by
-    simpa using mul_le_mul X1 Z1 (by norm_num : (0:ℝ) ≤ 1) (zero_le_one.trans X1)
-  have tail' : (G.card:ℝ)*(n:ℝ)^(-(2:ℝ)) ≤ X*Z.card := tail.trans xz
-  apply bound.trans
-  have costs := mul_le_mul_of_nonneg_right (coeff.trans growth) (show 0 ≤ (Z.card:ℝ) by positivity)
-  change _ ≤ earlyCost+K*X*Z.card
-  dsimp only [K]
-  linarith only [costs,tail']
+  exact bound.trans (by
+    have h := absorb hn cap hZ coeff
+    linarith only [h])
+
+theorem assembledSteiner_late_rate_of_integer_draws {ε : ℝ} (he : 0 < ε) :
+    ∃ K > 0, ∀ (V : Type u) [LinearOrder V] [Fintype V] {G Z : Arcs V}
+      (early : EarlySteinerRule G) (T : ℕ) (D : List (V × V)) (earlyCost : ℝ),
+      0 ≤ earlyCost → 0 < Fintype.card V → 0 < Z.card → Z ⊆ G →
+      (∀ d ∈ D, Reach Z d.1 d.2) →
+      (∀ S : Finset V, (steinerPhaseTraces early T S D).hits ≠ [] →
+        steinerEarlyCutoff (Fintype.card V) ≤ Z.card ^ 2) →
+      (∀ S : Finset V, ((early.run (steinerPhaseTraces early T S D).early).card:ℝ) ≤
+          earlyCost) →
+      assembledSteinerMeanOfDrawCount early T
+        (steinerThinThreshold (Fintype.card V))
+        (steinerHubDraws (Fintype.card V) (steinerThinThreshold (Fintype.card V))) D ≤
+        earlyCost+K*(Fintype.card V:ℝ)^(3/5+ε)*Z.card := by
+  let A : ℝ := 1+4*(1/Real.log 2+1)
+  let B : ℝ := 2/Real.log 2+2
+  let C : ℝ := 4*(1/Real.log 2+1)+1
+  have logTwo : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  obtain ⟨K, Kpos, absorb⟩ := lateRate_absorb he (A*B+17+4*C) (by dsimp [A, B, C]; positivity)
+  refine ⟨K, Kpos, ?_⟩
+  intro V _ _ G Z early T D earlyCost E0 hn hZ sub feasible optLower earlyBound
+  let n := Fintype.card V
+  let τ := steinerThinThreshold n
+  have cap : G.card ≤ n^2 := by simpa [n,Fintype.card_prod,pow_two] using card_le_univ G
+  have size := steinerHubDraws_balanced hn (steinerThinThreshold_bounds hn).2.le
+  have bound := assembledSteiner_mean_transfer_of_draw_count early (by positivity) E0 hn
+    (steinerEarlyCutoff_bounds hn).1 size (steinerHubDraws_probability G τ hn) D sub feasible optLower earlyBound
+  have coeff := integerLateCoefficient_polylog hn cap (steinerThinThreshold_bounds hn).1
+  refine bound.trans ?_
+  have h := absorb hn cap hZ coeff
+  linarith only [h]
 
 theorem assembledSteiner_late_rate {ε : ℝ} (he : 0 < ε) :
     ∃ K > 0, ∀ (V : Type u) [LinearOrder V] [Fintype V] {G Z : Arcs V}

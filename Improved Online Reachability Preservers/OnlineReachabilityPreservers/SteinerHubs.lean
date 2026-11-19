@@ -168,6 +168,93 @@ theorem thickSampleCount_balanced {n τ : ℕ} {power : ℝ}
         (Real.one_le_rpow n1 (by norm_num))
     _ = _ := by ring
 
+theorem log_le_log2_succ {n : ℕ} (positive : 0 < n) :
+    Real.log (n : ℝ) ≤ (n.log2 : ℝ) + 1 := by
+  have pow : (n : ℝ) ≤ (2 : ℝ) ^ (n.log2 + 1) := by exact_mod_cast (Nat.lt_log2_self (n := n)).le
+  have base : Real.log 2 ≤ 1 := by
+    have le := Real.log_le_sub_one_of_pos (show (0 : ℝ) < 2 by norm_num)
+    norm_num at le
+    exact le
+  calc
+    _ ≤ Real.log ((2 : ℝ) ^ (n.log2 + 1)) := Real.log_le_log (Nat.cast_pos.mpr positive) pow
+    _ = ((n.log2 : ℝ) + 1) * Real.log 2 := by rw [Real.log_pow, Nat.cast_add, Nat.cast_one]
+    _ ≤ _ := by simpa only [mul_one] using mul_le_mul_of_nonneg_left base (by positivity)
+
+/-- A computable number of hub draws for failure probability at most
+n to the power minus two. -/
+def steinerHubDraws (n τ : ℕ) : ℕ := (4 * (n.log2 + 1) * n) / (τ + 1) + 1
+
+private theorem steinerHubDraws_adequate {n τ : ℕ} (hn : 0 < n) :
+    4 * Real.log (n : ℝ) * (n : ℝ) / ((τ : ℝ) + 1) ≤ steinerHubDraws n τ := by
+  let a := 4 * (n.log2 + 1) * n
+  let b := τ + 1
+  have step : a < (a / b + 1) * b :=
+    (Nat.div_lt_iff_lt_mul (by dsimp [b]; positivity)).mp (Nat.lt_succ_self _)
+  have comparison : 4 * Real.log (n : ℝ) * (n : ℝ) ≤ (a : ℝ) := by
+    push_cast [a]
+    exact mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left (log_le_log2_succ hn) (by positivity))
+      (by positivity)
+  apply (div_le_iff₀ (by positivity)).mpr
+  exact comparison.trans (by exact_mod_cast step.le)
+
+theorem steinerHubDraws_probability (G : Arcs V)
+    (τ : ℕ) (hn : 0 < Fintype.card V) :
+    ((thickFailures G τ (steinerHubDraws (Fintype.card V) τ)).card : ℝ) /
+      (Fintype.card V : ℝ) ^ (steinerHubDraws (Fintype.card V) τ) ≤
+        (Fintype.card V : ℝ) ^ (-(2 : ℝ)) := by
+  by_cases thin : τ < Fintype.card V
+  · let n : ℝ := Fintype.card V
+    let k := steinerHubDraws (Fintype.card V) τ
+    let u : ℝ := (τ : ℝ) + 1
+    have n0 : 0 < n := Nat.cast_pos.mpr hn
+    have u0 : 0 < u := by dsimp [u]; positivity
+    have comp : 4 * Real.log n ≤ (k : ℝ) * u / n :=
+      (le_div_iff₀ n0).mpr ((div_le_iff₀ u0).mp (steinerHubDraws_adequate hn))
+    calc
+      _ ≤ n^2 * Real.exp (-(k : ℝ) * u / n) := thickFailures_probability G hn thin
+      _ ≤ n^2 * Real.exp (-(4 * Real.log n)) := by
+        have le := neg_le_neg comp
+        exact mul_le_mul_of_nonneg_left (Real.exp_le_exp.mpr
+          (by simpa only [neg_mul, neg_div] using le)) (sq_nonneg _)
+      _ = _ := by
+        change n ^ 2 * Real.exp (-(4 * Real.log n)) = n ^ (-(2 : ℝ))
+        rw [← Real.rpow_two n, show -(4 * Real.log n) = Real.log n * (-4) by ring,
+          ← Real.rpow_def_of_pos n0, ← Real.rpow_add n0]
+        norm_num
+  · have empty : thickPairs G τ = ∅ := by
+      apply eq_empty_iff_forall_notMem.mpr
+      intro d present
+      exact (Nat.not_lt_of_ge ((card_le_univ _).trans (Nat.le_of_not_lt thin))) (mem_filter.mp present).2
+    simp only [thickFailures, empty, biUnion_empty, card_empty, Nat.cast_zero, zero_div]
+    positivity
+
+theorem steinerHubDraws_balanced {n τ : ℕ} (hn : 0 < n)
+    (threshold : (n : ℝ) ^ (3/5 : ℝ) ≤ (τ : ℝ) + 1) :
+    (steinerHubDraws n τ : ℝ) ≤ (4 * ((n.log2 : ℝ) + 1) + 1) * (n : ℝ) ^ (2/5 : ℝ) := by
+  let a := 4 * (n.log2 + 1) * n
+  let b := τ + 1
+  have n0 : (0 : ℝ) < n := Nat.cast_pos.mpr hn
+  have n1 : (1 : ℝ) ≤ n := by exact_mod_cast hn
+  have b0 : (0 : ℝ) < b := by dsimp [b]; positivity
+  have num : ((a / b : ℕ) : ℝ) ≤ (a : ℝ) / b := by
+    apply (le_div_iff₀ b0).mpr
+    exact_mod_cast Nat.div_mul_le_self a b
+  have div : (n : ℝ) / ((τ : ℝ) + 1) ≤ (n : ℝ) ^ (2/5 : ℝ) := by
+    calc
+      _ ≤ (n : ℝ) / (n : ℝ) ^ (3/5 : ℝ) :=
+        div_le_div_of_nonneg_left n0.le (Real.rpow_pos_of_pos n0 _) threshold
+      _ = (n : ℝ) ^ (1 : ℝ) / (n : ℝ) ^ (3/5 : ℝ) := by rw [Real.rpow_one]
+      _ = _ := by rw [← Real.rpow_sub n0]; norm_num
+  have pow : 1 ≤ (n : ℝ) ^ (2/5 : ℝ) := Real.one_le_rpow n1 (by norm_num)
+  change ((a / b + 1 : ℕ) : ℝ) ≤ _
+  rw [Nat.cast_add, Nat.cast_one]
+  calc
+    _ ≤ (a : ℝ) / b + 1 := add_le_add num le_rfl
+    _ = (4 * ((n.log2 : ℝ) + 1)) * ((n : ℝ) / ((τ : ℝ) + 1)) + 1 := by push_cast [a,b]; ring
+    _ ≤ (4 * ((n.log2 : ℝ) + 1)) * (n : ℝ) ^ (2/5 : ℝ) + (n : ℝ) ^ (2/5 : ℝ) :=
+      add_le_add (mul_le_mul_of_nonneg_left div (by positivity)) pow
+    _ = _ := by ring
+
 end Sampling
 
 section Routing
@@ -380,6 +467,30 @@ theorem hubPreserver_charge {V : Type*} [LinearOrder V] [Fintype V]
 
 /-- The checked hit-phase contribution at the parameters of Theorem 21.
 The remaining phases are outside this estimate. -/
+theorem hubPreserver_balanced_bound_of_size {V : Type*} [LinearOrder V] [Fintype V]
+    (G : Arcs V) (S : Finset V) (D : List (V × V)) (H : ℕ → Arcs V) (mono : Monotone H)
+    {T : ℕ} {C : ℝ} (hn : 0 < Fintype.card V)
+    (hT : (Fintype.card V:ℝ)^(6/5:ℝ) ≤ T)
+    (size : (S.card:ℝ) ≤ C * (Fintype.card V:ℝ)^(2/5:ℝ))
+    (hit : ∀ d ∈ D, ∃ v, hitHub G S d = some v)
+    (nontrivial : ∀ i : Fin D.length, ¬ Reach (H i) (D.get i).1 (D.get i).2)
+    (contains : ∀ i, hubPreserver G S (D.take i) ⊆ H i)
+    (Z : Arcs V) (solution : ∀ i : Fin D.length, Reach Z (D.get i).1 (D.get i).2)
+    (total : T ≤ Z.card^2) :
+    ((hubPreserver G S D).card:ℝ) ≤
+      (6+4*C)*(Fintype.card V:ℝ)^(3/5:ℝ)*Z.card := by
+  let n := Fintype.card V
+  have n1 : (1:ℝ) ≤ n := by exact_mod_cast (show 1 ≤ Fintype.card V from hn)
+  have charge := hubPreserver_charge G S D H mono hit nontrivial contains Z solution
+  have T0 : (0:ℝ) < T := (Real.rpow_pos_of_pos (zero_lt_one.trans_le n1) _).trans_le hT
+  have bound := (hubPreserver_bound G S D).2
+  rw [hitRequests_length_of_hits G S D hit] at bound
+  have contribution := hub_competitive_contribution (n := (n:ℝ)) (σ := (S.card:ℝ))
+    (hits := (D.length:ℝ)) (opt := (Z.card:ℝ)) (T := (T:ℝ)) (by positivity) (by positivity)
+    (by positivity) T0 (by exact_mod_cast total) (by exact_mod_cast charge)
+  have balance := hub_balanced_contribution n1 (show 0 ≤ (S.card:ℝ) by positivity) hT size
+  exact bound.trans (contribution.trans (mul_le_mul_of_nonneg_right balance (by positivity)))
+
 theorem hubPreserver_balanced_bound {V : Type*} [LinearOrder V] [Fintype V]
     (G : Arcs V) (D : List (V × V)) (H : ℕ → Arcs V) (mono : Monotone H)
     {τ T : ℕ} {power : ℝ} (hp : 0 ≤ power) (hn : 0 < Fintype.card V)
@@ -392,21 +503,9 @@ theorem hubPreserver_balanced_bound {V : Type*} [LinearOrder V] [Fintype V]
     (Z : Arcs V) (solution : ∀ i : Fin D.length, Reach Z (D.get i).1 (D.get i).2)
     (total : T ≤ Z.card^2) :
     ((hubPreserver G (sampledVertices sample) D).card:ℝ) ≤
-      (6+4*((2+power)*Real.log (Fintype.card V:ℝ)+1))*(Fintype.card V:ℝ)^(3/5:ℝ)*Z.card := by
-  let S := sampledVertices sample
-  let n := Fintype.card V
-  let C := (2+power)*Real.log (n:ℝ)+1
-  have n1 : (1:ℝ) ≤ n := by exact_mod_cast (show 1 ≤ Fintype.card V from hn)
-  have σ : (S.card:ℝ) ≤ C*(n:ℝ)^(2/5:ℝ) :=
-    (Nat.cast_le.mpr (sampledVertices_card sample)).trans (thickSampleCount_balanced hn hp hτ)
-  have charge := hubPreserver_charge G S D H mono hit nontrivial contains Z solution
-  have T0 : (0:ℝ) < T := (Real.rpow_pos_of_pos (zero_lt_one.trans_le n1) _).trans_le hT
-  have bound := (hubPreserver_bound G S D).2
-  rw [hitRequests_length_of_hits G S D hit] at bound
-  have contribution := hub_competitive_contribution (n := (n:ℝ)) (σ := (S.card:ℝ))
-    (hits := (D.length:ℝ)) (opt := (Z.card:ℝ)) (T := (T:ℝ)) (by positivity) (by positivity)
-    (by positivity) T0 (by exact_mod_cast total) (by exact_mod_cast charge)
-  have balance := hub_balanced_contribution n1 (show 0 ≤ (S.card:ℝ) by positivity) hT σ
-  exact bound.trans (contribution.trans (mul_le_mul_of_nonneg_right balance (by positivity)))
+      (6+4*((2+power)*Real.log (Fintype.card V:ℝ)+1))*(Fintype.card V:ℝ)^(3/5:ℝ)*Z.card :=
+  hubPreserver_balanced_bound_of_size G (sampledVertices sample) D H mono hn hT
+    ((Nat.cast_le.mpr (sampledVertices_card sample)).trans (thickSampleCount_balanced hn hp hτ))
+    hit nontrivial contains Z solution total
 
 end OnlineReachabilityPreservers

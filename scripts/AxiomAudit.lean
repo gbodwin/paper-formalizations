@@ -275,6 +275,10 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.earlyRoundedGraph_rate
 #print axioms OnlineReachabilityPreservers.completeSteinerRun_prefix
 #print axioms OnlineReachabilityPreservers.completeSteinerRun_correct
+#print axioms OnlineReachabilityPreservers.steinerHubDraws_probability
+#print axioms OnlineReachabilityPreservers.steinerHubDraws_balanced
+#print axioms OnlineReachabilityPreservers.completeSteinerDrawRun_correct
+#print axioms OnlineReachabilityPreservers.completeSteinerDrawRun_prefix
 #print axioms OnlineReachabilityPreservers.theorem21_online_steiner_expected
 #print axioms OnlineReachabilityPreservers.theorem3_lattice_lower
 #print axioms OnlineReachabilityPreservers.theorem3_lower

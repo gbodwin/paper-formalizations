@@ -168,13 +168,34 @@ private theorem completeSteiner_late_opt {Z : Arcs V} (D : List (V × V))
     (fun d hd => (mem_distinctNonselfTrace.mp (List.mem_toFinset.mp hd)).2)
     (fun d hd => feasible d (mem_distinctNonselfTrace.mp (List.mem_toFinset.mp hd)).1)
 
+/-- The sample size of the executable integer hub budget. -/
+def completeSteinerHubCount (V : Type*) [Fintype V] : ℕ :=
+  steinerHubDraws (Fintype.card V) (steinerThinThreshold (Fintype.card V))
+
+def completeSteinerDrawRun (G : Arcs V) (height : ℕ) (early : EarlyRoundSample G height)
+    (draw : Fin (completeSteinerHubCount V) → V) (thin : ThinSample G) (D : List (V × V)) : Arcs V :=
+  completeSteinerRun G height early (sampledVertices draw) thin D
+
+theorem completeSteinerDrawRun_correct (G : Arcs V) (height : ℕ) (early : EarlyRoundSample G height)
+    (draw : Fin (completeSteinerHubCount V) → V) (thin : ThinSample G) (D : List (V × V))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    completeSteinerDrawRun G height early draw thin D ⊆ G ∧
+      Preserves G (completeSteinerDrawRun G height early draw thin D) D :=
+  completeSteinerRun_correct G height early (sampledVertices draw) thin D feasible
+
+theorem completeSteinerDrawRun_prefix (G : Arcs V) (height : ℕ) (early : EarlyRoundSample G height)
+    (draw : Fin (completeSteinerHubCount V) → V) (thin : ThinSample G) {D E : List (V × V)}
+    (prefixOf : D <+: E) (feasible : ∀ d ∈ E, Reach G d.1 d.2) :
+    completeSteinerDrawRun G height early draw thin D ⊆ completeSteinerDrawRun G height early draw thin E :=
+  completeSteinerRun_prefix G height early (sampledVertices draw) thin prefixOf feasible
+
 /-- Independent finite early, hub, and thin draws. -/
 noncomputable def completeSteinerMean (G : Arcs V) (height : ℕ) (D : List (V × V)) : ℝ :=
   let n := Fintype.card V
-  let k := thickSampleCount n (steinerThinThreshold n) 2
+  let k := completeSteinerHubCount V
   𝔼 sample : EarlyRoundSample G height,
     ((∑ draw : Fin k → V, thinMean G (fun thin =>
-      completeSteinerRun G height sample (sampledVertices draw) thin D)) / (n : ℝ) ^ k)
+      completeSteinerDrawRun G height sample draw thin D)) / (n : ℝ) ^ k)
 
 private theorem completeSteinerMean_le_split [Nonempty V] (G : Arcs V)
     (height : ℕ) (D : List (V × V)) :
@@ -183,15 +204,16 @@ private theorem completeSteinerMean_le_split [Nonempty V] (G : Arcs V)
     let P := distinctNonselfTrace D
     (completeSteinerMean G height D) ≤
       (𝔼 sample : EarlyRoundSample G height, ((earlyRoundedGraph G height (P.take T) sample).card : ℝ)) +
-      assembledSteinerMean (lateUnusedRule G) 0 (steinerThinThreshold n) 2 (P.drop T) := by
+      assembledSteinerMeanOfDrawCount (lateUnusedRule G) 0 (steinerThinThreshold n)
+        (completeSteinerHubCount V) (P.drop T) := by
   classical
   let n := Fintype.card V
   let T := steinerEarlyCutoff n
   let τ := steinerThinThreshold n
-  let k := thickSampleCount n τ 2
+  let k := completeSteinerHubCount V
   let P := distinctNonselfTrace D
   let q := (n : ℝ) ^ k
-  let late := assembledSteinerMean (lateUnusedRule G) 0 τ 2 (P.drop T)
+  let late := assembledSteinerMeanOfDrawCount (lateUnusedRule G) 0 τ k (P.drop T)
   let first := fun sample : EarlyRoundSample G height => ((earlyRoundedGraph G height (P.take T) sample).card : ℝ)
   let middle := fun (draw : Fin k → V) => thinMean G (fun thin =>
     assembledSteiner (lateUnusedRule G) 0 τ (sampledVertices draw) thin (P.drop T))
@@ -228,10 +250,10 @@ private theorem completeSteinerMean_le_split [Nonempty V] (G : Arcs V)
 private theorem completeSteiner_late_rate {ε : ℝ} (epsilon : 0 < ε) :
     ∃ K > 0, ∀ (V : Type u) [LinearOrder V] [Fintype V] [Nonempty V] {G Z : Arcs V}
       (D : List (V × V)), 0 < Z.card → Z ⊆ G → (∀ d ∈ D, Reach Z d.1 d.2) →
-      assembledSteinerMean (lateUnusedRule G) 0 (steinerThinThreshold (Fintype.card V)) 2
-        ((distinctNonselfTrace D).drop (steinerEarlyCutoff (Fintype.card V))) ≤
+      assembledSteinerMeanOfDrawCount (lateUnusedRule G) 0 (steinerThinThreshold (Fintype.card V))
+        (completeSteinerHubCount V) ((distinctNonselfTrace D).drop (steinerEarlyCutoff (Fintype.card V))) ≤
         K * (Fintype.card V : ℝ) ^ (3/5 + ε) * Z.card := by
-  obtain ⟨K, pos, bound⟩ := assembledSteiner_late_rate_of_opt.{u} epsilon
+  obtain ⟨K, pos, bound⟩ := assembledSteiner_late_rate_of_integer_draws.{u} epsilon
   refine ⟨K, pos, ?_⟩
   intro V _ _ _ G Z D Zpos sub feasible
   let Q := (distinctNonselfTrace D).drop (steinerEarlyCutoff (Fintype.card V))
@@ -248,7 +270,7 @@ private theorem completeSteiner_late_rate {ε : ℝ} (epsilon : 0 < ε) :
     rw [steinerPhaseTraces_early_empty_at_zero, (lateUnusedRule G).empty, card_empty]
   have full := bound V (lateUnusedRule G) 0 Q 0 le_rfl Fintype.card_pos Zpos sub req opt
     (fun S => by rw [zero, Nat.cast_zero])
-  simpa only [zero_add] using full
+  simpa only [zero_add, completeSteinerHubCount, Q] using full
 
 private theorem completeSteinerMean_zero_of_no_nonself (G : Arcs V)
     (height : ℕ) (D : List (V × V)) (none : distinctNonselfTrace D = []) :
@@ -256,7 +278,7 @@ private theorem completeSteinerMean_zero_of_no_nonself (G : Arcs V)
   have empty (sample : EarlyRoundSample G height) (hubs : Finset V) (thin : ThinSample G) :
       completeSteinerRun G height sample hubs thin D = ∅ := by
     simp [completeSteinerRun, none, earlyRoundedGraph_empty, assembledSteiner_empty]
-  simp [completeSteinerMean, empty, thinMean]
+  simp [completeSteinerMean, completeSteinerDrawRun, empty, thinMean]
 
 omit [LinearOrder V] [Fintype V] in
 private theorem reach_empty_eq {s t : V} (path : Reach (∅ : Arcs V) s t) : s = t := by
@@ -266,7 +288,7 @@ private theorem reach_empty_eq {s t : V} (path : Reach (∅ : Arcs V) s t) : s =
 
 /-- The expected competitive edge bound of Theorems 8 and 21 on a fixed
 feasible demand sequence. The output is the executable immutable-prefix
-algorithm `completeSteinerRun`, for which correctness holds on every seed. -/
+algorithm `completeSteinerDrawRun`, for which correctness holds on every seed. -/
 theorem theorem21_online_steiner_expected {ε : ℝ} (epsilon : 0 < ε) :
     ∃ height : ℕ, 0 < height ∧ ∃ K : ℝ, 0 < K ∧
       ∀ (V : Type u) [LinearOrder V] [Fintype V] {G Z : Arcs V}

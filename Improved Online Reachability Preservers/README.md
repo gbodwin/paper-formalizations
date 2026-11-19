@@ -42,7 +42,8 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   dyadic quotas starting at `Nat.sqrt n + 1` and is correct at every prefix.
 - [The Steiner hit phase](OnlineReachabilityPreservers/SteinerHubs.lean)
   proves the exact uniform sample failure count for a fixed pair and an
-  inverse-power failure bound over all thick pairs. It serves both hub legs
+  inverse-power failure bound over all thick pairs. The complete evaluator
+  uses a draw count computed by integer arithmetic. It serves both hub legs
   in original edges with prefix monotonicity and checks the logarithmic
   competitive contribution at the thresholds of Theorem 21.
 - [The thin-demand fractional cover](OnlineReachabilityPreservers/SteinerThinCover.lean)
@@ -61,7 +62,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   starts empty, serves every revealed demand, and preserves every purchased
   edge. The [full online algorithm](OnlineReachabilityPreservers/SteinerComplete.lean)
   uses a seed-independent cutoff on distinct non-self requests and
-  proves \(O(n^{3/5+arepsilon})\) expected competitiveness on every
+  proves \(O(n^{3/5+\varepsilon})\) expected competitiveness on every
   fixed feasible demand sequence, against any offline solution.
   Every realization serves all prefixes. Formal end-to-end runtime remains open.
 - [The late-phase exponent bound](OnlineReachabilityPreservers/SteinerRate.lean)
@@ -242,5 +243,4 @@ and kernel replay.
 
 The [companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 includes an interactive trace and a source-linked proof map. The unrestricted
-path-system estimates, formal runtime, and full Steiner competitive guarantee
-remain open.
+path-system estimates and formal runtime remain open.
