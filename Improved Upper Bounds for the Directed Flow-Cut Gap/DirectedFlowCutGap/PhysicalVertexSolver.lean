@@ -15,7 +15,7 @@ namespace DirectedFlowCutGap.PhysicalVertexSolver
 open FiniteDrawTrees EncodedVertexSolver PhysicalCoverReader
 open BinaryArithmetic RetainedGridState
 
-private def treeFromPlan {n : ℕ} (D : GraphInput n) (round : Rounding n) :
+def treeFromPlan {n : ℕ} (D : GraphInput n) (round : Rounding n) :
     Plan n → FiniteDrawTrees.Tree (Output n)
   | .infeasible d => roundOutput D round (.infeasible d)
   | .zero mask => roundOutput D round (.zero (BinaryFractionalRows.column mask))
@@ -24,7 +24,7 @@ private def treeFromPlan {n : ℕ} (D : GraphInput n) (round : Rounding n) :
     let candidates := rows.map (fun y => round (roundingInput D y))
     map (fun a : Option (Flags n) => a.elim .invalid .cut) (EncodedCutSelection.best D.costs candidates)
 
-private theorem treeFromPlan_eq {n : ℕ} (D : GraphInput n) (round : Rounding n)
+theorem treeFromPlan_eq {n : ℕ} (D : GraphInput n) (round : Rounding n)
     (out : BinaryFractionalGuesses.Output n) :
     treeFromPlan D round (plan out) = roundOutput D round (BinaryFractionalGuesses.decodeOutput out) := by
   cases out with

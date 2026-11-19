@@ -15,7 +15,7 @@ namespace DirectedFlowCutGap.PhysicalSourceReadback
 open BinaryArithmetic ImmutableReferenceSimulation ImmutableReferenceTerminal
 open PhysicalCoverReader PhysicalCoverAccess
 
-private theorem planBound_mono {H B H' B' : ℕ} (hH : H ≤ H') (hB : B ≤ B') :
+theorem planBound_mono {H B H' B' : ℕ} (hH : H ≤ H') (hB : B ≤ B') :
     planBound H B ≤ planBound H' B' := by
   unfold planBound bestBound fractionBound wordBound cellBound
   gcongr
@@ -29,14 +29,37 @@ theorem terminal_charge {C : ℕ} (n : ℕ) (s : BitState C) {H B : ℕ} (hs : s
   exact (readPlan_charge n hs.2.2.1 (Registers.get_all hs.2.2.2.1 .r3)).trans
     (planBound_mono hH le_rfl)
 
-def run {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
+private def readout {C : ℕ} (n : ℕ) (out : BitState C) (physical : ℕ) :
     Option (Plan n × ℕ × ℕ) :=
-  let args := PhysicalSourceDispatch.input D
-  (PhysicalCoverExecution.executeCached PhysicalSourceDispatch.program
-    (PhysicalSourceDispatch.steps D + 1) (PhysicalSourceDispatch.initial args) 0).bind
-      fun (out, physical) =>
-        let result := PhysicalCoverAccess.readPlan n out.heap out.registers.d
-        result.1.map fun p => (p, physical, result.2)
+  let result := PhysicalCoverAccess.readPlan n out.heap out.registers.d
+  result.1.map fun p => (p, physical, result.2)
+
+def run {n : ℕ} (D : BinaryFractionalGuesses.Input n) : Option (Plan n × ℕ × ℕ) :=
+  let initial := CachedReferenceExecution.FastState.ofReference
+    (PhysicalSourceDispatch.initial (PhysicalSourceDispatch.input D))
+  (CachedReferenceExecution.execute PhysicalSourceDispatch.program
+    (PhysicalSourceDispatch.steps D + 1) initial 0).bind fun (out, physical) =>
+      let result := PhysicalCoverAccess.readPlanCached n out.store out.registers.d
+      result.1.map fun p => (p, physical, result.2)
+
+theorem run_reference {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
+    run D = (PhysicalCoverExecution.execute PhysicalSourceDispatch.program
+      (PhysicalSourceDispatch.steps D + 1)
+      (PhysicalSourceDispatch.initial (PhysicalSourceDispatch.input D)) 0).bind
+      (fun (out, physical) => readout n out physical) := by
+  rw [← PhysicalCoverExecution.executeCached_eq]
+  unfold run PhysicalCoverExecution.executeCached
+  dsimp only
+  generalize CachedReferenceExecution.execute PhysicalSourceDispatch.program
+    (PhysicalSourceDispatch.steps D + 1)
+    (CachedReferenceExecution.FastState.ofReference
+      (PhysicalSourceDispatch.initial (PhysicalSourceDispatch.input D))) 0 = result
+  cases result with
+  | none => rfl
+  | some out =>
+    rcases out with ⟨state, paid⟩
+    simp only [Option.bind_some, Option.map_some, PhysicalCoverAccess.readPlanCached_eq, readout,
+      CachedReferenceExecution.FastState.freeze]
 
 theorem run_eq {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
     let size := (PhysicalSourceDispatch.input D).length
@@ -59,7 +82,7 @@ theorem run_eq {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
     rw [readPlan_value]
     exact PhysicalCoverReader.readPlan_eq hresult
   refine ⟨paid, lookupCost, ?_, hpaid.trans (PhysicalSourceDispatch.paidBound_polynomial D), ?_⟩
-  · simp only [run, PhysicalCoverExecution.executeCached_eq, he, Option.bind_some, Nat.zero_add,
+  · simp only [run_reference, he, Option.bind_some, Nat.zero_add, readout,
       hr, Option.map_some, paid, lookupCost]
   · simpa only [lookupCost, Nat.zero_add] using hlook
 

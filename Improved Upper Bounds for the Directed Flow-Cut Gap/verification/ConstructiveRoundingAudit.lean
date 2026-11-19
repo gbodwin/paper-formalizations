@@ -13,6 +13,7 @@ import DirectedFlowCutGap.PhysicalEdgeSolver
 import DirectedFlowCutGap.PhysicalSourceReadback
 import DirectedFlowCutGap.RetainedBinarySampler
 import DirectedFlowCutGap.EncodedBinarySampling
+import DirectedFlowCutGap.PhysicalSolverChargeBounds
 import Lean.Compiler.Old
 import Lean.Util.CollectAxioms
 import Lean.Util.FoldConsts
@@ -54,7 +55,8 @@ run_cmd do
     `DirectedFlowCutGap.RetainedChargedFairBits,
     `DirectedFlowCutGap.PhysicalCoverAccess, `DirectedFlowCutGap.PhysicalSourceReadback,
     `DirectedFlowCutGap.BinaryDrawTreeExecution, `DirectedFlowCutGap.RetainedBinarySampler,
-    `DirectedFlowCutGap.EncodedBinarySampling]
+    `DirectedFlowCutGap.EncodedBinarySampling, `DirectedFlowCutGap.PhysicalSolverCharges,
+    `DirectedFlowCutGap.PhysicalSourceSizeBounds, `DirectedFlowCutGap.PhysicalSolverChargeBounds]
   let allowed := #[`propext, `Classical.choice, `Quot.sound]
   let mut counts : NameMap Nat := {}
   let mut compilerEntries : Nat := 0
@@ -122,6 +124,7 @@ run_cmd do
     `DirectedFlowCutGap.EncodedEdgeInput.parse_encode,
     `DirectedFlowCutGap.EncodedSolverBits.amplifier_le_polynomial,
     `DirectedFlowCutGap.EncodedSolverBits.run_support,
+    `DirectedFlowCutGap.EncodedSolverBits.run_fairTape,
     `DirectedFlowCutGap.EncodedSourceExecution.vertexMass_complete,
     `DirectedFlowCutGap.EncodedSourceExecution.vertexSize_complete,
     `DirectedFlowCutGap.EncodedSourceExecution.edgeMass_complete,
@@ -150,7 +153,16 @@ run_cmd do
     `DirectedFlowCutGap.RetainedChargedFairBits.initial_work_bound,
     `DirectedFlowCutGap.PhysicalCoverAccess.readPlan_value,
     `DirectedFlowCutGap.PhysicalCoverAccess.readPlan_charge,
+    `DirectedFlowCutGap.PhysicalCoverAccess.readPlanCached_eq,
     `DirectedFlowCutGap.PhysicalSourceReadback.run_eq,
+    `DirectedFlowCutGap.PhysicalSolverCharges.vertex_fairTape,
+    `DirectedFlowCutGap.PhysicalSolverCharges.edge_fairTape,
+    `DirectedFlowCutGap.PhysicalSolverCharges.vertex_mass_complete,
+    `DirectedFlowCutGap.PhysicalSolverCharges.vertex_size_complete,
+    `DirectedFlowCutGap.PhysicalSolverCharges.edge_mass_complete,
+    `DirectedFlowCutGap.PhysicalSolverCharges.edge_size_complete,
+    `DirectedFlowCutGap.PhysicalSolverCharges.vertex_budgets,
+    `DirectedFlowCutGap.PhysicalSolverCharges.edge_budgets,
     `DirectedFlowCutGap.BinaryDrawTreeExecution.draw_observe,
     `DirectedFlowCutGap.BinaryDrawTreeExecution.run_value,
     `DirectedFlowCutGap.BinaryDrawTreeExecution.run_cost,

@@ -1,4 +1,5 @@
 import DirectedFlowCutGap.EncodedEdgeSolver
+import DirectedFlowCutGap.MonadicBitSampler
 
 /-!
 # Bounded consumption of literal fair bits
@@ -25,10 +26,48 @@ private def readBit (n : ℕ) (_ : 0 < n) : StateT Tape Option (Fin n) :=
 def run {A : Type} (t : FiniteDrawTrees.Tree A) (bits : List Bool) : Option (A × Tape) :=
   (FiniteDrawTrees.execute readBit t).run (bits, 0)
 
+theorem run_map {A B : Type} (f : A → B) (t : FiniteDrawTrees.Tree A) (bits : List Bool) :
+    run (map f t) bits = (run t bits).map (fun (a, tape) => (f a, tape)) := by
+  unfold run
+  rw [MonadicBitSampler.execute_map]
+  simp only [StateT.run_bind, StateT.run_pure]
+  cases (FiniteDrawTrees.execute readBit t).run (bits, 0) <;> rfl
+
 private theorem step_at {A : Type} (next : Fin 2 → FiniteDrawTrees.Tree A)
     (b : Bool) (bs : List Bool) (start : ℕ) :
     (FiniteDrawTrees.execute readBit (.draw 2 (by decide) next)).run (b :: bs, start) =
       (FiniteDrawTrees.execute readBit (next (bitValue b))).run (bs, start + 1) := rfl
+
+noncomputable def fairTape : ℕ → PMF (List Bool)
+  | 0 => PMF.pure []
+  | q + 1 => (uniformDraw 2 (by decide)).bind fun i =>
+      (fairTape q).map (List.cons (i.val = 1))
+
+private theorem uniform_from {A : Type} {q : ℕ} {t : FiniteDrawTrees.Tree A}
+    (ht : Within q t) (hb : LazyFairBitTrees.Binary t) (start : ℕ) :
+    (fairTape q).map (fun bits =>
+      ((FiniteDrawTrees.execute readBit t).run (bits, start)).map Prod.fst) =
+        (ideal t).map some := by
+  induction ht generalizing start with
+  | pure q a =>
+    change (fairTape q).map (Function.const (List Bool) (some a)) = (PMF.pure a).map some
+    rw [PMF.map_const, PMF.pure_map]
+  | @draw q n hn next children ih =>
+    cases hb with
+    | @draw next hc =>
+      change ((uniformDraw 2 (by decide)).bind _).map _ =
+        ((uniformDraw 2 (by decide)).bind (fun a => ideal (next a))).map some
+      simp only [PMF.map_bind]
+      congr 1
+      funext i
+      rw [PMF.map_comp]
+      have hi : bitValue (decide (i.val = 1)) = i := by fin_cases i <;> decide
+      simpa only [Function.comp_def, step_at, hi] using ih i (hc i) (start + 1)
+
+theorem run_fairTape {A : Type} {q : ℕ} {t : FiniteDrawTrees.Tree A}
+    (ht : Within q t) (hb : LazyFairBitTrees.Binary t) :
+    (fairTape q).map (fun bits => (run t bits).map Prod.fst) = (ideal t).map some :=
+  uniform_from ht hb 0
 
 private theorem complete_from {A : Type} {t : FiniteDrawTrees.Tree A} {budget : ℕ}
     (h : Within budget t) (hb : LazyFairBitTrees.Binary t)

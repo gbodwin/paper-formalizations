@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - codex/flow-constructive-20261118
+      - codex/flow-charges-20261119
   workflow_dispatch:
 permissions:
   contents: read
@@ -37,6 +38,7 @@ jobs:
             +DirectedFlowCutGap.PhysicalSourceReadback
             +DirectedFlowCutGap.RetainedBinarySampler
             +DirectedFlowCutGap.EncodedBinarySampling
+            +DirectedFlowCutGap.PhysicalSolverChargeBounds
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"

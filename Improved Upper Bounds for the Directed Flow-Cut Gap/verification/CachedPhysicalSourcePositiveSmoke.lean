@@ -1,5 +1,6 @@
 import DirectedFlowCutGap.CachedReferenceExecution
 import DirectedFlowCutGap.PhysicalVertexSolver
+import DirectedFlowCutGap.PhysicalSolverCharges
 import FinalDispatchPositiveFixtureSupport
 
 open DirectedFlowCutGap
@@ -52,6 +53,21 @@ private def roundCover (plan : PhysicalCoverReader.Plan 3) (physical : ℕ)
     return used
   | _ => throw (IO.userError "rounding the actual positive plan did not produce a cut")
 
+private def roundChargedCover (plan : PhysicalCoverReader.Plan 3)
+    (round : EncodedVertexSolver.Rounding 3) (expectedReads : ℕ) : IO ℕ := do
+  let graph := BinaryFractionalGuesses.decodeInput input
+  let confidence := EncodedVertexAmplification.confidenceExponent 3 0
+  let tape := [true, false, false, true]
+  let tree := PhysicalSolverCharges.treeFromPlan (EncodedVertexAmplification.roundDrawBound 3)
+    confidence (confidence + 1) graph round plan
+  match EncodedSolverBits.run tree tape with
+  | some ((.cut mask, charge), rest, used) =>
+    unless mask[1] && used == expectedReads && rest == tape.drop used &&
+        charge ≤ EncodedBinarySampling.polynomial (EncodedSolverBits.vertexBudget 0 graph) do
+      throw (IO.userError "charged rounding changed the cut, tape or charge bound")
+    return charge
+  | _ => throw (IO.userError "charged rounding of the actual positive plan did not produce a cut")
+
 def main (args : List String) : IO Unit := do
   let cap ← parseCap args
   preflight
@@ -83,8 +99,17 @@ def main (args : List String) : IO Unit := do
     | throw (IO.userError "could not read the positive physical output for rounding")
   let massReads ← roundCover plan result.charge EncodedWeightedRounding.tree
   let sizeReads ← roundCover plan result.charge EncodedSizeRounding.tree
+  let (cached, lookups) := PhysicalCoverAccess.readPlanCached 3 result.state.store result.state.registers.d
+  let some cachedPlan := cached
+    | throw (IO.userError "the cached pointer reader lost the physical output")
+  unless 0 < lookups do
+    throw (IO.userError "the physical readback did not charge its lookups")
+  let massSample ← roundChargedCover cachedPlan EncodedWeightedRounding.tree massReads
+  let sizeSample ← roundChargedCover cachedPlan EncodedSizeRounding.tree sizeReads
   IO.println ("PASS cached physical source: orderedStates=" ++ toString states.length ++
     " sourceRequests=" ++ toString result.events.length ++ " instructions=" ++
     toString result.instructions ++ " paidOperations=" ++ toString result.charge ++
     " terminalOperations=" ++ toString result.terminalCharge ++
-    " massRandomReads=" ++ toString massReads ++ " sizeRandomReads=" ++ toString sizeReads)
+    " massRandomReads=" ++ toString massReads ++ " sizeRandomReads=" ++ toString sizeReads ++
+    " lookupOperations=" ++ toString lookups ++ " massSamplerOperations=" ++ toString massSample ++
+    " sizeSamplerOperations=" ++ toString sizeSample)
