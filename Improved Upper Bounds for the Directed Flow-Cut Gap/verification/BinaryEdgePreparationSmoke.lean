@@ -52,8 +52,8 @@ private def literalInput : IO Unit := do
   let second := PhysicalBinaryEdgeWire.edgeWithCost 0 .mass (EncodedEdgeInput.encode self) tape
   let some ⟨_,invalid⟩ := second.1 | throw (IO.userError "binary edge entry lost the self-demand witness")
   let .infeasible (some (s,t)) := invalid.output | throw (IO.userError "binary edge entry returned the wrong witness tag")
-  unless s.val == 0 && t.val == 0 && invalid.suffix == tape &&
-      (PhysicalBinaryEdgeWire.edgeWithCost 0 .size (wire ++ [true]) tape).1.isNone do
+  let trailing := PhysicalBinaryEdgeWire.edgeWithCost 0 .size (wire ++ [true]) tape
+  unless s.val == 0 && t.val == 0 && invalid.suffix == tape && trailing.1.isNone && 0 < trailing.2 do
     throw (IO.userError "binary edge source lost the original witness or accepted trailing data")
   IO.println "PASS padded original edge source, original self-demand witness, and counted malformed input rejection"
 

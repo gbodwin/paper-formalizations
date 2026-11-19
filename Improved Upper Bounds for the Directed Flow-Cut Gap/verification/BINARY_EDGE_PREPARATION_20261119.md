@@ -24,5 +24,5 @@ remaining graph serialization and conversion costs have separate
 verification scope.
 
 The executable checks compare the binary gadget with the retained
-construction, round a positive actual line-graph input row, and run
+construction, round a supplied positive line-graph row at the rounding entry, and run
 the literal edge entry on padded prices, a self-demand, and malformed input.
