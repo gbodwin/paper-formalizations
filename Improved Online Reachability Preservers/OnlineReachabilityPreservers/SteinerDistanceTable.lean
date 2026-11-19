@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.SteinerEarlyReplay
+import OnlineReachabilityPreservers.SteinerRoundingWork
 import OnlineReachabilityPreservers.SteinerTemplateWork
 
 /-! Precompute original-graph distances independently of the Steiner height forest. -/
@@ -240,38 +241,6 @@ theorem forestFractionalFromWeightsWithSearchWork_eq (G : Arcs V) (dist : V × V
   rw [heightForestFromDistances_eq G dist values height, forestWeightFromDistances_eq G dist values]
   rfl
 
-private def forestUnitsFromWeights (links : Arcs (HeightForestVertex V height))
-    (weight : HeightForestVertex V height × HeightForestVertex V height → ℕ)
-    (charges : ForestNetworkVertex V height × ForestNetworkVertex V height → ℕ) (scale : ℕ)
-    (edge : HeightForestVertex V height × HeightForestVertex V height) : ℕ :=
-  if edge ∈ links then
-    let cost := weight edge
-    if cost = 0 then scale
-    else roundedWeightedCapacity cost (charges (forestNetworkCopy.prodMap forestNetworkCopy edge))
-  else 0
-
-private def roundedForestLinksFromWeights (links : Arcs (HeightForestVertex V height))
-    (weight : HeightForestVertex V height × HeightForestVertex V height → ℕ)
-    (charges : ForestNetworkVertex V height × ForestNetworkVertex V height → ℕ) (scale : ℕ)
-    (sample : ForestRoundingSample V height scale) : Arcs (HeightForestVertex V height) :=
-  let units := forestUnitsFromWeights links weight charges scale
-  links.filter fun e => weight e = 0 ∨
-    ∃ tier : Fin (scale.log2+1),
-      let root := heightForestRoot e.1
-      let seed := sample root tier
-      let side := roundingArcSide e
-      let hist := roundingArcHistory e
-      seed.1.val < 2^tier.val ∧
-        thresholdPath (forestSeedSize scale) (historyCutoff (scale.log2+1) tier.val
-          (fun u => units (heightForestLegArc root side u))) (historyAncestors hist) (seed.2 side)
-
-/-- All trials share the stored forest and hop values. -/
-def roundedForestTrialsFromWeights (links : Arcs (HeightForestVertex V height))
-    (weight : HeightForestVertex V height × HeightForestVertex V height → ℕ)
-    (charges : ForestNetworkVertex V height × ForestNetworkVertex V height → ℕ) (scale trials : ℕ)
-    (sample : ForestTrialArray V height scale trials) : Arcs (HeightForestVertex V height) :=
-  univ.biUnion fun i => roundedForestLinksFromWeights links weight charges scale (sample i)
-
 theorem roundedForestTrialsFromWeights_eq (G : Arcs V) (dist : V × V → ℕ)
     (values : ∀ d : V × V, dist d = hops G d.1 d.2)
     (charges : ForestNetworkVertex V height × ForestNetworkVertex V height → ℕ) (scale trials : ℕ)
@@ -279,6 +248,33 @@ theorem roundedForestTrialsFromWeights_eq (G : Arcs V) (dist : V × V → ℕ)
     roundedForestTrialsFromWeights (heightForestFromDistances dist height) (forestWeightFromDistances dist)
       charges scale trials sample = roundedForestTrials G charges scale trials sample := by
   rw [heightForestFromDistances_eq G dist values height, forestWeightFromDistances_eq G dist values]
+  rfl
+
+/-- Read a forest link's original hop weight together with the table work. -/
+def forestWeightWithDistanceWork (read : V × V → ℕ × ℕ)
+    (e : HeightForestVertex V height × HeightForestVertex V height) : ℕ × ℕ :=
+  read (heightForestLabel e.1,heightForestLabel e.2)
+
+/-- The rounded trial union for a prepared template and stored metric is exact.
+Count only key comparisons made by these weight reads. -/
+theorem roundedForestTrialsWithDistanceTable_spec (G : Arcs V)
+    (links : Arcs (HeightForestVertex V height)) (same : links = heightForest G height)
+    (charges : ForestNetworkVertex V height × ForestNetworkVertex V height → ℕ) (scale trials : ℕ)
+    (sample : ForestTrialArray V height scale trials) :
+    let read := readDistanceRow (distanceTableWithSearchWork G).1
+    let out := roundedForestTrialsWithWork links (forestWeightWithDistanceWork read) charges scale trials sample
+    out.1 = roundedForestTrials G charges scale trials sample ∧
+      out.2 ≤ trials*(links.card*((1+(scale.log2+1)*(2*(height+1)^2))*Fintype.card V^2)) := by
+  let read := readDistanceRow (distanceTableWithSearchWork G).1
+  let weight := forestWeightWithDistanceWork (height := height) read
+  have scanBound (e : HeightForestVertex V height × HeightForestVertex V height) :
+      (weight e).2 ≤ Fintype.card V^2 :=
+    (distanceTableReadWithSearchWork_spec G _).2
+  have correct : (fun e => (weight e).1) = heightForestWeight G :=
+    funext fun e => (distanceTableReadWithSearchWork_spec G (heightForestLabel e.1,heightForestLabel e.2)).1
+  obtain ⟨graph, work⟩ := roundedForestTrialsWithWork_spec links weight charges scale trials _ scanBound sample
+  refine ⟨graph.trans ?_,work⟩
+  rw [correct, same]
   rfl
 
 private def preparedScaleAndFuel (priced : Arcs (ForestNetworkVertex V height))

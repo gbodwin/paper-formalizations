@@ -554,6 +554,13 @@ An exact-source replay grants no coverage to a paper statement outside the
   the retained-mass bound. The 3631-declaration audit, local kernel replay,
   and independent review of the common-order scope passed.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44506685244).
+- [b0648629](https://github.com/gbodwin/paper-formalizations/commit/b0648629f2e9e39783094bda204573c22d2357ed)
+  counts distance-table key comparisons in the shared paired template.
+  The 3661-declaration audit and local kernel replay passed. Independent
+  review checked both orientations, the exact prefix list, and one table
+  and template preparation in generated C. The two-vertex replay reported
+  12 arc inspections and 20 key comparisons for the shared preparations.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44507701923).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

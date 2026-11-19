@@ -173,9 +173,16 @@ links, scale, and separator fuel with every early prefix. The weighted
 network loop passes the same scale and fuel through each request update.
 The [template work bound](OnlineReachabilityPreservers/SteinerTemplateWork.lean)
 counts comparisons in both orientations while checking successive labels
-in every history. With \(H\) histories per root and height \(h\), the
+in every candidate history. With \(H\) candidates per root and height \(h\), the
 one-time template cost is at most \(2n^3Hh\) table key comparisons.
 The replay reports that cost separately from the table's arc inspections.
+The [rounding counter](OnlineReachabilityPreservers/SteinerRoundingWork.lean)
+counts the original weight reads in a set of integral rounding trials.
+It returns the same link union and bounds key comparisons by
+\(t|E_F|n^2(1+2(\lfloor\log_2 S\rfloor+1)(h+1)^2)\) for \(t\) trials
+at scale \(S\) on the prepared forest \(E_F\). The two ancestor minima per
+cutoff use at most \(h+1\) ancestors each. This count is for one rounded
+fractional state.
 The [route counters](OnlineReachabilityPreservers/RouteWork.lean)
 bound arc inspections for SCC labels and shortest routes, and
 sum the search work over greedy forwards growth. They also bound
