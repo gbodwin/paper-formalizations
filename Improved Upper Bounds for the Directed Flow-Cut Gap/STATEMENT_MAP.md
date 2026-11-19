@@ -18,7 +18,7 @@ open. [Physical execution scope](verification/PHYSICAL_SOURCE_DISPATCH_20261118.
 | Lemma 9 | Actual all-regime randomized law, uniform ε expected-size and n^(-κ) high-probability size bounds | Constructive runtime |
 | Theorem 10 | Cited background only | Not claimed formalized |
 | Lemma 11 | Actual indexed-path level crossing, including infinite distances | Complete |
-| Lemma 12 | Every selected demand is internally cut. The loop preserves processed-demand correctness. `RoundStateUpdateProgram.update_round_state` realizes the post-sampling flags and mass update on represented inputs. | Fixed-instruction construction of the sampled level cut and its optimizer context |
+| Lemma 12 | Every selected demand is internally cut. The loop preserves processed-demand correctness. `RoundStateUpdateProgram.update_round_state` realizes the post-sampling flags and mass update. `PhysicalSampledRoundProgram.physical_round` computes the cut mask and executes that update for the represented chosen pair and level. | Fixed-instruction optimizer, input assembly, and fair sampling composition |
 | Lemma 13 | Actual restart sequence, analysis-epoch splitting, whole-trace bounds, outer recursion and explicit global parameters | Complete finite mathematical component |
 | Lemma 14 | Actual uniform-level law, unconditional stopped-prefix expectation and full-epoch truncation bound | Complete finite component |
 | Lemma 15 | Actual capped-ceiling horizon, active-state tail, unconditional outer cost and global parameter specialization | Complete finite mathematical component |
