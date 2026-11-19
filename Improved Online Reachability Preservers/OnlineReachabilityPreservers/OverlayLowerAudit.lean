@@ -1,7 +1,10 @@
+import Mathlib.Data.Prod.Lex
+import OnlineReachabilityPreservers.AcyclicOverlay
 import OnlineReachabilityPreservers.CyclicReturnOverlay
 
-/-! A family of counterexamples to using the consecutive overlay for the
-lower-bound direction of the Independence Lemma. -/
+/-! Lattice paths for the lower-bound direction of the Independence Lemma.
+The acyclic overlay gives a superlinear lower bound. Adding return paths
+produces counterexamples to the cited overlay argument for cyclic systems. -/
 
 namespace OnlineReachabilityPreservers.SourceAudit
 
@@ -177,5 +180,96 @@ theorem lemma14_overlay_no_constant (C : ℕ) :
       rw [← Nat.add_mul]
       exact Nat.mul_lt_mul_of_pos_right (by omega) pPos
     _ = _ := incidences
+
+abbrev OrderedLayerVertex (L : ℕ) := Fin (L+1) ×ₗ (Fin (2*L^2) ×ₗ Fin (2*L^3))
+
+private def layerVertexOrder (L : ℕ) : LayerVertex L ≃ OrderedLayerVertex L :=
+  ((Equiv.refl _).prodCongr toLex).trans toLex
+
+theorem orderedLayerVertex_card (L : ℕ) :
+    Fintype.card (OrderedLayerVertex L) = 4*(L+1)*L^5 := by
+  rw [← Fintype.card_congr (layerVertexOrder L)]
+  simp only [LayerVertex, Fintype.card_prod, Fintype.card_fin]
+  ring
+
+theorem orderedLayerVertex_card_bounds {L : ℕ} (positive : 0 < L) :
+    4*L^6 ≤ Fintype.card (OrderedLayerVertex L) ∧ Fintype.card (OrderedLayerVertex L) ≤ 8*L^6 := by
+  rw [orderedLayerVertex_card]
+  have first : 4*L ≤ 4*(L+1) := by omega
+  have last : 4*(L+1) ≤ 8*L := by omega
+  constructor
+  · calc
+      4*L^6 = (4*L)*L^5 := by ring
+      _ ≤ _ := Nat.mul_le_mul_right (L^5) first
+  · calc
+      _ ≤ (8*L)*L^5 := Nat.mul_le_mul_right (L^5) last
+      _ = 8*L^6 := by ring
+
+private theorem layerBefore_of_ordered {L : ℕ} {line : LayerLine L} {u v : LayerVertex L}
+    (left : u ∈ layerPaths line) (right : v ∈ layerPaths line)
+    (ordered : layerVertexOrder L u < layerVertexOrder L v) : ListBefore layerPaths line u v := by
+  obtain ⟨i,rfl⟩ := List.mem_ofFn.mp left
+  obtain ⟨j,rfl⟩ := List.mem_ofFn.mp right
+  have neither : i ≠ j := fun equal => (lt_irrefl _ : ¬ layerVertexOrder L (layerVertex line i) < _)
+    (equal.symm ▸ ordered)
+  have stage : i < j := by
+    change toLex (layerVertex line i |>.1, toLex (layerVertex line i |>.2)) <
+      toLex (layerVertex line j |>.1, toLex (layerVertex line j |>.2)) at ordered
+    rcases Prod.Lex.toLex_lt_toLex.mp ordered with less | ⟨equal,_⟩
+    · exact less
+    · exact (neither equal).elim
+  have injective : Function.Injective (layerVertex line) := fun _ _ same => congrArg Prod.fst same
+  refine ⟨List.mem_ofFn.mpr ⟨i,rfl⟩, List.mem_ofFn.mpr ⟨j,rfl⟩, ?_⟩
+  simpa only [layerPaths, idxOf_ofFn_injective (layerVertex line) injective i,
+    idxOf_ofFn_injective (layerVertex line) injective j] using (show i.val < j.val from stage)
+
+/-- The acyclic lattice family forces a superlinear number of edges in the
+intermediate range with comparable vertex and demand counts. -/
+theorem layered_offline_lower {L : ℕ} (positive : 0 < L) :
+    ∃ (G : Arcs (OrderedLayerVertex L)) (D : Arcs (OrderedLayerVertex L)),
+      IsDAG G ∧ D.card = L^6 ∧ (∀ d ∈ D, Reach G d.1 d.2) ∧
+        ∀ H ⊆ G, Preserves G H D.toList → H.card = L^7 := by
+  classical
+  let count := Fintype.card (LayerLine L)
+  let line := (Fintype.equivFin (LayerLine L)).symm
+  let vertex := layerVertexOrder L
+  let paths (i : Fin count) := (layerPaths (line i)).toFinset.map vertex.toEmbedding
+  have pathSize (i : Fin count) : (paths i).card = L+1 := by
+    rw [Finset.card_map, List.toFinset_card_of_nodup (layerPaths_simple _)]
+    simp [layerPaths]
+  have nonempty (i : Fin count) : (paths i).Nonempty := Finset.card_pos.mp (by rw [pathSize]; omega)
+  have free (k : ℕ) : IsEmpty (Bridge (PathBefore paths) k) := by
+    refine ⟨fun b => (layerPaths_fullFree L k).false ?_⟩
+    have steps (i : Fin count) (u v : OrderedLayerVertex L) (step : PathBefore paths i u v) :
+        ListBefore layerPaths (line i) (vertex.symm u) (vertex.symm v) := by
+      obtain ⟨left,right,forward⟩ := step
+      obtain ⟨a,ha,rfl⟩ := Finset.mem_map.mp left
+      obtain ⟨b,hb,rfl⟩ := Finset.mem_map.mp right
+      simpa only [Equiv.toEmbedding_apply, Equiv.symm_apply_apply] using
+        layerBefore_of_ordered (List.mem_toFinset.mp ha) (List.mem_toFinset.mp hb) forward
+    exact (b.mapVertices vertex.symm vertex.symm.injective steps).mapPaths line line.injective
+      (fun _ _ _ h => h)
+  rw [show L^6 = count from (by simp [count]; ring)]
+  obtain ⟨G, pairs, dag, length, service, all⟩ := theorem14_acyclic_overlay_lower nonempty free
+  have mass : (∑ i : Fin count, (paths i).card) = count*(L+1) := by simp [pathSize]
+  have retain (H : Arcs (OrderedLayerVertex L)) (sub : H ⊆ G) (preserved : Preserves G H pairs) : H.card = count*L := by
+    have same := all H sub preserved
+    rw [length, Fintype.card_fin, mass, Nat.mul_succ] at same
+    omega
+  have graph : G.card = count*L := retain G Subset.rfl (fun _ _ => Iff.rfl)
+  let possible : Arcs (OrderedLayerVertex L) := univ.filter fun d => Reach G d.1 d.2
+  have enough : count ≤ possible.card := by
+    have subset : G ⊆ possible := fun d edge => mem_filter.mpr ⟨mem_univ _, Relation.ReflTransGen.single edge⟩
+    exact (Nat.le_mul_of_pos_right count positive).trans (graph ▸ card_le_card subset)
+  have included : pairs.toFinset ⊆ possible := fun d inside => mem_filter.mpr
+    ⟨mem_univ _, service d (List.mem_toFinset.mp inside)⟩
+  have small : pairs.toFinset.card ≤ count := List.toFinset_card_le _ |>.trans_eq (length.trans (Fintype.card_fin _))
+  obtain ⟨D, original, possibleD, size⟩ := exists_subsuperset_card_eq included small enough
+  refine ⟨G,D,dag,size,fun d hd => (mem_filter.mp (possibleD hd)).2,?_⟩
+  intro H sub preserves
+  have result := retain H sub (fun d hd => preserves d (Finset.mem_toList.mpr (original (List.mem_toFinset.mpr hd))))
+  rw [result]
+  simp [count]
+  ring
 
 end OnlineReachabilityPreservers.SourceAudit

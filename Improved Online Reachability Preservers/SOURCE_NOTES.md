@@ -183,6 +183,15 @@ and \(p\le n^2\). A bipartite graph supplies a separate bound linear in
 \(p\) when the consecutive overlay's path-count subtraction is substantial.
 [Exact distinct-demand lower bounds](OnlineReachabilityPreservers/OfflineDemandLower.lean).
 
+The base lattice paths alone also give a superlinear offline lower bound
+when the vertex and demand counts are comparable. Ordering vertices by
+layer and then lexicographically makes the path system acyclic. Its
+consecutive overlay on \(4(L+1)L^5\) vertices forces \(L^7\) edges for
+\(L^6\) distinct feasible demands, for every integer \(L\ge1\). Lean can fill
+any unused demand slots with other reachable pairs while retaining all
+original reachability requirements.
+[Checked finite lattice lower bound](OnlineReachabilityPreservers/OverlayLowerAudit.lean).
+
 For simple path systems with no full bridges through size four, Theorem 43
 bounds their mass by \(B K n\) when \(p^2\le K n\) and by \(B K p\) when
 \(n^2\le Kp\), with one absolute constant \(B\). A spanning directed path

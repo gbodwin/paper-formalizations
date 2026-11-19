@@ -213,6 +213,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   path system that excludes full bridges through size four. Theorem 43
   bounds that mass by a linear term in each regime. The general extremal
   lower bound remains open between these regimes.
+- [`layered_offline_lower`](OnlineReachabilityPreservers/OverlayLowerAudit.lean)
+  gives DAGs on \(4(L+1)L^5\) vertices with \(L^6\) distinct feasible demands
+  that force exactly \(L^7\) edges for every positive integer \(L\). This gives
+  a superlinear lower bound when the vertex and demand counts are comparable.
 - [`lemma14_overlay_no_constant`](OnlineReachabilityPreservers/OverlayLowerAudit.lean)
   checks fully bridge-free simple path families for which the cited overlay
   and its distinct endpoint demands admit preservers arbitrarily smaller
