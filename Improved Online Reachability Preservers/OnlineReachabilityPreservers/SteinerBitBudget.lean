@@ -292,7 +292,8 @@ private theorem boundedBitWord_cast {a b : ℕ} (width : a = b) (bits : Fin b �
   subst a
   rfl
 
-/-- Compute and share the forest scale for the bit count, the decoder, and replay. -/
+/-- Share the forest scale for the bit count, the decoder, and replay.
+The decoder reads the bounded bit function at the current position. -/
 def completeSteinerReplayWithCachedBitBudget (G : Arcs V) (height : ℕ)
     (bits : Fin (steinerBitBudget G height) → Bool) (D : List (V × V)) :
     List (Arcs V × ℕ) × ℕ × ℕ × ℕ :=
@@ -305,12 +306,13 @@ def completeSteinerReplayWithCachedBitBudget (G : Arcs V) (height : ℕ)
   let budget := completeSteinerSeedBitBoundAtWidth G height width * G.card
   let budgetEq : budget = steinerBitBudget G height :=
     congrArg (· * G.card) (completeSteinerSeedBitBoundAtWidth_eq G height width widthEq)
-  let raw := List.ofFn (fun i : Fin budget => bits (Fin.cast budgetEq i))
-  let result := decodeCompleteSteinerSeedAtWidth G height width widthEq coordinates vertices arcs raw
+  let boundedBits := fun i : Fin budget => bits (Fin.cast budgetEq i)
+  let result := (decodeCompleteSteinerSeedCursorAtWidth G height width widthEq coordinates vertices arcs
+    boundedBits ⟨0, Nat.zero_le budget⟩).map Prod.fst
   let rounds := match result with
     | none => steinerFallbackPrefixScan G D
     | some seed => D.inits.map (completeSteinerDrawRunWithSearchWorkFromEarly G
-        (prepared.2.1 seed.1.1) seed.1.2.1 seed.1.2.2)
+        (prepared.2.1 seed.1) seed.2.1 seed.2.2)
   (rounds,prepared.2.2)
 
 private theorem prepareSteinerSeed_work_polynomial (G : Arcs V) (height p : ℕ) :
@@ -361,9 +363,9 @@ theorem completeSteinerReplayWithCachedBitBudget_spec (G : Arcs V) (height : ℕ
   have readEq : decodeCompleteSteinerSeed G height (steinerEarlyCoordinateIndex G height)
       (steinerVertexIndex V) (steinerArcIndex G) (List.ofFn (fun i : Fin budget => bits (Fin.cast budgetEq i))) =
         decodeBudgetSeed G height bits := by rw [rawEq, decodeBudgetSeed]
-  simp only [completeSteinerReplayWithCachedBitBudget, decodeCompleteSteinerSeedAtWidth_eq,
-    steinerUniverseArrayIndex_eq, steinerArcArrayIndex_eq, steinerEarlyCoordinateIndexLex_eq,
-    steinerEarlyCoordinateIndexAtWidth_eq]
+  simp only [completeSteinerReplayWithCachedBitBudget, decodeCompleteSteinerSeedCursorAtWidth_seed_eq,
+    decodeCompleteSteinerSeedAtWidth_eq, steinerUniverseArrayIndex_eq, steinerArcArrayIndex_eq,
+    steinerEarlyCoordinateIndexLex_eq, steinerEarlyCoordinateIndexAtWidth_eq]
   erw [readEq]
   cases read : decodeBudgetSeed G height bits with
   | none =>
@@ -375,7 +377,7 @@ theorem completeSteinerReplayWithCachedBitBudget_spec (G : Arcs V) (height : ℕ
         completeSteinerDrawRun G height seed.1.1 seed.1.2.1 seed.1.2.2 := by
       funext P
       simp only [completeSteinerRunWithBitBudget, read]
-    simpa only [run, completeSteinerPrefixSearchReplayWithWeightWork,
+    simpa only [Option.map_some, run, completeSteinerPrefixSearchReplayWithWeightWork,
       prepareEarlyDistanceTableWithWeightWork] using
       completeSteinerPrefixSearchReplayWithWeightWork_polynomial
         G height seed.1.1 seed.1.2.1 seed.1.2.2 D feasible

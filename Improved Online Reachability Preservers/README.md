@@ -153,7 +153,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   edge in expectation, retaining the same competitive exponent. A replay theorem
   returns these same prefix graphs and bounds its measured searches and table
   operations. The cached replay shares one distance table and forest plan
-  across budget calculation, decoding, and evaluation. It accounts for
+  across budget calculation, decoding, and evaluation. The
+  [bit cursor](OnlineReachabilityPreservers/SteinerBitCursor.lean) reads only
+  the requested positions of its finite bit function. The
+  [seed decoder](OnlineReachabilityPreservers/SteinerBitSeed.lean) preserves
+  the decoded seed, rejection counts, and unread suffix. The replay accounts for
   preparation even on the fallback branch, which scans requests in one pass.
   The [arithmetic history index](OnlineReachabilityPreservers/SteinerBitOrders.lean)
   gives the same seed coordinate order by ranking bounded histories one label
