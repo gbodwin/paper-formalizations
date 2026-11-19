@@ -140,8 +140,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   inputs are prefix-free, and pass the decoded seeds to the verified weighted
   prefix evaluator. [Summing the raw events](OnlineReachabilityPreservers/SteinerBitLaw.lean)
   recovers the uniform seed law and the expected competitive bound on fixed
-  feasible traces. The decoder takes finite index orders for the early
-  coordinates, vertices, and arcs as inputs.
+  feasible traces. The [graph-based replay](OnlineReachabilityPreservers/SteinerBitOrders.lean)
+  constructs the finite index orders for the early coordinates, vertices,
+  and arcs. Under the [product fair-bit law](OnlineReachabilityPreservers/SteinerBitMeasure.lean),
+  a finite prefix suffices almost surely. Lean checks the uniform seed law,
+  the expected edge count, and the polynomial bound on expected bits read at
+  fixed height.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
