@@ -250,6 +250,9 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.weightedNetworkViolation_some
 #print axioms OnlineReachabilityPreservers.weightedNetworkStep_spec
 #print axioms OnlineReachabilityPreservers.weightedNetworkRun_bound
+#print axioms OnlineReachabilityPreservers.forestNetworkScale_le
+#print axioms OnlineReachabilityPreservers.forestNetworkDemand_feasible
+#print axioms OnlineReachabilityPreservers.forestFractionalRun_bound
 #print axioms OnlineReachabilityPreservers.theorem3_lattice_lower
 #print axioms OnlineReachabilityPreservers.theorem3_lower
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum

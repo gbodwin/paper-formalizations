@@ -88,8 +88,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [paired forest](OnlineReachabilityPreservers/SteinerHeightForest.lean)
   joins both sides at each root and gives a weighted offline comparator.
   Any selected group paths expand to the original demands at no more
-  than the selected metric weight. Connecting the forest to the
-  online cut run and rounding its flows remain open.
+  than the selected metric weight. The
+  [forest network](OnlineReachabilityPreservers/SteinerForestNetwork.lean)
+  applies the online cut run to these templates with the two current
+  groups' directed attachments. It proves full flow for each demand
+  and compares the fractional cost to any feasible original solution.
+  Integral online rounding remains open.
 - [The weighted fractional cover](OnlineReachabilityPreservers/SteinerWeightedCover.lean)
   raises rational capacities as batches of cuts arrive. It verifies coverage
   and bounds both the update count and the cost against any fixed set that
@@ -100,12 +104,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   adds at most one to the normalized objective. The
   [capacity separator](OnlineReachabilityPreservers/SteinerCutFlow.lean)
   takes a nonnegative integer cutoff. For distinct terminals it returns a
-  violating cut or certifies a flow of the requested value.
+  violating cut or certifies a flow of the requested value. A certified
+  integral flow decomposes into simple unit routes within the original
+  arc capacities.
   The [weighted network run](OnlineReachabilityPreservers/SteinerWeightedNetwork.lean)
   uses the separator on each request's own free attachments. It preserves
   earlier flow certificates and bounds rounded fractional cost against a
-  fixed integral solution. Auxiliary graph reduction and path rounding
-  remain open.
+  fixed integral solution.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

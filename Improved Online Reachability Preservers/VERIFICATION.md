@@ -254,6 +254,18 @@ An exact-source replay grants no coverage to a paper statement outside the
   review checked the cut charge, preservation of prior flows, and
   the normalized cost and update bounds.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44455872017).
+- [d1da5fe1](https://github.com/gbodwin/paper-formalizations/commit/d1da5fe1faadf40d0e77a74d22f16dc75c8c72ab)
+  constructs the paired metric forest and proves its offline comparator
+  and expansion. The 2163-declaration audit and local kernel replay
+  passed. Independent review checked root isolation, leaf
+  labels, the reversed copy, zero-cost links and the cost bound.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44456704931).
+- [b4bdfcce](https://github.com/gbodwin/paper-formalizations/commit/b4bdfcce48578a2955c4ca6bf4bcea300c24ee41)
+  decomposes certified integer flows into simple unit routes. The
+  2184-declaration audit and local kernel replay passed. Independent
+  review checked the support, skew and capacity invariants and the
+  degenerate endpoint and supply cases.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44458091574).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

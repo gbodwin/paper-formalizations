@@ -54,7 +54,7 @@ its abstract and bibliographic record. All section and result numbers below refe
 | Lemma 14, cited [8] | Independence lemma connects bridge-free path systems to extremal offline preserver size. The constructive direction uses minimally necessary edges and shortcutting, with tightness in the extremal sense. | The [DAG upper direction](OnlineReachabilityPreservers/OfflineIndependence.lean) and [exact acyclic lower construction](OnlineReachabilityPreservers/AcyclicOverlay.lean) are checked. The SCC lift applies the acyclic upper bound to general digraphs. A [four-vertex counterexample](OnlineReachabilityPreservers/SplitAudit.lean) refutes the inference of overlay uniqueness from bridge-freeness alone. The general asymptotic lower bound remains open. |
 | Algorithm 3 and Theorem 15 | For a deterministic current-state path rule with a uniform prefix budget \(F\) at \(p>0\), buy paths with more than \(F/p\) missing edges before assigning the remaining paths against the frozen graph. Fewer than \(p\) such purchases, and any \(p\) preassigned paths have union size at most \(2F\). Use the allowed demand domain for the restricted case. | [Checked](OnlineReachabilityPreservers/KnownBudget.lean), with strict integer comparison and preservation of the rule's paths. |
 | Algorithms 4–5 and Theorem 16 | Precompute Algorithm 3 at positive dyadic budgets \(q\) starting at a linear-cost threshold. The arrival index chooses its first covering budget. Footnote 4 requires the sum of dyadic bounds to be dominated by the final term and bounded doubling of the bound. For \(p\) below the starting threshold, use the linear term directly. Domains and planned budgets can be capped by the finite pair population or the number of distinct arrivals. | [Checked](OnlineReachabilityPreservers/IndexSensitive.lean) under the two growth inequalities specified by footnote 4, with explicit constants and executable dyadic selection. |
-| Theorems 17–19 and Lemma 20 | Prior algorithm of [24] and its early- and thin-demand routines. Lemma 20 lower-bounds OPT by a constant times \(\sqrt p\) for distinct nontrivial demands via terminal incidence. | [Lemma 20](OnlineReachabilityPreservers/SteinerCounting.lean) checks \(p\le \mathrm{OPT}^2\) for sets and for nontrivial online traces. [Cut covering](OnlineReachabilityPreservers/SteinerThinCover.lean) and [fixed-threshold rounding](OnlineReachabilityPreservers/SteinerThinRound.lean) prove irrevocable thin-demand feasibility and expected edge cost on fixed traces of distinct non-self thin requests. The [separator](OnlineReachabilityPreservers/SteinerCutFlow.lean) uses bounded unit augmentations. The [early rooted-tree comparison](OnlineReachabilityPreservers/SteinerJunction.lean) checks distinct roots and rooted route prefixes. The [height-reduction interval bound](OnlineReachabilityPreservers/SteinerHeightIntervals.lean) is checked. The auxiliary forest construction and online label-cover rounding remain open. |
+| Theorems 17–19 and Lemma 20 | Prior algorithm of [24] and its early- and thin-demand routines. Lemma 20 lower-bounds OPT by a constant times \(\sqrt p\) for distinct nontrivial demands via terminal incidence. | [Lemma 20](OnlineReachabilityPreservers/SteinerCounting.lean) checks \(p\le \mathrm{OPT}^2\) for sets and for nontrivial online traces. [Cut covering](OnlineReachabilityPreservers/SteinerThinCover.lean) and [fixed-threshold rounding](OnlineReachabilityPreservers/SteinerThinRound.lean) prove irrevocable thin-demand feasibility and expected edge cost on fixed traces of distinct non-self thin requests. The [separator](OnlineReachabilityPreservers/SteinerCutFlow.lean) uses bounded unit augmentations. The [early rooted-tree comparison](OnlineReachabilityPreservers/SteinerJunction.lean) checks distinct roots and rooted route prefixes. The [height-reduction interval bound](OnlineReachabilityPreservers/SteinerHeightIntervals.lean) and [fractional forest run](OnlineReachabilityPreservers/SteinerForestNetwork.lean) are checked. Online integral rounding remains open. |
 | Lemma 22 | Among \(p'\) nontrivial demands hit by the sampled hubs, each creates at least one previously unsatisfied terminal–hub connection. This implies \(p'\le 2\lvert S\rvert\,\mathrm{OPT}\) using oriented terminal incidence. | [Checked](OnlineReachabilityPreservers/SteinerCounting.lean) for every offline solution, with a monotone preserver and both hub subrequests served. |
 
 The [weighted fractional cover](OnlineReachabilityPreservers/SteinerWeightedCover.lean)
@@ -72,8 +72,7 @@ The [weighted network run](OnlineReachabilityPreservers/SteinerWeightedNetwork.l
 uses actual separating cuts and certifies flow in the graph of each request
 with its own free attachments. The rounded normalized objective pays an
 additive baseline of at most two and a logarithmic factor times the
-chosen integral solution. Embedding the auxiliary graph into this
-formulation and rounding its paths remain open.
+chosen integral solution.
 The [height-block proof](OnlineReachabilityPreservers/SteinerHeightBlocks.lean)
 constructs the shortened segments on the original rooted routes, checks
 their concatenation, and bounds their weighted cost. The
@@ -87,8 +86,13 @@ and cost at most \(4h k^{1/h}\) times the original unit-cost tree size.
 The [paired forest](OnlineReachabilityPreservers/SteinerHeightForest.lean)
 keeps every group path within one root. A feasible original solution
 of size \(M\) gives a forest solution of cost at most
-\(12h p^{1/h}(\lfloor\sqrt p\rfloor+1)M\). The auxiliary cut reduction
-and online rounding remain open.
+\(12h p^{1/h}(\lfloor\sqrt p\rfloor+1)M\). The
+[forest network](OnlineReachabilityPreservers/SteinerForestNetwork.lean)
+uses those links to prove feasibility and the cost bound for the actual
+fractional online run. Zero-cost metric links are always free. Leaf
+attachments are local to the current source and sink groups. With \(H\)
+denoting the template vertex set, the capacity scale is at most
+\(\max(1,n|H|^2)\). Online rounding remains open.
 
 ## Appendix dependencies
 
