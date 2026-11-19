@@ -162,8 +162,12 @@ demand. This falsifies the inference of uniqueness from bridge-freeness
 alone. The asymptotic extremal lower bound remains a separate
 proof obligation. Corollary 42 of [8] invokes Theorem 37, so its comparison
 with the acyclic extremum inherits the lower-direction gap from Lemma 40.
+The same uniqueness inference appears in Lemma 18 of arXiv v1 and in
+Lemma 40 of v2 through v4. The corresponding v1 comparison is Corollary 20,
+which invokes Theorem 15.
 [Checked counterexample](OnlineReachabilityPreservers/SplitAudit.lean)
-· [Bridge Girth, Lemma 40](https://arxiv.org/pdf/2212.11944v4).
+· [Bridge Girth v1, Lemma 18](https://arxiv.org/pdf/2212.11944v1#page=18)
+· [Bridge Girth v4, Lemma 40](https://arxiv.org/pdf/2212.11944v4#page=35).
 
 With a common vertex order, a detour that uses the same path twice can be
 shortened to one step along that path. A detour with distinct path indices
@@ -454,11 +458,16 @@ local-order upper bound and recurrence of Theorem 43.
   walk. Their original edges still certify the required reachability.
   [Checked sampling and routing](OnlineReachabilityPreservers/SteinerHubs.lean).
 - The phase composition skips a hit when the hub phase already serves it.
-  The hub charge therefore uses the hub trace itself. The thin phase receives
-  every distinct non-self miss after the cutoff, so its trace depends on the
-  hubs and the early routine, independently of its edge thresholds. A missed
-  thick pair triggers a full-graph purchase charged to the bad hub event.
-  [Checked phase composition](OnlineReachabilityPreservers/SteinerAssembly.lean).
+  The hub charge therefore uses the hub trace itself. In the generic phase
+  assembly, the early routine can affect which misses arrive after a positive
+  cutoff. The thin thresholds are independent of this trace. For Theorems 8
+  and 21, the complete evaluator splits the fixed distinct non-self trace
+  before sampling and runs the late assembly with cutoff zero. The thin trace
+  then depends only on those arrivals and the hubs, independently of the early
+  seeds and thin thresholds. A missed thick pair triggers a full-graph
+  purchase charged to the bad hub event.
+  [Checked phase composition](OnlineReachabilityPreservers/SteinerAssembly.lean)
+  · [Complete evaluator](OnlineReachabilityPreservers/SteinerComplete.lean).
 - The [second-moment estimate](OnlineReachabilityPreservers/SecondMoment.lean)
   of Appendix A is checked for a common vertex order under the inductive
   subfamily bound. The [finite online iteration](OnlineReachabilityPreservers/OnlineBound.lean)

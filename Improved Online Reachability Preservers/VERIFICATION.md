@@ -827,6 +827,20 @@ sign-in.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44603724969).
 
+## Independent statement review
+
+The review of [35e4e0ea](https://github.com/gbodwin/paper-formalizations/commit/35e4e0eac89c85c678c10c16ccff415e8c8de768)
+checked the correspondence of the arXiv text with all 43 numbered results,
+three definitions, and five algorithms. Its Lean build, audit of 5,418
+paper declarations, and local kernel replay of the changed defining
+modules passed. The review confirmed the scopes of the main edge and
+competitive bounds, the replacement proofs, and the distinction between
+the false inequality in Lemma 25 and the construction counterexamples.
+The statement map and source notes incorporate its coverage clarifications.
+[Exact Lean CI run](https://github.com/gbodwin/paper-formalizations/actions/runs/44609382701).
+
+## Execution examples
+
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
 crossing edges on a cyclic input. The empty prefix has no edges, an
