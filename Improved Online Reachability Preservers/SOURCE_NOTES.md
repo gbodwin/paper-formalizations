@@ -31,7 +31,10 @@ exponent. Approximation for convergence should be from below. Its proposed
 exponent slack changes signs between the two consecutive displays.
 [ExponentLimits](OnlineReachabilityPreservers/ExponentLimits.lean) verifies
 the root bracket, the increase of the corrected sequence from below, and
-the limits of both online exponents.
+the limits of both online exponents. The limiting incidence theorem absorbs
+each finite coefficient into a positive vertex power in the middle range
+of path counts. The initial cubic bound handles the two other ranges.
+[Unrestricted limit](OnlineReachabilityPreservers/LocalOnlineLimit.lean).
 
 ## Lemma 42 doubles the displayed vertex exponent
 

@@ -245,6 +245,9 @@ and corrected tail inequality for Lemma 25 and the recurrence discrepancy in The
 [SplitAudit](OnlineReachabilityPreservers/SplitAudit.lean) checks that the path
 split printed in Lemmas 23 and 39 can introduce a forbidden bridge in a general
 path system.
+[LocalOnlineLimit](OnlineReachabilityPreservers/LocalOnlineLimit.lean) proves
+Theorem 38 for arbitrary simple paths with no half-bridge through size four.
+One exponent slack depends only on the vertex count and tends to zero.
 [LocalOfflineBound](OnlineReachabilityPreservers/LocalOfflineBound.lean) proves
 Theorem 43 for arbitrary simple paths, with the exact limiting exponent and a
 constant that works for every vertex and path count.
@@ -253,7 +256,7 @@ Build from the repository root with `lake build OnlineReachabilityPreservers`.
 The library is included in the repository's module index, declaration audit,
 and kernel replay.
 
-The [companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
-includes an interactive trace and a source-linked proof map. The sharp unrestricted
-half-bridge-free estimate, the general extremal converse in Lemma 14, and formal
-runtime remain open.
+The companion PaperLab includes an interactive trace and a source-linked
+proof map. The general extremal converse in Lemma 14 and the end-to-end
+running-time proofs remain open.
+[Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).

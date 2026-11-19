@@ -67,7 +67,8 @@ private theorem leading_rate_le {a A n p : ℝ} (ha : A ≤ a) (ha' : a ≤ 1)
       _ = _ := by
         rw [mul_assoc, ← Real.rpow_add hp, show (2-2*a)+2*e=2-2*A by dsimp [e]; ring]
 
-private theorem pairs_le_mixed {b n p : ℝ} (hb : b ≤ 1) (hn : 0 ≤ n)
+/-- In the middle range of demand counts the mixed term dominates the count itself. -/
+theorem pairs_le_mixed {b n p : ℝ} (hb : b ≤ 1) (hn : 0 ≤ n)
     (hp : 0 < p) (hpn : p ≤ n^2) : p ≤ n^(2-2*b)*p^b := by
   have h := Real.rpow_le_rpow hp.le hpn (sub_nonneg.mpr hb)
   rw [← Real.rpow_natCast_mul hn 2] at h
@@ -170,7 +171,8 @@ theorem theorem1_rounded :
 open Filter Set
 open scoped Topology
 
-private theorem leading_rate_slack {a A n p ε : ℝ}
+/-- Transfer perturbations of both leading exponents to vertex slack. -/
+theorem leading_rate_slack {a A n p ε : ℝ}
     (hn : 1 ≤ n) (hp : 1 ≤ p) (hpn : p ≤ n^2) (he : 0 < ε)
     (head : a ≤ A+ε/5) (tail : A-ε/5 ≤ a) :
     n^a*p^(2-2*a) ≤ n^(A+ε)*p^(2-2*A) := by
@@ -291,7 +293,8 @@ private theorem sinkPreserver_small_pairs {V : Type u} [LinearOrder V] [Fintype 
   have h' : (H.card:ℝ) ≤ (e:ℝ)+2*(n:ℝ) := by exact_mod_cast h
   linarith only [root,h']
 
-private theorem threshold_for_power {K δ : ℝ} (hK : 1 ≤ K) (hδ : 0 < δ) :
+/-- Absorb a fixed coefficient into any positive vertex power above a threshold. -/
+theorem threshold_for_power {K δ : ℝ} (hK : 1 ≤ K) (hδ : 0 < δ) :
     ∃ N : ℕ, 1 ≤ N ∧ ∀ n : ℕ, N ≤ n → K ≤ (n:ℝ)^δ := by
   obtain ⟨N, hN⟩ := exists_nat_ge (K^(1/δ))
   refine ⟨max N 1, le_max_right _ _, ?_⟩

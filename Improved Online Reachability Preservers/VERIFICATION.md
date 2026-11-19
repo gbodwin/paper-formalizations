@@ -440,6 +440,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   passed. Independent review checked both anchor directions, the base as a
   right branch, the dyadic sum and normalization.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44484838977).
+- [d9ff71ea](https://github.com/gbodwin/paper-formalizations/commit/d9ff71ea51fc181718cdb3df2425f09de1a3c1d6)
+  proves the corrected finite online recurrence for arbitrary simple
+  paths. The 3252-declaration audit and local kernel replay passed.
+  Independent review checked the window, exact lower and upper tuple
+  counts, split budgets, and the single pruning factor for every iterate.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44485409782).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
