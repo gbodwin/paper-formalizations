@@ -9,107 +9,6 @@ open Finset Relation
 
 variable {V I : Type*} [LinearOrder V] [LinearOrder I]
 
-private inductive ColouredDetour (paths : I → Finset V) (river : I) :
-    V → V → List I → Prop
-  | nil (u : V) : ColouredDetour paths river u u []
-  | cons {u v w : V} {c : I} {C : List I} (fresh : river ≠ c)
-      (edge : PathBefore paths c u v) (tail : ColouredDetour paths river v w C) :
-      ColouredDetour paths river u w (c::C)
-
-namespace ColouredDetour
-
-variable {paths : I → Finset V} {river : I} {u v w : V} {C : List I}
-
-omit [LinearOrder I] in
-private theorem le (r : ColouredDetour paths river u v C) : u ≤ v := by
-  induction r with
-  | nil => exact le_rfl
-  | cons _ edge _ ih => exact edge.2.2.le.trans ih
-
-omit [LinearOrder I] in
-private theorem append_step (r : ColouredDetour paths river u v C) {c : I}
-    (fresh : river ≠ c) (edge : PathBefore paths c v w) :
-    ColouredDetour paths river u w (C++[c]) := by
-  induction r with
-  | nil => exact .cons fresh edge (.nil _)
-  | cons diff e _ ih => exact .cons diff e (ih edge)
-
-omit [LinearOrder I] in
-private theorem used_fresh (r : ColouredDetour paths river u v C) {c : I} (mem : c ∈ C) :
-    river ≠ c := by
-  induction r with
-  | nil => simp at mem
-  | cons diff _ _ ih =>
-    rcases List.mem_cons.mp mem with rfl | h
-    · exact diff
-    · exact ih h
-
-omit [LinearOrder I] in
-private theorem suffix_after (r : ColouredDetour paths river u v C) (nodup : C.Nodup)
-    {c : I} (present : c ∈ C) :
-    ∃ a b D, u ≤ a ∧ PathBefore paths c a b ∧ ColouredDetour paths river b v D ∧
-      D.Nodup ∧ c ∉ D := by
-  induction r with
-  | nil => simp at present
-  | @cons x y z d D fresh edge tail ih =>
-    obtain ⟨none,nd⟩ := List.nodup_cons.mp nodup
-    rcases List.mem_cons.mp present with rfl | mem
-    · exact ⟨x,y,D,le_rfl,edge,tail,nd,none⟩
-    · obtain ⟨a,b,E,le,other,rest,ndE,noE⟩ := ih nd mem
-      exact ⟨a,b,E,edge.2.2.le.trans le,other,rest,ndE,noE⟩
-
-/-- A repeated colour can be shortcut when every path uses the same vertex order. -/
-private theorem remove_duplicates (r : ColouredDetour paths river u v C) :
-    ∃ D : List I, ColouredDetour paths river u v D ∧ D.Nodup := by
-  induction r with
-  | nil => exact ⟨[],.nil _,by simp⟩
-  | @cons s t v c C fresh edge tail ih =>
-    obtain ⟨D,shortened,nd⟩ := ih
-    by_cases used : c ∈ D
-    · obtain ⟨a,b,E,ha,other,rest,ndE,noE⟩ := suffix_after shortened nd used
-      have step : PathBefore paths c s b :=
-        ⟨edge.1,other.2.1,(edge.2.2.trans_le ha).trans other.2.2⟩
-      exact ⟨c::E,.cons fresh step rest,List.nodup_cons.mpr ⟨noE,ndE⟩⟩
-    · exact ⟨c::D,.cons fresh edge shortened,List.nodup_cons.mpr ⟨used,nd⟩⟩
-
-omit [LinearOrder I] in
-private theorem coordinates (r : ColouredDetour paths river u v C) :
-    ∃ x : Fin (C.length+1) → V, x 0 = u ∧ x (Fin.last C.length) = v ∧
-      ∀ i : Fin C.length, PathBefore paths (C.get i) (x i.castSucc) (x i.succ) := by
-  induction r with
-  | nil =>
-    exact ⟨fun _ => _,rfl,rfl,fun i => i.elim0⟩
-  | @cons s t v c D _ edge tail ih =>
-    obtain ⟨x,x0,xlast,steps⟩ := ih
-    let vertices : Fin ((c::D).length+1) → V := Fin.cases s x
-    refine ⟨vertices,rfl,?_,?_⟩
-    · change x (Fin.last D.length) = v
-      exact xlast
-    · intro i
-      rcases Fin.eq_zero_or_eq_succ i with rfl | ⟨j,rfl⟩
-      · change PathBefore paths c s (x 0)
-        rwa [x0]
-      · change PathBefore paths (D.get j) (x j.castSucc) (x j.succ)
-        exact steps j
-
-private theorem yields_bridge (r : ColouredDetour paths river u v C)
-    (riverEdge : PathBefore paths river u v) : ∃ k, Nonempty (Bridge (PathBefore paths) k) := by
-  obtain ⟨D,short,nd⟩ := remove_duplicates r
-  obtain ⟨x,x0,xlast,steps⟩ := short.coordinates
-  cases D with
-  | nil =>
-    have uv : u=v := x0.symm.trans xlast
-    exact (riverEdge.2.2.ne uv).elim
-  | cons c rest =>
-    refine ⟨rest.length,⟨orderedBridge x (fun i => (c::rest).get i) river
-      (List.nodup_iff_injective_get.mp nd) ?_ ?_ steps⟩⟩
-    · intro i
-      exact short.used_fresh ((c::rest).get_mem i)
-    · change PathBefore paths river (x 0) (x (Fin.last (c::rest).length))
-      rwa [x0,xlast]
-
-end ColouredDetour
-
 variable [Fintype V] [Fintype I]
 
 /-- All forward steps on a path other than the designated river. -/
@@ -127,7 +26,7 @@ theorem bridge_of_acyclic_detour {paths : I → Finset V} {river : I} {u v : V}
     (along : PathBefore paths river u v) (detour : Reach (otherPathArcs paths river) u v) :
     ∃ k, Nonempty (Bridge (PathBefore paths) k) := by
   have lift {a b : V} (r : Reach (otherPathArcs paths river) a b) :
-      ∃ C, ColouredDetour paths river a b C := by
+      ∃ C, OrderedDetour paths river a b C := by
     induction r with
     | refl => exact ⟨[],.nil _⟩
     | tail _ edge ih =>

@@ -127,11 +127,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   count the reachability and path-rule calls in pruning and budget
   certification. The [seed representation](OnlineReachabilityPreservers/SteinerSeedCoordinates.lean)
   identifies early samples with independent finite grid choices and
-  bounds the number of coordinates. These are subroutine work bounds.
+  bounds the number of coordinates. The [Steiner prefix counter](OnlineReachabilityPreservers/SteinerCompleteReplay.lean)
+  and [preassigned path counter](OnlineReachabilityPreservers/AssignmentSearchWork.lean)
+  compose polynomial bounds for the measured searches. The
+  [bit budget](OnlineReachabilityPreservers/SteinerSamplingWork.lean) bounds
+  the expected number of fair bits for independent seed coordinates.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
-  from Lemmas 23 and 39 and preserves both bridge exclusions through size four.
+  from Lemmas 23 and 39 and preserves both bridge exclusions at every size.
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)
@@ -214,7 +218,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
 - [Regularization](OnlineReachabilityPreservers/Regularization.lean)
   verifies an acyclic upper-cap reduction for Appendices A and B. Splitting
   vertices and consecutive path blocks preserves every incidence and both
-  bridge conditions through size four. The new sizes are at most twice their
+  bridge conditions at every size. The new sizes are at most twice their
   original values, and each cap is at most four times the corresponding new average.
 - [OfflineMoment](OnlineReachabilityPreservers/OfflineMoment.lean)
   checks the logarithmic second-moment bound and the resulting upper count

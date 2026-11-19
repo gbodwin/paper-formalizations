@@ -1,3 +1,4 @@
+import OnlineReachabilityPreservers.AcyclicDetour
 import OnlineReachabilityPreservers.AcyclicOverlay
 import OnlineReachabilityPreservers.AlgorithmSearchWork
 import OnlineReachabilityPreservers.AssignmentSearchWork

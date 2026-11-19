@@ -98,13 +98,15 @@ private theorem splitPaths_convex {paths : I → Finset V} {w : ℕ}
   rw [(mem_filter.mp hz).2] at le₂
   exact le_antisymm le₂ le₁
 
-theorem splitPaths_halfFree {paths : I → Finset V} (free : HalfBridgeFree (PathBefore paths) 4)
-    (w : ℕ) : HalfBridgeFree (PathBefore (splitPaths paths w)) 4 :=
+theorem splitPaths_halfFree {paths : I → Finset V} {size : ℕ}
+    (free : HalfBridgeFree (PathBefore paths) size)
+    (w : ℕ) : HalfBridgeFree (PathBefore (splitPaths paths w)) size :=
   free.split_paths Sigma.fst (block_parent_mono paths w) (splitPaths_subset paths w)
     splitPaths_disjoint splitPaths_convex
 
-theorem splitPaths_free {paths : I → Finset V} (free : BridgeFree (PathBefore paths) 4)
-    (w : ℕ) : BridgeFree (PathBefore (splitPaths paths w)) 4 :=
+theorem splitPaths_free {paths : I → Finset V} {size : ℕ}
+    (free : BridgeFree (PathBefore paths) size)
+    (w : ℕ) : BridgeFree (PathBefore (splitPaths paths w)) size :=
   free.split_paths Sigma.fst (splitPaths_subset paths w) splitPaths_disjoint splitPaths_convex
 
 omit [LinearOrder I] in
@@ -215,13 +217,15 @@ theorem splitVertices_card (paths : I → Finset V) {w : ℕ} (hw : 0 < w)
   exact mass
 
 omit [Fintype V] in
-theorem regularization_halfFree {paths : I → Finset V} (free : HalfBridgeFree (PathBefore paths) 4)
-    (D L : ℕ) : HalfBridgeFree (PathBefore (splitPaths (splitVertices paths D) L)) 4 :=
+theorem regularization_halfFree {paths : I → Finset V} {size : ℕ}
+    (free : HalfBridgeFree (PathBefore paths) size)
+    (D L : ℕ) : HalfBridgeFree (PathBefore (splitPaths (splitVertices paths D) L)) size :=
   splitPaths_halfFree (splitVertices_halfFree free D) L
 
 omit [Fintype V] in
-theorem regularization_free {paths : I → Finset V} (free : BridgeFree (PathBefore paths) 4)
-    (D L : ℕ) : BridgeFree (PathBefore (splitPaths (splitVertices paths D) L)) 4 :=
+theorem regularization_free {paths : I → Finset V} {size : ℕ}
+    (free : BridgeFree (PathBefore paths) size)
+    (D L : ℕ) : BridgeFree (PathBefore (splitPaths (splitVertices paths D) L)) size :=
   splitPaths_free (splitVertices_free free D) L
 
 /-- Splitting first by degree and then by length keeps every incidence, with

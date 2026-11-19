@@ -218,16 +218,16 @@ private def rectangleBridge (paths : I → Finset V) (A : Finset V) (B : Finset 
     (fun _ _ eq => b.distinctArcs (Subtype.ext eq))
     (fun i eq => b.river_ne_arc i (Subtype.ext eq)) (before b.riverStep) (fun i => before (b.arcStep i))
 
-private theorem rectangleHalfFree {paths : I → Finset V} (A : Finset V) (B : Finset I)
-    (free : HalfBridgeFree (PathBefore paths) 4) :
-    HalfBridgeFree (PathBefore (rectanglePaths paths A B)) 4 := by
+private theorem rectangleHalfFree {paths : I → Finset V} {size : ℕ} (A : Finset V) (B : Finset I)
+    (free : HalfBridgeFree (PathBefore paths) size) :
+    HalfBridgeFree (PathBefore (rectanglePaths paths A B)) size := by
   intro k size b earlier
   exact free size (rectangleBridge paths A B b) earlier
 
 omit [LinearOrder I] in
-private theorem rectangleFullFree {paths : I → Finset V} (A : Finset V) (B : Finset I)
-    (free : BridgeFree (PathBefore paths) 4) :
-    BridgeFree (PathBefore (rectanglePaths paths A B)) 4 := by
+private theorem rectangleFullFree {paths : I → Finset V} {size : ℕ} (A : Finset V) (B : Finset I)
+    (free : BridgeFree (PathBefore paths) size) :
+    BridgeFree (PathBefore (rectanglePaths paths A B)) size := by
   intro k size
   exact ⟨fun b => (free size).false (rectangleBridge paths A B b)⟩
 
@@ -325,7 +325,8 @@ theorem balancedRectangle_subsystem (Z : I → Finset V) {n p : ℕ}
 set_option maxHeartbeats 1000000 in
 /-- With a common vertex order and incidence mass at least both original counts,
 splitting, restriction, and pruning meet both budgets and all four average caps.
-The surviving mass is at least a sixteenth of the original mass. -/
+The surviving mass is at least a sixteenth of the original mass. Every
+full or half-bridge size exclusion of the input is preserved. -/
 theorem regularization_balanced_caps (paths : I → Finset V) (hn : 0 < Fintype.card V)
     (hp : 0 < Fintype.card I) (dense : Fintype.card V ≤ ∑ i, (paths i).card)
     (long : Fintype.card I ≤ ∑ i, (paths i).card) :
@@ -343,8 +344,8 @@ theorem regularization_balanced_caps (paths : I → Finset V) (hn : 0 < Fintype.
           ((occurrences clean v).card:ℝ) ≤ 4*(M:ℝ)/(n:ℝ)) ∧
         (∀ i, (M:ℝ)/(4*(p:ℝ)) ≤ (clean i).card ∧
           ((clean i).card:ℝ) ≤ 4*(M:ℝ)/(p:ℝ)) ∧
-        (HalfBridgeFree (PathBefore paths) 4 → HalfBridgeFree (PathBefore clean) 4) ∧
-        (BridgeFree (PathBefore paths) 4 → BridgeFree (PathBefore clean) 4) := by
+        (∀ size, HalfBridgeFree (PathBefore paths) size → HalfBridgeFree (PathBefore clean) size) ∧
+        (∀ size, BridgeFree (PathBefore paths) size → BridgeFree (PathBefore clean) size) := by
   let n := Fintype.card V
   let p := Fintype.card I
   let M := ∑ i, (paths i).card
@@ -378,8 +379,8 @@ theorem regularization_balanced_caps (paths : I → Finset V) (hn : 0 < Fintype.
   rw [total] at finalMass minDegree minLength
   let clean := rectanglePaths Z A B
   refine ⟨A, B, ac, bc, finalMass, ?_, ?_,
-    fun free => rectangleHalfFree A B (regularization_halfFree free d l),
-    fun free => rectangleFullFree A B (regularization_free free d l)⟩
+    fun _ free => rectangleHalfFree A B (regularization_halfFree free d l),
+    fun _ free => rectangleFullFree A B (regularization_free free d l)⟩
   · intro v
     change d0 ≤ ((occurrences clean v).card : ℝ) ∧
       ((occurrences clean v).card : ℝ) ≤ 4 * (M : ℝ) / (n : ℝ)

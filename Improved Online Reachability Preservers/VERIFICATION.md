@@ -499,6 +499,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   matched the ordinary purchases `[0, 1, 1, 1]` and exercised the three
   late cases separately.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44494902764).
+- [19e4833e](https://github.com/gbodwin/paper-formalizations/commit/19e4833ec715705c6e3b4abc21f85cdc96fc7c26)
+  verifies polynomial search budgets for six preassigned path rules and
+  an indexed pairwise prefix. The 3501-declaration audit and local kernel
+  replay passed. Independent review matched the optional paths, certification
+  and final search, quotient and lift allowances, and both endpoint scopes.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44495797797).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

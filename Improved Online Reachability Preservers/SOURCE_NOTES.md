@@ -81,7 +81,7 @@ vertex order.
 [SplitAudit](OnlineReachabilityPreservers/SplitAudit.lean) checks both the absence of
 any original bridge and the presence of the new half-4-bridge.
 [SplitPreservation](OnlineReachabilityPreservers/SplitPreservation.lean) proves
-that disjoint consecutive splits preserve the bridge condition through size four
+that disjoint consecutive splits preserve the bridge condition at every size
 in the acyclic scope. [Regularization](OnlineReachabilityPreservers/Regularization.lean)
 uses this to prove the upper caps with at most twice the ambient budgets.
 
@@ -116,7 +116,7 @@ only path longer than the original average splits at its midpoint. The
 new chain is \(5\to2\to3\to4\to0\to1\to6\) with river \((5,6)\),
 and its last arc precedes the river. Lean checks that the original family
 has unique intersections and excludes every bridge. The arbitrary-size
-cleaning existence lemma needs a different argument.
+cleaning existence lemma for cyclic families needs a different argument.
 [Checked half-7 example](OnlineReachabilityPreservers/UniqueSplitAudit.lean).
 
 ## The cited consecutive-edge overlay can admit an alternate path
@@ -238,13 +238,15 @@ local-order upper bound and recurrence of Theorem 43.
   counts, restricting the expanded system in each coordinate preserves at
   least nine sixteenths of the mass. Pruning then preserves at least one
   sixteenth of the original mass and gives both upper and lower caps.
-  Lean verifies both original budgets and the two bridge conditions through
-  size four. The same caps hold under unique intersections in local orders.
+  Lean verifies both original budgets and the two bridge conditions at every
+  size in this common-order setting. The same caps hold through size four
+  under unique intersections in local orders.
   With opposite-intersection pruning first, arbitrary simple paths whose
   mass is at least twice both counts keep one thirty-second of the mass and
   have lower caps at one eighth of their original averages. The upper caps
   stay at four times the original averages. The factor-four lower caps
-  before pruning and preservation through arbitrary bridge sizes remain open.
+  before pruning and preservation through arbitrary bridge sizes remain open
+  for cyclic families.
   [Checked local cleaning](OnlineReachabilityPreservers/LocalBalancedRegularization.lean).
 - The proof of Lemma 23 writes \(\beta\) for the half-bridge-free extremum
   \(H\). The statement of Lemma 39 writes \(H\) for the full-bridge-free
