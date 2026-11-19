@@ -1,3 +1,4 @@
+import Mathlib.Data.Finset.Sort
 import OnlineReachabilityPreservers.PathAssignments
 
 /-! Cardinality comparison for the rooted pieces used by the early-demand reduction. -/
@@ -14,6 +15,51 @@ structure InArborescence (T : Arcs V) (root : V) : Prop where
   dag : IsDAG T
   unique_next : ∀ {u v w}, Edge T u v → Edge T u w → v=w
   at_root : ∀ e ∈ T, Reach T e.1 root ∧ Reach T e.2 root
+
+omit [LinearOrder V] [Fintype V] in
+/-- There is a unique route from a vertex to the root of an inward arborescence. -/
+theorem InArborescence.walk_unique {T : Arcs V} {root s : V} (tree : InArborescence T root)
+    {a b : List (V × V)} (left : Walk T s root a) (right : Walk T s root b) : a = b := by
+  induction left generalizing b with
+  | nil u =>
+    cases right with
+    | nil => rfl
+    | cons edge rest => exact (tree.dag edge rest.reachable).elim
+  | @cons u v t path edge rest ih =>
+    cases right with
+    | nil => exact (tree.dag edge rest.reachable).elim
+    | @cons _ v' _ path' edge' rest' =>
+      obtain rfl := tree.unique_next edge edge'
+      exact congrArg ((u, v) :: ·) (ih tree rest')
+
+omit [LinearOrder V] [Fintype V] in
+private theorem Walk.split_at_arc {T : Arcs V} {s t : V} {l : List (V × V)} {e : V × V}
+    (walk : Walk T s t l) (member : e ∈ l) :
+    ∃ before after, l = before ++ e :: after ∧ Walk T s e.1 before ∧ Walk T e.2 t after := by
+  induction walk with
+  | nil => simp at member
+  | @cons u v t rest edge tail ih =>
+    rcases List.mem_cons.mp member with rfl | later
+    · exact ⟨[], rest, rfl, .nil _, tail⟩
+    · obtain ⟨before, after, eq, first, last⟩ := ih later
+      exact ⟨(u, v) :: before, after, by simp [eq], .cons edge first, last⟩
+
+/-- A fixed arc occurs on a route toward the root exactly when the reverse
+of that route has the arc's rootward continuation as a prefix. -/
+theorem InArborescence.arc_reversed_prefix {T : Arcs V} {root : V} (tree : InArborescence T root)
+    {e : V × V} (he : e ∈ T) :
+    ∃ tail, Walk T e.2 root tail ∧ ∀ {s : V} {l : List (V × V)}, Walk T s root l →
+      (e ∈ l ↔ (e :: tail).reverse <+: l.reverse) := by
+  obtain ⟨tail, lifts⟩ := routePath_succeeds.mpr (tree.at_root e he).2
+  have tailWalk := (routePath_some lifts).1
+  refine ⟨tail, tailWalk, fun {_ _} walk => ⟨?_, ?_⟩⟩
+  · intro member
+    obtain ⟨before, after, eq, _, rest⟩ := walk.split_at_arc member
+    rw [tree.walk_unique rest tailWalk] at eq
+    rw [eq, List.reverse_append]
+    exact List.prefix_append _ _
+  · intro h
+    exact List.mem_reverse.mp (h.subset (List.mem_reverse.mpr (List.mem_cons_self)))
 
 private def towardChoices (G : Arcs V) (root u : V) : Finset V :=
   (reaches G root).filter fun v => Edge G u v ∧ hops G v root < hops G u root
@@ -97,6 +143,15 @@ def JunctionPiece.cost {Z : Arcs V} (piece : JunctionPiece Z) : ℕ :=
 def JunctionCover {Z : Arcs V} (pieces : List (JunctionPiece Z)) (P : Finset (V × V)) : Prop :=
   ∀ d ∈ P, ∃ piece ∈ pieces, d ∈ piece.demands
 
+private theorem list_weight_sum_toFinset {A : Type*} [DecidableEq A] (xs : List A)
+    (f : A → ℕ) (nodup : xs.Nodup) :
+    (xs.map f).sum = ∑ a ∈ xs.toFinset, f a := by
+  induction xs with
+  | nil => simp
+  | cons a xs ih =>
+    obtain ⟨fresh, rest⟩ := List.nodup_cons.mp nodup
+    simp [ih rest, sum_insert (List.mem_toFinset.not.mpr fresh)]
+
 private def chosenLegs (Z : Arcs V) (d : V × V) : Arcs V :=
   pathArcs (routePath Z d.1 d.2)
 
@@ -178,17 +233,10 @@ private theorem lightJunction_cover (Z : Arcs V) (P : Finset (V × V))
   · intro d hd
     refine ⟨make ⟨d,hd⟩, List.mem_map_of_mem (by simp),?_⟩
     simp [make,lightJunction]
-  · have sum_of_nodup (L : List ↥P) (hL : L.Nodup) :
-        (L.map (fun d => (make d).cost)).sum = ∑ d ∈ L.toFinset, (make d).cost := by
-      induction L with
-      | nil => simp
-      | cons d L ih =>
-        obtain ⟨no,nd⟩ := List.nodup_cons.mp hL
-        simp [ih nd, sum_insert (List.mem_toFinset.not.mpr no)]
-    change ((P.attach.toList.map make).map JunctionPiece.cost).sum ≤ _
+  · change ((P.attach.toList.map make).map JunctionPiece.cost).sum ≤ _
     rw [List.map_map]
     change (P.attach.toList.map (fun d => (make d).cost)).sum ≤ _
-    rw [sum_of_nodup _ (nodup_toList _),toList_toFinset]
+    rw [list_weight_sum_toFinset _ _ (nodup_toList _), toList_toFinset]
     calc
       _ ≤ ∑ d ∈ P.attach, (chosenLegs Z d.1).card := by
         apply sum_le_sum
@@ -260,5 +308,95 @@ theorem junctionCover_sqrt (Z : Arcs V) (P : Finset (V × V))
     rw [pow_two] at h
     omega)
   exact ⟨pieces,cover,cost.trans (Nat.mul_le_mul_right _ (by omega))⟩
+
+private def junctionRootFiber {Z : Arcs V} (pieces : List (JunctionPiece Z)) (root : V) :
+    Finset (Fin pieces.length) :=
+  univ.filter fun i => (pieces.get i).root = root
+
+/-- Combine the two legs of all pieces at a root and retake an arborescence
+for each leg in its union. -/
+private def mergeJunctionRoot {Z : Arcs V} (pieces : List (JunctionPiece Z)) (root : V) :
+    JunctionPiece Z := by
+  let fiber := junctionRootFiber pieces root
+  let legsIn := fiber.biUnion fun i => (pieces.get i).inward
+  let legsOut := fiber.biUnion fun i => (pieces.get i).outward
+  refine {
+    root := root
+    demands := fiber.biUnion fun i => (pieces.get i).demands
+    inward := targetTree legsIn root
+    outward := outTree legsOut root
+    inward_tree := targetTree_arborescence _ _
+    outward_tree := outTree_arborescence _ _
+    inward_sub := (targetTree_subset _ _).trans ?_
+    outward_sub := (outTree_subset _ _).trans ?_
+    served := ?_ }
+  · intro e he
+    obtain ⟨i, _, hi⟩ := mem_biUnion.mp he
+    exact (pieces.get i).inward_sub hi
+  · intro e he
+    obtain ⟨i, _, hi⟩ := mem_biUnion.mp he
+    exact (pieces.get i).outward_sub hi
+  · intro d hd
+    obtain ⟨i, hi, hit⟩ := mem_biUnion.mp hd
+    obtain ⟨first, last⟩ := (pieces.get i).served d hit
+    have eq : (pieces.get i).root = root := (mem_filter.mp hi).2
+    rw [eq] at first last
+    have left : (pieces.get i).inward ⊆ legsIn := fun _ he => mem_biUnion.mpr ⟨i, hi, he⟩
+    have right : (pieces.get i).outward ⊆ legsOut := fun _ he => mem_biUnion.mpr ⟨i, hi, he⟩
+    exact ⟨targetTree_reach (reach_mono left first), outTree_reach (reach_mono right last)⟩
+
+private theorem mergeJunctionRoot_cost {Z : Arcs V} (pieces : List (JunctionPiece Z)) (root : V) :
+    (mergeJunctionRoot pieces root).cost ≤ ∑ i ∈ junctionRootFiber pieces root, (pieces.get i).cost := by
+  unfold JunctionPiece.cost
+  rw [Finset.sum_add_distrib]
+  apply Nat.add_le_add
+  · exact (card_le_card (targetTree_subset _ _)).trans card_biUnion_le
+  · exact (card_le_card (outTree_subset _ _)).trans card_biUnion_le
+
+private theorem list_weight_sum_get {A : Type*} (xs : List A) (f : A → ℕ) :
+    (xs.map f).sum = ∑ i : Fin xs.length, f (xs.get i) := by
+  induction xs with
+  | nil => simp
+  | cons a xs ih =>
+    simp only [List.map_cons, List.sum_cons, List.length_cons, Fin.sum_univ_succ]
+    rw [ih]
+    rfl
+
+/-- Repeated roots in a junction cover can be merged without increasing the
+sum of the two leg costs. -/
+theorem junctionCover_distinct_roots {Z : Arcs V} {P : Finset (V × V)} {pieces : List (JunctionPiece Z)}
+    (cover : JunctionCover pieces P) :
+    ∃ result : List (JunctionPiece Z), JunctionCover result P ∧
+      (result.map JunctionPiece.root).Nodup ∧
+      (result.map JunctionPiece.cost).sum ≤ (pieces.map JunctionPiece.cost).sum := by
+  let roots := (univ : Finset (Fin pieces.length)).image fun i => (pieces.get i).root
+  let result := (roots.sort (· ≤ ·)).map (mergeJunctionRoot pieces)
+  refine ⟨result, ?_, ?_, ?_⟩
+  · intro d hd
+    obtain ⟨piece, hp, hit⟩ := cover d hd
+    obtain ⟨i, rfl⟩ := List.mem_iff_get.mp hp
+    let r := (pieces.get i).root
+    have hr : r ∈ roots := mem_image.mpr ⟨i, mem_univ _, rfl⟩
+    refine ⟨mergeJunctionRoot pieces r, List.mem_map_of_mem ((Finset.mem_sort _).mpr hr), ?_⟩
+    change d ∈ (junctionRootFiber pieces r).biUnion (fun j => (pieces.get j).demands)
+    exact mem_biUnion.mpr ⟨i, mem_filter.mpr ⟨mem_univ _, rfl⟩, hit⟩
+  · simp [result, List.map_map, Function.comp_def, mergeJunctionRoot, Finset.sort_nodup]
+  · change (((roots.sort (· ≤ ·)).map (mergeJunctionRoot pieces)).map JunctionPiece.cost).sum ≤ _
+    rw [List.map_map, list_weight_sum_toFinset _ _ (Finset.sort_nodup _ _),
+      Finset.sort_toFinset, list_weight_sum_get]
+    calc
+      _ ≤ ∑ r ∈ roots, ∑ i ∈ junctionRootFiber pieces r, (pieces.get i).cost :=
+        sum_le_sum fun r _ => mergeJunctionRoot_cost pieces r
+      _ = _ := Finset.sum_fiberwise_of_maps_to (fun i _ => mem_image.mpr ⟨i, mem_univ _, rfl⟩) _
+
+/-- The common-root comparison with the distinct roots required by the cited reduction. -/
+theorem junctionCover_sqrt_distinct (Z : Arcs V) (P : Finset (V × V))
+    (reachable : ∀ d ∈ P, Reach Z d.1 d.2) :
+    ∃ pieces : List (JunctionPiece Z), JunctionCover pieces P ∧
+      (pieces.map JunctionPiece.root).Nodup ∧
+      (pieces.map JunctionPiece.cost).sum ≤ 3 * (Nat.sqrt P.card + 1) * Z.card := by
+  obtain ⟨pieces, cover, h⟩ := junctionCover_sqrt Z P reachable
+  obtain ⟨result, valid, distinct, saving⟩ := junctionCover_distinct_roots cover
+  exact ⟨result, valid, distinct, saving.trans h⟩
 
 end OnlineReachabilityPreservers

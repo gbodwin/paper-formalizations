@@ -200,6 +200,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   and the one-sixteenth incidence guarantee. Its 1623-declaration paper
   audit, kernel replay, and independent correspondence review passed.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44445138764).
+- [d2a85b35](https://github.com/gbodwin/paper-formalizations/commit/d2a85b3560bb6c74ccfe8d4d0b101b1d3a7c7d67)
+  proves the arbitrary-builder insertion lower bound at exact vertex and
+  demand counts. The 1743-declaration paper audit and local kernel replay
+  passed. Independent review checked the transcript, lattice forcing,
+  counting, rounding, and the finite constant.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44447445893).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

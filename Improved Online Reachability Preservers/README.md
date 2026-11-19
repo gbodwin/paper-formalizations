@@ -70,7 +70,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   checks an offline junction cover of cost at most
   `3 * (floor(sqrt p) + 1) * OPT` for unit-cost demands. Heavy edges supply
   roots that cover many requests. Light edges are charged by their path loads.
-  This supplies one dependency of the early-demand routine.
+  Merging pieces at the same root preserves their service without increasing
+  cost. The [height-reduction count](OnlineReachabilityPreservers/SteinerHeightIntervals.lean)
+  bounds the number of child blocks whose parent straddles either boundary
+  of a terminal interval. Constructing the full auxiliary forest and its
+  online rounding algorithm remains open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

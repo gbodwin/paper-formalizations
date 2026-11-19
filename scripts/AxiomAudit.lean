@@ -215,6 +215,10 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.assembledSteiner_late_rate
 #print axioms OnlineReachabilityPreservers.targetTree_arborescence
 #print axioms OnlineReachabilityPreservers.junctionCover_sqrt
+#print axioms OnlineReachabilityPreservers.junctionCover_sqrt_distinct
+#print axioms OnlineReachabilityPreservers.InArborescence.arc_reversed_prefix
+#print axioms OnlineReachabilityPreservers.terminalIntervalCrossings_total
+#print axioms OnlineReachabilityPreservers.SourceAudit.persistentSuperterminals_counterexample
 #print axioms OnlineReachabilityPreservers.theorem3_lattice_lower
 #print axioms OnlineReachabilityPreservers.theorem3_lower
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum

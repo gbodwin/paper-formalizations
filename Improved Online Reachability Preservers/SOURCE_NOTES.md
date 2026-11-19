@@ -95,6 +95,32 @@ shortened to one step along that path. A detour with distinct path indices
 gives a bridge. The acyclic overlay therefore forces every consecutive arc.
 [Checked acyclic construction](OnlineReachabilityPreservers/AcyclicOverlay.lean).
 
+The same three paths in their listed order also give an alternate route in
+the final reveal round of the ordered construction of [8] Lemma 45.
+Theorem 3's checked lattice proof forces each route directly from the
+available slopes. [Checked insertion lower bound](OnlineReachabilityPreservers/StrongAdversary.lean).
+
+## Persistent virtual terminals can connect different trees
+
+The conference version of [24] states a deterministic early algorithm.
+Its Section 2.1.3 adds a super source and sink for each group demand
+before invoking ordinary online Steiner forest. Keeping these free
+attachments across rounds can make a later pair connected by a route
+that leaves its tree through earlier virtual terminals.
+
+Lean checks the example with paths `4–0–1–5` and `2–3`. The paid edges
+serve the first groups `{0,2}` and `{1,3}` through `2–3`. The second request
+has endpoints `4` and `5` and needs the unpaid arc between `0` and `1`
+in the original forest. Earlier attachments give a detour from `0`
+through `2–3` to `1`. The claim that ordinary connectivity recovers a
+group solution under persistent attachments is false. A separate argument
+is needed for the deterministic competitive guarantee. The full arXiv
+version states a randomized result and uses group Steiner forest with
+flows that stay in a single root copy.
+[Checked example](OnlineReachabilityPreservers/SteinerGroupAudit.lean)
+· [Conference paper](https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.APPROX/RANDOM.2021.5)
+· [Full arXiv version](https://arxiv.org/pdf/2103.04543v3).
+
 ## Matters requiring proof or clarification
 
 - Lemma 13's pigeonhole step can pick two paths whose only intersection with
