@@ -179,4 +179,18 @@ theorem consumeCursorIndex_spec {budget : ℕ} (bits : Fin budget → Bool) (N :
   · rw [consumeCursorIndex, dite_eq_right width, consumeFairIndex, dite_eq_right width]
     by_cases positive : 0 < N <;> simp [positive]
 
+/-- A successful rejection draw advances one full proposal per rejection,
+then one more for the accepted proposal. -/
+theorem consumeCursorIndex_position {budget : ℕ} (bits : Fin budget → Bool) (N : ℕ)
+    {cursor next : BitCursor budget} {index : Fin N} {rejected : ℕ}
+    (success : consumeCursorIndex bits N cursor = some ((index,rejected),next)) :
+    next.position = cursor.position + uniformProposalWidth N*(rejected+1) := by
+  have same := consumeCursorIndex_spec bits N cursor
+  rw [success, Option.map_some] at same
+  have lengths := (consumeFairIndex_suffix same.symm).1
+  simp only [cursorSuffix, List.length_drop, List.length_ofFn] at lengths
+  have start := cursor.bounded
+  have finish := next.bounded
+  omega
+
 end OnlineReachabilityPreservers

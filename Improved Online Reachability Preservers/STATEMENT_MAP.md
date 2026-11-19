@@ -266,7 +266,7 @@ The [bit cursor](OnlineReachabilityPreservers/SteinerBitCursor.lean) reads
 the requested positions directly, with a tail-recursive word accumulator. The
 [cursor decoder](OnlineReachabilityPreservers/SteinerBitSeed.lean) agrees with
 the list decoder on the sampled seed, rejection counts, unread suffix,
-and failure. The cached replay uses the cursor from position zero. Integer
+and failure. The cursor advances by the exact number of proposal bits read on success. The [replay proof](OnlineReachabilityPreservers/SteinerBitReplay.lean) shows that changing bits outside the consumed interval preserves the seed, rejection counts, and final cursor. The cached replay starts at position zero. Integer
 arithmetic, finite container operations, and full execution time still
 require certification.
 The [preassigned-path counter](OnlineReachabilityPreservers/AssignmentSearchWork.lean)

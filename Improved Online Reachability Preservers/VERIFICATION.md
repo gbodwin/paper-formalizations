@@ -779,6 +779,34 @@ linked to arXiv.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44579972345).
 
+PaperLab version 32 pins 158 links to `4a44baf9` and contains 15 boxed L
+notes. The checkpoint proves the original-average caps for arbitrary full
+bridge exclusion through cutoff four, retaining at least one 119th of the
+maximizing mass. Independent review, the 4,870-declaration paper audit,
+local replay of the changed modules, and exact CI replay all passed.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44584502650).
+
+PaperLab version 33 pins 162 links to `6b17874a` and contains 15 boxed L
+notes. The checkpoint extends the full bridge cleaning through cutoff five
+and proves the distinct-demand SCC lift. Independent review, the
+4,943-declaration paper audit, and local replay of the changed modules
+passed. The first exact CI attempt reached its 30-minute limit during
+kernel replay. The retry passed a full replay of every project module.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [Successful exact retry](https://github.com/gbodwin/paper-formalizations/actions/runs/44589591602/attempts/2).
+
+PaperLab version 34 pins 173 links to `6fd5569f` and contains 15 boxed L
+notes. It explains binary seed ranks, the finite-bit cursor, the size-five
+half-bridge after vertex splitting, and the all-range comparison using two
+lattice rates. Independent review, the 5,132-declaration paper audit, and
+replay of the changed modules passed. Exact CI replayed every project
+module. The deployment render, proof links, and local controls were
+checked. Production requires owner sign-in. Greg Bodwin's publication
+entry listed the arXiv manuscript.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44597705263).
+
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
 crossing edges on a cyclic input. The empty prefix has no edges, an

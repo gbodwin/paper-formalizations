@@ -283,4 +283,79 @@ theorem completeSteinerReplayFromBits_of_seed (G : Arcs V) (height : ℕ)
       some (completeSteinerPrefixSearchReplayWithWeightWork G height early hubs thin D, (hubRejects,thinRejects), rest) := by
   simp [completeSteinerReplayFromBits, seed]
 
+/-- Changing bits outside the interval used by a successful decoder
+preserves the seed, rejection counts, and final cursor. -/
+theorem decodeCompleteSteinerSeedCursorAtWidth_congr_read (G : Arcs V) (height width : ℕ)
+    (width_eq : width = (forestScale G height).log2+1)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card)
+    {budget : ℕ} (left right : Fin budget → Bool) {cursor next : BitCursor budget}
+    {early : EarlyRoundSample G height} {hubs : Fin (completeSteinerHubCount V) → V} {thin : ThinSample G}
+    {hubRejects : Fin (completeSteinerHubCount V) → ℕ} {thinRejects : G → ℕ}
+    (success : decodeCompleteSteinerSeedCursorAtWidth G height width width_eq coordinates vertices arcs left cursor =
+      some ((early,hubs,thin),(hubRejects,thinRejects),next))
+    (agrees : ∀ i : Fin budget, cursor.position ≤ i.val → i.val < next.position → left i = right i) :
+    decodeCompleteSteinerSeedCursorAtWidth G height width width_eq coordinates vertices arcs right cursor =
+      some ((early,hubs,thin),(hubRejects,thinRejects),next) := by
+  have leftSpec := decodeCompleteSteinerSeedCursorAtWidth_spec G height width width_eq coordinates vertices arcs left cursor
+  rw [success, Option.map_some, decodeCompleteSteinerSeedAtWidth_eq] at leftSpec
+  have used := decodeCompleteSteinerSeed_suffix G height coordinates vertices arcs leftSpec.symm
+  dsimp only at used
+  rw [← completeSteinerBitSeedWidth_eq G height arcs hubRejects thinRejects] at used
+  let count := completeSteinerBitSeedWidth G height arcs hubRejects thinRejects
+  have offset : cursor.position + count = next.position := by
+    have move := decodeCompleteSteinerSeedCursorAtWidth_position G height width width_eq coordinates vertices arcs left success
+    simpa only [count, completeSteinerBitSeedWidth_eq] using move.symm
+  have fits : cursor.position + count ≤ budget := offset.trans_le next.bounded
+  have length (bits : Fin budget → Bool) : (cursorSuffix bits cursor).length = budget-cursor.position := by
+    simp [cursorSuffix]
+  have same : (cursorSuffix left cursor).take count = (cursorSuffix right cursor).take count := by
+    apply List.ext_getElem
+    · simp only [List.length_take, length]
+    · intro i hi hj
+      have bound : i < count := (show i < min count (cursorSuffix left cursor).length by
+        simpa only [List.length_take] using hi).trans_le (Nat.min_le_left _ _)
+      have index : cursor.position+i < budget := by omega
+      have equal := agrees ⟨cursor.position+i,index⟩ (by simp)
+        (by change cursor.position+i < next.position; omega)
+      simpa only [cursorSuffix, List.getElem_take, List.getElem_drop, List.getElem_ofFn] using equal
+  have headLen : ((cursorSuffix left cursor).take count).length = count :=
+    List.length_take_of_le (by rw [length]; omega)
+  let read := (sizedBitsEquiv count).symm ⟨(cursorSuffix left cursor).take count,headLen⟩
+  have head : List.ofFn read = (cursorSuffix left cursor).take count :=
+    congrArg Subtype.val ((sizedBitsEquiv count).apply_symm_apply ⟨(cursorSuffix left cursor).take count,headLen⟩)
+  have leftSplit : List.ofFn read ++ cursorSuffix left next = cursorSuffix left cursor := by
+    have tail := used.2
+    change (cursorSuffix left cursor).drop count = cursorSuffix left next at tail
+    rw [head, ← tail, List.take_append_drop]
+  have rightSplit : List.ofFn read ++ cursorSuffix right next = cursorSuffix right cursor := by
+    have tail : (cursorSuffix right cursor).drop count = cursorSuffix right next := by
+      simp only [cursorSuffix, List.drop_drop, offset]
+    rw [head, same, ← tail, List.take_append_drop]
+  have leftEvent : read ∈ completeSteinerRawSeedEvent G height coordinates vertices arcs early hubs thin
+      hubRejects thinRejects (cursorSuffix left next) := by
+    simp only [completeSteinerRawSeedEvent, Finset.mem_filter, Finset.mem_univ, true_and, leftSplit, leftSpec.symm]
+  have rightEvent : read ∈ completeSteinerRawSeedEvent G height coordinates vertices arcs early hubs thin
+      hubRejects thinRejects (cursorSuffix right next) := by
+    rwa [← completeSteinerRawSeedEvent_suffix_eq G height coordinates vertices arcs early hubs thin hubRejects thinRejects
+      (cursorSuffix left next) (cursorSuffix right next)]
+  have rightRead : decodeCompleteSteinerSeed G height coordinates vertices arcs (cursorSuffix right cursor) =
+      some ((early,hubs,thin),(hubRejects,thinRejects),cursorSuffix right next) := by
+    simpa only [completeSteinerRawSeedEvent, Finset.mem_filter, Finset.mem_univ, true_and, rightSplit] using rightEvent
+  have rightSpec := decodeCompleteSteinerSeedCursorAtWidth_spec G height width width_eq coordinates vertices arcs right cursor
+  rw [decodeCompleteSteinerSeedAtWidth_eq, rightRead] at rightSpec
+  cases readAgain : decodeCompleteSteinerSeedCursorAtWidth G height width width_eq coordinates vertices arcs right cursor with
+  | none => simp only [readAgain, Option.map_none, reduceCtorEq] at rightSpec
+  | some result =>
+    obtain ⟨seed, counts, last⟩ := result
+    simp only [readAgain, Option.map_some, Option.some.injEq, Prod.mk.injEq] at rightSpec
+    obtain ⟨sameSeed, sameCounts, sameSuffix⟩ := rightSpec
+    have equalPos := congrArg List.length sameSuffix
+    simp only [cursorSuffix, List.length_drop, List.length_ofFn] at equalPos
+    have l := last.bounded
+    have r := next.bounded
+    have fin : last.position = next.position := by omega
+    have samePos : last = next := by cases last; cases next; cases fin; rfl
+    simp [sameSeed, sameCounts, samePos]
+
 end OnlineReachabilityPreservers

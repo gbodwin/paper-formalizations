@@ -644,4 +644,28 @@ theorem decodeCompleteSteinerSeedCursorAtWidth_seed_eq (G : Arcs V) (height widt
   simpa only [Option.map_map, Function.comp_def, cursorSuffix, List.drop_zero] using
     congrArg (Option.map Prod.fst) same
 
+/-- The final cursor position records exactly the fixed early bits and
+all complete proposals consumed by the two rejection phases. -/
+theorem decodeCompleteSteinerSeedCursorAtWidth_position (G : Arcs V) (height width : ℕ)
+    (width_eq : width = (forestScale G height).log2+1)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card)
+    {budget : ℕ} (bits : Fin budget → Bool) {cursor next : BitCursor budget}
+    {early : EarlyRoundSample G height} {hubs : Fin (completeSteinerHubCount V) → V} {thin : ThinSample G}
+    {hubRejects : Fin (completeSteinerHubCount V) → ℕ} {thinRejects : G → ℕ}
+    (success : decodeCompleteSteinerSeedCursorAtWidth G height width width_eq coordinates vertices arcs bits cursor =
+      some ((early,hubs,thin),(hubRejects,thinRejects),next)) :
+    let used := earlySeedBits G height +
+      (∑ i, uniformProposalWidth (Fintype.card V)*(hubRejects i+1)) +
+      (∑ e, uniformProposalWidth G.card*(thinRejects e+1))
+    next.position = cursor.position + used := by
+  have same := decodeCompleteSteinerSeedCursorAtWidth_spec G height width width_eq coordinates vertices arcs bits cursor
+  rw [success, Option.map_some, decodeCompleteSteinerSeedAtWidth_eq] at same
+  have length := (decodeCompleteSteinerSeed_suffix G height coordinates vertices arcs same.symm).1
+  simp only [cursorSuffix, List.length_drop, List.length_ofFn] at length
+  dsimp only
+  have start := cursor.bounded
+  have finish := next.bounded
+  omega
+
 end OnlineReachabilityPreservers
