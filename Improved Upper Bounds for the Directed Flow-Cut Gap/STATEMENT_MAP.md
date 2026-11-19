@@ -5,12 +5,14 @@ This is a partial checkpoint. The main vertex and edge rounding bounds,
 randomized output guarantees, and attained optimum and corollary interfaces
 are proved. Both pipelines execute from graph source tables with a
 polynomial random-read bound. The charged physical fractional prefix has a
-separate deterministic polynomial. The complete source-to-cut bit-time
-bound remains open. [Physical execution scope](verification/PHYSICAL_SOURCE_DISPATCH_20261118.md)
+separate deterministic polynomial. The prepared vertex mass and size modes
+also have a composed word-operation envelope for the retained rounding
+and selection stages. The complete source-to-cut bit-time bound remains
+open. [Physical execution scope](verification/PHYSICAL_SOURCE_DISPATCH_20261118.md)
 
 | Source item | Verified scope at this checkpoint | Still required |
 | --- | --- | --- |
-| Theorems 1–2 | Main all-cost vertex and edge bounds, actual randomized guarantees, attained sum-flow duality, and source execution with physical fractional dispatch | Complete deterministic bit-time bound and fixed-instruction rounding |
+| Theorems 1–2 | Main all-cost vertex and edge bounds, actual randomized guarantees, attained sum-flow duality, and source execution with physical fractional dispatch. `ChargedVertexModes.run_complete` and `budget_le` compose the vertex word-model charges. | Complete deterministic bit-time bound and fixed-instruction rounding |
 | Theorems 3–5 | Actual finite unit-cost, uniform-weight, edge/vertex and self-reduction network | Complete algorithmic realization and runtime |
 | Corollaries 6–8 | Attained normalized sparsest/concurrent-flow optima, actual weak-decomposition PMF and both main factors | Polynomial LP computation, complete algorithmic realization and efficiency |
 | Lemma 9 | Actual all-regime randomized law, uniform ε expected-size and n^(-κ) high-probability size bounds | Constructive runtime |
@@ -33,10 +35,11 @@ bound remains open. [Physical execution scope](verification/PHYSICAL_SOURCE_DISP
 | Theorem 29 | Actual repaired finite reduction: 4n² vertices,3W weight,6αC cost, zero cases | Runtime; exact gap notation requires the stated bounded-instance interpretation |
 | Theorems30–31 | Actual dyadic edge-to-vertex and split-vertex constructions, all path/cut/count/weight/cost bridges and bounded-oracle forms | Constructive runtime |
 | Theorem 32 | Actual endpoint-safe self-reduction and uniform vertex n^(1/3+ε) composition | Runtime |
-| Theorem 33 | Finite family and PMF for both models. `RandomizedEdgeFamily.calibrated_families` executes adaptive edge-cut calls, bounds literal fair-bit reads and failure, and proves the marginal bound in the original weights. The exact-weight edge law also has a quadratic-horizon variant. | Deterministic bit-time and fixed-instruction realization of the adaptive solver. Near-linear horizon at the exact original-weight rounding factor. |
+| Theorem 33 | Finite family and PMF for both models. `RandomizedEdgeFamily.calibrated_families` executes adaptive edge-cut calls, bounds literal fair-bit reads and failure, and proves the marginal bound in the original weights. `AdaptiveWidthEnvelope.family_polynomial_reads` bounds the calibrated family in the original stored width. The exact-weight edge law also has a quadratic-horizon variant. | Deterministic bit-time and fixed-instruction realization of the adaptive solver. Near-linear horizon at the exact original-weight rounding factor. |
 
 The current scoped gate is [the constructive workflow](../.github/workflows/flow-constructive-rounding.yml).
 The adaptive edge-family extension has a [separate exact-commit gate](../.github/workflows/flow-adaptive-family.yml) and a [proof scope record](verification/ADAPTIVE_EDGE_FAMILY_20261119.md).
+The charged vertex modes and original-width envelope have a [full-library gate](../.github/workflows/flow-library-verification.yml) and a [proof scope record](verification/CHARGED_VERTEX_20261119.md).
 The manifest `verification/component-verification.json` records an earlier
 component checkpoint.
 Independent reviews record semantic scope and boundary cases. No desired

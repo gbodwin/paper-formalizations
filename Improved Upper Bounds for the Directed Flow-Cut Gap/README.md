@@ -7,6 +7,12 @@ fractional dispatcher. The edge pipeline uses the physical fraction
 solver on its typed line graph. Each returns its exact unread random tape.
 The full deterministic bit-time obligation is still open.
 
+The prepared mass and size vertex modes now include a polynomial
+word-operation bound through retained rounding and both cost selections.
+The same physical dispatcher and heap readback supply the cover rows.
+Cut and unread tape agree exactly with the original bounded bit-tree solver.
+[Charged vertex verification scope](verification/CHARGED_VERTEX_20261119.md)
+
 [Verification scope and entry points](verification/PHYSICAL_SOURCE_DISPATCH_20261118.md)
 
 ---

@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - codex/flow-library-20261119
+      - codex/flow-vertex-runtime-20261119
   workflow_dispatch:
 permissions:
   contents: read
@@ -31,6 +32,8 @@ jobs:
           axiom-audit: "false"
       - name: Check all project imports, audit, replay, and execute the binary routines
         run: bash scripts/CheckFlowLibrary.sh
+      - name: Check the composed vertex modes and adaptive width proof
+        run: bash scripts/CheckFlowChargedVertex.sh
       - name: Recheck source identity
         run: |
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
