@@ -147,6 +147,7 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.lemma37_acyclic_update
 #print axioms OnlineReachabilityPreservers.theorem38_acyclic_iteration
 #print axioms OnlineReachabilityPreservers.theorem1_rounded
+#print axioms OnlineReachabilityPreservers.theorem1_limiting_rate
 #print axioms OnlineReachabilityPreservers.theorem43_exponent_limit
 #print axioms OnlineReachabilityPreservers.theorem14_dag_compression
 #print axioms OnlineReachabilityPreservers.offline_pairwise_initial

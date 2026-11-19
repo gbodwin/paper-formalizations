@@ -141,7 +141,9 @@ uses this to prove the upper caps with at most twice the ambient budgets.
   bridge the gap between this sharp asymptotic statement and the rounded bound.
   The no-log acyclic estimate gives the rounded graph bound after two
   iterations with \((a,b)=(62/85,1006/1437)\).
-  [Checked rounded bound](OnlineReachabilityPreservers/OnlineSharp.lean).
+  The limiting bound keeps a fixed small-demand coefficient and chooses a
+  vertex-count-dependent slack from the finite iteration bounds.
+  [Checked online bounds](OnlineReachabilityPreservers/OnlineSharp.lean).
 - The [second-moment estimate](OnlineReachabilityPreservers/SecondMoment.lean)
   of Appendix A is checked for a common vertex order under the inductive
   subfamily bound. The [finite online iteration](OnlineReachabilityPreservers/OnlineBound.lean)

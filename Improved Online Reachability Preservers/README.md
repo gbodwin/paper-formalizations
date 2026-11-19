@@ -53,9 +53,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   The chosen integer window scales with the constant in the inductive estimate.
   The lower mean absorbs the linear contribution and the two window
   exceptions give the claimed rates directly.
-- [`theorem1_rounded`](OnlineReachabilityPreservers/OnlineSharp.lean)
-  proves the rounded adaptive online edge bound for the actual forward-growth
-  preserver on arbitrary finite digraphs, at every prefix.
+- [`theorem1_rounded` and `theorem1_limiting_rate`](OnlineReachabilityPreservers/OnlineSharp.lean)
+  prove both adaptive online edge bounds for the actual forward-growth
+  preserver on arbitrary finite digraphs, at every prefix. The limiting proof
+  chooses one nonnegative slack function of the vertex count that tends to
+  zero and works for every demand count. The small-demand bound keeps the
+  coefficient of the linear term fixed.
 - [`theorem14_dag_compression` and `offline_pairwise_initial`](OnlineReachabilityPreservers/OfflineIndependence.lean)
   prove the constructive independence reduction on DAGs and its initial
   offline pairwise consequence on arbitrary digraphs. The algorithm deletes
@@ -140,6 +143,6 @@ The library is included in the repository's module index, declaration audit,
 and kernel replay.
 
 The [companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
-includes an interactive trace and a source-linked proof map. The limiting
-online pairwise rate, unrestricted extremal estimates, and full Steiner
-competitive guarantee remain open.
+includes an interactive trace and a source-linked proof map. The pairwise
+non-adaptive instantiations, unrestricted extremal estimates, and full
+Steiner competitive guarantee remain open.

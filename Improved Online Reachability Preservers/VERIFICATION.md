@@ -119,6 +119,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   audit and local kernel replay passed. Independent review checked the
   separated geometric tails, all three moment powers, and cap normalization.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44428420973).
+- [dee45f7d](https://github.com/gbodwin/paper-formalizations/commit/dee45f7d7ad44701b48161653191066d7681d498)
+  proves the corrected finite iteration and the rounded online edge bound
+  on general digraphs. The 1051-declaration paper audit and local kernel
+  replay passed. Independent review checked all four terms, the window
+  exceptions, and the prefix guarantee.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44430372943).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
