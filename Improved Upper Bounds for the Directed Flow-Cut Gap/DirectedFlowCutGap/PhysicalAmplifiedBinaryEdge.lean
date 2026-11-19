@@ -1,0 +1,137 @@
+import DirectedFlowCutGap.PhysicalAmplifiedBinaryVertex
+import DirectedFlowCutGap.BinaryEdgeGadget
+
+/-! The original edge solver with binary line prices, dyadic gadgets, and
+binary scalar vertex preparation on each actual fractional row. -/
+
+namespace DirectedFlowCutGap.PhysicalAmplifiedBinaryEdge
+
+open BinaryArithmetic BinaryRational RawNonnegativeRational FiniteDrawTrees Polynomial
+open EncodedVertexAmplification EncodedEdgeLineInput
+open PhysicalEdgeSolver (binaryLineInput decode_binaryLineInput)
+open PhysicalAmplifiedEdgeSolver (EdgeResult model)
+open PhysicalIntegerRounding (Result)
+open RetainedGridState (Flags)
+open LiteralTapeComposition (execute execute_map)
+open BinaryVertexReductionArithmetic (batch batch_value batch_paid)
+
+def lineAllowance {R : Type*} [Semiring R] (m demands : R) : R :=
+  128*(m+2)^2*(m^2+m+demands+1)
+
+def lineWithCost {n : ℕ} (D : Input n) : BinaryFractionalGuesses.Input (lineSize n) × ℕ :=
+  let line := lineInput D
+  let c := batch fun i => BinaryRawRational.encode line.costs[i.val]
+  (⟨line.adjacency,line.demands,c.1⟩,c.2+lineAllowance (lineSize n) D.demands.length)
+
+@[simp] theorem line_value {n : ℕ} (D : Input n) : (lineWithCost D).1=binaryLineInput D := by
+  have costs : (batch (fun i : Fin (lineSize n) => BinaryRawRational.encode (lineInput D).costs[i.val])).1 =
+      (binaryLineInput D).costs := by
+    apply Vector.ext
+    intro i hi
+    simp only [batch_value,Vector.getElem_ofFn,binaryLineInput,Vector.getElem_map,BinaryRawRational.encode_eq]
+    rfl
+  simp only [lineWithCost,costs]
+  rfl
+
+def lineBudget {R : Type*} [Semiring R] (m demands b : R) : R :=
+  m*(40*(b+2)^2)+8*m+4+lineAllowance m demands
+
+theorem line_paid {n b : ℕ} (D : Input n) (positive : 1 ≤ b)
+    (fits : ∀ u v : Fin n, D.costs[u.val][v.val].num.size ≤ b ∧ D.costs[u.val][v.val].den.size ≤ b) :
+    (lineWithCost D).2 ≤ lineBudget (lineSize n) D.demands.length b := by
+  apply Nat.add_le_add_right
+  apply batch_paid
+  intro i
+  obtain ⟨a,c⟩ := lineInput_cost_width D positive fits i
+  exact BinaryRawRational.encode_paid
+    (show (lineInput D).costs[i.val].Bounded b from ⟨(Nat.size_le.mp a).le,(Nat.size_le.mp c).le⟩)
+
+def pullbackBudget {R : Type*} [Semiring R] (n m : R) : R :=
+  128*(n+4)*(2*n^2*(m+1)+(n*2+n*n)+1)
+
+private def pullback {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (cut : Flags g.size) : Flags (lineSize n) × ℕ :=
+  (toLine (EncodedEdgeRounding.pullback g cut),pullbackBudget n g.size)
+
+def round {n : ℕ} (D : Input n) (mode : ChargedVertexModes.Mode) : PhysicalVertexSampling.Runner (lineSize n) :=
+  fun T r tape =>
+    let g := BinaryEdgeGadget.build (roundingInput D r.weights)
+    (PhysicalAmplifiedBinaryVertex.runner mode T g.1.data tape).map
+      (PhysicalVertexRounding.project (pullback g.1) (g.2+64*(n+4)^2*(n+1)^2))
+
+theorem round_observe {n : ℕ} (D : Input n) (mode : ChargedVertexModes.Mode) (T : ℕ)
+    (r : EncodedVertexSolver.RoundingInput (lineSize n)) (tape : Bits) :
+    (round D mode T r tape).map PhysicalIntegerRounding.Result.observe =
+      execute T (EncodedEdgeSolver.round D (model mode) r) tape := by
+  let p := BinaryEdgeGadget.build (roundingInput D r.weights)
+  let g := p.1
+  have hs : (fun mask => (pullback g mask).1) = (fun mask => toLine (EncodedEdgeRounding.pullback g mask)) := rfl
+  unfold round
+  change ((PhysicalAmplifiedBinaryVertex.runner mode T g.data tape).map
+    (PhysicalVertexRounding.project (pullback g) (p.2+64*(n+4)^2*(n+1)^2))).map
+      PhysicalIntegerRounding.Result.observe = _
+  rw [PhysicalVertexRounding.project_observe _ _ (fun mask => congrFun hs mask),
+    PhysicalAmplifiedBinaryVertex.runner_observe,
+    ← execute_map T (fun cut => toLine (EncodedEdgeRounding.pullback g cut))
+      (ChargedVertexModes.round g.size mode g.data) tape]
+  unfold EncodedEdgeSolver.round EncodedEdgeRounding.tree
+  have h : g=EncodedEdgeGadget.build (roundingInput D r.weights) := BinaryEdgeGadget.build_value _
+  let solution (g' : EncodedEdgeGadget.Prepared (roundingInput D r.weights)) :=
+    execute T (map (fun cut => toLine (EncodedEdgeRounding.pullback g' cut))
+      (ChargedVertexModes.round g'.size mode g'.data)) tape
+  change solution g = _
+  rw [h]
+  cases mode <;> simp only [solution,model,ChargedVertexModes.round,EncodedEdgeSolver.massMode,
+    EncodedEdgeSolver.sizeMode,execute_map,Option.map_map,Function.comp_def]
+
+def outputBudget {R : Type*} [Semiring R] (n : R) : R := 128*(n+4)^2*(n+1)^2+32
+
+def finish {n : ℕ} (D : Input n) (setup : ℕ) (r : PhysicalAmplifiedVertexSolver.Result (lineSize n)) : EdgeResult n :=
+  ⟨EncodedEdgeSolver.outputFor D r.output,r.suffix,r.dispatch,r.readback,r.roundingAndSelection+setup+outputBudget n⟩
+
+def run {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) (tape : Bits) : Option (EdgeResult n) :=
+  let e := confidenceExponent n κ
+  let packed := lineWithCost D
+  (PhysicalAmplifiedVertexSolver.run packed.1 (round D mode) (EncodedEdgeSolver.drawBound n) e (e+1) tape).map
+    (finish D packed.2)
+
+theorem run_observe {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) (tape : Bits) :
+    (run κ D mode tape).map EdgeResult.observe =
+      (EncodedSolverBits.run (EncodedEdgeSolver.bitTree κ D (model mode)) tape).map
+        (fun (out,(rest,_)) => (out,rest)) := by
+  let e := confidenceExponent n κ
+  let ref := EncodedEdgeSolver.round D (model mode)
+  let actual := PhysicalAmplifiedVertexSolver.run (lineWithCost D).1 (round D mode)
+    (EncodedEdgeSolver.drawBound n) e (e+1) tape
+  let abstract := boundedBitTree (EncodedEdgeSolver.drawBound n) e (e+1) (lineInput D) ref
+  have law := PhysicalAmplifiedVertexSolver.run_observe (lineWithCost D).1 (round D mode) ref
+    (EncodedEdgeSolver.drawBound n) e (e+1) tape (round_observe D mode)
+  have decode : BinaryFractionalGuesses.decodeInput (lineWithCost D).1=lineInput D := by
+    rw [line_value,decode_binaryLineInput]
+  change actual.map PhysicalAmplifiedVertexSolver.Result.observe =
+    (EncodedSolverBits.run (boundedBitTree (EncodedEdgeSolver.drawBound n) e (e+1)
+      (BinaryFractionalGuesses.decodeInput (lineWithCost D).1) ref) tape).map (fun (out,(rest,_)) => (out,rest)) at law
+  rw [decode] at law
+  have eq : EncodedEdgeSolver.bitTree κ D (model mode)=map (EncodedEdgeSolver.outputFor D) abstract := rfl
+  rw [eq,EncodedSolverBits.run_map]
+  have readout : (run κ D mode tape).map EdgeResult.observe =
+      (actual.map PhysicalAmplifiedVertexSolver.Result.observe).map
+        (fun (out,rest) => (EncodedEdgeSolver.outputFor D out,rest)) := by
+    simp only [run,actual,e,Option.map_map,Function.comp_def,finish,EdgeResult.observe,
+      PhysicalAmplifiedVertexSolver.Result.observe]
+  rw [readout,law]
+  simp only [Option.map_map,Function.comp_def,abstract]
+
+theorem run_fairTape {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) :
+    (EncodedSolverBits.fairTape (EncodedSolverBits.edgeBudget κ D)).map
+      (fun tape => (run κ D mode tape).map EdgeResult.output) =
+      (ideal (EncodedEdgeSolver.bitTree κ D (model mode))).map some := by
+  have same : (fun tape => (run κ D mode tape).map EdgeResult.output) =
+      (fun tape => (PhysicalAmplifiedEdgeSolver.run κ D mode tape).map EdgeResult.output) := by
+    funext tape
+    have eq := (run_observe κ D mode tape).trans (PhysicalAmplifiedEdgeSolver.run_observe κ D mode tape).symm
+    simpa only [Option.map_map,Function.comp_def,EdgeResult.observe] using congrArg (Option.map Prod.fst) eq
+  rw [same]
+  exact PhysicalOriginalInputSolvers.edge_fairTape κ D mode
+
+end DirectedFlowCutGap.PhysicalAmplifiedBinaryEdge

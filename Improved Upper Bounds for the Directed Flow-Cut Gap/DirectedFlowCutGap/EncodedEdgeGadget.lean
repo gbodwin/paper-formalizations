@@ -119,11 +119,11 @@ private theorem adjacent_iff {n : ℕ} (D : Input n) (labels : Labels n) (x y : 
   rcases x with ⟨u, b⟩ | ⟨u, b, i⟩ <;> rcases y with ⟨v, c⟩ | ⟨v, c, j⟩ <;>
     cases b <;> cases c <;> simp [adjacent, EdgeToVertex.RawAdj, Input.graph]
 
-private def nodeWeight {n : ℕ} : RawNode n → Code
+def nodeWeight {n : ℕ} : RawNode n → Code
   | .inl _ => Code.zero
   | .inr (_, _, i) => EncodedEdgeLabels.valueCode i
 
-private def edgeCharge {n : ℕ} (D : Input n) (labels : Labels n) (x : RawNode n) (e : Pair n) : Code :=
+def edgeCharge {n : ℕ} (D : Input n) (labels : Labels n) (x : RawNode n) (e : Pair n) : Code :=
   let cost := D.costs[e.1.val][e.2.val]
   (if x = EdgeToVertex.right (labelAt labels) e then cost else Code.zero).add
     (if x = EdgeToVertex.left (labelAt labels) e then cost else Code.zero)
@@ -134,17 +134,23 @@ structure Prepared {n : ℕ} (D : Input n) where
   vertices : Vector (Node D labels) size
   data : EncodedUnitCostReplication.Input size
 
-def build {n : ℕ} (D : Input n) : Prepared D :=
-  let l := labelTable D
-  let es := edges D
-  let vs := nodes D l
-  let m := vs.length
-  let v : Vector (Node D l) m := ⟨vs.toArray, by simp [m]⟩
+def assemble {n m : ℕ} (D : Input n) (l : Labels n)
+    (v : Vector (Node D l) m) (weights costs : Vector Code m) : Prepared D :=
   ⟨m, l, v,
     { adjacency := Vector.ofFn fun x => Vector.ofFn fun y => adjacent D l v[x.val].val v[y.val].val
-      weights := Vector.ofFn fun x => nodeWeight v[x.val].val
-      costs := Vector.ofFn fun x =>
-        FractionalCoverRawCore.sumCodes (es.map (edgeCharge D l v[x.val].val)) }⟩
+      weights := weights
+      costs := costs }⟩
+
+def nodeVector {n : ℕ} (D : Input n) (l : Labels n) : Vector (Node D l) (nodes D l).length :=
+  ⟨(nodes D l).toArray, by simp⟩
+
+def buildWithLabels {n : ℕ} (D : Input n) (l : Labels n) : Prepared D :=
+  let es := edges D
+  let v := nodeVector D l
+  assemble D l v (Vector.ofFn fun x => nodeWeight v[x.val].val)
+    (Vector.ofFn fun x => FractionalCoverRawCore.sumCodes (es.map (edgeCharge D l v[x.val].val)))
+
+def build {n : ℕ} (D : Input n) : Prepared D := buildWithLabels D (labelTable D)
 
 def indexEquiv {n : ℕ} (D : Input n) : Fin (build D).size ≃ Node D (labelTable D) :=
   List.Nodup.getEquivOfForallMemList _ (nodes_nodup D (labelTable D)) (nodes_mem D (labelTable D))
@@ -157,7 +163,7 @@ theorem build_adj {n : ℕ} (D : Input n) (i j : Fin (build D).size) :
       (EdgeToVertex.graph D.graph (labelAt (labelTable D))).Adj (indexEquiv D i) (indexEquiv D j) := by
   have h : (build D).data.graph.Adj i j ↔ adjacent D (labelTable D)
       (build D).vertices[i.val].val (build D).vertices[j.val].val = true := by
-    simp only [EncodedUnitCostReplication.Input.graph, build, Vector.getElem_ofFn]
+    simp only [EncodedUnitCostReplication.Input.graph, build, buildWithLabels, assemble, Vector.getElem_ofFn]
   rw [← indexEquiv_apply D i, ← indexEquiv_apply D j] at h
   exact h.trans (adjacent_iff D (labelTable D) (indexEquiv D i).val (indexEquiv D j).val)
 
@@ -168,7 +174,7 @@ theorem build_weight {n : ℕ} (D : Input n) (i : Fin (build D).size) :
     (indexEquiv D i).property
   unfold EdgeToVertex.weight
   rw [EdgeToVertex.rawWeight.eq_def, ite_eq_left h]
-  simp only [EncodedUnitCostReplication.Input.weight, build, Vector.getElem_ofFn]
+  simp only [EncodedUnitCostReplication.Input.weight, build, buildWithLabels, assemble, Vector.getElem_ofFn]
   change (nodeWeight (indexEquiv D i).val).realValue = _
   cases (indexEquiv D i).val with
   | inl x => simp [nodeWeight, Code.realValue]
@@ -186,7 +192,7 @@ theorem build_cost {n : ℕ} (D : Input n) (i : Fin (build D).size) :
     ext e
     simp [edges_mem]
   unfold EdgeToVertex.cost EdgeToVertex.rawCost
-  simp only [EncodedUnitCostReplication.Input.cost, build, Vector.getElem_ofFn]
+  simp only [EncodedUnitCostReplication.Input.cost, build, buildWithLabels, assemble, Vector.getElem_ofFn]
   change (FractionalCoverRawCore.sumCodes
       ((edges D).map (edgeCharge D (labelTable D) (indexEquiv D i).val))).realValue = _
   rw [sumCodes_value, List.map_map, ← List.sum_toFinset _ (edges_nodup D), he]

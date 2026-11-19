@@ -24,9 +24,9 @@ private theorem code_equal {a b : Code} (num : a.num=b.num) (den : a.den=b.den) 
   cases b
   simp_all
 
-private def powerFraction (k : ℕ) : Fraction := ⟨[true],powerWord k,by rw [power_value]; positivity⟩
+def powerFraction (k : ℕ) : Fraction := ⟨[true],powerWord k,by rw [power_value]; positivity⟩
 
-private theorem decode_power (k : ℕ) : decode (powerFraction k)=dyadicCode k := by
+theorem decode_power (k : ℕ) : decode (powerFraction k)=dyadicCode k := by
   apply code_equal
   · change value [true]=(Code.one.div (Code.ofNat (2^k))).num
     simp [Code.div,Code.one,Code.ofNat,value]
@@ -34,7 +34,7 @@ private theorem decode_power (k : ℕ) : decode (powerFraction k)=dyadicCode k :
     rw [power_value]
     simp [Code.div,Code.one,Code.ofNat]
 
-private theorem power_width (k : ℕ) : StoredBounded (powerFraction k) (k+1) := by
+theorem power_width (k : ℕ) : StoredBounded (powerFraction k) (k+1) := by
   simp [StoredBounded,powerFraction,powerWord]
 
 private def twiceCount (n : ℕ) (h : 0<n) : Fraction :=
@@ -79,7 +79,7 @@ private theorem search_index_le (w : Fraction) (k : ℕ) : (search w k).1 ≤ k 
   rw [search_value,EncodedEdgeLabels.ceilIndex_value]
   exact DyadicEdgeWeights.ceilIndex_le _ _
 
-private def checkBudget (k B : ℕ) : ℕ := 2048*(B+k+3)^2+8*(k+2)+10
+def checkBudget {R : Type*} [Semiring R] (k B : R) : R := 2048*(B+k+3)^2+8*(k+2)+10
 
 private theorem checks_mono {a b : ℕ} (B : ℕ) (h : a≤b) : checkBudget a B ≤ checkBudget b B := by
   unfold checkBudget
@@ -133,7 +133,7 @@ theorem label_value (n : ℕ) (w : Fraction) : (label n w).1=EncodedEdgeLabels.l
     subst n
     rfl
 
-def labelBudget (n B : ℕ) : ℕ :=
+def labelBudget {R : Type*} [Semiring R] (n B : R) : R :=
   2*(2048*(B+n+2)^2)+16*(n+1)^2+17+(n+1)*checkBudget (n+1) B
 
 theorem label_paid {B : ℕ} (n : ℕ) (w : Fraction) (fits : StoredBounded w B) : (label n w).2 ≤ labelBudget n B := by
