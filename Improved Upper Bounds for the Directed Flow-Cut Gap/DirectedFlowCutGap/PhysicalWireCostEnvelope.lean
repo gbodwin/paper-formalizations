@@ -30,18 +30,25 @@ private theorem rowBits_le {x : ℕ} (qs : List Fraction) (fits : ∀ q ∈ qs, 
     simp only [LambdaRowProgram.rowBits,List.length_cons,Nat.add_mul,Nat.one_mul]
     omega
 
-theorem vertex_wire_polynomial : ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits)
+theorem vertex_wire_polynomial_for
+    (solve : ∀ {n : ℕ}, ℕ → ChargedVertexModes.Mode → BinaryFractionalGuesses.Input n →
+      Bits → Option (PhysicalAmplifiedVertexSolver.Result n))
+    (bounded : ∃ p : Polynomial ℕ, ∀ {n : ℕ} (κ : ℕ) mode
+      (D : BinaryFractionalGuesses.Input n) (tape : Bits) {out : PhysicalAmplifiedVertexSolver.Result n},
+      solve κ mode D tape=some out →
+        out.dispatch+out.readback+out.roundingAndSelection ≤ p.eval (PhysicalSolverCostEnvelope.vertexSize D κ)) :
+    ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits)
     {n : ℕ} {r : PhysicalAmplifiedVertexSolver.Result n},
-    (PhysicalOriginalInputSolvers.vertexWithCost κ mode source tape).1=some ⟨n,r⟩ →
-      (PhysicalOriginalInputSolvers.vertexWithCost κ mode source tape).2+r.dispatch+r.readback+r.roundingAndSelection ≤
+    PhysicalVertexSolver.prepareOn (fun _ input => solve κ mode input tape)
+        (ChargedSourceAssembly.vertex source).1=some ⟨n,r⟩ →
+      (ChargedSourceAssembly.vertex source).2+r.dispatch+r.readback+r.roundingAndSelection ≤
         p.eval (source.length+κ) := by
-  obtain ⟨p,hp⟩ := PhysicalSolverCostEnvelope.vertex_polynomial
+  obtain ⟨p,hp⟩ := bounded
   let pad : Polynomial ℕ := X+X+1+C 2*X^2+X
   refine ⟨ChargedSourceAssembly.parsePolynomial+p.comp pad,?_⟩
   intro κ mode source tape n r actual
   let x := source.length+κ
-  obtain ⟨D,decoded,run⟩ := prepareOn_some
-    (fun _ input => PhysicalAmplifiedVertexSolver.vertex κ mode input tape) actual
+  obtain ⟨D,decoded,run⟩ := prepareOn_some (fun _ input => solve κ mode input tape) actual
   obtain ⟨size,demands,fields⟩ := ChargedSourceAssembly.vertex_dimensions decoded
   have width := rowBits_le D.costs.toList fields
   rw [Vector.length_toList] at width
@@ -60,6 +67,13 @@ theorem vertex_wire_polynomial : ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (mode : 
   change (ChargedSourceAssembly.vertex source).2+r.dispatch+r.readback+r.roundingAndSelection ≤
     ChargedSourceAssembly.parsePolynomial.eval x+p.eval (pad.eval x)
   omega
+
+theorem vertex_wire_polynomial : ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits)
+    {n : ℕ} {r : PhysicalAmplifiedVertexSolver.Result n},
+    (PhysicalOriginalInputSolvers.vertexWithCost κ mode source tape).1=some ⟨n,r⟩ →
+      (PhysicalOriginalInputSolvers.vertexWithCost κ mode source tape).2+r.dispatch+r.readback+r.roundingAndSelection ≤
+        p.eval (source.length+κ) :=
+  vertex_wire_polynomial_for @PhysicalAmplifiedVertexSolver.vertex PhysicalSolverCostEnvelope.vertex_polynomial
 
 theorem edge_wire_polynomial : ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits)
     {n : ℕ} {r : PhysicalAmplifiedEdgeSolver.EdgeResult n},

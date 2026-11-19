@@ -56,14 +56,16 @@ theorem trialLimit_le {n B x : ℕ} (D : BinaryFractionalGuesses.Input n) (draw 
 /-- Bound the three observed counters, including a polynomial for the actual
 number of shared rejection trials. The runner can have a different rounding
 dimension, as happens when it uses the edge gadget. -/
-theorem run_polynomial (q : Polynomial ℕ) : ∃ p : Polynomial ℕ,
+theorem run_polynomial_on_rows (q : Polynomial ℕ) : ∃ p : Polynomial ℕ,
     ∀ {n B x : ℕ} (D : BinaryFractionalGuesses.Input n) (round : PhysicalVertexSampling.Runner n)
       (draw extra confidence : ℕ) (tape : Bits),
       n ≤ x → B ≤ x → draw ≤ x → extra ≤ x → confidence ≤ x → (PhysicalSourceDispatch.input D).length ≤ x →
       1 ≤ B → (∀ i, StoredBounded (get D.costs i) B) →
-      (∀ input bits (r : PhysicalIntegerRounding.Result n),
-        round (trialLimit (BinaryFractionalGuesses.decodeInput D) draw extra confidence) input bits = some r →
-          r.paid ≤ q.eval (trialEnvelope.eval x+x)) →
+      (∀ rows, PhysicalCoverReader.plan (BinaryFractionalGuesses.solveInput D).1=.covers rows →
+        ∀ y ∈ rows, ∀ bits (r : PhysicalIntegerRounding.Result n),
+          round (trialLimit (BinaryFractionalGuesses.decodeInput D) draw extra confidence)
+            (EncodedVertexSolver.roundingInput (BinaryFractionalGuesses.decodeInput D) y) bits=some r →
+            r.paid ≤ q.eval (trialEnvelope.eval x+x)) →
       ∀ {out : PhysicalAmplifiedVertexSolver.Result n},
       PhysicalAmplifiedVertexSolver.run D round draw extra confidence tape = some out →
         out.dispatch+out.readback+out.roundingAndSelection ≤ p.eval x := by
@@ -83,7 +85,8 @@ theorem run_polynomial (q : Polynomial ℕ) : ∃ p : Polynomial ℕ,
   refine ⟨PhysicalSourceDispatch.paidPolynomial+lookup+amplify,?_⟩
   intro n B x D round draw extra confidence tape hn hB hd he hc length positive fits pc out executed
   let R := q.eval (trials.eval x+x)
-  obtain ⟨dispatch,readback,paid⟩ := PhysicalAmplifiedVertexCost.run_paid D round draw extra confidence R tape positive fits pc executed
+  obtain ⟨dispatch,readback,paid⟩ :=
+    PhysicalAmplifiedVertexCost.run_paid_on_rows D round draw extra confidence R tape positive fits pc executed
   obtain ⟨dispatchLimit,readbackLimit⟩ := PhysicalSolverCharges.budgets_of_source_length D length
   have rows := rowLimit_le D fits
   have r : rowLimit (BinaryFractionalGuesses.decodeInput D) ≤ 4*x+3 := by
@@ -101,6 +104,22 @@ theorem run_polynomial (q : Polynomial ℕ) : ∃ p : Polynomial ℕ,
       PhysicalCoverAccess.wordBound,PhysicalCoverAccess.cellBound]
   simp only [eval_add,readEval]
   exact Nat.add_le_add (Nat.add_le_add (dispatch.trans dispatchLimit) (readback.trans readbackLimit)) (paid.trans rounding)
+
+theorem run_polynomial (q : Polynomial ℕ) : ∃ p : Polynomial ℕ,
+    ∀ {n B x : ℕ} (D : BinaryFractionalGuesses.Input n) (round : PhysicalVertexSampling.Runner n)
+      (draw extra confidence : ℕ) (tape : Bits),
+      n ≤ x → B ≤ x → draw ≤ x → extra ≤ x → confidence ≤ x → (PhysicalSourceDispatch.input D).length ≤ x →
+      1 ≤ B → (∀ i, StoredBounded (get D.costs i) B) →
+      (∀ input bits (r : PhysicalIntegerRounding.Result n),
+        round (trialLimit (BinaryFractionalGuesses.decodeInput D) draw extra confidence) input bits = some r →
+          r.paid ≤ q.eval (trialEnvelope.eval x+x)) →
+      ∀ {out : PhysicalAmplifiedVertexSolver.Result n},
+      PhysicalAmplifiedVertexSolver.run D round draw extra confidence tape = some out →
+        out.dispatch+out.readback+out.roundingAndSelection ≤ p.eval x := by
+  obtain ⟨p,hp⟩ := run_polynomial_on_rows q
+  refine ⟨p,?_⟩
+  intro n B x D round draw extra confidence tape hn hB hd he hc length positive fits paid out ran
+  exact hp D round draw extra confidence tape hn hB hd he hc length positive fits (fun _ _ _ _ => paid _) ran
 
 theorem exponent_le (n κ : ℕ) : confidenceExponent n κ ≤ (n+2)*κ := by
   have log := Nat.log_le_self 2 (max 1 n)

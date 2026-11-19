@@ -53,8 +53,7 @@ structure Residual (n : ℕ) where
 /-- The survivor enumeration, list length and vector are retained once. The
 allowances cover original finRange, heavy-mask comparison and vector creation,
 list-to-array conversion, label mapping and every residual array cell. -/
-def build {n : ℕ} (D : Input n) (τ : Code) : Residual n :=
-  let heavy := heavyMask D τ
+def buildWith {n : ℕ} (D : Input n) (heavy : Vector Bool n) (weight : Fin n → Code) : Residual n :=
   let r := RetainedSurvivorEnumeration.scan heavy (List.finRange n)
   let N := r.1.length
   let labels₀ : Vector (RetainedSurvivorEnumeration.Survivor heavy) N := ⟨r.1.toArray,by simp [N]⟩
@@ -63,9 +62,12 @@ def build {n : ℕ} (D : Input n) (τ : Code) : Residual n :=
     data :=
       { adjacency := Vector.ofFn (n := N) fun i => Vector.ofFn (n := N) fun j =>
           D.adjacency[labels[i.val].val][labels[j.val].val]
-        weights := Vector.ofFn (n := N) fun i => (Code.ofNat 2).mul D.weights[labels[i.val].val]
+        weights := Vector.ofFn (n := N) fun i => weight labels[i.val]
         costs := Vector.ofFn (n := N) fun i => D.costs[labels[i.val].val] }
     work := r.2+40*N^2+75*N+33*n+39 }
+
+def build {n : ℕ} (D : Input n) (τ : Code) : Residual n :=
+  buildWith D (heavyMask D τ) (fun i => (Code.ofNat 2).mul D.weights[i.val])
 
 @[simp] theorem build_size {n : ℕ} (D : Input n) (τ : Code) :
     (build D τ).size = (RetainedSurvivorEnumeration.labels (heavyMask D τ)).length := rfl
@@ -84,14 +86,14 @@ noncomputable def indexEquiv {n : ℕ} (D : Input n) (τ : Code) :
 @[simp] theorem labels_get {n : ℕ} (D : Input n) (τ : Code) (i : Fin (build D τ).size) :
     (build D τ).labels[i.val] = (indexEquiv D τ i).val := by
   simp only [indexEquiv_apply]
-  simp [build,survivorEquiv,RetainedSurvivorEnumeration.vector,RetainedSurvivorEnumeration.labels]
+  simp [build,buildWith,survivorEquiv,RetainedSurvivorEnumeration.vector,RetainedSurvivorEnumeration.labels]
 
 theorem build_graph {n : ℕ} (D : Input n) (τ : Code) (i j : Fin (build D τ).size) :
     (build D τ).data.graph.Adj i j ↔
       (WeightSelfReduction.graph D.graph D.weight τ.realValue).Adj (indexEquiv D τ i) (indexEquiv D τ j) := by
   change (build D τ).data.adjacency[i.val][j.val]=true ↔ _
   have he : (build D τ).data.adjacency[i.val][j.val] =
-      D.adjacency[(build D τ).labels[i.val].val][(build D τ).labels[j.val].val] := by simp [build]
+      D.adjacency[(build D τ).labels[i.val].val][(build D τ).labels[j.val].val] := by simp [build,buildWith]
   rw [he]
   simp only [labels_get]
   rfl
@@ -99,14 +101,14 @@ theorem build_graph {n : ℕ} (D : Input n) (τ : Code) (i j : Fin (build D τ).
 theorem build_weight {n : ℕ} (D : Input n) (τ : Code) (i : Fin (build D τ).size) :
     (build D τ).data.weight i = WeightSelfReduction.weight D.weight τ.realValue (indexEquiv D τ i) := by
   have he : (build D τ).data.weights[i.val] =
-      (Code.ofNat 2).mul D.weights[(build D τ).labels[i.val].val] := by simp [build]
+      (Code.ofNat 2).mul D.weights[(build D τ).labels[i.val].val] := by simp [build,buildWith]
   simp only [Input.weight,he,labels_get,WeightSelfReduction.weight,Code.realValue,Code.value_mul,
     Code.value_ofNat,NNRat.cast_mul]
   norm_num
 
 theorem build_cost {n : ℕ} (D : Input n) (τ : Code) (i : Fin (build D τ).size) :
     (build D τ).data.cost i = WeightSelfReduction.cost D.weight D.cost τ.realValue (indexEquiv D τ i) := by
-  have he : (build D τ).data.costs[i.val] = D.costs[(build D τ).labels[i.val].val] := by simp [build]
+  have he : (build D τ).data.costs[i.val] = D.costs[(build D τ).labels[i.val].val] := by simp [build,buildWith]
   simp only [Input.cost,he,labels_get,WeightSelfReduction.cost]
 
 theorem build_totalWeight {n : ℕ} (D : Input n) (τ : Code) :
@@ -148,14 +150,14 @@ theorem build_weights_bounded {n : ℕ} (D : Input n) (τ : Code) (b : ℕ)
     (build D τ).data.weights[i.val].Bounded (b+1) := by
   have ht : (Code.ofNat 2).Bounded 1 := by norm_num [Code.ofNat,Code.Bounded]
   have he : (build D τ).data.weights[i.val] =
-      (Code.ofNat 2).mul D.weights[(build D τ).labels[i.val].val] := by simp [build]
+      (Code.ofNat 2).mul D.weights[(build D τ).labels[i.val].val] := by simp [build,buildWith]
   rw [he]
   simpa only [Nat.add_comm] using Code.bounded_mul ht (h (build D τ).labels[i.val])
 
 theorem build_costs_bounded {n : ℕ} (D : Input n) (τ : Code) (b : ℕ)
     (h : ∀ i : Fin n, D.costs[i.val].Bounded b) (i : Fin (build D τ).size) :
     (build D τ).data.costs[i.val].Bounded b := by
-  have he : (build D τ).data.costs[i.val] = D.costs[(build D τ).labels[i.val].val] := by simp [build]
+  have he : (build D τ).data.costs[i.val] = D.costs[(build D τ).labels[i.val].val] := by simp [build,buildWith]
   rw [he]
   exact h _
 

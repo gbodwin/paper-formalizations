@@ -36,7 +36,7 @@ structure Chain {m : ℕ} (k : Vector ℕ m) where
 input edge read and all vector-loop callbacks/pushes/wrappers. The linear
 budget also pays list length, array conversion, uniform-weight/unit-cost array
 construction and the raw reciprocal/ceiling used for the integer cutoff. -/
-def materialize {m : ℕ} (P : Input m) (average : Code) (k : Vector ℕ m) : Chain k :=
+def materializeWith {m : ℕ} (P : Input m) (average : Code) (k : Vector ℕ m) (level : ℕ) : Chain k :=
   let r := cloneRows k (List.finRange m)
   let N := r.1.length
   let labels : Vector (Clone k) N := ⟨r.1.toArray,by simp [N]⟩
@@ -46,8 +46,11 @@ def materialize {m : ℕ} (P : Input m) (average : Code) (k : Vector ℕ m) : Ch
           chainAdj P k labels[i.val] labels[j.val]
         weights := Vector.replicate N average
         costs := Vector.replicate N Code.one }
-    cutoff := (Code.one.div average).ceil
+    cutoff := level
     work := r.2+10*m+60*N^2+40*N+35 }
+
+def materialize {m : ℕ} (P : Input m) (average : Code) (k : Vector ℕ m) : Chain k :=
+  materializeWith P average k (Code.one.div average).ceil
 
 @[simp] theorem materialize_size {m : ℕ} (P : Input m) (average : Code) (k : Vector ℕ m) :
     (materialize P average k).size = (cloneList k).length := rfl
@@ -62,18 +65,18 @@ theorem materialize_graph {m : ℕ} (P : Input m) (average : Code) (k : Vector �
         ((EncodedUnitCostReplication.cloneEquiv k) i) ((EncodedUnitCostReplication.cloneEquiv k) j) := by
   change _ ↔ (UniformWeightReduction.graph P.graph (fun v => k[v.val])).Adj
     (labelVector k)[i.val] (labelVector k)[j.val]
-  simpa [materialize,Input.graph,labelVector,cloneList] using
+  simpa [materialize,materializeWith,Input.graph,labelVector,cloneList] using
     chainAdj_refines P k (labelVector k)[i.val] (labelVector k)[j.val]
 
 theorem materialize_weight {m : ℕ} (P : Input m) (average : Code) (k : Vector ℕ m)
     (i : Fin (materialize P average k).size) :
     (materialize P average k).data.weight i = average.realValue := by
-  simp [materialize,Input.weight]
+  simp [materialize,materializeWith,Input.weight]
 
 theorem materialize_cost {m : ℕ} (P : Input m) (average : Code) (k : Vector ℕ m)
     (i : Fin (materialize P average k).size) :
     (materialize P average k).data.cost i = 1 := by
-  simp [materialize,Input.cost,Code.realValue]
+  simp [materialize,materializeWith,Input.cost,Code.realValue]
 
 theorem materialize_work {m : ℕ} (P : Input m) (average : Code) (k : Vector ℕ m) :
     (materialize P average k).work =
@@ -84,7 +87,7 @@ theorem materialize_work {m : ℕ} (P : Input m) (average : Code) (k : Vector �
     rw [← List.sum_toFinset _ (List.nodup_finRange m)]
     have he : (List.finRange m).toFinset=Finset.univ := by ext i; simp
     rw [he]
-  simp only [materialize,cloneRows_work,List.length_finRange]
+  simp only [materialize,materializeWith,cloneRows_work,List.length_finRange]
   change 10*((List.finRange m).map fun v => k[v.val]).sum+7*m+1+10*m+
     60*(cloneList k).length^2+40*(cloneList k).length+35 = _
   rw [hsum]

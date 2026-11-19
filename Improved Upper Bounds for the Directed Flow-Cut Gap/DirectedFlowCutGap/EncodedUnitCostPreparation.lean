@@ -49,8 +49,8 @@ The quadratic allowance pays at most 80 operations per port-adjacency cell;
 the linear allowance pays all masks, decode branches and vector setup. -/
 def portWork (n : ℕ) : ℕ := 80*(3*n)^2+160*n+60
 
-def build {n : ℕ} (D : Input n) : Prepared n :=
-  let P := portData D
+def buildWith {n : ℕ} (D : Input n) (P : EncodedShortcutReachability.Input (3*n))
+    (weight : Port n → Code) : Prepared n :=
   let matrix := P.materialize
   let r := RetainedSurvivorEnumeration.scan P.removed (List.finRange (3*n))
   let N := r.1.length
@@ -62,9 +62,11 @@ def build {n : ℕ} (D : Input n) : Prepared n :=
     data :=
       { adjacency := Vector.ofFn (n := N) fun i => Vector.ofFn (n := N) fun j =>
           matrix.adjacency[ports[i.val].val][ports[j.val].val]
-        weights := Vector.ofFn (n := N) fun i => preparedWeightCode D (decodePort ports[i.val])
+        weights := Vector.ofFn (n := N) fun i => weight (decodePort ports[i.val])
         costs := Vector.ofFn (n := N) fun i => preparedCostCode D (decodePort ports[i.val]) }
     work := portWork n+matrix.work+r.2+10*(3*n)+40*N^2+100*N+30 }
+
+def build {n : ℕ} (D : Input n) : Prepared n := buildWith D (portData D) (preparedWeightCode D)
 
 @[simp] theorem build_size {n : ℕ} (D : Input n) :
     (build D).size = (RetainedSurvivorEnumeration.labels (portData D).removed).length := rfl
@@ -99,7 +101,7 @@ noncomputable def preparedEquiv {n : ℕ} (D : Input n) :
 @[simp] theorem ports_get {n : ℕ} (D : Input n) (i : Fin (build D).size) :
     (build D).ports[i.val] =
       ((RetainedSurvivorEnumeration.vector (portData D).removed)[i.val]).val := by
-  simp [build,RetainedSurvivorEnumeration.vector,RetainedSurvivorEnumeration.labels]
+  simp [build,buildWith,RetainedSurvivorEnumeration.vector,RetainedSurvivorEnumeration.labels]
 
 @[simp] theorem preparedEquiv_val {n : ℕ} (D : Input n) (i : Fin (build D).size) :
     (preparedEquiv D i).val = decodePort (build D).ports[i.val] := by
@@ -108,17 +110,17 @@ noncomputable def preparedEquiv {n : ℕ} (D : Input n) :
 
 @[simp] theorem build_weights_get {n : ℕ} (D : Input n) (i : Fin (build D).size) :
     (build D).data.weights[i.val] = preparedWeightCode D (decodePort (build D).ports[i.val]) := by
-  simp [build]
+  simp [build,buildWith]
 
 @[simp] theorem build_costs_get {n : ℕ} (D : Input n) (i : Fin (build D).size) :
     (build D).data.costs[i.val] = preparedCostCode D (decodePort (build D).ports[i.val]) := by
-  simp [build]
+  simp [build,buildWith]
 
 theorem build_graph {n : ℕ} (D : Input n) (i j : Fin (build D).size) :
     (build D).data.graph.Adj i j ↔
       (UnitCostReduction.preparedGraph D.graph D.weight).Adj (preparedEquiv D i) (preparedEquiv D j) := by
   simp only [preparedEquiv_apply]
-  simpa [Input.graph,build,
+  simpa [Input.graph, build,buildWith,
     RetainedSurvivorEnumeration.vector,RetainedSurvivorEnumeration.labels] using
     preparedShortcut_refines D
       ((RetainedSurvivorEnumeration.vector (portData D).removed)[i.val])
@@ -127,14 +129,14 @@ theorem build_graph {n : ℕ} (D : Input n) (i j : Fin (build D).size) :
 theorem build_weight {n : ℕ} (D : Input n) (i : Fin (build D).size) :
     (build D).data.weight i = UnitCostReduction.preparedWeight D.weight (preparedEquiv D i) := by
   simp only [preparedEquiv_apply]
-  simpa [Input.weight,build,
+  simpa [Input.weight, build,buildWith,
     RetainedSurvivorEnumeration.vector,RetainedSurvivorEnumeration.labels] using
     preparedWeight_refines D ((RetainedSurvivorEnumeration.vector (portData D).removed)[i.val])
 
 theorem build_cost {n : ℕ} (D : Input n) (i : Fin (build D).size) :
     (build D).data.cost i = UnitCostReduction.preparedCost D.weight D.cost (preparedEquiv D i) := by
   simp only [preparedEquiv_apply]
-  simpa [Input.cost,build,
+  simpa [Input.cost, build,buildWith,
     RetainedSurvivorEnumeration.vector,RetainedSurvivorEnumeration.labels] using
     preparedCost_refines D ((RetainedSurvivorEnumeration.vector (portData D).removed)[i.val])
 

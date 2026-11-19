@@ -6,7 +6,7 @@ namespace DirectedFlowCutGap.PhysicalOriginalInputCompleteness
 
 open BinaryArithmetic FiniteDrawTrees EncodedSolverBits
 
-private theorem returns {A R : Type} (output : R → A) (suffix : R → Bits)
+theorem returns {A R : Type} (output : R → A) (suffix : R → Bits)
     {tree : FiniteDrawTrees.Tree A} {tape : Bits} (physical : Option R) (valid : A → Prop)
     (observed : physical.map (fun r => (output r,suffix r)) =
       (run tree tape).map (fun (a,(rest,_)) => (a,rest)))

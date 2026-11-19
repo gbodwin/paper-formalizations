@@ -46,8 +46,9 @@ private theorem select_paid {n B budget : ℕ} {costs : Row n} (head : Flags n �
 private theorem chooseRows_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n)
     (round : PhysicalVertexSampling.Runner n) (T budget : ℕ)
     (hB : 1 ≤ B) (fits : ∀ i, StoredBounded (get D.costs i) B)
-    (bound : ∀ input tape (r : PhysicalIntegerRounding.Result n), round T input tape=some r → r.paid ≤ budget)
     (rows : List (FractionalCoverRawCore.RawRow n)) (tape : Bits)
+    (bound : ∀ y ∈ rows, ∀ tape (r : PhysicalIntegerRounding.Result n),
+      round T (roundingInput (BinaryFractionalGuesses.decodeInput D) y) tape=some r → r.paid ≤ budget)
     {out : (Option (ChargedCutSelection.Scored D.costs) × ℕ) × Bits}
     (actual : PhysicalVertexSampling.chooseRows D round T rows tape=some out) :
     (∀ s ∈ out.1.1, StoredBounded s.price (n*(B+1)+1)) ∧
@@ -68,17 +69,19 @@ private theorem chooseRows_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n
       cases tail : PhysicalVertexSampling.chooseRows D round T ys a.suffix with
       | none => simp [first,tail] at actual
       | some late =>
-        have hs := ih a.suffix tail
-        have selected := select_paid (a.mask,a.paid) late.1 hB fits (bound input tape a first) hs.1
+        have hs := ih a.suffix (fun y mem => bound y (List.mem_cons_of_mem _ mem)) tail
+        have selected := select_paid (a.mask,a.paid) late.1 hB fits (bound y List.mem_cons_self tape a first) hs.1
         simp only [first,tail,Option.bind_some,Option.map_some,Option.some.injEq] at actual
         rw [← actual]
         exact ⟨selected.1,selected.2.trans (by simp only [List.length_cons,Nat.add_mul,Nat.one_mul]; omega)⟩
 
-theorem fromPlan_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n)
+theorem fromPlan_paid_on_rows {n B : ℕ} (D : BinaryFractionalGuesses.Input n)
     (round : PhysicalVertexSampling.Runner n) (T budget : ℕ)
     (hB : 1 ≤ B) (fits : ∀ i, StoredBounded (get D.costs i) B)
-    (bound : ∀ input tape (r : PhysicalIntegerRounding.Result n), round T input tape=some r → r.paid ≤ budget)
-    (plan : PhysicalCoverReader.Plan n) (tape : Bits) {out : (Output n × ℕ) × Bits}
+    (plan : PhysicalCoverReader.Plan n) (tape : Bits)
+    (bound : ∀ rows, plan=.covers rows → ∀ y ∈ rows, ∀ tape (r : PhysicalIntegerRounding.Result n),
+      round T (roundingInput (BinaryFractionalGuesses.decodeInput D) y) tape=some r → r.paid ≤ budget)
+    {out : (Output n × ℕ) × Bits}
     (actual : PhysicalVertexSampling.fromPlan D round T plan tape=some out) :
     out.1.2 ≤ sampleBudget n B (rowsCount plan) budget := by
   cases plan with
@@ -92,11 +95,20 @@ theorem fromPlan_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n)
     cases h : PhysicalVertexSampling.chooseRows D round T rows tape with
     | none => simp [h] at actual
     | some x =>
-      have paid := (chooseRows_paid D round T budget hB fits bound rows tape h).2
+      have paid := (chooseRows_paid D round T budget hB fits rows tape (bound rows rfl) h).2
       simp only [h,Option.map_some,Option.some.injEq] at actual
       rw [← actual]
       simp only [sampleBudget,rowsCount]
       omega
+
+theorem fromPlan_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PhysicalVertexSampling.Runner n) (T budget : ℕ)
+    (hB : 1 ≤ B) (fits : ∀ i, StoredBounded (get D.costs i) B)
+    (bound : ∀ input tape (r : PhysicalIntegerRounding.Result n), round T input tape=some r → r.paid ≤ budget)
+    (plan : PhysicalCoverReader.Plan n) (tape : Bits) {out : (Output n × ℕ) × Bits}
+    (actual : PhysicalVertexSampling.fromPlan D round T plan tape=some out) :
+    out.1.2 ≤ sampleBudget n B (rowsCount plan) budget :=
+  fromPlan_paid_on_rows D round T budget hB fits plan tape (fun _ _ _ _ => bound _) actual
 
 private theorem samples_paid {A : Type} (one : Bits → Option ((A × ℕ) × Bits)) (budget : ℕ)
     (pay : ∀ tape a, one tape=some a → a.1.2 ≤ budget) (k : ℕ) (tape : Bits)
@@ -137,11 +149,13 @@ private theorem amplification_paid {n B : ℕ} (D : BinaryFractionalGuesses.Inpu
   unfold ChargedAmplification.budget
   omega
 
-theorem run_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n) (round : PhysicalVertexSampling.Runner n)
+theorem run_paid_on_rows {n B : ℕ} (D : BinaryFractionalGuesses.Input n) (round : PhysicalVertexSampling.Runner n)
     (roundBound extra confidence cost : ℕ) (tape : Bits)
     (hB : 1 ≤ B) (fits : ∀ i, StoredBounded (get D.costs i) B)
-    (bound : ∀ input tape (r : PhysicalIntegerRounding.Result n),
-      round (trialLimit (BinaryFractionalGuesses.decodeInput D) roundBound extra confidence) input tape=some r → r.paid ≤ cost)
+    (bound : ∀ rows, PhysicalCoverReader.plan (BinaryFractionalGuesses.solveInput D).1=.covers rows →
+      ∀ y ∈ rows, ∀ tape (r : PhysicalIntegerRounding.Result n),
+        round (trialLimit (BinaryFractionalGuesses.decodeInput D) roundBound extra confidence)
+          (roundingInput (BinaryFractionalGuesses.decodeInput D) y) tape=some r → r.paid ≤ cost)
     {out : PhysicalAmplifiedVertexSolver.Result n}
     (h : PhysicalAmplifiedVertexSolver.run D round roundBound extra confidence tape=some out) :
     out.dispatch ≤ PhysicalSolverCharges.dispatchBudget D ∧
@@ -166,9 +180,21 @@ theorem run_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Phys
     apply amplification_paid D extra _ hB fits cuts
     apply samples_paid one _ _ (extra+1) tape samples
     intro bits r ran
-    apply (fromPlan_paid D round T cost hB fits bound plan bits ran).trans
+    apply (fromPlan_paid_on_rows D round T cost hB fits plan bits bound ran).trans
     have length : rowsCount plan ≤ rowLimit G := rowsCount_le D
     unfold sampleBudget
     gcongr
+
+theorem run_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n) (round : PhysicalVertexSampling.Runner n)
+    (roundBound extra confidence cost : ℕ) (tape : Bits)
+    (hB : 1 ≤ B) (fits : ∀ i, StoredBounded (get D.costs i) B)
+    (bound : ∀ input tape (r : PhysicalIntegerRounding.Result n),
+      round (trialLimit (BinaryFractionalGuesses.decodeInput D) roundBound extra confidence) input tape=some r → r.paid ≤ cost)
+    {out : PhysicalAmplifiedVertexSolver.Result n}
+    (h : PhysicalAmplifiedVertexSolver.run D round roundBound extra confidence tape=some out) :
+    out.dispatch ≤ PhysicalSolverCharges.dispatchBudget D ∧
+    out.readback ≤ PhysicalSolverCharges.lookupBudget D ∧
+    out.roundingAndSelection ≤ budget (BinaryFractionalGuesses.decodeInput D) B extra cost :=
+  run_paid_on_rows D round roundBound extra confidence cost tape hB fits (fun _ _ _ _ => bound _) h
 
 end DirectedFlowCutGap.PhysicalAmplifiedVertexCost

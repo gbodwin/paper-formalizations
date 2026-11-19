@@ -151,6 +151,7 @@ import DirectedFlowCutGap.BinaryComparisonProgram
 import DirectedFlowCutGap.BinaryCounterMaterialization
 import DirectedFlowCutGap.BinaryCounterProgram
 import DirectedFlowCutGap.BinaryCounters
+import DirectedFlowCutGap.BinaryCubeThreshold
 import DirectedFlowCutGap.BinaryCutPriceSelection
 import DirectedFlowCutGap.BinaryDivision
 import DirectedFlowCutGap.BinaryDrawTreeExecution
@@ -171,6 +172,7 @@ import DirectedFlowCutGap.BinaryFractionalWalkBounds
 import DirectedFlowCutGap.BinaryFractionalWalkOracle
 import DirectedFlowCutGap.BinaryFractionalWidths
 import DirectedFlowCutGap.BinaryGeometricCounterProgram
+import DirectedFlowCutGap.BinaryHeavyPreparation
 import DirectedFlowCutGap.BinaryIncrementProgram
 import DirectedFlowCutGap.BinaryIndexedPairRead
 import DirectedFlowCutGap.BinaryInputBudgets
@@ -182,7 +184,9 @@ import DirectedFlowCutGap.BinaryMaximumProgram
 import DirectedFlowCutGap.BinaryMaximumTrace
 import DirectedFlowCutGap.BinaryMinimumWordProgram
 import DirectedFlowCutGap.BinaryMultiplicationProgram
+import DirectedFlowCutGap.BinaryNaturalView
 import DirectedFlowCutGap.BinaryPointerListRead
+import DirectedFlowCutGap.BinaryPortPreparation
 import DirectedFlowCutGap.BinaryPowerBound
 import DirectedFlowCutGap.BinaryPowerCallLift
 import DirectedFlowCutGap.BinaryPowerCalls
@@ -199,6 +203,8 @@ import DirectedFlowCutGap.BinaryPredecessorTrace
 import DirectedFlowCutGap.BinaryProductOrderProgram
 import DirectedFlowCutGap.BinaryRandomWord
 import DirectedFlowCutGap.BinaryRational
+import DirectedFlowCutGap.BinaryRationalCeiling
+import DirectedFlowCutGap.BinaryRawRational
 import DirectedFlowCutGap.BinarySamplerCost
 import DirectedFlowCutGap.BinarySigned
 import DirectedFlowCutGap.BinarySizeCallLift
@@ -208,6 +214,8 @@ import DirectedFlowCutGap.BinarySizeProgram
 import DirectedFlowCutGap.BinarySizeTrace
 import DirectedFlowCutGap.BinarySizeValue
 import DirectedFlowCutGap.BinaryTrimProgram
+import DirectedFlowCutGap.BinaryUniformArithmetic
+import DirectedFlowCutGap.BinaryVertexReductionArithmetic
 import DirectedFlowCutGap.BinaryWalkCostCongruence
 import DirectedFlowCutGap.BinaryWeightedChoice
 import DirectedFlowCutGap.BinaryZeroProgram
@@ -835,9 +843,11 @@ import DirectedFlowCutGap.PathCostMaterialization
 import DirectedFlowCutGap.PathExtraction
 import DirectedFlowCutGap.PathSystemCharging
 import DirectedFlowCutGap.PathSystemCounting
+import DirectedFlowCutGap.PhysicalAmplifiedBinaryVertex
 import DirectedFlowCutGap.PhysicalAmplifiedEdgeSolver
 import DirectedFlowCutGap.PhysicalAmplifiedVertexCost
 import DirectedFlowCutGap.PhysicalAmplifiedVertexSolver
+import DirectedFlowCutGap.PhysicalBinaryVertexRounding
 import DirectedFlowCutGap.PhysicalBoundedDrawExecution
 import DirectedFlowCutGap.PhysicalBoundedDrawProgram
 import DirectedFlowCutGap.PhysicalControllerControls
@@ -845,6 +855,7 @@ import DirectedFlowCutGap.PhysicalControllerInitializer
 import DirectedFlowCutGap.PhysicalCoverAccess
 import DirectedFlowCutGap.PhysicalCoverExecution
 import DirectedFlowCutGap.PhysicalCoverReader
+import DirectedFlowCutGap.PhysicalCoverWidthEnvelope
 import DirectedFlowCutGap.PhysicalDrawSequenceProgram
 import DirectedFlowCutGap.PhysicalEdgeCostEnvelope
 import DirectedFlowCutGap.PhysicalEdgeFamily
@@ -1054,6 +1065,7 @@ import DirectedFlowCutGap.ValidatedFractionalRows
 import DirectedFlowCutGap.VertexFlow
 import DirectedFlowCutGap.VertexGridDistances
 import DirectedFlowCutGap.VertexListReverse
+import DirectedFlowCutGap.VertexReductionWidths
 import DirectedFlowCutGap.VertexReplication
 import DirectedFlowCutGap.VertexRounding
 import DirectedFlowCutGap.VertexToEdgeReduction
