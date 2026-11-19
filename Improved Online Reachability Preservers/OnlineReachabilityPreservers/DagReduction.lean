@@ -126,6 +126,96 @@ theorem theorem9_lift (run : Arcs V → List (V × V) → Arcs V)
       have h₃ := card_union_le (connectors G) (liftedArcs G H)
       omega
 
+private theorem eraseDups_sublist_nodup {A : Type*} [BEq A] [LawfulBEq A] (D : List A) :
+    List.Sublist D.eraseDups D ∧ D.eraseDups.Nodup := by
+  cases D with
+  | nil => simp
+  | cons d rest =>
+    rw [List.eraseDups_cons]
+    let remaining := rest.filter fun a => !a == d
+    have cut : List.Sublist remaining rest := List.filter_sublist
+    obtain ⟨sub,unique⟩ := eraseDups_sublist_nodup remaining
+    refine ⟨List.Sublist.cons_cons d (sub.trans cut), List.nodup_cons.mpr ⟨?_,unique⟩⟩
+    simp
+termination_by D.length
+decreasing_by exact Nat.lt_succ_of_le (List.length_filter_le _ _)
+
+private theorem eraseDups_prefix {A : Type*} [BEq A] [LawfulBEq A] {D E : List A} (hprefix : D <+: E) :
+    D.eraseDups <+: E.eraseDups := by
+  obtain ⟨extra,rfl⟩ := hprefix
+  rw [List.eraseDups_append]
+  exact List.prefix_append _ _
+
+/-- Process projected demands in first-occurrence order and skip repetitions. -/
+def projectedDistinctDemands (G : Arcs V) (D : List (V × V)) : List (V × V) :=
+  (D.map (projectDemand G)).eraseDups
+
+theorem projectedDistinctDemands_nodup (G : Arcs V) (D : List (V × V)) :
+    (projectedDistinctDemands G D).Nodup :=
+  (eraseDups_sublist_nodup (D.map (projectDemand G))).2
+
+theorem projectedDistinctDemands_length_le (G : Arcs V) (D : List (V × V)) :
+    (projectedDistinctDemands G D).length ≤ D.length := by
+  simpa only [projectedDistinctDemands, List.length_map] using
+    (eraseDups_sublist_nodup (D.map (projectDemand G))).1.length_le
+
+/-- Contracting and deduplicating does not increase the number of distinct endpoints. -/
+theorem projectedDistinctDemands_endpoints_le (G : Arcs V) (D : List (V × V)) (endpoint : V × V → V)
+    (compatible : ∀ d, endpoint (projectDemand G d) = componentLabel G (endpoint d)) :
+    ((projectedDistinctDemands G D).toFinset.image endpoint).card ≤ (D.toFinset.image endpoint).card := by
+  have inclusion : (projectedDistinctDemands G D).toFinset.image endpoint ⊆
+      (D.toFinset.image endpoint).image (componentLabel G) := by
+    intro w hw
+    obtain ⟨e,he,rfl⟩ := mem_image.mp hw
+    have before := List.mem_eraseDups.mp (List.mem_toFinset.mp he)
+    obtain ⟨d,hd,rfl⟩ := List.mem_map.mp before
+    exact mem_image.mpr ⟨endpoint d,mem_image.mpr ⟨d,List.mem_toFinset.mpr hd,rfl⟩,(compatible d).symm⟩
+  exact (card_le_card inclusion).trans card_image_le
+
+/-- Lift a DAG algorithm whose contract applies only to lists of distinct demands. -/
+def liftedDistinctRun (run : Arcs V → List (V × V) → Arcs V) (G : Arcs V) (D : List (V × V)) : Arcs V :=
+  liftedRun (fun K P => run K P.eraseDups) G D
+
+theorem liftedDistinctRun_prefix (run : Arcs V → List (V × V) → Arcs V)
+    (online : ∀ G, IsDAG G → ∀ {P Q}, P.Nodup → Q.Nodup → P <+: Q → run G P ⊆ run G Q)
+    (G : Arcs V) {D E : List (V × V)} (hprefix : D <+: E) :
+    liftedDistinctRun run G D ⊆ liftedDistinctRun run G E :=
+  liftedRun_prefix (fun K P => run K P.eraseDups)
+    (fun K dag {P Q} h => online K dag (eraseDups_sublist_nodup P).2 (eraseDups_sublist_nodup Q).2
+      (eraseDups_prefix h)) G hprefix
+
+/-- The SCC reduction with distinct DAG requests, preserving every original request. -/
+theorem theorem9_lift_distinct (run : Arcs V → List (V × V) → Arcs V)
+    (G : Arcs V) (D : List (V × V))
+    (sub : ∀ K, IsDAG K → ∀ P, P.Nodup → run K P ⊆ K)
+    (correct : ∀ K, IsDAG K → ∀ P, P.Nodup → Preserves K (run K P) P) :
+    liftedDistinctRun run G D ⊆ G ∧ Preserves G (liftedDistinctRun run G D) D ∧
+      (liftedDistinctRun run G D).card ≤ (run (condensation G) (projectedDistinctDemands G D)).card +
+        2 * Fintype.card V := by
+  apply theorem9_lift (fun K P => run K P.eraseDups) G D
+  · exact fun K dag P => sub K dag _ (eraseDups_sublist_nodup P).2
+  · intro K dag P e he
+    exact (correct K dag _ (eraseDups_sublist_nodup P).2) e (List.mem_eraseDups.mpr he)
+
+/-- The edge-budget form of Theorem 9 when the DAG bound is monotone in the
+number of demands and the number of source or sink labels. -/
+theorem theorem9_distinct_monotone_bound (run : Arcs V → List (V × V) → Arcs V)
+    (G : Arcs V) (D : List (V × V)) (endpoint : V × V → V) (f : ℕ → ℕ → ℕ → ℕ)
+    (compatible : ∀ d, endpoint (projectDemand G d) = componentLabel G (endpoint d))
+    (sub : ∀ K, IsDAG K → ∀ P, P.Nodup → run K P ⊆ K)
+    (correct : ∀ K, IsDAG K → ∀ P, P.Nodup → Preserves K (run K P) P)
+    (size : ∀ K, IsDAG K → ∀ P, P.Nodup →
+      (run K P).card ≤ f (Fintype.card V) P.length (P.toFinset.image endpoint).card)
+    (mono : ∀ {p q s t}, p ≤ q → s ≤ t → f (Fintype.card V) p s ≤ f (Fintype.card V) q t) :
+    liftedDistinctRun run G D ⊆ G ∧ Preserves G (liftedDistinctRun run G D) D ∧
+      (liftedDistinctRun run G D).card ≤ f (Fintype.card V) D.length (D.toFinset.image endpoint).card +
+        2*Fintype.card V := by
+  obtain ⟨isSub, good, budget⟩ := theorem9_lift_distinct run G D sub correct
+  have contracted := size (condensation G) (condensation_dag G) _ (projectedDistinctDemands_nodup G D)
+  have stillFits := mono (projectedDistinctDemands_length_le G D)
+    (projectedDistinctDemands_endpoints_le G D endpoint compatible)
+  exact ⟨isSub, good, budget.trans (Nat.add_le_add_right (contracted.trans stillFits) _)⟩
+
 /-- The sink-restricted online algorithm on an arbitrary directed graph. -/
 def sinkPreserver (G : Arcs V) (D : List (V × V)) : Arcs V := liftedRun forwardRun G D
 

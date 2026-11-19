@@ -290,7 +290,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
 Here `p` counts processed requests. For the paper's ordered set of distinct demands,
 this is its demand cardinality. The model admits self-pairs and unreachable pairs.
 For component contraction, unused vertex labels are isolated in the DAG, keeping
-the budget parameter `n` equal to the original vertex count.
+the budget parameter `n` equal to the original vertex count. The distinct-demand
+lift forwards first occurrences in arrival order, even when two distinct original
+demands project to the same pair. It preserves every request and adds at most
+`2n` edges to a DAG budget that is monotone in demand and endpoint counts.
+[Theorem 9](OnlineReachabilityPreservers/DagReduction.lean).
 
 The algorithms are executable bounded searches on finite sets. The graph searches
 iterate at most `n` times over finite vertex and edge sets, with a deterministic
