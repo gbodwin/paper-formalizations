@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.AcyclicOverlay
+import OnlineReachabilityPreservers.BalancedRegularization
 import OnlineReachabilityPreservers.Basic
 import OnlineReachabilityPreservers.BootstrapArithmetic
 import OnlineReachabilityPreservers.BranchWindow

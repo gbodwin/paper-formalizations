@@ -190,6 +190,11 @@ An exact-source replay grants no coverage to a paper statement outside the
   kernel replay passed. Independent review checked repeated-path shortcuts,
   bridge extraction, and the required consecutive-arc count.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44442685627).
+- [9827de6a](https://github.com/gbodwin/paper-formalizations/commit/9827de6adf9e212d83b2e0a3ddeba0e72e90aba9)
+  bounds the number of dyadic quota candidates searched. The 1580-declaration
+  paper audit and local kernel replay passed. Independent review confirmed
+  that the chosen levels and assigned paths agree with the previous search.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44444817085).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

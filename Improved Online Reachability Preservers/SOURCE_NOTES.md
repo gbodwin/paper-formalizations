@@ -103,8 +103,14 @@ gives a bridge. The acyclic overlay therefore forces every consecutive arc.
   while the restricted preserver size bound has an alternative counting proof.
 - Lemmas 23 and 39 use splitting steps, which increase vertex or path count
   before any additional restriction. The displayed proof does not establish
-  its exact output budgets. The constant-factor acyclic proof establishes the
-  upper caps used in the counts. The lower caps and exact budgets remain open.
+  its exact output budgets or preserve the lower bounds after all steps.
+  In a common vertex order and with incidence mass at least both original
+  counts, restricting the expanded system in each coordinate preserves at
+  least nine sixteenths of the mass. Pruning then preserves at least one
+  sixteenth of the original mass and gives both upper and lower caps.
+  Lean verifies both original budgets and the two bridge conditions through
+  size four. General path-system cleaning remains open.
+  [Checked acyclic cleaning](OnlineReachabilityPreservers/BalancedRegularization.lean).
 - The proof of Lemma 23 writes \(\beta\) for the half-bridge-free extremum
   \(H\). The statement of Lemma 39 writes \(H\) for the full-bridge-free
   extremum \(\beta\) it is used to estimate.
