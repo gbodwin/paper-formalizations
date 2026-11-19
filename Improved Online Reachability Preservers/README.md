@@ -55,6 +55,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   edge. It checks the mean cost of the two late phases over independent finite
   choices and adds an explicit early cost. The cited early competitive bound
   and the full running time remain open.
+- [The late-phase exponent bound](OnlineReachabilityPreservers/SteinerRate.lean)
+  uses integer thresholds for \(n^{6/5}\) and \(n^{3/5}\). It absorbs both
+  logarithmic losses and the bad-hub cost into \(O(n^{3/5+\varepsilon})\)
+  times the offline solution size, with the early purchases kept explicit.
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)

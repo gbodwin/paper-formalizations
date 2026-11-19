@@ -46,5 +46,6 @@ import OnlineReachabilityPreservers.SteinerCounting
 import OnlineReachabilityPreservers.SteinerCutFlow
 import OnlineReachabilityPreservers.SteinerCuts
 import OnlineReachabilityPreservers.SteinerHubs
+import OnlineReachabilityPreservers.SteinerRate
 import OnlineReachabilityPreservers.SteinerThinCover
 import OnlineReachabilityPreservers.SteinerThinRound

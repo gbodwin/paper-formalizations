@@ -205,6 +205,9 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.assembledSteiner_prefix
 #print axioms OnlineReachabilityPreservers.assembledSteiner_correct
 #print axioms OnlineReachabilityPreservers.assembledSteiner_mean_transfer
+#print axioms OnlineReachabilityPreservers.steinerEarlyCutoff_bounds
+#print axioms OnlineReachabilityPreservers.steinerThinThreshold_bounds
+#print axioms OnlineReachabilityPreservers.assembledSteiner_late_rate
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum
 #print axioms OnlineReachabilityPreservers.SourceAudit.splitExample_bridge_free
 #print axioms OnlineReachabilityPreservers.SourceAudit.splitExample_creates_half_four

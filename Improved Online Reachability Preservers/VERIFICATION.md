@@ -167,6 +167,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   review verified the distinct-path bridge definition, the alternate route,
   and the scope of the inference refuted by the example.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44438914059).
+- [02c175a3](https://github.com/gbodwin/paper-formalizations/commit/02c175a3b0dd8236d032611bcfad304d5059a1c9)
+  proves feasibility, prefix monotonicity, and the combined expected late
+  cost with an explicit early cost. The 1447-declaration paper audit and
+  local kernel replay passed. Independent review checked the actual cutoff
+  charge, the fixed thin trace, and both independent sample spaces.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44440525657).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
