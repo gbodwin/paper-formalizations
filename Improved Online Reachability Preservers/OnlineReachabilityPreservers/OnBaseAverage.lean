@@ -159,7 +159,8 @@ private theorem predecessor_last_power {y x b : ℝ} (hy : 0 < y) (hx : 1 ≤ x)
   rw [Real.div_rpow (Real.rpow_nonneg hy.le _) hx'.le, ← Real.rpow_mul hy.le, e, Real.rpow_two]
   exact div_le_div_of_nonneg_left (sq_nonneg y) (pow_pos hx' _) exp
 
-private theorem predecessor_count_coarse {C a b : ℝ} (hC : 1 ≤ C)
+/-- Combine the predecessor envelope and degree cap, including small thresholds. -/
+theorem lemma35_coarse_from_counts {C a b : ℝ} (hC : 1 ≤ C)
     (ha₀ : 2/3 ≤ a) (ha₁ : a ≤ 3/4) (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 3/4) :
     ∃ K ≥ 1, ∀ {M x d h : ℝ}, 1 ≤ x → 0 < d → 1 ≤ h →
       M ≤ d^2*h/x →
@@ -230,7 +231,7 @@ theorem lemma35_large_bases_coarse {C a b : ℝ} (hC : 1 ≤ C)
       let y : ℝ := (D:ℝ)*h
       ((largeBranchBases paths u h x).card:ℝ) ≤
         K*min (y/x+y^2/(x:ℝ)^3) ((D:ℝ)^2*h/x) := by
-  obtain ⟨K, hK, coarse⟩ := predecessor_count_coarse hC ha₀ ha₁ hb₀ hb₁
+  obtain ⟨K, hK, coarse⟩ := lemma35_coarse_from_counts hC ha₀ ha₁ hb₀ hb₁
   refine ⟨K, hK, ?_⟩
   intro V I _ _ _ paths free u D h x hD hh hx degree input
   let J := largeBranchBases paths u h x
@@ -342,6 +343,87 @@ theorem lemma35_bucket_upper {ℓ d h x K P M : ℝ} (hℓ : 0 < ℓ) (hd : 0 < 
 
 
 
+
+/-- The source-restricted square-root term after inserting the support caps. -/
+theorem lemma35_important_from_caps {ℓ d h P S N M : ℝ}
+    (hℓ : 0 ≤ ℓ) (hd : 0 ≤ d) (_hh : 0 ≤ h)
+    (hP : 0 ≤ P) (hS : 0 ≤ S) (_hN : 0 ≤ N)
+    (sCap : S ≤ d*h) (nCap : N ≤ 2*ℓ*d)
+    (count : M ≤ N+Real.sqrt (2*N*(P*S))) :
+    M ≤ 2*ℓ*d+2*d*Real.sqrt (ℓ*h*P) := calc
+  _ ≤ N+Real.sqrt (2*N*(P*S)) := count
+  _ ≤ (2*ℓ*d)+Real.sqrt (2*(2*ℓ*d)*(P*(d*h))) := by
+    exact add_le_add nCap (Real.sqrt_le_sqrt (by gcongr))
+  _ = _ := by
+    rw [show 2*(2*ℓ*d)*(P*(d*h))=(2*d)^2*(ℓ*h*P) by ring,
+      Real.sqrt_mul (sq_nonneg _), Real.sqrt_sq (by positivity)]
+
+/-- Sum the two numerical bounds for each dyadic on-base bucket. -/
+theorem lemma35_on_base_sum_from_buckets :
+    ∃ G > 0, ∀ {V : Type*} [Fintype V] (L D h : ℕ),
+      0 < h → h ≤ L → h ≤ D →
+      ∀ {K Q : ℝ}, 1 ≤ K → (M P : V → ℕ → ℝ) →
+      (∀ j u, 0 ≤ M u j) →
+      (∀ j u, M u j ≤ 2*(L:ℝ)*D+2*D*Real.sqrt ((L:ℝ)*h*P u j)) →
+      (∀ j u, let x : ℝ := (2:ℝ)^j
+        P u j ≤ K*min ((D:ℝ)*h/x+((D:ℝ)*h)^2/x^3) ((D:ℝ)^2*h/x)) →
+      Q ≤ (∑ j ∈ range (Nat.log 2 D+1),
+        (2*(2:ℝ)^j*((D:ℝ)+h+1))*∑ u, M u j) →
+      (L:ℝ)*Q ≤ (12*Real.sqrt K*G)*(Fintype.card V:ℝ)*D*
+        ((L:ℝ)^2*(D:ℝ)^2+(L:ℝ)^(3/2:ℝ)*(D:ℝ)^2*(h:ℝ)^(5/4:ℝ)) := by
+  obtain ⟨G, hG, geometric⟩ := lemma35_dyadic_arithmetic
+  refine ⟨G, hG, ?_⟩
+  intro V _ L D h hh hL hD K Q hK M P nonneg marked coarse count
+  let ℓ : ℝ := L
+  let d : ℝ := D
+  let t : ℝ := h
+  let n : ℝ := Fintype.card V
+  let J := range (Nat.log 2 D+1)
+  let x (j : ℕ) : ℝ := (2:ℝ)^j
+  let B (j : ℕ) := ℓ^2*d*x j +
+    min (ℓ^(3/2:ℝ)*d^(3/2:ℝ)*t*(x j)^(1/2:ℝ) +
+        ℓ^(3/2:ℝ)*d^2*t^(3/2:ℝ)*(x j)^(-(1/2):ℝ))
+      (ℓ^(3/2:ℝ)*d^2*t*(x j)^(1/2:ℝ))
+  have dl : 0 < D := hh.trans_le hD
+  have hℓ : 0 < ℓ := Nat.cast_pos.mpr (hh.trans_le hL)
+  have hd : 0 < d := Nat.cast_pos.mpr dl
+  have ht : 0 < t := Nat.cast_pos.mpr hh
+  have hd1 : 1 ≤ d := by change (1:ℝ) ≤ D; exact_mod_cast (show 1 ≤ D from dl)
+  have ht1 : 1 ≤ t := by change (1:ℝ) ≤ h; exact_mod_cast (show 1 ≤ h from hh)
+  have upper (j : ℕ) (u : V) : ℓ*x j*M u j ≤ 2*Real.sqrt K*B j :=
+    lemma35_bucket_upper hℓ hd ht (pow_pos (by norm_num) j) hK (coarse j u) (marked j u)
+  have bucket (j : ℕ) :
+      ℓ*(2*x j*(d+t+1))*(∑ u, M u j) ≤ (12*Real.sqrt K*n*d)*B j := calc
+    _ = 2*(d+t+1)*∑ u, ℓ*x j*M u j := by
+      rw [← mul_sum]
+      ring
+    _ ≤ (6*d)*∑ u, ℓ*x j*M u j := by
+      have htD : t ≤ d := Nat.cast_le.mpr hD
+      apply mul_le_mul_of_nonneg_right (by linarith only [htD, hd1])
+      apply sum_nonneg
+      intro u _
+      exact mul_nonneg (mul_nonneg hℓ.le (pow_nonneg (by norm_num) _)) (nonneg j u)
+    _ ≤ (6*d)*∑ _u : V, 2*Real.sqrt K*B j :=
+      mul_le_mul_of_nonneg_left (sum_le_sum fun u _ => upper j u) (by positivity)
+    _ = _ := by rw [sum_const, card_univ, nsmul_eq_mul]; dsimp only [n]; ring
+  have cutoff (j : ℕ) (hj : j ∈ J) : (2:ℝ)^j ≤ d := by
+    have hs : j ≤ Nat.log 2 D := Nat.le_of_lt_succ (mem_range.mp hj)
+    have hpow : (2:ℕ)^j ≤ D :=
+      (Nat.pow_le_pow_right (by decide) hs).trans (Nat.pow_log_le_self 2 dl.ne')
+    change (2:ℝ)^j ≤ (D:ℝ)
+    exact_mod_cast hpow
+  have sumGeom : (∑ j ∈ J, B j) ≤ G*(ℓ^2*d^2+ℓ^(3/2:ℝ)*d^2*t^(5/4:ℝ)) :=
+    geometric J hℓ hd1 ht1 cutoff
+  change ℓ*Q ≤
+    (12*Real.sqrt K*G)*n*d*(ℓ^2*d^2+ℓ^(3/2:ℝ)*d^2*t^(5/4:ℝ))
+  calc
+    _ ≤ ℓ*∑ j ∈ J, 2*x j*(d+t+1)*(∑ u, M u j) := mul_le_mul_of_nonneg_left count hℓ.le
+    _ ≤ ∑ j ∈ J, (12*Real.sqrt K*n*d)*B j := by
+      rw [mul_sum]
+      exact sum_le_sum fun j _ => (by simpa only [mul_assoc] using bucket j)
+    _ = (12*Real.sqrt K*n*d)*∑ j ∈ J, B j := (mul_sum _ _ _).symm
+    _ ≤ _ := (mul_le_mul_of_nonneg_left sumGeom (by dsimp only [n]; positivity)).trans_eq (by ring)
+
 /-- The finite Appendix A on-base estimate. The vertex and path dimensions
 are kept separate from the uniform degree and length caps. -/
 theorem lemma35_on_base_sum {C a b : ℝ} (hC : 1 ≤ C)
@@ -357,37 +439,19 @@ theorem lemma35_on_base_sum {C a b : ℝ} (hC : 1 ≤ C)
       ℓ*(∑ base, ((onBaseBranchTuples paths base h).card:ℝ)) ≤
         A*(Fintype.card V:ℝ)*d*(ℓ^2*d^2+ℓ^(3/2:ℝ)*d^2*t^(5/4:ℝ)) := by
   obtain ⟨K, hK, coarse⟩ := lemma35_large_bases_coarse hC ha₀ ha₁ hb₀ hb₁
-  obtain ⟨G, hG, geometric⟩ := lemma35_dyadic_arithmetic
-  have sqp : 0 < Real.sqrt K := Real.sqrt_pos.2 (zero_lt_one.trans_le hK)
+  obtain ⟨G, hG, combine⟩ := lemma35_on_base_sum_from_buckets
   refine ⟨12*Real.sqrt K*G, by positivity, ?_⟩
   intro V I _ _ _ _ paths free L D h hh hL hD lengths degrees input
-  dsimp only
-  let ℓ : ℝ := L
-  let d : ℝ := D
-  let t : ℝ := h
-  let n : ℝ := Fintype.card V
-  let J := range (Nat.log 2 D+1)
-  let x (j : ℕ) : ℝ := (2:ℝ)^j
   let M (u : V) (j : ℕ) : ℝ := importantBaseIncidences paths u h (2^j)
-  let B (j : ℕ) := ℓ^2*d*x j +
-    min (ℓ^(3/2:ℝ)*d^(3/2:ℝ)*t*(x j)^(1/2:ℝ) +
-        ℓ^(3/2:ℝ)*d^2*t^(3/2:ℝ)*(x j)^(-(1/2):ℝ))
-      (ℓ^(3/2:ℝ)*d^2*t*(x j)^(1/2:ℝ))
-  have dl : 0 < D := hh.trans_le hD
-  have hℓ : 0 < ℓ := Nat.cast_pos.mpr (hh.trans_le hL)
-  have hd : 0 < d := Nat.cast_pos.mpr dl
-  have ht : 0 < t := Nat.cast_pos.mpr hh
-  have hd1 : 1 ≤ d := by change (1:ℝ) ≤ D; exact_mod_cast (show 1 ≤ D from dl)
-  have ht1 : 1 ≤ t := by change (1:ℝ) ≤ h; exact_mod_cast (show 1 ≤ h from hh)
-  have upper (j : ℕ) (u : V) : ℓ*x j*M u j ≤ 2*Real.sqrt K*B j := by
-    have xp : (0:ℝ) < x j := pow_pos (by norm_num) j
-    let P : ℝ := (largeBranchBases paths u h (2^j)).card
+  let P (u : V) (j : ℕ) : ℝ := (largeBranchBases paths u h (2^j)).card
+  refine combine L D h hh hL hD hK M P (fun _ _ => Nat.cast_nonneg _) ?_ ?_ ?_
+  · intro j u
     let S : ℝ := (predecessorSupport paths u h).card
     let N : ℝ := (predecessorSupport paths u h ∪ successorSupport paths u).card
-    have hS : S ≤ d*t := by
+    have hS : S ≤ (D:ℝ)*h := by
       change ((predecessorSupport paths u h).card:ℝ) ≤ (D:ℝ)*h
       exact_mod_cast (predecessorSupport_card paths u h).trans (Nat.mul_le_mul_right h (degrees u))
-    have hN : N ≤ 2*ℓ*d := by
+    have hN : N ≤ 2*(L:ℝ)*D := by
       change ((predecessorSupport paths u h ∪ successorSupport paths u).card:ℝ) ≤ 2*(L:ℝ)*D
       have nCap : (predecessorSupport paths u h ∪ successorSupport paths u).card ≤ 2*L*D := calc
         _ ≤ (predecessorSupport paths u h).card + (successorSupport paths u).card := card_union_le _ _
@@ -397,97 +461,36 @@ theorem lemma35_on_base_sum {C a b : ℝ} (hC : 1 ≤ C)
         _ ≤ D*L+D*L := Nat.add_le_add_right (Nat.mul_le_mul_left D hL) _
         _ = _ := by ring
       exact_mod_cast nCap
-    have pPos : 0 ≤ P := Nat.cast_nonneg _
-    have mark : M u j ≤ 2*ℓ*d+2*d*Real.sqrt (ℓ*t*P) := calc
-      _ ≤ N+Real.sqrt (2*N*(P*S)) := lemma35_important_upper free u h (2^j) (Nat.pow_pos (by decide))
-      _ ≤ (2*ℓ*d)+Real.sqrt (2*(2*ℓ*d)*(P*(d*t))) := by
-        have sGood : 0 ≤ S := Nat.cast_nonneg _
-        have nGood : 0 ≤ N := Nat.cast_nonneg _
-        exact add_le_add hN (Real.sqrt_le_sqrt (by gcongr))
-      _ = _ := by
-        rw [show 2*(2*ℓ*d)*(P*(d*t))=(2*d)^2*(ℓ*t*P) by ring,
-          Real.sqrt_mul (sq_nonneg _), Real.sqrt_sq (by positivity)]
-    have prior := coarse free u D h (2^j) dl hh (Nat.pow_pos (by decide)) degrees input
-    have cBound : P ≤ K*min (d*t/x j+(d*t)^2/(x j)^3) (d^2*t/x j) := by
-      simpa only [P, d, t, x, Nat.cast_pow, Nat.cast_ofNat] using prior
-    exact lemma35_bucket_upper hℓ hd ht xp hK cBound mark
-  have bucket (j : ℕ) :
-      ℓ*(2*x j*(d+t+1))*(∑ u, M u j) ≤ (12*Real.sqrt K*n*d)*B j := calc
-    _ = 2*(d+t+1)*∑ u, ℓ*x j*M u j := by
-      rw [← mul_sum]
-      ring
-    _ ≤ (6*d)*∑ u, ℓ*x j*M u j := by
-      have htD : t ≤ d := Nat.cast_le.mpr hD
-      apply mul_le_mul_of_nonneg_right (by linarith only [htD, hd1])
-      apply sum_nonneg
-      intro u _
-      exact mul_nonneg (mul_nonneg hℓ.le (pow_nonneg (by norm_num) _)) (Nat.cast_nonneg _)
-    _ ≤ (6*d)*∑ _u : V, 2*Real.sqrt K*B j :=
-      mul_le_mul_of_nonneg_left (sum_le_sum fun u _ => upper j u) (by positivity)
-    _ = _ := by rw [sum_const, card_univ, nsmul_eq_mul]; dsimp only [n]; ring
-  have count : (∑ base, ((onBaseBranchTuples paths base h).card:ℝ)) ≤
-      ∑ j ∈ J, 2*x j*(d+t+1)*(∑ u, M u j) := by
-    dsimp only [J, x, d, t, M]
+    exact lemma35_important_from_caps (Nat.cast_nonneg L) (Nat.cast_nonneg D) (Nat.cast_nonneg h)
+      (Nat.cast_nonneg _) (Nat.cast_nonneg _) (Nat.cast_nonneg _) hS hN
+      (lemma35_important_upper free u h (2^j) (Nat.pow_pos (by decide)))
+  · intro j u
+    simpa only [P, Nat.cast_pow, Nat.cast_ofNat] using
+      coarse free u D h (2^j) (hh.trans_le hD) hh (Nat.pow_pos (by decide)) degrees input
+  · dsimp only [M]
     exact_mod_cast lemma35_on_base_dyadic_count free h D degrees
-  have cutoff (j : ℕ) (hj : j ∈ J) : (2:ℝ)^j ≤ d := by
-    have hs : j ≤ Nat.log 2 D := Nat.le_of_lt_succ (mem_range.mp hj)
-    have hpow : (2:ℕ)^j ≤ D :=
-      (Nat.pow_le_pow_right (by decide) hs).trans (Nat.pow_log_le_self 2 dl.ne')
-    change (2:ℝ)^j ≤ (D:ℝ)
-    exact_mod_cast hpow
-  have sumGeom : (∑ j ∈ J, B j) ≤ G*(ℓ^2*d^2+ℓ^(3/2:ℝ)*d^2*t^(5/4:ℝ)) :=
-    geometric J hℓ hd1 ht1 cutoff
-  change ℓ*(∑ base, ((onBaseBranchTuples paths base h).card:ℝ)) ≤
-    (12*Real.sqrt K*G)*n*d*(ℓ^2*d^2+ℓ^(3/2:ℝ)*d^2*t^(5/4:ℝ))
-  calc
-    _ ≤ ℓ*∑ j ∈ J, 2*x j*(d+t+1)*(∑ u, M u j) := mul_le_mul_of_nonneg_left count hℓ.le
-    _ ≤ ∑ j ∈ J, (12*Real.sqrt K*n*d)*B j := by
-      rw [mul_sum]
-      exact sum_le_sum fun j _ => (by simpa only [mul_assoc] using bucket j)
-    _ = (12*Real.sqrt K*n*d)*∑ j ∈ J, B j := (mul_sum _ _ _).symm
-    _ ≤ _ := (mul_le_mul_of_nonneg_left sumGeom (by dsimp only [n]; positivity)).trans_eq (by ring)
 
 set_option maxHeartbeats 500000 in
-/-- Averaging over the base paths gives the two terms of Lemma 35 with no
-logarithmic loss. The caps are at most four times the corresponding averages. -/
-theorem lemma35_on_base_expectation {C a b : ℝ} (hC : 1 ≤ C)
-    (ha₀ : 2/3 ≤ a) (ha₁ : a ≤ 3/4) (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 3/4) :
-    ∃ A > 0, ∀ {V I : Type*} [LinearOrder V] [LinearOrder I] [Fintype V] [Fintype I]
-      {paths : I → Finset V} (_ : HalfBridgeFree (PathBefore paths) 4) (L D h : ℕ),
-      0 < Fintype.card V → 0 < Fintype.card I → 0 < h → h ≤ L → h ≤ D →
-      (∀ i, (paths i).card ≤ L) →
-      (∀ v, (occurrences paths v).card ≤ D) → InducedSizeBound paths C a b →
-      let n := Fintype.card V
-      let p := Fintype.card I
-      let M := ∑ i, (paths i).card
-      0 < M → L*p ≤ 4*M → D*n ≤ 4*M →
-      let ℓ : ℝ := (M:ℝ)/p
-      let d : ℝ := (M:ℝ)/n
-      (∑ base, ((onBaseBranchTuples paths base h).card:ℝ))/(p:ℝ) ≤
-        A*(ℓ^2*d^2+ℓ^(3/2:ℝ)*d^2*(h:ℝ)^(5/4:ℝ)) := by
-  obtain ⟨K, hK, bound⟩ := lemma35_on_base_sum hC ha₀ ha₁ hb₀ hb₁
-  refine ⟨1024*K, by positivity, ?_⟩
-  intro V I _ _ _ _ paths free L D h hn hp hh hL hD length degree input
-  dsimp only
-  let n := Fintype.card V
-  let p := Fintype.card I
-  let M := ∑ i, (paths i).card
-  intro hM capL capD
+/-- Normalize the finite on-base sum using the length and degree caps. -/
+theorem lemma35_on_base_average_from_sum {n p M L D h : ℕ} {K Q : ℝ} (hK : 0 ≤ K)
+    (hn : 0 < n) (hp : 0 < p) (hM : 0 < M) (hL : 0 < L)
+    (capL : L*p ≤ 4*M) (capD : D*n ≤ 4*M) (individual : M ≤ L*p)
+    (bound : (L:ℝ)*Q ≤ K*(n:ℝ)*D*
+      ((L:ℝ)^2*(D:ℝ)^2 + (L:ℝ)^(3/2:ℝ)*(D:ℝ)^2*(h:ℝ)^(5/4:ℝ))) :
+    let ℓ : ℝ := (M:ℝ)/p
+    let d : ℝ := (M:ℝ)/n
+    Q/(p:ℝ) ≤ (1024*K)*(ℓ^2*d^2+ℓ^(3/2:ℝ)*d^2*(h:ℝ)^(5/4:ℝ)) := by
   let ℓ : ℝ := (M:ℝ)/p
   let d : ℝ := (M:ℝ)/n
   let F := (L:ℝ)^2*(D:ℝ)^2 + (L:ℝ)^(3/2:ℝ)*(D:ℝ)^2*(h:ℝ)^(5/4:ℝ)
   let G := ℓ^2*d^2+ℓ^(3/2:ℝ)*d^2*(h:ℝ)^(5/4:ℝ)
-  let Q := ∑ base, ((onBaseBranchTuples paths base h).card:ℝ)
   have ppos : (0:ℝ) < p := Nat.cast_pos.mpr hp
   have npos : (0:ℝ) < n := Nat.cast_pos.mpr hn
   have mpos : (0:ℝ) < M := Nat.cast_pos.mpr hM
   have lpos : 0 < ℓ := div_pos mpos ppos
   have dpos : 0 < d := div_pos mpos npos
-  have Lpos : (0:ℝ) < L := Nat.cast_pos.mpr (hh.trans_le hL)
+  have Lpos : (0:ℝ) < L := Nat.cast_pos.mpr hL
   have Fpos : 0 ≤ F := by dsimp only [F]; positivity
-  have individual : M ≤ L*p := calc
-    _ ≤ ∑ _ : I, L := sum_le_sum (fun i _ => length i)
-    _ = _ := by simp [p, mul_comm]
   have ndlp : (n:ℝ)*D ≤ 4*(L:ℝ)*p := calc
     _ ≤ 4*(M:ℝ) := by exact_mod_cast (Nat.mul_comm n D).le.trans capD
     _ ≤ _ := by
@@ -523,14 +526,43 @@ theorem lemma35_on_base_expectation {C a b : ℝ} (hC : 1 ≤ C)
         (Real.rpow_nonneg (Nat.cast_nonneg h) _)).trans_eq (by ring)
     exact (add_le_add a₁ a₂).trans_eq (by dsimp only [G]; ring)
   have qBound : (L:ℝ)*Q ≤ (4*K)*(L:ℝ)*p*F := calc
-    _ ≤ K*(n:ℝ)*D*F := bound free L D h hh hL hD length degree input
+    _ ≤ K*(n:ℝ)*D*F := bound
     _ = (K*F)*((n:ℝ)*D) := by ring
-    _ ≤ (K*F)*(4*(L:ℝ)*p) := mul_le_mul_of_nonneg_left ndlp (mul_nonneg hK.le Fpos)
+    _ ≤ (K*F)*(4*(L:ℝ)*p) := mul_le_mul_of_nonneg_left ndlp (mul_nonneg hK Fpos)
     _ = _ := by ring
   have mean : Q/(p:ℝ) ≤ (4*K)*F := by
     apply (div_le_iff₀ ppos).mpr
     apply le_of_mul_le_mul_left (a := (L:ℝ)) _ Lpos
     exact qBound.trans_eq (by ring)
-  exact mean.trans ((mul_le_mul_of_nonneg_left size (mul_nonneg (by norm_num) hK.le)).trans_eq (by ring))
+  exact mean.trans ((mul_le_mul_of_nonneg_left size (mul_nonneg (by norm_num) hK)).trans_eq (by ring))
+
+set_option maxHeartbeats 500000 in
+/-- Averaging over the base paths gives the two terms of Lemma 35 with no
+logarithmic loss. The caps are at most four times the corresponding averages. -/
+theorem lemma35_on_base_expectation {C a b : ℝ} (hC : 1 ≤ C)
+    (ha₀ : 2/3 ≤ a) (ha₁ : a ≤ 3/4) (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 3/4) :
+    ∃ A > 0, ∀ {V I : Type*} [LinearOrder V] [LinearOrder I] [Fintype V] [Fintype I]
+      {paths : I → Finset V} (_ : HalfBridgeFree (PathBefore paths) 4) (L D h : ℕ),
+      0 < Fintype.card V → 0 < Fintype.card I → 0 < h → h ≤ L → h ≤ D →
+      (∀ i, (paths i).card ≤ L) →
+      (∀ v, (occurrences paths v).card ≤ D) → InducedSizeBound paths C a b →
+      let n := Fintype.card V
+      let p := Fintype.card I
+      let M := ∑ i, (paths i).card
+      0 < M → L*p ≤ 4*M → D*n ≤ 4*M →
+      let ℓ : ℝ := (M:ℝ)/p
+      let d : ℝ := (M:ℝ)/n
+      (∑ base, ((onBaseBranchTuples paths base h).card:ℝ))/(p:ℝ) ≤
+        A*(ℓ^2*d^2+ℓ^(3/2:ℝ)*d^2*(h:ℝ)^(5/4:ℝ)) := by
+  obtain ⟨K, hK, bound⟩ := lemma35_on_base_sum hC ha₀ ha₁ hb₀ hb₁
+  refine ⟨1024*K, by positivity, ?_⟩
+  intro V I _ _ _ _ paths free L D h hn hp hh hL hD length degree input
+  dsimp only
+  intro hM capL capD
+  apply lemma35_on_base_average_from_sum hK.le hn hp hM (hh.trans_le hL) capL capD
+  · calc
+      _ ≤ ∑ _ : I, L := sum_le_sum (fun i _ => length i)
+      _ = _ := by simp [mul_comm]
+  · exact bound free L D h hh hL hD length degree input
 
 end OnlineReachabilityPreservers

@@ -412,6 +412,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   kernel replay passed. Independent review checked inherited order, unique
   intersections and the assumptions on the induced subfamilies.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44480859399).
+- [6104d2ad](https://github.com/gbodwin/paper-formalizations/commit/6104d2ade5c2fb0baf408e858b0de36970b4efc3)
+  checks the source-restricted suffix and dyadic count for the filtered
+  on-base tuples. It also checks both Lemma 32 estimates for every selected
+  long subfamily. The 3168-declaration audit and local kernel replay passed.
+  Independent review checked the suffix anchor, retained targets and fibers.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44481784001).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
@@ -424,6 +430,12 @@ notes, including the Lemma 35 cycle. The deployment render and local
 controls passed. The research entry again linked to the arXiv manuscript.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44473906418).
+
+PaperLab version 16 pins 104 links to `da12bf52` and contains 15 boxed L
+notes. The live deployment and local controls passed. The research entry
+again linked to the arXiv manuscript.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44478646760).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
