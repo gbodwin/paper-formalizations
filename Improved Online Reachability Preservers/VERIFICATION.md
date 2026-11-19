@@ -817,6 +817,16 @@ Production requires owner sign-in.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44600398705).
 
+PaperLab version 36 pins 179 links to `d55352c8` and contains 15 boxed L
+notes. The checkpoint checks the successful cursor interval and the combined
+comparison count for one sort followed by binary rank lookups. It passed
+independent review, the 5,261-declaration paper audit, local replay of the
+changed modules, and exact CI replay of every project module. The render,
+source links, and local controls were checked. Production requires owner
+sign-in.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44603724969).
+
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
 crossing edges on a cyclic input. The empty prefix has no edges, an

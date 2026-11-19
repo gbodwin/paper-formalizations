@@ -46,21 +46,26 @@ private theorem sparse_cleaning_block_dimensions {a b : ℕ} (bPos : 0 < b) (ord
     exact raw.le.trans (by simpa [Nat.mul_comm, Nat.mul_left_comm, Nat.mul_assoc] using Nat.mul_le_mul_left width rowMore)
   exact ⟨width,rows,widthPos,rowsLe,taken,dbl,covers,Nat.div_mul_le_self _ _⟩
 
-private theorem sparse_cleaning_block_counts {a b M : ℕ} (bPos : 0 < b) (ordered : b ≤ a)
-    (massLower : a ≤ M) (massUpper : M ≤ 3*a) :
-    ∃ width rows : ℕ, 0 < width ∧ rows ≤ b ∧ rows*width ≤ a ∧ M ≤ 6*(rows*width) ∧
+private theorem sparse_cleaning_block_counts {a b M factor : ℕ} (bPos : 0 < b) (ordered : b ≤ a)
+    (massLower : a ≤ M) (massUpper : M ≤ factor*a) (factorCap : factor ≤ 4) :
+    ∃ width rows : ℕ, 0 < width ∧ rows ≤ b ∧ rows*width ≤ a ∧ M ≤ (2*factor)*(rows*width) ∧
       (M:ℝ)/(4*(a:ℝ)) ≤ 1 ∧ (1:ℝ) ≤ 4*(M:ℝ)/(a:ℝ) ∧
       (M:ℝ)/(4*(b:ℝ)) ≤ (width:ℝ) ∧ (width:ℝ) ≤ 4*(M:ℝ)/(b:ℝ) := by
   have aPos : 0 < a := bPos.trans_le ordered
   obtain ⟨width,rows,widthPos,rowsLe,taken,dbl,covers,slack⟩ := sparse_cleaning_block_dimensions bPos ordered
   have nonzeroA : 0 < (a:ℝ) := Nat.cast_pos.mpr aPos
   have nonzeroB : 0 < (b:ℝ) := Nat.cast_pos.mpr bPos
+  have atMost : M ≤ 4*a := massUpper.trans (Nat.mul_le_mul_right _ factorCap)
   have widthLower : M ≤ 4*b*width := by
-    have step : M ≤ 4*(b*width) := massUpper.trans (by omega)
+    have step : M ≤ 4*(b*width) := atMost.trans (by omega)
     simpa only [Nat.mul_assoc] using step
   have widthUpper : width*b ≤ 4*M := by
     omega
-  refine ⟨width,rows,widthPos,rowsLe,taken,by omega,?_,?_,?_,?_⟩
+  have retained : M ≤ (2*factor)*(rows*width) := calc
+    _ ≤ factor*a := massUpper
+    _ ≤ factor*(2*(rows*width)) := Nat.mul_le_mul_left _ dbl
+    _ = _ := by ring
+  refine ⟨width,rows,widthPos,rowsLe,taken,retained,?_,?_,?_,?_⟩
   · apply (div_le_iff₀ (by positivity : 0 < 4*(a:ℝ))).mpr
     exact_mod_cast (show M ≤ 1*(4*a) by omega)
   · apply (le_div_iff₀ nonzeroA).mpr
@@ -115,15 +120,15 @@ private theorem singletonFrozenRows_degree (r w : ℕ) (x : Fin r) :
 
 /-- At low mass in either coordinate, disjoint paths or repeated singletons
 meet the two budgets and the same frozen averages. -/
-theorem full_frozen_cleaning_sparse {n p M k : ℕ} (hn : 0 < n) (hp : 0 < p)
-    (dense : n ≤ M) (long : p ≤ M) (small : M ≤ 3*max n p) :
+private theorem full_frozen_cleaning_sparse_of_factor {n p M k factor : ℕ} (factorCap : factor ≤ 4) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ M) (long : p ≤ M) (small : M ≤ factor*max n p) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
-      M ≤ 6*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+      M ≤ (2*factor)*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   by_cases pl : p ≤ n
   · rw [max_eq_left pl] at small
     obtain ⟨w,r,_,rCap,massCap,massEnough,degLow,degHigh,lenLow,lenHigh⟩ :=
-      sparse_cleaning_block_counts hp pl dense small
+      sparse_cleaning_block_counts hp pl dense small factorCap
     let clean := disjointFrozenRows r w
     have simple (i : Fin r) : (clean i).Nodup := List.nodup_ofFn.mpr (fun _ _ eq =>
       congrArg Prod.snd (finProdFinEquiv.injective eq))
@@ -147,7 +152,7 @@ theorem full_frozen_cleaning_sparse {n p M k : ℕ} (hn : 0 < n) (hp : 0 < p)
   · have np : n ≤ p := le_of_not_ge pl
     rw [max_eq_right np] at small
     obtain ⟨w,r,_,rCap,massCap,massEnough,lenLow,lenHigh,degLow,degHigh⟩ :=
-      sparse_cleaning_block_counts hn np long small
+      sparse_cleaning_block_counts hn np long small factorCap
     let clean := singletonFrozenRows r w
     have simple (i : Fin (r*w)) : (clean i).Nodup := by simp [clean, singletonFrozenRows]
     have legal : BridgeFree (ListBefore clean) k := by
@@ -168,6 +173,22 @@ theorem full_frozen_cleaning_sparse {n p M k : ℕ} (hn : 0 < n) (hp : 0 < p)
         change (M:ℝ)/(4*(p:ℝ)) ≤ ((singletonFrozenRows r w i).length:ℝ) ∧
           ((singletonFrozenRows r w i).length:ℝ) ≤ 4*(M:ℝ)/(p:ℝ)
         simpa only [singletonFrozenRows, List.length_singleton, Nat.cast_one] using And.intro lenLow lenHigh
+
+theorem full_frozen_cleaning_sparse {n p M k : ℕ} (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ M) (long : p ≤ M) (small : M ≤ 3*max n p) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
+      M ≤ 6*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  full_frozen_cleaning_sparse_of_factor (by decide) hn hp dense long small
+
+/-- At most four incidences per unit of the larger budget suffice for the
+same sparse construction with one eighth of the input mass. -/
+theorem full_frozen_cleaning_sparse_four {n p M k : ℕ} (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ M) (long : p ≤ M) (small : M ≤ 4*max n p) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
+      M ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  full_frozen_cleaning_sparse_of_factor (by decide) hn hp dense long small
 
 end OnlineReachabilityPreservers
 
