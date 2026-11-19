@@ -302,4 +302,57 @@ theorem unitAugmentations_count {c : ArcFlow V} {s t : V} (fuel : ℕ)
     (unitAugmentations c s t fuel (fun _ => 0)).2 ≤ fuel :=
   (unitAugmentations_spec fuel (fun _ => 0) 0 (zeroFlow_valid c hc s t)).2.1
 
+/-- Start at zero and augment to the given supply or a saturated cut. -/
+theorem unitAugmentations_zero_spec (c : ArcFlow V) (s t : V) (fuel : ℕ) (hc : ∀ e, 0 ≤ c e) :
+    let result := unitAugmentations c s t fuel (fun _ => 0)
+    ValidArcFlow c s t result.2 result.1 ∧ result.2 ≤ fuel ∧
+      (result.2 < fuel → ¬ Reach (residualArcs c result.1) s t) := by
+  simpa only [zero_add] using unitAugmentations_spec fuel (fun _ => 0) 0 (zeroFlow_valid c hc s t)
+
+def findLowCapacityCut (c : ArcFlow V) (s t : V) (supply : ℕ) : Option (Finset V) :=
+  let result := unitAugmentations c s t supply (fun _ => 0)
+  if result.2 = supply then none else some (residualReach c result.1 s)
+
+/-- A cut below the supplied capacity, or an actual flow proving coverage
+of every separating cut. -/
+theorem findLowCapacityCut_spec (c : ArcFlow V) (s t : V) (supply : ℕ) (hc : ∀ e, 0 ≤ c e) :
+    match findLowCapacityCut c s t supply with
+    | none => ValidArcFlow c s t supply (unitAugmentations c s t supply (fun _ => 0)).1
+    | some W => s ∈ W ∧ t ∉ W ∧ cutArcFlow c W < (supply : ℤ) := by
+  let result := unitAugmentations c s t supply (fun _ => 0)
+  obtain ⟨valid, within, stopped⟩ := unitAugmentations_zero_spec c s t supply hc
+  change ValidArcFlow c s t result.2 result.1 at valid
+  change result.2 ≤ supply at within
+  change result.2 < supply → ¬ Reach (residualArcs c result.1) s t at stopped
+  by_cases enough : result.2 = supply
+  · simp only [findLowCapacityCut, show (unitAugmentations c s t supply (fun _ => 0)).2 = supply from enough, ite_true]
+    rw [enough] at valid
+    exact valid
+  · have small : result.2 < supply := lt_of_le_of_ne within enough
+    have unreachable := stopped small
+    let W := residualReach c result.1 s
+    simp only [findLowCapacityCut, show (unitAugmentations c s t supply (fun _ => 0)).2 ≠ supply from enough,
+      ite_false]
+    refine ⟨mem_residualReach.mpr .refl, fun member => unreachable (mem_residualReach.mp member), ?_⟩
+    change cutArcFlow c W < (supply : ℤ)
+    rw [valid.residualCut_capacity unreachable]
+    exact_mod_cast small
+
+theorem findLowCapacityCut_eq_none {c : ArcFlow V} {s t : V} {supply : ℕ} (hc : ∀ e, 0 ≤ c e) :
+    findLowCapacityCut c s t supply = none ↔
+      ∀ W : Finset V, s ∈ W → t ∉ W → (supply : ℤ) ≤ cutArcFlow c W := by
+  have checks := findLowCapacityCut_spec c s t supply hc
+  cases h : findLowCapacityCut c s t supply with
+  | none =>
+    rw [h] at checks
+    exact ⟨fun _ _ start finish => checks.cut_capacity start finish, fun _ => rfl⟩
+  | some W =>
+    rw [h] at checks
+    obtain ⟨start, finish, capacity⟩ := checks
+    constructor
+    · intro equal
+      cases equal
+    · intro all
+      exact (capacity.not_ge (all W start finish)).elim
+
 end OnlineReachabilityPreservers

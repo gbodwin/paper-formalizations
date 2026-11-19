@@ -236,6 +236,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   replay passed. Independent review checked the history count, root
   structure, exact hop lengths, and the expansion bounds.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44454016035).
+- [45d24517](https://github.com/gbodwin/paper-formalizations/commit/45d245177e99aaa3e8ed6a647b11716b863ca3a1)
+  embeds the shortened routes into the fixed metric tree with explicit
+  terminal labels and an integer branch choice. The 2048-declaration audit
+  and kernel replay passed. Independent review checked link feasibility,
+  leaf coverage, deduplication and the cost bound.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44454532744).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

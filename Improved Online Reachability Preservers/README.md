@@ -91,8 +91,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   and bounds both the update count and the cost against any fixed set that
   hits every cut. The competitive factor is logarithmic in the total
   positive integer edge weight. This implementation takes explicitly listed
-  cuts, and its update count depends on the numeric weights. Connecting it
-  to the auxiliary graph and checking weighted separation remain open.
+  cuts, and its update count depends on the numeric weights.
+  [Integer capacity rounding](OnlineReachabilityPreservers/SteinerRoundedCapacities.lean)
+  adds at most one to the normalized objective. The
+  [capacity separator](OnlineReachabilityPreservers/SteinerCutFlow.lean)
+  now takes an arbitrary integer cutoff and returns a violating cut or
+  certifies the requested flow value. Their integration into the weighted
+  auxiliary graph remains open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

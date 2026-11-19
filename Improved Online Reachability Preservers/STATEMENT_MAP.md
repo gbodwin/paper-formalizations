@@ -62,7 +62,11 @@ provides a capacity-update routine for explicitly listed binary cuts.
 It covers every revealed batch and bounds the update count
 and objective by a logarithmic factor times an integral hitting solution,
 with an additive baseline of at most one in the normalized objective.
-The graph reduction, separation, and rounding remain open.
+The [integer capacity comparison](OnlineReachabilityPreservers/SteinerRoundedCapacities.lean)
+checks an extra normalized cost of at most one. The
+[general cut separator](OnlineReachabilityPreservers/SteinerCutFlow.lean)
+supports the integer cutoff used for that comparison.
+Connecting these to the auxiliary graph and rounding its paths remain open.
 The [height-block proof](OnlineReachabilityPreservers/SteinerHeightBlocks.lean)
 constructs the shortened segments on the original rooted routes, checks
 their concatenation, and bounds their weighted cost. The
