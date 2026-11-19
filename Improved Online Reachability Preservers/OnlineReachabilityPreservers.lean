@@ -38,6 +38,7 @@ import OnlineReachabilityPreservers.PathAssignments
 import OnlineReachabilityPreservers.Regularization
 import OnlineReachabilityPreservers.Restricted
 import OnlineReachabilityPreservers.RestrictedNonAdaptive
+import OnlineReachabilityPreservers.RouteWork
 import OnlineReachabilityPreservers.SearchWork
 import OnlineReachabilityPreservers.SecondMoment
 import OnlineReachabilityPreservers.SimplePaths

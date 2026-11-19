@@ -258,36 +258,55 @@ theorem knownBudget_certify (choose : PathRule V) (Q : Finset (V × V)) (p F : �
 def certifiedBudget (choose : PathRule V) (Q : Finset (V × V)) (p cap : ℕ) : ℕ :=
   (least? ((range (cap+1)).filter (KnownBudgetCertified choose Q p))).getD cap
 
+private def certifiedBudgetWorkEntry (choose : PathRule V) (Q : Finset (V × V)) (p F : ℕ) :
+    ℕ × Bool × ℕ :=
+  let trace := expensiveTraceWithChoiceCalls choose p F p ∅ Q
+  (F, decide (trace.1.length < p ∧ (runRule choose ∅ trace.1).card ≤ F), trace.2 + trace.1.length)
+
 /-- Count the base path evaluations in the finite quota certification.
-Each candidate is tested once. Its reconstruction calls the rule once
-per purchased demand. -/
+Store each evaluated candidate before selecting the budget and totaling
+the planned path calls. -/
 def certifiedBudgetWithChoiceCalls (choose : PathRule V) (Q : Finset (V × V)) (p cap : ℕ) : ℕ × ℕ :=
-  let attempts := range (cap + 1)
-  let run := fun F => expensiveTraceWithChoiceCalls choose p F p ∅ Q
-  let certified := attempts.filter fun F => (run F).1.length < p ∧ (runRule choose ∅ (run F).1).card ≤ F
-  ((least? certified).getD cap, ∑ F ∈ attempts, ((run F).2 + (run F).1.length))
+  let evaluated := (range (cap + 1)).image (certifiedBudgetWorkEntry choose Q p)
+  let certified := (evaluated.filter (fun entry => entry.2.1 = true)).image Prod.fst
+  ((least? certified).getD cap, ∑ entry ∈ evaluated, entry.2.2)
 
 theorem certifiedBudgetWithChoiceCalls_spec (choose : PathRule V) (Q : Finset (V × V)) (p cap : ℕ) :
     let result := certifiedBudgetWithChoiceCalls choose Q p cap
     result.1 = certifiedBudget choose Q p cap ∧
       result.2 ≤ (cap + 1) * (p * (Q.card + 1) + p) := by
   let attempts := range (cap + 1)
-  let run := fun F => expensiveTraceWithChoiceCalls choose p F p ∅ Q
-  have trace (F : ℕ) : (run F).1 = expensiveTrace choose p F p ∅ Q :=
-    (expensiveTraceWithChoiceCalls_spec choose p F p ∅ Q).1
+  let entry := certifiedBudgetWorkEntry choose Q p
+  have agrees (F : ℕ) : (entry F).2.1 = true ↔ KnownBudgetCertified choose Q p F := by
+    change decide _ = true ↔ _
+    rw [decide_eq_true_eq, KnownBudgetCertified, (expensiveTraceWithChoiceCalls_spec choose p F p ∅ Q).1]
   refine ⟨?_, ?_⟩
-  · have same : attempts.filter (fun F => (run F).1.length < p ∧ (runRule choose ∅ (run F).1).card ≤ F) =
+  · have same : ((attempts.image entry).filter (fun x => x.2.1 = true)).image Prod.fst =
         attempts.filter (KnownBudgetCertified choose Q p) := by
       ext F
-      simp only [mem_filter, trace, KnownBudgetCertified]
+      constructor
+      · rintro h
+        obtain ⟨value, valueFound, budget⟩ := mem_image.mp h
+        obtain ⟨inImage, passed⟩ := mem_filter.mp valueFound
+        obtain ⟨candidate, hc, rfl⟩ := mem_image.mp inImage
+        change candidate = F at budget
+        subst candidate
+        exact mem_filter.mpr ⟨hc, (agrees F).mp passed⟩
+      · intro h
+        obtain ⟨candidate, good⟩ := mem_filter.mp h
+        exact mem_image.mpr ⟨entry F, mem_filter.mpr ⟨mem_image_of_mem _ candidate, (agrees F).mpr good⟩, rfl⟩
     exact congrArg (fun limits => (least? limits).getD cap) same
-  · change (∑ F ∈ attempts, ((run F).2 + (run F).1.length)) ≤ _
+  · change (∑ x ∈ attempts.image entry, x.2.2) ≤ _
+    rw [sum_image (fun a _ b _ eq => congrArg Prod.fst eq)]
     calc
       _ ≤ ∑ _ ∈ attempts, (p * (Q.card + 1) + p) := by
         apply sum_le_sum
         intro F _
-        have t := (expensiveTraceWithChoiceCalls_spec choose p F p ∅ Q).2
-        exact Nat.add_le_add t (by rw [trace]; exact (expensiveTrace_spec choose p F p ∅ Q).1)
+        obtain ⟨trace, calls⟩ := expensiveTraceWithChoiceCalls_spec choose p F p ∅ Q
+        change (expensiveTraceWithChoiceCalls choose p F p ∅ Q).2 +
+          (expensiveTraceWithChoiceCalls choose p F p ∅ Q).1.length ≤ _
+        rw [trace]
+        exact Nat.add_le_add calls (expensiveTrace_spec choose p F p ∅ Q).1
       _ = _ := by simp [attempts]
 
 theorem certifiedBudget_spec {choose : PathRule V} {Q : Finset (V × V)} {p cap : ℕ}

@@ -132,17 +132,24 @@ The [search counters](OnlineReachabilityPreservers/SearchWork.lean)
 return the ordinary search outputs, including failed searches.
 Reverse search inspects at most \(n|E|\) arcs, and greedy path
 growth tests at most \(2n^2\) successor candidates. One weighted
-fractional run on \(p\) requests makes at most
-\(p((B+1)B+1)\) separator calls for \(B=\max(1,n|H|^2)\).
+fractional run on the paired height forest \(H\) with \(p\)
+requests makes at most \(p((B+1)B+1)\) separator calls for
+\(B=\max(1,n|V(H)|^2)\).
 Each integer augmentation loop makes at most its supplied number
-of path searches. The [prune counter](OnlineReachabilityPreservers/OfflineIndependence.lean)
+of path searches. The [route counters](OnlineReachabilityPreservers/RouteWork.lean)
+bound arc inspections for SCC labels and shortest routes, and
+sum the search work over greedy forwards growth. They also bound
+SCC projection and lift calls and the number of thin-flow separators.
+The [prune counter](OnlineReachabilityPreservers/OfflineIndependence.lean)
 bounds reachability calls by \(2|E|p\). The
 [quota counter](OnlineReachabilityPreservers/KnownBudget.lean)
-bounds the number of base path-rule calls at each candidate budget.
+bounds the number of base path-rule calls at each candidate budget
+and shares each evaluated candidate across selection and counting.
 The [sample coordinates](OnlineReachabilityPreservers/SteinerSeedCoordinates.lean)
 are in bijection with the nested early seed and preserve the
-uniform finite probability. The bounds do not yet give a formal
-end-to-end runtime model.
+uniform finite probability. The counts cover these subroutines.
+The costs of finite containers, arithmetic, seed generation, and
+the composition of all online steps remain open in the runtime proof.
 
 ## Appendix dependencies
 

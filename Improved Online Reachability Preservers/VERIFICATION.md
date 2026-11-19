@@ -335,6 +335,13 @@ An exact-source replay grants no coverage to a paper statement outside the
   review checked the positive-count branch and the unchanged
   expected-rate and per-prefix statements for the exact evaluator.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44466968405).
+- [fd9fc1ce](https://github.com/gbodwin/paper-formalizations/commit/fd9fc1ce88548d493916f8cf6d80bc681d62bddc)
+  checks search and separator call budgets and a probability-preserving
+  bijection for the early seed coordinates. The 2711-declaration audit
+  and local kernel replay passed. Independent review found that the
+  quota meter recomputed each candidate trace in separate passes. The
+  following checkpoint shares the evaluated candidate results.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44467887210).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
