@@ -259,6 +259,9 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.selectedHistory_group_probability
 #print axioms OnlineReachabilityPreservers.historyCap_dyadic
 #print axioms OnlineReachabilityPreservers.dyadicHistory_group_probability
+#print axioms OnlineReachabilityPreservers.forestMetricUnits_eq_capacity
+#print axioms OnlineReachabilityPreservers.roundedForestLinks_serves
+#print axioms OnlineReachabilityPreservers.forestTrialFailure_bound
 #print axioms OnlineReachabilityPreservers.theorem3_lattice_lower
 #print axioms OnlineReachabilityPreservers.theorem3_lower
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum

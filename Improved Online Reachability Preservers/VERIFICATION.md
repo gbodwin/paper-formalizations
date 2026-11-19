@@ -285,6 +285,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   passed. Independent review checked path projection, root and side
   changes, route multiplicities and the directed ancestor bounds.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44460327779).
+- [bb97f686](https://github.com/gbodwin/paper-formalizations/commit/bb97f686cd5ef151d12ed05f4bee51ad0b0e3153)
+  verifies integer dyadic tiers and exact finite parent cutoffs. The
+  2366-declaration audit and local kernel replay passed. Independent
+  review checked capacity clipping, the telescoping probabilities, group
+  normalization and the degenerate thresholds.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44460812733).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

@@ -105,7 +105,12 @@ makes these marginals computable from integer capacities. It caps them
 at the active root's scale and takes ancestor minima. The thresholds
 give the exact normalized marginals and preserve the one-sided
 probability bound when the integer terminal mass fits.
-The paired rounding and its online cost remain open.
+The [paired rounding trial](OnlineReachabilityPreservers/SteinerForestRounding.lean)
+selects actual metric links using shared root gates and independent
+thresholds within each side of a root. If the fractional state covers
+a request, one trial misses it with probability at most
+\(\exp(-1/(4(h+1)^2))\). The bound on cumulative purchases across online
+prefixes and the full early competitiveness result remain open.
 
 ## Appendix dependencies
 
