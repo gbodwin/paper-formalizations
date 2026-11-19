@@ -150,6 +150,11 @@ unit of total load increase, which is at most \(|E|(\lfloor\log_2|E|\rfloor+1)\)
 The [thin rounding counter](OnlineReachabilityPreservers/SteinerThinReplay.lean)
 composes that budget with the rounded-arc scan and reachability test at
 every prefix, including the final evaluation if there is no miss.
+The [early rounding counter](OnlineReachabilityPreservers/SteinerEarlyReplay.lean)
+shares each prefix's weighted fractional evaluation between its miss test
+and the union of metric purchases. It bounds the original-graph route
+expansions and reachability checks, including the optional final expansion.
+The paired-forest template and the rounding arithmetic are outside that count.
 The [route counters](OnlineReachabilityPreservers/RouteWork.lean)
 bound arc inspections for SCC labels and shortest routes, and
 sum the search work over greedy forwards growth. They also bound

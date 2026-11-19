@@ -477,6 +477,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   Independent review checked both counterexamples on seven vertices,
   acyclicity and exact distinct demand counts in both lower-bound cases.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44492464048).
+- [ae7dad3a](https://github.com/gbodwin/paper-formalizations/commit/ae7dad3a83360577717531a831517dd1e3ec150f)
+  checks the expected bit budget for drawing the Steiner seeds. The
+  3405-declaration audit and local kernel replay passed. Independent
+  review checked the early bit equivalence, finite first-acceptance events,
+  the series and zero-size cases. The sampler analysis is per coordinate.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44493464434).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
