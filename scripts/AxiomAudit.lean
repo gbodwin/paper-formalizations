@@ -297,6 +297,10 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.BridgeFree.split_list_paths
 #print axioms OnlineReachabilityPreservers.HalfBridgeFree.split_list_paths
 #print axioms OnlineReachabilityPreservers.HalfBridgeFree.split_list_paths_three
+#print axioms OnlineReachabilityPreservers.lemma26_ranked_chain_lower
+#print axioms OnlineReachabilityPreservers.lemma26_list_triple_lower
+#print axioms OnlineReachabilityPreservers.lemma27_list
+#print axioms OnlineReachabilityPreservers.lemma27_list_full
 #print axioms OnlineReachabilityPreservers.offlinePruneWithReachCalls_spec
 #print axioms OnlineReachabilityPreservers.knownBudgetPathWithChoiceCalls_spec
 #print axioms OnlineReachabilityPreservers.certifiedBudgetWithChoiceCalls_spec

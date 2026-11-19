@@ -354,6 +354,11 @@ An exact-source replay grants no coverage to a paper statement outside the
   audit and local kernel replay passed. Independent review checked the
   local-order proof, the strict Appendix B form and the witness example.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44470202282).
+- [adbb6067](https://github.com/gbodwin/paper-formalizations/commit/adbb60678fdd8471d19d2ec75b14738c126261df)
+  verifies the earlier-path pruning and split repairs. The 2849-declaration
+  audit and local kernel replay passed. Independent review checked the
+  per-vertex charge, local order, and distinct parents in the short bridges.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44471767518).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

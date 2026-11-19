@@ -84,8 +84,9 @@ retained earlier incidence at the same vertex. Reusing a mark would give a
 that at least half the incidences at each vertex survive and that each pair
 of surviving paths has at most one common vertex. Under this last condition,
 disjoint order-preserving path splits keep both bridge conditions through
-size four, even when the paths have no common vertex order. General path
-splits preserve both conditions through size three.
+size four, even when the paths have no common vertex order. Disjoint
+order-preserving pieces suffice through size three without unique
+intersections. The half-bridge statements keep the parent path order.
 [Checked pruning](OnlineReachabilityPreservers/OppositeIntersectionPruning.lean)
 · [Checked splits](OnlineReachabilityPreservers/CyclicSplits.lean)
 · [Bridge Girth, Lemma 20](https://arxiv.org/pdf/2212.11944v4).
@@ -179,12 +180,14 @@ guarantees are checked for this construction.
   by choosing one witness for each middle path and using the 2-bridge exclusion
   to rule out repeated corners in the proposed 4-bridge. Full bridge-freeness
   gives strict order at the right. The paths `[(0), (2,1), (0,1,2)]` have
-  one middle path and two witnesses for the same outer paths. Lemma 26's
-  step from counted witnesses to distinct path triples needs a further argument
-  in this scope. The growth path systems have a common vertex order, which
-  makes their witnesses unique and allows a direct incidence count.
+  one middle path and two witnesses for the same outer paths. For Lemma 26,
+  Lean prunes opposite intersections before counting distinct triples. The
+  pruned system retains at least half the original mass, its witnesses are
+  unique, and every counted triple occurs in the original system. This yields
+  the unrestricted initial bound of Lemma 27. The common vertex order of
+  growth paths gives uniqueness directly.
   [General fiber and example](OnlineReachabilityPreservers/CyclicIntersections.lean)
-  · [Acyclic chain count](OnlineReachabilityPreservers/PairwiseInitial.lean).
+  · [General chain count and initial bound](OnlineReachabilityPreservers/GeneralInitial.lean).
 - Lemma 28 writes a difference of a right-hand intersection position with
   itself in the definition of close pairs. Its collision argument instead
   bounds the difference between the two right-hand intersection positions.

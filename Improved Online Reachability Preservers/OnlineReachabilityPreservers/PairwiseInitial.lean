@@ -8,12 +8,16 @@ namespace OnlineReachabilityPreservers
 open Finset
 
 variable {V I : Type*} [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
+variable {K : Type*} [LinearOrder K]
 
 private def highDegree (paths : I → Finset V) (d : ℕ) (i : I) : Finset V :=
   (paths i).filter (fun v => d ≤ (occurrences paths v).card)
 
-private def goodVertices (paths : I → Finset V) (d ℓ : ℕ) (i : I) : Finset V :=
-  (highDegree paths d i).filter fun y => ℓ ≤ (predecessors (highDegree paths d i) y).card
+private def earlierVertices (s : Finset V) (position : V → K) (y : V) : Finset V :=
+  s.filter fun x => position x < position y
+
+private def goodVertices (paths : I → Finset V) (position : I → V → K) (d ℓ : ℕ) (i : I) : Finset V :=
+  (highDegree paths d i).filter fun y => ℓ ≤ (earlierVertices (highDegree paths d i) (position i) y).card
 
 omit [LinearOrder I] in
 private theorem highDegree_sum (paths : I → Finset V) (d : ℕ) :
@@ -42,33 +46,45 @@ private theorem highDegree_sum (paths : I → Finset V) (d : ℕ) :
       sum_congr rfl fun i _ => (card_filter_add_card_filter_not _).symm
     _ ≤ _ := by rw [sum_add_distrib]; gcongr
 
-omit [Fintype V] in
-private theorem early_count (s : Finset V) (ℓ : ℕ) :
-    (s.filter fun y => ¬ ℓ ≤ (predecessors s y).card).card ≤ ℓ := by
+omit [Fintype V] [LinearOrder V] in
+private theorem early_count (s : Finset V) (position : V → K) (unique : Set.InjOn position s) (ℓ : ℕ) :
+    (s.filter fun y => ¬ ℓ ≤ (earlierVertices s position y).card).card ≤ ℓ := by
+  have increase {x y : V} (hx : x ∈ s) (advance : position x < position y) :
+      (earlierVertices s position x).card < (earlierVertices s position y).card := by
+    apply card_lt_card
+    rw [ssubset_iff_subset_ne]
+    refine ⟨fun w hw => mem_filter.mpr ⟨(mem_filter.mp hw).1, (mem_filter.mp hw).2.trans advance⟩, ?_⟩
+    intro equal
+    have hx' : x ∈ earlierVertices s position y := mem_filter.mpr ⟨hx, advance⟩
+    rw [← equal] at hx'
+    exact (lt_irrefl _) (mem_filter.mp hx').2
   calc
     _ ≤ (range ℓ).card := by
-      apply card_le_card_of_injOn (fun y => (predecessors s y).card)
+      apply card_le_card_of_injOn (fun y => (earlierVertices s position y).card)
       · intro y hy
         exact mem_range.mpr (lt_of_not_ge (mem_filter.mp hy).2)
       · intro x hx y hy eq
-        rcases lt_trichotomy x y with hlt | heq | hgt
-        · exact ((predecessor_count_strict (mem_filter.mp hx).1 hlt).ne eq).elim
-        · exact heq
-        · exact ((predecessor_count_strict (mem_filter.mp hy).1 hgt).ne' eq).elim
+        obtain ⟨hx, _⟩ := mem_filter.mp hx
+        obtain ⟨hy, _⟩ := mem_filter.mp hy
+        rcases lt_trichotomy (position x) (position y) with earlier | same | later
+        · exact ((increase hx earlier).ne eq).elim
+        · exact unique hx hy same
+        · exact ((increase hy later).ne' eq).elim
     _ = _ := card_range ℓ
 
 omit [Fintype V] [LinearOrder I] in
-private theorem goodVertices_sum (paths : I → Finset V) (d ℓ : ℕ) :
+private theorem goodVertices_sum (paths : I → Finset V) (position : I → V → K)
+    (unique : ∀ i, Set.InjOn (position i) (paths i)) (d ℓ : ℕ) :
     (∑ i, (highDegree paths d i).card) ≤
-      (∑ i, (goodVertices paths d ℓ i).card) + Fintype.card I * ℓ := by
+      (∑ i, (goodVertices paths position d ℓ i).card) + Fintype.card I * ℓ := by
   rw [← show (∑ _ : I, ℓ) = Fintype.card I * ℓ by simp, ← sum_add_distrib]
   apply sum_le_sum
   intro i _
   let s := highDegree paths d i
-  have eq := card_filter_add_card_filter_not (s := s) (fun y => ℓ ≤ (predecessors s y).card)
-  change s.card ≤ (goodVertices paths d ℓ i).card + ℓ
+  have eq := card_filter_add_card_filter_not (s := s) (fun y => ℓ ≤ (earlierVertices s (position i) y).card)
+  change s.card ≤ (goodVertices paths position d ℓ i).card + ℓ
   rw [← eq]
-  exact Nat.add_le_add_left (early_count s ℓ) _
+  exact Nat.add_le_add_left (early_count s (position i) ((unique i).mono (filter_subset _ _)) ℓ) _
 
 omit [Fintype I] in
 private theorem card_erase_lower {s : Finset I} (i : I) : s.card ≤ (s.erase i).card + 1 := by
@@ -77,30 +93,34 @@ private theorem card_erase_lower {s : Finset I} (i : I) : s.card ≤ (s.erase i)
   · simp [erase_eq_of_notMem hi]
 
 /-- Every good collision extends at each high-degree predecessor to a distinct counted chain. -/
-private theorem extend_collisions (paths : I → Finset V) (d ℓ : ℕ) :
-    (collisions (goodVertices paths d ℓ)).card * (ℓ * (d - 2)) ≤ (rChains paths).card := by
+private theorem extend_collisions (paths : I → Finset V) (position : I → V → K)
+    (chains : Finset ((I × I) × (I × V × V)))
+    (accept : ∀ {l m r x y}, l ≠ m → l ≠ r → r < m → x ∈ paths l → y ∈ paths r →
+      x ∈ paths m → y ∈ paths m → position m x < position m y → ((l, r), m, x, y) ∈ chains)
+    (d ℓ : ℕ) :
+    (collisions (goodVertices paths position d ℓ)).card * (ℓ * (d - 2)) ≤ chains.card := by
   classical
-  let g := collisions (goodVertices paths d ℓ)
-  let prior (w : V × I × I) := predecessors (highDegree paths d w.2.2) w.1
+  let g := collisions (goodVertices paths position d ℓ)
+  let prior (w : V × I × I) := earlierVertices (highDegree paths d w.2.2) (position w.2.2) w.1
   let choices (w : V × I × I) (x : V) := ((occurrences paths x).erase w.2.2).erase w.2.1
   let pairs := g.sigma fun w => (prior w).sigma (choices w)
   let witness (w : Σ _ : V × I × I, Σ _ : V, I) : (I × I) × (I × V × V) :=
     ((w.2.2, w.1.2.1), (w.1.2.2, w.2.1, w.1.1))
-  have into : pairs.card ≤ (rChains paths).card := by
+  have into : pairs.card ≤ chains.card := by
     apply card_le_card_of_injOn witness
     · rintro ⟨⟨y, r, m⟩, x, l⟩ hp
       obtain ⟨hw, hxl⟩ := mem_sigma.mp hp
-      have hc : (y, r, m) ∈ collisions (goodVertices paths d ℓ) := hw
+      have hc : (y, r, m) ∈ collisions (goodVertices paths position d ℓ) := hw
       obtain ⟨_, hrm, hyr, hym⟩ := mem_filter.mp hc
       obtain ⟨hx, hl⟩ := mem_sigma.mp hxl
-      have hx' : x ∈ predecessors (highDegree paths d m) y := hx
+      have hx' : x ∈ earlierVertices (highDegree paths d m) (position m) y := hx
       have hl' : l ∈ ((occurrences paths x).erase m).erase r := hl
       obtain ⟨hlr, hlm, hli⟩ := by
         simpa only [mem_erase] using hl'
-      exact mem_rChains.mpr ⟨hlm, hlr, hrm, (mem_filter.mp hli).2,
-        (mem_filter.mp (mem_filter.mp hyr).1).1,
-        (mem_filter.mp (mem_filter.mp hx').1).1,
-        (mem_filter.mp (mem_filter.mp hym).1).1, (mem_filter.mp hx').2⟩
+      exact accept hlm hlr hrm (mem_filter.mp hli).2
+        (mem_filter.mp (mem_filter.mp hyr).1).1
+        (mem_filter.mp (mem_filter.mp hx').1).1
+        (mem_filter.mp (mem_filter.mp hym).1).1 (mem_filter.mp hx').2
     · rintro ⟨⟨y, r, m⟩, x, l⟩ _ ⟨⟨y', r', m'⟩, x', l'⟩ _ he
       change ((l, r), m, x, y) = ((l', r'), m', x', y') at he
       cases he
@@ -112,7 +132,7 @@ private theorem extend_collisions (paths : I → Finset V) (d ℓ : ℕ) :
     _ ≤ _ := by
       apply sum_le_sum
       intro w hw
-      have hg : w ∈ collisions (goodVertices paths d ℓ) := hw
+      have hg : w ∈ collisions (goodVertices paths position d ℓ) := hw
       have hℓ : ℓ ≤ (prior w).card := (mem_filter.mp (mem_filter.mp hg).2.2.2).2
       rw [card_sigma]
       calc
@@ -121,7 +141,7 @@ private theorem extend_collisions (paths : I → Finset V) (d ℓ : ℕ) :
         _ ≤ _ := by
           apply sum_le_sum
           intro x hx
-          have hprior : x ∈ predecessors (highDegree paths d w.2.2) w.1 := hx
+          have hprior : x ∈ earlierVertices (highDegree paths d w.2.2) (position w.2.2) w.1 := hx
           have hd := (mem_filter.mp (mem_filter.mp hprior).1).2
           have hm := card_erase_lower (s := occurrences paths x) w.2.2
           have hr := card_erase_lower (s := (occurrences paths x).erase w.2.2) w.2.1
@@ -139,21 +159,25 @@ private theorem cut_budget {m n : ℕ} (hn : 0 < n) (hm : 4 * n ≤ m) :
 
 /-- A finite version of the Appendix A lower count, obtained by thresholding incidences.
 This avoids assuming a split or cleaning operation preserves the bridge condition. -/
-theorem lemma26_chain_lower (paths : I → Finset V)
+theorem lemma26_ranked_chain_lower (paths : I → Finset V) (position : I → V → K)
+    (unique : ∀ i, Set.InjOn (position i) (paths i))
+    (chains : Finset ((I × I) × (I × V × V)))
+    (accept : ∀ {l m r x y}, l ≠ m → l ≠ r → r < m → x ∈ paths l → y ∈ paths r →
+      x ∈ paths m → y ∈ paths m → position m x < position m y → ((l, r), m, x, y) ∈ chains)
     (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
     (hdense : 16 * Fintype.card V ≤ ∑ i, (paths i).card)
     (hlong : 8 * Fintype.card I ≤ ∑ i, (paths i).card) :
     (∑ i, (paths i).card)^4 ≤ 2048 * (Fintype.card V)^2 * Fintype.card I *
-      (rChains paths).card := by
+      chains.card := by
   let n := Fintype.card V
   let p := Fintype.card I
   let m := ∑ i, (paths i).card
   let d := m / (4 * n)
   let ℓ := m / (4 * p)
-  let G := ∑ i, (goodVertices paths d ℓ i).card
-  let Q := (collisions (goodVertices paths d ℓ)).card
+  let G := ∑ i, (goodVertices paths position d ℓ i).card
+  let Q := (collisions (goodVertices paths position d ℓ)).card
   have hclean := highDegree_sum paths d
-  have hgood := goodVertices_sum paths d ℓ
+  have hgood := goodVertices_sum paths position unique d ℓ
   change m ≤ (∑ i, (highDegree paths d i).card) + n*d at hclean
   change (∑ i, (highDegree paths d i).card) ≤ G + p*ℓ at hgood
   have hdn : 4 * (n * d) ≤ m := by
@@ -168,7 +192,7 @@ theorem lemma26_chain_lower (paths : I → Finset V)
   have hlong' : 8*p ≤ m := hlong
   have hdense' : 16*n ≤ m := hdense
   have hGn : 2*n ≤ G := by omega
-  have hCS : G^2 ≤ n * (G + 2*Q) := incidence_square (goodVertices paths d ℓ) Q le_rfl
+  have hCS : G^2 ≤ n * (G + 2*Q) := incidence_square (goodVertices paths position d ℓ) Q le_rfl
   have hGQ : G^2 ≤ 4*n*Q := by
     have h := Nat.mul_le_mul_right G hGn
     nlinarith only [h, hCS]
@@ -181,13 +205,23 @@ theorem lemma26_chain_lower (paths : I → Finset V)
   have hdd : d ≤ 2 * (d - 2) := by omega
   have hmD : m ≤ 16*n*(d - 2) := hmd.trans
     ((Nat.mul_le_mul_left (8*n) hdd).trans (by ring_nf; rfl))
-  have hcount : Q * (ℓ * (d - 2)) ≤ (rChains paths).card := extend_collisions paths d ℓ
-  change m^4 ≤ 2048 * n^2 * p * (rChains paths).card
+  have hcount : Q * (ℓ * (d - 2)) ≤ chains.card := extend_collisions paths position chains (fun a b c d e f g h => accept a b c d e f g h) d ℓ
+  change m^4 ≤ 2048 * n^2 * p * chains.card
   calc
     m^4 = m^2 * m * m := by ring
     _ ≤ (16*n*Q) * (8*p*ℓ) * (16*n*(d - 2)) := by gcongr
     _ = (2048*n^2*p) * (Q * (ℓ * (d - 2))) := by ring
     _ ≤ _ := Nat.mul_le_mul_left _ hcount
+
+/-- The Appendix A lower count when all paths use a common vertex order. -/
+theorem lemma26_chain_lower (paths : I → Finset V)
+    (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
+    (hdense : 16 * Fintype.card V ≤ ∑ i, (paths i).card)
+    (hlong : 8 * Fintype.card I ≤ ∑ i, (paths i).card) :
+    (∑ i, (paths i).card)^4 ≤ 2048 * (Fintype.card V)^2 * Fintype.card I * (rChains paths).card :=
+  lemma26_ranked_chain_lower paths (fun _ v => v) (fun _ _ _ _ _ eq => eq) (rChains paths)
+    (fun lm lr earlier left right mx my order => mem_rChains.mpr ⟨lm, lr, earlier, left, right, mx, my, order⟩)
+    hn hp hdense hlong
 
 /-- The initial bound (Lemma 27) on the acyclic systems used by the growth algorithms. -/
 theorem lemma27_acyclic (paths : I → Finset V) (free : HalfBridgeFree (PathBefore paths) 4) :
