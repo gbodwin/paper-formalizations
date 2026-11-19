@@ -1,6 +1,6 @@
 import OnlineReachabilityPreservers.AcyclicOverlay
 
-/-! The linear demand term in the offline worst-case lower bound. -/
+/-! The linear terms in the offline worst-case lower bound. -/
 
 namespace OnlineReachabilityPreservers
 
@@ -36,6 +36,30 @@ private theorem extend_demand_set {V : Type*} [DecidableEq V] [Fintype V] (activ
   refine ⟨active ∪ extra, subset_union_left, ?_⟩
   rw [card_union_of_disjoint separate, extraSize]
   exact Nat.add_sub_of_le lower
+
+/-- A spanning directed path forces `n - 1` edges with exactly `p` distinct
+requests, provided that at least one request is available. -/
+theorem offline_linear_vertex_lower {n p : ℕ} (hn : 2 ≤ n) (hp0 : 0 < p)
+    (hp : p ≤ n^2) :
+    ∃ (G : Arcs (Fin n)) (D : Finset (Fin n × Fin n)), IsDAG G ∧ D.card = p ∧
+      ∀ H ⊆ G, Preserves G H D.toList → n - 1 ≤ H.card := by
+  let paths : Unit → Finset (Fin n) := fun _ => univ
+  have nonempty : ∀ i, (paths i).Nonempty := fun _ =>
+    ⟨⟨0, by omega⟩, mem_univ _⟩
+  have free (k : ℕ) : IsEmpty (Bridge (PathBefore paths) k) :=
+    ⟨fun b => b.river_ne_arc 0 (Subsingleton.elim _ _)⟩
+  obtain ⟨G, demands, acyclic, length, _, exactSize⟩ := theorem14_acyclic_overlay_lower nonempty free
+  have oneDemand : demands.length = 1 := by simpa using length
+  obtain ⟨D, keeps, size⟩ := extend_demand_set demands.toFinset p
+    ((List.toFinset_card_le _).trans (oneDemand ▸ hp0)) (by simpa using hp)
+  refine ⟨G, D, acyclic, size, ?_⟩
+  intro H sub serves
+  have retained : Preserves G H demands :=
+    fun d hd => serves d (mem_toList.mpr (keeps (List.mem_toFinset.mpr hd)))
+  have edges := exactSize H sub retained
+  rw [oneDemand] at edges
+  have mass : (∑ i : Unit, (paths i).card) = n := by simp [paths]
+  omega
 
 /-- For exactly `p` distinct demands, the offline extremum is at least
 `p/6` when `2 ≤ n` and `p ≤ n²`. The extra requests preserve the original

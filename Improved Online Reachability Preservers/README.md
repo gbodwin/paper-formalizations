@@ -180,7 +180,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   offline pairwise consequence on arbitrary digraphs. The algorithm deletes
   each dispensable edge and the proof assigns the surviving edges to requests
   that require them. The resulting acyclic system has size `m+p` and is fully
-  bridge-free. The extremal lower direction remains open.
+  bridge-free.
+- [`theorem14_extremal_lower_in_linear_regimes`](OnlineReachabilityPreservers/OfflineConverseRegimes.lean)
+  proves the unrestricted path-family converse when `p² ≤ K n` or `n² ≤ K p`.
+  For a universal constant `C`, a DAG with exactly `n` vertices and `p`
+  distinct demands forces at least `1/(C K)` of the mass of every simple
+  path system that excludes full bridges through size four. Theorem 43
+  bounds that mass by a linear term in each regime. The general extremal
+  lower bound remains open between these regimes.
 - [`theorem4_rounded` and `theorem4_sharp`](OnlineReachabilityPreservers/OfflineSharp.lean)
   prove both offline edge bounds for the constructed preserver on arbitrary
   finite digraphs. Two acyclic updates suffice for the rounded bound.

@@ -157,14 +157,22 @@ gives a bridge. The acyclic overlay therefore forces every consecutive arc.
 
 The seven-vertex family also gives an alternate overlay route under unique
 intersections. Its last demand survives deletion of \((5,6)\) by using
-both ends of the long path. The general extremal implication that the
-offline worst case is at least a constant times \(\beta(n,p,\infty)\)
-remains open. For the common-order extremum, Lean checks a lower bound at
+both ends of the long path. For the common-order extremum, Lean checks a lower bound at
 the original sizes with exactly \(p\) distinct demands for \(n\ge2\)
 and \(p\le n^2\). A bipartite graph supplies a separate bound linear in
 \(p\) when the consecutive overlay's path-count subtraction is substantial.
 [Checked unique-intersection example](OnlineReachabilityPreservers/UniqueSplitAudit.lean)
 · [Exact distinct-demand lower bounds](OnlineReachabilityPreservers/OfflineDemandLower.lean).
+
+For simple path systems with no full bridges through size four, Theorem 43
+bounds their mass by \(B K n\) when \(p^2\le K n\) and by \(B K p\) when
+\(n^2\le Kp\), with one absolute constant \(B\). A spanning directed path
+forces \(n-1\) edges in the first regime, and a bipartite DAG forces at
+least \(p/6\) edges in the second. Extra distinct demands fill the demand
+set to exactly \(p\). Together these prove the extremal converse in both
+linear regimes, allowing cyclic path systems. The unrestricted extremal
+implication across the intermediate range remains open.
+[Checked converse in two demand regimes](OnlineReachabilityPreservers/OfflineConverseRegimes.lean).
 
 The same three paths in their listed order also give an alternate route in
 the final reveal round of the ordered construction of [8] Lemma 45.
