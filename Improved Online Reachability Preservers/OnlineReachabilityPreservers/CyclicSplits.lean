@@ -86,24 +86,40 @@ theorem HalfBridgeFree.split_list_paths [LinearOrder I] [LinearOrder J]
 
 /-- Through size three, disjoint order-preserving path splits work on
 arbitrary locally ordered paths. -/
-theorem BridgeFree.split_list_paths_three {paths : I → List V} {pieces : J → List V}
-    (free : BridgeFree (ListBefore paths) 3) (parent : J → I)
+theorem BridgeFree.split_list_paths_short {paths : I → List V} {pieces : J → List V}
+    {size : ℕ} (free : BridgeFree (ListBefore paths) size) (short : size ≤ 3) (parent : J → I)
     (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
     (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False) :
-    BridgeFree (ListBefore pieces) 3 := by
+    BridgeFree (ListBefore pieces) size := by
   intro k hk
   exact ⟨fun b => (free hk).false (listBridge_after_path_split parent steps disjoint (by omega)
     (fun equal => (show False by omega).elim) b)⟩
 
 /-- Retaining parent order also preserves the half exclusion through three. -/
+theorem HalfBridgeFree.split_list_paths_short [LinearOrder I] [LinearOrder J]
+    {paths : I → List V} {pieces : J → List V} {size : ℕ}
+    (free : HalfBridgeFree (ListBefore paths) size) (short : size ≤ 3)
+    (parent : J → I) (monotone : Monotone parent)
+    (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
+    (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False) :
+    HalfBridgeFree (ListBefore pieces) size := by
+  intro k hk b earlier
+  let old := listBridge_after_path_split parent steps disjoint (by omega) (fun equal => (show False by omega).elim) b
+  exact free hk old ((monotone earlier.le).lt_of_ne (old.river_ne_arc (Fin.last k)).symm)
+
+theorem BridgeFree.split_list_paths_three {paths : I → List V} {pieces : J → List V}
+    (free : BridgeFree (ListBefore paths) 3) (parent : J → I)
+    (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
+    (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False) :
+    BridgeFree (ListBefore pieces) 3 :=
+  free.split_list_paths_short le_rfl parent steps disjoint
+
 theorem HalfBridgeFree.split_list_paths_three [LinearOrder I] [LinearOrder J]
     {paths : I → List V} {pieces : J → List V} (free : HalfBridgeFree (ListBefore paths) 3)
     (parent : J → I) (monotone : Monotone parent)
     (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
     (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False) :
-    HalfBridgeFree (ListBefore pieces) 3 := by
-  intro k hk b earlier
-  let old := listBridge_after_path_split parent steps disjoint (by omega) (fun equal => (show False by omega).elim) b
-  exact free hk old ((monotone earlier.le).lt_of_ne (old.river_ne_arc (Fin.last k)).symm)
+    HalfBridgeFree (ListBefore pieces) 3 :=
+  free.split_list_paths_short le_rfl parent monotone steps disjoint
 
 end OnlineReachabilityPreservers

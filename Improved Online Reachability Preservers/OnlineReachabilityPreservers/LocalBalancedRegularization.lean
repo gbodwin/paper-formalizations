@@ -148,6 +148,31 @@ theorem regularization_list_balanced_caps (paths : I → List V) (simple : ∀ i
 
 /-- Both original budgets and all four caps hold for arbitrary simple paths
 when preserving bridge exclusion through size three. -/
+theorem regularization_list_balanced_caps_short (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
+    {size : ℕ} (short : size ≤ 3)
+    (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
+    (dense : Fintype.card V ≤ ∑ i, (paths i).length) (long : Fintype.card I ≤ ∑ i, (paths i).length) :
+    let n := Fintype.card V
+    let p := Fintype.card I
+    let M := ∑ i, (paths i).length
+    let D := (4 * M) / n
+    let L := (4 * M) / p
+    let after := listRegularizedPaths paths D L
+    ∃ A : Finset (ListVertexBlockIndex paths D),
+      ∃ B : Finset (ListBlockIndex (splitListVertices paths D) L),
+        let clean := restrictListPaths after A B
+        A.card ≤ n ∧ B.card ≤ p ∧ M ≤ 16 * (∑ i, (clean i).length) ∧
+          (∑ i, (clean i).length) ≤ M ∧
+          (∀ v : A, (M : ℝ) / (4 * (n : ℝ)) ≤ (occurrences (fun i => (clean i).toFinset) v).card ∧
+            ((occurrences (fun i => (clean i).toFinset) v).card : ℝ) ≤ 4 * (M : ℝ) / (n : ℝ)) ∧
+          (∀ i : B, (M : ℝ) / (4 * (p : ℝ)) ≤ (clean i).length ∧
+            ((clean i).length : ℝ) ≤ 4 * (M : ℝ) / (p : ℝ)) ∧
+          (HalfBridgeFree (ListBefore paths) size → HalfBridgeFree (ListBefore clean) size) ∧
+          (BridgeFree (ListBefore paths) size → BridgeFree (ListBefore clean) size) :=
+  regularization_list_balanced_caps_of_splits paths simple size
+    (fun D L free => listRegularizedPaths_halfFree_short simple free short D L)
+    (fun D L free => listRegularizedPaths_fullFree_short simple free short D L) hn hp dense long
+
 theorem regularization_list_balanced_caps_three (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
     (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
     (dense : Fintype.card V ≤ ∑ i, (paths i).length) (long : Fintype.card I ≤ ∑ i, (paths i).length) :
@@ -168,9 +193,7 @@ theorem regularization_list_balanced_caps_three (paths : I → List V) (simple :
             ((clean i).length : ℝ) ≤ 4 * (M : ℝ) / (p : ℝ)) ∧
           (HalfBridgeFree (ListBefore paths) 3 → HalfBridgeFree (ListBefore clean) 3) ∧
           (BridgeFree (ListBefore paths) 3 → BridgeFree (ListBefore clean) 3) :=
-  regularization_list_balanced_caps_of_splits paths simple 3
-    (fun D L free => listRegularizedPaths_halfFree_three simple free D L)
-    (fun D L free => listRegularizedPaths_fullFree_three simple free D L) hn hp dense long
+  regularization_list_balanced_caps_short paths simple le_rfl hn hp dense long
 
 /-- Prune a general system before performing the two splits. The lower
 caps lose at most a factor of two, and both original budgets are met. -/

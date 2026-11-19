@@ -603,6 +603,14 @@ An exact-source replay grants no coverage to a paper statement outside the
   two-vertex example keeps the previous preparation charges, and its
   per-prefix charges are `[0, 539964, 539964, 539964]`.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44515200844).
+- [64d2c2be](https://github.com/gbodwin/paper-formalizations/commit/64d2c2be8b4a63a06f14a08a4850b6950ea970f1)
+  adds one weight read per forest link in preparation and proves one
+  polynomial for all measured searches and original distance-table reads.
+  The 3874-declaration audit and local kernel replay passed. Independent
+  review confirmed exact prefix graph and charge equality and a single
+  shared setup in generated C. The two-vertex setup reports 12 arc
+  inspections, 20 template comparisons, and 19 weighted-plan comparisons.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44516110338).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

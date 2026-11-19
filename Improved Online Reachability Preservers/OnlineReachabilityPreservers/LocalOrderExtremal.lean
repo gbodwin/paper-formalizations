@@ -60,6 +60,32 @@ theorem localOrderExtremal_isDense (n p size : ℕ) (half : Bool) (hn : 0 < n) (
 
 /-- Through size three, retain a constant fraction of the unrestricted
 maximum and meet both budgets and all four original-average caps. -/
+theorem localOrderExtremal_balanced_short (n p : ℕ) (half : Bool) {size : ℕ} (short : size ≤ 3) (hn : 0 < n) (hp : 0 < p) :
+    ∃ paths : Fin p → List (Fin n), (∀ i, (paths i).Nodup) ∧ localOrderAdmissible half size paths ∧
+      (∀ other : Fin p → List (Fin n), (∀ i, (other i).Nodup) → localOrderAdmissible half size other →
+        (∑ i, (other i).length) ≤ ∑ i, (paths i).length) ∧
+      let M := ∑ i, (paths i).length
+      let D := (4*M)/Fintype.card (Fin n)
+      let L := (4*M)/Fintype.card (Fin p)
+      let copies := splitListVertices paths D
+      ∃ A : Finset (ListVertexBlockIndex paths D), ∃ B : Finset (ListBlockIndex copies L),
+        let clean := restrictListPaths (listRegularizedPaths paths D L) A B
+        A.card ≤ n ∧ B.card ≤ p ∧ localOrderAdmissible half size clean ∧
+          M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧
+          (∀ v : A, (M:ℝ)/(4*(n:ℝ)) ≤ (occurrences (fun i => (clean i).toFinset) v).card ∧
+            ((occurrences (fun i => (clean i).toFinset) v).card : ℝ) ≤ 4*(M:ℝ)/(n:ℝ)) ∧
+          (∀ i : B, (M:ℝ)/(4*(p:ℝ)) ≤ (clean i).length ∧
+            ((clean i).length : ℝ) ≤ 4*(M:ℝ)/(p:ℝ)) := by
+  obtain ⟨paths,simple,eligible,maximal,nd,pd⟩ := localOrderExtremal_isDense n p size half hn hp
+  obtain ⟨A,B,vertices,pathsCap,mass,upper,degree,length,halfFree,fullFree⟩ :=
+    regularization_list_balanced_caps_short paths simple short (by simpa using hn) (by simpa using hp)
+      (by simpa using nd) (by simpa using pd)
+  refine ⟨paths,simple,eligible,maximal,A,B,by simpa using vertices,by simpa using pathsCap,
+    ?_,mass,upper,by simpa using degree,by simpa using length⟩
+  cases half
+  · exact fullFree eligible
+  · exact halfFree eligible
+
 theorem localOrderExtremal_balanced_three (n p : ℕ) (half : Bool) (hn : 0 < n) (hp : 0 < p) :
     ∃ paths : Fin p → List (Fin n), (∀ i, (paths i).Nodup) ∧ localOrderAdmissible half 3 paths ∧
       (∀ other : Fin p → List (Fin n), (∀ i, (other i).Nodup) → localOrderAdmissible half 3 other →
@@ -75,15 +101,7 @@ theorem localOrderExtremal_balanced_three (n p : ℕ) (half : Bool) (hn : 0 < n)
           (∀ v : A, (M:ℝ)/(4*(n:ℝ)) ≤ (occurrences (fun i => (clean i).toFinset) v).card ∧
             ((occurrences (fun i => (clean i).toFinset) v).card : ℝ) ≤ 4*(M:ℝ)/(n:ℝ)) ∧
           (∀ i : B, (M:ℝ)/(4*(p:ℝ)) ≤ (clean i).length ∧
-            ((clean i).length : ℝ) ≤ 4*(M:ℝ)/(p:ℝ)) := by
-  obtain ⟨paths,simple,eligible,maximal,nd,pd⟩ := localOrderExtremal_isDense n p 3 half hn hp
-  obtain ⟨A,B,vertices,pathsCap,mass,upper,degree,length,halfFree,fullFree⟩ :=
-    regularization_list_balanced_caps_three paths simple (by simpa using hn) (by simpa using hp)
-      (by simpa using nd) (by simpa using pd)
-  refine ⟨paths,simple,eligible,maximal,A,B,by simpa using vertices,by simpa using pathsCap,
-    ?_,mass,upper,by simpa using degree,by simpa using length⟩
-  cases half
-  · exact fullFree eligible
-  · exact halfFree eligible
+            ((clean i).length : ℝ) ≤ 4*(M:ℝ)/(p:ℝ)) :=
+  localOrderExtremal_balanced_short n p half le_rfl hn hp
 
 end OnlineReachabilityPreservers

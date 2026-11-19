@@ -260,8 +260,8 @@ local-order upper bound and recurrence of Theorem 43.
   size in this common-order setting. A spanning path and singleton padding
   make both density assumptions automatic at a common-order maximum with
   positive budgets. The same caps hold through size four
-  under unique intersections in local orders, and through size three for
-  arbitrary simple paths. In the latter case the general ordered-list
+  under unique intersections in local orders, and at every cutoff up to size
+  three for arbitrary simple paths. In the latter case the general ordered-list
   maximum is finite, with both density assumptions following from the
   common-order witness.
   With opposite-intersection pruning first, arbitrary simple paths whose

@@ -334,15 +334,15 @@ theorem listRegularizedPaths_fullFree {paths : I → List V} (simple : ∀ i, (p
 
 /-- Both splitting steps preserve the half-bridge condition through three
 on arbitrary simple paths. The parent order is unchanged. -/
-theorem listRegularizedPaths_halfFree_three {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
-    (free : HalfBridgeFree (ListBefore paths) 3) (D L : ℕ) :
-    HalfBridgeFree (ListBefore (listRegularizedPaths paths D L)) 3 := by
+theorem listRegularizedPaths_halfFree_short {paths : I → List V} {size : ℕ} (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (ListBefore paths) size) (short : size ≤ 3) (D L : ℕ) :
+    HalfBridgeFree (ListBefore (listRegularizedPaths paths D L)) size := by
   let copies := splitListVertices paths D
-  have copyFree : HalfBridgeFree (ListBefore copies) 3 :=
-    free.split_list_vertices_short (by decide) (fun v => v.fst)
+  have copyFree : HalfBridgeFree (ListBefore copies) size :=
+    free.split_list_vertices_short (short.trans (by decide)) (fun v => v.fst)
       (fun {i x y} step => splitListVertices_step (width := D) (simple i) step)
-  change HalfBridgeFree (ListBefore (splitListPaths copies L)) 3
-  apply copyFree.split_list_paths_three (fun j : ListBlockIndex copies L => j.fst)
+  change HalfBridgeFree (ListBefore (splitListPaths copies L)) size
+  apply copyFree.split_list_paths_short short (fun j : ListBlockIndex copies L => j.fst)
     (block_parent_mono (fun i => (copies i).toFinset) L)
   · intro i x y h
     exact listBefore_of_sublist (paths := fun j : ListBlockIndex copies L => copies j.fst)
@@ -352,20 +352,30 @@ theorem listRegularizedPaths_halfFree_three {paths : I → List V} (simple : ∀
 
 /-- Full bridge exclusion through three survives both splitting steps
 on arbitrary simple paths. -/
-theorem listRegularizedPaths_fullFree_three {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
-    (free : BridgeFree (ListBefore paths) 3) (D L : ℕ) :
-    BridgeFree (ListBefore (listRegularizedPaths paths D L)) 3 := by
+theorem listRegularizedPaths_fullFree_short {paths : I → List V} {size : ℕ} (simple : ∀ i, (paths i).Nodup)
+    (free : BridgeFree (ListBefore paths) size) (short : size ≤ 3) (D L : ℕ) :
+    BridgeFree (ListBefore (listRegularizedPaths paths D L)) size := by
   let copies := splitListVertices paths D
-  have copyFree : BridgeFree (ListBefore copies) 3 :=
+  have copyFree : BridgeFree (ListBefore copies) size :=
     free.split_list_vertices_any (fun v => v.fst)
       (fun {i x y} step => splitListVertices_step (width := D) (simple i) step)
-  change BridgeFree (ListBefore (splitListPaths copies L)) 3
-  apply copyFree.split_list_paths_three (fun j : ListBlockIndex copies L => j.fst)
+  change BridgeFree (ListBefore (splitListPaths copies L)) size
+  apply copyFree.split_list_paths_short short (fun j : ListBlockIndex copies L => j.fst)
   · intro i x y h
     exact listBefore_of_sublist (paths := fun j : ListBlockIndex copies L => copies j.fst)
       (cut := splitListPaths copies L) (splitListVertices_simple paths D i.fst (simple i.fst))
       (splitListPaths_sublist copies L i) h
   · exact fun different equal first second => splitListPaths_disjoint different equal first second
+
+theorem listRegularizedPaths_halfFree_three {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (ListBefore paths) 3) (D L : ℕ) :
+    HalfBridgeFree (ListBefore (listRegularizedPaths paths D L)) 3 :=
+  listRegularizedPaths_halfFree_short simple free le_rfl D L
+
+theorem listRegularizedPaths_fullFree_three {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
+    (free : BridgeFree (ListBefore paths) 3) (D L : ℕ) :
+    BridgeFree (ListBefore (listRegularizedPaths paths D L)) 3 :=
+  listRegularizedPaths_fullFree_short simple free le_rfl D L
 
 variable [Fintype V]
 
