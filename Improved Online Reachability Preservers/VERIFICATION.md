@@ -143,6 +143,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   audit and local kernel replay passed. Independent review checked the
   product counts, the cyclic reachability interval, and the exact thresholds.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44434808043).
+- [ab419103](https://github.com/gbodwin/paper-formalizations/commit/ab419103b0ec7ae63f0301f00148eb88aae10c9c)
+  proves monotone thin-demand cut covering and the fractional capacity bound.
+  The 1227-declaration paper audit and local kernel replay passed. Independent
+  review checked the integer load invariant, the finite cut enumeration, and
+  charging against any feasible offline solution.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44435788128).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

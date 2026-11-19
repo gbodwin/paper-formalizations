@@ -43,8 +43,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   checks capacity doubling on the local directed cuts. Every request's cuts
   remain covered, and the capacity sum is bounded by
   `1 + OPT * (1 + floor(log₂ |E|))` after normalization when `|E| > 0`.
-  The current separator enumerates all local cuts. Polynomial separation
-  and online rounding remain open.
+  [The rounded preserver](OnlineReachabilityPreservers/SteinerThinRound.lean)
+  uses a single independent integer threshold per edge. It is correct at
+  every prefix, uses a graph purchase on failure, and has the expected
+  logarithmic-factor thin-demand edge bound on a fixed distinct trace.
+  The current separator enumerates all local cuts.
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)
