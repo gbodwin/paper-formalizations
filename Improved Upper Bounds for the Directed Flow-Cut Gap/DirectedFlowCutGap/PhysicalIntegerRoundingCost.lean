@@ -39,14 +39,30 @@ def readBound (n L T : ℕ) : ℕ :=
   let fuel := instructionBound n L (H+1) T.bits+1
   PhysicalCoverAccess.wordBound (H+1+fuel) (H+fuel)
 
+def boundaryBudget {R : Type*} [Semiring R] (n L T : R) : R :=
+  16*(n+1)^2+16*(L+1)^2+16*(T+1)^2+24*(n+1)^3+12+16*(n+n+1)^2
+
+private theorem boundary_paid (n L T : ℕ) :
+    (PhysicalIntegerRounding.boundaryWords n L T).paid+PhysicalIntegerRounding.maskCopyCharge n n ≤
+      boundaryBudget n L T := by
+  have word (x : ℕ) : (BinaryNaturalView.encode x).2 ≤ 16*(x+1)^2 :=
+    (BinaryNaturalView.encode_paid x).trans (Nat.mul_le_mul_left 16
+      (Nat.pow_le_pow_left (Nat.add_le_add_right (Nat.size_le.mpr Nat.lt_two_pow_self) 1) 2))
+  have d := word n
+  have l := word L
+  have t := word T
+  unfold PhysicalIntegerRounding.boundaryWords PhysicalIntegerRounding.maskCopyCharge boundaryBudget
+  dsimp only
+  omega
+
 def roundBudget (n L T : ℕ) : ℕ :=
   EncodedEpochParameters.operationBound n+2*n+10+
-    (if L≤n ∧ 64*cap n≤L ∧ n≤L^3 then packedCost n L T+readBound n L T else 0)
+    (if L≤n ∧ 64*cap n≤L ∧ n≤L^3 then packedCost n L T+readBound n L T+boundaryBudget n L T else 0)
 
 set_option maxHeartbeats 1800000 in
 theorem hard_paid {n L T : ℕ} {adj : PairFlags n} (positive : 0<L) (tape : Bits) {result : Result n}
     (observed : PhysicalIntegerRounding.hardRun T adj L tape=some result) :
-    result.paid≤packedCost n L T+readBound n L T := by
+    result.paid≤packedCost n L T+readBound n L T+boundaryBudget n L T := by
   let F := CandidateEnumeration.make n L
   let E := F.network.enumeration
   let EN := F.nodes.enumeration
@@ -86,12 +102,15 @@ theorem hard_paid {n L T : ℕ} {adj : PairFlags n} (positive : 0<L) (tape : Bit
         PhysicalCoverAccess.wordBound (H+1+(instructionBound n L (H+1) T.bits+1)) (H+(instructionBound n L (H+1) T.bits+1))
       unfold PhysicalCoverAccess.wordBound PhysicalCoverAccess.cellBound
       gcongr
-    have finished : result.paid=input.2+paid+(PhysicalCoverAccess.readWord out.heap out.registers.d).2 := by
+    have finished : result.paid=input.2+paid+(PhysicalCoverAccess.readWord out.heap out.registers.d).2+
+        (PhysicalIntegerRounding.boundaryWords n L T).paid+PhysicalIntegerRounding.maskCopyCharge n n := by
       dsimp only [input,matrix] at ran
       simp [PhysicalIntegerRounding.hardRun,preparedCells_eq,ran,output] at observed
       exact congrArg PhysicalIntegerRounding.Result.paid observed.symm
     rw [finished]
-    exact Nat.add_le_add (Nat.add_le_add packing time) lookupCost
+    have base : input.2+paid ≤ packedCost n L T := Nat.add_le_add packing time
+    have h := Nat.add_le_add (Nat.add_le_add base lookupCost) (boundary_paid n L T)
+    rwa [← Nat.add_assoc] at h
 
 theorem round_paid {n L T : ℕ} {adj : PairFlags n} (positive : 0<L) (tape : Bits) {result : Result n}
     (observed : PhysicalIntegerRounding.run T adj L tape=some result) :
@@ -165,7 +184,8 @@ theorem round_budget_polynomial :
   obtain ⟨p,h⟩ := OriginalGraphCostEnvelope.bounded_trials_polynomial
   let v := C 16*(X+1)^2+p
   let extra := C 18*X^3+C 14*X+C 75
-  refine ⟨p+C 128*v*(v+1)^2+extra,?_⟩
+  let b := boundaryBudget (X : Polynomial ℕ) X X
+  refine ⟨p+C 128*v*(v+1)^2+extra+b,?_⟩
   intro n L T
   let x := n+T
   have head : EncodedEpochParameters.operationBound n+2*n+10≤18*x^3+14*x+75 := by
@@ -179,8 +199,15 @@ theorem round_budget_polynomial :
   next hard =>
     have hp := h n L T hard.1
     have hr := read_le_eval hard.1 hp
-    change _ ≤ p.eval x+128*(16*(x+1)^2+p.eval x)*(16*(x+1)^2+p.eval x+1)^2+(18*x^3+14*x+75)
-    exact (Nat.add_le_add head (Nat.add_le_add hp hr)).trans_eq (by ac_rfl)
+    have hb : boundaryBudget n L T ≤ b.eval x := by
+      have hn : n ≤ x := Nat.le_add_right _ _
+      have hL : L ≤ x := hard.1.trans hn
+      have hT : T ≤ x := Nat.le_add_left _ _
+      simp only [b,boundaryBudget,eval_add,eval_mul,eval_pow,eval_X,eval_one,eval_ofNat]
+      gcongr
+    change _ ≤ p.eval x+128*(16*(x+1)^2+p.eval x)*(16*(x+1)^2+p.eval x+1)^2+(18*x^3+14*x+75)+b.eval x
+    exact (Nat.add_le_add head (Nat.add_le_add (Nat.add_le_add hp hr) hb)).trans_eq
+      ((Nat.add_comm _ _).trans (Nat.add_right_comm _ _ _))
   next =>
     dsimp only [x] at head
     omega

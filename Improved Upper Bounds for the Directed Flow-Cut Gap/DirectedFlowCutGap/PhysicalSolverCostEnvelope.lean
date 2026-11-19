@@ -78,7 +78,8 @@ theorem run_polynomial_on_rows (q : Polynomial ℕ) : ∃ p : Polynomial ℕ,
   let row := q.comp (trials+X)+sum+C 10+compare
   let sample := (C 4*X+C 3)*row+1+C 4*X+C 10
   let amplify := (X+1)*sample+((X+1)*sum+X*compare)+C 20*(X+1)^2+C 5
-  refine ⟨PhysicalSourceDispatch.paidPolynomial+lookup+amplify,?_⟩
+  let controls := BinaryAmplificationPreparation.budget (5*X : Polynomial ℕ)
+  refine ⟨PhysicalSourceDispatch.paidPolynomial+lookup+(amplify+controls),?_⟩
   intro n B x D round draw extra confidence tape hn hB hd he hc length positive fits pc out executed
   let R := q.eval (trials.eval x+x)
   obtain ⟨dispatch,readback,paid⟩ :=
@@ -96,8 +97,12 @@ theorem run_polynomial_on_rows (q : Polynomial ℕ) : ∃ p : Polynomial ℕ,
     gcongr
   have readEval : lookup.eval x = PhysicalSourceReadback.planBound (1+inst.eval x) (inst.eval x) := by
     simp only [lookup,H,PhysicalSourceReadback.planBound_eval,eval_add,eval_one]
+  have control : BinaryAmplificationPreparation.budget (n+B+draw+extra+confidence) ≤ controls.eval x := by
+    simp only [controls,BinaryAmplificationPreparation.budget_eval,eval_mul,eval_ofNat,eval_X]
+    exact BinaryAmplificationPreparation.budget_mono (by omega)
   simp only [eval_add,readEval]
-  exact Nat.add_le_add (Nat.add_le_add (dispatch.trans dispatchLimit) (readback.trans readbackLimit)) (paid.trans rounding)
+  exact Nat.add_le_add (Nat.add_le_add (dispatch.trans dispatchLimit) (readback.trans readbackLimit))
+    (paid.trans (Nat.add_le_add rounding control))
 
 theorem run_polynomial (q : Polynomial ℕ) : ∃ p : Polynomial ℕ,
     ∀ {n B x : ℕ} (D : BinaryFractionalGuesses.Input n) (round : PhysicalVertexSampling.Runner n)

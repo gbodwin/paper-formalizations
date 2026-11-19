@@ -12,12 +12,16 @@ open LiteralTapeComposition (execute execute_map execute_bind)
 
 abbrev Runner (n : ℕ) := ℕ → RoundingInput n → Bits → Option (Result n)
 
-def chooseRows {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Runner n) (T : ℕ) :
+def chooseRowsWith {n : ℕ} (D : BinaryFractionalGuesses.Input n) (costs : FractionalCoverRawCore.RawRow n)
+    (round : Runner n) (T : ℕ) :
     List (FractionalCoverRawCore.RawRow n) → Bits → Option ((Option (ChargedCutSelection.Scored D.costs) × ℕ) × Bits)
   | [], tape => some ((none,1),tape)
-  | y::ys, tape => (round T (roundingInput (BinaryFractionalGuesses.decodeInput D) y) tape).bind fun a =>
-      (chooseRows D round T ys a.suffix).map fun (best,rest) =>
+  | y::ys, tape => (round T ⟨D.adjacency,y,costs⟩ tape).bind fun a =>
+      (chooseRowsWith D costs round T ys a.suffix).map fun (best,rest) =>
         (ChargedCutSelection.select (a.mask,a.paid) best,rest)
+
+def chooseRows {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Runner n) (T : ℕ) :=
+  chooseRowsWith D (decodeRow D.costs) round T
 
 private theorem chooseRows_observe {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Runner n)
     (tree : Rounding n) (T : ℕ)
@@ -55,13 +59,17 @@ private theorem chooseRows_observe {n : ℕ} (D : BinaryFractionalGuesses.Input 
           ChargedCutSelection.select_value (a.mask,a.paid) scored]
         rfl
 
-def fromPlan {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Runner n) (T : ℕ) :
+def fromPlanWith {n : ℕ} (D : BinaryFractionalGuesses.Input n) (costs : FractionalCoverRawCore.RawRow n)
+    (round : Runner n) (T : ℕ) :
     PhysicalCoverReader.Plan n → Bits → Option ((Output n × ℕ) × Bits)
   | .invalid,tape => some ((.invalid,4*n+10),tape)
   | .infeasible d,tape => some ((.infeasible d,4*n+10),tape)
   | .zero mask,tape => some ((.cut mask,4*n+10),tape)
-  | .covers rows,tape => (chooseRows D round T rows tape).map fun (best,rest) =>
+  | .covers rows,tape => (chooseRowsWith D costs round T rows tape).map fun (best,rest) =>
       (((ChargedCutSelection.result best).elim .invalid .cut,best.2+4*n+10),rest)
+
+def fromPlan {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Runner n) (T : ℕ) :=
+  fromPlanWith D (decodeRow D.costs) round T
 
 theorem fromPlan_observe {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Runner n) (tree : Rounding n) (T : ℕ)
     (refines : ∀ input tape, (round T input tape).map Result.observe = execute T (tree input) tape)
@@ -75,13 +83,13 @@ theorem fromPlan_observe {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round 
       apply Vector.ext
       intro i hi
       simp [maskOfSet,column]
-    simp only [fromPlan,Option.map_some,PhysicalVertexSolver.treeFromPlan,roundOutput,equal]
+    simp only [fromPlan,fromPlanWith,Option.map_some,PhysicalVertexSolver.treeFromPlan,roundOutput,equal]
     rfl
   | covers rows =>
     have casesEq := congrArg
       (Option.map fun (a,rest) => (a.elim Output.invalid Output.cut,rest))
       (chooseRows_observe D round tree T refines rows tape)
-    simpa only [PhysicalVertexSolver.treeFromPlan,execute_map,fromPlan,Option.map_map,Function.comp_def,
+    simpa only [PhysicalVertexSolver.treeFromPlan,execute_map,fromPlan,fromPlanWith,chooseRows,Option.map_map,Function.comp_def,
       BinaryFractionalGuesses.decodeInput] using casesEq
 
 end DirectedFlowCutGap.PhysicalVertexSampling

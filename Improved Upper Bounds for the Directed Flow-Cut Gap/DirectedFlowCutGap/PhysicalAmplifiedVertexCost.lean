@@ -55,7 +55,7 @@ private theorem chooseRows_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n
       out.1.2 ≤ rows.length*ChargedCutSelection.rowBound n B budget+1 := by
   induction rows generalizing tape out with
   | nil =>
-    simp only [PhysicalVertexSampling.chooseRows,Option.some.injEq] at actual
+    simp only [PhysicalVertexSampling.chooseRows,PhysicalVertexSampling.chooseRowsWith,Option.some.injEq] at actual
     rw [← actual]
     simp
   | cons y ys ih =>
@@ -86,7 +86,7 @@ theorem fromPlan_paid_on_rows {n B : ℕ} (D : BinaryFractionalGuesses.Input n)
     out.1.2 ≤ sampleBudget n B (rowsCount plan) budget := by
   cases plan with
   | invalid | infeasible _ | zero _ =>
-    simp only [PhysicalVertexSampling.fromPlan,Option.some.injEq] at actual
+    simp only [PhysicalVertexSampling.fromPlan,PhysicalVertexSampling.fromPlanWith,Option.some.injEq] at actual
     rw [← actual]
     simp [sampleBudget,rowsCount]
   | covers rows =>
@@ -160,23 +160,28 @@ theorem run_paid_on_rows {n B : ℕ} (D : BinaryFractionalGuesses.Input n) (roun
     (h : PhysicalAmplifiedVertexSolver.run D round roundBound extra confidence tape=some out) :
     out.dispatch ≤ PhysicalSolverCharges.dispatchBudget D ∧
     out.readback ≤ PhysicalSolverCharges.lookupBudget D ∧
-    out.roundingAndSelection ≤ budget (BinaryFractionalGuesses.decodeInput D) B extra cost := by
+    out.roundingAndSelection ≤ budget (BinaryFractionalGuesses.decodeInput D) B extra cost+
+      BinaryAmplificationPreparation.budget (n+B+roundBound+extra+confidence) := by
   obtain ⟨dispatch,lookup,source,hd,hl⟩ := PhysicalSourceReadback.run_eq D
   let plan := PhysicalCoverReader.plan (BinaryFractionalGuesses.solveInput D).1
   let G := BinaryFractionalGuesses.decodeInput D
   let T := trialLimit G roundBound extra confidence
   let one := PhysicalVertexSampling.fromPlan D round T plan
-  rw [PhysicalAmplifiedVertexSolver.run,source,Option.bind_some] at h
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  have prep := BinaryAmplificationPreparation.prepare_paid D.costs roundBound extra confidence fits
+    (x := n+B+roundBound+extra+confidence) (by omega) (by omega) (by omega) (by omega) (by omega)
+  simp only [PhysicalAmplifiedVertexSolver.run,source,Option.bind_some,
+    BinaryAmplificationPreparation.costs_value,BinaryAmplificationPreparation.trials_value D] at h
   change ((PhysicalAmplifiedVertexSolver.samples one (extra+1) tape).map fun (cuts,rest) =>
     ⟨(ChargedAmplification.select D.costs extra cuts).1,rest,dispatch,lookup,
-      (ChargedAmplification.select D.costs extra cuts).2⟩)=some out at h
+      (ChargedAmplification.select D.costs extra cuts).2+setup.paid⟩)=some out at h
   cases samples : PhysicalAmplifiedVertexSolver.samples one (extra+1) tape with
   | none => simp [samples] at h
   | some s =>
     rcases s with ⟨cuts,rest⟩
     simp only [samples,Option.map_some,Option.some.injEq] at h
     rw [← h]
-    refine ⟨hd,hl,?_⟩
+    refine ⟨hd,hl,Nat.add_le_add ?_ prep⟩
     apply amplification_paid D extra _ hB fits cuts
     apply samples_paid one _ _ (extra+1) tape samples
     intro bits r ran
@@ -194,7 +199,8 @@ theorem run_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Phys
     (h : PhysicalAmplifiedVertexSolver.run D round roundBound extra confidence tape=some out) :
     out.dispatch ≤ PhysicalSolverCharges.dispatchBudget D ∧
     out.readback ≤ PhysicalSolverCharges.lookupBudget D ∧
-    out.roundingAndSelection ≤ budget (BinaryFractionalGuesses.decodeInput D) B extra cost :=
+    out.roundingAndSelection ≤ budget (BinaryFractionalGuesses.decodeInput D) B extra cost+
+      BinaryAmplificationPreparation.budget (n+B+roundBound+extra+confidence) :=
   run_paid_on_rows D round roundBound extra confidence cost tape hB fits (fun _ _ _ _ => bound _) h
 
 end DirectedFlowCutGap.PhysicalAmplifiedVertexCost

@@ -1,4 +1,5 @@
 import DirectedFlowCutGap.PhysicalVertexSampling
+import DirectedFlowCutGap.BinaryAmplificationPreparation
 import DirectedFlowCutGap.ChargedVertexModes
 
 /-! Original vertex input, actual fractional computation, repeated fair tape and binary selection. -/
@@ -7,7 +8,7 @@ namespace DirectedFlowCutGap.PhysicalAmplifiedVertexSolver
 
 open BinaryArithmetic FiniteDrawTrees EncodedVertexSolver EncodedVertexAmplification
 open LiteralTapeComposition (execute execute_map execute_bind)
-open PhysicalVertexSampling (Runner fromPlan fromPlan_observe)
+open PhysicalVertexSampling (Runner fromPlan fromPlanWith fromPlan_observe)
 
 def samples {A : Type} (one : Bits → Option ((A × ℕ) × Bits)) :
     (k : ℕ) → Bits → Option ((Fin k → A × ℕ) × Bits)
@@ -58,10 +59,10 @@ def Result.observe {n : ℕ} (r : Result n) : Output n × Bits := (r.output,r.su
 def run {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Runner n)
     (roundBound extra confidence : ℕ) (tape : Bits) : Option (Result n) :=
   (PhysicalSourceReadback.run D).bind fun (plan,dispatch,readback) =>
-    let T := ChargedPhysicalVertexSolver.trialLimit (BinaryFractionalGuesses.decodeInput D) roundBound extra confidence
-    (samples (fromPlan D round T plan) (extra+1) tape).map fun (cuts,rest) =>
+    let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+    (samples (fromPlanWith D setup.costs round setup.trials plan) (extra+1) tape).map fun (cuts,rest) =>
       let (winner,paid) := ChargedAmplification.select D.costs extra cuts
-      ⟨winner,rest,dispatch,readback,paid⟩
+      ⟨winner,rest,dispatch,readback,paid+setup.paid⟩
 
 set_option maxHeartbeats 1600000 in
 theorem run_observe {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Runner n) (model : Rounding n)
@@ -89,8 +90,10 @@ theorem run_observe {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Run
   rw [EncodedAmplification.selectedTree,execute_map,← obs]
   have native : run D round roundBound extra confidence tape = sampled.map fun (cuts,rest) =>
       ⟨(ChargedAmplification.select D.costs extra cuts).1,rest,paid,lookup,
-        (ChargedAmplification.select D.costs extra cuts).2⟩ := by
-    simp only [run,source,Option.bind_some,sampled,T,G,plan]
+        (ChargedAmplification.select D.costs extra cuts).2+
+          (BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence).paid⟩ := by
+    simp only [run,source,Option.bind_some,sampled,T,G,plan,fromPlan,
+      BinaryAmplificationPreparation.costs_value,BinaryAmplificationPreparation.trials_value D]
   rw [native]
   change (sampled.map _).map Result.observe = (sampled.map _).map _
   cases h : sampled with

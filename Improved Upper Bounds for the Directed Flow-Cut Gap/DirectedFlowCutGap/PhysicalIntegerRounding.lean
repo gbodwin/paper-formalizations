@@ -2,6 +2,7 @@ import DirectedFlowCutGap.RawGraphInputStore
 import DirectedFlowCutGap.EncodedIntegerRounding
 import DirectedFlowCutGap.EncodedEpochParameters
 import DirectedFlowCutGap.PhysicalCoverAccess
+import DirectedFlowCutGap.BinaryNaturalView
 
 /-! Execute all three cutoff regimes and transport the actual output and tape. -/
 
@@ -22,24 +23,50 @@ structure Result (n : ℕ) where
 def Result.observe {n : ℕ} (r : Result n) : Flags n × Bits := (r.mask,r.suffix)
 
 def fromWord (n : ℕ) (word : Bits) : Flags n :=
-  Vector.ofFn (fun v : Fin n => word[v.val]?.getD false)
+  let bits := word.toArray
+  Vector.ofFn (fun v : Fin n => bits[v.val]?.getD false)
 
 private theorem fromWord_exact {n : ℕ} (mask : Flags n) : fromWord n mask.toList=mask := by
   apply Vector.ext
   intro i hi
   have h : i < mask.toList.length := by simpa only [Vector.length_toList] using hi
-  simp only [fromWord,Vector.getElem_ofFn,List.getElem?_eq_getElem h,Option.getD_some,Vector.getElem_toList]
+  simp only [fromWord,Vector.getElem_ofFn,List.getElem?_toArray,List.getElem?_eq_getElem h,
+    Option.getD_some,Vector.getElem_toList]
+
+structure BoundaryWords where
+  dimension : Bits
+  level : Bits
+  trials : Bits
+  paid : ℕ
+
+def boundaryWords (n L T : ℕ) : BoundaryWords :=
+  let dimension := BinaryNaturalView.encode n
+  let level := BinaryNaturalView.encode L
+  let trials := BinaryNaturalView.encode T
+  ⟨dimension.1,level.1,trials.1,dimension.2+level.2+trials.2+24*(n+1)^3+12⟩
+
+@[simp] theorem boundary_dimension (n L T : ℕ) : (boundaryWords n L T).dimension=n.bits :=
+  BinaryNaturalView.encode_bits _
+
+@[simp] theorem boundary_level (n L T : ℕ) : (boundaryWords n L T).level=L.bits :=
+  BinaryNaturalView.encode_bits _
+
+@[simp] theorem boundary_trials (n L T : ℕ) : (boundaryWords n L T).trials=T.bits :=
+  BinaryNaturalView.encode_bits _
+
+def maskCopyCharge (n length : ℕ) : ℕ := 16*(n+length+1)^2
 
 def hardRun {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (tape : Bits) : Option (Result n) :=
+  let words := boundaryWords n L T
   let matrix := GraphRelaxationRefinement.matrix adj
-  let H := cells matrix n.bits L.bits T.bits
-  let entry := prepare matrix n.bits L.bits T.bits tape
+  let H := cells matrix words.dimension words.level words.trials
+  let entry := prepare matrix words.dimension words.level words.trials tape
   do
     let (out,paid) ← GuardedReferenceExecution.execute RawGraphControllerProgram.program
-      (instructionBound n L (H+1) T.bits+1) entry.1 0
+      (instructionBound n L (H+1) words.trials+1) entry.1 0
     let observed := PhysicalCoverAccess.readWord out.heap out.registers.d
     let mask ← observed.1
-    pure ⟨fromWord n mask,out.source,entry.2+paid+observed.2⟩
+    pure ⟨fromWord n mask,out.source,entry.2+paid+observed.2+words.paid+maskCopyCharge n mask.length⟩
 
 private noncomputable abbrev maskTree {n L : ℕ} (adj : PairFlags n) (positive : 0<L) :=
   map (fun s => s.data.cut)
