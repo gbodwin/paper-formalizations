@@ -261,7 +261,9 @@ local-order upper bound and recurrence of Theorem 43.
   make both density assumptions automatic at a common-order maximum with
   positive budgets. The same caps hold through size four
   under unique intersections in local orders, and through size three for
-  arbitrary simple paths in the dense regime.
+  arbitrary simple paths. In the latter case the general ordered-list
+  maximum is finite, with both density assumptions following from the
+  common-order witness.
   With opposite-intersection pruning first, arbitrary simple paths whose
   mass is at least twice both counts keep one thirty-second of the mass and
   have lower caps at one eighth of their original averages. The upper caps
@@ -269,6 +271,7 @@ local-order upper bound and recurrence of Theorem 43.
   before pruning and preservation through arbitrary bridge sizes remain open
   for cyclic families.
   [Common-order extremum](OnlineReachabilityPreservers/CommonOrderExtremal.lean)
+  · [Unrestricted extremum through size three](OnlineReachabilityPreservers/LocalOrderExtremal.lean)
   · [Checked local cleaning](OnlineReachabilityPreservers/LocalBalancedRegularization.lean).
 - The proof of Lemma 23 writes \(\beta\) for the half-bridge-free extremum
   \(H\). The statement of Lemma 39 writes \(H\) for the full-bridge-free

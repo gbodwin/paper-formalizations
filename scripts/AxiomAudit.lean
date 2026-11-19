@@ -195,6 +195,8 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.bridge_after_path_split
 #print axioms OnlineReachabilityPreservers.commonOrderExtremal_isDense
 #print axioms OnlineReachabilityPreservers.commonOrderExtremal_balanced
+#print axioms OnlineReachabilityPreservers.localOrderExtremal_isDense
+#print axioms OnlineReachabilityPreservers.localOrderExtremal_balanced_three
 #print axioms OnlineReachabilityPreservers.Bridge.project_vertices
 #print axioms OnlineReachabilityPreservers.BridgeFree.split_list_vertices_any
 #print axioms OnlineReachabilityPreservers.HalfBridgeFree.split_list_vertices_short

@@ -582,6 +582,14 @@ An exact-source replay grants no coverage to a paper statement outside the
   per-prefix charges are `[0, 539960, 539960, 539960]` and its two preparations
   cost 12 arc inspections and 20 template comparisons.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44512109459).
+- [1c24a035](https://github.com/gbodwin/paper-formalizations/commit/1c24a035b1b705d6f7455507ff9e7eff9c278c54)
+  caches rounded capacities within each weighted separator and gives a
+  bound on their integer numerator. The 3816-declaration audit and local
+  kernel replay passed. Independent review confirmed free-edge precedence,
+  the same charge function and cut trace, and one evaluation per priced
+  capacity row in generated C. A one-arc, two-request example kept the
+  same cut and charge while adding 21 in weight-read charges.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44513133106).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
