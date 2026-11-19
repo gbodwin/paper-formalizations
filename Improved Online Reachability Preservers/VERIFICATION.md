@@ -242,6 +242,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   and kernel replay passed. Independent review checked link feasibility,
   leaf coverage, deduplication and the cost bound.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44454532744).
+- [aceeb3cb](https://github.com/gbodwin/paper-formalizations/commit/aceeb3cbc7ddbe12a96103526d2572b73a6b68c5)
+  verifies integer capacity ceilings and the general integer cut separator.
+  The 2063-declaration audit and local kernel replay passed. Independent
+  review checked the rounding cost, residual cut certificate, and
+  the zero-supply and coincident-terminal cases.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44455010279).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

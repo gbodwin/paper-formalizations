@@ -241,6 +241,9 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.findLowCapacityCut_eq_none
 #print axioms OnlineReachabilityPreservers.roundedWeightedCapacity_bounds
 #print axioms OnlineReachabilityPreservers.roundedWeightedObjective_le
+#print axioms OnlineReachabilityPreservers.weightedNetworkViolation_some
+#print axioms OnlineReachabilityPreservers.weightedNetworkStep_spec
+#print axioms OnlineReachabilityPreservers.weightedNetworkRun_bound
 #print axioms OnlineReachabilityPreservers.theorem3_lattice_lower
 #print axioms OnlineReachabilityPreservers.theorem3_lower
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum

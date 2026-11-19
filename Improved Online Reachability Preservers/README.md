@@ -95,9 +95,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [Integer capacity rounding](OnlineReachabilityPreservers/SteinerRoundedCapacities.lean)
   adds at most one to the normalized objective. The
   [capacity separator](OnlineReachabilityPreservers/SteinerCutFlow.lean)
-  now takes an arbitrary integer cutoff and returns a violating cut or
-  certifies the requested flow value. Their integration into the weighted
-  auxiliary graph remains open.
+  takes a nonnegative integer cutoff. For distinct terminals it returns a
+  violating cut or certifies a flow of the requested value.
+  The [weighted network run](OnlineReachabilityPreservers/SteinerWeightedNetwork.lean)
+  uses the separator on each request's own free attachments. It preserves
+  earlier flow certificates and bounds rounded fractional cost against a
+  fixed integral solution. Auxiliary graph reduction and path rounding
+  remain open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

@@ -66,7 +66,12 @@ The [integer capacity comparison](OnlineReachabilityPreservers/SteinerRoundedCap
 checks an extra normalized cost of at most one. The
 [general cut separator](OnlineReachabilityPreservers/SteinerCutFlow.lean)
 supports the integer cutoff used for that comparison.
-Connecting these to the auxiliary graph and rounding its paths remain open.
+The [weighted network run](OnlineReachabilityPreservers/SteinerWeightedNetwork.lean)
+uses actual separating cuts and certifies flow in the graph of each request
+with its own free attachments. The rounded normalized objective pays an
+additive baseline of at most two and a logarithmic factor times the
+chosen integral solution. Embedding the auxiliary graph into this
+formulation and rounding its paths remain open.
 The [height-block proof](OnlineReachabilityPreservers/SteinerHeightBlocks.lean)
 constructs the shortened segments on the original rooted routes, checks
 their concatenation, and bounds their weighted cost. The

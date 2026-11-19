@@ -223,16 +223,16 @@ def weightedCoverLoop (search : (E → ℕ) → Option (Finset E)) :
       let out := weightedCoverLoop search fuel (chargeWeightedCut cut charges)
       (out.1, cut :: out.2)
 
-theorem weightedCoverLoop_spec (weight : E → ℕ) (scale : ℕ) (cuts : List (Finset E))
-    (search : (E → ℕ) → Option (Finset E))
+theorem weightedCoverLoop_certify (weight : E → ℕ) (scale : ℕ)
+    (search : (E → ℕ) → Option (Finset E)) (admissible : Finset E → Prop)
+    (covered : (E → ℕ) → Prop)
     (sound : ∀ {charges cut}, search charges = some cut →
-      cut ∈ cuts ∧ weightedCutSum cut weight charges < (scale : ℚ))
-    (complete : ∀ {charges}, search charges = none →
-      ∀ cut ∈ cuts, (scale : ℚ) ≤ weightedCutSum cut weight charges)
+      admissible cut ∧ weightedCutSum cut weight charges < (scale : ℚ))
+    (complete : ∀ {charges}, search charges = none → covered charges)
     (fuel : ℕ) (initial : E → ℕ) :
     let out := weightedCoverLoop search fuel initial
-    WeightedCutUpdates weight scale initial out.2 out.1 ∧ (∀ cut ∈ out.2, cut ∈ cuts) ∧
-      (out.2.length < fuel → ∀ cut ∈ cuts, (scale : ℚ) ≤ weightedCutSum cut weight out.1) := by
+    WeightedCutUpdates weight scale initial out.2 out.1 ∧ (∀ cut ∈ out.2, admissible cut) ∧
+      (out.2.length < fuel → covered out.1) := by
   induction fuel generalizing initial with
   | zero =>
     exact ⟨.nil _, fun _ h => (List.not_mem_nil h).elim, fun h => (Nat.not_lt_zero _ h).elim⟩
@@ -241,7 +241,7 @@ theorem weightedCoverLoop_spec (weight : E → ℕ) (scale : ℕ) (cuts : List (
     | none =>
       simpa only [weightedCoverLoop, response] using
         And.intro (WeightedCutUpdates.nil initial)
-          ⟨(by simp : ∀ cut ∈ ([] : List (Finset E)), cut ∈ cuts), fun _ => complete response⟩
+          ⟨(by simp : ∀ cut ∈ ([] : List (Finset E)), admissible cut), fun _ => complete response⟩
     | some cut =>
       obtain ⟨member, small⟩ := sound response
       obtain ⟨trace, selected, closed⟩ := ih (chargeWeightedCut cut initial)
@@ -251,6 +251,20 @@ theorem weightedCoverLoop_spec (weight : E → ℕ) (scale : ℕ) (cuts : List (
       rcases List.mem_cons.mp present with rfl | earlier
       · exact member
       · exact selected c earlier
+
+theorem weightedCoverLoop_spec (weight : E → ℕ) (scale : ℕ) (cuts : List (Finset E))
+    (search : (E → ℕ) → Option (Finset E))
+    (sound : ∀ {charges cut}, search charges = some cut →
+      cut ∈ cuts ∧ weightedCutSum cut weight charges < (scale : ℚ))
+    (complete : ∀ {charges}, search charges = none →
+      ∀ cut ∈ cuts, (scale : ℚ) ≤ weightedCutSum cut weight charges)
+    (fuel : ℕ) (initial : E → ℕ) :
+    let out := weightedCoverLoop search fuel initial
+    WeightedCutUpdates weight scale initial out.2 out.1 ∧ (∀ cut ∈ out.2, cut ∈ cuts) ∧
+      (out.2.length < fuel → ∀ cut ∈ cuts, (scale : ℚ) ≤ weightedCutSum cut weight out.1) :=
+  weightedCoverLoop_certify weight scale search (fun cut => cut ∈ cuts)
+    (fun charges => ∀ cut ∈ cuts, (scale : ℚ) ≤ weightedCutSum cut weight charges)
+    sound complete fuel initial
 
 /-- The initial fractional cost is at most one with this normalization. -/
 def weightedCoverScale (edges : Finset E) (weight : E → ℕ) : ℕ :=
