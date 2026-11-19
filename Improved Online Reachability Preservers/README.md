@@ -84,8 +84,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   The [forward embedding](OnlineReachabilityPreservers/SteinerHeightEmbedding.lean)
   places each original terminal at a template leaf. For at most \(k\)
   terminals and positive depth \(h\), the embedded cost is at most
-  \(4h k^{1/h}\) times the original tree size. Joining the root copies
-  and online rounding remain open.
+  \(4h k^{1/h}\) times the original tree size. The
+  [paired forest](OnlineReachabilityPreservers/SteinerHeightForest.lean)
+  joins both sides at each root and gives a weighted offline comparator.
+  Any selected group paths expand to the original demands at no more
+  than the selected metric weight. Connecting the forest to the
+  online cut run and rounding its flows remain open.
 - [The weighted fractional cover](OnlineReachabilityPreservers/SteinerWeightedCover.lean)
   raises rational capacities as batches of cuts arrive. It verifies coverage
   and bounds both the update count and the cost against any fixed set that

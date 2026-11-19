@@ -82,8 +82,11 @@ edges at cost at most their weights. The
 embeds any inward arborescence with at most \(k\) designated terminals
 into the fixed template. The selected links preserve the terminal labels
 and cost at most \(4h k^{1/h}\) times the original unit-cost tree size.
-The paired root copies, auxiliary cut reduction, and online solver remain
-open.
+The [paired forest](OnlineReachabilityPreservers/SteinerHeightForest.lean)
+keeps every group path within one root. A feasible original solution
+of size \(M\) gives a forest solution of cost at most
+\(12h p^{1/h}(\lfloor\sqrt p\rfloor+1)M\). The auxiliary cut reduction
+and online rounding remain open.
 
 ## Appendix dependencies
 

@@ -257,7 +257,7 @@ private theorem sum_image_weight_le {A B : Type*} [DecidableEq A] [DecidableEq B
     · rw [sum_insert occurs]
       exact Nat.add_le_add_left ih _
 
-private theorem sum_biUnion_weight_le {A B : Type*} [DecidableEq A] [DecidableEq B]
+theorem sum_biUnion_weight_le {A B : Type*} [DecidableEq A] [DecidableEq B]
     (S : Finset A) (f : A → Finset B) (w : B → ℕ) :
     (∑ b ∈ S.biUnion f, w b) ≤ ∑ a ∈ S, ∑ b ∈ f a, w b := by
   induction S using Finset.induction_on with

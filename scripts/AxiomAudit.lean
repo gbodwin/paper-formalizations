@@ -235,6 +235,10 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.heightReductionBranch_le
 #print axioms OnlineReachabilityPreservers.rootedHeightEmbedding
 #print axioms OnlineReachabilityPreservers.rootedHeightEmbedding_bounded
+#print axioms OnlineReachabilityPreservers.heightForest_reach_spec
+#print axioms OnlineReachabilityPreservers.heightForest_comparison
+#print axioms OnlineReachabilityPreservers.expandHeightForest_serves
+#print axioms OnlineReachabilityPreservers.expandHeightForest_cost
 #print axioms OnlineReachabilityPreservers.weightedCoverStep_spec
 #print axioms OnlineReachabilityPreservers.weightedCoverRun_bound
 #print axioms OnlineReachabilityPreservers.findLowCapacityCut_spec

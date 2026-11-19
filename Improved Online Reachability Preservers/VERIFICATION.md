@@ -248,6 +248,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   review checked the rounding cost, residual cut certificate, and
   the zero-supply and coincident-terminal cases.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44455010279).
+- [8a21faf6](https://github.com/gbodwin/paper-formalizations/commit/8a21faf62f574efe547367beea8333360bc3856f)
+  executes weighted separation with request-local free arcs. The
+  2120-declaration audit and local kernel replay passed. Independent
+  review checked the cut charge, preservation of prior flows, and
+  the normalized cost and update bounds.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44455872017).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

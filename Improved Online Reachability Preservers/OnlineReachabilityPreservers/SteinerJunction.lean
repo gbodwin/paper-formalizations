@@ -353,7 +353,7 @@ private theorem mergeJunctionRoot_cost {Z : Arcs V} (pieces : List (JunctionPiec
   · exact (card_le_card (targetTree_subset _ _)).trans card_biUnion_le
   · exact (card_le_card (outTree_subset _ _)).trans card_biUnion_le
 
-private theorem list_weight_sum_get {A : Type*} (xs : List A) (f : A → ℕ) :
+theorem list_weight_sum_get {A : Type*} (xs : List A) (f : A → ℕ) :
     (xs.map f).sum = ∑ i : Fin xs.length, f (xs.get i) := by
   induction xs with
   | nil => simp

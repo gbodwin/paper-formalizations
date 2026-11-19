@@ -180,47 +180,69 @@ theorem heightLinkWeight_le {G : Arcs V} {root : V} {u v : HeightNode V height}
     heightLinkWeight G root (u, v) ≤ path.length :=
   hops_le_walk w
 
-/-- Expand any selected template links by the shortest original routes. -/
-def expandHeightLinks (G : Arcs V) (root : V) (links : Arcs (HeightNode V height)) : Arcs V :=
-  links.biUnion fun e => pathArcs (routePath G (heightLabel root e.1) (heightLabel root e.2))
+/-! Expansion works for any set of metric links labelled by original vertices. -/
 
-theorem expandHeightLinks_mono (G : Arcs V) (root : V) :
-    Monotone (expandHeightLinks (height := height) G root) := by
+def expandLabelledLinks {A : Type*} (G : Arcs V) (label : A → V) (links : Arcs A) : Arcs V :=
+  links.biUnion fun e => pathArcs (routePath G (label e.1) (label e.2))
+
+theorem expandLabelledLinks_mono {A : Type*} (G : Arcs V) (label : A → V) :
+    Monotone (expandLabelledLinks G label) := by
   intro left right sub e he
   obtain ⟨link, member, used⟩ := mem_biUnion.mp he
   exact mem_biUnion.mpr ⟨link, sub member, used⟩
 
-theorem expandHeightLinks_sub (G : Arcs V) (root : V) (links : Arcs (HeightNode V height)) :
-    expandHeightLinks G root links ⊆ G := by
+theorem expandLabelledLinks_sub {A : Type*} (G : Arcs V) (label : A → V) (links : Arcs A) :
+    expandLabelledLinks G label links ⊆ G := by
   intro e he
   obtain ⟨link, _, used⟩ := mem_biUnion.mp he
-  cases h : routePath G (heightLabel root link.1) (heightLabel root link.2) with
+  cases h : routePath G (label link.1) (label link.2) with
   | none => simp [pathArcs, h] at used
   | some path => exact (routePath_some h).1.mem (by simpa [pathArcs, h] using used)
 
-theorem expandHeightLinks_cost (G : Arcs V) (root : V) (links : Arcs (HeightNode V height)) :
-    (expandHeightLinks G root links).card ≤ ∑ link ∈ links, heightLinkWeight G root link := by
+theorem expandLabelledLinks_cost {A : Type*} (G : Arcs V) (label : A → V) (links : Arcs A) :
+    (expandLabelledLinks G label links).card ≤ ∑ link ∈ links, hops G (label link.1) (label link.2) := by
   refine card_biUnion_le.trans (sum_le_sum fun link _ => ?_)
-  cases h : routePath G (heightLabel root link.1) (heightLabel root link.2) with
+  cases h : routePath G (label link.1) (label link.2) with
   | none => simp [pathArcs]
   | some path =>
-    simp only [pathArcs, heightLinkWeight]
+    simp only [pathArcs]
     calc
       path.toFinset.card ≤ path.length := List.toFinset_card_le path
       _ = _ := routePath_length_eq_hops h
 
-theorem expandHeightLinks_reach {G : Arcs V} {root : V} {links : Arcs (HeightNode V height)}
-    (sub : links ⊆ inwardHeightTree G root height) {u v : HeightNode V height}
-    (path : Reach links u v) :
-    Reach (expandHeightLinks G root links) (heightLabel root u) (heightLabel root v) := by
+theorem expandLabelledLinks_reach {A : Type*} {G : Arcs V} {label : A → V} {links : Arcs A}
+    (admissible : ∀ link ∈ links, Reach G (label link.1) (label link.2)) {u v : A}
+    (path : Reach links u v) : Reach (expandLabelledLinks G label links) (label u) (label v) := by
   induction path with
   | refl => exact .refl
   | @tail w z _ edge ih =>
-    have transfer := inwardHeightTree_edge_reach (sub edge)
+    have transfer := admissible (w, z) edge
     obtain ⟨l, hl⟩ := routePath_succeeds.mpr transfer
-    have used : l.toFinset ⊆ expandHeightLinks G root links := by
+    have used : l.toFinset ⊆ expandLabelledLinks G label links := by
       intro e he
       exact mem_biUnion.mpr ⟨(w, z), edge, by simpa [pathArcs, hl] using he⟩
     exact ih.trans (reach_mono used (routePath_some hl).1.in_edges.reachable)
+
+/-- Expand any selected template links by the shortest original routes. -/
+def expandHeightLinks (G : Arcs V) (root : V) (links : Arcs (HeightNode V height)) : Arcs V :=
+  expandLabelledLinks G (heightLabel root) links
+
+theorem expandHeightLinks_mono (G : Arcs V) (root : V) :
+    Monotone (expandHeightLinks (height := height) G root) :=
+  expandLabelledLinks_mono G (heightLabel root)
+
+theorem expandHeightLinks_sub (G : Arcs V) (root : V) (links : Arcs (HeightNode V height)) :
+    expandHeightLinks G root links ⊆ G :=
+  expandLabelledLinks_sub G (heightLabel root) links
+
+theorem expandHeightLinks_cost (G : Arcs V) (root : V) (links : Arcs (HeightNode V height)) :
+    (expandHeightLinks G root links).card ≤ ∑ link ∈ links, heightLinkWeight G root link :=
+  expandLabelledLinks_cost G (heightLabel root) links
+
+theorem expandHeightLinks_reach {G : Arcs V} {root : V} {links : Arcs (HeightNode V height)}
+    (sub : links ⊆ inwardHeightTree G root height) {u v : HeightNode V height}
+    (path : Reach links u v) :
+    Reach (expandHeightLinks G root links) (heightLabel root u) (heightLabel root v) :=
+  expandLabelledLinks_reach (fun _ he => inwardHeightTree_edge_reach (sub he)) path
 
 end OnlineReachabilityPreservers
