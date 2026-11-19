@@ -1,8 +1,9 @@
-import DirectedFlowCutGap.WeakDecomposition
+import DirectedFlowCutGap.WeakDecompositionBounds
 import Mathlib.Analysis.Convex.Topology
 import Mathlib.Analysis.LocallyConvex.Separation
 
-/-! A finite cut law with exactly the all-cost rounding factor in each marginal. -/
+/-! A finite cut law bounded by the all-cost rounding factor in each marginal,
+and its specialization to the paper's least integer factors at fixed mass. -/
 
 namespace DirectedFlowCutGap.WeakDecomposition
 
@@ -126,3 +127,68 @@ theorem edge_law_of_exact_factor (G : Digraph E) (w : E × E → ℝ≥0) (α : 
 
 end
 end DirectedFlowCutGap.WeakDecomposition
+
+namespace DirectedFlowCutGap.ExactFlowCutGap
+
+noncomputable section
+open scoped NNReal
+
+def VertexBound (n : ℕ) (W : ℝ≥0) (k : ℕ) : Prop :=
+  ∀ (G : Digraph (Fin n)) (w : Fin n → ℝ≥0), totalWeight w = W →
+    HasVertexRoundingFactor G w (k : ℝ)
+
+def EdgeBound (n : ℕ) (W : ℝ≥0) (k : ℕ) : Prop :=
+  ∀ (G : Digraph (Fin n)) (w : Fin n × Fin n → ℝ≥0), totalEdgeWeight G w = W →
+    HasEdgeRoundingFactor G w (k : ℝ)
+
+private theorem vertexBound_exists (n : ℕ) (W : ℝ≥0) : ∃ k, VertexBound n W k := by
+  refine ⟨n,?_⟩
+  intro G w _
+  simpa only [Fintype.card_fin] using hasVertexRoundingFactor_card G w
+
+private theorem edgeBound_exists (n : ℕ) (W : ℝ≥0) : ∃ k, EdgeBound n W k := by
+  obtain ⟨K,_,oracle⟩ := AdaptiveEdgeBound.hasEdgeRoundingFactor_uniform.{0} 1 one_pos
+  let b : ℝ := K * (n : ℝ) ^ ((1 : ℝ) / 3 + 1)
+  refine ⟨⌈b⌉₊,?_⟩
+  intro G w _
+  apply WeakDecomposition.edge_factor_mono (α:=b)
+  · simpa only [b,Fintype.card_fin] using oracle (Fin n) G w
+  · exact Nat.le_ceil b
+
+def vfg (n : ℕ) (W : ℝ≥0) : ℕ := by
+  classical
+  exact Nat.find (vertexBound_exists n W)
+
+def efg (n : ℕ) (W : ℝ≥0) : ℕ := by
+  classical
+  exact Nat.find (edgeBound_exists n W)
+
+theorem vfg_bound (n : ℕ) (W : ℝ≥0) : VertexBound n W (vfg n W) := by
+  classical
+  exact Nat.find_spec (vertexBound_exists n W)
+
+theorem efg_bound (n : ℕ) (W : ℝ≥0) : EdgeBound n W (efg n W) := by
+  classical
+  exact Nat.find_spec (edgeBound_exists n W)
+
+theorem vfg_le {n : ℕ} {W : ℝ≥0} {k : ℕ} (bound : VertexBound n W k) : vfg n W ≤ k := by
+  classical
+  exact Nat.find_min' (vertexBound_exists n W) bound
+
+theorem efg_le {n : ℕ} {W : ℝ≥0} {k : ℕ} (bound : EdgeBound n W k) : efg n W ≤ k := by
+  classical
+  exact Nat.find_min' (edgeBound_exists n W) bound
+
+theorem vertex_law {n : ℕ} (G : Digraph (Fin n)) (w : Fin n → ℝ≥0) :
+    ∃ p : PMF (Finset (Fin n)), (∀ X ∈ p.support, IsIntegralCut G X (thresholdDemands G w)) ∧
+      ∀ e, (p.toOuterMeasure {X | e ∈ X}).toReal ≤ (vfg n (totalWeight w) : ℝ) * (w e : ℝ) :=
+  WeakDecomposition.vertex_law_of_exact_factor (vfg_bound n (totalWeight w) G w rfl)
+
+theorem edge_law {n : ℕ} (G : Digraph (Fin n)) (w : Fin n × Fin n → ℝ≥0) :
+    ∃ p : PMF (Finset (Fin n × Fin n)),
+      (∀ X ∈ p.support, X ⊆ graphEdges G ∧ IsIntegralEdgeCut G X (edgeThresholdDemands G w)) ∧
+      ∀ e, (p.toOuterMeasure {X | e ∈ X}).toReal ≤ (efg n (totalEdgeWeight G w) : ℝ) * (w e : ℝ) :=
+  WeakDecomposition.edge_law_of_exact_factor G w _ (efg_bound n (totalEdgeWeight G w) G w rfl)
+
+end
+end DirectedFlowCutGap.ExactFlowCutGap
