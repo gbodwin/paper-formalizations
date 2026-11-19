@@ -183,6 +183,11 @@ It returns the same link union and bounds key comparisons by
 at scale \(S\) on the prepared forest \(E_F\). The two ancestor minima per
 cutoff use at most \(h+1\) ancestors each. This count is for one rounded
 fractional state.
+The [rounding replay](OnlineReachabilityPreservers/SteinerDistanceReplay.lean)
+includes those comparisons along with the measured searches at every
+prefix. Its output graphs agree with the ordinary seeded evaluator.
+With \(p\) arrivals, it adds at most \((p+1)^2\) calls' worth of rounding
+comparisons to the search budget and reports the preparations separately.
 The [route counters](OnlineReachabilityPreservers/RouteWork.lean)
 bound arc inspections for SCC labels and shortest routes, and
 sum the search work over greedy forwards growth. They also bound
@@ -217,8 +222,8 @@ This covers known totals and arrival indices in all three endpoint scopes.
 The indexed pairwise evaluator returns the ordinary union of all assigned
 paths in one prefix and sums their search work. The quota count is bounded
 by a polynomial in the graph sizes and the known total or current index.
-The remaining runtime costs include the total number of table lookups
-inside the early routines, finite container operations, arithmetic, and
+The remaining runtime costs include table reads for weighted setup and
+capacity evaluation, finite container operations, arithmetic, and
 converting sampled indices into vertex values.
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

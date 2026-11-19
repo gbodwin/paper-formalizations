@@ -127,6 +127,54 @@ def completeSteinerPrefixSearchReplay (G : Arcs V) (height : ℕ) (sample : Earl
     (D : List (V × V)) : List (Arcs V × ℕ) :=
   D.inits.map (completeSteinerDrawRunWithSearchWork G height sample draw thin)
 
+/-- Changing the price of an early metric prefix preserves the complete
+graphs and accumulates at most one early-prefix budget per call. -/
+theorem completeSteinerPrefixSearchReplayFromEarly_compare (G : Arcs V)
+    (original updated : List (V × V) → Arcs V × ℕ) (K : ℕ)
+    (compare : ∀ P, (updated P).1 = (original P).1 ∧ (updated P).2 ≤ (original P).2+(P.length+1)*K)
+    (draw : Fin (completeSteinerHubCount V) → V) (thin : ThinSample G) (D : List (V × V)) :
+    let old := D.inits.map (completeSteinerDrawRunWithSearchWorkFromEarly G original draw thin)
+    let out := D.inits.map (completeSteinerDrawRunWithSearchWorkFromEarly G updated draw thin)
+    out.map Prod.fst = old.map Prod.fst ∧
+      (out.map Prod.snd).sum ≤ (old.map Prod.snd).sum+(D.length+1)*((D.length+1)*K) := by
+  let old := completeSteinerDrawRunWithSearchWorkFromEarly G original draw thin
+  let new := completeSteinerDrawRunWithSearchWorkFromEarly G updated draw thin
+  let extra := (D.length+1)*K
+  have each (P : List (V × V)) : (new P).1 = (old P).1 ∧
+      (new P).2 ≤ (old P).2+(P.length+1)*K := by
+    let trace := distinctNonselfTrace P
+    let cut := steinerEarlyCutoff (Fintype.card V)
+    obtain ⟨graph,work⟩ := compare (trace.take cut)
+    have length := (List.take_prefix cut trace).length_le.trans (distinctTrace_length_le P)
+    refine ⟨?_,?_⟩
+    · let late := lateSteinerWithSearchWork G (steinerThinThreshold (Fintype.card V))
+        (sampledVertices draw) thin (trace.drop cut)
+      exact congrArg (fun A => A ∪ late.1) graph
+    · have extra := work.trans (by gcongr : (original (trace.take cut)).2+((trace.take cut).length+1)*K ≤
+          (original (trace.take cut)).2+(P.length+1)*K)
+      have bound := Nat.add_le_add_right extra
+        (lateSteinerWithSearchWork G (steinerThinThreshold (Fintype.card V)) (sampledVertices draw) thin (trace.drop cut)).2
+      simpa only [new,old,completeSteinerDrawRunWithSearchWorkFromEarly,add_right_comm] using bound
+  constructor
+  · change ((D.inits.map new).map Prod.fst) = (D.inits.map old).map Prod.fst
+    rw [List.map_map,List.map_map]
+    exact List.map_congr_left (fun P _ => (each P).1)
+  · have addUp (L : List (List (V × V))) (inside : ∀ P ∈ L, P ∈ D.inits) :
+        (L.map (fun P => (new P).2)).sum ≤ (L.map (fun P => (old P).2)).sum+L.length*extra := by
+      induction L with
+      | nil => simp
+      | cons P L ih =>
+        have pref := (List.mem_inits _ _).mp (inside P List.mem_cons_self)
+        have smaller : (P.length+1)*K ≤ extra := Nat.mul_le_mul_right K (Nat.succ_le_succ pref.length_le)
+        have enough := (each P).2.trans (Nat.add_le_add_left smaller _)
+        have later := ih (fun Q h => inside Q (List.mem_cons_of_mem _ h))
+        simp only [List.map_cons,List.sum_cons,List.length_cons,Nat.succ_mul]
+        omega
+    change ((D.inits.map new).map Prod.snd).sum ≤ ((D.inits.map old).map Prod.snd).sum+_
+    rw [List.map_map,List.map_map]
+    change (D.inits.map (fun P => (new P).2)).sum ≤ (D.inits.map (fun P => (old P).2)).sum+(D.length+1)*extra
+    simpa only [List.length_inits] using addUp D.inits (fun _ h => h)
+
 private theorem completeSteinerSearchPolynomial_mono (n m height : ℕ) :
     Monotone (completeSteinerSearchPolynomial n m height) := by
   intro p q le

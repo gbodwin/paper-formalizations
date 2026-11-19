@@ -217,4 +217,79 @@ theorem earlyRoundedGraphWithSearchWork_spec (G : Arcs V) (height : ℕ)
       rfl
     · simpa only [Fintype.card_prod, pow_two] using card_le_univ (rows.biUnion fun r => r.2.1)
 
+/-- Charge an additional per-metric cost without changing any graph or miss
+flag. The prefix rows share each metric result between all uses. -/
+theorem earlyRoundedGraphWithSearchWorkFromMetric_compare (G : Arcs V) (height : ℕ)
+    (original updated : List (V × V) → Arcs (HeightForestVertex V height) × ℕ) (K : ℕ)
+    (metric : ∀ P, (updated P).1 = (original P).1 ∧ (updated P).2 ≤ (original P).2+K)
+    (D : List (V × V)) :
+    let out := earlyRoundedGraphWithSearchWorkFromMetric G height updated D
+    let old := earlyRoundedGraphWithSearchWorkFromMetric G height original D
+    out.1 = old.1 ∧ out.2 ≤ old.2+(D.length+1)*K := by
+  let A := D.inits.toFinset
+  let readOld := earlyPrefixWorkRow G height original
+  let readNew := earlyPrefixWorkRow G height updated
+  let oldRows := A.map readOld
+  let newRows := A.map readNew
+  have row (P : List (V × V)) :
+      let prior := readOld P
+      let next := readNew P
+      next.2.1 = prior.2.1 ∧ next.2.2.1 = prior.2.2.1 ∧ next.2.2.2 ≤ prior.2.2.2+K := by
+    have ⟨graph, cost⟩ := metric P
+    change (earlyPrefixWorkEntry G height updated P).2.1 = (earlyPrefixWorkEntry G height original P).2.1 ∧
+      (earlyPrefixWorkEntry G height updated P).2.2.1 = (earlyPrefixWorkEntry G height original P).2.2.1 ∧
+      (earlyPrefixWorkEntry G height updated P).2.2.2 ≤ (earlyPrefixWorkEntry G height original P).2.2.2+K
+    cases ending : P.getLast? with
+    | none => simp [earlyPrefixWorkEntry, ending]
+    | some d =>
+      simp only [earlyPrefixWorkEntry, ending, graph, true_and]
+      omega
+  have failure : (newRows.filter fun r => r.2.2.1 = true).Nonempty ↔
+      (oldRows.filter fun r => r.2.2.1 = true).Nonempty := by
+    constructor
+    · rintro ⟨r,hr⟩
+      obtain ⟨seen,miss⟩ := mem_filter.mp hr
+      obtain ⟨P,hP,rfl⟩ := mem_map.mp seen
+      exact ⟨readOld P, mem_filter.mpr ⟨mem_map_of_mem _ hP, (row P).2.1 ▸ miss⟩⟩
+    · rintro ⟨r,hr⟩
+      obtain ⟨seen,miss⟩ := mem_filter.mp hr
+      obtain ⟨P,hP,rfl⟩ := mem_map.mp seen
+      exact ⟨readNew P, mem_filter.mpr ⟨mem_map_of_mem _ hP, (row P).2.1.symm ▸ miss⟩⟩
+  have purchases : newRows.biUnion (fun r => r.2.1) = oldRows.biUnion (fun r => r.2.1) := by
+    ext a
+    constructor
+    · intro bought
+      obtain ⟨r,seen,used⟩ := mem_biUnion.mp bought
+      obtain ⟨P,hP,rfl⟩ := mem_map.mp seen
+      exact mem_biUnion.mpr ⟨readOld P,mem_map_of_mem _ hP,(row P).1 ▸ used⟩
+    · intro bought
+      obtain ⟨r,seen,used⟩ := mem_biUnion.mp bought
+      obtain ⟨P,hP,rfl⟩ := mem_map.mp seen
+      exact mem_biUnion.mpr ⟨readNew P,mem_map_of_mem _ hP,(row P).1.symm ▸ used⟩
+  let oldSum := ∑ r ∈ oldRows, r.2.2.2
+  let newSum := ∑ r ∈ newRows, r.2.2.2
+  have summed : newSum ≤ oldSum+(D.length+1)*K := by
+    change (∑ r ∈ A.map readNew, r.2.2.2) ≤ (∑ r ∈ A.map readOld, r.2.2.2)+(D.length+1)*K
+    rw [sum_map, sum_map]
+    calc
+      _ ≤ ∑ P ∈ A, ((readOld P).2.2.2+K) := sum_le_sum fun P _ => (row P).2.2
+      _ = (∑ P ∈ A, (readOld P).2.2.2)+A.card*K := by rw [sum_add_distrib]; simp
+      _ ≤ _ := by
+        apply Nat.add_le_add_left
+        apply Nat.mul_le_mul_right
+        exact (List.toFinset_card_le D.inits).trans_eq (List.length_inits D)
+  let final := expandLabelledLinksWithSearchWork G heightForestLabel (oldRows.biUnion fun r => r.2.1)
+  let outNew : Arcs V × ℕ := if (newRows.filter fun r => r.2.2.1 = true).Nonempty then
+    (G,newSum) else
+      let exp := expandLabelledLinksWithSearchWork G heightForestLabel (newRows.biUnion fun r => r.2.1)
+      (exp.1,newSum+exp.2)
+  let outOld : Arcs V × ℕ := if (oldRows.filter fun r => r.2.2.1 = true).Nonempty then
+    (G,oldSum) else (final.1,oldSum+final.2)
+  change outNew.1 = outOld.1 ∧ outNew.2 ≤ outOld.2+(D.length+1)*K
+  by_cases failed : (oldRows.filter fun r => r.2.2.1 = true).Nonempty
+  · simp only [outNew, outOld, (failure.mpr failed), failed, ite_true, true_and]
+    exact summed
+  · simp only [outNew, outOld, (not_congr failure).mpr failed, failed, ite_false, purchases, final, true_and]
+    omega
+
 end OnlineReachabilityPreservers

@@ -64,4 +64,50 @@ theorem completeSteinerPrefixSearchReplayWithDistanceTable_spec (G : Arcs V) (he
   have ordinary := completeSteinerPrefixSearchReplay_spec G height sample draw thin D feasible
   exact ⟨ordinary.1,Nat.add_le_add ordinary.2 (distanceTableWithSearchWork_bound G)⟩
 
+/-- Share preparation across all arrivals and include the rounding weight
+reads in the search charge at each prefix. -/
+def completeSteinerPrefixSearchReplayWithRoundingWork (G : Arcs V) (height : ℕ)
+    (sample : EarlyRoundSample G height) (draw : Fin (completeSteinerHubCount V) → V)
+    (thin : ThinSample G) (D : List (V × V)) : List (Arcs V × ℕ) × ℕ × ℕ :=
+  let prepared := prepareEarlyDistanceTableWithRoundingWork G height sample
+  let evaluate := completeSteinerDrawRunWithSearchWorkFromEarly G prepared.1 draw thin
+  (D.inits.map evaluate,prepared.2.1,prepared.2.2)
+
+/-- The same prefix graphs, with an explicit polynomial for the charged
+searches and rounding reads at fixed height. The table-build and template
+charges are reported once. -/
+theorem completeSteinerPrefixSearchReplayWithRoundingWork_spec (G : Arcs V) (height : ℕ)
+    (sample : EarlyRoundSample G height) (draw : Fin (completeSteinerHubCount V) → V)
+    (thin : ThinSample G) (D : List (V × V)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let n := Fintype.card V
+    let m := G.card
+    let p := D.length
+    let out := completeSteinerPrefixSearchReplayWithRoundingWork G height sample draw thin D
+    out.1.map Prod.fst = D.inits.map (completeSteinerDrawRun G height sample draw thin) ∧
+      (out.1.map Prod.snd).sum ≤ (p+1)*completeSteinerSearchPolynomial n m height p+
+        (p+1)*((p+1)*roundingComparisonPolynomial n height) ∧
+      out.2.1 ≤ n^2*((n+1)*n*m) ∧
+      out.2.2 ≤ n*(2*Fintype.card (HeightNode V height)*height*n^2) := by
+  let plain := prepareEarlyDistanceTableWithTemplateWork G height sample
+  let next := prepareEarlyDistanceTableWithRoundingWork G height sample
+  obtain ⟨samePrep,perPrefix⟩ := prepareEarlyDistanceTableWithRoundingWork_spec G height sample
+  obtain ⟨plainEq,buildEq,template⟩ := prepareEarlyDistanceTableWithTemplateWork_spec G height sample
+  obtain ⟨graphs,charges⟩ := completeSteinerPrefixSearchReplay_spec G height sample draw thin D feasible
+  obtain ⟨same,extra⟩ := completeSteinerPrefixSearchReplayFromEarly_compare G plain.1 next.1
+    (roundingComparisonPolynomial (Fintype.card V) height) perPrefix draw thin D
+  have original : D.inits.map (completeSteinerDrawRunWithSearchWorkFromEarly G plain.1 draw thin) =
+      completeSteinerPrefixSearchReplay G height sample draw thin D := by
+    rw [show plain.1 = _ from plainEq]
+    rfl
+  rw [original] at same extra
+  have prepEq : next.2 = plain.2 := samePrep
+  have arcEq : plain.2.1 = (distanceTableWithSearchWork G).2 := buildEq
+  refine ⟨same.trans graphs,extra.trans (Nat.add_le_add_right charges _),?_,?_⟩
+  · change next.2.1 ≤ _
+    rw [prepEq,arcEq]
+    exact distanceTableWithSearchWork_bound G
+  · change next.2.2 ≤ _
+    rw [prepEq]
+    exact template
+
 end OnlineReachabilityPreservers

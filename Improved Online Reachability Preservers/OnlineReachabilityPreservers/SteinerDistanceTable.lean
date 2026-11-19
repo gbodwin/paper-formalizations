@@ -310,6 +310,16 @@ private def earlyMetricWithPreparedInputs (links : Arcs (HeightForestVertex V he
   let out := forestFractionalWithPreparedInputs priced free networkWeight scale fuel P
   (roundedForestTrialsFromWeights links weight out.1.1 scale (earlyTrialCount V height) seed,out.2)
 
+private def earlyMetricWithPreparedRoundingWork (links : Arcs (HeightForestVertex V height))
+    (read : V × V → ℕ × ℕ) (priced free : Arcs (ForestNetworkVertex V height))
+    (networkWeight : ForestNetworkVertex V height × ForestNetworkVertex V height → ℕ)
+    (scale fuel : ℕ) (seed : ForestTrialArray V height scale (earlyTrialCount V height))
+    (P : List (V × V)) : Arcs (HeightForestVertex V height) × ℕ :=
+  let out := forestFractionalWithPreparedInputs priced free networkWeight scale fuel P
+  let rounded := roundedForestTrialsWithWork links (forestWeightWithDistanceWork read) out.1.1 scale
+    (earlyTrialCount V height) seed
+  (rounded.1,out.2+rounded.2)
+
 private theorem earlyMetricWithPreparedInputs_eq (G : Arcs V) (height : ℕ) (dist : V × V → ℕ)
     (values : ∀ d : V × V, dist d = hops G d.1 d.2)
     (links : Arcs (HeightForestVertex V height)) (correct : links = heightForestFromDistances dist height)
@@ -345,10 +355,8 @@ private theorem earlyMetricWithPreparedInputs_eq (G : Arcs V) (height : ℕ) (di
 
 end ForestWeights
 
-/-- Prepare one early evaluator. Report distance-table arc inspections and
-the key comparisons made to construct the paired template separately. -/
-def prepareEarlyDistanceTableWithTemplateWork (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
-    (List (V × V) → Arcs V × ℕ) × ℕ × ℕ :=
+private def prepareEarlyDistanceTableBy (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height)
+    (countRounding : Bool) : (List (V × V) → Arcs V × ℕ) × ℕ × ℕ :=
   let table := distanceTableWithSearchWork G
   let query := readDistanceRow table.1
   let dist := fun d => (query d).1
@@ -369,8 +377,22 @@ def prepareEarlyDistanceTableWithTemplateWork (G : Arcs V) (height : ℕ) (sampl
   let seed : ForestTrialArray V height scale (earlyTrialCount V height) :=
     cast (congrArg (fun k => ForestTrialArray V height k (earlyTrialCount V height))
       (forestScaleFromWeights_eq G dist known height links correct).symm) sample
-  let metric := earlyMetricWithPreparedInputs links weight priced free networkWeight scale fuel seed
+  let metric := if countRounding then
+    earlyMetricWithPreparedRoundingWork links query priced free networkWeight scale fuel seed
+  else earlyMetricWithPreparedInputs links weight priced free networkWeight scale fuel seed
   (earlyRoundedGraphWithSearchWorkFromMetric G height metric,table.2,template.2)
+
+/-- Prepare one early evaluator. Report distance-table arc inspections and
+key comparisons constructing the paired template separately. -/
+def prepareEarlyDistanceTableWithTemplateWork (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
+    (List (V × V) → Arcs V × ℕ) × ℕ × ℕ :=
+  prepareEarlyDistanceTableBy G height sample false
+
+/-- Use the same preparation and also charge rounding weight reads in the
+early prefix evaluator. -/
+def prepareEarlyDistanceTableWithRoundingWork (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
+    (List (V × V) → Arcs V × ℕ) × ℕ × ℕ :=
+  prepareEarlyDistanceTableBy G height sample true
 
 theorem prepareEarlyDistanceTableWithTemplateWork_spec (G : Arcs V) (height : ℕ)
     (sample : EarlyRoundSample G height) :
@@ -390,6 +412,81 @@ theorem prepareEarlyDistanceTableWithTemplateWork_spec (G : Arcs V) (height : �
   refine ⟨?_,rfl,spec.2⟩
   exact congrArg (earlyRoundedGraphWithSearchWorkFromMetric G height)
     (earlyMetricWithPreparedInputs_eq G height dist known template.1 correct sample)
+
+/-- One rounded fractional state makes polynomially many key comparisons
+for each fixed height. -/
+def roundingComparisonPolynomial (n height : ℕ) : ℕ :=
+  let F := (n*2)*((height+1)*n^height)
+  let S := 1+n*F^2
+  let trials := 16*(height+1)^2*(n+1)
+  trials*(F^2*((1+(S+1)*(2*(height+1)^2))*n^2))
+
+private theorem roundingComparisonBound_le (G : Arcs V) (height : ℕ)
+    (links : Arcs (HeightForestVertex V height)) (scale : ℕ) (scaleEq : scale = forestScale G height) :
+    earlyTrialCount V height*(links.card*((1+(scale.log2+1)*(2*(height+1)^2))*Fintype.card V^2)) ≤
+      roundingComparisonPolynomial (Fintype.card V) height := by
+  let n := Fintype.card V
+  let F := (n*2)*((height+1)*n^height)
+  have forest : Fintype.card (HeightForestVertex V height) ≤ F := by
+    cases isEmpty_or_nonempty V with
+    | inl empty => simp [HeightForestVertex]
+    | inr ne => exact heightForestVertex_card_le V height
+  have linksBound : links.card ≤ F^2 := by
+    have raw := card_le_univ links
+    rw [Fintype.card_prod, ← pow_two] at raw
+    exact raw.trans (Nat.pow_le_pow_left forest _)
+  have scaleBound : scale.log2 ≤ 1+n*F^2 := by
+    apply (Nat.log2_le_self scale).trans
+    rw [scaleEq]
+    apply (forestNetworkScale_le G height).trans
+    refine max_le (Nat.le_add_right _ _) (le_trans ?_ (Nat.le_add_left _ _))
+    gcongr
+  unfold roundingComparisonPolynomial earlyTrialCount
+  dsimp only
+  gcongr
+  exact Nat.log2_le_self _
+
+/-- Including the rounding reads changes only the charge, by at most one
+rounding budget per evaluated early prefix. The shared preparation is unchanged. -/
+theorem prepareEarlyDistanceTableWithRoundingWork_spec (G : Arcs V) (height : ℕ)
+    (sample : EarlyRoundSample G height) :
+    let plain := prepareEarlyDistanceTableWithTemplateWork G height sample
+    let out := prepareEarlyDistanceTableWithRoundingWork G height sample
+    out.2 = plain.2 ∧ ∀ P,
+      (out.1 P).1 = (plain.1 P).1 ∧
+        (out.1 P).2 ≤ (plain.1 P).2+(P.length+1)*roundingComparisonPolynomial (Fintype.card V) height := by
+  let query := readDistanceRow (distanceTableWithSearchWork G).1
+  let dist := fun d => (query d).1
+  have known (d : V × V) : dist d = hops G d.1 d.2 :=
+    (distanceTableReadWithSearchWork_spec G d).1
+  let template := heightForestWithDistanceWork (historyDistanceRead query)
+    (historyDistanceRead (fun d => query d.swap)) height
+  let links := template.1
+  have correct : links = heightForestFromDistances dist height :=
+    (heightForestWithDistanceTableWork_spec G height).1.trans (heightForestFromDistances_eq G dist known height).symm
+  let weight := forestWeightFromDistances (height := height) dist
+  let priced := pricedForestFromWeights links weight
+  let free := freeForestFromWeights links weight
+  let networkWeight := networkWeightFromForestWeights weight
+  let sizes := preparedScaleAndFuel priced networkWeight
+  let scale := sizes.1
+  let fuel := sizes.2
+  have scaleEq : scale = forestScale G height := forestScaleFromWeights_eq G dist known height links correct
+  let seed : ForestTrialArray V height scale (earlyTrialCount V height) :=
+    cast (congrArg (fun k => ForestTrialArray V height k (earlyTrialCount V height)) scaleEq.symm) sample
+  let oldMetric := earlyMetricWithPreparedInputs links weight priced free networkWeight scale fuel seed
+  let newMetric := earlyMetricWithPreparedRoundingWork links query priced free networkWeight scale fuel seed
+  let B := roundingComparisonPolynomial (Fintype.card V) height
+  have metric (P : List (V × V)) : (newMetric P).1 = (oldMetric P).1 ∧
+      (newMetric P).2 ≤ (oldMetric P).2+B := by
+    let frac := forestFractionalWithPreparedInputs priced free networkWeight scale fuel P
+    obtain ⟨same, work⟩ := roundedForestTrialsWithWork_spec links (forestWeightWithDistanceWork query)
+      frac.1.1 scale (earlyTrialCount V height) (Fintype.card V^2)
+      (fun _ => (distanceTableReadWithSearchWork_spec G _).2) seed
+    exact ⟨same, Nat.add_le_add_left (work.trans (roundingComparisonBound_le G height links scale scaleEq)) frac.2⟩
+  refine ⟨rfl,?_⟩
+  intro P
+  exact earlyRoundedGraphWithSearchWorkFromMetric_compare G height oldMetric newMetric B metric P
 
 /-- The measured graph searches, with the same distance-table preparation. -/
 def prepareEarlyDistanceTable (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :

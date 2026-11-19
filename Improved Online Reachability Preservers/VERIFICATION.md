@@ -567,6 +567,13 @@ An exact-source replay grants no coverage to a paper statement outside the
   passed. Independent review checked the exact trial union, the two ancestor
   minima, the per-tier bound, and reuse of computed rows in generated C.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44509167990).
+- [126cc61f](https://github.com/gbodwin/paper-formalizations/commit/126cc61fa32e9d6773dba8484252ea66d66934f9)
+  proves vertex projection for full bridges of every size and for half
+  bridges through size four. It also checks the width-two degree split
+  that creates a half-6-bridge and both original cleaning budgets and all
+  four caps through size three. The 3758-declaration audit, local kernel
+  replay, and independent correspondence review passed.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44510793894).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
