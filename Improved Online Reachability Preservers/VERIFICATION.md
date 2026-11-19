@@ -400,6 +400,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   passed. Independent review checked the actual sampled subfamilies,
   sparse and out-of-window cases, uniform constant and pointwise limit.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44478646760).
+- [8f48cdc3](https://github.com/gbodwin/paper-formalizations/commit/8f48cdc37651aa7eb187edadae2be01636be336a)
+  counts residual and route inspections for weighted fractional runs.
+  The 3103-declaration audit and local kernel replay passed. Independent
+  review checked equal outputs, the failed flow and final cut searches,
+  and the scope of the operation counters.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44480003591).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

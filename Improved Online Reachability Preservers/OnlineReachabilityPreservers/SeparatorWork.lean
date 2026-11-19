@@ -115,8 +115,9 @@ theorem findLowCapacityCutWithSearchWork_spec (c : ArcFlow V) (s t : V) (supply 
       same, enough, ite_false, side, true_and]
     exact Nat.add_le_add work finish
 
-/-- A thin separator shares the interval before evaluating capacities.
-The additional term budgets the two reachability searches and the arc filter. -/
+/-- The metered thin separator shares the interval before evaluating capacities.
+The additional term budgets arc inspections in the two reachability searches
+and the interval filter. It excludes the underlying finite container costs. -/
 def fastThinViolationWithSearchWork (G : Arcs V) (d : V × V) (load : CutLoads V)
     : Option (Finset V) × ℕ :=
   if d.1 = d.2 then (none, 0)
@@ -198,8 +199,8 @@ theorem weightedCoverLoopWithSearchWork_spec (search : (E → ℕ) → Option (F
 
 end CuttingLoop
 
-/-- Bound the residual vertex-pair inspections and route tests for one
-weighted network request with the given scale. -/
+/-- Bound the residual vertex-pair inspections, route tests and cut filter
+for one weighted separator call with the given scale. -/
 def weightedSeparatorWorkBound (vertices edges scale : ℕ) : ℕ :=
   scale * residualStepWorkBound vertices + (2 * vertices^2 + vertices * vertices^2) + edges
 
