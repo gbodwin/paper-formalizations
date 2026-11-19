@@ -131,7 +131,15 @@ def fastThinViolationWithSearchWork (G : Arcs V) (d : V × V) (load : CutLoads V
 private theorem fastThinViolation_eq_lowCut (G : Arcs V) (d : V × V) (load : CutLoads V) (hne : d.1 ≠ d.2) :
     fastThinViolation G d load = (findLowCapacityCut (localArcCapacity G d load) d.1 d.2 G.card).map
       (· ∩ reachInterval G d) := by
-  simp only [fastThinViolation, findLowCapacityCut, hne, ite_false]
+  let c := localArcCapacity G d load
+  let r := unitAugmentations c d.1 d.2 G.card (fun _ => 0)
+  have plain : fastThinViolation G d load =
+      if r.2 = G.card then none else some (residualReach c r.1 d.1 ∩ reachInterval G d) := by
+    simp only [fastThinViolation, hne, ite_false]
+    rfl
+  rw [plain]
+  change (if r.2 = G.card then none else some (residualReach c r.1 d.1 ∩ reachInterval G d)) =
+    (if r.2 = G.card then none else some (residualReach c r.1 d.1)).map (· ∩ reachInterval G d)
   split <;> rfl
 
 theorem fastThinViolationWithSearchWork_spec (G : Arcs V) (d : V × V) (load : CutLoads V) :

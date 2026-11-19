@@ -67,7 +67,7 @@ private theorem forwardCoreSearchWork_output (G : Arcs V) (D : List (V × V)) :
     (forwardCoreSearchWork G D).1 = forwardRun G D :=
   (forwardRunWithSearchWork_spec G ∅ D).1
 
-/-- Count all search inspections and candidate tests in the adaptive
+/-- Bound reachability arc inspections and forward successor tests in the adaptive
 pairwise run, including the original graph's projection and lift. -/
 def sinkPreserverWithSearchWork (G : Arcs V) (D : List (V × V)) : Arcs V × ℕ :=
   liftedRunWithSearchWork forwardCoreSearchWork G D

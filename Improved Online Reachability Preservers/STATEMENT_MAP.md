@@ -140,9 +140,12 @@ of path searches. The [separator work](OnlineReachabilityPreservers/SeparatorWor
 bounds residual pair inspections and route tests within each augmentation,
 accounts for the final reachability search on a failed flow, and composes
 the work over a full weighted fractional run on the paired forest. The
-metered thin separator shares its reachability interval across capacity tests.
+thin separator shares its reachability interval across capacity tests.
 Its interval count covers the search inspections and filter, with graph
-container construction outside that term.
+container construction outside that term. The [thin run counter](OnlineReachabilityPreservers/ThinSearchWork.lean)
+also covers reconstruction of the cut to update loads. Across a feasible
+trace it charges at most one separator budget per request plus one per
+unit of total load increase, which is at most \(|E|(\lfloor\log_2|E|\rfloor+1)\).
 The [route counters](OnlineReachabilityPreservers/RouteWork.lean)
 bound arc inspections for SCC labels and shortest routes, and
 sum the search work over greedy forwards growth. They also bound

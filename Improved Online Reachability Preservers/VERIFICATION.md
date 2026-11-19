@@ -452,6 +452,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   Independent review checked the two sparse ranges, the uniform coefficient,
   and the domain of all finite ordered simple paths.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44486348837).
+- [439fa13c](https://github.com/gbodwin/paper-formalizations/commit/439fa13c4030805bf0f8667134f9f427bbfe051d)
+  composes reachability and successor counts for the deterministic
+  online and offline algorithms. The 3285-declaration audit and local
+  kernel replay passed. Independent review checked the exact outputs,
+  prefix replay and operation scope.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44487967461).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

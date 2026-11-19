@@ -221,10 +221,12 @@ private theorem cut_inter_interval (G : Arcs V) (d : V × V) (W : Finset V) :
 def fastThinViolation (G : Arcs V) (d : V × V) (load : CutLoads V) : Option (Finset V) :=
   if d.1=d.2 then none
   else
-    let c := localArcCapacity G d load
+    let interval := reachInterval G d
+    let edges := G.filter (fun e => e.1 ∈ interval ∧ e.2 ∈ interval)
+    let c : ArcFlow V := fun e => if e ∈ edges then (2 : ℤ) ^ load e else 0
     let r := unitAugmentations c d.1 d.2 G.card (fun _ => 0)
     if r.2=G.card then none else
-      some (residualReach c r.1 d.1 ∩ reachInterval G d)
+      some (residualReach c r.1 d.1 ∩ interval)
 
 private theorem fastThinViolation_check (G : Arcs V) (d : V × V) (load : CutLoads V)
     (reach : Reach G d.1 d.2) :
@@ -245,10 +247,13 @@ private theorem fastThinViolation_check (G : Arcs V) (d : V × V) (load : CutLoa
     simpa only [zero_add] using valid
   change r.2 ≤ G.card at limit
   change r.2 < G.card → ¬ Reach (residualArcs c r.1) d.1 d.2 at stuck
+  have computation : fastThinViolation G d load =
+      if r.2 = G.card then none else some (residualReach c r.1 d.1 ∩ reachInterval G d) := by
+    simp only [fastThinViolation, ite_eq_right eq]
+    rfl
+  rw [computation]
   by_cases enough : r.2=G.card
-  · simp only [fastThinViolation,ite_eq_right eq,show
-      (unitAugmentations (localArcCapacity G d load) d.1 d.2 G.card fun _ => 0).2=G.card from enough,
-      ite_true]
+  · rw [ite_eq_left enough]
     intro W _ hs ht
     have bound := flow.cut_capacity hs ht
     rw [enough,localArcCapacity_cut] at bound
@@ -260,9 +265,7 @@ private theorem fastThinViolation_check (G : Arcs V) (d : V × V) (load : CutLoa
     rw [localArcCapacity_cut] at cut
     have hs : d.1 ∈ W := mem_residualReach.mpr .refl
     have ht : d.2 ∉ W := fun h => stuck hl (mem_residualReach.mp h)
-    simp only [fastThinViolation,ite_eq_right eq,show
-      (unitAugmentations (localArcCapacity G d load) d.1 d.2 G.card fun _ => 0).2≠G.card from enough,
-      ite_false]
+    rw [ite_eq_right enough]
     change W ∩ reachInterval G d ⊆ reachInterval G d ∧ d.1 ∈ W ∩ reachInterval G d ∧
        d.2 ∉ W ∩ reachInterval G d ∧ cutMass (outgoingCut (intervalArcs G d)
          (W ∩ reachInterval G d)) load < G.card

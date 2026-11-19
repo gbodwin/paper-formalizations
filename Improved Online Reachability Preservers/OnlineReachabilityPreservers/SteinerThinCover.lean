@@ -143,6 +143,14 @@ theorem thinCoverStep_spec (G Z : Arcs V) (sub : Z ⊆ G) (d : V × V)
   rw [Nat.mul_add] at h
   omega
 
+/-- Each successful update consumes at least one unit of the total load budget. -/
+theorem thinCoverLoop_load_progress (G Z : Arcs V) (sub : Z ⊆ G) (d : V × V)
+    (feasible : Reach Z d.1 d.2) (fuel : ℕ) (load : CutLoads V)
+    (bounded : ∀ e ∈ G, load e ≤ G.card.log2+1) :
+    let out := thinCoverLoop G d fuel load
+    loadTotal G load+out.2 ≤ loadTotal G out.1 :=
+  (thinCoverLoop_spec G Z sub d feasible fuel load bounded).2.2.1
+
 /-- The fractional phase makes at most one successful update for each unit
 of the remaining total exponent budget. -/
 theorem thinCoverLoop_updates (G Z : Arcs V) (sub : Z ⊆ G) (d : V × V)
