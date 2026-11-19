@@ -8,7 +8,11 @@ Section 2.2 describes a set of nonempty vertex sequences. The path-system
 definition in [8] uses a multiset and requires each vertex to occur at most
 once on a path. Separate copies can participate in a 2-bridge. Lean uses
 indexed simple paths and permits empty positions as padding of mass zero.
-[Bridge Girth, Definition 6](https://arxiv.org/pdf/2212.11944v4).
+At positive vertex budgets, every maximizing family has nonempty paths.
+Filling an empty position with a singleton increases the incidence mass
+and preserves the bridge exclusions at the same cutoff.
+[Bridge Girth, Definition 6](https://arxiv.org/pdf/2212.11944v4)
+· [Checked nonemptiness](OnlineReachabilityPreservers/LocalOrderExtremal.lean).
 
 ## Lemma 25 has a false denominator
 

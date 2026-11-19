@@ -104,4 +104,43 @@ theorem localOrderExtremal_balanced_three (n p : ℕ) (half : Bool) (hn : 0 < n)
             ((clean i).length : ℝ) ≤ 4*(M:ℝ)/(p:ℝ)) :=
   localOrderExtremal_balanced_short n p half le_rfl hn hp
 
+/-- Empty padding cannot occur at a maximum with a nonempty vertex budget. -/
+theorem localOrderMaximizer_nonempty {n p k : ℕ} {half : Bool}
+    (hn : 0 < n) (paths : Fin p → List (Fin n)) (allowed : localOrderAdmissible half k paths)
+    (maximal : ∀ other : Fin p → List (Fin n), (∀ i, (other i).Nodup) →
+      localOrderAdmissible half k other → (∑ i, (other i).length) ≤ ∑ i, (paths i).length)
+    (simple : ∀ i, (paths i).Nodup) (i : Fin p) : paths i ≠ [] := by
+  intro noVertices
+  let v : Fin n := ⟨0,hn⟩
+  let filled := Function.update paths i [v]
+  have nodup (j : Fin p) : (filled j).Nodup := by
+    by_cases pick : j = i
+    · subst j
+      simp [filled]
+    · simpa [filled,pick] using simple j
+  have step {j : Fin p} {x y : Fin n} (new : ListBefore filled j x y) : ListBefore paths j x y := by
+    by_cases pick : j = i
+    · subst j
+      have left : x = v := by simpa [filled] using new.1
+      have right : y = v := by simpa [filled] using new.2.1
+      exact (listBefore_ne new (left.trans right.symm)).elim
+    · have same : filled j = paths j := by simp [filled,pick]
+      unfold SourceAudit.BeforeIn at new ⊢
+      rwa [same] at new
+  have legal : localOrderAdmissible half k filled := by
+    cases half
+    · intro q hq
+      exact ⟨fun b => (allowed hq).false (b.mapPaths id Function.injective_id (fun _ _ _ h => step h))⟩
+    · intro q hq b earlier
+      exact allowed hq (b.mapPaths id Function.injective_id (fun _ _ _ h => step h)) earlier
+  have length (j : Fin p) : (filled j).length = (paths j).length + if j = i then 1 else 0 := by
+    by_cases pick : j = i
+    · subst j
+      simp [filled, noVertices]
+    · simp [filled,pick]
+  have gain : (∑ j, (filled j).length) = (∑ j, (paths j).length)+1 := by
+    simp [length, sum_add_distrib]
+  have cap := maximal filled nodup legal
+  omega
+
 end OnlineReachabilityPreservers
