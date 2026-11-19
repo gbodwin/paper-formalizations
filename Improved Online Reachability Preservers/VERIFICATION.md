@@ -537,6 +537,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   paid 12 extra arc inspections for the whole list. The generated C still
   built the paired template inside the prefix callback at this checkpoint.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44503067005).
+- [b55af670](https://github.com/gbodwin/paper-formalizations/commit/b55af670556a2e99afbe36c737a39e5da536f1f2)
+  materializes the paired forest, priced and free links, scale, and fuel
+  before creating the prefix callback. The 3622-declaration audit and local
+  kernel replay passed. Independent review checked the exact replay and
+  the generated C for one preparation and the fixed weighted-loop inputs.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44504990104).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

@@ -136,6 +136,8 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
   from Lemmas 23 and 39 and preserves both bridge exclusions at every size.
+  The [extremal conclusion](OnlineReachabilityPreservers/CommonOrderExtremal.lean)
+  applies this at any positive vertex and path budgets in a common vertex order.
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)

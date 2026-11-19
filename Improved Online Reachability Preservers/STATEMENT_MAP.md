@@ -230,6 +230,11 @@ prefix has an operand bound of \((5n+4)\cdot 2|E|\).
 | Lemma 37 and Theorem 38 | [OnlineBound](OnlineReachabilityPreservers/OnlineBound.lean) compares the lower and upper \(Q\)-bounds with \(h\asymp p/(\ell d^2)\), including \(h>\ell\) and \(h>d\). [OnlineArithmetic](OnlineReachabilityPreservers/OnlineArithmetic.lean) absorbs the two lower-order terms. [LocalOnlineBound](OnlineReachabilityPreservers/LocalOnlineBound.lean) proves the corrected update with unique intersections and all finite iterates for arbitrary simple paths with the half-bridge exclusion through four. [LocalOnlineLimit](OnlineReachabilityPreservers/LocalOnlineLimit.lean) proves the unrestricted limiting bound with a single slack function tending to zero in \(n\) and one constant uniform in both \(n\) and \(p\). [OnlineSharp](OnlineReachabilityPreservers/OnlineSharp.lean) gives the unrounded graph rate. |
 | Lemmas 40–42 and Theorem 43 | [LocalOfflineCounting](OnlineReachabilityPreservers/LocalOfflineCounting.lean) proves Lemma 41's off-base branching uniqueness and injection into the sampled path pairs in local orders. [OfflineMoment](OnlineReachabilityPreservers/OfflineMoment.lean) checks the logarithmic moment from subfamily incidence bounds. [LocalOfflineMoment](OnlineReachabilityPreservers/LocalOfflineMoment.lean) applies it to the actual local-order samples. [OfflineArithmetic](OnlineReachabilityPreservers/OfflineArithmetic.lean) checks the three-term comparison with third term \(n^{1/(b+1)}p^{(2b+1)/(2b+2)}\). [LocalOfflineBound](OnlineReachabilityPreservers/LocalOfflineBound.lean) gives the unrestricted update and a constant uniform over all iterations. At the limit Theorem 43 holds for arbitrary simple paths with the exact exponent \(1/\sqrt2\) and zero exponent slack. |
 
+For Lemmas 23 and 39, the [common-order extremal theorem](OnlineReachabilityPreservers/CommonOrderExtremal.lean)
+uses a finite maximum. For every positive pair of budgets and either
+bridge exclusion it gives one subsystem with both budgets and all four
+caps, retaining at least one sixteenth of the maximum.
+
 Here \(\ell,d\) are average path length and vertex degree and \(H\) is the
 half-bridge-free extremal function. The analogous full bridge-free function is \(\beta\).
 See [source notes](SOURCE_NOTES.md) for explicit discrepancies and the distinction between a

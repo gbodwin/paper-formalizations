@@ -239,7 +239,9 @@ local-order upper bound and recurrence of Theorem 43.
   least nine sixteenths of the mass. Pruning then preserves at least one
   sixteenth of the original mass and gives both upper and lower caps.
   Lean verifies both original budgets and the two bridge conditions at every
-  size in this common-order setting. The same caps hold through size four
+  size in this common-order setting. A spanning path and singleton padding
+  make both density assumptions automatic at a common-order maximum with
+  positive budgets. The same caps hold through size four
   under unique intersections in local orders.
   With opposite-intersection pruning first, arbitrary simple paths whose
   mass is at least twice both counts keep one thirty-second of the mass and
@@ -247,7 +249,8 @@ local-order upper bound and recurrence of Theorem 43.
   stay at four times the original averages. The factor-four lower caps
   before pruning and preservation through arbitrary bridge sizes remain open
   for cyclic families.
-  [Checked local cleaning](OnlineReachabilityPreservers/LocalBalancedRegularization.lean).
+  [Common-order extremum](OnlineReachabilityPreservers/CommonOrderExtremal.lean)
+  · [Checked local cleaning](OnlineReachabilityPreservers/LocalBalancedRegularization.lean).
 - The proof of Lemma 23 writes \(\beta\) for the half-bridge-free extremum
   \(H\). The statement of Lemma 39 writes \(H\) for the full-bridge-free
   extremum \(\beta\) it is used to estimate.

@@ -193,6 +193,8 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.regularization_balanced_caps
 #print axioms OnlineReachabilityPreservers.OrderedDetour.shorten_indexed
 #print axioms OnlineReachabilityPreservers.bridge_after_path_split
+#print axioms OnlineReachabilityPreservers.commonOrderExtremal_isDense
+#print axioms OnlineReachabilityPreservers.commonOrderExtremal_balanced
 #print axioms OnlineReachabilityPreservers.lemma40_acyclic_moment
 #print axioms OnlineReachabilityPreservers.lemma41_sampled_upper
 #print axioms OnlineReachabilityPreservers.lemma20_opt_squared
