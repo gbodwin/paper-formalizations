@@ -259,9 +259,12 @@ keeps the canonical seed-coordinate order. The empty history occupies the
 first slot. Every first label starts a block of shorter histories with a size
 computed by recurrence. Ranking within these blocks avoids listing and sorting
 the history space. The cached replay uses sorted vertex and arc arrays.
-A binary search returns the canonical rank of any present key with at most
-as many key comparisons as the bit length of the array size. Inverse ranks
-read the corresponding stored position.
+A [separate comparison counter](OnlineReachabilityPreservers/SteinerSortWork.lean)
+follows Lean's native merge schedule for any list representing a set. It
+returns the canonical sorted order. The [combined bound](OnlineReachabilityPreservers/SteinerBitOrders.lean)
+covers one sort of `m` entries and `q` binary rank lookups by at most
+`(m+q)*m.size` key comparisons, where `m.size` is the bit length. Inverse
+ranks read the corresponding stored position.
 The [bit cursor](OnlineReachabilityPreservers/SteinerBitCursor.lean) reads
 the requested positions directly, with a tail-recursive word accumulator. The
 [cursor decoder](OnlineReachabilityPreservers/SteinerBitSeed.lean) agrees with
@@ -300,8 +303,8 @@ construction and application of the finite index enumerations remain separate
 runtime costs. The ordinary graph-based bit entry point evaluates the forest
 scale and the counts of finite seed coordinates before the measured replay.
 The cached bit entry point shares the measured preparation and uses an
-arithmetic coordinate count. Index construction, the arithmetic in index
-lookups, and the time cost of the remaining container operations still need bounds.
+arithmetic coordinate count. Index enumeration, allocation, arithmetic in
+lookups, and the cost of other container operations still need time bounds.
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

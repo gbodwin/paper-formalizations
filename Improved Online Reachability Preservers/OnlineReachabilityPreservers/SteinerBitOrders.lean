@@ -1,6 +1,7 @@
 import Mathlib.Data.Nat.Size
 import Mathlib.Data.Prod.Lex
 import OnlineReachabilityPreservers.SteinerBitReplay
+import OnlineReachabilityPreservers.SteinerSortWork
 
 /-! Executable index orders for the graph, height histories, and early seed coordinates. -/
 
@@ -309,6 +310,34 @@ theorem binarySortedIndexWithChecks_spec {A : Type*} [LinearOrder A] (values : F
   rw [found] at data
   exact data
 
+/-- Sorting the entries once and ranking present keys gives the canonical
+ranks within a single comparison bound for the sort and all lookups. -/
+theorem steinerSortedRankQueries_comparisons {A : Type*} [LinearOrder A] (values : Finset A)
+    (entries : List A) (rep : (entries : Multiset A) = values.val) (queries : List values) :
+    let sorted := listSortWithChecks (fun a b => decide (a ≤ b)) entries
+    let rows := sorted.1.toArray
+    let result := queries.map fun x => arrayLowerBoundWithChecks rows x.val rows.size.size 0 rows.size le_rfl
+    result.map Prod.fst = queries.map (values.sort.idxOf ·.val) ∧
+      sorted.2 + (result.map Prod.snd).sum ≤ (values.card+queries.length)*values.card.size := by
+  obtain ⟨canonical,sortWork⟩ := listSortWithChecks_finset values entries rep
+  dsimp only
+  rw [canonical]
+  let rows := values.sort.toArray
+  let read (x : values) := arrayLowerBoundWithChecks rows x.val rows.size.size 0 rows.size le_rfl
+  have each (x : values) : (read x).1 = values.sort.idxOf x.val ∧ (read x).2 ≤ values.card.size :=
+    binarySortedIndexWithChecks_spec values x
+  change (queries.map read).map Prod.fst = queries.map (values.sort.idxOf ·.val) ∧
+    (listSortWithChecks (fun a b => decide (a ≤ b)) entries).2 + ((queries.map read).map Prod.snd).sum ≤ _
+  constructor
+  · rw [List.map_map]
+    exact List.map_congr_left fun x _ => (each x).1
+  · have lookups : ((queries.map read).map Prod.snd).sum ≤ queries.length*values.card.size := by
+      induction queries with
+      | nil => simp
+      | cons first rest ih =>
+        simpa only [List.map_cons, List.sum_cons, List.length_cons, Nat.succ_mul, Nat.add_comm]
+          using Nat.add_le_add (each first).2 ih
+    simpa only [Nat.add_mul] using Nat.add_le_add sortWork lookups
 
 /-- Share one sorted array. Forward lookup uses its binary rank and inverse
 lookup reads the array at the indicated position. -/
