@@ -68,6 +68,16 @@ theorem calibrated_fits {n k B : ℕ} (hk : 0 < k) (M κ : ℕ)
   let e := exponent (max 1 n) k
   let f := exponent (massCeiling adj w) 2
   let F := M * (EncodedDyadicRoot.powerTwo e).1 * (EncodedDyadicRoot.powerTwo f).1
+  let c := κ+(RationalWeakFamily.edgeRounds n (originalTotal adj w)).size
+  have le : (calibratedParameters k M κ adj w).factor ≤ (F:ℚ≥0) :=
+    (best_factor_bounds (k:=k) (M:=M) (κ:=c) adj w).1
+  obtain ⟨factor,natFactor⟩ : ∃ q : ℕ, (calibratedParameters k M κ adj w).factor=(q:ℚ≥0) := by
+    unfold calibratedParameters
+    rw [best_factor_nat]
+    exact ⟨_,rfl⟩
+  have smaller : factor ≤ F := by
+    rw [natFactor] at le
+    exact_mod_cast le
   have he : e ≤ n+1 :=
     (exponent_le _ hk).trans ((Nat.size_le.mpr Nat.lt_two_pow_self).trans (max_le (by omega) (by omega)))
   have hf : f ≤ n*n*(B+1)+2 := (exponent_le _ (by decide)).trans (mass_bits adj w h)
@@ -83,11 +93,11 @@ theorem calibrated_fits {n k B : ℕ} (hk : 0 < k) (M κ : ℕ)
       _ = 2 ^ (M.size + e + f) := by rw [pow_add, pow_add]
       _ ≤ _ := Nat.pow_le_pow_right (by decide) hdeg
   refine ⟨⟨?_, ?_⟩, ?_⟩
-  · change ((F : ℚ≥0).num ≤ 2 ^ width n B M)
-    rw [NNRat.num_natCast]
-    exact hF
-  · change ((F : ℚ≥0).den ≤ 2 ^ width n B M)
-    rw [NNRat.den_natCast]
+  · change (calibratedParameters k M κ adj w).factor.num ≤ _
+    rw [natFactor,NNRat.num_natCast]
+    exact smaller.trans hF
+  · change (calibratedParameters k M κ adj w).factor.den ≤ _
+    rw [natFactor,NNRat.den_natCast]
     exact Nat.one_le_pow _ _ (by decide)
   · intro s t
     have hB := le_max_left B (M.size + n + n*n*(B+1) + 3)
@@ -99,6 +109,7 @@ theorem calibrated_confidence {n k B : ℕ} (hk : 0 < k) (M κ : ℕ)
     (adj : BinaryFractionalWalkOracle.Adjacency n) (w : RationalEdgeThresholds.Weights n)
     (h : StoredWeights w B) : (calibratedParameters k M κ adj w).confidence ≤ confidence n B M κ := by
   let D := calibratedParameters k M κ adj w
+  rw [calibrated_confidence_value]
   change κ + (rounds D).size ≤ confidence n B M κ
   exact Nat.add_le_add_left ((Nat.size_le.mpr Nat.lt_two_pow_self).trans
     (rounds_le D (calibrated_fits hk M κ adj w h))) κ
@@ -114,7 +125,7 @@ theorem family_polynomial_reads {n k B : ℕ} (hn : 0 < n) (hk : 0 < k) (M κ : 
     FiniteDrawTrees.Within (readBudget n (width n B M) (confidence n B M κ))
       (familyTree (calibratedParameters k M κ adj w)) :=
   FiniteDrawTrees.within_mono
-    (familyTree_within hn _ (parameters_factor_ge_one hM adj w) (calibrated_fits hk M κ adj w h))
+    (familyTree_within hn _ (calibrated_factor_ge_one hM adj w) (calibrated_fits hk M κ adj w h))
     (read_mono (calibrated_confidence hk M κ adj w h))
 
 end DirectedFlowCutGap.AdaptiveWidthEnvelope

@@ -25,6 +25,7 @@ structure Input (n : ℕ) where
   weights : RationalEdgeThresholds.Weights n
   factor : ℚ≥0
   confidence : ℕ
+  strategy : CheckedEdgeOracle.Strategy := .mass
 
 def adjusted {n : ℕ} (D : Input n) : Edge n → ℚ≥0 := modifiedWeight D.adjacency D.weights
 def floored {n : ℕ} (D : Input n) (e : Edge n) : ℚ≥0 := max (n : ℚ≥0)⁻¹ (adjusted D e)
@@ -39,7 +40,7 @@ def allowance {n : ℕ} (D : Input n) (c : Edge n → ℚ≥0) : ℚ≥0 :=
   D.factor * (∑ e, c e * adjusted D e) / 2
 
 def expectedPriceBound {n : ℕ} (D : Input n) : Prop :=
-  ∀ c : Edge n → ℚ≥0, EncodedEdgeSolver.expectedPrice (request D c) EncodedEdgeSolver.massMode ≤
+  ∀ c : Edge n → ℚ≥0, EncodedEdgeSolver.expectedPrice (request D c) D.strategy.model ≤
     (allowance D c : ℝ)
 
 def keep {n : ℕ} (D : Input n) (X : Finset (Edge n)) : Prop :=
@@ -47,7 +48,7 @@ def keep {n : ℕ} (D : Input n) (X : Finset (Edge n)) : Prop :=
 
 private def checked {n : ℕ} (D : Input n) (s : History (Edge n)) :
     FiniteDrawTrees.Tree (Option (Finset (Edge n))) :=
-  CheckedEdgeOracle.mass D.confidence
+  CheckedEdgeOracle.tree D.strategy D.confidence
     (request D (penalizedCosts (adjusted D) D.factor s.costs)) (allowance D s.costs)
 
 def step {n : ℕ} (D : Input n) (s : History (Edge n)) :
@@ -82,7 +83,7 @@ theorem step_good {n : ℕ} (hn : 0 < n) (D : Input n) (hα : 0 < D.factor)
     have eq : advance (floored D) D.factor (scale n) s X = s' := Option.some.inj he
     subst s'
     let c := penalizedCosts (adjusted D) D.factor s.costs
-    have ha := CheckedEdgeOracle.mass_accepted D.confidence (request D c) (allowance D s.costs) X hr
+    have ha := CheckedEdgeOracle.accepted D.strategy D.confidence (request D c) (allowance D s.costs) X hr
     have hP : Good D.adjacency D.weights X := ⟨ha.1, ha.2.1⟩
     have hprice := ha.2.2
     rw [query_cost D c X ha.1] at hprice
@@ -127,7 +128,7 @@ private theorem step_failure {n : ℕ} (D : Input n) (hMean : expectedPriceBound
     rw [penalized_potential]
   have hfeas : ∃ w, IsFractionalEdgeCut (request D c).graph w {d | d ∈ (request D c).demands} :=
     ⟨fun e => (adjusted D e : ℝ≥0), modified_feasible D.adjacency D.weights⟩
-  have hfail := CheckedEdgeOracle.mass_failure D.confidence (request D c)
+  have hfail := CheckedEdgeOracle.failure D.strategy D.confidence (request D c)
     (allowance D s.costs) (by simpa only [hB] using hMean c) hfeas
   have he : (Option.map (advance (floored D) D.factor (scale n) s)) ⁻¹' {none} = {none} := by
     ext a
@@ -215,7 +216,7 @@ theorem factor_exists (ε : ℝ) (hε : 0 < ε) :
       1 ≤ α ∧ (α : ℝ) ≤ 2 * (K * (n : ℝ) ^ ε *
         (totalEdgeWeight (BinaryFractionalWalkOracle.graph adj)
           (fun e => (modifiedWeight adj w e : ℝ≥0)) : ℝ) ^ (1 / 2 : ℝ)) + 2 ∧
-      expectedPriceBound ⟨adj, w, α, κ⟩ := by
+      expectedPriceBound ⟨adj, w, α, κ,.mass⟩ := by
   obtain ⟨K, hK, bound⟩ := EncodedEdgeSolver.mass_expected_uniform ε hε
   refine ⟨K, hK, ?_⟩
   intro n adj w κ
@@ -240,7 +241,7 @@ theorem factor_exists (ε : ℝ) (hε : 0 < ε) :
     rw [hcast]
     linarith
   · intro c
-    let D : Input n := ⟨adj, w, α, κ⟩
+    let D : Input n := ⟨adj, w, α, κ,.mass⟩
     have hb := bound n (request D c) m (modified_feasible adj w)
     change EncodedEdgeSolver.expectedPrice (request D c) EncodedEdgeSolver.massMode ≤
       rate * (weightedEdgeCost (request D c).graph (request D c).cost
@@ -414,7 +415,7 @@ private theorem step_budget {n B : ℕ} (D : Input n) (h : InputFits D B) (s : H
       (EncodedEdgeLineInput.lineSize n) (2*n*(n+4)) budget D.confidence := by
     dsimp only [EncodedSolverBits.edgeBudget, EncodedSolverBits.polynomial]
     gcongr
-  exact within_mono (within_map (CheckedEdgeOracle.mass_within D.confidence R (allowance D s.costs)) _) hcap
+  exact within_mono (within_map (CheckedEdgeOracle.tree_within D.strategy D.confidence R (allowance D s.costs)) _) hcap
 
 theorem within_build {n B : ℕ} (hn : 0 < n) (D : Input n) (hα : 1 ≤ D.factor)
     (h : InputFits D B) : Within (readBudget n B D.confidence) (build D) := by
@@ -435,7 +436,7 @@ theorem within_build {n B : ℕ} (hn : 0 < n) (D : Input n) (hα : 1 ≤ D.facto
   exact within_mono htree (Nat.mul_le_mul_right q (rounds_le D h))
 
 theorem step_binary {n : ℕ} (D : Input n) (s : History (Edge n)) : LazyFairBitTrees.Binary (step D s) :=
-  LazyFairBitTrees.binary_map (CheckedEdgeOracle.mass_binary D.confidence _ (allowance D s.costs)) _
+  LazyFairBitTrees.binary_map (CheckedEdgeOracle.tree_binary D.strategy D.confidence _ (allowance D s.costs)) _
 
 theorem build_binary {n : ℕ} (D : Input n) : LazyFairBitTrees.Binary (build D) :=
   AdaptiveOracleFailure.binary_tree (step D) (step_binary D) ..

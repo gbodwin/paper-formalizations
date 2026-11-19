@@ -63,7 +63,26 @@ theorem ceiling_value (m : Code) : (ceiling m).1=max 1 ⌈2*m.value⌉₊ := by
     Code.value_ofNat,Nat.cast_ofNat]
 
 private def blank {n : ℕ} (adj : BinaryFractionalWalkOracle.Adjacency n)
-    (w : RationalEdgeThresholds.Weights n) : Input n := ⟨adj,w,0,0⟩
+    (w : RationalEdgeThresholds.Weights n) : Input n := ⟨adj,w,0,0,.mass⟩
+
+private def chooseRoot (a b : ℕ) : (ℕ × CheckedEdgeOracle.Strategy) × ℕ :=
+  let cmp := BinaryRawRational.le (Code.ofNat a) (Code.ofNat b)
+  (if cmp.1 then (a,.mass) else (b,.size),cmp.2)
+
+private theorem chooseRoot_value (a b : ℕ) :
+    (chooseRoot a b).1=if a≤b then (a,.mass) else (b,.size) := by
+  simp only [chooseRoot,BinaryRawRational.le_value,Code.le,Code.ofNat,Nat.mul_one,decide_eq_true_eq]
+
+private theorem chooseRoot_size {a b W : ℕ} (ha : a.size ≤ W) (hb : b.size ≤ W) :
+    (chooseRoot a b).1.1.size ≤ W := by
+  rw [chooseRoot_value]
+  split
+  · exact ha
+  · exact hb
+
+private theorem chooseRoot_paid {a b W : ℕ} (ha : a.size ≤ W) (hb : b.size ≤ W) :
+    (chooseRoot a b).2 ≤ BinaryRawRational.budget W :=
+  BinaryRawRational.le_paid (ofNat_fit ha) (ofNat_fit hb)
 
 def calibrate {n : ℕ} (k M κ : ℕ) (adj : BinaryFractionalWalkOracle.Adjacency n)
     (w : RationalEdgeThresholds.Weights n) : Input n × ℕ :=
@@ -76,10 +95,12 @@ def calibrate {n : ℕ} (k M κ : ℕ) (adj : BinaryFractionalWalkOracle.Adjacen
   let bound := ceiling m
   let g := root k (max 1 n)
   let h := root 2 bound.1
+  let s := root 3 (max 1 n)
+  let selected := chooseRoot h.1 s.1
   let u := BinaryNaturalOperations.mul M g.1
-  let v := BinaryNaturalOperations.mul u.1 h.1
-  (⟨adj,w,(v.1 : ℚ≥0),conf.1⟩,
-    a.2+t.2+control.paid+boost.2+conf.2+bound.2+g.2+h.2+u.2+v.2+16*(n+1)^2+16)
+  let v := BinaryNaturalOperations.mul u.1 selected.1.1
+  (⟨adj,w,(v.1 : ℚ≥0),conf.1,selected.1.2⟩,
+    a.2+t.2+control.paid+boost.2+conf.2+bound.2+g.2+h.2+s.2+selected.2+u.2+v.2+16*(n+1)^2+20)
 
 theorem calibrate_value {n : ℕ} (k M κ : ℕ) (adj : BinaryFractionalWalkOracle.Adjacency n)
     (w : RationalEdgeThresholds.Weights n) : (calibrate k M κ adj w).1=calibratedParameters k M κ adj w := by
@@ -92,13 +113,28 @@ theorem calibrate_value {n : ℕ} (k M κ : ℕ) (adj : BinaryFractionalWalkOrac
     simp only [BinaryNaturalOperations.add_value,BinaryNaturalOperations.width_value,
       BinaryEdgeFamilyControls.compute_horizon,value]
   have bound : (ceiling m).1=massCeiling adj w := by simp only [ceiling_value,value,massCeiling]
-  unfold calibrate
-  change (⟨adj,w,(((BinaryNaturalOperations.mul (BinaryNaturalOperations.mul M (root k (max 1 n)).1).1
-    (root 2 (ceiling m).1).1).1 : ℕ) : ℚ≥0),
-    (BinaryNaturalOperations.add κ (BinaryNaturalOperations.width (BinaryEdgeFamilyControls.compute n m).horizon).1).1⟩ :
-      Input n) = _
-  rw [conf,bound,BinaryNaturalOperations.mul_value,BinaryNaturalOperations.mul_value,root_value,root_value]
-  rfl
+  have choices : ((root 2 (ceiling m).1).1≤(root 3 (max 1 n)).1) ↔ preferMass adj w := by
+    rw [bound,root_value,root_value]
+    rfl
+  let mass := (root 2 (ceiling m).1).1
+  let size := (root 3 (max 1 n)).1
+  let selected := chooseRoot mass size
+  have choose : selected.1 = if preferMass adj w then (mass,.mass) else (size,.size) := by
+    dsimp only [selected,mass,size]
+    simp only [chooseRoot_value,choices]
+  change (⟨adj,w,(((BinaryNaturalOperations.mul
+      (BinaryNaturalOperations.mul M (root k (max 1 n)).1).1 selected.1.1).1:ℕ):ℚ≥0),
+    (BinaryNaturalOperations.add κ (BinaryNaturalOperations.width (BinaryEdgeFamilyControls.compute n m).horizon).1).1,
+    selected.1.2⟩ : Input n)=_
+  rw [conf,choose,BinaryNaturalOperations.mul_value,BinaryNaturalOperations.mul_value]
+  unfold calibratedParameters
+  by_cases h : preferMass adj w
+  · rw [bestParameters_mass adj w h,ite_eq_left h]
+    simp only [mass,bound,root_value]
+    rfl
+  · rw [bestParameters_size adj w h,ite_eq_right h]
+    simp only [size,root_value]
+    rfl
 
 def run {n : ℕ} (k M κ : ℕ) (adj : BinaryFractionalWalkOracle.Adjacency n)
     (w : RationalEdgeThresholds.Weights n) (tape : Bits) : Option (PhysicalBinaryEdgeFamily.Result n) :=
@@ -161,7 +197,7 @@ def budget {R : Type*} [Semiring R] (n B k M κ : R) : R :=
   let W := calibrationWidth n B k M κ
   n*n*(40*(B+1)^2)+8*(n*n)+4+sumBudget n B+
   BinaryEdgeFamilyControls.budget n (n*n*(B+1))+(24*(W+1)^2+4)+(BinaryRawRational.budget W+4)+
-  ceilingBudget (n*n*(B+1))+2*rootBudget W+2*(BinaryRawRational.budget (2*W+2)+4)+16*(n+1)^2+16
+  ceilingBudget (n*n*(B+1))+3*rootBudget W+3*(BinaryRawRational.budget (2*W+2)+4)+16*(n+1)^2+20
 
 set_option maxHeartbeats 1500000 in
 theorem calibrate_paid {n B : ℕ} (k M κ : ℕ) (adj : BinaryFractionalWalkOracle.Adjacency n)
@@ -177,8 +213,11 @@ theorem calibrate_paid {n B : ℕ} (k M κ : ℕ) (adj : BinaryFractionalWalkOra
   let massCap := ceiling m
   let g := root k (max 1 n)
   let h := root 2 massCap.1
+  let s := root 3 (max 1 n)
+  let selected := chooseRoot h.1 s.1
+  let chosen := selected.1.1
   let u := BinaryNaturalOperations.mul M g.1
-  let v := BinaryNaturalOperations.mul u.1 h.1
+  let v := BinaryNaturalOperations.mul u.1 chosen
   let L := n*n*(B+1)
   let H := horizonBound n B
   let W := calibrationWidth n B k M κ
@@ -205,6 +244,8 @@ theorem calibrate_paid {n B : ℕ} (k M κ : ℕ) (adj : BinaryFractionalWalkOra
   have rootSize : massCap.1.size ≤ W := massSize.trans (by omega)
   have gs : g.1.size ≤ W+1 := (root_size _ _).trans (Nat.add_le_add_right dim _)
   have hs : h.1.size ≤ W+1 := (root_size _ _).trans (Nat.add_le_add_right rootSize _)
+  have ss : s.1.size ≤ W+1 := (root_size _ _).trans (Nat.add_le_add_right dim _)
+  have both : chosen.size ≤ W+1 := chooseRoot_size hs ss
   have us : u.1.size ≤ 2*W+2 := by
     change (BinaryNaturalOperations.mul M g.1).1.size ≤ _
     rw [BinaryNaturalOperations.mul_value]
@@ -220,13 +261,17 @@ theorem calibrate_paid {n B : ℕ} (k M κ : ℕ) (adj : BinaryFractionalWalkOra
   have confPaid : conf.2 ≤ BinaryRawRational.budget W+4 := BinaryNaturalOperations.add_paid confWidth boostOut
   have gPaid : g.2 ≤ rootBudget W := root_paid kWidth dim
   have hPaid : h.2 ≤ rootBudget W := root_paid two rootSize
+  have three : (3:ℕ).size ≤ W := (show (3:ℕ).size=2 by decide).trans_le (by omega)
+  have sPaid : s.2 ≤ rootBudget W := root_paid three dim
+  have cmpPaid : selected.2 ≤ BinaryRawRational.budget F :=
+    chooseRoot_paid (hs.trans (by unfold F; omega)) (ss.trans (by unfold F; omega))
   have uPaid : u.2 ≤ BinaryRawRational.budget F+4 :=
     BinaryNaturalOperations.mul_paid (mWidth.trans (by unfold F; omega)) (gs.trans (by unfold F; omega))
   have vPaid : v.2 ≤ BinaryRawRational.budget F+4 :=
-    BinaryNaturalOperations.mul_paid us (hs.trans (by unfold F; omega))
-  change a.2+t.2+c.paid+boost.2+conf.2+massCap.2+g.2+h.2+u.2+v.2+16*(n+1)^2+16 ≤
+    BinaryNaturalOperations.mul_paid us (both.trans (by unfold F; omega))
+  change a.2+t.2+c.paid+boost.2+conf.2+massCap.2+g.2+h.2+s.2+selected.2+u.2+v.2+16*(n+1)^2+20 ≤
     n*n*(40*(B+1)^2)+8*(n*n)+4+sumBudget n B+BinaryEdgeFamilyControls.budget n L+(24*(W+1)^2+4)+
-    (BinaryRawRational.budget W+4)+ceilingBudget L+2*rootBudget W+2*(BinaryRawRational.budget F+4)+16*(n+1)^2+16
+    (BinaryRawRational.budget W+4)+ceilingBudget L+3*rootBudget W+3*(BinaryRawRational.budget F+4)+16*(n+1)^2+20
   omega
 
 open Polynomial

@@ -21,7 +21,7 @@ private theorem step_width {n B C : ℕ} (D : Input n) (p : Preparation n) (dema
     {r : Result n} (ran : step D p demands s tape=some r) :
     ∀ a ∈ r.history, Fits a.prices (B+C) := by
   let q := query D p demands s
-  have mapped : ((PhysicalAmplifiedBinaryEdge.run D.confidence q.input .mass tape).map
+  have mapped : ((PhysicalAmplifiedBinaryEdge.run D.confidence q.input (PhysicalEdgeFamily.runnerMode D.strategy) tape).map
       (finishStep p s q))=some r := ran
   obtain ⟨round,_,rfl⟩ := Option.map_eq_some_iff.mp mapped
   intro out mem
@@ -46,11 +46,11 @@ private theorem step_paid {n B : ℕ} (edge : Polynomial ℕ)
     r.total ≤ stepCap edge n B D.confidence := by
   let q := query D p demands s
   let W := queryWidth n B
-  change (PhysicalAmplifiedBinaryEdge.run D.confidence q.input .mass tape).map (finishStep p s q)=some r at ran
+  change (PhysicalAmplifiedBinaryEdge.run D.confidence q.input (PhysicalEdgeFamily.runnerMode D.strategy) tape).map (finishStep p s q)=some r at ran
   obtain ⟨round,called,rfl⟩ := Option.map_eq_some_iff.mp ran
   obtain ⟨b,pre⟩ : QueryFits q W ∧ q.paid ≤ queryBudget n B := query_fits_paid D p demands s w a prices
   have widths (u v : Fin n) := Code.bounded_bits (b.prices u v)
-  have edgePaid := edgeBound D.confidence q.input .mass tape (Nat.le_add_left 1 W) widths called
+  have edgePaid := edgeBound D.confidence q.input (PhysicalEdgeFamily.runnerMode D.strategy) tape (Nat.le_add_left 1 W) widths called
   have hsize : n+q.input.demands.length+(W+1)+D.confidence ≤ n+n*n+W+1+D.confidence := by
     change n+demands.length+(W+1)+D.confidence ≤ _
     omega

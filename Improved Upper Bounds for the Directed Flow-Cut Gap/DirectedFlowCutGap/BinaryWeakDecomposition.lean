@@ -321,17 +321,17 @@ theorem calibrated_selected (ε : ℝ) (positive : 0<ε) :
       p none ≤ ENNReal.ofReal ((n:ℝ)^(-(κ:ℝ))) ∧
       (∀ X, some X ∈ p.support → Good adj w X) ∧
       (∀ e, probability p (fun o => ∃ X ∈ o, e ∈ X) ≤ 8*(originalWeight adj w e:ℝ)*
-        (8*(M:ℝ)*(n:ℝ)^ε*(originalTotal adj w:ℝ)^(1/2:ℝ))*probability p (fun o => o.isSome)) ∧
+        min (8*(M:ℝ)*(n:ℝ)^ε*(originalTotal adj w:ℝ)^(1/2:ℝ)) (8*(M:ℝ)*(n:ℝ)^(ε+1/3))*probability p (fun o => o.isSome)) ∧
       (∀ tape : Bits, q≤tape.length → ∃ out used,
         run k M κ adj w tape=some out ∧ out.suffix=tape.drop used ∧ used≤q) := by
-  obtain ⟨k,M,hk,hM,calibrated⟩ := calibrated_families ε positive
+  obtain ⟨k,M,hk,hM,calibrated⟩ := calibrated_best_families ε positive
   refine ⟨k,M,hk,hM,?_⟩
   intro n large adj w κ
   dsimp only
   let D := calibratedParameters k M (κ+1) adj w
   let T := EncodedVertexAmplification.confidenceExponent n (κ+1)
   let b := readBudget n (inputWidth D) D.confidence
-  have factor : 1≤D.factor := parameters_factor_ge_one hM adj w
+  have factor : 1≤D.factor := calibrated_factor_ge_one hM adj w
   have familyWithin := familyTree_within (by omega : 0<n) D factor (input_fits D)
   obtain ⟨failed,scan⟩ := calibrated n large adj w (κ+1)
   have familyLaw := family_law familyWithin (familyTree_binary D)
@@ -340,7 +340,7 @@ theorem calibrated_selected (ε : ℝ) (positive : 0<ε) :
   have supported (s : History (Edge n)) (hs : some s ∈ (ideal (familyTree D)).support) :
       s.cuts.length=rounds D ∧ (∀ X∈s.cuts, Good adj w X) ∧
         ∀ e, (CheckedMWHistory.occurrences s e:ℝ)/(s.cuts.length:ℝ) ≤ 8*(originalWeight adj w e:ℝ)*
-          (8*(M:ℝ)*(n:ℝ)^ε*(originalTotal adj w:ℝ)^(1/2:ℝ)) := by
+          min (8*(M:ℝ)*(n:ℝ)^ε*(originalTotal adj w:ℝ)^(1/2:ℝ)) (8*(M:ℝ)*(n:ℝ)^(ε+1/3)) := by
     rw [← familyLaw] at hs
     obtain ⟨tape,ht,pick⟩ := (PMF.mem_support_map_iff _ _ _).mp hs
     obtain ⟨res,used,ran,_,good⟩ := scan tape (tape_length ht).ge
@@ -379,7 +379,7 @@ private theorem family_length {n k M j : ℕ} (hn : 0<n) (hM : 0<M)
       simpa only [PhysicalBinaryEdgeFamily.Result.observe,history,Option.map_some] using h
     have supported : some s.observe ∈ (ideal (familyTree D)).support :=
       hcut ▸ EncodedSolverBits.run_support (familyTree_binary D) hr
-    have factor : 1≤D.factor := parameters_factor_ge_one hM adj w
+    have factor : 1≤D.factor := calibrated_factor_ge_one hM adj w
     exact (familyTree_spec hn D factor (D.factor : ℝ) (by positivity) (fun _ => le_rfl) s.observe supported).1
 
 private theorem setup_paid (n κ : ℕ) :
@@ -427,6 +427,32 @@ private theorem rounds_bound {n B k M κ : ℕ} (hk : 0<k)
   have h : max B (M.size+n+n*n*(B+1)+3) ≤ B+M.size+n+n*n*(B+1)+3 := by
     apply max_le <;> omega
   gcongr
+
+def tapeBound (n B M κ : ℕ) : ℕ :=
+  readBudget n (AdaptiveWidthEnvelope.width n B M) (AdaptiveWidthEnvelope.confidence n B M (κ+1))+
+    (n+1)*(κ+1)*(maxRounds n B M.size+1)
+
+theorem tree_polynomial_reads {n k B : ℕ} (hn : 0<n) (hk : 0<k) (M κ : ℕ) (hM : 0<M)
+    (adj : BinaryFractionalWalkOracle.Adjacency n) (w : RationalEdgeThresholds.Weights n)
+    (fit : AdaptiveWidthEnvelope.StoredWeights w B) :
+    Within (tapeBound n B M κ) (tree (calibratedParameters k M (κ+1) adj w)
+      (EncodedVertexAmplification.confidenceExponent n (κ+1))) := by
+  let D := calibratedParameters k M (κ+1) adj w
+  let T := EncodedVertexAmplification.confidenceExponent n (κ+1)
+  have within := AdaptiveWidthEnvelope.family_polynomial_reads hn hk M (κ+1) hM adj w fit
+  apply within_bind_support within (next T)
+  intro s hs
+  cases s with
+  | none => exact .pure _ _
+  | some s =>
+    have factor : 1≤D.factor := calibrated_factor_ge_one hM adj w
+    have length := (familyTree_spec hn D factor (D.factor:ℝ) (by positivity) (fun _ => le_rfl) s hs).1
+    have pos : 0<s.cuts.length := length.symm ▸ rounds_pos D
+    have width : FairBitWords.width s.cuts.length ≤ maxRounds n B M.size+1 := by
+      rw [← BinaryBoundedSampler.size_eq_width pos,length]
+      exact (BinaryNaturalOperations.size_le_self _).trans ((rounds_bound hk adj w fit).trans (Nat.le_succ _))
+    have sample := BinaryFamilySampler.choose_within s.cuts T
+    exact within_mono sample (Nat.mul_le_mul (confidence_le n κ) width)
 
 def selectBudget {R : Type*} [Semiring R] (n B κ m : R) : R :=
   let r := maxRounds n B m

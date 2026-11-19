@@ -9,6 +9,14 @@ open BinaryArithmetic FiniteDrawTrees RandomizedEdgeFamily
 open RationalWeakFamily RationalEdgeDecomposition CheckedMWHistory
 open scoped NNRat ENNReal
 
+def runnerMode : CheckedEdgeOracle.Strategy → ChargedVertexModes.Mode
+  | .mass => .mass
+  | .size => .size
+
+@[simp] theorem runner_model (strategy : CheckedEdgeOracle.Strategy) :
+    PhysicalAmplifiedEdgeSolver.model (runnerMode strategy)=strategy.model := by
+  cases strategy <;> rfl
+
 abbrev State (n : ℕ) := History (Edge n)
 
 structure Result (n : ℕ) where
@@ -30,7 +38,7 @@ def stepWith {n : ℕ} (D : Input n) (demands : List (Edge n)) (s : State n) (ta
   let cost := penalizedCosts (adjusted D) D.factor s.costs
   let query : EncodedEdgeLineInput.Input n := ⟨D.adjacency,demands,
     Vector.ofFn fun s => Vector.ofFn fun t => RawNonnegativeRational.Code.ofNNRat (cost (s,t))⟩
-  (PhysicalAmplifiedEdgeSolver.run D.confidence query .mass tape).map fun round =>
+  (PhysicalAmplifiedEdgeSolver.run D.confidence query (runnerMode D.strategy) tape).map fun round =>
     let next := (CheckedEdgeOracle.check query (allowance D s.costs) round.output).map
       (advance (floored D) D.factor (scale n) s)
     ⟨next,round.suffix,round.dispatch,round.readback,round.roundingAndSelection⟩
@@ -45,18 +53,18 @@ theorem step_observe {n : ℕ} (D : Input n) (s : State n) (tape : Bits) :
   let query := request D (penalizedCosts (adjusted D) D.factor s.costs)
   let transform := fun out => (CheckedEdgeOracle.check query (allowance D s.costs) out).map
     (advance (floored D) D.factor (scale n) s)
-  have observe := PhysicalAmplifiedEdgeSolver.run_observe D.confidence query .mass tape
+  have observe := PhysicalAmplifiedEdgeSolver.run_observe D.confidence query (runnerMode D.strategy) tape
   have folded : RandomizedEdgeFamily.step D s =
     map (Option.map (advance (floored D) D.factor (scale n) s))
       (map (CheckedEdgeOracle.check query (allowance D s.costs))
-        (EncodedEdgeSolver.bitTree D.confidence query EncodedEdgeSolver.massMode)) := rfl
+        (EncodedEdgeSolver.bitTree D.confidence query D.strategy.model)) := rfl
   rw [folded,EncodedSolverBits.run_map,EncodedSolverBits.run_map]
   have hstep : (step D s tape).map Result.observe =
-      ((PhysicalAmplifiedEdgeSolver.run D.confidence query .mass tape).map PhysicalAmplifiedEdgeSolver.EdgeResult.observe).map
+      ((PhysicalAmplifiedEdgeSolver.run D.confidence query (runnerMode D.strategy) tape).map PhysicalAmplifiedEdgeSolver.EdgeResult.observe).map
         (fun (out,rest) => (transform out,rest)) := by
     simp only [step,stepWith,query,request,Option.map_map,Function.comp_def,Result.observe,PhysicalAmplifiedEdgeSolver.EdgeResult.observe,transform]
   rw [hstep,observe]
-  simp only [PhysicalAmplifiedEdgeSolver.model,Option.map_map,Function.comp_def,transform]
+  simp only [runner_model,Option.map_map,Function.comp_def,transform]
 
 def runStages {n : ℕ} (one : State n → Bits → Option (Result n)) : ℕ → Option (State n) → Bits → Option (Result n)
   | 0,s,tape => some ⟨s,tape,0,0,0⟩

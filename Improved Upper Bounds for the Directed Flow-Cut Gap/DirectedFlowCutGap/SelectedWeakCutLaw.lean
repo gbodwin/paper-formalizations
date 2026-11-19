@@ -80,7 +80,7 @@ theorem verified (ε : ℝ) (positive : 0<ε) :
         (∀ X, law X=p (some X)/(∑' Y : Finset (Edge n), p (some Y))) ∧
         (∀ X ∈ law.support, Good adj w X) ∧
         ∀ e, probability law (fun X => e ∈ X) ≤
-          8*(originalWeight adj w e:ℝ)*(8*(M:ℝ)*(n:ℝ)^ε*(originalTotal adj w:ℝ)^(1/2:ℝ)) := by
+          8*(originalWeight adj w e:ℝ)*min (8*(M:ℝ)*(n:ℝ)^ε*(originalTotal adj w:ℝ)^(1/2:ℝ)) (8*(M:ℝ)*(n:ℝ)^(ε+1/3)) := by
   obtain ⟨k,M,hk,hM,h⟩ := calibrated_selected ε positive
   refine ⟨k,M,hk,hM,?_⟩
   intro n hn adj w κ hκ

@@ -43,7 +43,7 @@ def finishStep {n : ℕ} (p : Preparation n) (s : State n) (q : Query n)
 def step {n : ℕ} (D : Input n) (p : Preparation n) (demands : List (Edge n)) (s : State n) (tape : Bits) :
     Option (Result n) :=
   let q := query D p demands s
-  (PhysicalAmplifiedBinaryEdge.run D.confidence q.input .mass tape).map (finishStep p s q)
+  (PhysicalAmplifiedBinaryEdge.run D.confidence q.input (PhysicalEdgeFamily.runnerMode D.strategy) tape).map (finishStep p s q)
 
 attribute [local irreducible] PhysicalSourceReadback.run PhysicalAmplifiedBinaryEdge.run
 
@@ -51,7 +51,7 @@ theorem step_canonical {n : ℕ} (D : Input n) (p : Preparation n) (demands : Li
     (s : State n) (h : s.Canonical) (tape : Bits) {r : Result n} (ran : step D p demands s tape=some r) :
     ∀ next ∈ r.history, next.Canonical := by
   let q := query D p demands s
-  have mapped : ((PhysicalAmplifiedBinaryEdge.run D.confidence q.input .mass tape).map
+  have mapped : ((PhysicalAmplifiedBinaryEdge.run D.confidence q.input (PhysicalEdgeFamily.runnerMode D.strategy) tape).map
       (finishStep p s q))=some r := ran
   obtain ⟨round,_,rfl⟩ := Option.map_eq_some_iff.mp mapped
   intro out mem
@@ -81,17 +81,17 @@ theorem step_observe {n : ℕ} (D : Input n) (s : State n) (h : s.Canonical) (ta
   let p := (prepare D).1
   let q := query D p d s
   let Q := request D (RationalWeakFamily.penalizedCosts (adjusted D) D.factor s.observe.costs)
-  let call := PhysicalAmplifiedBinaryEdge.run D.confidence q.input .mass tape
+  let call := PhysicalAmplifiedBinaryEdge.run D.confidence q.input (PhysicalEdgeFamily.runnerMode D.strategy) tape
   let finish := fun out => (CheckedEdgeOracle.check Q (allowance D s.observe.costs) out).map
     (CheckedMWHistory.advance (floored D) D.factor (scale n) s.observe)
   have inputEq : q.input=Q := query_request D s h
-  have law := PhysicalAmplifiedBinaryEdge.run_observe D.confidence q.input .mass tape
+  have law := PhysicalAmplifiedBinaryEdge.run_observe D.confidence q.input (PhysicalEdgeFamily.runnerMode D.strategy) tape
   change call.map PhysicalAmplifiedEdgeSolver.EdgeResult.observe = _ at law
   rw [inputEq] at law
   have model : RandomizedEdgeFamily.step D s.observe =
       map (Option.map (CheckedMWHistory.advance (floored D) D.factor (scale n) s.observe))
         (map (CheckedEdgeOracle.check Q (allowance D s.observe.costs))
-          (EncodedEdgeSolver.bitTree D.confidence Q EncodedEdgeSolver.massMode)) := rfl
+          (EncodedEdgeSolver.bitTree D.confidence Q D.strategy.model)) := rfl
   rw [model,EncodedSolverBits.run_map,EncodedSolverBits.run_map]
   have join : (step D p d s tape).map Result.observe =
       (call.map PhysicalAmplifiedEdgeSolver.EdgeResult.observe).map (fun (out,rest) => (finish out,rest)) := by
@@ -105,7 +105,7 @@ theorem step_observe {n : ℕ} (D : Input n) (s : State n) (h : s.Canonical) (ta
     rw [same]
   rw [show step D (prepare D).1 (RationalEdgeThresholds.demands D.adjacency D.weights) s tape=step D p d s tape from rfl,
     join,law]
-  simp only [PhysicalAmplifiedEdgeSolver.model,Option.map_map,Function.comp_def,finish]
+  simp only [PhysicalEdgeFamily.runner_model,Option.map_map,Function.comp_def,finish]
 
 def stages {n : ℕ} (one : State n → Bits → Option (Result n)) : ℕ → Option (State n) → Bits → Option (Result n)
   | 0,s,tape => some ⟨s,tape,0,0,0,0⟩

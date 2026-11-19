@@ -4,12 +4,12 @@ open DirectedFlowCutGap
 open scoped NNRat
 
 private def emptyGraph : RandomizedEdgeFamily.Input 1 :=
-  ⟨#v[#v[false]], #v[#v[BinaryRational.zero]], 1, 0⟩
+  ⟨#v[#v[false]], #v[#v[BinaryRational.zero]], 1, 0,.mass⟩
 
 private def oneEdge : RandomizedEdgeFamily.Input 2 :=
   ⟨#v[#v[false, true], #v[false, false]],
     #v[#v[BinaryRational.zero, BinaryRational.one],
-      #v[BinaryRational.zero, BinaryRational.zero]], 64, 0⟩
+      #v[BinaryRational.zero, BinaryRational.zero]], 64, 0,.mass⟩
 
 private def belowUnitMass : RandomizedEdgeFamily.Input 2 :=
   RandomizedEdgeFamily.calibratedParameters 2 1 3 oneEdge.adjacency

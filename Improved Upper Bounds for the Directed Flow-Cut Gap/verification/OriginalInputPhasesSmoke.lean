@@ -36,7 +36,7 @@ private def thresholds : IO Unit := do
   IO.println s!"PASS binary threshold demands include equality and unreachable pairs, paid {demands.2}"
 
 private def preparedFamily : IO Unit := do
-  let input : RandomizedEdgeFamily.Input 1 := ⟨#v[#v[true]],#v[#v[one]],1,0⟩
+  let input : RandomizedEdgeFamily.Input 1 := ⟨#v[#v[true]],#v[#v[one]],1,0,.mass⟩
   let tape := [true,false,true]
   let some out := PhysicalPreparedEdgeFamily.run input tape
     | throw (IO.userError "prepared family did not return")

@@ -17,7 +17,7 @@ private def loopAdj : BinaryFractionalWalkOracle.Adjacency 1 := #v[#v[true]]
 private def loopWeight : RationalEdgeThresholds.Weights 1 := #v[#v[one]]
 
 private def update : IO Unit := do
-  let input : RandomizedEdgeFamily.Input 1 := ⟨loopAdj,loopWeight,1,0⟩
+  let input : RandomizedEdgeFamily.Input 1 := ⟨loopAdj,loopWeight,1,0,.mass⟩
   let prepared := BinaryEdgeFamilyArithmetic.prepare input
   let state := BinaryEdgeFamilyState.initial 1
   let cut : RetainedGridState.PairFlags 1 := #v[#v[true]]

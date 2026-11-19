@@ -61,7 +61,7 @@ def massCeiling {n : ℕ} (adj : BinaryFractionalWalkOracle.Adjacency n)
 def parameters {n : ℕ} (exponentDenominator multiplier confidence : ℕ)
     (adj : BinaryFractionalWalkOracle.Adjacency n) (w : RationalEdgeThresholds.Weights n) : Input n :=
   ⟨adj, w, ((multiplier * root (k := exponentDenominator) (max 1 n) *
-    root (k := 2) (massCeiling adj w) : ℕ) : ℚ≥0), confidence⟩
+    root (k := 2) (massCeiling adj w) : ℕ) : ℚ≥0), confidence,.mass⟩
 
 private theorem mass_le {n : ℕ} (D : Input n) (c : Edge n → ℚ≥0) :
     (totalEdgeWeight (request D c).graph (fun e => (adjusted D e : ℝ≥0)) : ℝ) ≤
@@ -193,6 +193,182 @@ theorem computable_parameters (ε : ℝ) (hε : 0 < ε) :
     have h := Real.rpow_le_rpow_of_exponent_le (show (1 : ℝ) ≤ n by exact_mod_cast hn) hke
     gcongr
 
+/-- The size calibration uses the same price multiplier and a cubic-root
+factor in the original vertex count. -/
+def sizeParameters {n : ℕ} (k M κ : ℕ) (adj : BinaryFractionalWalkOracle.Adjacency n)
+    (w : RationalEdgeThresholds.Weights n) : Input n :=
+  ⟨adj,w,((M*root (k:=k) (max 1 n)*root (k:=3) (max 1 n) : ℕ) : ℚ≥0),κ,.size⟩
+
+private theorem size_factor {n k M κ : ℕ} (adj : BinaryFractionalWalkOracle.Adjacency n)
+    (w : RationalEdgeThresholds.Weights n) :
+    ((sizeParameters k M κ adj w).factor:ℝ) =
+      (M:ℝ)*(root (k:=k) (max 1 n):ℝ)*(root (k:=3) (max 1 n):ℝ) := by
+  change (((M*root (k:=k) (max 1 n)*root (k:=3) (max 1 n) : ℕ) : ℚ≥0) : ℝ) = _
+  rw [NNRat.cast_natCast,Nat.cast_mul,Nat.cast_mul]
+
+private theorem size_factor_ge_one {n k M κ : ℕ} (hM : 0<M) (adj : BinaryFractionalWalkOracle.Adjacency n)
+    (w : RationalEdgeThresholds.Weights n) : 1 ≤ (sizeParameters k M κ adj w).factor := by
+  have positive := Nat.mul_pos (Nat.mul_pos hM (root_positive (max 1 n) k)) (root_positive (max 1 n) 3)
+  change (1 : ℚ≥0) ≤ ((M*root (k:=k) (max 1 n)*root (k:=3) (max 1 n) : ℕ) : ℚ≥0)
+  exact_mod_cast Nat.succ_le_of_lt positive
+
+def preferMass {n : ℕ} (adj : BinaryFractionalWalkOracle.Adjacency n)
+    (w : RationalEdgeThresholds.Weights n) : Prop :=
+  root (k:=2) (massCeiling adj w) ≤ root (k:=3) (max 1 n)
+
+instance preferMassDecidable {n : ℕ} (adj : BinaryFractionalWalkOracle.Adjacency n)
+    (w : RationalEdgeThresholds.Weights n) : Decidable (preferMass adj w) :=
+  by
+  unfold preferMass
+  infer_instance
+
+def bestParameters {n : ℕ} (k M κ : ℕ) (adj : BinaryFractionalWalkOracle.Adjacency n)
+    (w : RationalEdgeThresholds.Weights n) : Input n :=
+  let chosen := if preferMass adj w then (root (k:=2) (massCeiling adj w),CheckedEdgeOracle.Strategy.mass)
+    else (root (k:=3) (max 1 n),CheckedEdgeOracle.Strategy.size)
+  ⟨adj,w,((M*root (k:=k) (max 1 n)*chosen.1 : ℕ) : ℚ≥0),κ,chosen.2⟩
+
+theorem bestParameters_mass {n k M κ : ℕ} (adj : BinaryFractionalWalkOracle.Adjacency n)
+    (w : RationalEdgeThresholds.Weights n) (h : preferMass adj w) :
+    bestParameters k M κ adj w=parameters k M κ adj w := by
+  simp only [bestParameters,h,ite_true,parameters]
+
+theorem bestParameters_size {n k M κ : ℕ} (adj : BinaryFractionalWalkOracle.Adjacency n)
+    (w : RationalEdgeThresholds.Weights n) (h : ¬preferMass adj w) :
+    bestParameters k M κ adj w=sizeParameters k M κ adj w := by
+  simp only [bestParameters,h,ite_false,sizeParameters]
+
+theorem best_factor_nat {n k M κ : ℕ} (adj : BinaryFractionalWalkOracle.Adjacency n)
+    (w : RationalEdgeThresholds.Weights n) :
+    (bestParameters k M κ adj w).factor =
+      ((M*root (k:=k) (max 1 n)*min (root (k:=2) (massCeiling adj w)) (root (k:=3) (max 1 n)) : ℕ) : ℚ≥0) := by
+  by_cases h : preferMass adj w
+  · rw [bestParameters_mass adj w h]
+    change root (k:=2) (massCeiling adj w) ≤ root (k:=3) (max 1 n) at h
+    rw [min_eq_left h]
+    rfl
+  · rw [bestParameters_size adj w h]
+    change ¬root (k:=2) (massCeiling adj w) ≤ root (k:=3) (max 1 n) at h
+    rw [min_eq_right (le_of_not_ge h)]
+    rfl
+
+theorem best_factor_bounds {n k M κ : ℕ} (adj : BinaryFractionalWalkOracle.Adjacency n)
+    (w : RationalEdgeThresholds.Weights n) :
+    (bestParameters k M κ adj w).factor ≤ (parameters k M κ adj w).factor ∧
+      (bestParameters k M κ adj w).factor ≤ (sizeParameters k M κ adj w).factor := by
+  rw [best_factor_nat]
+  let a := M*root (k:=k) (max 1 n)
+  let b := root (k:=2) (massCeiling adj w)
+  let c := root (k:=3) (max 1 n)
+  have bound (r : ℕ) (h : min b c ≤ r) : ((a*min b c : ℕ) : ℚ≥0) ≤ ((a*r : ℕ) : ℚ≥0) := by
+    exact_mod_cast Nat.mul_le_mul_left a h
+  exact ⟨bound b (min_le_left ..),bound c (min_le_right ..)⟩
+
+theorem best_factor_ge_one {n k M κ : ℕ} (hM : 0<M) (adj : BinaryFractionalWalkOracle.Adjacency n)
+    (w : RationalEdgeThresholds.Weights n) : 1 ≤ (bestParameters k M κ adj w).factor := by
+  by_cases h : preferMass adj w
+  · rw [bestParameters_mass adj w h]
+    exact parameters_factor_ge_one hM adj w
+  · rw [bestParameters_size adj w h]
+    exact size_factor_ge_one hM adj w
+
+private theorem size_expected {n k M κ : ℕ} (hn : 0<n) (hk : 0<k) (K : ℝ) (_hK : 0<K)
+    (hM : 2*K≤M) (adj : BinaryFractionalWalkOracle.Adjacency n) (w : RationalEdgeThresholds.Weights n)
+    (bound : ∀ c : Edge n → ℚ≥0,
+      let D := sizeParameters k M κ adj w
+      let I := request D c
+      EncodedEdgeSolver.expectedPrice I EncodedEdgeSolver.sizeMode ≤
+        K*(n:ℝ)^(1/3+(k:ℝ)⁻¹)*(weightedEdgeCost I.graph I.cost (fun e => (adjusted D e:ℝ≥0)):ℝ)) :
+    expectedPriceBound (sizeParameters k M κ adj w) := by
+  let D := sizeParameters k M κ adj w
+  have hnR : 0 < (n:ℝ) := by exact_mod_cast hn
+  have roots := (root_bounds (r:=n) (k:=k) hn hk).1
+  have cubic := (root_bounds (r:=n) (k:=3) hn (by decide)).1
+  norm_num only [Nat.cast_ofNat] at cubic
+  have cast (κ : ℕ) : ((sizeParameters k M κ adj w).factor:ℝ) =
+      (M:ℝ)*(root (k:=k) n:ℝ)*(root (k:=3) n:ℝ) := by
+    rw [size_factor,max_eq_right hn]
+  have cap : K*(n:ℝ)^(1/3+(k:ℝ)⁻¹) ≤ (D.factor:ℝ)/2 := by
+    rw [cast,Real.rpow_add hnR,one_div]
+    apply (le_div_iff₀ (by norm_num : (0:ℝ)<2)).mpr
+    have h : (2*K)*(n:ℝ)^(k:ℝ)⁻¹*(n:ℝ)^(3:ℝ)⁻¹ ≤
+        (M:ℝ)*(root (k:=k) n:ℝ)*(root (k:=3) n:ℝ) := by
+      gcongr
+      simpa only [one_div] using cubic
+    calc
+      _ = (2*K)*(n:ℝ)^(k:ℝ)⁻¹*(n:ℝ)^(3:ℝ)⁻¹ := by ring
+      _ ≤ _ := h
+  intro c
+  have est := bound c
+  change EncodedEdgeSolver.expectedPrice (request D c) EncodedEdgeSolver.sizeMode ≤
+    K*(n:ℝ)^(1/3+(k:ℝ)⁻¹)*(weightedEdgeCost (request D c).graph (request D c).cost
+      (fun e => (adjusted D e:ℝ≥0)):ℝ) at est
+  rw [weighted_cost] at est
+  refine est.trans ((mul_le_mul_of_nonneg_right cap (by positivity)).trans_eq ?_)
+  change (D.factor:ℝ)/2 * (∑ e, (c e:ℝ)*(adjusted D e:ℝ)) = (allowance D c:ℝ)
+  simp only [allowance,NNRat.cast_div,NNRat.cast_mul,NNRat.cast_sum,NNRat.cast_ofNat]
+  ring
+
+private theorem size_factor_le {n k M κ : ℕ} (hn : 0<n) (hk : 0<k)
+    (adj : BinaryFractionalWalkOracle.Adjacency n) (w : RationalEdgeThresholds.Weights n) :
+    ((sizeParameters k M κ adj w).factor:ℝ) ≤ 4*(M:ℝ)*(n:ℝ)^((k:ℝ)⁻¹+1/3) := by
+  have hnR : 0 < (n:ℝ) := by exact_mod_cast hn
+  have rk := (root_bounds (r:=n) (k:=k) hn hk).2
+  have rs := (root_bounds (r:=n) (k:=3) hn (by decide)).2
+  norm_num only [Nat.cast_ofNat] at rs
+  rw [size_factor,max_eq_right hn,Real.rpow_add hnR,one_div]
+  calc
+    _ ≤ (M:ℝ)*(2*(n:ℝ)^(k:ℝ)⁻¹)*(2*(n:ℝ)^(3:ℝ)⁻¹) := by
+      gcongr
+      simpa only [one_div] using rs
+    _ = _ := by ring
+
+theorem computable_best_parameters (ε : ℝ) (hε : 0<ε) :
+    ∃ k M : ℕ, 0<k ∧ 0<M ∧
+      ∀ (n : ℕ), 0<n → ∀ (adj : BinaryFractionalWalkOracle.Adjacency n)
+        (w : RationalEdgeThresholds.Weights n) (κ : ℕ),
+        let D := bestParameters k M κ adj w
+        1≤D.factor ∧ expectedPriceBound D ∧
+          (1≤originalTotal adj w →
+            (D.factor:ℝ) ≤ min
+              (8*(M:ℝ)*(n:ℝ)^ε*(originalTotal adj w:ℝ)^(1/2:ℝ))
+              (8*(M:ℝ)*(n:ℝ)^(ε+1/3))) := by
+  obtain ⟨j,hj⟩ := exists_nat_one_div_lt hε
+  let k := j+1
+  have hk : 0<k := Nat.succ_pos _
+  have hkR : 0<(k:ℝ)⁻¹ := by positivity
+  have hke : (k:ℝ)⁻¹ ≤ ε := by
+    simpa only [k,Nat.cast_add,Nat.cast_one,one_div] using hj.le
+  obtain ⟨A,hA,ma⟩ := EncodedEdgeSolver.mass_expected_uniform (k:ℝ)⁻¹ hkR
+  obtain ⟨B,hB,si⟩ := EncodedEdgeSolver.size_expected_uniform (k:ℝ)⁻¹ hkR
+  let M := ⌈2*(A+B)⌉₊+1
+  have hM : 0<M := Nat.succ_pos _
+  have bounds : 2*(A+B) ≤ (M:ℝ) := (Nat.le_ceil _).trans (by unfold M; push_cast; linarith)
+  refine ⟨k,M,hk,hM,fun n hn adj w κ => ?_⟩
+  have loose : (1:ℝ)≤n := by exact_mod_cast hn
+  have mass : expectedPriceBound (parameters k M κ adj w) :=
+    parameters_expected_bound hn hk adj w A (by linarith) (fun c => ma n _ _ (modified_feasible adj w))
+  have size : expectedPriceBound (sizeParameters k M κ adj w) :=
+    size_expected hn hk B hB (by linarith) adj w (fun c => si n _ _ (modified_feasible adj w))
+  have valid : expectedPriceBound (bestParameters k M κ adj w) := by
+    by_cases h : preferMass adj w
+    · rw [bestParameters_mass adj w h]
+      exact mass
+    · rw [bestParameters_size adj w h]
+      exact size
+  refine ⟨best_factor_ge_one hM adj w,valid,fun hW => ?_⟩
+  have limiting := best_factor_bounds (k:=k) (M:=M) (κ:=κ) adj w
+  apply le_min
+  · apply ((NNRat.cast_le (K:=ℝ)).mpr limiting.1).trans
+    apply (parameters_factor_le hn hk adj w hW).trans
+    have powers := Real.rpow_le_rpow_of_exponent_le loose hke
+    gcongr
+  · apply ((NNRat.cast_le (K:=ℝ)).mpr limiting.2).trans
+    apply (size_factor_le hn hk adj w).trans
+    have powers := Real.rpow_le_rpow_of_exponent_le loose (add_le_add hke (le_refl (1/3:ℝ)))
+    gcongr
+    norm_num
+
 open FiniteDrawTrees
 open RationalWeakFamily (History)
 open CheckedMWHistory (occurrences)
@@ -296,7 +472,17 @@ theorem input_fits {n : ℕ} (D : Input n) : InputFits D (inputWidth D) := by
 
 def calibratedParameters {n : ℕ} (k M κ : ℕ) (adj : BinaryFractionalWalkOracle.Adjacency n)
     (w : RationalEdgeThresholds.Weights n) : Input n :=
-  parameters k M (κ + (RationalWeakFamily.edgeRounds n (originalTotal adj w)).size) adj w
+  bestParameters k M (κ + (RationalWeakFamily.edgeRounds n (originalTotal adj w)).size) adj w
+
+@[simp] theorem calibrated_confidence_value {n : ℕ} (k M κ : ℕ) (adj : BinaryFractionalWalkOracle.Adjacency n)
+    (w : RationalEdgeThresholds.Weights n) :
+    (calibratedParameters k M κ adj w).confidence =
+      κ+(RationalWeakFamily.edgeRounds n (originalTotal adj w)).size := rfl
+
+theorem calibrated_factor_ge_one {n k M κ : ℕ} (hM : 0<M)
+    (adj : BinaryFractionalWalkOracle.Adjacency n) (w : RationalEdgeThresholds.Weights n) :
+    1≤(calibratedParameters k M κ adj w).factor :=
+  best_factor_ge_one hM adj w
 
 private theorem failure_scale {n T κ : ℕ} (hn : 2 ≤ n) :
     (T : ℝ≥0∞) * ENNReal.ofReal (((max 1 n : ℕ) : ℝ) ^ (-((κ + T.size : ℕ) : ℝ))) ≤
@@ -320,10 +506,56 @@ private theorem failure_scale {n T κ : ℕ} (hn : 2 ≤ n) :
     _ ≤ 1 * (n : ℝ) ^ (-(κ : ℝ)) := mul_le_mul_of_nonneg_right ht (by positivity)
     _ = _ := one_mul _
 
+set_option maxHeartbeats 1800000 in
 /-- Run the finite adaptive family from original rational edge weights.
 The theorem supplies fixed integer parameters for each positive exponent.
 Every execution with enough bits preserves its unused suffix, and every
 returned family has the all-demand and pointwise marginal guarantees. -/
+theorem calibrated_best_families (ε : ℝ) (hε : 0 < ε) :
+    ∃ k M : ℕ, 0 < k ∧ 0 < M ∧
+      ∀ (n : ℕ) (_ : 2 ≤ n) (adj : BinaryFractionalWalkOracle.Adjacency n)
+        (w : RationalEdgeThresholds.Weights n) (κ : ℕ),
+        let D := calibratedParameters k M κ adj w
+        let budget := readBudget n (inputWidth D) D.confidence
+        ((EncodedSolverBits.fairTape budget).map
+          (fun tape => ((EncodedSolverBits.run (familyTree D) tape).map Prod.fst).join)) none ≤
+          ENNReal.ofReal ((n : ℝ) ^ (-(κ : ℝ))) ∧
+        ∀ (tape : List Bool), budget ≤ tape.length →
+          ∃ result used, EncodedSolverBits.run (familyTree D) tape = some (result, (tape.drop used, used)) ∧
+            used ≤ budget ∧ ∀ s, result = some s →
+              s.cuts.length = rounds D ∧ (∀ X ∈ s.cuts, Good adj w X) ∧
+              ∀ e, (occurrences s e : ℝ) / (s.cuts.length : ℝ) ≤
+                8 * (originalWeight adj w e : ℝ) *
+                  min (8*(M:ℝ)*(n:ℝ)^ε*(originalTotal adj w:ℝ)^(1/2:ℝ))
+                    (8*(M:ℝ)*(n:ℝ)^(ε+1/3)) := by
+  obtain ⟨k, M, hk, hM, hparam⟩ := computable_best_parameters ε hε
+  refine ⟨k, M, hk, hM, ?_⟩
+  intro n hn adj w κ
+  let D := calibratedParameters k M κ adj w
+  have hn0 : 0 < n := by omega
+  have prm : bestParameters k M D.confidence adj w=D := by
+    rw [calibrated_confidence_value]
+    rfl
+  obtain ⟨hα, hMean, hf⟩ := hparam n hn0 adj w D.confidence
+  rw [prm] at hα hMean hf
+  have h := input_fits D
+  have scale : (rounds D : ℝ≥0∞) *
+      ENNReal.ofReal (((max 1 n : ℕ) : ℝ)^(-(D.confidence:ℝ))) ≤
+      ENNReal.ofReal ((n:ℝ)^(-(κ:ℝ))) := by
+    have confidence : D.confidence=κ+(rounds D).size := calibrated_confidence_value k M κ adj w
+    rw [confidence]
+    exact failure_scale hn
+  refine ⟨(familyTree_failure hn0 D hα h hMean).trans scale, ?_⟩
+  intro tape ht
+  have hb := familyTree_binary D
+  obtain ⟨result, used, hr, hu⟩ := EncodedSolverBits.complete (familyTree_within hn0 D hα h) hb tape ht
+  refine ⟨result, used, hr, hu, ?_⟩
+  intro s hs
+  have hsupport : some s ∈ (ideal (familyTree D)).support := hs ▸ EncodedSolverBits.run_support hb hr
+  obtain ⟨hlen, hvalid, hm⟩ := familyTree_spec hn0 D hα _ (by positivity) hf s hsupport
+  exact ⟨hlen, fun X hx => (hvalid X hx).1, hm⟩
+
+set_option maxHeartbeats 1800000 in
 theorem calibrated_families (ε : ℝ) (hε : 0 < ε) :
     ∃ k M : ℕ, 0 < k ∧ 0 < M ∧
       ∀ (n : ℕ) (_ : 2 ≤ n) (adj : BinaryFractionalWalkOracle.Adjacency n)
@@ -340,21 +572,16 @@ theorem calibrated_families (ε : ℝ) (hε : 0 < ε) :
               ∀ e, (occurrences s e : ℝ) / (s.cuts.length : ℝ) ≤
                 8 * (originalWeight adj w e : ℝ) *
                   (8 * (M : ℝ) * (n : ℝ) ^ ε * (originalTotal adj w : ℝ) ^ (1 / 2 : ℝ)) := by
-  obtain ⟨k, M, hk, hM, hparam⟩ := computable_parameters ε hε
-  refine ⟨k, M, hk, hM, ?_⟩
+  obtain ⟨k,M,hk,hM,h⟩ := calibrated_best_families ε hε
+  refine ⟨k,M,hk,hM,?_⟩
   intro n hn adj w κ
-  let D := calibratedParameters k M κ adj w
-  have hn0 : 0 < n := by omega
-  obtain ⟨hα, hMean, hf⟩ := hparam n hn0 adj w D.confidence
-  have h := input_fits D
-  refine ⟨(familyTree_failure hn0 D hα h hMean).trans (failure_scale hn), ?_⟩
-  intro tape ht
-  have hb := familyTree_binary D
-  obtain ⟨result, used, hr, hu⟩ := EncodedSolverBits.complete (familyTree_within hn0 D hα h) hb tape ht
-  refine ⟨result, used, hr, hu, ?_⟩
+  obtain ⟨chance,run⟩ := h n hn adj w κ
+  refine ⟨chance,?_⟩
+  intro tape enough
+  obtain ⟨out,used,exactRun,reads,good⟩ := run tape enough
+  refine ⟨out,used,exactRun,reads,?_⟩
   intro s hs
-  have hsupport : some s ∈ (ideal (familyTree D)).support := hs ▸ EncodedSolverBits.run_support hb hr
-  obtain ⟨hlen, hvalid, hm⟩ := familyTree_spec hn0 D hα _ (by positivity) hf s hsupport
-  exact ⟨hlen, fun X hx => (hvalid X hx).1, hm⟩
+  obtain ⟨size,valid,freq⟩ := good s hs
+  exact ⟨size,valid,fun e => (freq e).trans (mul_le_mul_of_nonneg_left (min_le_left ..) (by positivity))⟩
 
 end DirectedFlowCutGap.RandomizedEdgeFamily

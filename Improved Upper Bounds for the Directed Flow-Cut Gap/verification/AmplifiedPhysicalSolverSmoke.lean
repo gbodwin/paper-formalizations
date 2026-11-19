@@ -66,7 +66,7 @@ private def edgeSource : IO Unit := do
   IO.println "PASS original encoded edge source, empty cut and original self-demand witness"
 
 private def family : IO Unit := do
-  let input : RandomizedEdgeFamily.Input 1 := ⟨#v[#v[false]],#v[#v[zero]],1,0⟩
+  let input : RandomizedEdgeFamily.Input 1 := ⟨#v[#v[false]],#v[#v[zero]],1,0,.mass⟩
   let tape := [true,false,true]
   let some out := PhysicalEdgeFamily.run input tape | throw (IO.userError "adaptive edge runner failed")
   let some history := out.history | throw (IO.userError "adaptive edge family rejected the zero-cost cuts")

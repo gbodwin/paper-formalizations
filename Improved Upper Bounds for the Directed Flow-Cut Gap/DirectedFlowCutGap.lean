@@ -908,6 +908,7 @@ import DirectedFlowCutGap.PhysicalVertexRounding
 import DirectedFlowCutGap.PhysicalVertexRoundingCost
 import DirectedFlowCutGap.PhysicalVertexSampling
 import DirectedFlowCutGap.PhysicalVertexSolver
+import DirectedFlowCutGap.PhysicalWeakCutWire
 import DirectedFlowCutGap.PhysicalWireCostEnvelope
 import DirectedFlowCutGap.PositiveInventoryBranches
 import DirectedFlowCutGap.PositiveInventoryCall

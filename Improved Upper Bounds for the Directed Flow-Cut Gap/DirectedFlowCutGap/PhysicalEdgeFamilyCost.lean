@@ -43,8 +43,8 @@ private theorem step_paid {n B : ℕ} (p : Polynomial ℕ)
     paid r ≤ p.eval (n+n*n+fieldBudget n B+D.confidence) := by
   let query := request D (penalizedCosts (adjusted D) D.factor s.costs)
   simp only [PhysicalEdgeFamily.step,PhysicalEdgeFamily.stepWith] at actual
-  change ((PhysicalAmplifiedEdgeSolver.run D.confidence query .mass tape).map _)=some r at actual
-  cases executed : PhysicalAmplifiedEdgeSolver.run D.confidence query .mass tape with
+  change ((PhysicalAmplifiedEdgeSolver.run D.confidence query (PhysicalEdgeFamily.runnerMode D.strategy) tape).map _)=some r at actual
+  cases executed : PhysicalAmplifiedEdgeSolver.run D.confidence query (PhysicalEdgeFamily.runnerMode D.strategy) tape with
   | none => simp [executed] at actual
   | some out =>
     simp only [executed,Option.map_some,Option.some.injEq] at actual
@@ -54,7 +54,7 @@ private theorem step_paid {n B : ℕ} (p : Polynomial ℕ)
       dsimp only
       apply (List.length_filter_le ..).trans
       simp [List.length_flatMap]
-    have cost := runBound D.confidence query .mass tape positive (step_query_width D width s hs hT) executed
+    have cost := runBound D.confidence query (PhysicalEdgeFamily.runnerMode D.strategy) tape positive (step_query_width D width s hs hT) executed
     rw [← actual]
     exact cost.trans (eval_mono p (by omega))
 
@@ -165,7 +165,7 @@ theorem calibrated_polynomial {k : ℕ} (positive : 0<k) (M : ℕ) (multiplier :
     unfold AdaptiveWidthEnvelope.confidence roundBudget
     simp only [S,eval_add,eval_mul,eval_X,eval_C,eval_one]
     gcongr
-  have work := hp size D (parameters_factor_ge_one multiplier adj w)
+  have work := hp size D (calibrated_factor_ge_one multiplier adj w)
     (AdaptiveWidthEnvelope.calibrated_fits positive M κ adj w stored) tape r actual
   rw [eval_comp]
   apply work.trans (eval_mono p ?_)
