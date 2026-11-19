@@ -117,17 +117,36 @@ private theorem omitted_path_marks_once {p k : ℕ} {paths : Fin p → List V}
   · exact free large (threeListBridge qa.ne' (fun equal => different equal.symm) qb.ne' av forward bv) qb
   · exact free large (threeListBridge qb.ne' (show a ≠ b from different) qa.ne' bv backward av) qa
 
-/-- Every vertex keeps at least half of its original incidences. Charge each
-omitted occurrence to a retained earlier occurrence at the same vertex. -/
-theorem removeOppositeIntersections_degree {p k : ℕ} {paths : Fin p → List V}
+/-- A discarded occurrence can be charged to an earlier retained occurrence
+after the first vertex of that path. The first incidences remain uncharged. -/
+theorem removeOppositeIntersections_degree_with_starts {p k : ℕ} {paths : Fin p → List V}
     (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (ListBefore paths) k) (large : 3 ≤ k)
     (v : V) :
-    (occurrences (fun i => (paths i).toFinset) v).card ≤
+    (occurrences (fun i => (paths i).toFinset) v).card +
+      (occurrences (fun i => ((removeOppositeIntersections paths i).take 1).toFinset) v).card ≤
       2 * (occurrences (fun i => (removeOppositeIntersections paths i).toFinset) v).card := by
   classical
   let original := occurrences (fun i => (paths i).toFinset) v
   let kept := occurrences (fun i => (removeOppositeIntersections paths i).toFinset) v
   let omitted := original \ kept
+  let starts := occurrences (fun i => ((removeOppositeIntersections paths i).take 1).toFinset) v
+  have startMember (j : Fin p) : j ∈ starts ↔ v ∈ (removeOppositeIntersections paths j).take 1 := by
+    rw [show starts = occurrences (fun i => ((removeOppositeIntersections paths i).take 1).toFinset) v from rfl,
+      mem_occurrences, List.mem_toFinset]
+  have startsKept : starts ⊆ kept := by
+    intro j hj
+    exact mem_occurrences.mpr (List.mem_toFinset.mpr ((List.take_sublist _ _).subset ((startMember j).mp hj)))
+  have notStart {q : Fin p} {u : V} (step : ListBefore (removeOppositeIntersections paths) q u v) : q ∉ starts := by
+    intro beginning
+    have head : v ∈ (removeOppositeIntersections paths q).take 1 := (startMember q).mp beginning
+    cases keep : removeOppositeIntersections paths q with
+    | nil => simp [keep] at head
+    | cons x xs =>
+      have equal : v = x := by simpa [keep] using head
+      subst x
+      have order := step.2.2
+      rw [keep] at order
+      simp at order
   have inside : kept ⊆ original := by
     intro i hi
     exact mem_occurrences.mpr (List.mem_toFinset.mpr ((removeOppositeIntersections_mem paths i v).mp
@@ -143,33 +162,84 @@ theorem removeOppositeIntersections_degree {p k : ℕ} {paths : Fin p → List V
   have valid (i : omitted) : mark i < i.val ∧ ∃ u,
       ListBefore paths i.val v u ∧ ListBefore (removeOppositeIntersections paths) (mark i) u v :=
     Classical.choose_spec (found i)
-  have budget : omitted.attach.card ≤ kept.card := by
+  have budget : omitted.attach.card ≤ (kept \ starts).card := by
     apply card_le_card_of_injOn mark
     · intro i _
       obtain ⟨_, u, _, right⟩ := valid i
-      exact mem_occurrences.mpr (List.mem_toFinset.mpr right.2.1)
+      exact mem_sdiff.mpr ⟨mem_occurrences.mpr (List.mem_toFinset.mpr right.2.1), notStart right⟩
     · intro a _ b _ equal
       apply Subtype.ext
       obtain ⟨qa, u, av, qu⟩ := valid a
       obtain ⟨qb, w, bv, qw⟩ := valid b
       exact omitted_path_marks_once simple free large qa (equal.symm ▸ qb) av bv qu (equal.symm ▸ qw)
   rw [card_attach] at budget
-  change original.card ≤ 2 * kept.card
+  change original.card + starts.card ≤ 2 * kept.card
   have count := card_sdiff_add_card_eq_card inside
-  change (original \ kept).card ≤ kept.card at budget
+  have retained := card_sdiff_add_card_eq_card startsKept
+  change (original \ kept).card ≤ (kept \ starts).card at budget
   omega
+
+/-- Every vertex keeps at least half of its original incidences. -/
+theorem removeOppositeIntersections_degree {p k : ℕ} {paths : Fin p → List V}
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (ListBefore paths) k) (large : 3 ≤ k)
+    (v : V) :
+    (occurrences (fun i => (paths i).toFinset) v).card ≤
+      2 * (occurrences (fun i => (removeOppositeIntersections paths i).toFinset) v).card :=
+  (Nat.le_add_right _ _).trans (removeOppositeIntersections_degree_with_starts simple free large v)
+
+/-- The last vertex of each nonempty original path survives pruning. -/
+theorem removeOppositeIntersections_getLast_mem {p : ℕ} {paths : Fin p → List V}
+    (simple : ∀ i, (paths i).Nodup) (i : Fin p) (nonempty : paths i ≠ []) :
+    (paths i).getLast nonempty ∈ removeOppositeIntersections paths i := by
+  let v := (paths i).getLast nonempty
+  have idx : (paths i).idxOf v = (paths i).length-1 := by
+    simp only [v, List.getLast_eq_getElem, (simple i).idxOf_getElem]
+  apply (removeOppositeIntersections_mem paths i v).mpr
+  refine ⟨List.getLast_mem nonempty,?_⟩
+  rintro ⟨j,_,u,after,_⟩
+  have tooLate := after.2.2
+  have uPosition := List.idxOf_lt_length_of_mem after.2.1
+  rw [idx] at tooLate
+  omega
+
+/-- In addition to retaining half the incidence mass, pruning gains half an
+incidence for every nonempty original path. -/
+theorem removeOppositeIntersections_mass_with_nonempty_paths [Fintype V] {p k : ℕ} {paths : Fin p → List V}
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (ListBefore paths) k) (large : 3 ≤ k) :
+    (∑ i, (paths i).length) + (univ.filter fun i => paths i ≠ []).card ≤
+      2 * (∑ i, (removeOppositeIntersections paths i).length) := by
+  let orig (i : Fin p) := (paths i).toFinset
+  let kept (i : Fin p) := (removeOppositeIntersections paths i).toFinset
+  let starts (i : Fin p) := ((removeOppositeIntersections paths i).take 1).toFinset
+  have oldLength (i : Fin p) : (orig i).card = (paths i).length := List.toFinset_card_of_nodup (simple i)
+  have newLength (i : Fin p) : (kept i).card = (removeOppositeIntersections paths i).length :=
+    List.toFinset_card_of_nodup ((removeOppositeIntersections_sublist paths i).nodup (simple i))
+  have startMass : (∑ i, (starts i).card) = (univ.filter fun i => paths i ≠ []).card := by
+    rw [card_filter]
+    apply sum_congr rfl
+    intro i _
+    by_cases nonempty : paths i ≠ []
+    · have keptNonempty : removeOppositeIntersections paths i ≠ [] :=
+        List.ne_nil_of_mem (removeOppositeIntersections_getLast_mem simple i nonempty)
+      cases survives : removeOppositeIntersections paths i with
+      | nil => exact (keptNonempty survives).elim
+      | cons v rest => simp [starts,survives,nonempty]
+    · have empty : paths i = [] := not_ne_iff.mp nonempty
+      have survives : removeOppositeIntersections paths i = [] := by
+        rw [removeOppositeIntersections,empty]
+        rfl
+      simp [starts,survives,empty]
+  rw [← startMass]
+  simp only [← oldLength, ← newLength, ← sum_occurrences orig, ← sum_occurrences kept,
+    ← sum_occurrences starts, ← sum_add_distrib, mul_sum]
+  exact sum_le_sum (fun v _ => removeOppositeIntersections_degree_with_starts simple free large v)
 
 /-- Pruning opposing intersections preserves at least half of the total
 incidence mass, with the original path and vertex budgets. -/
 theorem removeOppositeIntersections_mass [Fintype V] {p k : ℕ} {paths : Fin p → List V}
     (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (ListBefore paths) k) (large : 3 ≤ k) :
     (∑ i, (paths i).length) ≤ 2 * (∑ i, (removeOppositeIntersections paths i).length) := by
-  let orig (i : Fin p) := (paths i).toFinset
-  let kept (i : Fin p) := (removeOppositeIntersections paths i).toFinset
-  have oldLength (i : Fin p) : (orig i).card = (paths i).length := List.toFinset_card_of_nodup (simple i)
-  have newLength (i : Fin p) : (kept i).card = (removeOppositeIntersections paths i).length :=
-    List.toFinset_card_of_nodup ((removeOppositeIntersections_sublist paths i).nodup (simple i))
-  simp only [← oldLength, ← newLength, ← sum_occurrences orig, ← sum_occurrences kept, mul_sum]
-  exact sum_le_sum (fun v _ => removeOppositeIntersections_degree simple free large v)
+  exact (Nat.le_add_right _ _).trans
+    (removeOppositeIntersections_mass_with_nonempty_paths simple free large)
 
 end OnlineReachabilityPreservers

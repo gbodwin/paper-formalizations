@@ -301,6 +301,61 @@ theorem regularization_list_frozen_after_caps_with_room {half : Bool} {k n p M :
     hn hp (by decide) (by decide) (by decide) (by decide) vertices families total.le
     (by rw [total]) lengthCap degreeCap capD capL
 
+/-- When opposite-intersection pruning already meets the fixed upper caps,
+the uncharged first incidence of every path is enough for frozen peeling.
+An original mean path length at most `C` gives a retained fraction `1/(2*C)`. -/
+theorem regularization_list_frozen_after_opposite_pruning {half : Bool} {k n p C : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (nonempty : ∀ i, paths i ≠ []) (allowed : localOrderAdmissible half k paths) (large : 3 ≤ k)
+    (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (avg : (∑ i, (paths i).length) ≤ C*p)
+    (lengthCap : ∀ i, (removeOppositeIntersections paths i).length ≤ 4*(∑ i, (paths i).length)/p)
+    (degreeCap : ∀ v, (occurrences (fun i => (removeOppositeIntersections paths i).toFinset) v).card ≤
+      4*(∑ i, (paths i).length)/n) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ (2*C)*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let kept := removeOppositeIntersections paths
+  let K := ∑ i, (kept i).length
+  have halfFree : HalfBridgeFree (ListBefore paths) k := by
+    cases half
+    · exact (show BridgeFree (ListBefore paths) k from allowed).halfFree
+    · exact allowed
+  have keptLegal : localOrderAdmissible half k kept := by
+    cases half
+    · exact removeOppositeIntersections_fullFree simple allowed
+    · exact removeOppositeIntersections_halfFree simple allowed
+  have keptSimple (i : Fin p) : (kept i).Nodup :=
+    (removeOppositeIntersections_sublist paths i).nodup (simple i)
+  have allPaths : univ.filter (fun i => paths i ≠ []) = univ :=
+    filter_true_of_mem fun i _ => nonempty i
+  have gain : M+p ≤ 2*K := by
+    simpa only [allPaths,card_univ,Fintype.card_fin,M,K,kept] using
+      removeOppositeIntersections_mass_with_nonempty_paths simple halfFree large
+  have enough : (2*C+2)*M ≤ 2*(2*C)*K := by
+    calc
+      _ = (2*C)*M + 2*M := Nat.add_mul _ _ _
+      _ ≤ (2*C)*M + (2*C)*p := Nat.add_le_add_left ((Nat.mul_le_mul_left 2 avg).trans_eq
+        (Nat.mul_assoc _ _ _).symm) _
+      _ = (2*C)*(M+p) := (Nat.mul_add _ _ _).symm
+      _ ≤ _ := (Nat.mul_le_mul_left _ gain).trans_eq (by ring)
+  have count : (∑ i, (kept i).toFinset.card) = K :=
+    sum_congr rfl fun i _ => List.toFinset_card_of_nodup (keptSimple i)
+  have total : K ≤ M :=
+    sum_le_sum fun i _ => (removeOppositeIntersections_sublist paths i).length_le
+  obtain ⟨_,_,capD⟩ := four_average_width hn dense
+  obtain ⟨_,_,capL⟩ := four_average_width hp long
+  exact frozen_cut_of_caps kept keptSimple keptLegal
+    (M := M) (D := 4*M/n) (L := 4*M/p) (retention := 2*C)
+    (vNum := 1) (vDen := 1) (pNum := 1) (pDen := 1)
+    hn hp (by decide) (by decide) (by decide) (by decide)
+    (by simp) (by simp) (count.trans_le total)
+    (by rw [count]; simpa only [one_mul,mul_one] using enough)
+    lengthCap degreeCap capD capL
+
 /-- If a length-capped subsystem retains three quarters of the original mass,
 peeling retains at least one sixteenth under both budgets. Split vertices
 when the bridge cutoff allows it, or use already capped degrees. -/

@@ -318,3 +318,96 @@ theorem regularization_list_frozen_by_partitions [Fintype V] [Fintype B]
     exact (partitionListIncidences_mass paths pathPart vertexPart simple).trans mass
 
 end OnlineReachabilityPreservers
+
+namespace OnlineReachabilityPreservers
+
+open Finset
+
+variable {V I : Type*} [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
+
+private theorem finite_capacity_groups {T : Type*} [Fintype T] [DecidableEq T] {q w : ℕ}
+    (fits : Fintype.card T ≤ q*w) :
+    ∃ part : T → Fin q, ∀ label, (univ.filter (fun x => part x = label)).card ≤ w := by
+  let position : T ↪ Fin q × Fin w := (Fintype.equivFin T).toEmbedding.trans
+    ((Fin.castLEEmb fits).trans finProdFinEquiv.symm.toEmbedding)
+  let part (x : T) := (position x).1
+  refine ⟨part,fun label => ?_⟩
+  have injective : Set.InjOn (fun x => (position x).2) (↑(univ.filter (fun x => part x = label)) : Set T) := by
+    intro x hx y hy same
+    apply position.injective
+    exact Prod.ext ((mem_filter.mp (Finset.mem_coe.mp hx)).2.trans
+      (mem_filter.mp (Finset.mem_coe.mp hy)).2.symm) same
+  have bound := card_le_card_of_injOn (fun x => (position x).2)
+    (fun _ _ => mem_univ _) injective
+  simpa only [card_univ, Fintype.card_fin] using bound
+
+private theorem frozen_cleaning_of_capacity_groups {half : Bool} {k n p M q r : ℕ}
+    (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k paths)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (vertexFit : Fintype.card V ≤ q*(4*M/p)) (pathFit : Fintype.card I ≤ r*(4*M/n))
+    (vertexRoom : 3*(Fintype.card V*r) ≤ 4*n) (pathRoom : 3*(Fintype.card I*q) ≤ 4*p)
+    (mass : (∑ i, (paths i).length) = M) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  obtain ⟨vertexPart,vertexCap⟩ := finite_capacity_groups (T := V) vertexFit
+  obtain ⟨pathPart,pathCap⟩ := finite_capacity_groups (T := I) pathFit
+  apply regularization_list_frozen_by_partitions paths pathPart vertexPart simple allowed hn hp dense long
+  · have summed : (∑ v, ((occurrences (fun i => (paths i).toFinset) v).image pathPart).card) ≤
+        Fintype.card V*r := by
+      calc
+        _ ≤ ∑ _ : V, r := by
+          apply sum_le_sum
+          intro v _
+          simpa only [Fintype.card_fin] using
+            card_le_univ ((occurrences (fun i => (paths i).toFinset) v).image pathPart)
+        _ = _ := by simp
+    exact (Nat.mul_le_mul_left _ summed).trans vertexRoom
+  · have summed : (∑ i, ((paths i).toFinset.image vertexPart).card) ≤ Fintype.card I*q := by
+      calc
+        _ ≤ ∑ _ : I, q := by
+          apply sum_le_sum
+          intro i _
+          simpa only [Fintype.card_fin] using card_le_univ ((paths i).toFinset.image vertexPart)
+        _ = _ := by simp
+    exact (Nat.mul_le_mul_left _ summed).trans pathRoom
+  · intro j
+    have nodup : (partitionListPaths paths vertexPart j).Nodup :=
+      List.filter_sublist.nodup (simple (ofLex j).1)
+    rw [← List.toFinset_card_of_nodup nodup]
+    have subset : (partitionListPaths paths vertexPart j).toFinset ⊆
+        univ.filter (fun v => vertexPart v = (ofLex j).2) := by
+      intro v mem
+      have inside := List.mem_toFinset.mp mem
+      exact mem_filter.mpr ⟨mem_univ _,of_decide_eq_true (List.mem_filter.mp inside).2⟩
+    exact (card_le_card subset).trans (vertexCap (ofLex j).2)
+  · intro v a
+    exact (card_le_card (filter_subset_filter _ (subset_univ _))).trans (pathCap a)
+  · exact mass
+
+omit [Fintype V] in
+/-- The occupied vertices and paths can be grouped into given numbers of
+parts using only the original upper caps as capacities. The product of
+each occupied support and the number of opposite parts bounds its copies. -/
+theorem regularization_list_frozen_in_capacity_groups {half : Bool} {k n p M q r : ℕ}
+    (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k paths)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (vertexFit : (activeListVertices paths).card ≤ q*(4*M/p))
+    (pathFit : (activeListIndices paths).card ≤ r*(4*M/n))
+    (vertexRoom : 3*((activeListVertices paths).card*r) ≤ 4*n)
+    (pathRoom : 3*((activeListIndices paths).card*q) ≤ 4*p)
+    (mass : (∑ i, (paths i).length) = M) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  frozen_cleaning_of_capacity_groups (activeListPaths paths) (activeListPaths_simple paths simple)
+    (activeListPaths_admissible paths simple allowed) hn hp dense long
+    (by simpa only [Fintype.card_coe] using vertexFit)
+    (by simpa only [Fintype.card_coe] using pathFit)
+    (by simpa only [Fintype.card_coe] using vertexRoom)
+    (by simpa only [Fintype.card_coe] using pathRoom)
+    ((activeListPaths_mass paths simple).trans mass)
+
+end OnlineReachabilityPreservers

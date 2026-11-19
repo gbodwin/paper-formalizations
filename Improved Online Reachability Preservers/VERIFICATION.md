@@ -888,6 +888,14 @@ within both original budgets and retains at least one sixteenth of the mass.
 Its four caps are relative to the original averages.
 [Common-partition proof](OnlineReachabilityPreservers/CommonPartitionCleaning.lean).
 
+The sharper opposite-intersection pruning bound leaves the first incidence
+of each retained path uncharged. Every original nonempty path retains its
+last vertex. This gives the exact mass bound with the count of nonempty
+paths, and reversed copies of the vertex order attain it. The frozen
+peeling extension assumes every original path is nonempty, the original
+upper caps hold on the pruned system, and the original mean length is bounded.
+[Pruning and sharpness](OnlineReachabilityPreservers/OppositePruningGain.lean).
+
 ## Execution examples
 
 A finite execution check of the PaperLab example gave cumulative purchases
