@@ -165,8 +165,13 @@ runs and the offline pruning algorithm. The forward budget also covers
 evaluating the whole list of arrival prefixes.
 The [sample coordinates](OnlineReachabilityPreservers/SteinerSeedCoordinates.lean)
 are in bijection with the nested early seed and preserve the
-uniform finite probability. The counts cover these subroutines.
-The costs of finite containers, arithmetic, seed generation, and the
+uniform finite probability. The [bit sampling bound](OnlineReachabilityPreservers/SteinerSamplingWork.lean)
+represents the early coordinates by fixed-width fair bit words. It proves
+the exact uniform target probabilities for independent rejection proposals
+for hub and thin draws, with at most two proposals in expectation per
+coordinate. The expected number of bits for all three seeds has an explicit
+polynomial bound for each fixed height. The costs of finite containers,
+arithmetic, converting sampled indices into vertex values, and the
 composition of the remaining online steps remain open in the runtime proof.
 
 ## Appendix dependencies

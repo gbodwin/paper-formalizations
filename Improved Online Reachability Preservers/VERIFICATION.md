@@ -471,6 +471,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   3326-declaration audit and local kernel replay passed. Independent
   review checked exact output, fallback and the shared interval.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44490802990).
+- [6de57197](https://github.com/gbodwin/paper-formalizations/commit/6de5719783466d2332e156aaa99476962e07df14)
+  checks the larger splitting counterexample and the acyclic extremal
+  converse. The 3361-declaration audit and local kernel replay passed.
+  Independent review checked both counterexamples on seven vertices,
+  acyclicity and exact distinct demand counts in both lower-bound cases.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44492464048).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
