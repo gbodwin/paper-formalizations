@@ -8,9 +8,16 @@ namespace OnlineReachabilityPreservers
 private def indexOfOrder (A : Type*) [LinearOrder A] [Fintype A] : A ≃ Fin (Fintype.card A) :=
   (Fintype.orderIsoFinOfCardEq A rfl).symm.toEquiv
 
-private def castIndexType {A : Type*} [Fintype A] {n : ℕ} (index : A ≃ Fin n) :
+/-- Cast the proof of the bound while retaining the same runtime index. -/
+@[inline] private def castFinIndex {n m : ℕ} (size : n = m) : Fin n ≃ Fin m where
+  toFun i := ⟨i.val, size ▸ i.isLt⟩
+  invFun i := ⟨i.val, size.symm ▸ i.isLt⟩
+  left_inv _ := Fin.ext rfl
+  right_inv _ := Fin.ext rfl
+
+@[inline] private def castIndexType {A : Type*} [Fintype A] {n : ℕ} (index : A ≃ Fin n) :
     A ≃ Fin (Fintype.card A) :=
-  index.trans (finCongr (by simpa using (Fintype.card_congr index).symm))
+  index.trans (castFinIndex (by simpa using (Fintype.card_congr index).symm))
 
 variable {V : Type*} [LinearOrder V] [Fintype V]
 
@@ -45,7 +52,7 @@ def steinerEarlyCoordinateIndexAtWidth (G : Arcs V) (height width : ℕ)
   let tier := ((Equiv.refl (Fin width)).prodCongr test).trans finProdFinEquiv
   let root := (vertices.prodCongr tier).trans finProdFinEquiv
   let trials := ((Equiv.refl (Fin (earlyTrialCount V height))).prodCongr root).trans finProdFinEquiv
-  let convert := (Equiv.refl _).prodCongr ((Equiv.refl V).prodCongr ((finCongr width_eq.symm).prodCongr (Equiv.refl _)))
+  let convert := (Equiv.refl _).prodCongr ((Equiv.refl V).prodCongr ((castFinIndex width_eq.symm).prodCongr (Equiv.refl _)))
   castIndexType (convert.trans trials)
 
 def steinerEarlyCoordinateIndex (G : Arcs V) (height : ℕ) :
