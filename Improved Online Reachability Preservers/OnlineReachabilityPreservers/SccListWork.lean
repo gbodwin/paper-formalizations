@@ -7,14 +7,14 @@ namespace OnlineReachabilityPreservers
 
 open Finset
 
-private def mapListWithChecks {A B : Type*} (f : A → B × ℕ) : List A → List B × ℕ
+def mapListWithChecks {A B : Type*} (f : A → B × ℕ) : List A → List B × ℕ
   | [] => ([], 0)
   | x::xs =>
     let first := f x
     let tail := mapListWithChecks f xs
     (first.1 :: tail.1, first.2 + tail.2)
 
-private theorem mapListWithChecks_spec {A B : Type*} (f : A → B × ℕ) (value : A → B)
+theorem mapListWithChecks_spec {A B : Type*} (f : A → B × ℕ) (value : A → B)
     (xs : List A) (budget : ℕ) (same : ∀ x ∈ xs, (f x).1 = value x)
     (cost : ∀ x ∈ xs, (f x).2 ≤ budget) :
     let out := mapListWithChecks f xs
@@ -32,7 +32,7 @@ private theorem mapListWithChecks_spec {A B : Type*} (f : A → B × ℕ) (value
 variable {V : Type*} [LinearOrder V] [Fintype V]
 
 omit [Fintype V] in
-private theorem reverseArcList_toFinset (arcs : List (V × V)) :
+theorem reverseArcList_toFinset (arcs : List (V × V)) :
     (arcs.map Prod.swap).toFinset = reverseArcs arcs.toFinset := by
   ext e
   simp [reverseArcs]

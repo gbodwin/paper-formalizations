@@ -8,7 +8,7 @@ open Finset Relation
 
 variable {V : Type*} [LinearOrder V] [Fintype V]
 
-private def serves (G H : Arcs V) (D : List (V × V)) : Bool :=
+def serves (G H : Arcs V) (D : List (V × V)) : Bool :=
   D.all fun d => !decide (d.1 ∈ reaches G d.2) || decide (d.1 ∈ reaches H d.2)
 
 private theorem serves_spec (G H : Arcs V) (D : List (V × V)) :
@@ -18,7 +18,7 @@ private theorem serves_spec (G H : Arcs V) (D : List (V × V)) :
   classical
   simp [or_iff_not_imp_left]
 
-private def removeIfSafe (G : Arcs V) (D : List (V × V)) (H : Arcs V) (e : V × V) : Arcs V :=
+def removeIfSafe (G : Arcs V) (D : List (V × V)) (H : Arcs V) (e : V × V) : Arcs V :=
   if serves G (H.erase e) D then H.erase e else H
 
 private theorem removeIfSafe_subset (G H : Arcs V) (D : List (V × V)) (e : V × V) :
@@ -34,7 +34,7 @@ private theorem removeIfSafe_serves (G H : Arcs V) (D : List (V × V)) (e : V ×
   unfold removeIfSafe
   split <;> assumption
 
-private def prune (G : Arcs V) (D : List (V × V)) (H : Arcs V) (edges : List (V × V)) : Arcs V :=
+def prune (G : Arcs V) (D : List (V × V)) (H : Arcs V) (edges : List (V × V)) : Arcs V :=
   edges.foldl (removeIfSafe G D) H
 
 private theorem prune_subset (G H : Arcs V) (D L : List (V × V)) :

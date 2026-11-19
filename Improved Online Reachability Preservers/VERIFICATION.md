@@ -870,6 +870,16 @@ The generated evaluator shares one transpose and one label table across the
 two projections. Its comparison budget includes list lookup and deduplication.
 [Reviewed SCC and quotient evaluator](OnlineReachabilityPreservers/SccListWork.lean).
 
+The lifted comparison proofs use the ordinary original-arc representatives
+and shortest-hop connectors. The sink and source evaluators return the same
+graphs on every prefix, including the empty prefix, and bound the sum of
+key comparisons when the prefixes are evaluated separately. The offline
+evaluator uses the exact sorted deletion order on the condensation and the
+same lift. Its pointwise theorem covers reachable, unreachable, self, and
+repeated requests. The ledger counts operations on abstract keys.
+[Exact general-digraph comparison proofs](OnlineReachabilityPreservers/SccLiftListWork.lean)
+· [Exact greedy deletion order](OnlineReachabilityPreservers/OfflineListWork.lean).
+
 ## Execution examples
 
 A finite execution check of the PaperLab example gave cumulative purchases
@@ -892,6 +902,15 @@ following two bits unread. An empty input returned no result.
 Using the graph-based orders, the height-zero replay gave the same result.
 At height one, the decoder consumed 7,177 supplied zero bits and returned
 the next two bits unread.
+
+On the cyclic input with a duplicated crossing arc, the lifted sink and
+source evaluators both matched the ordinary edge sets over five arrivals,
+with counts `[0, 6, 6, 6, 6, 6]`. The sink replay charged 19,936 key
+comparisons across those six prefixes. The lifted offline evaluator also
+matched each supplied prefix. On the directed diamond the greedy list
+evaluator kept `(0,2)` and `(2,3)`, as dictated by the original lexicographic
+deletion order. The empty graph on zero vertices returned an empty list and
+zero comparisons.
 
 The weighted-capacity replay builds a table once per separator and constructs
 residual graphs from the stored values and their unique keys. The two-vertex

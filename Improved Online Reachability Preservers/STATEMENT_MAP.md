@@ -309,6 +309,24 @@ adds at most \(p(2n+B(n,m))\) comparisons, with \(B\) the list-backed
 per-arrival forward budget. These counts cover the input condensation and
 the forward computation in the quotient. Lifting the selected arcs and
 building the internal connectors are separate operations.
+The [list-backed lift](OnlineReachabilityPreservers/SccLiftListWork.lean)
+chooses the original lexicographically least arc for every selected quotient
+arc in the chosen orientation. The source evaluator reverses the input
+and reverses its output back. The lift also builds both ordinary shortest-hop
+connector trees using the cached labels. One merge of connectors and
+representatives yields the exact duplicate-free preserver edge sets. Each nonempty
+call uses one label table, charges a second raw-arc projection for the lift,
+and charges the comparison work of both connector orientations. Both
+all-prefix replay theorems include the cost of rerunning the preparation and
+lift at each prefix. The [greedy deletion evaluator](OnlineReachabilityPreservers/OfflineListWork.lean)
+sorts the duplicate-free quotient arcs in the same order as the ordinary
+offline preserver. It charges the sort, edge filters, and bounded
+reachability checks, and the common lift gives the exact offline preserver
+with a polynomial key-comparison bound on general digraphs. The original
+raw arc list may contain duplicates. These theorems count abstract key
+comparisons in supplied list representations. Vertex enumeration,
+allocation, structural list work, primitive comparison costs, and bit
+arithmetic remain separate parts of the runtime analysis.
 The [preassigned-path counter](OnlineReachabilityPreservers/AssignmentSearchWork.lean)
 combines the calls made by quota certification and path selection with the
 arc inspections and successor tests in each base rule and lifted path.

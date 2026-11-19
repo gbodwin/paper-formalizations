@@ -196,11 +196,11 @@ theorem leastWhereWithChecks_spec (test : V → Bool × ℕ) (P : V → Prop) [D
       exact ⟨found, (Nat.le_succ _).trans cap⟩
 
 omit [Fintype V] in
-private def leastSuccessorWithChecks (arcs : List (V × V)) (u : V) (candidates : List V) : Option V × ℕ :=
+def leastSuccessorWithChecks (arcs : List (V × V)) (u : V) (candidates : List V) : Option V × ℕ :=
   leastWhereWithChecks (fun v => anyWithChecks (fun a => decide ((u,v) = a)) arcs) candidates
 
 omit [Fintype V] in
-private theorem leastSuccessorWithChecks_spec (arcs : List (V × V)) (u : V) (candidates : List V) :
+theorem leastSuccessorWithChecks_spec (arcs : List (V × V)) (u : V) (candidates : List V) :
     let out := leastSuccessorWithChecks arcs u candidates
     out.1 = least? (candidates.toFinset.filter (Edge arcs.toFinset u)) ∧
       out.2 ≤ candidates.length * (arcs.length+1) := by
@@ -430,5 +430,29 @@ theorem forwardRunListWithChecks_spec (G D H : List (V × V)) (simple : H.Nodup)
     change step.1.toFinset = _ at same
     rw [exactRun, same]
     rfl
+
+/-- Test one vertex against a bounded reverse search, counting all key comparisons. -/
+def reachTestListWithChecks (arcs : List (V × V)) (s t : V) (depth : ℕ) : Bool × ℕ :=
+  let found := reachInListWithChecks arcs t depth
+  let member := anyWithChecks (fun v => decide (s = v)) found.1
+  (member.1,found.2+member.2)
+
+theorem reachTestListWithChecks_spec (arcs : List (V × V)) (s t : V) (depth : ℕ) :
+    let n := Fintype.card V
+    let out := reachTestListWithChecks arcs s t depth
+    out.1 = decide (s ∈ reachIn arcs.toFinset t depth) ∧
+      out.2 ≤ depth*(arcs.length*(2*n))+n := by
+  let found := reachInListWithChecks arcs t depth
+  obtain ⟨distinct, reached, work⟩ := reachInListWithChecks_spec arcs t depth
+  obtain ⟨member, cost⟩ := memScanWithChecks_spec s found.1
+  have size : found.1.length ≤ Fintype.card V := by
+    rw [← List.toFinset_card_of_nodup distinct]
+    exact card_le_univ _
+  refine ⟨?_, Nat.add_le_add work (cost.trans size)⟩
+  change (anyWithChecks _ found.1).1 = _
+  rw [member]
+  have reachedEq : found.1.toFinset = reachIn arcs.toFinset t depth := reached
+  rw [← reachedEq]
+  simp only [List.mem_toFinset]
 
 end OnlineReachabilityPreservers

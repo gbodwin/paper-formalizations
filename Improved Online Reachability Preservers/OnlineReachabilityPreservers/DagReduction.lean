@@ -10,11 +10,11 @@ open Finset Relation
 
 variable {V : Type*} [LinearOrder V] [Fintype V]
 
-private def crossingCandidates (G : Arcs V) (e : V × V) : Finset (Lex (V × V)) :=
+def crossingCandidates (G : Arcs V) (e : V × V) : Finset (Lex (V × V)) :=
   (G.filter (fun a => projectDemand G a = e)).image toLex
 
 /-- The unique deterministically chosen representative, when a preimage exists. -/
-private def liftOne (G : Arcs V) (e : V × V) : Arcs V :=
+def liftOne (G : Arcs V) (e : V × V) : Arcs V :=
   match least? (crossingCandidates G e) with
   | some a => {ofLex a}
   | none => ∅

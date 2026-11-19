@@ -80,7 +80,7 @@ theorem exists_decreasing_hop {G : Arcs V} {s t : V} (h : Reach G s t) (hne : s 
   exact ⟨v, he, reachIn_sound hr, by omega⟩
 
 /-- For each nonroot vertex, choose one edge descending toward its SCC root. -/
-private def towardRoot (G : Arcs V) (s : V) : Arcs V :=
+def towardRoot (G : Arcs V) (s : V) : Arcs V :=
   let t := componentLabel G s
   if s = t then ∅
   else match least? ((reachIn G t (hops G s t - 1)).filter (Edge G s)) with
