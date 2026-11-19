@@ -75,6 +75,75 @@ private theorem prune_critical (G H : Arcs V) (D L : List (V × V)) {e : V × V}
 def offlinePrune (G : Arcs V) (D : List (V × V)) : Arcs V :=
   prune G D G ((G.image toLex).sort (· ≤ ·) |>.map ofLex)
 
+/-- The reachability tests performed by one pruning decision. -/
+private def servesWithReachCalls (G H : Arcs V) : List (V × V) → Bool × ℕ
+  | [] => (true, 0)
+  | d :: D =>
+    if d.1 ∈ reaches G d.2 then
+      if d.1 ∈ reaches H d.2 then
+        let tail := servesWithReachCalls G H D
+        (tail.1, tail.2 + 2)
+      else (false, 2)
+    else
+      let tail := servesWithReachCalls G H D
+      (tail.1, tail.2 + 1)
+
+private theorem servesWithReachCalls_spec (G H : Arcs V) (D : List (V × V)) :
+    let result := servesWithReachCalls G H D
+    result.1 = serves G H D ∧ result.2 ≤ 2 * D.length := by
+  induction D with
+  | nil => simp [servesWithReachCalls, serves]
+  | cons d D ih =>
+    obtain ⟨output, calls⟩ := ih
+    by_cases yes : d.1 ∈ reaches G d.2
+    · by_cases kept : d.1 ∈ reaches H d.2
+      · simp only [servesWithReachCalls, serves, yes, kept, List.all_cons, List.length_cons,
+          decide_true, Bool.not_true, Bool.false_or, Bool.true_and, ↓reduceIte]
+        exact ⟨output, by omega⟩
+      · simp [servesWithReachCalls, serves, yes, kept]
+    · simp only [servesWithReachCalls, serves, yes, List.all_cons, List.length_cons,
+        decide_false, Bool.not_false, Bool.true_or, Bool.true_and, ↓reduceIte]
+      exact ⟨output, by omega⟩
+
+private def pruneWithReachCalls (G : Arcs V) (D : List (V × V)) :
+    Arcs V → List (V × V) → Arcs V × ℕ
+  | H, [] => (H, 0)
+  | H, e :: remaining =>
+    let result := servesWithReachCalls G (H.erase e) D
+    let next := if result.1 then H.erase e else H
+    let tail := pruneWithReachCalls G D next remaining
+    (tail.1, result.2 + tail.2)
+
+private theorem pruneWithReachCalls_spec (G H : Arcs V) (D E : List (V × V)) :
+    let result := pruneWithReachCalls G D H E
+    result.1 = prune G D H E ∧ result.2 ≤ E.length * (2 * D.length) := by
+  induction E generalizing H with
+  | nil => simp [pruneWithReachCalls, prune]
+  | cons e rest ih =>
+    let result := servesWithReachCalls G (H.erase e) D
+    let next := if result.1 then H.erase e else H
+    obtain ⟨decision, tests⟩ := servesWithReachCalls_spec G (H.erase e) D
+    have same : next = removeIfSafe G D H e := by
+      simp only [next, result, decision, removeIfSafe]
+    obtain ⟨follows, cap⟩ := ih next
+    change (pruneWithReachCalls G D next rest).1 = prune G D (removeIfSafe G D H e) rest ∧
+      result.2 + (pruneWithReachCalls G D next rest).2 ≤ (rest.length + 1) * (2 * D.length)
+    refine ⟨follows.trans (congrArg (fun B => prune G D B rest) same), ?_⟩
+    exact (Nat.add_le_add tests cap).trans_eq
+      ((Nat.add_comm _ _).trans (Nat.succ_mul rest.length (2 * D.length)).symm)
+
+/-- The greedy prune with a certificate for its number of reachability
+queries. Its first projection is the ordinary offline output. -/
+def offlinePruneWithReachCalls (G : Arcs V) (D : List (V × V)) : Arcs V × ℕ :=
+  pruneWithReachCalls G D G ((G.image toLex).sort (· ≤ ·) |>.map ofLex)
+
+theorem offlinePruneWithReachCalls_spec (G : Arcs V) (D : List (V × V)) :
+    let result := offlinePruneWithReachCalls G D
+    result.1 = offlinePrune G D ∧ result.2 ≤ G.card * (2 * D.length) := by
+  obtain ⟨output, bound⟩ := pruneWithReachCalls_spec G G D ((G.image toLex).sort (· ≤ ·) |>.map ofLex)
+  exact ⟨output, bound.trans (Nat.mul_le_mul_right _ (by
+    simpa only [List.length_map, length_sort] using card_image_le))⟩
+
 theorem offlinePrune_spec (G : Arcs V) (D : List (V × V)) :
     offlinePrune G D ⊆ G ∧ Preserves G (offlinePrune G D) D := by
   have sub : offlinePrune G D ⊆ G := prune_subset _ _ _ _

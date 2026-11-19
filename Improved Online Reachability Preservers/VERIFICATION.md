@@ -329,6 +329,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   review checked the nonempty-graph estimates and found that an
   empty graph needed a zero-draw case. The next checkpoint adds it.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44466253050).
+- [af10a045](https://github.com/gbodwin/paper-formalizations/commit/af10a045d2ba2ef7d64cdc25fca4427804073f0d)
+  gives the empty graph a valid zero-draw hub sample. The
+  2569-declaration audit and local kernel replay passed. Independent
+  review checked the positive-count branch and the unchanged
+  expected-rate and per-prefix statements for the exact evaluator.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44466968405).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

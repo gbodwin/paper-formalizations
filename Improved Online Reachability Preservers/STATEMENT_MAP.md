@@ -126,6 +126,24 @@ uses the first \(T\) distinct non-self arrivals, so the early cost proof
 applies to a fixed input trace. Lemma 20 still supplies the offline
 lower bound when the late phase starts. Formal runtime remains open.
 
+## Search and sampling work
+
+The [search counters](OnlineReachabilityPreservers/SearchWork.lean)
+return the ordinary search outputs, including failed searches.
+Reverse search inspects at most \(n|E|\) arcs, and greedy path
+growth tests at most \(2n^2\) successor candidates. One weighted
+fractional run on \(p\) requests makes at most
+\(p((B+1)B+1)\) separator calls for \(B=\max(1,n|H|^2)\).
+Each integer augmentation loop makes at most its supplied number
+of path searches. The [prune counter](OnlineReachabilityPreservers/OfflineIndependence.lean)
+bounds reachability calls by \(2|E|p\). The
+[quota counter](OnlineReachabilityPreservers/KnownBudget.lean)
+bounds the number of base path-rule calls at each candidate budget.
+The [sample coordinates](OnlineReachabilityPreservers/SteinerSeedCoordinates.lean)
+are in bijection with the nested early seed and preserve the
+uniform finite probability. The bounds do not yet give a formal
+end-to-end runtime model.
+
 ## Appendix dependencies
 
 | Source | Mathematical obligation |

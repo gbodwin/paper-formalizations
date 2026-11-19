@@ -148,6 +148,80 @@ def knownBudgetPath (choose : PathRule V) (Q : Finset (V × V)) (p F : ℕ) (d :
     Option (List (V × V)) :=
   assignedPath choose ∅ (expensiveTrace choose p F p ∅ Q) d
 
+private def expensiveTraceWithChoiceCalls (choose : PathRule V) (p F : ℕ) :
+    ℕ → Arcs V → Finset (V × V) → List (V × V) × ℕ
+  | 0, _, _ => ([], 0)
+  | k + 1, H, Q =>
+    match expensive choose p F H Q with
+    | none => ([], Q.card)
+    | some d =>
+      let rest := expensiveTraceWithChoiceCalls choose p F k (H ∪ pathArcs (choose H d)) (Q.erase d)
+      (d :: rest.1, Q.card + 1 + rest.2)
+
+private theorem expensiveTraceWithChoiceCalls_spec (choose : PathRule V) (p F k : ℕ) (H Q : Arcs V) :
+    let result := expensiveTraceWithChoiceCalls choose p F k H Q
+    result.1 = expensiveTrace choose p F k H Q ∧ result.2 ≤ k * (Q.card + 1) := by
+  induction k generalizing H Q with
+  | zero => simp [expensiveTraceWithChoiceCalls, expensiveTrace]
+  | succ k ih =>
+    cases h : expensive choose p F H Q with
+    | none =>
+      simp only [expensiveTraceWithChoiceCalls, expensiveTrace, h, true_and]
+      rw [Nat.succ_mul k (Q.card + 1)]
+      omega
+    | some d =>
+      obtain ⟨result, calls⟩ := ih (H ∪ pathArcs (choose H d)) (Q.erase d)
+      simp only [expensiveTraceWithChoiceCalls, expensiveTrace, h, result, true_and]
+      have cap : (Q.erase d).card ≤ Q.card := card_le_card (erase_subset _ _)
+      have tail := calls.trans (Nat.mul_le_mul_left k (Nat.succ_le_succ cap))
+      exact (Nat.add_le_add (le_rfl : Q.card + 1 ≤ Q.card + 1) tail).trans_eq
+        ((Nat.add_comm _ _).trans (Nat.succ_mul k (Q.card + 1)).symm)
+
+
+private def assignedPathWithChoiceCalls (choose : PathRule V) (H : Arcs V) :
+    List (V × V) → V × V → Option (List (V × V)) × ℕ
+  | [], d => (choose H d, 1)
+  | a :: as, d =>
+    if a = d then (choose H a, 1)
+    else
+      let tail := assignedPathWithChoiceCalls choose (H ∪ pathArcs (choose H a)) as d
+      (tail.1, tail.2 + 1)
+
+private theorem assignedPathWithChoiceCalls_spec (choose : PathRule V) (H : Arcs V) (T : List (V × V))
+    (d : V × V) :
+    let result := assignedPathWithChoiceCalls choose H T d
+    result.1 = assignedPath choose H T d ∧ result.2 ≤ T.length + 1 := by
+  induction T generalizing H with
+  | nil => simp [assignedPathWithChoiceCalls, assignedPath]
+  | cons a T ih =>
+    by_cases h : a = d
+    · simp [assignedPathWithChoiceCalls, assignedPath, h]
+    · obtain ⟨result, count⟩ := ih (H ∪ pathArcs (choose H a))
+      simp only [assignedPathWithChoiceCalls, assignedPath, h, ↓reduceIte, result, true_and, List.length_cons]
+      exact Nat.succ_le_succ count
+
+/-- Compute the usual known-quota path and count requests to its base
+path rule. The estimate includes the initial scans and final replay. -/
+def knownBudgetPathWithChoiceCalls (choose : PathRule V) (Q : Finset (V × V)) (p F : ℕ) (d : V × V) :
+    Option (List (V × V)) × ℕ :=
+  let planned := expensiveTraceWithChoiceCalls choose p F p ∅ Q
+  let selected := assignedPathWithChoiceCalls choose ∅ planned.1 d
+  (selected.1, planned.2 + selected.2)
+
+theorem knownBudgetPathWithChoiceCalls_spec (choose : PathRule V) (Q : Finset (V × V))
+    (p F : ℕ) (d : V × V) :
+    let result := knownBudgetPathWithChoiceCalls choose Q p F d
+    result.1 = knownBudgetPath choose Q p F d ∧ result.2 ≤ p * (Q.card + 1) + (p + 1) := by
+  let planned := expensiveTraceWithChoiceCalls choose p F p ∅ Q
+  obtain ⟨trace, tc⟩ := expensiveTraceWithChoiceCalls_spec choose p F p ∅ Q
+  obtain ⟨selection, sc⟩ := assignedPathWithChoiceCalls_spec choose ∅ planned.1 d
+  have length := (expensiveTrace_spec choose p F p ∅ Q).1
+  change planned.1 = _ at trace
+  change (assignedPathWithChoiceCalls choose ∅ planned.1 d).1 = _ at selection
+  refine ⟨selection.trans ?_, Nat.add_le_add tc ?_⟩
+  · rw [knownBudgetPath, trace]
+  · exact sc.trans (Nat.succ_le_succ (by simpa only [trace] using length))
+
 /-- A budget is certified by running the expensive-pair phase and checking its
 length and edge count. Both checks depend only on the rule, domain, and quota. -/
 def KnownBudgetCertified (choose : PathRule V) (Q : Finset (V × V)) (p F : ℕ) : Prop :=
@@ -183,6 +257,38 @@ theorem knownBudget_certify (choose : PathRule V) (Q : Finset (V × V)) (p F : �
 /-- The smallest certified budget up to the given edge cap. -/
 def certifiedBudget (choose : PathRule V) (Q : Finset (V × V)) (p cap : ℕ) : ℕ :=
   (least? ((range (cap+1)).filter (KnownBudgetCertified choose Q p))).getD cap
+
+/-- Count the base path evaluations in the finite quota certification.
+Each candidate is tested once. Its reconstruction calls the rule once
+per purchased demand. -/
+def certifiedBudgetWithChoiceCalls (choose : PathRule V) (Q : Finset (V × V)) (p cap : ℕ) : ℕ × ℕ :=
+  let attempts := range (cap + 1)
+  let run := fun F => expensiveTraceWithChoiceCalls choose p F p ∅ Q
+  let certified := attempts.filter fun F => (run F).1.length < p ∧ (runRule choose ∅ (run F).1).card ≤ F
+  ((least? certified).getD cap, ∑ F ∈ attempts, ((run F).2 + (run F).1.length))
+
+theorem certifiedBudgetWithChoiceCalls_spec (choose : PathRule V) (Q : Finset (V × V)) (p cap : ℕ) :
+    let result := certifiedBudgetWithChoiceCalls choose Q p cap
+    result.1 = certifiedBudget choose Q p cap ∧
+      result.2 ≤ (cap + 1) * (p * (Q.card + 1) + p) := by
+  let attempts := range (cap + 1)
+  let run := fun F => expensiveTraceWithChoiceCalls choose p F p ∅ Q
+  have trace (F : ℕ) : (run F).1 = expensiveTrace choose p F p ∅ Q :=
+    (expensiveTraceWithChoiceCalls_spec choose p F p ∅ Q).1
+  refine ⟨?_, ?_⟩
+  · have same : attempts.filter (fun F => (run F).1.length < p ∧ (runRule choose ∅ (run F).1).card ≤ F) =
+        attempts.filter (KnownBudgetCertified choose Q p) := by
+      ext F
+      simp only [mem_filter, trace, KnownBudgetCertified]
+    exact congrArg (fun limits => (least? limits).getD cap) same
+  · change (∑ F ∈ attempts, ((run F).2 + (run F).1.length)) ≤ _
+    calc
+      _ ≤ ∑ _ ∈ attempts, (p * (Q.card + 1) + p) := by
+        apply sum_le_sum
+        intro F _
+        have t := (expensiveTraceWithChoiceCalls_spec choose p F p ∅ Q).2
+        exact Nat.add_le_add t (by rw [trace]; exact (expensiveTrace_spec choose p F p ∅ Q).1)
+      _ = _ := by simp [attempts]
 
 theorem certifiedBudget_spec {choose : PathRule V} {Q : Finset (V × V)} {p cap : ℕ}
     (hcap : KnownBudgetCertified choose Q p cap) :

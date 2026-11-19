@@ -119,6 +119,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   uses the separator on each request's own free attachments. It preserves
   earlier flow certificates and bounds rounded fractional cost against a
   fixed integral solution.
+- [Search-work certificates](OnlineReachabilityPreservers/SearchWork.lean)
+  count the arc inspections in reverse search, the candidate tests in
+  a greedy walk, and separator calls in the weighted forest. The
+  [offline](OnlineReachabilityPreservers/OfflineIndependence.lean) and
+  [quota](OnlineReachabilityPreservers/KnownBudget.lean) certificates
+  count the reachability and path-rule calls in pruning and budget
+  certification. The [seed representation](OnlineReachabilityPreservers/SteinerSeedCoordinates.lean)
+  identifies early samples with independent finite grid choices and
+  bounds the number of coordinates. These are subroutine work bounds.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
