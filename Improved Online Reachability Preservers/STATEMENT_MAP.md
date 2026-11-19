@@ -183,9 +183,15 @@ the exact uniform target probabilities for independent rejection proposals
 for hub and thin draws, with at most two proposals in expectation per
 coordinate. The expected number of bits for all three seeds has an explicit
 polynomial bound for each fixed height. The retry analysis is per coordinate.
+The [preassigned-path counter](OnlineReachabilityPreservers/AssignmentSearchWork.lean)
+combines the calls made by quota certification and path selection with the
+arc inspections and successor tests in each base rule and lifted path.
+This covers known totals and arrival indices in all three endpoint scopes.
+The indexed pairwise bound also counts the ordinary union of all assigned
+paths in one prefix. The quota count is bounded by a polynomial in the
+graph sizes and the known total or current index.
 The costs of finite containers, arithmetic, converting sampled indices into
-vertex values and the early queries listed above remain open. The
-preassigned-path strategies still have separate quota and routing counts.
+vertex values and the early queries listed above remain open.
 
 ## Appendix dependencies
 

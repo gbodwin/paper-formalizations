@@ -1,5 +1,6 @@
 import OnlineReachabilityPreservers.AcyclicOverlay
 import OnlineReachabilityPreservers.AlgorithmSearchWork
+import OnlineReachabilityPreservers.AssignmentSearchWork
 import OnlineReachabilityPreservers.BalancedRegularization
 import OnlineReachabilityPreservers.Basic
 import OnlineReachabilityPreservers.BootstrapArithmetic

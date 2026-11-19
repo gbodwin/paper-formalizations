@@ -490,6 +490,15 @@ An exact-source replay grants no coverage to a paper statement outside the
   review checked the exact seed and fallback, and identified the metric
   weight and template queries beyond the measured operations.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44494015139).
+- [4e8ea0d9](https://github.com/gbodwin/paper-formalizations/commit/4e8ea0d9c922457291e17512a1c5255571bcd68b)
+  checks the ordinary seeded Steiner outputs and the polynomial bound
+  on the composed search charges at every feasible prefix. The
+  3467-declaration audit and local kernel replay passed. Independent
+  review checked the split, both hub legs, thick fallback, exact prefix
+  outputs and the scope of the search bound. The two-vertex execution
+  matched the ordinary purchases `[0, 1, 1, 1]` and exercised the three
+  late cases separately.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44494902764).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
