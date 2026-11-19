@@ -213,6 +213,7 @@ import DirectedFlowCutGap.BoundedBitRejection
 import DirectedFlowCutGap.BoundedDrawPrograms
 import DirectedFlowCutGap.BoundedSampling
 import DirectedFlowCutGap.BudgetOrderedPrefixProgram
+import DirectedFlowCutGap.CacheGatesProgram
 import DirectedFlowCutGap.CachedReferenceExecution
 import DirectedFlowCutGap.CachedReferenceHeap
 import DirectedFlowCutGap.CandidateBlockDifferenceProgram
@@ -304,6 +305,7 @@ import DirectedFlowCutGap.ConcurrentEdgeFlow
 import DirectedFlowCutGap.ConcurrentProfiles
 import DirectedFlowCutGap.ConcurrentVertexFlow
 import DirectedFlowCutGap.ConstructedPrefixMaterialization
+import DirectedFlowCutGap.ControllerWordWidth
 import DirectedFlowCutGap.CostedCandidateBounds
 import DirectedFlowCutGap.CostedCandidateMaterialization
 import DirectedFlowCutGap.CostedCandidateSelection
@@ -315,6 +317,7 @@ import DirectedFlowCutGap.CostedSupportRefinement
 import DirectedFlowCutGap.CountedResidualSearch
 import DirectedFlowCutGap.CountedTabulatedFlow
 import DirectedFlowCutGap.CounterPrefixProgram
+import DirectedFlowCutGap.CurrentDemandProgram
 import DirectedFlowCutGap.DemandCollectionBounds
 import DirectedFlowCutGap.DemandCollectionData
 import DirectedFlowCutGap.DemandCollectionExecution
@@ -409,6 +412,10 @@ import DirectedFlowCutGap.EpochParameterBridge
 import DirectedFlowCutGap.EpochPermutationData
 import DirectedFlowCutGap.EpochPermutationProgram
 import DirectedFlowCutGap.EpochPrefixSelectionProgram
+import DirectedFlowCutGap.EpochScanBounds
+import DirectedFlowCutGap.EpochScanData
+import DirectedFlowCutGap.EpochScanHeadProgram
+import DirectedFlowCutGap.EpochScanProgram
 import DirectedFlowCutGap.EpochSelectedRoundProgram
 import DirectedFlowCutGap.FairBitConfidence
 import DirectedFlowCutGap.FairBitWords
@@ -533,6 +540,7 @@ import DirectedFlowCutGap.GridInputProgram
 import DirectedFlowCutGap.GridInputTrace
 import DirectedFlowCutGap.GridLevelSampling
 import DirectedFlowCutGap.GuardedReferenceExecution
+import DirectedFlowCutGap.GuardedReferencePrefix
 import DirectedFlowCutGap.HeapPairEmit
 import DirectedFlowCutGap.HeapWordEmit
 import DirectedFlowCutGap.HeapWordReverse
@@ -811,6 +819,7 @@ import DirectedFlowCutGap.PhysicalEdgeSolver
 import DirectedFlowCutGap.PhysicalEpochDraws
 import DirectedFlowCutGap.PhysicalEpochInputData
 import DirectedFlowCutGap.PhysicalEpochInputProgram
+import DirectedFlowCutGap.PhysicalEpochScanProgram
 import DirectedFlowCutGap.PhysicalFairWordProgram
 import DirectedFlowCutGap.PhysicalSampledRoundProgram
 import DirectedFlowCutGap.PhysicalSolverChargeBounds
