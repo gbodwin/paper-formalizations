@@ -73,20 +73,26 @@ theorem earlySearchWorkBound_mono (n m : ℕ) {F F' N N' p p' : ℕ}
   dsimp only
   gcongr
 
-private def earlyPrefixWorkEntry (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height)
+/-- The ordinary weighted prefix and its metric purchases, before expansion. -/
+def earlyMetricWithSearchWork (G : Arcs V) (height : ℕ)
+    (sample : EarlyRoundSample G height) (P : List (V × V)) : Arcs (HeightForestVertex V height) × ℕ :=
+  let frac := forestFractionalRunWithSearchWork G height P
+  (roundedForestTrials G frac.1.1 (forestScale G height) (earlyTrialCount V height) sample,frac.2)
+
+private def earlyPrefixWorkEntry (G : Arcs V) (height : ℕ)
+    (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ)
     (P : List (V × V)) : List (V × V) × Arcs (HeightForestVertex V height) × Bool × ℕ :=
   match P.getLast? with
   | none => (P, ∅, false, 0)
   | some d =>
-    let frac := forestFractionalRunWithSearchWork G height P
-    let metric := roundedForestTrials G frac.1.1 (forestScale G height) (earlyTrialCount V height) sample
-    let expanded := expandLabelledLinksWithSearchWork G heightForestLabel metric
+    let bought := metric P
+    let expanded := expandLabelledLinksWithSearchWork G heightForestLabel bought.1
     let check := reachInWithArcInspections expanded.1 d.2 (Fintype.card V)
-    (P, metric, decide (d.1 ∉ check.1), frac.2+expanded.2+check.2)
+    (P, bought.1, decide (d.1 ∉ check.1), bought.2+expanded.2+check.2)
 
 private theorem earlyPrefixWorkEntry_spec (G : Arcs V) (height : ℕ)
     (sample : EarlyRoundSample G height) (P : List (V × V)) :
-    let row := earlyPrefixWorkEntry G height sample P
+    let row := earlyPrefixWorkEntry G height (earlyMetricWithSearchWork G height sample) P
     row.2.1 = (if P = [] then ∅ else earlyMetricAt G height P sample) ∧
       (row.2.2.1 = true ↔ earlyRoundMiss G height P sample) ∧
       row.2.2.2 ≤ earlyPrefixSearchWorkBound (Fintype.card V) G.card
@@ -112,7 +118,7 @@ private theorem earlyPrefixWorkEntry_spec (G : Arcs V) (height : ℕ)
       exact card_le_card (expandLabelledLinks_sub _ _ _)
     have metricBound : metric.card ≤ Fintype.card (HeightForestVertex V height)^2 := by
       simpa only [Fintype.card_prod, pow_two] using card_le_univ metric
-    simp only [earlyPrefixWorkEntry, earlyRoundMiss, h, notEmpty, ite_false,
+    simp only [earlyPrefixWorkEntry, earlyMetricWithSearchWork, earlyRoundMiss, h, notEmpty, ite_false,
       reachInWithArcInspections_spec, decide_eq_true_eq]
     refine ⟨metricEq, ?_, ?_⟩
     · rw [arcs, metricEq]
@@ -120,27 +126,34 @@ private theorem earlyPrefixWorkEntry_spec (G : Arcs V) (height : ℕ)
     · exact Nat.add_le_add (Nat.add_le_add work (routes.trans (Nat.mul_le_mul_right _ metricBound)))
         (Nat.mul_le_mul_left _ arcBound)
 
-private def earlyPrefixWorkRow (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
+private def earlyPrefixWorkRow (G : Arcs V) (height : ℕ)
+    (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ) :
     List (V × V) ↪ List (V × V) × Arcs (HeightForestVertex V height) × Bool × ℕ where
-  toFun := earlyPrefixWorkEntry G height sample
+  toFun := earlyPrefixWorkEntry G height metric
   inj' := by
-    have key (P : List (V × V)) : (earlyPrefixWorkEntry G height sample P).1 = P := by
+    have key (P : List (V × V)) : (earlyPrefixWorkEntry G height metric P).1 = P := by
       unfold earlyPrefixWorkEntry
       split <;> rfl
     intro P Q equal
     exact (key P).symm.trans ((congrArg Prod.fst equal).trans (key Q))
 
-/-- Run the early fallback test and union purchases using the cached
-result of each fractional prefix computation. -/
-def earlyRoundedGraphWithSearchWork (G : Arcs V) (height : ℕ)
-    (sample : EarlyRoundSample G height) (D : List (V × V)) : Arcs V × ℕ :=
-  let rows := D.inits.toFinset.map (earlyPrefixWorkRow G height sample)
+/-- Replay prefix misses and the final purchases from a given metric evaluator. -/
+def earlyRoundedGraphWithSearchWorkFromMetric (G : Arcs V) (height : ℕ)
+    (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ)
+    (D : List (V × V)) : Arcs V × ℕ :=
+  let rows := D.inits.toFinset.map (earlyPrefixWorkRow G height metric)
   let work := ∑ r ∈ rows, r.2.2.2
   if (rows.filter fun r => r.2.2.1 = true).Nonempty then (G, work)
   else
     let bought := rows.biUnion (fun r => r.2.1)
     let expanded := expandLabelledLinksWithSearchWork G heightForestLabel bought
     (expanded.1, work+expanded.2)
+
+/-- Run the early fallback test and union purchases using the cached
+result of each fractional prefix computation. -/
+def earlyRoundedGraphWithSearchWork (G : Arcs V) (height : ℕ)
+    (sample : EarlyRoundSample G height) (D : List (V × V)) : Arcs V × ℕ :=
+  earlyRoundedGraphWithSearchWorkFromMetric G height (earlyMetricWithSearchWork G height sample) D
 
 theorem earlyRoundedGraphWithSearchWork_spec (G : Arcs V) (height : ℕ)
     (sample : EarlyRoundSample G height) (D : List (V × V)) :
@@ -149,7 +162,7 @@ theorem earlyRoundedGraphWithSearchWork_spec (G : Arcs V) (height : ℕ)
     let out := earlyRoundedGraphWithSearchWork G height sample D
     out.1 = earlyRoundedGraph G height D sample ∧
       out.2 ≤ earlySearchWorkBound (Fintype.card V) G.card F N D.length := by
-  let rows := D.inits.toFinset.map (earlyPrefixWorkRow G height sample)
+  let rows := D.inits.toFinset.map (earlyPrefixWorkRow G height (earlyMetricWithSearchWork G height sample))
   let B := earlyPrefixSearchWorkBound (Fintype.card V) G.card
     (Fintype.card (HeightForestVertex V height)) (Fintype.card (ForestNetworkVertex V height)) D.length
   have same : (rows.filter fun r => r.2.2.1 = true).Nonempty ↔ earlyRoundFallback G height D sample := by
@@ -185,7 +198,7 @@ theorem earlyRoundedGraphWithSearchWork_spec (G : Arcs V) (height : ℕ)
           gcongr)
       _ = rows.card*B := by simp
       _ ≤ (D.length+1)*B := by
-        have length : rows.card ≤ D.inits.length := (Finset.card_map (earlyPrefixWorkRow G height sample)).le.trans (List.toFinset_card_le _)
+        have length : rows.card ≤ D.inits.length := (Finset.card_map (earlyPrefixWorkRow G height (earlyMetricWithSearchWork G height sample))).le.trans (List.toFinset_card_le _)
         rw [List.length_inits] at length
         exact Nat.mul_le_mul_right _ length
   let cost := ∑ r ∈ rows, r.2.2.2

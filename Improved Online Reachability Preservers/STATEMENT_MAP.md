@@ -154,8 +154,12 @@ The [early rounding counter](OnlineReachabilityPreservers/SteinerEarlyReplay.lea
 shares each prefix's weighted fractional evaluation between its miss test
 and the union of metric purchases. It bounds the original-graph route
 expansions and reachability checks, including the optional final expansion.
-The paired-forest template, metric weight and hop queries inside capacity
-and rounding predicates, and rounding arithmetic are outside that count.
+The [distance table](OnlineReachabilityPreservers/SteinerDistanceTable.lean)
+records all original hop distances before constructing the paired forest.
+The table-backed prefix evaluator uses those values for both orientations
+of the template, for arc weights in separation, and for rounding decisions.
+It returns the ordinary graph and adds one charge for building the table.
+Each stored lookup takes at most \(n^2\) key comparisons.
 The [late search counter](OnlineReachabilityPreservers/SteinerLateReplay.lean)
 bounds request classification, both projected hub runs, and thin rounding.
 The [complete search counter](OnlineReachabilityPreservers/SteinerCompleteReplay.lean)
@@ -196,8 +200,9 @@ This covers known totals and arrival indices in all three endpoint scopes.
 The indexed pairwise evaluator returns the ordinary union of all assigned
 paths in one prefix and sums their search work. The quota count is bounded
 by a polynomial in the graph sizes and the known total or current index.
-The costs of finite containers, arithmetic, converting sampled indices into
-vertex values and the early queries listed above remain open.
+The remaining runtime costs include the total number of table lookups
+inside the early routines, finite container operations, arithmetic, and
+converting sampled indices into vertex values.
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

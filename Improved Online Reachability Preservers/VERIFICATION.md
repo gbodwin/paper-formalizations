@@ -517,6 +517,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   Independent review checked the actual flow recursion, capacity cases and
   rounding operands, including the zero-size cases.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44498327136).
+- [94a8bfc8](https://github.com/gbodwin/paper-formalizations/commit/94a8bfc8e0f6c5ddaf9f0b363e1f8d701986b40f)
+  checks the retry evaluator against the uniform law on all three seed
+  types. The 3555-declaration audit and local kernel replay passed.
+  Independent review checked the first-success counts, expected bits,
+  finite joint event probabilities and empty-coordinate cases.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44501074024).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
