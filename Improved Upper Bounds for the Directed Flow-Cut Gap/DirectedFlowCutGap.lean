@@ -1,3 +1,4 @@
+import DirectedFlowCutGap.ActiveDemandListProgram
 import DirectedFlowCutGap.ActualAdaptivePackingStep
 import DirectedFlowCutGap.ActualAvoidingDemandScan
 import DirectedFlowCutGap.ActualAvoidingKeptPath
@@ -390,7 +391,13 @@ import DirectedFlowCutGap.EnumeratedPackingCallLift
 import DirectedFlowCutGap.EnumeratedPackingExecution
 import DirectedFlowCutGap.EnumeratedPackingProgram
 import DirectedFlowCutGap.EpochAccounting
+import DirectedFlowCutGap.EpochActiveFromMaskProgram
+import DirectedFlowCutGap.EpochGridTableProgram
+import DirectedFlowCutGap.EpochMaterializeProgram
 import DirectedFlowCutGap.EpochParameterBridge
+import DirectedFlowCutGap.EpochPermutationData
+import DirectedFlowCutGap.EpochPermutationProgram
+import DirectedFlowCutGap.EpochPrefixSelectionProgram
 import DirectedFlowCutGap.FairBitConfidence
 import DirectedFlowCutGap.FairBitWords
 import DirectedFlowCutGap.FinalDispatchCallLift
@@ -790,6 +797,8 @@ import DirectedFlowCutGap.PhysicalCoverReader
 import DirectedFlowCutGap.PhysicalDrawSequenceProgram
 import DirectedFlowCutGap.PhysicalEdgeSolver
 import DirectedFlowCutGap.PhysicalEpochDraws
+import DirectedFlowCutGap.PhysicalEpochInputData
+import DirectedFlowCutGap.PhysicalEpochInputProgram
 import DirectedFlowCutGap.PhysicalFairWordProgram
 import DirectedFlowCutGap.PhysicalSampledRoundProgram
 import DirectedFlowCutGap.PhysicalSolverChargeBounds
