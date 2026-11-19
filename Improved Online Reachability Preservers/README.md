@@ -18,6 +18,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   and the revealed prefix. The proof uses `S` only to bound the actual output by
   `3n + sqrt(2npσ)`, with `σ = |S|`. The functions retain all previously bought
   edges and preserve original reachability for every demand in the prefix.
+- [Theorem 3](OnlineReachabilityPreservers/StrongAdversary.lean) verifies the
+  edge-insertion adversary's lower bound for exact counts `n ≥ 2` and
+  `1 ≤ p ≤ n²`. A fixed trace reveals lattice lines in slope order. Serving
+  a line's request forces every edge on that line, and earlier purchases
+  remain in the final preserver. The proof includes the linear term, integer
+  parameter rounding, and padding to exactly `p` distinct requests.
 - [`theorem15_known_budget`](OnlineReachabilityPreservers/KnownBudget.lean) verifies
   the known-budget path assignment and the factor-two union bound.
   [`theorem16_index_sensitive`](OnlineReachabilityPreservers/IndexSensitive.lean)

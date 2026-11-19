@@ -103,7 +103,8 @@ gives a bridge. The acyclic overlay therefore forces every consecutive arc.
   while the restricted preserver size bound has an alternative counting proof.
 - Lemmas 23 and 39 use splitting steps, which increase vertex or path count
   before any additional restriction. The displayed proof does not establish
-  its exact output budgets or preserve the lower bounds after all steps.
+  its exact output budgets or show that the lower caps survive a restriction
+  to those budgets.
   In a common vertex order and with incidence mass at least both original
   counts, restricting the expanded system in each coordinate preserves at
   least nine sixteenths of the mass. Pruning then preserves at least one
@@ -153,6 +154,16 @@ gives a bridge. The acyclic overlay therefore forces every consecutive arc.
   The [cited online buy-at-bulk paper](https://arxiv.org/abs/1509.03212)
   gives the latter exponent with polylogarithmic factors in the graph size.
   The Steiner application can absorb these factors into its final exponent slack.
+- Lemma 2.12 in the full version of [24] prints both height-reduction
+  cost inequalities in the direction opposite to the bounds used by its
+  Theorem 2.5. The comparison used there bounds the auxiliary optimum by
+  the original optimum times the height-reduction factor, and bounds the
+  cost of expanding a purchased auxiliary tree by its auxiliary cost.
+  Lemma 5.2 of the cited source already prints the first inequality in
+  reverse, and its Appendix A proves the direction needed by the reduction.
+  It prints the expansion inequality in the needed direction.
+  [Grigorescu–Lin–Quanrud, full version](https://arxiv.org/pdf/2103.04543v3#page=15)
+  · [Height-reduction source](https://par.nsf.gov/servlets/purl/10210282#page=13).
 - Theorem 1's table has a different pairwise rounded presentation
   (\(0.73,0.54\)) than its theorem and abstract (\(0.72,0.56\)).
   The sharper expression has its first two exponents related by

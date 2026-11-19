@@ -195,6 +195,11 @@ An exact-source replay grants no coverage to a paper statement outside the
   paper audit and local kernel replay passed. Independent review confirmed
   that the chosen levels and assigned paths agree with the previous search.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44444817085).
+- [c0e42ca7](https://github.com/gbodwin/paper-formalizations/commit/c0e42ca72bd63a9d32b3c6433e11e7f5f4ef9be6)
+  proves the exact acyclic cleaning budgets, both lower and upper caps,
+  and the one-sixteenth incidence guarantee. Its 1623-declaration paper
+  audit, kernel replay, and independent correspondence review passed.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44445138764).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
