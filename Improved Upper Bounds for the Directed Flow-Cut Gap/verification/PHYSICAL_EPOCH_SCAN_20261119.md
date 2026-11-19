@@ -6,6 +6,6 @@
 
 `PhysicalEpochScanProgram.physical_epoch_rejected` proves rejection for any evaluator fuel and accumulated charge if the sampler exhausts its tape. It witnesses a prefix requesting more bits than are available. The subsequent scan is unnecessary for this rejection proof.
 
-The executable fixture on the path 0 → 1 → 2 starts from a valid cache for one active pair. The full program uses the literal tape to cut vertex 1, clears the demand, returns current and optimum zero and preserves the two-bit suffix and runtime record. It completes 12,796 instructions and charges 1,003,581,423 modeled operations. A separate run with a one-bit tape is rejected. The isolated scan also checks an empty order, an unready cache and a stale head.
+The executable fixture on the path 0 → 1 → 2 starts from a cache for one active pair with canonical candidate rows and padded mass words. The full program uses the literal tape to cut vertex 1, clears the demand, returns current and optimum zero and preserves the two-bit suffix and runtime record. It completes 12,796 instructions and charges 925,411,574 modeled operations including the halt, or 1,025,343,347 through the guarded evaluator. A separate run with a one-bit tape is rejected. The isolated scan also checks an empty order, an unready cache and a stale head.
 
 The entry point is a represented retained cache for one epoch. The remaining controller obligations include its initialization, stabilization, repeated epochs, and a composed deterministic bit-time bound from the original stored input.

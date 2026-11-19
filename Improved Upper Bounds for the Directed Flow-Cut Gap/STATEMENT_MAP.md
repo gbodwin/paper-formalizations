@@ -40,7 +40,7 @@ open. [Physical execution scope](verification/PHYSICAL_SOURCE_DISPATCH_20261118.
 The current scoped gate is [the constructive workflow](../.github/workflows/flow-constructive-rounding.yml).
 The adaptive edge-family extension has a [separate exact-commit gate](../.github/workflows/flow-adaptive-family.yml) and a [proof scope record](verification/ADAPTIVE_EDGE_FAMILY_20261119.md).
 The charged vertex modes and original-width envelope have a [full-library gate](../.github/workflows/flow-library-verification.yml) and a [proof scope record](verification/CHARGED_VERTEX_20261119.md).
-The fixed sampled-cut state update has a [proof scope record](verification/ROUND_STATE_UPDATE_20261119.md). The [physical fair-tape epoch](verification/PHYSICAL_EPOCH_SCAN_20261119.md) draws, scans and refreshes one represented epoch, with explicit instruction and heap bounds.
+The fixed sampled-cut state update has a [proof scope record](verification/ROUND_STATE_UPDATE_20261119.md). The [physical fair-tape epoch](verification/PHYSICAL_EPOCH_SCAN_20261119.md) draws, scans and refreshes one represented epoch, with explicit instruction and heap bounds. The [physical adaptive controller](verification/PHYSICAL_ADAPTIVE_CONTROLLER_20261119.md) proves stabilization and repeated fair-tape epochs from a represented cache.
 The manifest `verification/component-verification.json` records an earlier
 component checkpoint.
 Independent reviews record semantic scope and boundary cases. No desired

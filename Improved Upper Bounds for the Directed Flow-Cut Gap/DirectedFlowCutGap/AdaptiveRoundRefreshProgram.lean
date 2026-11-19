@@ -279,6 +279,29 @@ private theorem refresh_call {n L : ℕ} {heap : NaturalHeap} {r : Registers ℕ
       (append_run stateFields (append_run pack (.step select (append_run run (.step ret (.done _)))))))
   · simpa only [Nat.size_eq_bits_len] using Nat.add_le_add_right within 17
 
+/-- The cache refresh subentry also starts a controller or follows a weight installation. -/
+theorem natural_cache_from_state {n L : ℕ} {heap : NaturalHeap} {r : Registers ℕ} {adj : PairFlags n}
+    {demands : Finset (Pair n)} (s : Code (EncodedIntegerShortestPaths.graph adj) demands L) (positive : 0<L)
+    (EN : ResidualSearch.Enumeration (Node n L)) (E : ResidualSearch.Enumeration (Network n L))
+    {R M scaleBits : Bits} {words : List (List Bits)} (stored : StateAt heap r.b s.data words scaleBits)
+    (config : Parameters (L:=L) heap r.c adj R M) (tape : Bits) :
+    let refreshed := refresh (tabulatedOptimizer positive (ResidualSearch.Enumeration.fin n) E) s
+    let bestWords := CandidateFamilyData.familyWords ⟨adj,s.data.cut⟩ s.data.remaining (4*s.data.scale) L.bits EN E
+    ∃ (ext : NaturalHeap) (root k : ℕ),CacheAt (heap++ext) root s.data refreshed.optimal refreshed.candidate words bestWords scaleBits ∧
+      NaturalRun program k (state heap r [] tape 2) [] (state (heap++ext) (r.set .r3 root) [] tape 4) ∧
+      k ≤ CandidateRefreshProgram.instructionBound n L n.size L.size scaleBits.length+18 := by
+  obtain ⟨ext,best,k,output,run,bound⟩ := refresh_call s positive EN E stored config tape
+  let mid := heap++ext
+  let cache : Cell ℕ := .pair r.b best
+  have finish : tickNatural program (state mid (r.set .r3 best) [] tape 3)=
+      some ⟨state (mid++[cache]) (r.set .r3 mid.length) [] tape 4,[],0⟩ := by
+    simp [ReferenceProgramInvocation.state,program,tickNatural,Registers.get,Registers.set,allocateNatural,Recipe.cell,cache]
+  refine ⟨ext++[cache],mid.length,k+1,?_,?_,by omega⟩
+  · rw [← List.append_assoc]
+    exact ⟨r.b,best,by simp [mid,cache],state_extend (state_extend stored ext) [cache],
+      AdaptiveControllerStorage.candidate_extend output [cache]⟩
+  · simpa only [mid,List.append_assoc,List.nil_append] using append_run run (.step finish (.done _))
+
 set_option maxHeartbeats 2300000 in
 theorem natural_round_refresh {n L W B : ℕ} {heap : NaturalHeap} {r : Registers ℕ} {adj : PairFlags n}
     {demands : Finset (Pair n)} (s : Code (EncodedIntegerShortestPaths.graph adj) demands L)

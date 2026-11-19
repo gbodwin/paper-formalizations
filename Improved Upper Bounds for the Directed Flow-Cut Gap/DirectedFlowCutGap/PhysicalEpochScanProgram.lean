@@ -58,6 +58,10 @@ def instructionBound (n L fuel H W B scale ratio threshold : ℕ) : ℕ :=
   let base := EpochScanBounds.baseInstructions n L (n*n) W B scale ratio threshold
   epoch+25+EpochScanBounds.loopBound (n*n) (H+epoch+21) alloc base+1
 
+def allocationBound (n L fuel W B scale ratio threshold : ℕ) : ℕ :=
+  PhysicalEpochInputProgram.instructionBound n L fuel+21+
+    (n*n)*EpochScanBounds.stepCells n L (n*n) W B scale ratio threshold
+
 private theorem input_slots (pc : Fin 401) (h : PhysicalEpochInputProgram.program pc≠.halt) :
     program (inputLabel pc)=ReferenceProgramLabels.instruction inputLabel (PhysicalEpochInputProgram.program pc) := by
   by_cases stop : pc.val=3
@@ -165,6 +169,14 @@ private theorem scan_bound (n L W B scale ratio threshold H h : ℕ) {cells coun
     AdaptiveRoundRefreshProgram.instructionBound EpochSelectedRoundProgram.instructionBound EpochGridLookupProgram.instructionBound
   gcongr
 
+private theorem scan_allocation_bound (n L W B scale ratio threshold : ℕ) {cells count : ℕ}
+    (hc : cells≤n*n) (hm : count≤n*n) :
+    count*EpochScanBounds.stepCells n L cells W B scale ratio threshold ≤
+      (n*n)*EpochScanBounds.stepCells n L (n*n) W B scale ratio threshold := by
+  unfold EpochScanBounds.stepCells EpochScanBounds.roundBound AdaptiveRoundRefreshProgram.instructionBound
+    EpochSelectedRoundProgram.instructionBound EpochGridLookupProgram.instructionBound
+  gcongr
+
 private theorem dispatch {heap : NaturalHeap} {r : Registers ℕ} {root order cells : ℕ} {tape : Bits}
     (atRoot : heap[root]?=some (.pair order cells)) :
     NaturalRun program 2 (state heap (r.set .r0 root) [] tape 1) []
@@ -191,7 +203,8 @@ theorem natural_epoch_scan {n L fuel W B H : ℕ} {heap : NaturalHeap} {r : Regi
       Stored (heap++ext) root (EpochScanData.scan positive E R M input.cell input.order s) positive EN E words scale ∧
       NaturalRun program k (state heap r [] tape 0) (observed.requests.map Event.request)
         (state (heap++ext) ⟨orderRoot,cellRoot,r.c,root⟩ [] rest 4) ∧
-      k≤ instructionBound n L fuel H W B scale.length R.length M.length ∧ observed.requests.length=reads := by
+      k≤ instructionBound n L fuel H W B scale.length R.length M.length ∧
+      ext.length≤ allocationBound n L fuel W B scale.length R.length M.length ∧ observed.requests.length=reads := by
   let a := s.data.remaining
   let input := RetainedTapeInput.materialize positive a t
   let observed := PhysicalDrawSequenceProgram.batch fuel (RetainedEpochFromMasks.bounds a positive) tape
@@ -223,7 +236,7 @@ theorem natural_epoch_scan {n L fuel W B H : ℕ} {heap : NaturalHeap} {r : Regi
     obtain ⟨d,hd,eq⟩ := List.mem_map.mp (List.of_mem_zip member).2
     rw [← eq]
     exact (widths d (List.drop_subset m observed.draws hd)).trans gridWidth
-  obtain ⟨es,root,k,stored,scan,time,_⟩ := EpochScanProgram.natural_scan s positive EN E input.cell values
+  obtain ⟨es,root,k,stored,scan,time,scanSpace⟩ := EpochScanProgram.natural_scan s positive EN E input.cell values
     (r:=scanArgs) orderRep cellRep (parameters_extend params (ep++ee)) (stored_extend cache (ep++ee))
     hW vertexWidth rowWidths levels weightWidths rest
   have sampleRun := sample_call load body
@@ -239,7 +252,7 @@ theorem natural_epoch_scan {n L fuel W B H : ℕ} {heap : NaturalHeap} {r : Regi
     omega
   have finalBound := scan_bound n L W B scale.length R.length M.length
     (H+PhysicalEpochInputProgram.instructionBound n L fuel+21) start.length cellCount orderCount size
-  refine ⟨ep++ee++es,root,orderRoot,cellRoot,e+21+(2+(k+2)),?_,?_,?_,count⟩
+  refine ⟨ep++ee++es,root,orderRoot,cellRoot,e+21+(2+(k+2)),?_,?_,?_,?_,count⟩
   · simpa only [start,List.append_assoc] using stored
   · simpa only [e,start,scanArgs,Registers.get,Registers.set,List.append_nil,List.append_assoc] using
       append_run sampleRun (append_run walk invoke)
@@ -247,6 +260,12 @@ theorem natural_epoch_scan {n L fuel W B H : ℕ} {heap : NaturalHeap} {r : Regi
       (EpochScanBounds.stepCells n L cells.length W B scale.length R.length M.length)
       (EpochScanBounds.baseInstructions n L cells.length W B scale.length R.length M.length)+1 at time
     dsimp only [instructionBound]
+    omega
+  · have prepSpace : (ep++ee).length≤e+21 := ControllerWordWidth.extension_bound sampleRun rfl
+    change es.length ≤ input.order.length*EpochScanBounds.stepCells n L cells.length W B scale.length R.length M.length at scanSpace
+    have fullSpace := scanSpace.trans (scan_allocation_bound n L W B scale.length R.length M.length cellCount orderCount)
+    dsimp only [allocationBound]
+    rw [List.length_append]
     omega
 
 private theorem at_entry (s : NaturalState 7789) (entry : s.pc=0) (quiet : s.stack=[])
@@ -281,7 +300,7 @@ theorem physical_epoch_scan {n L fuel W B H A : ℕ} {adj : PairFlags n} {demand
   let old := eraseState initial
   let budget := instructionBound n L fuel H W B scale.length R.length M.length
   let observed := PhysicalDrawSequenceProgram.batch fuel (RetainedEpochFromMasks.bounds s.data.remaining positive) initial.source
-  obtain ⟨ext,root,orderRoot,cellRoot,k,rep,body,within,count⟩ := natural_epoch_scan s positive EN E guard params cache
+  obtain ⟨ext,root,orderRoot,cellRoot,k,rep,body,within,_,count⟩ := natural_epoch_scan s positive EN E guard params cache
     (by simpa only [eraseState,State.map,List.length_map] using (Nat.le_add_right initial.heap.length (initial.stack.length+1)).trans (by simpa only [State.records,Nat.add_assoc] using bounded.1)) hW vertexWidth gridWidth
     rowWidths weightWidths initial.source rest reads t sample
   let final := state (old.heap++ext) ⟨orderRoot,cellRoot,old.registers.c,root⟩ [] rest 4
