@@ -8,9 +8,12 @@ existing typed solver and includes the charge in its full polynomial.
 
 `PhysicalIntegerRounding.boundaryWords` produces and charges the exact input
 words for the same packed program. The hard rounding path shares these words
-between heap accounting and initialization. It converts the returned mask
-through one array and charges for the copy. The executable test calls the
-packed controller directly to exercise this boundary on a small graph.
+between heap accounting and initialization. It reads the returned mask from the
+same cached store, converts the word through one array and charges for the
+copy. The guarded cache refines every attempt, including guard charges,
+fuel failure and tape exhaustion. The native guard fixture consumes one
+bit and checks the literal suffix and charge against the reference. A
+second fixture enters the packed controller directly on an empty graph.
 
 `WeakDecomposition.edge_family_of_original_floor` and its PMF theorem use
 the exact original-weight oracle and the original near-linear horizon

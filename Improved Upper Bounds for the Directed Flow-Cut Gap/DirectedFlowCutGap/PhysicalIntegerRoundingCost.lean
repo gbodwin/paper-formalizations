@@ -82,7 +82,7 @@ theorem hard_paid {n L T : ℕ} {adj : PairFlags n} (positive : 0<L) (tape : Bit
     change ∀ limit paid, GuardedReferenceExecution.execute RawGraphControllerProgram.program limit input.1 paid=none at proved
     have stop := proved (instructionBound n L (H+1) T.bits+1) 0
     dsimp only [input,matrix,H] at stop
-    simp [PhysicalIntegerRounding.hardRun,preparedCells_eq,stop] at observed
+    simp [PhysicalIntegerRounding.hardRun_reference,preparedCells_eq,stop] at observed
   | some answer =>
     rcases answer with ⟨cut,rest,reads⟩
     rw [model] at proved
@@ -105,7 +105,7 @@ theorem hard_paid {n L T : ℕ} {adj : PairFlags n} (positive : 0<L) (tape : Bit
     have finished : result.paid=input.2+paid+(PhysicalCoverAccess.readWord out.heap out.registers.d).2+
         (PhysicalIntegerRounding.boundaryWords n L T).paid+PhysicalIntegerRounding.maskCopyCharge n n := by
       dsimp only [input,matrix] at ran
-      simp [PhysicalIntegerRounding.hardRun,preparedCells_eq,ran,output] at observed
+      simp [PhysicalIntegerRounding.hardRun_reference,preparedCells_eq,ran,output] at observed
       exact congrArg PhysicalIntegerRounding.Result.paid observed.symm
     rw [finished]
     have base : input.2+paid ≤ packedCost n L T := Nat.add_le_add packing time

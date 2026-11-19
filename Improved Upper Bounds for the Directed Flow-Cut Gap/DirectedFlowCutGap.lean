@@ -243,6 +243,7 @@ import DirectedFlowCutGap.CacheAdvanceProgram
 import DirectedFlowCutGap.CacheGatesProgram
 import DirectedFlowCutGap.CacheInstallProgram
 import DirectedFlowCutGap.CacheStabilizeProgram
+import DirectedFlowCutGap.CachedGuardedReferenceExecution
 import DirectedFlowCutGap.CachedReferenceExecution
 import DirectedFlowCutGap.CachedReferenceHeap
 import DirectedFlowCutGap.CandidateBlockDifferenceProgram

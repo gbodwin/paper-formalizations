@@ -3,6 +3,7 @@ import DirectedFlowCutGap.EncodedIntegerRounding
 import DirectedFlowCutGap.EncodedEpochParameters
 import DirectedFlowCutGap.PhysicalCoverAccess
 import DirectedFlowCutGap.BinaryNaturalView
+import DirectedFlowCutGap.CachedGuardedReferenceExecution
 
 /-! Execute all three cutoff regimes and transport the actual output and tape. -/
 
@@ -56,7 +57,29 @@ def boundaryWords (n L T : ℕ) : BoundaryWords :=
 
 def maskCopyCharge (n length : ℕ) : ℕ := 16*(n+length+1)^2
 
+private def readCachedWord (store : CachedReferenceHeap.Store) : Bits → PhysicalCoverAccess.Read Bits :=
+  PhysicalCoverAccess.readWordWith (CachedReferenceHeap.read store) store.cells.size
+
+private theorem readCachedWord_eq (store : CachedReferenceHeap.Store) (root : Bits) :
+    readCachedWord store root=PhysicalCoverAccess.readWord store.cells.toList root := by
+  have read : CachedReferenceHeap.read store = PhysicalCoverAccess.access store.cells.toList :=
+    funext (CachedReferenceHeap.read_eq store)
+  simp only [readCachedWord,PhysicalCoverAccess.readWord,read,Array.length_toList]
+
 def hardRun {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (tape : Bits) : Option (Result n) :=
+  let words := boundaryWords n L T
+  let matrix := GraphRelaxationRefinement.matrix adj
+  let H := cells matrix words.dimension words.level words.trials
+  let entry := prepare matrix words.dimension words.level words.trials tape
+  do
+    let (out,paid) ← CachedGuardedReferenceExecution.execute RawGraphControllerProgram.program
+      (instructionBound n L (H+1) words.trials+1) (CachedReferenceExecution.FastState.ofReference entry.1) 0
+    let observed := readCachedWord out.store out.registers.d
+    let mask ← observed.1
+    pure ⟨fromWord n mask,out.source,entry.2+paid+observed.2+words.paid+maskCopyCharge n mask.length⟩
+
+theorem hardRun_reference {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (tape : Bits) :
+    hardRun T adj L tape = (
   let words := boundaryWords n L T
   let matrix := GraphRelaxationRefinement.matrix adj
   let H := cells matrix words.dimension words.level words.trials
@@ -66,7 +89,16 @@ def hardRun {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (tape : Bits) : Op
       (instructionBound n L (H+1) words.trials+1) entry.1 0
     let observed := PhysicalCoverAccess.readWord out.heap out.registers.d
     let mask ← observed.1
-    pure ⟨fromWord n mask,out.source,entry.2+paid+observed.2+words.paid+maskCopyCharge n mask.length⟩
+    pure ⟨fromWord n mask,out.source,entry.2+paid+observed.2+words.paid+maskCopyCharge n mask.length⟩) := by
+  unfold hardRun
+  dsimp only
+  rw [← CachedGuardedReferenceExecution.execute_ofReference]
+  cases h : CachedGuardedReferenceExecution.execute _ _ _ _ with
+  | none => rfl
+  | some result =>
+    rcases result with ⟨out,paid⟩
+    simp only [Option.map_some,CachedReferenceExecution.FastState.freeze,readCachedWord_eq]
+    rfl
 
 private noncomputable abbrev maskTree {n L : ℕ} (adj : PairFlags n) (positive : 0<L) :=
   map (fun s => s.data.cut)
@@ -92,7 +124,7 @@ private theorem hard_observe {n L : ℕ} (T : ℕ) (adj : PairFlags n) (positive
   cases model : ControllerTapeModel.run positive E (ratio n) T (epochs n) (epochs n) (sourceCode (adj:=adj) positive) tape with
   | none =>
     rw [model] at physical
-    simp [hardRun,matrix,input,physical]
+    simp [hardRun_reference,matrix,input,physical]
   | some answer =>
     rcases answer with ⟨out,rest,reads⟩
     rw [model] at physical
@@ -100,7 +132,7 @@ private theorem hard_observe {n L : ℕ} (T : ℕ) (adj : PairFlags n) (positive
     dsimp only [input,matrix] at done
     have observed : (PhysicalCoverAccess.readWord native.heap native.registers.d).1 =
         some out.data.cut.toList := (PhysicalCoverAccess.readWord_value _ _).trans mask
-    simp [hardRun,done,observed,Result.observe,fromWord_exact,tail]
+    simp [hardRun_reference,done,observed,Result.observe,fromWord_exact,tail]
 
 set_option maxHeartbeats 1100000 in
 private theorem tree_hard {n L : ℕ} (adj : PairFlags n) (positive : 0<L) (inside : L≤n)
