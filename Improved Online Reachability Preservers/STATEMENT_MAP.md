@@ -143,9 +143,13 @@ the work over a full weighted fractional run on the paired forest. The
 thin separator shares its reachability interval across capacity tests.
 Its interval count covers the search inspections and filter, with graph
 container construction outside that term. The [thin run counter](OnlineReachabilityPreservers/ThinSearchWork.lean)
-also covers reconstruction of the cut to update loads. Across a feasible
+also covers reconstruction of the cut to update loads, caching the interval
+before its edge filter. Across a feasible
 trace it charges at most one separator budget per request plus one per
 unit of total load increase, which is at most \(|E|(\lfloor\log_2|E|\rfloor+1)\).
+The [thin rounding counter](OnlineReachabilityPreservers/SteinerThinReplay.lean)
+composes that budget with the rounded-arc scan and reachability test at
+every prefix, including the final evaluation if there is no miss.
 The [route counters](OnlineReachabilityPreservers/RouteWork.lean)
 bound arc inspections for SCC labels and shortest routes, and
 sum the search work over greedy forwards growth. They also bound

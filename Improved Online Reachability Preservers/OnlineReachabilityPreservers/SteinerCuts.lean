@@ -12,7 +12,8 @@ variable {V : Type*} [LinearOrder V] [Fintype V]
 
 /-- Edges with both endpoints in the reachability interval of the demand. -/
 def intervalArcs (G : Arcs V) (d : V × V) : Arcs V :=
-  G.filter fun e => e.1 ∈ reachInterval G d ∧ e.2 ∈ reachInterval G d
+  let interval := reachInterval G d
+  G.filter fun e => e.1 ∈ interval ∧ e.2 ∈ interval
 
 theorem intervalArcs_subset (G : Arcs V) (d : V × V) : intervalArcs G d ⊆ G :=
   filter_subset _ _

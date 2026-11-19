@@ -458,6 +458,13 @@ An exact-source replay grants no coverage to a paper statement outside the
   kernel replay passed. Independent review checked the exact outputs,
   prefix replay and operation scope.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44487967461).
+- [c9385791](https://github.com/gbodwin/paper-formalizations/commit/c9385791d652e1980503b1a7c1f8d643add4f4a9)
+  caches the thin separator and bounds the whole fractional run by
+  successful load updates and one terminal test per request. The
+  3318-declaration audit and kernel replay passed. Independent review
+  found repeated interval searches in the cut reconstruction. The next
+  checkpoint shares that interval before filtering its edges.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44489545275).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
@@ -476,6 +483,13 @@ notes. The live deployment and local controls passed. The research entry
 again linked to the arXiv manuscript.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44478646760).
+
+PaperLab version 17 pins 110 links to `abada20c` and contains 15 boxed L
+notes. It includes both unrestricted incidence theorems and the full
+Lemma 35 repair. The deployed render and local controls passed. The
+research entry again linked to the arXiv manuscript.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44486348837).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
