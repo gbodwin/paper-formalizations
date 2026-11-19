@@ -277,6 +277,30 @@ private theorem frozen_cut_of_caps {k : ℕ} {half : Bool} (pieces : I → List 
   · rw [relabeledMass, mass]
     exact (rectanglePaths_mass_le Z A B).trans total
 
+/-- If both upper caps already hold, both supports may be larger than the
+original budgets by factors of four thirds. At full original mass the
+rectangle estimate and peeling keep at least one sixteenth. -/
+theorem regularization_list_frozen_after_caps_with_room {half : Bool} {k n p M : ℕ}
+    (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k paths)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (vertices : 3*Fintype.card V ≤ 4*n) (families : 3*Fintype.card I ≤ 4*p)
+    (lengthCap : ∀ i, (paths i).length ≤ 4*M/p)
+    (degreeCap : ∀ v, (occurrences (fun i => (paths i).toFinset) v).card ≤ 4*M/n)
+    (mass : (∑ i, (paths i).length) = M) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  obtain ⟨_,_,capD⟩ := four_average_width hn dense
+  obtain ⟨_,_,capL⟩ := four_average_width hp long
+  have total : (∑ i, (paths i).toFinset.card) = M := by
+    simp only [List.toFinset_card_of_nodup (simple _), mass]
+  exact frozen_cut_of_caps paths simple allowed
+    (M := M) (D := 4*M/n) (L := 4*M/p) (retention := 16)
+    (vNum := 3) (vDen := 4) (pNum := 3) (pDen := 4)
+    hn hp (by decide) (by decide) (by decide) (by decide) vertices families total.le
+    (by rw [total]) lengthCap degreeCap capD capL
+
 /-- If a length-capped subsystem retains three quarters of the original mass,
 peeling retains at least one sixteenth under both budgets. Split vertices
 when the bridge cutoff allows it, or use already capped degrees. -/

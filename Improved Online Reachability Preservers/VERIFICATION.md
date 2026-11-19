@@ -880,6 +880,14 @@ repeated requests. The ledger counts operations on abstract keys.
 [Exact general-digraph comparison proofs](OnlineReachabilityPreservers/SccLiftListWork.lean)
 · [Exact greedy deletion order](OnlineReachabilityPreservers/OfflineListWork.lean).
 
+The common-partition cleaning theorem handles both bridge modes at every
+cutoff under explicit partition hypotheses. It counts only occupied copies
+and pieces. With the full original incidence mass, both upper caps, and at
+most four thirds of both original support budgets, the cleaned witness stays
+within both original budgets and retains at least one sixteenth of the mass.
+Its four caps are relative to the original averages.
+[Common-partition proof](OnlineReachabilityPreservers/CommonPartitionCleaning.lean).
+
 ## Execution examples
 
 A finite execution check of the PaperLab example gave cumulative purchases
@@ -911,6 +919,12 @@ matched each supplied prefix. On the directed diamond the greedy list
 evaluator kept `(0,2)` and `(2,3)`, as dictated by the original lexicographic
 deletion order. The empty graph on zero vertices returned an empty list and
 zero comparisons.
+
+A 30-vertex family of 11 paths with no full bridge at any cutoff had
+39 incidences, maximum length 19, and maximum degree 10. Two common partitions
+produced 31 occupied vertex copies and 12 nonempty pieces, with maximum
+length 10 and maximum degree 5. The occupied supports fit the four-thirds
+allowances and the upper caps use the original budgets and mass.
 
 The weighted-capacity replay builds a table once per separator and constructs
 residual graphs from the stored values and their unique keys. The two-vertex
