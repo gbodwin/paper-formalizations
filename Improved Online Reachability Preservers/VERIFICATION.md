@@ -114,6 +114,11 @@ An exact-source replay grants no coverage to a paper statement outside the
   993-declaration paper audit and local kernel replay passed. Independent
   review checked the geometric regimes, normalization, and empty buckets.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44426396075).
+- [b3794a3a](https://github.com/gbodwin/paper-formalizations/commit/b3794a3a736a893f3d5d2fb38e94e11226ef7822)
+  proves the full acyclic branching upper bound. The 1010-declaration paper
+  audit and local kernel replay passed. Independent review checked the
+  separated geometric tails, all three moment powers, and cap normalization.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44428420973).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

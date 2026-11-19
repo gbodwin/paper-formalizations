@@ -1,3 +1,4 @@
+import OnlineReachabilityPreservers.BranchWindow
 import OnlineReachabilityPreservers.OfflineArithmetic
 import OnlineReachabilityPreservers.OfflineMoment
 import OnlineReachabilityPreservers.Regularization
@@ -44,31 +45,6 @@ private theorem offlineRate_double {b n p : ℝ} (hb : 0 ≤ b) (hb' : b ≤ 1)
   · exact (shift (by norm_num) (by norm_num) (by norm_num)).trans
       (mul_le_mul_of_nonneg_left hF (by norm_num))
   · exact (shift (by linarith) hb (by linarith)).trans (mul_le_mul_of_nonneg_left hG (by norm_num))
-
-private theorem offline_large_window {M n p C : ℝ} (hM : 0 < M) (hn : 0 < n)
-    (hp : 0 < p) (hC : 0 < C)
-    (outside : let ℓ := M/p; let d := M/n; ℓ ≤ 3*(C*p/(ℓ*d^2))) :
-    M ≤ (3*C)^(1/4 : ℝ)*n^(1/2 : ℝ)*p^(3/4 : ℝ) := by
-  let ℓ := M/p
-  let d := M/n
-  have h := mul_le_mul_of_nonneg_right outside (by positivity : 0 ≤ ℓ*d^2)
-  change ℓ*(ℓ*d^2) ≤ (3*(C*p/(ℓ*d^2)))*(ℓ*d^2) at h
-  have pos : 0 < ℓ*d^2 := by dsimp [ℓ, d]; positivity
-  have eq : (3*(C*p/(ℓ*d^2)))*(ℓ*d^2) = 3*C*p := by
-    rw [mul_assoc, div_mul_cancel₀ _ pos.ne', mul_assoc]
-  rw [eq, show ℓ*(ℓ*d^2) = ℓ^2*d^2 by ring] at h
-  have m : M^4 ≤ (3*C)*n^2*p^3 := by
-    have h' := mul_le_mul_of_nonneg_right h (by positivity : 0 ≤ n^2*p^2)
-    convert h' using 1
-    · dsimp [ℓ, d]
-      field_simp
-    · ring
-  have h' := Real.rpow_le_rpow (pow_nonneg hM.le 4) m (show (0 : ℝ) ≤ 1/4 by norm_num)
-  rw [← Real.rpow_natCast_mul hM.le 4, Real.mul_rpow (by positivity) (by positivity),
-    Real.mul_rpow (by positivity) (by positivity), ← Real.rpow_natCast_mul hn.le 2,
-    ← Real.rpow_natCast_mul hp.le 3] at h'
-  norm_num at h'
-  exact h'
 
 private theorem offline_window_term_le {b n p : ℝ} (hb : b ≤ 3/4)
     (hn : 0 < n) (hp : 0 < p) :
@@ -211,43 +187,6 @@ def OfflineIncidenceBound (b B : ℝ) : Prop :=
   ∀ (V : Type u) (I : Type v) [LinearOrder V] [LinearOrder I] [Fintype V] [Fintype I]
     (paths : I → Finset V), BridgeFree (PathBefore paths) 4 →
     (∑ i, ((paths i).card : ℝ)) ≤ offlineRate b (Fintype.card V) (Fintype.card I) * B
-
-private theorem integer_window {n p M : ℕ} (hn : 0 < n) (hp : 0 < p) (hM : 0 < M)
-    (cube : M^3 ≤ 2048*(n*p)^2) :
-    let h : ℕ := (40960*n^2*p^2)/M^3+1
-    let ℓ : ℝ := (M:ℝ)/p
-    let d : ℝ := (M:ℝ)/n
-    let t : ℝ := 40960*p/(ℓ*d^2)
-    (h : ℝ)+1 ≤ 3*t ∧ 40960*n^2*p^2 ≤ (h+1)*M^3 := by
-  dsimp only
-  let ℓ : ℝ := (M:ℝ)/p
-  let d : ℝ := (M:ℝ)/n
-  let t : ℝ := 40960*p/(ℓ*d^2)
-  let R := 40960*n^2*p^2
-  let h := R/M^3+1
-  have npos : (0:ℝ) < n := Nat.cast_pos.mpr hn
-  have ppos : (0:ℝ) < p := Nat.cast_pos.mpr hp
-  have mpos : (0:ℝ) < M := Nat.cast_pos.mpr hM
-  have model : t = (R:ℝ)/(M:ℝ)^3 := by
-    dsimp only [t, ℓ, d, R]
-    push_cast
-    field_simp [npos.ne', ppos.ne', mpos.ne']
-  have lower : 1 ≤ t := by
-    rw [model, le_div_iff₀ (pow_pos mpos 3), one_mul]
-    have hle : M^3 ≤ R := cube.trans (by dsimp [R]; nlinarith)
-    exact_mod_cast hle
-  have floor : ((R/M^3:ℕ):ℝ) ≤ t := by
-    rw [model, le_div_iff₀ (pow_pos mpos 3)]
-    exact_mod_cast Nat.div_mul_le_self R (M^3)
-  change (h:ℝ)+1 ≤ 3*t ∧ R ≤ (h+1)*M^3
-  constructor
-  · dsimp only [h]
-    push_cast
-    linarith only [lower, floor]
-  · calc
-      _ ≤ M^3*h := (Nat.lt_mul_div_succ R (Nat.pow_pos hM)).le
-      _ = h*M^3 := Nat.mul_comm _ _
-      _ ≤ _ := Nat.mul_le_mul_right _ (Nat.le_succ h)
 
 private theorem mean_lower_real {n p M Q : ℕ} (hn : 0 < n) (hp : 0 < p)
     (lower : M^4 ≤ 4096*n^2*p*Q) :
@@ -426,7 +365,7 @@ private theorem offline_regular_step :
   have cube : M^3 ≤ 2048*(n*p)^2 :=
     ((lemma27_acyclic paths free.halfFree).resolve_left (not_le_of_gt hdense)).resolve_left
       (not_le_of_gt hlong)
-  obtain ⟨hsum, hlarge⟩ := integer_window hn hp hM cube
+  obtain ⟨hsum, hlarge⟩ := rounded_branch_window (C := 40960) hn hp hM (by decide) cube
   change (h:ℝ)+1 ≤ 3*t at hsum
   change 40960*n^2*p^2 ≤ (h+1)*M^3 at hlarge
   let F := offlineRate β (n : ℝ) (p : ℝ)
@@ -438,7 +377,7 @@ private theorem offline_regular_step :
   · have houtside : ℓ ≤ 3*t := by
       have h : (M : ℝ) ≤ (h : ℝ)*p := by exact_mod_cast (le_of_not_ge window)
       exact ((div_le_iff₀ ppos).mpr h).trans (by linarith)
-    have hsmall := offline_large_window mpos npos ppos hCp houtside
+    have hsmall := mass_large_length_window mpos npos ppos hCp houtside
     have hU' : U ≤ U+2*A := by linarith only [hA]
     exact (hsmall.trans_eq (mul_assoc _ _ _)).trans
       ((mul_le_mul_of_nonneg_left (offline_window_term_le beta_high npos ppos) hU.le).trans

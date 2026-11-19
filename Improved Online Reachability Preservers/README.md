@@ -48,6 +48,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [OfflineBound](OnlineReachabilityPreservers/OfflineBound.lean) applies each
   Appendix B update to acyclic full-bridge-free systems, including the
   integer branching window, split budgets, and sparse regimes.
+- [`lemma37_acyclic_update` and `theorem38_acyclic_iteration`](OnlineReachabilityPreservers/OnlineBound.lean)
+  prove the corrected Appendix A update and each finite online iterate.
+  The chosen integer window scales with the constant in the inductive estimate.
+  The lower mean absorbs the linear contribution and the two window
+  exceptions give the claimed rates directly.
+- [`theorem1_rounded`](OnlineReachabilityPreservers/OnlineSharp.lean)
+  proves the rounded adaptive online edge bound for the actual forward-growth
+  preserver on arbitrary finite digraphs, at every prefix.
 - [`theorem14_dag_compression` and `offline_pairwise_initial`](OnlineReachabilityPreservers/OfflineIndependence.lean)
   prove the constructive independence reduction on DAGs and its initial
   offline pairwise consequence on arbitrary digraphs. The algorithm deletes
@@ -132,6 +140,6 @@ The library is included in the repository's module index, declaration audit,
 and kernel replay.
 
 The [companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
-includes an interactive trace and a source-linked proof map. The sharp online
-pairwise rate, unrestricted extremal estimates, and full Steiner competitive
-guarantee remain open.
+includes an interactive trace and a source-linked proof map. The limiting
+online pairwise rate, unrestricted extremal estimates, and full Steiner
+competitive guarantee remain open.

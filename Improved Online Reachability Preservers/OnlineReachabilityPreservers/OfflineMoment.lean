@@ -1,3 +1,4 @@
+import OnlineReachabilityPreservers.BranchWindow
 import OnlineReachabilityPreservers.BranchingDegrees
 
 /-! The Appendix B critical power in the path-length second moment. -/
@@ -5,37 +6,6 @@ import OnlineReachabilityPreservers.BranchingDegrees
 namespace OnlineReachabilityPreservers
 
 open Finset
-
-private theorem offline_prefix_term {n k a : ℝ} (hn : 0 < n) (hk : 0 ≤ k)
-    (ha : a ≤ 3/4) :
-    n^(3/4 : ℝ)*k^(1/2 : ℝ) ≤ max n (n^a*k^(2-2*a)) := by
-  by_cases cut : k ≤ Real.sqrt n
-  · have h := Real.rpow_le_rpow hk cut (by norm_num : (0 : ℝ) ≤ 1/2)
-    apply le_max_of_le_left
-    calc
-      _ ≤ n^(3/4 : ℝ)*(Real.sqrt n)^(1/2 : ℝ) := mul_le_mul_of_nonneg_left h (by positivity)
-      _ = n := by
-        rw [Real.sqrt_eq_rpow, ← Real.rpow_mul hn.le, ← Real.rpow_add hn]
-        norm_num
-  · have hsq : n ≤ k^2 := by
-      rw [← Real.sq_sqrt hn.le]
-      exact (sq_le_sq₀ (Real.sqrt_nonneg _) hk).mpr (le_of_lt (lt_of_not_ge cut))
-    let e : ℝ := 3/4-a
-    have he₀ : 0 ≤ e := sub_nonneg.mpr ha
-    have he := Real.rpow_le_rpow hn.le hsq he₀
-    rw [← Real.rpow_natCast_mul hk 2] at he
-    push_cast at he
-    apply le_max_of_le_right
-    calc
-      _ = (n^a*k^(1/2 : ℝ)) * n^e := by
-        rw [mul_comm (n^a*k^(1/2 : ℝ)) (n^e), ← mul_assoc, ← Real.rpow_add hn]
-        have : e+a = 3/4 := by dsimp [e]; ring
-        rw [this]
-      _ ≤ (n^a*k^(1/2 : ℝ))*k^(2*e) := mul_le_mul_of_nonneg_left he (by positivity)
-      _ = _ := by
-        have hkp : 0 < k := (Real.sqrt_pos.2 hn).trans (lt_of_not_ge cut)
-        have he' : (1/2 : ℝ)+2*e = 2-2*a := by dsimp [e]; ring
-        rw [mul_assoc, ← Real.rpow_add hkp, he']
 
 /-- The offline recurrence's square-root term gives a logarithm in the moment.
 Choose the online exponent within 1/max(4, log n) of 3/4 and apply the
@@ -69,7 +39,7 @@ theorem lemma40_ranked_moment (N : ℕ) (values : ℕ → ℝ) {n d L C b : ℝ}
       intro k hk
       apply (prefixBounds k hk).trans
       apply mul_le_mul_of_nonneg_left _ hC.le
-      have h := offline_prefix_term npos (by positivity : (0 : ℝ) ≤ k) ua.le
+      have h := square_root_rate_le npos (by positivity : (0 : ℝ) ≤ k) ua.le
       apply max_le
       · exact le_max_left _ _
       · apply max_le

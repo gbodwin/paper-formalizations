@@ -139,9 +139,11 @@ uses this to prove the upper caps with at most twice the ambient budgets.
   At the dense end, \(p\) of order \(n^2/\log n\) also leaves no fixed
   power of \(n\) to absorb the loss. The graph cap \(n^2\) alone does not
   bridge the gap between this sharp asymptotic statement and the rounded bound.
+  The no-log acyclic estimate gives the rounded graph bound after two
+  iterations with \((a,b)=(62/85,1006/1437)\).
+  [Checked rounded bound](OnlineReachabilityPreservers/OnlineSharp.lean).
 - The [second-moment estimate](OnlineReachabilityPreservers/SecondMoment.lean)
   of Appendix A is checked for a common vertex order under the inductive
-  subfamily bound. The expectation of the dyadic moment sum and the
-  remaining regime reductions are open.
-  The intermediate discrepancies do not
-  furnish counterexamples to Theorems 1, 2, 4, 5 or 8.
+  subfamily bound. The [finite online iteration](OnlineReachabilityPreservers/OnlineBound.lean)
+  uses the acyclic expectation estimates and handles the window exceptions.
+  The intermediate discrepancies concern the printed arguments and formulas.

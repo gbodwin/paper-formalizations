@@ -217,7 +217,8 @@ theorem lemma27_acyclic (paths : I → Finset V) (free : HalfBridgeFree (PathBef
   refine Or.inr (Or.inr (Nat.le_of_mul_le_mul_right ?_ hm))
   convert h using 1 <;> ring
 
-private theorem orderedCompression_free {G : Arcs V} (dag : IsDAG G) (D : List (V × V)) :
+/-- Forward growth gives a common-order half-4-bridge-free family. -/
+theorem orderedCompression_free {G : Arcs V} (dag : IsDAG G) (D : List (V × V)) :
     HalfBridgeFree (PathBefore (topologicalPaths G (compressed G D))) 4 := by
   intro k _ b
   let old : Bridge (CompressedBefore G D) k :=
