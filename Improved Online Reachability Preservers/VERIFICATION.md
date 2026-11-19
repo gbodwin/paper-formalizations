@@ -179,6 +179,11 @@ An exact-source replay grants no coverage to a paper statement outside the
   passed. Independent review checked the uniform constant, both cutoffs,
   and the inverse-square hub failure term.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44441989079).
+- [3678d99b](https://github.com/gbodwin/paper-formalizations/commit/3678d99b02eb94498d9030809f584e044f43e7fa)
+  proves the unit-cost square-root junction comparison. The 1539-declaration
+  paper audit and local kernel replay passed. Independent review checked the
+  arborescences, heavy-demand elimination, and light edge charge.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44442385174).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

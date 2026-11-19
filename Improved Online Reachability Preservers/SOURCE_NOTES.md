@@ -90,6 +90,11 @@ proof obligation.
 [Checked counterexample](OnlineReachabilityPreservers/SplitAudit.lean)
 · [Bridge Girth, Lemma 40](https://arxiv.org/pdf/2212.11944v4).
 
+With a common vertex order, a detour that uses the same path twice can be
+shortened to one step along that path. A detour with distinct path indices
+gives a bridge. The acyclic overlay therefore forces every consecutive arc.
+[Checked acyclic construction](OnlineReachabilityPreservers/AcyclicOverlay.lean).
+
 ## Matters requiring proof or clarification
 
 - Lemma 13's pigeonhole step can pick two paths whose only intersection with

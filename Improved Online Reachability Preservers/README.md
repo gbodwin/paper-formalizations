@@ -95,6 +95,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   chooses one nonnegative slack function of the vertex count that tends to
   zero and works for every demand count. The small-demand bound keeps the
   coefficient of the linear term fixed.
+- [`theorem14_acyclic_overlay_lower`](OnlineReachabilityPreservers/AcyclicOverlay.lean)
+  checks the reverse construction in a common vertex order. Any preserver of
+  the endpoint demands must retain exactly the total incidence count minus
+  the path count in consecutive edges.
 - [`theorem14_dag_compression` and `offline_pairwise_initial`](OnlineReachabilityPreservers/OfflineIndependence.lean)
   prove the constructive independence reduction on DAGs and its initial
   offline pairwise consequence on arbitrary digraphs. The algorithm deletes
