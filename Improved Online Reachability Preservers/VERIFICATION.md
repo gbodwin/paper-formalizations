@@ -733,6 +733,16 @@ requires owner sign-in. The research entry linked to the arXiv manuscript.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44551482548).
 
+PaperLab version 27 pins 145 links to `c7dc4922` and contains 15 boxed L
+notes. The new declarations check the expected bit and edge counts under
+independent infinite fair bits. Independent review, the 4,422-declaration
+paper audit and replay of the changed Lean modules passed. Exact CI also
+replayed every project module. The rendered deployment and interactive
+controls passed. Production requires owner sign-in. The research entry
+linked to the arXiv manuscript.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44558374523).
+
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
 crossing edges on a cyclic input. The empty prefix has no edges, an

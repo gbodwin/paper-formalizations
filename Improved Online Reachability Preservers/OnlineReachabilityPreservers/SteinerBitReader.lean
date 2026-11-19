@@ -12,6 +12,58 @@ def consumeFairWord : (w : ℕ) → List Bool → Option (Fin (2^w) × List Bool
   | w+1, bit::bits => (consumeFairWord w bits).map fun (word,rest) =>
       (finCongr (pow_succ' 2 w).symm (finProdFinEquiv (finTwoEquiv.symm bit,word)), rest)
 
+private def consumeWordAccum : ℕ → ℕ → List Bool → Option (ℕ × List Bool)
+  | 0, word, bits => some (word,bits)
+  | _+1, _, [] => none
+  | n+1, word, b::rest => consumeWordAccum n (2*word + if b then 1 else 0) rest
+
+private theorem consumeWordAccum_eq (n word : ℕ) (bits : List Bool) :
+    consumeWordAccum n word bits = (consumeFairWord n bits).map (fun (suffix,rest) => (word*2^n + suffix.val,rest)) := by
+  induction n generalizing word bits with
+  | zero => simp [consumeWordAccum, consumeFairWord]
+  | succ n ih =>
+    cases bits with
+    | nil => rfl
+    | cons b rest =>
+      simp only [consumeWordAccum, consumeFairWord, ih]
+      cases consumeFairWord n rest with
+      | none => rfl
+      | some output =>
+        obtain ⟨suffix,remaining⟩ := output
+        cases b <;> simp [finProdFinEquiv, finTwoEquiv, pow_succ] <;> ring
+
+/-- Run the same big-endian word reader using shift and add. -/
+def consumeFairWordTail (width : ℕ) (bits : List Bool) : Option (Fin (2^width) × List Bool) :=
+  match consumed : consumeWordAccum width 0 bits with
+  | none => none
+  | some (word,rest) => some (⟨word, by
+      have eq := consumeWordAccum_eq width 0 bits
+      rw [consumed] at eq
+      cases read : consumeFairWord width bits with
+      | none => simp [read] at eq
+      | some output =>
+        obtain ⟨value,suffix⟩ := output
+        simp [read] at eq
+        simp [eq.1]⟩,rest)
+
+@[csimp] theorem consumeFairWord_eq_tail : consumeFairWord = consumeFairWordTail := by
+  funext width bits
+  unfold consumeFairWordTail
+  have eq := consumeWordAccum_eq width 0 bits
+  split
+  · rename_i consumed
+    rw [consumed] at eq
+    cases read : consumeFairWord width bits <;> simp [read] at eq ⊢
+  · rename_i word rest consumed
+    rw [consumed] at eq
+    cases read : consumeFairWord width bits with
+    | none => simp [read] at eq
+    | some output =>
+      obtain ⟨value,suffix⟩ := output
+      simp [read] at eq
+      apply congrArg some
+      exact Prod.ext (Fin.ext eq.1.symm) eq.2.symm
+
 theorem consumeFairWord_ofFn {w : ℕ} (word : Fin w → Bool) (rest : List Bool) :
     consumeFairWord w (List.ofFn word ++ rest) = some (uniformBitsEquiv w word, rest) := by
   induction w with
@@ -57,6 +109,55 @@ termination_by bits.length
 decreasing_by
   have length := (consumeFairWord_suffix _consumed).1
   omega
+
+private def consumeFairIndexLoop (N width : ℕ) (positive : 0 < width) (bits : List Bool) (rejected : ℕ) :
+    Option ((Fin N × ℕ) × List Bool) :=
+  match consumed : consumeFairWord width bits with
+  | none => none
+  | some (word,rest) =>
+    if bound : word.val < N then some ((⟨word.val,bound⟩,rejected),rest)
+    else consumeFairIndexLoop N width positive rest (rejected+1)
+termination_by bits.length
+decreasing_by
+  have length := (consumeFairWord_suffix consumed).1
+  omega
+
+private theorem consumeFairIndexLoop_eq (N : ℕ) (positive : 0 < uniformProposalWidth N) (bits : List Bool)
+    (rejected : ℕ) :
+    consumeFairIndexLoop N (uniformProposalWidth N) positive bits rejected =
+      (consumeFairIndex N bits).map (fun ((index,count),rest) => ((index,count+rejected),rest)) := by
+  induction bits using (measure List.length).wf.induction generalizing rejected with
+  | h bits ih =>
+    rw [consumeFairIndexLoop, consumeFairIndex, dite_eq_left positive]
+    cases read : consumeFairWord (uniformProposalWidth N) bits with
+    | none => simp
+    | some result =>
+      obtain ⟨word, rest⟩ := result
+      by_cases accepted : word.val < N
+      · simp [accepted]
+      · simp only [dite_eq_right accepted]
+        have length := (consumeFairWord_suffix read).1
+        rw [ih rest (by change rest.length < bits.length; omega) (rejected+1)]
+        cases consumeFairIndex N rest with
+        | none => rfl
+        | some output =>
+          rcases output with ⟨⟨index,count⟩,suffix⟩
+          simp [Nat.add_left_comm, Nat.add_comm]
+
+/-- The rejection loop threads its count as an accumulator. -/
+def consumeFairIndexTail (N : ℕ) (bits : List Bool) : Option ((Fin N × ℕ) × List Bool) :=
+  if positive : 0 < uniformProposalWidth N then consumeFairIndexLoop N _ positive bits 0
+  else if positive : 0 < N then some ((⟨0,positive⟩,0),bits) else none
+
+@[csimp] theorem consumeFairIndex_eq_tail : consumeFairIndex = consumeFairIndexTail := by
+  funext N bits
+  unfold consumeFairIndexTail
+  by_cases positive : 0 < uniformProposalWidth N
+  · rw [dite_eq_left positive, consumeFairIndexLoop_eq]
+    cases consumeFairIndex N bits with
+    | none => rfl
+    | some result => rcases result with ⟨⟨index,count⟩,suffix⟩; simp
+  · rw [dite_eq_right positive, consumeFairIndex, dite_eq_right positive]
 
 theorem consumeFairIndex_ofFn {N : ℕ} (positive : 0 < N)
     (word : Fin (uniformProposalWidth N) → Bool) (rest : List Bool) :

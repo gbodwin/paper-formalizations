@@ -1,3 +1,4 @@
+import Mathlib.MeasureTheory.Integral.Lebesgue.Markov
 import Mathlib.Probability.Distributions.Uniform
 import Mathlib.Probability.ProductMeasure
 import OnlineReachabilityPreservers.SteinerBitLaw
@@ -76,6 +77,36 @@ theorem fairBitPrefix_probability {n : ℕ} (event : Finset (Fin n → Bool)) :
   simp only [finiteProbability, card, Finset.sum_const, nsmul_eq_mul, div_eq_mul_inv, ← inv_pow]
   rw [ENNReal.ofReal_mul (by positivity), ENNReal.ofReal_pow (by positivity)]
   norm_num [half]
+
+/-- A score that uses only a fixed prefix has the ordinary uniform finite mean. -/
+theorem fairBitPrefix_lintegral_eq (n : ℕ) (loss : (Fin n → Bool) → ℕ) :
+    (∫⁻ stream, (loss (fairBitPrefix n stream) : ℝ≥0∞) ∂fairBitMeasure) =
+      ENNReal.ofReal ((∑ bits, (loss bits : ℝ)) / (Fintype.card (Fin n → Bool) : ℝ)) := by
+  classical
+  let event := fun bits : Fin n → Bool => fairBitPrefix n ⁻¹' ({bits} : Set (Fin n → Bool))
+  have meas (bits : Fin n → Bool) : MeasurableSet (event bits) :=
+    (MeasurableSet.singleton _).preimage (fairBitPrefix_measurable n)
+  have score (stream : ℕ → Bool) : (loss (fairBitPrefix n stream) : ℝ≥0∞) =
+      ∑ bits, (event bits).indicator (fun _ => (loss bits : ℝ≥0∞)) stream := by
+    rw [Finset.sum_eq_single (fairBitPrefix n stream)]
+    · rw [Set.indicator_of_mem (show stream ∈ event (fairBitPrefix n stream) from rfl)]
+    · intro bits _ different
+      have outside : stream ∉ event bits := fun same => different (Set.mem_singleton_iff.mp same).symm
+      rw [Set.indicator_of_notMem outside]
+    · simp
+  simp_rw [score]
+  rw [lintegral_finsetSum _ (fun bits _ => measurable_const.indicator (meas bits))]
+  simp only [Finset.sum_div]
+  rw [ENNReal.ofReal_sum_of_nonneg (fun _ _ => by positivity)]
+  apply Finset.sum_congr rfl
+  intro bits _
+  rw [lintegral_indicator_const (meas bits)]
+  have prob : fairBitMeasure (event bits) = ENNReal.ofReal (finiteProbability ({bits} : Finset _)) := by
+    simpa only [event, Finset.coe_singleton] using fairBitPrefix_probability {bits}
+  rw [prob]
+  simp only [finiteProbability, Finset.card_singleton, Nat.cast_one]
+  rw [← ENNReal.ofReal_natCast (loss bits), ← ENNReal.ofReal_mul (Nat.cast_nonneg _)]
+  simp only [div_eq_mul_inv, one_mul]
 
 private theorem fairBitPrefix_ofFn_prefix {a b : ℕ} (short : a ≤ b) (stream : ℕ → Bool) :
     List.ofFn (fairBitPrefix a stream) <+: List.ofFn (fairBitPrefix b stream) := by
@@ -358,5 +389,98 @@ theorem theorem21_online_steiner_fair_expected {ε : ℝ} (epsilon : 0 < ε) :
   intro W _ _ G Z D sub reaches
   rw [fairBitDecoderEdgeIntegral_eq]
   exact ENNReal.ofReal_le_ofReal (rate W D sub reaches)
+
+theorem fairBitDecoderBitLength_measurable (G : Arcs V) (height : ℕ)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card) :
+    Measurable (fairBitDecoderBitLength G height coordinates vertices arcs) := by
+  unfold fairBitDecoderBitLength
+  exact Measurable.tsum fun result => measurable_const.indicator
+    (decoderOutcomeEvent_measurable G height coordinates vertices arcs result)
+
+/-- A fixed budget of fair bits fails only on the tail of the consumed-length distribution. -/
+theorem fairBitDecoder_failure_le (G : Arcs V) (height : ℕ)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card) (budget : ℕ) :
+    fairBitMeasure {stream | decodeCompleteSteinerSeed G height coordinates vertices arcs
+      (List.ofFn (fairBitPrefix budget stream)) = none} ≤
+        (completeSteinerSeedPolynomial (Fintype.card V) G.card height : ℝ≥0∞) / (budget+1 : ℕ) := by
+  classical
+  let length := fairBitDecoderBitLength G height coordinates vertices arcs
+  have outside : {stream | decodeCompleteSteinerSeed G height coordinates vertices arcs
+      (List.ofFn (fairBitPrefix budget stream)) = none} ≤ᵐ[fairBitMeasure]
+        {stream | ((budget+1 : ℕ) : ℝ≥0∞) ≤ length stream} := by
+    filter_upwards [fairBitDecoderBitLength_ae_matches G height coordinates vertices arcs] with stream measured
+    obtain ⟨n, len, ⟨early,hubs,thin⟩, ⟨hubRejects,thinRejects⟩, parsed⟩ := measured
+    intro failed
+    have greater : budget < n := by
+      by_contra! within
+      obtain ⟨tail, joined⟩ := fairBitPrefix_ofFn_prefix within stream
+      have still := decodeCompleteSteinerSeed_append G height coordinates vertices arcs tail parsed
+      rw [joined] at still
+      change decodeCompleteSteinerSeed G height coordinates vertices arcs
+        (List.ofFn (fairBitPrefix budget stream)) = none at failed
+      rw [failed] at still
+      contradiction
+    change ((budget+1 : ℕ) : ℝ≥0∞) ≤ length stream
+    rw [show length stream = (n : ℝ≥0∞) from len]
+    exact_mod_cast (Nat.succ_le_of_lt greater)
+  exact (measure_mono_ae outside).trans <|
+    (meas_ge_le_lintegral_div (fairBitDecoderBitLength_measurable G height coordinates vertices arcs).aemeasurable
+      (by positivity) (by simp)).trans <|
+    ENNReal.div_le_div_right (fairBitDecoderBitLength_polynomial G height coordinates vertices arcs) _
+
+private theorem fairBitOutcome_cost (G : Arcs V) (height : ℕ)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card)
+    (D : List (V × V)) (stream : ℕ → Bool)
+    (result : DecoderSeed G height × DecoderCounts G)
+    (accepted : stream ∈ decoderOutcomeEvent G height coordinates vertices arcs result) :
+    fairBitDecoderEdgeCount G height coordinates vertices arcs D stream = (completeSteinerDrawRun G height result.1.1 result.1.2.1 result.1.2.2 D).card := by
+  classical
+  unfold fairBitDecoderEdgeCount
+  rw [Finset.sum_eq_single result.1]
+  · have member : stream ∈ fairBitDecoderSeedEvent G height coordinates vertices arcs result.1.1 result.1.2.1 result.1.2.2 :=
+      Set.mem_iUnion.mpr ⟨result.2,accepted⟩
+    rw [Set.indicator_of_mem member]
+  · intro seed _ unequal
+    apply Set.indicator_of_notMem
+    intro member
+    obtain ⟨counts, inside⟩ := Set.mem_iUnion.mp member
+    have separate : (seed,counts) ≠ result := fun eq => unequal (congrArg Prod.fst eq)
+    exact Set.disjoint_left.mp (decoderOutcomeEvents_disjoint G height coordinates vertices arcs separate) inside accepted
+  · simp
+
+/-- Any successful reading of a prefix gives the same cost as the stream outcome. -/
+theorem fairBitDecoderEdgeCount_ae_decode_prefix (G : Arcs V) (height : ℕ)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card) (D : List (V × V)) :
+    ∀ᵐ stream ∂fairBitMeasure, ∀ n seed counts rest,
+      decodeCompleteSteinerSeed G height coordinates vertices arcs (List.ofFn (fairBitPrefix n stream)) =
+        some (seed, counts, rest) →
+      fairBitDecoderEdgeCount G height coordinates vertices arcs D stream =
+        (completeSteinerDrawRun G height seed.1 seed.2.1 seed.2.2 D).card := by
+  filter_upwards [decoderOutcome_ae G height coordinates vertices arcs] with stream accepted
+  obtain ⟨result, member⟩ := accepted
+  intro n seed counts rest read
+  rw [fairBitOutcome_cost G height coordinates vertices arcs D stream result member]
+  simp only [decoderOutcomeEvent, Set.mem_preimage, Finset.mem_coe, completeSteinerRawSeedEvent,
+    Finset.mem_filter, Finset.mem_univ, true_and, List.append_nil] at member
+  let width := decoderOutcomeWidth G height arcs result
+  change decodeCompleteSteinerSeed G height coordinates vertices arcs
+    (List.ofFn (fairBitPrefix width stream)) = _ at member
+  have same : seed = result.1 := by
+    rcases le_total width n with short | long
+    · obtain ⟨tail, joined⟩ := fairBitPrefix_ofFn_prefix short stream
+      have upgraded := decodeCompleteSteinerSeed_append G height coordinates vertices arcs tail member
+      rw [joined, read] at upgraded
+      exact congrArg Prod.fst (Option.some.inj upgraded)
+    · obtain ⟨tail, joined⟩ := fairBitPrefix_ofFn_prefix long stream
+      obtain ⟨early, hubs, thin⟩ := seed
+      obtain ⟨hubRejects, thinRejects⟩ := counts
+      have upgraded := decodeCompleteSteinerSeed_append G height coordinates vertices arcs tail read
+      rw [joined, member] at upgraded
+      exact (congrArg Prod.fst (Option.some.inj upgraded)).symm
+  rw [same]
 
 end OnlineReachabilityPreservers
