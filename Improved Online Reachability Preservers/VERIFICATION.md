@@ -266,6 +266,13 @@ An exact-source replay grants no coverage to a paper statement outside the
   review checked the support, skew and capacity invariants and the
   degenerate endpoint and supply cases.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44458091574).
+- [6bac9549](https://github.com/gbodwin/paper-formalizations/commit/6bac9549814cb4d104c90ae21755e806f14eabed)
+  applies the online fractional separator to the paired forest. The
+  2208-declaration audit and local kernel replay passed. Independent
+  review checked current group attachments, zero links, all-prefix
+  coverage at the fixed scale, and the comparison to any feasible
+  original subgraph.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44458678422).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

@@ -1,4 +1,5 @@
 import Mathlib.Algebra.BigOperators.Field
+import OnlineReachabilityPreservers.SteinerFiniteSampling
 import OnlineReachabilityPreservers.SteinerThinCover
 
 /-! Fixed edge thresholds and finite product probabilities for the thin phase. -/
@@ -6,33 +7,6 @@ import OnlineReachabilityPreservers.SteinerThinCover
 namespace OnlineReachabilityPreservers
 
 open Finset
-
-private noncomputable def constrainedSamples {I : Type*} [Fintype I] (m : ℕ) (allowed : I → Finset (Fin m)) :
-    Finset (I → Fin m) := by
-  classical
-  exact univ.filter fun sample => ∀ i, sample i ∈ allowed i
-
-private theorem constrainedSamples_card {I : Type*} [Fintype I] (m : ℕ) (allowed : I → Finset (Fin m)) :
-    (constrainedSamples m allowed).card = ∏ i, (allowed i).card := by
-  classical
-  let e : {s // s ∈ constrainedSamples m allowed} ≃ ∀ i, {u // u ∈ allowed i} :=
-    { toFun := fun s i => ⟨s.1 i, (mem_filter.mp s.2).2 i⟩
-      invFun := fun f => ⟨fun i => (f i).1,mem_filter.mpr ⟨mem_univ _,fun i => (f i).2⟩⟩
-      left_inv := fun _ => Subtype.ext rfl
-      right_inv := fun _ => funext fun _ => Subtype.ext rfl }
-  rw [← Fintype.card_coe,Fintype.card_congr e,Fintype.card_pi]
-  simp
-
-private def lowThreshold (m u : ℕ) : Finset (Fin m) := univ.filter fun i => (i:ℕ) < u
-
-private theorem lowThreshold_card (m u : ℕ) : (lowThreshold m u).card = min m u := by
-  let eqv : {i // i ∈ lowThreshold m u} ≃ Fin (min m u) :=
-    { toFun := fun i => ⟨i.1.1, lt_min i.1.isLt (mem_filter.mp i.2).2⟩
-      invFun := fun i => ⟨⟨i.1, i.isLt.trans_le (min_le_left _ _)⟩,
-        mem_filter.mpr ⟨mem_univ _,i.isLt.trans_le (min_le_right _ _)⟩⟩
-      left_inv := fun _ => Subtype.ext (Fin.ext rfl)
-      right_inv := fun _ => Fin.ext rfl }
-  rw [← Fintype.card_coe,Fintype.card_congr eqv,Fintype.card_fin]
 
 variable {V : Type*} [LinearOrder V] [Fintype V]
 
