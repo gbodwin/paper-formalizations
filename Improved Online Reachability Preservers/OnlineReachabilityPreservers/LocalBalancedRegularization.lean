@@ -1,0 +1,172 @@
+import OnlineReachabilityPreservers.LocalInducedPaths
+
+/-! Both cleaning budgets for locally ordered paths with unique intersections. -/
+
+namespace OnlineReachabilityPreservers
+
+open Finset
+
+variable {V I : Type*} [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
+
+local notation "ListBefore" => SourceAudit.BeforeIn
+
+private theorem mass_le_average_width {M q : ℕ} (positive : 0 < q) (enough : q ≤ M) :
+    M ≤ q * ((4 * M) / q) := by
+  have lower := Nat.lt_mul_div_succ (4 * M) positive
+  rw [Nat.mul_succ] at lower
+  omega
+
+/-- For a family with unique intersections, restrict the two splits back to
+both original budgets. Keep one sixteenth of the mass and all four caps
+relative to the input averages. The exclusions are preserved through size four. -/
+theorem regularization_list_balanced_caps (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
+    (unique : ∀ {i j x y}, i ≠ j → x ∈ paths i → x ∈ paths j → y ∈ paths i → y ∈ paths j → x = y)
+    (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
+    (dense : Fintype.card V ≤ ∑ i, (paths i).length) (long : Fintype.card I ≤ ∑ i, (paths i).length) :
+    let n := Fintype.card V
+    let p := Fintype.card I
+    let M := ∑ i, (paths i).length
+    let D := (4 * M) / n
+    let L := (4 * M) / p
+    let after := listRegularizedPaths paths D L
+    ∃ A : Finset (ListVertexBlockIndex paths D),
+      ∃ B : Finset (ListBlockIndex (splitListVertices paths D) L),
+        let clean := restrictListPaths after A B
+        A.card ≤ n ∧ B.card ≤ p ∧ M ≤ 16 * (∑ i, (clean i).length) ∧
+          (∀ v : A, (M : ℝ) / (4 * (n : ℝ)) ≤ (occurrences (fun i => (clean i).toFinset) v).card ∧
+            ((occurrences (fun i => (clean i).toFinset) v).card : ℝ) ≤ 4 * (M : ℝ) / (n : ℝ)) ∧
+          (∀ i : B, (M : ℝ) / (4 * (p : ℝ)) ≤ (clean i).length ∧
+            ((clean i).length : ℝ) ≤ 4 * (M : ℝ) / (p : ℝ)) ∧
+          (HalfBridgeFree (ListBefore paths) 4 → HalfBridgeFree (ListBefore clean) 4) ∧
+          (BridgeFree (ListBefore paths) 4 → BridgeFree (ListBefore clean) 4) := by
+  let n := Fintype.card V
+  let p := Fintype.card I
+  let M := ∑ i, (paths i).length
+  let D := (4 * M) / n
+  let L := (4 * M) / p
+  let copies := splitListVertices paths D
+  let after := listRegularizedPaths paths D L
+  let Z (i : ListBlockIndex copies L) := (after i).toFinset
+  obtain ⟨hD, trimD, capD⟩ := four_average_width hn dense
+  obtain ⟨hL, trimL, capL⟩ := four_average_width hp long
+  obtain ⟨_, _, afterMass, length, degree⟩ := regularization_list_size paths simple D L hD hL
+    (mass_le_average_width hn dense) (mass_le_average_width hp long)
+  have sourceLength (i : I) : (paths i).toFinset.card = (paths i).length := List.toFinset_card_of_nodup (simple i)
+  have copiedLength (i : I) : (copies i).toFinset.card = (paths i).length := by
+    rw [splitListVertices_toFinset, splitVertices_length, sourceLength]
+  have afterSimple (i : ListBlockIndex copies L) : (after i).Nodup := listRegularizedPaths_simple paths simple D L i
+  have total : (∑ i, (Z i).card) = M :=
+    (sum_congr rfl (fun i _ => List.toFinset_card_of_nodup (afterSimple i))).trans afterMass
+  have vertices : 3 * Fintype.card (ListVertexBlockIndex paths D) ≤ 4 * n := by
+    have estimate := blockIndex_card_precise (occurrences (fun i => (paths i).toFinset)) hD
+    rw [sum_occurrences] at estimate
+    simp only [sourceLength] at estimate
+    change Fintype.card (ListVertexBlockIndex paths D) ≤ n + M/D at estimate
+    change 3*(M/D) ≤ n at trimD
+    omega
+  have pathsCap : 3 * Fintype.card (ListBlockIndex copies L) ≤ 4 * p := by
+    have estimate := blockIndex_card_precise (fun i => (copies i).toFinset) hL
+    have mass : (∑ i, (copies i).toFinset.card) = M := sum_congr rfl (fun i _ => copiedLength i)
+    rw [mass] at estimate
+    change Fintype.card (ListBlockIndex copies L) ≤ p+M/L at estimate
+    change 3*(M/L) ≤ p at trimL
+    omega
+  obtain ⟨A,B,aCap,bCap,retained,minDegree,minLength⟩ := balancedRectangle_subsystem Z hn hp vertices pathsCap
+  rw [total] at retained minDegree minLength
+  let clean := restrictListPaths after A B
+  let rectangle := rectanglePaths Z A B
+  have same (i : B) : (clean i).toFinset = rectangle i := restrictListPaths_toFinset after A B i
+  have cleanLength (i : B) : (clean i).length = (rectangle i).card := by
+    have nodup := restrictListPath_nodup (afterSimple i.val) A
+    change (restrictListPath (after i.val) A).length = _
+    rw [← List.toFinset_card_of_nodup nodup]
+    exact congrArg Finset.card (same i)
+  have equals : (fun i => (clean i).toFinset) = rectangle := funext same
+  refine ⟨A,B,aCap,bCap,?_,?_,?_,?_,?_⟩
+  · change M ≤ 16 * ∑ i : B, (clean i).length
+    rw [show (∑ i : B, (clean i).length) = ∑ i : B, (rectangle i).card from
+      sum_congr rfl (fun i _ => cleanLength i)]
+    exact retained
+  · intro v
+    change (M : ℝ)/(4*(n:ℝ)) ≤ _ ∧ _
+    rw [equals]
+    refine ⟨minDegree v, ?_⟩
+    have sub : (occurrences rectangle v).card ≤ (occurrences Z v.val).card := by
+      apply card_le_card_of_injOn (fun i : B => i.val) _ Subtype.val_injective.injOn
+      intro i hi
+      apply mem_occurrences.mpr
+      have present := (mem_occurrences (marks := rectangle)).mp hi
+      rw [← same i] at present
+      exact List.mem_toFinset.mpr (mem_restrictListPath.mp (List.mem_toFinset.mp present))
+    exact (Nat.cast_le.mpr (sub.trans (degree v.val))).trans capD
+  · intro i
+    change (M : ℝ)/(4*(p:ℝ)) ≤ ((clean i).length : ℝ) ∧ _
+    refine ⟨by rw [cleanLength]; exact minLength i, ?_⟩
+    have bound : (clean i).length ≤ (after i.val).length := by
+      rw [show (clean i).length = ((after i.val).toFinset ∩ A).card from restrictListPath_length (afterSimple i.val) A]
+      exact (card_le_card inter_subset_left).trans (List.toFinset_card_le _)
+    exact (Nat.cast_le.mpr (bound.trans (length i.val))).trans capL
+  · intro free
+    exact restrictListPaths_halfFree afterSimple (listRegularizedPaths_halfFree simple unique free D L) A B
+  · intro free
+    exact restrictListPaths_fullFree afterSimple (listRegularizedPaths_fullFree simple unique free D L) A B
+
+/-- Prune a general system before performing the two splits. The lower
+caps lose at most a factor of two, and both original budgets are met. -/
+theorem regularization_list_after_pruning {p : ℕ} (paths : Fin p → List V) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (ListBefore paths) 4) (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card (Fin p))
+    (dense : 2 * Fintype.card V ≤ ∑ i, (paths i).length)
+    (long : 2 * Fintype.card (Fin p) ≤ ∑ i, (paths i).length) :
+    let n := Fintype.card V
+    let P := Fintype.card (Fin p)
+    let M := ∑ i, (paths i).length
+    let kept := removeOppositeIntersections paths
+    let m := ∑ i, (kept i).length
+    let D := (4 * m) / n
+    let L := (4 * m) / P
+    let after := listRegularizedPaths kept D L
+    ∃ A : Finset (ListVertexBlockIndex kept D),
+      ∃ B : Finset (ListBlockIndex (splitListVertices kept D) L),
+        let clean := restrictListPaths after A B
+        A.card ≤ n ∧ B.card ≤ P ∧ M ≤ 32 * (∑ i, (clean i).length) ∧
+          (∀ v : A, (M : ℝ) / (8 * (n : ℝ)) ≤ (occurrences (fun i => (clean i).toFinset) v).card ∧
+            ((occurrences (fun i => (clean i).toFinset) v).card : ℝ) ≤ 4 * (M : ℝ) / (n : ℝ)) ∧
+          (∀ i : B, (M : ℝ) / (8 * (P : ℝ)) ≤ (clean i).length ∧
+            ((clean i).length : ℝ) ≤ 4 * (M : ℝ) / (P : ℝ)) ∧
+          HalfBridgeFree (ListBefore clean) 4 ∧
+          (BridgeFree (ListBefore paths) 4 → BridgeFree (ListBefore clean) 4) := by
+  let kept := removeOppositeIntersections paths
+  let m := ∑ i, (kept i).length
+  let M := ∑ i, (paths i).length
+  have half : M ≤ 2*m := removeOppositeIntersections_mass simple free (by decide)
+  have below : m ≤ M := sum_le_sum fun i _ => (removeOppositeIntersections_sublist paths i).length_le
+  have halfReal : (M : ℝ) ≤ 2 * (m : ℝ) := by exact_mod_cast half
+  have belowReal : (m : ℝ) ≤ (M : ℝ) := Nat.cast_le.mpr below
+  have keptSimple (i : Fin p) : (kept i).Nodup :=
+    (removeOppositeIntersections_sublist paths i).nodup (simple i)
+  obtain ⟨A, B, aCap, bCap, mass, degrees, lengths, halfFree, fullFree⟩ :=
+    regularization_list_balanced_caps kept keptSimple
+      (fun different a b c d => removeOppositeIntersections_unique simple free (by decide) different a b c d)
+      hn hp (by change Fintype.card V ≤ m; omega) (by change Fintype.card (Fin p) ≤ m; omega)
+  refine ⟨A, B, aCap, bCap, ?_, ?_, ?_, halfFree (removeOppositeIntersections_halfFree simple free),
+    fun original => fullFree (removeOppositeIntersections_fullFree simple original)⟩
+  · simpa only [← Nat.mul_assoc] using half.trans (Nat.mul_le_mul_left 2 mass)
+  · intro v
+    refine ⟨?_, ?_⟩
+    · apply le_trans _ (degrees v).1
+      have eq : (m : ℝ) / (4 * (Fintype.card V : ℝ)) = 2 * (m : ℝ) / (8 * (Fintype.card V : ℝ)) := by ring
+      rw [eq]
+      exact div_le_div_of_nonneg_right halfReal (by positivity)
+    · exact (degrees v).2.trans (div_le_div_of_nonneg_right
+        (mul_le_mul_of_nonneg_left belowReal (by norm_num)) (by positivity))
+  · intro i
+    refine ⟨?_, ?_⟩
+    · apply le_trans _ (lengths i).1
+      have eq : (m : ℝ) / (4 * (Fintype.card (Fin p) : ℝ)) =
+          2 * (m : ℝ) / (8 * (Fintype.card (Fin p) : ℝ)) := by ring
+      rw [eq]
+      exact div_le_div_of_nonneg_right halfReal (by positivity)
+    · exact (lengths i).2.trans (div_le_div_of_nonneg_right
+        (mul_le_mul_of_nonneg_left belowReal (by norm_num)) (by positivity))
+
+end OnlineReachabilityPreservers

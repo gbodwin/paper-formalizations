@@ -376,6 +376,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   splits in local path orders. The 2960-declaration audit and kernel replay
   passed. Independent review checked the corner projection, order and counts.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44474896147).
+- [3cc2d31d](https://github.com/gbodwin/paper-formalizations/commit/3cc2d31db18981177d4ed6361da6a2c5cd2539d9)
+  verifies the shared window normalization and the sampled path-pair
+  upper count for Appendix B in local orders. The 2978-declaration audit
+  and kernel replay passed. Independent review checked the exact absorption,
+  preservation of the acyclic bound and the off-base uniqueness.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44475741797).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

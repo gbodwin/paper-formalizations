@@ -95,7 +95,10 @@ intersections. The half-bridge statements keep the parent path order.
 The locally ordered vertex copies also preserve unique intersections
 and both exclusions through size four. The two splits retain all mass
 of the pruned system, at most double the ambient counts, and give the
-upper caps used in the bootstrap.
+upper caps used in the bootstrap. Restricting the copies back to the
+original budgets and pruning low incidences gives the four caps
+relative to the pruned input averages. Those averages are at least
+half of the original averages.
 [Checked pruning](OnlineReachabilityPreservers/OppositeIntersectionPruning.lean)
 · [Checked splits](OnlineReachabilityPreservers/CyclicSplits.lean)
 · [Local upper caps](OnlineReachabilityPreservers/LocalRegularization.lean)
@@ -198,8 +201,13 @@ lower-count restrictions. The cyclic upper estimates remain open.
   least nine sixteenths of the mass. Pruning then preserves at least one
   sixteenth of the original mass and gives both upper and lower caps.
   Lean verifies both original budgets and the two bridge conditions through
-  size four. General path-system cleaning remains open.
-  [Checked acyclic cleaning](OnlineReachabilityPreservers/BalancedRegularization.lean).
+  size four. The same caps hold under unique intersections in local orders.
+  With opposite-intersection pruning first, arbitrary simple paths whose
+  mass is at least twice both counts keep one thirty-second of the mass and
+  have lower caps at one eighth of their original averages. The upper caps
+  stay at four times the original averages. The factor-four lower caps
+  before pruning and preservation through arbitrary bridge sizes remain open.
+  [Checked local cleaning](OnlineReachabilityPreservers/LocalBalancedRegularization.lean).
 - The proof of Lemma 23 writes \(\beta\) for the half-bridge-free extremum
   \(H\). The statement of Lemma 39 writes \(H\) for the full-bridge-free
   extremum \(\beta\) it is used to estimate.

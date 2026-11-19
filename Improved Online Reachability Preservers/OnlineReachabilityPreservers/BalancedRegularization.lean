@@ -234,7 +234,8 @@ private theorem rectangleFullFree {paths : I → Finset V} (A : Finset V) (B : F
 variable [Fintype V] [Fintype I]
 
 omit [LinearOrder V] [LinearOrder I] [Fintype V] in
-private theorem blockIndex_card_precise (sets : I → Finset V) {w : ℕ} (hw : 0 < w) :
+/-- Upper bound on the exact number of block slots. -/
+theorem blockIndex_card_precise (sets : I → Finset V) {w : ℕ} (hw : 0 < w) :
     Fintype.card (BlockIndex sets w) ≤ Fintype.card I+(∑ i, (sets i).card)/w := by
   rw [Fintype.card_lex,Fintype.card_sigma]
   have count (i : I) : Fintype.card (Fin (blockCount (sets i) w)) =
@@ -246,7 +247,8 @@ private theorem blockIndex_card_precise (sets : I → Finset V) {w : ℕ} (hw : 
     exact sum_le_sum (fun i _ => Nat.div_mul_le_self (sets i).card w)
   omega
 
-private theorem four_average_width {M q : ℕ} (hq : 0 < q) (dense : q ≤ M) :
+/-- Width from four times the average, with room to trim back to the budget. -/
+theorem four_average_width {M q : ℕ} (hq : 0 < q) (dense : q ≤ M) :
     let w := (4*M)/q
     0 < w ∧ 3*(M/w) ≤ q ∧ (w:ℝ) ≤ 4*(M:ℝ)/(q:ℝ) := by
   let w := (4*M)/q
@@ -265,6 +267,60 @@ private theorem four_average_width {M q : ℕ} (hq : 0 < q) (dense : q ≤ M) :
     apply (le_div_iff₀ (Nat.cast_pos.mpr hq)).mpr
     exact_mod_cast Nat.div_mul_le_self (4*M) q
   exact ⟨hw,trim,cap⟩
+
+/-- Trim an incidence rectangle to the requested budgets and erase low
+rows and columns. The argument depends only on membership. -/
+theorem balancedRectangle_subsystem (Z : I → Finset V) {n p : ℕ}
+    (hn : 0 < n) (hp : 0 < p)
+    (vertices : 3 * Fintype.card V ≤ 4 * n) (families : 3 * Fintype.card I ≤ 4 * p) :
+    let M := ∑ i, (Z i).card
+    ∃ A : Finset V, ∃ B : Finset I,
+      let clean := rectanglePaths Z A B
+      A.card ≤ n ∧ B.card ≤ p ∧ M ≤ 16 * (∑ i, (clean i).card) ∧
+        (∀ v, (M : ℝ) / (4 * (n : ℝ)) ≤ (occurrences clean v).card) ∧
+        (∀ i, (M : ℝ) / (4 * (p : ℝ)) ≤ (clean i).card) := by
+  let M := ∑ i, (Z i).card
+  let A0 : Finset V := univ
+  let B0 : Finset I := univ
+  let d0 : ℝ := (M : ℝ) / (4 * (n : ℝ))
+  let l0 : ℝ := (M : ℝ) / (4 * (p : ℝ))
+  have ZMass : rectangleMass Z A0 B0 = M := by simp [rectangleMass, A0, B0, M]
+  have vCap : 3 * A0.card ≤ 4 * n := by simpa [A0] using vertices
+  have iCap : 3 * B0.card ≤ 4 * p := by simpa [B0] using families
+  obtain ⟨A1,_,B1,_,ac,bc,densePart⟩ := rectangle_trim Z A0 B0 vCap iCap
+  have d0_nonneg : 0 ≤ d0 := div_nonneg (Nat.cast_nonneg _) (mul_nonneg (by norm_num) (Nat.cast_nonneg _))
+  have l0_nonneg : 0 ≤ l0 := div_nonneg (Nat.cast_nonneg _) (mul_nonneg (by norm_num) (Nat.cast_nonneg _))
+  obtain ⟨A,as,B,bs,keep,minDegree,minLength⟩ := rectangle_prune Z A1 B1 d0_nonneg l0_nonneg
+  let clean := rectanglePaths Z A B
+  have loseDegree : d0*(A1.card:ℝ) ≤ (M:ℝ)/4 := by
+    calc
+      _ ≤ d0*(n:ℝ) := mul_le_mul_of_nonneg_left (Nat.cast_le.mpr ac) d0_nonneg
+      _ = _ := by
+        dsimp [d0]
+        have h : (n:ℝ) ≠ 0 := (Nat.cast_pos.mpr hn).ne'
+        field_simp
+  have loseLength : l0*(B1.card:ℝ) ≤ (M:ℝ)/4 := by
+    calc
+      _ ≤ l0*(p:ℝ) := mul_le_mul_of_nonneg_left (Nat.cast_le.mpr bc) l0_nonneg
+      _ = _ := by
+        dsimp [l0]
+        have h : (p:ℝ) ≠ 0 := (Nat.cast_pos.mpr hp).ne'
+        field_simp
+  have part : 9*(M:ℝ) ≤ 16*(rectangleMass Z A1 B1:ℝ) := by
+    rw [ZMass] at densePart
+    exact_mod_cast densePart
+  have finalMass : M ≤ 16*(∑ i, (clean i).card) := by
+    rw [rectanglePath_mass]
+    have h : (M:ℝ) ≤ 16*(rectangleMass Z A B:ℝ) := by
+      linarith only [part,keep,loseDegree,loseLength]
+    exact_mod_cast h
+  refine ⟨A, B, (card_le_card as).trans ac, (card_le_card bs).trans bc, finalMass, ?_, ?_⟩
+  · intro v
+    rw [rectanglePath_degree]
+    exact minDegree v.val v.property
+  · intro i
+    rw [rectanglePath_card]
+    exact minLength i.val i.property
 
 set_option maxHeartbeats 1000000 in
 /-- With a common vertex order and incidence mass at least both original counts,
@@ -304,9 +360,6 @@ theorem regularization_balanced_caps (paths : I → Finset V) (hn : 0 < Fintype.
   obtain ⟨hl,reduceL,lCap⟩ := four_average_width hp long
   have sMass : (∑ i, (s i).card) = M := by
     simp only [s,splitVertices_length,M]
-  have ZMass : rectangleMass Z A0 B0 = M := by
-    simp only [rectangleMass,A0,B0,inter_univ,Z]
-    exact (splitPaths_size s l).trans sMass
   have vertices : 3*A0.card ≤ 4*n := by
     have h := blockIndex_card_precise (occurrences paths) hd
     rw [sum_occurrences] at h
@@ -319,34 +372,12 @@ theorem regularization_balanced_caps (paths : I → Finset V) (hn : 0 < Fintype.
     change B0.card ≤ p+M/l at h
     change 3*(M/l) ≤ p at reduceL
     omega
-  obtain ⟨A1,_,B1,_,ac,bc,densePart⟩ := rectangle_trim Z A0 B0 vertices families
-  have d0_nonneg : 0 ≤ d0 := div_nonneg (Nat.cast_nonneg _) (mul_nonneg (by norm_num) (Nat.cast_nonneg _))
-  have l0_nonneg : 0 ≤ l0 := div_nonneg (Nat.cast_nonneg _) (mul_nonneg (by norm_num) (Nat.cast_nonneg _))
-  obtain ⟨A,as,B,bs,keep,minDegree,minLength⟩ := rectangle_prune Z A1 B1 d0_nonneg l0_nonneg
+  have total : (∑ i, (Z i).card) = M := (splitPaths_size s l).trans sMass
+  obtain ⟨A, B, ac, bc, finalMass, minDegree, minLength⟩ := balancedRectangle_subsystem Z hn hp
+    (by simpa only [A0, card_univ] using vertices) (by simpa only [B0, card_univ] using families)
+  rw [total] at finalMass minDegree minLength
   let clean := rectanglePaths Z A B
-  have loseDegree : d0*(A1.card:ℝ) ≤ (M:ℝ)/4 := by
-    calc
-      _ ≤ d0*(n:ℝ) := mul_le_mul_of_nonneg_left (Nat.cast_le.mpr ac) d0_nonneg
-      _ = _ := by
-        dsimp [d0]
-        have h : (n:ℝ) ≠ 0 := (Nat.cast_pos.mpr hn).ne'
-        field_simp
-  have loseLength : l0*(B1.card:ℝ) ≤ (M:ℝ)/4 := by
-    calc
-      _ ≤ l0*(p:ℝ) := mul_le_mul_of_nonneg_left (Nat.cast_le.mpr bc) l0_nonneg
-      _ = _ := by
-        dsimp [l0]
-        have h : (p:ℝ) ≠ 0 := (Nat.cast_pos.mpr hp).ne'
-        field_simp
-  have part : 9*(M:ℝ) ≤ 16*(rectangleMass Z A1 B1:ℝ) := by
-    rw [ZMass] at densePart
-    exact_mod_cast densePart
-  have finalMass : M ≤ 16*(∑ i, (clean i).card) := by
-    rw [rectanglePath_mass]
-    have h : (M:ℝ) ≤ 16*(rectangleMass Z A B:ℝ) := by
-      linarith only [part,keep,loseDegree,loseLength]
-    exact_mod_cast h
-  refine ⟨A,B,(card_le_card as).trans ac,(card_le_card bs).trans bc,finalMass,?_,?_,
+  refine ⟨A, B, ac, bc, finalMass, ?_, ?_,
     fun free => rectangleHalfFree A B (regularization_halfFree free d l),
     fun free => rectangleFullFree A B (regularization_free free d l)⟩
   · intro v
@@ -354,7 +385,7 @@ theorem regularization_balanced_caps (paths : I → Finset V) (hn : 0 < Fintype.
       ((occurrences clean v).card : ℝ) ≤ 4 * (M : ℝ) / (n : ℝ)
     rw [show (occurrences clean v).card = rectangularDegree Z B v.1 from
       rectanglePath_degree Z A B v]
-    refine ⟨minDegree v.1 v.2,?_⟩
+    refine ⟨(rectanglePath_degree Z A B v) ▸ minDegree v, ?_⟩
     have sub : B.filter (fun i => v.1 ∈ Z i) ⊆ occurrences Z v.1 :=
       fun _ h => mem_occurrences.mpr (mem_filter.mp h).2
     have cap := ((card_le_card sub).trans (splitPaths_degree s l v.1)).trans
@@ -363,7 +394,7 @@ theorem regularization_balanced_caps (paths : I → Finset V) (hn : 0 < Fintype.
   · intro i
     change l0 ≤ ((clean i).card : ℝ) ∧ ((clean i).card : ℝ) ≤ 4 * (M : ℝ) / (p : ℝ)
     rw [show (clean i).card = (Z i.1 ∩ A).card from rectanglePath_card Z A B i]
-    refine ⟨minLength i.1 i.2,?_⟩
+    refine ⟨(rectanglePath_card Z A B i) ▸ minLength i, ?_⟩
     have cap := (card_le_card (inter_subset_left : Z i.1 ∩ A ⊆ Z i.1)).trans
       (splitPaths_length s hl i.1)
     exact (Nat.cast_le.mpr cap).trans lCap
