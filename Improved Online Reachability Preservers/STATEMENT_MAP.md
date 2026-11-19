@@ -192,6 +192,12 @@ paths in one prefix and sums their search work. The quota count is bounded
 by a polynomial in the graph sizes and the known total or current index.
 The costs of finite containers, arithmetic, converting sampled indices into
 vertex values and the early queries listed above remain open.
+The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
+control the signed flow entries by the augmentation supply, the thin
+capacities by twice the number of arcs, and the weighted capacities by
+four times the forest scale plus one. The forest threshold operands are
+polynomial in the scale. The thin rounding comparison on each feasible
+prefix has an operand bound of \((5n+4)\cdot 2|E|\).
 
 ## Appendix dependencies
 

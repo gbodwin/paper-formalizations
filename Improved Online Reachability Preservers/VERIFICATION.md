@@ -505,6 +505,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   replay passed. Independent review matched the optional paths, certification
   and final search, quotient and lift allowances, and both endpoint scopes.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44495797797).
+- [748f0c1e](https://github.com/gbodwin/paper-formalizations/commit/748f0c1e61f94fdbb3950a488e78725b5b156cb8)
+  verifies cleaning in a common vertex order for every full and half-bridge
+  size. The 3495-declaration audit and local kernel replay passed.
+  Independent review checked the shortcut's river and last path, and that
+  one system meets all the caps and size bounds while preserving every exclusion.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44497008109).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
@@ -530,6 +536,14 @@ Lemma 35 repair. The deployed render and local controls passed. The
 research entry again linked to the arXiv manuscript.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44486348837).
+
+PaperLab version 18 pins 116 links to `6de57197` and contains 15 boxed L
+notes. It presents the larger cyclic counterexamples, the acyclic converse
+at an exact demand count, and the thin rounding and deterministic search
+bounds. The deployed render and local controls passed. Production requires
+the owner's ChatGPT sign-in. The research entry linked to the arXiv manuscript.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44492464048).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
