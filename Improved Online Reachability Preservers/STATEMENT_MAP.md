@@ -232,13 +232,20 @@ applies this at every early fractional state with weights from the original
 distance table. It additionally charges at most \(p(p+1)^2\) times the
 per-request capacity comparison polynomial for \(p\) arrivals. The prefix
 graphs and one-time preparation charges agree with the rounding replay.
-The remaining runtime costs include table reads for weighted setup,
-searches of cached capacity rows, finite container operations, arithmetic,
-and converting sampled indices into vertex values.
+The [complete weight-read replay](OnlineReachabilityPreservers/SteinerDistanceReplay.lean)
+also charges the original table reads for the weighted link classes,
+scale, and fuel. One shared row per link suffices, so setup adds at most
+\(|E_F|n^2\) key comparisons. One fixed-height polynomial covers the
+reported searches and original table reads across the whole replay.
+Searches of cached capacity rows, finite container operations, arithmetic,
+and conversion from sampled indices to vertex values remain separate
+runtime costs.
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
-four times the forest scale plus one. The forest threshold operands are
+four times the forest scale plus one. The [weighted numerator bound](OnlineReachabilityPreservers/SteinerRoundedCapacities.lean)
+is \((4S+1)c\) with positive scale \(S\), cost \(c\), and the checked load cap.
+The forest threshold operands are
 polynomial in the scale. The thin rounding comparison on each feasible
 prefix has an operand bound of \((5n+4)\cdot 2|E|\).
 

@@ -596,6 +596,13 @@ An exact-source replay grants no coverage to a paper statement outside the
   three. The 3823-declaration audit, local kernel replay, and independent
   correspondence review passed.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44513724542).
+- [031078a5](https://github.com/gbodwin/paper-formalizations/commit/031078a5ae4ec1bc70dea3236a9544fc2008fc74)
+  includes cached capacity weight reads throughout replay. The
+  3855-declaration audit and local kernel replay passed. Independent review
+  checked the exact prefix graphs and the nested charge bound. The
+  two-vertex example keeps the previous preparation charges, and its
+  per-prefix charges are `[0, 539964, 539964, 539964]`.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44515200844).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
@@ -644,6 +651,15 @@ Production requires the owner's ChatGPT sign-in. The research entry linked
 to the arXiv manuscript.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44503067005).
+
+PaperLab version 21 pins 128 links to `126cc61f` and contains 15 boxed L
+notes. It explains the half-6-bridge after a degree split and links the
+full projection theorem, the exact common-order cleaning maximum, and
+the arbitrary-path caps through size three. The deployed render and the
+local controls passed. Production requires the owner's ChatGPT sign-in.
+The research publication entry linked to the arXiv manuscript.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44510793894).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

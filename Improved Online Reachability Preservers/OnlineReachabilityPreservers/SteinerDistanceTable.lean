@@ -284,6 +284,87 @@ private def preparedScaleAndFuel (priced : Arcs (ForestNetworkVertex V height))
   let scale := max 1 total
   (scale,(scale.log2+1)*total+1)
 
+private def storedForestWeightRow
+    (read : HeightForestVertex V height × HeightForestVertex V height → ℕ × ℕ) :
+    (HeightForestVertex V height × HeightForestVertex V height) ↪
+      (HeightForestVertex V height × HeightForestVertex V height) × (ℕ × ℕ) :=
+  ⟨fun e => (e,read e),fun _ _ same => congrArg Prod.fst same⟩
+
+private def selectedPreparedForestArcs
+    (rows : Finset ((HeightForestVertex V height × HeightForestVertex V height) × (ℕ × ℕ)))
+    (select : ℕ → Prop) [DecidablePred select] : Arcs (ForestNetworkVertex V height) :=
+  (rows.filter fun r => select r.2.1).image fun r => forestNetworkCopy.prodMap forestNetworkCopy r.1
+
+omit [Fintype V] in
+private theorem selectedPreparedForestArcs_eq (links : Arcs (HeightForestVertex V height))
+    (read : HeightForestVertex V height × HeightForestVertex V height → ℕ × ℕ)
+    (select : ℕ → Prop) [DecidablePred select] :
+    selectedPreparedForestArcs (links.map (storedForestWeightRow read)) select =
+      (links.filter (fun e => select (read e).1)).map (forestNetworkCopy.prodMap forestNetworkCopy) := by
+  let row := storedForestWeightRow read
+  let lift := (forestNetworkCopy (V := V) (height := height)).prodMap (forestNetworkCopy (V := V) (height := height))
+  ext f
+  change f ∈ ((links.map row).filter fun r => select r.2.1).image (fun r => lift r.1) ↔
+    f ∈ (links.filter fun e => select (read e).1).map lift
+  constructor
+  · intro inside
+    obtain ⟨r,found,rfl⟩ := mem_image.mp inside
+    obtain ⟨mapped,chosen⟩ := mem_filter.mp found
+    obtain ⟨e,present,rfl⟩ := mem_map.mp mapped
+    exact mem_map_of_mem _ (mem_filter.mpr ⟨present,chosen⟩)
+  · intro inside
+    obtain ⟨e,found,rfl⟩ := mem_map.mp inside
+    obtain ⟨present,chosen⟩ := mem_filter.mp found
+    exact mem_image.mpr ⟨row e, mem_filter.mpr ⟨mem_map_of_mem _ present,chosen⟩,rfl⟩
+
+/-- Evaluate each link once to build both weighted classes and their fixed
+scale and fuel. The extra charge counts the original weight reads. -/
+private def prepareForestWeights (links : Arcs (HeightForestVertex V height))
+    (read : HeightForestVertex V height × HeightForestVertex V height → ℕ × ℕ) :
+    (Arcs (ForestNetworkVertex V height) × Arcs (ForestNetworkVertex V height)) × (ℕ × ℕ) × ℕ :=
+  let rows := links.map (storedForestWeightRow read)
+  let priced := selectedPreparedForestArcs rows (fun w => 0 < w)
+  let free := selectedPreparedForestArcs rows (fun w => w = 0)
+  let total := ∑ r ∈ rows, r.2.1
+  let scale := max 1 total
+  ((priced,free),(scale,(scale.log2+1)*total+1),∑ r ∈ rows, r.2.2)
+
+omit [Fintype V] in
+private theorem prepareForestWeights_spec (links : Arcs (HeightForestVertex V height))
+    (read : HeightForestVertex V height × HeightForestVertex V height → ℕ × ℕ)
+    (B : ℕ) (each : ∀ e, (read e).2 ≤ B) :
+    let weight := fun e => (read e).1
+    let priced := pricedForestFromWeights links weight
+    let out := prepareForestWeights links read
+    out.1.1 = priced ∧ out.1.2 = freeForestFromWeights links weight ∧
+      out.2.1 = preparedScaleAndFuel priced (networkWeightFromForestWeights weight) ∧
+      out.2.2 ≤ links.card*B := by
+  let row := storedForestWeightRow read
+  let rows := links.map row
+  let weight := fun e => (read e).1
+  let paid := links.filter fun e => 0 < weight e
+  let lift := (forestNetworkCopy (V := V) (height := height)).prodMap (forestNetworkCopy (V := V) (height := height))
+  have total : (∑ r ∈ rows, r.2.1) = ∑ e ∈ paid.map lift, networkWeightFromForestWeights weight e := by
+    change (∑ r ∈ links.map row, r.2.1) = _
+    rw [sum_map,sum_map]
+    change (∑ e ∈ links, weight e) = ∑ e ∈ paid, weight e
+    rw [show paid = links.filter (fun e => 0 < weight e) from rfl,sum_filter]
+    apply sum_congr rfl
+    intro e _
+    by_cases valid : 0 < weight e
+    · simp only [valid,ite_true]
+    · simp [Nat.eq_zero_of_not_pos valid]
+  refine ⟨selectedPreparedForestArcs_eq links read (fun w => 0 < w),
+    selectedPreparedForestArcs_eq links read (fun w => w = 0),?_,?_⟩
+  · dsimp only [prepareForestWeights, preparedScaleAndFuel]
+    rw [total]
+    rfl
+  · change (∑ r ∈ links.map row, r.2.2) ≤ _
+    rw [sum_map]
+    calc
+      _ ≤ ∑ _ ∈ links, B := sum_le_sum (fun e _ => each e)
+      _ = _ := by simp
+
 private theorem forestScaleFromWeights_eq (G : Arcs V) (dist : V × V → ℕ)
     (values : ∀ d : V × V, dist d = hops G d.1 d.2) (height : ℕ)
     (links : Arcs (HeightForestVertex V height)) (correct : links = heightForestFromDistances dist height) :
@@ -419,6 +500,78 @@ def prepareEarlyDistanceTableWithRoundingWork (G : Arcs V) (height : ℕ) (sampl
 def prepareEarlyDistanceTableWithCapacityWork (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
     (List (V × V) → Arcs V × ℕ) × ℕ × ℕ :=
   prepareEarlyDistanceTableBy G height sample .capacity
+
+private abbrev EarlyWeightPlan (V : Type*) (height : ℕ) :=
+  (Arcs (ForestNetworkVertex V height) × Arcs (ForestNetworkVertex V height)) × (ℕ × ℕ)
+
+private def earlyCapacityMetricFromPlan (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height)
+    (link : Arcs (HeightForestVertex V height)) (read : V × V → ℕ × ℕ)
+    (plan : EarlyWeightPlan V height) (scale : plan.2.1 = forestScale G height) :
+    List (V × V) → Arcs (HeightForestVertex V height) × ℕ :=
+  let seed : ForestTrialArray V height plan.2.1 (earlyTrialCount V height) :=
+    cast (congrArg (fun k => ForestTrialArray V height k (earlyTrialCount V height)) scale.symm) sample
+  earlyMetricWithPreparedCapacityWork link read plan.1.1 plan.1.2 plan.2.1 plan.2.2 seed
+
+private theorem earlyCapacityMetricFromPlan_congr (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height)
+    (link : Arcs (HeightForestVertex V height)) (read : V × V → ℕ × ℕ)
+    (a b : EarlyWeightPlan V height) (same : a = b)
+    (aScale : a.2.1 = forestScale G height) (bScale : b.2.1 = forestScale G height) :
+    earlyCapacityMetricFromPlan G height sample link read a aScale =
+      earlyCapacityMetricFromPlan G height sample link read b bScale := by
+  subst b
+  rfl
+
+/-- Also meter preparation of the weighted link classes, scale, and fuel.
+The table, forest, and weighted plan are constructed once. -/
+def prepareEarlyDistanceTableWithWeightWork (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
+    (List (V × V) → Arcs V × ℕ) × ℕ × ℕ × ℕ :=
+  let table := distanceTableWithSearchWork G
+  let query := readDistanceRow table.1
+  let dist := fun d => (query d).1
+  let known : ∀ d : V × V, dist d = hops G d.1 d.2 :=
+    fun d => (distanceTableReadWithSearchWork_spec G d).1
+  let template := heightForestWithDistanceWork (historyDistanceRead query)
+    (historyDistanceRead (fun d => query d.swap)) height
+  let links := template.1
+  let correct : links = heightForestFromDistances dist height :=
+    (heightForestWithDistanceTableWork_spec G height).1.trans (heightForestFromDistances_eq G dist known height).symm
+  let priced := prepareForestWeights links (forestWeightWithDistanceWork query)
+  let spec := prepareForestWeights_spec links (forestWeightWithDistanceWork query) (Fintype.card V^2)
+    (fun _ => (distanceTableReadWithSearchWork_spec G _).2)
+  let scale : priced.2.1.1 = forestScale G height :=
+    (congrArg Prod.fst spec.2.2.1).trans (forestScaleFromWeights_eq G dist known height links correct)
+  let metric := earlyCapacityMetricFromPlan G height sample links query (priced.1,priced.2.1) scale
+  (earlyRoundedGraphWithSearchWorkFromMetric G height metric,table.2,template.2,priced.2.2)
+
+theorem prepareEarlyDistanceTableWithWeightWork_spec (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
+    let out := prepareEarlyDistanceTableWithWeightWork G height sample
+    let old := prepareEarlyDistanceTableWithCapacityWork G height sample
+    out.1 = old.1 ∧ out.2.1 = old.2.1 ∧ out.2.2.1 = old.2.2 ∧
+      out.2.2.2 ≤ Fintype.card (HeightForestVertex V height)^2 * Fintype.card V^2 := by
+  let query := readDistanceRow (distanceTableWithSearchWork G).1
+  let dist := fun d => (query d).1
+  have known (d : V × V) : dist d = hops G d.1 d.2 :=
+    (distanceTableReadWithSearchWork_spec G d).1
+  let template := heightForestWithDistanceWork (historyDistanceRead query)
+    (historyDistanceRead (fun d => query d.swap)) height
+  let links := template.1
+  have correct : links = heightForestFromDistances dist height :=
+    (heightForestWithDistanceTableWork_spec G height).1.trans (heightForestFromDistances_eq G dist known height).symm
+  let counted := prepareForestWeights links (forestWeightWithDistanceWork query)
+  let weight := forestWeightFromDistances (height := height) dist
+  let priced := pricedForestFromWeights links weight
+  let free := freeForestFromWeights links weight
+  let setup := preparedScaleAndFuel priced (networkWeightFromForestWeights weight)
+  have scaleEq : setup.1 = forestScale G height := forestScaleFromWeights_eq G dist known height links correct
+  obtain ⟨paid,unpaid,sizes,compares⟩ := prepareForestWeights_spec links (forestWeightWithDistanceWork query)
+    (Fintype.card V^2) (fun _ => (distanceTableReadWithSearchWork_spec G _).2)
+  have planEq : (counted.1,counted.2.1) = ((priced,free),setup) := Prod.ext (Prod.ext paid unpaid) sizes
+  have scale : counted.2.1.1 = forestScale G height := (congrArg Prod.fst sizes).trans scaleEq
+  have linksBound : links.card ≤ Fintype.card (HeightForestVertex V height)^2 := by
+    simpa only [Fintype.card_prod, pow_two] using card_le_univ links
+  refine ⟨?_,rfl,rfl,compares.trans (Nat.mul_le_mul_right _ linksBound)⟩
+  exact congrArg (earlyRoundedGraphWithSearchWorkFromMetric G height)
+    (earlyCapacityMetricFromPlan_congr G height sample links query _ _ planEq scale scaleEq)
 
 theorem prepareEarlyDistanceTableWithTemplateWork_spec (G : Arcs V) (height : ℕ)
     (sample : EarlyRoundSample G height) :

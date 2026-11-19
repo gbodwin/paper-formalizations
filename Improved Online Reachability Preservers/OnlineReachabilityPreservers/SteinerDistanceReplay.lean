@@ -152,4 +152,83 @@ theorem completeSteinerPrefixSearchReplayWithCapacityWork_spec (G : Arcs V) (hei
   · change next.2.2 ≤ _
     exact prepEq.symm ▸ template
 
+/-- Complete prefix replay with the original distance-table reads charged in
+template setup, weight preparation, weighted separation, and rounding. -/
+def completeSteinerPrefixSearchReplayWithWeightWork (G : Arcs V) (height : ℕ)
+    (sample : EarlyRoundSample G height) (draw : Fin (completeSteinerHubCount V) → V)
+    (thin : ThinSample G) (D : List (V × V)) : List (Arcs V × ℕ) × ℕ × ℕ × ℕ :=
+  let prepared := prepareEarlyDistanceTableWithWeightWork G height sample
+  let evaluate := completeSteinerDrawRunWithSearchWorkFromEarly G prepared.1 draw thin
+  (D.inits.map evaluate,prepared.2.1,prepared.2.2.1,prepared.2.2.2)
+
+theorem completeSteinerPrefixSearchReplayWithWeightWork_eq (G : Arcs V) (height : ℕ)
+    (sample : EarlyRoundSample G height) (draw : Fin (completeSteinerHubCount V) → V)
+    (thin : ThinSample G) (D : List (V × V)) :
+    let out := completeSteinerPrefixSearchReplayWithWeightWork G height sample draw thin D
+    let old := completeSteinerPrefixSearchReplayWithCapacityWork G height sample draw thin D
+    out.1 = old.1 ∧ out.2.1 = old.2.1 ∧ out.2.2.1 = old.2.2 ∧
+      out.2.2.2 ≤ Fintype.card (HeightForestVertex V height)^2 * Fintype.card V^2 := by
+  obtain ⟨same,build,template,weight⟩ := prepareEarlyDistanceTableWithWeightWork_spec G height sample
+  exact ⟨congrArg (fun early => D.inits.map (completeSteinerDrawRunWithSearchWorkFromEarly G early draw thin))
+    same,build,template,weight⟩
+
+theorem completeSteinerPrefixSearchReplayWithWeightWork_spec (G : Arcs V) (height : ℕ)
+    (sample : EarlyRoundSample G height) (draw : Fin (completeSteinerHubCount V) → V)
+    (thin : ThinSample G) (D : List (V × V)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let n := Fintype.card V
+    let m := G.card
+    let p := D.length
+    let out := completeSteinerPrefixSearchReplayWithWeightWork G height sample draw thin D
+    out.1.map Prod.fst = D.inits.map (completeSteinerDrawRun G height sample draw thin) ∧
+      (out.1.map Prod.snd).sum ≤ (p+1)*completeSteinerSearchPolynomial n m height p+
+        (p+1)*((p+1)*roundingComparisonPolynomial n height)+
+        (p+1)*((p+1)*(p*capacityComparisonPolynomial n height)) ∧
+      out.2.1 ≤ n^2*((n+1)*n*m) ∧
+      out.2.2.1 ≤ n*(2*Fintype.card (HeightNode V height)*height*n^2) ∧
+      out.2.2.2 ≤ Fintype.card (HeightForestVertex V height)^2*n^2 := by
+  obtain ⟨same,buildEq,templateEq,weight⟩ := completeSteinerPrefixSearchReplayWithWeightWork_eq G height sample draw thin D
+  obtain ⟨graphs,charges,build,template⟩ :=
+    completeSteinerPrefixSearchReplayWithCapacityWork_spec G height sample draw thin D feasible
+  exact ⟨same.symm ▸ graphs,same.symm ▸ charges,buildEq.symm ▸ build,templateEq.symm ▸ template,weight⟩
+
+/-- Bound the measured searches and original table reads by one polynomial
+for fixed height. The three preparation terms are charged once. -/
+def completeSteinerWeightWorkPolynomial (n m height p : ℕ) : ℕ :=
+  let H := (height+1)*n^height
+  let F := (n*2)*H
+  (p+1)*completeSteinerSearchPolynomial n m height p+
+    (p+1)*((p+1)*roundingComparisonPolynomial n height)+
+    (p+1)*((p+1)*(p*capacityComparisonPolynomial n height))+
+    n^2*((n+1)*n*m)+n*(2*H*height*n^2)+F^2*n^2
+
+theorem completeSteinerPrefixSearchReplayWithWeightWork_polynomial (G : Arcs V) (height : ℕ)
+    (sample : EarlyRoundSample G height) (draw : Fin (completeSteinerHubCount V) → V)
+    (thin : ThinSample G) (D : List (V × V)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let n := Fintype.card V
+    let out := completeSteinerPrefixSearchReplayWithWeightWork G height sample draw thin D
+    out.1.map Prod.fst = D.inits.map (completeSteinerDrawRun G height sample draw thin) ∧
+      (out.1.map Prod.snd).sum+out.2.1+out.2.2.1+out.2.2.2 ≤
+        completeSteinerWeightWorkPolynomial n G.card height D.length := by
+  let n := Fintype.card V
+  let H := (height+1)*n^height
+  let F := (n*2)*H
+  let out := completeSteinerPrefixSearchReplayWithWeightWork G height sample draw thin D
+  obtain ⟨graphs,charges,build,template,weights⟩ :=
+    completeSteinerPrefixSearchReplayWithWeightWork_spec G height sample draw thin D feasible
+  have forest : Fintype.card (HeightForestVertex V height) ≤ F := by
+    cases isEmpty_or_nonempty V with
+    | inl empty => simp [HeightForestVertex]
+    | inr ne => exact heightForestVertex_card_le V height
+  have templateCap : out.2.2.1 ≤ n*(2*H*height*n^2) := by
+    apply template.trans
+    change n*(2*Fintype.card (HeightNode V height)*height*n^2) ≤ n*(2*H*height*n^2)
+    cases isEmpty_or_nonempty V with
+    | inl empty => simp [n]
+    | inr ne =>
+      have histories : Fintype.card (HeightNode V height) ≤ H := heightNode_card_le V height
+      gcongr
+  have weightCap : out.2.2.2 ≤ F^2*n^2 :=
+    weights.trans (Nat.mul_le_mul_right _ (Nat.pow_le_pow_left forest _))
+  exact ⟨graphs,Nat.add_le_add (Nat.add_le_add (Nat.add_le_add charges build) templateCap) weightCap⟩
+
 end OnlineReachabilityPreservers
