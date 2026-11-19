@@ -543,6 +543,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   kernel replay passed. Independent review checked the exact replay and
   the generated C for one preparation and the fixed weighted-loop inputs.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44504990104).
+- [6decf613](https://github.com/gbodwin/paper-formalizations/commit/6decf61358fc75b5284ebd51e0b1395d2d3b4303)
+  proves the balanced conclusion at a common-order maximum with positive
+  budgets. The 3630-declaration audit and local kernel replay passed.
+  Independent review checked the finite maximum and asked for its eligibility,
+  maximality, and the upper retained mass to be explicit in the conclusion.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44505667587).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
@@ -583,6 +589,14 @@ render and local controls passed. Production requires the owner's ChatGPT
 sign-in. The research entry linked to the arXiv manuscript.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44495797797).
+
+PaperLab version 20 pins 123 links to `5481d01e` and contains 15 boxed L
+notes. The deployed render and local controls passed. Its coverage includes
+acyclic cleaning at every bridge size, the seed law, and the shared hop table.
+Production requires the owner's ChatGPT sign-in. The research entry linked
+to the arXiv manuscript.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44503067005).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

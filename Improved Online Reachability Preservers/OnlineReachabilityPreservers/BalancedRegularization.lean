@@ -209,6 +209,16 @@ private theorem rectanglePath_mass (paths : I → Finset V) (A : Finset V) (B : 
   simp only [rectanglePath_card]
   exact (Finset.sum_subtype B (fun _ => Iff.rfl) (fun i => (paths i ∩ A).card)).symm
 
+omit [LinearOrder I] in
+/-- Restricting the vertices and paths cannot increase the incidence mass. -/
+theorem rectanglePaths_mass_le [Fintype I] (paths : I → Finset V) (A : Finset V) (B : Finset I) :
+    (∑ i : ↥B, (rectanglePaths paths A B i).card) ≤ ∑ i, (paths i).card := by
+  rw [rectanglePath_mass]
+  unfold rectangleMass
+  calc
+    _ ≤ ∑ i ∈ B, (paths i).card := sum_le_sum (fun _ _ => card_le_card inter_subset_left)
+    _ ≤ _ := sum_le_sum_of_subset_of_nonneg (subset_univ B) (fun _ _ _ => Nat.zero_le _)
+
 private def rectangleBridge (paths : I → Finset V) (A : Finset V) (B : Finset I) {k : ℕ}
     (b : Bridge (PathBefore (rectanglePaths paths A B)) k) : Bridge (PathBefore paths) k := by
   have before {i : ↥B} {u v : ↥A} (h : PathBefore (rectanglePaths paths A B) i u v) :

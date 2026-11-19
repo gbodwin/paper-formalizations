@@ -77,6 +77,9 @@ One subdivision and restriction retains a constant fraction of the maximum
 within both budgets and the four original-average caps. -/
 theorem commonOrderExtremal_balanced (n p size : ℕ) (half : Bool) (hn : 0<n) (hp : 0<p) :
     ∃ paths : Fin p → Finset (Fin n),
+      commonOrderAdmissible half size paths ∧
+      (∀ other : Fin p → Finset (Fin n), commonOrderAdmissible half size other →
+        (∑ i, (other i).card) ≤ ∑ i, (paths i).card) ∧
       let M := ∑ i, (paths i).card
       let d := (4*M)/Fintype.card (Fin n)
       let l := (4*M)/Fintype.card (Fin p)
@@ -84,8 +87,7 @@ theorem commonOrderExtremal_balanced (n p size : ℕ) (half : Bool) (hn : 0<n) (
       ∃ A : Finset (VertexBlockIndex paths d), ∃ B : Finset (BlockIndex pieces l),
         let clean := rectanglePaths (splitPaths pieces l) A B
         A.card ≤ n ∧ B.card ≤ p ∧ commonOrderAdmissible half size clean ∧
-          (∀ other : Fin p → Finset (Fin n), commonOrderAdmissible half size other →
-            (∑ i, (other i).card) ≤ 16*(∑ i, (clean i).card)) ∧
+          M ≤ 16*(∑ i, (clean i).card) ∧ (∑ i, (clean i).card) ≤ M ∧
           (∀ v : ↥A, (M:ℝ)/(4*(n:ℝ)) ≤ (occurrences clean v).card ∧
             ((occurrences clean v).card:ℝ) ≤ 4*(M:ℝ)/(n:ℝ)) ∧
           (∀ i : ↥B, (M:ℝ)/(4*(p:ℝ)) ≤ (clean i).card ∧
@@ -94,12 +96,14 @@ theorem commonOrderExtremal_balanced (n p size : ℕ) (half : Bool) (hn : 0<n) (
   obtain ⟨A,B,vertices,requests,mass,deg,len,halfFree,fullFree⟩ := regularization_balanced_caps paths
     (by simpa only [Fintype.card_fin] using hn) (by simpa only [Fintype.card_fin] using hp)
     (by simpa only [Fintype.card_fin] using mn) (by simpa only [Fintype.card_fin] using mp)
-  refine ⟨paths,A,B,by simpa only [Fintype.card_fin] using vertices,
-    by simpa only [Fintype.card_fin] using requests, ?_,
-    fun other allowed => (maximal other allowed).trans mass, ?_, ?_⟩
+  refine ⟨paths,eligible,maximal,A,B,by simpa only [Fintype.card_fin] using vertices,
+    by simpa only [Fintype.card_fin] using requests, ?_,mass,?_,?_,?_⟩
   · cases half
     · exact fullFree size eligible
     · exact halfFree size eligible
+  · apply (rectanglePaths_mass_le _ A B).trans_eq
+    rw [splitPaths_size]
+    simp only [splitVertices_length]
   · simpa only [Fintype.card_fin] using deg
   · simpa only [Fintype.card_fin] using len
 
