@@ -149,6 +149,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   review checked the integer load invariant, the finite cut enumeration, and
   charging against any feasible offline solution.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44435788128).
+- [01401d01](https://github.com/gbodwin/paper-formalizations/commit/01401d01d8f39b51a469d36d11394b235196620a)
+  proves the fixed-threshold rounding, irrevocable service, and expected
+  thin-demand edge bound. The 1279-declaration paper audit and local kernel
+  replay passed. Independent review checked the marginals, cut and prefix
+  failure events, and the fallback cost on fixed traces.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44437612106).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

@@ -47,7 +47,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   uses a single independent integer threshold per edge. It is correct at
   every prefix, uses a graph purchase on failure, and has the expected
   logarithmic-factor thin-demand edge bound on a fixed distinct trace.
-  The current separator enumerates all local cuts.
+  The [cut separator](OnlineReachabilityPreservers/SteinerCutFlow.lean)
+  uses at most `|E|` unit augmentations. When it stops early the residual
+  reachable set supplies a violating cut. Lean checks the augmentation and
+  doubling counts.
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)

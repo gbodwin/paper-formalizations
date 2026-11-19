@@ -194,6 +194,9 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.hubPreserver_balanced_bound
 #print axioms OnlineReachabilityPreservers.thinCoverRun_bound
 #print axioms OnlineReachabilityPreservers.thinCoverRun_prefix
+#print axioms OnlineReachabilityPreservers.fastThinViolation_eq_none
+#print axioms OnlineReachabilityPreservers.unitAugmentations_count
+#print axioms OnlineReachabilityPreservers.thinCoverLoop_updates
 #print axioms OnlineReachabilityPreservers.roundedThin_cut_probability
 #print axioms OnlineReachabilityPreservers.thinRoundRun_correct
 #print axioms OnlineReachabilityPreservers.thinRoundRun_competitive
