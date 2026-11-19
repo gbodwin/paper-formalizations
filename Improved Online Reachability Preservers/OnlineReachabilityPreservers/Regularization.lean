@@ -54,7 +54,8 @@ private theorem orderBlock_sum (S : Finset V) (w : ℕ) :
 abbrev BlockIndex (sets : I → Finset V) (w : ℕ) := Σₗ i : I, Fin (blockCount (sets i) w)
 
 omit [LinearOrder V] in
-private theorem block_parent_mono (sets : I → Finset V) (w : ℕ) :
+/-- Ordering blocks lexicographically retains their parent order. -/
+theorem block_parent_mono (sets : I → Finset V) (w : ℕ) :
     Monotone (fun i : BlockIndex sets w => i.fst) := by
   intro i j h
   rcases Sigma.Lex.le_def.mp h with hlt | ⟨eq, _⟩
@@ -153,7 +154,8 @@ theorem blockIndex_card_ge (sets : I → Finset V) (w : ℕ) :
 /-- The ordered copies of each vertex, indexed by blocks of its incident paths. -/
 abbrev VertexBlockIndex (paths : I → Finset V) (w : ℕ) := BlockIndex (occurrences paths) w
 
-private def vertexCopy (paths : I → Finset V) (w : ℕ) (i : I) (v : paths i) :
+/-- The copy of a vertex assigned to its occurrence in a path. -/
+def vertexCopy (paths : I → Finset V) (w : ℕ) (i : I) (v : paths i) :
     VertexBlockIndex paths w :=
   ⟨v.val, ⟨(predecessors (occurrences paths v.val) i).card / w,
     block_index_lt (occurrences paths v.val) w i⟩⟩
@@ -241,6 +243,19 @@ theorem regularization_size (paths : I → Finset V) (D L : ℕ) (hD : 0 < D) (h
     (splitPaths_size _ _).trans same, fun i => splitPaths_length _ hL i,
     fun v => (splitPaths_degree _ _ v).trans (splitVertices_degree paths hD v)⟩
 
+/-- One plus the integer part of an average remains within four times
+that average when its count grows by at most a factor of two. -/
+theorem averageWidth_times_card_le {M count expanded : ℕ} (enough : count ≤ M)
+    (size : expanded ≤ 2 * count) : (M / count + 1) * expanded ≤ 4 * M := by
+  have width : (M / count + 1) * count ≤ 2 * M := by
+    rw [Nat.add_mul, one_mul]
+    have h := Nat.div_mul_le_self M count
+    omega
+  calc
+    _ ≤ (M / count + 1) * (2 * count) := Nat.mul_le_mul_left _ size
+    _ = 2 * ((M / count + 1) * count) := by ring
+    _ ≤ _ := by omega
+
 /-- The degree and length caps from one plus the original average integer part
 are within four times the new averages after splitting. -/
 theorem regularization_average_caps (paths : I → Finset V)
@@ -268,18 +283,6 @@ theorem regularization_average_caps (paths : I → Finset V)
   have mL : M ≤ p*L := (Nat.lt_mul_div_succ M hp).le
   obtain ⟨hn', hp', hs, hl, hd⟩ := regularization_size paths D L
     (Nat.succ_pos (M/n)) (Nat.succ_pos (M/p)) mD mL
-  have cap (q : ℕ) (hq : q ≤ M) : (M/q+1)*q ≤ 2*M := by
-    rw [Nat.add_mul, one_mul]
-    have h := Nat.div_mul_le_self M q
-    omega
-  refine ⟨hn', hp', hs, hl, hd, ?_, ?_⟩
-  · calc
-      _ ≤ D*(2*n) := Nat.mul_le_mul_left _ hn'
-      _ = 2*(D*n) := by ring
-      _ ≤ _ := by have h := cap n dense; change D*n ≤ 2*M at h; omega
-  · calc
-      _ ≤ L*(2*p) := Nat.mul_le_mul_left _ hp'
-      _ = 2*(L*p) := by ring
-      _ ≤ _ := by have h := cap p long; change L*p ≤ 2*M at h; omega
+  exact ⟨hn', hp', hs, hl, hd, averageWidth_times_card_le dense hn', averageWidth_times_card_le long hp'⟩
 
 end OnlineReachabilityPreservers

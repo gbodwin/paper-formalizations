@@ -92,8 +92,13 @@ disjoint order-preserving path splits keep both bridge conditions through
 size four, even when the paths have no common vertex order. Disjoint
 order-preserving pieces suffice through size three without unique
 intersections. The half-bridge statements keep the parent path order.
+The locally ordered vertex copies also preserve unique intersections
+and both exclusions through size four. The two splits retain all mass
+of the pruned system, at most double the ambient counts, and give the
+upper caps used in the bootstrap.
 [Checked pruning](OnlineReachabilityPreservers/OppositeIntersectionPruning.lean)
 · [Checked splits](OnlineReachabilityPreservers/CyclicSplits.lean)
+· [Local upper caps](OnlineReachabilityPreservers/LocalRegularization.lean)
 · [Bridge Girth, Lemma 20](https://arxiv.org/pdf/2212.11944v4).
 
 ## The cited consecutive-edge overlay can admit an alternate path
@@ -169,7 +174,7 @@ whose source is `0`. The system has unique intersections and no bridges
 of any size. A directed 3-cycle invalidates the step asserting that every
 induced base path starts in the near-predecessor set.
 
-Every close-pair charge with its right endpoint on the base has its left
+After pruning to unique intersections, every close-pair charge with its right endpoint on the base has its left
 start earlier on that base. This permits restricting the count to tuples
 whose right endpoint lies after a near predecessor. The suffix from the
 first such predecessor contains all of these right endpoints. In Appendix B,

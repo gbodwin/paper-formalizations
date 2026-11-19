@@ -365,6 +365,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   review checked that retained witnesses inject into original path triples,
   the sparse cases and preservation of the acyclic statements.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44472699012).
+- [bbca66ce](https://github.com/gbodwin/paper-formalizations/commit/bbca66ce0afb565347508e051662e0de7d95a1bf)
+  checks the local-order close-pair lower comparisons. The 2910-declaration
+  audit and kernel replay passed. Independent review checked the online
+  filter, the strict offline displacement, and the three-path cycle that
+  invalidates the source-restriction step of Lemma 35.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44473906418).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
