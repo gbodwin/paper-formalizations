@@ -57,11 +57,70 @@ private def finiteLabels (n : ℕ) : CandidateEnumeration.Built (DyadicEdgeWeigh
 private def rawEnumeration (n : ℕ) : CandidateEnumeration.Built (RawNode n) :=
   let vertices := CandidateEnumeration.fin n
   let sides := CandidateEnumeration.bool
-  CandidateEnumeration.sum (CandidateEnumeration.prod vertices sides)
-    (CandidateEnumeration.prod vertices (CandidateEnumeration.prod sides (finiteLabels n)))
+  let labels := finiteLabels n
+  let ports := CandidateEnumeration.prod vertices sides
+  let sideLabels := CandidateEnumeration.prod sides labels
+  let labeled := CandidateEnumeration.prod vertices sideLabels
+  let result := CandidateEnumeration.sum ports labeled
+  { result with work := vertices.work+sides.work+labels.work+ports.work+sideLabels.work+labeled.work+result.work+8 }
+
+private def filterLoop {A : Type*} (test : A → Bool × ℕ) (kept : List A) (paid : ℕ) : List A → List A × ℕ
+  | [] => (kept.reverse,paid+1)
+  | x::xs =>
+    let keep := test x
+    filterLoop test (if keep.1 then x::kept else kept) (paid+keep.2+8) xs
+
+private def filterWithCost {A : Type*} (test : A → Bool × ℕ) (xs : List A) : List A × ℕ :=
+  filterLoop test [] 0 xs
+
+private theorem filterWithCost_value {A : Type*} (test : A → Bool × ℕ) (xs : List A) :
+    (filterWithCost test xs).1=xs.filter (fun x => (test x).1) := by
+  have loop (kept : List A) (paid : ℕ) (xs : List A) :
+      (filterLoop test kept paid xs).1=kept.reverse++xs.filter (fun x => (test x).1) := by
+    induction xs generalizing kept paid with
+    | nil => simp [filterLoop]
+    | cons x xs ih =>
+      simp only [filterLoop,List.filter_cons,ih]
+      split <;> simp_all
+  simpa only [filterWithCost,List.reverse_nil,List.nil_append] using loop [] 0 xs
+
+private theorem filterWithCost_paid {A : Type*} (test : A → Bool × ℕ) (xs : List A) (cap : ℕ)
+    (cost : ∀ x, (test x).2 ≤ cap) : (filterWithCost test xs).2 ≤ xs.length*(cap+8)+1 := by
+  have loop (kept : List A) (paid : ℕ) (xs : List A) :
+      (filterLoop test kept paid xs).2 ≤ paid+xs.length*(cap+8)+1 := by
+    induction xs generalizing kept paid with
+    | nil => simp [filterLoop]
+    | cons x xs ih =>
+      have head := cost x
+      simp only [filterLoop,List.length_cons,Nat.add_mul,Nat.one_mul]
+      exact (ih _ _).trans (by omega)
+  simpa only [filterWithCost,Nat.zero_add] using loop [] 0 xs
 
 def edges {n : ℕ} (D : Input n) : List (Pair n) :=
   ((List.finRange n).product (List.finRange n)).filter fun e => D.adjacency[e.1.val][e.2.val]
+
+def edgesWithCost {n : ℕ} (D : Input n) : List (Pair n) × ℕ :=
+  let vertices := CandidateEnumeration.fin n
+  let pairs := CandidateEnumeration.prod vertices vertices
+  let out := filterWithCost (fun e => (D.adjacency[e.1.val][e.2.val],8)) pairs.enumeration.vertices
+  (out.1,vertices.work+pairs.work+out.2+8)
+
+@[simp] theorem edgesWithCost_value {n : ℕ} (D : Input n) : (edgesWithCost D).1=edges D := by
+  simp only [edgesWithCost,filterWithCost_value,CandidateEnumeration.prod_vertices,CandidateEnumeration.fin_vertices]
+  rfl
+
+def edgesBudget {R : Type*} [Semiring R] (n : R) : R := 48*(n+1)^2
+
+theorem edgesWithCost_paid {n : ℕ} (D : Input n) : (edgesWithCost D).2 ≤ edgesBudget n := by
+  let vertices := CandidateEnumeration.fin n
+  let pairs := CandidateEnumeration.prod vertices vertices
+  have paid := filterWithCost_paid (fun e : Pair n => (D.adjacency[e.1.val][e.2.val],8))
+    pairs.enumeration.vertices 8 (fun _ => le_rfl)
+  change vertices.work+pairs.work+(filterWithCost _ _).2+8 ≤ _
+  simp only [vertices,pairs,CandidateEnumeration.prod_length,CandidateEnumeration.fin_length,Nat.reduceAdd] at paid
+  simp only [vertices,pairs,CandidateEnumeration.prod_work,CandidateEnumeration.fin_work,
+    CandidateEnumeration.fin_length,edgesBudget]
+  nlinarith only [paid]
 
 theorem edges_mem {n : ℕ} (D : Input n) (e : Pair n) :
     e ∈ edges D ↔ e ∈ graphEdges D.graph := by
@@ -87,12 +146,16 @@ private theorem active_iff {n : ℕ} (D : Input n) (labels : Labels n) (x : RawN
     simp only [active, List.any_eq_true, decide_eq_true_eq, EdgeToVertex.Active,
       Sum.inr_ne_inl, exists_false, false_or, edges_mem]
 
+private def refineNodes {n : ℕ} (D : Input n) (labels : Labels n) (xs : List (RawNode n))
+    (h : ∀ x ∈ xs, EdgeToVertex.Active D.graph (labelAt labels) x) : List (Node D labels) :=
+  xs.attach.map fun x => ⟨x.1,h x.1 x.2⟩
+
 def nodes {n : ℕ} (D : Input n) (labels : Labels n) : List (Node D labels) :=
   let raw := (rawEnumeration n).enumeration.vertices.filter (active (edges D) labels)
-  raw.attach.map fun x => ⟨x.1, (active_iff D labels x.1).mp (List.mem_filter.mp x.2).2⟩
+  refineNodes D labels raw (fun x h => (active_iff D labels x).mp (List.mem_filter.mp h).2)
 
 theorem nodes_nodup {n : ℕ} (D : Input n) (labels : Labels n) : (nodes D labels).Nodup := by
-  unfold nodes
+  unfold nodes refineNodes
   apply List.Nodup.map
   · intro a b h
     exact Subtype.ext (congrArg (fun z : Node D labels => z.val) h)
@@ -143,6 +206,83 @@ def assemble {n m : ℕ} (D : Input n) (l : Labels n)
 
 def nodeVector {n : ℕ} (D : Input n) (l : Labels n) : Vector (Node D l) (nodes D l).length :=
   ⟨(nodes D l).toArray, by simp⟩
+
+private theorem filter_active_value {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → Bool × ℕ)
+    (exactTest : ∀ x, (test x).1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x) :
+    (filterWithCost test (rawEnumeration n).enumeration.vertices).1=
+      (rawEnumeration n).enumeration.vertices.filter (active (edges D) l) := by
+  rw [filterWithCost_value]
+  congr 1
+  funext x
+  exact Bool.eq_iff_iff.mpr ((exactTest x).trans (active_iff D l x).symm)
+
+private def selectedNodes {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → Bool × ℕ)
+    (exactTest : ∀ x, (test x).1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x) : List (Node D l) × ℕ :=
+  let candidates := rawEnumeration n
+  let out := filterWithCost test candidates.enumeration.vertices
+  let found := refineNodes D l out.1 (by
+    intro x mem
+    have filtered : x ∈ candidates.enumeration.vertices.filter (fun y => (test y).1) :=
+      filterWithCost_value test _ ▸ mem
+    exact (exactTest x).mp (List.mem_filter.mp filtered).2)
+  (found,candidates.work+out.2+16*found.length+4)
+
+private theorem selectedNodes_value {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → Bool × ℕ)
+    (exactTest : ∀ x, (test x).1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x) :
+    (selectedNodes D l test exactTest).1=nodes D l := by
+  have same (xs ys : List (RawNode n)) (hx : ∀ x ∈ xs, EdgeToVertex.Active D.graph (labelAt l) x)
+      (hy : ∀ y ∈ ys, EdgeToVertex.Active D.graph (labelAt l) y) (h : xs=ys) :
+      refineNodes D l xs hx=refineNodes D l ys hy := by subst ys; rfl
+  unfold selectedNodes nodes
+  dsimp only
+  apply same
+  exact filter_active_value D l test exactTest
+
+def nodeVectorWithCost {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → Bool × ℕ)
+    (exactTest : ∀ x, (test x).1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x) :
+    Vector (Node D l) (nodes D l).length × ℕ :=
+  let r := selectedNodes D l test exactTest
+  (⟨r.1.toArray,by simp only [r,List.size_toArray,selectedNodes_value]⟩,r.2)
+
+@[simp] theorem nodeVectorWithCost_value {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → Bool × ℕ)
+    (exactTest : ∀ x, (test x).1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x) :
+    (nodeVectorWithCost D l test exactTest).1=nodeVector D l :=
+  Vector.toArray_injective (congrArg List.toArray (selectedNodes_value D l test exactTest))
+
+def nodeVectorBudget {R : Type*} [Semiring R] (n cap : R) : R := 256*(n+4)^2+2*n*(n+4)*(cap+24)+5
+
+theorem nodeVectorWithCost_paid {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → Bool × ℕ)
+    (exactTest : ∀ x, (test x).1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x) (cap : ℕ)
+    (cost : ∀ x, (test x).2 ≤ cap) : (nodeVectorWithCost D l test exactTest).2 ≤ nodeVectorBudget n cap := by
+  have hdepth : DyadicEdgeWeights.depth n ≤ n+1 := Nat.add_le_add_right (Nat.log_le_self 2 n) 1
+  have hlabels : (finiteLabels n).enumeration.vertices.length = DyadicEdgeWeights.depth n+2 := by
+    simp only [finiteLabels,CandidateEnumeration.pack_vertices,List.length_cons,List.length_map,List.length_finRange]
+  have hlabelWork : (finiteLabels n).work=16*(DyadicEdgeWeights.depth n+2)+16 := by
+    simp only [finiteLabels,CandidateEnumeration.pack]
+  let candidates := rawEnumeration n
+  have length : candidates.enumeration.vertices.length ≤ 2*n*(n+4) := by
+    simp only [candidates,rawEnumeration,CandidateEnumeration.sum_length,CandidateEnumeration.prod_length,
+      CandidateEnumeration.fin_length,CandidateEnumeration.bool_vertices,List.length_cons,List.length_nil,hlabels]
+    rw [show n*2+n*(2*(DyadicEdgeWeights.depth n+2))=2*n*(DyadicEdgeWeights.depth n+3) by ring]
+    exact Nat.mul_le_mul_left _ (by omega)
+  have work : candidates.work ≤ 256*(n+4)^2 := by
+    simp only [candidates,rawEnumeration,CandidateEnumeration.sum_work,CandidateEnumeration.prod_work,
+      CandidateEnumeration.fin_work,CandidateEnumeration.bool_work,CandidateEnumeration.fin_length,
+      CandidateEnumeration.prod_length,CandidateEnumeration.bool_vertices,List.length_cons,List.length_nil,hlabels,hlabelWork]
+    have scaled := Nat.mul_le_mul_left n hdepth
+    nlinarith only [hdepth,scaled]
+  have filtered := filterWithCost_paid test candidates.enumeration.vertices cap cost
+  have copied : (selectedNodes D l test exactTest).1.length ≤ candidates.enumeration.vertices.length := by
+    simp only [selectedNodes,refineNodes,List.length_map,List.length_attach,filterWithCost_value]
+    exact List.length_filter_le _ _
+  change candidates.work+(filterWithCost test candidates.enumeration.vertices).2+
+    16*(selectedNodes D l test exactTest).1.length+4 ≤ _
+  unfold nodeVectorBudget
+  have h := filtered.trans (Nat.add_le_add_right (Nat.mul_le_mul_right (cap+8) length) 1)
+  have j := Nat.mul_le_mul_left 16 (copied.trans length)
+  rw [Nat.mul_add] at h
+  rw [Nat.mul_add]
+  omega
 
 def buildWithLabels {n : ℕ} (D : Input n) (l : Labels n) : Prepared D :=
   let es := edges D

@@ -37,7 +37,7 @@ The physical source entry now counts serialization, binary dispatch fuel, valida
 | Lemma 27 | Actual maximal family, proved comparison candidate and exact stable-gate mass comparison | Complete finite stable-state component |
 | Theorem 28 | Actual repaired finite chain/port reduction:6n vertices,2W mass,2αW pullback | Constructive runtime |
 | Theorem 29 | Actual repaired finite reduction: 4n² vertices,3W weight,6αC cost, zero cases | Runtime; exact gap notation requires the stated bounded-instance interpretation |
-| Theorems30–31 | Actual dyadic edge-to-vertex and split-vertex constructions, path and cost bridges, and bounded-oracle forms. The original edge solver uses binary line labels and demand endpoints. | Constructive runtime |
+| Theorems30–31 | Actual dyadic edge-to-vertex and split-vertex constructions, path and cost bridges, and bounded-oracle forms. The original edge solver measures binary line labels, demand endpoints, and dyadic gadget assembly. | Complete constructive bit time |
 | Theorem 32 | Actual endpoint-safe self-reduction and uniform vertex n^(1/3+ε) composition | Runtime |
 | Theorem 33 | Finite family and PMF for both models. `PhysicalEdgeFamily.calibrated_physical` executes the adaptive edge-cut calls and transfers the literal fair-bit, confidence and original-weight frequency bounds. `AdaptiveWidthEnvelope.family_polynomial_reads` bounds the calibrated family in the original stored width. The exact-weight edge law also has a quadratic-horizon variant. | The packed adaptive family chooses the smaller calibrated factor, computes exact prices and threshold demands, and samples from its unread tape. The near-linear exact-original-weight result holds when positive weights already meet the floor. The unrestricted form and complete structural bit-time remain open. |
 
@@ -51,6 +51,7 @@ The [binary adaptive family](verification/BINARY_ADAPTIVE_FAMILY_20261119.md) jo
 The [binary source and terminal reader](verification/BINARY_SOURCE_READBACK_20261119.md) frame the dispatcher input, evaluate its instruction bound on binary words, and pay for validation and conversion of each reached terminal row or witness.
 The [paired multicut solvers](verification/PAIRED_MULTICUT_20261119.md) run both modes on the same literal fair source, choose the cheaper cut at the original prices, and prove the Corollary 6 minimum bound with the original confidence.
 The [amplifier and controller boundary](verification/BINARY_ROUND_BOUNDARY_20261119.md) charges the exact trial computation, shares the decoded prices, and verifies the hard controller’s packed input words and mask copy. The same checkpoint gives a near-linear exact-weight family when the original weights already satisfy the positive-weight floor.
+The [dyadic gadget assembly](verification/BINARY_GADGET_LAYOUT_20261119.md) charges the actual arc collection, retained-label selection, adjacency matrix and price tests while preserving the exact reference layout.
 The manifest `verification/component-verification.json` records an earlier
 component checkpoint.
 Independent reviews record semantic scope and boundary cases. No desired

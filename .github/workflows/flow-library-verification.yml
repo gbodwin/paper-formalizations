@@ -40,6 +40,7 @@ on:
       - codex/flow-best-weak-cut-20261119
       - codex/flow-total-packed-controller-20261119
       - codex/flow-binary-line-labels-20261119
+      - codex/flow-binary-gadget-layout-20261119
   workflow_dispatch:
 permissions:
   contents: read
@@ -146,29 +147,32 @@ jobs:
         if: github.ref_name == 'codex/flow-binary-integer-cutoff-20261119'
         run: bash scripts/CheckFlowBinaryIntegerCutoff.sh
       - name: Check the measured source setup and terminal conversions on all solver entries
-        if: github.ref_name == 'codex/flow-binary-source-readback-20261119' || github.ref_name == 'codex/flow-paired-multicut-20261119' || github.ref_name == 'codex/flow-binary-round-boundary-20261119' || github.ref_name == 'codex/flow-binary-weak-sampler-20261119' || github.ref_name == 'codex/flow-binary-outer-controls-20261119' || github.ref_name == 'codex/flow-best-weak-cut-20261119' || github.ref_name == 'codex/flow-total-packed-controller-20261119' || github.ref_name == 'codex/flow-binary-line-labels-20261119'
+        if: github.ref_name == 'codex/flow-binary-source-readback-20261119' || github.ref_name == 'codex/flow-paired-multicut-20261119' || github.ref_name == 'codex/flow-binary-round-boundary-20261119' || github.ref_name == 'codex/flow-binary-weak-sampler-20261119' || github.ref_name == 'codex/flow-binary-outer-controls-20261119' || github.ref_name == 'codex/flow-best-weak-cut-20261119' || github.ref_name == 'codex/flow-total-packed-controller-20261119' || github.ref_name == 'codex/flow-binary-line-labels-20261119' || github.ref_name == 'codex/flow-binary-gadget-layout-20261119'
         run: bash scripts/CheckFlowBinarySourceReadback.sh
       - name: Check the paired multicut approximation and wire entries
-        if: github.ref_name == 'codex/flow-paired-multicut-20261119' || github.ref_name == 'codex/flow-binary-round-boundary-20261119' || github.ref_name == 'codex/flow-binary-weak-sampler-20261119' || github.ref_name == 'codex/flow-binary-outer-controls-20261119' || github.ref_name == 'codex/flow-best-weak-cut-20261119' || github.ref_name == 'codex/flow-total-packed-controller-20261119' || github.ref_name == 'codex/flow-binary-line-labels-20261119'
+        if: github.ref_name == 'codex/flow-paired-multicut-20261119' || github.ref_name == 'codex/flow-binary-round-boundary-20261119' || github.ref_name == 'codex/flow-binary-weak-sampler-20261119' || github.ref_name == 'codex/flow-binary-outer-controls-20261119' || github.ref_name == 'codex/flow-best-weak-cut-20261119' || github.ref_name == 'codex/flow-total-packed-controller-20261119' || github.ref_name == 'codex/flow-binary-line-labels-20261119' || github.ref_name == 'codex/flow-binary-gadget-layout-20261119'
         run: bash scripts/CheckFlowPairedMulticut.sh
       - name: Check binary amplifier preparation and the controller boundary
-        if: github.ref_name == 'codex/flow-binary-round-boundary-20261119' || github.ref_name == 'codex/flow-binary-weak-sampler-20261119' || github.ref_name == 'codex/flow-binary-outer-controls-20261119' || github.ref_name == 'codex/flow-best-weak-cut-20261119' || github.ref_name == 'codex/flow-total-packed-controller-20261119' || github.ref_name == 'codex/flow-binary-line-labels-20261119'
+        if: github.ref_name == 'codex/flow-binary-round-boundary-20261119' || github.ref_name == 'codex/flow-binary-weak-sampler-20261119' || github.ref_name == 'codex/flow-binary-outer-controls-20261119' || github.ref_name == 'codex/flow-best-weak-cut-20261119' || github.ref_name == 'codex/flow-total-packed-controller-20261119' || github.ref_name == 'codex/flow-binary-line-labels-20261119' || github.ref_name == 'codex/flow-binary-gadget-layout-20261119'
         run: bash scripts/CheckFlowBinaryRoundBoundary.sh
       - name: Check calibrated edge-cut selection on the literal suffix
-        if: github.ref_name == 'codex/flow-binary-weak-sampler-20261119' || github.ref_name == 'codex/flow-binary-outer-controls-20261119' || github.ref_name == 'codex/flow-best-weak-cut-20261119' || github.ref_name == 'codex/flow-total-packed-controller-20261119' || github.ref_name == 'codex/flow-binary-line-labels-20261119'
+        if: github.ref_name == 'codex/flow-binary-weak-sampler-20261119' || github.ref_name == 'codex/flow-binary-outer-controls-20261119' || github.ref_name == 'codex/flow-best-weak-cut-20261119' || github.ref_name == 'codex/flow-total-packed-controller-20261119' || github.ref_name == 'codex/flow-binary-line-labels-20261119' || github.ref_name == 'codex/flow-binary-gadget-layout-20261119'
         run: bash scripts/CheckFlowBinaryWeakSampler.sh
       - name: Check binary outer controls and the accepted edge-cut law
-        if: github.ref_name == 'codex/flow-binary-outer-controls-20261119' || github.ref_name == 'codex/flow-best-weak-cut-20261119' || github.ref_name == 'codex/flow-total-packed-controller-20261119' || github.ref_name == 'codex/flow-binary-line-labels-20261119'
+        if: github.ref_name == 'codex/flow-binary-outer-controls-20261119' || github.ref_name == 'codex/flow-best-weak-cut-20261119' || github.ref_name == 'codex/flow-total-packed-controller-20261119' || github.ref_name == 'codex/flow-binary-line-labels-20261119' || github.ref_name == 'codex/flow-binary-gadget-layout-20261119'
         run: bash scripts/CheckFlowBinaryOuterControls.sh
       - name: Check both calibrated weak-cut strategies on the original weight wire
-        if: github.ref_name == 'codex/flow-best-weak-cut-20261119' || github.ref_name == 'codex/flow-total-packed-controller-20261119' || github.ref_name == 'codex/flow-binary-line-labels-20261119'
+        if: github.ref_name == 'codex/flow-best-weak-cut-20261119' || github.ref_name == 'codex/flow-total-packed-controller-20261119' || github.ref_name == 'codex/flow-binary-line-labels-20261119' || github.ref_name == 'codex/flow-binary-gadget-layout-20261119'
         run: bash scripts/CheckFlowBestWeakCut.sh
       - name: Check total execution of the packed preprocessing and rounding controller
-        if: github.ref_name == 'codex/flow-total-packed-controller-20261119' || github.ref_name == 'codex/flow-binary-line-labels-20261119'
+        if: github.ref_name == 'codex/flow-total-packed-controller-20261119' || github.ref_name == 'codex/flow-binary-line-labels-20261119' || github.ref_name == 'codex/flow-binary-gadget-layout-20261119'
         run: bash scripts/CheckFlowTotalPacked.sh
       - name: Check binary line labels, prices and ordered demand endpoints
-        if: github.ref_name == 'codex/flow-binary-line-labels-20261119'
+        if: github.ref_name == 'codex/flow-binary-line-labels-20261119' || github.ref_name == 'codex/flow-binary-gadget-layout-20261119'
         run: bash scripts/CheckFlowBinaryLineLabels.sh
+      - name: Check the charged dyadic gadget layout and price fields
+        if: github.ref_name == 'codex/flow-binary-gadget-layout-20261119'
+        run: bash scripts/CheckFlowBinaryGadgetLayout.sh
       - name: Recheck source identity
         run: |
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
