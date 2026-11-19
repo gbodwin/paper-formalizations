@@ -1,5 +1,6 @@
 import DirectedFlowCutGap.PhysicalAmplifiedBinaryVertex
 import DirectedFlowCutGap.BinaryEdgeGadget
+import DirectedFlowCutGap.BinaryLineLabels
 
 /-! The original edge solver with binary line prices, dyadic gadgets, and
 binary scalar vertex preparation on each actual fractional row. -/
@@ -19,9 +20,9 @@ def lineAllowance {R : Type*} [Semiring R] (m demands : R) : R :=
   128*(m+2)^2*(m^2+m+demands+1)
 
 def lineWithCost {n : ℕ} (D : Input n) : BinaryFractionalGuesses.Input (lineSize n) × ℕ :=
-  let line := lineInput D
-  let c := batch fun i => BinaryRawRational.encode line.costs[i.val]
-  (⟨line.adjacency,line.demands,c.1⟩,c.2+lineAllowance (lineSize n) D.demands.length)
+  let line := BinaryLineLabels.prepare D
+  let c := batch fun i => BinaryRawRational.encode line.1.costs[i.val]
+  (⟨line.1.adjacency,line.1.demands,c.1⟩,c.2+line.2+lineAllowance (lineSize n) D.demands.length)
 
 @[simp] theorem line_value {n : ℕ} (D : Input n) : (lineWithCost D).1=binaryLineInput D := by
   have costs : (batch (fun i : Fin (lineSize n) => BinaryRawRational.encode (lineInput D).costs[i.val])).1 =
@@ -30,21 +31,31 @@ def lineWithCost {n : ℕ} (D : Input n) : BinaryFractionalGuesses.Input (lineSi
     intro i hi
     simp only [batch_value,Vector.getElem_ofFn,binaryLineInput,Vector.getElem_map,BinaryRawRational.encode_eq]
     rfl
-  simp only [lineWithCost,costs]
+  simp only [lineWithCost,BinaryLineLabels.prepare_value,costs]
   rfl
 
 def lineBudget {R : Type*} [Semiring R] (m demands b : R) : R :=
-  m*(40*(b+2)^2)+8*m+4+lineAllowance m demands
+  m*(40*(b+2)^2)+8*m+4+(BinaryLineLabels.budget m m+BinaryLineLabels.demandBudget m demands)+lineAllowance m demands
 
 theorem line_paid {n b : ℕ} (D : Input n) (positive : 1 ≤ b)
     (fits : ∀ u v : Fin n, D.costs[u.val][v.val].num.size ≤ b ∧ D.costs[u.val][v.val].den.size ≤ b) :
     (lineWithCost D).2 ≤ lineBudget (lineSize n) D.demands.length b := by
-  apply Nat.add_le_add_right
-  apply batch_paid
-  intro i
-  obtain ⟨a,c⟩ := lineInput_cost_width D positive fits i
-  exact BinaryRawRational.encode_paid
-    (show (lineInput D).costs[i.val].Bounded b from ⟨(Nat.size_le.mp a).le,(Nat.size_le.mp c).le⟩)
+  let line := BinaryLineLabels.prepare D
+  have paid : (batch fun i : Fin (lineSize n) => BinaryRawRational.encode line.1.costs[i.val]).2 ≤
+      lineSize n*(40*(b+2)^2)+8*lineSize n+4 := by
+    apply batch_paid
+    intro i
+    obtain ⟨a,c⟩ := lineInput_cost_width D positive fits i
+    have fields : (lineInput D).costs[i.val].Bounded b :=
+      ⟨(Nat.size_le.mp a).le,(Nat.size_le.mp c).le⟩
+    rw [show line.1=lineInput D from BinaryLineLabels.prepare_value D]
+    exact BinaryRawRational.encode_paid fields
+  have layout : line.2 ≤ BinaryLineLabels.budget (lineSize n) (lineSize n)+
+      BinaryLineLabels.demandBudget (lineSize n) D.demands.length := BinaryLineLabels.prepare_paid D
+  change (batch fun i : Fin (lineSize n) => BinaryRawRational.encode line.1.costs[i.val]).2+line.2+
+    lineAllowance (lineSize n) D.demands.length ≤ lineBudget (lineSize n) D.demands.length b
+  unfold lineBudget
+  omega
 
 def pullbackBudget {R : Type*} [Semiring R] (n m : R) : R :=
   128*(n+4)*(2*n^2*(m+1)+(n*2+n*n)+1)

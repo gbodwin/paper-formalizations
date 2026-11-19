@@ -184,7 +184,8 @@ theorem edge_polynomial : ∃ p : Polynomial ℕ, ∀ {n B : ℕ} (κ : ℕ) (D 
     (ChargedVertexModes.priceWidth_positive binary) good rounds hr
   have setup := line_paid D positive fits
   have liftLine : lineBudget (lineSize n) D.demands.length B ≤ (lineBudget line X X).eval y := by
-    simp only [lineBudget,lineAllowance,eval_add,eval_mul,eval_ofNat,eval_X,eval_pow,eval_one]
+    simp only [lineBudget,lineAllowance,BinaryLineLabels.budget_eval,BinaryLineLabels.demandBudget_eval,eval_add,eval_mul,eval_ofNat,eval_X,eval_pow,eval_one]
+    unfold BinaryLineLabels.budget BinaryLineLabels.demandBudget
     gcongr
   have liftOutput : outputBudget n ≤ (outputBudget (X : Polynomial ℕ)).eval y := by
     simp only [outputBudget,eval_add,eval_mul,eval_ofNat,eval_X,eval_pow,eval_one]

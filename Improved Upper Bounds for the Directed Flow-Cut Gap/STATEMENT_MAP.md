@@ -37,7 +37,7 @@ The physical source entry now counts serialization, binary dispatch fuel, valida
 | Lemma 27 | Actual maximal family, proved comparison candidate and exact stable-gate mass comparison | Complete finite stable-state component |
 | Theorem 28 | Actual repaired finite chain/port reduction:6n vertices,2W mass,2αW pullback | Constructive runtime |
 | Theorem 29 | Actual repaired finite reduction: 4n² vertices,3W weight,6αC cost, zero cases | Runtime; exact gap notation requires the stated bounded-instance interpretation |
-| Theorems30–31 | Actual dyadic edge-to-vertex and split-vertex constructions, all path/cut/count/weight/cost bridges and bounded-oracle forms | Constructive runtime |
+| Theorems30–31 | Actual dyadic edge-to-vertex and split-vertex constructions, path and cost bridges, and bounded-oracle forms. The original edge solver uses binary line labels and demand endpoints. | Constructive runtime |
 | Theorem 32 | Actual endpoint-safe self-reduction and uniform vertex n^(1/3+ε) composition | Runtime |
 | Theorem 33 | Finite family and PMF for both models. `PhysicalEdgeFamily.calibrated_physical` executes the adaptive edge-cut calls and transfers the literal fair-bit, confidence and original-weight frequency bounds. `AdaptiveWidthEnvelope.family_polynomial_reads` bounds the calibrated family in the original stored width. The exact-weight edge law also has a quadratic-horizon variant. | The packed adaptive family chooses the smaller calibrated factor, computes exact prices and threshold demands, and samples from its unread tape. The near-linear exact-original-weight result holds when positive weights already meet the floor. The unrestricted form and complete structural bit-time remain open. |
 

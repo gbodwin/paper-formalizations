@@ -39,3 +39,9 @@ def main : IO Unit := do
   unless cut.mask.toList == [] && cut.suffix == tape && cut.paid == 36504075 do
     throw (IO.userError "the total original controller changed the result or its guarded charge")
   IO.println s!"PASS the packed original controller halts with identical word and unread tape, paid {cut.paid}"
+  let one : PairFlags 1 := #v[#v[true]]
+  let some live := PhysicalIntegerRounding.hardRun 0 one 1 tape |
+    throw (IO.userError "the total controller on the nonempty graph did not halt")
+  unless live.mask.toList == [false] && live.suffix == tape && live.paid == 70312016 do
+    throw (IO.userError "the nonempty graph changed its cut, tape or charge")
+  IO.println s!"PASS total packed controller on one vertex and a live self loop, paid {live.paid}"

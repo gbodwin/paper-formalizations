@@ -189,6 +189,7 @@ import DirectedFlowCutGap.BinaryInputBudgets
 import DirectedFlowCutGap.BinaryIntegerCutoff
 import DirectedFlowCutGap.BinaryLabelRangeProgram
 import DirectedFlowCutGap.BinaryLengthProgram
+import DirectedFlowCutGap.BinaryLineLabels
 import DirectedFlowCutGap.BinaryMaximumCallLift
 import DirectedFlowCutGap.BinaryMaximumExecution
 import DirectedFlowCutGap.BinaryMaximumProgram
