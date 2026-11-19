@@ -130,42 +130,45 @@ theorem theorem14_extremal_lower_in_linear_regimes :
       _ ≤ (K*(6*H.card))*B := by gcongr
       _ = _ := by ring
 
-private theorem offlineRate_le_lattice_gap {b n p : ℝ} (bLo : 1/2 ≤ b) (bHi : b ≤ 7/8)
+private theorem offlineRate_le_two_lattice_gap {b n p : ℝ} (bLo : 2/3 ≤ b) (bHi : b ≤ 5/6)
     (hn : 1 ≤ n) (hp : 1 ≤ p) :
-    offlineRate b n p ≤ n^((2-2*b)/3) * (n + p + n^(2/3 : ℝ)*p^(1/2 : ℝ)) := by
-  let d := (2-2*b)/3
-  let base := n + p + n^(2/3 : ℝ)*p^(1/2 : ℝ)
+    offlineRate b n p ≤ n^((1-b)/2) * (n + p + n^(2/3 : ℝ)*p^(1/2 : ℝ) + n^(1/2 : ℝ)*p^(2/3 : ℝ)) := by
+  let d := (1-b)/2
+  let firstLattice := n^(2/3 : ℝ)*p^(1/2 : ℝ)
+  let secondLattice := n^(1/2 : ℝ)*p^(2/3 : ℝ)
+  let base := n + p + firstLattice + secondLattice
   have nPos : 0 < n := by linarith
   have pPos : 0 < p := by linarith
   have dLo : (1/12 : ℝ) ≤ d := by dsimp [d]; linarith
   have d0 : 0 ≤ d := by linarith
   have size : 1 ≤ n^d := Real.one_le_rpow hn d0
-  have lattice0 : 0 ≤ n^(2/3 : ℝ)*p^(1/2 : ℝ) := by positivity
-  have nLe : n ≤ base := by dsimp [base]; linarith only [pPos, lattice0]
-  have pLe : p ≤ base := by dsimp [base]; linarith only [nPos, lattice0]
-  have latticeLe : n^(2/3 : ℝ)*p^(1/2 : ℝ) ≤ base := by
-    dsimp [base]
-    linarith only [nPos, pPos]
+  have first0 : 0 ≤ firstLattice := by dsimp [firstLattice]; positivity
+  have second0 : 0 ≤ secondLattice := by dsimp [secondLattice]; positivity
+  have nLe : n ≤ base := by dsimp [base]; linarith only [pPos, first0, second0]
+  have pLe : p ≤ base := by dsimp [base]; linarith only [nPos, first0, second0]
+  have firstLe : firstLattice ≤ base := by dsimp [base]; linarith only [nPos, pPos, second0]
+  have secondLe : secondLattice ≤ base := by dsimp [base]; linarith only [nPos, pPos, first0]
   have baseLe : base ≤ n^d*base := le_mul_of_one_le_left (by positivity) size
   have first : n^(3/4 : ℝ)*p^(1/2 : ℝ) ≤ n^d * base := calc
     _ = n^(1/12 : ℝ)*(n^(2/3 : ℝ)*p^(1/2 : ℝ)) := by
       rw [← mul_assoc, ← Real.rpow_add nPos]
       norm_num
-    _ ≤ n^d * base := mul_le_mul (Real.rpow_le_rpow_of_exponent_le hn dLo) latticeLe (by positivity) (by positivity)
+    _ ≤ n^d * base := mul_le_mul (Real.rpow_le_rpow_of_exponent_le hn dLo) firstLe first0 (by positivity)
   have mixed : n^(2-2*b)*p^b ≤ n^d*base := by
-    by_cases below : p ≤ n^(4/3 : ℝ)
+    by_cases below : p ≤ n^(3/2 : ℝ)
     · calc
-        _ = n^(2-2*b)*p^(b-1/2)*p^(1/2 : ℝ) := by
+        _ = n^(2-2*b)*p^(b-2/3)*p^(2/3 : ℝ) := by
           rw [mul_assoc, ← Real.rpow_add pPos, sub_add_cancel]
-        _ ≤ n^(2-2*b)*(n^(4/3 : ℝ))^(b-1/2)*p^(1/2 : ℝ) := by
+        _ ≤ n^(2-2*b)*(n^(3/2 : ℝ))^(b-2/3)*p^(2/3 : ℝ) := by
           apply mul_le_mul_of_nonneg_right _ (by positivity)
           exact mul_le_mul_of_nonneg_left (Real.rpow_le_rpow pPos.le below (by linarith)) (by positivity)
-        _ = n^d*(n^(2/3 : ℝ)*p^(1/2 : ℝ)) := by
+        _ = n^d*secondLattice := by
+          dsimp only [secondLattice]
           rw [← Real.rpow_mul nPos.le, ← Real.rpow_add nPos, ← mul_assoc, ← Real.rpow_add nPos]
           congr 2
           dsimp [d]
           ring
-        _ ≤ _ := mul_le_mul_of_nonneg_left latticeLe (by positivity)
+        _ ≤ _ := mul_le_mul_of_nonneg_left secondLe (by positivity)
     · calc
         _ = n^(2-2*b)*p^(b-1)*p := by
           rw [mul_assoc]
@@ -173,7 +176,7 @@ private theorem offlineRate_le_lattice_gap {b n p : ℝ} (bLo : 1/2 ≤ b) (bHi 
           calc
             p^b = p^((b-1)+1) := by rw [sub_add_cancel]
             _ = _ := by rw [Real.rpow_add pPos, Real.rpow_one]
-        _ ≤ n^(2-2*b)*(n^(4/3 : ℝ))^(b-1)*p := by
+        _ ≤ n^(2-2*b)*(n^(3/2 : ℝ))^(b-1)*p := by
           apply mul_le_mul_of_nonneg_right _ pPos.le
           exact mul_le_mul_of_nonneg_left (Real.rpow_le_rpow_of_nonpos (by positivity) (le_of_not_ge below)
             (by linarith)) (by positivity)
@@ -185,10 +188,49 @@ private theorem offlineRate_le_lattice_gap {b n p : ℝ} (bLo : 1/2 ≤ b) (bHi 
         _ ≤ _ := mul_le_mul_of_nonneg_left pLe (by positivity)
   exact max_le (nLe.trans baseLe) (max_le first (max_le mixed (pLe.trans baseLe)))
 
-/-- At every parameter pair, a DAG forces a preserver within a polynomial
-factor of the mass of every path system excluding full bridges through four.
-The factor is measured against the exact cardinalities, with no demand-range restriction
-beyond the model's distinct-pair constraint. -/
+/-- At every admissible parameter pair, the two lattice rates give a
+preserver lower bound within a factor `C*n^((1-1/sqrt 2)/2)` of the mass of
+every simple system excluding full bridges through four. -/
+theorem theorem14_extremal_lower_with_two_lattice_gap :
+    ∃ C : ℝ, 1 ≤ C ∧ ∀ {n p : ℕ}, 2 ≤ n → 0 < p → p ≤ n^2 →
+      ∃ (G D : Arcs (Fin n)), IsDAG G ∧ D.card = p ∧
+        ∀ H ⊆ G, Preserves G H D.toList →
+          ∀ paths : Fin p → List (Fin n), (∀ i, (paths i).Nodup) →
+            BridgeFree (ListBefore paths) 4 →
+            (∑ i, ((paths i).length : ℝ)) ≤
+              C*(n : ℝ)^((1-1/Real.sqrt 2)/2)*H.card := by
+  obtain ⟨B, hB, bound⟩ := theorem43_list_limit.{0}
+  refine ⟨4096*B, by linarith, ?_⟩
+  intro n p hn hp hpCap
+  obtain ⟨G,D,dag,size,lower⟩ := SourceAudit.offline_lower_all_sizes_with_two_lattices hn hp hpCap
+  refine ⟨G,D,dag,size,?_⟩
+  intro H sub preserves paths simple free
+  let b := 1/Real.sqrt 2
+  have bn : (2/3 : ℝ) ≤ b := by
+    have sq : b^2 = (1/2 : ℝ) := by
+      rw [div_pow, Real.sq_sqrt (by norm_num)]
+      norm_num
+    exact (sq_le_sq₀ (by norm_num) (by positivity)).mp (by linarith)
+  have bh : b ≤ (5/6 : ℝ) := offline_limit_lt.le.trans (by norm_num)
+  have n1 : (1 : ℝ) ≤ n := by exact_mod_cast (show 1 ≤ n by omega)
+  have p1 : (1 : ℝ) ≤ p := by exact_mod_cast hp
+  have incidence : (∑ i, ((paths i).length : ℝ)) ≤ offlineRate b n p * B := by
+    simpa [b] using bound (Fin n) p paths simple free
+  have rate := offlineRate_le_two_lattice_gap bn bh n1 p1
+  have force := lower H sub preserves
+  calc
+    _ ≤ offlineRate b n p * B := incidence
+    _ ≤ ((n : ℝ)^((1-b)/2) * ((n : ℝ) + p + (n : ℝ)^(2/3 : ℝ)*(p : ℝ)^(1/2 : ℝ) +
+          (n : ℝ)^(1/2 : ℝ)*(p : ℝ)^(2/3 : ℝ)))*B :=
+      mul_le_mul_of_nonneg_right rate (by linarith)
+    _ ≤ ((n : ℝ)^((1-b)/2) * (4096*H.card))*B :=
+      mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left force (by positivity)) (by linarith)
+    _ = _ := by
+      change ((n : ℝ)^((1-b)/2)*(4096*H.card))*B = 4096*B*(n : ℝ)^((1-b)/2)*H.card
+      ring
+
+/-- The earlier comparison with one lattice remains valid at its
+original exponent. -/
 theorem theorem14_extremal_lower_with_lattice_gap :
     ∃ C : ℝ, 1 ≤ C ∧ ∀ {n p : ℕ}, 2 ≤ n → 0 < p → p ≤ n^2 →
       ∃ (G D : Arcs (Fin n)), IsDAG G ∧ D.card = p ∧
@@ -197,33 +239,17 @@ theorem theorem14_extremal_lower_with_lattice_gap :
             BridgeFree (ListBefore paths) 4 →
             (∑ i, ((paths i).length : ℝ)) ≤
               C*(n : ℝ)^((2-2*(1/Real.sqrt 2))/3)*H.card := by
-  obtain ⟨B, hB, bound⟩ := theorem43_list_limit.{0}
-  refine ⟨768*B, by linarith, ?_⟩
+  obtain ⟨C,positive,lower⟩ := theorem14_extremal_lower_with_two_lattice_gap
+  refine ⟨C,positive,?_⟩
   intro n p hn hp hpCap
-  obtain ⟨G,D,dag,size,lower⟩ := SourceAudit.offline_lower_all_sizes_with_linear hn hp hpCap
+  obtain ⟨G,D,dag,size,gap⟩ := lower hn hp hpCap
   refine ⟨G,D,dag,size,?_⟩
   intro H sub preserves paths simple free
-  let b := 1/Real.sqrt 2
-  have bn : (1/2 : ℝ) ≤ b := by
-    have sq : b^2 = (1/2 : ℝ) := by
-      rw [div_pow, Real.sq_sqrt (by norm_num)]
-      norm_num
-    exact (sq_le_sq₀ (by norm_num) (by positivity)).mp (by linarith)
-  have bh : b ≤ (7/8 : ℝ) := offline_limit_lt.le.trans (by norm_num)
   have n1 : (1 : ℝ) ≤ n := by exact_mod_cast (show 1 ≤ n by omega)
-  have p1 : (1 : ℝ) ≤ p := by exact_mod_cast hp
-  have incidence : (∑ i, ((paths i).length : ℝ)) ≤ offlineRate b n p * B := by
-    simpa [b] using bound (Fin n) p paths simple free
-  have rate := offlineRate_le_lattice_gap bn bh n1 p1
-  have force := lower H sub preserves
-  calc
-    _ ≤ offlineRate b n p * B := incidence
-    _ ≤ ((n : ℝ)^((2-2*b)/3) * ((n : ℝ) + p + (n : ℝ)^(2/3 : ℝ)*(p : ℝ)^(1/2 : ℝ)))*B :=
-      mul_le_mul_of_nonneg_right rate (by linarith)
-    _ ≤ ((n : ℝ)^((2-2*b)/3) * (768*H.card))*B :=
-      mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left force (by positivity)) (by linarith)
-    _ = _ := by
-      change ((n : ℝ)^((2-2*b)/3)*(768*H.card))*B = 768*B*(n : ℝ)^((2-2*b)/3)*H.card
-      ring
+  have exponent : (1-1/Real.sqrt 2)/2 ≤ (2-2*(1/Real.sqrt 2))/3 := by
+    linarith only [offline_limit_lt]
+  have monotone := Real.rpow_le_rpow_of_exponent_le n1 exponent
+  exact (gap H sub preserves paths simple free).trans
+    (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left monotone (by linarith)) (by positivity))
 
 end OnlineReachabilityPreservers
