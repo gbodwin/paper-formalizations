@@ -4,9 +4,10 @@ import DirectedFlowCutGap.PhysicalSourceDispatch
 /-!
 # Rounding the rows read from a physical fractional dispatch
 
-The fixed parser and fractional dispatcher consume the serialized graph.
-The retained cover rows read from the terminal heap become the candidates
-for rounding. The output reports the physical prefix charge separately.
+The fixed parser and fractional dispatcher consume the encoder's format.
+The functional parser also accepts padded demand labels. Those inputs
+are re-encoded before dispatch. The retained cover rows read from the
+terminal heap become the candidates for rounding.
 -/
 
 namespace DirectedFlowCutGap.PhysicalVertexSolver
@@ -117,23 +118,69 @@ theorem prepareOn_eq {A B : ℕ → Type} (init : (n : ℕ) → A n → Option (
     prepareOn init parsed = some ⟨n, result⟩ := by
   simp only [prepareOn, hp, Option.bind_some, hi, Option.map_some]
 
+private def dispatchSource {n : ℕ} (D : BinaryFractionalGuesses.Input n) (graph : Bits) : Bits :=
+  let encoded := PhysicalSourceDispatch.input D
+  if graph = encoded then graph else encoded
+
+private theorem dispatchSource_eq {n : ℕ} (D : BinaryFractionalGuesses.Input n) (graph : Bits) :
+    dispatchSource D graph = PhysicalSourceDispatch.input D := by
+  unfold dispatchSource
+  dsimp only
+  split
+  · assumption
+  · rfl
+
 def sourceTree (κ : ℕ) (round : (n : ℕ) → Rounding n) (graph : Bits) :
     Option (Σ n, FiniteDrawTrees.Tree (Output n) × ℕ) :=
-  prepareOn (fun n D => rawTree κ D (round n) graph) (EncodedVertexInput.parse graph)
+  prepareOn (fun n D => rawTree κ D (round n) (dispatchSource D graph))
+    (EncodedVertexInput.parse graph)
+
+theorem sourceTree_parsed {n : ℕ} (κ : ℕ) (D : BinaryFractionalGuesses.Input n)
+    (round : (n : ℕ) → Rounding n) {graph : Bits} (hparse : EncodedVertexInput.parse graph = some ⟨n, D⟩) :
+    ∃ paid, sourceTree κ round graph =
+      some ⟨n, (EncodedVertexAmplification.polynomialBitTree κ
+        (BinaryFractionalGuesses.decodeInput D) (round n), paid)⟩ ∧
+      paid ≤ PhysicalSourceDispatch.paidPolynomial.eval (PhysicalSourceDispatch.input D).length := by
+  obtain ⟨paid, ht, hp⟩ := rawTree_eq κ D (round n)
+  have he := congrArg (rawTree κ D (round n)) (dispatchSource_eq D graph)
+  exact ⟨paid, prepareOn_eq (fun n G => rawTree κ G (round n) (dispatchSource G graph))
+    hparse (he.trans ht), hp⟩
 
 theorem sourceTree_eq {n : ℕ} (κ : ℕ) (D : BinaryFractionalGuesses.Input n)
     (round : (n : ℕ) → Rounding n) :
     ∃ paid, sourceTree κ round (SourcePacking.encode D.costs D.adjacency D.demands) =
       some ⟨n, (EncodedVertexAmplification.polynomialBitTree κ
         (BinaryFractionalGuesses.decodeInput D) (round n), paid)⟩ ∧
-      paid ≤ PhysicalSourceDispatch.paidPolynomial.eval (PhysicalSourceDispatch.input D).length := by
-  obtain ⟨paid, ht, hp⟩ := rawTree_eq κ D (round n)
-  exact ⟨paid, prepareOn_eq (fun n G => rawTree κ G (round n) (PhysicalSourceDispatch.input D))
-    (EncodedVertexInput.parse_encode D) ht, hp⟩
+      paid ≤ PhysicalSourceDispatch.paidPolynomial.eval (PhysicalSourceDispatch.input D).length :=
+  sourceTree_parsed κ D round (EncodedVertexInput.parse_encode D)
 
 def source (κ : ℕ) (round : (n : ℕ) → Rounding n) (graph tape : Bits) :
     Option (Σ n, Output n × EncodedSolverBits.Tape × ℕ) :=
   runOn (sourceTree κ round graph) tape
+
+theorem source_complete_of_parse {n : ℕ} (κ : ℕ) (D : BinaryFractionalGuesses.Input n)
+    (round : (n : ℕ) → Rounding n) (graph tape : Bits)
+    (hparse : EncodedVertexInput.parse graph = some ⟨n, D⟩)
+    (hbits : EncodedSolverBits.vertexBudget κ (BinaryFractionalGuesses.decodeInput D) ≤ tape.length)
+    (hreads : Within (EncodedSolverBits.vertexBudget κ (BinaryFractionalGuesses.decodeInput D))
+      (EncodedVertexAmplification.polynomialBitTree κ (BinaryFractionalGuesses.decodeInput D) (round n)))
+    (hvalid : ∀ a ∈ (ideal (EncodedVertexAmplification.polynomialBitTree κ
+      (BinaryFractionalGuesses.decodeInput D) (round n))).support,
+      Valid (BinaryFractionalGuesses.decodeInput D) a) :
+    ∃ output used paid,
+      source κ round graph tape =
+        some ⟨n, (output, (tape.drop used, used), paid)⟩ ∧
+      used ≤ EncodedSolverBits.vertexBudget κ (BinaryFractionalGuesses.decodeInput D) ∧
+      paid ≤ PhysicalSourceDispatch.paidPolynomial.eval (PhysicalSourceDispatch.input D).length ∧
+      Valid (BinaryFractionalGuesses.decodeInput D) output := by
+  obtain ⟨paid, ht, hp⟩ := sourceTree_parsed κ D round hparse
+  have hb : LazyFairBitTrees.Binary
+      (EncodedVertexAmplification.polynomialBitTree κ (BinaryFractionalGuesses.decodeInput D) (round n)) :=
+    EncodedVertexAmplification.bitTree_binary
+    (EncodedVertexAmplification.confidenceExponent n κ) (EncodedVertexAmplification.confidenceExponent n κ + 1)
+    (BinaryFractionalGuesses.decodeInput D) (round n)
+  obtain ⟨a, used, hr, hbound, ha⟩ := runOn_complete ht hreads hb tape hbits _ hvalid
+  exact ⟨a, used, paid, hr, hbound, hp, ha⟩
 
 theorem source_complete {n : ℕ} (κ : ℕ) (D : BinaryFractionalGuesses.Input n)
     (round : (n : ℕ) → Rounding n) (tape : Bits)
@@ -148,15 +195,8 @@ theorem source_complete {n : ℕ} (κ : ℕ) (D : BinaryFractionalGuesses.Input 
         some ⟨n, (output, (tape.drop used, used), paid)⟩ ∧
       used ≤ EncodedSolverBits.vertexBudget κ (BinaryFractionalGuesses.decodeInput D) ∧
       paid ≤ PhysicalSourceDispatch.paidPolynomial.eval (PhysicalSourceDispatch.input D).length ∧
-      Valid (BinaryFractionalGuesses.decodeInput D) output := by
-  obtain ⟨paid, ht, hp⟩ := sourceTree_eq κ D round
-  have hb : LazyFairBitTrees.Binary
-      (EncodedVertexAmplification.polynomialBitTree κ (BinaryFractionalGuesses.decodeInput D) (round n)) :=
-    EncodedVertexAmplification.bitTree_binary
-    (EncodedVertexAmplification.confidenceExponent n κ) (EncodedVertexAmplification.confidenceExponent n κ + 1)
-    (BinaryFractionalGuesses.decodeInput D) (round n)
-  obtain ⟨a, used, hr, hbound, ha⟩ := runOn_complete ht hreads hb tape hbits _ hvalid
-  exact ⟨a, used, paid, hr, hbound, hp, ha⟩
+      Valid (BinaryFractionalGuesses.decodeInput D) output :=
+  source_complete_of_parse κ D round _ tape (EncodedVertexInput.parse_encode D) hbits hreads hvalid
 
 theorem source_mass_complete {n : ℕ} (κ : ℕ) (D : BinaryFractionalGuesses.Input n)
     (tape : Bits)

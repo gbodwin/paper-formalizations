@@ -35,8 +35,9 @@ bound remains open. [Physical execution scope](verification/PHYSICAL_SOURCE_DISP
 | Theorem 32 | Actual endpoint-safe self-reduction and uniform vertex n^(1/3+ε) composition | Runtime |
 | Theorem 33 | Corrected finite family and PMF for both models, linear-in-n edge horizon with tiny-edge preprocessing, and exact original-weight edge law with a quadratic horizon | Complete algorithmic runtime and efficient same-weight edge family |
 
-The aggregate imports every checked component. The exact source hashes and
-allowed-axiom/kernel results are in `verification/component-verification.json`.
+The current scoped gate is [the constructive workflow](../.github/workflows/flow-constructive-rounding.yml).
+The manifest `verification/component-verification.json` records an earlier
+component checkpoint.
 Independent reviews record semantic scope and boundary cases. No desired
 main bound, optimizer, graph-path correspondence or favorable random outcome
 is introduced as a custom axiom.

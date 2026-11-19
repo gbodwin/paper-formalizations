@@ -182,7 +182,7 @@ theorem bit_trace {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
   · rwa [he]
 
 def runFrom {n : ℕ} (fuel : ℕ) (source : Bits) : Option (PhysicalCoverReader.Plan n × ℕ) := do
-  let (out, charge) ← PhysicalCoverExecution.execute program fuel (initial source) 0
+  let (out, charge) ← PhysicalCoverExecution.executeCached program fuel (initial source) 0
   let state := eraseState out
   let plan ← PhysicalCoverReader.readPlan n state.heap state.registers.d
   pure (plan, charge)
@@ -197,6 +197,6 @@ theorem run_eq {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
   obtain ⟨k, charge, out, hk, hr, hh, _, hp, hout⟩ := bit_trace D
   have he := PhysicalCoverExecution.execute_eq hr hh (steps D + 1) 0 (by omega)
   refine ⟨charge + (attempt program out).operations, ?_, hp⟩
-  simp [run, runFrom, he, PhysicalCoverReader.readPlan_eq hout]
+  simp [run, runFrom, PhysicalCoverExecution.executeCached_eq, he, PhysicalCoverReader.readPlan_eq hout]
 
 end DirectedFlowCutGap.PhysicalSourceDispatch

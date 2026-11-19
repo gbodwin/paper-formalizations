@@ -177,6 +177,7 @@ import DirectedFlowCutGap.ResidualPathSearch
 import DirectedFlowCutGap.ResidualSearchComplexity
 import DirectedFlowCutGap.RetainedCandidateSolver
 import DirectedFlowCutGap.RetainedClosureLaw
+import DirectedFlowCutGap.RetainedChargedFairBits
 import DirectedFlowCutGap.RetainedDemandMask
 import DirectedFlowCutGap.RetainedDrawTrees
 import DirectedFlowCutGap.RetainedExecutionLaw

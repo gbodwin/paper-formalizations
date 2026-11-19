@@ -1,4 +1,5 @@
 import DirectedFlowCutGap.PhysicalCoverReader
+import DirectedFlowCutGap.CachedReferenceExecution
 
 /-!
 # Executing the recovered fractional dispatcher
@@ -19,6 +20,38 @@ def execute {C : ℕ} (p : Program C) : ℕ → BitState C → ℕ → Option (B
     match step.result with
     | none => some (s, paid + step.operations)
     | some r => execute p fuel r.state (paid + step.operations)
+
+private theorem cached_refines {C : ℕ} (p : Program C) (fuel : ℕ)
+    (s : CachedReferenceExecution.FastState C) (paid : ℕ) :
+    (CachedReferenceExecution.execute p fuel s paid).map (fun (u, q) => (u.freeze, q)) =
+      execute p fuel s.freeze paid := by
+  induction fuel generalizing s paid with
+  | zero => rfl
+  | succ fuel ih =>
+    have hs := CachedReferenceExecution.attempt_eq p s
+    cases h : CachedReferenceExecution.attempt p s with
+    | stopped u q =>
+      have he := CachedReferenceExecution.stopped_state p h
+      subst u
+      rw [h] at hs
+      simp only [CachedReferenceExecution.execute, h, Option.map_some, execute, ← hs,
+        CachedReferenceExecution.FastAttempt.freeze, stopped]
+    | completed r =>
+      rw [h] at hs
+      simp only [CachedReferenceExecution.execute, h, execute, ← hs,
+        CachedReferenceExecution.FastAttempt.freeze, success,
+        CachedReferenceExecution.FastResult.freeze]
+      exact ih r.state (paid + r.cost)
+
+def executeCached {C : ℕ} (p : Program C) (fuel : ℕ) (s : BitState C) (paid : ℕ) :
+    Option (BitState C × ℕ) :=
+  (CachedReferenceExecution.execute p fuel (CachedReferenceExecution.FastState.ofReference s) paid).map
+    (fun (u, q) => (u.freeze, q))
+
+theorem executeCached_eq {C : ℕ} (p : Program C) (fuel : ℕ) (s : BitState C) (paid : ℕ) :
+    executeCached p fuel s paid = execute p fuel s paid := by
+  simpa only [executeCached, CachedReferenceExecution.freeze_ofReference] using
+    cached_refines p fuel (CachedReferenceExecution.FastState.ofReference s) paid
 
 theorem execute_eq {C k q : ℕ} {p : Program C} {s u : BitState C} {events : List Event}
     (h : Run p k q s events u) (halted : (attempt p u).result = none)
@@ -81,7 +114,7 @@ def budget {n : ℕ} (D : BinaryFractionalGuesses.Input n) : ℕ :=
 including the final paid stop. The heap reader is executed afterward. -/
 def run {n : ℕ} (D : BinaryFractionalGuesses.Input n) : Option (Plan n × ℕ) := do
   let start := OriginalStoreInitial.prepare D.adjacency D.costs D.demands
-  let (out, paid) ← execute FinalDispatch.program (budget D + 1) start.1 start.2
+  let (out, paid) ← executeCached FinalDispatch.program (budget D + 1) start.1 start.2
   let result := eraseState out
   let p ← readPlan n result.heap result.registers.d
   return (p, paid)
@@ -104,7 +137,7 @@ theorem run_eq {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
       (OriginalStoreInitial.prepare adjacency costs demands).2 hk'
     have hread := readPlan_eq houtput
     refine ⟨paid, ?_, hpaid⟩
-    simp [run, D, paid, hex, hread]
+    simp [run, D, paid, executeCached_eq, hex, hread]
 
 theorem budget_polynomial {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
     budget D ≤ OriginalStoreDispatch.totalPolynomial.eval

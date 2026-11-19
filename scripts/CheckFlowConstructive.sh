@@ -16,6 +16,7 @@ new_sources=(
   ActualFinalDispatch FinalDispatchEnvelope PackedOriginalStore OriginalStoreInputViews
   OriginalStoreInitial OriginalStoreCorrectness OriginalStoreDispatch
   PhysicalCoverReader PhysicalCoverExecution PhysicalSourceDispatch PhysicalVertexSolver PhysicalEdgeSolver
+  CachedReferenceHeap CachedReferenceExecution RetainedChargedFairBits
 )
 targets=(
   OptimalFlowCutBounds AdaptiveVertexBound AdaptiveEdgeBound
@@ -39,4 +40,17 @@ lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/EncodedEdgeSo
 lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/EncodedSourceExecutionSmoke.lean"
 lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/PhysicalVertexSolverSmoke.lean"
 lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/PhysicalEdgeSolverSmoke.lean"
+lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/RetainedChargedFairBitsSmoke.lean"
+lake env bash -c '
+  set -euo pipefail
+  verification=$1
+  fixture_lib=${RUNNER_TEMP:-/tmp}/flow-positive-fixture
+  mkdir -p "$fixture_lib"
+  export LEAN_PATH="$fixture_lib${LEAN_PATH:+:$LEAN_PATH}"
+  lean -j1 -DautoImplicit=false -DwarningAsError=true --root="$verification" \
+    -o "$fixture_lib/FinalDispatchPositiveFixtureSupport.olean" \
+    "$verification/FinalDispatchPositiveFixtureSupport.lean"
+  timeout 1800 lean -j1 -DautoImplicit=false -DwarningAsError=true \
+    --run "$verification/CachedPhysicalSourcePositiveSmoke.lean" 40000000
+' _ "$paper/verification"
 git diff --exit-code HEAD --

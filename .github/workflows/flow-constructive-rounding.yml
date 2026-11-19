@@ -11,7 +11,7 @@ env:
 jobs:
   rounding:
     runs-on: ubuntu-latest
-    timeout-minutes: 70
+    timeout-minutes: 105
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Bind exact source
@@ -34,6 +34,7 @@ jobs:
             +DirectedFlowCutGap.EncodedSourceExecution
             +DirectedFlowCutGap.WeakDecompositionExactWeight
             +DirectedFlowCutGap.PhysicalEdgeSolver
+            +DirectedFlowCutGap.RetainedChargedFairBits
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"

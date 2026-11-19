@@ -117,18 +117,48 @@ def sourceTree (κ : ℕ) (mode : EncodedEdgeSolver.Mode) (graph : Bits) :
     (fun _ D => initializedTree κ (EncodedEdgeInput.decodeInput D) mode)
     (EncodedEdgeInput.parse graph)
 
-theorem sourceTree_eq {n : ℕ} (κ : ℕ) (D : EncodedEdgeInput.Input n) (mode : EncodedEdgeSolver.Mode) :
+theorem sourceTree_parsed {n : ℕ} (κ : ℕ) (D : EncodedEdgeInput.Input n)
+    (mode : EncodedEdgeSolver.Mode) {graph : Bits}
+    (hparse : EncodedEdgeInput.parse graph = some ⟨n, D⟩) :
     let line := binaryLineInput (EncodedEdgeInput.decodeInput D)
-    ∃ paid, sourceTree κ mode (EncodedEdgeInput.encode D) =
+    ∃ paid, sourceTree κ mode graph =
       some ⟨n, (EncodedEdgeSolver.bitTree κ (EncodedEdgeInput.decodeInput D) mode, paid)⟩ ∧
       paid ≤ OriginalStoreDispatch.totalPolynomial.eval (OriginalStoreInitial.inputSize line.costs line.demands) := by
   obtain ⟨paid, ht, hp⟩ := initializedTree_eq κ (EncodedEdgeInput.decodeInput D) mode
   exact ⟨paid, PhysicalVertexSolver.prepareOn_eq
-    (fun _ G => initializedTree κ (EncodedEdgeInput.decodeInput G) mode) (EncodedEdgeInput.parse_encode D) ht, hp⟩
+    (fun _ G => initializedTree κ (EncodedEdgeInput.decodeInput G) mode) hparse ht, hp⟩
+
+theorem sourceTree_eq {n : ℕ} (κ : ℕ) (D : EncodedEdgeInput.Input n) (mode : EncodedEdgeSolver.Mode) :
+    let line := binaryLineInput (EncodedEdgeInput.decodeInput D)
+    ∃ paid, sourceTree κ mode (EncodedEdgeInput.encode D) =
+      some ⟨n, (EncodedEdgeSolver.bitTree κ (EncodedEdgeInput.decodeInput D) mode, paid)⟩ ∧
+      paid ≤ OriginalStoreDispatch.totalPolynomial.eval (OriginalStoreInitial.inputSize line.costs line.demands) :=
+  sourceTree_parsed κ D mode (EncodedEdgeInput.parse_encode D)
 
 def source (κ : ℕ) (mode : EncodedEdgeSolver.Mode) (source tape : Bits) :
     Option (Σ n, EncodedEdgeSolver.Output n × EncodedSolverBits.Tape × ℕ) :=
   PhysicalVertexSolver.runOn (sourceTree κ mode source) tape
+
+theorem source_complete_of_parse {n : ℕ} (κ : ℕ) (D : EncodedEdgeInput.Input n)
+    (mode : EncodedEdgeSolver.Mode) (graph tape : Bits)
+    (hparse : EncodedEdgeInput.parse graph = some ⟨n, D⟩)
+    (hbits : EncodedSolverBits.edgeBudget κ (EncodedEdgeInput.decodeInput D) ≤ tape.length)
+    (hreads : Within (EncodedSolverBits.edgeBudget κ (EncodedEdgeInput.decodeInput D))
+      (EncodedEdgeSolver.bitTree κ (EncodedEdgeInput.decodeInput D) mode))
+    (hvalid : ∀ a ∈ (ideal (EncodedEdgeSolver.bitTree κ (EncodedEdgeInput.decodeInput D) mode)).support,
+      EncodedEdgeSolver.Valid (EncodedEdgeInput.decodeInput D) a) :
+    let line := binaryLineInput (EncodedEdgeInput.decodeInput D)
+    ∃ output used paid,
+      source κ mode graph tape =
+        some ⟨n, (output, (tape.drop used, used), paid)⟩ ∧
+      used ≤ EncodedSolverBits.edgeBudget κ (EncodedEdgeInput.decodeInput D) ∧
+      paid ≤ OriginalStoreDispatch.totalPolynomial.eval
+        (OriginalStoreInitial.inputSize line.costs line.demands) ∧
+      EncodedEdgeSolver.Valid (EncodedEdgeInput.decodeInput D) output := by
+  obtain ⟨paid, ht, hp⟩ := sourceTree_parsed κ D mode hparse
+  have hb := EncodedEdgeSolver.bitTree_binary κ (EncodedEdgeInput.decodeInput D) mode
+  obtain ⟨a, used, hr, hbound, ha⟩ := PhysicalVertexSolver.runOn_complete ht hreads hb tape hbits _ hvalid
+  exact ⟨a, used, paid, hr, hbound, hp, ha⟩
 
 theorem source_complete {n : ℕ} (κ : ℕ) (D : EncodedEdgeInput.Input n)
     (mode : EncodedEdgeSolver.Mode) (tape : Bits)
@@ -144,11 +174,8 @@ theorem source_complete {n : ℕ} (κ : ℕ) (D : EncodedEdgeInput.Input n)
       used ≤ EncodedSolverBits.edgeBudget κ (EncodedEdgeInput.decodeInput D) ∧
       paid ≤ OriginalStoreDispatch.totalPolynomial.eval
         (OriginalStoreInitial.inputSize line.costs line.demands) ∧
-      EncodedEdgeSolver.Valid (EncodedEdgeInput.decodeInput D) output := by
-  obtain ⟨paid, ht, hp⟩ := sourceTree_eq κ D mode
-  have hb := EncodedEdgeSolver.bitTree_binary κ (EncodedEdgeInput.decodeInput D) mode
-  obtain ⟨a, used, hr, hbound, ha⟩ := PhysicalVertexSolver.runOn_complete ht hreads hb tape hbits _ hvalid
-  exact ⟨a, used, paid, hr, hbound, hp, ha⟩
+      EncodedEdgeSolver.Valid (EncodedEdgeInput.decodeInput D) output :=
+  source_complete_of_parse κ D mode _ tape (EncodedEdgeInput.parse_encode D) hbits hreads hvalid
 
 theorem source_mass_complete {n : ℕ} (κ : ℕ) (D : EncodedEdgeInput.Input n) (tape : Bits)
     (hbits : EncodedSolverBits.edgeBudget κ (EncodedEdgeInput.decodeInput D) ≤ tape.length) :

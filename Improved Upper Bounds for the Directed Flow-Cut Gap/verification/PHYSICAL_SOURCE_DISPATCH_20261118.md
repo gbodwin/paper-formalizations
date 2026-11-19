@@ -22,9 +22,10 @@ tree whose support, probability and size bounds are proved elsewhere
 in the formalization.
 
 [PhysicalVertexSolver](../DirectedFlowCutGap/PhysicalVertexSolver.lean)
-uses the raw bytes in the physical run. A separate functional parse
-provides types and the fuel bound. Both rounding modes return a valid
-output for any sufficient tape and expose its exact unread suffix.
+runs a functional parse to obtain types and the fuel bound. It dispatches
+encoder-produced bytes directly and re-encodes other accepted demand label spellings. Both
+rounding modes return a valid output for parse-accepted source tables
+and any sufficient tape. The output records the exact unread suffix.
 [PhysicalEdgeSolver](../DirectedFlowCutGap/PhysicalEdgeSolver.lean)
 builds a binary line graph from the original rational edge instance,
 uses the physical dispatcher with typed store preparation, then rounds
@@ -33,16 +34,31 @@ polynomial in original graph dimension, demand count and canonical
 rational field width. The edge charge includes declared typed
 preparation.
 
-The charged prefix excludes the separate native parse or line graph
-construction, fuel calculation, terminal heap erasure and readback,
+The charged prefix excludes the separate native parse, format comparison
+and re-encoding, line graph construction, fuel calculation, terminal heap erasure and readback,
 and deterministic work in rounding and selection. The fair-bit bound
 counts random reads. A single fixed-instruction source-to-cut
 implementation and a polynomial bound on all its deterministic bit
 operations remain open.
 
-The physical fixtures check paid empty and self-demand runs for
-both graph models, and a separately constructed positive heap for
-ordered cover readback. The recovered positive whole-dispatch
-fixtures previously timed out after reaching the grid. The old
-positive run remains an open execution check. Kernel replay and
-logical dependency gates run through [the constructive workflow](../../.github/workflows/flow-constructive-rounding.yml).
+[CachedReferenceExecution](../DirectedFlowCutGap/CachedReferenceExecution.lean)
+executes the same fixed instructions with an indexed store and prefix sums
+for the sequential lookup and append charges. The Lean refinement proves
+the same transition and charge on every step and the same returned state
+and charge for the fuelled evaluator, including a paid terminal attempt.
+
+[RetainedChargedFairBits](../DirectedFlowCutGap/RetainedChargedFairBits.lean)
+supplies the counted rounding controller with its actual bounded-rejection
+sampler. The logged execution projects to the original lowered rounding
+tree. The declared word-operation price is bounded for the computed
+initial state at the algorithm’s restart and epoch parameters.
+
+The short physical fixtures cover empty and self-demand runs for both
+graph models, padded demand labels, and ordered cover readback from a
+separately constructed positive heap. The full positive fixture uses the
+cached evaluator over the three-vertex source chain. It checks ordered
+request events, source exhaustion, original roots, all nine retained
+states, and the paid stop. The earlier sequential-interpreter timeouts
+are recorded separately in the recovery receipt.
+
+[Constructive workflow](../../.github/workflows/flow-constructive-rounding.yml)
