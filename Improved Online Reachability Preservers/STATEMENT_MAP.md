@@ -57,6 +57,13 @@ its abstract and bibliographic record. All section and result numbers below refe
 | Theorems 17–19 and Lemma 20 | Prior algorithm of [24] and its early- and thin-demand routines. Lemma 20 lower-bounds OPT by a constant times \(\sqrt p\) for distinct nontrivial demands via terminal incidence. | [Lemma 20](OnlineReachabilityPreservers/SteinerCounting.lean) checks \(p\le \mathrm{OPT}^2\) for sets and for nontrivial online traces. [Cut covering](OnlineReachabilityPreservers/SteinerThinCover.lean) and [fixed-threshold rounding](OnlineReachabilityPreservers/SteinerThinRound.lean) prove irrevocable thin-demand feasibility and expected edge cost on fixed traces of distinct non-self thin requests. The [separator](OnlineReachabilityPreservers/SteinerCutFlow.lean) uses bounded unit augmentations. The [early rooted-tree comparison](OnlineReachabilityPreservers/SteinerJunction.lean) checks distinct roots and rooted route prefixes. The [height-reduction interval bound](OnlineReachabilityPreservers/SteinerHeightIntervals.lean) is checked. The auxiliary forest construction and online label-cover rounding remain open. |
 | Lemma 22 | Among \(p'\) nontrivial demands hit by the sampled hubs, each creates at least one previously unsatisfied terminal–hub connection. This implies \(p'\le 2\lvert S\rvert\,\mathrm{OPT}\) using oriented terminal incidence. | [Checked](OnlineReachabilityPreservers/SteinerCounting.lean) for every offline solution, with a monotone preserver and both hub subrequests served. |
 
+The [weighted fractional cover](OnlineReachabilityPreservers/SteinerWeightedCover.lean)
+verifies the early auxiliary problem's capacity-update step for explicitly
+listed cuts. It covers every revealed batch and bounds the update count
+and objective by a logarithmic factor times an integral hitting solution,
+with an additive baseline of at most one. The auxiliary separation and
+rounding steps are separate proof obligations.
+
 ## Appendix dependencies
 
 | Source | Mathematical obligation |

@@ -55,4 +55,5 @@ import OnlineReachabilityPreservers.SteinerRate
 import OnlineReachabilityPreservers.SteinerRootOrder
 import OnlineReachabilityPreservers.SteinerThinCover
 import OnlineReachabilityPreservers.SteinerThinRound
+import OnlineReachabilityPreservers.SteinerWeightedCover
 import OnlineReachabilityPreservers.StrongAdversary

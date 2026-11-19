@@ -213,6 +213,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   mathematical components and identified the leaf condition addressed
   by the stronger example.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44448933901).
+- [483eff59](https://github.com/gbodwin/paper-formalizations/commit/483eff597996036412e60fec7d74861a7eae8ca0)
+  checks the terminal order and strengthens the virtual-terminal example
+  to leaf representatives on both sides of both roots. The 1793-declaration
+  audit and local kernel replay passed. Independent review checked the
+  rooted intervals and verified that the omitted original arc is required.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44450498197).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
