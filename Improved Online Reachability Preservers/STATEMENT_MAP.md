@@ -269,7 +269,11 @@ The [bit cursor](OnlineReachabilityPreservers/SteinerBitCursor.lean) reads
 the requested positions directly, with a tail-recursive word accumulator. The
 [cursor decoder](OnlineReachabilityPreservers/SteinerBitSeed.lean) agrees with
 the list decoder on the sampled seed, rejection counts, unread suffix,
-and failure. The cursor advances by the exact number of proposal bits read on success. The [replay proof](OnlineReachabilityPreservers/SteinerBitReplay.lean) shows that changing bits outside the consumed interval preserves the seed, rejection counts, and final cursor. The cached replay starts at position zero. Integer
+and failure. The cursor advances by the exact number of proposal bits read on success. The [replay proof](OnlineReachabilityPreservers/SteinerBitReplay.lean) shows that changing bits outside the consumed interval preserves the seed, rejection counts, and final cursor. A separate reference decoder also reports
+the position after the last complete word on exhaustion. Lean checks exact
+agreement with the established result and that the reported position stays
+within the supplied prefix. A failed positive-width rejection phase consumes
+all complete proposals it can read. The cached replay starts at position zero. Integer
 arithmetic, finite container operations, and full execution time still
 require certification.
 The [preassigned-path counter](OnlineReachabilityPreservers/AssignmentSearchWork.lean)

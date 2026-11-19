@@ -490,6 +490,22 @@ theorem completeSteinerSeedBitBoundAtWidth_eq (G : Arcs V) (height width : ℕ)
   unfold completeSteinerSeedBitBoundAtWidth completeSteinerSeedBitBound earlySeedBits
   rw [earlySeedCoordinateCountByWidth_eq G height width width_eq, width_eq]
 
+@[inline] private def assembleSeedAtWidth (G : Arcs V) (height width count : ℕ)
+    (width_eq : width = (forestScale G height).log2+1)
+    (count_eq : count = Fintype.card (EarlySeedCoordinate G height))
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card)
+    (early : Fin count → Fin (2^width)) (hubs : Fin (completeSteinerHubCount V) → Fin (Fintype.card V) × ℕ)
+    (thin : Fin G.card → Fin G.card × ℕ) :
+    (EarlyRoundSample G height × (Fin (completeSteinerHubCount V) → V) × ThinSample G) ×
+      ((Fin (completeSteinerHubCount V) → ℕ) × (G → ℕ)) :=
+  let words := fun c => Fin.cast (congrArg (fun w : ℕ => 2^w) width_eq)
+    (early (Fin.cast count_eq.symm (coordinates c)))
+  let earlySeed := (earlySeedCoordinates G height).symm words
+  let hubSeed := fun i => vertices.symm ((hubs i).1)
+  let thinSeed := fun e => (thin (arcs e)).1
+  ((earlySeed, hubSeed, thinSeed), (fun i => (hubs i).2, fun e => (thin (arcs e)).2))
+
 private def decodeSeedAtWidthAndCount {S : Type*} (G : Arcs V) (height width count : ℕ)
     (width_eq : width = (forestScale G height).log2+1)
     (count_eq : count = Fintype.card (EarlySeedCoordinate G height))
@@ -504,12 +520,8 @@ private def decodeSeedAtWidthAndCount {S : Type*} (G : Arcs V) (height width cou
     (consumeBitArray (A := Fin (Fintype.card V) × ℕ) (completeSteinerHubCount V)
       (fun _ => readVertex) early.2).bind fun hubs =>
       (consumeBitArray (A := Fin G.card × ℕ) G.card (fun _ => readArc) hubs.2).map fun thin =>
-        let words := fun c => Fin.cast (congrArg (fun w : ℕ => 2^w) width_eq)
-          (early.1 (Fin.cast count_eq.symm (coordinates c)))
-        let earlySeed := (earlySeedCoordinates G height).symm words
-        let hubSeed := fun i => vertices.symm ((hubs.1 i).1)
-        let thinSeed := fun e => (thin.1 (arcs e)).1
-        ((earlySeed, hubSeed, thinSeed), (fun i => (hubs.1 i).2, fun e => (thin.1 (arcs e)).2), thin.2)
+        let seed := assembleSeedAtWidth G height width count width_eq count_eq coordinates vertices arcs early.1 hubs.1 thin.1
+        (seed.1,seed.2,thin.2)
 
 /-- Decode using a previously computed word width and an arithmetic coordinate count. -/
 def decodeCompleteSteinerSeedAtWidth (G : Arcs V) (height width : ℕ)
@@ -667,5 +679,145 @@ theorem decodeCompleteSteinerSeedCursorAtWidth_position (G : Arcs V) (height wid
   have start := cursor.bounded
   have finish := next.bounded
   omega
+
+private def consumeBitArrayWithEnd {A S : Type*} : (count : ℕ) →
+    (Fin count → S → Option A × S) → S → Option (Fin count → A) × S
+  | 0, _, state => (some Fin.elim0,state)
+  | count+1, read, state =>
+    match read 0 state with
+    | (none, last) => (none,last)
+    | (some head,next) =>
+      let rest := consumeBitArrayWithEnd count (fun i => read i.succ) next
+      (rest.1.map (Fin.cases head),rest.2)
+
+private theorem consumeBitArrayWithEnd_agrees {A S : Type*} (count : ℕ)
+    (read : Fin count → S → Option A × S) (reference : Fin count → S → Option (A × S))
+    (state : S) (same : ∀ i s, let seen := read i s; seen.1.map (·,seen.2) = reference i s) :
+    let result := consumeBitArrayWithEnd count read state
+    result.1.map (·,result.2) = consumeBitArray count reference state := by
+  induction count generalizing state with
+  | zero => simp [consumeBitArrayWithEnd, consumeBitArray]
+  | succ count ih =>
+    dsimp only
+    rw [consumeBitArrayWithEnd, consumeBitArray]
+    have first := same 0 state
+    cases front : read 0 state with
+    | mk head next =>
+      cases head with
+      | none =>
+        simp only [front, Option.map_none] at first
+        rw [← first]
+        rfl
+      | some value =>
+        simp only [front, Option.map_some] at first
+        rw [← first]
+        simp only [Option.bind_some]
+        have tail := ih (fun i => read i.succ) (fun i => reference i.succ) next
+          (fun i s => same i.succ s)
+        dsimp only at tail
+        rw [← tail]
+        cases rear : consumeBitArrayWithEnd count (fun i => read i.succ) next with
+        | mk rest final => cases rest <;> rfl
+
+private theorem consumeBitArrayWithEnd_progress {A : Type*} {budget : ℕ} (count : ℕ)
+    (read : Fin count → BitCursor budget → Option A × BitCursor budget) (cursor : BitCursor budget)
+    (advances : ∀ i c, c.position ≤ (read i c).2.position) :
+    cursor.position ≤ (consumeBitArrayWithEnd count read cursor).2.position := by
+  induction count generalizing cursor with
+  | zero => simp [consumeBitArrayWithEnd]
+  | succ count ih =>
+    rw [consumeBitArrayWithEnd]
+    have start := advances 0 cursor
+    cases front : read 0 cursor with
+    | mk head next =>
+      simp only [front] at start
+      cases head with
+      | none => exact start
+      | some value => exact start.trans (ih (fun i => read i.succ) next (fun i c => advances i.succ c))
+
+/-- Track the final position even if a finite seed stops early. The state is
+the position after the last complete word, including rejected proposals. -/
+def decodeCompleteSteinerSeedCursorWithEndAtWidth (G : Arcs V) (height width : ℕ)
+    (width_eq : width = (forestScale G height).log2+1)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card)
+    {budget : ℕ} (bits : Fin budget → Bool) (cursor : BitCursor budget) :
+    Option ((EarlyRoundSample G height × (Fin (completeSteinerHubCount V) → V) × ThinSample G) ×
+      ((Fin (completeSteinerHubCount V) → ℕ) × (G → ℕ))) × BitCursor budget :=
+  let count := earlySeedCoordinateCountByWidth V height width
+  let count_eq := earlySeedCoordinateCountByWidth_eq G height width width_eq
+  let early := consumeBitArrayWithEnd count (fun _ => consumeCursorWordWithEnd bits width) cursor
+  match early.1 with
+  | none => (none,early.2)
+  | some earlyWords =>
+    let hubs := consumeBitArrayWithEnd (completeSteinerHubCount V)
+      (fun _ => consumeCursorIndexWithEnd bits (Fintype.card V)) early.2
+    match hubs.1 with
+    | none => (none,hubs.2)
+    | some hubWords =>
+      let thin := consumeBitArrayWithEnd G.card (fun _ => consumeCursorIndexWithEnd bits G.card) hubs.2
+      (thin.1.map (assembleSeedAtWidth G height width count width_eq count_eq coordinates vertices arcs
+        earlyWords hubWords),thin.2)
+
+/-- Projecting the tracked outcome gives the exact established cursor
+decoder, and its final position lies within the supplied interval. -/
+theorem decodeCompleteSteinerSeedCursorWithEndAtWidth_spec (G : Arcs V) (height width : ℕ)
+    (width_eq : width = (forestScale G height).log2+1)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card)
+    {budget : ℕ} (bits : Fin budget → Bool) (cursor : BitCursor budget) :
+    let out := decodeCompleteSteinerSeedCursorWithEndAtWidth G height width width_eq coordinates vertices arcs bits cursor
+    out.1.map (fun (seed,counts) => (seed,counts,out.2)) =
+      decodeCompleteSteinerSeedCursorAtWidth G height width width_eq coordinates vertices arcs bits cursor ∧
+      cursor.position ≤ out.2.position ∧ out.2.position ≤ budget := by
+  let count := earlySeedCoordinateCountByWidth V height width
+  let early := consumeBitArrayWithEnd count (fun _ => consumeCursorWordWithEnd bits width) cursor
+  have earlyRead := consumeBitArrayWithEnd_agrees count (fun _ => consumeCursorWordWithEnd bits width)
+    (fun _ => consumeCursorWord bits width) cursor (fun _ c => (consumeCursorWordWithEnd_spec bits width c).1)
+  have earlyMove := consumeBitArrayWithEnd_progress count (fun _ => consumeCursorWordWithEnd bits width) cursor
+    (fun _ c => by
+      have progress := (consumeCursorWordWithEnd_spec bits width c).2
+      exact (Nat.le_add_right _ _).trans_eq progress.symm)
+  change early.1.map _ = _ at earlyRead
+  change cursor.position ≤ early.2.position at earlyMove
+  have advance (N : ℕ) (c : BitCursor budget) :
+      c.position ≤ (consumeCursorIndexWithEnd bits N c).2.position := by
+    obtain ⟨k,h⟩ := (consumeCursorIndexWithEnd_spec bits N c).2.1
+    rw [h]
+    exact Nat.le_add_right _ _
+  unfold decodeCompleteSteinerSeedCursorWithEndAtWidth decodeCompleteSteinerSeedCursorAtWidth decodeSeedAtWidthAndCount
+  dsimp only
+  rw [← earlyRead]
+  cases ranEarly : early.1 with
+  | none => exact ⟨rfl,earlyMove,early.2.bounded⟩
+  | some earlyWords =>
+    simp only [Option.map_some, Option.bind_some]
+    let hubs := consumeBitArrayWithEnd (completeSteinerHubCount V)
+      (fun _ => consumeCursorIndexWithEnd bits (Fintype.card V)) early.2
+    have hubRead := consumeBitArrayWithEnd_agrees (completeSteinerHubCount V)
+      (fun _ => consumeCursorIndexWithEnd bits (Fintype.card V))
+      (fun _ => consumeCursorIndex bits (Fintype.card V)) early.2
+      (fun _ c => (consumeCursorIndexWithEnd_spec bits (Fintype.card V) c).1)
+    have hubMove := consumeBitArrayWithEnd_progress (completeSteinerHubCount V)
+      (fun _ => consumeCursorIndexWithEnd bits (Fintype.card V)) early.2
+      (fun _ => advance (Fintype.card V))
+    change hubs.1.map _ = _ at hubRead
+    change early.2.position ≤ hubs.2.position at hubMove
+    rw [← hubRead]
+    cases ranHubs : hubs.1 with
+    | none => exact ⟨rfl,earlyMove.trans hubMove,hubs.2.bounded⟩
+    | some hubWords =>
+      simp only [Option.map_some, Option.bind_some]
+      let thin := consumeBitArrayWithEnd G.card (fun _ => consumeCursorIndexWithEnd bits G.card) hubs.2
+      have thinRead := consumeBitArrayWithEnd_agrees G.card (fun _ => consumeCursorIndexWithEnd bits G.card)
+        (fun _ => consumeCursorIndex bits G.card) hubs.2
+        (fun _ c => (consumeCursorIndexWithEnd_spec bits G.card c).1)
+      have thinMove := consumeBitArrayWithEnd_progress G.card (fun _ => consumeCursorIndexWithEnd bits G.card)
+        hubs.2 (fun _ => advance G.card)
+      change thin.1.map _ = _ at thinRead
+      change hubs.2.position ≤ thin.2.position at thinMove
+      rw [← thinRead]
+      refine ⟨?_,earlyMove.trans (hubMove.trans thinMove),thin.2.bounded⟩
+      cases thin.1 <;> rfl
 
 end OnlineReachabilityPreservers

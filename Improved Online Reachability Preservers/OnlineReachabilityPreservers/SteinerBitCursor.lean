@@ -193,4 +193,116 @@ theorem consumeCursorIndex_position {budget : ℕ} (bits : Fin budget → Bool) 
   have finish := next.bounded
   omega
 
+private def consumeCursorIndexLoopWithEnd {budget : ℕ} (bits : Fin budget → Bool) (N width : ℕ)
+    (positive : 0 < width) (cursor : BitCursor budget) (rejected : ℕ) :
+    Option (Fin N × ℕ) × BitCursor budget :=
+  match used : consumeCursorWord bits width cursor with
+  | none => (none,cursor)
+  | some (word,next) =>
+    if good : word.val < N then (some (⟨word.val,good⟩,rejected),next)
+    else consumeCursorIndexLoopWithEnd bits N width positive next (rejected+1)
+termination_by budget-cursor.position
+decreasing_by
+  have usedWidth := consumeCursorWord_position bits width cursor next word used
+  have fits := next.bounded
+  omega
+
+private theorem consumeCursorIndexLoopWithEnd_spec {budget : ℕ} (bits : Fin budget → Bool)
+    (N width : ℕ) (positive : 0 < width) (cursor : BitCursor budget) (rejected : ℕ) :
+    let out := consumeCursorIndexLoopWithEnd bits N width positive cursor rejected
+    out.1.map (·,out.2) = consumeCursorIndexLoop bits N width positive cursor rejected ∧
+      (∃ k, out.2.position = cursor.position + width*k) ∧
+      (out.1 = none → budget-out.2.position < width) := by
+  induction cursor using (measure (fun c : BitCursor budget => budget-c.position)).wf.induction generalizing rejected with
+  | h cursor ih =>
+    dsimp only
+    rw [consumeCursorIndexLoopWithEnd, consumeCursorIndexLoop]
+    cases read : consumeCursorWord bits width cursor with
+    | none =>
+      have short : ¬cursor.position + width ≤ budget := by
+        intro enough
+        simp [consumeCursorWord, enough] at read
+      have left := cursor.bounded
+      simp only [Option.map_none, true_and, forall_const]
+      exact ⟨⟨0,by simp⟩,by omega⟩
+    | some answer =>
+      obtain ⟨word,next⟩ := answer
+      have widthUsed := consumeCursorWord_position bits width cursor next word read
+      by_cases accepted : word.val < N
+      · simp only [dite_eq_left accepted, Option.map_some, true_and, reduceCtorEq, false_implies, and_true]
+        exact ⟨1,by simpa using widthUsed⟩
+      · simp only [dite_eq_right accepted]
+        have bounded := next.bounded
+        have smaller : budget-next.position < budget-cursor.position := by omega
+        obtain ⟨result,⟨k,position⟩,short⟩ := ih next smaller (rejected+1)
+        refine ⟨result,⟨k+1,?_⟩,short⟩
+        rw [position,widthUsed,Nat.mul_succ]
+        omega
+
+/-- A reference rejection sampler reports its final cursor even when it runs
+out of complete proposal words. -/
+def consumeCursorIndexWithEnd {budget : ℕ} (bits : Fin budget → Bool) (N : ℕ) (cursor : BitCursor budget) :
+    Option (Fin N × ℕ) × BitCursor budget :=
+  if width : 0 < uniformProposalWidth N then consumeCursorIndexLoopWithEnd bits N _ width cursor 0
+  else if positive : 0 < N then (some (⟨0,positive⟩,0),cursor) else (none,cursor)
+
+theorem consumeCursorIndexWithEnd_spec {budget : ℕ} (bits : Fin budget → Bool) (N : ℕ)
+    (cursor : BitCursor budget) :
+    let out := consumeCursorIndexWithEnd bits N cursor
+    out.1.map (·,out.2) = consumeCursorIndex bits N cursor ∧
+      (∃ k, out.2.position = cursor.position + uniformProposalWidth N*k) ∧
+      (0 < uniformProposalWidth N → out.1 = none → budget-out.2.position < uniformProposalWidth N) := by
+  by_cases width : 0 < uniformProposalWidth N
+  · have spec := consumeCursorIndexLoopWithEnd_spec bits N _ width cursor 0
+    dsimp only
+    rw [consumeCursorIndexWithEnd, dite_eq_left width, consumeCursorIndex, dite_eq_left width]
+    exact ⟨spec.1,spec.2.1,fun _ => spec.2.2⟩
+  · by_cases positive : 0 < N
+    · simp [consumeCursorIndexWithEnd, consumeCursorIndex, width, positive]
+    · simp [consumeCursorIndexWithEnd, consumeCursorIndex, width, positive]
+
+/-- When a positive-width sampler runs out, it has consumed every whole
+proposal that fits, with fewer than one proposal's worth of bits left. -/
+theorem consumeCursorIndexWithEnd_exhaustion_position {budget : ℕ} (bits : Fin budget → Bool)
+    (N : ℕ) (cursor : BitCursor budget) (width : 0 < uniformProposalWidth N)
+    (failure : consumeCursorIndex bits N cursor = none) :
+    let out := consumeCursorIndexWithEnd bits N cursor
+    out.2.position = cursor.position + uniformProposalWidth N*((budget-cursor.position)/uniformProposalWidth N) := by
+  let out := consumeCursorIndexWithEnd bits N cursor
+  obtain ⟨replay,⟨k,position⟩,endShort⟩ := consumeCursorIndexWithEnd_spec bits N cursor
+  change out.1.map (·,out.2) = _ at replay
+  change out.2.position = _ at position
+  have failed : out.1 = none := by
+    rw [failure] at replay
+    cases answer : out.1 with
+    | none => rfl
+    | some value => simp [answer] at replay
+  have short : budget-out.2.position < uniformProposalWidth N := endShort width failed
+  have bounded := out.2.bounded
+  have total : budget-cursor.position = (budget-out.2.position) + uniformProposalWidth N*k := by omega
+  have words : (budget-cursor.position)/uniformProposalWidth N = k := by
+    rw [total,Nat.add_mul_div_left _ _ width,Nat.div_eq_of_lt short,Nat.zero_add]
+  change out.2.position = _
+  rw [words]
+  exact position
+
+/-- On a word failure, the reader stops before using a partial word. -/
+def consumeCursorWordWithEnd {budget : ℕ} (bits : Fin budget → Bool) (width : ℕ)
+    (cursor : BitCursor budget) : Option (Fin (2^width)) × BitCursor budget :=
+  match consumeCursorWord bits width cursor with
+  | none => (none,cursor)
+  | some (word,next) => (some word,next)
+
+theorem consumeCursorWordWithEnd_spec {budget : ℕ} (bits : Fin budget → Bool) (width : ℕ)
+    (cursor : BitCursor budget) :
+    let out := consumeCursorWordWithEnd bits width cursor
+    out.1.map (·,out.2) = consumeCursorWord bits width cursor ∧
+      out.2.position = cursor.position + if out.1.isSome then width else 0 := by
+  unfold consumeCursorWordWithEnd
+  cases word : consumeCursorWord bits width cursor with
+  | none => simp
+  | some answer =>
+    obtain ⟨value,next⟩ := answer
+    exact ⟨rfl,consumeCursorWord_position bits width cursor next value word⟩
+
 end OnlineReachabilityPreservers
