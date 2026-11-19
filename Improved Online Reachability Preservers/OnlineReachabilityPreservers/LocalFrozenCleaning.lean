@@ -1,7 +1,7 @@
 import OnlineReachabilityPreservers.LocalAverageCleaning
 import OnlineReachabilityPreservers.SynchronizedPathSplits
 
-/-! Full-bridge cleaning through four with the factor-four caps measured against the input averages. -/
+/-! Cleaning with factor-four caps measured against the input averages. -/
 
 namespace OnlineReachabilityPreservers
 
@@ -16,11 +16,9 @@ def frozenListCaps {V I : Type*} [DecidableEq V] [Fintype I]
     ((occurrences (fun i => (paths i).toFinset) v).card:ℝ) ≤ 4*(M:ℝ)/(n:ℝ)) ∧
   (∀ i : I, (M:ℝ)/(4*(p:ℝ)) ≤ ((paths i).length:ℝ) ∧ ((paths i).length:ℝ) ≤ 4*(M:ℝ)/(p:ℝ))
 
-private theorem sparse_cleaning_block_counts {a b M : ℕ} (bPos : 0 < b) (ordered : b ≤ a)
-    (massLower : a ≤ M) (massUpper : M ≤ 3*a) :
-    ∃ width rows : ℕ, 0 < width ∧ rows ≤ b ∧ rows*width ≤ a ∧ M ≤ 6*(rows*width) ∧
-      (M:ℝ)/(4*(a:ℝ)) ≤ 1 ∧ (1:ℝ) ≤ 4*(M:ℝ)/(a:ℝ) ∧
-      (M:ℝ)/(4*(b:ℝ)) ≤ (width:ℝ) ∧ (width:ℝ) ≤ 4*(M:ℝ)/(b:ℝ) := by
+private theorem sparse_cleaning_block_dimensions {a b : ℕ} (bPos : 0 < b) (ordered : b ≤ a) :
+    ∃ width rows : ℕ, 0 < width ∧ rows ≤ b ∧ rows*width ≤ a ∧ a ≤ 2*(rows*width) ∧
+      a ≤ b*width ∧ width*b ≤ a+b-1 := by
   let width := (a+b-1)/b
   let rows := a/width
   have aPos : 0 < a := bPos.trans_le ordered
@@ -46,13 +44,21 @@ private theorem sparse_cleaning_block_counts {a b M : ℕ} (bPos : 0 < b) (order
     change a < width*(rows+1) at raw
     have rowMore : rows+1 ≤ 2*rows := by omega
     exact raw.le.trans (by simpa [Nat.mul_comm, Nat.mul_left_comm, Nat.mul_assoc] using Nat.mul_le_mul_left width rowMore)
+  exact ⟨width,rows,widthPos,rowsLe,taken,dbl,covers,Nat.div_mul_le_self _ _⟩
+
+private theorem sparse_cleaning_block_counts {a b M : ℕ} (bPos : 0 < b) (ordered : b ≤ a)
+    (massLower : a ≤ M) (massUpper : M ≤ 3*a) :
+    ∃ width rows : ℕ, 0 < width ∧ rows ≤ b ∧ rows*width ≤ a ∧ M ≤ 6*(rows*width) ∧
+      (M:ℝ)/(4*(a:ℝ)) ≤ 1 ∧ (1:ℝ) ≤ 4*(M:ℝ)/(a:ℝ) ∧
+      (M:ℝ)/(4*(b:ℝ)) ≤ (width:ℝ) ∧ (width:ℝ) ≤ 4*(M:ℝ)/(b:ℝ) := by
+  have aPos : 0 < a := bPos.trans_le ordered
+  obtain ⟨width,rows,widthPos,rowsLe,taken,dbl,covers,slack⟩ := sparse_cleaning_block_dimensions bPos ordered
   have nonzeroA : 0 < (a:ℝ) := Nat.cast_pos.mpr aPos
   have nonzeroB : 0 < (b:ℝ) := Nat.cast_pos.mpr bPos
   have widthLower : M ≤ 4*b*width := by
     have step : M ≤ 4*(b*width) := massUpper.trans (by omega)
     simpa only [Nat.mul_assoc] using step
   have widthUpper : width*b ≤ 4*M := by
-    have bound : width*b ≤ a+b-1 := Nat.div_mul_le_self _ _
     omega
   refine ⟨width,rows,widthPos,rowsLe,taken,by omega,?_,?_,?_,?_⟩
   · apply (div_le_iff₀ (by positivity : 0 < 4*(a:ℝ))).mpr
@@ -422,5 +428,267 @@ theorem localOrderExtremal_frozen_full_four (n p : ℕ) (hn : 0 < n) (hp : 0 < p
         (∑ i, (clean i).length) ≤ (∑ i, (paths i).length) ∧
         frozenListCaps n p (∑ i, (paths i).length) clean :=
   localOrderExtremal_frozen_full_short n p (by decide) (by decide) hn hp
+
+private def pairedFrozenVertex {r w : ℕ} (i : Fin (r*2)) (j : Fin w) : Fin (r*w) :=
+  let row := (finProdFinEquiv : Fin r × Fin 2 ≃ Fin (r*2)).symm i
+  finProdFinEquiv (row.1, if row.2 = 0 then j else j.rev)
+
+private def pairedFrozenRows (r w : ℕ) (i : Fin (r*2)) : List (Fin (r*w)) :=
+  List.ofFn (pairedFrozenVertex i)
+
+private theorem pairedFrozenVertex_injective {r w : ℕ} (i : Fin (r*2)) :
+    Function.Injective (pairedFrozenVertex (w := w) i) := by
+  intro x y same
+  have order := congrArg Prod.snd (finProdFinEquiv.injective same)
+  split at order
+  · exact order
+  · simpa only [Fin.rev_inj] using order
+
+private theorem pairedFrozenRows_simple {r w : ℕ} (i : Fin (r*2)) :
+    (pairedFrozenRows r w i).Nodup := List.nodup_ofFn.mpr (pairedFrozenVertex_injective i)
+
+private theorem pairedFrozenRows_owner {r w : ℕ} {i : Fin (r*2)} {x : Fin (r*w)} :
+    x ∈ pairedFrozenRows r w i ↔ (finProdFinEquiv.symm x).1 = (finProdFinEquiv.symm i).1 := by
+  constructor
+  · intro mem
+    obtain ⟨j,rfl⟩ := List.mem_ofFn.mp mem
+    simp [pairedFrozenVertex, Equiv.symm_apply_apply]
+  · intro same
+    let q : Fin r × Fin w := finProdFinEquiv.symm x
+    let row : Fin r × Fin 2 := finProdFinEquiv.symm i
+    change q.1 = row.1 at same
+    let j := if row.2 = 0 then q.2 else q.2.rev
+    refine List.mem_ofFn.mpr ⟨j,?_⟩
+    apply finProdFinEquiv.symm.injective
+    simp only [pairedFrozenVertex, Equiv.symm_apply_apply]
+    change (row.1,if row.2 = 0 then j else j.rev) = q
+    by_cases side : row.2 = 0
+    · exact Prod.ext same.symm (by simp [j, side])
+    · exact Prod.ext same.symm (by simp [j, side])
+
+private theorem pairedFrozenRows_index {r w : ℕ} {i : Fin (r*2)} {x : Fin (r*w)}
+    (present : x ∈ pairedFrozenRows r w i) :
+    (pairedFrozenRows r w i).idxOf x =
+      if (finProdFinEquiv.symm i).2 = 0 then ((finProdFinEquiv.symm x).2 : Fin w).val
+      else ((finProdFinEquiv.symm x).2 : Fin w).rev.val := by
+  obtain ⟨j,rfl⟩ := List.mem_ofFn.mp present
+  have jFit : j.val < (pairedFrozenRows r w i).length := by
+    simp only [pairedFrozenRows, List.length_ofFn]
+    exact j.isLt
+  have value : (pairedFrozenRows r w i)[j.val]'jFit = pairedFrozenVertex i j := List.getElem_ofFn jFit
+  conv_lhs => rw [← value, (pairedFrozenRows_simple i).idxOf_getElem]
+  by_cases side : (finProdFinEquiv.symm i).2 = 0 <;>
+    simp only [pairedFrozenVertex, Equiv.symm_apply_apply, side, ite_true, ite_false, Fin.rev_rev]
+
+private theorem pairedFrozenRows_degree (r w : ℕ) (x : Fin (r*w)) :
+    (occurrences (fun i => (pairedFrozenRows r w i).toFinset) x).card = 2 := by
+  let block : Fin r := (finProdFinEquiv.symm x).1
+  let copies : Fin 2 ↪ Fin (r*2) :=
+    ⟨fun side => finProdFinEquiv (block,side), fun a b same => congrArg Prod.snd (finProdFinEquiv.injective same)⟩
+  have exactly : occurrences (fun i => (pairedFrozenRows r w i).toFinset) x = univ.map copies := by
+    ext i
+    simp only [mem_occurrences, List.mem_toFinset, pairedFrozenRows_owner, mem_map, mem_univ, true_and]
+    constructor
+    · intro same
+      let q := (finProdFinEquiv : Fin r × Fin 2 ≃ Fin (r*2)).symm i
+      have pair : (block,q.2) = q := Prod.ext same rfl
+      exact ⟨q.2, (congrArg finProdFinEquiv pair).trans (finProdFinEquiv.apply_symm_apply i)⟩
+    · rintro ⟨side,rfl⟩
+      change block = ((finProdFinEquiv : Fin r × Fin 2 ≃ Fin (r*2)).symm
+        (finProdFinEquiv (block,side))).1
+      rw [Equiv.symm_apply_apply]
+  rw [exactly, card_map, card_univ, Fintype.card_fin]
+
+/-- Within each disjoint vertex block there are two opposite paths. A
+bridge must stay in one block, and opposite paths cannot make a 2-bridge. -/
+private theorem pairedFrozenRows_free (r w k : ℕ) : BridgeFree (ListBefore (pairedFrozenRows r w)) k := by
+  intro q _
+  refine ⟨fun b => ?_⟩
+  let labels : Fin (r*2) ≃ Fin r × Fin 2 := finProdFinEquiv.symm
+  let owner (x : Fin (r*w)) : Fin r := (finProdFinEquiv.symm x).1
+  have step (i : Fin q.succ) : owner (b.vertex i.castSucc) = (labels (b.arc i)).1 ∧
+      owner (b.vertex i.succ) = (labels (b.arc i)).1 :=
+    ⟨pairedFrozenRows_owner.mp (b.arcStep i).1, pairedFrozenRows_owner.mp (b.arcStep i).2.1⟩
+  have corners (i : Fin (q+2)) : owner (b.vertex i) = (labels b.river).1 := by
+    refine Fin.induction ?_ (fun j previous => ?_) i
+    · exact pairedFrozenRows_owner.mp b.riverStep.1
+    · exact (step j).2.trans ((step j).1.symm.trans previous)
+  have sameBlock (i : Fin (q+1)) : (labels (b.arc i)).1 = (labels b.river).1 :=
+    (step i).1.symm.trans (corners i.castSucc)
+  let paths (i : Option (Fin (q+1))) : Fin (r*2) := i.elim b.river b.arc
+  have distinct : Function.Injective paths := by
+    intro i j eq
+    cases i with
+    | none =>
+      cases j with
+      | none => rfl
+      | some j => exact (b.river_ne_arc j eq).elim
+    | some i =>
+      cases j with
+      | none => exact (b.river_ne_arc i eq.symm).elim
+      | some j => exact congrArg some (b.distinctArcs eq)
+  have first (i : Option (Fin (q+1))) : (labels (paths i)).1 = (labels b.river).1 := by
+    cases i with
+    | none => rfl
+    | some i => exact sameBlock i
+  have two : Function.Injective (fun i : Option (Fin (q+1)) => (labels (paths i)).2) := by
+    intro i j eq
+    exact distinct (labels.injective (Prod.ext ((first i).trans (first j).symm) eq))
+  have short := Fintype.card_le_of_injective _ two
+  simp only [Fintype.card_option, Fintype.card_fin] at short
+  have eq : q = 0 := by omega
+  subst q
+  let x := b.vertex 0
+  let y := b.vertex (Fin.last 1)
+  have river : ListBefore (pairedFrozenRows r w) b.river x y := b.riverStep
+  have arc : ListBefore (pairedFrozenRows r w) (b.arc 0) x y := b.arcStep 0
+  have riverEarlier := river.2.2
+  have arcEarlier := arc.2.2
+  rw [pairedFrozenRows_index river.1, pairedFrozenRows_index river.2.1] at riverEarlier
+  rw [pairedFrozenRows_index arc.1, pairedFrozenRows_index arc.2.1] at arcEarlier
+  change (if (labels b.river).2 = 0 then ((finProdFinEquiv.symm x).2 : Fin w).val else
+    ((finProdFinEquiv.symm x).2 : Fin w).rev.val) <
+    (if (labels b.river).2 = 0 then ((finProdFinEquiv.symm y).2 : Fin w).val else
+      ((finProdFinEquiv.symm y).2 : Fin w).rev.val) at riverEarlier
+  change (if (labels (b.arc 0)).2 = 0 then ((finProdFinEquiv.symm x).2 : Fin w).val else
+    ((finProdFinEquiv.symm x).2 : Fin w).rev.val) <
+    (if (labels (b.arc 0)).2 = 0 then ((finProdFinEquiv.symm y).2 : Fin w).val else
+      ((finProdFinEquiv.symm y).2 : Fin w).rev.val) at arcEarlier
+  have different : (labels b.river).2 ≠ (labels (b.arc 0)).2 :=
+    fun equal => b.river_ne_arc 0 (labels.injective (Prod.ext (sameBlock 0).symm equal))
+  let xj : Fin w := (finProdFinEquiv.symm x).2
+  let yj : Fin w := (finProdFinEquiv.symm y).2
+  have xFit := xj.isLt
+  have yFit := yj.isLt
+  by_cases side : (labels b.river).2 = 0 <;>
+    by_cases other : (labels (b.arc 0)).2 = 0
+  · exact different (side.trans other.symm)
+  · simp only [side,other,ite_true,ite_false, Fin.val_rev] at riverEarlier arcEarlier
+    change xj.val < yj.val at riverEarlier
+    change w - (xj.val+1) < w - (yj.val+1) at arcEarlier
+    omega
+  · simp only [side,other,ite_true,ite_false, Fin.val_rev] at riverEarlier arcEarlier
+    change w - (xj.val+1) < w - (yj.val+1) at riverEarlier
+    change xj.val < yj.val at arcEarlier
+    omega
+  · have left : (labels b.river).2 = 1 := Fin.ext (by
+      have bounds := (labels b.river).2.isLt
+      have nz : (labels b.river).2.val ≠ 0 := fun same => side (Fin.ext same)
+      omega)
+    have right : (labels (b.arc 0)).2 = 1 := Fin.ext (by
+      have bounds := (labels (b.arc 0)).2.isLt
+      have nz : (labels (b.arc 0)).2.val ≠ 0 := fun same => other (Fin.ext same)
+      omega)
+    exact different (left.trans right.symm)
+
+/-- Pairs of opposite paths meet the original caps in a bounded-density
+range with at most as many paths as vertices. The witness excludes every
+full bridge, so it also meets the half-bridge condition at any cutoff. -/
+theorem frozen_cleaning_paired_rows {n p M k : ℕ} (pPos : 2 ≤ p) (ordered : p ≤ n)
+    (massLower : 2*n ≤ M) (massUpper : M ≤ 8*n) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
+      M ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  have pPositive : 0 < p := by omega
+  have nPositive : 0 < n := pPositive.trans_le ordered
+  let b := p/2
+  have bPos : 0 < b := Nat.div_pos pPos (by decide)
+  have bLe : b ≤ n := (Nat.div_le_self p 2).trans ordered
+  have bBudget : 2*b ≤ p := by
+    have cap := Nat.div_mul_le_self p 2
+    change b*2 ≤ p at cap
+    omega
+  have pLe : p ≤ 3*b := by
+    have bound := Nat.lt_mul_div_succ p (by decide : 0 < 2)
+    change p < 2*(b+1) at bound
+    omega
+  obtain ⟨width,rows,widthPos,rowsLe,taken,dbl,covers,slack⟩ := sparse_cleaning_block_dimensions bPos bLe
+  let clean := pairedFrozenRows rows width
+  have rowsWidth : (∑ i, (clean i).length) = 2*(rows*width) := by
+    simp [clean, pairedFrozenRows]
+    ring
+  have pBound : rows*2 ≤ p := by omega
+  have long : M ≤ 4*p*width := calc
+    _ ≤ 8*n := massUpper
+    _ ≤ 8*(b*width) := Nat.mul_le_mul_left _ covers
+    _ = (4*(2*b))*width := by ring
+    _ ≤ _ := Nat.mul_le_mul_right _ (Nat.mul_le_mul_left _ bBudget)
+  have short : width*p ≤ 4*M := calc
+    _ ≤ width*(3*b) := Nat.mul_le_mul_left _ pLe
+    _ = 3*(width*b) := by ring
+    _ ≤ 3*(n+b-1) := Nat.mul_le_mul_left _ slack
+    _ ≤ _ := by omega
+  refine ⟨rows*width,taken,rows*2,pBound,clean,pairedFrozenRows_simple,pairedFrozenRows_free rows width k,?_,?_,?_⟩
+  · rw [rowsWidth]
+    omega
+  · rw [rowsWidth]
+    omega
+  · constructor
+    · intro x
+      rw [pairedFrozenRows_degree]
+      norm_num only [Nat.cast_ofNat]
+      constructor
+      · apply (div_le_iff₀ (by positivity : 0 < (4:ℝ)*n)).mpr
+        exact_mod_cast (show M ≤ 2*(4*n) by omega)
+      · apply (le_div_iff₀ (by positivity : 0 < (n:ℝ))).mpr
+        exact_mod_cast (show 2*n ≤ 4*M by omega)
+    · intro i
+      have len : (clean i).length = width := by simp [clean, pairedFrozenRows]
+      rw [len]
+      constructor
+      · apply (div_le_iff₀ (by positivity : 0 < (4:ℝ)*p)).mpr
+        rw [mul_comm (width : ℝ)]
+        exact_mod_cast long
+      · exact (le_div_iff₀ (by positivity : 0 < (p:ℝ))).mpr (by exact_mod_cast short)
+
+/-- Under the smaller path budget, the sparse witnesses and paired rows
+cover every incidence mass from the vertex count through eight times it. -/
+theorem frozen_cleaning_at_most_eight_per_vertex {n p M k : ℕ} (hp : 0 < p) (ordered : p ≤ n)
+    (massLower : n ≤ M) (massUpper : M ≤ 8*n) (fits : M ≤ n*p) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
+      M ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  by_cases low : M ≤ 3*n
+  · have sparse : M ≤ 3*max n p := by simpa only [max_eq_left ordered] using low
+    obtain ⟨n',v,p',i,clean,simple,free,retained,upper,caps⟩ :=
+      full_frozen_cleaning_sparse (k := k) (hp.trans_le ordered) hp massLower (ordered.trans massLower) sparse
+    exact ⟨n',v,p',i,clean,simple,free,by omega,upper,caps⟩
+  · have two : 2 ≤ p := by
+      by_contra! small
+      have only : p = 1 := by omega
+      rw [only,Nat.mul_one] at fits
+      omega
+    exact frozen_cleaning_paired_rows two ordered (by omega) massUpper
+
+/-- For at most eight paths and a vertex budget at least as large, an
+unrestricted maximum has a constant-mass cleaned witness with the frozen
+caps in either mode at every cutoff. -/
+theorem localOrderExtremal_frozen_up_to_eight_paths (n p k : ℕ) (half : Bool)
+    (hp : 0 < p) (ordered : p ≤ n) (few : p ≤ 8) :
+    ∃ paths : Fin p → List (Fin n), (∀ i, (paths i).Nodup) ∧ localOrderAdmissible half k paths ∧
+      (∀ other : Fin p → List (Fin n), (∀ i, (other i).Nodup) → localOrderAdmissible half k other →
+        (∑ i, (other i).length) ≤ ∑ i, (paths i).length) ∧
+      let M := ∑ i, (paths i).length
+      ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+        (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+        M ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  obtain ⟨paths,simple,free,maximal,dense,_⟩ :=
+    localOrderExtremal_isDense n p k half (hp.trans_le ordered) hp
+  have fit : (∑ i, (paths i).length) ≤ n*p := calc
+    _ ≤ ∑ _ : Fin p, n := by
+      apply sum_le_sum
+      intro i _
+      rw [← List.toFinset_card_of_nodup (simple i)]
+      simpa only [Fintype.card_fin] using (Finset.card_le_univ (paths i).toFinset)
+    _ = n*p := by simp [Nat.mul_comm]
+  have low : (∑ i, (paths i).length) ≤ 8*n :=
+    fit.trans (by simpa only [Nat.mul_comm] using Nat.mul_le_mul_left n few)
+  obtain ⟨n',v,p',i,clean,nodup,legal,mass,upper,caps⟩ :=
+    frozen_cleaning_at_most_eight_per_vertex (k := k) hp ordered dense low fit
+  refine ⟨paths,simple,free,maximal,n',v,p',i,clean,nodup,?_,mass,upper,caps⟩
+  cases half
+  · exact legal
+  · intro j small b _
+    exact (legal small).false b
 
 end OnlineReachabilityPreservers

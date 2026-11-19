@@ -807,6 +807,16 @@ entry listed the arXiv manuscript.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44597705263).
 
+PaperLab version 35 pins 175 links to `6f4056fc` and contains 15 boxed L
+notes. The checkpoint proves exact-count lattice lower bounds in every
+positive dimension and the three-lattice comparison with polynomial loss.
+Independent review, the 5,173-declaration paper audit, and local replay
+of the changed modules passed. Exact CI replayed every project module.
+The deployed render, pinned sources, and local controls were checked.
+Production requires owner sign-in.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44600398705).
+
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
 crossing edges on a cyclic input. The empty prefix has no edges, an

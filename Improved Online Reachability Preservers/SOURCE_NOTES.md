@@ -346,9 +346,17 @@ local-order upper bound and recurrence of Theorem 43.
   incidences before peeling. Peeling at the original
   one-quarter averages loses at most \(M/2\). Disjoint paths or singleton
   paths cover the sparse case. The final witness retains at least \(M/119\)
-  and meets all four original-average caps. The half-bridge case of the frozen
-  caps at cutoff four and the arbitrary-cutoff cyclic statements remain open.
+  and meets all four original-average caps.
   [Checked full-bridge cleaning](OnlineReachabilityPreservers/LocalFrozenCleaning.lean).
+- When the path budget is at most the vertex budget and the incidence mass
+  lies between the vertex count and eight times it, opposite path pairs in disjoint
+  blocks extend the sparse construction. The cleaned witness meets both
+  budgets and all four original-average caps and retains at least one eighth
+  of the mass. It excludes full bridges at all sizes, so it works in either
+  mode. In particular the extremal statement holds for at most eight paths
+  and a vertex budget at least as large. The general frozen half-bridge
+  case at cutoff four and the arbitrary-cutoff cyclic statements remain open.
+  [Checked paired construction](OnlineReachabilityPreservers/LocalFrozenCleaning.lean).
 - The opposite-intersection condition alone can fail at size six. One example
   has unique intersections and excludes every full bridge before splitting.
   Two disjoint pieces of one path create a size-six bridge. In half mode,
