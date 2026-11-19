@@ -388,6 +388,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   review checked inherited order, the old acyclic statement, and the
   different constants before and after opposite-intersection pruning.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44476586666).
+- [5a5ea8a7](https://github.com/gbodwin/paper-formalizations/commit/5a5ea8a78cf3eb842e6306de4a7eeb9c6a4a4681)
+  checks the sampled upper moment for local orders and the initial cubic
+  estimate under unique intersections. The 3022-declaration audit and
+  local kernel replay passed. Independent review checked the exact induced
+  lists, the caps and preservation of the previous moment statement.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44477790171).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

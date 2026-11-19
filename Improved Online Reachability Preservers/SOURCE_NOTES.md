@@ -182,9 +182,12 @@ start earlier on that base. This permits restricting the count to tuples
 whose right endpoint lies after a near predecessor. The suffix from the
 first such predecessor contains all of these right endpoints. In Appendix B,
 all close-pair charges have both endpoints off the base. Lean checks these
-lower-count restrictions. The cyclic upper estimates remain open.
+lower-count restrictions. The filtered offline count gives the local-order
+upper bound and recurrence of Theorem 43. The filtered online upper proof
+remains open.
 [Checked cycle](OnlineReachabilityPreservers/SplitAudit.lean)
-· [Checked close-pair charges](OnlineReachabilityPreservers/LocalBranching.lean).
+· [Checked close-pair charges](OnlineReachabilityPreservers/LocalBranching.lean)
+· [Unrestricted offline bound](OnlineReachabilityPreservers/LocalOfflineBound.lean).
 
 ## Matters requiring proof or clarification
 
