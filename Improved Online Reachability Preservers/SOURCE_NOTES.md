@@ -95,8 +95,12 @@ disjoint order-preserving path splits keep both bridge conditions through
 size four, even when the paths have no common vertex order. Disjoint
 order-preserving pieces suffice through size three without unique
 intersections. The half-bridge statements keep the parent path order.
-The locally ordered vertex copies also preserve unique intersections
-and both exclusions through size four. The two splits retain all mass
+Locally ordered vertex copies preserve unique intersections. They also
+preserve full exclusion at every size by erasing repeated vertices on the
+projected chain. They preserve half exclusion through size four because
+identifying opposite corners of a projected four-bridge would imply a
+2-bridge. Neither vertex-split preservation claim needs unique intersections.
+The two splits retain all mass
 of the pruned system, at most double the ambient counts, and give the
 upper caps used in the bootstrap. Restricting the copies back to the
 original budgets and pruning low incidences gives the four caps
@@ -118,6 +122,20 @@ and its last arc precedes the river. Lean checks that the original family
 has unique intersections and excludes every bridge. The arbitrary-size
 cleaning existence lemma for cyclic families needs a different argument.
 [Checked half-7 example](OnlineReachabilityPreservers/UniqueSplitAudit.lean).
+
+Splitting a vertex can also break the half exclusion, even with unique
+intersections. In arrival order take the paths `(4,2), (0,2), (0,1), (1,2),
+(2,3), (3,4)`. The only vertex above average degree is `2`. Its four
+incidences split into two blocks of size two. Assign the earlier block to
+copy `5` and the later block to copy `2`. The new chain is
+\(0\to1\to2\to3\to4\to5\) with river \((0,5)\), and its last arc is earlier
+than the river. In the original family the only alternate simple chain
+for a river is \(0\to1\to2\), whose last arc is later than \((0,2)\).
+Erasing repeated vertices after projecting the new chain therefore loses
+the required last arc. Lean checks the original half exclusion at every
+size and the half-6-bridge in the actual consecutive incidence blocks.
+[Projection theorem](OnlineReachabilityPreservers/BridgeVertexProjection.lean)
+· [Checked vertex split](OnlineReachabilityPreservers/VertexSplitAudit.lean).
 
 ## The cited consecutive-edge overlay can admit an alternate path
 
@@ -242,7 +260,8 @@ local-order upper bound and recurrence of Theorem 43.
   size in this common-order setting. A spanning path and singleton padding
   make both density assumptions automatic at a common-order maximum with
   positive budgets. The same caps hold through size four
-  under unique intersections in local orders.
+  under unique intersections in local orders, and through size three for
+  arbitrary simple paths in the dense regime.
   With opposite-intersection pruning first, arbitrary simple paths whose
   mass is at least twice both counts keep one thirty-second of the mass and
   have lower caps at one eighth of their original averages. The upper caps

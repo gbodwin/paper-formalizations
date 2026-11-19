@@ -7,6 +7,7 @@ import OnlineReachabilityPreservers.Basic
 import OnlineReachabilityPreservers.BootstrapArithmetic
 import OnlineReachabilityPreservers.BranchWindow
 import OnlineReachabilityPreservers.BranchingDegrees
+import OnlineReachabilityPreservers.BridgeVertexProjection
 import OnlineReachabilityPreservers.Bridges
 import OnlineReachabilityPreservers.ClosePairs
 import OnlineReachabilityPreservers.CommonOrderExtremal
@@ -116,3 +117,4 @@ import OnlineReachabilityPreservers.SteinerWeightedNetwork
 import OnlineReachabilityPreservers.StrongAdversary
 import OnlineReachabilityPreservers.ThinSearchWork
 import OnlineReachabilityPreservers.UniqueSplitAudit
+import OnlineReachabilityPreservers.VertexSplitAudit

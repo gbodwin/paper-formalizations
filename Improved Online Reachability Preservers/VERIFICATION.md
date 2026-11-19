@@ -561,6 +561,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   and template preparation in generated C. The two-vertex replay reported
   12 arc inspections and 20 key comparisons for the shared preparations.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44507701923).
+- [e80372d7](https://github.com/gbodwin/paper-formalizations/commit/e80372d7481b8df888533363f94479a7e63481e5)
+  checks the same rounding decisions with counts of stored weight reads for
+  one fractional state. The 3710-declaration audit and local kernel replay
+  passed. Independent review checked the exact trial union, the two ancestor
+  minima, the per-tier bound, and reuse of computed rows in generated C.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44509167990).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

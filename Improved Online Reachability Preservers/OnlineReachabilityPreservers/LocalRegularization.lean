@@ -1,3 +1,4 @@
+import OnlineReachabilityPreservers.BridgeVertexProjection
 import OnlineReachabilityPreservers.CyclicSplits
 import OnlineReachabilityPreservers.OppositeIntersectionPruning
 import OnlineReachabilityPreservers.Regularization
@@ -30,12 +31,11 @@ theorem listBefore_map {paths : I → List W} {i : I} (project : W → V)
   have yp := position step.2.1
   exact ⟨List.mem_map_of_mem step.1, List.mem_map_of_mem step.2.1, xp.symm ▸ yp.symm ▸ step.2.2⟩
 
-/-- A projected bridge through size four still has distinct corners when
-its original paths have at most one meeting vertex per pair. -/
-def listBridge_after_vertex_split {paths : I → List V} {copies : I → List W} (project : W → V)
+private def projectShortListBridge {paths : I → List V} {copies : I → List W} (project : W → V)
     (steps : ∀ {i x y}, ListBefore copies i x y → ListBefore paths i (project x) (project y))
-    (unique : ∀ {a b x y}, a ≠ b → x ∈ paths a → x ∈ paths b → y ∈ paths a → y ∈ paths b → x = y)
-    {k : ℕ} (short : k ≤ 2) (b : Bridge (ListBefore copies) k) : Bridge (ListBefore paths) k := by
+    {k : ℕ} (short : k ≤ 2)
+    (noParallel : k = 2 → ∀ {a b x y}, a ≠ b → ListBefore paths a x y → ListBefore paths b x y → False)
+    (b : Bridge (ListBefore copies) k) : Bridge (ListBefore paths) k := by
   let vertices := project ∘ b.vertex
   refine ⟨vertices, b.arc, b.river, ?_, b.distinctArcs, b.river_ne_arc, steps b.riverStep,
     fun i => steps (b.arcStep i)⟩
@@ -61,13 +61,42 @@ def listBridge_after_vertex_split {paths : I → List V} {copies : I → List W}
     have apart03 := listBefore_ne river
     have apart02 : vertices 0 ≠ vertices 2 := by
       intro same
-      have diff : b.arc 0 ≠ b.arc 1 := fun equal => (by decide : (0 : Fin 3) ≠ 1) (b.distinctArcs equal)
-      exact apart01 (unique diff one.1 (same.symm ▸ two.2.1) one.2.1 two.1)
+      exact noParallel rfl (b.river_ne_arc 2) river (same.symm ▸ three)
     have apart13 : vertices 1 ≠ vertices 3 := by
       intro same
-      have diff : b.arc 1 ≠ b.arc 2 := fun equal => (by decide : (1 : Fin 3) ≠ 2) (b.distinctArcs equal)
-      exact apart12 (unique diff two.1 (same.symm ▸ three.2.1) two.2.1 three.1)
+      exact noParallel rfl (b.river_ne_arc 0) river (same ▸ one)
     fin_cases i <;> fin_cases j <;> simp_all
+
+/-- A projected bridge through size four still has distinct corners when
+its original paths have at most one meeting vertex per pair. -/
+def listBridge_after_vertex_split {paths : I → List V} {copies : I → List W} (project : W → V)
+    (steps : ∀ {i x y}, ListBefore copies i x y → ListBefore paths i (project x) (project y))
+    (unique : ∀ {a b x y}, a ≠ b → x ∈ paths a → x ∈ paths b → y ∈ paths a → y ∈ paths b → x = y)
+    {k : ℕ} (short : k ≤ 2) (b : Bridge (ListBefore copies) k) : Bridge (ListBefore paths) k :=
+  projectShortListBridge project steps short
+    (fun _ {_ _ _ _} diff left right => listBefore_ne left (unique diff left.1 right.1 left.2.1 right.2.1)) b
+
+/-- Vertex splitting preserves full bridge exclusion at every size. -/
+theorem BridgeFree.split_list_vertices_any {paths : I → List V} {copies : I → List W} {size : ℕ}
+    (free : BridgeFree (ListBefore paths) size) (project : W → V)
+    (steps : ∀ {i x y}, ListBefore copies i x y → ListBefore paths i (project x) (project y)) :
+    BridgeFree (ListBefore copies) size := by
+  intro k hk
+  refine ⟨fun b => ?_⟩
+  obtain ⟨j,small,old,_⟩ := b.project_vertices project steps (fun h => listBefore_ne h)
+  exact (free (k := j) (by omega)).false old
+
+/-- In a projected bridge of size four, identifying opposite corners
+would give a 2-bridge. Through four, projection can keep the last arc. -/
+theorem HalfBridgeFree.split_list_vertices_short [LinearOrder I]
+    {paths : I → List V} {copies : I → List W} {size : ℕ}
+    (free : HalfBridgeFree (ListBefore paths) size) (short : size ≤ 4) (project : W → V)
+    (steps : ∀ {i x y}, ListBefore copies i x y → ListBefore paths i (project x) (project y)) :
+    HalfBridgeFree (ListBefore copies) size := by
+  intro k hk b earlier
+  let old := projectShortListBridge project steps (by omega)
+    (fun same {_ _ _ _} diff left right => no_parallel_list_steps free (by omega) diff left right) b
+  exact free hk old earlier
 
 theorem BridgeFree.split_list_vertices {paths : I → List V} {copies : I → List W}
     (free : BridgeFree (ListBefore paths) 4) (project : W → V)
@@ -274,7 +303,8 @@ theorem listRegularizedPaths_halfFree {paths : I → List V} (simple : ∀ i, (p
     HalfBridgeFree (ListBefore (listRegularizedPaths paths D L)) 4 := by
   let copies := splitListVertices paths D
   have copyFree : HalfBridgeFree (ListBefore copies) 4 :=
-    free.split_list_vertices (fun v => v.fst) (fun {i x y} step => splitListVertices_step (width := D) (simple i) step) unique
+    free.split_list_vertices_short le_rfl (fun v => v.fst)
+      (fun {i x y} step => splitListVertices_step (width := D) (simple i) step)
   change HalfBridgeFree (ListBefore (splitListPaths copies L)) 4
   apply copyFree.split_list_paths (fun j : ListBlockIndex copies L => j.fst)
     (block_parent_mono (fun i => (copies i).toFinset) L)
@@ -291,7 +321,8 @@ theorem listRegularizedPaths_fullFree {paths : I → List V} (simple : ∀ i, (p
     BridgeFree (ListBefore (listRegularizedPaths paths D L)) 4 := by
   let copies := splitListVertices paths D
   have copyFree : BridgeFree (ListBefore copies) 4 :=
-    free.split_list_vertices (fun v => v.fst) (fun {i x y} step => splitListVertices_step (width := D) (simple i) step) unique
+    free.split_list_vertices_any (fun v => v.fst)
+      (fun {i x y} step => splitListVertices_step (width := D) (simple i) step)
   change BridgeFree (ListBefore (splitListPaths copies L)) 4
   apply copyFree.split_list_paths (fun j : ListBlockIndex copies L => j.fst)
   · intro i x y h
@@ -300,6 +331,41 @@ theorem listRegularizedPaths_fullFree {paths : I → List V} (simple : ∀ i, (p
       (splitListPaths_sublist copies L i) h
   · exact fun different equal first second => splitListPaths_disjoint different equal first second
   · exact fun different first second third fourth => splitListVertices_unique simple unique different first second third fourth
+
+/-- Both splitting steps preserve the half-bridge condition through three
+on arbitrary simple paths. The parent order is unchanged. -/
+theorem listRegularizedPaths_halfFree_three {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (ListBefore paths) 3) (D L : ℕ) :
+    HalfBridgeFree (ListBefore (listRegularizedPaths paths D L)) 3 := by
+  let copies := splitListVertices paths D
+  have copyFree : HalfBridgeFree (ListBefore copies) 3 :=
+    free.split_list_vertices_short (by decide) (fun v => v.fst)
+      (fun {i x y} step => splitListVertices_step (width := D) (simple i) step)
+  change HalfBridgeFree (ListBefore (splitListPaths copies L)) 3
+  apply copyFree.split_list_paths_three (fun j : ListBlockIndex copies L => j.fst)
+    (block_parent_mono (fun i => (copies i).toFinset) L)
+  · intro i x y h
+    exact listBefore_of_sublist (paths := fun j : ListBlockIndex copies L => copies j.fst)
+      (cut := splitListPaths copies L) (splitListVertices_simple paths D i.fst (simple i.fst))
+      (splitListPaths_sublist copies L i) h
+  · exact fun different equal first second => splitListPaths_disjoint different equal first second
+
+/-- Full bridge exclusion through three survives both splitting steps
+on arbitrary simple paths. -/
+theorem listRegularizedPaths_fullFree_three {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
+    (free : BridgeFree (ListBefore paths) 3) (D L : ℕ) :
+    BridgeFree (ListBefore (listRegularizedPaths paths D L)) 3 := by
+  let copies := splitListVertices paths D
+  have copyFree : BridgeFree (ListBefore copies) 3 :=
+    free.split_list_vertices_any (fun v => v.fst)
+      (fun {i x y} step => splitListVertices_step (width := D) (simple i) step)
+  change BridgeFree (ListBefore (splitListPaths copies L)) 3
+  apply copyFree.split_list_paths_three (fun j : ListBlockIndex copies L => j.fst)
+  · intro i x y h
+    exact listBefore_of_sublist (paths := fun j : ListBlockIndex copies L => copies j.fst)
+      (cut := splitListPaths copies L) (splitListVertices_simple paths D i.fst (simple i.fst))
+      (splitListPaths_sublist copies L i) h
+  · exact fun different equal first second => splitListPaths_disjoint different equal first second
 
 variable [Fintype V]
 
