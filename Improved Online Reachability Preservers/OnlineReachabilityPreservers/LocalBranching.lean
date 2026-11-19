@@ -236,4 +236,64 @@ theorem lemma28_list_off_base_lower {paths : I → List V} (free : BridgeFree (L
       (2 * L + h + 1) * ((listRChains paths).card + 2 * ∑ b, (listOffBaseBranchTuples paths b h).card) :=
   lemma28_list_lower_of_count free.halfFree unique L h _ length (lemma28_list_off_base_charge free unique h)
 
+private theorem listRChains_square_le (paths : I → List V) :
+    (listRChains paths).card^2 ≤ Fintype.card I^2 *
+      ∑ lr : I × I, (listRWitnesses paths lr.1 lr.2).card^2 := by
+  rw [listRChains_card]
+  have bound := sum_mul_sq_le_sq_mul_sq (R := ℕ) (univ : Finset (I × I)) (fun _ => 1)
+    (fun lr => (listRWitnesses paths lr.1 lr.2).card)
+  simpa [Fintype.card_prod, pow_two] using bound
+
+private theorem scaled_list_branching_count (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
+    (L h Q : ℕ) (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
+    (hdense : 16 * Fintype.card V ≤ ∑ i, (paths i).length)
+    (hlong : 8 * Fintype.card I ≤ ∑ i, (paths i).length)
+    (avg_length : L * Fintype.card I ≤ 4 * ∑ i, (paths i).length)
+    (window_le_avg : h * Fintype.card I ≤ ∑ i, (paths i).length)
+    (window_large : 40960 * (Fintype.card V)^2 * (Fintype.card I)^2 ≤
+      (h + 1) * (∑ i, (paths i).length)^3)
+    (close : (h + 1) * (∑ lr : I × I, (listRWitnesses paths lr.1 lr.2).card^2) ≤
+      (2 * L + h + 1) * ((listRChains paths).card + 2 * Q)) :
+    (h+1)*(∑ i, (paths i).length)^7 ≤ (40*2048^2)*(Fintype.card V)^4*(Fintype.card I)^3*Q := by
+  have window : (2 * L + h + 1) * Fintype.card I ≤ 10 * ∑ i, (paths i).length := by
+    rw [Nat.add_mul, Nat.add_mul, Nat.mul_assoc, Nat.one_mul]
+    omega
+  exact scaled_branching_count hn hp ((Nat.mul_pos (by decide) hp).trans_le hlong)
+    (lemma26_list_chain_lower paths simple hn hp hdense hlong) (listRChains_square_le paths)
+    close window window_large
+
+/-- The scaled lower count for the locally ordered online system. -/
+theorem lemma28_list_scaled_mean_lower {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (ListBefore paths) 4)
+    (unique : ∀ {i j x y}, i ≠ j → x ∈ paths i → x ∈ paths j → y ∈ paths i → y ∈ paths j → x = y)
+    (L h : ℕ) (length : ∀ i, (paths i).length ≤ L)
+    (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
+    (hdense : 16 * Fintype.card V ≤ ∑ i, (paths i).length)
+    (hlong : 8 * Fintype.card I ≤ ∑ i, (paths i).length)
+    (avg_length : L * Fintype.card I ≤ 4 * ∑ i, (paths i).length)
+    (window_le_avg : h * Fintype.card I ≤ ∑ i, (paths i).length)
+    (window_large : 40960 * (Fintype.card V)^2 * (Fintype.card I)^2 ≤
+      (h + 1) * (∑ i, (paths i).length)^3) :
+    (h+1)*(∑ i, (paths i).length)^7 ≤
+      (40*2048^2)*(Fintype.card V)^4*(Fintype.card I)^3*∑ b, (listBranchTuples paths b h).card :=
+  scaled_list_branching_count paths simple L h _ hn hp hdense hlong avg_length window_le_avg window_large
+    (lemma28_list_lower free unique L h length)
+
+/-- The scaled lower count for the locally ordered offline system. -/
+theorem lemma28_list_off_base_mean_lower {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
+    (free : BridgeFree (ListBefore paths) 4)
+    (unique : ∀ {i j x y}, i ≠ j → x ∈ paths i → x ∈ paths j → y ∈ paths i → y ∈ paths j → x = y)
+    (L h : ℕ) (length : ∀ i, (paths i).length ≤ L)
+    (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
+    (hdense : 16 * Fintype.card V ≤ ∑ i, (paths i).length)
+    (hlong : 8 * Fintype.card I ≤ ∑ i, (paths i).length)
+    (avg_length : L * Fintype.card I ≤ 4 * ∑ i, (paths i).length)
+    (window_le_avg : h * Fintype.card I ≤ ∑ i, (paths i).length)
+    (window_large : 40960 * (Fintype.card V)^2 * (Fintype.card I)^2 ≤
+      (h + 1) * (∑ i, (paths i).length)^3) :
+    (h+1)*(∑ i, (paths i).length)^7 ≤
+      (40*2048^2)*(Fintype.card V)^4*(Fintype.card I)^3*∑ b, (listOffBaseBranchTuples paths b h).card :=
+  scaled_list_branching_count paths simple L h _ hn hp hdense hlong avg_length window_le_avg window_large
+    (lemma28_list_off_base_lower free unique L h length)
+
 end OnlineReachabilityPreservers

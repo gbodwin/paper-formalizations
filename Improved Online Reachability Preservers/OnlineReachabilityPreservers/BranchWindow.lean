@@ -159,4 +159,44 @@ theorem square_root_rate_le {n k a : ℝ} (hn : 0 < n) (hk : 0 ≤ k)
         rw [mul_assoc, ← Real.rpow_add hkp, he']
 
 
+/-- Convert a witness count, its second moment and the close-pair count into
+the common lower bound on the sampled branching tuples. -/
+theorem scaled_branching_count {n p M h a R S Q : ℕ}
+    (hn : 0 < n) (hp : 0 < p) (hM : 0 < M)
+    (chain : M^4 ≤ 2048 * n^2 * p * R)
+    (moment : R^2 ≤ p^2 * S)
+    (close : (h+1)*S ≤ a*(R+2*Q))
+    (window : a*p ≤ 10*M)
+    (large : 40960*n^2*p^2 ≤ (h+1)*M^3) :
+    (h+1)*M^7 ≤ (40*2048^2)*n^4*p^3*Q := by
+  have enough : 2*a*p^2 ≤ (h+1)*R := by
+    apply Nat.le_of_mul_le_mul_right (c := 2048*n^2*p) _ (by positivity)
+    have h1 := Nat.mul_le_mul_right (4096*n^2*p^2) window
+    have h2 := Nat.mul_le_mul_right M large
+    have h3 := Nat.mul_le_mul_left (h + 1) chain
+    change (40960*n^2*p^2) * M ≤ ((h + 1)*M^3) * M at h2
+    nlinarith only [h1, h2, h3]
+  have linear : 2*a*R ≤ (h + 1)*S := by
+    apply Nat.le_of_mul_le_mul_right (c := p^2) _ (Nat.pow_pos hp)
+    have h1 := Nat.mul_le_mul_right R enough
+    have h2 := Nat.mul_le_mul_left (h + 1) moment
+    nlinarith only [h1, h2]
+  have absorbed : (h+1)*S ≤ 4*a*Q := by nlinarith only [close, linear]
+  have square : M^8 ≤ 2048^2*n^4*p^4*S := calc
+    M^8 = (M^4)^2 := by ring
+    _ ≤ (2048*n^2*p*R)^2 := Nat.pow_le_pow_left chain 2
+    _ = (2048^2*n^4*p^2)*R^2 := by ring
+    _ ≤ (2048^2*n^4*p^2)*(p^2*S) := Nat.mul_le_mul_left _ moment
+    _ = _ := by ring
+  apply Nat.le_of_mul_le_mul_right (c := M*p) _ (Nat.mul_pos hM hp)
+  calc
+    _ = ((h+1)*p)*M^8 := by ring
+    _ ≤ ((h+1)*p)*(2048^2*n^4*p^4*S) := Nat.mul_le_mul_left _ square
+    _ = (2048^2*n^4*p^5)*((h+1)*S) := by ring
+    _ ≤ (2048^2*n^4*p^5)*(4*a*Q) := Nat.mul_le_mul_left _ absorbed
+    _ = (4*2048^2*n^4*p^4*Q)*(a*p) := by ring
+    _ ≤ (4*2048^2*n^4*p^4*Q)*(10*M) := Nat.mul_le_mul_left _ window
+    _ = _ := by ring
+
+
 end OnlineReachabilityPreservers

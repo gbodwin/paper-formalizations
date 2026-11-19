@@ -371,6 +371,11 @@ An exact-source replay grants no coverage to a paper statement outside the
   filter, the strict offline displacement, and the three-path cycle that
   invalidates the source-restriction step of Lemma 35.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44473906418).
+- [548ecfb8](https://github.com/gbodwin/paper-formalizations/commit/548ecfb88c602067e778d6ac51ffda3267d40f2c)
+  checks mass preservation and the degree and length caps through both
+  splits in local path orders. The 2960-declaration audit and kernel replay
+  passed. Independent review checked the corner projection, order and counts.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44474896147).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

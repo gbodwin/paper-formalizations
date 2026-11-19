@@ -1,3 +1,4 @@
+import OnlineReachabilityPreservers.BranchWindow
 import OnlineReachabilityPreservers.PairwiseInitial
 
 /-! The finite close-pair count used in Appendix A.3. -/
@@ -308,34 +309,9 @@ theorem lemma28_scaled_mean_lower {paths : I → Finset V} (free : HalfBridgeFre
     (h+1)*(∑ i, (paths i).card)^7 ≤
       (40*2048^2)*(Fintype.card V)^4*(Fintype.card I)^3*
       ∑ base : I, (branchTuples paths base h).card := by
-  let n := Fintype.card V
-  let p := Fintype.card I
-  let M := ∑ i, (paths i).card
-  let a := 2*L+h+1
-  let R := (rChains paths).card
-  let S := ∑ lr : I × I, (rWitnesses paths lr.1 lr.2).card^2
-  let Q := ∑ base : I, (branchTuples paths base h).card
-  have hM : 0 < M := (Nat.mul_pos (by decide) hp).trans_le hlong
-  have lower : M^4 ≤ 2048*n^2*p*R := lemma26_chain_lower paths hn hp hdense hlong
-  have close : (h+1)*S ≤ 4*a*Q :=
-    lemma28_from_incidence free L h length hn hp hdense hlong avg_length window_le_avg window_large
-  have hwindow : a*p ≤ 10*M := window_size_budget avg_length window_le_avg hlong
-  have square : M^8 ≤ 2048^2*n^4*p^4*S := calc
-    M^8 = (M^4)^2 := by ring
-    _ ≤ (2048*n^2*p*R)^2 := Nat.pow_le_pow_left lower 2
-    _ = (2048^2*n^4*p^2)*R^2 := by ring
-    _ ≤ (2048^2*n^4*p^2)*(p^2*S) := Nat.mul_le_mul_left _ (rChains_square_le paths)
-    _ = _ := by ring
-  change (h+1)*M^7 ≤ (40*2048^2)*n^4*p^3*Q
-  apply Nat.le_of_mul_le_mul_right (c := M*p) _ (Nat.mul_pos hM hp)
-  calc
-    _ = ((h+1)*p)*M^8 := by ring
-    _ ≤ ((h+1)*p)*(2048^2*n^4*p^4*S) := Nat.mul_le_mul_left _ square
-    _ = (2048^2*n^4*p^5)*((h+1)*S) := by ring
-    _ ≤ (2048^2*n^4*p^5)*(4*a*Q) := Nat.mul_le_mul_left _ close
-    _ = (4*2048^2*n^4*p^4*Q)*(a*p) := by ring
-    _ ≤ (4*2048^2*n^4*p^4*Q)*(10*M) := Nat.mul_le_mul_left _ hwindow
-    _ = _ := by ring
+  apply scaled_branching_count hn hp ((Nat.mul_pos (by decide) hp).trans_le hlong)
+    (lemma26_chain_lower paths hn hp hdense hlong) (rChains_square_le paths)
+    (lemma28_branch_lower free L h length) (window_size_budget avg_length window_le_avg hlong) window_large
 
 /-- The uniform mean of the qualifying tuple counts controls the squared product
 of the average length and degree, with denominators cleared. -/
