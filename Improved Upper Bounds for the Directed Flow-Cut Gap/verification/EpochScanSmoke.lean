@@ -120,7 +120,7 @@ private def check (mode : Case) (restartOnly : Bool := false) : IO Unit := do
       throw (IO.userError "restart did not install the actual cached records")
     let some (called,total,charge) := reachRestart solverEntry 10000
         (CachedReferenceExecution.FastState.ofReference out) steps paid
-      | throw (IO.userError "refresh did not invoke the physical candidate solver")
+      | throw (IO.userError "stabilization did not reach candidate refresh entry")
     let input := eraseState called
     let some (heldCut,heldScale) := pair input.heap input.registers.d
       | throw (IO.userError "missing refresh query cutoff and scale")
@@ -128,7 +128,7 @@ private def check (mode : Case) (restartOnly : Bool := false) : IO Unit := do
         input.registers.a == value pairs.root && input.registers.b == value demands.root &&
         input.registers.c == value shared.root && heldCut == value cut.root && heldScale == newScale do
       throw (IO.userError "refresh did not pass the actual original labels, live masks, and installed scale")
-    IO.println s!"PASS unready restart installed scale 12 and entered the candidate solver with the live masks, {total} instructions, paid {charge} before its first instruction"
+    IO.println s!"PASS unready restart installed scale 12 and reached candidate refresh entry with the live masks, {total} instructions, paid {charge} before its first instruction"
     return
   if mode==.selected then
     let prepared : BitState 118 := ⟨twice.heap,twice.next,regs,[],0,source⟩
