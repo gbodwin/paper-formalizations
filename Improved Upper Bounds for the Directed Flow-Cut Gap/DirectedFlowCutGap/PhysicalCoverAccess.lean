@@ -61,11 +61,11 @@ private theorem access_result (heap : Heap) (root : Bits) :
     (eraseHeap heap)[value root]? = Option.map eraseCell (access heap root).1 :=
   (lookup_refines root heap).symm
 
-private theorem access_charge {heap : Heap} {root : Bits} {B : ℕ}
+theorem access_charge {heap : Heap} {root : Bits} {B : ℕ}
     (hh : heap.Bounded B) (hr : root.length ≤ B) :
     (access heap root).2 ≤ cellBound heap.length B := lookup_bound hr hh
 
-private def readListWith {A : Type} (get : Bits → Read (Cell Bits)) (item : Bits → Read A) :
+def readListWith {A : Type} (get : Bits → Read (Cell Bits)) (item : Bits → Read A) :
     ℕ → Bits → Read (List A)
   | 0, _ => Read.failure
   | fuel + 1, root => do
@@ -96,7 +96,7 @@ private theorem readList_value {A : Type} (heap : Heap) (item : Bits → Read A)
       cases c <;> simp [readList, readListWith, PhysicalCoverReader.readList, Read.bind_value, he, hv,
         eraseCell, Cell.map, h, ih]
 
-private theorem readList_charge {A : Type} {heap : Heap} {item : Bits → Read A}
+theorem readList_charge {A : Type} {heap : Heap} {item : Bits → Read A}
     {B charge : ℕ} (hh : heap.Bounded B)
     (hi : ∀ address, address.length ≤ B → (item address).2 ≤ charge)
     (fuel : ℕ) (root : Bits) (hr : root.length ≤ B) :
@@ -128,7 +128,7 @@ private def readFlagWith (get : Bits → Read (Cell Bits)) (root : Bits) : Read 
 
 private def readFlag (heap : Heap) : Bits → Read Bool := readFlagWith (access heap)
 
-private def readWordWith (get : Bits → Read (Cell Bits)) (length : ℕ) (root : Bits) : Read Bits :=
+def readWordWith (get : Bits → Read (Cell Bits)) (length : ℕ) (root : Bits) : Read Bits :=
   readListWith get (readFlagWith get) length root
 
 def readWord (heap : Heap) : Bits → Read Bits :=
@@ -173,7 +173,7 @@ theorem readWord_charge {heap : Heap} {root : Bits} {B : ℕ}
     (readWord heap root).2 ≤ wordBound heap.length B :=
   readList_charge hh (fun _ ha => readFlag_charge hh ha) _ _ hr
 
-private def readFractionWith (get : Bits → Read (Cell Bits)) (length : ℕ) (root : Bits) : Read BinaryRational.Fraction := do
+def readFractionWith (get : Bits → Read (Cell Bits)) (length : ℕ) (root : Bits) : Read BinaryRational.Fraction := do
   let .pair a b ← get root | Read.failure
   let num ← readWordWith get length a
   let den ← readWordWith get length b
@@ -210,7 +210,7 @@ theorem readFraction_charge {heap : Heap} {root : Bits} {B : ℕ}
         (Read.bind_bound (readWord_charge hh hb.2) (k := fun den => ((BinaryRational.fromBits num den).1, 0))
           (later := 0) (by intro _ _; exact Nat.zero_le _))
 
-private def readBestWith (n : ℕ) (get : Bits → Read (Cell Bits)) (length : ℕ) (root : Bits) : Read (RawRow n) := do
+def readBestWith (n : ℕ) (get : Bits → Read (Cell Bits)) (length : ℕ) (root : Bits) : Read (RawRow n) := do
   let .pair _ next ← get root | Read.failure
   let .pair best _ ← get next | Read.failure
   let xs ← readListWith get (readFractionWith get length) length best
@@ -276,7 +276,7 @@ private theorem readBest_charge (n : ℕ) {heap : Heap} {root : Bits} {B : ℕ}
 
 open PhysicalCoverReader (Plan)
 
-private def readObstructionWith (n : ℕ) (get : Bits → Read (Cell Bits)) (length : ℕ) (root : Bits) : Read (Plan n) := do
+def readObstructionWith (n : ℕ) (get : Bits → Read (Cell Bits)) (length : ℕ) (root : Bits) : Read (Plan n) := do
   let .pair first last ← get root | Read.failure
   let source ← readWordWith get length first
   let target ← readWordWith get length last
@@ -284,11 +284,11 @@ private def readObstructionWith (n : ℕ) (get : Bits → Read (Cell Bits)) (len
     pure (.infeasible (⟨value source, h.1⟩, ⟨value target, h.2⟩))
   else Read.failure
 
-private def readMaskWith (n : ℕ) (get : Bits → Read (Cell Bits)) (length : ℕ) (root : Bits) : Read (Plan n) := do
+def readMaskWith (n : ℕ) (get : Bits → Read (Cell Bits)) (length : ℕ) (root : Bits) : Read (Plan n) := do
   let a ← readWordWith get length root
   if h : a.length = n then pure (.zero ⟨a.toArray, by simpa using h⟩) else Read.failure
 
-private def readPlanWith (n : ℕ) (get : Bits → Read (Cell Bits)) (length : ℕ) (root : Bits) : Read (Plan n) := do
+def readPlanWith (n : ℕ) (get : Bits → Read (Cell Bits)) (length : ℕ) (root : Bits) : Read (Plan n) := do
   match ← get root with
   | .nil => pure .invalid
   | .flag _ => Read.failure

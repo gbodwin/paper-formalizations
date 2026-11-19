@@ -9,7 +9,7 @@ integer controller have separate deterministic polynomials. The composed
 vertex, edge and adaptive charge counters also have polynomial bounds in the
 original input dimensions. The original-input solvers also have counted parsing,
 and the adaptive solver can reuse a single charged threshold-demand computation.
-The complete source-to-cut bit-time bound remains open.
+The physical source entry now counts serialization, binary dispatch fuel, validation and terminal decoding. The remaining structural operations and their bit-time composition are open.
 [Physical amplified solvers](verification/PHYSICAL_AMPLIFIED_SOLVERS_20261119.md)
 [Composed charge bounds](verification/PHYSICAL_AMPLIFIED_COST_20261119.md)
 [Original input phases](verification/ORIGINAL_INPUT_PHASES_20261119.md)
@@ -39,7 +39,7 @@ The complete source-to-cut bit-time bound remains open.
 | Theorem 29 | Actual repaired finite reduction: 4n² vertices,3W weight,6αC cost, zero cases | Runtime; exact gap notation requires the stated bounded-instance interpretation |
 | Theorems30–31 | Actual dyadic edge-to-vertex and split-vertex constructions, all path/cut/count/weight/cost bridges and bounded-oracle forms | Constructive runtime |
 | Theorem 32 | Actual endpoint-safe self-reduction and uniform vertex n^(1/3+ε) composition | Runtime |
-| Theorem 33 | Finite family and PMF for both models. `PhysicalEdgeFamily.calibrated_physical` executes the adaptive edge-cut calls and transfers the literal fair-bit, confidence and original-weight frequency bounds. `AdaptiveWidthEnvelope.family_polynomial_reads` bounds the calibrated family in the original stored width. The exact-weight edge law also has a quadratic-horizon variant. | The binary adaptive family counts calibrated arithmetic, exact prices, and the binary integer cutoff. Physical source serialization and readback conversions remain outside this accounting. Near-linear horizon at the exact original-weight rounding factor. |
+| Theorem 33 | Finite family and PMF for both models. `PhysicalEdgeFamily.calibrated_physical` executes the adaptive edge-cut calls and transfers the literal fair-bit, confidence and original-weight frequency bounds. `AdaptiveWidthEnvelope.family_polynomial_reads` bounds the calibrated family in the original stored width. The exact-weight edge law also has a quadratic-horizon variant. | The binary adaptive family includes calibrated arithmetic, exact prices, binary cutoff, physical source serialization and readback conversions. The structural bit-time composition and a near-linear horizon at the exact original-weight rounding factor remain open. |
 
 The current scoped gate is [the constructive workflow](../.github/workflows/flow-constructive-rounding.yml).
 The adaptive edge-family extension has a [separate exact-commit gate](../.github/workflows/flow-adaptive-family.yml) and a [proof scope record](verification/ADAPTIVE_EDGE_FAMILY_20261119.md).
@@ -48,6 +48,7 @@ The fixed sampled-cut state update has a [proof scope record](verification/ROUND
 The [binary vertex preparation](verification/BINARY_VERTEX_PREPARATION_20261119.md) measures the scalar work on the observed cover rows and proves the literal-tape law, validity, and a source-length envelope for the returned counters. The integer cutoff gate and edge and adaptive transformations have separate cost scopes.
 The [binary edge preparation](verification/BINARY_EDGE_PREPARATION_20261119.md) composes the literal input with binary gadget weights, prices and row rounding, and bounds the returned counters. Its exact output and tape agree with the earlier edge solver.
 The [binary adaptive family](verification/BINARY_ADAPTIVE_FAMILY_20261119.md) joins exact parameter computation and normalized adaptive prices to the binary edge solver. The calibrated entry has the literal-tape law, original-weight frequency and confidence guarantees, and a polynomial for the returned operation counts.
+The [binary source and terminal reader](verification/BINARY_SOURCE_READBACK_20261119.md) frame the dispatcher input, evaluate its instruction bound on binary words, and pay for validation and conversion of each reached terminal row or witness.
 The manifest `verification/component-verification.json` records an earlier
 component checkpoint.
 Independent reviews record semantic scope and boundary cases. No desired

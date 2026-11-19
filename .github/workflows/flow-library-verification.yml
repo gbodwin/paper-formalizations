@@ -32,6 +32,7 @@ on:
       - codex/flow-binary-edge-preparation-20261119
       - codex/flow-binary-adaptive-family-20261119
       - codex/flow-binary-integer-cutoff-20261119
+      - codex/flow-binary-source-readback-20261119
   workflow_dispatch:
 permissions:
   contents: read
@@ -137,6 +138,9 @@ jobs:
       - name: Check the measured binary integer cutoff
         if: github.ref_name == 'codex/flow-binary-integer-cutoff-20261119'
         run: bash scripts/CheckFlowBinaryIntegerCutoff.sh
+      - name: Check the measured source setup and terminal conversions on all solver entries
+        if: github.ref_name == 'codex/flow-binary-source-readback-20261119'
+        run: bash scripts/CheckFlowBinarySourceReadback.sh
       - name: Recheck source identity
         run: |
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"

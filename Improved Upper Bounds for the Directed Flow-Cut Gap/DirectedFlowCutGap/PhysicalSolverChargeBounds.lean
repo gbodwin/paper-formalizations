@@ -6,7 +6,7 @@ import DirectedFlowCutGap.PhysicalSourceSizeBounds
 
 The serialization estimate bounds the encoded line graph in the input
 dimensions before interpreting it. These bounds cover dispatch and the
-reference lookups during readback. The solver completeness theorems give
+serialization, dispatch fuel construction, terminal reads and conversions. The solver completeness theorems give
 the separate polynomial bound on the binary sampler's operations.
 -/
 
@@ -23,7 +23,7 @@ theorem budgets_of_source_length {n l : ℕ} (D : BinaryFractionalGuesses.Input 
     (h : (PhysicalSourceDispatch.input D).length ≤ l) :
     let bound := PhysicalSourceDispatch.instructionPolynomial.eval l
     dispatchBudget D ≤ PhysicalSourceDispatch.paidPolynomial.eval l ∧
-    lookupBudget D ≤ PhysicalCoverAccess.planBound (1 + bound) bound := by
+    lookupBudget D ≤ PhysicalSourceReadback.planBound (1 + bound) bound := by
   have hb := eval_mono PhysicalSourceDispatch.instructionPolynomial h
   exact ⟨eval_mono PhysicalSourceDispatch.paidPolynomial h,
     PhysicalSourceReadback.planBound_mono (Nat.add_le_add_left hb 1) hb⟩
@@ -33,7 +33,7 @@ theorem vertex_budgets {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
       (LambdaRowProgram.rowBits D.costs.toList)
     let bound := PhysicalSourceDispatch.instructionPolynomial.eval size
     dispatchBudget D ≤ PhysicalSourceDispatch.paidPolynomial.eval size ∧
-    lookupBudget D ≤ PhysicalCoverAccess.planBound (1 + bound) bound :=
+    lookupBudget D ≤ PhysicalSourceReadback.planBound (1 + bound) bound :=
   budgets_of_source_length D (PhysicalSourceSizeBounds.source_size_le D)
 
 theorem edge_budgets {n B : ℕ} (D : EncodedEdgeLineInput.Input n) (hB : 1 ≤ B)
@@ -43,7 +43,7 @@ theorem edge_budgets {n B : ℕ} (D : EncodedEdgeLineInput.Input n) (hB : 1 ≤ 
     let size := PhysicalSourceSizeBounds.lineSourceSizeBound n D.demands.length B
     let bound := PhysicalSourceDispatch.instructionPolynomial.eval size
     dispatchBudget line ≤ PhysicalSourceDispatch.paidPolynomial.eval size ∧
-    lookupBudget line ≤ PhysicalCoverAccess.planBound (1 + bound) bound :=
+    lookupBudget line ≤ PhysicalSourceReadback.planBound (1 + bound) bound :=
   budgets_of_source_length _ (PhysicalSourceSizeBounds.line_source_size_le D hB hc)
 
 end DirectedFlowCutGap.PhysicalSolverCharges

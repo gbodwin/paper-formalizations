@@ -107,7 +107,7 @@ noncomputable def dispatchBudget {n : ℕ} (D : BinaryFractionalGuesses.Input n)
 
 noncomputable def lookupBudget {n : ℕ} (D : BinaryFractionalGuesses.Input n) : ℕ :=
   let bound := PhysicalSourceDispatch.instructionPolynomial.eval (PhysicalSourceDispatch.input D).length
-  PhysicalCoverAccess.planBound (1 + bound) bound
+  PhysicalSourceReadback.planBound (1 + bound) bound
 
 def treeFromPlan {n : ℕ} (roundBound extra confidence : ℕ) (G : GraphInput n)
     (round : Rounding n) (p : PhysicalCoverReader.Plan n) : FiniteDrawTrees.Tree (Output n × ℕ) :=

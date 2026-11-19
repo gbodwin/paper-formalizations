@@ -72,11 +72,7 @@ theorem run_polynomial_on_rows (q : Polynomial ℕ) : ∃ p : Polynomial ℕ,
   let trials := trialEnvelope
   let inst := PhysicalSourceDispatch.instructionPolynomial
   let H : Polynomial ℕ := 1+inst
-  let cell := C 64*(H+1)*(inst+1)
-  let word := H*(cell+cell)
-  let fraction := cell+word+word
-  let best := C 2*cell+H*(cell+fraction)
-  let lookup := C 2*cell+fraction+H*(cell+best)
+  let lookup := PhysicalSourceReadback.planBound H inst
   let sum := X*(C 2048*((X+1)*(X+1)+1)^2+C 4)+1
   let compare := C 2048*(X*(X+1)+C 2)^2
   let row := q.comp (trials+X)+sum+C 10+compare
@@ -98,10 +94,8 @@ theorem run_polynomial_on_rows (q : Polynomial ℕ) : ∃ p : Polynomial ℕ,
       ChargedCutSelection.rowBound BinaryFractionalRows.sumBound
     dsimp only [R]
     gcongr
-  have readEval : lookup.eval x = PhysicalCoverAccess.planBound (1+inst.eval x) (inst.eval x) := by
-    simp only [lookup,best,fraction,word,cell,H,eval_mul,eval_add,eval_C,eval_one,
-      PhysicalCoverAccess.planBound,PhysicalCoverAccess.bestBound,PhysicalCoverAccess.fractionBound,
-      PhysicalCoverAccess.wordBound,PhysicalCoverAccess.cellBound]
+  have readEval : lookup.eval x = PhysicalSourceReadback.planBound (1+inst.eval x) (inst.eval x) := by
+    simp only [lookup,H,PhysicalSourceReadback.planBound_eval,eval_add,eval_one]
   simp only [eval_add,readEval]
   exact Nat.add_le_add (Nat.add_le_add (dispatch.trans dispatchLimit) (readback.trans readbackLimit)) (paid.trans rounding)
 
@@ -141,6 +135,7 @@ abbrev vertexSize {n : ℕ} (D : BinaryFractionalGuesses.Input n) (κ : ℕ) : �
 
 /-- End-to-end counters in the original vertex dimension, number of demands,
 stored cost bits and confidence exponent. -/
+set_option maxHeartbeats 800000 in
 theorem vertex_polynomial : ∃ p : Polynomial ℕ, ∀ {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) {out : PhysicalAmplifiedVertexSolver.Result n},
     PhysicalAmplifiedVertexSolver.vertex κ mode D tape = some out →
