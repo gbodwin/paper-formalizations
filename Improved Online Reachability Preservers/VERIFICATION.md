@@ -530,6 +530,13 @@ An exact-source replay grants no coverage to a paper statement outside the
   exact separation and rounding, and the one-time graph inspections.
   A two-vertex run returned the same graph and added 12 arc inspections.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44502188351).
+- [5481d01e](https://github.com/gbodwin/paper-formalizations/commit/5481d01e0284e534d058986aa77ba56385b919ef)
+  shares the distance table across the complete sequence of seeded prefixes.
+  The 3619-declaration audit and local kernel replay passed. Independent
+  review checked exact equality of graphs and counts. The two-vertex run
+  paid 12 extra arc inspections for the whole list. The generated C still
+  built the paired template inside the prefix callback at this checkpoint.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44503067005).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

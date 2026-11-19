@@ -184,6 +184,14 @@ private def requestOnFreeForest (free : Arcs (ForestNetworkVertex V height)) (d 
   ⟨free ∪ forestNetworkEntries d.1 ∪ forestNetworkExits d.2,
     forestNetworkSource d.1,forestNetworkSink d.2⟩
 
+private def forestFractionalWithPreparedInputs (priced free : Arcs (ForestNetworkVertex V height))
+    (weight : ForestNetworkVertex V height × ForestNetworkVertex V height → ℕ)
+    (scale fuel : ℕ) (D : List (V × V)) :
+    (((ForestNetworkVertex V height × ForestNetworkVertex V height) → ℕ) ×
+      List (Arcs (ForestNetworkVertex V height))) × ℕ :=
+  weightedNetworkRunAtScaleWithSearchWork priced weight scale fuel
+    (D.map (requestOnFreeForest free)) (fun _ => 0)
+
 /-- Use one paired template and its stored original-graph hop values in all
 weighted separators. The graph searches have the ordinary flow outputs. -/
 def forestFractionalFromWeightsWithSearchWork
@@ -194,8 +202,9 @@ def forestFractionalFromWeightsWithSearchWork
       List (Arcs (ForestNetworkVertex V height))) × ℕ :=
   let priced := pricedForestFromWeights links weight
   let free := freeForestFromWeights links weight
-  fun D => weightedNetworkRunWithSearchWork priced (networkWeightFromForestWeights weight)
-    (D.map (requestOnFreeForest free)) (fun _ => 0)
+  let liftedWeight := networkWeightFromForestWeights weight
+  forestFractionalWithPreparedInputs priced free liftedWeight
+    (weightedCoverScale priced liftedWeight) (weightedCoverFuel priced liftedWeight)
 
 theorem forestFractionalFromWeightsWithSearchWork_eq (G : Arcs V) (dist : V × V → ℕ)
     (values : ∀ d : V × V, dist d = hops G d.1 d.2) (height : ℕ) (D : List (V × V)) :
@@ -245,14 +254,17 @@ theorem roundedForestTrialsFromWeights_eq (G : Arcs V) (dist : V × V → ℕ)
   rw [heightForestFromDistances_eq G dist values height, forestWeightFromDistances_eq G dist values]
   rfl
 
-private def forestScaleFromWeights (links : Arcs (HeightForestVertex V height))
-    (weight : HeightForestVertex V height × HeightForestVertex V height → ℕ) : ℕ :=
-  weightedCoverScale (pricedForestFromWeights links weight) (networkWeightFromForestWeights weight)
+private def preparedScaleAndFuel (priced : Arcs (ForestNetworkVertex V height))
+    (weight : ForestNetworkVertex V height × ForestNetworkVertex V height → ℕ) : ℕ × ℕ :=
+  let total := ∑ e ∈ priced, weight e
+  let scale := max 1 total
+  (scale,(scale.log2+1)*total+1)
 
 private theorem forestScaleFromWeights_eq (G : Arcs V) (dist : V × V → ℕ)
     (values : ∀ d : V × V, dist d = hops G d.1 d.2) (height : ℕ) :
-    forestScaleFromWeights (heightForestFromDistances dist height) (forestWeightFromDistances dist) =
-      forestScale G height := by
+    (preparedScaleAndFuel (pricedForestFromWeights (heightForestFromDistances dist height)
+      (forestWeightFromDistances dist)) (networkWeightFromForestWeights (forestWeightFromDistances dist))).1 =
+        forestScale G height := by
   rw [heightForestFromDistances_eq G dist values height, forestWeightFromDistances_eq G dist values]
   rfl
 
@@ -265,26 +277,43 @@ private theorem roundedTrials_cast_scale (G : Arcs V) {scale : ℕ}
   subst scale
   rfl
 
-private def earlyMetricFromDistances (G : Arcs V) (height : ℕ) (dist : V × V → ℕ)
-    (values : ∀ d : V × V, dist d = hops G d.1 d.2) (sample : EarlyRoundSample G height) :
-    List (V × V) → Arcs (HeightForestVertex V height) × ℕ :=
-  let links := heightForestFromDistances dist height
-  let weight := forestWeightFromDistances dist
-  let scale := forestScaleFromWeights links weight
-  let seed : ForestTrialArray V height scale (earlyTrialCount V height) :=
-    cast (congrArg (fun k => ForestTrialArray V height k (earlyTrialCount V height))
-      (forestScaleFromWeights_eq G dist values height).symm) sample
-  let fraction := forestFractionalFromWeightsWithSearchWork links weight
-  fun P =>
-    let out := fraction P
-    (roundedForestTrialsFromWeights links weight out.1.1 scale (earlyTrialCount V height) seed,out.2)
+private def earlyMetricWithPreparedInputs (links : Arcs (HeightForestVertex V height))
+    (weight : HeightForestVertex V height × HeightForestVertex V height → ℕ)
+    (priced free : Arcs (ForestNetworkVertex V height))
+    (networkWeight : ForestNetworkVertex V height × ForestNetworkVertex V height → ℕ)
+    (scale fuel : ℕ) (seed : ForestTrialArray V height scale (earlyTrialCount V height))
+    (P : List (V × V)) : Arcs (HeightForestVertex V height) × ℕ :=
+  let out := forestFractionalWithPreparedInputs priced free networkWeight scale fuel P
+  (roundedForestTrialsFromWeights links weight out.1.1 scale (earlyTrialCount V height) seed,out.2)
 
-private theorem earlyMetricFromDistances_eq (G : Arcs V) (height : ℕ) (dist : V × V → ℕ)
+private theorem earlyMetricWithPreparedInputs_eq (G : Arcs V) (height : ℕ) (dist : V × V → ℕ)
     (values : ∀ d : V × V, dist d = hops G d.1 d.2) (sample : EarlyRoundSample G height) :
-    earlyMetricFromDistances G height dist values sample = earlyMetricWithSearchWork G height sample := by
+    let links := heightForestFromDistances dist height
+    let weight := forestWeightFromDistances dist
+    let priced := pricedForestFromWeights links weight
+    let free := freeForestFromWeights links weight
+    let networkWeight := networkWeightFromForestWeights weight
+    let sizes := preparedScaleAndFuel priced networkWeight
+    let scale := sizes.1
+    let fuel := sizes.2
+    let seed : ForestTrialArray V height scale (earlyTrialCount V height) :=
+      cast (congrArg (fun k => ForestTrialArray V height k (earlyTrialCount V height))
+        (forestScaleFromWeights_eq G dist values height).symm) sample
+    earlyMetricWithPreparedInputs links weight priced free networkWeight scale fuel seed =
+      earlyMetricWithSearchWork G height sample := by
   funext P
-  dsimp only [earlyMetricFromDistances, earlyMetricWithSearchWork]
-  rw [forestFractionalFromWeightsWithSearchWork_eq G dist values,
+  let links := heightForestFromDistances dist height
+  let weight := forestWeightFromDistances (height := height) dist
+  let priced := pricedForestFromWeights links weight
+  let free := freeForestFromWeights links weight
+  let networkWeight := networkWeightFromForestWeights weight
+  let sizes := preparedScaleAndFuel priced networkWeight
+  have fraction : forestFractionalWithPreparedInputs priced free networkWeight
+      sizes.1 sizes.2 P =
+      forestFractionalRunWithSearchWork G height P :=
+    forestFractionalFromWeightsWithSearchWork_eq G dist values height P
+  dsimp only [earlyMetricWithPreparedInputs, earlyMetricWithSearchWork]
+  rw [fraction,
     roundedForestTrialsFromWeights_eq G dist values,
     roundedTrials_cast_scale G (forestScaleFromWeights_eq G dist values height)]
 
@@ -298,7 +327,18 @@ def prepareEarlyDistanceTable (G : Arcs V) (height : ℕ) (sample : EarlyRoundSa
   let dist := fun d => (readDistanceRow table.1 d).1
   let known : ∀ d : V × V, dist d = hops G d.1 d.2 :=
     fun d => (distanceTableReadWithSearchWork_spec G d).1
-  let metric := earlyMetricFromDistances G height dist known sample
+  let links := heightForestFromDistances dist height
+  let weight := forestWeightFromDistances dist
+  let priced := pricedForestFromWeights links weight
+  let free := freeForestFromWeights links weight
+  let networkWeight := networkWeightFromForestWeights weight
+  let sizes := preparedScaleAndFuel priced networkWeight
+  let scale := sizes.1
+  let fuel := sizes.2
+  let seed : ForestTrialArray V height scale (earlyTrialCount V height) :=
+    cast (congrArg (fun k => ForestTrialArray V height k (earlyTrialCount V height))
+      (forestScaleFromWeights_eq G dist known height).symm) sample
+  let metric := earlyMetricWithPreparedInputs links weight priced free networkWeight scale fuel seed
   (earlyRoundedGraphWithSearchWorkFromMetric G height metric,table.2)
 
 theorem prepareEarlyDistanceTable_eq (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
@@ -306,7 +346,8 @@ theorem prepareEarlyDistanceTable_eq (G : Arcs V) (height : ℕ) (sample : Early
       (earlyRoundedGraphWithSearchWork G height sample,(distanceTableWithSearchWork G).2) := by
   unfold prepareEarlyDistanceTable earlyRoundedGraphWithSearchWork
   dsimp only
-  rw [earlyMetricFromDistances_eq]
+  rw [earlyMetricWithPreparedInputs_eq G height _
+    (fun d => (distanceTableReadWithSearchWork_spec G d).1) sample]
 
 /-- Construct original distances once before building the height forest.
 The separator and rounding use stored values for original metric queries. -/

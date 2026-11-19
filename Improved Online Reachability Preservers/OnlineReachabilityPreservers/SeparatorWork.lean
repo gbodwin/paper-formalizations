@@ -212,16 +212,20 @@ for one weighted separator call with the given scale. -/
 def weightedSeparatorWorkBound (vertices edges scale : ℕ) : ℕ :=
   scale * residualStepWorkBound vertices + (2 * vertices^2 + vertices * vertices^2) + edges
 
-/-- Execute the same weighted network updates with the inner separator work. -/
-def weightedNetworkRunWithSearchWork (edges : Arcs V) (weight : V × V → ℕ) :
+/-- Evaluate each request using the fixed scale and fuel for the input weights. -/
+def weightedNetworkRunAtScaleWithSearchWork (edges : Arcs V) (weight : V × V → ℕ) (scale fuel : ℕ) :
     List (WeightedNetworkDemand V) → (V × V → ℕ) → ((V × V → ℕ) × List (Arcs V)) × ℕ
   | [], initial => ((initial, []), 0)
   | d :: D, initial =>
     let first := weightedCoverLoopWithSearchWork
-      (weightedNetworkViolationWithSearchWork edges d weight (weightedCoverScale edges weight))
-      (weightedCoverFuel edges weight) initial
-    let last := weightedNetworkRunWithSearchWork edges weight D first.1.1
+      (weightedNetworkViolationWithSearchWork edges d weight scale) fuel initial
+    let last := weightedNetworkRunAtScaleWithSearchWork edges weight scale fuel D first.1.1
     ((last.1.1, first.1.2 ++ last.1.2), first.2 + last.2)
+
+/-- Execute the same weighted network updates with the inner separator work. -/
+def weightedNetworkRunWithSearchWork (edges : Arcs V) (weight : V × V → ℕ) :
+    List (WeightedNetworkDemand V) → (V × V → ℕ) → ((V × V → ℕ) × List (Arcs V)) × ℕ :=
+  weightedNetworkRunAtScaleWithSearchWork edges weight (weightedCoverScale edges weight) (weightedCoverFuel edges weight)
 
 theorem weightedNetworkRunWithSearchWork_spec (edges : Arcs V) (weight : V × V → ℕ)
     (D : List (WeightedNetworkDemand V)) (initial : V × V → ℕ) :
@@ -233,7 +237,7 @@ theorem weightedNetworkRunWithSearchWork_spec (edges : Arcs V) (weight : V × V 
   let budget := weightedSeparatorWorkBound (Fintype.card V) edges.card scale
   let fuel := weightedCoverFuel edges weight
   induction D generalizing initial with
-  | nil => simp [weightedNetworkRunWithSearchWork, weightedNetworkRun]
+  | nil => simp [weightedNetworkRunWithSearchWork, weightedNetworkRunAtScaleWithSearchWork, weightedNetworkRun]
   | cons d D ih =>
     let separate := weightedNetworkViolationWithSearchWork edges d weight scale
     let first := weightedCoverLoopWithSearchWork separate fuel initial

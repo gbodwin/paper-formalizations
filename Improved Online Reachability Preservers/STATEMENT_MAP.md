@@ -168,6 +168,9 @@ trace. Its measured operations have an explicit polynomial bound at fixed
 height, including when the whole list of prefixes is evaluated.
 The [shared-table replay](OnlineReachabilityPreservers/SteinerDistanceReplay.lean)
 adds one distance-table preparation to this bound for the whole list.
+The prepared evaluator also shares the paired template, priced and free
+links, scale, and separator fuel with every early prefix. The weighted
+network loop passes the same scale and fuel through each request update.
 The [route counters](OnlineReachabilityPreservers/RouteWork.lean)
 bound arc inspections for SCC labels and shortest routes, and
 sum the search work over greedy forwards growth. They also bound
