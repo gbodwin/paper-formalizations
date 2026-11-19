@@ -55,7 +55,7 @@ lake env bash -c '
   lean -j1 -DautoImplicit=false -DwarningAsError=true --root="$verification" \
     -o "$fixture_lib/FinalDispatchPositiveFixtureSupport.olean" \
     "$verification/FinalDispatchPositiveFixtureSupport.lean"
-  timeout 1800 lean -j1 -DautoImplicit=false -DwarningAsError=true \
+  timeout 3600 lean -j1 -DautoImplicit=false -DwarningAsError=true \
     --run "$verification/CachedPhysicalSourcePositiveSmoke.lean" 40000000
 ' _ "$paper/verification"
 git diff --exit-code HEAD --

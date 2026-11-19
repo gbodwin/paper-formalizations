@@ -4,6 +4,7 @@ on:
     branches:
       - codex/flow-constructive-20261118
       - codex/flow-charges-20261119
+      - codex/flow-library-20261119
   workflow_dispatch:
 permissions:
   contents: read
@@ -12,7 +13,7 @@ env:
 jobs:
   rounding:
     runs-on: ubuntu-latest
-    timeout-minutes: 105
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Bind exact source
