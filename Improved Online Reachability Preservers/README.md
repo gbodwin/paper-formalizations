@@ -33,6 +33,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   find a certified integer budget by simulating the expensive-pair phase.
   The real-valued rates bound the budget in the proof. The indexed rule uses
   dyadic quotas starting at `Nat.sqrt n + 1` and is correct at every prefix.
+- [The Steiner hit phase](OnlineReachabilityPreservers/SteinerHubs.lean)
+  proves the exact uniform sample failure count for a fixed pair and an
+  inverse-power failure bound over all thick pairs. It serves both hub legs
+  in original edges with prefix monotonicity and checks the logarithmic
+  competitive contribution at the thresholds of Theorem 21. The early and
+  thin phases carry separate obligations.
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)

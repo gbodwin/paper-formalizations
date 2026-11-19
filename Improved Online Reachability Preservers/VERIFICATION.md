@@ -131,6 +131,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   review confirmed the cubic, the exponents, and the uniform vertex-count
   slack with a single constant for all input sizes and prefixes.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44431318161).
+- [5e92b045](https://github.com/gbodwin/paper-formalizations/commit/5e92b045ee08ece34299c8284c4c0395cd10639c)
+  proves the rounded and limiting pairwise bounds for both path assignments
+  in Theorem 5. The 1114-declaration paper audit and local kernel replay
+  passed. Independent review checked the integer certificates, the clipped
+  dyadic envelope, and simple original-graph paths with shared connectors.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44433680272).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

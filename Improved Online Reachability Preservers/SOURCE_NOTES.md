@@ -146,11 +146,17 @@ uses this to prove the upper caps with at most twice the ambient budgets.
   [Checked online bounds](OnlineReachabilityPreservers/OnlineSharp.lean).
 - The pairwise instantiation of Algorithm 3 checks the number of pairs and
   the edge count after the expensive phase and searches for the smallest
-  certified integer quota up to the size of the condensation. Every proven
+  certified integer quota up to the number of condensation arcs. Every proven
   upper bound on the adaptive prefix certifies a quota. The dyadic proof uses
   the smaller of the initial and sharp rate envelopes to keep the first
   quota linear even with vertex-count-dependent slack.
   [Checked pairwise assignments](OnlineReachabilityPreservers/PairwiseNonAdaptive.lean).
+- The hit phase draws with replacement and then deduplicates the sampled
+  vertices. For a demand \((s,t)\), it uses the vertices reachable from
+  \(s\) that can reach \(t\). This region contains every vertex on a simple
+  \(s\)-to-\(t\) path. In a cyclic graph two hub legs can concatenate to a
+  walk. Their original edges still certify the required reachability.
+  [Checked sampling and routing](OnlineReachabilityPreservers/SteinerHubs.lean).
 - The [second-moment estimate](OnlineReachabilityPreservers/SecondMoment.lean)
   of Appendix A is checked for a common vertex order under the inductive
   subfamily bound. The [finite online iteration](OnlineReachabilityPreservers/OnlineBound.lean)

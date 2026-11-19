@@ -35,6 +35,34 @@ theorem lemma20_opt_squared (P : Finset (V × V)) (H : Arcs V)
       rw [card_product, pow_two]
       exact Nat.mul_le_mul card_image_le card_image_le
 
+/-- Once a demand is served, it cannot appear again in the subsequence of
+nontrivial arrivals. The lower bound therefore applies to the entire trace. -/
+theorem lemma20_nontrivial_trace (D : List (V × V)) (H : ℕ → Arcs V) (mono : Monotone H)
+    (nontrivial : ∀ i : Fin D.length, ¬ Reach (H i) (D.get i).1 (D.get i).2)
+    (served : ∀ i : Fin D.length, Reach (H (i.1+1)) (D.get i).1 (D.get i).2)
+    (Z : Arcs V) (solution : ∀ i : Fin D.length, Reach Z (D.get i).1 (D.get i).2) :
+    D.length ≤ Z.card^2 := by
+  have different (i j : Fin D.length) (lt : i < j) : D.get i ≠ D.get j := by
+    intro eq
+    have h := reach_mono (mono (Nat.succ_le_of_lt lt)) (served i)
+    rw [eq] at h
+    exact nontrivial j h
+  have nodup : D.Nodup := by
+    apply List.nodup_iff_injective_get.mpr
+    intro i j eq
+    rcases lt_trichotomy i j with lt | same | gt
+    · exact (different _ _ lt eq).elim
+    · exact same
+    · exact (different _ _ gt eq.symm).elim
+  rw [← List.toFinset_card_of_nodup nodup]
+  apply lemma20_opt_squared D.toFinset Z
+  · intro d hd eq
+    obtain ⟨i,rfl⟩ := List.mem_iff_get.mp (List.mem_toFinset.mp hd)
+    exact nontrivial i (eq ▸ ReflTransGen.refl)
+  · intro d hd
+    obtain ⟨i,rfl⟩ := List.mem_iff_get.mp (List.mem_toFinset.mp hd)
+    exact solution i
+
 variable [Fintype V]
 
 /-- Lemma 22. Every nontrivial hit reveals a new source–hub or hub–sink
