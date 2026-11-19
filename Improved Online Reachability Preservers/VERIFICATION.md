@@ -465,6 +465,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   found repeated interval searches in the cut reconstruction. The next
   checkpoint shares that interval before filtering its edges.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44489545275).
+- [9db6e5e1](https://github.com/gbodwin/paper-formalizations/commit/9db6e5e11609f7604d2bc17cc1b8b090eeb64861)
+  shares the interval during cut reconstruction and accounts for every
+  thin rounding prefix, including the optional final replay. The
+  3326-declaration audit and local kernel replay passed. Independent
+  review checked exact output, fallback and the shared interval.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44490802990).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

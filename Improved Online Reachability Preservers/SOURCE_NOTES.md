@@ -107,6 +107,18 @@ half of the original averages.
 · [Local upper caps](OnlineReachabilityPreservers/LocalRegularization.lean)
 · [Bridge Girth, Lemma 20](https://arxiv.org/pdf/2212.11944v4).
 
+The same splitting step can fail at larger bridge sizes with unique
+intersections. On seven vertices, take the six paths `[(0,1,2,3), (3,4),
+(4,0), (5,2), (1,6), (5,6)]`. There are 14 incidences, every vertex
+has degree two, and the average path length is \(7/3\). The printed
+deletion and vertex splitting stages leave this family unchanged. The
+only path longer than the original average splits at its midpoint. The
+new chain is \(5\to2\to3\to4\to0\to1\to6\) with river \((5,6)\),
+and its last arc precedes the river. Lean checks that the original family
+has unique intersections and excludes every bridge. The arbitrary-size
+cleaning existence lemma needs a different argument.
+[Checked half-7 example](OnlineReachabilityPreservers/UniqueSplitAudit.lean).
+
 ## The cited consecutive-edge overlay can admit an alternate path
 
 The same three simple paths have no bridge of any size. Their endpoint
@@ -124,6 +136,17 @@ With a common vertex order, a detour that uses the same path twice can be
 shortened to one step along that path. A detour with distinct path indices
 gives a bridge. The acyclic overlay therefore forces every consecutive arc.
 [Checked acyclic construction](OnlineReachabilityPreservers/AcyclicOverlay.lean).
+
+The seven-vertex family also gives an alternate overlay route under unique
+intersections. Its last demand survives deletion of \((5,6)\) by using
+both ends of the long path. The general extremal implication that the
+offline worst case is at least a constant times \(\beta(n,p,\infty)\)
+remains open. For the common-order extremum, Lean checks a lower bound at
+the original sizes with exactly \(p\) distinct demands for \(n\ge2\)
+and \(p\le n^2\). A bipartite graph supplies a separate bound linear in
+\(p\) when the consecutive overlay's path-count subtraction is substantial.
+[Checked unique-intersection example](OnlineReachabilityPreservers/UniqueSplitAudit.lean)
+· [Exact distinct-demand lower bounds](OnlineReachabilityPreservers/OfflineDemandLower.lean).
 
 The same three paths in their listed order also give an alternate route in
 the final reveal round of the ordered construction of [8] Lemma 45.
