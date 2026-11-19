@@ -173,6 +173,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   local kernel replay passed. Independent review checked the actual cutoff
   charge, the fixed thin trace, and both independent sample spaces.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44440525657).
+- [46a0e93f](https://github.com/gbodwin/paper-formalizations/commit/46a0e93f6b10976af8e7ec48c704ab087af08a41)
+  checks the integer Steiner thresholds and the late rate after logarithmic
+  absorption. The 1461-declaration paper audit and local kernel replay
+  passed. Independent review checked the uniform constant, both cutoffs,
+  and the inverse-square hub failure term.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44441989079).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

@@ -208,6 +208,8 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.steinerEarlyCutoff_bounds
 #print axioms OnlineReachabilityPreservers.steinerThinThreshold_bounds
 #print axioms OnlineReachabilityPreservers.assembledSteiner_late_rate
+#print axioms OnlineReachabilityPreservers.targetTree_arborescence
+#print axioms OnlineReachabilityPreservers.junctionCover_sqrt
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum
 #print axioms OnlineReachabilityPreservers.SourceAudit.splitExample_bridge_free
 #print axioms OnlineReachabilityPreservers.SourceAudit.splitExample_creates_half_four
