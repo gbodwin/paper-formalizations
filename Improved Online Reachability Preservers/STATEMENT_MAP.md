@@ -154,7 +154,14 @@ The [early rounding counter](OnlineReachabilityPreservers/SteinerEarlyReplay.lea
 shares each prefix's weighted fractional evaluation between its miss test
 and the union of metric purchases. It bounds the original-graph route
 expansions and reachability checks, including the optional final expansion.
-The paired-forest template and the rounding arithmetic are outside that count.
+The paired-forest template, metric weight and hop queries inside capacity
+and rounding predicates, and rounding arithmetic are outside that count.
+The [late search counter](OnlineReachabilityPreservers/SteinerLateReplay.lean)
+bounds request classification, both projected hub runs, and thin rounding.
+The [complete search counter](OnlineReachabilityPreservers/SteinerCompleteReplay.lean)
+returns the ordinary seeded algorithm's graph at every prefix of a feasible
+trace. Its measured operations have an explicit polynomial bound at fixed
+height, including when the whole list of prefixes is evaluated.
 The [route counters](OnlineReachabilityPreservers/RouteWork.lean)
 bound arc inspections for SCC labels and shortest routes, and
 sum the search work over greedy forwards growth. They also bound
@@ -175,9 +182,10 @@ represents the early coordinates by fixed-width fair bit words. It proves
 the exact uniform target probabilities for independent rejection proposals
 for hub and thin draws, with at most two proposals in expectation per
 coordinate. The expected number of bits for all three seeds has an explicit
-polynomial bound for each fixed height. The costs of finite containers,
-arithmetic, converting sampled indices into vertex values, and the
-composition of the remaining online steps remain open in the runtime proof.
+polynomial bound for each fixed height. The retry analysis is per coordinate.
+The costs of finite containers, arithmetic, converting sampled indices into
+vertex values and the early queries listed above remain open. The
+preassigned-path strategies still have separate quota and routing counts.
 
 ## Appendix dependencies
 

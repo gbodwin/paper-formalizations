@@ -483,6 +483,13 @@ An exact-source replay grants no coverage to a paper statement outside the
   review checked the early bit equivalence, finite first-acceptance events,
   the series and zero-size cases. The sampler analysis is per coordinate.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44493464434).
+- [f131c5f5](https://github.com/gbodwin/paper-formalizations/commit/f131c5f59e6c22a468ea2b91a4a6eb27874d86b4)
+  evaluates each early prefix's fractional run once for the miss check
+  and metric union, and accounts for the ordinary route expansions.
+  The 3424-declaration audit and local kernel replay passed. Independent
+  review checked the exact seed and fallback, and identified the metric
+  weight and template queries beyond the measured operations.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44494015139).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
