@@ -129,7 +129,10 @@ lower bound when the late phase starts. Formal runtime remains open.
 ## Search and sampling work
 
 The [search counters](OnlineReachabilityPreservers/SearchWork.lean)
-return the ordinary search outputs, including failed searches.
+return the ordinary search outputs, including failed searches. The
+[distinct-demand counter](OnlineReachabilityPreservers/AlgorithmSearchWork.lean)
+returns the projected first occurrences with at most one pair comparison per
+entry of the original list for each processed request.
 Reverse search inspects at most \(n|E|\) arcs, and greedy path
 growth tests at most \(2n^2\) successor candidates. One weighted
 fractional run on the paired height forest \(H\) with \(p\)

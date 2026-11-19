@@ -182,4 +182,61 @@ theorem sinkPreserver_prefixSearchReplay (G : Arcs V) (D : List (V × V)) :
       (Nat.add_le_add (liftSearchWorkBound_mono _ _ earlier.length_le)
         (Nat.mul_le_mul_right _ earlier.length_le))
 
+/-- The list test with the number of predicate calls up to its first match. -/
+private def anyWithChecks {A : Type*} (test : A → Bool) : List A → Bool × ℕ
+  | [] => (false,0)
+  | a::as => if test a then (true,1) else
+    let result := anyWithChecks test as
+    (result.1,result.2+1)
+
+private theorem anyWithChecks_spec {A : Type*} (test : A → Bool) (xs : List A) :
+    (anyWithChecks test xs).1 = xs.any test ∧ (anyWithChecks test xs).2 ≤ xs.length := by
+  induction xs with
+  | nil => simp [anyWithChecks]
+  | cons x xs ih =>
+    cases found : test x with
+    | false =>
+      simpa only [anyWithChecks, List.any_cons, found, Bool.false_eq_true, ↓reduceIte,
+        Bool.false_or, ih.1, List.length_cons, true_and] using Nat.add_le_add_right ih.2 1
+    | true => simp [anyWithChecks, List.any_cons, found]
+
+/-- First-occurrence deduplication with exactly one charge per pair comparison. -/
+private def uniqueLoopWithChecks {A : Type*} (beq : A → A → Bool) : List A → List A → List A × ℕ
+  | [], seen => (seen.reverse,0)
+  | x::xs, seen =>
+    let tested := anyWithChecks (beq x) seen
+    let finished := uniqueLoopWithChecks beq xs (if tested.1 then seen else x::seen)
+    (finished.1,tested.2+finished.2)
+
+private theorem uniqueLoopWithChecks_spec {A : Type*} (beq : A → A → Bool) (xs seen : List A) :
+    (uniqueLoopWithChecks beq xs seen).1 = List.eraseDupsBy.loop beq xs seen ∧
+      (uniqueLoopWithChecks beq xs seen).2 ≤ xs.length*(seen.length+xs.length) := by
+  induction xs generalizing seen with
+  | nil => simp [uniqueLoopWithChecks, List.eraseDupsBy.loop]
+  | cons x xs ih =>
+    obtain ⟨same,checks⟩ := anyWithChecks_spec (beq x) seen
+    cases found : seen.any (beq x) with
+    | false =>
+      obtain ⟨out,cap⟩ := ih (x::seen)
+      simp only [uniqueLoopWithChecks, List.eraseDupsBy.loop, same, found, Bool.false_eq_true, ↓reduceIte, out,
+        true_and, List.length_cons] at *
+      apply (Nat.add_le_add checks cap).trans
+      nlinarith only [Nat.zero_le seen.length, Nat.zero_le xs.length]
+    | true =>
+      obtain ⟨out,cap⟩ := ih seen
+      simp only [uniqueLoopWithChecks, List.eraseDupsBy.loop, same, found, ↓reduceIte, out, true_and, List.length_cons]
+      apply (Nat.add_le_add checks cap).trans
+      nlinarith only [Nat.zero_le seen.length, Nat.zero_le xs.length]
+
+/-- Count pair equality tests in the SCC lift's stable deduplication. -/
+def projectedDistinctDemandsWithChecks (G : Arcs V) (D : List (V × V)) : List (V × V) × ℕ :=
+  uniqueLoopWithChecks (· == ·) (D.map (projectDemand G)) []
+
+theorem projectedDistinctDemandsWithChecks_spec (G : Arcs V) (D : List (V × V)) :
+    let result := projectedDistinctDemandsWithChecks G D
+    result.1 = projectedDistinctDemands G D ∧ result.2 ≤ D.length^2 := by
+  simpa only [projectedDistinctDemandsWithChecks, projectedDistinctDemands, List.eraseDups, List.eraseDupsBy,
+    List.length_map, List.length_nil, Nat.zero_add, pow_two] using
+    uniqueLoopWithChecks_spec (· == ·) (D.map (projectDemand G)) []
+
 end OnlineReachabilityPreservers
