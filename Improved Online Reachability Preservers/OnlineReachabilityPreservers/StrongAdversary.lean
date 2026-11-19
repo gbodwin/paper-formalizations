@@ -1,7 +1,7 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.NthRootLemmas
 import Mathlib.Data.Finset.Sort
 import Mathlib.Logic.Equiv.Fin.Basic
-import OnlineReachabilityPreservers.Basic
+import OnlineReachabilityPreservers.GraphRelabel
 
 /-! The changing-graph adversary of Theorem 3 and its lattice construction. -/
 
@@ -303,27 +303,6 @@ private theorem insertedArcs_relabel (f : V ↪ W) (requests : List (InsertionRe
     exact ⟨a, ⟨r, hr, ha⟩, eq⟩
   · rintro ⟨a, ⟨r, hr, ha⟩, eq⟩
     exact ⟨r.relabel f, ⟨r, hr, rfl⟩, mem_map.mpr ⟨a, ha, eq⟩⟩
-
-omit [DecidableEq V] [DecidableEq W] in
-private theorem reach_relabel {G : Arcs V} (f : V ↪ W) {a b : V} :
-    Reach (G.map (f.prodMap f)) (f a) (f b) ↔ Reach G a b := by
-  constructor
-  · have recover (w : W) (reach : Reach (G.map (f.prodMap f)) (f a) w) :
-        ∃ v, f v = w ∧ Reach G a v := by
-      induction reach with
-      | refl => exact ⟨a, rfl, .refl⟩
-      | @tail z y _ edge ih =>
-        obtain ⟨v, eq, path⟩ := ih
-        obtain ⟨e, member, same⟩ := mem_map.mp edge
-        have first : e.1 = v := f.injective ((congrArg Prod.fst same).trans eq.symm)
-        exact ⟨e.2, congrArg Prod.snd same, path.tail (by rwa [← first])⟩
-    intro path
-    obtain ⟨v, eq, h⟩ := recover (f b) path
-    exact f.injective eq ▸ h
-  · intro path
-    induction path with
-    | refl => exact .refl
-    | tail _ edge ih => exact ih.tail (mem_map_of_mem _ edge)
 
 omit [DecidableEq V] [DecidableEq W] in
 private theorem relabel_get (f : V ↪ W) (requests : List (InsertionRequest V))

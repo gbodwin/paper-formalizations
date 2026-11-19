@@ -221,6 +221,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   gives DAGs on \(4(L+1)L^5\) vertices with \(L^6\) distinct feasible demands
   that force exactly \(L^7\) edges for every positive integer \(L\). This gives
   a superlinear lower bound when the vertex and demand counts are comparable.
+- [`offline_lower_all_sizes_with_linear`](OnlineReachabilityPreservers/OfflineLatticeLower.lean)
+  varies the layer and slope counts independently. For every \(n\ge2\) and
+  \(1\le p\le n^2\), a DAG with exactly those counts forces
+  \(\Omega(n+p+n^{2/3}p^{1/2})\) edges, with one absolute constant.
 - [`lemma14_overlay_no_constant`](OnlineReachabilityPreservers/OverlayLowerAudit.lean)
   checks fully bridge-free simple path families for which the cited overlay
   and its distinct endpoint demands admit preservers arbitrarily smaller
