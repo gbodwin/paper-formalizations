@@ -68,8 +68,13 @@ constructs the shortened segments on the original rooted routes, checks
 their concatenation, and bounds their weighted cost. The
 [inward metric tree](OnlineReachabilityPreservers/SteinerHeightTree.lean)
 has depth at most the given limit. Any selected links expand to original
-edges at cost at most their weights. The forward embedding into this
-tree and the online solver remain open.
+edges at cost at most their weights. The
+[forward height reduction](OnlineReachabilityPreservers/SteinerHeightEmbedding.lean)
+embeds any inward arborescence with at most \(k\) designated terminals
+into the fixed template. The selected links preserve the terminal labels
+and cost at most \(4h k^{1/h}\) times the original unit-cost tree size.
+The paired root copies, auxiliary cut reduction, and online solver remain
+open.
 
 ## Appendix dependencies
 

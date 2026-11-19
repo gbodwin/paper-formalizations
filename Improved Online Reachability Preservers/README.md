@@ -81,7 +81,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   The [inward metric tree](OnlineReachabilityPreservers/SteinerHeightTree.lean)
   is built from the graph, a root, and a depth limit. Expanded links
   preserve directed reachability at no more than their metric weight.
-  Embedding the shortened routes into this tree, joining the root copies,
+  The [forward embedding](OnlineReachabilityPreservers/SteinerHeightEmbedding.lean)
+  places each original terminal at a template leaf. For at most \(k\)
+  terminals and positive depth \(h\), the embedded cost is at most
+  \(4h k^{1/h}\) times the original tree size. Joining the root copies
   and online rounding remain open.
 - [The weighted fractional cover](OnlineReachabilityPreservers/SteinerWeightedCover.lean)
   raises rational capacities as batches of cuts arrive. It verifies coverage

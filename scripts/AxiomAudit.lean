@@ -232,6 +232,9 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.inwardHeightTree_arborescence
 #print axioms OnlineReachabilityPreservers.expandHeightLinks_reach
 #print axioms OnlineReachabilityPreservers.expandHeightLinks_cost
+#print axioms OnlineReachabilityPreservers.heightReductionBranch_le
+#print axioms OnlineReachabilityPreservers.rootedHeightEmbedding
+#print axioms OnlineReachabilityPreservers.rootedHeightEmbedding_bounded
 #print axioms OnlineReachabilityPreservers.weightedCoverStep_spec
 #print axioms OnlineReachabilityPreservers.weightedCoverRun_bound
 #print axioms OnlineReachabilityPreservers.theorem3_lattice_lower

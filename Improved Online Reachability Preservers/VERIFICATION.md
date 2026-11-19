@@ -230,6 +230,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   review checked the prefix decomposition, the top and lower blocks,
   and the weighted count on actual arborescences.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44452159771).
+- [45d8a30e](https://github.com/gbodwin/paper-formalizations/commit/45d8a30e248bb01bf47e34838ad1cf52fda96243)
+  constructs the fixed inward metric tree and expands any selected links
+  using shortest original routes. The 1988-declaration audit and kernel
+  replay passed. Independent review checked the history count, root
+  structure, exact hop lengths, and the expansion bounds.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44454016035).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
