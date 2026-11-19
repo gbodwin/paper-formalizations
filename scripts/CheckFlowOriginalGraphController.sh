@@ -8,7 +8,7 @@ modules=(InitialDemandFlagProgram InitialDemandPairProgram InitialDemandMaskProg
   InitialUniformTables InitialRetainedStateProgram InitialGraphDictionary InitialGraphContexts InitialSeedProgram
   PhysicalControllerInitializer OriginalGraphControllerProgram OriginalGraphControllerLaw)
 
-if [[ "${GITHUB_REF_NAME:-}" == codex/flow-raw-controller-20261119 ]]; then
+if [[ -f "$paper/DirectedFlowCutGap/RawGraphControllerLaw.lean" ]]; then
   modules+=(BinaryGeometricCounterProgram OriginalControlWordsProgram PhysicalControllerControls
     RawGraphControllerProgram RawGraphControllerLaw RawGraphInputStore)
 fi

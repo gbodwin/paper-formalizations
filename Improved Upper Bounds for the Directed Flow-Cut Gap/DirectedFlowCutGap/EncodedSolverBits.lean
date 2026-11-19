@@ -33,6 +33,42 @@ theorem run_map {A B : Type} (f : A → B) (t : FiniteDrawTrees.Tree A) (bits : 
   simp only [StateT.run_bind, StateT.run_pure]
   cases (FiniteDrawTrees.execute readBit t).run (bits, 0) <;> rfl
 
+/-- The counter is observational. Changing its initial value preserves the
+interpreted output and unread bits. -/
+private theorem execute_forget_start {A : Type} (t : FiniteDrawTrees.Tree A) (tape : List Bool) (start : ℕ) :
+    ((FiniteDrawTrees.execute readBit t).run (tape,start)).map (fun (a,(rest,_)) => (a,rest)) =
+      (run t tape).map (fun (a,(rest,_)) => (a,rest)) := by
+  induction t generalizing tape start with
+  | pure a => rfl
+  | draw n hn next ih =>
+    simp only [FiniteDrawTrees.execute,StateT.run_bind,run]
+    cases tape with
+    | nil => rfl
+    | cons b rest =>
+      by_cases h : n=2
+      · subst n
+        change ((FiniteDrawTrees.execute readBit (next (bitValue b))).run (rest,start+1)).map _ =
+          ((FiniteDrawTrees.execute readBit (next (bitValue b))).run (rest,1)).map _
+        exact (ih (bitValue b) rest (start+1)).trans (ih (bitValue b) rest 1).symm
+      · have reject (j : ℕ) : (readBit n hn).run (b::rest,j)=none := by
+          change readBit n hn (b::rest,j)=none
+          simp [readBit,h]
+        rw [reject start,reject 0]
+
+theorem run_bind_observe {A B : Type} (t : FiniteDrawTrees.Tree A) (next : A → FiniteDrawTrees.Tree B)
+    (tape : List Bool) :
+    (run (t >>= next) tape).map (fun (b,(rest,_)) => (b,rest)) =
+      ((run t tape).map (fun (a,(rest,_)) => (a,rest))).bind (fun (a,rest) =>
+        (run (next a) rest).map (fun (b,(tail,_)) => (b,tail))) := by
+  unfold run
+  change ((FiniteDrawTrees.execute readBit (FiniteDrawTrees.bind t next)).run (tape,0)).map _ = _
+  rw [MonadicBitSampler.execute_bind,StateT.run_bind]
+  cases finish : (FiniteDrawTrees.execute readBit t).run (tape,0) with
+  | none => rfl
+  | some answer =>
+    rcases answer with ⟨a,rest,count⟩
+    exact execute_forget_start (next a) rest count
+
 private theorem step_at {A : Type} (next : Fin 2 → FiniteDrawTrees.Tree A)
     (b : Bool) (bs : List Bool) (start : ℕ) :
     (FiniteDrawTrees.execute readBit (.draw 2 (by decide) next)).run (b :: bs, start) =

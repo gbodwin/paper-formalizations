@@ -39,10 +39,13 @@ noncomputable abbrev codeTree (positive : 0<L) (E : ResidualSearch.Enumeration (
 noncomputable abbrev cutTree (positive : 0<L) (E : ResidualSearch.Enumeration (Network n L)) :=
   map (fun s => cutSet s.data.cut) (codeTree (adj:=adj) positive E)
 
-theorem cutTree_eq (positive : 0<L) (E : ResidualSearch.Enumeration (Network n L)) :
-    cutTree (adj:=adj) positive E =
-      RetainedFairBitLaw.cutTree (optimizer positive E) positive (integerCutOracle (G:=Graph adj) positive (enumeration n))
-        (restart n) (epochs n) (epochs n) (sourceCode (adj:=adj) positive) := by
+theorem projectTree_eq {A : Type} (project : Flags n → A) (positive : 0<L)
+    (E : ResidualSearch.Enumeration (Network n L)) :
+    map (fun s => project s.data.cut) (codeTree (adj:=adj) positive E) =
+      map (fun out => project out.result.cache.state.data.cut)
+        (RetainedDrawTrees.runTree (optimizer positive E) positive
+          (integerCutOracle (G:=Graph adj) positive (enumeration n))
+          (restart n) (epochs n) (epochs n) (sourceCode (adj:=adj) positive)) := by
   let s := sourceCode (adj:=adj) positive
   let Q := optimizer (adj:=adj) (demands:=remainingSet s.data.remaining) positive E
   let C := integerCutOracle (G:=Graph adj) positive (enumeration n)
@@ -50,16 +53,20 @@ theorem cutTree_eq (positive : 0<L) (E : ResidualSearch.Enumeration (Network n L
   have oracle : EpochScanData.cutOracle adj positive=C := EncodedRoundingInput.cutOracle_eq (enumeration n) adj positive
   have exactTree := ControllerTapeModel.tree_exact positive E (ratio n) (epochs n) (epochs n) s
   rw [oracle,show value (ratio n)=restart n from value_bits _] at exactTree
-  change map (fun x => cutSet x.data.cut) (ControllerTapeModel.tree positive E (ratio n) (epochs n) (epochs n) s) =
-    RetainedFairBitLaw.cutTree Q positive C (restart n) (epochs n) (epochs n) s
+  change map (fun x => project x.data.cut) (ControllerTapeModel.tree positive E (ratio n) (epochs n) (epochs n) s) =
+    map (fun out => project out.result.cache.state.data.cut) (RetainedDrawTrees.runTree Q positive C (restart n) (epochs n) (epochs n) s)
   rw [exactTree]
-  change map (fun x => cutSet x.data.cut) (map (fun out => out.result.cache.state) t) = _
+  change map (fun x => project x.data.cut) (map (fun out => out.result.cache.state) t) = _
   have runEq : RetainedDrawTrees.runTree Q positive C (restart n) (epochs n) (epochs n) s =
       map (fun out => { out with
         result := { out.result with work := (IntegerAdaptiveExecution.refreshWork s).add out.result.work } }) t := rfl
-  change _ = map (fun out => cutSet out.result.cache.state.data.cut)
-    (RetainedDrawTrees.runTree Q positive C (restart n) (epochs n) (epochs n) s)
   rw [runEq,map_twice,map_twice]
+
+theorem cutTree_eq (positive : 0<L) (E : ResidualSearch.Enumeration (Network n L)) :
+    cutTree (adj:=adj) positive E =
+      RetainedFairBitLaw.cutTree (optimizer positive E) positive (integerCutOracle (G:=Graph adj) positive (enumeration n))
+        (restart n) (epochs n) (epochs n) (sourceCode (adj:=adj) positive) :=
+  projectTree_eq (adj:=adj) cutSet positive E
 
 def readBound (n L trials : ℕ) : ℕ :=
   (epochs n*(2*n*n))*trials*RetainedDrawTrees.sampleWidth n L
@@ -77,6 +84,14 @@ theorem cutRun_eq (positive : 0<L) (E : ResidualSearch.Enumeration (Network n L)
           (sourceCode (adj:=adj) positive)) tape).map Prod.fst := by
   rw [RetainedFairBitLaw.bitTree,← cutTree_eq,cutTree,lower_map,EncodedSolverBits.run_map]
   simp only [cutRun,ControllerTapeModel.run,Option.map_map,Function.comp_def]
+
+theorem projectRun_eq {A : Type} (project : Flags n→A) (positive : 0<L)
+    (E : ResidualSearch.Enumeration (Network n L)) (trials : ℕ) (tape : Bits) :
+    EncodedSolverBits.run (LazyFairBitTrees.lower trials
+      (map (fun s => project s.data.cut) (codeTree (adj:=adj) positive E))) tape =
+    (ControllerTapeModel.run positive E (ratio n) trials (epochs n) (epochs n)
+      (sourceCode (adj:=adj) positive) tape).map (fun (s,t) => (project s.data.cut,t)) := by
+  rw [lower_map,EncodedSolverBits.run_map]
 
 theorem codeTree_within (positive : 0 < L) (E : ResidualSearch.Enumeration (Network n L)) :
     Within (epochs n * (2 * n * n)) (codeTree (adj:=adj) positive E) := by

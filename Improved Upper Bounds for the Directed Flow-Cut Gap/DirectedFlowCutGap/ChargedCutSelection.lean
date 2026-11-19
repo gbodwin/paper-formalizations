@@ -35,7 +35,7 @@ private def score {n : ℕ} (costs : Row n) (mask : Flags n) : Scored costs × �
   let s := BinaryCutPriceSelection.maskScore costs mask
   (⟨mask, s.1, BinaryCutPriceSelection.maskScore_decodes costs mask⟩, s.2)
 
-private def select {n : ℕ} {costs : Row n} (head : Flags n × ℕ)
+def select {n : ℕ} {costs : Row n} (head : Flags n × ℕ)
     (tail : Option (Scored costs) × ℕ) : Option (Scored costs) × ℕ :=
   let a := score costs head.1
   let base := head.2 + tail.2 + a.2 + 10
@@ -45,7 +45,7 @@ private def select {n : ℕ} {costs : Row n} (head : Flags n × ℕ)
     let cmp := BinaryRational.le a.1.price b.price
     (some (if cmp.1 then a.1 else b), base + cmp.2)
 
-private theorem select_value {n : ℕ} {costs : Row n} (head : Flags n × ℕ)
+theorem select_value {n : ℕ} {costs : Row n} (head : Flags n × ℕ)
     (tail : Option (Scored costs) × ℕ) :
     (select head tail).1.map Scored.value = some
       ((tail.1.map Scored.value).elim head.1 (EncodedCutSelection.cheaper (decodeRow costs) head.1)) := by

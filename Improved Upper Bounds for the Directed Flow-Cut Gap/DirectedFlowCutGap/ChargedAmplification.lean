@@ -69,7 +69,7 @@ private theorem sample_support {A : Type} (t : FiniteDrawTrees.Tree A) {k : ℕ}
     obtain ⟨tail, ht, rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp hx
     exact Fin.cases ha (fun i => ih ht i)
 
-private def select {n : ℕ} (costs : Row n) (extra : ℕ)
+def select {n : ℕ} (costs : Row n) (extra : ℕ)
     (xs : Fin (extra + 1) → Output n × ℕ) : Output n × ℕ :=
   let winner := BinaryCutPriceSelection.minimum (BinaryCutPriceSelection.cutScore costs) extra
     (fun i => (xs i).1)

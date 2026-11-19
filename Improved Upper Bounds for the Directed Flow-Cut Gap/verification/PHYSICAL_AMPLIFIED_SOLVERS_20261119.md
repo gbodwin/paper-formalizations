@@ -1,0 +1,9 @@
+# Amplified solvers from encoded graphs
+
+`PhysicalOriginalInputSolvers.vertex` and `.edge` parse the original graph bitstrings. The vertex solver uses the physical fractional-cover dispatcher and row reader. Each row follows the chosen mass or size reduction and invokes the packed integer controller in the hard regime. Selection compares the original vertex costs with the binary cut-price routines. The edge solver uses the verified line-graph and dyadic-gadget constructions, and maps cuts and infeasibility witnesses back to original edges and demands.
+
+The Lean proofs identify both outputs and unread tape suffixes pointwise with the established bounded-rejection solvers. Their finite-fair-tape laws use the original graph and mode. `PhysicalEdgeFamily.calibrated_physical` connects the actual adaptive edge calls to the paper's confidence, horizon and original-weight frequency guarantees. The adaptive family checks each cut before updating its history. The calibrated subunit-mass case emits the prescribed family of empty cuts.
+
+`OriginalGraphCostEnvelope.solve_packed` bounds the cost of preparing and running the guarded controller by a polynomial for the calibrated number of trials at fixed confidence and level at most the vertex count. `PhysicalIntegerRoundingCost.round_budget_polynomial` also covers the physical cut readback and the arithmetic-word charges of the deterministic cutoff regimes, with a polynomial in the vertex and trial counts.
+
+The executable fixtures exercise the deterministic cutoff branches with a large encoded threshold, the physical source dispatcher, the positive one-row path in both vertex modes, the original edge self-demand witness, and both an executed adaptive family and a calibrated subunit-mass family. The remaining runtime proof concerns the complete outer reduction, price selection, rational arithmetic and history-update bit costs from the encoded source width.

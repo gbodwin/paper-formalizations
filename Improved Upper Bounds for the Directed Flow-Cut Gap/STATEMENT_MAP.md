@@ -3,22 +3,21 @@
 Pinned source: Bodwin–Samborska, arXiv:2604.03412v3 (9 July 2026).
 This is a partial checkpoint. The main vertex and edge rounding bounds,
 randomized output guarantees, and attained optimum and corollary interfaces
-are proved. Both pipelines execute from graph source tables with a
-polynomial random-read bound. The charged physical fractional prefix has a
-separate deterministic polynomial. The prepared vertex mass and size modes
-also have a composed word-operation envelope for the retained rounding
-and selection stages. The complete source-to-cut bit-time bound remains
-open. [Physical execution scope](verification/PHYSICAL_SOURCE_DISPATCH_20261118.md)
+are proved. Both pipelines execute from original graph bitstrings with a
+polynomial random-read bound. The physical fractional prefix and packed
+integer controller have separate deterministic polynomials. The complete
+source-to-cut bit-time bound remains open.
+[Physical amplified solvers](verification/PHYSICAL_AMPLIFIED_SOLVERS_20261119.md)
 
 | Source item | Verified scope at this checkpoint | Still required |
 | --- | --- | --- |
-| Theorems 1–2 | Main all-cost vertex and edge bounds, actual randomized guarantees, attained sum-flow duality, and source execution with physical fractional dispatch. `ChargedVertexModes.run_complete` and `budget_le` compose the vertex word-model charges. | Complete deterministic bit-time bound and fixed-instruction rounding |
+| Theorems 1–2 | Main all-cost vertex and edge bounds, actual randomized guarantees, attained sum-flow duality, physical fractional dispatch and packed rounding on one literal tape. The original-input solvers preserve the verified output and unread suffix. | Complete deterministic bit-time bound for the outer composition |
 | Theorems 3–5 | Actual finite unit-cost, uniform-weight, edge/vertex and self-reduction network | Complete algorithmic realization and runtime |
 | Corollaries 6–8 | Attained normalized sparsest/concurrent-flow optima, actual weak-decomposition PMF and both main factors | Polynomial LP computation, complete algorithmic realization and efficiency |
 | Lemma 9 | Actual all-regime randomized law, uniform ε expected-size and n^(-κ) high-probability size bounds. `PhysicalEpochInputProgram.physical_epoch_input` produces exact original-label order and grid assignments from the stored mask and literal fair tape. | Deterministic bit complexity of the full controller |
 | Theorem 10 | Cited background only | Not claimed formalized |
 | Lemma 11 | Actual indexed-path level crossing, including infinite distances | Complete |
-| Lemma 12 | Every selected demand is internally cut. The loop preserves processed-demand correctness. `AdaptiveRoundRefreshProgram.physical_round_refresh` uses the selected original pair and stored grid table to compute the midpoint cut, update masks and mass, and refresh the cache on the same heap. `AdaptiveGatesProgram.natural_gates` implements the ready and active tests on stored mass words. | Original-input polynomial envelope and outer solver composition |
+| Lemma 12 | Every selected demand is internally cut. The loop preserves processed-demand correctness. The packed controller computes the midpoint cut, updates masks and mass, and refreshes the cache on the same heap. Its input, guarded execution and cut readback have explicit cost bounds. | Complete outer deterministic bit-time bound |
 | Lemma 13 | Actual restart sequence, analysis-epoch splitting, whole-trace bounds, outer recursion and explicit global parameters | Complete finite mathematical component |
 | Lemma 14 | Actual uniform-level law, unconditional stopped-prefix expectation and full-epoch truncation bound | Complete finite component |
 | Lemma 15 | Actual capped-ceiling horizon, active-state tail, unconditional outer cost and global parameter specialization | Complete finite mathematical component |
@@ -35,7 +34,7 @@ open. [Physical execution scope](verification/PHYSICAL_SOURCE_DISPATCH_20261118.
 | Theorem 29 | Actual repaired finite reduction: 4n² vertices,3W weight,6αC cost, zero cases | Runtime; exact gap notation requires the stated bounded-instance interpretation |
 | Theorems30–31 | Actual dyadic edge-to-vertex and split-vertex constructions, all path/cut/count/weight/cost bridges and bounded-oracle forms | Constructive runtime |
 | Theorem 32 | Actual endpoint-safe self-reduction and uniform vertex n^(1/3+ε) composition | Runtime |
-| Theorem 33 | Finite family and PMF for both models. `RandomizedEdgeFamily.calibrated_families` executes adaptive edge-cut calls, bounds literal fair-bit reads and failure, and proves the marginal bound in the original weights. `AdaptiveWidthEnvelope.family_polynomial_reads` bounds the calibrated family in the original stored width. The exact-weight edge law also has a quadratic-horizon variant. | Deterministic bit-time and fixed-instruction realization of the adaptive solver. Near-linear horizon at the exact original-weight rounding factor. |
+| Theorem 33 | Finite family and PMF for both models. `PhysicalEdgeFamily.calibrated_physical` executes the adaptive edge-cut calls and transfers the literal fair-bit, confidence and original-weight frequency bounds. `AdaptiveWidthEnvelope.family_polynomial_reads` bounds the calibrated family in the original stored width. The exact-weight edge law also has a quadratic-horizon variant. | Complete deterministic bit-time for the adaptive composition. Near-linear horizon at the exact original-weight rounding factor. |
 
 The current scoped gate is [the constructive workflow](../.github/workflows/flow-constructive-rounding.yml).
 The adaptive edge-family extension has a [separate exact-commit gate](../.github/workflows/flow-adaptive-family.yml) and a [proof scope record](verification/ADAPTIVE_EDGE_FAMILY_20261119.md).
