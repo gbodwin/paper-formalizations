@@ -1,4 +1,5 @@
 import Mathlib.Algebra.Order.BigOperators.Expect
+import OnlineReachabilityPreservers.SteinerEarlyRound
 import OnlineReachabilityPreservers.SteinerFiniteSampling
 import OnlineReachabilityPreservers.SteinerForestRounding
 
@@ -99,7 +100,7 @@ section ForestCosts
 
 variable {V : Type*} {height : ℕ} [LinearOrder V] [Fintype V]
 
-local instance : DecidableEq (ForestNetworkVertex V height) :=
+local instance onlineForestNetworkDecidableEq : DecidableEq (ForestNetworkVertex V height) :=
   (inferInstance : LinearOrder (ForestNetworkVertex V height)).toDecidableEq
 
 private theorem forestMetricUnits_mono (G : Arcs V) (scale : ℕ)
@@ -275,6 +276,214 @@ theorem forestArcTier_anyPrefix_bound (G : Arcs V) (scale : ℕ)
   have realBound : (Fintype.card J : ℝ) ≤ ((scale.log2 + 2 : ℕ) : ℝ) ^ (height + 1) :=
     by exact_mod_cast count
   exact total.trans (mul_le_mul_of_nonneg_right realBound (by positivity))
+
+def earlyRoundingFactor (G : Arcs V) (height : ℕ) : ℕ :=
+  let W := forestScale G height
+  2 * earlyTrialCount V height * (W.log2 + 1) * (W.log2 + 2) ^ (height + 1)
+
+private noncomputable def earlyLinkPurchaseEvent (G : Arcs V) (height : ℕ) (D : List (V × V))
+    (e : HeightForestVertex V height × HeightForestVertex V height) : Finset (EarlyRoundSample G height) := by
+  classical
+  exact univ.filter fun sample => e ∈ earlyMetricPurchases G height D sample
+
+private theorem earlyLinkPurchaseEvent_probability (G : Arcs V) (D : List (V × V))
+    {e : HeightForestVertex V height × HeightForestVertex V height} (inside : e ∈ heightForest G height)
+    (positive : 0 < heightForestWeight G e) :
+    let W := forestScale G height
+    let units := forestMetricUnits G (forestFractionalRun G height D).1 W e
+    finiteProbability (earlyLinkPurchaseEvent G height D e) ≤
+      (earlyRoundingFactor G height : ℝ) * (units : ℝ) / W := by
+  classical
+  let W := forestScale G height
+  let T := earlyTrialCount V height
+  let r := heightForestRoot e.1
+  let side := roundingArcSide e
+  let child := roundingArcHistory e
+  let x := forestMetricUnits G (forestFractionalRun G height D).1 W e
+  obtain ⟨notRoot, leg⟩ := forestPaidArc_history inside positive
+  have unitEq : forestLegUnits G (forestFractionalRun G height D).1 W r side child = x :=
+    congrArg (forestMetricUnits G (forestFractionalRun G height D).1 W) leg
+  let tierEvent := fun tier : Fin (W.log2 + 1) => forestTierPrefixEvent G W D r side child tier
+  let batch := fun i : Fin T => (univ : Finset (Fin (W.log2 + 1))).biUnion fun tier =>
+    coordinatePreimage i (tierEvent tier)
+  have inclusion : earlyLinkPurchaseEvent G height D e ⊆ (univ : Finset (Fin T)).biUnion batch := by
+    intro sample member
+    have bought : e ∈ earlyMetricPurchases G height D sample := by
+      simpa [earlyLinkPurchaseEvent] using member
+    obtain ⟨P, hp, chosen⟩ := mem_biUnion.mp bought
+    by_cases empty : P = []
+    · simp [empty] at chosen
+    have selected : e ∈ earlyMetricAt G height P sample := by simpa [empty] using chosen
+    obtain ⟨i, _, seen⟩ := mem_biUnion.mp selected
+    have either := (mem_filter.mp seen).2
+    rcases either with zero | ⟨tier, group⟩
+    · exact (positive.ne' zero).elim
+    refine mem_biUnion.mpr ⟨i, mem_univ _, mem_biUnion.mpr ⟨tier, mem_univ _, ?_⟩⟩
+    apply mem_coordinatePreimage.mpr
+    exact mem_biUnion.mpr ⟨P, hp, mem_forestArcTierEvent.mpr group⟩
+  have seedPositive : 0 < forestSeedSize W := by unfold forestSeedSize; positivity
+  let initial : Fin (forestSeedSize W) := ⟨0, seedPositive⟩
+  have nonempty : Nonempty (ForestRoundingSample V height W) :=
+    ⟨fun _ _ => ⟨initial, fun _ _ => initial⟩⟩
+  let C := ((W.log2 + 2 : ℕ) : ℝ) ^ (height + 1)
+  have tierBound (i : Fin T) (tier : Fin (W.log2 + 1)) :
+      finiteProbability (coordinatePreimage i (tierEvent tier)) ≤
+        C * (2 * (x : ℝ) / (forestSeedSize W : ℝ)) := by
+    rw [finiteProbability_coordinatePreimage]
+    simpa only [unitEq] using forestArcTier_anyPrefix_bound G W D r side child notRoot tier
+  have oneTrial (i : Fin T) :
+      finiteProbability (batch i) ≤ (W.log2 + 1 : ℝ) * (C * (2 * (x : ℝ) / (forestSeedSize W : ℝ))) := by
+    apply (finiteProbability_biUnion_le _ _).trans
+    calc
+      _ ≤ ∑ _ : Fin (W.log2 + 1), C * (2 * (x : ℝ) / (forestSeedSize W : ℝ)) :=
+        sum_le_sum fun tier _ => tierBound i tier
+      _ = _ := by simp
+  have size : (W : ℝ) ≤ (forestSeedSize W : ℝ) := by exact_mod_cast (Nat.lt_log2_self (n := W)).le
+  refine (finiteProbability_mono inclusion).trans ((finiteProbability_biUnion_le _ _).trans ?_)
+  calc
+    _ ≤ ∑ _ : Fin T, (W.log2 + 1 : ℝ) * (C * (2 * (x : ℝ) / (forestSeedSize W : ℝ))) :=
+      sum_le_sum fun i _ => oneTrial i
+    _ = (T : ℝ) * ((W.log2 + 1 : ℝ) * (C * (2 * (x : ℝ) / (forestSeedSize W : ℝ)))) := by simp
+    _ ≤ (T : ℝ) * ((W.log2 + 1 : ℝ) * (C * (2 * (x : ℝ) / W))) := by
+      have ratio := div_le_div_of_nonneg_left (show 0 ≤ 2 * (x : ℝ) by positivity)
+        (Nat.cast_pos.mpr (forestScale_pos G height)) size
+      gcongr
+    _ = _ := by simp only [earlyRoundingFactor, Nat.cast_mul, Nat.cast_pow, Nat.cast_add,
+      Nat.cast_ofNat, Nat.cast_one, T, W, C, div_eq_mul_inv]; ring
+
+private theorem earlyMetricPurchases_sub (G : Arcs V) (height : ℕ) (D : List (V × V))
+    (sample : EarlyRoundSample G height) : earlyMetricPurchases G height D sample ⊆ heightForest G height := by
+  intro e he
+  obtain ⟨P, _, chosen⟩ := mem_biUnion.mp he
+  by_cases empty : P = []
+  · simp [empty] at chosen
+  have seen : e ∈ earlyMetricAt G height P sample := by simpa [empty] using chosen
+  exact roundedForestTrials_sub _ _ _ _ _ seen
+
+theorem earlyMetric_weight_mean_le (G : Arcs V) (height : ℕ) (D : List (V × V)) :
+    let W := forestScale G height
+    let edges := forestNetworkPriced G (heightForest G height)
+    let weight := forestNetworkWeight (height := height) G
+    let out := forestFractionalRun G height D
+    (𝔼 sample : EarlyRoundSample G height,
+      ∑ e ∈ earlyMetricPurchases G height D sample, (heightForestWeight G e : ℝ)) ≤
+      (earlyRoundingFactor G height : ℝ) *
+        ∑ e ∈ edges, (weight e : ℝ) * ((roundedWeightedCapacity (weight e) (out.1 e) : ℝ) / W) := by
+  classical
+  let H := heightForest G height
+  let cost := fun (e : HeightForestVertex V height × HeightForestVertex V height) =>
+    (heightForestWeight G e : ℝ)
+  let W := forestScale G height
+  let paid := H.filter (fun e => 0 < heightForestWeight G e)
+  let picked := fun (sample : EarlyRoundSample G height) (e : HeightForestVertex V height × HeightForestVertex V height) =>
+    if e ∈ earlyMetricPurchases G height D sample then cost e else 0
+  let units := forestMetricUnits G (forestFractionalRun G height D).1 W
+  have sumOnH (sample : EarlyRoundSample G height) :
+      (∑ e ∈ earlyMetricPurchases G height D sample, cost e) = ∑ e ∈ H, picked sample e := by
+    rw [← Finset.sum_filter]
+    have eq : H.filter (fun e => e ∈ earlyMetricPurchases G height D sample) =
+        earlyMetricPurchases G height D sample := by
+      ext e
+      exact ⟨fun h => (mem_filter.mp h).2, fun h =>
+        mem_filter.mpr ⟨earlyMetricPurchases_sub G height D sample h, h⟩⟩
+    rw [eq]
+  have expectation (e : HeightForestVertex V height × HeightForestVertex V height) :
+      (𝔼 sample : EarlyRoundSample G height, picked sample e) =
+        cost e * finiteProbability (earlyLinkPurchaseEvent G height D e) := by
+    rw [Finset.expect_eq_sum_div_card]
+    change (∑ sample : EarlyRoundSample G height,
+        if e ∈ earlyMetricPurchases G height D sample then cost e else 0) / _ = _
+    rw [← Finset.sum_filter]
+    simp only [earlyLinkPurchaseEvent, finiteProbability, sum_const, nsmul_eq_mul, card_univ]
+    ring
+  have totalMean : (𝔼 sample : EarlyRoundSample G height,
+      ∑ e ∈ earlyMetricPurchases G height D sample, cost e) =
+      ∑ e ∈ H, cost e * finiteProbability (earlyLinkPurchaseEvent G height D e) := by
+    simp_rw [sumOnH, Finset.expect_sum_comm, expectation]
+  change (𝔼 sample : EarlyRoundSample G height,
+    ∑ e ∈ earlyMetricPurchases G height D sample, cost e) ≤ _
+  rw [totalMean]
+  have dropZero :
+      (∑ e ∈ H, cost e * finiteProbability (earlyLinkPurchaseEvent G height D e)) =
+        ∑ e ∈ paid, cost e * finiteProbability (earlyLinkPurchaseEvent G height D e) := by
+    rw [Finset.sum_filter]
+    apply sum_congr rfl
+    intro e _
+    by_cases pos : 0 < heightForestWeight G e
+    · simp [pos]
+    have zero : heightForestWeight G e = 0 := Nat.eq_zero_of_not_pos pos
+    simp [cost, zero]
+  rw [dropZero]
+  have step (e) (he : e ∈ paid) :
+      cost e * finiteProbability (earlyLinkPurchaseEvent G height D e) ≤
+        (earlyRoundingFactor G height : ℝ) * (cost e * ((units e : ℝ) / W)) := by
+    obtain ⟨inside, positive⟩ := mem_filter.mp he
+    have bound := earlyLinkPurchaseEvent_probability G D inside positive
+    calc
+      _ ≤ cost e * ((earlyRoundingFactor G height : ℝ) * (units e : ℝ) / W) :=
+        mul_le_mul_of_nonneg_left bound (by dsimp [cost]; positivity)
+      _ = _ := by ring
+  refine (sum_le_sum step).trans_eq ?_
+  rw [← Finset.mul_sum]
+  change (earlyRoundingFactor G height : ℝ) * (∑ e ∈ paid, cost e * ((units e : ℝ) / W)) =
+    (earlyRoundingFactor G height : ℝ) *
+      ∑ e ∈ forestNetworkPriced G H, (forestNetworkWeight G e : ℝ) *
+        ((roundedWeightedCapacity (forestNetworkWeight G e) ((forestFractionalRun G height D).1 e) : ℝ) / W)
+  rw [forestNetworkPriced, Finset.sum_map]
+  congr 1
+  apply sum_congr rfl
+  intro e he
+  obtain ⟨inside, positive⟩ := mem_filter.mp he
+  simp [units, forestMetricUnits, H, inside, positive.ne', cost, forestNetworkWeight]
+  rfl
+
+/-- Expected original edge cost of the instantiated early online
+algorithm on a fixed feasible trace of distinct demands. -/
+theorem earlyRoundedGraph_mean_le [Nonempty V] (G Z : Arcs V) (sub : Z ⊆ G)
+    {height : ℕ} (heightPos : 0 < height) (D : List (V × V)) (distinct : D.Nodup)
+    (nonempty : 0 < D.length) (feasible : ∀ d ∈ D, Reach Z d.1 d.2) :
+    let W := forestScale G height
+    let p := D.length
+    (𝔼 sample : EarlyRoundSample G height, ((earlyRoundedGraph G height D sample).card : ℝ)) ≤
+      (earlyRoundingFactor G height : ℝ) *
+        (2 + ((W.log2 + 1 : ℕ) : ℝ) *
+          (12 * (height : ℝ) * (p : ℝ) ^ (1 / (height : ℝ)) *
+            ((Nat.sqrt p : ℝ) + 1) * (Z.card : ℝ))) + 2 := by
+  classical
+  let picked (sample : EarlyRoundSample G height) :=
+    ∑ e ∈ earlyMetricPurchases G height D sample, (heightForestWeight G e : ℝ)
+  let penalty (sample : EarlyRoundSample G height) : ℝ :=
+    if sample ∈ earlyFallbackSamples G height D then G.card else 0
+  have point (sample : EarlyRoundSample G height) :
+      ((earlyRoundedGraph G height D sample).card : ℝ) ≤ picked sample + penalty sample := by
+    by_cases fail : earlyRoundFallback G height D sample
+    · have p0 : 0 ≤ picked sample := sum_nonneg (fun _ _ => by positivity)
+      have h : sample ∈ earlyFallbackSamples G height D := by simpa [earlyFallbackSamples] using fail
+      simp only [earlyRoundedGraph, fail, penalty, h, ↓reduceIte]
+      linarith only [p0]
+    · have h : sample ∉ earlyFallbackSamples G height D := by simpa [earlyFallbackSamples] using fail
+      simp only [earlyRoundedGraph, fail, penalty, h, ↓reduceIte, add_zero]
+      dsimp only [picked]
+      exact_mod_cast expandHeightForest_cost G (earlyMetricPurchases G height D sample)
+  have penaltyMean : (𝔼 sample : EarlyRoundSample G height, penalty sample) =
+      (G.card : ℝ) * finiteProbability (earlyFallbackSamples G height D) := by
+    rw [Finset.expect_eq_sum_div_card]
+    simp only [penalty]
+    rw [← Finset.sum_filter, filter_mem_eq_inter, univ_inter]
+    simp only [finiteProbability, sum_const, nsmul_eq_mul, card_univ]
+    ring
+  have pcount : D.toFinset.card = D.length := List.toFinset_card_of_nodup distinct
+  have net := (forestFractionalRun_bound G Z sub D feasible (pcount.symm ▸ nonempty) heightPos).2
+  have cost := earlyMetric_weight_mean_le G height D
+  have fallback := earlyFallback_expectedCost_le G heightPos D distinct
+    (fun d hd => reach_mono sub (feasible d hd))
+  calc
+    _ ≤ (𝔼 sample : EarlyRoundSample G height, (picked sample + penalty sample)) :=
+      Finset.expect_le_expect (fun sample _ => point sample)
+    _ ≤ _ := by
+      rw [Finset.expect_add_distrib, penaltyMean]
+      refine add_le_add (cost.trans ?_) fallback
+      exact mul_le_mul_of_nonneg_left (by simpa only [pcount, forestScale] using net) (by positivity)
 
 end ForestCosts
 

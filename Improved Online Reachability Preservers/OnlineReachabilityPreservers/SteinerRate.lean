@@ -68,7 +68,7 @@ theorem steinerEarlyCutoff_bounds {n : ℕ} (hn : 0 < n) :
   push_cast [steinerEarlyCutoff]
   exact ⟨hi.le,by linarith only [lo,x1]⟩
 
-private theorem nat_log2_le_log {n : ℕ} (hn : 0 < n) :
+theorem nat_log2_le_log {n : ℕ} (hn : 0 < n) :
     (n.log2:ℝ) ≤ Real.log (n:ℝ)/Real.log 2 := by
   have logTwo : 0 < Real.log 2 := Real.log_pos (by norm_num)
   apply (le_div_iff₀ logTwo).mpr
@@ -93,7 +93,7 @@ private theorem edge_log2_le {m n : ℕ} (hn : 0 < n) (hm : m ≤ n^2) :
   push_cast at ll
   exact l.trans (div_le_div_of_nonneg_right ll logTwo.le)
 
-private theorem log_power_absorption {ε : ℝ} (he : 0 < ε) (k : ℕ) :
+theorem log_power_absorption {ε : ℝ} (he : 0 < ε) (k : ℕ) :
     ∃ C ≥ 1, ∀ {x : ℝ}, 1 ≤ x → (1+Real.log x)^k ≤ C*x^ε := by
   let δ := ε/((k:ℝ)+1)
   have hd : 0 < δ := by dsimp [δ]; positivity
@@ -194,15 +194,16 @@ universe u
 
 /-- The summed expected late-phase contribution of Section 5, with the early
 budget still supplied separately. -/
-theorem assembledSteiner_late_rate {ε : ℝ} (he : 0 < ε) :
+theorem assembledSteiner_late_rate_of_opt {ε : ℝ} (he : 0 < ε) :
     ∃ K > 0, ∀ (V : Type u) [LinearOrder V] [Fintype V] {G Z : Arcs V}
-      (early : EarlySteinerRule G) (D : List (V × V)) (earlyCost : ℝ),
+      (early : EarlySteinerRule G) (T : ℕ) (D : List (V × V)) (earlyCost : ℝ),
       0 ≤ earlyCost → 0 < Fintype.card V → 0 < Z.card → Z ⊆ G →
       (∀ d ∈ D, Reach Z d.1 d.2) →
-      (∀ S : Finset V,
-        ((early.run (steinerPhaseTraces early (steinerEarlyCutoff (Fintype.card V)) S D).early).card:ℝ) ≤
+      (∀ S : Finset V, (steinerPhaseTraces early T S D).hits ≠ [] →
+        steinerEarlyCutoff (Fintype.card V) ≤ Z.card ^ 2) →
+      (∀ S : Finset V, ((early.run (steinerPhaseTraces early T S D).early).card:ℝ) ≤
           earlyCost) →
-      assembledSteinerMean early (steinerEarlyCutoff (Fintype.card V))
+      assembledSteinerMean early T
         (steinerThinThreshold (Fintype.card V)) 2 D ≤
         earlyCost+K*(Fintype.card V:ℝ)^(3/5+ε)*Z.card := by
   obtain ⟨C,hC,logs⟩ := log_power_absorption he 2
@@ -214,10 +215,9 @@ theorem assembledSteiner_late_rate {ε : ℝ} (he : 0 < ε) :
   have B0 : 0 ≤ B := by dsimp [B]; positivity
   have C0 : 0 ≤ C := zero_le_one.trans hC
   refine ⟨K, by dsimp [K]; positivity,?_⟩
-  intro V _ _ G Z early D earlyCost E0 hn hZ sub feasible earlyBound
+  intro V _ _ G Z early T D earlyCost E0 hn hZ sub feasible optLower earlyBound
   let n := Fintype.card V
   let τ := steinerThinThreshold n
-  let T := steinerEarlyCutoff n
   let L := thinRoundingFactor n τ
   let Y := 1+Real.log (n:ℝ)
   let X := (n:ℝ)^(3/5+ε)
@@ -227,8 +227,8 @@ theorem assembledSteiner_late_rate {ε : ℝ} (he : 0 < ε) :
   have n0 := zero_lt_one.trans_le n1
   have cap : G.card ≤ n^2 := by
     simpa [n,Fintype.card_prod,pow_two] using card_le_univ G
-  have bound := assembledSteiner_mean_transfer (power := 2) early (by norm_num) E0 hn
-    (steinerEarlyCutoff_bounds hn).1 (steinerThinThreshold_bounds hn).2.le D sub feasible earlyBound
+  have bound := assembledSteiner_mean_transfer_of_opt (power := 2) early (by norm_num) E0 hn
+    (steinerEarlyCutoff_bounds hn).1 (steinerThinThreshold_bounds hn).2.le D sub feasible optLower earlyBound
   have coeff := lateCoefficient_polylog hn cap (steinerThinThreshold_bounds hn).1
   have growth : (A*B+17)*Y^2*(n:ℝ)^(3/5:ℝ) ≤ (A*B+17)*C*X := by
     calc
@@ -255,5 +255,22 @@ theorem assembledSteiner_late_rate {ε : ℝ} (he : 0 < ε) :
   change _ ≤ earlyCost+K*X*Z.card
   dsimp only [K]
   linarith only [costs,tail']
+
+theorem assembledSteiner_late_rate {ε : ℝ} (he : 0 < ε) :
+    ∃ K > 0, ∀ (V : Type u) [LinearOrder V] [Fintype V] {G Z : Arcs V}
+      (early : EarlySteinerRule G) (D : List (V × V)) (earlyCost : ℝ),
+      0 ≤ earlyCost → 0 < Fintype.card V → 0 < Z.card → Z ⊆ G →
+      (∀ d ∈ D, Reach Z d.1 d.2) →
+      (∀ S : Finset V,
+        ((early.run (steinerPhaseTraces early (steinerEarlyCutoff (Fintype.card V)) S D).early).card:ℝ) ≤
+          earlyCost) →
+      assembledSteinerMean early (steinerEarlyCutoff (Fintype.card V))
+        (steinerThinThreshold (Fintype.card V)) 2 D ≤
+        earlyCost+K*(Fintype.card V:ℝ)^(3/5+ε)*Z.card := by
+  obtain ⟨K, pos, bound⟩ := assembledSteiner_late_rate_of_opt.{u} he
+  refine ⟨K, pos, ?_⟩
+  intro V _ _ G Z early D earlyCost E0 hn hZ sub feasible earlyBound
+  exact bound V early _ D earlyCost E0 hn hZ sub feasible
+    (fun S => phaseCutoff_le_opt_of_hits early _ S D sub feasible) earlyBound
 
 end OnlineReachabilityPreservers

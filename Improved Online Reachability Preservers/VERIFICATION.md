@@ -303,6 +303,13 @@ An exact-source replay grants no coverage to a paper statement outside the
   review checked monotone charges, paid-edge identification, the exact
   marginal probability, and the ancestor profile count.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44462324546).
+- [700d853d](https://github.com/gbodwin/paper-formalizations/commit/700d853dfb06754428e3094ccce44b5883d9effe)
+  executes independent early trials and permanent fallback on misses.
+  The 2499-declaration audit and local kernel replay passed. Independent
+  review checked amplification, irrevocable retention, feasibility on
+  every sample and the fixed-trace fallback estimate. It also identified
+  the need for a seed-independent early trace in the full composition.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44462762946).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

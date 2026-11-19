@@ -268,6 +268,10 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.earlyRoundedGraph_preserves
 #print axioms OnlineReachabilityPreservers.earlyRoundedGraph_mono
 #print axioms OnlineReachabilityPreservers.earlyFallback_expectedCost_le
+#print axioms OnlineReachabilityPreservers.earlyMetric_weight_mean_le
+#print axioms OnlineReachabilityPreservers.earlyRoundedGraph_mean_le
+#print axioms OnlineReachabilityPreservers.assembledSteiner_mean_transfer_of_opt
+#print axioms OnlineReachabilityPreservers.assembledSteiner_late_rate_of_opt
 #print axioms OnlineReachabilityPreservers.theorem3_lattice_lower
 #print axioms OnlineReachabilityPreservers.theorem3_lower
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum

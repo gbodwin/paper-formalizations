@@ -113,11 +113,14 @@ a request, one trial misses it with probability at most
 controls the chance that a paid link is ever selected across prefixes.
 The proof counts ancestor capacity profiles and uses the final monotone
 capacities. The [early integral algorithm](OnlineReachabilityPreservers/SteinerEarlyRound.lean)
-amplifies each trial, keeps all prior purchases, and falls back to the
+uses independent trials to amplify success, keeps all prior purchases, and falls back to the
 input graph on a miss. For a fixed feasible sequence of distinct
 requests with positive height, the expected fallback cost is at most
-two edges. Aggregating the metric purchases into the early competitive
-bound remains open.
+two edges. The [explicit early cost theorem](OnlineReachabilityPreservers/SteinerOnlineRounding.lean)
+then adds the expected original expansion cost, using the total paid
+fractional capacity and the number of trials, tiers and profiles.
+Phase integration with a seed-independent early input and formal
+runtime remain open.
 
 ## Appendix dependencies
 
