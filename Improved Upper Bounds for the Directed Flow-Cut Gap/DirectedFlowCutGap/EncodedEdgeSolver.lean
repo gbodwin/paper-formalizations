@@ -61,7 +61,7 @@ def tree {n : ℕ} (D : Input n) (mode : Mode) : FiniteDrawTrees.Tree (Output n)
 def drawBound (n : ℕ) : ℕ :=
   EncodedUniformRounding.drawBound (4 * (2 * n * (Nat.log2 n + 4)) ^ 2)
 
-private theorem round_within {n : ℕ} (D : Input n) (mode : Mode)
+theorem round_within {n : ℕ} (D : Input n) (mode : Mode)
     (h : ∀ m (I : EncodedUnitCostReplication.Input m),
       Within (EncodedUniformRounding.drawBound (4 * m ^ 2)) (mode m I))
     (r : EncodedUnitCostReplication.Input (lineSize n)) : Within (drawBound n) (round D mode r) := by
@@ -75,7 +75,7 @@ private theorem round_within {n : ℕ} (D : Input n) (mode : Mode)
 def drawWidth (n : ℕ) : ℕ :=
   EncodedWeightedRounding.drawWidth (2 * n * (Nat.log2 n + 4))
 
-private theorem round_widths {n : ℕ} (D : Input n) (mode : Mode)
+theorem round_widths {n : ℕ} (D : Input n) (mode : Mode)
     (h : ∀ m (I : EncodedUnitCostReplication.Input m),
       LazyFairBitTrees.WidthsLE (EncodedWeightedRounding.drawWidth m) (mode m I))
     (r : EncodedUnitCostReplication.Input (lineSize n)) :

@@ -10,7 +10,9 @@ import DirectedFlowCutGap.EncodedEdgeSolver
 import DirectedFlowCutGap.WeakDecompositionExactWeight
 import DirectedFlowCutGap.EncodedSourceExecution
 import DirectedFlowCutGap.PhysicalEdgeSolver
-import DirectedFlowCutGap.RetainedChargedFairBits
+import DirectedFlowCutGap.PhysicalSourceReadback
+import DirectedFlowCutGap.RetainedBinarySampler
+import DirectedFlowCutGap.EncodedBinarySampling
 import Lean.Compiler.Old
 import Lean.Util.CollectAxioms
 import Lean.Util.FoldConsts
@@ -49,7 +51,10 @@ run_cmd do
     `DirectedFlowCutGap.PhysicalCoverExecution, `DirectedFlowCutGap.PhysicalSourceDispatch,
     `DirectedFlowCutGap.PhysicalVertexSolver, `DirectedFlowCutGap.PhysicalEdgeSolver,
     `DirectedFlowCutGap.CachedReferenceHeap, `DirectedFlowCutGap.CachedReferenceExecution,
-    `DirectedFlowCutGap.RetainedChargedFairBits]
+    `DirectedFlowCutGap.RetainedChargedFairBits,
+    `DirectedFlowCutGap.PhysicalCoverAccess, `DirectedFlowCutGap.PhysicalSourceReadback,
+    `DirectedFlowCutGap.BinaryDrawTreeExecution, `DirectedFlowCutGap.RetainedBinarySampler,
+    `DirectedFlowCutGap.EncodedBinarySampling]
   let allowed := #[`propext, `Classical.choice, `Quot.sound]
   let mut counts : NameMap Nat := {}
   let mut compilerEntries : Nat := 0
@@ -142,7 +147,21 @@ run_cmd do
     `DirectedFlowCutGap.PhysicalEdgeSolver.source_size_complete,
     `DirectedFlowCutGap.RetainedChargedFairBits.sample_support_bound,
     `DirectedFlowCutGap.RetainedChargedFairBits.run_projected,
-    `DirectedFlowCutGap.RetainedChargedFairBits.initial_work_bound] do
+    `DirectedFlowCutGap.RetainedChargedFairBits.initial_work_bound,
+    `DirectedFlowCutGap.PhysicalCoverAccess.readPlan_value,
+    `DirectedFlowCutGap.PhysicalCoverAccess.readPlan_charge,
+    `DirectedFlowCutGap.PhysicalSourceReadback.run_eq,
+    `DirectedFlowCutGap.BinaryDrawTreeExecution.draw_observe,
+    `DirectedFlowCutGap.BinaryDrawTreeExecution.run_value,
+    `DirectedFlowCutGap.BinaryDrawTreeExecution.run_cost,
+    `DirectedFlowCutGap.RetainedBinarySampler.run_projected,
+    `DirectedFlowCutGap.RetainedBinarySampler.initial_wordBudget,
+    `DirectedFlowCutGap.EncodedBinarySampling.vertex_value,
+    `DirectedFlowCutGap.EncodedBinarySampling.edge_value,
+    `DirectedFlowCutGap.EncodedBinarySampling.vertex_mass_cost,
+    `DirectedFlowCutGap.EncodedBinarySampling.vertex_size_cost,
+    `DirectedFlowCutGap.EncodedBinarySampling.edge_mass_cost,
+    `DirectedFlowCutGap.EncodedBinarySampling.edge_size_cost] do
     let some (.thmInfo _) := env.find? theoremName | throwError "Missing theorem {theoremName}"
     unless roots.contains theoremName do throwError "Unselected theorem {theoremName}"
   let mut todo := roots

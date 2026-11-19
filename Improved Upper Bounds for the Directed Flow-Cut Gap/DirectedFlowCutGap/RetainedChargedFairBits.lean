@@ -82,7 +82,7 @@ private theorem tree_assoc {A B C : Type} (t : FiniteDrawTrees.Tree A)
   | pure a => rfl
   | draw n hn next ih => exact congrArg (FiniteDrawTrees.Tree.draw n hn) (funext ih)
 
-local instance : LawfulMonad FiniteDrawTrees.Tree := LawfulMonad.mk' FiniteDrawTrees.Tree tree_id (by intros; rfl) tree_assoc
+instance : LawfulMonad FiniteDrawTrees.Tree := LawfulMonad.mk' FiniteDrawTrees.Tree tree_id (by intros; rfl) tree_assoc
 
 private theorem lower_bind {A B : Type} (T : ℕ) (t : FiniteDrawTrees.Tree A) (f : A → FiniteDrawTrees.Tree B) :
     lower T (t >>= f) = lower T t >>= fun a => lower T (f a) := by
@@ -118,8 +118,12 @@ local notation "Q" => RetainedCandidateSolver.optimizer (demands := demands) adj
 local notation "C" => RetainedGridState.integerCutOracle (G := inputGraph) hL F.base.enumeration
 local notation "charged" => EncodedSampledRounding.ChargedResult H
 
+def runWith (sampler : (a : PairFlags n) → FiniteDrawTrees.Tree (RetainedTapeInput.Tape L a × ℕ))
+    (R restartFuel epochs : ℕ) (s : Code inputGraph demands L) : FiniteDrawTrees.Tree charged :=
+  EncodedSampledRounding.runSampled adjacency F horder hL sampler R restartFuel epochs s
+
 def run (T R restartFuel epochs : ℕ) (s : Code inputGraph demands L) : FiniteDrawTrees.Tree charged :=
-  EncodedSampledRounding.runSampled adjacency F horder hL (sample T hL) R restartFuel epochs s
+  runWith adjacency F horder hL (sample T hL) R restartFuel epochs s
 
 private theorem execute_lower (T R restartFuel epochs : ℕ) (c : Cache H) :
     lower T (RetainedSampledExecution.executeSampled (RetainedDrawTrees.sampleTape hL)
@@ -138,24 +142,33 @@ private theorem execute_lower (T R restartFuel epochs : ℕ) (c : Cache H) :
       rw [lower_bind, ih]
       rfl
 
-theorem run_projected (T R restartFuel epochs : ℕ) (s : Code inputGraph demands L) :
-    map (EncodedSampledRounding.ChargedResult.logged) (run adjacency F horder hL T R restartFuel epochs s) =
+theorem runWith_projected (T R restartFuel epochs : ℕ) (s : Code inputGraph demands L)
+    (sampler : (a : PairFlags n) → FiniteDrawTrees.Tree (RetainedTapeInput.Tape L a × ℕ))
+    (hs : ∀ a, map Prod.fst (sampler a) = lower T (RetainedDrawTrees.sampleTape hL a)) :
+    map (EncodedSampledRounding.ChargedResult.logged)
+        (runWith adjacency F horder hL sampler R restartFuel epochs s) =
       lower T (RetainedDrawTrees.runTree Q hL C R restartFuel epochs s) := by
   have h := EncodedSampledRounding.runData_refines adjacency F horder hL
-    (sample T hL) R restartFuel epochs s
-  change map _ (run adjacency F horder hL T R restartFuel epochs s) =
-    RetainedSampledExecution.runSampled (fun a => map Prod.fst (sample T hL a))
+    sampler R restartFuel epochs s
+  change map _ (runWith adjacency F horder hL sampler R restartFuel epochs s) =
+    RetainedSampledExecution.runSampled (fun a => map Prod.fst (sampler a))
       Q hL C R restartFuel epochs s at h
   rw [h]
-  simp only [sample_project, RetainedDrawTrees.runTree, RetainedSampledExecution.runSampled, lower_bind,
+  simp only [hs, RetainedDrawTrees.runTree, RetainedSampledExecution.runSampled, lower_bind,
     execute_lower adjacency F horder hL]
   rfl
 
-private theorem execute_ideal (T R restartFuel epochs : ℕ) (c : Cache H) :
+theorem run_projected (T R restartFuel epochs : ℕ) (s : Code inputGraph demands L) :
+    map (EncodedSampledRounding.ChargedResult.logged) (run adjacency F horder hL T R restartFuel epochs s) =
+      lower T (RetainedDrawTrees.runTree Q hL C R restartFuel epochs s) :=
+  runWith_projected adjacency F horder hL T R restartFuel epochs s _ (sample_project T hL)
+
+private theorem execute_ideal (R restartFuel epochs : ℕ) (c : Cache H)
+    (sampler : (a : PairFlags n) → FiniteDrawTrees.Tree (RetainedTapeInput.Tape L a × ℕ)) :
     ideal (EncodedSampledRounding.executeSampled adjacency F horder hL
-      (sample T hL) R restartFuel epochs c) =
+      sampler R restartFuel epochs c) =
     EncodedSampledRounding.executeSampled adjacency F horder hL
-      (fun a => ideal (sample T hL a)) R restartFuel epochs c := by
+      (fun a => ideal (sampler a)) R restartFuel epochs c := by
   induction epochs generalizing c with
   | zero => rfl
   | succ epochs ih =>
@@ -169,23 +182,32 @@ private theorem execute_ideal (T R restartFuel epochs : ℕ) (c : Cache H) :
       rw [ideal_map, ih]
       rfl
 
-private theorem run_ideal (T R restartFuel epochs : ℕ) (s : Code inputGraph demands L) :
-    ideal (run adjacency F horder hL T R restartFuel epochs s) =
+private theorem runWith_ideal (R restartFuel epochs : ℕ) (s : Code inputGraph demands L)
+    (sampler : (a : PairFlags n) → FiniteDrawTrees.Tree (RetainedTapeInput.Tape L a × ℕ)) :
+    ideal (runWith adjacency F horder hL sampler R restartFuel epochs s) =
     EncodedSampledRounding.runSampled adjacency F horder hL
-      (fun a => ideal (sample T hL a)) R restartFuel epochs s := by
-  unfold run EncodedSampledRounding.runSampled
+      (fun a => ideal (sampler a)) R restartFuel epochs s := by
+  unfold runWith EncodedSampledRounding.runSampled
   change ideal (map _ _) = _
   rw [ideal_map, execute_ideal adjacency F horder hL]
   rfl
+
+theorem runWith_support_charge (R restartFuel epochs : ℕ) (s : Code inputGraph demands L)
+    (sampler : (a : PairFlags n) → FiniteDrawTrees.Tree (RetainedTapeInput.Tape L a × ℕ))
+    (K : ℕ) (hK : ∀ a t, t ∈ (ideal (sampler a)).support → t.2 ≤ K) {out : charged}
+    (ho : out ∈ (ideal (runWith adjacency F horder hL sampler R restartFuel epochs s)).support) :
+    out.operations ≤ EncodedRoundingRuntime.price n L out.logged.result.work +
+      EncodedSampledRounding.epochCharge n K * epochs + 1 ∧ out.sampling ≤ K * epochs := by
+  rw [runWith_ideal adjacency F horder hL] at ho
+  exact EncodedSampledRounding.run_cost_bound adjacency F horder hL _ _ hK R restartFuel epochs s ho
 
 theorem run_support_charge (T R restartFuel epochs : ℕ) (s : Code inputGraph demands L) {out : charged}
     (ho : out ∈ (ideal (run adjacency F horder hL T R restartFuel epochs s)).support) :
     out.operations ≤ EncodedRoundingRuntime.price n L out.logged.result.work +
       EncodedSampledRounding.epochCharge n (sampleCharge n L T) * epochs + 1 ∧
-    out.sampling ≤ sampleCharge n L T * epochs := by
-  rw [run_ideal adjacency F horder hL] at ho
-  exact EncodedSampledRounding.run_cost_bound adjacency F horder hL _ _
-    (fun a _ ha => sample_support_bound T hL a ha) R restartFuel epochs s ho
+    out.sampling ≤ sampleCharge n L T * epochs :=
+  runWith_support_charge adjacency F horder hL R restartFuel epochs s _ _
+    (fun a _ ha => sample_support_bound T hL a ha) ho
 
 /-- A bound for every work counter used by the concrete charge function. -/
 def workBound (n restartFuel epochs restarts : ℕ) : Work where
@@ -197,18 +219,21 @@ def workBound (n restartFuel epochs restarts : ℕ) : Work where
   restarts := restarts
   massScans := 1 + restarts + 2 * (n * n)
 
-theorem run_work_bound (T R restartFuel epochs J : ℕ) (hR : 1 < (R : ℝ≥0))
+theorem runWith_work_bound (T R restartFuel epochs J : ℕ) (hR : 1 < (R : ℝ≥0))
     (s : Code inputGraph demands L) (hJ : (interpret s).mass < (R : ℝ≥0) ^ (J + 1))
-    {out : charged} (ho : out ∈ (ideal (run adjacency F horder hL T R restartFuel epochs s)).support) :
+    (sampler : (a : PairFlags n) → FiniteDrawTrees.Tree (RetainedTapeInput.Tape L a × ℕ))
+    (K : ℕ) (hK : ∀ a t, t ∈ (ideal (sampler a)).support → t.2 ≤ K)
+    (hs : ∀ a, map Prod.fst (sampler a) = lower T (RetainedDrawTrees.sampleTape hL a))
+    {out : charged} (ho : out ∈ (ideal (runWith adjacency F horder hL sampler R restartFuel epochs s)).support) :
     out.operations ≤ EncodedRoundingRuntime.price n L (workBound n restartFuel epochs J) +
-      EncodedSampledRounding.epochCharge n (sampleCharge n L T) * epochs + 1 := by
+      EncodedSampledRounding.epochCharge n K * epochs + 1 := by
   let : NeZero L := ⟨hL.ne'⟩
   have hmap : out.logged ∈
       (ideal (map EncodedSampledRounding.ChargedResult.logged
-        (run adjacency F horder hL T R restartFuel epochs s))).support := by
+        (runWith adjacency F horder hL sampler R restartFuel epochs s))).support := by
     rw [ideal_map]
     exact (PMF.mem_support_map_iff _ _ _).2 ⟨out, ho, rfl⟩
-  rw [run_projected] at hmap
+  rw [runWith_projected adjacency F horder hL T R restartFuel epochs s sampler hs] at hmap
   have href := lowered_support_subset_ideal T _ hmap
   rw [RetainedFairBitLaw.runTree_law] at href
   obtain ⟨_, _, hr, hj, hf, hc, hg, ht⟩ :=
@@ -225,16 +250,27 @@ theorem run_work_bound (T R restartFuel epochs J : ℕ) (hR : 1 < (R : ℝ≥0))
       EncodedRoundingRuntime.price n L (workBound n restartFuel epochs J) := by
     simp only [EncodedRoundingRuntime.price, workBound]
     gcongr
-  exact (run_support_charge adjacency F horder hL T R restartFuel epochs s ho).1.trans
+  exact (runWith_support_charge adjacency F horder hL R restartFuel epochs s sampler K hK ho).1.trans
     (Nat.add_le_add_right (Nat.add_le_add_right hprice _) _)
 
-theorem initial_work_bound (T : ℕ) :
+theorem run_work_bound (T R restartFuel epochs J : ℕ) (hR : 1 < (R : ℝ≥0))
+    (s : Code inputGraph demands L) (hJ : (interpret s).mass < (R : ℝ≥0) ^ (J + 1))
+    {out : charged} (ho : out ∈ (ideal (run adjacency F horder hL T R restartFuel epochs s)).support) :
+    out.operations ≤ EncodedRoundingRuntime.price n L (workBound n restartFuel epochs J) +
+      EncodedSampledRounding.epochCharge n (sampleCharge n L T) * epochs + 1 :=
+  runWith_work_bound adjacency F horder hL T R restartFuel epochs J hR s hJ _ _
+    (fun a _ ha => sample_support_bound T hL a ha) (sample_project T hL) ho
+
+theorem initial_runWith_work_bound (T : ℕ)
+    (sampler : (a : PairFlags n) → FiniteDrawTrees.Tree (RetainedTapeInput.Tape L a × ℕ))
+    (K : ℕ) (hK : ∀ a t, t ∈ (ideal (sampler a)).support → t.2 ≤ K)
+    (hs : ∀ a, map Prod.fst (sampler a) = lower T (RetainedDrawTrees.sampleTape hL a)) :
     let s := RetainedDemandMask.initial inputGraph F.base.enumeration L hL
     let R := IntegerEpochParameters.restart n
     let fuel := IntegerEpochParameters.fuel n
-    ∀ out ∈ (ideal (run adjacency F horder hL T R (fuel + 1) (fuel + 1) s)).support,
+    ∀ out ∈ (ideal (runWith adjacency F horder hL sampler R (fuel + 1) (fuel + 1) s)).support,
       out.operations ≤ EncodedRoundingRuntime.price n L (workBound n (fuel + 1) (fuel + 1) fuel) +
-        EncodedSampledRounding.epochCharge n (sampleCharge n L T) * (fuel + 1) + 1 := by
+        EncodedSampledRounding.epochCharge n K * (fuel + 1) + 1 := by
   dsimp only
   intro out ho
   have hm :
@@ -242,8 +278,18 @@ theorem initial_work_bound (T : ℕ) :
         (IntegerEpochParameters.restart n : ℝ≥0) ^ (IntegerEpochParameters.fuel n + 1) := by
     rw [RetainedDemandMask.initial, RetainedClosureLaw.initialMaskedCode_mass]
     simpa only [Fintype.card_fin] using IntegerClosureAsymptotic.initial_fuel_bound inputGraph L hL
-  exact run_work_bound adjacency F horder hL T _ _ _ _
-    (IntegerClosureAsymptotic.restart_nnreal_one_lt n) _ hm ho
+  exact runWith_work_bound adjacency F horder hL T _ _ _ _
+    (IntegerClosureAsymptotic.restart_nnreal_one_lt n) _ hm sampler K hK hs ho
+
+theorem initial_work_bound (T : ℕ) :
+    let s := RetainedDemandMask.initial inputGraph F.base.enumeration L hL
+    let R := IntegerEpochParameters.restart n
+    let fuel := IntegerEpochParameters.fuel n
+    ∀ out ∈ (ideal (run adjacency F horder hL T R (fuel + 1) (fuel + 1) s)).support,
+      out.operations ≤ EncodedRoundingRuntime.price n L (workBound n (fuel + 1) (fuel + 1) fuel) +
+        EncodedSampledRounding.epochCharge n (sampleCharge n L T) * (fuel + 1) + 1 :=
+  initial_runWith_work_bound adjacency F horder hL T _ _
+    (fun a _ ha => sample_support_bound T hL a ha) (sample_project T hL)
 
 end Execution
 

@@ -34,7 +34,9 @@ jobs:
             +DirectedFlowCutGap.EncodedSourceExecution
             +DirectedFlowCutGap.WeakDecompositionExactWeight
             +DirectedFlowCutGap.PhysicalEdgeSolver
-            +DirectedFlowCutGap.RetainedChargedFairBits
+            +DirectedFlowCutGap.PhysicalSourceReadback
+            +DirectedFlowCutGap.RetainedBinarySampler
+            +DirectedFlowCutGap.EncodedBinarySampling
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"

@@ -17,6 +17,7 @@ new_sources=(
   OriginalStoreInitial OriginalStoreCorrectness OriginalStoreDispatch
   PhysicalCoverReader PhysicalCoverExecution PhysicalSourceDispatch PhysicalVertexSolver PhysicalEdgeSolver
   CachedReferenceHeap CachedReferenceExecution RetainedChargedFairBits
+  PhysicalCoverAccess PhysicalSourceReadback BinaryDrawTreeExecution RetainedBinarySampler EncodedBinarySampling
 )
 targets=(
   OptimalFlowCutBounds AdaptiveVertexBound AdaptiveEdgeBound
@@ -41,6 +42,8 @@ lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/EncodedSource
 lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/PhysicalVertexSolverSmoke.lean"
 lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/PhysicalEdgeSolverSmoke.lean"
 lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/RetainedChargedFairBitsSmoke.lean"
+lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/PhysicalSourceReadbackSmoke.lean"
+lake env timeout 180 lean "${flags[@]}" --run "$paper/verification/RetainedBinarySamplerSmoke.lean"
 lake env bash -c '
   set -euo pipefail
   verification=$1

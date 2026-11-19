@@ -152,7 +152,7 @@ def edgeBudget {n : ℕ} (κ : ℕ) (D : EncodedEdgeLineInput.Input n) : ℕ :=
   polynomial n (EncodedEdgeLineInput.lineSize n) (2 * n * (n + 4))
     (FractionalCoverRawCore.inputWidth (EncodedEdgeLineInput.lineInput D).costs) κ
 
-private theorem polynomial_roundSize_mono {n v a b B κ : ℕ} (h : a ≤ b) :
+theorem polynomial_roundSize_mono {n v a b B κ : ℕ} (h : a ≤ b) :
     polynomial n v a B κ ≤ polynomial n v b B κ := by
   dsimp only [polynomial, EncodedUniformRounding.drawBound]
   gcongr

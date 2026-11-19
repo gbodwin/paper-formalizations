@@ -62,6 +62,7 @@ import DirectedFlowCutGap.EdgeRounding
 import DirectedFlowCutGap.EdgeToVertexReduction
 import DirectedFlowCutGap.EncodedAmplification
 import DirectedFlowCutGap.EncodedArrayStorage
+import DirectedFlowCutGap.EncodedBinarySampling
 import DirectedFlowCutGap.EncodedCandidateCapacity
 import DirectedFlowCutGap.EncodedCandidateOutput
 import DirectedFlowCutGap.EncodedCellAccess
@@ -169,6 +170,7 @@ import DirectedFlowCutGap.PathExtraction
 import DirectedFlowCutGap.PathSystemCharging
 import DirectedFlowCutGap.PathSystemCounting
 import DirectedFlowCutGap.PhysicalEdgeSolver
+import DirectedFlowCutGap.PhysicalSourceReadback
 import DirectedFlowCutGap.PhysicalVertexSolver
 import DirectedFlowCutGap.RawNonnegativeRational
 import DirectedFlowCutGap.RawWeightedMasses
@@ -178,6 +180,7 @@ import DirectedFlowCutGap.ResidualSearchComplexity
 import DirectedFlowCutGap.RetainedCandidateSolver
 import DirectedFlowCutGap.RetainedClosureLaw
 import DirectedFlowCutGap.RetainedChargedFairBits
+import DirectedFlowCutGap.RetainedBinarySampler
 import DirectedFlowCutGap.RetainedDemandMask
 import DirectedFlowCutGap.RetainedDrawTrees
 import DirectedFlowCutGap.RetainedExecutionLaw

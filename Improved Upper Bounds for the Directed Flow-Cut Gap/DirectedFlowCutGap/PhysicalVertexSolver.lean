@@ -34,7 +34,8 @@ private theorem treeFromPlan_eq {n : ℕ} (D : GraphInput n) (round : Rounding n
     rfl
   | infeasible _ | zero _ | invalid => rfl
 
-private def boundedFromRun {n : ℕ} (roundBound extraSamples confidence : ℕ)
+/-- Amplify the rounding tree from the actual readback plan and carry its paid prefix. -/
+def boundedFromRun {n : ℕ} (roundBound extraSamples confidence : ℕ)
     (G : GraphInput n) (round : Rounding n) (result : Option (Plan n × ℕ)) :
     Option (FiniteDrawTrees.Tree (Output n) × ℕ) :=
   let q := drawBound G roundBound

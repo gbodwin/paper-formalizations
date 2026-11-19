@@ -58,7 +58,10 @@ graph models, padded demand labels, and ordered cover readback from a
 separately constructed positive heap. The full positive fixture uses the
 cached evaluator over the three-vertex source chain. It checks ordered
 request events, source exhaustion, original roots, all nine retained
-states, and the paid stop. The earlier sequential-interpreter timeouts
+states, and the paid stop. Both rounding modes then use the retained
+rows from that same run. The earlier sequential-interpreter timeouts
 are recorded separately in the recovery receipt.
+
+[Heap readback and binary sampler charges](SAMPLING_READBACK_20261119.md)
 
 [Constructive workflow](../../.github/workflows/flow-constructive-rounding.yml)

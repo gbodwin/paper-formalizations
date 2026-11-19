@@ -1,5 +1,5 @@
 import DirectedFlowCutGap.CachedReferenceExecution
-import DirectedFlowCutGap.PhysicalSourceDispatch
+import DirectedFlowCutGap.PhysicalVertexSolver
 import FinalDispatchPositiveFixtureSupport
 
 open DirectedFlowCutGap
@@ -36,6 +36,22 @@ where
         (← IO.getStdout).flush
       go fuel r.state i' total (r.events.reverse ++ events) seen
 
+private def roundCover (plan : PhysicalCoverReader.Plan 3) (physical : ℕ)
+    (round : EncodedVertexSolver.Rounding 3) : IO ℕ := do
+  let graph := BinaryFractionalGuesses.decodeInput input
+  let confidence := EncodedVertexAmplification.confidenceExponent 3 0
+  let tape := [true, false, false, true]
+  let some (tree, paid) := PhysicalVertexSolver.boundedFromRun
+    (EncodedVertexAmplification.roundDrawBound 3) confidence (confidence + 1)
+    graph round (some (plan, physical))
+      | throw (IO.userError "the physical plan did not initialize rounding")
+  match EncodedSolverBits.run tree tape with
+  | some (.cut mask, rest, used) =>
+    unless mask[1] && paid == physical && rest == tape.drop used do
+      throw (IO.userError "rounding lost the internal vertex, paid prefix, or original tape suffix")
+    return used
+  | _ => throw (IO.userError "rounding the actual positive plan did not produce a cut")
+
 def main (args : List String) : IO Unit := do
   let cap ← parseCap args
   preflight
@@ -63,7 +79,12 @@ def main (args : List String) : IO Unit := do
   let states ← expectedStates
   unless states.length == 9 && readCovers out.heap out.registers.d == some states do
     throw (IO.userError "positive source trace changed the ordered fractional output")
+  let some plan := PhysicalCoverReader.readPlan 3 out.heap out.registers.d
+    | throw (IO.userError "could not read the positive physical output for rounding")
+  let massReads ← roundCover plan result.charge EncodedWeightedRounding.tree
+  let sizeReads ← roundCover plan result.charge EncodedSizeRounding.tree
   IO.println ("PASS cached physical source: orderedStates=" ++ toString states.length ++
     " sourceRequests=" ++ toString result.events.length ++ " instructions=" ++
     toString result.instructions ++ " paidOperations=" ++ toString result.charge ++
-    " terminalOperations=" ++ toString result.terminalCharge)
+    " terminalOperations=" ++ toString result.terminalCharge ++
+    " massRandomReads=" ++ toString massReads ++ " sizeRandomReads=" ++ toString sizeReads)
