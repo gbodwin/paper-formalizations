@@ -1087,6 +1087,8 @@ import DirectedFlowCutGap.SupportVisitDecision
 import DirectedFlowCutGap.TabulatedIntegralFlow
 import DirectedFlowCutGap.TerminalPorts
 import DirectedFlowCutGap.TinyEdgePreprocessing
+import DirectedFlowCutGap.TotalGuardedPackedExecution
+import DirectedFlowCutGap.TotalRawGraphExecution
 import DirectedFlowCutGap.UniformWeightReduction
 import DirectedFlowCutGap.UnitCostReduction
 import DirectedFlowCutGap.ValidatedFractionalRows

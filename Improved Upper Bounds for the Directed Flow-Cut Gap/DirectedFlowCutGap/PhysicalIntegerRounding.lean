@@ -3,7 +3,7 @@ import DirectedFlowCutGap.EncodedIntegerRounding
 import DirectedFlowCutGap.EncodedEpochParameters
 import DirectedFlowCutGap.PhysicalCoverAccess
 import DirectedFlowCutGap.BinaryNaturalView
-import DirectedFlowCutGap.CachedGuardedReferenceExecution
+import DirectedFlowCutGap.TotalRawGraphExecution
 
 /-! Execute all three cutoff regimes and transport the actual output and tape. -/
 
@@ -66,14 +66,27 @@ private theorem readCachedWord_eq (store : CachedReferenceHeap.Store) (root : Bi
     funext (CachedReferenceHeap.read_eq store)
   simp only [readCachedWord,PhysicalCoverAccess.readWord,read,Array.length_toList]
 
+private theorem boundary_input {n : ℕ} (adj : PairFlags n) (L T : ℕ) (tape : Bits) :
+    let words := boundaryWords n L T
+    let matrix := GraphRelaxationRefinement.matrix adj
+    let H := cells matrix words.dimension words.level words.trials
+    let entry := prepare matrix words.dimension words.level words.trials tape
+    RawGraphControllerLaw.Input (L:=L) adj words.trials (H+1) H entry.1 := by
+  dsimp only
+  simp only [boundary_dimension,boundary_level,boundary_trials]
+  exact (RawGraphInputStore.prepare_spec (L:=L) adj T.bits tape).1
+
 def hardRun {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (tape : Bits) : Option (Result n) :=
   let words := boundaryWords n L T
   let matrix := GraphRelaxationRefinement.matrix adj
-  let H := cells matrix words.dimension words.level words.trials
   let entry := prepare matrix words.dimension words.level words.trials tape
   do
-    let (out,paid) ← CachedGuardedReferenceExecution.execute RawGraphControllerProgram.program
-      (instructionBound n L (H+1) words.trials+1) (CachedReferenceExecution.FastState.ofReference entry.1) 0
+    let (out,paid) ← if positive : 0<L then
+        TotalRawGraphExecution.run entry.1 (boundary_input adj L T tape) positive
+      else
+        let H := cells matrix words.dimension words.level words.trials
+        CachedGuardedReferenceExecution.execute RawGraphControllerProgram.program
+          (instructionBound n L (H+1) words.trials+1) (CachedReferenceExecution.FastState.ofReference entry.1) 0
     let observed := readCachedWord out.store out.registers.d
     let mask ← observed.1
     pure ⟨fromWord n mask,out.source,entry.2+paid+observed.2+words.paid+maskCopyCharge n mask.length⟩
@@ -90,15 +103,21 @@ theorem hardRun_reference {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (tap
     let observed := PhysicalCoverAccess.readWord out.heap out.registers.d
     let mask ← observed.1
     pure ⟨fromWord n mask,out.source,entry.2+paid+observed.2+words.paid+maskCopyCharge n mask.length⟩) := by
-  unfold hardRun
-  dsimp only
-  rw [← CachedGuardedReferenceExecution.execute_ofReference]
-  cases h : CachedGuardedReferenceExecution.execute _ _ _ _ with
-  | none => rfl
-  | some result =>
-    rcases result with ⟨out,paid⟩
-    simp only [Option.map_some,CachedReferenceExecution.FastState.freeze,readCachedWord_eq]
-    rfl
+  by_cases positive : 0<L
+  all_goals
+    unfold hardRun
+    dsimp only
+    first
+    | rw [dite_eq_left positive,TotalRawGraphExecution.run_eq]
+    | rw [dite_eq_right positive]
+    rw [← CachedGuardedReferenceExecution.execute_ofReference]
+    cases h : CachedGuardedReferenceExecution.execute _ _ _ _ with
+    | none => rfl
+    | some result =>
+      rcases result with ⟨out,paid⟩
+      simp only [Option.map_some,CachedReferenceExecution.FastState.freeze,readCachedWord_eq]
+      rfl
+
 
 private noncomputable abbrev maskTree {n L : ℕ} (adj : PairFlags n) (positive : 0<L) :=
   map (fun s => s.data.cut)
