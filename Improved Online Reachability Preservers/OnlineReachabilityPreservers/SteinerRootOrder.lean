@@ -105,6 +105,30 @@ theorem rootedTerminalOrder_nodup {T : Arcs V} {root : V} (tree : InArborescence
   have arcNodup := List.Nodup.of_map Prod.fst simple.2.of_append_left
   exact List.Nodup.of_map ofLex (List.nodup_reverse.mp arcNodup)
 
+/-- The fixed rootward continuation of an arc is a prefix of exactly the
+ordered routes that use the arc. -/
+theorem rootedTerminalOrder_arc_prefix {T : Arcs V} {root : V} (tree : InArborescence T root)
+    {terminals : Finset V} (allReach : ∀ v ∈ terminals, Reach T v root) {e : V × V} (arc : e ∈ T) :
+    let xs := rootedTerminalOrder T root terminals
+    ∃ stem : List (V ×ₗ V), toLex e ∈ stem ∧ ∀ i : Fin xs.length,
+      toLex e ∈ (ofLex (xs.get i)).1 ↔ stem <+: (ofLex (xs.get i)).1 := by
+  let xs := rootedTerminalOrder T root terminals
+  obtain ⟨tail, _, continuation⟩ := tree.arc_reversed_prefix arc
+  refine ⟨(e :: tail).reverse.map toLex, by simp, fun i => ?_⟩
+  let arcs := (ofLex (xs.get i)).1
+  have plain : e ∈ arcs.map ofLex ↔ (e :: tail).reverse <+: arcs.map ofLex := by
+    have h := continuation (rootedTerminalOrder_walk allReach i)
+    simpa [arcs] using h
+  constructor
+  · intro mem
+    have member : e ∈ arcs.map ofLex := List.mem_map.mpr ⟨toLex e, mem, rfl⟩
+    simpa [arcs, List.map_map, Function.comp_def] using ((plain.mp member).map toLex)
+  · intro pref
+    have member : e ∈ arcs.map ofLex := plain.mpr (by
+      simpa [arcs, List.map_map, Function.comp_def] using pref.map ofLex)
+    obtain ⟨key, hk, eq⟩ := List.mem_map.mp member
+    exact ofLex.injective (show ofLex key = ofLex (toLex e) from eq) ▸ hk
+
 /-- In the terminal traversal order, the routes using an arc form one
 consecutive interval. Empty descendant sets use the empty interval. -/
 theorem rootedTerminalOrder_arc_interval {T : Arcs V} {root : V} (tree : InArborescence T root)
@@ -113,22 +137,7 @@ theorem rootedTerminalOrder_arc_interval {T : Arcs V} {root : V} (tree : InArbor
     ∃ first past : ℕ, ∀ i : Fin xs.length,
       toLex e ∈ (ofLex (xs.get i)).1 ↔ first ≤ i.val ∧ i.val < past := by
   let xs := rootedTerminalOrder T root terminals
-  obtain ⟨tail, _, continuation⟩ := tree.arc_reversed_prefix arc
-  have atIndex (i : Fin xs.length) :
-      toLex e ∈ (ofLex (xs.get i)).1 ↔ (e :: tail).reverse.map toLex <+: (ofLex (xs.get i)).1 := by
-    let arcs := (ofLex (xs.get i)).1
-    have plain : e ∈ arcs.map ofLex ↔ (e :: tail).reverse <+: arcs.map ofLex := by
-      have h := continuation (rootedTerminalOrder_walk allReach i)
-      simpa [arcs] using h
-    constructor
-    · intro mem
-      have member : e ∈ arcs.map ofLex := List.mem_map.mpr ⟨toLex e, mem, rfl⟩
-      simpa [arcs, List.map_map, Function.comp_def] using ((plain.mp member).map toLex)
-    · intro pref
-      have member : e ∈ arcs.map ofLex := plain.mpr (by
-        simpa [arcs, List.map_map, Function.comp_def] using pref.map ofLex)
-      obtain ⟨key, hk, eq⟩ := List.mem_map.mp member
-      exact ofLex.injective (show ofLex key = ofLex (toLex e) from eq) ▸ hk
+  obtain ⟨_, _, atIndex⟩ := rootedTerminalOrder_arc_prefix tree allReach arc
   have ordered : xs.Pairwise (fun a b => a ≤ b) := Finset.pairwise_sort _ _
   refine fin_convex_interval (fun i : Fin xs.length => toLex e ∈ (ofLex (xs.get i)).1)
     (fun {i j k} left right hi hk => ?_)
@@ -136,5 +145,11 @@ theorem rootedTerminalOrder_arc_interval {T : Arcs V} {root : V} (tree : InArbor
   exact prefix_between ((atIndex i).mp hi) ((atIndex k).mp hk)
     (Prod.Lex.monotone_fst_ofLex (ordered.rel_get_of_le left))
     (Prod.Lex.monotone_fst_ofLex (ordered.rel_get_of_le right))
+
+theorem rootedTerminalOrder_arc_mem {T : Arcs V} {root : V} {terminals : Finset V}
+    (allReach : ∀ v ∈ terminals, Reach T v root) (i : Fin (rootedTerminalOrder T root terminals).length)
+    {e : V ×ₗ V} (member : e ∈ (ofLex ((rootedTerminalOrder T root terminals).get i)).1) :
+    ofLex e ∈ T :=
+  (rootedTerminalOrder_walk allReach i).mem (List.mem_reverse.mpr (List.mem_map.mpr ⟨e, member, rfl⟩))
 
 end OnlineReachabilityPreservers

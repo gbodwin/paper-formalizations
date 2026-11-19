@@ -75,14 +75,17 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   bounds the number of child blocks whose parent straddles either boundary
   of a terminal interval. The [ordered routes](OnlineReachabilityPreservers/SteinerRootOrder.lean)
   show that the terminals using any original arc form such an interval.
-  Constructing the full auxiliary forest and its
-  online rounding algorithm remains open.
+  The [shortened routes](OnlineReachabilityPreservers/SteinerHeightBlocks.lean)
+  concatenate back to the original routes and charge each original arc at
+  most twice the branch count per level. The full auxiliary forest and
+  its online rounding algorithm remain open.
 - [The weighted fractional cover](OnlineReachabilityPreservers/SteinerWeightedCover.lean)
   raises rational capacities as batches of cuts arrive. It verifies coverage
   and bounds both the update count and the cost against any fixed set that
-  hits every cut. The bound is logarithmic in the total positive integer
-  edge weight. This implementation takes explicitly listed cuts. The
-  weighted separation oracle for the auxiliary forest remains open.
+  hits every cut. The competitive factor is logarithmic in the total
+  positive integer edge weight. This implementation takes explicitly listed
+  cuts, and its update count depends on the numeric weights. Connecting it
+  to the auxiliary graph and checking weighted separation remain open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

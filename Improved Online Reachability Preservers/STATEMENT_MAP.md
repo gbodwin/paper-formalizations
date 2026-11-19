@@ -58,11 +58,14 @@ its abstract and bibliographic record. All section and result numbers below refe
 | Lemma 22 | Among \(p'\) nontrivial demands hit by the sampled hubs, each creates at least one previously unsatisfied terminal–hub connection. This implies \(p'\le 2\lvert S\rvert\,\mathrm{OPT}\) using oriented terminal incidence. | [Checked](OnlineReachabilityPreservers/SteinerCounting.lean) for every offline solution, with a monotone preserver and both hub subrequests served. |
 
 The [weighted fractional cover](OnlineReachabilityPreservers/SteinerWeightedCover.lean)
-verifies the early auxiliary problem's capacity-update step for explicitly
-listed cuts. It covers every revealed batch and bounds the update count
+provides a capacity-update routine for explicitly listed binary cuts.
+It covers every revealed batch and bounds the update count
 and objective by a logarithmic factor times an integral hitting solution,
-with an additive baseline of at most one. The auxiliary separation and
-rounding steps are separate proof obligations.
+with an additive baseline of at most one in the normalized objective.
+The graph reduction, separation, and rounding remain open.
+The [height-block proof](OnlineReachabilityPreservers/SteinerHeightBlocks.lean)
+constructs the shortened segments on the original rooted routes, checks
+their concatenation, and bounds their weighted cost.
 
 ## Appendix dependencies
 
