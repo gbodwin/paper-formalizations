@@ -157,12 +157,31 @@ gives a bridge. The acyclic overlay therefore forces every consecutive arc.
 
 The seven-vertex family also gives an alternate overlay route under unique
 intersections. Its last demand survives deletion of \((5,6)\) by using
-both ends of the long path. For the common-order extremum, Lean checks a lower bound at
-the original sizes with exactly \(p\) distinct demands for \(n\ge2\)
+both ends of the long path.
+[Checked unique-intersection example](OnlineReachabilityPreservers/UniqueSplitAudit.lean).
+
+The cited overlay construction can also lose an arbitrarily large factor.
+For any integer \(C\ge1\), Lean constructs a fully bridge-free simple path
+family whose consecutive overlay has a preserver with
+\(C|E(H)|+p<\lVert S\rVert\) for the \(p\) distinct endpoint demands.
+The base paths advance by a slope and its square in two coordinates. A
+bridge would have zero weighted variance in its slopes. Its first arc
+and river would then share a slope and their source vertex, specifying
+the same path. Private vertices and two return paths close each base path
+into a directed cycle. A return path as river has no alternate first
+edge. A chain for a base river that uses a return would use the same base
+path twice. The two SCC connector forests
+therefore serve all the overlay demands using only a linear number of
+edges. The existential extremal lower bound for arbitrary digraphs remains
+open across the intermediate demand range.
+[Checked unbounded gap in the cited overlay](OnlineReachabilityPreservers/OverlayLowerAudit.lean)
+· [Checked bridge exclusion for the added return paths](OnlineReachabilityPreservers/CyclicReturnOverlay.lean).
+
+For the common-order extremum, Lean checks a lower bound at the original
+sizes with exactly \(p\) distinct demands for \(n\ge2\)
 and \(p\le n^2\). A bipartite graph supplies a separate bound linear in
 \(p\) when the consecutive overlay's path-count subtraction is substantial.
-[Checked unique-intersection example](OnlineReachabilityPreservers/UniqueSplitAudit.lean)
-· [Exact distinct-demand lower bounds](OnlineReachabilityPreservers/OfflineDemandLower.lean).
+[Exact distinct-demand lower bounds](OnlineReachabilityPreservers/OfflineDemandLower.lean).
 
 For simple path systems with no full bridges through size four, Theorem 43
 bounds their mass by \(B K n\) when \(p^2\le K n\) and by \(B K p\) when
@@ -170,8 +189,7 @@ bounds their mass by \(B K n\) when \(p^2\le K n\) and by \(B K p\) when
 forces \(n-1\) edges in the first regime, and a bipartite DAG forces at
 least \(p/6\) edges in the second. Extra distinct demands fill the demand
 set to exactly \(p\). Together these prove the extremal converse in both
-linear regimes, allowing cyclic path systems. The unrestricted extremal
-implication across the intermediate range remains open.
+linear regimes, allowing cyclic path systems.
 [Checked converse in two demand regimes](OnlineReachabilityPreservers/OfflineConverseRegimes.lean).
 
 The same three paths in their listed order also give an alternate route in

@@ -189,6 +189,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   path system that excludes full bridges through size four. Theorem 43
   bounds that mass by a linear term in each regime. The general extremal
   lower bound remains open between these regimes.
+- [`lemma14_overlay_no_constant`](OnlineReachabilityPreservers/OverlayLowerAudit.lean)
+  checks fully bridge-free simple path families for which the cited overlay
+  and its distinct endpoint demands admit preservers arbitrarily smaller
+  than the total incidence count minus the demand count.
 - [`theorem4_rounded` and `theorem4_sharp`](OnlineReachabilityPreservers/OfflineSharp.lean)
   prove both offline edge bounds for the constructed preserver on arbitrary
   finite digraphs. Two acyclic updates suffice for the rounded bound.
