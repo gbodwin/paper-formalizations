@@ -196,8 +196,8 @@ variable {V I : Type*} [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
 
 local notation "ListBefore" => SourceAudit.BeforeIn
 
-private theorem frozen_cut_of_caps (pieces : I → List V) (pieceSimple : ∀ i, (pieces i).Nodup)
-    (piecesFree : BridgeFree (ListBefore pieces) 4)
+private theorem frozen_cut_of_caps {k : ℕ} (pieces : I → List V) (pieceSimple : ∀ i, (pieces i).Nodup)
+    (piecesFree : BridgeFree (ListBefore pieces) k)
     {M n p D L : ℕ} (hn : 0 < n) (hp : 0 < p)
     (vertices : 11*Fintype.card V ≤ 14*n) (families : 11*Fintype.card I ≤ 17*p)
     (total : (∑ i, (pieces i).toFinset.card) = M)
@@ -211,7 +211,7 @@ private theorem frozen_cut_of_caps (pieces : I → List V) (pieceSimple : ∀ i,
         (∀ v : A, (M:ℝ)/(4*(n:ℝ)) ≤ (occurrences (fun i => (clean i).toFinset) v).card ∧
           ((occurrences (fun i => (clean i).toFinset) v).card : ℝ) ≤ 4*(M:ℝ)/(n:ℝ)) ∧
         (∀ i : B, (M:ℝ)/(4*(p:ℝ)) ≤ ((clean i).length : ℝ) ∧
-          ((clean i).length : ℝ) ≤ 4*(M:ℝ)/(p:ℝ)) ∧ BridgeFree (ListBefore clean) 4 := by
+          ((clean i).length : ℝ) ≤ 4*(M:ℝ)/(p:ℝ)) ∧ BridgeFree (ListBefore clean) k := by
   let Z (i : I) := (pieces i).toFinset
   obtain ⟨A,B,aCap,bCap,retained,minDegree,minLength⟩ :=
     balancedRectangle_subsystem_of_ratios (retention := 119) Z hn hp
@@ -254,16 +254,16 @@ private theorem frozen_cut_of_caps (pieces : I → List V) (pieceSimple : ∀ i,
 
 
 /-- Preserve both original budgets and the frozen four-factor caps for
-simple systems with full bridge exclusion through size four. -/
-theorem regularization_list_balanced_full_four_dense (paths : I → List V)
-    (simple : ∀ i, (paths i).Nodup) (free : BridgeFree (ListBefore paths) 4)
+simple systems with full bridge exclusion through size five. -/
+theorem regularization_list_balanced_full_short_dense {k : ℕ} (three : 3 ≤ k) (five : k ≤ 5) (paths : I → List V)
+    (simple : ∀ i, (paths i).Nodup) (free : BridgeFree (ListBefore paths) k)
     (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
     (dense : 3*Fintype.card V ≤ ∑ i, (paths i).length) (long : 3*Fintype.card I ≤ ∑ i, (paths i).length) :
     let n := Fintype.card V
     let p := Fintype.card I
     let M := ∑ i, (paths i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
-      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) 4 ∧
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
       M ≤ 119*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let n := Fintype.card V
   let p := Fintype.card I
@@ -273,15 +273,15 @@ theorem regularization_list_balanced_full_four_dense (paths : I → List V)
   let copies := splitListVertices paths D
   have copiesSimple (i : I) : (copies i).Nodup :=
     List.Nodup.of_map (fun v => v.fst) ((splitListVertices_project paths D i).symm ▸ simple i)
-  have copiesFree : BridgeFree (ListBefore copies) 4 := by
+  have copiesFree : BridgeFree (ListBefore copies) k := by
     apply free.split_list_vertices_any (fun v : ListVertexBlockIndex paths D => v.fst)
     intro i x y step
     have orig := listBefore_map (fun v : ListVertexBlockIndex paths D => v.fst)
       ((splitListVertices_project paths D i).symm ▸ simple i) step
     simpa only [copies, splitListVertices_project] using orig
   have copiesFreeThree : BridgeFree (ListBefore copies) 3 := by
-    intro k hk
-    exact copiesFree (hk.trans (by decide))
+    intro j hj
+    exact copiesFree (hj.trans three)
   obtain ⟨indexes⟩ := exists_packedPathRanks copies copiesSimple copiesFreeThree
   let selected := baseRankCuts (fun i => (copies i).length) L
   let cuts := synchronizedCuts selected (oppositeCutPartner indexes)
@@ -325,8 +325,8 @@ theorem regularization_list_balanced_full_four_dense (paths : I → List V)
     apply (packedPathPiece_degree_le indexes cuts v).trans
     simpa only [copies, splitListVertices_toFinset] using
       (splitVertices_degree (fun i => (paths i).toFinset) hD v)
-  have piecesFree : BridgeFree (ListBefore pieces) 4 :=
-    packedPathPiece_fullFree copiesSimple indexes copiesFree selected
+  have piecesFree : BridgeFree (ListBefore pieces) k :=
+    packedPathPiece_fullFree_short copiesSimple three five indexes copiesFree selected
   obtain ⟨A,B,aCap,bCap,retained,upper,nodup,degree,length,legal⟩ :=
     frozen_cut_of_caps pieces pieceSimple piecesFree (M := M) (n := n) (p := p) (D := D) (L := L)
       hn hp vertices families total lengthCap degreeCap capD capL
@@ -346,6 +346,59 @@ open Finset
 
 local notation "ListBefore" => SourceAudit.BeforeIn
 
+/-- For full-bridge cutoffs three through five, keep the original vertex and
+path budgets and the factor-four caps relative to the input averages. -/
+theorem regularization_list_frozen_full_short {n p k : ℕ} (three : 3 ≤ k) (five : k ≤ 5)
+    (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : BridgeFree (ListBefore paths) k)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
+      M ≤ 119*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  by_cases thin : M ≤ 3*max n p
+  · obtain ⟨n',vn,p',ip,clean,nodup,legal,retained,upper,caps⟩ :=
+      full_frozen_cleaning_sparse (k := k) hn hp dense long thin
+    exact ⟨n',vn,p',ip,clean,nodup,legal,by omega,upper,caps⟩
+  · have nHigh : 3*n ≤ M := (Nat.mul_le_mul_left 3 (le_max_left _ _)).trans (le_of_not_ge thin)
+    have pHigh : 3*p ≤ M := (Nat.mul_le_mul_left 3 (le_max_right _ _)).trans (le_of_not_ge thin)
+    simpa only [Fintype.card_fin] using
+      (regularization_list_balanced_full_short_dense three five paths simple free
+        (by simpa only [Fintype.card_fin] using hn) (by simpa only [Fintype.card_fin] using hp)
+        (by simpa only [Fintype.card_fin] using nHigh) (by simpa only [Fintype.card_fin] using pHigh))
+
+/-- A maximizing family through size five has a full-bridge-free cleaned
+witness with the original caps and at least one 119th of its mass. -/
+theorem localOrderExtremal_frozen_full_short (n p : ℕ) {k : ℕ} (three : 3 ≤ k) (five : k ≤ 5) (hn : 0 < n) (hp : 0 < p) :
+    ∃ paths : Fin p → List (Fin n), (∀ i, (paths i).Nodup) ∧ BridgeFree (ListBefore paths) k ∧
+      (∀ other : Fin p → List (Fin n), (∀ i, (other i).Nodup) → BridgeFree (ListBefore other) k →
+        (∑ i, (other i).length) ≤ ∑ i, (paths i).length) ∧
+      ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+        (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
+        (∑ i, (paths i).length) ≤ 119*(∑ i, (clean i).length) ∧
+        (∑ i, (clean i).length) ≤ (∑ i, (paths i).length) ∧
+        frozenListCaps n p (∑ i, (paths i).length) clean := by
+  obtain ⟨paths,simple,legal,maximal,dense,long⟩ := localOrderExtremal_isDense n p k false hn hp
+  exact ⟨paths,simple,legal,maximal,regularization_list_frozen_full_short three five paths simple legal hn hp dense long⟩
+
+
+variable {V I : Type*} [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
+
+/-- Preserve both original budgets and the frozen four-factor caps for
+simple systems with full bridge exclusion through size four. -/
+theorem regularization_list_balanced_full_four_dense (paths : I → List V)
+    (simple : ∀ i, (paths i).Nodup) (free : BridgeFree (ListBefore paths) 4)
+    (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
+    (dense : 3*Fintype.card V ≤ ∑ i, (paths i).length) (long : 3*Fintype.card I ≤ ∑ i, (paths i).length) :
+    let n := Fintype.card V
+    let p := Fintype.card I
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) 4 ∧
+      M ≤ 119*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_balanced_full_short_dense (by decide) (by decide) paths simple free hn hp dense long
+
 /-- For full bridge exclusion through four, keep the original vertex and path
 budgets and the factor-four caps relative to the input averages. -/
 theorem regularization_list_frozen_full_four {n p : ℕ} (paths : Fin p → List (Fin n))
@@ -354,18 +407,8 @@ theorem regularization_list_frozen_full_four {n p : ℕ} (paths : Fin p → List
     let M := ∑ i, (paths i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) 4 ∧
-      M ≤ 119*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
-  let M := ∑ i, (paths i).length
-  by_cases thin : M ≤ 3*max n p
-  · obtain ⟨n',vn,p',ip,clean,nodup,legal,retained,upper,caps⟩ :=
-      full_frozen_cleaning_sparse (k := 4) hn hp dense long thin
-    exact ⟨n',vn,p',ip,clean,nodup,legal,by omega,upper,caps⟩
-  · have nHigh : 3*n ≤ M := (Nat.mul_le_mul_left 3 (le_max_left _ _)).trans (le_of_not_ge thin)
-    have pHigh : 3*p ≤ M := (Nat.mul_le_mul_left 3 (le_max_right _ _)).trans (le_of_not_ge thin)
-    simpa only [Fintype.card_fin] using
-      (regularization_list_balanced_full_four_dense paths simple free
-        (by simpa only [Fintype.card_fin] using hn) (by simpa only [Fintype.card_fin] using hp)
-        (by simpa only [Fintype.card_fin] using nHigh) (by simpa only [Fintype.card_fin] using pHigh))
+      M ≤ 119*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_full_short (by decide) (by decide) paths simple free hn hp dense long
 
 /-- A maximizing family through size four has a full-bridge-free cleaned
 witness with the original caps and at least one 119th of its mass. -/
@@ -377,8 +420,7 @@ theorem localOrderExtremal_frozen_full_four (n p : ℕ) (hn : 0 < n) (hp : 0 < p
         (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) 4 ∧
         (∑ i, (paths i).length) ≤ 119*(∑ i, (clean i).length) ∧
         (∑ i, (clean i).length) ≤ (∑ i, (paths i).length) ∧
-        frozenListCaps n p (∑ i, (paths i).length) clean := by
-  obtain ⟨paths,simple,legal,maximal,dense,long⟩ := localOrderExtremal_isDense n p 4 false hn hp
-  exact ⟨paths,simple,legal,maximal,regularization_list_frozen_full_four paths simple legal hn hp dense long⟩
+        frozenListCaps n p (∑ i, (paths i).length) clean :=
+  localOrderExtremal_frozen_full_short n p (by decide) (by decide) hn hp
 
 end OnlineReachabilityPreservers

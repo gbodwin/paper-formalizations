@@ -769,6 +769,16 @@ passed. Production requires owner sign-in. The research entry linked to arXiv.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44576863074).
 
+PaperLab version 31 pins 156 links to `4813ceba` and contains 15 boxed L
+notes. Independent review, the 4,681-declaration paper audit, and local
+replay of the changed defining modules passed. Exact CI replayed every
+project module. Arithmetic ranks agree with the canonical seed order,
+including rank and inverse lookups. The deployed render and interactive
+controls passed. Production requires owner sign-in. The research entry
+linked to arXiv.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44579972345).
+
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
 crossing edges on a cyclic input. The empty prefix has no edges, an

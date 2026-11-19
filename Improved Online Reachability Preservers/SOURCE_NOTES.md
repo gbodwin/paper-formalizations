@@ -4,10 +4,11 @@ These notes concern [arXiv:2410.20471v1](https://arxiv.org/pdf/2410.20471v1).
 The SODA abstract agrees on the displayed rates. The full proceedings text was
 unavailable for comparison.
 
-Section 2.2 describes paths as nonempty vertex sequences. The path-system
-definition in [8] requires each vertex to occur at most once on a path.
-The Lean extremal statements use this convention and permit empty index
-positions as padding of mass zero. [Bridge Girth, Definition 6](https://arxiv.org/pdf/2212.11944v4).
+Section 2.2 describes a set of nonempty vertex sequences. The path-system
+definition in [8] uses a multiset and requires each vertex to occur at most
+once on a path. Separate copies can participate in a 2-bridge. Lean uses
+indexed simple paths and permits empty positions as padding of mass zero.
+[Bridge Girth, Definition 6](https://arxiv.org/pdf/2212.11944v4).
 
 ## Lemma 25 has a false denominator
 
@@ -146,7 +147,8 @@ alone preserves all three demands. In particular, the original chord and
 the route \(2\to3\to0\to1\) give two distinct simple paths for the last
 demand. This falsifies the inference of uniqueness from bridge-freeness
 alone. The asymptotic extremal lower bound remains a separate
-proof obligation.
+proof obligation. Corollary 42 of [8] invokes Theorem 37, so its comparison
+with the acyclic extremum inherits the lower-direction gap from Lemma 40.
 [Checked counterexample](OnlineReachabilityPreservers/SplitAudit.lean)
 · [Bridge Girth, Lemma 40](https://arxiv.org/pdf/2212.11944v4).
 
@@ -319,19 +321,27 @@ local-order upper bound and recurrence of Theorem 43.
   paths supply the witness. Both budgets hold and the output mass is
   between \(M/392\) and \(M\).
   [Checked output-average bounds](OnlineReachabilityPreservers/LocalAverageCleaning.lean).
-- For full bridge exclusion through size four, opposite shared intervals
+- For full bridge cutoffs from three through five, opposite shared intervals
   decompose into chains of adjacent shared vertices. Reversing a shared
   interval pairs each chain link with its counterpart on the other path.
   After splitting vertices, place width cuts between chain positions and mirror
   every cut at its counterpart. Path pieces retain their original relative
-  orders. This doubles the number of added cuts at most and preserves full
-  exclusion through size four. In the dense case, restricting both budgets
-  retains \(121M/238\) incidences before peeling. Peeling at the original
+  orders. This at most doubles the number of cuts. In a bridge of size at most five,
+  every two slots around the river and arcs are adjacent or have one slot
+  between them. The mirrored cuts preserve full exclusion up to that size.
+  In the dense case, restricting both budgets retains at least \(121M/238\)
+  incidences before peeling. Peeling at the original
   one-quarter averages loses at most \(M/2\). Disjoint paths or singleton
   paths cover the sparse case. The final witness retains at least \(M/119\)
   and meets all four original-average caps. The half-bridge case of the frozen
   caps at cutoff four and the arbitrary-cutoff cyclic statements remain open.
   [Checked full-bridge cleaning](OnlineReachabilityPreservers/LocalFrozenCleaning.lean).
+- The opposite-intersection condition alone can fail at size six. One example
+  has unique intersections and excludes every full bridge before splitting.
+  Two disjoint pieces of one path create a size-six bridge. In half mode,
+  the chains used to pair cuts can branch even when every half-bridge is
+  excluded. These examples identify the limits of the splitting proof.
+  [Checked splitting examples](OnlineReachabilityPreservers/CyclicSplitLimits.lean).
 - The proof of Lemma 23 writes \(\beta\) for the half-bridge-free extremum
   \(H\). The statement of Lemma 39 writes \(H\) for the full-bridge-free
   extremum \(\beta\) it is used to estimate.

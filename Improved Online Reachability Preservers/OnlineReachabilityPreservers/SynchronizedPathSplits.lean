@@ -334,11 +334,12 @@ private theorem packedPathPiece_disjoint {paths : I → List V} (indexes : Packe
   exact congrArg (Sigma.mk a) (Fin.ext same)
 
 omit [Fintype I] in
-theorem packedPathPiece_fullFree {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
-    (indexes : PackedPathRanks paths) (free : BridgeFree (ListBefore paths) 4)
+theorem packedPathPiece_fullFree_short {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
+    {size : ℕ} (three : 3 ≤ size) (five : size ≤ 5)
+    (indexes : PackedPathRanks paths) (free : BridgeFree (ListBefore paths) size)
     (selected : Finset (PackedBoundary paths)) :
     let cuts := synchronizedCuts selected (oppositeCutPartner indexes)
-    BridgeFree (ListBefore (packedPathPiece indexes cuts)) 4 := by
+    BridgeFree (ListBefore (packedPathPiece indexes cuts)) size := by
   let cuts := synchronizedCuts selected (oppositeCutPartner indexes)
   let pieces := packedPathPiece indexes cuts
   let parent (j : PackedBlockIndex cuts) := j.fst
@@ -346,14 +347,15 @@ theorem packedPathPiece_fullFree {paths : I → List V} (simple : ∀ i, (paths 
       ListBefore paths (parent j) x y :=
     listBefore_of_sublist (paths := fun k : PackedBlockIndex cuts => paths (parent k)) (cut := pieces)
       (simple j.fst) List.filter_sublist xy
-  have freeThree : BridgeFree (ListBefore paths) 3 := fun k hk => free (by omega)
-  change BridgeFree (ListBefore pieces) 4
+  have freeThree : BridgeFree (ListBefore paths) 3 := fun _ hk => free (hk.trans three)
+  change BridgeFree (ListBefore pieces) size
   intro k hk
   refine ⟨fun b => (free hk).false ?_⟩
-  refine listBridge_after_opposite_safe_split (paths := paths) (pieces := pieces) parent
+  refine listBridge_after_opposite_safe_split_through_five (paths := paths) (pieces := pieces) parent
     (fun {i _ _} h => step (j := i) h)
-    (fun {_ _ _} different same x y => different (packedPathPiece_disjoint indexes cuts same x y)) (by omega)
-    (fun _ {_ _ _ _} different x y => no_parallel_list_steps free.halfFree (by decide) different x y) ?_ b
+    (fun {_ _ _} different same x y => different (packedPathPiece_disjoint indexes cuts same x y))
+    (fun _ {_ _ _ _} different x y => no_parallel_list_steps free.halfFree (by omega) different x y)
+    ?_ (by omega) b
   intro _ j j' q x y same apart xy yx hx hy
   have bx := (mem_packedPathPiece indexes cuts j x).mp hx |>.2
   have by' := (mem_packedPathPiece indexes cuts j' y).mp hy |>.2
@@ -365,6 +367,14 @@ theorem packedPathPiece_fullFree {paths : I → List V} (simple : ∀ i, (paths 
   change i = i' at same
   subst i'
   exact congrArg (Sigma.mk i) (Fin.ext (bx.symm.trans (synced.trans by')))
+
+omit [Fintype I] in
+theorem packedPathPiece_fullFree {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
+    (indexes : PackedPathRanks paths) (free : BridgeFree (ListBefore paths) 4)
+    (selected : Finset (PackedBoundary paths)) :
+    let cuts := synchronizedCuts selected (oppositeCutPartner indexes)
+    BridgeFree (ListBefore (packedPathPiece indexes cuts)) 4 :=
+  packedPathPiece_fullFree_short simple (by decide) (by decide) indexes free selected
 
 omit [Fintype I] in
 private theorem packedPathPiece_sum_at {paths : I → List V} (simple : ∀ i, (paths i).Nodup)

@@ -170,7 +170,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   bridge mode retains at least \(M/392\) of the maximizing incidence mass \(M\).
   It meets both budgets and all four factor-four bounds around its own
   averages. [Output-average cleaning](OnlineReachabilityPreservers/LocalAverageCleaning.lean).
-- With full bridge exclusion through size four, the cleaned maximizing family
+- For full-bridge cutoffs three through five, a cleaned maximizing family
   retains at least \(M/119\) and meets both budgets and all four factor-four
   caps measured against the original averages. The path split places matching
   cuts between opposite intersections. [Frozen-average cleaning](OnlineReachabilityPreservers/LocalFrozenCleaning.lean).
