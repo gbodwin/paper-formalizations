@@ -170,6 +170,7 @@ import DirectedFlowCutGap.BinaryFractionalStepCost
 import DirectedFlowCutGap.BinaryFractionalWalkBounds
 import DirectedFlowCutGap.BinaryFractionalWalkOracle
 import DirectedFlowCutGap.BinaryFractionalWidths
+import DirectedFlowCutGap.BinaryGeometricCounterProgram
 import DirectedFlowCutGap.BinaryIncrementProgram
 import DirectedFlowCutGap.BinaryIndexedPairRead
 import DirectedFlowCutGap.BinaryInputBudgets
@@ -706,6 +707,7 @@ import DirectedFlowCutGap.OracleMaskVertex
 import DirectedFlowCutGap.OracleSelectedMask
 import DirectedFlowCutGap.OracleTailMembership
 import DirectedFlowCutGap.OrderedCounterPrefix
+import DirectedFlowCutGap.OriginalControlWordsProgram
 import DirectedFlowCutGap.OriginalDispatchActive
 import DirectedFlowCutGap.OriginalDispatchCallLift
 import DirectedFlowCutGap.OriginalDispatchCalls
@@ -829,6 +831,7 @@ import DirectedFlowCutGap.PathSystemCharging
 import DirectedFlowCutGap.PathSystemCounting
 import DirectedFlowCutGap.PhysicalBoundedDrawExecution
 import DirectedFlowCutGap.PhysicalBoundedDrawProgram
+import DirectedFlowCutGap.PhysicalControllerControls
 import DirectedFlowCutGap.PhysicalControllerInitializer
 import DirectedFlowCutGap.PhysicalCoverAccess
 import DirectedFlowCutGap.PhysicalCoverExecution
@@ -883,6 +886,9 @@ import DirectedFlowCutGap.RationalEdgeDecomposition
 import DirectedFlowCutGap.RationalEdgeThresholds
 import DirectedFlowCutGap.RationalWeakFamily
 import DirectedFlowCutGap.RationalWeakHorizon
+import DirectedFlowCutGap.RawGraphControllerLaw
+import DirectedFlowCutGap.RawGraphControllerProgram
+import DirectedFlowCutGap.RawGraphInputStore
 import DirectedFlowCutGap.RawNonnegativeRational
 import DirectedFlowCutGap.RawWeightedMasses
 import DirectedFlowCutGap.RecoveredEdgeProjection

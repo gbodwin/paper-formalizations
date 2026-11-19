@@ -8,6 +8,11 @@ modules=(InitialDemandFlagProgram InitialDemandPairProgram InitialDemandMaskProg
   InitialUniformTables InitialRetainedStateProgram InitialGraphDictionary InitialGraphContexts InitialSeedProgram
   PhysicalControllerInitializer OriginalGraphControllerProgram OriginalGraphControllerLaw)
 
+if [[ "${GITHUB_REF_NAME:-}" == codex/flow-raw-controller-20261119 ]]; then
+  modules+=(BinaryGeometricCounterProgram OriginalControlWordsProgram PhysicalControllerControls
+    RawGraphControllerProgram RawGraphControllerLaw RawGraphInputStore)
+fi
+
 for module in "${modules[@]}"; do
   lake env lean "${flags[@]}" "$paper/DirectedFlowCutGap/$module.lean"
   printf 'PASS strict elaboration of %s\n' "$module"

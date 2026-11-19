@@ -1,4 +1,4 @@
-import DirectedFlowCutGap.OriginalGraphControllerProgram
+import DirectedFlowCutGap.RawGraphInputStore
 import DirectedFlowCutGap.PhysicalCoverExecution
 
 open DirectedFlowCutGap BinaryArithmetic ImmutableReferenceSimulation RetainedGridState
@@ -136,8 +136,60 @@ private def checkOriginal : IO Unit := do
     throw (IO.userError "the joined controller did not preserve the original heap, final cut, or fair tape")
   IO.println s!"PASS guarded original graph controller computed its cache and stopped at zero optimum with two epoch, trial and restart slots, {steps} instructions, paid {paid}"
 
+private def checkControls (n : ℕ) (trialWord : Bits) (expectedRatio expectedEpochs : ℕ) : IO Unit := do
+  let seed := PackedWordPairTable.seed
+  let count := word n.bits seed
+  let trials := word trialWord count
+  let one := word [true] trials
+  let tape := [true,false,true]
+  let input : BitState 413 := ⟨one.heap,one.next,⟨count.root,trials.root,one.root,[]⟩,[],0,tape⟩
+  let program := PhysicalControllerControls.program
+  let some (out,steps,_) := execute program 500000 (CachedReferenceExecution.FastState.ofReference input) 0 0
+    | throw (IO.userError "controller parameters did not halt")
+  let some (guarded,paid) := GuardedReferenceExecution.execute program (steps+1) input 0
+    | throw (IO.userError "guarded controller parameters did not halt")
+  let final := eraseState out
+  let some (gates,budget) := pair final.heap final.registers.d | throw (IO.userError "missing computed control record")
+  let some (ratio,threshold) := pair final.heap gates | throw (IO.userError "missing gate words")
+  let some (epoch,fuel) := pair final.heap budget | throw (IO.userError "missing computed epoch spine")
+  let some (t,r) := pair final.heap fuel | throw (IO.userError "missing sampler and restart spines")
+  let read := PhysicalCoverReader.readWord final.heap
+  let spine := PhysicalCoverReader.readList final.heap some final.heap.length
+  unless guarded == out && out.pc == 10 && out.stack.isEmpty && out.source == tape &&
+      out.heap.take input.heap.length == input.heap &&
+      read ratio == some expectedRatio.bits && read threshold == some [] &&
+      (spine epoch).map List.length == some expectedEpochs && epoch == r &&
+      (spine t).map List.length == some (value trialWord) do
+    throw (IO.userError s!"computed control fields are incorrect for {n} vertices")
+  IO.println s!"PASS computed controls for {n} vertices, ratio {expectedRatio}, {expectedEpochs} epoch and restart slots, {value trialWord} trials, {steps} instructions, paid {paid}"
+
+private def checkRaw : IO Unit := do
+  let adj : PairFlags 2 := #v[#v[false,true],#v[true,false]]
+  let matrix := GraphRelaxationRefinement.matrix adj
+  let count := [false,true]
+  let level := [true]
+  let trials := [false,true]
+  let tape := [false,true,true]
+  let (input,setup) := RawGraphInputStore.prepare matrix count level trials tape
+  let program := RawGraphControllerProgram.program
+  let some (counted,k,charge) := execute program 500000 (CachedReferenceExecution.FastState.ofReference input) 0 0
+    | throw (IO.userError "controller from the graph and trial word did not halt")
+  let some (out,paid) := GuardedReferenceExecution.execute program (k+1) input 0
+    | throw (IO.userError "guarded controller from the graph and trial word did not halt")
+  let final := eraseState out
+  unless input.heap.length == RawGraphInputStore.cells matrix count level trials &&
+      counted == out && out.pc == 6 && out.stack.isEmpty && out.source == tape &&
+      out.heap.take input.heap.length == input.heap &&
+      PhysicalCoverReader.readWord final.heap final.registers.d == some [false,false] &&
+      paid == charge+(k+1)*GuardedReferenceExecution.guardCost 26704 do
+    throw (IO.userError "the raw program failed to compute the controls and return the actual cut pointer")
+  IO.println s!"PASS packed original graph and trial word returned the actual guarded cut and unread tape, {k} instructions, paid {paid} after {setup} input operations"
+
 def main : IO Unit := do
   checkMask 1 [[false,false,true],[true,false,false],[true,true,false]]
   checkMask 2 [[false,false,false],[true,false,false],[true,true,false]]
   checkInitialized
   checkOriginal
+  checkControls 0 [] 3 2
+  checkControls 3 [true,false,true,false,false] 4 4
+  checkRaw

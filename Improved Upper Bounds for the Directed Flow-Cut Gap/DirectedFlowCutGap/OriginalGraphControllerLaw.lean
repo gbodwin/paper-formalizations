@@ -30,7 +30,7 @@ private theorem lower_map (T : ℕ) {A B : Type} (f : A→B) (t : FiniteDrawTree
 variable {n L : ℕ} {adj : PairFlags n}
 
 noncomputable abbrev sourceCode (positive : 0<L) := initialCode adj positive
-noncomputable abbrev ratio (n : ℕ) := (restart n).bits
+abbrev ratio (n : ℕ) := (restart n).bits
 abbrev epochs (n : ℕ) := fuel n+1
 
 noncomputable abbrev codeTree (positive : 0<L) (E : ResidualSearch.Enumeration (Network n L)) :=
