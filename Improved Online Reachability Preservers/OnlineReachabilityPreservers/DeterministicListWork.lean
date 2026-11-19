@@ -6,7 +6,8 @@ namespace OnlineReachabilityPreservers
 
 open Finset
 
-private theorem memScanWithChecks_spec {A : Type*} [DecidableEq A] (a : A) (xs : List A) :
+/-- A membership scan returns the list membership decision and charges each tested key. -/
+theorem memScanWithChecks_spec {A : Type*} [DecidableEq A] (a : A) (xs : List A) :
     (anyWithChecks (fun x => decide (a = x)) xs).1 = decide (a ∈ xs) ∧
       (anyWithChecks (fun x => decide (a = x)) xs).2 ≤ xs.length := by
   obtain ⟨found, cap⟩ := anyWithChecks_spec (fun x => decide (a=x)) xs
@@ -134,66 +135,82 @@ private theorem least?_insert_key (S : Finset V) (v : V) :
     · exact (min_le_right _ _).trans (least?_le old first)
 
 omit [Fintype V] in
-private def leastSuccessorWithChecks (arcs : List (V × V)) (u : V) : List V → Option V × ℕ
+/-- Find the least accepted candidate, adding one charge per minimum call. -/
+def leastWhereWithChecks (test : V → Bool × ℕ) : List V → Option V × ℕ
   | [] => (none, 0)
   | v::rest =>
-    let edge := anyWithChecks (fun a => decide ((u,v) = a)) arcs
-    let tail := leastSuccessorWithChecks arcs u rest
-    if edge.1 then
+    let checked := test v
+    let tail := leastWhereWithChecks test rest
+    if checked.1 then
       match tail.1 with
-      | none => (some v, edge.2 + tail.2)
-      | some best => (some (min v best), edge.2 + tail.2 + 1)
-    else (tail.1, edge.2 + tail.2)
+      | none => (some v, checked.2 + tail.2)
+      | some best => (some (min v best), checked.2 + tail.2 + 1)
+    else (tail.1, checked.2 + tail.2)
+
+omit [Fintype V] in
+/-- The least candidate and the charge for testing every candidate and comparing minima. -/
+theorem leastWhereWithChecks_spec (test : V → Bool × ℕ) (P : V → Prop) [DecidablePred P]
+    (candidates : List V) (budget : ℕ)
+    (passes : ∀ v ∈ candidates, (test v).1 = decide (P v))
+    (testCost : ∀ v ∈ candidates, (test v).2 ≤ budget) :
+    let out := leastWhereWithChecks test candidates
+    out.1 = least? (candidates.toFinset.filter P) ∧ out.2 ≤ candidates.length * (budget+1) := by
+  induction candidates with
+  | nil => simp [leastWhereWithChecks, least?]
+  | cons v rest ih =>
+    let tail := leastWhereWithChecks test rest
+    let checked := test v
+    obtain ⟨found, work⟩ := ih
+      (fun w hw => passes w (List.mem_cons_of_mem _ hw))
+      (fun w hw => testCost w (List.mem_cons_of_mem _ hw))
+    change tail.1 = _ at found
+    change tail.2 ≤ _ at work
+    have accepted : checked.1 = decide (P v) := passes v List.mem_cons_self
+    have charged : checked.2 ≤ budget := testCost v List.mem_cons_self
+    let step := if checked.1 then
+      match tail.1 with
+      | none => (some v, checked.2+tail.2)
+      | some best => (some (min v best), checked.2+tail.2+1)
+      else (tail.1,checked.2+tail.2)
+    change step.1 = least? ((v::rest).toFinset.filter P) ∧ step.2 ≤ (rest.length+1)*(budget+1)
+    have cap : checked.2 + tail.2 + 1 ≤ (rest.length+1)*(budget+1) := by
+      rw [Nat.succ_mul]
+      omega
+    by_cases present : P v
+    · have filterEq : ((v::rest).toFinset.filter P) = insert v (rest.toFinset.filter P) := by
+        simp only [List.toFinset_cons, filter_insert, present, ↓reduceIte]
+      have eq : checked.1 = true := by simpa only [present, decide_true] using accepted
+      rw [filterEq, least?_insert_key, ← found]
+      cases result : tail.1 with
+      | none =>
+        simp only [step, eq, ↓reduceIte, result, Option.elim_none, true_and]
+        exact (Nat.le_succ _).trans cap
+      | some best =>
+        simp only [step, eq, ↓reduceIte, result, Option.elim_some, true_and]
+        exact cap
+    · have filterEq : ((v::rest).toFinset.filter P) = rest.toFinset.filter P := by
+        simp only [List.toFinset_cons, filter_insert, present, ↓reduceIte]
+      have eq : checked.1 = false := by simpa only [present, decide_false] using accepted
+      rw [filterEq]
+      simp only [step, eq, Bool.false_eq_true, ↓reduceIte]
+      exact ⟨found, (Nat.le_succ _).trans cap⟩
+
+omit [Fintype V] in
+private def leastSuccessorWithChecks (arcs : List (V × V)) (u : V) (candidates : List V) : Option V × ℕ :=
+  leastWhereWithChecks (fun v => anyWithChecks (fun a => decide ((u,v) = a)) arcs) candidates
 
 omit [Fintype V] in
 private theorem leastSuccessorWithChecks_spec (arcs : List (V × V)) (u : V) (candidates : List V) :
     let out := leastSuccessorWithChecks arcs u candidates
     out.1 = least? (candidates.toFinset.filter (Edge arcs.toFinset u)) ∧
       out.2 ≤ candidates.length * (arcs.length+1) := by
-  induction candidates with
-  | nil => simp [leastSuccessorWithChecks, least?]
-  | cons v rest ih =>
-    let tail := leastSuccessorWithChecks arcs u rest
-    let edge := anyWithChecks (fun a => decide ((u,v) = a)) arcs
-    obtain ⟨found, work⟩ := ih
-    change tail.1 = _ at found
-    change tail.2 ≤ _ at work
-    obtain ⟨hasEdge, edgeWork⟩ := memScanWithChecks_spec (u,v) arcs
-    change edge.1 = _ at hasEdge
-    change edge.2 ≤ _ at edgeWork
-    let step := if edge.1 then
-      match tail.1 with
-      | none => (some v, edge.2+tail.2)
-      | some best => (some (min v best), edge.2+tail.2+1)
-      else (tail.1,edge.2+tail.2)
-    change step.1 = least? ((v::rest).toFinset.filter (Edge arcs.toFinset u)) ∧
-      step.2 ≤ (rest.length+1)*(arcs.length+1)
-    by_cases present : (u,v) ∈ arcs
-    · have filterEq : ((v::rest).toFinset.filter (Edge arcs.toFinset u)) =
-          insert v (rest.toFinset.filter (Edge arcs.toFinset u)) := by
-        simp only [List.toFinset_cons, filter_insert, Edge, List.mem_toFinset, present, ↓reduceIte]
-      have budget : edge.2 + tail.2 + 1 ≤ (rest.length+1)*(arcs.length+1) := by
-        rw [Nat.succ_mul]
-        omega
-      have eq : edge.1 = true := by simpa only [present, decide_true] using hasEdge
-      rw [filterEq, least?_insert_key, ← found]
-      cases result : tail.1 with
-      | none =>
-        simp only [step, eq, ↓reduceIte, result, Option.elim_none, true_and]
-        exact (Nat.le_succ _).trans budget
-      | some best =>
-        simp only [step, eq, ↓reduceIte, result, Option.elim_some, true_and]
-        exact budget
-    · have filterEq : ((v::rest).toFinset.filter (Edge arcs.toFinset u)) =
-          rest.toFinset.filter (Edge arcs.toFinset u) := by
-        simp only [List.toFinset_cons, filter_insert, Edge, List.mem_toFinset, present, ↓reduceIte]
-      have budget : edge.2 + tail.2 ≤ (rest.length+1)*(arcs.length+1) := by
-        rw [Nat.succ_mul]
-        omega
-      have eq : edge.1 = false := by simpa only [present, decide_false] using hasEdge
-      rw [filterEq]
-      simp only [step, eq, Bool.false_eq_true, ↓reduceIte]
-      exact ⟨found,budget⟩
+  apply leastWhereWithChecks_spec
+  · intro v _
+    have found := (memScanWithChecks_spec (u,v) arcs).1
+    rw [found]
+    exact Bool.eq_iff_iff.mpr (by simp [Edge])
+  · intro v _
+    exact (memScanWithChecks_spec (u,v) arcs).2
 
 omit [Fintype V] in
 private def nextVertexListWithChecks (G H : List (V × V)) (R : List V) (u : V) : Option V × ℕ :=
@@ -313,14 +330,16 @@ theorem forwardPathListWithChecks_spec (G H : List (V × V)) (s t : V) :
     rfl
   · gcongr
 
-private def insertListWithChecks {A : Type*} [DecidableEq A] : List A → List A → List A × ℕ
+/-- Insert list keys into a set represented by a duplicate-free list, charging membership tests. -/
+def insertListWithChecks {A : Type*} [DecidableEq A] : List A → List A → List A × ℕ
   | [], seen => (seen, 0)
   | a::as, seen =>
     let present := anyWithChecks (fun x => decide (a=x)) seen
     let out := insertListWithChecks as (if present.1 then seen else a::seen)
     (out.1,present.2+out.2)
 
-private theorem insertListWithChecks_spec {A : Type*} [DecidableEq A] [Fintype A]
+/-- The list union stays duplicate-free and charges at most one scan per inserted key. -/
+theorem insertListWithChecks_spec {A : Type*} [DecidableEq A] [Fintype A]
     (xs seen : List A) (simple : seen.Nodup) :
     let out := insertListWithChecks xs seen
     out.1.Nodup ∧ out.1.toFinset = seen.toFinset ∪ xs.toFinset ∧

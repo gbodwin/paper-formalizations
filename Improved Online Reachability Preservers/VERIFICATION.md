@@ -864,13 +864,24 @@ The generated code uses the charged list scans and purchase pass. The
 comparison model charges each pair equality or minimum call once.
 [Reviewed list evaluator](OnlineReachabilityPreservers/DeterministicListWork.lean).
 
+Independent review checked the prepared least-vertex labels, duplicate-free
+condensation, and equality of the forward quotient run on any supplied prefix.
+The generated evaluator shares one transpose and one label table across the
+two projections. Its comparison budget includes list lookup and deduplication.
+[Reviewed SCC and quotient evaluator](OnlineReachabilityPreservers/SccListWork.lean).
+
 ## Execution examples
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. The list-backed evaluator gave the same edge sets with
 cumulative comparison counts `[0, 657, 1383, 1967, 2553]`. A graph with a
 two-vertex SCC confirmed the internal and
-crossing edges on a cyclic input. The empty prefix has no edges, an
+crossing edges on a cyclic input. A five-vertex example with two nontrivial
+SCCs and a repeated raw crossing arc returned labels `[0,0,2,2,4]` and
+exactly the two projected arcs `(0,2)` and `(2,4)`. The label table and
+condensation together took 1,796 comparisons. The three projected requests
+used 1,933 comparisons including preparation. Every prefix had the ordinary
+quotient forward run's edge set. The empty prefix has no edges, an
 unreachable forward request returns `none`, and a self-request returns an
 empty path. An execution of the complete Steiner draw evaluator on a
 two-vertex graph, with a repeated demand and a self-request, gave

@@ -295,6 +295,20 @@ operations in this representation. Each pair equality or minimum call is
 one charged operation. General-digraph SCC preprocessing, the implementation
 cost of each key operation, other list operations, and arithmetic time are
 separate costs.
+The [list-backed SCC preparation](OnlineReachabilityPreservers/SccListWork.lean)
+builds the exact least-vertex labels using two bounded reverse searches per
+vertex. The evaluator shares one transpose and one label table. Projection
+looks up each endpoint in that table. The resulting condensation is
+exact and duplicate-free. With a complete duplicate-free vertex list,
+its comparison count is at most
+\[
+n\bigl(4n^2m+n(n+1)\bigr)+m(2n+1+n^2).
+\]
+The same table supplies the demand projection. The condensed forward run
+adds at most \(p(2n+B(n,m))\) comparisons, with \(B\) the list-backed
+per-arrival forward budget. These counts cover the input condensation and
+the forward computation in the quotient. Lifting the selected arcs and
+building the internal connectors are separate operations.
 The [preassigned-path counter](OnlineReachabilityPreservers/AssignmentSearchWork.lean)
 combines the calls made by quota certification and path selection with the
 arc inspections and successor tests in each base rule and lifted path.
