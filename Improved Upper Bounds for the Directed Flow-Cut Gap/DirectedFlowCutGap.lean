@@ -226,6 +226,7 @@ import DirectedFlowCutGap.BinarySizeExecution
 import DirectedFlowCutGap.BinarySizeProgram
 import DirectedFlowCutGap.BinarySizeTrace
 import DirectedFlowCutGap.BinarySizeValue
+import DirectedFlowCutGap.BinarySolverOuterControls
 import DirectedFlowCutGap.BinarySourceFuel
 import DirectedFlowCutGap.BinarySourceSerialization
 import DirectedFlowCutGap.BinaryTrimProgram
@@ -1023,6 +1024,7 @@ import DirectedFlowCutGap.ScalarQuotientRowCall
 import DirectedFlowCutGap.ScalarQuotientRowProgram
 import DirectedFlowCutGap.ScalarQuotientRowRefinement
 import DirectedFlowCutGap.ScalarQuotientRowTrace
+import DirectedFlowCutGap.SelectedWeakCutLaw
 import DirectedFlowCutGap.SelfDelimitedWordProgram
 import DirectedFlowCutGap.ShiftedGridBound
 import DirectedFlowCutGap.ShiftedGridCallLift

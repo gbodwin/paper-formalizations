@@ -90,10 +90,18 @@ def finish {n : ℕ} (D : Input n) (setup : ℕ) (r : PhysicalAmplifiedVertexSol
   ⟨EncodedEdgeSolver.outputFor D r.output,r.suffix,r.dispatch,r.readback,r.roundingAndSelection+setup+outputBudget n⟩
 
 def run {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) (tape : Bits) : Option (EdgeResult n) :=
-  let e := confidenceExponent n κ
+  let controls := BinarySolverOuterControls.edge n κ
   let packed := lineWithCost D
-  (PhysicalAmplifiedVertexSolver.run packed.1 (round D mode) (EncodedEdgeSolver.drawBound n) e (e+1) tape).map
-    (finish D packed.2)
+  (PhysicalAmplifiedVertexSolver.run packed.1 (round D mode) controls.draws controls.extra controls.confidence tape).map
+    (finish D (packed.2+controls.paid))
+
+theorem run_controls {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) (tape : Bits) :
+    run κ D mode tape =
+      (PhysicalAmplifiedVertexSolver.run (lineWithCost D).1 (round D mode) (EncodedEdgeSolver.drawBound n)
+        (confidenceExponent n κ) (confidenceExponent n κ+1) tape).map
+          (finish D ((lineWithCost D).2+(BinarySolverOuterControls.edge n κ).paid)) := by
+  simp only [run,BinarySolverOuterControls.edge_draws,BinarySolverOuterControls.edge_extra,
+    BinarySolverOuterControls.edge_confidence]
 
 theorem run_observe {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) (tape : Bits) :
     (run κ D mode tape).map EdgeResult.observe =
@@ -117,7 +125,7 @@ theorem run_observe {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexMode
   have readout : (run κ D mode tape).map EdgeResult.observe =
       (actual.map PhysicalAmplifiedVertexSolver.Result.observe).map
         (fun (out,rest) => (EncodedEdgeSolver.outputFor D out,rest)) := by
-    simp only [run,actual,e,Option.map_map,Function.comp_def,finish,EdgeResult.observe,
+    simp only [run_controls,actual,e,Option.map_map,Function.comp_def,finish,EdgeResult.observe,
       PhysicalAmplifiedVertexSolver.Result.observe]
   rw [readout,law]
   simp only [Option.map_map,Function.comp_def,abstract]

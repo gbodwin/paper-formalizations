@@ -94,7 +94,7 @@ theorem edge_polynomial : ∃ p : Polynomial ℕ, ∀ {n B : ℕ} (κ : ℕ) (D 
   let vertices := BinaryEdgeGadget.dimension (X : Polynomial ℕ)
   let exponent : Polynomial ℕ := (X+2)*X+1
   let pad := X+line+(costs+1)+sourceSize+vertices+exponent+drawPolynomial vertices
-  refine ⟨p.comp pad+lineBudget line X X+outputBudget X,?_⟩
+  refine ⟨p.comp pad+lineBudget line X X+outputBudget X+BinarySolverOuterControls.budget X X,?_⟩
   intro n B κ D mode tape positive fits out ran
   let y := n+D.demands.length+B+κ
   let x := pad.eval y
@@ -161,8 +161,9 @@ theorem edge_polynomial : ∃ p : Polynomial ℕ, ∀ {n B : ℕ} (κ : ℕ) (D 
   have good := ChargedVertexModes.priceWidth_bounds binary
   have trials : T ≤ z :=
     (trialLimit_le binary draw e (e+1) hl hW draws eBound he good).trans (Nat.le_add_right _ _)
+  rw [run_controls] at ran
   change ((PhysicalAmplifiedVertexSolver.run binary (round D mode) draw e (e+1) tape).map
-    (finish D (lineWithCost D).2))=some out at ran
+    (finish D ((lineWithCost D).2+(BinarySolverOuterControls.edge n κ).paid)))=some out at ran
   obtain ⟨r,hr,rfl⟩ := Option.map_eq_some_iff.mp ran
   have rounds : ∀ rows, PhysicalCoverReader.plan (BinaryFractionalGuesses.solveInput binary).1=.covers rows →
       ∀ row ∈ rows, ∀ bits a, round D mode T
@@ -189,9 +190,11 @@ theorem edge_polynomial : ∃ p : Polynomial ℕ, ∀ {n B : ℕ} (κ : ℕ) (D 
     simp only [outputBudget,eval_add,eval_mul,eval_ofNat,eval_X,eval_pow,eval_one]
     gcongr
   have totalLine := setup.trans liftLine
-  simp only [finish,eval_add,eval_comp]
-  change r.dispatch+r.readback+(r.roundingAndSelection+(lineWithCost D).2+outputBudget n) ≤
-    p.eval x+(lineBudget line X X).eval y+(outputBudget (X : Polynomial ℕ)).eval y
+  have meter := (BinarySolverOuterControls.edge_paid n κ).trans (BinarySolverOuterControls.budget_mono hn hk)
+  simp only [finish,eval_add,eval_comp,BinarySolverOuterControls.budget_eval,eval_X]
+  change r.dispatch+r.readback+
+      (r.roundingAndSelection+((lineWithCost D).2+(BinarySolverOuterControls.edge n κ).paid)+outputBudget n) ≤
+    p.eval x+(lineBudget line X X).eval y+(outputBudget (X : Polynomial ℕ)).eval y+BinarySolverOuterControls.budget y y
   omega
 
 end DirectedFlowCutGap.PhysicalBinaryEdgeCost

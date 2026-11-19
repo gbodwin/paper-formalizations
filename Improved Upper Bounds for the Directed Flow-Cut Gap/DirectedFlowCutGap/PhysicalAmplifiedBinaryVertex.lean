@@ -2,6 +2,7 @@ import DirectedFlowCutGap.PhysicalBinaryVertexRounding
 import DirectedFlowCutGap.PhysicalSolverCostEnvelope
 import DirectedFlowCutGap.PhysicalOriginalInputCompleteness
 import DirectedFlowCutGap.PhysicalWireCostEnvelope
+import DirectedFlowCutGap.BinarySolverOuterControls
 
 /-! Run the original vertex solver with measured binary preparation on every
 realized cover row. The output and the remaining literal tape are unchanged. -/
@@ -40,17 +41,34 @@ theorem runner_observe {n : ℕ} (mode : ChargedVertexModes.Mode) (T : ℕ)
     simpa only [runner,ChargedVertexModes.round,Option.map_map,Function.comp_def,PhysicalBinaryVertexRounding.Result.charge,
       PhysicalIntegerRounding.Result.observe] using same
 
+private def addControls {n : ℕ} (paid : ℕ) (r : Result n) : Result n :=
+  { r with roundingAndSelection := r.roundingAndSelection+paid }
+
 def vertex {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : BinaryFractionalGuesses.Input n)
     (tape : Bits) : Option (Result n) :=
-  let e := confidenceExponent n κ
-  PhysicalAmplifiedVertexSolver.run D (runner mode) (roundDrawBound n) e (e+1) tape
+  let controls := BinarySolverOuterControls.vertex n κ
+  (PhysicalAmplifiedVertexSolver.run D (runner mode) controls.draws controls.extra controls.confidence tape).map
+    (addControls controls.paid)
+
+private theorem vertex_run {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : BinaryFractionalGuesses.Input n)
+    (tape : Bits) :
+    vertex κ mode D tape =
+      (PhysicalAmplifiedVertexSolver.run D (runner mode) (roundDrawBound n)
+        (confidenceExponent n κ) (confidenceExponent n κ+1) tape).map
+          (addControls (BinarySolverOuterControls.vertex n κ).paid) := by
+  simp only [vertex,BinarySolverOuterControls.vertex_draws,BinarySolverOuterControls.vertex_extra,
+    BinarySolverOuterControls.vertex_confidence]
 
 theorem vertex_observe {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : BinaryFractionalGuesses.Input n)
     (tape : Bits) :
     (vertex κ mode D tape).map Result.observe =
       (PhysicalAmplifiedVertexSolver.vertex κ mode D tape).map Result.observe := by
-  rw [PhysicalAmplifiedVertexSolver.vertex_observe]
-  exact PhysicalAmplifiedVertexSolver.run_observe D _ _ _ _ _ tape (runner_observe mode)
+  rw [PhysicalAmplifiedVertexSolver.vertex_observe,vertex_run]
+  have eq := PhysicalAmplifiedVertexSolver.run_observe D (runner mode) (ChargedVertexModes.round n mode)
+    (roundDrawBound n) (confidenceExponent n κ) (confidenceExponent n κ+1) tape (runner_observe mode)
+  have observe : Result.observe (n:=n) ∘ addControls (BinarySolverOuterControls.vertex n κ).paid = Result.observe := rfl
+  rw [Option.map_map,observe]
+  simpa only [polynomialBitTree,bitTree] using eq
 
 def vertexWithCost (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
     PhysicalCoverAccess.Read (Σ n,Result n) :=
@@ -139,6 +157,9 @@ theorem runner_paid {n b T y : ℕ} (q : Polynomial ℕ)
     exact Nat.add_le_add ((qBound n T y hn ht).2 D bits out.cut out')
       ((PhysicalBinaryVertexRounding.size_paid T D fits bits call).trans monotone)
 
+attribute [local irreducible] PhysicalAmplifiedVertexSolver.run PhysicalSourceReadback.run
+
+set_option maxHeartbeats 1600000 in
 theorem vertex_polynomial : ∃ p : Polynomial ℕ, ∀ {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) {out : Result n}, vertex κ mode D tape=some out →
       out.dispatch+out.readback+out.roundingAndSelection ≤ p.eval (vertexSize D κ) := by
@@ -147,8 +168,11 @@ theorem vertex_polynomial : ∃ p : Polynomial ℕ, ∀ {n : ℕ} (κ : ℕ) (mo
   let wire : Polynomial ℕ := 2*(X+X*X+X*(X+X))+3*(X+X+X)+3
   let exponent : Polynomial ℕ := (X+2)*X+1
   let pad := X+wire+exponent+drawPolynomial X
-  refine ⟨p.comp pad,?_⟩
+  refine ⟨p.comp pad+BinarySolverOuterControls.budget X X,?_⟩
   intro n κ mode D tape out ran
+  rw [vertex_run] at ran
+  obtain ⟨inner,innerRan,same⟩ := Option.map_eq_some_iff.mp ran
+  subst out
   let y := vertexSize D κ
   let x := pad.eval y
   let z := trialEnvelope.eval x+x
@@ -184,13 +208,18 @@ theorem vertex_polynomial : ∃ p : Polynomial ℕ, ∀ {n : ℕ} (κ : ℕ) (mo
   have eBound : e ≤ x := (Nat.le_succ _).trans he
   have ht : T ≤ z := (trialLimit_le D (roundDrawBound n) e (e+1) (hn.trans hy) (hb.trans hy)
     draw eBound he fits).trans (Nat.le_add_right _ _)
-  rw [eval_comp]
-  refine hp D (runner mode) (roundDrawBound n) e (e+1) tape (hn.trans hy) (hb.trans hy) draw eBound he source
-    positive fits (fun rows stored row member bits r call => ?_) ran
-  apply runner_paid q hq mode _ bits (VertexReductionWidths.fractional_input D stored member) ((hn.trans hy).trans hx) ht ?_ call
-  have H := eval_mono PhysicalSourceDispatch.instructionPolynomial (source.trans hx)
-  have price := (hb.trans hy).trans hx
-  exact max_le (by omega) (by omega)
+  have solve : inner.dispatch+inner.readback+inner.roundingAndSelection ≤ p.eval x := by
+    refine hp D (runner mode) (roundDrawBound n) e (e+1) tape (hn.trans hy) (hb.trans hy) draw eBound he source
+      positive fits (fun rows stored row member bits r call => ?_) innerRan
+    apply runner_paid q hq mode _ bits (VertexReductionWidths.fractional_input D stored member) ((hn.trans hy).trans hx) ht ?_ call
+    have H := eval_mono PhysicalSourceDispatch.instructionPolynomial (source.trans hx)
+    have price := (hb.trans hy).trans hx
+    exact max_le (by omega) (by omega)
+  have meter := (BinarySolverOuterControls.vertex_paid n κ).trans (BinarySolverOuterControls.budget_mono hn hκ)
+  rw [eval_add,eval_comp,BinarySolverOuterControls.budget_eval,eval_X]
+  change inner.dispatch+inner.readback+(inner.roundingAndSelection+(BinarySolverOuterControls.vertex n κ).paid) ≤
+    p.eval x+BinarySolverOuterControls.budget y y
+  omega
 
 theorem vertex_wire_polynomial : ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits)
     {n : ℕ} {r : Result n}, (vertexWithCost κ mode source tape).1=some ⟨n,r⟩ →
