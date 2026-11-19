@@ -215,6 +215,23 @@ first-success events give the uniform coordinate law and the expected
 number of bits. The probability of each finite joint attempt event factors,
 and the product of the resulting laws is uniform on the complete algorithm's
 three seed types. This model takes its fair bits as input.
+The [consecutive decoder](OnlineReachabilityPreservers/SteinerBitSeed.lean)
+uses a single finite bit list for those choices. It returns the seed, the
+individual rejection counts, and the unread suffix when the supplied list
+contains a complete sample. It takes explicit finite bijections for early
+coordinates, vertices, and arcs. The [raw-prefix law](OnlineReachabilityPreservers/SteinerBitReplay.lean)
+identifies the event for a specified seed and joint rejection counts on
+a uniform raw prefix of the corresponding length. Its probability factors
+into the early grid probability and the coordinate first-success probabilities.
+Additional bits leave a completed result unchanged and remain in the returned
+suffix. Successful consumed inputs are prefix-free. The
+[joint sum](OnlineReachabilityPreservers/SteinerBitLaw.lean) over all rejection
+profiles has the uniform seed law, and the weights over all outcomes sum to
+one. The resulting expected edge count agrees with the finite-seed mean in
+Theorem 21 for every fixed trace and gives its competitive bound.
+The decoder's exact consumption and the sum of the marginal expected bit
+counts give the same fixed-height polynomial bound. A successful decoding
+feeds the same seed and graph sequence to the weighted prefix evaluator.
 The [preassigned-path counter](OnlineReachabilityPreservers/AssignmentSearchWork.lean)
 combines the calls made by quota certification and path selection with the
 arc inspections and successor tests in each base rule and lifted path.
@@ -242,7 +259,8 @@ scale, and fuel. One shared row per link suffices, so setup adds at most
 \(|E_F|n^2\) key comparisons. One fixed-height polynomial covers the
 reported searches, capacity table visits, and original table reads across
 the whole replay. Finite container operations, arithmetic bit costs, and
-conversion from sampled indices to vertex values remain separate runtime costs.
+construction and application of the finite index enumerations remain separate
+runtime costs.
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

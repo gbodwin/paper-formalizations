@@ -132,6 +132,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   compose polynomial bounds for the measured searches. The
   [bit budget](OnlineReachabilityPreservers/SteinerSamplingWork.lean) bounds
   the expected number of fair bits for independent seed coordinates.
+- The [Steiner bit decoder](OnlineReachabilityPreservers/SteinerBitSeed.lean)
+  reads the early grid choices, hub draws, and thin rounding choices from
+  consecutive pieces of one finite bit list. It returns the unread suffix
+  and the rejection count of each draw. The [raw-prefix proof and replay](OnlineReachabilityPreservers/SteinerBitReplay.lean)
+  factor each fixed-count fair-bit event, prove that successful consumed
+  inputs are prefix-free, and pass the decoded seeds to the verified weighted
+  prefix evaluator. [Summing the raw events](OnlineReachabilityPreservers/SteinerBitLaw.lean)
+  recovers the uniform seed law and the expected competitive bound on fixed
+  feasible traces. The decoder takes finite index orders for the early
+  coordinates, vertices, and arcs as inputs.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
@@ -260,7 +270,8 @@ minimum choice. SCC labels, internal trees, and crossing representatives depend
 only on the input graph and can be precomputed. The [Steiner replay](OnlineReachabilityPreservers/SteinerDistanceReplay.lean)
 also bounds weighted capacity-table construction and reuse, graph searches, and
 original weight reads by a polynomial at fixed height. Finite container operations,
-arithmetic bit costs, and seed decoding still need end-to-end time bounds.
+arithmetic bit costs, and construction and use of the finite index enumerations
+still need end-to-end time bounds.
 
 ## Source and verification
 

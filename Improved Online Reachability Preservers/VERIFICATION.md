@@ -715,6 +715,16 @@ requires owner sign-in. The research entry linked to the arXiv manuscript.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44532334205).
 
+PaperLab version 25 pins 134 links to `40848cb2` and contains 15 boxed L
+notes. Lean proves cutoff-four cleaning at the unrestricted maximum in
+both bridge modes with both original budgets and bounds around the witness's
+averages. Independent review, the 4,182-declaration paper audit, and local
+kernel replay of all 217 project modules passed. CI passed on the exact
+commit. The deployed render and interactive controls passed. Production
+requires owner sign-in. The research entry linked to the arXiv manuscript.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44541654229).
+
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
 crossing edges on a cyclic input. The empty prefix has no edges, an
@@ -722,6 +732,9 @@ unreachable forward request returns `none`, and a self-request returns an
 empty path. An execution of the complete Steiner draw evaluator on a
 two-vertex graph, with a repeated demand and a self-request, gave
 cumulative purchases `[0, 1, 1, 1]`.
+The bit-driven replay on that one-arc graph at height zero consumed 201
+supplied zero bits, gave the same cumulative purchases, and returned the
+following two bits unread. An empty input returned no result.
 
 The weighted-capacity replay builds a table once per separator and constructs
 residual graphs from the stored values and their unique keys. The two-vertex
