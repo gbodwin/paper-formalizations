@@ -33,9 +33,9 @@ theorem roundedWeightedCapacity_mono {cost : ℕ} (positive : 0 < cost) :
   intro a b h
   exact Nat.div_le_div_right (Nat.add_le_add_right (weightedLoad_mono positive h) _)
 
-theorem roundedWeightedCapacity_le {cost charge scale : ℕ} (positive : 0 < cost) (scalePos : 0 < scale)
+theorem weightedLoad_factors_le {cost charge scale : ℕ} (positive : 0 < cost) (scalePos : 0 < scale)
     (cap : charge ≤ (scale.log2 + 1) * cost) :
-    roundedWeightedCapacity cost charge ≤ 4 * scale + 1 := by
+    2 ^ (charge / cost) ≤ 2 * scale ∧ cost + charge % cost ≤ 2 * cost := by
   have expo : charge / cost ≤ scale.log2 + 1 :=
     (Nat.div_le_iff_le_mul positive).mpr (by omega)
   have pow_le : 2 ^ (charge / cost) ≤ 2 * scale := by
@@ -43,18 +43,26 @@ theorem roundedWeightedCapacity_le {cost charge scale : ℕ} (positive : 0 < cos
       _ ≤ 2 ^ (scale.log2 + 1) := Nat.pow_le_pow_right (by decide) expo
       _ = 2 * 2 ^ scale.log2 := by rw [pow_succ']
       _ ≤ _ := Nat.mul_le_mul_left _ ((Nat.le_log2 scalePos.ne').mp le_rfl)
-  have load : weightedLoad cost charge ≤ (2 * scale) * (2 * cost) := by
-    unfold weightedLoad
-    have rem := Nat.mod_lt charge positive
-    exact Nat.mul_le_mul pow_le (by omega)
-  have cpos : (0 : ℚ) < cost := Nat.cast_pos.mpr positive
-  have rational : weightedCapacity cost charge ≤ 4 * (scale : ℚ) := by
-    apply (div_le_iff₀ cpos).mpr
-    have h : (weightedLoad cost charge : ℚ) ≤ ((2 * scale) * (2 * cost) : ℕ) := by exact_mod_cast load
-    push_cast at h
-    linarith only [h]
-  have result := (roundedWeightedCapacity_bounds positive charge).2.trans (add_le_add rational le_rfl)
-  exact_mod_cast result
+  have rem := Nat.mod_lt charge positive
+  exact ⟨pow_le, by omega⟩
+
+/-- The integer numerator used for ceiling division is polynomially
+bounded in the edge weight and the fixed capacity scale. -/
+theorem roundedWeightedCapacity_numerator_le {cost charge scale : ℕ} (positive : 0 < cost)
+    (scalePos : 0 < scale) (cap : charge ≤ (scale.log2 + 1) * cost) :
+    weightedLoad cost charge + (cost - 1) ≤ (4 * scale + 1) * cost := by
+  obtain ⟨power,bump⟩ := weightedLoad_factors_le positive scalePos cap
+  calc
+    _ ≤ (2 * scale) * (2 * cost) + cost :=
+      Nat.add_le_add (Nat.mul_le_mul power bump) (Nat.sub_le _ _)
+    _ = _ := by ring
+
+theorem roundedWeightedCapacity_le {cost charge scale : ℕ} (positive : 0 < cost) (scalePos : 0 < scale)
+    (cap : charge ≤ (scale.log2 + 1) * cost) :
+    roundedWeightedCapacity cost charge ≤ 4 * scale + 1 := by
+  unfold roundedWeightedCapacity
+  exact (Nat.div_le_div_right (roundedWeightedCapacity_numerator_le positive scalePos cap)).trans_eq
+    (Nat.mul_div_cancel _ positive)
 
 section
 

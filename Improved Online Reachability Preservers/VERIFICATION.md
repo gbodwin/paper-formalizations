@@ -574,6 +574,14 @@ An exact-source replay grants no coverage to a paper statement outside the
   four caps through size three. The 3758-declaration audit, local kernel
   replay, and independent correspondence review passed.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44510793894).
+- [04d7e20a](https://github.com/gbodwin/paper-formalizations/commit/04d7e20ad764a5aa53d5b537898c0dbf1babb50d)
+  includes rounding comparisons at every arrival prefix. The 3773-declaration
+  audit and local kernel replay passed. Independent review checked the two
+  nested prefix counts and confirmed the compiled one-time preparation and
+  single evaluation of each nonempty early row. The two-vertex example's
+  per-prefix charges are `[0, 539960, 539960, 539960]` and its two preparations
+  cost 12 arc inspections and 20 template comparisons.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44512109459).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
