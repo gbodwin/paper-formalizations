@@ -10,7 +10,7 @@ open Finset
 noncomputable def uniformMean {I : Type*} [Fintype I] (f : I → ℝ) : ℝ :=
   (∑ i, f i)/(Fintype.card I:ℝ)
 
-private theorem uniformMean_mono {I : Type*} [Fintype I] {f g : I → ℝ}
+theorem uniformMean_mono {I : Type*} [Fintype I] {f g : I → ℝ}
     (pointwise : ∀ i, f i ≤ g i) : uniformMean f ≤ uniformMean g :=
   div_le_div_of_nonneg_right (sum_le_sum (fun i _ => pointwise i)) (Nat.cast_nonneg _)
 
@@ -50,21 +50,24 @@ theorem uniformMean_power_le_cap {I : Type*} [Fintype I] {f : I → ℝ} {T r : 
 
 variable {V I : Type*} [LinearOrder V] [LinearOrder I] [Fintype V] [Fintype I]
 
-/-- The refined Lemma 34 inequality in terms of uniform means over bases. -/
-theorem lemma34_minkowski_mean {paths : I → Finset V} (free : HalfBridgeFree (PathBefore paths) 4)
-    (h D : ℕ) (hp : 0 < Fintype.card I) (degree : ∀ v, (occurrences paths v).card ≤ D) :
-    Real.sqrt (uniformMean fun base => ((offBaseBranchTuples paths base h).card:ℝ)) ≤
+omit [LinearOrder I] in
+/-- Normalize the dyadic triangle bound over the set of base paths. -/
+theorem lemma34_minkowski_mean_from_weights (paths : I → Finset V) (weight : I → V → ℕ)
+    (count : I → ℕ) (D : ℕ) (hp : 0 < Fintype.card I)
+    (cap : ∀ b v, v ∉ paths b → weight b v ≤ D)
+    (weighted : ∀ b, count b ≤ ∑ i, (∑ v ∈ paths i \ paths b, weight b v)^2) :
+    Real.sqrt (uniformMean fun base => (count base:ℝ)) ≤
       2*∑ j ∈ range (Nat.log 2 D+1), (2:ℝ)^j *
-        Real.sqrt (uniformMean fun base => ∑ i, ((paths i ∩ degreeBucket paths base h j).card:ℝ)^2) := by
+        Real.sqrt (uniformMean fun base => ∑ i, ((paths i ∩ weightedDegreeBucket (paths base) (weight base) j).card:ℝ)^2) := by
   let P : ℝ := Fintype.card I
   have hP : 0 < P := Nat.cast_pos.mpr hp
-  let S (j : ℕ) := ∑ base : I, ∑ i, ((paths i ∩ degreeBucket paths base h j).card:ℝ)^2
-  let Q := ∑ base : I, ((offBaseBranchTuples paths base h).card:ℝ)
+  let S (j : ℕ) := ∑ base : I, ∑ i, ((paths i ∩ weightedDegreeBucket (paths base) (weight base) j).card:ℝ)^2
+  let Q := ∑ base : I, (count base:ℝ)
   let J := range (Nat.log 2 D+1)
   have qPos : 0 ≤ Q := sum_nonneg (fun _ _ => Nat.cast_nonneg _)
   have sPos (j : ℕ) : 0 ≤ S j := sum_nonneg (fun _ _ => sum_nonneg (fun _ _ => sq_nonneg _))
   have bound : Real.sqrt Q ≤ 2*∑ j ∈ J, (2:ℝ)^j*Real.sqrt (S j) :=
-    lemma34_minkowski free h D degree
+    lemma34_minkowski_from_weights paths weight count D cap weighted
   have k := div_le_div_of_nonneg_right bound (Real.sqrt_pos.mpr hP).le
   change Real.sqrt (Q/P) ≤ 2*∑ j ∈ J, (2:ℝ)^j*Real.sqrt (S j/P)
   calc
@@ -76,6 +79,17 @@ theorem lemma34_minkowski_mean {paths : I → Finset V} (free : HalfBridgeFree (
       apply sum_congr rfl
       intro j _
       rw [Real.sqrt_div (sPos j), mul_div_assoc]
+
+/-- The refined Lemma 34 inequality in terms of uniform means over bases. -/
+theorem lemma34_minkowski_mean {paths : I → Finset V} (free : HalfBridgeFree (PathBefore paths) 4)
+    (h D : ℕ) (hp : 0 < Fintype.card I) (degree : ∀ v, (occurrences paths v).card ≤ D) :
+    Real.sqrt (uniformMean fun base => ((offBaseBranchTuples paths base h).card:ℝ)) ≤
+      2*∑ j ∈ range (Nat.log 2 D+1), (2:ℝ)^j *
+        Real.sqrt (uniformMean fun base => ∑ i, ((paths i ∩ degreeBucket paths base h j).card:ℝ)^2) := by
+  exact lemma34_minkowski_mean_from_weights paths (fun b v => (branchesThrough paths b h v).card)
+    (fun b => (offBaseBranchTuples paths b h).card) D hp
+    (fun _ v outside => (branchesThrough_le_degree free outside).trans (degree v))
+    (lemma34_weighted_path_bound paths · h)
 
 omit [LinearOrder I] in
 /-- Deterministic cap on each actual off-base dyadic bucket. -/
@@ -89,6 +103,41 @@ theorem degreeBucket_size_cap (paths : I → Finset V) (base : I) (h j L D : ℕ
   _ ≤ ∑ _ ∈ paths base, D*(h+1) := sum_le_sum fun u _ => Nat.mul_le_mul_right _ (degree u)
   _ = (paths base).card * D * (h+1) := by simp [mul_assoc]
   _ ≤ _ := Nat.mul_le_mul_right _ (Nat.mul_le_mul_right _ length)
+
+omit [LinearOrder I] [Fintype V] in
+/-- Average the vertex-sample moment estimate over the actual buckets. -/
+theorem lemma34_mean_bucket_moment_from_samples (paths : I → Finset V) (bucket : I → Finset V)
+    {L D C a b : ℝ} (hb : 0 < b)
+    (sampled : ∀ S : Finset V, 0 < S.card →
+      (∑ i, ((paths i ∩ S).card:ℝ)^2) ≤
+        2*C*(S.card:ℝ)*(L+D) +
+        (1/(3-4*a)+1)*C^(1/(2-2*a))*(S.card:ℝ)^(3/2:ℝ)*D^((3-4*a)/(2-2*a)) +
+        (1/(2*b-1)+1)*C^(1/b)*(S.card:ℝ)^(1/b)*D^((2*b-1)/b)) :
+    let n (base : I) : ℝ := (bucket base).card
+    uniformMean (fun base => ∑ i, ((paths i ∩ bucket base).card:ℝ)^2) ≤
+      (2*C*(L+D))*uniformMean n +
+      ((1/(3-4*a)+1)*C^(1/(2-2*a))*D^((3-4*a)/(2-2*a)))*
+        uniformMean (fun base => (n base)^(3/2:ℝ)) +
+      ((1/(2*b-1)+1)*C^(1/b)*D^((2*b-1)/b))*
+        uniformMean (fun base => (n base)^(1/b)) := by
+  dsimp only
+  let N (base : I) : ℝ := (bucket base).card
+  let t₁ := 2*C*(L+D)
+  let t₂ := (1/(3-4*a)+1)*C^(1/(2-2*a))*D^((3-4*a)/(2-2*a))
+  let t₃ := (1/(2*b-1)+1)*C^(1/b)*D^((2*b-1)/b)
+  change _ ≤ t₁*uniformMean N +
+    t₂*uniformMean (fun base => (N base)^(3/2:ℝ)) +
+    t₃*uniformMean (fun base => (N base)^(1/b))
+  simp only [← uniformMean_mul, ← uniformMean_add]
+  apply uniformMean_mono
+  intro base
+  let S := bucket base
+  change (∑ i, ((paths i ∩ S).card:ℝ)^2) ≤
+    t₁*(S.card:ℝ)+t₂*(S.card:ℝ)^(3/2:ℝ)+t₃*(S.card:ℝ)^(1/b)
+  by_cases he : S = ∅
+  · simp [he, Real.zero_rpow (inv_ne_zero hb.ne')]
+  have hs : 0 < S.card := card_pos.mpr (nonempty_iff_ne_empty.mpr he)
+  exact (sampled S hs).trans_eq (by dsimp only [t₁,t₂,t₃]; ring)
 
 /-- The moment estimate for each off-base bucket, averaged over actual bases. -/
 theorem lemma34_mean_bucket_moment {paths : I → Finset V} (free : HalfBridgeFree (PathBefore paths) 4)
@@ -104,28 +153,11 @@ theorem lemma34_mean_bucket_moment {paths : I → Finset V} (free : HalfBridgeFr
         uniformMean (fun base => (n base)^(3/2:ℝ)) +
       ((1/(2*b-1)+1)*C^(1/b)*d^((2*b-1)/b))*
         uniformMean (fun base => (n base)^(1/b)) := by
-  dsimp only
-  let N (base : I) : ℝ := (degreeBucket paths base h j).card
-  let d : ℝ := D
-  let t₁ := 2*C*((L:ℝ)+d)
-  let t₂ := (1/(3-4*a)+1)*C^(1/(2-2*a))*d^((3-4*a)/(2-2*a))
-  let t₃ := (1/(2*b-1)+1)*C^(1/b)*d^((2*b-1)/b)
-  have hb : 0 < b := by linarith
-  change _ ≤ t₁*uniformMean N +
-    t₂*uniformMean (fun base => (N base)^(3/2:ℝ)) +
-    t₃*uniformMean (fun base => (N base)^(1/b))
-  simp only [← uniformMean_mul, ← uniformMean_add]
-  apply uniformMean_mono
-  intro base
-  let S := degreeBucket paths base h j
-  change (∑ i, ((paths i ∩ S).card:ℝ)^2) ≤
-    t₁*(S.card:ℝ)+t₂*(S.card:ℝ)^(3/2:ℝ)+t₃*(S.card:ℝ)^(1/b)
-  by_cases he : S = ∅
-  · simp [he, Real.zero_rpow (inv_ne_zero hb.ne')]
-  have hs : 0 < S.card := card_pos.mpr (nonempty_iff_ne_empty.mpr he)
-  have upper := sampled_vertex_moment free S hs D hD (show (0:ℝ) < L from Nat.cast_pos.mpr hL)
-    hC ha₀ ha₁ hb₀ hb₁ (fun i => Nat.cast_le.mpr (length i)) (fun u _ => degree u) input
-  exact upper.trans_eq (by dsimp only [t₁,t₂,t₃,d]; ring)
+  apply lemma34_mean_bucket_moment_from_samples paths (fun base => degreeBucket paths base h j)
+    (show 0 < b by linarith)
+  intro S hs
+  exact sampled_vertex_moment free S hs D hD (Nat.cast_pos.mpr hL) hC ha₀ ha₁ hb₀ hb₁
+    (fun i => Nat.cast_le.mpr (length i)) (fun v _ => degree v) input
 
 /-- The first moment of each actual bucket is at most the predecessor-tail
 envelope from Lemma 33 when the threshold exceeds its coefficient. -/

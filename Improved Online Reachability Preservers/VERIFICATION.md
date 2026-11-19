@@ -418,6 +418,11 @@ An exact-source replay grants no coverage to a paper statement outside the
   long subfamily. The 3168-declaration audit and local kernel replay passed.
   Independent review checked the suffix anchor, retained targets and fibers.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44481784001).
+- [8bae4dae](https://github.com/gbodwin/paper-formalizations/commit/8bae4dae8a723bba42f647f79af003be2526f9fe)
+  proves the filtered on-base expectation without logarithmic loss. The
+  3177-declaration audit and local kernel replay passed. Independent review
+  checked the actual support sizes, geometric sum and normalization.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44482679729).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

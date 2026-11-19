@@ -314,6 +314,37 @@ theorem ranked_path_lengths (paths : I → Finset V) :
     have hi : i.1 < Fintype.card I := i.2.trans_le hk
     simp [values, hi, Function.Embedding.trans_apply, Fin.castLE]
 
+omit [LinearOrder V] [Fintype V] in
+/-- The second moment from length bounds on every actual indexed subfamily. -/
+theorem lemma31_moment_from_subfamily (paths : I → Finset V)
+    {n d L C a b : ℝ} (hn : 0 < n) (hd : 0 < d) (hL : 0 < L) (hC : 0 < C)
+    (ha₀ : 1/2 ≤ a) (ha₁ : a < 3/4) (hb₀ : 1/2 < b) (hb₁ : b ≤ 1)
+    (cap : ∀ i, ((paths i).card : ℝ) ≤ L)
+    (mass : (∑ i, ((paths i).card : ℝ)) ≤ n*d)
+    (subfamily : ∀ J : Finset I,
+      let p : ℝ := J.card
+      (∑ i ∈ J, ((paths i).card : ℝ)) ≤ C * max n (max (n^a*p^(2-2*a)) (max (n^(2-2*b)*p^b) p))) :
+    (∑ i, ((paths i).card : ℝ)^2) ≤
+      2*C*n*(L+d) +
+      (1/(3-4*a)+1)*C^(1/(2-2*a))*n^(3/2 : ℝ)*d^((3-4*a)/(2-2*a)) +
+      (1/(2*b-1)+1)*C^(1/b)*n^(1/b)*d^((2*b-1)/b) := by
+  let p := Fintype.card I
+  obtain ⟨values, order, listed, prefixes⟩ := ranked_path_lengths paths
+  obtain ⟨all, hc, sums⟩ := prefixes p le_rfl
+  have heq : all = (Finset.univ : Finset I) := Finset.eq_univ_of_card _ hc
+  have total : (∑ i ∈ range p, values i) = ∑ j, ((paths j).card : ℝ) := by
+    simpa only [heq, id_eq] using sums id
+  have bound := lemma31_ranked_moment p values hn hd hL hC ha₀ ha₁ hb₀ hb₁
+    (fun i hi => by obtain ⟨j, eq⟩ := listed i hi; rw [eq]; positivity) order
+    (fun i hi => by obtain ⟨j, eq⟩ := listed i hi; rw [eq]; exact cap j) (total.le.trans mass) (by
+      intro k hk
+      obtain ⟨J, hJ, hsum⟩ := prefixes k hk
+      have eq : (∑ i ∈ range k, values i) = ∑ j ∈ J, ((paths j).card : ℝ) := hsum id
+      rw [eq]
+      simpa only [hJ] using subfamily J)
+  rw [sums (· ^ 2), heq] at bound
+  exact bound
+
 /-- Lemma 31 on ordered paths with a common vertex order. The input bound
 is the inductive incidence-size envelope applied to each subfamily. -/
 theorem lemma31_acyclic_moment (paths : I → Finset V) (free : HalfBridgeFree (PathBefore paths) 4)
@@ -330,22 +361,7 @@ theorem lemma31_acyclic_moment (paths : I → Finset V) (free : HalfBridgeFree (
       2*C*n*(L+d) +
       (1/(3-4*a)+1)*C^(1/(2-2*a))*n^(3/2 : ℝ)*d^((3-4*a)/(2-2*a)) +
       (1/(2*b-1)+1)*C^(1/b)*n^(1/b)*d^((2*b-1)/b) := by
-  let p := Fintype.card I
-  obtain ⟨values, order, listed, prefixes⟩ := ranked_path_lengths paths
-  obtain ⟨all, hc, sums⟩ := prefixes p le_rfl
-  have heq : all = (Finset.univ : Finset I) := Finset.eq_univ_of_card _ hc
-  have total : (∑ i ∈ range p, values i) = ∑ j, ((paths j).card : ℝ) := by
-    simpa only [heq, id_eq] using sums id
-  have positive : (0 : ℝ) < (Fintype.card V : ℝ) := by exact_mod_cast hn
-  have bound := lemma31_ranked_moment p values positive hd hL hC ha₀ ha₁ hb₀ hb₁
-    (fun i hi => by obtain ⟨j, eq⟩ := listed i hi; rw [eq]; positivity) order
-    (fun i hi => by obtain ⟨j, eq⟩ := listed i hi; rw [eq]; exact cap j) (total.le.trans mass) (by
-      intro k hk
-      obtain ⟨J, hJ, hsum⟩ := prefixes k hk
-      have eq : (∑ i ∈ range k, values i) = ∑ j ∈ J, ((paths j).card : ℝ) := hsum id
-      rw [eq]
-      simpa only [hJ] using subfamily J (free.restrict_paths J))
-  rw [sums (· ^ 2), heq] at bound
-  exact bound
+  exact lemma31_moment_from_subfamily paths (Nat.cast_pos.mpr hn) hd hL hC ha₀ ha₁ hb₀ hb₁
+    cap mass (fun J => subfamily J (free.restrict_paths J))
 
 end OnlineReachabilityPreservers
