@@ -33,9 +33,10 @@ bound remains open. [Physical execution scope](verification/PHYSICAL_SOURCE_DISP
 | Theorem 29 | Actual repaired finite reduction: 4n² vertices,3W weight,6αC cost, zero cases | Runtime; exact gap notation requires the stated bounded-instance interpretation |
 | Theorems30–31 | Actual dyadic edge-to-vertex and split-vertex constructions, all path/cut/count/weight/cost bridges and bounded-oracle forms | Constructive runtime |
 | Theorem 32 | Actual endpoint-safe self-reduction and uniform vertex n^(1/3+ε) composition | Runtime |
-| Theorem 33 | Corrected finite family and PMF for both models, linear-in-n edge horizon with tiny-edge preprocessing, and exact original-weight edge law with a quadratic horizon | Complete algorithmic runtime and efficient same-weight edge family |
+| Theorem 33 | Finite family and PMF for both models. `RandomizedEdgeFamily.calibrated_families` executes adaptive edge-cut calls, bounds literal fair-bit reads and failure, and proves the marginal bound in the original weights. The exact-weight edge law also has a quadratic-horizon variant. | Deterministic bit-time and fixed-instruction realization of the adaptive solver. Near-linear horizon at the exact original-weight rounding factor. |
 
 The current scoped gate is [the constructive workflow](../.github/workflows/flow-constructive-rounding.yml).
+The adaptive edge-family extension has a [separate exact-commit gate](../.github/workflows/flow-adaptive-family.yml) and a [proof scope record](verification/ADAPTIVE_EDGE_FAMILY_20261119.md).
 The manifest `verification/component-verification.json` records an earlier
 component checkpoint.
 Independent reviews record semantic scope and boundary cases. No desired

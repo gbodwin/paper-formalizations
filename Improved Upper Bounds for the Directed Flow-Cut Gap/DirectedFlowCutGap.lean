@@ -71,6 +71,7 @@ import DirectedFlowCutGap.AdaptiveCost
 import DirectedFlowCutGap.AdaptiveEdgeBound
 import DirectedFlowCutGap.AdaptiveEpoch
 import DirectedFlowCutGap.AdaptiveHighProbability
+import DirectedFlowCutGap.AdaptiveOracleFailure
 import DirectedFlowCutGap.AdaptivePackingActiveExecution
 import DirectedFlowCutGap.AdaptivePackingActiveSelection
 import DirectedFlowCutGap.AdaptivePackingActiveTail
@@ -232,6 +233,8 @@ import DirectedFlowCutGap.CapacityBottleneckRefinement
 import DirectedFlowCutGap.CapacityBottleneckSelection
 import DirectedFlowCutGap.CapacityCandidateConstruction
 import DirectedFlowCutGap.CapacityCandidateStep
+import DirectedFlowCutGap.CheckedEdgeOracle
+import DirectedFlowCutGap.CheckedMWHistory
 import DirectedFlowCutGap.ClosureRuntime
 import DirectedFlowCutGap.ConcreteExpressionBounds
 import DirectedFlowCutGap.ConcreteExpressionProgram
@@ -569,6 +572,7 @@ import DirectedFlowCutGap.MinimumShiftRange
 import DirectedFlowCutGap.MinimumShiftTrace
 import DirectedFlowCutGap.MonadicBitSampler
 import DirectedFlowCutGap.MultiplicativeWeights
+import DirectedFlowCutGap.NNRatStoredBounds
 import DirectedFlowCutGap.NaturalFractionExecution
 import DirectedFlowCutGap.NaturalFractionProgram
 import DirectedFlowCutGap.NormalizedRowBounds
@@ -756,7 +760,13 @@ import DirectedFlowCutGap.PreparedPackingExecution
 import DirectedFlowCutGap.PreparedPackingProgram
 import DirectedFlowCutGap.PreparedRowEmit
 import DirectedFlowCutGap.QueryBudgetArithmetic
+import DirectedFlowCutGap.RandomizedEdgeFamily
+import DirectedFlowCutGap.RandomizedEdgeFamilyParameters
 import DirectedFlowCutGap.RationalComparisonProgram
+import DirectedFlowCutGap.RationalEdgeDecomposition
+import DirectedFlowCutGap.RationalEdgeThresholds
+import DirectedFlowCutGap.RationalWeakFamily
+import DirectedFlowCutGap.RationalWeakHorizon
 import DirectedFlowCutGap.RawNonnegativeRational
 import DirectedFlowCutGap.RawWeightedMasses
 import DirectedFlowCutGap.RecoveredEdgeProjection

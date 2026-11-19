@@ -1,0 +1,44 @@
+name: Directed flow-cut adaptive edge family
+on:
+  push:
+    branches:
+      - codex/flow-adaptive-20261119
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  LEAN_NUM_THREADS: 1
+jobs:
+  family:
+    runs-on: ubuntu-latest
+    timeout-minutes: 115
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Bind exact source
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git diff --exit-code HEAD --
+          python3 scripts/CheckReferenceRecovery.py
+      - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
+        with:
+          auto-config: "false"
+          build: "true"
+          build-args: "+DirectedFlowCutGap.RandomizedEdgeFamilyParameters Cli"
+          test: "false"
+          lint: "false"
+          use-mathlib-cache: "true"
+          mk_all-check: "false"
+          axiom-audit: "false"
+      - name: Verify the module index
+        run: |
+          lake env bash -c '
+            cd "$1"
+            lean -j1 --run ../.lake/packages/mathlib/scripts/mk_all.lean --check --lib DirectedFlowCutGap
+          ' _ 'Improved Upper Bounds for the Directed Flow-Cut Gap'
+      - name: Check the adaptive proof and run the edge solver fixture
+        run: bash scripts/CheckFlowAdaptiveFamilies.sh
+      - name: Recheck source identity
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git diff --exit-code HEAD --
+          python3 scripts/CheckReferenceRecovery.py
