@@ -317,10 +317,21 @@ local-order upper bound and recurrence of Theorem 43.
   so each lies within a factor of four of its output average. For small
   budgets or low mass after restriction, a spanning path or singleton
   paths supply the witness. Both budgets hold and the output mass is
-  between \(M/392\) and \(M\). The frozen
-  original-average lower caps through size four without unique intersections
-  and the arbitrary-size cyclic statements remain open.
+  between \(M/392\) and \(M\).
   [Checked output-average bounds](OnlineReachabilityPreservers/LocalAverageCleaning.lean).
+- For full bridge exclusion through size four, opposite shared intervals
+  decompose into chains of adjacent shared vertices. Reversing a shared
+  interval pairs each chain link with its counterpart on the other path.
+  After splitting vertices, place width cuts between chain positions and mirror
+  every cut at its counterpart. Path pieces retain their original relative
+  orders. This doubles the number of added cuts at most and preserves full
+  exclusion through size four. In the dense case, restricting both budgets
+  retains \(121M/238\) incidences before peeling. Peeling at the original
+  one-quarter averages loses at most \(M/2\). Disjoint paths or singleton
+  paths cover the sparse case. The final witness retains at least \(M/119\)
+  and meets all four original-average caps. The half-bridge case of the frozen
+  caps at cutoff four and the arbitrary-cutoff cyclic statements remain open.
+  [Checked full-bridge cleaning](OnlineReachabilityPreservers/LocalFrozenCleaning.lean).
 - The proof of Lemma 23 writes \(\beta\) for the half-bridge-free extremum
   \(H\). The statement of Lemma 39 writes \(H\) for the full-bridge-free
   extremum \(\beta\) it is used to estimate.

@@ -91,24 +91,36 @@ private theorem outputAverageWidth {M q : ℕ} (hq : 0 < q) (dense : q ≤ M) :
   have left' : 2*w*(q/4) ≤ M := by nlinarith only [left]
   omega
 
-private theorem listOutputAverageCaps_relabel {V I : Type*}
-    [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] (paths : I → List V)
-    (simple : ∀ i, (paths i).Nodup) (half : Bool) (allowed : localOrderAdmissible half 4 paths)
-    (caps : listOutputAverageCaps paths) :
-    ∃ clean : Fin (Fintype.card I) → List (Fin (Fintype.card V)),
-      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half 4 clean ∧
-      (∑ i, (clean i).length) = (∑ i, (paths i).length) ∧ listOutputAverageCaps clean := by
+/-- Relabel both finite ordered supports by their canonical finite ordinals. -/
+def relabelListPathsFin {V I : Type*} [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
+    (paths : I → List V) (i : Fin (Fintype.card I)) : List (Fin (Fintype.card V)) :=
   let vIso : Fin (Fintype.card V) ≃o V := Fintype.orderIsoFinOfCardEq V rfl
   let iIso : Fin (Fintype.card I) ≃o I := Fintype.orderIsoFinOfCardEq I rfl
-  let clean (i : Fin (Fintype.card I)) := (paths (iIso i)).map vIso.symm
+  (paths (iIso i)).map vIso.symm
+
+/-- Finite ordinal relabeling preserves mass, degrees, lengths, and bridge exclusion. -/
+theorem relabelListPathsFin_spec {V I : Type*}
+    [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] (paths : I → List V)
+    (simple : ∀ i, (paths i).Nodup) {half : Bool} {k : ℕ} (allowed : localOrderAdmissible half k paths) :
+    let vIso : Fin (Fintype.card V) ≃o V := Fintype.orderIsoFinOfCardEq V rfl
+    let iIso : Fin (Fintype.card I) ≃o I := Fintype.orderIsoFinOfCardEq I rfl
+    let clean := relabelListPathsFin paths
+    (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      (∑ i, (clean i).length) = (∑ i, (paths i).length) ∧
+      (∀ v, (occurrences (fun i => (clean i).toFinset) v).card =
+        (occurrences (fun i => (paths i).toFinset) (vIso v)).card) ∧
+      (∀ i, (clean i).length = (paths (iIso i)).length) := by
+  let vIso : Fin (Fintype.card V) ≃o V := Fintype.orderIsoFinOfCardEq V rfl
+  let iIso : Fin (Fintype.card I) ≃o I := Fintype.orderIsoFinOfCardEq I rfl
+  let clean := relabelListPathsFin paths
   have project : (fun i => (clean i).map vIso) = fun i => paths (iIso i) := by
     funext i
-    simp [clean, List.map_map, Function.comp_def]
+    simp [clean, relabelListPathsFin, vIso, iIso, List.map_map, Function.comp_def]
   have steps {i u v} (step : ListBefore clean i u v) : ListBefore paths (iIso i) (vIso u) (vIso v) := by
     have old := listBefore_map vIso (by rw [congrFun project i]; exact simple _) step
     rw [project] at old
     exact old
-  have noBridge : localOrderAdmissible half 4 clean := by
+  have noBridge : localOrderAdmissible half k clean := by
     cases half
     · intro k hk
       exact ⟨fun b => (allowed hk).false ((b.mapVertices vIso vIso.injective
@@ -117,7 +129,7 @@ private theorem listOutputAverageCaps_relabel {V I : Type*}
       exact allowed hk ((b.mapVertices vIso vIso.injective (fun _ _ _ h => steps h)).mapPaths
         iIso iIso.injective (fun _ _ _ h => h)) (iIso.strictMono earlier)
   have mass : (∑ i, (clean i).length) = ∑ i, (paths i).length := by
-    simp only [clean, List.length_map]
+    simp only [clean, relabelListPathsFin, List.length_map]
     exact Equiv.sum_comp iIso.toEquiv (fun i => (paths i).length)
   have degrees (v : Fin (Fintype.card V)) :
       (occurrences (fun i => (clean i).toFinset) v).card =
@@ -129,16 +141,30 @@ private theorem listOutputAverageCaps_relabel {V I : Type*}
       change v ∈ clean j ↔ vIso v ∈ paths (iIso j)
       constructor
       · intro member
+        change v ∈ (paths (iIso j)).map vIso.symm at member
         obtain ⟨a, inside, equal⟩ := List.mem_map.mp member
         have original : a = vIso v := by simpa only [OrderIso.apply_symm_apply] using congrArg vIso equal
         exact original ▸ inside
       · exact fun inside => List.mem_map.mpr ⟨vIso v, inside, vIso.symm_apply_apply v⟩
     rw [eq, card_map]
-  refine ⟨clean, fun i => (simple (iIso i)).map vIso.symm.injective, noBridge, mass, ?_⟩
+  exact ⟨fun i => (simple (iIso i)).map vIso.symm.injective, noBridge, mass, degrees,
+    fun i => by simp only [relabelListPathsFin, List.length_map]⟩
+
+private theorem listOutputAverageCaps_relabel {V I : Type*}
+    [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] (paths : I → List V)
+    (simple : ∀ i, (paths i).Nodup) (half : Bool) (allowed : localOrderAdmissible half 4 paths)
+    (caps : listOutputAverageCaps paths) :
+    ∃ clean : Fin (Fintype.card I) → List (Fin (Fintype.card V)),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half 4 clean ∧
+      (∑ i, (clean i).length) = (∑ i, (paths i).length) ∧ listOutputAverageCaps clean := by
+  let vIso : Fin (Fintype.card V) ≃o V := Fintype.orderIsoFinOfCardEq V rfl
+  let iIso : Fin (Fintype.card I) ≃o I := Fintype.orderIsoFinOfCardEq I rfl
+  obtain ⟨cleanSimple, cleanLegal, mass, degrees, lengths⟩ := relabelListPathsFin_spec paths simple allowed
+  refine ⟨relabelListPathsFin paths, cleanSimple, cleanLegal, mass, ?_⟩
   unfold listOutputAverageCaps at caps ⊢
   simp only [mass, Fintype.card_fin]
   exact ⟨fun v => by rw [degrees]; exact caps.1 (vIso v),
-    fun i => by simpa only [clean, List.length_map] using caps.2 (iIso i)⟩
+    fun i => by rw [lengths]; exact caps.2 (iIso i)⟩
 
 private theorem restrictListPaths_mass_eq {V I : Type*} [LinearOrder V]
     (paths : I → List V) (simple : ∀ i, (paths i).Nodup) (A : Finset V) (B : Finset I) :

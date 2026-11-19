@@ -753,6 +753,22 @@ The research entry linked to the arXiv manuscript.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44564977060).
 
+PaperLab version 29 pins 153 links to `b9276da5` and contains 15 boxed L
+notes. Independent review, the 4,610-declaration paper audit, and local replay
+of all 224 project modules passed. Exact CI also replayed every module. The
+checkpoint combines a lattice lower bound with one shared Steiner preparation
+and charges preparation even when the fixed bit word is exhausted.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44573210334).
+
+PaperLab version 30 pins 154 links to `27dde48c` and contains 15 boxed L
+notes. The exact-count offline lower bound passed independent review, the
+4,646-declaration paper audit, and local replay of the changed modules. Exact
+CI replayed every project module. The deployment render and interactive controls
+passed. Production requires owner sign-in. The research entry linked to arXiv.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44576863074).
+
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
 crossing edges on a cyclic input. The empty prefix has no edges, an
