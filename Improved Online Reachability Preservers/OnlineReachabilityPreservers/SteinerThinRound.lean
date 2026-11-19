@@ -52,7 +52,7 @@ private def missCutChoices (G C : Arcs V) (factor : ℕ) (load : CutLoads V) (e 
   if e.1 ∈ C then (lowThreshold G.card (factor*2^(load e.1)))ᶜ else univ
 
 private noncomputable def missedCutSamples (G C : Arcs V) (factor : ℕ) (load : CutLoads V) :
-    Finset (ThinSample G) := constrainedSamples G.card (missCutChoices G C factor load)
+    Finset (ThinSample G) := constrainedSamples (missCutChoices G C factor load)
 
 omit [Fintype V] in
 private theorem mem_missedCutSamples {G C : Arcs V} {factor : ℕ} {load : CutLoads V} {s : ThinSample G} :
@@ -76,7 +76,7 @@ private theorem mem_missedCutSamples {G C : Arcs V} {factor : ℕ} {load : CutLo
 
 omit [LinearOrder V] [Fintype V] in
 private theorem thinProbability_product (G : Arcs V) (allowed : G → Finset (Fin G.card)) :
-    thinProbability G (constrainedSamples G.card allowed) =
+    thinProbability G (constrainedSamples allowed) =
       ∏ e : G, ((allowed e).card:ℝ)/(G.card:ℝ) := by
   unfold thinProbability
   rw [constrainedSamples_card,Nat.cast_prod, prod_div_distrib,prod_const,card_univ,Fintype.card_coe]
@@ -210,7 +210,7 @@ private theorem roundedThin_coordinate_probability (G : Arcs V) (factor : ℕ)
   let choices (f : G) : Finset (Fin G.card) :=
     if f=e then lowThreshold G.card (factor*2^(load e.1)) else univ
   have events : (univ : Finset (ThinSample G)).filter (fun s => (s e:ℕ) < factor*2^(load e.1)) =
-      constrainedSamples G.card choices := by
+      constrainedSamples choices := by
     ext sample
     simp only [constrainedSamples,mem_filter,mem_univ,true_and]
     constructor

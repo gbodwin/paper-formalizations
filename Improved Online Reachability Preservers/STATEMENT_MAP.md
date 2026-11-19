@@ -100,6 +100,11 @@ denoting the template vertex set, the capacity scale is at most
 gives a one-sided success probability of at least \(1/(h+1)\) when
 the ancestor marginals dominate a unit terminal flow. Its proof uses
 independent finite thresholds and the common-prefix second moment.
+The [dyadic threshold construction](OnlineReachabilityPreservers/SteinerDyadicRounding.lean)
+makes these marginals computable from integer capacities. It caps them
+at the active root's scale and takes ancestor minima. The thresholds
+give the exact normalized marginals and preserve the one-sided
+probability bound when the integer terminal mass fits.
 The paired rounding and its online cost remain open.
 
 ## Appendix dependencies

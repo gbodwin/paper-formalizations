@@ -257,6 +257,8 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.forestNetworkCovered_leafLoads
 #print axioms OnlineReachabilityPreservers.thresholdPathsEvent_probability
 #print axioms OnlineReachabilityPreservers.selectedHistory_group_probability
+#print axioms OnlineReachabilityPreservers.historyCap_dyadic
+#print axioms OnlineReachabilityPreservers.dyadicHistory_group_probability
 #print axioms OnlineReachabilityPreservers.theorem3_lattice_lower
 #print axioms OnlineReachabilityPreservers.theorem3_lower
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum

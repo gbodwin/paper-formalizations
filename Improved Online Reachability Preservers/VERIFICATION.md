@@ -279,6 +279,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   Independent review checked the product count, the support of the
   estimator, and the common-prefix second moment.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44459443528).
+- [d3cd6f5b](https://github.com/gbodwin/paper-formalizations/commit/d3cd6f5b32f7abcbb6ad81047859ec75b0d032e6)
+  extracts the two terminal distributions at each root from a certified
+  network flow. The 2311-declaration audit and local kernel replay
+  passed. Independent review checked path projection, root and side
+  changes, route multiplicities and the directed ancestor bounds.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44460327779).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
