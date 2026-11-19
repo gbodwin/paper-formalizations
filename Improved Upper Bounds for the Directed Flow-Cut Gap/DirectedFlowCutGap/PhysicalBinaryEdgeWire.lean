@@ -78,6 +78,8 @@ private theorem stored_member {m : ℕ} (row : BinaryFractionalRows.Row m) (i : 
   have hi : i.val < row.toList.length := by simp only [Vector.length_toList,i.isLt]
   simpa only [Vector.getElem_toList] using List.getElem_mem hi
 
+attribute [local irreducible] PhysicalSourceReadback.run PhysicalSourceReadback.planBound
+
 theorem edge_wire_polynomial : ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits)
     {n : ℕ} {r : EdgeResult n}, (edgeWithCost κ mode source tape).1=some ⟨n,r⟩ →
       (edgeWithCost κ mode source tape).2+r.dispatch+r.readback+r.roundingAndSelection ≤ p.eval (source.length+κ) := by

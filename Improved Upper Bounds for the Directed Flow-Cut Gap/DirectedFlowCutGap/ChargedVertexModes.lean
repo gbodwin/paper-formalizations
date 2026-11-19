@@ -170,7 +170,8 @@ theorem run_fairTape {n : ℕ} (κ : ℕ) (mode : Mode) (D : BinaryFractionalGue
       (ideal (polynomialBitTree κ G (round n mode))).map some := by
   dsimp only
   rw [← EncodedSolverBits.run_fairTape (within κ mode _) (EncodedAmplification.bitTree_binary ..)]
-  congr 1
+  apply congrArg ((EncodedSolverBits.fairTape
+    (EncodedSolverBits.vertexBudget κ (BinaryFractionalGuesses.decodeInput D))).map)
   funext tape
   have h := congrArg (Option.map Prod.fst) (run_value κ mode D tape)
   simpa only [Option.map_map, Function.comp_def, Result.observe] using h

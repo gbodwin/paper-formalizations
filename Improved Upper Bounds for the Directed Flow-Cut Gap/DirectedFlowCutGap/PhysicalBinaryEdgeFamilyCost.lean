@@ -14,12 +14,16 @@ open IntegralNetworkFlow.Tabulated
 noncomputable def stepCap (edge : Polynomial ℕ) (n B conf : ℕ) : ℕ :=
   edge.eval (n+n*n+queryWidth n B+1+conf)+queryBudget n B+checkBudget n (queryWidth n B)+advanceBudget n B B+12
 
+attribute [local irreducible] PhysicalSourceReadback.run PhysicalAmplifiedBinaryEdge.run
+
 private theorem step_width {n B C : ℕ} (D : Input n) (p : Preparation n) (demands : List (Edge n))
     (s : State n) (prices : Fits s.prices B) (gain : Fits p.gain C) (tape : Bits)
     {r : Result n} (ran : step D p demands s tape=some r) :
     ∀ a ∈ r.history, Fits a.prices (B+C) := by
   let q := query D p demands s
-  obtain ⟨round,_,rfl⟩ := Option.map_eq_some_iff.mp ran
+  have mapped : ((PhysicalAmplifiedBinaryEdge.run D.confidence q.input .mass tape).map
+      (finishStep p s q))=some r := ran
+  obtain ⟨round,_,rfl⟩ := Option.map_eq_some_iff.mp mapped
   intro out mem
   change out ∈ ((check q round.output).1.map (advance p s)).map Prod.fst at mem
   cases tag : (check q round.output).1 with

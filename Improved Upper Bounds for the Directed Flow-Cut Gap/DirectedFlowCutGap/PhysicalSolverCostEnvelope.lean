@@ -133,9 +133,10 @@ theorem drawPolynomial_eval (v : Polynomial ℕ) (x : ℕ) :
 abbrev vertexSize {n : ℕ} (D : BinaryFractionalGuesses.Input n) (κ : ℕ) : ℕ :=
   n+D.demands.length+ChargedVertexModes.priceWidth D+κ
 
+attribute [local irreducible] PhysicalSourceReadback.run PhysicalSourceReadback.planBound
+
 /-- End-to-end counters in the original vertex dimension, number of demands,
 stored cost bits and confidence exponent. -/
-set_option maxHeartbeats 800000 in
 theorem vertex_polynomial : ∃ p : Polynomial ℕ, ∀ {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) {out : PhysicalAmplifiedVertexSolver.Result n},
     PhysicalAmplifiedVertexSolver.vertex κ mode D tape = some out →
@@ -192,8 +193,9 @@ theorem vertex_polynomial : ∃ p : Polynomial ℕ, ∀ {n : ℕ} (κ : ℕ) (mo
     · exact (hq n T _ dim ht).1
     · exact (hq n T _ dim ht).2
   have ran : PhysicalAmplifiedVertexSolver.run D runner (roundDrawBound n) e (e+1) tape = some out := by
-    cases mode <;> simpa only [PhysicalAmplifiedVertexSolver.vertex, runner, e] using executed
+    cases mode <;> simpa only [PhysicalAmplifiedVertexSolver.vertex,runner,e] using executed
   rw [eval_comp]
-  exact hp D runner (roundDrawBound n) e (e+1) tape (hn.trans hy) (hB.trans hy) draw eBound he source positive fits paid ran
+  exact hp (n := n) (B := B) (x := x) D runner (roundDrawBound n) e (e+1) tape
+    (hn.trans hy) (hB.trans hy) draw eBound he source positive fits paid ran
 
 end DirectedFlowCutGap.PhysicalSolverCostEnvelope

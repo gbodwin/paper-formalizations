@@ -42,6 +42,7 @@ private theorem step_paid {n B : ℕ} (p : Polynomial ℕ)
     (tape : Bits) {r : Result n} (actual : PhysicalEdgeFamily.step D s tape=some r) :
     paid r ≤ p.eval (n+n*n+fieldBudget n B+D.confidence) := by
   let query := request D (penalizedCosts (adjusted D) D.factor s.costs)
+  simp only [PhysicalEdgeFamily.step,PhysicalEdgeFamily.stepWith] at actual
   change ((PhysicalAmplifiedEdgeSolver.run D.confidence query .mass tape).map _)=some r at actual
   cases executed : PhysicalAmplifiedEdgeSolver.run D.confidence query .mass tape with
   | none => simp [executed] at actual

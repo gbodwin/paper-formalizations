@@ -45,11 +45,15 @@ def step {n : ℕ} (D : Input n) (p : Preparation n) (demands : List (Edge n)) (
   let q := query D p demands s
   (PhysicalAmplifiedBinaryEdge.run D.confidence q.input .mass tape).map (finishStep p s q)
 
+attribute [local irreducible] PhysicalSourceReadback.run PhysicalAmplifiedBinaryEdge.run
+
 theorem step_canonical {n : ℕ} (D : Input n) (p : Preparation n) (demands : List (Edge n))
     (s : State n) (h : s.Canonical) (tape : Bits) {r : Result n} (ran : step D p demands s tape=some r) :
     ∀ next ∈ r.history, next.Canonical := by
   let q := query D p demands s
-  obtain ⟨round,_,rfl⟩ := Option.map_eq_some_iff.mp ran
+  have mapped : ((PhysicalAmplifiedBinaryEdge.run D.confidence q.input .mass tape).map
+      (finishStep p s q))=some r := ran
+  obtain ⟨round,_,rfl⟩ := Option.map_eq_some_iff.mp mapped
   intro out mem
   change out ∈ ((check q round.output).1.map (advance p s)).map Prod.fst at mem
   cases tag : (check q round.output).1 with
