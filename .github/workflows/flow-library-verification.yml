@@ -6,6 +6,7 @@ on:
       - codex/flow-vertex-runtime-20261119
       - codex/flow-round-state-20261119
       - codex/flow-midpoint-round-20261119
+      - codex/flow-guarded-epoch-20261119
   workflow_dispatch:
 permissions:
   contents: read
@@ -37,11 +38,14 @@ jobs:
       - name: Check the composed vertex modes and adaptive width proof
         run: bash scripts/CheckFlowChargedVertex.sh
       - name: Check the fixed sampled-cut state update
-        if: github.ref_name == 'codex/flow-round-state-20261119' || github.ref_name == 'codex/flow-midpoint-round-20261119'
+        if: github.ref_name == 'codex/flow-round-state-20261119' || github.ref_name == 'codex/flow-midpoint-round-20261119' || github.ref_name == 'codex/flow-guarded-epoch-20261119'
         run: bash scripts/CheckFlowRoundStateUpdate.sh
       - name: Check the physical midpoint scan and selected round
-        if: github.ref_name == 'codex/flow-midpoint-round-20261119'
+        if: github.ref_name == 'codex/flow-midpoint-round-20261119' || github.ref_name == 'codex/flow-guarded-epoch-20261119'
         run: bash scripts/CheckFlowMidpointRound.sh
+      - name: Check physical guarded fair draws and the epoch tape
+        if: github.ref_name == 'codex/flow-guarded-epoch-20261119'
+        run: bash scripts/CheckFlowGuardedEpoch.sh
       - name: Recheck source identity
         run: |
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
