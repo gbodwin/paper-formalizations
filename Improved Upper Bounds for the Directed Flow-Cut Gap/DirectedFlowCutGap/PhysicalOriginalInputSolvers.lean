@@ -1,22 +1,34 @@
 import DirectedFlowCutGap.PhysicalAmplifiedEdgeSolver
+import DirectedFlowCutGap.ChargedSourceAssembly
 
 /-! Original bitstrings and finite fair tapes for the vertex and edge entries. -/
 
 namespace DirectedFlowCutGap.PhysicalOriginalInputSolvers
 
 open BinaryArithmetic FiniteDrawTrees
+open PhysicalCoverAccess (Read)
+
+def vertexWithCost (κ : ℕ) (mode : ChargedVertexModes.Mode) (graph tape : Bits) :
+    Read (Σ n,PhysicalAmplifiedVertexSolver.Result n) :=
+  let parsed := ChargedSourceAssembly.vertex graph
+  (PhysicalVertexSolver.prepareOn (fun _ input => PhysicalAmplifiedVertexSolver.vertex κ mode input tape) parsed.1,parsed.2)
 
 def vertex (κ : ℕ) (mode : ChargedVertexModes.Mode) (graph tape : Bits) :
-    Option (Σ n,PhysicalAmplifiedVertexSolver.Result n) :=
-  PhysicalVertexSolver.prepareOn
-    (fun _ input => PhysicalAmplifiedVertexSolver.vertex κ mode input tape) (EncodedVertexInput.parse graph)
+    Option (Σ n,PhysicalAmplifiedVertexSolver.Result n) := (vertexWithCost κ mode graph tape).1
+
+theorem vertex_of_parse {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (graph tape : Bits) {r : PhysicalAmplifiedVertexSolver.Result n}
+    (parsed : EncodedVertexInput.parse graph=some ⟨n,D⟩)
+    (ran : PhysicalAmplifiedVertexSolver.vertex κ mode D tape=some r) :
+    vertex κ mode graph tape=some ⟨n,r⟩ := by
+  simp only [vertex,vertexWithCost,ChargedSourceAssembly.vertex_value]
+  exact PhysicalVertexSolver.prepareOn_eq (fun _ input => PhysicalAmplifiedVertexSolver.vertex κ mode input tape) parsed ran
 
 theorem vertex_encoded_success {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) {r : PhysicalAmplifiedVertexSolver.Result n}
     (ran : PhysicalAmplifiedVertexSolver.vertex κ mode D tape=some r) :
     vertex κ mode (PhysicalSourceDispatch.input D) tape=some ⟨n,r⟩ :=
-  PhysicalVertexSolver.prepareOn_eq (fun _ input => PhysicalAmplifiedVertexSolver.vertex κ mode input tape)
-    (EncodedVertexInput.parse_encode D) ran
+  vertex_of_parse κ mode D _ tape (EncodedVertexInput.parse_encode D) ran
 
 theorem vertex_fairTape {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : BinaryFractionalGuesses.Input n) :
     let G := BinaryFractionalGuesses.decodeInput D
@@ -40,19 +52,29 @@ theorem vertex_fairTape {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D
     · exact EncodedSolverBits.vertex_size_within κ _
   exact EncodedSolverBits.run_fairTape within (EncodedAmplification.bitTree_binary ..)
 
+def edgeWithCost (κ : ℕ) (mode : ChargedVertexModes.Mode) (graph tape : Bits) :
+    Read (Σ n,PhysicalAmplifiedEdgeSolver.EdgeResult n) :=
+  let parsed := ChargedSourceAssembly.edge graph
+  (PhysicalVertexSolver.prepareOn
+    (fun _ input => PhysicalAmplifiedEdgeSolver.run κ (EncodedEdgeInput.decodeInput input) mode tape) parsed.1,parsed.2)
+
 def edge (κ : ℕ) (mode : ChargedVertexModes.Mode) (graph tape : Bits) :
-    Option (Σ n,PhysicalAmplifiedEdgeSolver.EdgeResult n) :=
-  PhysicalVertexSolver.prepareOn
-    (fun _ input => PhysicalAmplifiedEdgeSolver.run κ (EncodedEdgeInput.decodeInput input) mode tape)
-    (EncodedEdgeInput.parse graph)
+    Option (Σ n,PhysicalAmplifiedEdgeSolver.EdgeResult n) := (edgeWithCost κ mode graph tape).1
+
+theorem edge_of_parse {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : EncodedEdgeInput.Input n) (graph tape : Bits) {r : PhysicalAmplifiedEdgeSolver.EdgeResult n}
+    (parsed : EncodedEdgeInput.parse graph=some ⟨n,D⟩)
+    (ran : PhysicalAmplifiedEdgeSolver.run κ (EncodedEdgeInput.decodeInput D) mode tape=some r) :
+    edge κ mode graph tape=some ⟨n,r⟩ := by
+  simp only [edge,edgeWithCost,ChargedSourceAssembly.edge_value]
+  exact PhysicalVertexSolver.prepareOn_eq
+    (fun _ input => PhysicalAmplifiedEdgeSolver.run κ (EncodedEdgeInput.decodeInput input) mode tape) parsed ran
 
 theorem edge_encoded_success {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
     (D : EncodedEdgeInput.Input n) (tape : Bits) {r : PhysicalAmplifiedEdgeSolver.EdgeResult n}
     (ran : PhysicalAmplifiedEdgeSolver.run κ (EncodedEdgeInput.decodeInput D) mode tape=some r) :
     edge κ mode (EncodedEdgeInput.encode D) tape=some ⟨n,r⟩ :=
-  PhysicalVertexSolver.prepareOn_eq
-    (fun _ input => PhysicalAmplifiedEdgeSolver.run κ (EncodedEdgeInput.decodeInput input) mode tape)
-    (EncodedEdgeInput.parse_encode D) ran
+  edge_of_parse κ mode D _ tape (EncodedEdgeInput.parse_encode D) ran
 
 theorem edge_fairTape {n : ℕ} (κ : ℕ) (D : EncodedEdgeLineInput.Input n) (mode : ChargedVertexModes.Mode) :
     (EncodedSolverBits.fairTape (EncodedSolverBits.edgeBudget κ D)).map

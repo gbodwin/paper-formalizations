@@ -65,13 +65,13 @@ private theorem stages_paid {n : ℕ} (D : Input n) (limit cap : ℕ)
     {r : Result n} (actual : PhysicalEdgeFamily.stages D k s tape = some r) : paid r ≤ k*cap := by
   induction k generalizing s tape r with
   | zero =>
-    simp only [PhysicalEdgeFamily.stages,Option.some.injEq] at actual
+    simp only [PhysicalEdgeFamily.stages,PhysicalEdgeFamily.runStages,Option.some.injEq] at actual
     rw [← actual]
     simp
   | succ k ih =>
     cases s with
     | none =>
-      simp only [PhysicalEdgeFamily.stages,Option.some.injEq] at actual
+      simp only [PhysicalEdgeFamily.stages,PhysicalEdgeFamily.runStages,Option.some.injEq] at actual
       rw [← actual]
       exact Nat.zero_le _
     | some s =>

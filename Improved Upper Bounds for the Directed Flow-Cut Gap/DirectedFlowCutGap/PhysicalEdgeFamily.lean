@@ -26,12 +26,17 @@ def Result.add {n : ℕ} (first later : Result n) : Result n :=
     readback := first.readback+later.readback
     roundingAndSelection := first.roundingAndSelection+later.roundingAndSelection }
 
-def step {n : ℕ} (D : Input n) (s : State n) (tape : Bits) : Option (Result n) :=
-  let query := request D (penalizedCosts (adjusted D) D.factor s.costs)
+def stepWith {n : ℕ} (D : Input n) (demands : List (Edge n)) (s : State n) (tape : Bits) : Option (Result n) :=
+  let cost := penalizedCosts (adjusted D) D.factor s.costs
+  let query : EncodedEdgeLineInput.Input n := ⟨D.adjacency,demands,
+    Vector.ofFn fun s => Vector.ofFn fun t => RawNonnegativeRational.Code.ofNNRat (cost (s,t))⟩
   (PhysicalAmplifiedEdgeSolver.run D.confidence query .mass tape).map fun round =>
     let next := (CheckedEdgeOracle.check query (allowance D s.costs) round.output).map
       (advance (floored D) D.factor (scale n) s)
     ⟨next,round.suffix,round.dispatch,round.readback,round.roundingAndSelection⟩
+
+def step {n : ℕ} (D : Input n) (s : State n) (tape : Bits) : Option (Result n) :=
+  stepWith D (RationalEdgeThresholds.demands D.adjacency D.weights) s tape
 
 theorem step_observe {n : ℕ} (D : Input n) (s : State n) (tape : Bits) :
     (step D s tape).map Result.observe =
@@ -49,15 +54,17 @@ theorem step_observe {n : ℕ} (D : Input n) (s : State n) (tape : Bits) :
   have hstep : (step D s tape).map Result.observe =
       ((PhysicalAmplifiedEdgeSolver.run D.confidence query .mass tape).map PhysicalAmplifiedEdgeSolver.EdgeResult.observe).map
         (fun (out,rest) => (transform out,rest)) := by
-    simp only [step,query,Option.map_map,Function.comp_def,Result.observe,PhysicalAmplifiedEdgeSolver.EdgeResult.observe,transform]
+    simp only [step,stepWith,query,request,Option.map_map,Function.comp_def,Result.observe,PhysicalAmplifiedEdgeSolver.EdgeResult.observe,transform]
   rw [hstep,observe]
   simp only [PhysicalAmplifiedEdgeSolver.model,Option.map_map,Function.comp_def,transform]
 
-def stages {n : ℕ} (D : Input n) : ℕ → Option (State n) → Bits → Option (Result n)
+def runStages {n : ℕ} (one : State n → Bits → Option (Result n)) : ℕ → Option (State n) → Bits → Option (Result n)
   | 0,s,tape => some ⟨s,tape,0,0,0⟩
   | _+1,none,tape => some ⟨none,tape,0,0,0⟩
-  | k+1,some s,tape => (step D s tape).bind fun first =>
-    (stages D k first.history first.suffix).map first.add
+  | k+1,some s,tape => (one s tape).bind fun first =>
+    (runStages one k first.history first.suffix).map first.add
+
+def stages {n : ℕ} (D : Input n) : ℕ → Option (State n) → Bits → Option (Result n) := runStages (step D)
 
 theorem stages_observe {n : ℕ} (D : Input n) (k : ℕ) (s : Option (State n)) (tape : Bits) :
     (stages D k s tape).map Result.observe =
@@ -74,9 +81,11 @@ theorem stages_observe {n : ℕ} (D : Input n) (k : ℕ) (s : Option (State n)) 
           tape).map (fun (out,(rest,_)) => (out,rest))
       rw [EncodedSolverBits.run_bind_observe,← step_observe]
       cases first : step D s tape with
-      | none => simp [stages,first]
+      | none => simp [stages,runStages,first]
       | some r =>
-        simp only [stages,first,Option.bind_some,Option.map_some,Result.observe,← ih]
+        simp only [show stages D (k+1) (some s) tape = (step D s tape).bind (fun first =>
+          (stages D k first.history first.suffix).map first.add) from rfl,
+          first,Option.bind_some,Option.map_some,Result.observe,← ih]
         cases stages D k r.history r.suffix <;> rfl
 
 def run {n : ℕ} (D : Input n) (tape : Bits) : Option (Result n) :=
