@@ -839,6 +839,12 @@ the false inequality in Lemma 25 and the construction counterexamples.
 The statement map and source notes incorporate its coverage clarifications.
 [Exact Lean CI run](https://github.com/gbodwin/paper-formalizations/actions/runs/44609382701).
 
+Independent follow-up review checked the standalone Lemmas 12 and 13.
+It verified the degree immediately after reverse insertion, the distinct
+demand count used in the coefficient 24, and the dependency on the direct
+proof of Theorem 11.
+[Reviewed counting proofs](OnlineReachabilityPreservers/RestrictedIncidence.lean).
+
 ## Execution examples
 
 A finite execution check of the PaperLab example gave cumulative purchases

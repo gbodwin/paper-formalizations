@@ -299,9 +299,12 @@ local-order upper bound and recurrence of Theorem 43.
 ## Matters requiring proof or clarification
 
 - Lemma 13's pigeonhole step can pick two paths whose only intersection with
-  the earlier path is their common terminal. An incidence proof restricted to
-  new-edge tails avoids this configuration. This concerns the given proof,
-  while the restricted preserver size bound has an alternative counting proof.
+  the earlier path is their common terminal. The reverse-arrival degree in
+  Lemma 12 also counts the path just inserted. An incidence proof restricted
+  to new-edge tails avoids the terminal configuration. It gives the restricted
+  edge bound and, for distinct requests with average degree at least two,
+  gives Lemma 13 with constant 24.
+  [Checked reverse-arrival selection and incidence estimate](OnlineReachabilityPreservers/RestrictedIncidence.lean).
 - Lemmas 23 and 39 use splitting steps, which increase vertex or path count
   before any additional restriction. The displayed proof does not establish
   its exact output budgets or show that the lower caps survive a restriction
