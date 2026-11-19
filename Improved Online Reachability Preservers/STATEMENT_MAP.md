@@ -255,7 +255,10 @@ graphs with one scan. The [arithmetic history index](OnlineReachabilityPreserver
 keeps the canonical seed-coordinate order. The empty history occupies the
 first slot. Every first label starts a block of shorter histories with a size
 computed by recurrence. Ranking within these blocks avoids listing and sorting
-the history space. The cached replay uses sorted vertex and arc indexes.
+the history space. The cached replay uses sorted vertex and arc arrays.
+A binary search returns the canonical rank of any present key with at most
+as many key comparisons as the bit length of the array size. Inverse ranks
+read the corresponding stored position.
 The word, rejection, and seed-array readers have checked tail-recursive
 implementations. Integer arithmetic, finite container operations, and full execution time
 still require certification.
@@ -290,8 +293,8 @@ construction and application of the finite index enumerations remain separate
 runtime costs. The ordinary graph-based bit entry point evaluates the forest
 scale and the counts of finite seed coordinates before the measured replay.
 The cached bit entry point shares the measured preparation and uses an
-arithmetic coordinate count. Applying the indexes and materializing the
-finite bit word still need time bounds.
+arithmetic coordinate count. Index construction, the arithmetic in index
+lookups, and materialization of the finite bit word still need time bounds.
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

@@ -157,7 +157,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   preparation even on the fallback branch, which scans requests in one pass.
   The [arithmetic history index](OnlineReachabilityPreservers/SteinerBitOrders.lean)
   gives the same seed coordinate order by ranking bounded histories one label
-  at a time. Full time certification remains open.
+  at a time. Vertex and arc ranks use binary search in their sorted arrays,
+  with at most one key comparison per bit of the array length. Full time
+  certification remains open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

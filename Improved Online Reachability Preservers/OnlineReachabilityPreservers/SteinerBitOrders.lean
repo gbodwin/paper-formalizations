@@ -1,3 +1,4 @@
+import Mathlib.Data.Nat.Size
 import Mathlib.Data.Prod.Lex
 import OnlineReachabilityPreservers.SteinerBitReplay
 
@@ -209,32 +210,141 @@ def completeSteinerReplayFromOrderedBits (G : Arcs V) (height : ℕ) (bits : Lis
   completeSteinerReplayFromBits G height (steinerEarlyCoordinateIndex G height)
     (steinerVertexIndex V) (steinerArcIndex G) bits D
 
-/-- Sort the finite input once and use an array for inverse lookups. -/
+/-- Search an array interval by midpoint comparisons. With sorted distinct
+keys and enough fuel, a present key returns its lower-bound position.
+The second field counts the key comparisons. -/
+def arrayLowerBoundWithChecks {A : Type*} [LinearOrder A] (values : Array A) (key : A) :
+    (fuel lo hi : ℕ) → (hi ≤ values.size) → ℕ × ℕ
+  | 0, lo, _, _ => (lo,0)
+  | fuel+1, lo, hi, cap =>
+    if room : lo < hi then
+      let middle := lo+(hi-lo)/2
+      let value := values[middle]'(by omega)
+      let result := if value < key then
+        arrayLowerBoundWithChecks values key fuel (middle+1) hi cap
+      else arrayLowerBoundWithChecks values key fuel lo middle (by omega)
+      (result.1,result.2+1)
+    else (lo,0)
+
+private theorem arrayLowerBoundWithChecks_find {A : Type*} [LinearOrder A] (values : Array A) (key : A)
+    (ordered : StrictMono (fun i : Fin values.size => values[i.val]'i.isLt))
+    (index : Fin values.size) (atKey : values[index.val]'index.isLt = key)
+    (fuel lo hi : ℕ) (cap : hi ≤ values.size) (lower : lo ≤ index.val) (upper : index.val ≤ hi)
+    (small : hi-lo < 2^fuel) :
+    (arrayLowerBoundWithChecks values key fuel lo hi cap).1 = index.val ∧
+      (arrayLowerBoundWithChecks values key fuel lo hi cap).2 ≤ fuel := by
+  induction fuel generalizing lo hi with
+  | zero =>
+    simp only [pow_zero] at small
+    simp only [arrayLowerBoundWithChecks, le_refl, and_true]
+    omega
+  | succ fuel ih =>
+    by_cases room : lo < hi
+    · let middle := lo+(hi-lo)/2
+      let mi : Fin values.size := ⟨middle,by dsimp [middle]; omega⟩
+      have halfSmall : (hi-lo)/2 < 2^fuel := by
+        apply (Nat.div_lt_iff_lt_mul (by decide : 0 < 2)).mpr
+        exact (pow_succ (2:ℕ) fuel) ▸ small
+      have spanLeft : middle-lo < 2^fuel := by dsimp [middle]; omega
+      have spanRight : hi-(middle+1) < 2^fuel := by dsimp [middle]; omega
+      by_cases above : values[mi.val]'mi.isLt < key
+      · have veryAbove : mi < index := ordered.lt_iff_lt.mp (by simpa only [atKey] using above)
+        have lo' : middle+1 ≤ index.val := veryAbove
+        have checked := ih (middle+1) hi cap lo' upper spanRight
+        change values[middle]'mi.isLt < key at above
+        simp only [arrayLowerBoundWithChecks, dite_eq_left room, middle, ite_eq_left above]
+        exact ⟨checked.1,Nat.succ_le_succ checked.2⟩
+      · have notPast : index ≤ mi := not_lt.mp (fun beyond => above (by simpa only [atKey] using ordered beyond))
+        have hi' : index.val ≤ middle := notPast
+        have checked := ih lo middle (le_of_lt mi.isLt) lower hi' spanLeft
+        change ¬ values[middle]'mi.isLt < key at above
+        simp only [arrayLowerBoundWithChecks, dite_eq_left room, middle, ite_eq_right above]
+        exact ⟨checked.1,Nat.succ_le_succ checked.2⟩
+    · simp only [arrayLowerBoundWithChecks, dite_eq_right room]
+      exact ⟨by omega,Nat.zero_le _⟩
+
+/-- For a key that occurs in a sorted distinct array, binary search gives
+its rank with at most one comparison per bit of the array length. -/
+theorem arrayLowerBoundWithChecks_spec {A : Type*} [LinearOrder A] (values : Array A)
+    (ordered : StrictMono (fun i : Fin values.size => values[i.val]'i.isLt)) (index : Fin values.size) :
+    let result := arrayLowerBoundWithChecks values (values[index.val]'index.isLt) values.size.size 0 values.size le_rfl
+    result.1 = index.val ∧ result.2 ≤ values.size.size := by
+  exact arrayLowerBoundWithChecks_find values _ ordered index rfl values.size.size 0 values.size le_rfl
+    (Nat.zero_le _) index.isLt.le (by simpa only [Nat.sub_zero] using Nat.lt_size_self values.size)
+
+
+private theorem sortedFinsetArray_strictMono {A : Type*} [LinearOrder A] (values : Finset A) :
+    let array := values.sort.toArray
+    StrictMono (fun i : Fin array.size => array[i.val]'i.isLt) := by
+  let rows := values.sort
+  let array := rows.toArray
+  change StrictMono (fun i : Fin array.size => array[i.val]'i.isLt)
+  intro i j hj
+  have ib : i.val < rows.length := by simpa only [array, List.size_toArray] using i.isLt
+  have jb : j.val < rows.length := by simpa only [array, List.size_toArray] using j.isLt
+  have sameOrder : rows[i.val]'ib ≤ rows[j.val]'jb :=
+    List.pairwise_iff_getElem.mp (values.pairwise_sort (· ≤ ·)) _ _ ib jb hj
+  have different : rows[i.val]'ib ≠ rows[j.val]'jb := fun eq =>
+    (show i.val ≠ j.val from ne_of_lt hj) ((values.sort_nodup (· ≤ ·)).getElem_inj.mp eq)
+  simpa only [array, List.getElem_toArray] using lt_of_le_of_ne sameOrder different
+
+/-- The new lookup finds the canonical list index using binary search. -/
+theorem binarySortedIndexWithChecks_spec {A : Type*} [LinearOrder A] (values : Finset A) (x : values) :
+    let rows := values.sort
+    let array := rows.toArray
+    let out := arrayLowerBoundWithChecks array x.val array.size.size 0 array.size le_rfl
+    out.1 = rows.idxOf x.val ∧ out.2 ≤ values.card.size := by
+  let rows := values.sort
+  let array := rows.toArray
+  have inside : x.val ∈ rows := (values.mem_sort _).mpr x.property
+  have rowBound := List.idxOf_lt_length_of_mem inside
+  let i : Fin array.size := ⟨rows.idxOf x.val,by simpa only [array, List.size_toArray] using rowBound⟩
+  have found : array[i.val]'i.isLt = x.val := by
+    simpa only [array, List.getElem_toArray, i] using List.getElem_idxOf rowBound
+  have data := arrayLowerBoundWithChecks_spec array (sortedFinsetArray_strictMono values) i
+  have cards : array.size = values.card := (List.size_toArray : rows.toArray.size = rows.length).trans (values.length_sort _)
+  change (arrayLowerBoundWithChecks array x.val array.size.size 0 array.size le_rfl).1 = i.val ∧
+    (arrayLowerBoundWithChecks array x.val array.size.size 0 array.size le_rfl).2 ≤ values.card.size
+  rw [← cards]
+  rw [found] at data
+  exact data
+
+
+/-- Share one sorted array. Forward lookup uses its binary rank and inverse
+lookup reads the array at the indicated position. -/
 def steinerSortedArrayIndex {A : Type*} [LinearOrder A] (values : Finset A) :
     values ≃ Fin values.card :=
   let rows := values.sort
   let array := rows.toArray
   have len : rows.length = values.card := values.length_sort _
+  let upper := array.size
+  let fuel := upper.size
+  let lookup (x : values) := (arrayLowerBoundWithChecks array x.val fuel 0 upper le_rfl).1
+  have rank (x : values) : lookup x = rows.idxOf x.val := (binarySortedIndexWithChecks_spec values x).1
   have index (i : Fin values.card) : i.val < rows.length := len.symm ▸ i.isLt
-  have indexArray (i : Fin values.card) : i.val < array.size := by
+  have inArray (i : Fin values.card) : i.val < array.size := by
     simpa only [array, List.size_toArray] using index i
   have inside (x : values) : x.val ∈ rows := (values.mem_sort _).mpr x.property
-  { toFun := fun x => ⟨rows.idxOf x.val, len ▸ List.idxOf_lt_length_of_mem (inside x)⟩
-    invFun := fun i => ⟨array[i.val]'(indexArray i), (values.mem_sort _).mp (by
+  have rank_lt (x : values) : lookup x < values.card := by
+    rw [rank]
+    exact len ▸ List.idxOf_lt_length_of_mem (inside x)
+  { toFun := fun x => ⟨lookup x, rank_lt x⟩
+    invFun := fun i => ⟨array[i.val]'(inArray i), (values.mem_sort _).mp (by
       simpa only [array, List.getElem_toArray] using List.getElem_mem (l := rows) (index i))⟩
     left_inv := by
       intro x
       apply Subtype.ext
-      exact List.getElem_idxOf (List.idxOf_lt_length_of_mem (inside x))
+      simpa only [array, List.getElem_toArray, rank] using List.getElem_idxOf (List.idxOf_lt_length_of_mem (inside x))
     right_inv := by
       intro i
       apply Fin.ext
-      simpa only [array, List.getElem_toArray] using (values.sort_nodup _).idxOf_getElem (i := i.val) (index i) }
+      simp only [rank, array, List.getElem_toArray]
+      exact (values.sort_nodup _).idxOf_getElem (i := i.val) (index i) }
 
 theorem steinerSortedArrayIndex_eq {A : Type*} [LinearOrder A] (values : Finset A) :
     steinerSortedArrayIndex values = (values.orderIsoOfFin rfl).symm.toEquiv := by
   ext x
-  exact (values.orderIsoOfFin_symm_apply rfl x).symm
+  exact (binarySortedIndexWithChecks_spec values x).1.trans (values.orderIsoOfFin_symm_apply rfl x).symm
 
 /-- Construct the ordinary increasing index for a finite type with one sort. -/
 def steinerUniverseArrayIndex (A : Type*) [LinearOrder A] [Fintype A] :
@@ -257,6 +367,8 @@ def steinerArcArrayIndex {V : Type*} [LinearOrder V] (G : Arcs V) : G ≃ Fin G.
 
 theorem steinerArcArrayIndex_eq {V : Type*} [LinearOrder V] [Fintype V] (G : Arcs V) :
     steinerArcArrayIndex G = steinerArcIndex G := by
+  dsimp only [steinerArcArrayIndex,steinerArcIndex]
+  rw [steinerSortedArrayIndex_eq]
   ext a
   rfl
 
