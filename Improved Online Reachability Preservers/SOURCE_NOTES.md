@@ -77,6 +77,19 @@ that disjoint consecutive splits preserve the bridge condition through size four
 in the acyclic scope. [Regularization](OnlineReachabilityPreservers/Regularization.lean)
 uses this to prove the upper caps with at most twice the ambient budgets.
 
+The pruning argument in [8], Lemma 20 also works for the half-bridge
+condition when processed in arrival order. An omitted incidence marks a
+retained earlier incidence at the same vertex. Reusing a mark would give a
+2-bridge or a 3-bridge whose last arc was earlier than the river. Lean proves
+that at least half the incidences at each vertex survive and that each pair
+of surviving paths has at most one common vertex. Under this last condition,
+disjoint order-preserving path splits keep both bridge conditions through
+size four, even when the paths have no common vertex order. General path
+splits preserve both conditions through size three.
+[Checked pruning](OnlineReachabilityPreservers/OppositeIntersectionPruning.lean)
+· [Checked splits](OnlineReachabilityPreservers/CyclicSplits.lean)
+· [Bridge Girth, Lemma 20](https://arxiv.org/pdf/2212.11944v4).
+
 ## The cited consecutive-edge overlay can admit an alternate path
 
 The same three simple paths have no bridge of any size. Their endpoint

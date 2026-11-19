@@ -348,6 +348,18 @@ An exact-source replay grants no coverage to a paper statement outside the
   the changed modules passed. Independent review checked the shared
   evaluations, output equalities and the scope of each count.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44469383213).
+- [81b0420d](https://github.com/gbodwin/paper-formalizations/commit/81b0420d0a961c919392b08094862dfc2edc15b9)
+  verifies the arbitrary-path fiber bound of Lemma 24 and gives a bridge-free
+  example with two witnesses for the same middle path. The 2806-declaration
+  audit and local kernel replay passed. Independent review checked the
+  local-order proof, the strict Appendix B form and the witness example.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44470202282).
+
+PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
+notes. The deployment render and local controls passed. The research
+publications entry linked to the arXiv manuscript at the deployment check.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [Research entry](https://gregbodwin.com/publications/index.html#publication-2410.20471).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

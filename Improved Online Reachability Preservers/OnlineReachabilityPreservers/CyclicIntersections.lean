@@ -12,20 +12,21 @@ variable {V I : Type*} [DecidableEq V] [LinearOrder I]
 local notation "ListBefore" => SourceAudit.BeforeIn
 
 omit [LinearOrder I] in
-private theorem listBefore_ne {paths : I → List V} {i : I} {x y : V}
+theorem listBefore_ne {paths : I → List V} {i : I} {x y : V}
     (h : ListBefore paths i x y) : x ≠ y := by
   rintro rfl
   exact (lt_irrefl _ h.2.2)
 
 omit [LinearOrder I] in
-private theorem listBefore_total {paths : I → List V} {i : I} {x y : V}
+theorem listBefore_total {paths : I → List V} {i : I} {x y : V}
     (hx : x ∈ paths i) (hy : y ∈ paths i) (ne : x ≠ y) :
     ListBefore paths i x y ∨ ListBefore paths i y x := by
   rcases lt_or_gt_of_ne (fun eq => ne ((List.idxOf_inj hx).mp eq)) with h | h
   · exact Or.inl ⟨hx, hy, h⟩
   · exact Or.inr ⟨hy, hx, h⟩
 
-private theorem no_parallel_list_steps {paths : I → List V} (free : HalfBridgeFree (ListBefore paths) 4)
+theorem no_parallel_list_steps {paths : I → List V} {size : ℕ} (free : HalfBridgeFree (ListBefore paths) size)
+    (large : 2 ≤ size)
     {a b : I} (ab : a ≠ b) {x y : V} (one : ListBefore paths a x y) (two : ListBefore paths b x y) : False := by
   have forbid {u v : I} (earlier : u < v) (left : ListBefore paths u x y)
       (right : ListBefore paths v x y) : False := by
@@ -37,12 +38,12 @@ private theorem no_parallel_list_steps {paths : I → List V} (free : HalfBridge
         by intro i j _; fin_cases i; fin_cases j; rfl,
         by intro i; fin_cases i; exact earlier.ne', right,
         by intro i; fin_cases i; exact left⟩
-    exact free (by decide) bridge earlier
+    exact free large bridge earlier
   rcases lt_or_gt_of_ne ab with earlier | later
   · exact forbid earlier one two
   · exact forbid later two one
 
-private def threeListBridge {paths : I → List V} {a b r : I}
+def threeListBridge {paths : I → List V} {a b r : I}
     (ab : a ≠ b) (ra : r ≠ a) (rb : r ≠ b) {x y z : V}
     (first : ListBefore paths a x y) (last : ListBefore paths b y z)
     (river : ListBefore paths r x z) : Bridge (ListBefore paths) 1 where
@@ -84,7 +85,7 @@ theorem lemma24_list_left_injective {paths : I → List V} (free : HalfBridgeFre
   by_contra different
   by_cases rightEqual : ya = yb
   · subst yb
-    exact no_parallel_list_steps free different ha.middle_step hb.middle_step
+    exact no_parallel_list_steps free (by decide) different ha.middle_step hb.middle_step
   rcases listBefore_total ha.on_right hb.on_right rightEqual with order | order
   · exact forbid ha hb different order
   · exact forbid hb ha (show b ≠ a from fun equal => different equal.symm) order
@@ -99,10 +100,10 @@ theorem lemma24_list_right_monotone {paths : I → List V} (free : HalfBridgeFre
   have right : ListBefore paths r yb ya := ⟨hb.on_right, ha.on_right, backward⟩
   have xy : xa ≠ yb := by
     rintro rfl
-    exact no_parallel_list_steps free ha.right_earlier.ne right ha.middle_step
+    exact no_parallel_list_steps free (by decide) ha.right_earlier.ne right ha.middle_step
   have yx : xb ≠ ya := by
     rintro rfl
-    exact no_parallel_list_steps free ha.left_ne_middle left ha.middle_step
+    exact no_parallel_list_steps free (by decide) ha.left_ne_middle left ha.middle_step
   let bridge : Bridge (ListBefore paths) 2 :=
     ⟨![xa, xb, yb, ya], ![l, b, r], a, by
       intro i j eq

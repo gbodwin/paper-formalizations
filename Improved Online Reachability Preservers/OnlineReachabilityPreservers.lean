@@ -9,6 +9,7 @@ import OnlineReachabilityPreservers.ClosePairs
 import OnlineReachabilityPreservers.Components
 import OnlineReachabilityPreservers.Connectors
 import OnlineReachabilityPreservers.CyclicIntersections
+import OnlineReachabilityPreservers.CyclicSplits
 import OnlineReachabilityPreservers.DagReduction
 import OnlineReachabilityPreservers.DyadicSums
 import OnlineReachabilityPreservers.EndpointBudget
@@ -32,6 +33,7 @@ import OnlineReachabilityPreservers.Online
 import OnlineReachabilityPreservers.OnlineArithmetic
 import OnlineReachabilityPreservers.OnlineBound
 import OnlineReachabilityPreservers.OnlineSharp
+import OnlineReachabilityPreservers.OppositeIntersectionPruning
 import OnlineReachabilityPreservers.PairwiseBudget
 import OnlineReachabilityPreservers.PairwiseInitial
 import OnlineReachabilityPreservers.PairwiseNonAdaptive
