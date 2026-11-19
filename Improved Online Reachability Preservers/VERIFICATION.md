@@ -611,6 +611,14 @@ An exact-source replay grants no coverage to a paper statement outside the
   shared setup in generated C. The two-vertex setup reports 12 arc
   inspections, 20 template comparisons, and 19 weighted-plan comparisons.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44516110338).
+- [3b5d3975](https://github.com/gbodwin/paper-formalizations/commit/3b5d3975ffc208ab2e7a9911e415074471c15263)
+  checks the corresponding unrestricted maximum separately for every
+  cutoff up to size three, with the same retained-mass interval and
+  original-average caps. The 3880-declaration audit and kernel replay of
+  the changed modules passed. Independent review checked both modes,
+  the unchanged cutoff, and the distinction between failed splitting
+  arguments and open existence statements.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44516744399).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

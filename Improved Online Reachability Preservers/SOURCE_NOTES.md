@@ -139,7 +139,7 @@ size and the half-6-bridge in the actual consecutive incidence blocks.
 
 ## The cited consecutive-edge overlay can admit an alternate path
 
-The same three simple paths have no bridge of any size. Their endpoint
+The paths `[(0,1,2,3), (3,0), (2,1)]` have no bridge of any size. Their endpoint
 demands are \((0,3),(3,0),(2,1)\), and their consecutive edges consist of
 the four-cycle \(0\to1\to2\to3\to0\) and the chord \(2\to1\). The cycle
 alone preserves all three demands. In particular, the original chord and
@@ -264,12 +264,14 @@ local-order upper bound and recurrence of Theorem 43.
   three for arbitrary simple paths. In the latter case the general ordered-list
   maximum is finite, with both density assumptions following from the
   common-order witness.
-  With opposite-intersection pruning first, arbitrary simple paths whose
-  mass is at least twice both counts keep one thirty-second of the mass and
-  have lower caps at one eighth of their original averages. The upper caps
-  stay at four times the original averages. The factor-four lower caps
-  before pruning and preservation through arbitrary bridge sizes remain open
-  for cyclic families.
+  For simple paths excluding half-bridges through size four and with mass
+  at least twice both counts, opposite-intersection pruning and cleaning
+  keep one thirty-second of the mass within both original budgets. The
+  lower caps are one eighth of the original averages and the upper caps
+  are four times those averages. Half exclusion survives, and full
+  exclusion survives when present in the original family. The factor-four
+  lower caps through size four without unique intersections and the
+  arbitrary-size cyclic existence statements remain unproved.
   [Common-order extremum](OnlineReachabilityPreservers/CommonOrderExtremal.lean)
   · [Unrestricted extremum through size three](OnlineReachabilityPreservers/LocalOrderExtremal.lean)
   · [Checked local cleaning](OnlineReachabilityPreservers/LocalBalancedRegularization.lean).
