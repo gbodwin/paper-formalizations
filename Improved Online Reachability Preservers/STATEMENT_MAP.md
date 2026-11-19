@@ -112,8 +112,12 @@ a request, one trial misses it with probability at most
 \(\exp(-1/(4(h+1)^2))\). A [fixed-tier cost bound](OnlineReachabilityPreservers/SteinerOnlineRounding.lean)
 controls the chance that a paid link is ever selected across prefixes.
 The proof counts ancestor capacity profiles and uses the final monotone
-capacities. Aggregating the bound over trials and linking it to the
-early competitive guarantee remain open.
+capacities. The [early integral algorithm](OnlineReachabilityPreservers/SteinerEarlyRound.lean)
+amplifies each trial, keeps all prior purchases, and falls back to the
+input graph on a miss. For a fixed feasible sequence of distinct
+requests with positive height, the expected fallback cost is at most
+two edges. Aggregating the metric purchases into the early competitive
+bound remains open.
 
 ## Appendix dependencies
 

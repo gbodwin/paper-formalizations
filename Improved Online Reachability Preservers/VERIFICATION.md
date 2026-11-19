@@ -297,6 +297,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   review checked the paid arcs, the shared same-root gate, the
   independent threshold events, and the final exponential bound.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44461722723).
+- [eb8321c3](https://github.com/gbodwin/paper-formalizations/commit/eb8321c34bbd175f6a14b816c42afa5444e8affd)
+  proves the fixed-tier purchase bound across online prefixes. The
+  2448-declaration audit and local kernel replay passed. Independent
+  review checked monotone charges, paid-edge identification, the exact
+  marginal probability, and the ancestor profile count.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44462324546).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

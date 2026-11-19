@@ -264,6 +264,10 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.forestTrialFailure_bound
 #print axioms OnlineReachabilityPreservers.forestFractionalRun_charges_mono
 #print axioms OnlineReachabilityPreservers.forestArcTier_anyPrefix_bound
+#print axioms OnlineReachabilityPreservers.forestTrialsFailure_bound
+#print axioms OnlineReachabilityPreservers.earlyRoundedGraph_preserves
+#print axioms OnlineReachabilityPreservers.earlyRoundedGraph_mono
+#print axioms OnlineReachabilityPreservers.earlyFallback_expectedCost_le
 #print axioms OnlineReachabilityPreservers.theorem3_lattice_lower
 #print axioms OnlineReachabilityPreservers.theorem3_lower
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum
