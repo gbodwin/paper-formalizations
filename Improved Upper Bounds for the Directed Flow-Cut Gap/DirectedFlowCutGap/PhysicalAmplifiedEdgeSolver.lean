@@ -16,7 +16,7 @@ def model (mode : ChargedVertexModes.Mode) : EncodedEdgeSolver.Mode :=
   | .mass => EncodedEdgeSolver.massMode
   | .size => EncodedEdgeSolver.sizeMode
 
-private def rounding {n : ℕ} (mode : ChargedVertexModes.Mode) : PhysicalVertexSampling.Runner n :=
+def rounding {n : ℕ} (mode : ChargedVertexModes.Mode) : PhysicalVertexSampling.Runner n :=
   match mode with
   | .mass => PhysicalVertexRounding.weighted
   | .size => PhysicalVertexRounding.size

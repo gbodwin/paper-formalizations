@@ -42,7 +42,7 @@ def expectedPriceBound {n : ℕ} (D : Input n) : Prop :=
   ∀ c : Edge n → ℚ≥0, EncodedEdgeSolver.expectedPrice (request D c) EncodedEdgeSolver.massMode ≤
     (allowance D c : ℝ)
 
-private def keep {n : ℕ} (D : Input n) (X : Finset (Edge n)) : Prop :=
+def keep {n : ℕ} (D : Input n) (X : Finset (Edge n)) : Prop :=
   Good D.adjacency D.weights X ∧ ∀ e ∈ X, 0 < adjusted D e
 
 private def checked {n : ℕ} (D : Input n) (s : History (Edge n)) :
@@ -70,7 +70,7 @@ private theorem floor_pos {n : ℕ} (hn : 0 < n) (D : Input n) (e : Edge n) : 0 
   have hn' : 0 < (n : ℚ≥0) := by exact_mod_cast hn
   exact (inv_pos.mpr hn').trans_le (le_max_left _ _)
 
-private theorem step_good {n : ℕ} (hn : 0 < n) (D : Input n) (hα : 0 < D.factor)
+theorem step_good {n : ℕ} (hn : 0 < n) (D : Input n) (hα : 0 < D.factor)
     (s s' : History (Edge n)) (hs : Invariant (floored D) D.factor (scale n) (keep D) s)
     (h : some s' ∈ (ideal (step D s)).support) :
     Invariant (floored D) D.factor (scale n) (keep D) s' ∧ s'.cuts.length = s.cuts.length + 1 := by
@@ -301,7 +301,7 @@ theorem rounds_le {n B : ℕ} (D : Input n) (h : InputFits D B) : rounds D ≤ r
   have hb := (Nat.size_le_size hc).trans (RawNonnegativeRational.Code.bounded_bits hq).1
   exact Nat.add_le_add_right (Nat.mul_le_mul_left (2*n) hb) 1
 
-private def arithmeticWidth (n B : ℕ) : ℕ := B + n + 2
+def arithmeticWidth (n B : ℕ) : ℕ := B + n + 2
 
 private theorem adjusted_bounded {n B : ℕ} (D : Input n) (h : InputFits D B) (e : Edge n) :
     Bounded (adjusted D e) (arithmeticWidth n B) := by
@@ -326,7 +326,7 @@ private theorem gain_bounded {n B : ℕ} (D : Input n) (h : InputFits D B) (e : 
   have he : 0 + (A + (A + A)) + 1 = 3 * A + 1 := by omega
   simpa only [A] using (he ▸ hp)
 
-private def priceBudget (n B : ℕ) : ℕ := (3 * arithmeticWidth n B + 1) * roundBudget n B
+def priceBudget (n B : ℕ) : ℕ := (3 * arithmeticWidth n B + 1) * roundBudget n B
 
 private theorem current_bounded {n B : ℕ} (D : Input n) (h : InputFits D B) (s : History (Edge n))
     (hs : Invariant (floored D) D.factor (scale n) (keep D) s)
@@ -341,7 +341,7 @@ private theorem current_bounded {n B : ℕ} (D : Input n) (h : InputFits D B) (s
   have hocc : occurrences s e ≤ roundBudget n B := List.countP_le_length.trans hT
   exact mono (pow_bounded (gain_bounded D h e) _) (Nat.mul_le_mul_left _ hocc)
 
-private def fieldBudget (n B : ℕ) : ℕ :=
+def fieldBudget (n B : ℕ) : ℕ :=
   let A := arithmeticWidth n B
   let C := priceBudget n B
   C + A + n*n*(C+A+1) + 2
@@ -377,6 +377,19 @@ def readBudget (n B κ : ℕ) : ℕ :=
   roundBudget n B * EncodedSolverBits.polynomial n (EncodedEdgeLineInput.lineSize n)
     (2*n*(n+4)) (fieldBudget n B) κ
 
+theorem step_query_width {n B : ℕ} (D : Input n) (h : InputFits D B) (s : History (Edge n))
+    (hs : Invariant (floored D) D.factor (scale n) (keep D) s)
+    (hT : s.cuts.length ≤ roundBudget n B) (u v : Fin n) :
+    let R := request D (penalizedCosts (adjusted D) D.factor s.costs)
+    R.costs[u.val][v.val].num.size ≤ fieldBudget n B ∧
+      R.costs[u.val][v.val].den.size ≤ fieldBudget n B := by
+  have widths := RawNonnegativeRational.Code.bounded_bits (query_bounded D h s hs hT (u,v))
+  have positive : fieldBudget n B - 1 + 1 = fieldBudget n B := by
+    unfold fieldBudget
+    dsimp only
+    omega
+  simpa only [request, Vector.getElem_ofFn, Fin.eta, positive] using widths
+
 private theorem step_budget {n B : ℕ} (D : Input n) (h : InputFits D B) (s : History (Edge n))
     (hs : Invariant (floored D) D.factor (scale n) (keep D) s)
     (hT : s.cuts.length ≤ roundBudget n B) :
@@ -385,14 +398,7 @@ private theorem step_budget {n B : ℕ} (D : Input n) (h : InputFits D B) (s : H
   let c := penalizedCosts (adjusted D) D.factor s.costs
   let R := request D c
   let budget := fieldBudget n B
-  have hW (u v : Fin n) : R.costs[u.val][v.val].num.size ≤ budget ∧
-      R.costs[u.val][v.val].den.size ≤ budget := by
-    have hlocal := RawNonnegativeRational.Code.bounded_bits (query_bounded D h s hs hT (u,v))
-    have hB : fieldBudget n B - 1 + 1 = fieldBudget n B := by
-      unfold fieldBudget
-      dsimp only
-      omega
-    simpa only [R, request, Vector.getElem_ofFn, Fin.eta, hB, budget] using hlocal
+  have hW := step_query_width D h s hs hT
   have hb : 1 ≤ budget := by
     unfold budget fieldBudget
     dsimp only
@@ -428,9 +434,11 @@ theorem within_build {n B : ℕ} (hn : 0 < n) (D : Input n) (hα : 1 ≤ D.facto
     (rounds D) 0 (some initial) (fun a ha => (Option.some.inj ha) ▸ hi) (by simpa using rounds_le D h)
   exact within_mono htree (Nat.mul_le_mul_right q (rounds_le D h))
 
+theorem step_binary {n : ℕ} (D : Input n) (s : History (Edge n)) : LazyFairBitTrees.Binary (step D s) :=
+  LazyFairBitTrees.binary_map (CheckedEdgeOracle.mass_binary D.confidence _ (allowance D s.costs)) _
+
 theorem build_binary {n : ℕ} (D : Input n) : LazyFairBitTrees.Binary (build D) :=
-  AdaptiveOracleFailure.binary_tree (step D) (fun s => LazyFairBitTrees.binary_map
-    (CheckedEdgeOracle.mass_binary D.confidence _ (allowance D s.costs)) _) ..
+  AdaptiveOracleFailure.binary_tree (step D) (step_binary D) ..
 
 theorem run_fairTape {n B : ℕ} (hn : 0 < n) (D : Input n) (hα : 1 ≤ D.factor) (h : InputFits D B) :
     (EncodedSolverBits.fairTape (readBudget n B D.confidence)).map

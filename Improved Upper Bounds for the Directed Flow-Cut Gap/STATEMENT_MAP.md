@@ -5,9 +5,11 @@ This is a partial checkpoint. The main vertex and edge rounding bounds,
 randomized output guarantees, and attained optimum and corollary interfaces
 are proved. Both pipelines execute from original graph bitstrings with a
 polynomial random-read bound. The physical fractional prefix and packed
-integer controller have separate deterministic polynomials. The complete
-source-to-cut bit-time bound remains open.
+integer controller have separate deterministic polynomials. The composed
+vertex, edge and adaptive charge counters also have polynomial bounds in the
+original input dimensions. The complete source-to-cut bit-time bound remains open.
 [Physical amplified solvers](verification/PHYSICAL_AMPLIFIED_SOLVERS_20261119.md)
+[Composed charge bounds](verification/PHYSICAL_AMPLIFIED_COST_20261119.md)
 
 | Source item | Verified scope at this checkpoint | Still required |
 | --- | --- | --- |
