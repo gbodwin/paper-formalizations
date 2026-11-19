@@ -273,6 +273,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   coverage at the fixed scale, and the comparison to any feasible
   original subgraph.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44458678422).
+- [5efae5e2](https://github.com/gbodwin/paper-formalizations/commit/5efae5e2f4a8415bf6a4754952834aab9db69754)
+  proves the one-sided group rounding probability for finite independent
+  thresholds. The 2248-declaration audit and local kernel replay passed.
+  Independent review checked the product count, the support of the
+  estimator, and the common-prefix second moment.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44459443528).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

@@ -90,7 +90,11 @@ of size \(M\) gives a forest solution of cost at most
 [forest network](OnlineReachabilityPreservers/SteinerForestNetwork.lean)
 uses those links to prove feasibility and the cost bound for the actual
 fractional online run. Zero-cost metric links are always free. Leaf
-attachments are local to the current source and sink groups. With \(H\)
+attachments are local to the current source and sink groups. The
+[flow decomposition on this forest](OnlineReachabilityPreservers/SteinerForestFlow.lean)
+assigns each unit path to the same root on both sides. It supplies equal
+terminal mass on the two sides of each root, bounded by the capacities
+on all ancestor links. With \(H\)
 denoting the template vertex set, the capacity scale is at most
 \(\max(1,n|H|^2)\). The [tree rounding probability](OnlineReachabilityPreservers/SteinerTreeRounding.lean)
 gives a one-sided success probability of at least \(1/(h+1)\) when
