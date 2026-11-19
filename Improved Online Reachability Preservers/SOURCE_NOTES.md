@@ -142,6 +142,15 @@ size and the half-6-bridge in the actual consecutive incidence blocks.
 [Projection theorem](OnlineReachabilityPreservers/BridgeVertexProjection.lean)
 · [Checked vertex split](OnlineReachabilityPreservers/VertexSplitAudit.lean).
 
+Without unique intersections, two consecutive size-two blocks can already
+create a half-5-bridge. In arrival order use `[(3,2),(0,2),(1,2),(2,3),(0,1)]`
+on four vertices. The four incidences at vertex `2` split into the earlier
+copy `2a` and the later copy `2b`. The half-bridge is the chain
+\(0	o1	o2b	o3	o2a\) and river \((0,2a)\). The original family
+excludes every half-bridge. This sets the limit for arbitrary simple paths
+of the checked vertex-split preservation through cutoff four.
+[Size-five vertex split](OnlineReachabilityPreservers/VertexSplitAudit.lean).
+
 ## The cited consecutive-edge overlay can admit an alternate path
 
 The paths `[(0,1,2,3), (3,0), (2,1)]` have no bridge of any size. Their endpoint
