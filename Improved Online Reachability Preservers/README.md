@@ -77,8 +77,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   show that the terminals using any original arc form such an interval.
   The [shortened routes](OnlineReachabilityPreservers/SteinerHeightBlocks.lean)
   concatenate back to the original routes and charge each original arc at
-  most twice the branch count per level. The full auxiliary forest and
-  its online rounding algorithm remain open.
+  most twice the branch count per level.
+  The [inward metric tree](OnlineReachabilityPreservers/SteinerHeightTree.lean)
+  is built from the graph, a root, and a depth limit. Expanded links
+  preserve directed reachability at no more than their metric weight.
+  Embedding the shortened routes into this tree, joining the root copies,
+  and online rounding remain open.
 - [The weighted fractional cover](OnlineReachabilityPreservers/SteinerWeightedCover.lean)
   raises rational capacities as batches of cuts arrive. It verifies coverage
   and bounds both the update count and the cost against any fixed set that

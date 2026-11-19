@@ -224,6 +224,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   The 1869-declaration audit and kernel replay passed. Independent review
   checked the exact weighted update, the cap and the normalized cost bound.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44450916781).
+- [bda572f6](https://github.com/gbodwin/paper-formalizations/commit/bda572f6ccb9096b592ddf42aca4cd7413bcd28e)
+  proves the actual rooted segment construction and its weighted bound.
+  The 1939-declaration audit and local kernel replay passed. Independent
+  review checked the prefix decomposition, the top and lower blocks,
+  and the weighted count on actual arborescences.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44452159771).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

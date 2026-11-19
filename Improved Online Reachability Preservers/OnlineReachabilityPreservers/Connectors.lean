@@ -34,6 +34,23 @@ private theorem hops_le {G : Arcs V} {s t : V} {k : ℕ}
   rw [hh]
   exact least?_le hj hmem
 
+@[simp]
+theorem hops_self (G : Arcs V) (v : V) : hops G v v = 0 :=
+  Nat.eq_zero_of_le_zero (hops_le (Nat.zero_le _) (target_mem_reachIn G v 0))
+
+theorem hops_le_edge {G : Arcs V} {u v t : V} (edge : Edge G u v) (reach : Reach G v t) :
+    hops G u t ≤ hops G v t + 1 := by
+  by_cases fuel : hops G v t + 1 ≤ Fintype.card V
+  · exact hops_le fuel (reachIn_succ.mpr (Or.inr ⟨v, edge, (hops_spec reach).2⟩))
+  · exact (hops_spec (reach.head edge)).1.trans (Nat.lt_of_not_ge fuel).le
+
+theorem hops_le_walk {G : Arcs V} {u v : V} {path : List (V × V)} (walk : Walk G u v path) :
+    hops G u v ≤ path.length := by
+  induction walk with
+  | nil => simp
+  | cons edge rest ih =>
+    exact (hops_le_edge edge rest.reachable).trans (Nat.succ_le_succ ih)
+
 private theorem hops_pos {G : Arcs V} {s t : V} (h : Reach G s t) (hne : s ≠ t) :
     0 < hops G s t := by
   have hm := (hops_spec h).2

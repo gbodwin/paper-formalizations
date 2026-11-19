@@ -65,7 +65,11 @@ with an additive baseline of at most one in the normalized objective.
 The graph reduction, separation, and rounding remain open.
 The [height-block proof](OnlineReachabilityPreservers/SteinerHeightBlocks.lean)
 constructs the shortened segments on the original rooted routes, checks
-their concatenation, and bounds their weighted cost.
+their concatenation, and bounds their weighted cost. The
+[inward metric tree](OnlineReachabilityPreservers/SteinerHeightTree.lean)
+has depth at most the given limit. Any selected links expand to original
+edges at cost at most their weights. The forward embedding into this
+tree and the online solver remain open.
 
 ## Appendix dependencies
 

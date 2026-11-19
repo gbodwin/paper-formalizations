@@ -83,4 +83,25 @@ theorem routePath_succeeds {G : Arcs V} {s t : V} :
     (∃ path, routePath G s t = some path) ↔ Reach G s t :=
   (forwardPath_succeeds (empty_subset _) (hopGraph_dag G t)).trans (hopGraph_reach G t s)
 
+private theorem hopGraph_walk_hops {G : Arcs V} {s u t : V} {path : List (V × V)}
+    (walk : Walk (hopGraph G t) s u path) (ending : Reach G u t) :
+    hops G s t = hops G u t + path.length := by
+  induction walk with
+  | nil => simp
+  | @cons a b z rest edge walk ih =>
+    obtain ⟨original, decrease⟩ := mem_filter.mp edge
+    change hops G b t < hops G a t at decrease
+    have reach : Reach G b t := (walk.mono (filter_subset _ _)).reachable.trans ending
+    have oneStep := hops_le_edge (show Edge G a b from original) reach
+    have remaining := ih ending
+    simp only [List.length_cons]
+    omega
+
+/-- The selected original route has the exact minimum hop count. -/
+theorem routePath_length_eq_hops {G : Arcs V} {s t : V} {path : List (V × V)}
+    (h : routePath G s t = some path) :
+    path.length = hops G s t := by
+  have walk := (forwardPath_spec (empty_subset _) h).1
+  simpa using (hopGraph_walk_hops walk (show Reach G t t from .refl)).symm
+
 end OnlineReachabilityPreservers

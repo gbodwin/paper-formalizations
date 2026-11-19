@@ -226,6 +226,12 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.rootedTerminalOrder_arc_prefix
 #print axioms OnlineReachabilityPreservers.terminalSegments_flatten
 #print axioms OnlineReachabilityPreservers.rootedHeightBlockSegments_weight_le
+#print axioms OnlineReachabilityPreservers.hops_le_walk
+#print axioms OnlineReachabilityPreservers.routePath_length_eq_hops
+#print axioms OnlineReachabilityPreservers.heightNode_card_le
+#print axioms OnlineReachabilityPreservers.inwardHeightTree_arborescence
+#print axioms OnlineReachabilityPreservers.expandHeightLinks_reach
+#print axioms OnlineReachabilityPreservers.expandHeightLinks_cost
 #print axioms OnlineReachabilityPreservers.weightedCoverStep_spec
 #print axioms OnlineReachabilityPreservers.weightedCoverRun_bound
 #print axioms OnlineReachabilityPreservers.theorem3_lattice_lower
