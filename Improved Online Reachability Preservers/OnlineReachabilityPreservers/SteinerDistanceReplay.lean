@@ -9,8 +9,30 @@ open Finset
 
 variable {V : Type*} [LinearOrder V] [Fintype V]
 
+/-- Share the distance table and paired template across all prefixes, and
+report the arc inspections and template key comparisons separately. -/
+def completeSteinerPrefixSearchReplayWithTemplateWork (G : Arcs V) (height : ℕ)
+    (sample : EarlyRoundSample G height) (draw : Fin (completeSteinerHubCount V) → V)
+    (thin : ThinSample G) (D : List (V × V)) : List (Arcs V × ℕ) × ℕ × ℕ :=
+  let prepared := prepareEarlyDistanceTableWithTemplateWork G height sample
+  let evaluate := completeSteinerDrawRunWithSearchWorkFromEarly G prepared.1 draw thin
+  (D.inits.map evaluate,prepared.2.1,prepared.2.2)
+
+theorem completeSteinerPrefixSearchReplayWithTemplateWork_spec (G : Arcs V) (height : ℕ)
+    (sample : EarlyRoundSample G height) (draw : Fin (completeSteinerHubCount V) → V)
+    (thin : ThinSample G) (D : List (V × V)) :
+    let out := completeSteinerPrefixSearchReplayWithTemplateWork G height sample draw thin D
+    let n := Fintype.card V
+    out.1 = completeSteinerPrefixSearchReplay G height sample draw thin D ∧
+      out.2.1 ≤ n^2*((n+1)*n*G.card) ∧
+      out.2.2 ≤ n*(2*Fintype.card (HeightNode V height)*height*n^2) := by
+  obtain ⟨replay,build,template⟩ := prepareEarlyDistanceTableWithTemplateWork_spec G height sample
+  refine ⟨?_,build.le.trans (distanceTableWithSearchWork_bound G),template⟩
+  simp only [completeSteinerPrefixSearchReplayWithTemplateWork, replay, completeSteinerPrefixSearchReplay]
+  rfl
+
 /-- One table and paired template serve all the prefixes. The second field
-charges their original-graph searches once, outside the prefix list. -/
+charges the table's original-graph searches once, outside the prefix list. -/
 def completeSteinerPrefixSearchReplayWithDistanceTable (G : Arcs V) (height : ℕ)
     (sample : EarlyRoundSample G height) (draw : Fin (completeSteinerHubCount V) → V)
     (thin : ThinSample G) (D : List (V × V)) : List (Arcs V × ℕ) × ℕ :=

@@ -549,6 +549,11 @@ An exact-source replay grants no coverage to a paper statement outside the
   Independent review checked the finite maximum and asked for its eligibility,
   maximality, and the upper retained mass to be explicit in the conclusion.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44505667587).
+- [0f6ac5e1](https://github.com/gbodwin/paper-formalizations/commit/0f6ac5e190d8c497e993d12ed52bdb0ff81a40bf)
+  states the initial family's eligibility and maximality and both sides of
+  the retained-mass bound. The 3631-declaration audit, local kernel replay,
+  and independent review of the common-order scope passed.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44506685244).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

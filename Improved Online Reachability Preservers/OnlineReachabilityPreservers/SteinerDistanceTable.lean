@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.SteinerEarlyReplay
+import OnlineReachabilityPreservers.SteinerTemplateWork
 
 /-! Precompute original-graph distances independently of the Steiner height forest. -/
 
@@ -147,6 +148,32 @@ theorem heightForestFromDistances_eq (G : Arcs V) (dist : V × V → ℕ)
   rw [heightTreeFromDistances_eq G dist yes root height,
     heightTreeFromDistances_eq (reverseArcs G) (fun d => dist d.swap) rev root height]
 
+private def historyDistanceRead (lookup : V × V → ℕ × ℕ) (a b : V) : Bool × ℕ :=
+  let entry := lookup (b,a)
+  (decide (entry.1 ≤ Fintype.card V),entry.2)
+
+theorem heightForestWithDistanceTableWork_spec (G : Arcs V) (height : ℕ) :
+    let rows := (distanceTableWithSearchWork G).1
+    let read := readDistanceRow rows
+    let out := heightForestWithDistanceWork (historyDistanceRead read)
+      (historyDistanceRead (fun d => read d.swap)) height
+    out.1 = heightForest G height ∧
+      out.2 ≤ Fintype.card V*(2*Fintype.card (HeightNode V height)*height*(Fintype.card V^2)) := by
+  let read := readDistanceRow (distanceTableWithSearchWork G).1
+  have value (a b : V) : (read (a,b)).1 ≤ Fintype.card V ↔ Reach G a b := by
+    change (readDistanceRow (distanceTableWithSearchWork G).1 (a,b)).1 ≤ _ ↔ _
+    rw [(distanceTableReadWithSearchWork_spec G (a,b)).1, hops_le_vertices_iff]
+  have left (a b : V) : (historyDistanceRead read a b).1 = true ↔ Reach G b a := by
+    simpa only [historyDistanceRead,decide_eq_true_eq] using value b a
+  have right (a b : V) : (historyDistanceRead (fun d => read d.swap) a b).1 = true ↔
+      Reach (reverseArcs G) b a := by
+    change decide ((read (a,b)).1 ≤ Fintype.card V) = true ↔ Reach (reverseArcs G) b a
+    rw [decide_eq_true_eq,reach_reverseArcs]
+    exact value a b
+  exact heightForestWithDistanceWork_spec G _ _ left right _
+    (fun a b => (distanceTableReadWithSearchWork_spec G (b,a)).2)
+    (fun a b => (distanceTableReadWithSearchWork_spec G (a,b)).2) height
+
 section ForestWeights
 
 variable {height : ℕ}
@@ -261,11 +288,12 @@ private def preparedScaleAndFuel (priced : Arcs (ForestNetworkVertex V height))
   (scale,(scale.log2+1)*total+1)
 
 private theorem forestScaleFromWeights_eq (G : Arcs V) (dist : V × V → ℕ)
-    (values : ∀ d : V × V, dist d = hops G d.1 d.2) (height : ℕ) :
-    (preparedScaleAndFuel (pricedForestFromWeights (heightForestFromDistances dist height)
-      (forestWeightFromDistances dist)) (networkWeightFromForestWeights (forestWeightFromDistances dist))).1 =
+    (values : ∀ d : V × V, dist d = hops G d.1 d.2) (height : ℕ)
+    (links : Arcs (HeightForestVertex V height)) (correct : links = heightForestFromDistances dist height) :
+    (preparedScaleAndFuel (pricedForestFromWeights links (forestWeightFromDistances dist))
+      (networkWeightFromForestWeights (forestWeightFromDistances dist))).1 =
         forestScale G height := by
-  rw [heightForestFromDistances_eq G dist values height, forestWeightFromDistances_eq G dist values]
+  rw [correct,heightForestFromDistances_eq G dist values height, forestWeightFromDistances_eq G dist values]
   rfl
 
 private theorem roundedTrials_cast_scale (G : Arcs V) {scale : ℕ}
@@ -287,8 +315,9 @@ private def earlyMetricWithPreparedInputs (links : Arcs (HeightForestVertex V he
   (roundedForestTrialsFromWeights links weight out.1.1 scale (earlyTrialCount V height) seed,out.2)
 
 private theorem earlyMetricWithPreparedInputs_eq (G : Arcs V) (height : ℕ) (dist : V × V → ℕ)
-    (values : ∀ d : V × V, dist d = hops G d.1 d.2) (sample : EarlyRoundSample G height) :
-    let links := heightForestFromDistances dist height
+    (values : ∀ d : V × V, dist d = hops G d.1 d.2)
+    (links : Arcs (HeightForestVertex V height)) (correct : links = heightForestFromDistances dist height)
+    (sample : EarlyRoundSample G height) :
     let weight := forestWeightFromDistances dist
     let priced := pricedForestFromWeights links weight
     let free := freeForestFromWeights links weight
@@ -298,9 +327,10 @@ private theorem earlyMetricWithPreparedInputs_eq (G : Arcs V) (height : ℕ) (di
     let fuel := sizes.2
     let seed : ForestTrialArray V height scale (earlyTrialCount V height) :=
       cast (congrArg (fun k => ForestTrialArray V height k (earlyTrialCount V height))
-        (forestScaleFromWeights_eq G dist values height).symm) sample
+        (forestScaleFromWeights_eq G dist values height links correct).symm) sample
     earlyMetricWithPreparedInputs links weight priced free networkWeight scale fuel seed =
       earlyMetricWithSearchWork G height sample := by
+  subst links
   funext P
   let links := heightForestFromDistances dist height
   let weight := forestWeightFromDistances (height := height) dist
@@ -315,19 +345,24 @@ private theorem earlyMetricWithPreparedInputs_eq (G : Arcs V) (height : ℕ) (di
   dsimp only [earlyMetricWithPreparedInputs, earlyMetricWithSearchWork]
   rw [fraction,
     roundedForestTrialsFromWeights_eq G dist values,
-    roundedTrials_cast_scale G (forestScaleFromWeights_eq G dist values height)]
+    roundedTrials_cast_scale G (forestScaleFromWeights_eq G dist values height links rfl)]
 
 end ForestWeights
 
-/-- Prepare one early evaluator for any number of prefixes. Its template,
-arc weights and scale share the same stored original distances. -/
-def prepareEarlyDistanceTable (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
-    (List (V × V) → Arcs V × ℕ) × ℕ :=
+/-- Prepare one early evaluator. Report distance-table arc inspections and
+the key comparisons made to construct the paired template separately. -/
+def prepareEarlyDistanceTableWithTemplateWork (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
+    (List (V × V) → Arcs V × ℕ) × ℕ × ℕ :=
   let table := distanceTableWithSearchWork G
-  let dist := fun d => (readDistanceRow table.1 d).1
+  let query := readDistanceRow table.1
+  let dist := fun d => (query d).1
   let known : ∀ d : V × V, dist d = hops G d.1 d.2 :=
     fun d => (distanceTableReadWithSearchWork_spec G d).1
-  let links := heightForestFromDistances dist height
+  let template := heightForestWithDistanceWork (historyDistanceRead query)
+    (historyDistanceRead (fun d => query d.swap)) height
+  let correct : template.1 = heightForestFromDistances dist height :=
+    (heightForestWithDistanceTableWork_spec G height).1.trans (heightForestFromDistances_eq G dist known height).symm
+  let links := template.1
   let weight := forestWeightFromDistances dist
   let priced := pricedForestFromWeights links weight
   let free := freeForestFromWeights links weight
@@ -337,17 +372,40 @@ def prepareEarlyDistanceTable (G : Arcs V) (height : ℕ) (sample : EarlyRoundSa
   let fuel := sizes.2
   let seed : ForestTrialArray V height scale (earlyTrialCount V height) :=
     cast (congrArg (fun k => ForestTrialArray V height k (earlyTrialCount V height))
-      (forestScaleFromWeights_eq G dist known height).symm) sample
+      (forestScaleFromWeights_eq G dist known height links correct).symm) sample
   let metric := earlyMetricWithPreparedInputs links weight priced free networkWeight scale fuel seed
-  (earlyRoundedGraphWithSearchWorkFromMetric G height metric,table.2)
+  (earlyRoundedGraphWithSearchWorkFromMetric G height metric,table.2,template.2)
+
+theorem prepareEarlyDistanceTableWithTemplateWork_spec (G : Arcs V) (height : ℕ)
+    (sample : EarlyRoundSample G height) :
+    let out := prepareEarlyDistanceTableWithTemplateWork G height sample
+    out.1 = earlyRoundedGraphWithSearchWork G height sample ∧
+      out.2.1 = (distanceTableWithSearchWork G).2 ∧
+      out.2.2 ≤ Fintype.card V*(2*Fintype.card (HeightNode V height)*height*(Fintype.card V^2)) := by
+  let query := readDistanceRow (distanceTableWithSearchWork G).1
+  let dist := fun d => (query d).1
+  have known (d : V × V) : dist d = hops G d.1 d.2 :=
+    (distanceTableReadWithSearchWork_spec G d).1
+  let template := heightForestWithDistanceWork (historyDistanceRead query)
+    (historyDistanceRead (fun d => query d.swap)) height
+  have spec := heightForestWithDistanceTableWork_spec G height
+  have correct : template.1 = heightForestFromDistances dist height :=
+    spec.1.trans (heightForestFromDistances_eq G dist known height).symm
+  refine ⟨?_,rfl,spec.2⟩
+  exact congrArg (earlyRoundedGraphWithSearchWorkFromMetric G height)
+    (earlyMetricWithPreparedInputs_eq G height dist known template.1 correct sample)
+
+/-- The measured graph searches, with the same distance-table preparation. -/
+def prepareEarlyDistanceTable (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
+    (List (V × V) → Arcs V × ℕ) × ℕ :=
+  let prepared := prepareEarlyDistanceTableWithTemplateWork G height sample
+  (prepared.1,prepared.2.1)
 
 theorem prepareEarlyDistanceTable_eq (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
     prepareEarlyDistanceTable G height sample =
       (earlyRoundedGraphWithSearchWork G height sample,(distanceTableWithSearchWork G).2) := by
-  unfold prepareEarlyDistanceTable earlyRoundedGraphWithSearchWork
-  dsimp only
-  rw [earlyMetricWithPreparedInputs_eq G height _
-    (fun d => (distanceTableReadWithSearchWork_spec G d).1) sample]
+  have out := prepareEarlyDistanceTableWithTemplateWork_spec G height sample
+  exact Prod.ext out.1 out.2.1
 
 /-- Construct original distances once before building the height forest.
 The separator and rounding use stored values for original metric queries. -/

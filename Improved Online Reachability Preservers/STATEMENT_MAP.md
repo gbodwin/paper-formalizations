@@ -171,6 +171,11 @@ adds one distance-table preparation to this bound for the whole list.
 The prepared evaluator also shares the paired template, priced and free
 links, scale, and separator fuel with every early prefix. The weighted
 network loop passes the same scale and fuel through each request update.
+The [template work bound](OnlineReachabilityPreservers/SteinerTemplateWork.lean)
+counts comparisons in both orientations while checking successive labels
+in every history. With \(H\) histories per root and height \(h\), the
+one-time template cost is at most \(2n^3Hh\) table key comparisons.
+The replay reports that cost separately from the table's arc inspections.
 The [route counters](OnlineReachabilityPreservers/RouteWork.lean)
 bound arc inspections for SCC labels and shortest routes, and
 sum the search work over greedy forwards growth. They also bound
