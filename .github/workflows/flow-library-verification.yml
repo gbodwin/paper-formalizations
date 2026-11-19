@@ -4,6 +4,7 @@ on:
     branches:
       - codex/flow-library-20261119
       - codex/flow-vertex-runtime-20261119
+      - codex/flow-round-state-20261119
   workflow_dispatch:
 permissions:
   contents: read
@@ -34,6 +35,9 @@ jobs:
         run: bash scripts/CheckFlowLibrary.sh
       - name: Check the composed vertex modes and adaptive width proof
         run: bash scripts/CheckFlowChargedVertex.sh
+      - name: Check the fixed sampled-cut state update
+        if: github.ref_name == 'codex/flow-round-state-20261119'
+        run: bash scripts/CheckFlowRoundStateUpdate.sh
       - name: Recheck source identity
         run: |
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"

@@ -13,6 +13,12 @@ The same physical dispatcher and heap readback supply the cover rows.
 Cut and unread tape agree exactly with the original bounded bit-tree solver.
 [Charged vertex verification scope](verification/CHARGED_VERTEX_20261119.md)
 
+After a cut has been sampled, one fixed-instruction program now updates
+the retained demand mask and cut and recomputes the current integer mass.
+Lean proves equality to the corresponding fields of the existing rounding
+step, including a polynomial charge with the paid halt.
+[Physical state update scope](verification/ROUND_STATE_UPDATE_20261119.md)
+
 [Verification scope and entry points](verification/PHYSICAL_SOURCE_DISPATCH_20261118.md)
 
 ---

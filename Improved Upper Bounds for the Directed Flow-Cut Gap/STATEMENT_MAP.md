@@ -18,7 +18,7 @@ open. [Physical execution scope](verification/PHYSICAL_SOURCE_DISPATCH_20261118.
 | Lemma 9 | Actual all-regime randomized law, uniform ε expected-size and n^(-κ) high-probability size bounds | Constructive runtime |
 | Theorem 10 | Cited background only | Not claimed formalized |
 | Lemma 11 | Actual indexed-path level crossing, including infinite distances | Complete |
-| Lemma 12 | Every selected demand internally cut; actual loop traces preserve processed-demand correctness | Complete finite component |
+| Lemma 12 | Every selected demand is internally cut. The loop preserves processed-demand correctness. `RoundStateUpdateProgram.update_round_state` realizes the post-sampling flags and mass update on represented inputs. | Fixed-instruction construction of the sampled level cut and its optimizer context |
 | Lemma 13 | Actual restart sequence, analysis-epoch splitting, whole-trace bounds, outer recursion and explicit global parameters | Complete finite mathematical component |
 | Lemma 14 | Actual uniform-level law, unconditional stopped-prefix expectation and full-epoch truncation bound | Complete finite component |
 | Lemma 15 | Actual capped-ceiling horizon, active-state tail, unconditional outer cost and global parameter specialization | Complete finite mathematical component |
@@ -40,6 +40,7 @@ open. [Physical execution scope](verification/PHYSICAL_SOURCE_DISPATCH_20261118.
 The current scoped gate is [the constructive workflow](../.github/workflows/flow-constructive-rounding.yml).
 The adaptive edge-family extension has a [separate exact-commit gate](../.github/workflows/flow-adaptive-family.yml) and a [proof scope record](verification/ADAPTIVE_EDGE_FAMILY_20261119.md).
 The charged vertex modes and original-width envelope have a [full-library gate](../.github/workflows/flow-library-verification.yml) and a [proof scope record](verification/CHARGED_VERTEX_20261119.md).
+The fixed sampled-cut state update has a [proof scope record](verification/ROUND_STATE_UPDATE_20261119.md).
 The manifest `verification/component-verification.json` records an earlier
 component checkpoint.
 Independent reviews record semantic scope and boundary cases. No desired
