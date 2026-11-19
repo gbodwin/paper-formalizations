@@ -192,6 +192,8 @@ run_cmd do
 #print axioms OnlineReachabilityPreservers.lemma22_hub_count
 #print axioms OnlineReachabilityPreservers.thickSampleCount_probability
 #print axioms OnlineReachabilityPreservers.hubPreserver_balanced_bound
+#print axioms OnlineReachabilityPreservers.thinCoverRun_bound
+#print axioms OnlineReachabilityPreservers.thinCoverRun_prefix
 #print axioms OnlineReachabilityPreservers.lemma29_square_sum
 #print axioms OnlineReachabilityPreservers.SourceAudit.splitExample_bridge_free
 #print axioms OnlineReachabilityPreservers.SourceAudit.splitExample_creates_half_four

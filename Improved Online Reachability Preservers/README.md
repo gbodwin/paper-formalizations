@@ -39,6 +39,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   in original edges with prefix monotonicity and checks the logarithmic
   competitive contribution at the thresholds of Theorem 21. The early and
   thin phases carry separate obligations.
+- [The thin-demand fractional cover](OnlineReachabilityPreservers/SteinerThinCover.lean)
+  checks capacity doubling on the local directed cuts. Every request's cuts
+  remain covered, and the capacity sum is bounded by
+  `1 + OPT * (1 + floor(log₂ |E|))` after normalization when `|E| > 0`.
+  The current separator enumerates all local cuts. Polynomial separation
+  and online rounding remain open.
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)

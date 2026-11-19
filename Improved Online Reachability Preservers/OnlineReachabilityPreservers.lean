@@ -43,3 +43,4 @@ import OnlineReachabilityPreservers.SplitAudit
 import OnlineReachabilityPreservers.SplitPreservation
 import OnlineReachabilityPreservers.SteinerCounting
 import OnlineReachabilityPreservers.SteinerHubs
+import OnlineReachabilityPreservers.SteinerThinCover

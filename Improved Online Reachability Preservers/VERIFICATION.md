@@ -137,6 +137,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   passed. Independent review checked the integer certificates, the clipped
   dyadic envelope, and simple original-graph paths with shared connectors.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44433680272).
+- [7505df0b](https://github.com/gbodwin/paper-formalizations/commit/7505df0b4e85cccb3a62f874441c99233fc4890a)
+  proves uniform all-pairs hub sampling, online hub routing and charging,
+  and the balanced contribution to Theorem 21. The 1158-declaration paper
+  audit and local kernel replay passed. Independent review checked the
+  product counts, the cyclic reachability interval, and the exact thresholds.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44434808043).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
