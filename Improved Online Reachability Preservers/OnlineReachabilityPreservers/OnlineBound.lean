@@ -19,26 +19,30 @@ def OnlineIncidenceBound (a b C : ℝ) : Prop :=
     (∑ i, ((paths i).card : ℝ)) ≤ C*onlineRate a b (Fintype.card V) (Fintype.card I)
 
 set_option maxHeartbeats 800000 in
-private theorem online_regular_step {a b C : ℝ} (hC : 1 ≤ C) (ha₀ : 29/40 ≤ a)
-    (ha₁ : a < 3/4) (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 701/1000)
-    (hβ₀ : 2/3 ≤ onlineExponentStep b) (hβ₁ : onlineExponentStep b ≤ 701/1000)
-    (prior : OnlineIncidenceBound.{u,v} a b C) :
-    ∃ A > 0, ∀ {V : Type u} {I : Type v} [LinearOrder V] [LinearOrder I] [Fintype V] [Fintype I]
-      {paths : I → Finset V} (_ : HalfBridgeFree (PathBefore paths) 4) (L D : ℕ),
-      0 < Fintype.card V → 0 < Fintype.card I →
-      let M := ∑ i, (paths i).card
-      16*Fintype.card V < M → 8*Fintype.card I < M →
-      L*Fintype.card I ≤ 4*M → D*Fintype.card V ≤ 4*M →
-      (∀ i, (paths i).card ≤ L) → (∀ v, (occurrences paths v).card ≤ D) →
-      (M:ℝ) ≤ A*onlineRate ((2+b)/(3+b)) (onlineExponentStep b) (Fintype.card V) (Fintype.card I) := by
+/-- The corrected exponent update from lower and upper sampled tuple counts. -/
+theorem online_regular_step_from_counts {a b X Y : ℝ} (hX : 0 < X) (hY : 0 < Y)
+    (ha₀ : 29/40 ≤ a) (ha₁ : a < 3/4) (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 701/1000)
+    (hβ₀ : 2/3 ≤ onlineExponentStep b) (hβ₁ : onlineExponentStep b ≤ 701/1000) :
+    ∃ B > 0, ∀ (n p M L D : ℕ), 0 < n → 0 < p → 0 < M →
+      M ≤ p*L → M ≤ n*D → M^3 ≤ 2048*(n*p)^2 →
+      (∀ (h : ℕ), 0 < h → h ≤ L → h ≤ D → h*p ≤ M → h*n ≤ M →
+        40960*n^2*p^2 ≤ (h+1)*M^3 →
+        let ℓ : ℝ := (M:ℝ)/p
+        let d : ℝ := (M:ℝ)/n
+        let t : ℝ := h
+        ∃ Q : ℕ, (h+1)*M^7 ≤ (40*2048^2)*n^4*p^3*Q ∧
+          (Q:ℝ)/(p:ℝ) ≤
+            X*(ℓ^2*d*t^(1/b) +
+              ℓ^(3/2:ℝ)*d^(3/2+(3-4*a)/(2-2*a))*t^((2*b+1)/(2*b)) +
+              ℓ^(1/b)*d^2*t^((4*b-2*b^2-1)/b^2)) +
+            Y*(ℓ^2*d^2+ℓ^(3/2:ℝ)*d^2*t^(5/4:ℝ))) →
+      (M:ℝ) ≤ B*onlineRate ((2+b)/(3+b)) (onlineExponentStep b) n p := by
   let α := (2+b)/(3+b)
   let β := onlineExponentStep b
   have βhi : β ≤ 3/4 := by linarith
   have bpos : 0 < b := by linarith
   have bwide : b ≤ 3/4 := by linarith
   have αhi : α ≤ 3/4 := (div_le_iff₀ (by linarith : 0 < 3+b)).mpr (by linarith)
-  obtain ⟨X, hX, Y, hY, sampled⟩ := lemma36_acyclic_expectation hC
-    (show 7/10 ≤ a by linarith) ha₁ hb₀ bwide
   obtain ⟨K, hK, upper⟩ := lemma37_substitute_window (a := a) hX hY hb₀ bwide
   let W : ℝ := 40*2048^2
   have hpW : 0 < W := by norm_num [W]
@@ -56,15 +60,7 @@ private theorem online_regular_step {a b C : ℝ} (hC : 1 ≤ C) (ha₀ : 29/40 
   have uB : U ≤ B := by dsimp only [B]; linarith only [hA]
   have aB : A ≤ B := by dsimp only [B]; linarith only [hU]
   refine ⟨B,hB,?_⟩
-  intro V I _ _ _ _ paths free L D hn hp
-  dsimp only
-  let n := Fintype.card V
-  let p := Fintype.card I
-  let M := ∑ i, (paths i).card
-  intro dense long avgL avgD lengths degree
-  change 16*n < M at dense
-  change 8*p < M at long
-  have hm : 0 < M := by omega
+  intro n p M L D hn hp hm length_total degree_total cube sampled
   have npos : (0:ℝ) < n := Nat.cast_pos.mpr hn
   have n1 : (1:ℝ) ≤ n := by exact_mod_cast (show 1 ≤ n from hn)
   have ppos : (0:ℝ) < p := Nat.cast_pos.mpr hp
@@ -77,8 +73,6 @@ private theorem online_regular_step {a b C : ℝ} (hC : 1 ≤ C) (ha₀ : 29/40 
   have tpos : 0 < t := div_pos (mul_pos cpos ppos) (mul_pos lpos (sq_pos_of_pos dpos))
   let h := (cN*n^2*p^2)/M^3+1
   have hpos : 0 < h := Nat.succ_pos _
-  have cube : M^3 ≤ 2048*(n*p)^2 :=
-    ((lemma27_acyclic paths free).resolve_left (not_le_of_gt dense)).resolve_left (not_le_of_gt long)
   obtain ⟨cap, height⟩ := rounded_branch_window hn hp hm
     ((by decide : 2048 ≤ 40960).trans c40960) cube
   change (h:ℝ)+1 ≤ 3*t at cap
@@ -113,37 +107,20 @@ private theorem online_regular_step {a b C : ℝ} (hC : 1 ≤ C) (ha₀ : 29/40 
     have branch := (square_root_rate_le npos ppos.le αhi).trans (max_le Fm leading)
     exact (m.trans_eq (mul_assoc _ _ _)).trans
       ((mul_le_mul_of_nonneg_left branch hU.le).trans (mul_le_mul_of_nonneg_right uB Fp))
-  have length_total : M ≤ p*L := calc
-    _ ≤ ∑ _ : I, L := sum_le_sum (fun i _ => lengths i)
-    _ = _ := by simp [p]
-  have degree_total : M ≤ n*D := by
-    change (∑ i, (paths i).card) ≤ n*D
-    rw [← sum_occurrences]
-    calc
-      _ ≤ ∑ _ : V, D := sum_le_sum (fun v _ => degree v)
-      _ = _ := by simp [n]
   have hl : h ≤ L := Nat.le_of_mul_le_mul_left ((Nat.mul_comm p h).le.trans (length_window.trans length_total)) hp
   have hd : h ≤ D := Nat.le_of_mul_le_mul_left ((Nat.mul_comm n h).le.trans (degree_window.trans degree_total)) hn
-  have input : InducedSizeBound paths C a b := by
-    intro S J free'
-    have h := prior S J (inducedPaths paths S J) free'
-    simpa only [Fintype.card_coe, onlineRate] using h
   have Hsmall : 40960*n^2*p^2 ≤ (h+1)*M^3 :=
     (Nat.mul_le_mul_right _ (Nat.mul_le_mul_right _ c40960)).trans height
-  have count := lemma28_scaled_mean_lower free L h lengths hn hp dense.le long.le avgL length_window Hsmall
-  let Qn := ∑ base : I, (branchTuples paths base h).card
-  let Q := uniformMean (fun base => ((branchTuples paths base h).card:ℝ))
+  obtain ⟨Qn, count, sampled_bound⟩ := sampled h hpos hl hd length_window degree_window Hsmall
+  let Q := (Qn:ℝ)/(p:ℝ)
   have hQ := branch_window_mean_lower (Q := Qn) hn hp height count
-  have castQ : (Qn:ℝ) = ∑ base : I, ((branchTuples paths base h).card:ℝ) := Nat.cast_sum _ _
-  change c*(ℓ^2*d^2) ≤ W*((Qn:ℝ)/(p:ℝ)) at hQ
-  rw [castQ] at hQ
+  change c*(ℓ^2*d^2) ≤ W*Q at hQ
   have qLower : (Y+1)*(ℓ^2*d^2) ≤ Q := by
     apply le_of_mul_le_mul_left (a := W) _ hpW
     calc
       _ = (W*(Y+1))*(ℓ^2*d^2) := by ring
       _ ≤ c*(ℓ^2*d^2) := mul_le_mul_of_nonneg_right cLarge (mul_nonneg (sq_nonneg ℓ) (sq_nonneg d))
       _ ≤ _ := hQ
-  have sampled_bound := sampled free L D h hn hp hpos hl hd lengths degree input hm avgL avgD
   have cap' : (h:ℝ) ≤ 3*t := by linarith only [cap]
   have upperQ := sampled_bound.trans (upper lpos dpos (Nat.cast_nonneg h) tpos cap')
   let S := ℓ^2*d*t^(1/b) +
@@ -154,7 +131,56 @@ private theorem online_regular_step {a b C : ℝ} (hC : 1 ≤ C) (ha₀ : 29/40 
   exact (rearrange mpos n1 ppos comparison).trans (mul_le_mul_of_nonneg_right aB Fp)
 
 
-private theorem onlineRate_mono {a b n n' p p' : ℝ} (ha : 0 ≤ a) (ha' : a ≤ 1)
+private theorem online_regular_step {a b C : ℝ} (hC : 1 ≤ C) (ha₀ : 29/40 ≤ a)
+    (ha₁ : a < 3/4) (hb₀ : 2/3 ≤ b) (hb₁ : b ≤ 701/1000)
+    (hβ₀ : 2/3 ≤ onlineExponentStep b) (hβ₁ : onlineExponentStep b ≤ 701/1000)
+    (prior : OnlineIncidenceBound.{u,v} a b C) :
+    ∃ A > 0, ∀ {V : Type u} {I : Type v} [LinearOrder V] [LinearOrder I] [Fintype V] [Fintype I]
+      {paths : I → Finset V} (_ : HalfBridgeFree (PathBefore paths) 4) (L D : ℕ),
+      0 < Fintype.card V → 0 < Fintype.card I →
+      let M := ∑ i, (paths i).card
+      16*Fintype.card V < M → 8*Fintype.card I < M →
+      L*Fintype.card I ≤ 4*M → D*Fintype.card V ≤ 4*M →
+      (∀ i, (paths i).card ≤ L) → (∀ v, (occurrences paths v).card ≤ D) →
+      (M:ℝ) ≤ A*onlineRate ((2+b)/(3+b)) (onlineExponentStep b) (Fintype.card V) (Fintype.card I) := by
+  have bwide : b ≤ 3/4 := by linarith
+  obtain ⟨X, hX, Y, hY, sampled⟩ := lemma36_acyclic_expectation hC
+    (show 7/10 ≤ a by linarith) ha₁ hb₀ bwide
+  obtain ⟨B, hB, update⟩ := online_regular_step_from_counts hX hY ha₀ ha₁ hb₀ hb₁ hβ₀ hβ₁
+  refine ⟨B, hB, ?_⟩
+  intro V I _ _ _ _ paths free L D hn hp
+  dsimp only
+  let n := Fintype.card V
+  let p := Fintype.card I
+  let M := ∑ i, (paths i).card
+  intro dense long avgL avgD lengths degree
+  change 16*n < M at dense
+  change 8*p < M at long
+  have hm : 0 < M := by omega
+  have cube : M^3 ≤ 2048*(n*p)^2 :=
+    ((lemma27_acyclic paths free).resolve_left (not_le_of_gt dense)).resolve_left (not_le_of_gt long)
+  have length_total : M ≤ p*L := calc
+    _ ≤ ∑ _ : I, L := sum_le_sum (fun i _ => lengths i)
+    _ = _ := by simp [p]
+  have degree_total : M ≤ n*D := by
+    change (∑ i, (paths i).card) ≤ n*D
+    rw [← sum_occurrences]
+    calc
+      _ ≤ ∑ _ : V, D := sum_le_sum (fun v _ => degree v)
+      _ = _ := by simp [n]
+  have input : InducedSizeBound paths C a b := by
+    intro S J free'
+    have h := prior S J (inducedPaths paths S J) free'
+    simpa only [Fintype.card_coe, onlineRate] using h
+  apply update n p M L D hn hp hm length_total degree_total cube
+  intro h hh hl hd length_window _ hlarge
+  let Q := ∑ base : I, (branchTuples paths base h).card
+  refine ⟨Q, lemma28_scaled_mean_lower free L h lengths hn hp dense.le long.le avgL length_window hlarge, ?_⟩
+  have castQ : (Q:ℝ) = ∑ base : I, ((branchTuples paths base h).card:ℝ) := Nat.cast_sum _ _
+  rw [castQ]
+  exact sampled free L D h hn hp hh hl hd lengths degree input hm avgL avgD
+
+theorem onlineRate_mono {a b n n' p p' : ℝ} (ha : 0 ≤ a) (ha' : a ≤ 1)
     (hb : 0 ≤ b) (hb' : b ≤ 1) (hn : 0 ≤ n) (hp : 0 ≤ p) (hn' : n ≤ n') (hp' : p ≤ p') :
     onlineRate a b n p ≤ onlineRate a b n' p' := by
   have pn := hn.trans hn'
@@ -164,7 +190,7 @@ private theorem onlineRate_mono {a b n n' p p' : ℝ} (ha : 0 ≤ a) (ha' : a �
   unfold onlineRate
   gcongr
 
-private theorem onlineRate_double {a b n p : ℝ} (ha : 0 ≤ a)
+theorem onlineRate_double {a b n p : ℝ} (ha : 0 ≤ a)
     (hb : 0 ≤ b) (hn : 0 ≤ n) (hp : 0 ≤ p) :
     onlineRate a b (2*n) (2*p) ≤ 4*onlineRate a b n p := by
   have shift {f g : ℝ} (hfg : f+g ≤ 2) :
@@ -253,19 +279,16 @@ theorem lemma37_acyclic_update {a b C : ℝ} (hC : 1 ≤ C) (ha₀ : 29/40 ≤ a
       (onlineRate_double α0 β0 (Nat.cast_nonneg n) (Nat.cast_nonneg p))
   exact stage.trans ((mul_le_mul_of_nonneg_left size hA.le).trans (by nlinarith only [f0]))
 
-private theorem online_incidence_initial : OnlineIncidenceBound.{u,v} (8/11) (2/3) 16 := by
-  intro V I _ _ _ _ paths free
-  let n := Fintype.card V
-  let p := Fintype.card I
-  let M := ∑ i, (paths i).card
+/-- The common arithmetic for the initial cubic bound and its sparse cases. -/
+theorem online_incidence_from_cubic_cases {n p M : ℕ}
+    (cases : M ≤ 16*n ∨ M ≤ 8*p ∨ M^3 ≤ 2048*(n*p)^2) :
+    (M:ℝ) ≤ 16*onlineRate (8/11) (2/3) n p := by
   let F := onlineRate (8/11) (2/3) (n:ℝ) (p:ℝ)
   have hNF : (n:ℝ) ≤ F := le_max_left _ _
   have hPF : (p:ℝ) ≤ F :=
     (le_max_right _ _).trans ((le_max_right _ _).trans (le_max_right _ _))
-  have castMass : (∑ i, ((paths i).card : ℝ)) = M := by simp only [M, Nat.cast_sum]
-  rw [castMass]
   change (M:ℝ) ≤ 16*F
-  rcases lemma27_acyclic paths free with h | h | h
+  rcases cases with h | h | h
   · have hr : (M:ℝ) ≤ 16*n := by exact_mod_cast h
     linarith
   · have hr : (M:ℝ) ≤ 8*p := by exact_mod_cast h
@@ -294,6 +317,11 @@ private theorem online_incidence_initial : OnlineIncidenceBound.{u,v} (8/11) (2/
       _ ≤ _ := hroot
       _ ≤ 16*((n:ℝ)^(2/3:ℝ)*(p:ℝ)^(2/3:ℝ)) := by grw [c]
       _ ≤ _ := mul_le_mul_of_nonneg_left hG (by norm_num)
+
+private theorem online_incidence_initial : OnlineIncidenceBound.{u,v} (8/11) (2/3) 16 := by
+  intro V I _ _ _ _ paths free
+  rw [← Nat.cast_sum]
+  exact online_incidence_from_cubic_cases (lemma27_acyclic paths free)
 
 /-- Each finite iterate in Theorem 38 is an incidence bound on actual
 acyclic systems, with a constant uniform over systems at that iterate. -/

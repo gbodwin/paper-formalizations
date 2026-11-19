@@ -434,6 +434,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   audit and local kernel replay passed. Independent review checked the
   actual dyadic bucket inputs and normalization by the incidence averages.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44484293414).
+- [06911506](https://github.com/gbodwin/paper-formalizations/commit/06911506d7a21d8b11408d2941e932c8f094f03e)
+  proves the whole on-base expectation and combines it with the off-base
+  terms in Lemma 36. The 3235-declaration audit and local kernel replay
+  passed. Independent review checked both anchor directions, the base as a
+  right branch, the dyadic sum and normalization.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44484838977).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research
