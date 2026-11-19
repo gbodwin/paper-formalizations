@@ -215,6 +215,18 @@ theorem completeSteinerExpectedSeedBits_le (G : Arcs V) (height : ℕ) :
   exact add_le_add (add_le_add le_rfl hub) thin
 
 
+/-- A graph-dependent integral bound on the expected seed length.
+The fixed early words are charged exactly and each rejection draw
+is charged twice its proposal width. -/
+def completeSteinerSeedBitBound (G : Arcs V) (height : ℕ) : ℕ :=
+  earlySeedBits G height + completeSteinerHubCount V * (2 * uniformProposalWidth (Fintype.card V)) +
+    G.card * (2 * uniformProposalWidth G.card)
+
+theorem completeSteinerExpectedSeedBits_le_bound (G : Arcs V) (height : ℕ) :
+    completeSteinerExpectedSeedBits G height ≤ (completeSteinerSeedBitBound G height : ℝ) := by
+  simpa only [completeSteinerSeedBitBound, Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat] using
+    completeSteinerExpectedSeedBits_le G height
+
 theorem uniformProposalWidth_le (N : ℕ) : uniformProposalWidth N ≤ N :=
   Nat.size_le.mpr ((Nat.sub_le _ _).trans_lt Nat.lt_two_pow_self)
 
@@ -226,8 +238,8 @@ def completeSteinerSeedPolynomial (n m height : ℕ) : ℕ :=
   16*(height+1)^2*(n+1)*n*((scale+1)^2*(2*history+1)) +
     (4*(n+1)*n+1)*(2*n)+m*(2*m)
 
-theorem completeSteinerExpectedSeedBits_polynomial (G : Arcs V) (height : ℕ) :
-    completeSteinerExpectedSeedBits G height ≤
+theorem completeSteinerSeedBitBound_polynomial (G : Arcs V) (height : ℕ) :
+    completeSteinerSeedBitBound G height ≤
       completeSteinerSeedPolynomial (Fintype.card V) G.card height := by
   let n := Fintype.card V
   let m := G.card
@@ -258,13 +270,15 @@ theorem completeSteinerExpectedSeedBits_polynomial (G : Arcs V) (height : ℕ) :
         _ = _ := by ring
   have hubs : completeSteinerHubCount V ≤ 4*(n+1)*n+1 :=
     (completeSteinerHubCount_le V).trans (by gcongr; exact Nat.log2_le_self _)
-  have sum : earlySeedBits G height+
-      completeSteinerHubCount V*(2*uniformProposalWidth n)+m*(2*uniformProposalWidth m) ≤
-      completeSteinerSeedPolynomial n m height := by
-    change _ ≤ early+(4*(n+1)*n+1)*(2*n)+m*(2*m)
-    exact Nat.add_le_add (Nat.add_le_add first
-      (Nat.mul_le_mul hubs (Nat.mul_le_mul_left _ (uniformProposalWidth_le n))))
-      (Nat.mul_le_mul_left _ (Nat.mul_le_mul_left _ (uniformProposalWidth_le m)))
-  exact (completeSteinerExpectedSeedBits_le G height).trans (by exact_mod_cast sum)
+  change earlySeedBits G height + completeSteinerHubCount V*(2*uniformProposalWidth n) +
+    m*(2*uniformProposalWidth m) ≤ early+(4*(n+1)*n+1)*(2*n)+m*(2*m)
+  exact Nat.add_le_add (Nat.add_le_add first
+    (Nat.mul_le_mul hubs (Nat.mul_le_mul_left _ (uniformProposalWidth_le n))))
+    (Nat.mul_le_mul_left _ (Nat.mul_le_mul_left _ (uniformProposalWidth_le m)))
+
+theorem completeSteinerExpectedSeedBits_polynomial (G : Arcs V) (height : ℕ) :
+    completeSteinerExpectedSeedBits G height ≤
+      completeSteinerSeedPolynomial (Fintype.card V) G.card height :=
+  (completeSteinerExpectedSeedBits_le_bound G height).trans (by exact_mod_cast completeSteinerSeedBitBound_polynomial G height)
 
 end OnlineReachabilityPreservers

@@ -239,19 +239,21 @@ surely. Its consumed bit count has the fixed-height polynomial bound in
 expectation, and the edge integral gives the finite-seed mean on every fixed
 trace. A successful decoding feeds the same seed and graph sequence to the
 weighted prefix evaluator. The [fixed-budget run and replay](OnlineReachabilityPreservers/SteinerBitBudget.lean)
-use a graph-dependent bit budget equal to the expected-length polynomial
-multiplied by the arc count. Failure probability is bounded by the
-expected-length polynomial divided by one plus the budget. The fallback buys
-the input graph at the first non-self request, adding at most one edge in
-expectation. This gives the same competitive exponent for the uniform finite
-bit word, with prefix preservation and zero cost when the offline optimum is
-zero. The replay decodes once, produces the same prefix graphs, and retains
-the polynomial bound for the measured searches and table operations. The
-[bit reader](OnlineReachabilityPreservers/SteinerBitReader.lean) has checked
-tail-recursive implementations of its word and rejection loops, including
-when the supplied bit word runs out. The remaining time costs include input
-preparation, processing the fallback prefixes, and the representation and
-execution costs of finite containers and arithmetic.
+use a graph-dependent bit budget equal to a bound on the expected number of
+bits consumed multiplied by the arc count. Lean bounds this tighter budget
+by the preceding polynomial. Exhausting a fixed prefix is almost surely
+exactly the event that the consumed length exceeds its budget. Markov's
+inequality bounds this probability by the expected consumed length divided
+by one plus the budget. The fallback buys the input graph at the first
+non-self request, adding at most one edge in expectation. This gives the same
+competitive exponent for a uniform finite bit word, with prefix preservation
+and zero cost when the offline optimum is zero. The cached replay shares
+one distance table and forest plan across budget calculation, decoding,
+and prefix evaluation. Its bound on measured searches and table operations
+includes preparation on both branches. The fallback computes the prefix
+graphs with one scan. The word, rejection, and seed-array readers have
+checked tail-recursive implementations. Integer arithmetic, finite container operations, and full execution time
+still require certification.
 The [preassigned-path counter](OnlineReachabilityPreservers/AssignmentSearchWork.lean)
 combines the calls made by quota certification and path selection with the
 arc inspections and successor tests in each base rule and lifted path.

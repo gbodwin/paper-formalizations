@@ -146,12 +146,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   a finite prefix suffices almost surely. Lean checks the uniform seed law,
   the expected edge count, and the polynomial bound on expected bits read at
   fixed height. The [fixed-budget implementation](OnlineReachabilityPreservers/SteinerBitBudget.lean)
-  reads from a single polynomial-length uniformly random bit word. If the
-  decoder exhausts that word, it buys the input graph on the first non-self
-  request. This preserves every feasible prefix and adds at most one edge in
-  expectation, retaining the same competitive exponent. A replay theorem
+  reads from a single polynomial-length uniformly random bit word. Its budget
+  uses a graph-specific upper bound on the expected number of bits consumed.
+  If decoding exhausts the word, the algorithm buys the input graph on the first
+  non-self request. This preserves every feasible prefix and adds at most one
+  edge in expectation, retaining the same competitive exponent. A replay theorem
   returns these same prefix graphs and bounds its measured searches and table
-  operations. Full time certification remains open.
+  operations. The cached replay shares one distance table and forest plan
+  across budget calculation, decoding, and evaluation. It accounts for
+  preparation even on the fallback branch, which scans requests in one pass.
+  Full time certification remains open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

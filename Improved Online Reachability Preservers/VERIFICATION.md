@@ -743,6 +743,16 @@ linked to the arXiv manuscript.
 [PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
 · [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44558374523).
 
+PaperLab version 28 pins 149 links to `73eef382` and contains 15 boxed L
+notes. The checkpoint checks a fixed polynomial budget of fair bits and a
+fallback that adds at most one edge in expectation. Independent review,
+the 4,491-declaration paper audit, and local replay of the changed defining
+modules passed. Exact CI replayed every project module. The deployment
+render and interactive controls passed. Production requires owner sign-in.
+The research entry linked to the arXiv manuscript.
+[PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site)
+· [CI for its Lean checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/44564977060).
+
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and
 crossing edges on a cyclic input. The empty prefix has no edges, an

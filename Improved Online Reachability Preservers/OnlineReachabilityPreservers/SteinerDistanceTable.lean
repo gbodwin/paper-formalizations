@@ -523,8 +523,9 @@ private theorem earlyCapacityMetricFromPlan_congr (G : Arcs V) (height : ℕ) (s
 
 /-- Also meter preparation of the weighted link classes, scale, and fuel.
 The table, forest, and weighted plan are constructed once. -/
-def prepareEarlyDistanceTableWithWeightWork (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
-    (List (V × V) → Arcs V × ℕ) × ℕ × ℕ × ℕ :=
+def prepareEarlyDistanceTableForSeed (G : Arcs V) (height : ℕ) :
+    {scale : ℕ // scale = forestScale G height} ×
+    (EarlyRoundSample G height → List (V × V) → Arcs V × ℕ) × ℕ × ℕ × ℕ :=
   let table := distanceTableWithSearchWork G
   let query := readDistanceRow table.1
   let dist := fun d => (query d).1
@@ -540,8 +541,32 @@ def prepareEarlyDistanceTableWithWeightWork (G : Arcs V) (height : ℕ) (sample 
     (fun _ => (distanceTableReadWithSearchWork_spec G _).2)
   let scale : priced.2.1.1 = forestScale G height :=
     (congrArg Prod.fst spec.2.2.1).trans (forestScaleFromWeights_eq G dist known height links correct)
-  let metric := earlyCapacityMetricFromPlan G height sample links query (priced.1,priced.2.1) scale
-  (earlyRoundedGraphWithSearchWorkFromMetric G height metric,table.2,template.2,priced.2.2)
+  let build := fun sample : EarlyRoundSample G height =>
+    let metric := earlyCapacityMetricFromPlan G height sample links query (priced.1,priced.2.1) scale
+    earlyRoundedGraphWithSearchWorkFromMetric G height metric
+  (⟨priced.2.1.1,scale⟩,build,table.2,template.2,priced.2.2)
+
+/-- Preparation charges are bounded before any seed has been decoded. -/
+theorem prepareEarlyDistanceTableForSeed_work_le (G : Arcs V) (height : ℕ) :
+    let n := Fintype.card V
+    let work := (prepareEarlyDistanceTableForSeed G height).2.2
+    work.1 ≤ n^2*((n+1)*n*G.card) ∧
+      work.2.1 ≤ n*(2*Fintype.card (HeightNode V height)*height*n^2) ∧
+      work.2.2 ≤ Fintype.card (HeightForestVertex V height)^2*n^2 := by
+  let read := readDistanceRow (distanceTableWithSearchWork G).1
+  let links := (heightForestWithDistanceWork (historyDistanceRead read)
+    (historyDistanceRead (fun d => read d.swap)) height).1
+  have rows := prepareForestWeights_spec links (forestWeightWithDistanceWork read)
+    (Fintype.card V^2) (fun _ => (distanceTableReadWithSearchWork_spec G _).2)
+  have arcs : links.card ≤ Fintype.card (HeightForestVertex V height)^2 := by
+    simpa only [Fintype.card_prod, pow_two] using card_le_univ links
+  exact ⟨distanceTableWithSearchWork_bound G, (heightForestWithDistanceTableWork_spec G height).2,
+    rows.2.2.2.trans (Nat.mul_le_mul_right _ arcs)⟩
+
+def prepareEarlyDistanceTableWithWeightWork (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
+    (List (V × V) → Arcs V × ℕ) × ℕ × ℕ × ℕ :=
+  let prepared := prepareEarlyDistanceTableForSeed G height
+  (prepared.2.1 sample,prepared.2.2)
 
 theorem prepareEarlyDistanceTableWithWeightWork_spec (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height) :
     let out := prepareEarlyDistanceTableWithWeightWork G height sample

@@ -13,7 +13,11 @@ variable {V : Type*} [LinearOrder V] [Fintype V]
 
 /-- A fixed fair-bit budget sufficient to bound the expected fallback cost by one edge. -/
 def steinerBitBudget (G : Arcs V) (height : ℕ) : ℕ :=
-  completeSteinerSeedPolynomial (Fintype.card V) G.card height * G.card
+  completeSteinerSeedBitBound G height * G.card
+
+theorem steinerBitBudget_polynomial (G : Arcs V) (height : ℕ) :
+    steinerBitBudget G height ≤ completeSteinerSeedPolynomial (Fintype.card V) G.card height * G.card :=
+  Nat.mul_le_mul_right _ (completeSteinerSeedBitBound_polynomial G height)
 
 private def decodeBudgetSeed (G : Arcs V) (height : ℕ) (bits : Fin (steinerBitBudget G height) → Bool) :=
   decodeCompleteSteinerSeed G height (steinerEarlyCoordinateIndex G height) (steinerVertexIndex V)
@@ -21,6 +25,53 @@ private def decodeBudgetSeed (G : Arcs V) (height : ℕ) (bits : Fin (steinerBit
 
 private def steinerBudgetFallback (G : Arcs V) (D : List (V × V)) : Arcs V :=
   if distinctNonselfTrace D = [] then ∅ else G
+
+private theorem scanl_or_eq_prefix_any {A : Type*} (predicate : A → Bool)
+    (arrivals : List A) (seen : Bool) :
+    arrivals.scanl (fun seen x => seen || predicate x) seen =
+      arrivals.inits.map (fun P => seen || P.any predicate) := by
+  induction arrivals generalizing seen with
+  | nil => simp [List.scanl_nil]
+  | cons first rest ih =>
+    simp [List.scanl_cons, ih, List.map_map, Function.comp_def, Bool.or_assoc]
+
+omit [Fintype V] in
+private theorem distinctNonselfTrace_eq_nil_of_all_self {D : List (V × V)} :
+    distinctNonselfTrace D = [] ↔ ∀ d ∈ D, d.1 = d.2 := by
+  rw [List.eq_nil_iff_forall_not_mem]
+  constructor
+  · intro none d present
+    by_contra different
+    exact none d (mem_distinctNonselfTrace.mpr ⟨present,different⟩)
+  · intro same d member
+    obtain ⟨present,different⟩ := mem_distinctNonselfTrace.mp member
+    exact different (same d present)
+
+/-- The exhausted-word branch can replay its purchases with one Boolean state. -/
+def steinerFallbackPrefixScan (G : Arcs V) (D : List (V × V)) : List (Arcs V × ℕ) :=
+  (D.scanl (fun seen d => seen || decide (d.1 ≠ d.2)) false).map
+    (fun seen => (if seen then G else ∅, 0))
+
+omit [Fintype V] in
+theorem steinerFallbackPrefixScan_eq (G : Arcs V) (D : List (V × V)) :
+    steinerFallbackPrefixScan G D =
+      D.inits.map (fun P => (if distinctNonselfTrace P = [] then ∅ else G, 0)) := by
+  unfold steinerFallbackPrefixScan
+  rw [scanl_or_eq_prefix_any, List.map_map]
+  apply List.map_congr_left
+  intro P _
+  simp only [Function.comp_apply, Bool.false_or]
+  have empty : P.any (fun d => decide (d.1 ≠ d.2)) = false ↔ distinctNonselfTrace P = [] := by
+    rw [List.any_eq_false, distinctNonselfTrace_eq_nil_of_all_self]
+    simp
+  cases result : P.any (fun d => decide (d.1 ≠ d.2)) with
+  | false => simp [empty.mp result]
+  | true =>
+    have nonempty : distinctNonselfTrace P ≠ [] := fun h => by
+      have contradiction := empty.mpr h
+      rw [result] at contradiction
+      cases contradiction
+    simp [nonempty]
 
 private theorem steinerDrawRun_eq_empty (G : Arcs V) (height : ℕ)
     (early : EarlyRoundSample G height) (hubs : Fin (completeSteinerHubCount V) → V)
@@ -81,7 +132,7 @@ def completeSteinerReplayWithBitBudget (G : Arcs V) (height : ℕ)
     (bits : Fin (steinerBitBudget G height) → Bool) (D : List (V × V)) :
     List (Arcs V × ℕ) × ℕ × ℕ × ℕ :=
   match decodeBudgetSeed G height bits with
-  | none => (D.inits.map (fun P => (steinerBudgetFallback G P,0)),0,0,0)
+  | none => (steinerFallbackPrefixScan G D,0,0,0)
   | some seed => completeSteinerPrefixSearchReplayWithWeightWork G height seed.1.1 seed.1.2.1 seed.1.2.2 D
 
 /-- The bounded-bit replay returns the online graphs and keeps the existing
@@ -95,7 +146,7 @@ theorem completeSteinerReplayWithBitBudget_spec (G : Arcs V) (height : ℕ)
         completeSteinerWeightWorkPolynomial (Fintype.card V) G.card height D.length := by
   cases read : decodeBudgetSeed G height bits with
   | none => simp [completeSteinerReplayWithBitBudget, completeSteinerRunWithBitBudget, read,
-      List.map_map, Function.comp_def]
+      steinerFallbackPrefixScan_eq, steinerBudgetFallback, List.map_map, Function.comp_def]
   | some seed =>
     have run : completeSteinerRunWithBitBudget G height bits =
         completeSteinerDrawRun G height seed.1.1 seed.1.2.1 seed.1.2.2 := by
@@ -138,11 +189,14 @@ private theorem steinerBudget_cost_ae (G : Arcs V) (height : ℕ) (D : List (V �
 
 private theorem steinerBudget_failureCharge_le_one (G : Arcs V) (height : ℕ) :
     (G.card : ℝ≥0∞) * fairBitMeasure (steinerBudgetFailure G height) ≤ 1 := by
-  let B := completeSteinerSeedPolynomial (Fintype.card V) G.card height
+  let B := completeSteinerSeedBitBound G height
   let budget := steinerBitBudget G height
   have fail : fairBitMeasure (steinerBudgetFailure G height) ≤ (B : ℝ≥0∞) / (budget+1 : ℕ) :=
-    fairBitDecoder_failure_le G height (steinerEarlyCoordinateIndex G height) (steinerVertexIndex V)
-      (steinerArcIndex G) budget
+    (fairBitDecoder_failure_le_expected G height (steinerEarlyCoordinateIndex G height) (steinerVertexIndex V)
+      (steinerArcIndex G) budget).trans (by
+        refine ENNReal.div_le_div_right ?_ _
+        rw [← ENNReal.ofReal_natCast]
+        exact ENNReal.ofReal_le_ofReal (completeSteinerExpectedSeedBits_le_bound G height))
   calc
     _ ≤ (G.card : ℝ≥0∞) * ((B : ℝ≥0∞) / (budget+1 : ℕ)) := by gcongr
     _ = (budget : ℝ≥0∞) / (budget+1 : ℕ) := by
@@ -232,5 +286,97 @@ theorem theorem21_online_steiner_bounded_bits_finite {ε : ℝ} (epsilon : 0 < �
   rw [fairBitPrefix_lintegral_eq (steinerBitBudget G height)
     (fun bits => (completeSteinerRunWithBitBudget G height bits D).card)] at law
   exact (ENNReal.ofReal_le_ofReal_iff (by positivity)).mp law
+
+private theorem boundedBitWord_cast {a b : ℕ} (width : a = b) (bits : Fin b → Bool) :
+    List.ofFn (fun i : Fin a => bits (Fin.cast width i)) = List.ofFn bits := by
+  subst a
+  rfl
+
+/-- Compute and share the forest scale for the bit count, the decoder, and replay. -/
+def completeSteinerReplayWithCachedBitBudget (G : Arcs V) (height : ℕ)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (V × V)) :
+    List (Arcs V × ℕ) × ℕ × ℕ × ℕ :=
+  let prepared := prepareEarlyDistanceTableForSeed G height
+  let width := prepared.1.val.log2+1
+  let widthEq := congrArg (fun scale : ℕ => scale.log2+1) prepared.1.property
+  let vertices := steinerUniverseArrayIndex V
+  let coordinates := steinerEarlyCoordinateIndexAtWidth G height width widthEq vertices
+  let arcs := steinerArcArrayIndex G
+  let budget := completeSteinerSeedBitBoundAtWidth G height width * G.card
+  let budgetEq : budget = steinerBitBudget G height :=
+    congrArg (· * G.card) (completeSteinerSeedBitBoundAtWidth_eq G height width widthEq)
+  let raw := List.ofFn (fun i : Fin budget => bits (Fin.cast budgetEq i))
+  let result := decodeCompleteSteinerSeedAtWidth G height width widthEq coordinates vertices arcs raw
+  let rounds := match result with
+    | none => steinerFallbackPrefixScan G D
+    | some seed => D.inits.map (completeSteinerDrawRunWithSearchWorkFromEarly G
+        (prepared.2.1 seed.1.1) seed.1.2.1 seed.1.2.2)
+  (rounds,prepared.2.2)
+
+private theorem prepareSteinerSeed_work_polynomial (G : Arcs V) (height p : ℕ) :
+    let work := (prepareEarlyDistanceTableForSeed G height).2.2
+    work.1 + work.2.1 + work.2.2 ≤ completeSteinerWeightWorkPolynomial (Fintype.card V) G.card height p := by
+  let n := Fintype.card V
+  let H := (height+1)*n^height
+  let F := (n*2)*H
+  let work := (prepareEarlyDistanceTableForSeed G height).2.2
+  obtain ⟨table, template, weights⟩ := prepareEarlyDistanceTableForSeed_work_le G height
+  have forest : Fintype.card (HeightForestVertex V height) ≤ F := by
+    cases isEmpty_or_nonempty V with
+    | inl empty => simp [HeightForestVertex]
+    | inr ne => exact heightForestVertex_card_le V height
+  have templateCap : work.2.1 ≤ n*(2*H*height*n^2) := by
+    apply template.trans
+    change n*(2*Fintype.card (HeightNode V height)*height*n^2) ≤ n*(2*H*height*n^2)
+    cases isEmpty_or_nonempty V with
+    | inl empty => simp [n]
+    | inr ne =>
+      have histories : Fintype.card (HeightNode V height) ≤ H := heightNode_card_le V height
+      gcongr
+  have weightCap : work.2.2 ≤ F^2*n^2 :=
+    weights.trans (Nat.mul_le_mul_right _ (Nat.pow_le_pow_left forest _))
+  have base : work.1 + work.2.1 + work.2.2 ≤ n^2*((n+1)*n*G.card) + n*(2*H*height*n^2) + F^2*n^2 :=
+    Nat.add_le_add (Nat.add_le_add table templateCap) weightCap
+  refine base.trans ?_
+  unfold completeSteinerWeightWorkPolynomial
+  dsimp only [n,H,F]
+  omega
+
+/-- The shared preparation preserves the bounded-bit graphs and accounts for
+its own measured work even when the seed is exhausted. -/
+theorem completeSteinerReplayWithCachedBitBudget_spec (G : Arcs V) (height : ℕ)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (V × V))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let out := completeSteinerReplayWithCachedBitBudget G height bits D
+    out.1.map Prod.fst = D.inits.map (completeSteinerRunWithBitBudget G height bits) ∧
+      (out.1.map Prod.snd).sum + out.2.1 + out.2.2.1 + out.2.2.2 ≤
+        completeSteinerWeightWorkPolynomial (Fintype.card V) G.card height D.length := by
+  let prepared := prepareEarlyDistanceTableForSeed G height
+  let width := prepared.1.val.log2+1
+  let widthEq := congrArg (fun scale : ℕ => scale.log2+1) prepared.1.property
+  let budget := completeSteinerSeedBitBoundAtWidth G height width * G.card
+  let budgetEq : budget = steinerBitBudget G height :=
+    congrArg (· * G.card) (completeSteinerSeedBitBoundAtWidth_eq G height width widthEq)
+  have rawEq := boundedBitWord_cast budgetEq bits
+  have readEq : decodeCompleteSteinerSeed G height (steinerEarlyCoordinateIndex G height)
+      (steinerVertexIndex V) (steinerArcIndex G) (List.ofFn (fun i : Fin budget => bits (Fin.cast budgetEq i))) =
+        decodeBudgetSeed G height bits := by rw [rawEq, decodeBudgetSeed]
+  simp only [completeSteinerReplayWithCachedBitBudget, decodeCompleteSteinerSeedAtWidth_eq,
+    steinerUniverseArrayIndex_eq, steinerArcArrayIndex_eq, steinerEarlyCoordinateIndexAtWidth_eq]
+  erw [readEq]
+  cases read : decodeBudgetSeed G height bits with
+  | none =>
+    simpa [completeSteinerRunWithBitBudget, read, steinerFallbackPrefixScan_eq,
+      steinerBudgetFallback, List.map_map, Function.comp_def] using
+      prepareSteinerSeed_work_polynomial G height D.length
+  | some seed =>
+    have run : completeSteinerRunWithBitBudget G height bits =
+        completeSteinerDrawRun G height seed.1.1 seed.1.2.1 seed.1.2.2 := by
+      funext P
+      simp only [completeSteinerRunWithBitBudget, read]
+    simpa only [run, completeSteinerPrefixSearchReplayWithWeightWork,
+      prepareEarlyDistanceTableWithWeightWork] using
+      completeSteinerPrefixSearchReplayWithWeightWork_polynomial
+        G height seed.1.1 seed.1.2.1 seed.1.2.2 D feasible
 
 end OnlineReachabilityPreservers

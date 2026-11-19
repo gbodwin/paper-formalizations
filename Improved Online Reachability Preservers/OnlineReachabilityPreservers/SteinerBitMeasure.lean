@@ -398,6 +398,61 @@ theorem fairBitDecoderBitLength_measurable (G : Arcs V) (height : ℕ)
   exact Measurable.tsum fun result => measurable_const.indicator
     (decoderOutcomeEvent_measurable G height coordinates vertices arcs result)
 
+/-- Failure on a fixed word is exactly the stopping-time tail, almost surely. -/
+theorem fairBitDecoder_failure_ae_iff (G : Arcs V) (height : ℕ)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card) (budget : ℕ) :
+    ∀ᵐ stream ∂fairBitMeasure,
+      decodeCompleteSteinerSeed G height coordinates vertices arcs (List.ofFn (fairBitPrefix budget stream)) = none ↔
+        ((budget+1 : ℕ) : ℝ≥0∞) ≤ fairBitDecoderBitLength G height coordinates vertices arcs stream := by
+  filter_upwards [fairBitDecoderBitLength_ae_matches G height coordinates vertices arcs] with stream measured
+  obtain ⟨n, length, ⟨early,hubs,thin⟩, ⟨hubRejects,thinRejects⟩, parsed⟩ := measured
+  rw [length]
+  have normalize : (((budget+1 : ℕ) : ℝ≥0∞) ≤ (n : ℝ≥0∞)) ↔ budget < n := by
+    simp only [Nat.cast_le, Nat.succ_le_iff]
+  rw [normalize]
+  constructor
+  · intro failed
+    by_contra! within
+    obtain ⟨tail, joined⟩ := fairBitPrefix_ofFn_prefix within stream
+    have still := decodeCompleteSteinerSeed_append G height coordinates vertices arcs tail parsed
+    rw [joined, failed] at still
+    contradiction
+  · intro longer
+    cases read : decodeCompleteSteinerSeed G height coordinates vertices arcs
+      (List.ofFn (fairBitPrefix budget stream)) with
+    | none => rfl
+    | some result =>
+      obtain ⟨⟨candidateEarly,candidateHubs,candidateThin⟩, ⟨candidateHubRejects,candidateThinRejects⟩, rest⟩ := result
+      obtain ⟨tail, joined⟩ := fairBitPrefix_ofFn_prefix longer.le stream
+      have hasLength := congrArg List.length joined
+      simp only [List.length_ofFn, List.length_append] at hasLength
+      have tailPos : 0 < tail.length := by omega
+      have still := decodeCompleteSteinerSeed_append G height coordinates vertices arcs tail read
+      rw [joined, parsed] at still
+      have empty : [] = rest ++ tail := congrArg (fun answer => answer.2.2) (Option.some.inj still)
+      have impossible := congrArg List.length empty
+      simp only [List.length_nil,List.length_append] at impossible
+      omega
+
+/-- The expected consumed length bounds the probability of exhausting a fixed word. -/
+theorem fairBitDecoder_failure_le_expected (G : Arcs V) (height : ℕ)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card) (budget : ℕ) :
+    fairBitMeasure {stream | decodeCompleteSteinerSeed G height coordinates vertices arcs
+      (List.ofFn (fairBitPrefix budget stream)) = none} ≤
+        ENNReal.ofReal (completeSteinerExpectedSeedBits G height) / (budget+1 : ℕ) := by
+  let length := fairBitDecoderBitLength G height coordinates vertices arcs
+  have outside : {stream | decodeCompleteSteinerSeed G height coordinates vertices arcs
+      (List.ofFn (fairBitPrefix budget stream)) = none} ≤ᵐ[fairBitMeasure]
+        {stream | ((budget+1 : ℕ) : ℝ≥0∞) ≤ length stream} := by
+    filter_upwards [fairBitDecoder_failure_ae_iff G height coordinates vertices arcs budget] with stream matched
+    exact matched.mp
+  rw [← fairBitDecoderBitLength_integral G height coordinates vertices arcs]
+  exact (measure_mono_ae outside).trans
+    (meas_ge_le_lintegral_div (fairBitDecoderBitLength_measurable G height coordinates vertices arcs).aemeasurable
+      (by positivity) (by simp))
+
 /-- A fixed budget of fair bits fails only on the tail of the consumed-length distribution. -/
 theorem fairBitDecoder_failure_le (G : Arcs V) (height : ℕ)
     (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
@@ -405,30 +460,10 @@ theorem fairBitDecoder_failure_le (G : Arcs V) (height : ℕ)
     fairBitMeasure {stream | decodeCompleteSteinerSeed G height coordinates vertices arcs
       (List.ofFn (fairBitPrefix budget stream)) = none} ≤
         (completeSteinerSeedPolynomial (Fintype.card V) G.card height : ℝ≥0∞) / (budget+1 : ℕ) := by
-  classical
-  let length := fairBitDecoderBitLength G height coordinates vertices arcs
-  have outside : {stream | decodeCompleteSteinerSeed G height coordinates vertices arcs
-      (List.ofFn (fairBitPrefix budget stream)) = none} ≤ᵐ[fairBitMeasure]
-        {stream | ((budget+1 : ℕ) : ℝ≥0∞) ≤ length stream} := by
-    filter_upwards [fairBitDecoderBitLength_ae_matches G height coordinates vertices arcs] with stream measured
-    obtain ⟨n, len, ⟨early,hubs,thin⟩, ⟨hubRejects,thinRejects⟩, parsed⟩ := measured
-    intro failed
-    have greater : budget < n := by
-      by_contra! within
-      obtain ⟨tail, joined⟩ := fairBitPrefix_ofFn_prefix within stream
-      have still := decodeCompleteSteinerSeed_append G height coordinates vertices arcs tail parsed
-      rw [joined] at still
-      change decodeCompleteSteinerSeed G height coordinates vertices arcs
-        (List.ofFn (fairBitPrefix budget stream)) = none at failed
-      rw [failed] at still
-      contradiction
-    change ((budget+1 : ℕ) : ℝ≥0∞) ≤ length stream
-    rw [show length stream = (n : ℝ≥0∞) from len]
-    exact_mod_cast (Nat.succ_le_of_lt greater)
-  exact (measure_mono_ae outside).trans <|
-    (meas_ge_le_lintegral_div (fairBitDecoderBitLength_measurable G height coordinates vertices arcs).aemeasurable
-      (by positivity) (by simp)).trans <|
-    ENNReal.div_le_div_right (fairBitDecoderBitLength_polynomial G height coordinates vertices arcs) _
+  refine (fairBitDecoder_failure_le_expected G height coordinates vertices arcs budget).trans ?_
+  refine ENNReal.div_le_div_right ?_ _
+  rw [← ENNReal.ofReal_natCast]
+  exact ENNReal.ofReal_le_ofReal (completeSteinerExpectedSeedBits_polynomial G height)
 
 private theorem fairBitOutcome_cost (G : Arcs V) (height : ℕ)
     (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))

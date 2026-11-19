@@ -12,6 +12,92 @@ private def consumeBitArray {A : Type*} : (count : ℕ) →
       (consumeBitArray count (fun i => read i.succ) current.2).map fun tail =>
         (Fin.cases current.1 tail.1,tail.2)
 
+private def consumeBitArrayLoop {A : Type*} (count : ℕ)
+    (read : Fin count → List Bool → Option (A × List Bool)) :
+    (remaining : ℕ) → List Bool → (values : Array A) → values.size + remaining = count →
+    Option (Array A × List Bool)
+  | 0, bits, values, _ => some (values, bits)
+  | remaining+1, bits, values, fits =>
+    match read ⟨values.size, by omega⟩ bits with
+    | none => none
+    | some (value, suffix) =>
+        consumeBitArrayLoop count read remaining suffix (values.push value) (by simp only [Array.size_push]; omega)
+
+private theorem consumeBitArrayLoop_eq {A : Type*} (count : ℕ)
+    (read : Fin count → List Bool → Option (A × List Bool)) (remaining : ℕ)
+    (bits : List Bool) (values : Array A) (fits : values.size + remaining = count) :
+    consumeBitArrayLoop count read remaining bits values fits =
+      (consumeBitArray remaining (fun i => read ⟨values.size + i.val, by omega⟩) bits).map
+        (fun (new, suffix) => (values ++ Array.ofFn new, suffix)) := by
+  induction remaining generalizing bits values with
+  | zero => simp [consumeBitArrayLoop, consumeBitArray]
+  | succ remaining ih =>
+    simp only [consumeBitArrayLoop, consumeBitArray, Fin.val_zero, Nat.add_zero]
+    cases result : read ⟨values.size, by omega⟩ bits with
+    | none => rfl
+    | some next =>
+      obtain ⟨value, suffix⟩ := next
+      simp only [Option.bind_some]
+      rw [ih]
+      have reads : (fun i : Fin remaining => read ⟨(values.push value).size + i.val, by simp only [Array.size_push]; omega⟩) =
+          (fun i : Fin remaining => read ⟨values.size+i.succ.val, by omega⟩) := by
+        funext i
+        congr 1
+        apply Fin.ext
+        simp only [Array.size_push, Fin.val_succ]
+        omega
+      rw [reads]
+      cases consumeBitArray remaining (fun i => read ⟨values.size + i.succ.val, by omega⟩) suffix with
+      | none => rfl
+      | some rest =>
+        obtain ⟨new, unread⟩ := rest
+        simp only [Option.map_some]
+        rw [Array.ofFn_succ', ← Array.append_assoc]
+        simp only [Fin.cases_zero, Fin.cases_succ, ← Array.push_eq_append]
+
+private def consumeBitArrayTail {A : Type*} (count : ℕ)
+    (read : Fin count → List Bool → Option (A × List Bool)) (bits : List Bool) :
+    Option ((Fin count → A) × List Bool) :=
+  let initial : Array A := Array.emptyWithCapacity count
+  match parsed : consumeBitArrayLoop count read count bits initial (by simp [initial]) with
+  | none => none
+  | some (values, rest) =>
+      have size : values.size = count := by
+        have eq := consumeBitArrayLoop_eq count read count bits initial (by simp [initial])
+        simp only [initial, Array.emptyWithCapacity_eq, Array.size_empty, Nat.zero_add, Array.empty_append] at eq
+        have comparison := parsed.symm.trans eq
+        cases answer : consumeBitArray count read bits with
+        | none => simp [answer] at comparison
+        | some result =>
+          simp [answer] at comparison
+          simp [comparison.1]
+      some (fun i => values[i.val]'(size.symm ▸ i.isLt), rest)
+
+@[csimp] private theorem consumeBitArray_eq_tail : @consumeBitArray = @consumeBitArrayTail := by
+  funext A count read bits
+  unfold consumeBitArrayTail
+  dsimp only
+  have eq := consumeBitArrayLoop_eq count read count bits (Array.emptyWithCapacity count) (by simp)
+  simp only [Array.emptyWithCapacity_eq, Array.size_empty, Nat.zero_add, Array.empty_append] at eq
+  split
+  · rename_i parsed
+    simp only [Array.emptyWithCapacity_eq] at parsed
+    rw [parsed] at eq
+    cases answer : consumeBitArray count read bits <;> simp [answer] at eq ⊢
+  · rename_i values rest parsed
+    simp only [Array.emptyWithCapacity_eq] at parsed
+    rw [parsed] at eq
+    cases answer : consumeBitArray count read bits with
+    | none => simp [answer] at eq
+    | some result =>
+      obtain ⟨new, unread⟩ := result
+      simp [answer] at eq
+      apply congrArg some
+      apply Prod.ext
+      · funext i
+        simp only [eq.1, Array.getElem_ofFn]
+      · exact eq.2.symm
+
 private theorem consumeBitArray_chunks {A : Type*} {count : ℕ}
     (read : Fin count → List Bool → Option (A × List Bool)) (chunks : Fin count → List Bool)
     (values : Fin count → A) (rest : List Bool)
@@ -379,5 +465,70 @@ theorem completeSteinerBitConsumption_polynomial (G : Arcs V) (height : ℕ)
   rw [hubSum, arcSum]
   simpa only [completeSteinerExpectedSeedBits, Finset.sum_const, Finset.card_univ,
     Fintype.card_fin, Fintype.card_coe, nsmul_eq_mul] using completeSteinerExpectedSeedBits_polynomial G height
+
+/-- Count coordinates by the radix sizes, without materializing the coordinate array. -/
+def earlySeedCoordinateCountByWidth (V : Type*) [Fintype V] (height width : ℕ) : ℕ :=
+  let n := Fintype.card V
+  let histories := ∑ k : Fin (height+1), n ^ k.val
+  earlyTrialCount V height * (n * (width * (2 * histories + 1)))
+
+theorem earlySeedCoordinateCountByWidth_eq (G : Arcs V) (height width : ℕ)
+    (width_eq : width = (forestScale G height).log2+1) :
+    earlySeedCoordinateCountByWidth V height width = Fintype.card (EarlySeedCoordinate G height) := by
+  rw [earlySeedCoordinate_card, width_eq, heightNode_card]
+  rfl
+
+/-- Compute the tighter bit bound with a previously prepared word width. -/
+def completeSteinerSeedBitBoundAtWidth (G : Arcs V) (height width : ℕ) : ℕ :=
+  earlySeedCoordinateCountByWidth V height width * width +
+    completeSteinerHubCount V * (2 * uniformProposalWidth (Fintype.card V)) +
+    G.card * (2 * uniformProposalWidth G.card)
+
+theorem completeSteinerSeedBitBoundAtWidth_eq (G : Arcs V) (height width : ℕ)
+    (width_eq : width = (forestScale G height).log2+1) :
+    completeSteinerSeedBitBoundAtWidth G height width = completeSteinerSeedBitBound G height := by
+  unfold completeSteinerSeedBitBoundAtWidth completeSteinerSeedBitBound earlySeedBits
+  rw [earlySeedCoordinateCountByWidth_eq G height width width_eq, width_eq]
+
+private def decodeSeedAtWidthAndCount (G : Arcs V) (height width count : ℕ)
+    (width_eq : width = (forestScale G height).log2+1)
+    (count_eq : count = Fintype.card (EarlySeedCoordinate G height))
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card) (bits : List Bool) :
+    Option ((EarlyRoundSample G height × (Fin (completeSteinerHubCount V) → V) × ThinSample G) ×
+      ((Fin (completeSteinerHubCount V) → ℕ) × (G → ℕ)) × List Bool) :=
+  (consumeBitArray (A := Fin (2^width)) count (fun _ => consumeFairWord width) bits).bind fun early =>
+    (consumeBitArray (A := Fin (Fintype.card V) × ℕ) (completeSteinerHubCount V)
+      (fun _ => consumeFairIndex (Fintype.card V)) early.2).bind fun hubs =>
+      (consumeBitArray (A := Fin G.card × ℕ) G.card (fun _ => consumeFairIndex G.card) hubs.2).map fun thin =>
+        let words := fun c => Fin.cast (congrArg (fun w : ℕ => 2^w) width_eq)
+          (early.1 (Fin.cast count_eq.symm (coordinates c)))
+        let earlySeed := (earlySeedCoordinates G height).symm words
+        let hubSeed := fun i => vertices.symm ((hubs.1 i).1)
+        let thinSeed := fun e => (thin.1 (arcs e)).1
+        ((earlySeed, hubSeed, thinSeed), (fun i => (hubs.1 i).2, fun e => (thin.1 (arcs e)).2), thin.2)
+
+/-- Decode using a previously computed word width and an arithmetic coordinate count. -/
+def decodeCompleteSteinerSeedAtWidth (G : Arcs V) (height width : ℕ)
+    (width_eq : width = (forestScale G height).log2+1)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card) (bits : List Bool) :
+    Option ((EarlyRoundSample G height × (Fin (completeSteinerHubCount V) → V) × ThinSample G) ×
+      ((Fin (completeSteinerHubCount V) → ℕ) × (G → ℕ)) × List Bool) :=
+  decodeSeedAtWidthAndCount G height width (earlySeedCoordinateCountByWidth V height width)
+    width_eq (earlySeedCoordinateCountByWidth_eq G height width width_eq) coordinates vertices arcs bits
+
+theorem decodeCompleteSteinerSeedAtWidth_eq (G : Arcs V) (height width : ℕ)
+    (width_eq : width = (forestScale G height).log2+1)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card) (bits : List Bool) :
+    decodeCompleteSteinerSeedAtWidth G height width width_eq coordinates vertices arcs bits =
+      decodeCompleteSteinerSeed G height coordinates vertices arcs bits := by
+  have exactDecode (width count : ℕ) (w : width = (forestScale G height).log2+1)
+      (c : count = Fintype.card (EarlySeedCoordinate G height)) :
+      decodeSeedAtWidthAndCount G height width count w c coordinates vertices arcs bits =
+        decodeCompleteSteinerSeed G height coordinates vertices arcs bits := by
+    subst width; subst count; rfl
+  exact exactDecode width _ width_eq (earlySeedCoordinateCountByWidth_eq G height width width_eq)
 
 end OnlineReachabilityPreservers
