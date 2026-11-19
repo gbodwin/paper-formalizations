@@ -108,6 +108,12 @@ An exact-source replay grants no coverage to a paper statement outside the
   964-declaration paper audit and local kernel replay passed. Independent
   review checked the source restriction, fiber multiplicities, and dyadic cover.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44423784108).
+- [86f8bb2b](https://github.com/gbodwin/paper-formalizations/commit/86f8bb2b512e70a4ceb3b94e1f0ec950bf00dc88)
+  proves the normalized on-base expectation without a logarithmic loss
+  and checks the uniform means of off-base bucket moments. The
+  993-declaration paper audit and local kernel replay passed. Independent
+  review checked the geometric regimes, normalization, and empty buckets.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44426396075).
 
 A finite execution check of the PaperLab example gave cumulative purchases
 `[0, 3, 4, 5, 5]`. A graph with a two-vertex SCC confirmed the internal and

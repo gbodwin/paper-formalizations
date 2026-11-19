@@ -80,6 +80,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   moment without a separate factor for the number of buckets.
   [OffBaseMoment](OnlineReachabilityPreservers/OffBaseMoment.lean) expresses
   those inequalities as uniform means of the actual bucket statistics.
+  [OffBaseAverage](OnlineReachabilityPreservers/OffBaseAverage.lean)
+  proves the three off-base powers with no logarithmic loss and combines
+  them with the on-base estimate by partitioning the qualifying tuples.
 - [OnBaseCounting](OnlineReachabilityPreservers/OnBaseCounting.lean)
   proves the source-restricted bound for the actual systems in Lemma 35
   and counts tuples with their second endpoint on the base. The proof

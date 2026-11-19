@@ -262,12 +262,6 @@ theorem lemma35_large_bases_coarse {C a b : ℝ} (hC : 1 ≤ C)
     C*y/x+(C*y^a/x)^(1/(2*a-1))+(C*y^(2-2*b)/x)^(1/(1-b))
   gcongr
 
-private theorem sqrt_sum_le {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) :
-    Real.sqrt (a+b) ≤ Real.sqrt a+Real.sqrt b := by
-  apply (sq_le_sq₀ (Real.sqrt_nonneg _) (add_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _))).mp
-  rw [Real.sq_sqrt (add_nonneg ha hb), add_sq, Real.sq_sqrt ha, Real.sq_sqrt hb]
-  linarith only [mul_nonneg (Real.sqrt_nonneg a) (Real.sqrt_nonneg b)]
-
 private theorem rpow_square {x : ℝ} (hx : 0 ≤ x) (r : ℝ) : (x^r)^2 = x^(2*r) := by
   rw [← Real.rpow_two, ← Real.rpow_mul hx, mul_comm]
 
@@ -327,7 +321,7 @@ theorem lemma35_bucket_upper {ℓ d h x K P M : ℝ} (hℓ : 0 < ℓ) (hd : 0 < 
     _ ≤ f*(S*Real.sqrt (ℓ*h*(a+b))) := mul_le_mul_of_nonneg_left (hsqrt (a+b) ta) fnn
     _ = (f*S)*Real.sqrt (ℓ*h*a+ℓ*h*b) := by rw [mul_add]; ring
     _ ≤ (f*S)*(Real.sqrt (ℓ*h*a)+Real.sqrt (ℓ*h*b)) :=
-      mul_le_mul_of_nonneg_left (sqrt_sum_le (by positivity) (by positivity))
+      mul_le_mul_of_nonneg_left (sqrt_add_le_nonneg (by positivity) (by positivity))
         (mul_nonneg fnn (zero_le_one.trans hS))
     _ = S*(f*Real.sqrt (ℓ*h*a)+f*Real.sqrt (ℓ*h*b)) := by ring
     _ = _ := by rw [first, second]
