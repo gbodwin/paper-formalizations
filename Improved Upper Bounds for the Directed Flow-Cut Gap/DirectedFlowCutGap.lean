@@ -1100,6 +1100,7 @@ import DirectedFlowCutGap.VertexReductionWidths
 import DirectedFlowCutGap.VertexReplication
 import DirectedFlowCutGap.VertexRounding
 import DirectedFlowCutGap.VertexToEdgeReduction
+import DirectedFlowCutGap.WeakCutExactMarginal
 import DirectedFlowCutGap.WeakDecomposition
 import DirectedFlowCutGap.WeakDecompositionBounds
 import DirectedFlowCutGap.WeakDecompositionExactWeight
