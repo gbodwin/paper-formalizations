@@ -429,6 +429,11 @@ An exact-source replay grants no coverage to a paper statement outside the
   replay passed. Independent review checked the actual ranked subfamilies,
   inheritance of the envelope and the moment averaging.
   [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44483573807).
+- [375f9fb8](https://github.com/gbodwin/paper-formalizations/commit/375f9fb86e1bd094b343df72e71f48c8738b2afa)
+  proves the full off-base expectation on local paths. The 3195-declaration
+  audit and local kernel replay passed. Independent review checked the
+  actual dyadic bucket inputs and normalization by the incidence averages.
+  [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/44484293414).
 
 PaperLab version 14 pins 98 links to `af10a045` and contains 14 boxed L
 notes. The deployment render and local controls passed. The research

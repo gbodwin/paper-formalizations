@@ -183,12 +183,19 @@ permits counting only tuples whose right endpoint lies after a near
 predecessor. Lean checks that the suffix from the earliest near predecessor
 contains all of these endpoints and induces a family with a source in the
 predecessor set on each path. The source-restricted estimate bounds those
-incidences and hence the filtered on-base tuple count. In Appendix B, all
-close-pair charges have both endpoints off the base. The filtered offline
-count gives the local-order upper bound and recurrence of Theorem 43.
+incidences. The other on-base endpoints precede a near predecessor on their
+base. Charge collisions of these endpoints to the earlier base and the
+last near predecessor on the later base. Two distinct collisions with the
+same charge would form a half-3-bridge or a half-4-bridge through the fixed
+vertex. Both groups have the same incidence bound, giving the paper's
+expectation for all on-base tuples. In Appendix B, all close-pair charges
+have both endpoints off the base. The filtered offline count gives the
+local-order upper bound and recurrence of Theorem 43.
 [Checked cycle](OnlineReachabilityPreservers/SplitAudit.lean)
 · [Checked close-pair charges](OnlineReachabilityPreservers/LocalBranching.lean)
 · [Checked source restriction and upper count](OnlineReachabilityPreservers/LocalOnBaseCounting.lean)
+· [Backward collision count](OnlineReachabilityPreservers/LocalFullOnBaseCounting.lean)
+· [Full expectation](OnlineReachabilityPreservers/LocalOnlineAverage.lean)
 · [Unrestricted offline bound](OnlineReachabilityPreservers/LocalOfflineBound.lean).
 
 ## Matters requiring proof or clarification
