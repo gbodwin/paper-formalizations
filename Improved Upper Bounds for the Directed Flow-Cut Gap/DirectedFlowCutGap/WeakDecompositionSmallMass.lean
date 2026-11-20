@@ -16,6 +16,26 @@ def smallEdgeMass (G : Digraph V) (w : V × V → ℝ≥0) (cutoff : ℝ) : ℝ 
   ∑ e ∈ Finset.univ.filter (fun e => (actualEdgeWeight G w e : ℝ) ≤ cutoff),
     (actualEdgeWeight G w e : ℝ)
 
+theorem smallEdgeMass_le_arc_count (G : Digraph V) (w : V × V → ℝ≥0) (cutoff : ℝ)
+    (nonneg : 0≤cutoff) : smallEdgeMass G w cutoff ≤ ((graphEdges G).card : ℝ)*cutoff := by
+  let light := Finset.univ.filter (fun e => (actualEdgeWeight G w e : ℝ)≤cutoff)
+  let actual := graphEdges G
+  have remove_nonarcs : (∑ e ∈ light ∩ actual, (actualEdgeWeight G w e : ℝ)) =
+       ∑ e ∈ light, (actualEdgeWeight G w e : ℝ) := by
+    apply Finset.sum_subset Finset.inter_subset_left
+    intro e hl notBoth
+    have missing : e ∉ actual := fun isArc => notBoth (Finset.mem_inter.mpr ⟨hl,isArc⟩)
+    have notAdj : ¬G.Adj e.1 e.2 := fun yes => missing ((mem_graphEdges G e).mpr yes)
+    rw [actualEdgeWeight_of_not_adj G w notAdj,NNReal.coe_zero]
+  change (∑ e ∈ light, (actualEdgeWeight G w e : ℝ)) ≤ (actual.card : ℝ)*cutoff
+  rw [← remove_nonarcs]
+  calc
+    _ ≤ ∑ _e ∈ light ∩ actual, cutoff := Finset.sum_le_sum (fun e h =>
+      (Finset.mem_filter.mp (Finset.mem_inter.mp h).1).2)
+    _ = ((light ∩ actual).card : ℝ)*cutoff := by simp [nsmul_eq_mul]
+    _ ≤ _ := mul_le_mul_of_nonneg_right (Nat.cast_le.mpr
+      (Finset.card_le_card Finset.inter_subset_right)) nonneg
+
 def smallMassHorizon (n k : ℕ) (W : ℝ≥0) (α : ℝ) : ℕ :=
   ⌈2*(k : ℝ)*Real.log (4*α*(k : ℝ)*(W : ℝ)+(n : ℝ)^2)⌉₊+1
 
@@ -165,26 +185,26 @@ noncomputable section
 open scoped NNReal BigOperators
 open WeakDecomposition
 
-theorem edge_uniform_of_small_mass {n : ℕ} (hn : 0 < n)
-    (G : Digraph (Fin n)) (w : Fin n × Fin n → ℝ≥0)
+theorem edge_uniform_of_small_mass_at_scale {n k : ℕ} (hn : 0 < n)
+    (G : Digraph (Fin n)) (w : Fin n × Fin n → ℝ≥0) (hk : 0 < k)
     (small : let α : ℝ := efg n (totalEdgeWeight G w)
-      α*smallEdgeMass G w (4*α*(n : ℝ))⁻¹ ≤ 1/4) :
+      α*smallEdgeMass G w (4*α*(k : ℝ))⁻¹ ≤ 1/4) :
     let α : ℝ := efg n (totalEdgeWeight G w)
-    let T := smallMassHorizon n n (totalEdgeWeight G w) α
+    let T := smallMassHorizon n k (totalEdgeWeight G w) α
     ∃ X : Fin T → Finset (Fin n × Fin n),
       let p := familyLaw (show 0 < T from Nat.zero_lt_succ _) X
       (∀ Y ∈ p.support, Y ⊆ graphEdges G ∧ IsIntegralEdgeCut G Y (edgeThresholdDemands G w)) ∧
       ∀ e, (p.toOuterMeasure {Y | e ∈ Y}).toReal ≤ 8*α*(w e : ℝ) := by
   classical
   let α : ℝ := efg n (totalEdgeWeight G w)
-  let T := smallMassHorizon n n (totalEdgeWeight G w) α
+  let T := smallMassHorizon n k (totalEdgeWeight G w) α
   have ht : 0 < T := Nat.zero_lt_succ _
   have oracle : HasEdgeRoundingFactor G w α := efg_bound n (totalEdgeWeight G w) G w rfl
   have valid_card : ∃ X : Fin T → Finset (Fin n × Fin n),
       (∀ i, X i ⊆ graphEdges G ∧ IsIntegralEdgeCut G (X i) (edgeThresholdDemands G w)) ∧
       ∀ e, ((Finset.univ.filter fun i => e ∈ X i).card : ℝ)/(T : ℝ) ≤ 8*α*(w e : ℝ) := by
     by_cases pos : 0 < α
-    · exact edge_family_of_small_mass G w α n (Fintype.card_fin n) hn hn pos oracle small
+    · exact edge_family_of_small_mass G w α k (Fintype.card_fin n) hn hk pos oracle small
     · have zero : α=0 := le_antisymm (le_of_not_gt pos) oracle.nonneg
       obtain ⟨Y,ok,cost⟩ := oracle.real_cost_round (fun _ => 1) (fun _ => zero_le_one)
       have zero_card : (Y.card : ℝ) ≤ 0 := by simpa [zero] using cost
@@ -198,6 +218,46 @@ theorem edge_uniform_of_small_mass {n : ℕ} (hn : 0 < n)
   · intro e
     rw [familyLaw_marginal]
     exact card e
+
+theorem edge_uniform_of_small_mass {n : ℕ} (hn : 0 < n)
+    (G : Digraph (Fin n)) (w : Fin n × Fin n → ℝ≥0)
+    (small : let α : ℝ := efg n (totalEdgeWeight G w)
+      α*smallEdgeMass G w (4*α*(n : ℝ))⁻¹ ≤ 1/4) :
+    let α : ℝ := efg n (totalEdgeWeight G w)
+    let T := smallMassHorizon n n (totalEdgeWeight G w) α
+    ∃ X : Fin T → Finset (Fin n × Fin n),
+      let p := familyLaw (show 0 < T from Nat.zero_lt_succ _) X
+      (∀ Y ∈ p.support, Y ⊆ graphEdges G ∧ IsIntegralEdgeCut G Y (edgeThresholdDemands G w)) ∧
+      ∀ e, (p.toOuterMeasure {Y | e ∈ Y}).toReal ≤ 8*α*(w e : ℝ) :=
+  edge_uniform_of_small_mass_at_scale hn G w hn small
+
+/-- An original-factor family needs a horizon proportional to the actual
+arc count, up to the displayed log factor. -/
+theorem edge_uniform_at_original_arc_count {n : ℕ} (hn : 0 < n)
+    (G : Digraph (Fin n)) (w : Fin n × Fin n → ℝ≥0) :
+    let α : ℝ := efg n (totalEdgeWeight G w)
+    let k := max 1 (graphEdges G).card
+    let T := smallMassHorizon n k (totalEdgeWeight G w) α
+    ∃ X : Fin T → Finset (Fin n × Fin n),
+      let p := familyLaw (show 0 < T from Nat.zero_lt_succ _) X
+      (∀ Y ∈ p.support, Y ⊆ graphEdges G ∧ IsIntegralEdgeCut G Y (edgeThresholdDemands G w)) ∧
+      ∀ e, (p.toOuterMeasure {Y | e ∈ Y}).toReal ≤ 8*α*(w e : ℝ) := by
+  let α : ℝ := efg n (totalEdgeWeight G w)
+  let k := max 1 (graphEdges G).card
+  have kpos : 0<k := lt_of_lt_of_le Nat.zero_lt_one (le_max_left _ _)
+  refine edge_uniform_of_small_mass_at_scale hn G w kpos ?_
+  change α*smallEdgeMass G w (4*α*(k : ℝ))⁻¹ ≤ 1/4
+  by_cases hα : α=0
+  · rw [hα,zero_mul]
+    norm_num
+  · have apos : 0<α := lt_of_le_of_ne (Nat.cast_nonneg _) (Ne.symm hα)
+    let δ := (4*α*(k : ℝ))⁻¹
+    have nonneg : 0≤δ := by dsimp only [δ]; positivity
+    have card : ((graphEdges G).card : ℝ)≤k := Nat.cast_le.mpr (le_max_right _ _)
+    have bound := (smallEdgeMass_le_arc_count G w δ nonneg).trans (mul_le_mul_of_nonneg_right card nonneg)
+    exact (mul_le_mul_of_nonneg_left bound apos.le).trans_eq (by
+      unfold δ
+      field_simp)
 
 end
 end DirectedFlowCutGap.ExactFlowCutGap

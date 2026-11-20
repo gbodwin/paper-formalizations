@@ -54,6 +54,12 @@ private theorem mem_arcs {n : ℕ} (A : Adjacency n) (e : Edge n) :
   simp only [arcs,List.mem_filter,RetainedTapeInput.mem_allPairs,true_and,mem_graphEdges]
   rfl
 
+def arcSet {n : ℕ} (A : Adjacency n) : Finset (Edge n) := (arcs A).toFinset
+
+theorem arcSet_value {n : ℕ} (A : Adjacency n) : arcSet A=graphEdges (graph A) := by
+  ext e
+  simp only [arcSet,List.mem_toFinset,mem_arcs]
+
 private def allowedArcs {n : ℕ} (A : Adjacency n) (avoid : Finset (Edge n)) : List (Edge n) :=
   (arcs A).filter fun e => e ∉ avoid
 
@@ -61,11 +67,11 @@ private theorem mem_allowedArcs {n : ℕ} (A : Adjacency n) (avoid : Finset (Edg
     e ∈ allowedArcs A avoid ↔ e ∈ graphEdges (graph A) ∧ e ∉ avoid := by
   simp only [allowedArcs,List.mem_filter,mem_arcs,decide_eq_true_eq]
 
-private def candidates {n : ℕ} (A : Adjacency n) (D : List (Edge n)) (avoid : Finset (Edge n)) :
+def candidates {n : ℕ} (A : Adjacency n) (D : List (Edge n)) (avoid : Finset (Edge n)) :
     List (Finset (Edge n)) :=
   ((allowedArcs A avoid).sublists.map List.toFinset).filter (checkCut A D)
 
-private theorem mem_candidates {n : ℕ} (A : Adjacency n) (D : List (Edge n)) (X avoid : Finset (Edge n)) :
+theorem mem_candidates {n : ℕ} (A : Adjacency n) (D : List (Edge n)) (X avoid : Finset (Edge n)) :
     X ∈ candidates A D avoid ↔ X ⊆ graphEdges (graph A) ∧ IsIntegralEdgeCut (graph A) X {e | e ∈ D} ∧
       Disjoint X avoid := by
   unfold candidates

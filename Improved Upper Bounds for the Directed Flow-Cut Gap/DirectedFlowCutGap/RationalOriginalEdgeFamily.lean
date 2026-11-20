@@ -3,7 +3,7 @@ import DirectedFlowCutGap.BinaryFamilySampler
 
 /-! An executable uniform family for the original rational edge weights.
 The dimension-sized horizon is used when the excluded light mass permits it.
-The general fallback uses the number of ordered vertex pairs. Both use the
+The general fallback uses the actual number of arcs. Both use the
 same exact finite cut search. -/
 namespace DirectedFlowCutGap.RationalOriginalEdgeFamily
 
@@ -11,7 +11,7 @@ open scoped NNRat NNReal BigOperators
 open BinaryFractionalWalkOracle (Adjacency graph)
 open RationalEdgeThresholds (Weights demands weights)
 open RationalEdgeDecomposition (Good originalWeight originalWeight_eq originalTotal)
-open RationalExactEdgeOracle (Edge selectAvoiding selectAvoiding_minimum)
+open RationalExactEdgeOracle (Edge arcSet arcSet_value selectAvoiding selectAvoiding_minimum)
 
 def floor (k : ℕ) (α : ℚ≥0) : ℚ≥0 := (4 * α * k)⁻¹
 
@@ -25,7 +25,7 @@ def lightMass {n : ℕ} (A : Adjacency n) (w : Weights n) (α : ℚ≥0) (k : �
   α * ∑ e ∈ light A w α k, originalWeight A w e
 
 def chooseScale {n : ℕ} (A : Adjacency n) (w : Weights n) (α : ℚ≥0) : ℕ :=
-  if lightMass A w α n ≤ 1 / 4 then n else n * n
+  if lightMass A w α n ≤ 1 / 4 then n else max 1 (arcSet A).card
 
 def horizon {n : ℕ} (A : Adjacency n) (w : Weights n) (α : ℚ≥0) (k : ℕ) : ℕ :=
   RationalWeakFamily.edgeRounds k (2 * α * originalTotal A w + (n : ℚ≥0)^2)
@@ -59,19 +59,34 @@ private theorem outside {n : ℕ} (A : Adjacency n) (w : Weights n) (α : ℚ≥
     (he : e ∉ light A w α k) : floor k α ≤ originalWeight A w e := by
   exact le_of_not_gt (fun low => he (Finset.mem_filter.mpr ⟨Finset.mem_univ _,low⟩))
 
-private theorem bounded_mass {n : ℕ} (hn : 0 < n) (A : Adjacency n) (w : Weights n)
-    (α : ℚ≥0) (hα : 0 < α) : lightMass A w α (n*n) ≤ 1/4 := by
-  let m := n*n
+private theorem bounded_mass {n : ℕ} (A : Adjacency n) (w : Weights n)
+    (α : ℚ≥0) (hα : 0 < α) : lightMass A w α (max 1 (arcSet A).card) ≤ 1/4 := by
+  let m := max 1 (arcSet A).card
   let δ := floor m α
   let S := light A w α m
-  have hm : 0 < m := Nat.mul_pos hn hn
+  let relevant := S ∩ arcSet A
+  have hm : 0 < m := Nat.zero_lt_one.trans_le (le_max_left _ _)
+  have ignoreZeros : (∑ e ∈ relevant, originalWeight A w e)=∑ e ∈ S, originalWeight A w e := by
+    apply Finset.sum_subset Finset.inter_subset_left
+    intro e lightEdge notRelevant
+    have absent : A[e.1.val][e.2.val] = false := by
+      apply Bool.eq_false_iff.mpr
+      intro isArc
+      apply notRelevant
+      refine Finset.mem_inter.mpr ⟨lightEdge,?_⟩
+      rw [arcSet_value]
+      exact (mem_graphEdges _ _).mpr isArc
+    simp [originalWeight,absent]
   have cap : (∑ e ∈ S, originalWeight A w e) ≤ (m : ℚ≥0) * δ := by
+    rw [← ignoreZeros]
     calc
-      _ ≤ ∑ _e ∈ S, δ := Finset.sum_le_sum fun _ he => (Finset.mem_filter.mp he).2.le
-      _ = (S.card : ℚ≥0) * δ := by simp [nsmul_eq_mul]
+      _ ≤ ∑ _e ∈ relevant, δ := Finset.sum_le_sum fun _ he =>
+        (Finset.mem_filter.mp (Finset.mem_inter.mp he).1).2.le
+      _ = (relevant.card : ℚ≥0) * δ := by simp [nsmul_eq_mul]
       _ ≤ _ := by
         apply mul_le_mul_of_nonneg_right _ zero_le
-        exact_mod_cast (S.card_le_univ.trans_eq (by simp [Edge,m] : Fintype.card (Edge n)=m))
+        exact_mod_cast ((Finset.card_le_card Finset.inter_subset_right : relevant.card≤(arcSet A).card).trans
+          (le_max_right 1 (arcSet A).card))
   have tight : α * ((m : ℚ≥0) * δ) = 1/4 := by
     have hm' : (m : ℚ≥0) ≠ 0 := Nat.cast_ne_zero.mpr hm.ne'
     dsimp only [δ,floor]
@@ -217,7 +232,7 @@ theorem adaptive_spec {n : ℕ} (hn : 0 < n) (A : Adjacency n) (w : Weights n)
     unfold k chooseScale
     split
     · exact ⟨hn,by assumption⟩
-    · exact ⟨Nat.mul_pos hn hn,bounded_mass hn A w α hα⟩
+    · exact ⟨Nat.zero_lt_one.trans_le (le_max_left _ _),bounded_mass A w α hα⟩
   have h := build_spec A w α feasible.1 hα feasible.2 factor
   simp only [adaptive,ite_eq_right hα.ne']
   exact ⟨build_length A w α k,fun X hX => (h.1 X hX).1,h.2⟩
