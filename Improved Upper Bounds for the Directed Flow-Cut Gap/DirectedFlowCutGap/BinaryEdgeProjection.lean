@@ -77,25 +77,72 @@ private def arcPosition {n : ℕ} (s t : Fin n) : Fin (lineSize n) × ℕ :=
 @[simp] private theorem arcPosition_value {n : ℕ} (s t : Fin n) :
     (arcPosition s t).1=edgeIndex (s,t) := Fin.ext (coordinateWord_value true s t)
 
-private def batchArcs {n : ℕ} {A : Type} (f : Fin n → Fin n → Fin (lineSize n) → A × ℕ) :
-    Vector (Vector A n) n × ℕ :=
-  batch fun s => batch fun t =>
-    let position := arcPosition s t
-    let answer := f s t position.1
-    (answer.1,position.2+answer.2)
+private def gridWithControl {n k : ℕ} {A : Type}
+    (position : Fin n → Fin n → Fin k × ℕ)
+    (f : Fin n → Fin n → Fin k → (A × ℕ) × ℕ) : (Vector (Vector A n) n × ℕ) × ℕ :=
+  BinaryArrayBatch.runWithChildWork fun s => BinaryArrayBatch.runWithChildWork fun t =>
+    let atCell := position s t
+    let result := f s t atCell.1
+    ((result.1.1,atCell.2+result.1.2),result.2)
+
+private theorem grid_reference {n k : ℕ} {A : Type}
+    (position : Fin n → Fin n → Fin k × ℕ)
+    (f : Fin n → Fin n → Fin k → (A × ℕ) × ℕ) :
+    (gridWithControl position f).1 = batch (fun s => batch fun t =>
+      let atCell := position s t
+      let result := (f s t atCell.1).1
+      (result.1,atCell.2+result.2)) := by
+  unfold gridWithControl
+  rw [BinaryArrayBatch.child_projection]
+  change batch _ = batch _
+  congr 1
+  funext s
+  rw [BinaryArrayBatch.child_projection]
+  rfl
 
 def readbackBudget {R : Type*} [Semiring R] (n cell : R) : R :=
   n*(n*(1024*(n+2)^2+cell)+8*n+4)+8*n+4
 
-private theorem batchArcs_paid {n : ℕ} {A : Type}
-    (f : Fin n → Fin n → Fin (lineSize n) → A × ℕ) {cap : ℕ}
-    (paid : ∀ s t i, (f s t i).2 ≤ cap) : (batchArcs f).2 ≤ readbackBudget n cap := by
-  unfold batchArcs readbackBudget
+private theorem grid_legacy_paid {n k : ℕ} {A : Type}
+    (position : Fin n → Fin n → Fin k × ℕ)
+    (f : Fin n → Fin n → Fin k → (A × ℕ) × ℕ) {cap : ℕ}
+    (indexPaid : ∀ s t, (position s t).2 ≤ 1024*(n+2)^2)
+    (paid : ∀ s t i, (f s t i).1.2 ≤ cap) : (gridWithControl position f).1.2 ≤ readbackBudget n cap := by
+  rw [grid_reference]
+  unfold readbackBudget
   apply batch_paid
   intro s
   apply batch_paid
   intro t
-  exact Nat.add_le_add (coordinateWord_paid true s t) (paid s t _)
+  exact Nat.add_le_add (indexPaid s t) (paid s t _)
+
+def gridControlBudget {R : Type*} [Semiring R] (n fee work : R) : R :=
+  let cellFee := 1024*(n+2)^2+fee
+  BinaryArrayBatch.childCeiling n (n*cellFee+8*n+4)
+    (BinaryArrayBatch.childCeiling n cellFee work)
+
+private theorem grid_control_paid {n k : ℕ} {A : Type}
+    (position : Fin n → Fin n → Fin k × ℕ)
+    (f : Fin n → Fin n → Fin k → (A × ℕ) × ℕ) {cap work : ℕ}
+    (indexPaid : ∀ s t, (position s t).2 ≤ 1024*(n+2)^2)
+    (paid : ∀ s t i, (f s t i).1.2 ≤ cap) (measured : ∀ s t i, (f s t i).2 ≤ work) :
+    (gridWithControl position f).2 ≤ gridControlBudget n cap work := by
+  let cellFee := 1024*(n+2)^2+cap
+  let cell (s t : Fin n) : (A × ℕ) × ℕ :=
+    let atCell := position s t
+    let result := f s t atCell.1
+    ((result.1.1,atCell.2+result.1.2),result.2)
+  have legacy (s t : Fin n) : (cell s t).1.2 ≤ cellFee :=
+    Nat.add_le_add (indexPaid s t) (paid s t _)
+  have rowFee (s : Fin n) :
+      (BinaryArrayBatch.runWithChildWork (cell s)).1.2 ≤ n*cellFee+8*n+4 := by
+    rw [BinaryArrayBatch.child_projection]
+    exact batch_paid _ (legacy s)
+  have rowWork (s : Fin n) :
+      (BinaryArrayBatch.runWithChildWork (cell s)).2 ≤ BinaryArrayBatch.childCeiling n cellFee work :=
+    (BinaryArrayBatch.runWithChildWork_paid _ (legacy s) (fun t => measured s t _)).trans
+      (BinaryArrayBatch.childBudget_le ..)
+  exact (BinaryArrayBatch.runWithChildWork_paid _ rowFee rowWork).trans (BinaryArrayBatch.childBudget_le ..)
 
 private def matrixPosition {n : ℕ} (s t : Fin n) : Fin (n*n) × ℕ :=
   let result := coordinateWord false s t
@@ -110,61 +157,159 @@ private def matrixPosition {n : ℕ} (s t : Fin n) : Fin (n*n) × ℕ :=
   change (coordinateWord false s t).1=t.val+n*s.val
   simpa only [Bool.false_eq_true,ite_false,zero_add] using coordinateWord_value false s t
 
+def matrixWithControl {n : ℕ} {A : Type} (f : Fin (n*n) → (A × ℕ) × ℕ) :
+    (Vector (Vector A n) n × ℕ) × ℕ := gridWithControl matrixPosition (fun _ _ => f)
+
 def matrix {n : ℕ} {A : Type} (f : Fin (n*n) → A × ℕ) : Vector (Vector A n) n × ℕ :=
-  batch fun s => batch fun t =>
-    let position := matrixPosition s t
-    let answer := f position.1
-    (answer.1,position.2+answer.2)
+  (matrixWithControl fun i => (f i,0)).1
+
+theorem matrix_reference {n : ℕ} {A : Type} (f : Fin (n*n) → (A × ℕ) × ℕ) :
+    (matrixWithControl f).1 = matrix (fun i => (f i).1) := by
+  simp only [matrix,matrixWithControl,grid_reference]
 
 @[simp] theorem matrix_value {n : ℕ} {A : Type} (f : Fin (n*n) → A × ℕ) :
     (matrix f).1=Vector.ofFn (fun s => Vector.ofFn fun t => (f (finProdFinEquiv (s,t))).1) := by
-  simp only [matrix,batch_value,matrixPosition_value]
+  simp only [matrix,matrixWithControl,grid_reference,batch_value,matrixPosition_value]
 
 theorem matrix_paid {n : ℕ} {A : Type} (f : Fin (n*n) → A × ℕ) {cap : ℕ}
-    (paid : ∀ i, (f i).2 ≤ cap) : (matrix f).2 ≤ readbackBudget n cap := by
-  unfold matrix readbackBudget
-  apply batch_paid
-  intro s
-  apply batch_paid
-  intro t
-  exact Nat.add_le_add (coordinateWord_paid false s t) (paid _)
+    (paid : ∀ i, (f i).2 ≤ cap) : (matrix f).2 ≤ readbackBudget n cap :=
+  grid_legacy_paid matrixPosition (fun _ _ i => (f i,0)) (coordinateWord_paid false) (fun _ _ => paid)
+
+theorem matrix_control_paid {n : ℕ} {A : Type} (f : Fin (n*n) → (A × ℕ) × ℕ) {cap work : ℕ}
+    (paid : ∀ i, (f i).1.2 ≤ cap) (measured : ∀ i, (f i).2 ≤ work) :
+    (matrixWithControl f).2 ≤ gridControlBudget n cap work :=
+  grid_control_paid matrixPosition (fun _ _ => f) (coordinateWord_paid false) (fun _ _ => paid) (fun _ _ => measured)
+
+private theorem lineWidth (n : ℕ) : n.size ≤ lineSize n :=
+  (BinaryNaturalOperations.size_le_self n).trans (by unfold lineSize; omega)
+
+def roundingInputWithControl {n : ℕ} (D : Input n) (row : RawRow (lineSize n)) :
+    (EncodedEdgeGadget.Input n × ℕ) × ℕ :=
+  let weights := gridWithControl arcPosition fun _ _ i =>
+    let cell := BinaryVectorAccess.read row i
+    ((cell.1,4),cell.2)
+  ((⟨D.adjacency,weights.1.1,D.costs⟩,weights.1.2+4),weights.2)
 
 def roundingInput {n : ℕ} (D : Input n) (row : RawRow (lineSize n)) : EncodedEdgeGadget.Input n × ℕ :=
-  let weight := batchArcs fun _ _ i => (get row i,4)
-  (⟨D.adjacency,weight.1,D.costs⟩,weight.2+4)
+  (roundingInputWithControl D row).1
+
+theorem roundingInput_reference {n : ℕ} (D : Input n) (row : RawRow (lineSize n)) :
+    roundingInput D row =
+      let weights := batch fun s => batch fun t =>
+        let position := arcPosition s t
+        (get row position.1,position.2+4)
+      (⟨D.adjacency,weights.1,D.costs⟩,weights.2+4) := by
+  simp only [roundingInput,roundingInputWithControl,grid_reference,BinaryVectorAccess.read_value,FractionalCoverRawCore.get]
 
 @[simp] theorem roundingInput_value {n : ℕ} (D : Input n) (row : RawRow (lineSize n)) :
     (roundingInput D row).1=EncodedEdgeLineInput.roundingInput D row := by
-  simp only [roundingInput,batchArcs,batch_value,arcPosition_value,EncodedEdgeLineInput.roundingInput]
+  simp only [roundingInput_reference,batch_value,arcPosition_value,EncodedEdgeLineInput.roundingInput]
 
 def roundingBudget {R : Type*} [Semiring R] (n : R) : R := readbackBudget n 4+4
 
 theorem roundingInput_paid {n : ℕ} (D : Input n) (row : RawRow (lineSize n)) :
     (roundingInput D row).2 ≤ roundingBudget n := by
-  unfold roundingInput roundingBudget
+  unfold roundingInput roundingInputWithControl roundingBudget
   apply Nat.add_le_add_right
-  exact batchArcs_paid (fun _ _ i => (get row i,4)) (fun _ _ _ => le_rfl)
+  exact grid_legacy_paid arcPosition _ (coordinateWord_paid true) (fun _ _ _ => le_rfl)
+
+theorem roundingInput_control_paid {n : ℕ} (D : Input n) (row : RawRow (lineSize n)) :
+    (roundingInputWithControl D row).2 ≤ gridControlBudget n 4 (BinaryVectorAccess.budget (lineSize n)) := by
+  unfold roundingInputWithControl
+  dsimp only
+  exact grid_control_paid arcPosition
+    (fun _ _ i => let stored := BinaryVectorAccess.read row i; ((stored.1,4),stored.2))
+    (coordinateWord_paid true) (fun _ _ _ => le_rfl)
+    (fun _ _ i => BinaryVectorAccess.read_paid row i (BinaryNaturalOperations.size_le_self _))
+
+private def edgeCell {n : ℕ} (D : Input n) (mask : Flags (lineSize n)) (s t : Fin n) (i : Fin (lineSize n)) :
+    (Bool × ℕ) × ℕ :=
+  let live := BinaryVectorAccess.readMatrix D.adjacency s t
+  if live.1 then
+    let selected := BinaryVectorAccess.read mask i
+    ((selected.1,8),live.2+selected.2)
+  else ((false,8),live.2)
+
+private theorem edgeCell_reference {n : ℕ} (D : Input n) (mask : Flags (lineSize n))
+    (s t : Fin n) (i : Fin (lineSize n)) : (edgeCell D mask s t i).1=(D.adjacency[s.val][t.val] && mask[i.val],8) := by
+  simp only [edgeCell,BinaryVectorAccess.readMatrix_value]
+  cases D.adjacency[s.val][t.val] <;> simp [BinaryVectorAccess.read_value]
+
+def toEdgesWithControl {n : ℕ} (D : Input n) (mask : Flags (lineSize n)) : (PairFlags n × ℕ) × ℕ :=
+  gridWithControl arcPosition (edgeCell D mask)
 
 def toEdges {n : ℕ} (D : Input n) (mask : Flags (lineSize n)) : PairFlags n × ℕ :=
-  batchArcs fun s t i => (D.adjacency[s.val][t.val] && mask[i.val],8)
+  (toEdgesWithControl D mask).1
+
+theorem toEdges_reference {n : ℕ} (D : Input n) (mask : Flags (lineSize n)) : toEdges D mask =
+    batch (fun s => batch fun t =>
+      let atCell := arcPosition s t
+      (D.adjacency[s.val][t.val] && mask[atCell.1.val],atCell.2+8)) := by
+  simp only [toEdges,toEdgesWithControl,grid_reference,edgeCell_reference]
 
 @[simp] theorem toEdges_value {n : ℕ} (D : Input n) (mask : Flags (lineSize n)) :
     (toEdges D mask).1=EncodedEdgeLineInput.toEdges D mask := by
-  simp only [toEdges,batchArcs,batch_value,arcPosition_value,EncodedEdgeLineInput.toEdges]
+  simp only [toEdges_reference,batch_value,arcPosition_value,EncodedEdgeLineInput.toEdges]
 
 theorem toEdges_paid {n : ℕ} (D : Input n) (mask : Flags (lineSize n)) :
-    (toEdges D mask).2 ≤ readbackBudget n 8 := batchArcs_paid _ (fun _ _ _ => le_rfl)
+    (toEdges D mask).2 ≤ readbackBudget n 8 := by
+  apply grid_legacy_paid arcPosition _ (coordinateWord_paid true)
+  simp only [edgeCell_reference,le_refl,implies_true]
+
+theorem toEdges_control_paid {n : ℕ} (D : Input n) (mask : Flags (lineSize n)) :
+    (toEdgesWithControl D mask).2 ≤ gridControlBudget n 8 (3*BinaryVectorAccess.budget (lineSize n)) := by
+  apply grid_control_paid arcPosition _ (coordinateWord_paid true)
+  · simp only [edgeCell_reference,le_refl,implies_true]
+  · intro s t i
+    have adjacency := BinaryVectorAccess.readMatrix_paid D.adjacency s t (lineWidth n) (lineWidth n)
+    have selected := BinaryVectorAccess.read_paid mask i (BinaryNaturalOperations.size_le_self _)
+    unfold edgeCell
+    dsimp only
+    split <;> dsimp only <;> omega
+
+private def lineCell {n : ℕ} (labels : Vector (EdgeLineReduction.Node (Fin n)) (lineSize n))
+    (mask : PairFlags n) (i : Fin (lineSize n)) : (Bool × ℕ) × ℕ :=
+  let label := BinaryVectorAccess.read labels i
+  match label.1 with
+  | .inl _ => ((false,2),label.2)
+  | .inr (s,t) =>
+      let selected := BinaryVectorAccess.readMatrix mask s t
+      ((selected.1,4),label.2+selected.2)
+
+private theorem lineCell_reference {n : ℕ} (labels : Vector (EdgeLineReduction.Node (Fin n)) (lineSize n))
+    (mask : PairFlags n) (i : Fin (lineSize n)) : (lineCell labels mask i).1 =
+    match labels[i.val] with
+    | .inl _ => (false,2)
+    | .inr (s,t) => (mask[s.val][t.val],4) := by
+  simp only [lineCell,BinaryVectorAccess.read_value]
+  rcases labels[i.val] with port | ⟨s,t⟩ <;> simp only [BinaryVectorAccess.readMatrix_value]
+
+def toLineWithControl {n : ℕ} (mask : PairFlags n) : (Flags (lineSize n) × ℕ) × ℕ :=
+  let labels := BinaryLineLabels.labelsWithControl n
+  let copies := BinaryArrayBatch.runWithChildWork (lineCell labels.1.1 mask)
+  ((copies.1.1,labels.1.2+copies.1.2+2),labels.2+copies.2)
 
 def toLine {n : ℕ} (mask : PairFlags n) : Flags (lineSize n) × ℕ :=
-  let labels := BinaryLineLabels.labels n
-  let copies := batch fun i : Fin (lineSize n) => match labels.1[i.val] with
-    | .inl _ => (false,2)
-    | .inr (s,t) => (mask[s.val][t.val],4)
-  (copies.1,labels.2+copies.2+2)
+  (toLineWithControl mask).1
+
+theorem toLine_reference {n : ℕ} (mask : PairFlags n) : toLine mask =
+    let labels := BinaryLineLabels.labels n
+    let copies := batch fun i : Fin (lineSize n) => match labels.1[i.val] with
+      | .inl _ => (false,2)
+      | .inr (s,t) => (mask[s.val][t.val],4)
+    (copies.1,labels.2+copies.2+2) := by
+  have plain := BinaryArrayBatch.child_projection (lineCell (BinaryLineLabels.labels n).1 mask)
+  change (BinaryArrayBatch.runWithChildWork (lineCell (BinaryLineLabels.labels n).1 mask)).1 = batch _ at plain
+  change ((let labels := BinaryLineLabels.labels n
+    let copies := (BinaryArrayBatch.runWithChildWork (lineCell labels.1 mask)).1
+    (copies.1,labels.2+copies.2+2))) = _
+  dsimp only
+  rw [plain]
+  simp only [lineCell_reference]
 
 @[simp] theorem toLine_value {n : ℕ} (mask : PairFlags n) :
     (toLine mask).1=EncodedEdgeLineInput.toLine mask := by
-  simp only [toLine,batch_value,BinaryLineLabels.labels_value,Vector.getElem_ofFn,EncodedEdgeLineInput.toLine]
+  simp only [toLine_reference,batch_value,BinaryLineLabels.labels_value,Vector.getElem_ofFn,EncodedEdgeLineInput.toLine]
   congr
   funext i
   cases index n i with
@@ -191,8 +336,32 @@ theorem toLine_paid {n : ℕ} (mask : PairFlags n) : (toLine mask).2 ≤ lineMas
   have labelPaid := BinaryLineLabels.labels_paid n
   change labels.2 ≤ _ at labelPaid
   unfold lineMaskBudget
+  rw [toLine_reference]
   change labels.2+(batch step).2+2 ≤ BinaryLineLabels.budget n (lineSize n)+lineSize n*4+8*lineSize n+6
   omega
+
+def lineMaskControlBudget {R : Type*} [Semiring R] (m : R) : R :=
+  BinaryLineLabels.labelControlBudget m+BinaryArrayBatch.childCeiling m 4 (3*BinaryVectorAccess.budget m)
+
+theorem toLine_control_paid {n : ℕ} (mask : PairFlags n) :
+    (toLineWithControl mask).2 ≤ lineMaskControlBudget (lineSize n) := by
+  let m := lineSize n
+  let labels := BinaryLineLabels.labelsWithControl n
+  have legacy (i : Fin m) : (lineCell labels.1.1 mask i).1.2 ≤ 4 := by
+    rw [lineCell_reference]
+    rcases labels.1.1[i.val] with port | ⟨s,t⟩ <;> simp
+  have measured (i : Fin m) : (lineCell labels.1.1 mask i).2 ≤ 3*BinaryVectorAccess.budget m := by
+    have label := BinaryVectorAccess.read_paid labels.1.1 i (BinaryNaturalOperations.size_le_self m)
+    unfold lineCell
+    dsimp only
+    split
+    · omega
+    · rename_i s t _
+      have cell := BinaryVectorAccess.readMatrix_paid mask s t (lineWidth n) (lineWidth n)
+      change _ ≤ 2*BinaryVectorAccess.budget m at cell
+      omega
+  have copied := (BinaryArrayBatch.runWithChildWork_paid _ legacy measured).trans (BinaryArrayBatch.childBudget_le ..)
+  exact Nat.add_le_add (BinaryLineLabels.labels_control_paid n) copied
 
 private def hasIncident {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
     (mask : Flags g.size) (edge : EncodedEdgeGadget.Pair n) (paid : ℕ) :
@@ -297,27 +466,49 @@ theorem pullback_paid {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdge
     (mask : Flags g.size) : (pullback g mask).2 ≤ pullbackBudget n g.size :=
   Nat.add_le_add (edgeMask_paid g mask) (toLine_paid _)
 
-def output {n : ℕ} (D : Input n) :
-    EncodedVertexSolver.Output (lineSize n) → EncodedEdgeSolver.Output n × ℕ
+private def readPorts {n : ℕ} (labels : Vector (EdgeLineReduction.Node (Fin n)) (lineSize n))
+    (demand : Fin (lineSize n) × Fin (lineSize n)) : Option (Fin n × Fin n) × ℕ :=
+  let fromLabel := BinaryVectorAccess.read labels demand.1
+  let toLabel := BinaryVectorAccess.read labels demand.2
+  let original := match fromLabel.1,toLabel.1 with
+    | .inl (s,true), .inl (t,false) => some (s,t)
+    | _,_ => none
+  (original,fromLabel.2+toLabel.2)
+
+def outputWithControl {n : ℕ} (D : Input n) :
+    EncodedVertexSolver.Output (lineSize n) → (EncodedEdgeSolver.Output n × ℕ) × ℕ
   | .infeasible demand =>
-    let labels := BinaryLineLabels.labels n
-    let original := match labels.1[demand.1.val], labels.1[demand.2.val] with
-      | .inl (s,true), .inl (t,false) => some (s,t)
-      | _,_ => none
-    (.infeasible original,labels.2+8)
+    let labels := BinaryLineLabels.labelsWithControl n
+    let original := readPorts labels.1.1 demand
+    ((.infeasible original.1,labels.1.2+8),labels.2+original.2)
   | .cut a =>
-    let kept := toEdges D a
-    (.cut kept.1,kept.2+2)
-  | .invalid => (.invalid,2)
+    let kept := toEdgesWithControl D a
+    ((.cut kept.1.1,kept.1.2+2),kept.2)
+  | .invalid => ((.invalid,2),0)
+
+def output {n : ℕ} (D : Input n) (r : EncodedVertexSolver.Output (lineSize n)) :
+    EncodedEdgeSolver.Output n × ℕ := (outputWithControl D r).1
+
+theorem output_reference {n : ℕ} (D : Input n) (r : EncodedVertexSolver.Output (lineSize n)) : output D r =
+    match r with
+    | .infeasible demand =>
+      let labels := BinaryLineLabels.labels n
+      let original := match labels.1[demand.1.val],labels.1[demand.2.val] with
+        | .inl (s,true), .inl (t,false) => some (s,t)
+        | _,_ => none
+      (.infeasible original,labels.2+8)
+    | .cut a => let kept := toEdges D a; (.cut kept.1,kept.2+2)
+    | .invalid => (.invalid,2) := by
+  cases r <;> simp only [output,outputWithControl,readPorts,BinaryVectorAccess.read_value] <;> rfl
 
 @[simp] theorem output_value {n : ℕ} (D : Input n) (r : EncodedVertexSolver.Output (lineSize n)) :
     (output D r).1=EncodedEdgeSolver.outputFor D r := by
   cases r with
   | infeasible d =>
-    simp only [output,BinaryLineLabels.labels_value,Vector.getElem_ofFn]
+    simp only [output_reference,BinaryLineLabels.labels_value,Vector.getElem_ofFn]
     rfl
   | cut a =>
-    simp only [output,toEdges_value,EncodedEdgeSolver.outputFor]
+    simp only [output_reference,toEdges_value,EncodedEdgeSolver.outputFor]
   | invalid => rfl
 
 def outputBudget {R : Type*} [Semiring R] (n : R) : R :=
@@ -325,6 +516,7 @@ def outputBudget {R : Type*} [Semiring R] (n : R) : R :=
 
 theorem output_paid {n : ℕ} (D : Input n) (r : EncodedVertexSolver.Output (lineSize n)) :
     (output D r).2 ≤ outputBudget n := by
+  rw [output_reference]
   cases r with
   | infeasible d =>
     have paid := BinaryLineLabels.labels_paid n
@@ -337,6 +529,45 @@ theorem output_paid {n : ℕ} (D : Input n) (r : EncodedVertexSolver.Output (lin
   | invalid =>
     change 2 ≤ readbackBudget n 8+BinaryLineLabels.budget n (n*2+n*n)+8
     omega
+
+def outputControlBudget {R : Type*} [Semiring R] (n : R) : R :=
+  let m := n*2+n*n
+  gridControlBudget n 8 (3*BinaryVectorAccess.budget m)+BinaryLineLabels.labelControlBudget m+
+    2*BinaryVectorAccess.budget m
+
+theorem output_control_paid {n : ℕ} (D : Input n) (r : EncodedVertexSolver.Output (lineSize n)) :
+    (outputWithControl D r).2 ≤ outputControlBudget n := by
+  let m := lineSize n
+  let labels := BinaryLineLabels.labelsWithControl n
+  cases r with
+  | infeasible d =>
+    have a := BinaryLineLabels.labels_control_paid n
+    have b := BinaryVectorAccess.read_paid labels.1.1 d.1 (BinaryNaturalOperations.size_le_self m)
+    have c := BinaryVectorAccess.read_paid labels.1.1 d.2 (BinaryNaturalOperations.size_le_self m)
+    change labels.2+((BinaryVectorAccess.read labels.1.1 d.1).2+(BinaryVectorAccess.read labels.1.1 d.2).2) ≤ _
+    change labels.2 ≤ BinaryLineLabels.labelControlBudget m at a
+    unfold outputControlBudget
+    change _ ≤ gridControlBudget n 8 (3*BinaryVectorAccess.budget m)+BinaryLineLabels.labelControlBudget m+
+      2*BinaryVectorAccess.budget m
+    omega
+  | cut a =>
+    apply (toEdges_control_paid D a).trans
+    change gridControlBudget n 8 (3*BinaryVectorAccess.budget m) ≤
+      gridControlBudget n 8 (3*BinaryVectorAccess.budget m)+BinaryLineLabels.labelControlBudget m+
+        2*BinaryVectorAccess.budget m
+    omega
+  | invalid => exact Nat.zero_le _
+
+open Polynomial in
+theorem gridControlBudget_eval (n fee work : Polynomial ℕ) (x : ℕ) :
+    (gridControlBudget n fee work).eval x=gridControlBudget (n.eval x) (fee.eval x) (work.eval x) := by
+  simp only [gridControlBudget,BinaryArrayBatch.childCeiling,eval_add,eval_mul,eval_pow,eval_ofNat,eval_one]
+
+open Polynomial in
+theorem outputControlBudget_eval (n : Polynomial ℕ) (x : ℕ) :
+    (outputControlBudget n).eval x=outputControlBudget (n.eval x) := by
+  simp only [outputControlBudget,gridControlBudget_eval,BinaryLineLabels.labelControlBudget,
+    BinaryArrayBatch.childCeiling,BinaryVectorAccess.budget,eval_add,eval_mul,eval_pow,eval_ofNat,eval_one,eval_zero]
 
 open Polynomial in
 theorem lineMaskBudget_eval (p : Polynomial ℕ) (x : ℕ) :

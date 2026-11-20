@@ -60,31 +60,49 @@ theorem round_value {n : ℕ} (D : Input n) (mode : ChargedVertexModes.Mode) :
   funext T r tape
   exact roundOn_value _ _ _ _ _
 
+private def finishWithControl {n : ℕ} (D : Input n) (setup sunk : ℕ)
+    (r : Read (PhysicalAmplifiedVertexSolver.Result (lineSize n))) : Read (EdgeResult n) × ℕ :=
+  match r.1 with
+  | none => ((none,sunk+r.2),0)
+  | some result =>
+      let output := BinaryEdgeProjection.outputWithControl D result.output
+      let decoded := output.1
+      ((some ⟨decoded.1,result.suffix,result.dispatch,result.readback,result.roundingAndSelection+setup+decoded.2⟩,
+        sunk+r.2+decoded.2),output.2)
+
 private def finish {n : ℕ} (D : Input n) (setup sunk : ℕ)
     (r : Read (PhysicalAmplifiedVertexSolver.Result (lineSize n))) : Read (EdgeResult n) :=
-  match r.1 with
-  | none => (none,sunk+r.2)
-  | some result =>
-      let decoded := BinaryEdgeProjection.output D result.output
-      (some ⟨decoded.1,result.suffix,result.dispatch,result.readback,result.roundingAndSelection+setup+decoded.2⟩,
-        sunk+r.2+decoded.2)
+  (finishWithControl D setup sunk r).1
+
+private theorem finish_control_paid {n : ℕ} (D : Input n) (setup sunk : ℕ)
+    (r : Read (PhysicalAmplifiedVertexSolver.Result (lineSize n))) :
+    (finishWithControl D setup sunk r).2 ≤ BinaryEdgeProjection.outputControlBudget n := by
+  unfold finishWithControl
+  cases r.1 with
+  | none => exact Nat.zero_le _
+  | some result => exact BinaryEdgeProjection.output_control_paid D result.output
 
 private theorem finish_value {n : ℕ} (D : Input n) (setup sunk : ℕ)
     (r : Read (PhysicalAmplifiedVertexSolver.Result (lineSize n))) :
     (finish D setup sunk r).1=r.1.map (PhysicalAmplifiedBinaryEdge.finish D setup) := by
-  unfold finish
+  unfold finish finishWithControl
   cases r.1 <;> rfl
+
+private theorem finish_control_value {n : ℕ} (D : Input n) (setup sunk : ℕ)
+    (r : Read (PhysicalAmplifiedVertexSolver.Result (lineSize n))) :
+    (finishWithControl D setup sunk r).1.1=r.1.map (PhysicalAmplifiedBinaryEdge.finish D setup) :=
+  finish_value D setup sunk r
 
 private theorem finish_paid {n : ℕ} (D : Input n) (setup sunk : ℕ)
     (r : Read (PhysicalAmplifiedVertexSolver.Result (lineSize n))) :
     (finish D setup sunk r).2 ≤ sunk+r.2+BinaryEdgeProjection.outputBudget n := by
-  unfold finish
+  unfold finish finishWithControl
   cases r.1 with
   | none => exact Nat.le_add_right _ _
   | some out => exact Nat.add_le_add_left (BinaryEdgeProjection.output_paid D out.output) _
 
-private def runWithLineControl {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) (tape : Bits) :
-    Read (EdgeResult n) × ℕ :=
+private def runWithBoundaryControl {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) (tape : Bits) :
+    Read (EdgeResult n) × (ℕ × ℕ) :=
   let controls := BinarySolverOuterControls.edge n κ
   let line := PhysicalAmplifiedBinaryEdge.lineWithControl D
   let input := line.1
@@ -93,15 +111,21 @@ private def runWithLineControl {n : ℕ} (κ : ℕ) (D : Input n) (mode : Charge
   let setup := input.2+controls.paid
   let followed := PaidVertexAmplification.runWithPlan input.1 (round D mode) controls.draws controls.extra
     controls.confidence reader.1 cover.2 reader.2 tape
-  (finish D setup (setup+cover.2+reader.2) followed,line.2)
+  let output := finishWithControl D setup (setup+cover.2+reader.2) followed
+  (output.1,(line.2,output.2))
+
+private def runWithLineControl {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) (tape : Bits) :
+    Read (EdgeResult n) × ℕ :=
+  let result := runWithBoundaryControl κ D mode tape
+  (result.1,result.2.1)
 
 def run {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) (tape : Bits) : Read (EdgeResult n) :=
   (runWithLineControl κ D mode tape).1
 
 theorem run_value {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) (tape : Bits) :
     (run κ D mode tape).1=DirectBinaryEdgeWire.run κ D mode tape := by
-  simp only [run,runWithLineControl,DirectBinaryEdgeWire.run,PhysicalAmplifiedBinaryEdge.lineWithCost,
-    finish_value,PaidVertexAmplification.runWithPlan_value,round_value]
+  simp only [run,runWithLineControl,runWithBoundaryControl,DirectBinaryEdgeWire.run,
+    PhysicalAmplifiedBinaryEdge.lineWithCost,finish_control_value,PaidVertexAmplification.runWithPlan_value,round_value]
 
 theorem phase_paid {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) (tape : Bits) :
     let controls := BinarySolverOuterControls.edge n κ
@@ -111,14 +135,37 @@ theorem phase_paid {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes
     (run κ D mode tape).2 ≤ input.2+controls.paid+cover.2+reader.2+
       (PaidVertexAmplification.runWithPlan input.1 (round D mode) controls.draws controls.extra
         controls.confidence reader.1 cover.2 reader.2 tape).2+BinaryEdgeProjection.outputBudget n := by
-  unfold run runWithLineControl
+  unfold run runWithLineControl runWithBoundaryControl
   exact finish_paid D _ _ _
+
+structure BoundaryWork where
+  prices : ℕ
+  line : ℕ
+  output : ℕ
+  deriving Repr
+
+def BoundaryWork.total (w : BoundaryWork) : ℕ := w.prices+w.line+w.output
+
+def runOnWithBoundaryControl {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : EncodedEdgeInput.Input n)
+    (tape : Bits) : Read (EdgeResult n) × BoundaryWork :=
+  let measured := PhysicalBinaryEdgeWire.decodeWithControl D
+  let input := measured.1
+  let r := runWithBoundaryControl κ input.1 mode tape
+  ((r.1.1.map (fun out => { out with roundingAndSelection := out.roundingAndSelection+input.2 }),input.2+r.1.2),
+    ⟨measured.2,r.2.1,r.2.2⟩)
+
+theorem runOn_prices_work {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : EncodedEdgeInput.Input n)
+    (tape : Bits) : (runOnWithBoundaryControl κ mode D tape).2.prices =
+      (PhysicalBinaryEdgeWire.decodeWithControl D).2 := rfl
+
+theorem runOn_output_paid {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : EncodedEdgeInput.Input n)
+    (tape : Bits) : (runOnWithBoundaryControl κ mode D tape).2.output ≤ BinaryEdgeProjection.outputControlBudget n :=
+  finish_control_paid _ _ _ _
 
 def runOnWithLineControl {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : EncodedEdgeInput.Input n)
     (tape : Bits) : Read (EdgeResult n) × ℕ :=
-  let input := PhysicalBinaryEdgeWire.decodeWithCost D
-  let (r, line) := runWithLineControl κ input.1 mode tape
-  ((r.1.map (fun out => { out with roundingAndSelection := out.roundingAndSelection+input.2 }),input.2+r.2),line)
+  let result := runOnWithBoundaryControl κ mode D tape
+  (result.1,result.2.line)
 
 def runOn {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : EncodedEdgeInput.Input n)
     (tape : Bits) : Read (EdgeResult n) := (runOnWithLineControl κ mode D tape).1
@@ -142,14 +189,19 @@ def edgeWithCost (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits
   let r := runOn κ mode D tape
   (r.1.map (fun out => ⟨n,out⟩),r.2)
 
-def edgeWithLineControl (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
-    Read (Σ n,EdgeResult n) × ℕ :=
+def edgeWithBoundaryControl (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    Read (Σ n,EdgeResult n) × BoundaryWork :=
   let input := PhysicalSourceInputJoin.edge source
   match input.1 with
-  | none => ((none,input.2),0)
+  | none => ((none,input.2),⟨0,0,0⟩)
   | some ⟨n,D⟩ =>
-      let (r, line) := runOnWithLineControl κ mode D tape
-      ((r.1.map (fun out => ⟨n,out⟩),input.2+r.2),line)
+      let r := runOnWithBoundaryControl κ mode D tape
+      ((r.1.1.map (fun out => ⟨n,out⟩),input.2+r.1.2),r.2)
+
+def edgeWithLineControl (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    Read (Σ n,EdgeResult n) × ℕ :=
+  let r := edgeWithBoundaryControl κ mode source tape
+  (r.1,r.2.line)
 
 theorem edgeWithLineControl_value (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
     (edgeWithLineControl κ mode source tape).1=edgeWithCost κ mode source tape := by
@@ -157,13 +209,17 @@ theorem edgeWithLineControl_value (κ : ℕ) (mode : ChargedVertexModes.Mode) (s
     Read.bind (PhysicalSourceInputJoin.edge source) (fun data =>
       let r := runOn κ mode data.2 tape
       (r.1.map (fun out => ⟨data.1,out⟩),r.2))
-  unfold edgeWithLineControl Read.bind
+  unfold edgeWithLineControl edgeWithBoundaryControl Read.bind
   dsimp only
   cases (PhysicalSourceInputJoin.edge source).1 with
   | none => rfl
   | some input =>
       obtain ⟨n,D⟩ := input
       rfl
+
+theorem edgeWithBoundaryControl_value (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    (edgeWithBoundaryControl κ mode source tape).1=edgeWithCost κ mode source tape :=
+  edgeWithLineControl_value κ mode source tape
 
 theorem edge_value (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
     (edgeWithCost κ mode source tape).1=(FramedDirectEdgeWire.edgeWithCost κ mode source tape).1 := by

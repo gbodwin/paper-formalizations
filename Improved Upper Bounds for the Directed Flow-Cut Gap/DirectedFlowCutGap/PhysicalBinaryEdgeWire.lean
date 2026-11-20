@@ -12,21 +12,57 @@ open PhysicalIntegerRoundingCost (eval_mono)
 def decodeBudget {R : Type*} [Semiring R] (n b : R) : R :=
   BinaryEdgeProjection.readbackBudget n (40*(b+1)^2)+4
 
+private def decodePrice {n : ℕ} (D : EncodedEdgeInput.Input n) (i : Fin (n*n)) :
+    (RawNonnegativeRational.Code × ℕ) × ℕ :=
+  let stored := BinaryVectorAccess.read D.costs i
+  (BinaryRawRational.decode stored.1,stored.2)
+
+private theorem decodePrice_reference {n : ℕ} (D : EncodedEdgeInput.Input n) (i : Fin (n*n)) :
+    (decodePrice D i).1=BinaryRawRational.decode (BinaryFractionalRows.get D.costs i) := by
+  simp only [decodePrice,BinaryVectorAccess.read_value,BinaryFractionalRows.get]
+
+def decodeWithControl {n : ℕ} (D : EncodedEdgeInput.Input n) : (EncodedEdgeLineInput.Input n × ℕ) × ℕ :=
+  let prices := BinaryEdgeProjection.matrixWithControl (decodePrice D)
+  ((⟨D.adjacency,D.demands,prices.1.1⟩,prices.1.2+4),prices.2)
+
 def decodeWithCost {n : ℕ} (D : EncodedEdgeInput.Input n) : EncodedEdgeLineInput.Input n × ℕ :=
-  let prices := BinaryEdgeProjection.matrix fun i => BinaryRawRational.decode (BinaryFractionalRows.get D.costs i)
-  (⟨D.adjacency,D.demands,prices.1⟩,prices.2+4)
+  (decodeWithControl D).1
+
+theorem decode_reference {n : ℕ} (D : EncodedEdgeInput.Input n) : decodeWithCost D =
+    let prices := BinaryEdgeProjection.matrix fun i => BinaryRawRational.decode (BinaryFractionalRows.get D.costs i)
+    (⟨D.adjacency,D.demands,prices.1⟩,prices.2+4) := by
+  simp only [decodeWithCost,decodeWithControl,BinaryEdgeProjection.matrix_reference,decodePrice_reference]
 
 @[simp] theorem decode_value {n : ℕ} (D : EncodedEdgeInput.Input n) : (decodeWithCost D).1=EncodedEdgeInput.decodeInput D := by
-  simp only [decodeWithCost,EncodedEdgeInput.decodeInput,BinaryEdgeProjection.matrix_value,
+  simp only [decode_reference,EncodedEdgeInput.decodeInput,BinaryEdgeProjection.matrix_value,
     BinaryRawRational.decode_value,BinaryFractionalRows.decode_get]
 
 theorem decode_paid {n b : ℕ} (D : EncodedEdgeInput.Input n)
     (fits : ∀ i, StoredBounded (BinaryFractionalRows.get D.costs i) b) :
     (decodeWithCost D).2 ≤ decodeBudget n b := by
+  rw [decode_reference]
   apply Nat.add_le_add_right
   exact BinaryEdgeProjection.matrix_paid
     (fun i => BinaryRawRational.decode (BinaryFractionalRows.get D.costs i))
     (fun i => BinaryRawRational.decode_paid (fits i))
+
+def decodeControlBudget {R : Type*} [Semiring R] (n b : R) : R :=
+  BinaryEdgeProjection.gridControlBudget n (40*(b+1)^2) (BinaryVectorAccess.budget (n*n))
+
+theorem decode_control_paid {n b : ℕ} (D : EncodedEdgeInput.Input n)
+    (fits : ∀ i, StoredBounded (BinaryFractionalRows.get D.costs i) b) :
+    (decodeWithControl D).2 ≤ decodeControlBudget n b := by
+  apply BinaryEdgeProjection.matrix_control_paid
+  · intro i
+    rw [decodePrice_reference]
+    exact BinaryRawRational.decode_paid (fits i)
+  · intro i
+    exact BinaryVectorAccess.read_paid D.costs i (BinaryNaturalOperations.size_le_self _)
+
+theorem decodeControlBudget_eval (n b : Polynomial ℕ) (x : ℕ) :
+    (decodeControlBudget n b).eval x=decodeControlBudget (n.eval x) (b.eval x) := by
+  simp only [decodeControlBudget,BinaryEdgeProjection.gridControlBudget_eval,BinaryVectorAccess.budget,
+    eval_add,eval_mul,eval_pow,eval_ofNat,eval_one]
 
 def runOn {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : EncodedEdgeInput.Input n) (tape : Bits) :
     Option (EdgeResult n) :=

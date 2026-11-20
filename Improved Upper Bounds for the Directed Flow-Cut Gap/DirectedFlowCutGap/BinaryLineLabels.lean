@@ -164,7 +164,7 @@ private theorem locate_paid {n : ℕ} (divisor ports : Bits) (hn : value divisor
     change (coordinates x.1 [false,true]).2 ≤ 1100*(W+1)^2 at div
     nlinarith only [p,c,div]
 
-private def labelsWithControl (n : ℕ) : (Vector (Node (Fin n)) (lineSize n) × ℕ) × ℕ :=
+def labelsWithControl (n : ℕ) : (Vector (Node (Fin n)) (lineSize n) × ℕ) × ℕ :=
   let word := BinaryNaturalView.encode n
   let ports := false::word.1
   have nword : value word.1=n := BinaryNaturalView.encode_value n
@@ -207,6 +207,12 @@ private theorem labels_bounds (n : ℕ) : (labels n).2 ≤ budget n (lineSize n)
   · exact (BinaryArrayBatch.run_paid _ callback).trans (BinaryArrayBatch.childBudget_le m _ 0)
 
 theorem labels_paid (n : ℕ) : (labels n).2 ≤ budget n (lineSize n) := (labels_bounds n).1
+
+def labelControlBudget {R : Type*} [Semiring R] (m : R) : R :=
+  BinaryArrayBatch.childCeiling m (2048*(m+3)^2) 0
+
+theorem labels_control_paid (n : ℕ) : (labelsWithControl n).2 ≤ labelControlBudget (lineSize n) :=
+  (labels_bounds n).2
 
 open EdgeLineReduction (departs base)
 open RawNonnegativeRational (Code)
