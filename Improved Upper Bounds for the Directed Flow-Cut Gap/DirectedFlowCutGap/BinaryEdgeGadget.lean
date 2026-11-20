@@ -2,6 +2,8 @@ import DirectedFlowCutGap.EncodedEdgeGadget
 import DirectedFlowCutGap.ChargedEdgeDyadicLabels
 import DirectedFlowCutGap.BinaryVertexReductionArithmetic
 import DirectedFlowCutGap.BinaryNaturalView
+import DirectedFlowCutGap.BinaryVectorAccess
+import DirectedFlowCutGap.BinaryShortScan
 
 /-! The dyadic gadget with binary label tests, exact dyadic weight
 materialization and measured sums of the input edge prices. -/
@@ -93,21 +95,47 @@ private theorem equalLabel_paid {n : ℕ} (a b : DyadicEdgeWeights.Label n) :
     have hj := (Nat.lt_succ_iff.mp j.isLt).trans (depth_le n)
     exact equalNatural_paid hi hj
 
-def incident {n : ℕ} (l : Labels n) (e : Pair n) : RawNode n → Bool × ℕ
-  | .inl _ => (false,2)
+def incidentWithControl {n : ℕ} (l : Labels n) (e : Pair n) : RawNode n → (Bool × ℕ) × ℕ
+  | .inl _ => ((false,2),0)
   | .inr (u,side,i) =>
     let v := if side then e.1 else e.2
     let base := equalFin u v
     if base.1 then
-      let label := equalLabel i (labelAt l e)
-      (label.1,base.2+label.2+8)
-    else (false,base.2+6)
+      let edge := BinaryVectorAccess.readMatrix l e.1 e.2
+      let label := equalLabel i edge.1
+      ((label.1,base.2+label.2+8),edge.2)
+    else ((false,base.2+6),0)
+
+def incident {n : ℕ} (l : Labels n) (e : Pair n) (x : RawNode n) : Bool × ℕ :=
+  (incidentWithControl l e x).1
+
+theorem incident_reference {n : ℕ} (l : Labels n) (e : Pair n) (x : RawNode n) :
+    incident l e x = match x with
+      | .inl _ => (false,2)
+      | .inr (u,side,i) =>
+        let v := if side then e.1 else e.2
+        let base := equalFin u v
+        if base.1 then
+          let label := equalLabel i (labelAt l e)
+          (label.1,base.2+label.2+8)
+        else (false,base.2+6) := by
+  rcases x with port | ⟨u,side,i⟩
+  · rfl
+  · cases side <;> simp only [incident,incidentWithControl,BinaryVectorAccess.readMatrix_value,labelAt,
+      Bool.false_eq_true,ite_false,ite_true] <;> split <;> rfl
+
+theorem incident_control_paid {n width : ℕ} (l : Labels n) (e : Pair n) (x : RawNode n)
+    (fits : n.size ≤ width) : (incidentWithControl l e x).2 ≤ 2*BinaryVectorAccess.budget width := by
+  rcases x with port | ⟨u,side,i⟩
+  · exact Nat.zero_le _
+  · cases side <;> simp only [incidentWithControl,Bool.false_eq_true,ite_false,ite_true] <;>
+      split <;> first | exact BinaryVectorAccess.readMatrix_paid l e.1 e.2 fits fits | exact Nat.zero_le _
 
 theorem incident_iff {n : ℕ} (l : Labels n) (e : Pair n) (x : RawNode n) :
     (incident l e x).1=true ↔ x=EdgeToVertex.right (labelAt l) e ∨ x=EdgeToVertex.left (labelAt l) e := by
   rcases x with pair | ⟨u,b,i⟩
-  · simp [incident,EdgeToVertex.right,EdgeToVertex.left]
-  · cases b <;> simp only [incident,EdgeToVertex.right,EdgeToVertex.left, Bool.false_eq_true,
+  · simp [incident_reference,EdgeToVertex.right,EdgeToVertex.left]
+  · cases b <;> simp only [incident_reference,EdgeToVertex.right,EdgeToVertex.left, Bool.false_eq_true,
       ite_false,ite_true,Sum.inr.injEq,Prod.mk.injEq,false_and,true_and,and_false,false_or] <;>
     split <;> simp_all [equalFin_value,equalLabel_value]
 
@@ -115,8 +143,9 @@ def incidentBudget {R : Type*} [Semiring R] (n : R) : R := 128*(n+2)^2+10
 
 theorem incident_paid {n : ℕ} (l : Labels n) (e : Pair n) (x : RawNode n) :
     (incident l e x).2 ≤ incidentBudget n := by
+  rw [incident_reference]
   rcases x with pair | ⟨u,b,i⟩
-  · simp [incident,incidentBudget]
+  · simp [incidentBudget]
   · let v := if b then e.1 else e.2
     have base : (equalFin u v).2 ≤ 64*(n+2)^2 := equalNatural_paid
       (u.isLt.le.trans (Nat.le_succ n)) (v.isLt.le.trans (Nat.le_succ n))
@@ -126,31 +155,35 @@ theorem incident_paid {n : ℕ} (l : Labels n) (e : Pair n) (x : RawNode n) :
     unfold incidentBudget
     split <;> omega
 
-private def incidentLoop {n : ℕ} (l : Labels n) (x : RawNode n) (paid : ℕ) : List (Pair n) → Bool × ℕ
-  | [] => (false,paid+1)
-  | e::es =>
-    let r := incident l e x
-    if r.1 then (true,paid+r.2+4)
-    else incidentLoop l x (paid+r.2+4) es
+private def incidentTest {n : ℕ} (l : Labels n) (x : RawNode n) (e : Pair n) : (Bool × ℕ) × ℕ :=
+  let r := incidentWithControl l e x
+  ((r.1.1,r.1.2+4),r.2)
+
+private def incidentLoopWithControl {n : ℕ} (l : Labels n) (x : RawNode n) (paid : ℕ) (es : List (Pair n)) :
+    (Bool × ℕ) × ℕ := BinaryShortScan.run (incidentTest l x) paid es
+
+private def incidentLoop {n : ℕ} (l : Labels n) (x : RawNode n) (paid : ℕ) (es : List (Pair n)) : Bool × ℕ :=
+  (incidentLoopWithControl l x paid es).1
+
+private theorem incidentLoop_reference {n : ℕ} (l : Labels n) (x : RawNode n) (paid : ℕ) (es : List (Pair n)) :
+    incidentLoop l x paid es=BinaryShortScan.reference (fun e => let r := incident l e x; (r.1,r.2+4)) paid es := by
+  simp only [incidentLoop,incidentLoopWithControl,BinaryShortScan.run_reference]
+  rfl
 
 private theorem incidentLoop_iff {n : ℕ} (l : Labels n) (x : RawNode n) (paid : ℕ) (es : List (Pair n)) :
     (incidentLoop l x paid es).1=true ↔ ∃ e ∈ es, x=EdgeToVertex.right (labelAt l) e ∨ x=EdgeToVertex.left (labelAt l) e := by
-  induction es generalizing paid with
-  | nil => simp [incidentLoop]
-  | cons e es ih =>
-    simp only [incidentLoop,List.mem_cons,exists_eq_or_imp]
-    split <;> simp_all [incident_iff]
+  simp only [incidentLoop_reference,BinaryShortScan.reference_true,incident_iff]
 
 private theorem incidentLoop_paid {n : ℕ} (l : Labels n) (x : RawNode n) (paid : ℕ) (es : List (Pair n)) :
     (incidentLoop l x paid es).2 ≤ paid+es.length*(incidentBudget n+4)+1 := by
-  induction es generalizing paid with
-  | nil => simp [incidentLoop]
-  | cons e es ih =>
-    have h := incident_paid l e x
-    simp only [incidentLoop,List.length_cons,Nat.add_mul,Nat.one_mul]
-    split
-    · omega
-    · exact (ih _).trans (by omega)
+  rw [incidentLoop_reference]
+  exact BinaryShortScan.reference_paid _ _ _ _ (fun e _ => Nat.add_le_add_right (incident_paid l e x) 4)
+
+private theorem incidentLoop_control_paid {n : ℕ} (l : Labels n) (x : RawNode n) (paid : ℕ) (es : List (Pair n)) :
+    (incidentLoopWithControl l x paid es).2 ≤
+      BinaryShortScan.controlBudget es.length paid (incidentBudget n+4) (2*BinaryVectorAccess.budget n) :=
+  BinaryShortScan.run_paid _ _ _ _ _ (fun e _ => ⟨Nat.add_le_add_right (incident_paid l e x) 4,
+    incident_control_paid l e x (BinaryNaturalOperations.size_le_self n)⟩)
 
 private def keepLabel {n : ℕ} (l : Labels n) (es : List (Pair n)) : RawNode n → Bool × ℕ
   | .inl _ => (true,2)

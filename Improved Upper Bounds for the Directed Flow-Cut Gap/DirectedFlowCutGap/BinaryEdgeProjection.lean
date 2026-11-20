@@ -363,16 +363,57 @@ theorem toLine_control_paid {n : ℕ} (mask : PairFlags n) :
   have copied := (BinaryArrayBatch.runWithChildWork_paid _ legacy measured).trans (BinaryArrayBatch.childBudget_le ..)
   exact Nat.add_le_add (BinaryLineLabels.labels_control_paid n) copied
 
+private def incidentAt {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) (edge : EncodedEdgeGadget.Pair n) (i : Fin g.size) : (Bool × ℕ) × ℕ :=
+  let selected := BinaryVectorAccess.read mask i
+  if selected.1 then
+    let node := BinaryVectorAccess.read g.vertices i
+    let hit := BinaryEdgeGadget.incidentWithControl g.labels edge node.1.val
+    ((hit.1.1,hit.1.2+4),selected.2+node.2+hit.2)
+  else ((false,4),selected.2)
+
+private theorem incidentAt_reference {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) (edge : EncodedEdgeGadget.Pair n) (i : Fin g.size) :
+    (incidentAt g mask edge i).1 = if mask[i.val] then
+      let hit := incident g.labels edge g.vertices[i.val].val
+      (hit.1,hit.2+4)
+    else (false,4) := by
+  simp only [incidentAt,BinaryVectorAccess.read_value]
+  split <;> rfl
+
+private theorem incidentAt_paid {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) (edge : EncodedEdgeGadget.Pair n) (i : Fin g.size) :
+    (incidentAt g mask edge i).1.2 ≤ incidentBudget n+4 ∧
+      (incidentAt g mask edge i).2 ≤ 2*BinaryVectorAccess.budget g.size+2*BinaryVectorAccess.budget n := by
+  constructor
+  · rw [incidentAt_reference]
+    split
+    · exact Nat.add_le_add_right (incident_paid g.labels edge g.vertices[i.val].val) 4
+    · exact Nat.le_add_left _ _
+  · have width := BinaryNaturalOperations.size_le_self g.size
+    have selected := BinaryVectorAccess.read_paid mask i width
+    have vertex := BinaryVectorAccess.read_paid g.vertices i width
+    have hit := BinaryEdgeGadget.incident_control_paid g.labels edge (BinaryVectorAccess.read g.vertices i).1.val
+      (BinaryNaturalOperations.size_le_self n)
+    unfold incidentAt
+    dsimp only
+    split <;> dsimp only <;> omega
+
+private def hasIncidentWithControl {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) (edge : EncodedEdgeGadget.Pair n) (paid : ℕ) (is : List (Fin g.size)) : (Bool × ℕ) × ℕ :=
+  BinaryShortScan.run (incidentAt g mask edge) paid is
+
 private def hasIncident {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
-    (mask : Flags g.size) (edge : EncodedEdgeGadget.Pair n) (paid : ℕ) :
-    List (Fin g.size) → Bool × ℕ
-  | [] => (false,paid+1)
-  | i::is =>
-    if mask[i.val] then
-      let test := incident g.labels edge g.vertices[i.val].val
-      if test.1 then (true,paid+test.2+4)
-      else hasIncident g mask edge (paid+test.2+4) is
-    else hasIncident g mask edge (paid+4) is
+    (mask : Flags g.size) (edge : EncodedEdgeGadget.Pair n) (paid : ℕ) (is : List (Fin g.size)) : Bool × ℕ :=
+  (hasIncidentWithControl g mask edge paid is).1
+
+private theorem hasIncident_reference {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) (edge : EncodedEdgeGadget.Pair n) (paid : ℕ) (is : List (Fin g.size)) :
+    hasIncident g mask edge paid is = BinaryShortScan.reference (fun i => if mask[i.val] then
+      let hit := incident g.labels edge g.vertices[i.val].val
+      (hit.1,hit.2+4)
+    else (false,4)) paid is := by
+  simp only [hasIncident,hasIncidentWithControl,BinaryShortScan.run_reference,incidentAt_reference]
 
 private theorem hasIncident_iff {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
     (mask : Flags g.size) (edge : EncodedEdgeGadget.Pair n) (paid : ℕ) (is : List (Fin g.size)) :
@@ -380,39 +421,62 @@ private theorem hasIncident_iff {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : E
       ∃ i ∈ is, mask[i.val]=true ∧
         (g.vertices[i.val].val=EdgeToVertex.right (EncodedEdgeGadget.labelAt g.labels) edge ∨
          g.vertices[i.val].val=EdgeToVertex.left (EncodedEdgeGadget.labelAt g.labels) edge) := by
-  induction is generalizing paid with
-  | nil => simp [hasIncident]
-  | cons i is ih =>
-    simp only [hasIncident,List.mem_cons,exists_eq_or_imp]
-    split
-    · split <;> simp_all [incident_iff]
-    · simp_all
+  simp only [hasIncident_reference,BinaryShortScan.reference_true]
+  refine exists_congr (fun i => and_congr_right (fun _ => ?_))
+  cases mask[i.val] <;> simp [incident_iff]
 
 private theorem hasIncident_paid {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
     (mask : Flags g.size) (edge : EncodedEdgeGadget.Pair n) (paid : ℕ) (is : List (Fin g.size)) :
     (hasIncident g mask edge paid is).2 ≤ paid+is.length*(incidentBudget n+4)+1 := by
-  induction is generalizing paid with
-  | nil => simp [hasIncident]
-  | cons i is ih =>
-    have test := incident_paid g.labels edge g.vertices[i.val].val
-    simp only [hasIncident,List.length_cons,Nat.add_mul,Nat.one_mul]
-    split
-    · split
-      · dsimp only
-        omega
-      · exact (ih _).trans (by omega)
-    · exact (ih _).trans (by omega)
+  simp only [hasIncident,hasIncidentWithControl,BinaryShortScan.run_reference]
+  exact BinaryShortScan.reference_paid _ _ _ _ (fun i _ => (incidentAt_paid g mask edge i).1)
+
+private def scanIndices (m : ℕ) : List (Fin m) × ℕ :=
+  let indices := BinaryArrayBatch.run fun i : Fin m => (i,0)
+  (indices.1.1.toList,indices.2+4*m+2)
+
+private theorem scanIndices_value (m : ℕ) : (scanIndices m).1=List.finRange m := by
+  simp only [scanIndices,BinaryArrayBatch.run_value,Vector.toList_ofFn,List.finRange]
+
+private def cellWithControl {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) (is : List (Fin g.size)) (s t : Fin n) : (Bool × ℕ) × ℕ :=
+  let arc := BinaryVectorAccess.readMatrix D.adjacency s t
+  if arc.1 then
+    let test := hasIncidentWithControl g mask (s,t) 0 is
+    ((test.1.1,test.1.2+4),arc.2+test.2)
+  else ((false,4),arc.2)
+
+private theorem cell_reference {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) (is : List (Fin g.size)) (s t : Fin n) : (cellWithControl g mask is s t).1 =
+    if D.adjacency[s.val][t.val] then
+      let test := hasIncident g mask (s,t) 0 is
+      (test.1,test.2+4)
+    else (false,4) := by
+  simp only [cellWithControl,BinaryVectorAccess.readMatrix_value]
+  split <;> rfl
+
+private def edgeMaskWithControl {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) : (PairFlags n × ℕ) × ℕ :=
+  let indices := scanIndices g.size
+  let bits := gridWithControl (fun _ _ : Fin n => ((0 : Fin 1),0))
+    (fun s t _ => cellWithControl g mask indices.1 s t)
+  ((bits.1.1,bits.1.2+8*g.size+4),indices.2+bits.2)
 
 private def edgeMask {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
-    (mask : Flags g.size) : PairFlags n × ℕ :=
-  let indices := List.finRange g.size
-  let bits := batch fun s : Fin n => batch fun t : Fin n =>
-    if D.adjacency[s.val][t.val] then
-      let test := hasIncident g mask (s,t) 0 indices
-      (test.1,test.2+4)
-    else (false,4)
-  (bits.1,bits.2+8*g.size+4)
+    (mask : Flags g.size) : PairFlags n × ℕ := (edgeMaskWithControl g mask).1
 
+private theorem edgeMask_reference {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) : edgeMask g mask =
+    let indices := List.finRange g.size
+    let bits := batch fun s : Fin n => batch fun t : Fin n =>
+      if D.adjacency[s.val][t.val] then
+        let test := hasIncident g mask (s,t) 0 indices
+        (test.1,test.2+4)
+      else (false,4)
+    (bits.1,bits.2+8*g.size+4) := by
+  simp only [edgeMask,edgeMaskWithControl,grid_reference,scanIndices_value,cell_reference,Nat.zero_add,Prod.eta]
+
+set_option maxHeartbeats 900000 in
 private theorem edgeMask_value {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
     (mask : Flags g.size) : (edgeMask g mask).1=EncodedEdgeRounding.pullback g mask := by
   apply Vector.ext
@@ -420,7 +484,7 @@ private theorem edgeMask_value {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : En
   apply Vector.ext
   intro t ht
   apply Bool.eq_iff_iff.mpr
-  simp only [edgeMask,batch_value,Vector.getElem_ofFn,EncodedEdgeRounding.pullback]
+  simp only [edgeMask_reference,batch_value,Vector.getElem_ofFn,EncodedEdgeRounding.pullback]
   split
   · rename_i live
     simp only [live,Bool.true_and,Bool.or_eq_true]
@@ -438,7 +502,8 @@ def maskBudget {R : Type*} [Semiring R] (n m : R) : R :=
 
 private theorem edgeMask_paid {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
     (mask : Flags g.size) : (edgeMask g mask).2 ≤ maskBudget n g.size := by
-  unfold edgeMask maskBudget
+  rw [edgeMask_reference]
+  unfold maskBudget
   apply Nat.add_le_add_right
   apply Nat.add_le_add_right
   apply batch_paid
@@ -449,16 +514,70 @@ private theorem edgeMask_paid {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : Enc
   rw [List.length_finRange,zero_add] at paid
   split <;> dsimp only <;> omega
 
+private def scanControlBudget {R : Type*} [Semiring R] (n m : R) : R :=
+  BinaryShortScan.controlBudget m 0 (incidentBudget n+4)
+    (2*BinaryVectorAccess.budget m+2*BinaryVectorAccess.budget n)
+
+private def maskControlBudget {R : Type*} [Semiring R] (n m : R) : R :=
+  BinaryArrayBatch.childCeiling m 0 0+4*m+2+
+    gridControlBudget n (m*(incidentBudget n+4)+5) (2*BinaryVectorAccess.budget n+scanControlBudget n m)
+
+private theorem edgeMask_control_paid {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) : (edgeMaskWithControl g mask).2 ≤ maskControlBudget n g.size := by
+  let indices := scanIndices g.size
+  have len : indices.1.length=g.size := by rw [show indices.1=List.finRange g.size from scanIndices_value _]; simp
+  have gather := (BinaryArrayBatch.run_paid (fun i : Fin g.size => (i,0)) (fun _ => le_rfl)).trans
+    (BinaryArrayBatch.childBudget_le g.size 0 0)
+  have legacy (s t : Fin n) : (cellWithControl g mask indices.1 s t).1.2 ≤ g.size*(incidentBudget n+4)+5 := by
+    rw [cell_reference]
+    have scan := hasIncident_paid g mask (s,t) 0 indices.1
+    rw [len,zero_add] at scan
+    split <;> dsimp only <;> omega
+  have measured (s t : Fin n) : (cellWithControl g mask indices.1 s t).2 ≤
+      2*BinaryVectorAccess.budget n+scanControlBudget n g.size := by
+    have width := BinaryNaturalOperations.size_le_self n
+    have arc := BinaryVectorAccess.readMatrix_paid D.adjacency s t width width
+    have scan := BinaryShortScan.run_paid (incidentAt g mask (s,t)) 0 (incidentBudget n+4)
+      (2*BinaryVectorAccess.budget g.size+2*BinaryVectorAccess.budget n) indices.1
+      (fun i _ => incidentAt_paid g mask (s,t) i)
+    rw [len] at scan
+    change (hasIncidentWithControl g mask (s,t) 0 indices.1).2 ≤ scanControlBudget n g.size at scan
+    unfold cellWithControl
+    dsimp only
+    split <;> dsimp only <;> omega
+  have bits := grid_control_paid (fun _ _ : Fin n => ((0 : Fin 1),0))
+    (fun s t _ => cellWithControl g mask indices.1 s t) (fun _ _ => Nat.zero_le _)
+    (fun s t _ => legacy s t) (fun s t _ => measured s t)
+  unfold edgeMaskWithControl maskControlBudget scanIndices
+  dsimp only
+  exact Nat.add_le_add (Nat.add_le_add_right (Nat.add_le_add_right gather _) _) bits
+
+def pullbackWithControl {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) : (Flags (lineSize n) × ℕ) × ℕ :=
+  let original := edgeMaskWithControl g mask
+  let line := toLineWithControl original.1.1
+  ((line.1.1,original.1.2+line.1.2),original.2+line.2)
+
 def pullback {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
-    (mask : Flags g.size) : Flags (lineSize n) × ℕ :=
-  let original := edgeMask g mask
-  let line := toLine original.1
-  (line.1,original.2+line.2)
+    (mask : Flags g.size) : Flags (lineSize n) × ℕ := (pullbackWithControl g mask).1
+
+theorem pullback_reference {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) : pullback g mask =
+      let original := edgeMask g mask
+      let line := toLine original.1
+      (line.1,original.2+line.2) := rfl
+
+def pullbackControlBudget {R : Type*} [Semiring R] (n m : R) : R :=
+  maskControlBudget n m+lineMaskControlBudget (n*2+n*n)
+
+theorem pullback_control_paid {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) : (pullbackWithControl g mask).2 ≤ pullbackControlBudget n g.size :=
+  Nat.add_le_add (edgeMask_control_paid g mask) (toLine_control_paid _)
 
 @[simp] theorem pullback_value {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
     (mask : Flags g.size) :
     (pullback g mask).1=EncodedEdgeLineInput.toLine (EncodedEdgeRounding.pullback g mask) := by
-  simp only [pullback,toLine_value,edgeMask_value]
+  simp only [pullback_reference,toLine_value,edgeMask_value]
 
 def pullbackBudget {R : Type*} [Semiring R] (n m : R) : R := maskBudget n m+lineMaskBudget n
 
@@ -568,6 +687,26 @@ theorem outputControlBudget_eval (n : Polynomial ℕ) (x : ℕ) :
     (outputControlBudget n).eval x=outputControlBudget (n.eval x) := by
   simp only [outputControlBudget,gridControlBudget_eval,BinaryLineLabels.labelControlBudget,
     BinaryArrayBatch.childCeiling,BinaryVectorAccess.budget,eval_add,eval_mul,eval_pow,eval_ofNat,eval_one,eval_zero]
+
+theorem pullbackControlBudget_mono {n n' m m' : ℕ} (hn : n ≤ n') (hm : m ≤ m') :
+    pullbackControlBudget n m ≤ pullbackControlBudget n' m' := by
+  unfold pullbackControlBudget maskControlBudget gridControlBudget lineMaskControlBudget
+    BinaryLineLabels.labelControlBudget BinaryArrayBatch.childCeiling BinaryVectorAccess.budget incidentBudget
+  dsimp only
+  gcongr
+  apply BinaryShortScan.controlBudget_mono hm le_rfl
+  · unfold incidentBudget
+    gcongr
+  · unfold BinaryVectorAccess.budget
+    gcongr
+
+open Polynomial in
+theorem pullbackControlBudget_eval (n m : Polynomial ℕ) (x : ℕ) :
+    (pullbackControlBudget n m).eval x=pullbackControlBudget (n.eval x) (m.eval x) := by
+  simp only [pullbackControlBudget,maskControlBudget,gridControlBudget_eval,scanControlBudget,
+    BinaryShortScan.controlBudget_eval,lineMaskControlBudget,BinaryLineLabels.labelControlBudget,
+    BinaryArrayBatch.childCeiling,BinaryVectorAccess.budget,incidentBudget,eval_add,eval_mul,eval_pow,
+    eval_ofNat,eval_one,eval_zero]
 
 open Polynomial in
 theorem lineMaskBudget_eval (p : Polynomial ℕ) (x : ℕ) :

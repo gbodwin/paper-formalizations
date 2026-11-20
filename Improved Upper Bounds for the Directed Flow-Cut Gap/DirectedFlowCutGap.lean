@@ -228,6 +228,7 @@ import DirectedFlowCutGap.BinaryRationalNormalize
 import DirectedFlowCutGap.BinaryRawRational
 import DirectedFlowCutGap.BinaryRawScalarPolynomial
 import DirectedFlowCutGap.BinarySamplerCost
+import DirectedFlowCutGap.BinaryShortScan
 import DirectedFlowCutGap.BinarySigned
 import DirectedFlowCutGap.BinarySizeCallLift
 import DirectedFlowCutGap.BinarySizeCalls

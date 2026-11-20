@@ -21,8 +21,8 @@ theorem round_paid (q : Polynomial ℕ)
   let g := p.1
   let y := roundPad.eval z
   let w := widthPolynomial.eval z
-  unfold round
-  dsimp only
+  change (roundOn (BinaryEdgeProjection.roundingInput D r.weights).1
+    (BinaryEdgeProjection.roundingInput D r.weights).2 mode T tape).2 ≤ _
   rw [BinaryEdgeProjection.roundingInput_value]
   refine (roundOn_paid (roundingInput D r.weights) (BinaryEdgeProjection.roundingInput D r.weights).2 mode T tape).trans ?_
   have dim : g.size ≤ z := (BinaryEdgeGadget.size_le _).trans dimensions

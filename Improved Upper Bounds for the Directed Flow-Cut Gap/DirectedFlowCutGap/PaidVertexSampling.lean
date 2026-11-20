@@ -171,4 +171,63 @@ theorem fromPlan_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n)
       simp only [fromPlanWith,ChargedPhysicalVertexSolver.rowsCount]
       omega
 
+/-- The continuation sees the same paid result. Only the work returned by
+reached branches can increase. -/
+theorem bind_extra {A B : Type} {a b : Read A} {f g : A → Read B} {d e : ℕ}
+    (same : b.1=a.1) (extra : b.2 ≤ a.2+d)
+    (later : ∀ x, a.1=some x → (g x).2 ≤ (f x).2+e) :
+    (b >>= g).2 ≤ (a >>= f).2+d+e := by
+  change (Read.bind b g).2 ≤ (Read.bind a f).2+d+e
+  unfold Read.bind
+  rw [same]
+  cases first : a.1 with
+  | none => exact extra.trans (Nat.le_add_right _ _)
+  | some x =>
+    have tail := later x first
+    dsimp only
+    omega
+
+theorem chooseRows_extra {n : ℕ} (D : BinaryFractionalGuesses.Input n) (costs : FractionalCoverRawCore.RawRow n)
+    (old newer : Runner n) (T cap : ℕ) (rows : List (FractionalCoverRawCore.RawRow n)) (tape : Bits)
+    (same : ∀ t input bits, (newer t input bits).1=(old t input bits).1)
+    (extra : ∀ input bits, (newer T input bits).2 ≤ (old T input bits).2+cap) :
+    (chooseRowsWith D costs newer T rows tape).2 ≤
+      (chooseRowsWith D costs old T rows tape).2+rows.length*cap := by
+  have sameRounds : (fun t input bits => (newer t input bits).1) = (fun t input bits => (old t input bits).1) :=
+    funext fun t => funext fun i => funext fun bits => same t i bits
+  induction rows generalizing tape with
+  | nil => simp [chooseRowsWith]
+  | cons y ys ih =>
+      let a := old T ⟨D.adjacency,y,costs⟩ tape
+      let b := newer T ⟨D.adjacency,y,costs⟩ tape
+      let prior (h : Result n) := chooseRowsWith D costs old T ys h.suffix
+      let current (h : Result n) := chooseRowsWith D costs newer T ys h.suffix
+      have nextSame (h : Result n) : (current h).1=(prior h).1 := by
+        simp only [current,prior,chooseRows_value,sameRounds]
+      have tail (h : Result n) :
+          (current h >>= selectResult h).2 ≤ (prior h >>= selectResult h).2+ys.length*cap := by
+        have paid : (current h).2 ≤ (prior h).2+ys.length*cap := ih h.suffix
+        exact (bind_extra (e := 0) (nextSame h) paid (fun _ _ => Nat.le_add_right _ _)).trans_eq (Nat.add_zero _)
+      have paid : (b >>= fun h => current h >>= selectResult h).2 ≤
+          (a >>= fun h => prior h >>= selectResult h).2+cap+ys.length*cap :=
+        bind_extra (same T _ _) (extra _ _) (fun h _ => tail h)
+      unfold chooseRowsWith
+      simp only [List.length_cons,Nat.add_mul,Nat.one_mul]
+      change (b >>= fun h => current h >>= selectResult h).2+4 ≤
+        (a >>= fun h => prior h >>= selectResult h).2+4+(ys.length*cap+cap)
+      omega
+
+theorem fromPlan_extra {n : ℕ} (D : BinaryFractionalGuesses.Input n) (costs : FractionalCoverRawCore.RawRow n)
+    (old newer : Runner n) (T cap : ℕ) (plan : PhysicalCoverReader.Plan n) (tape : Bits)
+    (same : ∀ t input bits, (newer t input bits).1=(old t input bits).1)
+    (extra : ∀ input bits, (newer T input bits).2 ≤ (old T input bits).2+cap) :
+    (fromPlanWith D costs newer T plan tape).2 ≤ (fromPlanWith D costs old T plan tape).2+
+      ChargedPhysicalVertexSolver.rowsCount plan*cap := by
+  cases plan with
+  | invalid | infeasible _ | zero _ => simp [fromPlanWith,ChargedPhysicalVertexSolver.rowsCount]
+  | covers rows =>
+    have paid := chooseRows_extra D costs old newer T cap rows tape same extra
+    simp only [fromPlanWith,ChargedPhysicalVertexSolver.rowsCount]
+    omega
+
 end DirectedFlowCutGap.PaidVertexSampling
