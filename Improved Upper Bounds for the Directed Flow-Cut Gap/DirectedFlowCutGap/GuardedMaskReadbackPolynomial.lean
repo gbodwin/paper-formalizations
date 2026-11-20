@@ -68,4 +68,17 @@ theorem hard_readback_polynomial : ∃ p : Polynomial ℕ,
   change (hardMeasured T adj L positive tape).2≤M*(2*CachedScalarRead.budget (64*(M+1)*(M+2)))
   exact read.trans (Nat.mul_le_mul memory (Nat.mul_le_mul_left 2 (work_mono widthFits)))
 
+open Polynomial in
+/-- The actual hard rounding path accounts for both cached-controller and
+final-mask scalar work, including runs that exhaust their literal tape. -/
+theorem hard_combined_scalar_polynomial : ∃ p : Polynomial ℕ,
+    ∀ n L T (adj : PairFlags n) (positive : 0<L) tape, L≤n →
+      let work := hardWithWork T adj L positive tape
+      work.1.2+work.2≤p.eval (n+T) := by
+  obtain ⟨p,mask⟩ := hard_readback_polynomial
+  obtain ⟨q,cache⟩ := hard_cache_polynomial
+  refine ⟨p+q,fun n L T adj positive bits inside => ?_⟩
+  rw [eval_add]
+  exact Nat.add_le_add (mask n L T adj positive bits inside) (cache n L T adj positive bits inside)
+
 end DirectedFlowCutGap.GuardedFuelFreeRounding

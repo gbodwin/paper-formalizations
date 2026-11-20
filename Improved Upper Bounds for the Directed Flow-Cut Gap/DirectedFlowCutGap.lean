@@ -148,6 +148,7 @@ import DirectedFlowCutGap.BinaryArithmetic
 import DirectedFlowCutGap.BinaryBorrowProgram
 import DirectedFlowCutGap.BinaryBoundedSampler
 import DirectedFlowCutGap.BinaryBudgetExpression
+import DirectedFlowCutGap.BinaryCachedHeapBuild
 import DirectedFlowCutGap.BinaryComparisonProgram
 import DirectedFlowCutGap.BinaryCounterMaterialization
 import DirectedFlowCutGap.BinaryCounterProgram
@@ -184,6 +185,7 @@ import DirectedFlowCutGap.BinaryFractionalWalkOracle
 import DirectedFlowCutGap.BinaryFractionalWidths
 import DirectedFlowCutGap.BinaryFractionalWorkPolynomial
 import DirectedFlowCutGap.BinaryGeometricCounterProgram
+import DirectedFlowCutGap.BinaryGuardedCacheExecution
 import DirectedFlowCutGap.BinaryHeavyPreparation
 import DirectedFlowCutGap.BinaryIncrementProgram
 import DirectedFlowCutGap.BinaryIndexedPairRead
@@ -222,6 +224,7 @@ import DirectedFlowCutGap.BinaryRational
 import DirectedFlowCutGap.BinaryRationalCeiling
 import DirectedFlowCutGap.BinaryRationalNormalize
 import DirectedFlowCutGap.BinaryRawRational
+import DirectedFlowCutGap.BinaryRawScalarPolynomial
 import DirectedFlowCutGap.BinarySamplerCost
 import DirectedFlowCutGap.BinarySigned
 import DirectedFlowCutGap.BinarySizeCallLift
@@ -250,6 +253,8 @@ import DirectedFlowCutGap.CacheAdvanceProgram
 import DirectedFlowCutGap.CacheGatesProgram
 import DirectedFlowCutGap.CacheInstallProgram
 import DirectedFlowCutGap.CacheStabilizeProgram
+import DirectedFlowCutGap.CachedBinaryAppend
+import DirectedFlowCutGap.CachedBinaryAttempt
 import DirectedFlowCutGap.CachedBinaryIndex
 import DirectedFlowCutGap.CachedControllerStorage
 import DirectedFlowCutGap.CachedGuardedMaskReadback

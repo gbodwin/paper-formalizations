@@ -1,5 +1,5 @@
 import DirectedFlowCutGap.CachedGuardedMaskReadback
-import DirectedFlowCutGap.PaidTotalRawGraphExecution
+import DirectedFlowCutGap.BinaryRawScalarPolynomial
 import DirectedFlowCutGap.GuardedIntegerRoundingWorkBounds
 import DirectedFlowCutGap.MaskBoundaryAssembly
 
@@ -100,11 +100,14 @@ private theorem input {n : ℕ} (adj : PairFlags n) (L T : ℕ) (tape : Bits) :
     PhysicalIntegerRounding.boundary_trials]
   simpa only [preparedCells_eq adj L T] using (RawGraphInputStore.prepare_spec (L:=L) adj T.bits tape).1
 
-def hardMeasured {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (positive : 0<L) (tape : Bits) : Read (Result n) × ℕ :=
+def hardWithWork {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (positive : 0<L) (tape : Bits) : (Read (Result n) × ℕ) × ℕ :=
   let words := boundaryWords n L T
   let entry := prepare (GraphRelaxationRefinement.matrix adj) words.dimension words.level words.trials tape
-  let run := PaidTotalRawGraphExecution.run entry.1 (input adj L T tape) positive
-  collectMaskCounted entry.2 words.paid run
+  let run := PaidTotalRawGraphExecution.runWithScalars entry.1 (input adj L T tape) positive
+  (collectMaskCounted entry.2 words.paid run.1,run.2)
+
+def hardMeasured {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (positive : 0<L) (tape : Bits) : Read (Result n) × ℕ :=
+  (hardWithWork T adj L positive tape).1
 
 def hard {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (positive : 0<L) (tape : Bits) : Read (Result n) :=
   (hardMeasured T adj L positive tape).1
@@ -116,10 +119,20 @@ theorem hard_readback_paid {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (po
     let fuel := instructionBound n L (H+1) T.bits+1
     (hardMeasured T adj L positive tape).2 ≤
       (H+1+fuel)*(2*CachedWordRead.loadBudget (H+1+fuel) (H+fuel)) := by
-  unfold hardMeasured
+  unfold hardMeasured hardWithWork
   dsimp only
   rw [collect_readback]
   exact CachedGuardedMaskReadback.raw_paid _ (input adj L T tape) positive
+
+open Polynomial in
+theorem hard_cache_polynomial : ∃ p : Polynomial ℕ,
+    ∀ n L T (adj : PairFlags n) (positive : 0<L) tape, L≤n →
+      (hardWithWork T adj L positive tape).2≤p.eval (n+T) := by
+  obtain ⟨p,cap⟩ := PaidTotalRawGraphExecution.scalar_polynomial
+  refine ⟨p,fun n L T adj positive tape inside => ?_⟩
+  let words := boundaryWords n L T
+  let entry := prepare (GraphRelaxationRefinement.matrix adj) words.dimension words.level words.trials tape
+  exact cap n L T adj entry.1 (input adj L T tape) positive inside
 
 theorem hard_mask_copy {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (positive : 0<L) (tape : Bits)
     {cut : Result n} (done : (hard T adj L positive tape).1=some cut) :

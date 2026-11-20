@@ -1,0 +1,7 @@
+# Binary scalar execution in the packed controller
+
+`CachedBinaryAppend` makes the binary successor address and updates both cumulative counters while building the same cache arrays with the same earlier charge. `CachedBinaryAttempt` uses this appender on allocation and tape requests. The branch, field and emit instructions use the binary cache reader. `BinaryCachedHeapBuild` uses the same appender throughout the initial heap fold. Each operation preserves the complete earlier observation.
+
+`BinaryGuardedCacheExecution.execute` uses these operations through the reached execution and performs binary addition of the running legacy charge. It retains tape exhaustion and its accumulated work. `PaidTotalRawGraphExecution.runWithScalars` is the raw controller entry. The actual hard rounding path calls it once and reads the resulting mask. `GuardedFuelFreeRounding.hardWithWork` reports the earlier result and separate readback and internal scalar charges. `hard_combined_scalar_polynomial` bounds their additional sum by a fixed polynomial in graph dimension plus the numerical trial count, for `0 < L ≤ n` and every literal tape.
+
+The executable packed-core singleton preserves its cut, its unread tape and its earlier total packed-run charge of 70,312,016. It records 41,293 in readback and 29,870,488 in internal scalar work. The two-request fixture preserves both the first tape exhaustion and a successful run. Move, call and return still use the earlier control operations. Width-sensitive scalar and structural costs for the entire original wire remain open.

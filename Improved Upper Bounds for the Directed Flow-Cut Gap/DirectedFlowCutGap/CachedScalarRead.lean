@@ -43,19 +43,19 @@ private theorem add_paid {B x y : ℕ} (hx : x.size≤B) (hy : y.size≤B) : (ad
   change l.2+r.2+added.2+(BinaryNaturalView.decode added.1).2+4≤_
   nlinarith only [wl,wr,work,wd,Nat.zero_le B,Nat.zero_le (B^2)]
 
-private def sumMeasured : List ℕ → ℕ × ℕ
+def sumMeasured : List ℕ → ℕ × ℕ
   | [] => (0,1)
   | x::xs =>
       let rest := sumMeasured xs
       let combined := addMeasured x rest.1
       (combined.1,combined.2+rest.2+4)
 
-private theorem sum_value (values : List ℕ) : (sumMeasured values).1=values.sum := by
+theorem sum_value (values : List ℕ) : (sumMeasured values).1=values.sum := by
   induction values with
   | nil => rfl
   | cons x xs ih => simp only [sumMeasured,add_value,ih,List.sum_cons]
 
-private theorem sum_paid {B : ℕ} (values : List ℕ) (width : values.sum.size≤B) :
+theorem sum_paid {B : ℕ} (values : List ℕ) (width : values.sum.size≤B) :
     (sumMeasured values).2≤values.length*(96*(B+2)^2+4)+1 := by
   induction values with
   | nil => simp [sumMeasured]
