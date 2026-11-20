@@ -182,6 +182,7 @@ import DirectedFlowCutGap.BinaryFractionalStepCost
 import DirectedFlowCutGap.BinaryFractionalWalkBounds
 import DirectedFlowCutGap.BinaryFractionalWalkOracle
 import DirectedFlowCutGap.BinaryFractionalWidths
+import DirectedFlowCutGap.BinaryFractionalWorkPolynomial
 import DirectedFlowCutGap.BinaryGeometricCounterProgram
 import DirectedFlowCutGap.BinaryHeavyPreparation
 import DirectedFlowCutGap.BinaryIncrementProgram
@@ -372,7 +373,9 @@ import DirectedFlowCutGap.DemandRecordConstruction
 import DirectedFlowCutGap.DemandSelectedPayload
 import DirectedFlowCutGap.DemandSelectionOrigin
 import DirectedFlowCutGap.DemandSelectionRefinement
+import DirectedFlowCutGap.DirectBinaryEdgeCost
 import DirectedFlowCutGap.DirectBinaryEdgeWire
+import DirectedFlowCutGap.DirectBinaryEdgeWireCost
 import DirectedFlowCutGap.DyadicEdgeWeights
 import DirectedFlowCutGap.EarlyStopRetainedFlow
 import DirectedFlowCutGap.EdgeFlow
@@ -507,6 +510,7 @@ import DirectedFlowCutGap.FractionalCoverRawOracle
 import DirectedFlowCutGap.FractionalCoverRawOracleEncoding
 import DirectedFlowCutGap.FractionalCoverWalkOracle
 import DirectedFlowCutGap.FractionalHeapRead
+import DirectedFlowCutGap.FramedDirectEdgeWire
 import DirectedFlowCutGap.FrozenEpochProbability
 import DirectedFlowCutGap.GraphAdjacencyProgram
 import DirectedFlowCutGap.GraphBoundedRounds
@@ -764,6 +768,9 @@ import DirectedFlowCutGap.OriginalRowMinimumExecution
 import DirectedFlowCutGap.OriginalRowMinimumIndex
 import DirectedFlowCutGap.OriginalRowMinimumProgram
 import DirectedFlowCutGap.OriginalRowMinimumTrace
+import DirectedFlowCutGap.OriginalSourceFraming
+import DirectedFlowCutGap.OriginalSourceFramingRefinement
+import DirectedFlowCutGap.OriginalSourceTableReadback
 import DirectedFlowCutGap.OriginalStoreCorrectness
 import DirectedFlowCutGap.OriginalStoreDispatch
 import DirectedFlowCutGap.OriginalStoreInitial
@@ -906,6 +913,7 @@ import DirectedFlowCutGap.PhysicalSolverChargeBounds
 import DirectedFlowCutGap.PhysicalSolverCharges
 import DirectedFlowCutGap.PhysicalSolverCostEnvelope
 import DirectedFlowCutGap.PhysicalSourceDispatch
+import DirectedFlowCutGap.PhysicalSourceInputJoin
 import DirectedFlowCutGap.PhysicalSourceReadback
 import DirectedFlowCutGap.PhysicalSourceSizeBounds
 import DirectedFlowCutGap.PhysicalVertexRounding
@@ -954,6 +962,7 @@ import DirectedFlowCutGap.RawGraphControllerLaw
 import DirectedFlowCutGap.RawGraphControllerProgram
 import DirectedFlowCutGap.RawGraphInputStore
 import DirectedFlowCutGap.RawNonnegativeRational
+import DirectedFlowCutGap.RawSourceFraming
 import DirectedFlowCutGap.RawWeightedMasses
 import DirectedFlowCutGap.RecoveredEdgeProjection
 import DirectedFlowCutGap.ReferencePrefixMaterialization
@@ -961,6 +970,7 @@ import DirectedFlowCutGap.ReferenceProgramInvocation
 import DirectedFlowCutGap.ReferenceProgramLabels
 import DirectedFlowCutGap.ReferenceProgramStack
 import DirectedFlowCutGap.ReferenceProgramSteps
+import DirectedFlowCutGap.ReferenceSourcePadding
 import DirectedFlowCutGap.RepeatPointerProgram
 import DirectedFlowCutGap.ResidualCapacityProgram
 import DirectedFlowCutGap.ResidualCellUpdateProgram
@@ -1040,6 +1050,7 @@ import DirectedFlowCutGap.ShiftedGridRange
 import DirectedFlowCutGap.ShiftedGridTrace
 import DirectedFlowCutGap.ShortcutContraction
 import DirectedFlowCutGap.ShortcutReachability
+import DirectedFlowCutGap.SourceFrameCompletion
 import DirectedFlowCutGap.SourceMatrixExecution
 import DirectedFlowCutGap.SourceMatrixProjection
 import DirectedFlowCutGap.SourcePackingBoundMonotonicity

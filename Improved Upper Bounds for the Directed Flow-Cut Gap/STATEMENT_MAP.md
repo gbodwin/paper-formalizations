@@ -9,10 +9,11 @@ integer controller have separate deterministic polynomials. The composed
 vertex, edge and adaptive charge counters also have polynomial bounds in the
 original input dimensions. The original-input solvers also have counted parsing,
 and the adaptive solver can reuse a single charged threshold-demand computation.
-The physical source entry counts serialization, binary dispatch fuel, validation and terminal decoding. The edge solver also measures flat price and weight matrix assembly, line adjacency, fractional row projection, gadget cut projection, and final output conversion. The complete bit-time composition still needs a width-sensitive refinement of the structural word operations.
+The physical source entry counts serialization, binary dispatch fuel, validation and terminal decoding. The edge solver also measures flat price and weight matrix assembly, line adjacency, fractional row projection, gadget cut projection, and final output conversion. `OriginalSourceFraming.readBinary_checked` proves a bit-model bound for framing, including malformed and truncated inputs. `PhysicalSourceInputJoin` reads the three retained tables and invokes the original typed validators. `FramedDirectEdgeWire.recorded_polynomial` bounds the combined recorded work on successful edge executions. The complete bit-time composition still needs a width-sensitive refinement of the remaining structural word operations.
 [Physical amplified solvers](verification/PHYSICAL_AMPLIFIED_SOLVERS_20261119.md)
 [Composed charge bounds](verification/PHYSICAL_AMPLIFIED_COST_20261119.md)
 [Original input phases](verification/ORIGINAL_INPUT_PHASES_20261119.md)
+[Physical source framing and edge composition](verification/PHYSICAL_SOURCE_FRAMING_20261120.md)
 
 | Source item | Verified scope at this checkpoint | Still required |
 | --- | --- | --- |
