@@ -1287,4 +1287,44 @@ theorem edge_terminal_row_paid (κ : ℕ) (mode : ChargedVertexModes.Mode) (sour
     rw [fees]
     omega
 
+
+/-- The line result consumed by the measured original edge output conversion. -/
+def terminalRowLineResult {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode)
+    (tape : Bits) : Option (PhysicalAmplifiedVertexSolver.Result (lineSize n)) :=
+  let controls := BinarySolverOuterControls.edge n κ
+  let line := (PhysicalAmplifiedBinaryEdge.lineWithCost D).1
+  match (PhysicalSourceReadback.runWithTerminalCharge line).1 with
+  | none => none
+  | some (plan,dispatch,readback) =>
+    (PaidVertexAmplification.runWithPlanRowWork line (roundWithGadgetWork D mode)
+      controls.draws controls.extra controls.confidence plan dispatch readback tape).1.1
+
+set_option maxHeartbeats 1500000 in
+theorem edge_terminal_row_observe_line (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    (edgeWithTerminalRowWork κ mode source tape).1.1.map observeWireEdge =
+      match (PhysicalSourceInputJoin.edge source).1 with
+      | none => none
+      | some ⟨n,D⟩ =>
+        let raw := (PhysicalBinaryEdgeWire.decodeWithCost D).1
+        (terminalRowLineResult κ raw mode tape).map (fun r =>
+          (⟨n,((BinaryEdgeProjection.outputWithControl raw r.output).1.1,r.suffix)⟩ :
+            Σ m,EncodedEdgeSolver.Output m × Bits)) := by
+  simp only [edgeWithTerminalRowWork,edgeWithFramedRun,PhysicalSourceInputJoin.edge_framing_records_value]
+  cases (PhysicalSourceInputJoin.edge source).1 with
+  | none => rfl
+  | some accepted =>
+    obtain ⟨n,D⟩ := accepted
+    let raw := (PhysicalBinaryEdgeWire.decodeWithControl D).1.1
+    let line := (PhysicalAmplifiedBinaryEdge.lineWithControl raw).1.1
+    let controls := BinarySolverOuterControls.edge n κ
+    simp only [runOnWithTerminalRowBoundary,runOnWithTerminalAmplificationBoundary,runWithPhysicalAmplificationControl,
+      terminalRowLineResult,PhysicalBinaryEdgeWire.decodeWithCost,PhysicalAmplifiedBinaryEdge.lineWithCost]
+    cases (PhysicalSourceReadback.runWithTerminalCharge line).1 with
+    | none => rfl
+    | some data =>
+      obtain ⟨plan,dispatch,reader⟩ := data
+      simp only [finishWithControl]
+      cases (PaidVertexAmplification.runWithPlanRowWork line (roundWithGadgetWork raw mode)
+        controls.draws controls.extra controls.confidence plan dispatch reader tape).1.1 <;> rfl
+
 end DirectedFlowCutGap.PaidDirectEdgeWire
