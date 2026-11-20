@@ -188,22 +188,24 @@ theorem cutScore_control_paid {n : ℕ} (costs : Row n) (out : EncodedVertexSolv
   · apply maskFields_paid
   · exact Nat.zero_le _
 
+def minimumLast {A : Type} (score : A → (Fraction × ℕ) × ℕ) (value : A) : Choice A × ℕ :=
+  let price := score value
+  (⟨value,price.1.1,price.1.2⟩,price.2+2)
+
+def minimumPrepend {A : Type} (score : A → (Fraction × ℕ) × ℕ) (value : A) (tail : Choice A × ℕ) :
+    Choice A × ℕ :=
+  let head := score value
+  let comp := BinaryRational.le head.1.1 tail.1.price
+  let fees := CachedScalarRead.sumMeasured [head.1.2,tail.1.charge,comp.2]
+  let chosen : Choice A := if comp.1 then ⟨value,head.1.1,fees.1⟩ else ⟨tail.1.value,tail.1.price,fees.1⟩
+  (chosen,head.2+tail.2+fees.2+8)
+
 /-- Choose the same minimum, counting reached price reads and the binary
 addition of the existing fees. Ties keep the first cut. -/
 def minimumWithControl {A : Type} (score : A → (Fraction × ℕ) × ℕ) :
     (n : ℕ) → (Fin (n+1) → A) → Choice A × ℕ
-  | 0, samples =>
-    let value := samples 0
-    let price := score value
-    (⟨value,price.1.1,price.1.2⟩,price.2+2)
-  | n+1, samples =>
-    let value := samples 0
-    let head := score value
-    let tail := minimumWithControl score n (Fin.tail samples)
-    let comp := BinaryRational.le head.1.1 tail.1.price
-    let fees := CachedScalarRead.sumMeasured [head.1.2,tail.1.charge,comp.2]
-    let chosen : Choice A := if comp.1 then ⟨value,head.1.1,fees.1⟩ else ⟨tail.1.value,tail.1.price,fees.1⟩
-    (chosen,head.2+tail.2+fees.2+8)
+  | 0, samples => minimumLast score (samples 0)
+  | n+1, samples => minimumPrepend score (samples 0) (minimumWithControl score n (Fin.tail samples))
 
 theorem minimumWithControl_value {A : Type} (score : A → (Fraction × ℕ) × ℕ) (n : ℕ)
     (samples : Fin (n+1) → A) :
@@ -211,7 +213,7 @@ theorem minimumWithControl_value {A : Type} (score : A → (Fraction × ℕ) × 
   induction n with
   | zero => rfl
   | succ n ih =>
-    simp only [minimumWithControl,minimum,ih,CachedScalarRead.sum_value,List.sum_cons,List.sum_nil,
+    simp only [minimumWithControl,minimumPrepend,minimum,ih,CachedScalarRead.sum_value,List.sum_cons,List.sum_nil,
       Nat.add_zero,Nat.add_assoc]
 
 def minimumControlBudget {R : Type*} [Semiring R] (n childCap B : R) : R :=
@@ -230,7 +232,7 @@ theorem minimumWithControl_paid {A : Type} (score : A → (Fraction × ℕ) × �
   induction n with
   | zero =>
     have head := each (samples 0)
-    simp only [minimumWithControl,minimumControlBudget,Nat.zero_add,Nat.one_mul]
+    simp only [minimumWithControl,minimumLast,minimumControlBudget,Nat.zero_add,Nat.one_mul]
     omega
   | succ n ih =>
     let head := score (samples 0)

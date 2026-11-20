@@ -554,4 +554,56 @@ theorem wire_terminal_selection_polynomial : ∃ p : Polynomial ℕ,
     _ = old.1.2+old.2.1.total+old.2.2+selection.eval x := by ac_rfl
     _ ≤ _ := Nat.add_le_add_right prior _
 
+theorem wire_terminal_stream_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let r := edgeWithTerminalStreamWork κ mode source tape
+      r.1.2+r.2.1.total+r.2.2 ≤ p.eval (source.length+κ) := by
+  obtain ⟨paid,paidBound⟩ := wire_terminal_selection_polynomial
+  obtain ⟨phase,phaseBound⟩ := FramedDirectEdgeWire.recorded_polynomial
+  let draws : Polynomial ℕ := (X+2)*X+1
+  let retained := draws*PaidVertexAmplification.retainedFeeBudget phase
+  refine ⟨paid+retained,fun κ mode source tape => ?_⟩
+  let x := source.length+κ
+  let old := edgeWithTerminalSelectionWork κ mode source tape
+  let new := edgeWithTerminalStreamWork κ mode source tape
+  let n := ((PhysicalSourceInputJoin.edge source).1.map Sigma.fst).getD 0
+  have prior : old.1.2+old.2.1.total+old.2.2 ≤ paid.eval x := paidBound κ mode source tape
+  have width : ∀ out ∈ old.1.1, out.2.roundingAndSelection.size≤phase.eval x := by
+    intro out present
+    have phases := edge_terminal_selection_phase κ mode source tape
+    change old.1.1.map _=(edgeWithCost κ mode source tape).1.map _ at phases
+    rw [Option.mem_def.mp present,Option.map_some] at phases
+    obtain ⟨legacy,valid,equal⟩ := Option.map_eq_some_iff.mp phases.symm
+    obtain ⟨m,result⟩ := legacy
+    rw [edge_value] at valid
+    have bound := phaseBound κ mode source tape valid
+    rw [← equal]
+    exact (BinaryNaturalOperations.size_le_self _).trans ((Nat.le_add_left _ _).trans bound)
+  have dimension : n≤x := by
+    apply le_trans _ (Nat.le_add_right source.length κ)
+    unfold n
+    cases parsed : (PhysicalSourceInputJoin.edge source).1 with
+    | none => exact Nat.zero_le _
+    | some encoded =>
+      obtain ⟨m,D⟩ := encoded
+      have stored : (ChargedSourceAssembly.edge source).1=some ⟨m,D⟩ := by
+        rwa [ChargedSourceAssembly.edge_value,← PhysicalSourceInputJoin.edge_value]
+      exact (ChargedSourceAssembly.edge_dimensions stored).1
+  have rounds : (BinarySolverOuterControls.edge n κ).extra+1≤draws.eval x := by
+    rw [BinarySolverOuterControls.edge_extra]
+    simp only [draws,eval_add,eval_mul,eval_ofNat,eval_X,eval_one]
+    exact Nat.add_le_add_right ((PhysicalSolverCostEnvelope.exponent_le n κ).trans
+      (Nat.mul_le_mul (Nat.add_le_add_right dimension 2) (Nat.le_add_left _ _))) 1
+  have added : new.1.2≤old.1.2+retained.eval x := by
+    apply (edge_terminal_stream_paid κ mode source tape width).trans
+    simp only [retained,eval_mul,PaidVertexAmplification.retainedFeeBudget_eval]
+    exact Nat.add_le_add_left (Nat.mul_le_mul_right _ rounds) _
+  have same : new.2=old.2 := (edge_terminal_stream_reference κ mode source tape).2
+  change new.1.2+new.2.1.total+new.2.2≤(paid+retained).eval x
+  rw [same,eval_add]
+  calc
+    _ ≤ old.1.2+retained.eval x+old.2.1.total+old.2.2 := Nat.add_le_add_right (Nat.add_le_add_right added _) _
+    _ = old.1.2+old.2.1.total+old.2.2+retained.eval x := by ac_rfl
+    _ ≤ _ := Nat.add_le_add_right prior _
+
 end DirectedFlowCutGap.PaidDirectEdgeWire

@@ -50,11 +50,10 @@ theorem samples_paid {A : Type} (one : Bits → Read ((A × ℕ) × Bits)) (budg
       rw [Nat.succ_mul]
       omega
 
-/-- Charge the binary sums of earlier sample work while walking one literal
-tape. When a sample fails, its spent work is kept and later samples are skipped. -/
-def samplesWithCharges {A : Type} (one : Bits → Read ((A × ℕ) × Bits)) :
-    (k : ℕ) → Bits → Read ((Fin k → A × ℕ) × Bits) × ℕ
-  | 0,tape => ((some (Fin.elim0,tape),1),1)
+private def collectWithCharges {A : Type} {answers : ℕ → Type} (empty : answers 0)
+    (prepend : ∀ k, A × ℕ → answers k → answers (k+1)) (one : Bits → Read ((A × ℕ) × Bits)) :
+    (k : ℕ) → Bits → Read (answers k × Bits) × ℕ
+  | 0,tape => ((some (empty,tape),1),1)
   | k+1,tape =>
     let head := one tape
     match head.1 with
@@ -62,11 +61,18 @@ def samplesWithCharges {A : Type} (one : Bits → Read ((A × ℕ) × Bits)) :
       let fee := BinaryNaturalOperations.add head.2 4
       ((none,fee.1),fee.2+4)
     | some (first,rest) =>
-      let tail := samplesWithCharges one k rest
+      let tail := collectWithCharges empty prepend one k rest
       let prior := BinaryNaturalOperations.add head.2 tail.1.2
       let fee := BinaryNaturalOperations.add prior.1 4
-      ((tail.1.1.map (fun (later,suffix) => (Fin.cons first later,suffix)),fee.1),
+      ((tail.1.1.map (fun (later,suffix) => (prepend k first later,suffix)),fee.1),
         tail.2+prior.2+fee.2+8)
+
+/-- Charge the binary sums of earlier sample work while walking one literal
+tape. When a sample fails, its spent work is kept and later samples are skipped. -/
+def samplesWithCharges {A : Type} (one : Bits → Read ((A × ℕ) × Bits)) :
+    (k : ℕ) → Bits → Read ((Fin k → A × ℕ) × Bits) × ℕ :=
+  collectWithCharges (answers := fun k => Fin k → A × ℕ) Fin.elim0
+    (fun _ first later => Fin.cons (α := fun _ => A × ℕ) first later) one
 
 private theorem bind_charge {A B : Type} (r : Read A) (k : A → Read B) :
     (r >>= k).2=r.2+(r.1.map fun a => (k a).2).getD 0 := by
@@ -79,13 +85,15 @@ theorem samplesWithCharges_reference {A : Type} (one : Bits → Read ((A × ℕ)
   induction k generalizing tape with
   | zero => rfl
   | succ k ih =>
-    simp only [samplesWithCharges,samples,Read.bind_value,bind_charge]
+    simp only [samplesWithCharges,collectWithCharges,samples,Read.bind_value,bind_charge]
     cases h : (one tape).1 with
     | none => simp only [Option.bind_none,Option.map_none,Option.getD_none,Nat.add_zero,
         BinaryNaturalOperations.add_value]
     | some item =>
       obtain ⟨first,rest⟩ := item
-      simp only [Option.bind_some,Option.map_some,Option.getD_some,ih rest,
+      have tail := ih rest
+      simp only [samplesWithCharges] at tail
+      simp only [Option.bind_some,Option.map_some,Option.getD_some,tail,
         BinaryNaturalOperations.add_value]
       cases (samples one k rest).1 with
       | none => simp only [Option.map_none,Option.bind_none,Option.getD_none,Nat.add_zero]
@@ -116,7 +124,7 @@ theorem samplesWithCharges_paid {A : Type} (one : Bits → Read ((A × ℕ) × B
     (k : ℕ) {B : ℕ} (tape : Bits) (width : ((samples one k tape).2+4).size ≤ B) :
     (samplesWithCharges one k tape).2 ≤ k*sampleControlBudget B+1 := by
   induction k generalizing tape with
-  | zero => simp only [samplesWithCharges,Nat.zero_mul,Nat.zero_add,le_refl]
+  | zero => simp only [samplesWithCharges,collectWithCharges,Nat.zero_mul,Nat.zero_add,le_refl]
   | succ k ih =>
     let head := one tape
     let amount := (samples one (k+1) tape).2+4
@@ -128,7 +136,7 @@ theorem samplesWithCharges_paid {A : Type} (one : Bits → Read ((A × ℕ) × B
       change (one tape).2 ≤ (samples one (k+1) tape).2+4
       rw [fee]
       omega)
-    simp only [samplesWithCharges]
+    simp only [samplesWithCharges,collectWithCharges]
     cases h : (one tape).1 with
     | none =>
       have step := BinaryNaturalOperations.add_paid hh h4
@@ -165,12 +173,127 @@ theorem samplesWithCharges_paid {A : Type} (one : Bits → Read ((A × ℕ) × B
       unfold sampleControlBudget at remaining ⊢
       omega
 
+private structure SampleSummary (A : Type) where
+  minimum : BinaryCutPriceSelection.Choice A × ℕ
+  fees : ℕ × ℕ
+
+private def Summary (A : Type) : ℕ → Type
+  | 0 => Unit
+  | _+1 => SampleSummary A
+
+private def pushSummary {A : Type} (score : A → (Fraction × ℕ) × ℕ) :
+    (k : ℕ) → A × ℕ → Summary A k → Summary A (k+1)
+  | 0,first,_ => ⟨BinaryCutPriceSelection.minimumLast score first.1,(first.2,4)⟩
+  | _+1,first,later =>
+    let previous : SampleSummary A := later
+    let total := BinaryNaturalOperations.add first.2 previous.fees.1
+    ⟨BinaryCutPriceSelection.minimumPrepend score first.1 previous.minimum,
+      (total.1,previous.fees.2+total.2+4)⟩
+
+private def summarize {A : Type} (score : A → (Fraction × ℕ) × ℕ) :
+    (k : ℕ) → (Fin k → A × ℕ) → Summary A k
+  | 0,_ => ()
+  | k+1,samples => pushSummary score k (samples 0) (summarize score k (Fin.tail samples))
+
+private def collectSummaries {A : Type} (score : A → (Fraction × ℕ) × ℕ)
+    (one : Bits → Read ((A × ℕ) × Bits)) :
+    (k : ℕ) → Bits → Read (Summary A k × Bits) × ℕ :=
+  collectWithCharges () (pushSummary score) one
+
+private theorem summarize_cons {A : Type} (score : A → (Fraction × ℕ) × ℕ) (k : ℕ)
+    (a : A × ℕ) (samples : Fin k → A × ℕ) :
+    summarize score (k+1) (Fin.cons a samples)=pushSummary score k a (summarize score k samples) := by
+  simp only [summarize,Fin.cons_zero,Fin.tail_cons]
+
+private theorem collectSummaries_reference {A : Type} (score : A → (Fraction × ℕ) × ℕ)
+    (one : Bits → Read ((A × ℕ) × Bits)) (k : ℕ) (tape : Bits) :
+    let old := samplesWithCharges one k tape
+    collectSummaries score one k tape =
+      ((old.1.1.map (fun (items,suffix) => (summarize score k items,suffix)),old.1.2),old.2) := by
+  induction k generalizing tape with
+  | zero => rfl
+  | succ k ih =>
+    simp only [collectSummaries,samplesWithCharges,collectWithCharges]
+    cases h : (one tape).1 with
+    | none => rfl
+    | some step =>
+      obtain ⟨first,rest⟩ := step
+      have tails := ih rest
+      simp only [collectSummaries,samplesWithCharges] at tails
+      dsimp only
+      rw [tails]
+      simp only [Option.map_map, Function.comp_def, summarize_cons]
+
+private theorem summarize_minimum {A : Type} (score : A → (Fraction × ℕ) × ℕ) (k : ℕ)
+    (samples : Fin (k+1) → A × ℕ) :
+    ((summarize score (k+1) samples : SampleSummary A).minimum)=
+      BinaryCutPriceSelection.minimumWithControl score k (fun i => (samples i).1) := by
+  induction k with
+  | zero => rfl
+  | succ k ih =>
+    change BinaryCutPriceSelection.minimumPrepend score (samples 0).1
+      (summarize score (k+1) (Fin.tail samples) : SampleSummary A).minimum =
+      BinaryCutPriceSelection.minimumPrepend score (samples 0).1
+        (BinaryCutPriceSelection.minimumWithControl score k (Fin.tail fun i => (samples i).1))
+    rw [ih (Fin.tail samples)]
+    rfl
+
+private theorem summarize_fees {A : Type} (score : A → (Fraction × ℕ) × ℕ) (k : ℕ)
+    (samples : Fin (k+1) → A × ℕ) :
+    ((summarize score (k+1) samples : SampleSummary A).fees).1 = (List.ofFn fun i => (samples i).2).sum := by
+  induction k with
+  | zero => simp [summarize,pushSummary,List.ofFn_succ]
+  | succ k ih =>
+    change (BinaryNaturalOperations.add (samples 0).2
+      (summarize score (k+1) (Fin.tail samples) : SampleSummary A).fees.1).1 = _
+    rw [BinaryNaturalOperations.add_value,ih (Fin.tail samples)]
+    conv_rhs => rw [List.ofFn_succ,List.sum_cons]
+    rfl
+
+def retainedFeeBudget {R : Type*} [Semiring R] (B : R) : R := BinaryRawRational.budget B+8
+
+private theorem summarize_fee_work {A : Type} (score : A → (Fraction × ℕ) × ℕ) (k : ℕ)
+    (samples : Fin (k+1) → A × ℕ) {B : ℕ}
+    (fits : (List.ofFn fun i => (samples i).2).sum.size≤B) :
+    (summarize score (k+1) samples : SampleSummary A).fees.2 ≤ (k+1)*retainedFeeBudget B := by
+  induction k with
+  | zero =>
+    change 4≤1*retainedFeeBudget B
+    simp only [retainedFeeBudget,Nat.one_mul]
+    omega
+  | succ k ih =>
+    let tail : SampleSummary A := summarize score (k+1) (Fin.tail samples)
+    have combined : (samples 0).2+tail.fees.1=(List.ofFn fun i => (samples i).2).sum := by
+      rw [show tail.fees.1=(List.ofFn fun i => (Fin.tail samples i).2).sum from summarize_fees score k _]
+      conv_rhs => rw [List.ofFn_succ,List.sum_cons]
+      rfl
+    have size_of {x : ℕ} (below : x≤(samples 0).2+tail.fees.1) : x.size≤B :=
+      (Nat.size_le_size (below.trans_eq combined)).trans fits
+    have left : (samples 0).2.size≤B := size_of (Nat.le_add_right _ _)
+    have right : tail.fees.1.size≤B := size_of (Nat.le_add_left _ _)
+    have previous : tail.fees.2≤(k+1)*retainedFeeBudget B := ih (Fin.tail samples) (by
+      rw [← summarize_fees score k]
+      exact right)
+    have next := BinaryNaturalOperations.add_paid left right
+    change tail.fees.2+(BinaryNaturalOperations.add (samples 0).2 tail.fees.1).2+4≤_
+    rw [Nat.add_mul,Nat.one_mul]
+    unfold retainedFeeBudget at previous ⊢
+    omega
+
+open Polynomial in
+theorem retainedFeeBudget_eval (B : Polynomial ℕ) (x : ℕ) :
+    (retainedFeeBudget B).eval x=retainedFeeBudget (B.eval x) := by
+  simp only [retainedFeeBudget,BinaryRawRational.budget,eval_add,eval_mul,eval_pow,eval_ofNat]
+
+private def finishCalculated {n : ℕ} (extra setup dispatch readback paid : ℕ) (rest : Bits)
+    (winner : BinaryCutPriceSelection.Choice (Output n)) : Read (Result n) :=
+  let copy := 20*(extra+1)^2+5
+  (some ⟨winner.value,rest,dispatch,readback,paid+winner.charge+20*(extra+1)^2+5+setup⟩,winner.charge+copy)
+
 private def finishWithWinner {n : ℕ} (extra setup dispatch readback : ℕ)
     (cuts : Fin (extra+1) → Output n × ℕ) (rest : Bits)
     (winner : BinaryCutPriceSelection.Choice (Output n)) : Read (Result n) :=
-  let paid := (List.ofFn fun i => (cuts i).2).sum
-  let copy := 20*(extra+1)^2+5
-  (some ⟨winner.value,rest,dispatch,readback,paid+winner.charge+20*(extra+1)^2+5+setup⟩,winner.charge+copy)
+  finishCalculated extra setup dispatch readback (List.ofFn fun i => (cuts i).2).sum rest winner
 
 private def finish {n : ℕ} (costs : Row n) (extra setup dispatch readback : ℕ)
     (cuts : Fin (extra+1) → Output n × ℕ) (rest : Bits) : Read (Result n) :=
@@ -331,6 +454,73 @@ theorem runWithPlanSelectionWork_reference {n : ℕ} (D : BinaryFractionalGuesse
     obtain ⟨cuts,rest⟩ := run
     simp only [finishSelection_reference]
 
+/-- Keep a successful suffix's minimum and total fee while unwinding the
+tape walk. A failed suffix never scores the earlier samples. -/
+def runWithPlanStreamWork {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback : ℕ) (tape : Bits) : Read (Result n) × ℕ :=
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  let score := BinaryCutPriceSelection.cutScoreWithControl D.costs
+  let all := collectSummaries score (PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan) (extra+1) tape
+  let chosen : Read (Result n) × ℕ := match all.1.1 with
+    | none => (Read.failure,0)
+    | some (summary,rest) =>
+      let data : SampleSummary (Output n) := summary
+      (finishCalculated extra setup.paid dispatch readback data.fees.1 rest data.minimum.1,
+        data.minimum.2+data.fees.2)
+  let selected := BinaryNaturalOperations.add all.1.2 chosen.1.2
+  let total := BinaryNaturalOperations.add setup.paid selected.1
+  ((chosen.1.1,total.1),all.2+selected.2+total.2+8+chosen.2)
+
+theorem runWithPlanStreamWork_reference {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback : ℕ) (tape : Bits) :
+    (runWithPlanStreamWork D round roundBound extra confidence plan dispatch readback tape).1 =
+      (runWithPlanSelectionWork D round roundBound extra confidence plan dispatch readback tape).1 := by
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  let one := PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan
+  simp only [runWithPlanStreamWork,runWithPlanSelectionWork,collectSummaries_reference]
+  cases (samplesWithCharges one (extra+1) tape).1.1 with
+  | none => rfl
+  | some state =>
+    obtain ⟨items,rest⟩ := state
+    simp only [Option.map_some,summarize_fees,summarize_minimum,finishWithSelectionWork,finishWithWinner]
+
+theorem runWithPlanStreamWork_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback : ℕ) (tape : Bits)
+    (fits : ∀ out ∈ (runWithPlanSelectionWork D round roundBound extra confidence plan dispatch readback tape).1.1,
+      out.roundingAndSelection.size≤B) :
+    (runWithPlanStreamWork D round roundBound extra confidence plan dispatch readback tape).2 ≤
+      (runWithPlanSelectionWork D round roundBound extra confidence plan dispatch readback tape).2+
+        (extra+1)*retainedFeeBudget B := by
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  let one := PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan
+  let score := BinaryCutPriceSelection.cutScoreWithControl D.costs
+  simp only [runWithPlanStreamWork,runWithPlanSelectionWork,collectSummaries_reference]
+  cases h : (samplesWithCharges one (extra+1) tape).1.1 with
+  | none => exact Nat.le_add_right _ _
+  | some state =>
+    obtain ⟨items,rest⟩ := state
+    let legacyFees := (List.ofFn fun i => (items i).2).sum
+    let choice := (BinaryCutPriceSelection.minimumWithControl score extra (fun i => (items i).1)).1
+    let observed : Result n := ⟨choice.value,rest,dispatch,readback,
+      legacyFees+choice.charge+20*(extra+1)^2+5+setup.paid⟩
+    have member : observed ∈ (runWithPlanSelectionWork D round roundBound extra confidence plan dispatch readback tape).1.1 := by
+      change observed ∈ (match (samplesWithCharges one (extra+1) tape).1.1 with
+        | none => (Read.failure,0)
+        | some (cuts,suffix) => finishWithSelectionWork D.costs extra setup.paid dispatch readback cuts suffix).1.1
+      rw [h]
+      exact Option.mem_some_iff.mpr rfl
+    have feeWidth : legacyFees.size≤B := by
+      apply (Nat.size_le_size ?_).trans (fits observed member)
+      dsimp only [observed]
+      omega
+    have fee := summarize_fee_work score extra items feeWidth
+    dsimp only [score] at fee
+    simp only [Option.map_some,summarize_fees,summarize_minimum,finishWithSelectionWork,finishWithWinner]
+    omega
+
 theorem runWithPlanSelectionWork_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n)
     (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
     (dispatch readback : ℕ) (tape : Bits)
@@ -463,6 +653,20 @@ theorem runWithPlan_extra {n : ℕ} (D : BinaryFractionalGuesses.Input n) (old n
 
 /-- Dispatch and readback headers are stored in the result. They do not
 change the selected cut, unread tape, or work of the amplification stage. -/
+theorem runWithPlan_phase {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : PaidVertexSampling.Runner n)
+    (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n) (d r d' r' : ℕ) (tape : Bits) :
+    let before := runWithPlan D round roundBound extra confidence plan d r tape
+    let after := runWithPlan D round roundBound extra confidence plan d' r' tape
+    after.1.map Result.roundingAndSelection=before.1.map Result.roundingAndSelection := by
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  let one := PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan
+  simp only [runWithPlan,Read.bind_value]
+  cases (samples one (extra+1) tape).1 with
+  | none => rfl
+  | some state =>
+    obtain ⟨_,_⟩ := state
+    rfl
+
 theorem runWithPlan_headers {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : PaidVertexSampling.Runner n)
     (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n) (d r d' r' : ℕ) (tape : Bits) :
     let before := runWithPlan D round roundBound extra confidence plan d r tape

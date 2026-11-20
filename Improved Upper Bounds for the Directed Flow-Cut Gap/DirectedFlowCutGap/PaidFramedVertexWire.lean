@@ -26,6 +26,17 @@ private def runFromSource {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) 
 def run {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : BinaryFractionalGuesses.Input n)
     (tape : Bits) : Read (Result n) := runFromSource κ mode D (PhysicalSourceReadback.run D) tape
 
+theorem run_value {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : BinaryFractionalGuesses.Input n)
+    (tape : Bits) : (run κ mode D tape).1=PhysicalAmplifiedBinaryVertex.vertex κ mode D tape := by
+  unfold run runFromSource PhysicalAmplifiedBinaryVertex.vertex PhysicalAmplifiedVertexSolver.run
+  dsimp only
+  cases sourceResult : PhysicalSourceReadback.run D with
+  | none => rfl
+  | some phases =>
+      obtain ⟨plan,dispatch,reader⟩ := phases
+      simp only [Option.bind_some,PaidVertexAmplification.runWithPlan_value,PaidVertexRounding.runner_value]
+      rfl
+
 def runWithCacheWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : BinaryFractionalGuesses.Input n)
     (tape : Bits) : Read (Result n) × ℕ :=
   let source := PhysicalSourceReadback.runWithCacheCharge D
@@ -45,28 +56,28 @@ def runWithTerminalWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
   let source := PhysicalSourceReadback.runWithTerminalCharge D
   (runFromSource κ mode D source.1 tape,source.2)
 
-private def runWithTerminalAmplificationWork {n : ℕ} (measureSelection : Bool) (κ : ℕ)
-    (mode : ChargedVertexModes.Mode)
+private def runWithTerminalAmplificationWork {n : ℕ}
+    (amplify : ℕ → ℕ → ℕ → PhysicalCoverReader.Plan n → ℕ → ℕ → Bits → Read (Result n) × ℕ) (κ : ℕ)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) : Read (Result n) × ℕ :=
   let source := PhysicalSourceReadback.runWithTerminalCharge D
   let controls := BinarySolverOuterControls.vertex n κ
   match source.1 with
   | none => ((none,controls.paid),source.2)
   | some (plan,dispatch,reader) =>
-      let amplify := match measureSelection with
-        | true => @PaidVertexAmplification.runWithPlanSelectionWork n
-        | false => @PaidVertexAmplification.runWithPlanScalarWork n
-      let r := amplify D (PaidVertexRounding.runner mode)
-        controls.draws controls.extra controls.confidence plan dispatch reader tape
+      let r := amplify controls.draws controls.extra controls.confidence plan dispatch reader tape
       ((r.1.1.map (addControls controls.paid),controls.paid+dispatch+reader+r.1.2),source.2+r.2)
 
 def runWithTerminalScalarWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) : Read (Result n) × ℕ :=
-  runWithTerminalAmplificationWork false κ mode D tape
+  runWithTerminalAmplificationWork (PaidVertexAmplification.runWithPlanScalarWork D (PaidVertexRounding.runner mode)) κ D tape
 
 def runWithTerminalSelectionWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) : Read (Result n) × ℕ :=
-  runWithTerminalAmplificationWork true κ mode D tape
+  runWithTerminalAmplificationWork (PaidVertexAmplification.runWithPlanSelectionWork D (PaidVertexRounding.runner mode)) κ D tape
+
+def runWithTerminalStreamWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) : Read (Result n) × ℕ :=
+  runWithTerminalAmplificationWork (PaidVertexAmplification.runWithPlanStreamWork D (PaidVertexRounding.runner mode)) κ D tape
 
 theorem run_terminal_scalar_reference {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
@@ -131,6 +142,57 @@ theorem run_terminal_selection_paid {n B : ℕ} (κ : ℕ) (mode : ChargedVertex
       controls.draws controls.extra controls.confidence plan dispatch reader tape retained
     simpa only [Nat.add_assoc] using Nat.add_le_add_left bound (PhysicalSourceReadback.runWithTerminalCharge D).2
 
+theorem run_terminal_phase_reference {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
+    (runWithTerminalSelectionWork κ mode D tape).1.1.map Result.roundingAndSelection =
+      (PhysicalAmplifiedBinaryVertex.vertex κ mode D tape).map Result.roundingAndSelection := by
+  rw [run_terminal_selection_reference,run_terminal_scalar_reference,← run_value]
+  let controls := BinarySolverOuterControls.vertex n κ
+  let plan := PhysicalCoverReader.plan (BinaryFractionalGuesses.solveInput D).1
+  obtain ⟨dispatch,oldReader,reader,old,measured,_⟩ := PhysicalSourceReadback.terminal_headers D
+  have same := PaidVertexAmplification.runWithPlan_phase D (PaidVertexRounding.runner mode)
+    controls.draws controls.extra controls.confidence plan dispatch oldReader dispatch reader tape
+  simp only [runWithTerminalWork,run,runFromSource,old,measured,Option.map_map,Function.comp_def,addControls]
+  simpa only [Option.map_map,Function.comp_def] using
+    congrArg (Option.map fun fee => fee+controls.paid) same
+
+theorem run_terminal_stream_reference {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
+    (runWithTerminalStreamWork κ mode D tape).1=(runWithTerminalSelectionWork κ mode D tape).1 := by
+  simp only [runWithTerminalStreamWork,runWithTerminalSelectionWork,runWithTerminalAmplificationWork]
+  cases (PhysicalSourceReadback.runWithTerminalCharge D).1 with
+  | none => rfl
+  | some input =>
+    obtain ⟨plan,dispatch,reader⟩ := input
+    simp only [PaidVertexAmplification.runWithPlanStreamWork_reference]
+
+theorem run_terminal_stream_paid {n B : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits)
+    (width : ∀ out ∈ (runWithTerminalSelectionWork κ mode D tape).1.1, out.roundingAndSelection.size≤B) :
+    (runWithTerminalStreamWork κ mode D tape).2 ≤ (runWithTerminalSelectionWork κ mode D tape).2+
+      ((BinarySolverOuterControls.vertex n κ).extra+1)*PaidVertexAmplification.retainedFeeBudget B := by
+  let controls := BinarySolverOuterControls.vertex n κ
+  let source := PhysicalSourceReadback.runWithTerminalCharge D
+  simp only [runWithTerminalStreamWork,runWithTerminalSelectionWork,runWithTerminalAmplificationWork] at width ⊢
+  cases h : source.1 with
+  | none => exact Nat.le_add_right _ _
+  | some input =>
+    obtain ⟨plan,dispatch,reader⟩ := input
+    let old := PaidVertexAmplification.runWithPlanSelectionWork D (PaidVertexRounding.runner mode)
+      controls.draws controls.extra controls.confidence plan dispatch reader tape
+    have fits : ∀ out ∈ old.1.1, out.roundingAndSelection.size ≤ B := by
+      intro out present
+      have observed : addControls controls.paid out ∈ old.1.1.map (addControls controls.paid) := by
+        obtain seen := Option.mem_def.mp present
+        rw [seen]
+        exact Option.mem_some_iff.mpr rfl
+      rw [h] at width
+      have w := width (addControls controls.paid out) observed
+      exact (Nat.size_le_size (Nat.le_add_right _ _)).trans w
+    have bound := PaidVertexAmplification.runWithPlanStreamWork_paid D (PaidVertexRounding.runner mode)
+      controls.draws controls.extra controls.confidence plan dispatch reader tape fits
+    simpa only [Nat.add_assoc] using Nat.add_le_add_left bound source.2
+
 theorem runWithTerminalWork_comparison {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
     let raw := PhysicalSourceReadback.runWithTerminalCharge D
@@ -163,17 +225,6 @@ theorem runWithTerminalWork_comparison {n : ℕ} (κ : ℕ) (mode : ChargedVerte
       controls.paid+dispatch+oldReader+before.2+(reader+cached)
     rw [paid]
     omega
-
-theorem run_value {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : BinaryFractionalGuesses.Input n)
-    (tape : Bits) : (run κ mode D tape).1=PhysicalAmplifiedBinaryVertex.vertex κ mode D tape := by
-  unfold run runFromSource PhysicalAmplifiedBinaryVertex.vertex PhysicalAmplifiedVertexSolver.run
-  dsimp only
-  cases sourceResult : PhysicalSourceReadback.run D with
-  | none => rfl
-  | some phases =>
-      obtain ⟨plan,dispatch,reader⟩ := phases
-      simp only [Option.bind_some,PaidVertexAmplification.runWithPlan_value,PaidVertexRounding.runner_value]
-      rfl
 
 theorem run_paid {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : BinaryFractionalGuesses.Input n)
     (tape : Bits) :

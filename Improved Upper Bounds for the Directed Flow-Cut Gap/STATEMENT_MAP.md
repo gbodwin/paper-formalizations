@@ -15,6 +15,8 @@ The physical source entry counts serialization, binary dispatch fuel, validation
 
 The [amplification price selection](verification/AMPLIFICATION_PRICE_SELECTION_20261120.md) measures the reached mask and price reads and the binary fee sums while preserving the earlier minimum and ties. `vertex_terminal_selection_polynomial` and `wire_terminal_selection_polynomial` carry the polynomial bounds through the original vertex and edge sources.
 
+The [streamed amplification](verification/STREAMED_AMPLIFICATION_20261120.md) carries the current winner and totals through the literal sample walk. It records binary accumulation of the successful sample fees and preserves the earlier result and tape. `vertex_terminal_stream_polynomial` and `wire_terminal_stream_polynomial` bound the recorded work on both original sources.
+
 The hard integer cutoff now calls a terminating packed interpreter without evaluating an initial fuel formula. `PaidTotalRawGraphExecution.complete_trace` bounds a complete reference trace using a tape extension inside the termination proof. The executable receives the original tape. `GuardedFuelFreeRounding.meets_old_entry` preserves the returned option and proves that recorded work stays within the earlier bound for every positive-level packed input.
 
 The [packed cut-mask copy](verification/PACKED_MASK_ASSEMBLY_20261120.md) certifies the hard branch’s output word length, measured typed mask construction and each allocated address width. Its recorded allowance, returned mask and unread tape agree with the earlier implementation.

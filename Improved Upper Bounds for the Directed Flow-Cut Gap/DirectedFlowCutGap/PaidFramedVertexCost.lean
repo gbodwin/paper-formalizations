@@ -461,4 +461,75 @@ theorem vertex_terminal_selection_polynomial : ∃ p : Polynomial ℕ,
     _ = old.1.2+old.2.1+old.2.2+selection.eval x := by ac_rfl
     _ ≤ _ := Nat.add_le_add_right prior _
 
+def vertexWithTerminalStreamWork (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    Read (Σ n,PhysicalAmplifiedVertexSolver.Result n) × (ℕ × ℕ) :=
+  vertexWithFramedRun runWithTerminalStreamWork κ mode source tape
+
+theorem vertex_terminal_stream_reference (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    let new := vertexWithTerminalStreamWork κ mode source tape
+    let old := vertexWithTerminalSelectionWork κ mode source tape
+    new.1=old.1 ∧ new.2.2=old.2.2 := by
+  simp only [vertexWithTerminalStreamWork,vertexWithTerminalSelectionWork,vertexWithFramedRun]
+  cases (PhysicalSourceInputJoin.vertexWithFramingRecords source).1.1 with
+  | none => exact ⟨rfl,True.intro⟩
+  | some encoded =>
+    obtain ⟨n,D⟩ := encoded
+    exact ⟨by simp only [run_terminal_stream_reference],True.intro⟩
+
+theorem vertex_terminal_stream_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let r := vertexWithTerminalStreamWork κ mode source tape
+      r.1.2+r.2.1+r.2.2 ≤ p.eval (source.length+κ) := by
+  obtain ⟨paid,paidBound⟩ := vertex_terminal_selection_polynomial
+  obtain ⟨phase,phaseBound⟩ := PhysicalAmplifiedBinaryVertex.vertex_wire_polynomial
+  let draws : Polynomial ℕ := (X+2)*X+1
+  let retained := draws*PaidVertexAmplification.retainedFeeBudget phase
+  refine ⟨paid+retained,fun κ mode source tape => ?_⟩
+  let x := source.length+κ
+  let old := vertexWithTerminalSelectionWork κ mode source tape
+  let new := vertexWithTerminalStreamWork κ mode source tape
+  have prior : old.1.2+old.2.1+old.2.2 ≤ paid.eval x := paidBound κ mode source tape
+  have same := vertex_terminal_stream_reference κ mode source tape
+  change new.1=old.1 ∧ new.2.2=old.2.2 at same
+  have additional : new.2.1≤old.2.1+retained.eval x := by
+    unfold new old vertexWithTerminalStreamWork vertexWithTerminalSelectionWork vertexWithFramedRun
+    dsimp only
+    rw [PhysicalSourceInputJoin.vertex_framing_records_value]
+    cases parsed : (PhysicalSourceInputJoin.vertex source).1 with
+    | none => exact Nat.zero_le _
+    | some encoded =>
+      obtain ⟨n,D⟩ := encoded
+      let earlier := runWithTerminalSelectionWork κ mode D tape
+      have stored : (ChargedSourceAssembly.vertex source).1=some ⟨n,D⟩ := by
+        rwa [ChargedSourceAssembly.vertex_value,← PhysicalSourceInputJoin.vertex_value]
+      have width : ∀ out ∈ earlier.1.1, out.roundingAndSelection.size≤phase.eval x := by
+        intro out present
+        have phases := run_terminal_phase_reference κ mode D tape
+        change earlier.1.1.map _=(PhysicalAmplifiedBinaryVertex.vertex κ mode D tape).map _ at phases
+        rw [Option.mem_def.mp present,Option.map_some] at phases
+        obtain ⟨spec,result,equal⟩ := Option.map_eq_some_iff.mp phases.symm
+        have fromSource : (PhysicalAmplifiedBinaryVertex.vertexWithCost κ mode source tape).1=some ⟨n,spec⟩ := by
+          simp only [PhysicalAmplifiedBinaryVertex.vertexWithCost,stored,PhysicalVertexSolver.prepareOn,
+            Option.bind_some,result,Option.map_some]
+        have bound := phaseBound κ mode source tape fromSource
+        rw [← equal]
+        exact (BinaryNaturalOperations.size_le_self _).trans ((Nat.le_add_left _ _).trans bound)
+      have dim := (ChargedSourceAssembly.vertex_dimensions stored).1.trans (Nat.le_add_right source.length κ)
+      have rounds : (BinarySolverOuterControls.vertex n κ).extra+1≤draws.eval x := by
+        rw [BinarySolverOuterControls.vertex_extra]
+        simp only [draws,eval_add,eval_mul,eval_X,eval_ofNat,eval_one]
+        exact Nat.add_le_add_right ((exponent_le n κ).trans
+          (Nat.mul_le_mul (Nat.add_le_add_right dim 2) (Nat.le_add_left _ _))) 1
+      change _≤earlier.2+retained.eval x
+      apply (run_terminal_stream_paid κ mode D tape width).trans
+      simp only [retained,eval_mul,PaidVertexAmplification.retainedFeeBudget_eval]
+      exact Nat.add_le_add_left (Nat.mul_le_mul_right _ rounds) _
+  change new.1.2+new.2.1+new.2.2 ≤ (paid+retained).eval x
+  rw [same.1,same.2,eval_add]
+  calc
+    _ ≤ old.1.2+(old.2.1+retained.eval x)+old.2.2 :=
+      Nat.add_le_add_right (Nat.add_le_add_left additional _) _
+    _ = old.1.2+old.2.1+old.2.2+retained.eval x := by ac_rfl
+    _ ≤ _ := Nat.add_le_add_right prior _
+
 end DirectedFlowCutGap.PaidFramedVertexWire
