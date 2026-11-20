@@ -195,6 +195,7 @@ import DirectedFlowCutGap.BinaryGeometricCounterProgram
 import DirectedFlowCutGap.BinaryGuardedCacheExecution
 import DirectedFlowCutGap.BinaryHeavyPreparation
 import DirectedFlowCutGap.BinaryIncrementProgram
+import DirectedFlowCutGap.BinaryIndexList
 import DirectedFlowCutGap.BinaryIndexedPairRead
 import DirectedFlowCutGap.BinaryInputBudgets
 import DirectedFlowCutGap.BinaryIntegerCutoff
@@ -202,6 +203,8 @@ import DirectedFlowCutGap.BinaryLabelRangeProgram
 import DirectedFlowCutGap.BinaryLengthProgram
 import DirectedFlowCutGap.BinaryLineLabels
 import DirectedFlowCutGap.BinaryMaskPrefix
+import DirectedFlowCutGap.BinaryMaskProjections
+import DirectedFlowCutGap.BinaryMaskScans
 import DirectedFlowCutGap.BinaryMaximumCallLift
 import DirectedFlowCutGap.BinaryMaximumExecution
 import DirectedFlowCutGap.BinaryMaximumProgram
@@ -210,6 +213,8 @@ import DirectedFlowCutGap.BinaryMinimumWordProgram
 import DirectedFlowCutGap.BinaryMultiplicationProgram
 import DirectedFlowCutGap.BinaryNaturalOperations
 import DirectedFlowCutGap.BinaryNaturalView
+import DirectedFlowCutGap.BinaryPayloadBlockMove
+import DirectedFlowCutGap.BinaryPayloadStore
 import DirectedFlowCutGap.BinaryPointerListRead
 import DirectedFlowCutGap.BinaryPortPreparation
 import DirectedFlowCutGap.BinaryPowerBound
