@@ -1,3 +1,4 @@
+import DirectedFlowCutGap.EncodedFrameStack
 import DirectedFlowCutGap.PhysicalAmplifiedVertexSolver
 
 /-! The work of earlier rows remains available when a later row runs out of tape. -/
@@ -532,5 +533,125 @@ theorem fromPlan_extra {n : ℕ} (D : BinaryFractionalGuesses.Input n) (costs : 
     (fromPlanWith D costs newer T plan tape).2 ≤ (fromPlanWith D costs old T plan tape).2+
       ChargedPhysicalVertexSolver.rowsCount plan*cap :=
   fromPlan_extra_on_rows D costs old newer T cap plan tape same (fun _ _ _ _ bits => extra _ bits)
+
+
+private abbrev PendingRow (n : ℕ) := Result n × ℕ
+
+private def resumeRow {n : ℕ} {D : BinaryFractionalGuesses.Input n}
+    (later : Read (RowResult D) × ℕ) (saved : PendingRow n) : Read (RowResult D) × ℕ :=
+  let chosen : Read (RowResult D) × ℕ := match later.1.1 with
+    | none => (Read.failure,0)
+    | some tail => selectResultWithControl saved.1 tail
+  let amount := CachedScalarRead.sumMeasured [saved.2,later.1.2,chosen.1.2,4]
+  ((chosen.1.1,amount.1),later.2+chosen.2+amount.2+8)
+
+private def descendRows {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (costs : FractionalCoverRawCore.RawRow n) (round : Runner n) (T : ℕ) :
+    List (FractionalCoverRawCore.RawRow n) → Bits → List (PendingRow n) →
+      (Read (RowResult D) × ℕ) × List (PendingRow n)
+  | [],tape,stack => (((some ((none,1),tape),1),1),stack)
+  | y::ys,tape,stack =>
+    let first := round T ⟨D.adjacency,y,costs⟩ tape
+    match first.1 with
+    | none =>
+      let amount := BinaryNaturalOperations.add first.2 4
+      (((none,amount.1),amount.2+4),stack)
+    | some answer => descendRows D costs round T ys answer.suffix ((answer,first.2)::stack)
+
+/-- An explicit stack of successful row calls. The walk consumes the tape
+forward, then closes the pending rows in the original selection order. -/
+def chooseRowsWithFrameStack {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (costs : FractionalCoverRawCore.RawRow n) (round : Runner n) (T : ℕ)
+    (rows : List (FractionalCoverRawCore.RawRow n)) (tape : Bits) : Read (RowResult D) × ℕ :=
+  let endOfRows := descendRows D costs round T rows tape []
+  endOfRows.2.foldl resumeRow endOfRows.1
+
+private theorem descend_reference {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (costs : FractionalCoverRawCore.RawRow n) (round : Runner n) (T : ℕ)
+    (rows : List (FractionalCoverRawCore.RawRow n)) (tape : Bits) (stack : List (PendingRow n)) :
+    let reached := descendRows D costs round T rows tape stack
+    reached.2.foldl resumeRow reached.1 =
+      stack.foldl resumeRow (chooseRowsWithSelectionWork D costs round T rows tape) := by
+  induction rows generalizing tape stack with
+  | nil => rfl
+  | cons y ys ih =>
+    let first := round T ⟨D.adjacency,y,costs⟩ tape
+    simp only [descendRows,chooseRowsWithSelectionWork]
+    cases found : first.1 with
+    | none => rfl
+    | some answer =>
+      have later := ih answer.suffix ((answer,first.2)::stack)
+      dsimp only at later
+      exact later
+
+theorem chooseRowsWithFrameStack_reference {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (costs : FractionalCoverRawCore.RawRow n) (round : Runner n) (T : ℕ)
+    (rows : List (FractionalCoverRawCore.RawRow n)) (tape : Bits) :
+    chooseRowsWithFrameStack D costs round T rows tape=chooseRowsWithSelectionWork D costs round T rows tape :=
+  descend_reference D costs round T rows tape []
+
+private theorem descend_frames {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (costs : FractionalCoverRawCore.RawRow n) (round : Runner n) (T : ℕ)
+    (rows : List (FractionalCoverRawCore.RawRow n)) (tape : Bits) (stack : List (PendingRow n)) :
+    (descendRows D costs round T rows tape stack).2.length ≤ stack.length+rows.length := by
+  induction rows generalizing tape stack with
+  | nil => exact le_rfl
+  | cons y ys ih =>
+    simp only [descendRows,List.length_cons]
+    let first := round T ⟨D.adjacency,y,costs⟩ tape
+    cases found : first.1 with
+    | none => exact Nat.le_add_right _ _
+    | some answer =>
+      have after := ih answer.suffix ((answer,first.2)::stack)
+      simp only [List.length_cons] at after
+      exact after.trans_eq (by omega)
+
+theorem frameStack_bound {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (costs : FractionalCoverRawCore.RawRow n) (round : Runner n) (T : ℕ)
+    (rows : List (FractionalCoverRawCore.RawRow n)) (tape : Bits) :
+    (descendRows D costs round T rows tape []).2.length ≤ rows.length := by
+  simpa only [List.length_nil,Nat.zero_add] using descend_frames D costs round T rows tape []
+
+
+open EncodedArrayStorage in
+def rowFrameCode {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (costs : FractionalCoverRawCore.RawRow n) (round : Runner n) (T : ℕ)
+    (rows : List (FractionalCoverRawCore.RawRow n)) (tape : Bits) : List (Instruction Unit) :=
+  EncodedFrameStack.trace (descendRows D costs round T rows tape []).2
+
+open EncodedArrayStorage in
+theorem rowFrameCode_bounds {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (costs : FractionalCoverRawCore.RawRow n) (round : Runner n) (T : ℕ)
+    (rows : List (FractionalCoverRawCore.RawRow n)) (tape : Bits) :
+    let code := rowFrameCode D costs round T rows tape
+    fresh code≤2*rows.length ∧ code.length≤8*rows.length := by
+  obtain ⟨work,space⟩ := EncodedFrameStack.counts (descendRows D costs round T rows tape []).2
+  have count := frameStack_bound D costs round T rows tape
+  unfold rowFrameCode
+  exact ⟨space.trans_le (Nat.mul_le_mul_left _ count),work.trans_le (Nat.mul_le_mul_left _ count)⟩
+
+def fromPlanWithFrameStack {n : ℕ} (D : BinaryFractionalGuesses.Input n) (costs : FractionalCoverRawCore.RawRow n)
+    (round : Runner n) (T : ℕ) (plan : PhysicalCoverReader.Plan n) (tape : Bits) : Read ((Output n × ℕ) × Bits) × ℕ :=
+  match plan with
+  | .covers rows =>
+    let choice := chooseRowsWithFrameStack D costs round T rows tape
+    let overhead := 4*n+10
+    let billed := CachedScalarRead.sumMeasured [choice.1.2,4*n,10]
+    match choice.1.1 with
+    | none => ((none,billed.1),choice.2+billed.2+4)
+    | some (best,rest) =>
+      let charge := BinaryNaturalOperations.add best.2 overhead
+      ((some (((ChargedCutSelection.result best).elim .invalid .cut,charge.1),rest),billed.1),
+        choice.2+billed.2+charge.2+8)
+  | _ => (fromPlanWith D costs round T plan tape,0)
+
+theorem fromPlanWithFrameStack_reference {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (costs : FractionalCoverRawCore.RawRow n) (round : Runner n) (T : ℕ)
+    (plan : PhysicalCoverReader.Plan n) (tape : Bits) :
+    fromPlanWithFrameStack D costs round T plan tape=fromPlanWithSelectionWork D costs round T plan tape := by
+  cases plan with
+  | invalid | infeasible _ | zero _ => rfl
+  | covers rows =>
+    simp only [fromPlanWithFrameStack,fromPlanWithSelectionWork,chooseRowsWithFrameStack_reference]
 
 end DirectedFlowCutGap.PaidVertexSampling

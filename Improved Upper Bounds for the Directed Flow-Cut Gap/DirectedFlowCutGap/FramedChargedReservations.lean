@@ -99,4 +99,19 @@ theorem edge : ∃ p : Polynomial ℕ,
         solver.1.2+solver.2.1.total+solver.2.2+reservationWork start trace ≤ p.eval (source.length+κ+start.size) :=
   edgeWith RunnerCutoffStorage.Model RunnerCutoffStorage.arrays
 
+
+/-- The binary reservation charge is polynomial in the supplied bounds
+and in the encoded width of the initial address. -/
+theorem reservations_le (cells copies : Polynomial ℕ) (x start : ℕ) (trace : Code)
+    (space : fresh trace ≤ cells.eval x) (work : trace.length ≤ copies.eval x) :
+    reservationWork start trace ≤ (budget 0 cells copies).eval (x+start.size) := by
+  obtain ⟨_,paid,_⟩ := PackedArrayReservations.binary_layout trace start
+  have width := Nat.size_le_size (Nat.add_le_add_left space start)
+  have more : reservationWork start trace ≤
+      BinaryAllocationTrace.chargeBound (copies.eval x) (start+cells.eval x).size := by
+    apply paid.trans
+    unfold BinaryAllocationTrace.chargeBound
+    gcongr
+  simpa only [Nat.zero_add] using work_le 0 cells copies x start 0 _ (Nat.zero_le _) more
+
 end DirectedFlowCutGap.FramedChargedReservations

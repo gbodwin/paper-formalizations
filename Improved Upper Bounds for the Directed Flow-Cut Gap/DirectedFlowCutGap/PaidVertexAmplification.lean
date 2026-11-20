@@ -777,4 +777,146 @@ theorem runWithPlan_headers {n : ℕ} (D : BinaryFractionalGuesses.Input n) (rou
     rcases data with ⟨cuts,rest⟩
     rfl
 
+
+private abbrev StackedSummary (A : Type) := Read (Option (SampleSummary A) × Bits) × ℕ
+
+private structure PendingSample (A : Type) where
+  first : A × ℕ
+  before : ℕ
+  measured : ℕ
+
+private def observeSummary {A : Type} (k : ℕ) : Summary A k → Option (SampleSummary A) :=
+  match k with
+  | 0 => fun _ => none
+  | _+1 => some
+
+private def observeSummaries {A : Type} (k : ℕ) (saved : Read (Summary A k × Bits) × ℕ) : StackedSummary A :=
+  ((saved.1.1.map fun (s,tape) => (observeSummary k s,tape),saved.1.2),saved.2)
+
+private def resumeSample {A : Type} (score : A → (Fraction × ℕ) × ℕ)
+    (later : StackedSummary A) (saved : PendingSample A) : StackedSummary A :=
+  let before := BinaryNaturalOperations.add saved.before later.1.2
+  let fee := BinaryNaturalOperations.add before.1 4
+  let updated := later.1.1.map fun (summary,tape) =>
+    let current := match summary with
+      | none => pushSummary score 0 saved.first ()
+      | some prior => pushSummary score 1 saved.first prior
+    (some current,tape)
+  ((updated,fee.1),later.2+before.2+fee.2+8+saved.measured)
+
+private def descendSamples {A : Type} (one : Bits → Read ((A × ℕ) × Bits) × ℕ) :
+    ℕ → Bits → List (PendingSample A) → StackedSummary A × List (PendingSample A)
+  | 0,tape,stack => (((some (none,tape),1),1),stack)
+  | k+1,tape,stack =>
+    let r := one tape
+    match r.1.1 with
+    | none =>
+      let fee := BinaryNaturalOperations.add r.1.2 4
+      (((none,fee.1),fee.2+4+r.2),stack)
+    | some (first,rest) => descendSamples one k rest (⟨first,r.1.2,r.2⟩::stack)
+
+private theorem observe_resume {A : Type} (score : A → (Fraction × ℕ) × ℕ) (k : ℕ)
+    (tail : Read (Summary A k × Bits) × ℕ) (saved : PendingSample A) :
+    let before := BinaryNaturalOperations.add saved.before tail.1.2
+    let fee := BinaryNaturalOperations.add before.1 4
+    observeSummaries (k+1)
+      ((tail.1.1.map (fun output => (pushSummary score k saved.first output.1,output.2)),fee.1),
+        tail.2+before.2+fee.2+8+saved.measured)=resumeSample score (observeSummaries k tail) saved := by
+  cases found : tail.1.1 with
+  | none => simp only [observeSummaries,resumeSample,found,Option.map_none]
+  | some data =>
+    obtain ⟨value,rest⟩ := data
+    cases k <;> simp only [observeSummaries,resumeSample,found,Option.map_some,observeSummary,pushSummary] <;> rfl
+
+private theorem descend_samples_reference {A : Type} (score : A → (Fraction × ℕ) × ℕ)
+    (one : Bits → Read ((A × ℕ) × Bits) × ℕ) (k : ℕ) (tape : Bits) (stack : List (PendingSample A)) :
+    let done := descendSamples one k tape stack
+    done.2.foldl (resumeSample score) done.1 =
+      stack.foldl (resumeSample score) (observeSummaries k (collectSummariesWithWork score one k tape)) := by
+  induction k generalizing tape stack with
+  | zero => rfl
+  | succ k ih =>
+    simp only [descendSamples,collectSummariesWithWork,collectWithCharges]
+    cases observed : (one tape).1.1 with
+    | none => rfl
+    | some step =>
+      obtain ⟨first,rest⟩ := step
+      have h := ih rest (⟨first,(one tape).1.2,(one tape).2⟩::stack)
+      dsimp only [List.foldl_cons] at h
+      dsimp only
+      let tail := collectWithCharges () (pushSummary score) one k rest
+      let saved : PendingSample A := ⟨first,(one tape).1.2,(one tape).2⟩
+      have step := observe_resume score k tail saved
+      dsimp only [tail,saved] at step
+      rw [step]
+      exact h
+
+private def closeSummaries {A : Type} (saved : StackedSummary A) : Read (SampleSummary A × Bits) × ℕ :=
+  ((saved.1.1.bind fun (summary,tape) => summary.map fun winner => (winner,tape),saved.1.2),saved.2)
+
+private theorem close_observed {A : Type} (k : ℕ) (saved : Read (Summary A (k+1) × Bits) × ℕ) :
+    closeSummaries (observeSummaries (k+1) saved)=saved := by
+  unfold closeSummaries observeSummaries
+  obtain ⟨⟨found,fee⟩,work⟩ := saved
+  cases found <;> rfl
+
+/-- Descend through the reached samples and their rows using explicit stacks.
+The resume order and all earlier recorded fees are preserved. -/
+def runWithPlanFrameStackWork {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PaidVertexSampling.Runner n) (draw extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback : ℕ) (tape : Bits) : Read (Result n) × ℕ :=
+  let setup := BinaryAmplificationPreparation.prepare D.costs draw extra confidence
+  let score := BinaryCutPriceSelection.cutScoreWithControl D.costs
+  let one := PaidVertexSampling.fromPlanWithFrameStack D setup.costs round setup.trials plan
+  let done := descendSamples one (extra+1) tape []
+  streamResult setup extra dispatch readback (closeSummaries (done.2.foldl (resumeSample score) done.1))
+
+theorem runWithPlanFrameStackWork_reference {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PaidVertexSampling.Runner n) (draw extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback : ℕ) (tape : Bits) :
+    runWithPlanFrameStackWork D round draw extra confidence plan dispatch readback tape =
+      runWithPlanRowWork D round draw extra confidence plan dispatch readback tape := by
+  simp only [runWithPlanFrameStackWork,runWithPlanRowWork]
+  rw [descend_samples_reference]
+  simp only [List.foldl_nil,close_observed]
+  congr 2
+  funext bits
+  exact PaidVertexSampling.fromPlanWithFrameStack_reference _ _ _ _ _ bits
+
+
+private theorem descend_sample_count {A : Type} (one : Bits → Read ((A × ℕ) × Bits) × ℕ)
+    (k : ℕ) (tape : Bits) (stack : List (PendingSample A)) :
+    (descendSamples one k tape stack).2.length ≤ stack.length+k := by
+  induction k generalizing tape stack with
+  | zero => exact le_rfl
+  | succ k ih =>
+    simp only [descendSamples]
+    cases (one tape).1.1 with
+    | none => exact Nat.le_add_right _ _
+    | some pair =>
+      obtain ⟨first,rest⟩ := pair
+      have remaining := ih rest (⟨first,(one tape).1.2,(one tape).2⟩::stack)
+      simp only [List.length_cons] at remaining
+      exact remaining.trans_eq (by omega)
+
+open EncodedArrayStorage in
+def sampleFrameCode {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : PaidVertexSampling.Runner n)
+    (draw extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n) (tape : Bits) : List (Instruction Unit) :=
+  let setup := BinaryAmplificationPreparation.prepare D.costs draw extra confidence
+  let one := PaidVertexSampling.fromPlanWithFrameStack D setup.costs round setup.trials plan
+  EncodedFrameStack.trace (descendSamples one (extra+1) tape []).2
+
+open EncodedArrayStorage in
+theorem sampleFrameCode_bounds {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : PaidVertexSampling.Runner n)
+    (draw extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n) (tape : Bits) :
+    let code := sampleFrameCode D round draw extra confidence plan tape
+    fresh code≤2*(extra+1) ∧ code.length≤8*(extra+1) := by
+  let setup := BinaryAmplificationPreparation.prepare D.costs draw extra confidence
+  let one := PaidVertexSampling.fromPlanWithFrameStack D setup.costs round setup.trials plan
+  let done := descendSamples one (extra+1) tape []
+  obtain ⟨work,space⟩ := EncodedFrameStack.counts done.2
+  have count : done.2.length ≤ extra+1 := by
+    simpa only [done,List.length_nil,Nat.zero_add] using descend_sample_count one (extra+1) tape []
+  exact ⟨space.trans_le (Nat.mul_le_mul_left _ count),work.trans_le (Nat.mul_le_mul_left _ count)⟩
+
 end DirectedFlowCutGap.PaidVertexAmplification

@@ -87,4 +87,27 @@ theorem polynomial : ∃ p : Polynomial ℕ, ∀ {n : ℕ} {D : EncodedEdgeInput
   exact trialLimit_le line controls.draws controls.extra controls.confidence lineDim prices draws
     ((Nat.le_succ _).trans extra) (sameConfidence.symm ▸ extra) (ChargedVertexModes.priceWidth_bounds line)
 
+
+open ChargedPhysicalVertexSolver (rowsCount rowsCount_le) in
+theorem rows_polynomial : ∃ p : Polynomial ℕ, ∀ {n : ℕ} {D : EncodedEdgeInput.Input n} {source : Bits},
+    (PhysicalSourceInputJoin.edge source).1=some ⟨n,D⟩ →
+      let raw := (PhysicalBinaryEdgeWire.decodeWithCost D).1
+      let line := (PhysicalAmplifiedBinaryEdge.lineWithCost raw).1
+      rowsCount (PhysicalCoverReader.plan (BinaryFractionalGuesses.solveInput line).1) ≤ p.eval source.length := by
+  obtain ⟨serialized,lengthBound⟩ := PaidDirectEdgeWire.serialized_line_length
+  refine ⟨4*serialized+3,?_⟩
+  intro n D source parsed
+  let raw := (PhysicalBinaryEdgeWire.decodeWithCost D).1
+  let line := (PhysicalAmplifiedBinaryEdge.lineWithCost raw).1
+  have length : (PhysicalSourceDispatch.input line).length ≤ serialized.eval source.length := by
+    rw [← BinarySourceSerialization.run_value]
+    exact lengthBound parsed
+  have dim := ((Nat.le_succ _).trans (BinarySourceSerialization.input_dimensions line)).trans length
+  have price := (width_le_source line).trans length
+  have cap := (rowsCount_le line).trans (rowLimit_le line (ChargedVertexModes.priceWidth_bounds line))
+  simp only [rowEnvelope] at cap
+  change rowsCount (PhysicalCoverReader.plan (BinaryFractionalGuesses.solveInput line).1) ≤ _
+  simp only [eval_add,eval_mul,eval_ofNat]
+  omega
+
 end DirectedFlowCutGap.FramedEdgeTrials

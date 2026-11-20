@@ -1327,4 +1327,20 @@ theorem edge_terminal_row_observe_line (κ : ℕ) (mode : ChargedVertexModes.Mod
       cases (PaidVertexAmplification.runWithPlanRowWork line (roundWithGadgetWork raw mode)
         controls.draws controls.extra controls.confidence plan dispatch reader tape).1.1 <;> rfl
 
+
+/-- The measured original edge source with explicit sample and row stacks. -/
+def edgeWithTerminalFrameStackWork (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    Read (Σ n,EdgeResult n) × (BoundaryWork × ℕ) :=
+  edgeWithFramedRun (fun {n} =>
+    runOnWithTerminalAmplificationBoundary (@PaidVertexAmplification.runWithPlanFrameStackWork (lineSize n)))
+    κ mode source tape
+
+theorem edge_terminal_frame_stack_reference (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    edgeWithTerminalFrameStackWork κ mode source tape=edgeWithTerminalRowWork κ mode source tape := by
+  unfold edgeWithTerminalFrameStackWork edgeWithTerminalRowWork runOnWithTerminalRowBoundary
+  have same {m : ℕ} : @PaidVertexAmplification.runWithPlanFrameStackWork m=@PaidVertexAmplification.runWithPlanRowWork m := by
+    funext data round draw extra confidence plan dispatch readback bits
+    exact PaidVertexAmplification.runWithPlanFrameStackWork_reference data round draw extra confidence plan dispatch readback bits
+  simp only [same]
+
 end DirectedFlowCutGap.PaidDirectEdgeWire

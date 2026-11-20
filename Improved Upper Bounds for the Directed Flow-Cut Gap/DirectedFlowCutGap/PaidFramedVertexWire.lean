@@ -299,4 +299,21 @@ theorem complete {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : Bina
   rw [vertex_value]
   exact PhysicalAmplifiedBinaryVertex.vertex_complete κ mode D source tape parsed enough
 
+
+/-- Run the same measured vertex plan with explicit sample and row stacks. -/
+def runWithTerminalFrameStackWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) : Read (Result n) × ℕ :=
+  runWithTerminalAmplificationWork
+    (PaidVertexAmplification.runWithPlanFrameStackWork D (PaidVertexRounding.runner mode)) κ D tape
+
+theorem run_terminal_frame_stack_reference {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
+    runWithTerminalFrameStackWork κ mode D tape=runWithTerminalRowWork κ mode D tape := by
+  unfold runWithTerminalFrameStackWork runWithTerminalRowWork
+  have same : PaidVertexAmplification.runWithPlanFrameStackWork D (PaidVertexRounding.runner mode)=
+      PaidVertexAmplification.runWithPlanRowWork D (PaidVertexRounding.runner mode) := by
+    funext draw extra confidence plan dispatch readback bits
+    exact PaidVertexAmplification.runWithPlanFrameStackWork_reference D _ _ _ _ _ _ _ _
+  rw [same]
+
 end DirectedFlowCutGap.PaidFramedVertexWire

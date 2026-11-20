@@ -654,4 +654,18 @@ theorem vertex_terminal_row_polynomial : ∃ p : Polynomial ℕ,
   rw [same.1,same.2,eval_add,eval_comp]
   omega
 
+
+/-- The measured original vertex source with explicit sample and row stacks. -/
+def vertexWithTerminalFrameStackWork (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    Read (Σ n,PhysicalAmplifiedVertexSolver.Result n) × (ℕ × ℕ) :=
+  vertexWithFramedRun runWithTerminalFrameStackWork κ mode source tape
+
+theorem vertex_terminal_frame_stack_reference (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    vertexWithTerminalFrameStackWork κ mode source tape=vertexWithTerminalRowWork κ mode source tape := by
+  unfold vertexWithTerminalFrameStackWork vertexWithTerminalRowWork
+  have same : @runWithTerminalFrameStackWork=@runWithTerminalRowWork := by
+    funext n confidence strat data bits
+    exact run_terminal_frame_stack_reference confidence strat data bits
+  rw [same]
+
 end DirectedFlowCutGap.PaidFramedVertexWire

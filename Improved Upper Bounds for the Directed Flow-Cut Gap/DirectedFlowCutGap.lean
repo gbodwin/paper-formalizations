@@ -111,6 +111,7 @@ import DirectedFlowCutGap.AdaptiveRoundRefreshProgram
 import DirectedFlowCutGap.AdaptiveRounding
 import DirectedFlowCutGap.AdaptiveVertexBound
 import DirectedFlowCutGap.AdaptiveWidthEnvelope
+import DirectedFlowCutGap.AmplificationFrameLayout
 import DirectedFlowCutGap.ApproximatePackingTrace
 import DirectedFlowCutGap.ArrayMaterializationLayout
 import DirectedFlowCutGap.AttainedOptima
@@ -444,6 +445,7 @@ import DirectedFlowCutGap.EncodedEdgeRounding
 import DirectedFlowCutGap.EncodedEdgeSolver
 import DirectedFlowCutGap.EncodedEpochParameters
 import DirectedFlowCutGap.EncodedFlagUnion
+import DirectedFlowCutGap.EncodedFrameStack
 import DirectedFlowCutGap.EncodedHeavyVertexOutput
 import DirectedFlowCutGap.EncodedHeavyVertexPreparation
 import DirectedFlowCutGap.EncodedInputSizing
@@ -553,6 +555,8 @@ import DirectedFlowCutGap.FramedEdgeTrials
 import DirectedFlowCutGap.FramedPreparedRoundWork
 import DirectedFlowCutGap.FramedProjectedRoundWork
 import DirectedFlowCutGap.FramedSolverRecords
+import DirectedFlowCutGap.FramedSolverStackLayout
+import DirectedFlowCutGap.FramedStackReservationWork
 import DirectedFlowCutGap.FramedVertexPackedLayout
 import DirectedFlowCutGap.FramedVertexStorage
 import DirectedFlowCutGap.FramedVertexTrials
