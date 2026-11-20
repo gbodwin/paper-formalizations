@@ -50,6 +50,121 @@ theorem samples_paid {A : Type} (one : Bits → Read ((A × ℕ) × Bits)) (budg
       rw [Nat.succ_mul]
       omega
 
+/-- Charge the binary sums of earlier sample work while walking one literal
+tape. When a sample fails, its spent work is kept and later samples are skipped. -/
+def samplesWithCharges {A : Type} (one : Bits → Read ((A × ℕ) × Bits)) :
+    (k : ℕ) → Bits → Read ((Fin k → A × ℕ) × Bits) × ℕ
+  | 0,tape => ((some (Fin.elim0,tape),1),1)
+  | k+1,tape =>
+    let head := one tape
+    match head.1 with
+    | none =>
+      let fee := BinaryNaturalOperations.add head.2 4
+      ((none,fee.1),fee.2+4)
+    | some (first,rest) =>
+      let tail := samplesWithCharges one k rest
+      let prior := BinaryNaturalOperations.add head.2 tail.1.2
+      let fee := BinaryNaturalOperations.add prior.1 4
+      ((tail.1.1.map (fun (later,suffix) => (Fin.cons first later,suffix)),fee.1),
+        tail.2+prior.2+fee.2+8)
+
+private theorem bind_charge {A B : Type} (r : Read A) (k : A → Read B) :
+    (r >>= k).2=r.2+(r.1.map fun a => (k a).2).getD 0 := by
+  change (Read.bind r k).2=_
+  unfold Read.bind
+  cases r.1 <;> simp
+
+theorem samplesWithCharges_reference {A : Type} (one : Bits → Read ((A × ℕ) × Bits))
+    (k : ℕ) (tape : Bits) : (samplesWithCharges one k tape).1=samples one k tape := by
+  induction k generalizing tape with
+  | zero => rfl
+  | succ k ih =>
+    simp only [samplesWithCharges,samples,Read.bind_value,bind_charge]
+    cases h : (one tape).1 with
+    | none => simp only [Option.bind_none,Option.map_none,Option.getD_none,Nat.add_zero,
+        BinaryNaturalOperations.add_value]
+    | some item =>
+      obtain ⟨first,rest⟩ := item
+      simp only [Option.bind_some,Option.map_some,Option.getD_some,ih rest,
+        BinaryNaturalOperations.add_value]
+      cases (samples one k rest).1 with
+      | none => simp only [Option.map_none,Option.bind_none,Option.getD_none,Nat.add_zero]
+      | some item =>
+        obtain ⟨later,suffix⟩ := item
+        simp only [Option.map_some,Option.bind_some,Option.getD_some,Read.pure_value,Read.pure_charge,
+          Nat.add_zero]
+
+def sampleControlBudget {R : Type*} [Semiring R] (B : R) : R := 2*(BinaryRawRational.budget B+4)+8
+
+open Polynomial in
+theorem sampleControlBudget_eval (B : Polynomial ℕ) (x : ℕ) :
+    (sampleControlBudget B).eval x=sampleControlBudget (B.eval x) := by
+  simp only [sampleControlBudget,BinaryRawRational.budget,eval_add,eval_mul,eval_pow,eval_ofNat]
+
+private theorem samples_step_fee {A : Type} (one : Bits → Read ((A × ℕ) × Bits)) (k : ℕ) (tape : Bits) :
+    (samples one (k+1) tape).2 =
+      (one tape).2+((one tape).1.map fun out => (samples one k out.2).2).getD 0+4 := by
+  simp only [samples,bind_charge]
+  cases h : (one tape).1 with
+  | none => rfl
+  | some answer =>
+    obtain ⟨first,rest⟩ := answer
+    simp only [Option.map_some,Option.getD_some]
+    cases (samples one k rest).1 <;> simp
+
+theorem samplesWithCharges_paid {A : Type} (one : Bits → Read ((A × ℕ) × Bits))
+    (k : ℕ) {B : ℕ} (tape : Bits) (width : ((samples one k tape).2+4).size ≤ B) :
+    (samplesWithCharges one k tape).2 ≤ k*sampleControlBudget B+1 := by
+  induction k generalizing tape with
+  | zero => simp only [samplesWithCharges,Nat.zero_mul,Nat.zero_add,le_refl]
+  | succ k ih =>
+    let head := one tape
+    let amount := (samples one (k+1) tape).2+4
+    have fits {x : ℕ} (le : x ≤ amount) : x.size ≤ B :=
+      (Nat.size_le_size le).trans width
+    have h4 : (4 : ℕ).size ≤ B := fits (Nat.le_add_left _ _)
+    have fee := samples_step_fee one k tape
+    have hh : head.2.size ≤ B := fits (by
+      change (one tape).2 ≤ (samples one (k+1) tape).2+4
+      rw [fee]
+      omega)
+    simp only [samplesWithCharges]
+    cases h : (one tape).1 with
+    | none =>
+      have step := BinaryNaturalOperations.add_paid hh h4
+      change (BinaryNaturalOperations.add head.2 4).2+4 ≤ _
+      simp only [sampleControlBudget,Nat.succ_mul]
+      omega
+    | some item =>
+      obtain ⟨first,rest⟩ := item
+      let tail := samplesWithCharges one k rest
+      let sum := BinaryNaturalOperations.add head.2 tail.1.2
+      have earlier : tail.1=samples one k rest := samplesWithCharges_reference one k rest
+      have whole : (samples one (k+1) tape).2=head.2+tail.1.2+4 := by
+        rw [fee,h,Option.map_some,Option.getD_some,earlier]
+      have tailWidth : ((samples one k rest).2+4).size ≤ B := fits (by
+        rw [← earlier]
+        change tail.1.2+4 ≤ (samples one (k+1) tape).2+4
+        rw [whole]
+        omega)
+      have chargeWidth : tail.1.2.size ≤ B := fits (by
+        change tail.1.2 ≤ (samples one (k+1) tape).2+4
+        rw [whole]
+        omega)
+      have sumWidth : sum.1.size ≤ B := by
+        rw [show sum.1=head.2+tail.1.2 from BinaryNaturalOperations.add_value ..]
+        apply fits
+        change head.2+tail.1.2 ≤ (samples one (k+1) tape).2+4
+        rw [whole]
+        omega
+      have a : sum.2 ≤ BinaryRawRational.budget B+4 := BinaryNaturalOperations.add_paid hh chargeWidth
+      have b := BinaryNaturalOperations.add_paid sumWidth h4
+      have remaining : tail.2 ≤ k*sampleControlBudget B+1 := ih rest tailWidth
+      change tail.2+sum.2+(BinaryNaturalOperations.add sum.1 4).2+8 ≤ _
+      rw [Nat.succ_mul]
+      unfold sampleControlBudget at remaining ⊢
+      omega
+
 private def finish {n : ℕ} (costs : Row n) (extra setup dispatch readback : ℕ)
     (cuts : Fin (extra+1) → Output n × ℕ) (rest : Bits) : Read (Result n) :=
   let winner := BinaryCutPriceSelection.minimum (BinaryCutPriceSelection.cutScore costs) extra (fun i => (cuts i).1)
@@ -80,6 +195,83 @@ def runWithPlan {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : PaidVer
   let all := samples (PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan) (extra+1) tape
   let selected := all >>= fun (cuts,rest) => finish D.costs extra setup.paid dispatch readback cuts rest
   (selected.1,setup.paid+selected.2)
+
+/-- Carry measured sample accumulation and the two outer binary sums
+through the same amplification and selection execution. -/
+def runWithPlanScalarWork {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback : ℕ) (tape : Bits) : Read (Result n) × ℕ :=
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  let all := samplesWithCharges (PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan) (extra+1) tape
+  let chosen : Read (Result n) := match all.1.1 with
+    | none => Read.failure
+    | some (cuts,rest) => finish D.costs extra setup.paid dispatch readback cuts rest
+  let selected := BinaryNaturalOperations.add all.1.2 chosen.2
+  let total := BinaryNaturalOperations.add setup.paid selected.1
+  ((chosen.1,total.1),all.2+selected.2+total.2+8)
+
+theorem runWithPlanScalarWork_reference {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback : ℕ) (tape : Bits) :
+    (runWithPlanScalarWork D round roundBound extra confidence plan dispatch readback tape).1 =
+      runWithPlan D round roundBound extra confidence plan dispatch readback tape := by
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  let all := samples (PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan) (extra+1) tape
+  simp only [runWithPlanScalarWork,runWithPlan,samplesWithCharges_reference,BinaryNaturalOperations.add_value,
+    Read.bind_value,bind_charge]
+  change
+    (_,
+      setup.paid+(all.2+(match all.1 with
+        | none => (Read.failure : Read (Result n))
+        | some (cuts,rest) => finish D.costs extra setup.paid dispatch readback cuts rest).2)) =
+    (all.1.bind (fun (cuts,rest) => (finish D.costs extra setup.paid dispatch readback cuts rest).1),
+      setup.paid+(all.2+(all.1.map (fun (cuts,rest) =>
+        (finish D.costs extra setup.paid dispatch readback cuts rest).2)).getD 0))
+  cases all.1 <;> rfl
+
+theorem runWithPlanScalarWork_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback : ℕ) (tape : Bits)
+    (totalWidth : ((runWithPlan D round roundBound extra confidence plan dispatch readback tape).2+4).size ≤ B) :
+    (runWithPlanScalarWork D round roundBound extra confidence plan dispatch readback tape).2 ≤
+      (extra+2)*sampleControlBudget B+1 := by
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  let one := PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan
+  let all := samplesWithCharges one (extra+1) tape
+  let chosen : Read (Result n) := match all.1.1 with
+    | none => Read.failure
+    | some (cuts,rest) => finish D.costs extra setup.paid dispatch readback cuts rest
+  let selected := BinaryNaturalOperations.add all.1.2 chosen.2
+  let total := BinaryNaturalOperations.add setup.paid selected.1
+  have eq : total.1=(runWithPlan D round roundBound extra confidence plan dispatch readback tape).2 :=
+    congrArg (fun r : Read (Result n) => r.2)
+      (runWithPlanScalarWork_reference D round roundBound extra confidence plan dispatch readback tape)
+  have projected : setup.paid+(all.1.2+chosen.2) =
+      (runWithPlan D round roundBound extra confidence plan dispatch readback tape).2 :=
+    by simpa only [total,selected,BinaryNaturalOperations.add_value] using eq
+  have envelope {x : ℕ} (h : x ≤ setup.paid+(all.1.2+chosen.2)) : x.size ≤ B := by
+    exact (Nat.size_le_size ((h.trans_eq projected).trans (Nat.le_add_right _ _))).trans totalWidth
+  have left : all.1.2.size≤B := envelope (by omega)
+  have right : chosen.2.size≤B := envelope (by omega)
+  have selectedWidth : selected.1.size≤B := by
+    rw [show selected.1=all.1.2+chosen.2 from BinaryNaturalOperations.add_value ..]
+    exact envelope (Nat.le_add_left _ _)
+  have setupWidth : setup.paid.size≤B := envelope (Nat.le_add_right _ _)
+  have sampleWidth : ((samples one (extra+1) tape).2+4).size ≤ B := by
+    have seen : all.1=samples one (extra+1) tape := samplesWithCharges_reference one _ _
+    rw [← seen]
+    apply (Nat.size_le_size ?_).trans totalWidth
+    rw [← projected]
+    omega
+  have before : all.2 ≤ (extra+1)*sampleControlBudget B+1 :=
+    samplesWithCharges_paid one (extra+1) tape sampleWidth
+  have sum₁ : selected.2 ≤ BinaryRawRational.budget B+4 := BinaryNaturalOperations.add_paid left right
+  have sum₂ : total.2 ≤ BinaryRawRational.budget B+4 := BinaryNaturalOperations.add_paid setupWidth selectedWidth
+  change all.2+selected.2+total.2+8 ≤ _
+  change _ ≤ ((extra+1)+1)*sampleControlBudget B+1
+  rw [Nat.add_mul,Nat.one_mul]
+  unfold sampleControlBudget at before ⊢
+  omega
 
 theorem runWithPlan_value {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : PaidVertexSampling.Runner n)
     (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n) (dispatch readback : ℕ) (tape : Bits) :

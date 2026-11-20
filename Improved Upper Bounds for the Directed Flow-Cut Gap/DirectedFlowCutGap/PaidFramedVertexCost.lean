@@ -324,4 +324,73 @@ theorem vertex_terminal_polynomial : ∃ p : Polynomial ℕ,
   rw [eval_add,eval_add,eval_comp]
   exact Nat.add_le_add (compared.trans (Nat.add_le_add (paid κ mode source tape) reader)) frame
 
+def vertexWithTerminalScalarWork (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    Read (Σ n,PhysicalAmplifiedVertexSolver.Result n) × (ℕ × ℕ) :=
+  vertexWithFramedRun runWithTerminalScalarWork κ mode source tape
+
+theorem vertex_terminal_scalar_reference (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    let next := vertexWithTerminalScalarWork κ mode source tape
+    let old := vertexWithTerminalWork κ mode source tape
+    next.1=old.1 ∧ next.2.2=old.2.2 := by
+  simp only [vertexWithTerminalScalarWork,vertexWithTerminalWork,vertexWithFramedRun]
+  cases (PhysicalSourceInputJoin.vertexWithFramingRecords source).1.1 with
+  | none => exact ⟨rfl,True.intro⟩
+  | some encoded =>
+    obtain ⟨n,D⟩ := encoded
+    exact ⟨by simp only [run_terminal_scalar_reference],True.intro⟩
+
+theorem vertex_terminal_scalar_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let r := vertexWithTerminalScalarWork κ mode source tape
+      r.1.2+r.2.1+r.2.2 ≤ p.eval (source.length+κ) := by
+  obtain ⟨p,paid⟩ := vertex_terminal_polynomial
+  let width := p+4
+  let calls : Polynomial ℕ := (X+2)*X+2
+  let arithmetic := calls*PaidVertexAmplification.sampleControlBudget width+1
+  refine ⟨p+arithmetic,fun κ mode source tape => ?_⟩
+  let x := source.length+κ
+  let old := vertexWithTerminalWork κ mode source tape
+  let next := vertexWithTerminalScalarWork κ mode source tape
+  have observed := vertex_terminal_scalar_reference κ mode source tape
+  change next.1=old.1 ∧ next.2.2=old.2.2 at observed
+  have all : old.1.2+old.2.1+old.2.2 ≤ p.eval x := paid κ mode source tape
+  have extra : next.2.1 ≤ old.2.1+arithmetic.eval x := by
+    unfold next old vertexWithTerminalScalarWork vertexWithTerminalWork vertexWithFramedRun
+    dsimp only
+    rw [PhysicalSourceInputJoin.vertex_framing_records_value]
+    cases parsed : (PhysicalSourceInputJoin.vertex source).1 with
+    | none => exact Nat.zero_le _
+    | some encoded =>
+      obtain ⟨n,D⟩ := encoded
+      let sample := runWithTerminalWork κ mode D tape
+      have included : sample.1.2 ≤ old.1.2 := by
+        unfold old vertexWithTerminalWork vertexWithFramedRun
+        dsimp only
+        rw [PhysicalSourceInputJoin.vertex_framing_records_value,parsed]
+        exact Nat.le_add_left _ _
+      have maxPaid := included.trans ((Nat.le_add_right _ _).trans ((Nat.le_add_right _ _).trans all))
+      have wide : (sample.1.2+4).size ≤ width.eval x := by
+        simp only [width,eval_add,eval_ofNat]
+        exact (BinaryNaturalOperations.size_le_self _).trans (Nat.add_le_add_right maxPaid 4)
+      have stored : (ChargedSourceAssembly.vertex source).1=some ⟨n,D⟩ := by
+        rwa [ChargedSourceAssembly.vertex_value,← PhysicalSourceInputJoin.vertex_value]
+      have dim := (ChargedSourceAssembly.vertex_dimensions stored).1.trans (Nat.le_add_right source.length κ)
+      have times : (BinarySolverOuterControls.vertex n κ).extra+2 ≤ calls.eval x := by
+        rw [BinarySolverOuterControls.vertex_extra]
+        simp only [calls,eval_add,eval_mul,eval_ofNat,eval_X]
+        apply Nat.add_le_add_right
+        exact (exponent_le n κ).trans (Nat.mul_le_mul (Nat.add_le_add_right dim 2) (Nat.le_add_left _ _))
+      have bound := run_terminal_scalar_paid κ mode D tape wide
+      change _ ≤ sample.2+arithmetic.eval x
+      apply bound.trans
+      simp only [arithmetic,eval_add,eval_mul,eval_one,PaidVertexAmplification.sampleControlBudget_eval]
+      exact Nat.add_le_add_left (Nat.add_le_add_right (Nat.mul_le_mul_right _ times) 1) _
+  change next.1.2+next.2.1+next.2.2 ≤ (p+arithmetic).eval x
+  rw [observed.1,observed.2,eval_add]
+  calc
+    _ ≤ old.1.2+(old.2.1+arithmetic.eval x)+old.2.2 :=
+      Nat.add_le_add_right (Nat.add_le_add_left extra _) _
+    _ = old.1.2+old.2.1+old.2.2+arithmetic.eval x := by ac_rfl
+    _ ≤ _ := Nat.add_le_add_right all _
+
 end DirectedFlowCutGap.PaidFramedVertexWire

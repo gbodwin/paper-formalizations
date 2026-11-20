@@ -45,6 +45,48 @@ def runWithTerminalWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
   let source := PhysicalSourceReadback.runWithTerminalCharge D
   (runFromSource κ mode D source.1 tape,source.2)
 
+def runWithTerminalScalarWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) : Read (Result n) × ℕ :=
+  let source := PhysicalSourceReadback.runWithTerminalCharge D
+  let controls := BinarySolverOuterControls.vertex n κ
+  match source.1 with
+  | none => ((none,controls.paid),source.2)
+  | some (plan,dispatch,reader) =>
+      let r := PaidVertexAmplification.runWithPlanScalarWork D (PaidVertexRounding.runner mode)
+        controls.draws controls.extra controls.confidence plan dispatch reader tape
+      ((r.1.1.map (addControls controls.paid),controls.paid+dispatch+reader+r.1.2),source.2+r.2)
+
+theorem run_terminal_scalar_reference {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
+    (runWithTerminalScalarWork κ mode D tape).1=(runWithTerminalWork κ mode D tape).1 := by
+  simp only [runWithTerminalScalarWork,runWithTerminalWork,runFromSource]
+  cases (PhysicalSourceReadback.runWithTerminalCharge D).1 with
+  | none => rfl
+  | some input =>
+    obtain ⟨plan,dispatch,reader⟩ := input
+    simp only [PaidVertexAmplification.runWithPlanScalarWork_reference]
+
+theorem run_terminal_scalar_paid {n B : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits)
+    (width : ((runWithTerminalWork κ mode D tape).1.2+4).size ≤ B) :
+    (runWithTerminalScalarWork κ mode D tape).2 ≤ (runWithTerminalWork κ mode D tape).2+
+      (((BinarySolverOuterControls.vertex n κ).extra+2)*PaidVertexAmplification.sampleControlBudget B+1) := by
+  let controls := BinarySolverOuterControls.vertex n κ
+  simp only [runWithTerminalScalarWork,runWithTerminalWork,runFromSource] at width ⊢
+  cases h : (PhysicalSourceReadback.runWithTerminalCharge D).1 with
+  | none => exact Nat.le_add_right _ _
+  | some input =>
+    obtain ⟨plan,dispatch,reader⟩ := input
+    rw [h] at width
+    let old := PaidVertexAmplification.runWithPlan D (PaidVertexRounding.runner mode)
+      controls.draws controls.extra controls.confidence plan dispatch reader tape
+    change (controls.paid+dispatch+reader+old.2+4).size ≤ B at width
+    have amp : (old.2+4).size ≤ B :=
+      (Nat.size_le_size (Nat.add_le_add_right (Nat.le_add_left _ _) 4)).trans width
+    exact Nat.add_le_add_left (PaidVertexAmplification.runWithPlanScalarWork_paid D
+      (PaidVertexRounding.runner mode) controls.draws controls.extra controls.confidence plan
+      dispatch reader tape amp) _
+
 theorem runWithTerminalWork_comparison {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
     let raw := PhysicalSourceReadback.runWithTerminalCharge D

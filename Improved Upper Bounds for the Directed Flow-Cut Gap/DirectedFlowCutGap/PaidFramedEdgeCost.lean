@@ -458,4 +458,50 @@ theorem wire_terminal_work_polynomial : ∃ p : Polynomial ℕ,
   simp only [edgeWithTerminalWork_paid,edgeWithTerminalWork_boundary,eval_add,Nat.add_assoc]
   exact Nat.add_le_add (hp κ mode source tape) boundary
 
+theorem wire_terminal_scalar_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let r := edgeWithTerminalScalarWork κ mode source tape
+      r.1.2+r.2.1.total+r.2.2 ≤ p.eval (source.length+κ) := by
+  obtain ⟨p,paid⟩ := wire_terminal_work_polynomial
+  let width := p+4
+  let calls : Polynomial ℕ := (X+2)*X+2
+  let arithmetic := calls*PaidVertexAmplification.sampleControlBudget width+1
+  refine ⟨p+arithmetic,fun κ mode source tape => ?_⟩
+  let x := source.length+κ
+  let old := edgeWithTerminalWork κ mode source tape
+  let next := edgeWithTerminalScalarWork κ mode source tape
+  let n := ((PhysicalSourceInputJoin.edge source).1.map Sigma.fst).getD 0
+  have all : old.1.2+old.2.1.total+old.2.2 ≤ p.eval x := paid κ mode source tape
+  have widthBound : (old.1.2+4).size ≤ width.eval x := by
+    simp only [width,eval_add,eval_ofNat]
+    have fee := (Nat.le_add_right old.1.2 old.2.1.total).trans ((Nat.le_add_right _ _).trans all)
+    exact (BinaryNaturalOperations.size_le_self _).trans (Nat.add_le_add_right fee 4)
+  have dimension : n ≤ source.length := by
+    unfold n
+    cases parsed : (PhysicalSourceInputJoin.edge source).1 with
+    | none => exact Nat.zero_le _
+    | some encoded =>
+      obtain ⟨m,D⟩ := encoded
+      have stored : (ChargedSourceAssembly.edge source).1=some ⟨m,D⟩ := by
+        rwa [ChargedSourceAssembly.edge_value,← PhysicalSourceInputJoin.edge_value]
+      exact (ChargedSourceAssembly.edge_dimensions stored).1
+  have times : (BinarySolverOuterControls.edge n κ).extra+2 ≤ calls.eval x := by
+    rw [BinarySolverOuterControls.edge_extra]
+    simp only [calls,eval_add,eval_mul,eval_ofNat,eval_X]
+    apply Nat.add_le_add_right
+    have nx := dimension.trans (Nat.le_add_right source.length κ)
+    exact (PhysicalSolverCostEnvelope.exponent_le n κ).trans
+      (Nat.mul_le_mul (Nat.add_le_add_right nx 2) (Nat.le_add_left _ _))
+  have extra : next.1.2≤old.1.2+arithmetic.eval x := by
+    apply (edge_terminal_scalar_paid κ mode source tape widthBound).trans
+    simp only [arithmetic,eval_add,eval_mul,eval_one,PaidVertexAmplification.sampleControlBudget_eval]
+    exact Nat.add_le_add_left (Nat.add_le_add_right (Nat.mul_le_mul_right _ times) 1) _
+  have same : next.2=old.2 := (edge_terminal_scalar_reference κ mode source tape).2
+  change next.1.2+next.2.1.total+next.2.2≤(p+arithmetic).eval x
+  rw [same,eval_add]
+  calc
+    _ ≤ old.1.2+arithmetic.eval x+old.2.1.total+old.2.2 := Nat.add_le_add_right (Nat.add_le_add_right extra _) _
+    _ = old.1.2+old.2.1.total+old.2.2+arithmetic.eval x := by ac_rfl
+    _ ≤ _ := Nat.add_le_add_right all _
+
 end DirectedFlowCutGap.PaidDirectEdgeWire
