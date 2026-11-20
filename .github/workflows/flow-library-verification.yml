@@ -237,7 +237,7 @@ jobs:
             printf 'PASS strict elaboration of %s\n' "$module"
           done
           for fixture in PaidTotalGuardedSmoke GuardedFuelFreePackedSmoke; do
-            timeout 600 lake env lean -j1 -DautoImplicit=false -DwarningAsError=true --run "$paper/verification/$fixture.lean"
+            timeout 600 lake env lean -j1 -M11500 -DautoImplicit=false -DwarningAsError=true --run "$paper/verification/$fixture.lean"
           done
       - name: Check the measured packed cut-mask assembly
         if: github.ref_name == 'codex/flow-measured-mask-20261120' || github.ref_name == 'codex/flow-cache-storage-20261120' || github.ref_name == 'codex/flow-packed-readback-20261120' || github.ref_name == 'codex/flow-packed-scalars-20261120'
@@ -265,7 +265,7 @@ jobs:
             lake env lean -j1 -DautoImplicit=false -DwarningAsError=true "$paper/DirectedFlowCutGap/$module.lean"
             printf 'PASS strict elaboration of %s\n' "$module"
           done
-          timeout 600 lake env lean -j1 -DautoImplicit=false -DwarningAsError=true --run "$paper/verification/PackedReadbackSmoke.lean"
+          timeout 600 lake env lean -j1 -M11500 -DautoImplicit=false -DwarningAsError=true --run "$paper/verification/PackedReadbackSmoke.lean"
       - name: Check binary scalar execution inside the packed controller
         if: github.ref_name == 'codex/flow-packed-scalars-20261120'
         run: |
@@ -274,7 +274,7 @@ jobs:
             lake env lean -j1 -DautoImplicit=false -DwarningAsError=true "$paper/DirectedFlowCutGap/$module.lean"
             printf 'PASS strict elaboration of %s\n' "$module"
           done
-          timeout 600 lake env lean -j1 -DautoImplicit=false -DwarningAsError=true --run "$paper/verification/PackedScalarExecutionSmoke.lean"
+          timeout 600 lake env lean -j1 -M11500 -DautoImplicit=false -DwarningAsError=true --run "$paper/verification/PackedScalarExecutionSmoke.lean"
       - name: Recheck source identity
         run: |
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
