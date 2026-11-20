@@ -54,38 +54,70 @@ private theorem mem_arcs {n : ℕ} (A : Adjacency n) (e : Edge n) :
   simp only [arcs,List.mem_filter,RetainedTapeInput.mem_allPairs,true_and,mem_graphEdges]
   rfl
 
-private def candidates {n : ℕ} (A : Adjacency n) (D : List (Edge n)) : List (Finset (Edge n)) :=
-  ((arcs A).sublists.map List.toFinset).filter (checkCut A D)
+private def allowedArcs {n : ℕ} (A : Adjacency n) (avoid : Finset (Edge n)) : List (Edge n) :=
+  (arcs A).filter fun e => e ∉ avoid
 
-private theorem mem_candidates {n : ℕ} (A : Adjacency n) (D : List (Edge n)) (X : Finset (Edge n)) :
-    X ∈ candidates A D ↔ X ⊆ graphEdges (graph A) ∧ IsIntegralEdgeCut (graph A) X {e | e ∈ D} := by
+private theorem mem_allowedArcs {n : ℕ} (A : Adjacency n) (avoid : Finset (Edge n)) (e : Edge n) :
+    e ∈ allowedArcs A avoid ↔ e ∈ graphEdges (graph A) ∧ e ∉ avoid := by
+  simp only [allowedArcs,List.mem_filter,mem_arcs,decide_eq_true_eq]
+
+private def candidates {n : ℕ} (A : Adjacency n) (D : List (Edge n)) (avoid : Finset (Edge n)) :
+    List (Finset (Edge n)) :=
+  ((allowedArcs A avoid).sublists.map List.toFinset).filter (checkCut A D)
+
+private theorem mem_candidates {n : ℕ} (A : Adjacency n) (D : List (Edge n)) (X avoid : Finset (Edge n)) :
+    X ∈ candidates A D avoid ↔ X ⊆ graphEdges (graph A) ∧ IsIntegralEdgeCut (graph A) X {e | e ∈ D} ∧
+      Disjoint X avoid := by
   unfold candidates
   rw [List.mem_filter, checkCut_iff]
-  have listed (h : X ⊆ graphEdges (graph A)) : X ∈ (arcs A).sublists.map List.toFinset := by
-    refine List.mem_map.mpr ⟨(arcs A).filter (fun e => e ∈ X),
+  constructor
+  · rintro ⟨listed,arcs,cut⟩
+    obtain ⟨ys,here,rfl⟩ := List.mem_map.mp listed
+    exact ⟨arcs,cut,Finset.disjoint_left.mpr fun e he =>
+      ((mem_allowedArcs A avoid e).mp ((List.mem_sublists.mp here).subset (List.mem_toFinset.mp he))).2⟩
+  · rintro ⟨arcs,cut,apart⟩
+    refine ⟨?_,arcs,cut⟩
+    refine List.mem_map.mpr ⟨(allowedArcs A avoid).filter (fun e => e ∈ X),
       List.mem_sublists.mpr (List.filter_sublist ..), ?_⟩
     ext e
     simp only [List.mem_toFinset,List.mem_filter,decide_eq_true_eq]
-    exact ⟨And.right, fun he => ⟨(mem_arcs A e).mpr (h he),he⟩⟩
-  exact ⟨And.right, fun h => ⟨listed h.1,h⟩⟩
+    exact ⟨And.right, fun he => ⟨(mem_allowedArcs A avoid e).mpr
+      ⟨arcs he,fun bad => Finset.disjoint_left.mp apart he bad⟩,he⟩⟩
+
+/-- Exclude the designated arcs from candidate cuts while checking demands
+in the original graph. -/
+def selectAvoiding {n : ℕ} (A : Adjacency n) (D : List (Edge n)) (avoid : Finset (Edge n))
+    (c : Edge n → ℚ≥0) : Option (Finset (Edge n)) :=
+  (candidates A D avoid).minOn? fun X => ∑ e ∈ X, c e
+
+theorem selectAvoiding_minimum {n : ℕ} (A : Adjacency n) (D : List (Edge n))
+    (avoid : Finset (Edge n)) (c : Edge n → ℚ≥0) {Y : Finset (Edge n)}
+    (edges : Y ⊆ graphEdges (graph A)) (valid : IsIntegralEdgeCut (graph A) Y {e | e ∈ D})
+    (apart : Disjoint Y avoid) :
+    ∃ X, selectAvoiding A D avoid c=some X ∧ X ⊆ graphEdges (graph A) ∧
+      IsIntegralEdgeCut (graph A) X {e | e ∈ D} ∧ Disjoint X avoid ∧
+      (∑ e ∈ X, c e) ≤ ∑ e ∈ Y, c e := by
+  let fee (X : Finset (Edge n)) := ∑ e ∈ X, c e
+  have present := (mem_candidates A D Y avoid).mpr ⟨edges,valid,apart⟩
+  let h := List.ne_nil_of_mem present
+  let X := (candidates A D avoid).minOn fee h
+  have hx : X ∈ candidates A D avoid := List.minOn_mem
+  obtain ⟨arcs,cuts,disjoint⟩ := (mem_candidates A D X avoid).mp hx
+  exact ⟨X,List.minOn?_eq_some_minOn h,arcs,cuts,disjoint,List.apply_minOn_le_of_mem (f := fee) present⟩
 
 /-- Returns a minimum cost valid edge cut whenever the demand list admits one. -/
 def select {n : ℕ} (A : Adjacency n) (D : List (Edge n)) (c : Edge n → ℚ≥0) :
     Option (Finset (Edge n)) :=
-  (candidates A D).minOn? fun X => ∑ e ∈ X, c e
+  selectAvoiding A D ∅ c
 
 theorem select_minimum {n : ℕ} (A : Adjacency n) (D : List (Edge n)) (c : Edge n → ℚ≥0)
     {Y : Finset (Edge n)} (edges : Y ⊆ graphEdges (graph A))
     (valid : IsIntegralEdgeCut (graph A) Y {e | e ∈ D}) :
     ∃ X, select A D c=some X ∧ X ⊆ graphEdges (graph A) ∧
       IsIntegralEdgeCut (graph A) X {e | e ∈ D} ∧ (∑ e ∈ X, c e) ≤ ∑ e ∈ Y, c e := by
-  let fee (X : Finset (Edge n)) := ∑ e ∈ X, c e
-  have present := (mem_candidates A D Y).mpr ⟨edges,valid⟩
-  let h := List.ne_nil_of_mem present
-  let X := (candidates A D).minOn fee h
-  have hx : X ∈ candidates A D := List.minOn_mem
-  obtain ⟨arcs,cuts⟩ := (mem_candidates A D X).mp hx
-  exact ⟨X,List.minOn?_eq_some_minOn h,arcs,cuts,List.apply_minOn_le_of_mem (f := fee) present⟩
+  obtain ⟨X,chosen,arcs,cuts,_,paid⟩ :=
+    selectAvoiding_minimum A D ∅ c edges valid (by simp)
+  exact ⟨X,chosen,arcs,cuts,paid⟩
 
 def run {n : ℕ} (A : Adjacency n) (w : Weights n) (c : Edge n → ℚ≥0) : Finset (Edge n) :=
   (select A (demands A w) c).getD ∅
