@@ -14,6 +14,8 @@ The physical source entry counts serialization, binary dispatch fuel, validation
 `PaidFramedVertexWire.wire_polynomial` and `PaidDirectEdgeWire.wire_polynomial` extend the recorded-work bounds to every original source and literal tape. A failed round keeps its incurred charge, and later rows and samples execute only after the preceding one succeeds. The returned results, unread suffix, and old phase charges agree pointwise with the earlier entries.
 
 The hard integer cutoff now calls a terminating packed interpreter without evaluating an initial fuel formula. `PaidTotalRawGraphExecution.complete_trace` bounds a complete reference trace using a tape extension inside the termination proof. The executable receives the original tape. `GuardedFuelFreeRounding.meets_old_entry` preserves the returned option and proves that recorded work stays within the earlier bound for every positive-level packed input.
+
+The [packed cut-mask copy](verification/PACKED_MASK_ASSEMBLY_20261120.md) certifies the hard branch’s output word length, measured typed mask construction and each allocated address width. Its recorded allowance, returned mask and unread tape agree with the earlier implementation.
 [Physical amplified solvers](verification/PHYSICAL_AMPLIFIED_SOLVERS_20261119.md)
 [Composed charge bounds](verification/PHYSICAL_AMPLIFIED_COST_20261119.md)
 [Original input phases](verification/ORIGINAL_INPUT_PHASES_20261119.md)
