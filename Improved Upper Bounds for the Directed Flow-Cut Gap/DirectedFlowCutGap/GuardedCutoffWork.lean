@@ -1,3 +1,4 @@
+import DirectedFlowCutGap.GuardedFuelFreeRounding
 import DirectedFlowCutGap.GuardedIntegerRoundingPolynomial
 import DirectedFlowCutGap.BinaryIntegerCutoff
 
@@ -27,12 +28,18 @@ theorem budget_polynomial : ∃ p : Polynomial ℕ, ∀ n L T, budget n L T ≤ 
   next fits => exact Nat.add_le_add setup (hard n L T fits.1)
   next => exact setup.trans (Nat.le_add_right _ _)
 
+private theorem positive_level {n L : ℕ} (inside : (BinaryIntegerCutoff.compute n L).inside=true)
+    (hard : (BinaryIntegerCutoff.compute n L).hard=true) : 0<L := by
+  have enough := ((BinaryIntegerCutoff.hard_true n L ((BinaryIntegerCutoff.inside_true n L).mp inside)).mp hard).1
+  have capPositive : 0<cap n := by unfold cap; positivity
+  omega
+
 def runBinary {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (tape : Bits) : Read (Result n × ℕ) :=
   let gate := BinaryIntegerCutoff.compute n L
   let setup := gate.parameters.work+2*n+10
-  let cut : Read (Result n) := if gate.inside then
-    if gate.hard then
-      let r := GuardedIntegerRoundingWork.hard T adj L tape
+  let cut : Read (Result n) := if inside : gate.inside then
+    if hard : gate.hard then
+      let r := GuardedFuelFreeRounding.hard T adj L (positive_level inside hard) tape
       (r.1.map (fun result => { result with paid := setup+result.paid }),setup+r.2)
     else (some ⟨Vector.replicate n true,tape,setup⟩,setup)
   else (some ⟨Vector.replicate n false,tape,setup⟩,setup)
@@ -40,13 +47,13 @@ def runBinary {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (tape : Bits) : 
 
 theorem binary_value {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (tape : Bits) :
     (runBinary T adj L tape).1=BinaryIntegerCutoff.run T adj L tape := by
-  unfold runBinary BinaryIntegerCutoff.run
-  dsimp only
-  split
-  · split
-    · rw [GuardedIntegerRoundingWork.hard_value]
-    · rfl
-  · rfl
+  by_cases inside : (BinaryIntegerCutoff.compute n L).inside=true
+  · by_cases hard : (BinaryIntegerCutoff.compute n L).hard=true
+    · simp only [runBinary,BinaryIntegerCutoff.run,dite_eq_left inside,dite_eq_left hard,
+        ite_eq_left inside,ite_eq_left hard,GuardedFuelFreeRounding.hard_value]
+    · simp only [runBinary,BinaryIntegerCutoff.run,dite_eq_left inside,dite_eq_right hard,
+        ite_eq_left inside,ite_eq_right hard]
+  · simp only [runBinary,BinaryIntegerCutoff.run,dite_eq_right inside,ite_eq_right inside]
 
 theorem binary_paid {n T L B : ℕ} (adj : PairFlags n) (tape : Bits) (level : L.size ≤ B) :
     (runBinary T adj L tape).2 ≤ budget n L T+BinaryIntegerCutoff.budget n B := by
@@ -57,18 +64,18 @@ theorem binary_paid {n T L B : ℕ} (adj : PairFlags n) (tape : Bits) (level : L
   · have hi := (BinaryIntegerCutoff.inside_true n L).mpr inside
     by_cases constraints : 64*cap n ≤ L ∧ n ≤ L^3
     · have hard := (BinaryIntegerCutoff.hard_true n L inside).mpr constraints
-      have core := GuardedIntegerRoundingWork.hard_paid (T:=T) (L:=L) adj tape
-      simp only [runBinary,budget,BinaryIntegerCutoff.parameters_value,ite_eq_left hi,ite_eq_left hard,
+      have core := GuardedFuelFreeRounding.hard_paid (T:=T) (L:=L) adj (positive_level hi hard) tape
+      simp only [runBinary,budget,BinaryIntegerCutoff.parameters_value,dite_eq_left hi,dite_eq_left hard,
         ite_eq_left (And.intro inside constraints)]
-      change (EncodedEpochParameters.compute n).work+2*n+10+(GuardedIntegerRoundingWork.hard T adj L tape).2+gate.paid ≤ _
+      change (EncodedEpochParameters.compute n).work+2*n+10+(GuardedFuelFreeRounding.hard T adj L (positive_level hi hard) tape).2+gate.paid ≤ _
       omega
     · have hard := fun h => constraints ((BinaryIntegerCutoff.hard_true n L inside).mp h)
-      simp only [runBinary,budget,BinaryIntegerCutoff.parameters_value,ite_eq_left hi,ite_eq_right hard,
+      simp only [runBinary,budget,BinaryIntegerCutoff.parameters_value,dite_eq_left hi,dite_eq_right hard,
         ite_eq_right (fun h : L ≤ n ∧ 64*cap n ≤ L ∧ n ≤ L^3 => constraints h.2),Nat.add_zero]
       change (EncodedEpochParameters.compute n).work+2*n+10+gate.paid ≤ _
       omega
   · have hi := fun h => inside ((BinaryIntegerCutoff.inside_true n L).mp h)
-    simp only [runBinary,budget,BinaryIntegerCutoff.parameters_value,ite_eq_right hi,
+    simp only [runBinary,budget,BinaryIntegerCutoff.parameters_value,dite_eq_right hi,
       ite_eq_right (fun h : L ≤ n ∧ 64*cap n ≤ L ∧ n ≤ L^3 => inside h.1),Nat.add_zero]
     change (EncodedEpochParameters.compute n).work+2*n+10+gate.paid ≤ _
     omega

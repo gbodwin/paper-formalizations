@@ -587,6 +587,7 @@ import DirectedFlowCutGap.GridInputProgram
 import DirectedFlowCutGap.GridInputTrace
 import DirectedFlowCutGap.GridLevelSampling
 import DirectedFlowCutGap.GuardedCutoffWork
+import DirectedFlowCutGap.GuardedFuelFreeRounding
 import DirectedFlowCutGap.GuardedIntegerRoundingPolynomial
 import DirectedFlowCutGap.GuardedIntegerRoundingWork
 import DirectedFlowCutGap.GuardedIntegerRoundingWorkBounds
@@ -879,6 +880,8 @@ import DirectedFlowCutGap.PaidFramedEdgeCost
 import DirectedFlowCutGap.PaidFramedVertexCost
 import DirectedFlowCutGap.PaidFramedVertexWire
 import DirectedFlowCutGap.PaidGuardedExecution
+import DirectedFlowCutGap.PaidTotalGuardedExecution
+import DirectedFlowCutGap.PaidTotalRawGraphExecution
 import DirectedFlowCutGap.PaidVertexAmplification
 import DirectedFlowCutGap.PaidVertexAmplificationCost
 import DirectedFlowCutGap.PaidVertexRounding

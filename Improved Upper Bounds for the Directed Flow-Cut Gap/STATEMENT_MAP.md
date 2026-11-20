@@ -12,11 +12,14 @@ and the adaptive solver can reuse a single charged threshold-demand computation.
 The physical source entry counts serialization, binary dispatch fuel, validation and terminal decoding. The edge solver also measures flat price and weight matrix assembly, line adjacency, fractional row projection, gadget cut projection, and final output conversion. `OriginalSourceFraming.readBinary_checked` proves a bit-model bound for framing, including malformed and truncated inputs. `PhysicalSourceInputJoin` reads the three retained tables and invokes the original typed validators. `FramedDirectEdgeWire.recorded_polynomial` bounds the combined recorded work on successful edge executions. The complete bit-time composition still needs a width-sensitive refinement of the remaining structural word operations.
 
 `PaidFramedVertexWire.wire_polynomial` and `PaidDirectEdgeWire.wire_polynomial` extend the recorded-work bounds to every original source and literal tape. A failed round keeps its incurred charge, and later rows and samples execute only after the preceding one succeeds. The returned results, unread suffix, and old phase charges agree pointwise with the earlier entries.
+
+The hard integer cutoff now calls a terminating packed interpreter without evaluating an initial fuel formula. `PaidTotalRawGraphExecution.complete_trace` bounds a complete reference trace using a tape extension inside the termination proof. The executable receives the original tape. `GuardedFuelFreeRounding.meets_old_entry` preserves the returned option and proves that recorded work stays within the earlier bound for every positive-level packed input.
 [Physical amplified solvers](verification/PHYSICAL_AMPLIFIED_SOLVERS_20261119.md)
 [Composed charge bounds](verification/PHYSICAL_AMPLIFIED_COST_20261119.md)
 [Original input phases](verification/ORIGINAL_INPUT_PHASES_20261119.md)
 [Physical source framing and edge composition](verification/PHYSICAL_SOURCE_FRAMING_20261120.md)
 [Recorded work for every source and tape](verification/PAID_SOURCE_SOLVERS_20261120.md)
+[Terminating packed rounding without numerical fuel](verification/FUEL_FREE_PACKED_ROUNDING_20261120.md)
 
 | Source item | Verified scope at this checkpoint | Still required |
 | --- | --- | --- |
