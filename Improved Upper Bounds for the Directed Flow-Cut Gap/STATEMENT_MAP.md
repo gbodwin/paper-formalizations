@@ -19,6 +19,8 @@ The [streamed amplification](verification/STREAMED_AMPLIFICATION_20261120.md) ca
 
 The [measured cover rows](verification/COVER_ROW_SELECTION_20261120.md) compare stored cut prices by index and accumulate the previous fees in binary. Both original inputs preserve their earlier results, phase fields, and unread tape. The new recorded-work bounds include work already spent when a later row or sample runs out of tape.
 
+The [edge array storage proofs](verification/EDGE_ARRAY_STORAGE_20261120.md) connect the source arrays, decoded prices, line arrays, physical cache and returned plan to one binary reservation schedule. The row and gadget proofs also bound the modeled array placements of each reached attempt. The packed controller and these allocations still require a common bound across the full outer execution.
+
 The hard integer cutoff now calls a terminating packed interpreter without evaluating an initial fuel formula. `PaidTotalRawGraphExecution.complete_trace` bounds a complete reference trace using a tape extension inside the termination proof. The executable receives the original tape. `GuardedFuelFreeRounding.meets_old_entry` preserves the returned option and proves that recorded work stays within the earlier bound for every positive-level packed input.
 
 The [packed cut-mask copy](verification/PACKED_MASK_ASSEMBLY_20261120.md) certifies the hard branch’s output word length, measured typed mask construction and each allocated address width. Its recorded allowance, returned mask and unread tape agree with the earlier implementation.

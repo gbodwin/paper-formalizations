@@ -1,0 +1,9 @@
+# Model arrays on the original edge inputs and rounds
+
+`BinaryArrayNestedStorage.grid_schedule_eq` connects the executable schedule to the typed array pushes. Before a parent push, it includes the array work for that row. Each retained result is stored in its original position. `PhysicalLineStorage` applies the construction to the actual price decoder, line labels, adjacency and price arrays.
+
+`FramedEdgeStorage.array_polynomial` places those arrays after the reached original input arrays and before the physical controller cache and returned plan arrays. The binary reservation walk reproduces the model’s block bases and extents. `PaidCacheTrace.Layout` links the cache blocks to the physical controller. Lean bounds the allocation and copy counts in the original source length and bounds address widths relative to the starting heap extent. A rejected source keeps the reached input arrays.
+
+`EdgeGadgetArrayStorage.for_build` models the measured gadget’s labels, the copy from its selected vertex list, adjacency, weights and prices. The original fractional-row and final cut and witness projections obey the same array model. `EdgeRoundStorage.observed_round` ties the recorded projection to the actual round’s cut and unread tape. `round_arrays` includes cut projection only on a successful round, and `polynomial` bounds the listed array work for each attempt. Edge filtering, list construction, vertex rounding, and packed controller storage still need to be joined with these arrays and the whole original solver.
+
+The fixtures exercise the one-vertex parser, price decoder, and line preparation, plus binary reservations for empty and one-vertex layouts and a measured 14-node gadget. The model uses persistent arrays and retained references. Its allocation bounds describe the modeled schedules.

@@ -146,6 +146,7 @@ import DirectedFlowCutGap.BinaryAllocationTrace
 import DirectedFlowCutGap.BinaryAmplificationPreparation
 import DirectedFlowCutGap.BinaryArithmetic
 import DirectedFlowCutGap.BinaryArrayBatch
+import DirectedFlowCutGap.BinaryArrayNestedStorage
 import DirectedFlowCutGap.BinaryBorrowProgram
 import DirectedFlowCutGap.BinaryBoundedSampler
 import DirectedFlowCutGap.BinaryBudgetExpression
@@ -404,8 +405,11 @@ import DirectedFlowCutGap.DirectNaturalView
 import DirectedFlowCutGap.DyadicEdgeWeights
 import DirectedFlowCutGap.EarlyStopRetainedFlow
 import DirectedFlowCutGap.EdgeFlow
+import DirectedFlowCutGap.EdgeGadgetArrayStorage
 import DirectedFlowCutGap.EdgeLineReduction
 import DirectedFlowCutGap.EdgeModel
+import DirectedFlowCutGap.EdgeProjectionArrayStorage
+import DirectedFlowCutGap.EdgeRoundStorage
 import DirectedFlowCutGap.EdgeRounding
 import DirectedFlowCutGap.EdgeToVertexReduction
 import DirectedFlowCutGap.EmptyDemandEdgeCallLift
@@ -536,6 +540,7 @@ import DirectedFlowCutGap.FractionalCoverRawOracleEncoding
 import DirectedFlowCutGap.FractionalCoverWalkOracle
 import DirectedFlowCutGap.FractionalHeapRead
 import DirectedFlowCutGap.FramedDirectEdgeWire
+import DirectedFlowCutGap.FramedEdgeStorage
 import DirectedFlowCutGap.FramedSolverRecords
 import DirectedFlowCutGap.FramedVertexStorage
 import DirectedFlowCutGap.FrozenEpochProbability
@@ -956,6 +961,7 @@ import DirectedFlowCutGap.PhysicalEpochScanProgram
 import DirectedFlowCutGap.PhysicalFairWordProgram
 import DirectedFlowCutGap.PhysicalIntegerRounding
 import DirectedFlowCutGap.PhysicalIntegerRoundingCost
+import DirectedFlowCutGap.PhysicalLineStorage
 import DirectedFlowCutGap.PhysicalOriginalInputCompleteness
 import DirectedFlowCutGap.PhysicalOriginalInputSolvers
 import DirectedFlowCutGap.PhysicalPairedEdge

@@ -753,4 +753,28 @@ theorem wire_terminal_row_polynomial : ∃ p : Polynomial ℕ,
   rw [same,eval_add,eval_comp]
   omega
 
+/-- The actual serialized line input has a polynomial length in the accepted
+original edge source, including inputs with padded rational fields. -/
+theorem serialized_line_length : ∃ p : Polynomial ℕ,
+    ∀ {n : ℕ} {D : EncodedEdgeInput.Input n} {source : Bits},
+      (PhysicalSourceInputJoin.edge source).1=some ⟨n,D⟩ →
+      let prices := (PhysicalBinaryEdgeWire.decodeWithCost D).1
+      let line := (PhysicalAmplifiedBinaryEdge.lineWithCost prices).1
+      (BinarySourceSerialization.run line).1.length ≤ p.eval source.length := by
+  let pad : Polynomial ℕ := 3*X+1
+  refine ⟨lineEncodingBudget.comp pad,?_⟩
+  intro n D source stored
+  have found : (ChargedSourceAssembly.edge source).1=some ⟨n,D⟩ := by
+    rwa [ChargedSourceAssembly.edge_value,← PhysicalSourceInputJoin.edge_value]
+  obtain ⟨dim,demands,fields⟩ := ChargedSourceAssembly.edge_dimensions found
+  let prices := (PhysicalBinaryEdgeWire.decodeWithCost D).1
+  let line := (PhysicalAmplifiedBinaryEdge.lineWithCost prices).1
+  have cap : n+prices.demands.length+(source.length+1)+0 ≤ pad.eval source.length := by
+    change n+D.demands.length+(source.length+1)+0 ≤ _
+    simp only [pad,eval_add,eval_mul,eval_ofNat,eval_one,eval_X]
+    omega
+  change (BinarySourceSerialization.run line).1.length ≤ _
+  rw [BinarySourceSerialization.run_value,eval_comp]
+  exact (line_encoding_length prices 0 (Nat.succ_pos _) (decoded_widths D fields)).trans (eval_mono _ cap)
+
 end DirectedFlowCutGap.PaidDirectEdgeWire
