@@ -45,21 +45,33 @@ def runWithTerminalWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
   let source := PhysicalSourceReadback.runWithTerminalCharge D
   (runFromSource κ mode D source.1 tape,source.2)
 
-def runWithTerminalScalarWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+private def runWithTerminalAmplificationWork {n : ℕ} (measureSelection : Bool) (κ : ℕ)
+    (mode : ChargedVertexModes.Mode)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) : Read (Result n) × ℕ :=
   let source := PhysicalSourceReadback.runWithTerminalCharge D
   let controls := BinarySolverOuterControls.vertex n κ
   match source.1 with
   | none => ((none,controls.paid),source.2)
   | some (plan,dispatch,reader) =>
-      let r := PaidVertexAmplification.runWithPlanScalarWork D (PaidVertexRounding.runner mode)
+      let amplify := match measureSelection with
+        | true => @PaidVertexAmplification.runWithPlanSelectionWork n
+        | false => @PaidVertexAmplification.runWithPlanScalarWork n
+      let r := amplify D (PaidVertexRounding.runner mode)
         controls.draws controls.extra controls.confidence plan dispatch reader tape
       ((r.1.1.map (addControls controls.paid),controls.paid+dispatch+reader+r.1.2),source.2+r.2)
+
+def runWithTerminalScalarWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) : Read (Result n) × ℕ :=
+  runWithTerminalAmplificationWork false κ mode D tape
+
+def runWithTerminalSelectionWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) : Read (Result n) × ℕ :=
+  runWithTerminalAmplificationWork true κ mode D tape
 
 theorem run_terminal_scalar_reference {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
     (runWithTerminalScalarWork κ mode D tape).1=(runWithTerminalWork κ mode D tape).1 := by
-  simp only [runWithTerminalScalarWork,runWithTerminalWork,runFromSource]
+  simp only [runWithTerminalScalarWork,runWithTerminalAmplificationWork,runWithTerminalWork,runFromSource]
   cases (PhysicalSourceReadback.runWithTerminalCharge D).1 with
   | none => rfl
   | some input =>
@@ -72,7 +84,7 @@ theorem run_terminal_scalar_paid {n B : ℕ} (κ : ℕ) (mode : ChargedVertexMod
     (runWithTerminalScalarWork κ mode D tape).2 ≤ (runWithTerminalWork κ mode D tape).2+
       (((BinarySolverOuterControls.vertex n κ).extra+2)*PaidVertexAmplification.sampleControlBudget B+1) := by
   let controls := BinarySolverOuterControls.vertex n κ
-  simp only [runWithTerminalScalarWork,runWithTerminalWork,runFromSource] at width ⊢
+  simp only [runWithTerminalScalarWork,runWithTerminalAmplificationWork,runWithTerminalWork,runFromSource] at width ⊢
   cases h : (PhysicalSourceReadback.runWithTerminalCharge D).1 with
   | none => exact Nat.le_add_right _ _
   | some input =>
@@ -86,6 +98,38 @@ theorem run_terminal_scalar_paid {n B : ℕ} (κ : ℕ) (mode : ChargedVertexMod
     exact Nat.add_le_add_left (PaidVertexAmplification.runWithPlanScalarWork_paid D
       (PaidVertexRounding.runner mode) controls.draws controls.extra controls.confidence plan
       dispatch reader tape amp) _
+
+theorem run_terminal_selection_reference {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
+    (runWithTerminalSelectionWork κ mode D tape).1=(runWithTerminalScalarWork κ mode D tape).1 := by
+  simp only [runWithTerminalSelectionWork,runWithTerminalScalarWork,runWithTerminalAmplificationWork]
+  cases (PhysicalSourceReadback.runWithTerminalCharge D).1 with
+  | none => rfl
+  | some input =>
+    obtain ⟨plan,dispatch,reader⟩ := input
+    simp only [PaidVertexAmplification.runWithPlanSelectionWork_reference]
+
+theorem run_terminal_selection_paid {n B : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits)
+    (width : (runWithTerminalScalarWork κ mode D tape).1.2.size ≤ B) :
+    (runWithTerminalSelectionWork κ mode D tape).2 ≤ (runWithTerminalScalarWork κ mode D tape).2+
+      BinaryCutPriceSelection.minimumControlBudget (BinarySolverOuterControls.vertex n κ).extra
+        (BinaryCutPriceSelection.fieldControlBudget n) B := by
+  let controls := BinarySolverOuterControls.vertex n κ
+  rw [run_terminal_scalar_reference] at width
+  simp only [runWithTerminalSelectionWork,runWithTerminalScalarWork,runWithTerminalAmplificationWork]
+  cases h : (PhysicalSourceReadback.runWithTerminalCharge D).1 with
+  | none => exact Nat.le_add_right _ _
+  | some input =>
+    obtain ⟨plan,dispatch,reader⟩ := input
+    simp only [runWithTerminalWork,runFromSource,h] at width
+    let old := PaidVertexAmplification.runWithPlan D (PaidVertexRounding.runner mode)
+      controls.draws controls.extra controls.confidence plan dispatch reader tape
+    change (controls.paid+dispatch+reader+old.2).size ≤ B at width
+    have retained : old.2.size ≤ B := (Nat.size_le_size (Nat.le_add_left _ _)).trans width
+    have bound := PaidVertexAmplification.runWithPlanSelectionWork_paid D (PaidVertexRounding.runner mode)
+      controls.draws controls.extra controls.confidence plan dispatch reader tape retained
+    simpa only [Nat.add_assoc] using Nat.add_le_add_left bound (PhysicalSourceReadback.runWithTerminalCharge D).2
 
 theorem runWithTerminalWork_comparison {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) :

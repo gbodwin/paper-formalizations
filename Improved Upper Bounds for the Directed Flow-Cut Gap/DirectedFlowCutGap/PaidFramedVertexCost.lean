@@ -393,4 +393,72 @@ theorem vertex_terminal_scalar_polynomial : ∃ p : Polynomial ℕ,
     _ = old.1.2+old.2.1+old.2.2+arithmetic.eval x := by ac_rfl
     _ ≤ _ := Nat.add_le_add_right all _
 
+def vertexWithTerminalSelectionWork (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    Read (Σ n,PhysicalAmplifiedVertexSolver.Result n) × (ℕ × ℕ) :=
+  vertexWithFramedRun runWithTerminalSelectionWork κ mode source tape
+
+theorem vertex_terminal_selection_reference (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    let new := vertexWithTerminalSelectionWork κ mode source tape
+    let old := vertexWithTerminalScalarWork κ mode source tape
+    new.1=old.1 ∧ new.2.2=old.2.2 := by
+  simp only [vertexWithTerminalSelectionWork,vertexWithTerminalScalarWork,vertexWithFramedRun]
+  cases (PhysicalSourceInputJoin.vertexWithFramingRecords source).1.1 with
+  | none => exact ⟨rfl,True.intro⟩
+  | some encoded =>
+    obtain ⟨n,D⟩ := encoded
+    exact ⟨by simp only [run_terminal_selection_reference],True.intro⟩
+
+theorem vertex_terminal_selection_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let r := vertexWithTerminalSelectionWork κ mode source tape
+      r.1.2+r.2.1+r.2.2 ≤ p.eval (source.length+κ) := by
+  obtain ⟨paid,hPaid⟩ := vertex_terminal_scalar_polynomial
+  let draws : Polynomial ℕ := (X+2)*X
+  let selection := BinaryCutPriceSelection.minimumControlBudget draws
+    (BinaryCutPriceSelection.fieldControlBudget X) paid
+  refine ⟨paid+selection,fun κ mode source tape => ?_⟩
+  let x := source.length+κ
+  let old := vertexWithTerminalScalarWork κ mode source tape
+  let new := vertexWithTerminalSelectionWork κ mode source tape
+  have prior : old.1.2+old.2.1+old.2.2 ≤ paid.eval x := hPaid κ mode source tape
+  have same := vertex_terminal_selection_reference κ mode source tape
+  change new.1=old.1 ∧ new.2.2=old.2.2 at same
+  have additional : new.2.1 ≤ old.2.1+selection.eval x := by
+    unfold new old vertexWithTerminalSelectionWork vertexWithTerminalScalarWork vertexWithFramedRun
+    dsimp only
+    rw [PhysicalSourceInputJoin.vertex_framing_records_value]
+    cases parsed : (PhysicalSourceInputJoin.vertex source).1 with
+    | none => exact Nat.zero_le _
+    | some encoded =>
+      obtain ⟨n,D⟩ := encoded
+      let run := runWithTerminalScalarWork κ mode D tape
+      have initialFee : run.1.2 ≤ old.1.2 := by
+        unfold old vertexWithTerminalScalarWork vertexWithFramedRun
+        dsimp only
+        rw [PhysicalSourceInputJoin.vertex_framing_records_value,parsed]
+        exact Nat.le_add_left _ _
+      have fee : run.1.2.size ≤ paid.eval x :=
+        (BinaryNaturalOperations.size_le_self _).trans
+          (initialFee.trans ((Nat.le_add_right _ _).trans ((Nat.le_add_right _ _).trans prior)))
+      have stored : (ChargedSourceAssembly.vertex source).1=some ⟨n,D⟩ := by
+        rwa [ChargedSourceAssembly.vertex_value,← PhysicalSourceInputJoin.vertex_value]
+      have dim := (ChargedSourceAssembly.vertex_dimensions stored).1.trans (Nat.le_add_right source.length κ)
+      have rounds : (BinarySolverOuterControls.vertex n κ).extra ≤ draws.eval x := by
+        rw [BinarySolverOuterControls.vertex_extra]
+        simp only [draws,eval_add,eval_mul,eval_X,eval_ofNat]
+        exact (exponent_le n κ).trans (Nat.mul_le_mul (Nat.add_le_add_right dim 2) (Nat.le_add_left _ _))
+      change _ ≤ run.2+selection.eval x
+      apply (run_terminal_selection_paid κ mode D tape fee).trans
+      simp only [selection,BinaryCutPriceSelection.minimumControlBudget_eval,
+        BinaryCutPriceSelection.fieldControlBudget_eval,eval_X]
+      exact Nat.add_le_add_left (BinaryCutPriceSelection.minimumControlBudget_mono rounds
+        (BinaryCutPriceSelection.fieldControlBudget_mono dim) le_rfl) _
+  change new.1.2+new.2.1+new.2.2 ≤ (paid+selection).eval x
+  rw [same.1,same.2,eval_add]
+  calc
+    _ ≤ old.1.2+(old.2.1+selection.eval x)+old.2.2 :=
+      Nat.add_le_add_right (Nat.add_le_add_left additional _) _
+    _ = old.1.2+old.2.1+old.2.2+selection.eval x := by ac_rfl
+    _ ≤ _ := Nat.add_le_add_right prior _
+
 end DirectedFlowCutGap.PaidFramedVertexWire

@@ -165,12 +165,42 @@ theorem samplesWithCharges_paid {A : Type} (one : Bits → Read ((A × ℕ) × B
       unfold sampleControlBudget at remaining ⊢
       omega
 
-private def finish {n : ℕ} (costs : Row n) (extra setup dispatch readback : ℕ)
-    (cuts : Fin (extra+1) → Output n × ℕ) (rest : Bits) : Read (Result n) :=
-  let winner := BinaryCutPriceSelection.minimum (BinaryCutPriceSelection.cutScore costs) extra (fun i => (cuts i).1)
+private def finishWithWinner {n : ℕ} (extra setup dispatch readback : ℕ)
+    (cuts : Fin (extra+1) → Output n × ℕ) (rest : Bits)
+    (winner : BinaryCutPriceSelection.Choice (Output n)) : Read (Result n) :=
   let paid := (List.ofFn fun i => (cuts i).2).sum
   let copy := 20*(extra+1)^2+5
   (some ⟨winner.value,rest,dispatch,readback,paid+winner.charge+20*(extra+1)^2+5+setup⟩,winner.charge+copy)
+
+private def finish {n : ℕ} (costs : Row n) (extra setup dispatch readback : ℕ)
+    (cuts : Fin (extra+1) → Output n × ℕ) (rest : Bits) : Read (Result n) :=
+  let winner := BinaryCutPriceSelection.minimum (BinaryCutPriceSelection.cutScore costs) extra (fun i => (cuts i).1)
+  finishWithWinner extra setup dispatch readback cuts rest winner
+
+private def finishWithSelectionWork {n : ℕ} (costs : Row n) (extra setup dispatch readback : ℕ)
+    (cuts : Fin (extra+1) → Output n × ℕ) (rest : Bits) : Read (Result n) × ℕ :=
+  let checked := BinaryCutPriceSelection.minimumWithControl
+    (BinaryCutPriceSelection.cutScoreWithControl costs) extra (fun i => (cuts i).1)
+  (finishWithWinner extra setup dispatch readback cuts rest checked.1,checked.2)
+
+private theorem finishSelection_reference {n : ℕ} (costs : Row n) (extra setup dispatch readback : ℕ)
+    (cuts : Fin (extra+1) → Output n × ℕ) (rest : Bits) :
+    (finishWithSelectionWork costs extra setup dispatch readback cuts rest).1 =
+      finish costs extra setup dispatch readback cuts rest := by
+  simp only [finishWithSelectionWork,finish,BinaryCutPriceSelection.minimumWithControl_value,
+    BinaryCutPriceSelection.cutScore_control_value]
+
+private theorem finishSelection_paid {n B : ℕ} (costs : Row n) (extra setup dispatch readback : ℕ)
+    (cuts : Fin (extra+1) → Output n × ℕ) (rest : Bits)
+    (width : (finish costs extra setup dispatch readback cuts rest).2.size ≤ B) :
+    (finishWithSelectionWork costs extra setup dispatch readback cuts rest).2 ≤
+      BinaryCutPriceSelection.minimumControlBudget extra (BinaryCutPriceSelection.fieldControlBudget n) B := by
+  let score := BinaryCutPriceSelection.cutScoreWithControl costs
+  apply BinaryCutPriceSelection.minimumWithControl_paid score extra (fun i => (cuts i).1)
+    (BinaryCutPriceSelection.cutScore_control_paid costs)
+  simp only [score,BinaryCutPriceSelection.cutScore_control_value]
+  apply (Nat.size_le_size ?_).trans width
+  exact Nat.le_add_right _ _
 
 private theorem finish_value {n : ℕ} (costs : Row n) (extra setup dispatch readback : ℕ)
     (cuts : Fin (extra+1) → Output n × ℕ) (rest : Bits) :
@@ -272,6 +302,63 @@ theorem runWithPlanScalarWork_paid {n B : ℕ} (D : BinaryFractionalGuesses.Inpu
   rw [Nat.add_mul,Nat.one_mul]
   unfold sampleControlBudget at before ⊢
   omega
+
+/-- Count the selected inputs and the binary fee sums in the same
+successful amplifier. Failed tape walks never visit the selector. -/
+def runWithPlanSelectionWork {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback : ℕ) (tape : Bits) : Read (Result n) × ℕ :=
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  let all := samplesWithCharges (PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan) (extra+1) tape
+  let chosen : Read (Result n) × ℕ := match all.1.1 with
+    | none => (Read.failure,0)
+    | some (cuts,rest) => finishWithSelectionWork D.costs extra setup.paid dispatch readback cuts rest
+  let selected := BinaryNaturalOperations.add all.1.2 chosen.1.2
+  let total := BinaryNaturalOperations.add setup.paid selected.1
+  ((chosen.1.1,total.1),all.2+selected.2+total.2+8+chosen.2)
+
+theorem runWithPlanSelectionWork_reference {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback : ℕ) (tape : Bits) :
+    (runWithPlanSelectionWork D round roundBound extra confidence plan dispatch readback tape).1 =
+      (runWithPlanScalarWork D round roundBound extra confidence plan dispatch readback tape).1 := by
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  let one := PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan
+  simp only [runWithPlanSelectionWork,runWithPlanScalarWork]
+  cases (samplesWithCharges one (extra+1) tape).1.1 with
+  | none => rfl
+  | some run =>
+    obtain ⟨cuts,rest⟩ := run
+    simp only [finishSelection_reference]
+
+theorem runWithPlanSelectionWork_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback : ℕ) (tape : Bits)
+    (width : (runWithPlan D round roundBound extra confidence plan dispatch readback tape).2.size ≤ B) :
+    (runWithPlanSelectionWork D round roundBound extra confidence plan dispatch readback tape).2 ≤
+      (runWithPlanScalarWork D round roundBound extra confidence plan dispatch readback tape).2+
+        BinaryCutPriceSelection.minimumControlBudget extra (BinaryCutPriceSelection.fieldControlBudget n) B := by
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  let one := PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan
+  let all := samplesWithCharges one (extra+1) tape
+  simp only [runWithPlanSelectionWork,runWithPlanScalarWork]
+  cases seen : all.1.1 with
+  | none =>
+    simp only [Nat.add_zero]
+    exact Nat.le_add_right _ _
+  | some run =>
+    obtain ⟨cuts,rest⟩ := run
+    simp only [finishSelection_reference]
+    let chosen := finish D.costs extra setup.paid dispatch readback cuts rest
+    have earlier : (samples one (extra+1) tape).1=some (cuts,rest) :=
+      (congrArg Prod.fst (samplesWithCharges_reference one (extra+1) tape)).symm.trans seen
+    have small : chosen.2 ≤ (runWithPlan D round roundBound extra confidence plan dispatch readback tape).2 := by
+      simp only [runWithPlan,bind_charge]
+      rw [show (samples one (extra+1) tape).1=some (cuts,rest) from earlier]
+      simp only [Option.map_some,Option.getD_some]
+      exact (Nat.le_add_left _ _).trans (Nat.le_add_left _ _)
+    exact Nat.add_le_add_left (finishSelection_paid D.costs extra setup.paid dispatch readback cuts rest
+      ((Nat.size_le_size small).trans width)) _
 
 theorem runWithPlan_value {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : PaidVertexSampling.Runner n)
     (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n) (dispatch readback : ℕ) (tape : Bits) :

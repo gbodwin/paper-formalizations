@@ -1,5 +1,8 @@
 import DirectedFlowCutGap.EncodedBinarySampling
 import DirectedFlowCutGap.BinaryFractionalRows
+import DirectedFlowCutGap.BinaryArrayBatch
+import DirectedFlowCutGap.BinaryVectorAccess
+import DirectedFlowCutGap.BinaryNaturalOperations
 
 /-!
 # Binary rational arithmetic for comparing repeated cuts
@@ -112,6 +115,159 @@ theorem cutScore_charge {n : ℕ} (costs : Row n) (a : EncodedVertexSolver.Outpu
   · exact ⟨⟨by simp [cutScore, zero], by simp [cutScore, zero]⟩, Nat.zero_le _⟩
   · exact maskScore_charge costs _ hB hc
   · exact ⟨⟨by simp [cutScore, zero], by simp [cutScore, zero]⟩, Nat.zero_le _⟩
+
+private def fieldWithControl {n : ℕ} (costs : Row n) (mask : Flags n) (i : Fin n) :
+    (Fraction × ℕ) × ℕ :=
+  let keep := BinaryVectorAccess.read mask i
+  if keep.1 then
+    let price := BinaryVectorAccess.read costs i
+    ((price.1,0),keep.2+price.2+4)
+  else ((zero,0),keep.2+4)
+
+private theorem field_value {n : ℕ} (costs : Row n) (mask : Flags n) (i : Fin n) :
+    (fieldWithControl costs mask i).1=((if mask[i.val] then get costs i else zero),0) := by
+  simp only [fieldWithControl,BinaryVectorAccess.read_value,BinaryFractionalRows.get]
+  split <;> rfl
+
+private theorem field_paid {n : ℕ} (costs : Row n) (mask : Flags n) (i : Fin n) :
+    (fieldWithControl costs mask i).2≤2*BinaryVectorAccess.budget n+4 := by
+  have keep := BinaryVectorAccess.read_paid mask i (BinaryNaturalOperations.size_le_self n)
+  have val := BinaryVectorAccess.read_paid costs i (BinaryNaturalOperations.size_le_self n)
+  unfold fieldWithControl
+  dsimp only
+  split <;> omega
+
+def maskFieldsWithControl {n : ℕ} (costs : Row n) (mask : Flags n) : List Fraction × ℕ :=
+  let stored := BinaryArrayBatch.runWithChildWork (fieldWithControl costs mask)
+  (stored.1.1.toList,stored.1.2+stored.2+2*n+4)
+
+theorem maskFields_value {n : ℕ} (costs : Row n) (mask : Flags n) :
+    (maskFieldsWithControl costs mask).1=fields costs mask := by
+  simp only [maskFieldsWithControl,BinaryArrayBatch.runWithChildWork_value,field_value,
+    Vector.toList_ofFn,fields]
+
+def fieldControlBudget {R : Type*} [Semiring R] (n : R) : R :=
+  8*n+4+BinaryArrayBatch.childCeiling n 0 (2*BinaryVectorAccess.budget n+4)+2*n+4
+
+theorem fieldControlBudget_mono {n m : ℕ} (size : n ≤ m) :
+    fieldControlBudget n ≤ fieldControlBudget m := by
+  unfold fieldControlBudget BinaryArrayBatch.childCeiling BinaryVectorAccess.budget
+  gcongr
+
+theorem maskFields_paid {n : ℕ} (costs : Row n) (mask : Flags n) :
+    (maskFieldsWithControl costs mask).2≤fieldControlBudget n := by
+  have paid := BinaryArrayBatch.runWithChildWork_paid (fieldWithControl costs mask)
+    (cap := 0) (fun i => by simp only [field_value,le_refl]) (field_paid costs mask)
+  let batch := BinaryArrayBatch.runWithChildWork (fieldWithControl costs mask)
+  have stored : batch.1.2=8*n+4 := by
+    simp only [batch,BinaryArrayBatch.runWithChildWork_value,field_value,List.map_ofFn,Function.comp_def,
+      List.ofFn_const,List.sum_replicate,nsmul_zero,Nat.zero_add]
+  change batch.1.2+batch.2+2*n+4≤fieldControlBudget n
+  rw [stored]
+  unfold fieldControlBudget
+  exact Nat.add_le_add_right (Nat.add_le_add_right
+    (Nat.add_le_add_left (paid.trans (BinaryArrayBatch.childBudget_le _ _ _)) _) _) _
+
+/-- Read the reached mask and price slots once before totaling a cut. -/
+def cutScoreWithControl {n : ℕ} (costs : Row n) (out : EncodedVertexSolver.Output n) :
+    (Fraction × ℕ) × ℕ :=
+  match out with
+  | .cut mask =>
+    let data := maskFieldsWithControl costs mask
+    (sum data.1,data.2)
+  | .invalid | .infeasible _ => ((zero,0),0)
+
+theorem cutScore_control_value {n : ℕ} (costs : Row n) (out : EncodedVertexSolver.Output n) :
+    (cutScoreWithControl costs out).1=cutScore costs out := by
+  cases out <;> simp only [cutScoreWithControl,cutScore,maskScore,maskFields_value]
+
+theorem cutScore_control_paid {n : ℕ} (costs : Row n) (out : EncodedVertexSolver.Output n) :
+    (cutScoreWithControl costs out).2≤fieldControlBudget n := by
+  cases out
+  · exact Nat.zero_le _
+  · apply maskFields_paid
+  · exact Nat.zero_le _
+
+/-- Choose the same minimum, counting reached price reads and the binary
+addition of the existing fees. Ties keep the first cut. -/
+def minimumWithControl {A : Type} (score : A → (Fraction × ℕ) × ℕ) :
+    (n : ℕ) → (Fin (n+1) → A) → Choice A × ℕ
+  | 0, samples =>
+    let value := samples 0
+    let price := score value
+    (⟨value,price.1.1,price.1.2⟩,price.2+2)
+  | n+1, samples =>
+    let value := samples 0
+    let head := score value
+    let tail := minimumWithControl score n (Fin.tail samples)
+    let comp := BinaryRational.le head.1.1 tail.1.price
+    let fees := CachedScalarRead.sumMeasured [head.1.2,tail.1.charge,comp.2]
+    let chosen : Choice A := if comp.1 then ⟨value,head.1.1,fees.1⟩ else ⟨tail.1.value,tail.1.price,fees.1⟩
+    (chosen,head.2+tail.2+fees.2+8)
+
+theorem minimumWithControl_value {A : Type} (score : A → (Fraction × ℕ) × ℕ) (n : ℕ)
+    (samples : Fin (n+1) → A) :
+    (minimumWithControl score n samples).1=minimum (fun a => (score a).1) n samples := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    simp only [minimumWithControl,minimum,ih,CachedScalarRead.sum_value,List.sum_cons,List.sum_nil,
+      Nat.add_zero,Nat.add_assoc]
+
+def minimumControlBudget {R : Type*} [Semiring R] (n childCap B : R) : R :=
+  (n+1)*(childCap+3*(96*(B+2)^2+4)+9)
+
+theorem minimumControlBudget_mono {n m c C b B : ℕ} (cycles : n ≤ m) (children : c ≤ C) (width : b ≤ B) :
+    minimumControlBudget n c b ≤ minimumControlBudget m C B := by
+  unfold minimumControlBudget
+  gcongr
+
+theorem minimumWithControl_paid {A : Type} (score : A → (Fraction × ℕ) × ℕ)
+    (n : ℕ) (samples : Fin (n+1) → A) {childCap B : ℕ}
+    (each : ∀ a, (score a).2 ≤ childCap)
+    (width : (minimum (fun a => (score a).1) n samples).charge.size≤B) :
+    (minimumWithControl score n samples).2 ≤ minimumControlBudget n childCap B := by
+  induction n with
+  | zero =>
+    have head := each (samples 0)
+    simp only [minimumWithControl,minimumControlBudget,Nat.zero_add,Nat.one_mul]
+    omega
+  | succ n ih =>
+    let head := score (samples 0)
+    let tail := minimumWithControl score n (Fin.tail samples)
+    let comp := BinaryRational.le head.1.1 tail.1.price
+    let fees : List ℕ := [head.1.2,tail.1.charge,comp.2]
+    have earlier : tail.1=minimum (fun a => (score a).1) n (Fin.tail samples) :=
+      minimumWithControl_value score n (Fin.tail samples)
+    have total : fees.sum=(minimum (fun a => (score a).1) (n+1) samples).charge := by
+      simp only [fees,minimum,head,comp,earlier,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc]
+      split <;> rfl
+    have bounded : fees.sum.size≤B := by rw [total]; exact width
+    have tailWidth : (minimum (fun a => (score a).1) n (Fin.tail samples)).charge.size≤B := by
+      rw [← earlier]
+      apply (Nat.size_le_size ?_).trans bounded
+      simp only [fees,List.sum_cons,List.sum_nil,Nat.add_zero]
+      omega
+    have more : tail.2 ≤ minimumControlBudget n childCap B := ih (Fin.tail samples) tailWidth
+    have sum : (CachedScalarRead.sumMeasured fees).2≤3*(96*(B+2)^2+4)+1 := by
+      simpa only [fees,List.length_cons,List.length_nil] using CachedScalarRead.sum_paid fees bounded
+    have headPaid : head.2≤childCap := each (samples 0)
+    change head.2+tail.2+(CachedScalarRead.sumMeasured fees).2+8≤_
+    unfold minimumControlBudget at more ⊢
+    rw [Nat.add_mul,Nat.one_mul]
+    omega
+
+open Polynomial in
+theorem fieldControlBudget_eval (n : Polynomial ℕ) (x : ℕ) :
+    (fieldControlBudget n).eval x=fieldControlBudget (n.eval x) := by
+  simp only [fieldControlBudget,BinaryArrayBatch.childCeiling,BinaryVectorAccess.budget,
+    eval_add,eval_mul,eval_pow,eval_ofNat,eval_one,eval_zero]
+
+open Polynomial in
+theorem minimumControlBudget_eval (n childCap B : Polynomial ℕ) (x : ℕ) :
+    (minimumControlBudget n childCap B).eval x=
+      minimumControlBudget (n.eval x) (childCap.eval x) (B.eval x) := by
+  simp only [minimumControlBudget,eval_add,eval_mul,eval_pow,eval_ofNat,eval_one]
 
 open FiniteDrawTrees LazyFairBitTrees
 open BinaryDrawTreeExecution (DrawTree)
