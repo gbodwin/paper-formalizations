@@ -33,11 +33,50 @@ def runWithCacheWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : 
 
 theorem runWithCacheWork_reference {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
-    (runWithCacheWork κ mode D tape).1=run κ mode D tape := rfl
+    (runWithCacheWork κ mode D tape).1=run κ mode D tape := by
+  simp only [runWithCacheWork,run,PhysicalSourceReadback.cache_readout_value]
 
 theorem run_cache_work {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
     (runWithCacheWork κ mode D tape).2=(PhysicalSourceReadback.runWithCacheCharge D).2 := rfl
+
+def runWithTerminalWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) : Read (Result n) × ℕ :=
+  let source := PhysicalSourceReadback.runWithTerminalCharge D
+  (runFromSource κ mode D source.1 tape,source.2)
+
+theorem runWithTerminalWork_comparison {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
+    let raw := PhysicalSourceReadback.runWithTerminalCharge D
+    let measured := runWithTerminalWork κ mode D tape
+    measured.1.1.map Result.observe=(run κ mode D tape).1.map Result.observe ∧
+      measured.1.2+measured.2 ≤ (run κ mode D tape).2+
+        (((raw.1.map (fun p => p.2.2)).getD 0)+raw.2) := by
+  let controls := BinarySolverOuterControls.vertex n κ
+  let plan := PhysicalCoverReader.plan (BinaryFractionalGuesses.solveInput D).1
+  obtain ⟨dispatch,oldReader,reader,old,measured,_⟩ := PhysicalSourceReadback.terminal_headers D
+  let before := PaidVertexAmplification.runWithPlan D (PaidVertexRounding.runner mode)
+    controls.draws controls.extra controls.confidence plan dispatch oldReader tape
+  let after := PaidVertexAmplification.runWithPlan D (PaidVertexRounding.runner mode)
+    controls.draws controls.extra controls.confidence plan dispatch reader tape
+  let cached := (PhysicalSourceReadback.runWithTerminalCharge D).2
+  have same := PaidVertexAmplification.runWithPlan_headers D (PaidVertexRounding.runner mode)
+    controls.draws controls.extra controls.confidence plan dispatch oldReader dispatch reader tape
+  have paid : after.2=before.2 :=
+    congrArg (fun q : Option (EncodedVertexSolver.Output n × Bits) × ℕ => q.2) same
+  have observed : after.1.map Result.observe=before.1.map Result.observe :=
+    congrArg (fun q : Option (EncodedVertexSolver.Output n × Bits) × ℕ => q.1) same
+  have unchanged : Result.observe ∘ addControls (n := n) controls.paid=Result.observe := rfl
+  simp only [runWithTerminalWork,run,runFromSource,old,measured,Option.map_some,Option.getD_some]
+  change _ ∧ _ + _ ≤ _ + (reader + _)
+  constructor
+  · change (after.1.map (addControls controls.paid)).map Result.observe =
+      (before.1.map (addControls controls.paid)).map Result.observe
+    simpa only [Option.map_map,unchanged] using observed
+  · change controls.paid+dispatch+reader+after.2+cached ≤
+      controls.paid+dispatch+oldReader+before.2+(reader+cached)
+    rw [paid]
+    omega
 
 theorem run_value {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : BinaryFractionalGuesses.Input n)
     (tape : Bits) : (run κ mode D tape).1=PhysicalAmplifiedBinaryVertex.vertex κ mode D tape := by

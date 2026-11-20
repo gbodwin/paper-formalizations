@@ -182,4 +182,28 @@ theorem runWithPlan_extra {n : ℕ} (D : BinaryFractionalGuesses.Input n) (old n
   runWithPlan_extra_on_rows D old newer roundBound extra confidence plan dispatch readback cap tape same
     (fun _ _ _ _ bits => paid _ _ bits)
 
+/-- Dispatch and readback headers are stored in the result. They do not
+change the selected cut, unread tape, or work of the amplification stage. -/
+theorem runWithPlan_headers {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : PaidVertexSampling.Runner n)
+    (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n) (d r d' r' : ℕ) (tape : Bits) :
+    let before := runWithPlan D round roundBound extra confidence plan d r tape
+    let after := runWithPlan D round roundBound extra confidence plan d' r' tape
+    (after.1.map Result.observe,after.2)=(before.1.map Result.observe,before.2) := by
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  let all := samples (PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan) (extra+1) tape
+  unfold runWithPlan
+  dsimp only
+  change (((all >>= fun (cuts,rest) => finish D.costs extra setup.paid d' r' cuts rest).1.map Result.observe),
+      setup.paid+(all >>= fun (cuts,rest) => finish D.costs extra setup.paid d' r' cuts rest).2) =
+    (((all >>= fun (cuts,rest) => finish D.costs extra setup.paid d r cuts rest).1.map Result.observe),
+      setup.paid+(all >>= fun (cuts,rest) => finish D.costs extra setup.paid d r cuts rest).2)
+  change (((Read.bind all _).1.map Result.observe),setup.paid+(Read.bind all _).2) =
+    (((Read.bind all _).1.map Result.observe),setup.paid+(Read.bind all _).2)
+  unfold Read.bind
+  cases all.1 with
+  | none => rfl
+  | some data =>
+    rcases data with ⟨cuts,rest⟩
+    rfl
+
 end DirectedFlowCutGap.PaidVertexAmplification

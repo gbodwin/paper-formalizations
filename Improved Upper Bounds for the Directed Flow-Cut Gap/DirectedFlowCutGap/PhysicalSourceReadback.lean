@@ -46,19 +46,50 @@ private def readout {C : ℕ} (n : ℕ) (out : BitState C) (physical setup : ℕ
   let result := BinaryCoverReadback.readPlan n out.heap out.registers.d
   result.1.map fun p => (p,physical,result.2+setup)
 
-private def readoutCached {C : ℕ} (n : ℕ) (out : CachedReferenceExecution.FastState C)
+private def readoutWith (reader : (n : ℕ) → CachedReferenceHeap.Store → Bits → Read (Plan n))
+    {C : ℕ} (n : ℕ) (out : CachedReferenceExecution.FastState C)
     (physical setup : ℕ) : Option (Plan n × ℕ × ℕ) :=
-  let read := BinaryCoverReadback.readPlanCached n out.store out.registers.d
+  let read := reader n out.store out.registers.d
   read.1.map fun p => (p,physical,read.2+setup)
 
-def runWithCacheCharge {n : ℕ} (D : BinaryFractionalGuesses.Input n) : Option (Plan n × ℕ × ℕ) × ℕ :=
+private def readoutCached {C : ℕ} (n : ℕ) (out : CachedReferenceExecution.FastState C)
+    (physical setup : ℕ) : Option (Plan n × ℕ × ℕ) :=
+  readoutWith BinaryCoverReadback.readPlanCached n out physical setup
+
+private def runWithReader (reader : (n : ℕ) → CachedReferenceHeap.Store → Bits → Read (Plan n))
+    {n : ℕ} (D : BinaryFractionalGuesses.Input n) : Option (Plan n × ℕ × ℕ) × ℕ :=
   let input := BinarySourceSerialization.run D
   let setup := input.2+(BinarySourceFuel.compute input.1.length).2
   let execution := PhysicalSourceBinaryCache.evaluate D input.1 (BinarySourceSerialization.run_value D)
-  (readoutCached n execution.1.1 execution.1.2 setup,execution.2)
+  (readoutWith reader n execution.1.1 execution.1.2 setup,execution.2)
+
+def runWithCacheCharge {n : ℕ} (D : BinaryFractionalGuesses.Input n) : Option (Plan n × ℕ × ℕ) × ℕ :=
+  runWithReader BinaryCoverReadback.readPlanCached D
+
+/-- One dispatch and one terminal traversal, using the binary access charges
+in the readback header and retaining the separate controller work. -/
+def runWithTerminalCharge {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
+    Option (Plan n × ℕ × ℕ) × ℕ :=
+  runWithReader BinaryCoverReadback.readPlanWithBitCharge D
+
+theorem terminal_cache_value {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
+    (runWithTerminalCharge D).2=(runWithCacheCharge D).2 := rfl
 
 def run {n : ℕ} (D : BinaryFractionalGuesses.Input n) : Option (Plan n × ℕ × ℕ) :=
-  (runWithCacheCharge D).1
+  let input := BinarySourceSerialization.run D
+  let setup := input.2+(BinarySourceFuel.compute input.1.length).2
+  (PhysicalSourceBinaryCache.reference input.1).bind (fun (out,paid) => readoutCached n out paid setup)
+
+theorem cache_readout_value {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
+    (runWithCacheCharge D).1=run D := by
+  let input := BinarySourceSerialization.run D
+  let execution := PhysicalSourceBinaryCache.evaluate D input.1 (BinarySourceSerialization.run_value D)
+  have exactRun : some execution.1 = PhysicalSourceBinaryCache.reference input.1 :=
+    PhysicalSourceBinaryCache.value_eq D input.1 (BinarySourceSerialization.run_value D)
+  unfold run runWithCacheCharge runWithReader
+  dsimp only
+  rw [← exactRun]
+  rfl
 
 /-- Count the source serialization, cached execution and terminal parser on one run. -/
 def runWithBitCharges {n : ℕ} (D : BinaryFractionalGuesses.Input n) : Read (Plan n) × ℕ :=
@@ -69,7 +100,9 @@ def runWithBitCharges {n : ℕ} (D : BinaryFractionalGuesses.Input n) : Read (Pl
 
 theorem metered_plan {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
     (runWithBitCharges D).1.1=(run D).map Prod.fst := by
-  simp only [runWithBitCharges,run,runWithCacheCharge,readoutCached,BinaryCoverReadback.readPlanWithBitCharge_value]
+  rw [← cache_readout_value]
+  simp only [runWithBitCharges,runWithCacheCharge,runWithReader,readoutWith,
+    BinaryCoverReadback.readPlanWithBitCharge_value]
   cases (BinaryCoverReadback.readPlanCached n
     (PhysicalSourceBinaryCache.evaluate D (BinarySourceSerialization.run D).1
       (BinarySourceSerialization.run_value D)).1.1.store
@@ -123,19 +156,35 @@ theorem bitCharges_polynomial : ∃ p : Polynomial ℕ, ∀ {n : ℕ} (D : Binar
   obtain ⟨p, cap⟩ := fits
   exact ⟨p,fun D => (bitCharges_bound D).trans (cap (PhysicalSourceDispatch.input D).length)⟩
 
-private theorem run_cached {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
-    let input := BinarySourceSerialization.run D
-    let setup := input.2+(BinarySourceFuel.compute input.1.length).2
-    run D = (PhysicalSourceBinaryCache.reference input.1).bind
-      (fun (out, paid) => readoutCached n out paid setup) := by
+private theorem terminal_projection {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
+    (runWithTerminalCharge D).1.map (fun p => (p.1,p.2.1)) =
+      (run D).map (fun p => (p.1,p.2.1)) := by
+  rw [← cache_readout_value]
+  simp only [runWithTerminalCharge,runWithCacheCharge,runWithReader,readoutWith,
+    Option.map_map,Function.comp_def,BinaryCoverReadback.readPlanWithBitCharge_value]
+
+open Polynomial in
+theorem terminal_charges_polynomial : ∃ p : Polynomial ℕ, ∀ {n : ℕ} (D : BinaryFractionalGuesses.Input n),
+    ((runWithTerminalCharge D).1.map (fun p => p.2.2)).getD 0+(runWithTerminalCharge D).2 ≤
+      p.eval (PhysicalSourceDispatch.input D).length := by
+  obtain ⟨p,bounded⟩ := bitCharges_polynomial
+  let fuel := BinarySourceFuel.budget PhysicalSourceDispatch.instructionPolynomial
+  refine ⟨p+fuel,fun {n} D => ?_⟩
+  let L := (PhysicalSourceDispatch.input D).length
   let input := BinarySourceSerialization.run D
-  let execution := PhysicalSourceBinaryCache.evaluate D input.1 (BinarySourceSerialization.run_value D)
-  have exactRun : some execution.1 = PhysicalSourceBinaryCache.reference input.1 :=
-    PhysicalSourceBinaryCache.value_eq D input.1 (BinarySourceSerialization.run_value D)
-  unfold run runWithCacheCharge
-  dsimp only
-  rw [← exactRun]
-  rfl
+  let out := PhysicalSourceBinaryCache.evaluate D input.1 (BinarySourceSerialization.run_value D)
+  let read := BinaryCoverReadback.readPlanWithBitCharge n out.1.1.store out.1.1.registers.d
+  have hL : 1 ≤ L := (Nat.succ_le_succ (Nat.zero_le n)).trans (BinarySourceSerialization.input_dimensions D)
+  have atLength : input.1.length=L := congrArg List.length (BinarySourceSerialization.run_value D)
+  have fuelPaid : (BinarySourceFuel.compute input.1.length).2 ≤ fuel.eval L := by
+    simpa only [fuel,BinarySourceFuel.budget_eval,atLength] using BinarySourceFuel.compute_paid hL
+  have stored : read.2+(out.2+input.2) ≤ p.eval L := bounded D
+  change ((read.1.map (fun plan => (plan,out.1.2,read.2+(input.2+(BinarySourceFuel.compute input.1.length).2)))).map
+      (fun t => t.2.2)).getD 0+out.2 ≤ (p+fuel).eval L
+  rw [eval_add]
+  cases readValue : read.1 <;> simp only [Option.map_none,Option.map_some,Option.getD_none,Option.getD_some]
+  · omega
+  · omega
 
 open Polynomial in
 theorem cache_polynomial : ∃ p : Polynomial ℕ, ∀ {n : ℕ} (D : BinaryFractionalGuesses.Input n),
@@ -143,7 +192,7 @@ theorem cache_polynomial : ∃ p : Polynomial ℕ, ∀ {n : ℕ} (D : BinaryFrac
   obtain ⟨p, covered⟩ := PhysicalSourceBinaryCache.polynomial
   refine ⟨p,fun D => ?_⟩
   have cap := covered D (BinarySourceSerialization.run D).1 (BinarySourceSerialization.run_value D)
-  simpa only [runWithCacheCharge,BinarySourceSerialization.run_value] using cap
+  simpa only [runWithCacheCharge,runWithReader,BinarySourceSerialization.run_value] using cap
 
 theorem run_reference {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
     let source := PhysicalSourceDispatch.input D
@@ -152,7 +201,9 @@ theorem run_reference {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
       (PhysicalSourceDispatch.initial source) 0).bind (fun (out,physical) =>
         readout n out physical ((BinarySourceSerialization.run D).2+fuel.2)) := by
   dsimp only
-  rw [run_cached, ← PhysicalCoverExecution.executeCached_eq]
+  unfold run
+  dsimp only
+  rw [← PhysicalCoverExecution.executeCached_eq]
   simp only [PhysicalSourceBinaryCache.reference,PhysicalCoverExecution.executeCached,
     BinarySourceSerialization.run_value]
   generalize CachedReferenceExecution.execute PhysicalSourceDispatch.program
@@ -163,7 +214,7 @@ theorem run_reference {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
   | none => rfl
   | some out =>
     rcases out with ⟨state, paid⟩
-    simp only [Option.bind_some,Option.map_some,BinaryCoverReadback.readPlanCached_eq,readout,readoutCached,
+    simp only [Option.bind_some,Option.map_some,BinaryCoverReadback.readPlanCached_eq,readout,readoutCached,readoutWith,
       CachedReferenceExecution.FastState.freeze]
 
 theorem run_eq {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
@@ -205,5 +256,21 @@ theorem run_eq {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
     exact Nat.add_le_add (Nat.add_le_add hread
       ((BinarySourceSerialization.run_paid D).trans (BinarySourceSerialization.budget_mono Lbound)))
       (BinarySourceFuel.compute_paid (by omega))
+
+theorem terminal_headers {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
+    ∃ dispatch oldReader reader,
+      let plan := PhysicalCoverReader.plan (BinaryFractionalGuesses.solveInput D).1
+      run D=some (plan,dispatch,oldReader) ∧
+        (runWithTerminalCharge D).1=some (plan,dispatch,reader) ∧
+        dispatch ≤ PhysicalSourceDispatch.paidPolynomial.eval (PhysicalSourceDispatch.input D).length := by
+  obtain ⟨dispatch,oldReader,old,dispatchBound,_⟩ := run_eq D
+  have same := terminal_projection D
+  rw [old] at same
+  cases current : (runWithTerminalCharge D).1 with
+  | none => simp only [current,Option.map_none,Option.map_some,reduceCtorEq] at same
+  | some result =>
+    rcases result with ⟨plan,paid,reader⟩
+    simp only [current,Option.map_some,Option.some.injEq,Prod.mk.injEq] at same
+    exact ⟨dispatch,oldReader,reader,old,by rw [same.1,same.2],dispatchBound⟩
 
 end DirectedFlowCutGap.PhysicalSourceReadback

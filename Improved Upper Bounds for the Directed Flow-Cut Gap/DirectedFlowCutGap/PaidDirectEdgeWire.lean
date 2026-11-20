@@ -485,21 +485,28 @@ private theorem runOn_gadgetBoundary_work {n : ℕ} (κ : ℕ) (mode : ChargedVe
       (runWithRunner κ raw (round raw mode) tape).2.2⟩
   rw [parts]
 
-/-- The same literal execution carries the modeled framer records, the
-edge boundary work, and the paid gadget and projection work of reached rounds. -/
-def edgeWithJoinedWork (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+private def edgeWithFramedRun
+    (runner : {n : ℕ} → ℕ → ChargedVertexModes.Mode → EncodedEdgeInput.Input n → Bits →
+      Read (EdgeResult n) × BoundaryWork)
+    (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
     Read (Σ n,EdgeResult n) × (BoundaryWork × ℕ) :=
   let parsed := PhysicalSourceInputJoin.edgeWithFramingRecords source
   let result : Read (Σ n,EdgeResult n) × BoundaryWork := match parsed.1.1 with
     | none => ((none,parsed.1.2),⟨0,0,0⟩)
     | some ⟨n,D⟩ =>
-        let executed := runOnWithGadgetBoundary κ mode D tape
+        let executed := runner κ mode D tape
         ((executed.1.1.map (fun out => ⟨n,out⟩),parsed.1.2+executed.1.2),executed.2)
   (result.1,(result.2,parsed.2))
 
+/-- The same literal execution carries the modeled framer records, the
+edge boundary work, and the paid gadget and projection work of reached rounds. -/
+def edgeWithJoinedWork (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    Read (Σ n,EdgeResult n) × (BoundaryWork × ℕ) :=
+  edgeWithFramedRun runOnWithGadgetBoundary κ mode source tape
+
 theorem edgeWithJoinedWork_paid_value (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
     (edgeWithJoinedWork κ mode source tape).1=edgeWithGadgetWork κ mode source tape := by
-  unfold edgeWithJoinedWork edgeWithGadgetWork edgeWithRunner
+  unfold edgeWithJoinedWork edgeWithFramedRun edgeWithGadgetWork edgeWithRunner
   dsimp only
   rw [PhysicalSourceInputJoin.edge_framing_records_value]
   change _ = Read.bind (PhysicalSourceInputJoin.edge source) _
@@ -512,7 +519,7 @@ theorem edgeWithJoinedWork_paid_value (κ : ℕ) (mode : ChargedVertexModes.Mode
 
 theorem edgeWithJoinedWork_boundary (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
     (edgeWithJoinedWork κ mode source tape).2.1=(edgeWithBoundaryControl κ mode source tape).2 := by
-  unfold edgeWithJoinedWork edgeWithBoundaryControl
+  unfold edgeWithJoinedWork edgeWithFramedRun edgeWithBoundaryControl
   dsimp only
   rw [PhysicalSourceInputJoin.edge_framing_records_value]
   cases (PhysicalSourceInputJoin.edge source).1 with
@@ -527,5 +534,175 @@ theorem edgeWithJoinedWork_frames (κ : ℕ) (mode : ChargedVertexModes.Mode) (s
 theorem edgeWithJoinedWork_value (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
     (edgeWithJoinedWork κ mode source tape).1.1=(edgeWithCost κ mode source tape).1 := by
   rw [edgeWithJoinedWork_paid_value,edgeWithGadgetWork_value]
+
+private theorem finish_headers {n : ℕ} (D : Input n) (setup oldSunk newSunk extra : ℕ)
+    {a b : Read (PhysicalAmplifiedVertexSolver.Result (lineSize n))}
+    (same : b.1.map PhysicalAmplifiedVertexSolver.Result.observe=a.1.map PhysicalAmplifiedVertexSolver.Result.observe)
+    (fee : b.2=a.2) (sunk : newSunk≤oldSunk+extra) :
+    (finish D setup newSunk b).1.map EdgeResult.observe=(finish D setup oldSunk a).1.map EdgeResult.observe ∧
+      (finish D setup newSunk b).2 ≤ (finish D setup oldSunk a).2+extra ∧
+      (finishWithControl D setup newSunk b).2=(finishWithControl D setup oldSunk a).2 := by
+  unfold finish finishWithControl
+  cases first : a.1 <;> cases second : b.1 <;>
+    simp only [first,second,Option.map_none,Option.map_some,Option.some.injEq,reduceCtorEq] at same ⊢
+  · exact ⟨True.intro,by omega,True.intro⟩
+  · rename_i earlier later
+    obtain ⟨output,tape⟩ := Prod.mk.inj same
+    simp only [EdgeResult.observe,output,tape]
+    exact ⟨True.intro,by omega,True.intro⟩
+
+/-- The physical fractional controller runs on the actual encoded line
+input. Dispatch and readback fees describe that execution. -/
+private def runWithPhysicalControl {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) (tape : Bits) :
+    Read (EdgeResult n) × ((ℕ × ℕ) × ℕ) :=
+  let controls := BinarySolverOuterControls.edge n κ
+  let line := PhysicalAmplifiedBinaryEdge.lineWithControl D
+  let physical := PhysicalSourceReadback.runWithTerminalCharge line.1.1
+  let setup := line.1.2+controls.paid
+  let r := match physical.1 with
+    | none => ((none,setup),0)
+    | some (plan,dispatch,readback) =>
+        let sample := PaidVertexAmplification.runWithPlan line.1.1 (roundWithGadgetWork D mode)
+          controls.draws controls.extra controls.confidence plan dispatch readback tape
+        finishWithControl D setup (setup+dispatch+readback) sample
+  (r.1,((line.2,r.2),physical.2))
+
+def runWithPhysicalGadgetWork {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) (tape : Bits) :
+    Read (EdgeResult n) × ℕ :=
+  let r := runWithPhysicalControl κ D mode tape
+  (r.1,r.2.2)
+
+private theorem runWithPhysicalControl_comparison {n : ℕ} (κ : ℕ) (D : Input n)
+    (mode : ChargedVertexModes.Mode) (tape : Bits) :
+    let binary := (PhysicalAmplifiedBinaryEdge.lineWithCost D).1
+    let size := (PhysicalSourceDispatch.input binary).length
+    let raw := PhysicalSourceReadback.runWithTerminalCharge binary
+    let new := runWithPhysicalControl κ D mode tape
+    let old := runWithGadgetWork κ D mode tape
+    new.1.1.map EdgeResult.observe=old.1.map EdgeResult.observe ∧
+      new.1.2 ≤ old.2+PhysicalSourceDispatch.paidPolynomial.eval size+
+        ((raw.1.map (fun p => p.2.2)).getD 0) ∧
+      new.2.1=(runWithRunner κ D (roundWithGadgetWork D mode) tape).2 := by
+  let controls := BinarySolverOuterControls.edge n κ
+  let line := PhysicalAmplifiedBinaryEdge.lineWithCost D
+  let cover := BinaryFractionalGuesses.solveInput line.1
+  let reader := DirectBinaryEdgeWire.read cover.1
+  let setup := line.2+controls.paid
+  obtain ⟨dispatch,_,readback,_,known,dispatchPaid⟩ := PhysicalSourceReadback.terminal_headers line.1
+  have observed := DirectBinaryEdgeWire.read_value cover.1
+  change (PhysicalSourceReadback.runWithTerminalCharge line.1).1 =
+    some (PhysicalCoverReader.plan cover.1,dispatch,readback) at known
+  rw [← observed] at known
+  let old := PaidVertexAmplification.runWithPlan line.1 (roundWithGadgetWork D mode)
+    controls.draws controls.extra controls.confidence reader.1 cover.2 reader.2 tape
+  let fresh := PaidVertexAmplification.runWithPlan line.1 (roundWithGadgetWork D mode)
+    controls.draws controls.extra controls.confidence reader.1 dispatch readback tape
+  have aligned := PaidVertexAmplification.runWithPlan_headers line.1 (roundWithGadgetWork D mode)
+    controls.draws controls.extra controls.confidence reader.1 cover.2 reader.2 dispatch readback tape
+  change (fresh.1.map PhysicalAmplifiedVertexSolver.Result.observe,fresh.2)=
+    (old.1.map PhysicalAmplifiedVertexSolver.Result.observe,old.2) at aligned
+  have sunk : setup+dispatch+readback ≤ setup+cover.2+reader.2+(dispatch+readback) := by omega
+  have fee : fresh.2=old.2 := congrArg (fun (p : Option (EncodedVertexSolver.Output (lineSize n) × Bits) × ℕ) => p.2) aligned
+  have result := finish_headers D setup (setup+cover.2+reader.2) (setup+dispatch+readback)
+    (dispatch+readback) (congrArg Prod.fst aligned) fee sunk
+  have knownControl :
+      (PhysicalSourceReadback.runWithTerminalCharge (PhysicalAmplifiedBinaryEdge.lineWithControl D).1.1).1 =
+        some (reader.1,dispatch,readback) := known
+  unfold runWithPhysicalControl
+  dsimp only
+  rw [knownControl,known]
+  simp only [Option.map_some,Option.getD_some]
+  refine ⟨result.1,result.2.1.trans ?_,?_⟩
+  · exact (Nat.add_le_add_left (Nat.add_le_add_right dispatchPaid readback) _).trans_eq (Nat.add_assoc ..).symm
+  · exact Prod.ext rfl result.2.2
+
+theorem runWithPhysicalGadgetWork_comparison {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) (tape : Bits) :
+    let binary := (PhysicalAmplifiedBinaryEdge.lineWithCost D).1
+    let size := (PhysicalSourceDispatch.input binary).length
+    let raw := PhysicalSourceReadback.runWithTerminalCharge binary
+    let new := runWithPhysicalGadgetWork κ D mode tape
+    let old := runWithGadgetWork κ D mode tape
+    new.1.1.map EdgeResult.observe=old.1.map EdgeResult.observe ∧
+      new.1.2 ≤ old.2+PhysicalSourceDispatch.paidPolynomial.eval size+
+        ((raw.1.map (fun p => p.2.2)).getD 0) :=
+  let compared := runWithPhysicalControl_comparison κ D mode tape
+  ⟨compared.1,compared.2.1⟩
+
+theorem physical_line_cache_work {n : ℕ} (κ : ℕ) (D : Input n) (mode : ChargedVertexModes.Mode) (tape : Bits) :
+    (runWithPhysicalGadgetWork κ D mode tape).2 =
+      (PhysicalSourceReadback.runWithTerminalCharge (PhysicalAmplifiedBinaryEdge.lineWithCost D).1).2 := rfl
+
+def runWithPhysicalWork : Runner := fun κ D mode tape =>
+  let result := runWithPhysicalGadgetWork κ D mode tape
+  (result.1.1,result.1.2+result.2)
+
+def edgeWithPhysicalWork (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) : Read (Σ n,EdgeResult n) :=
+  edgeWithRunner runWithPhysicalWork κ mode source tape
+
+def observeWireEdge (r : Σ n,EdgeResult n) : Σ n,EncodedEdgeSolver.Output n × Bits := ⟨r.1,r.2.observe⟩
+
+theorem edgeWithPhysicalWork_observe (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    (edgeWithPhysicalWork κ mode source tape).1.map observeWireEdge=
+      (edgeWithCost κ mode source tape).1.map observeWireEdge := by
+  rw [← edgeWithGadgetWork_value κ mode source tape]
+  simp only [edgeWithPhysicalWork,edgeWithGadgetWork,edgeWithRunner,Read.bind_value]
+  cases (PhysicalSourceInputJoin.edge source).1 with
+  | none => rfl
+  | some encoded =>
+    obtain ⟨n,D⟩ := encoded
+    simp only [Option.bind_some,runOnWithRunner,Option.map_map,Function.comp_def]
+    let raw := (PhysicalBinaryEdgeWire.decodeWithCost D).1
+    have same := (runWithPhysicalGadgetWork_comparison κ raw mode tape).1
+    have lifted := congrArg (Option.map (fun v : EncodedEdgeSolver.Output n × Bits =>
+      (⟨n,v⟩ : Σ m,EncodedEdgeSolver.Output m × Bits))) same
+    simp only [Option.map_map,Function.comp_def] at lifted
+    exact lifted
+
+private def runOnWithPhysicalBoundary {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : EncodedEdgeInput.Input n) (tape : Bits) : Read (EdgeResult n) × BoundaryWork :=
+  let prices := PhysicalBinaryEdgeWire.decodeWithControl D
+  let r := runWithPhysicalControl κ prices.1.1 mode tape
+  ((r.1.1.map (fun out => { out with roundingAndSelection := out.roundingAndSelection+prices.1.2 }),
+    prices.1.2+(r.1.2+r.2.2)), ⟨prices.2,r.2.1.1,r.2.1.2⟩)
+
+private theorem runOn_physical_boundary {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : EncodedEdgeInput.Input n) (tape : Bits) :
+    (runOnWithPhysicalBoundary κ mode D tape).2=(runOnWithGadgetBoundary κ mode D tape).2 := by
+  let prices := PhysicalBinaryEdgeWire.decodeWithControl D
+  have h := (runWithPhysicalControl_comparison κ prices.1.1 mode tape).2.2
+  exact congrArg (fun a : ℕ × ℕ => (⟨prices.2,a.1,a.2⟩ : BoundaryWork)) h
+
+/-- Keep the original framer and edge boundary work with the measured
+fractional terminal pass and all reached gadget rounds on one source run. -/
+def edgeWithTerminalWork (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    Read (Σ n,EdgeResult n) × (BoundaryWork × ℕ) :=
+  edgeWithFramedRun runOnWithPhysicalBoundary κ mode source tape
+
+theorem edgeWithTerminalWork_paid (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    (edgeWithTerminalWork κ mode source tape).1=edgeWithPhysicalWork κ mode source tape := by
+  unfold edgeWithTerminalWork edgeWithFramedRun edgeWithPhysicalWork edgeWithRunner
+  dsimp only
+  rw [PhysicalSourceInputJoin.edge_framing_records_value]
+  change _ = Read.bind (PhysicalSourceInputJoin.edge source) _
+  unfold Read.bind
+  cases (PhysicalSourceInputJoin.edge source).1 with
+  | none => rfl
+  | some encoded => obtain ⟨n,D⟩ := encoded; rfl
+
+theorem edgeWithTerminalWork_boundary (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    (edgeWithTerminalWork κ mode source tape).2=(edgeWithJoinedWork κ mode source tape).2 := by
+  unfold edgeWithTerminalWork edgeWithJoinedWork edgeWithFramedRun
+  dsimp only
+  cases (PhysicalSourceInputJoin.edgeWithFramingRecords source).1.1 with
+  | none => rfl
+  | some encoded =>
+    obtain ⟨n,D⟩ := encoded
+    exact congrArg (fun a => (a,(PhysicalSourceInputJoin.edgeWithFramingRecords source).2))
+      (runOn_physical_boundary κ mode D tape)
+
+theorem edgeWithTerminalWork_observe (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    (edgeWithTerminalWork κ mode source tape).1.1.map observeWireEdge =
+      (edgeWithCost κ mode source tape).1.map observeWireEdge := by
+  rw [edgeWithTerminalWork_paid,edgeWithPhysicalWork_observe]
 
 end DirectedFlowCutGap.PaidDirectEdgeWire

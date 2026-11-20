@@ -386,4 +386,76 @@ theorem wire_joined_work_polynomial : ∃ p : Polynomial ℕ,
     ((hBoundary κ mode source tape).trans (eval_mono boundary lift)))
     ((addFrame.trans_eq same.symm).trans (eval_mono framing lift))
 
+private noncomputable def lineEncodingBudget : Polynomial ℕ :=
+  let n := X*2+X*X
+  let prices := n+X+n*(2*X)+1
+  2*(prices+n*n+X*(n+n))+3*(n+n+X)+3
+
+private theorem line_encoding_length {n B : ℕ} (D : Input n) (κ : ℕ) (positive : 1 ≤ B)
+    (fits : ∀ u v : Fin n, D.costs[u.val][v.val].num.size ≤ B ∧ D.costs[u.val][v.val].den.size ≤ B) :
+    let line := (PhysicalAmplifiedBinaryEdge.lineWithCost D).1
+    (PhysicalSourceDispatch.input line).length ≤ lineEncodingBudget.eval (n+D.demands.length+B+κ) := by
+  let x := n+D.demands.length+B+κ
+  have hn : n ≤ x := by dsimp only [x]; omega
+  have hd : D.demands.length ≤ x := by dsimp only [x]; omega
+  have hb : B ≤ x := by dsimp only [x]; omega
+  rw [PhysicalAmplifiedBinaryEdge.line_value]
+  refine (PhysicalSourceSizeBounds.line_source_size_le D positive fits).trans ?_
+  simp only [lineEncodingBudget,PhysicalSourceSizeBounds.lineSourceSizeBound,
+    PhysicalSourceSizeBounds.sourceSizeBound,PhysicalEdgeSolver.lineInputSizeBound,lineSize,
+    eval_add,eval_mul,eval_X,eval_ofNat,eval_one]
+  gcongr
+
+theorem run_physical_work_bound : ∃ p : Polynomial ℕ, ∀ {n B : ℕ} (κ : ℕ) (D : Input n)
+    (mode : ChargedVertexModes.Mode) (tape : Bits), 1 ≤ B →
+    (∀ u v : Fin n, D.costs[u.val][v.val].num.size ≤ B ∧ D.costs[u.val][v.val].den.size ≤ B) →
+      (runWithPhysicalWork κ D mode tape).2 ≤ (run κ D mode tape).2+p.eval (n+D.demands.length+B+κ) := by
+  obtain ⟨gadget,hGadget⟩ := run_gadget_work_bound
+  obtain ⟨terminal,hTerminal⟩ := PhysicalSourceReadback.terminal_charges_polynomial
+  let length := lineEncodingBudget
+  let dispatch := PhysicalSourceDispatch.paidPolynomial.comp length
+  refine ⟨gadget+dispatch+terminal.comp length,?_⟩
+  intro n B κ D mode tape positive fits
+  let x := n+D.demands.length+B+κ
+  let binary := (PhysicalAmplifiedBinaryEdge.lineWithCost D).1
+  let s := (PhysicalSourceDispatch.input binary).length
+  let raw := PhysicalSourceReadback.runWithTerminalCharge binary
+  let new := runWithPhysicalGadgetWork κ D mode tape
+  let old := runWithGadgetWork κ D mode tape
+  have len : s ≤ length.eval x := line_encoding_length D κ positive fits
+  have direct : old.2 ≤ (run κ D mode tape).2+gadget.eval x := hGadget κ D mode tape positive fits
+  have phase := (runWithPhysicalGadgetWork_comparison κ D mode tape).2
+  change new.1.2 ≤ old.2+PhysicalSourceDispatch.paidPolynomial.eval s+(raw.1.map (fun p => p.2.2)).getD 0 at phase
+  have fresh : (raw.1.map (fun p => p.2.2)).getD 0+new.2 ≤ terminal.eval (length.eval x) :=
+    (hTerminal binary).trans (eval_mono terminal len)
+  have dispatchPaid : PhysicalSourceDispatch.paidPolynomial.eval s ≤ dispatch.eval x := by
+    simp only [dispatch,eval_comp]
+    exact eval_mono _ len
+  let head := (run κ D mode tape).2+gadget.eval x+dispatch.eval x
+  let reader := (raw.1.map (fun p => p.2.2)).getD 0
+  have paid : new.1.2 ≤ head+reader :=
+    phase.trans (Nat.add_le_add_right (Nat.add_le_add direct dispatchPaid) _)
+  have combined : new.1.2+new.2 ≤ head+terminal.eval (length.eval x) :=
+    ((Nat.add_le_add_right paid new.2).trans_eq (Nat.add_assoc ..)).trans (Nat.add_le_add_left fresh _)
+  change new.1.2+new.2 ≤ (run κ D mode tape).2+(gadget+dispatch+terminal.comp length).eval x
+  simpa only [head,eval_add,eval_comp,Nat.add_assoc] using combined
+
+theorem wire_physical_work_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      (edgeWithPhysicalWork κ mode source tape).2 ≤ p.eval (source.length+κ) :=
+  wire_runner_work_polynomial runWithPhysicalWork run_physical_work_bound
+
+theorem wire_terminal_work_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let r := edgeWithTerminalWork κ mode source tape
+      r.1.2+r.2.1.total+r.2.2 ≤ p.eval (source.length+κ) := by
+  obtain ⟨p,hp⟩ := wire_physical_work_polynomial
+  obtain ⟨q,hq⟩ := wire_joined_work_polynomial
+  refine ⟨p+q,fun κ mode source tape => ?_⟩
+  let previous := edgeWithJoinedWork κ mode source tape
+  have boundary : previous.2.1.total+previous.2.2 ≤ q.eval (source.length+κ) :=
+    (Nat.add_le_add_right (Nat.le_add_left _ _) _).trans (hq κ mode source tape)
+  simp only [edgeWithTerminalWork_paid,edgeWithTerminalWork_boundary,eval_add,Nat.add_assoc]
+  exact Nat.add_le_add (hp κ mode source tape) boundary
+
 end DirectedFlowCutGap.PaidDirectEdgeWire

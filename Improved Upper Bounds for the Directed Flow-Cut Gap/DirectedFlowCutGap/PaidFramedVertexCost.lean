@@ -178,21 +178,34 @@ private theorem joined_framingBudget_eval (s : ℕ) :
       PhysicalSourceInputJoin.framingBudget s := by
   simp only [PhysicalSourceInputJoin.framingBudget,eval_X,eval_add,eval_mul,eval_pow,eval_ofNat,eval_one]
 
-/-- Retain both the framer record count and the cached fractional source
-work from the same paid vertex execution. -/
-def vertexWithJoinedWork (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+private def vertexWithFramedRun
+    (runner : {n : ℕ} → ℕ → ChargedVertexModes.Mode → BinaryFractionalGuesses.Input n → Bits →
+      Read (PhysicalAmplifiedVertexSolver.Result n) × ℕ)
+    (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
     Read (Σ n,PhysicalAmplifiedVertexSolver.Result n) × (ℕ × ℕ) :=
   let parsed := PhysicalSourceInputJoin.vertexWithFramingRecords source
   let executed : Read (Σ n,PhysicalAmplifiedVertexSolver.Result n) × ℕ := match parsed.1.1 with
     | none => ((none,parsed.1.2),0)
     | some ⟨n,D⟩ =>
-        let r := PaidFramedVertexWire.runWithCacheWork κ mode D tape
+        let r := runner κ mode D tape
         ((r.1.1.map (fun out => ⟨n,out⟩),parsed.1.2+r.1.2),r.2)
   (executed.1,(executed.2,parsed.2))
 
+/-- Retain both the framer record count and the cached fractional source
+work from the same paid vertex execution. -/
+def vertexWithJoinedWork (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    Read (Σ n,PhysicalAmplifiedVertexSolver.Result n) × (ℕ × ℕ) :=
+  vertexWithFramedRun runWithCacheWork κ mode source tape
+
+/-- Run the original typed input with the measured terminal reader and
+retain the cache and framing work from that execution. -/
+def vertexWithTerminalWork (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    Read (Σ n,PhysicalAmplifiedVertexSolver.Result n) × (ℕ × ℕ) :=
+  vertexWithFramedRun runWithTerminalWork κ mode source tape
+
 theorem vertexWithJoinedWork_reference (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
     (vertexWithJoinedWork κ mode source tape).1=PaidFramedVertexWire.vertexWithCost κ mode source tape := by
-  unfold vertexWithJoinedWork PaidFramedVertexWire.vertexWithCost
+  unfold vertexWithJoinedWork vertexWithFramedRun PaidFramedVertexWire.vertexWithCost
   dsimp only
   rw [PhysicalSourceInputJoin.vertex_framing_records_value]
   change _ = Read.bind (PhysicalSourceInputJoin.vertex source) _
@@ -212,7 +225,7 @@ theorem vertex_joined_cache_polynomial : ∃ p : Polynomial ℕ,
   obtain ⟨cache,paid⟩ := PhysicalSourceReadback.cache_polynomial
   refine ⟨cache.comp PaidFramedVertexWire.serializedLengthBound,?_⟩
   intro κ mode source tape
-  unfold vertexWithJoinedWork
+  unfold vertexWithJoinedWork vertexWithFramedRun
   dsimp only
   rw [PhysicalSourceInputJoin.vertex_framing_records_value,eval_comp]
   cases exactSource : (PhysicalSourceInputJoin.vertex source).1 with
@@ -239,5 +252,76 @@ theorem vertex_joined_polynomial : ∃ p : Polynomial ℕ,
     (PhysicalIntegerRoundingCost.eval_mono c (Nat.le_add_right source.length κ))
   simp only [eval_add,vertexWithJoinedWork_reference,vertexWithJoinedWork_frames]
   exact Nat.add_le_add (Nat.add_le_add (paid κ mode source tape) cache) frame
+
+def observeWireVertex (r : Σ n,PhysicalAmplifiedVertexSolver.Result n) :
+    Σ n,EncodedVertexSolver.Output n × Bits := ⟨r.1,r.2.observe⟩
+
+private def reachedTerminalWork (source : Bits) : ℕ :=
+  ((PhysicalSourceInputJoin.vertex source).1.map fun ⟨_,D⟩ =>
+    let raw := PhysicalSourceReadback.runWithTerminalCharge D
+    ((raw.1.map (fun p => p.2.2)).getD 0)+raw.2).getD 0
+
+private theorem vertex_terminal_comparison (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    let new := vertexWithTerminalWork κ mode source tape
+    let old := vertexWithCost κ mode source tape
+    new.1.1.map observeWireVertex=old.1.map observeWireVertex ∧
+      new.1.2+new.2.1 ≤ old.2+reachedTerminalWork source := by
+  unfold vertexWithTerminalWork vertexWithFramedRun vertexWithCost reachedTerminalWork
+  dsimp only
+  rw [PhysicalSourceInputJoin.vertex_framing_records_value]
+  let earlier (encoded : Σ n,BinaryFractionalGuesses.Input n) :
+      Read (Σ n,PhysicalAmplifiedVertexSolver.Result n) :=
+    let r := run κ mode encoded.2 tape
+    (r.1.map (fun out => ⟨encoded.1,out⟩),r.2)
+  change _ = (Read.bind (PhysicalSourceInputJoin.vertex source) earlier).1.map observeWireVertex ∧
+    _ ≤ (Read.bind (PhysicalSourceInputJoin.vertex source) earlier).2 + _
+  unfold Read.bind
+  cases found : (PhysicalSourceInputJoin.vertex source).1 with
+  | none => exact ⟨rfl,by simp⟩
+  | some encoded =>
+    obtain ⟨n,D⟩ := encoded
+    have h := runWithTerminalWork_comparison κ mode D tape
+    let parsed := (PhysicalSourceInputJoin.vertex source).2
+    let new := runWithTerminalWork κ mode D tape
+    let old := run κ mode D tape
+    change new.1.1.map PhysicalAmplifiedVertexSolver.Result.observe =
+      old.1.map PhysicalAmplifiedVertexSolver.Result.observe ∧ _ at h
+    constructor
+    · have lifted := congrArg (Option.map (fun v : EncodedVertexSolver.Output n × Bits =>
+        (⟨n,v⟩ : Σ i, EncodedVertexSolver.Output i × Bits))) h.1
+      simpa only [earlier,Option.map_map,Function.comp_def,observeWireVertex] using lifted
+    · simpa only [Option.map_some,Option.getD_some,Nat.add_assoc] using Nat.add_le_add_left h.2 parsed
+
+theorem vertexWithTerminalWork_observe (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    (vertexWithTerminalWork κ mode source tape).1.1.map observeWireVertex =
+      (vertexWithCost κ mode source tape).1.map observeWireVertex :=
+  (vertex_terminal_comparison κ mode source tape).1
+
+theorem vertex_terminal_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let r := vertexWithTerminalWork κ mode source tape
+      r.1.2+r.2.1+r.2.2 ≤ p.eval (source.length+κ) := by
+  obtain ⟨prior,paid⟩ := wire_polynomial
+  obtain ⟨terminal,hterminal⟩ := PhysicalSourceReadback.terminal_charges_polynomial
+  let framing := PhysicalSourceInputJoin.framingBudget (X : Polynomial ℕ)
+  refine ⟨prior+terminal.comp serializedLengthBound+framing,?_⟩
+  intro κ mode source tape
+  let x := source.length+κ
+  have lift : source.length ≤ x := Nat.le_add_right _ _
+  have frame : (vertexWithTerminalWork κ mode source tape).2.2 ≤ framing.eval x :=
+    ((PhysicalSourceInputJoin.framing_records_bound source).1.trans_eq
+      (joined_framingBudget_eval source.length).symm).trans (eval_mono framing lift)
+  have reader : reachedTerminalWork source ≤ terminal.eval (serializedLengthBound.eval x) := by
+    unfold reachedTerminalWork
+    cases sourceValue : (PhysicalSourceInputJoin.vertex source).1 with
+    | none => exact Nat.zero_le _
+    | some encoded =>
+      obtain ⟨n,D⟩ := encoded
+      exact (hterminal D).trans
+        (eval_mono terminal ((serialized_length_le sourceValue).trans (eval_mono serializedLengthBound lift)))
+  have compared := (vertex_terminal_comparison κ mode source tape).2
+  change _ ≤ (prior+terminal.comp serializedLengthBound+framing).eval x
+  rw [eval_add,eval_add,eval_comp]
+  exact Nat.add_le_add (compared.trans (Nat.add_le_add (paid κ mode source tape) reader)) frame
 
 end DirectedFlowCutGap.PaidFramedVertexWire
