@@ -532,4 +532,126 @@ theorem vertex_terminal_stream_polynomial : ∃ p : Polynomial ℕ,
     _ = old.1.2+old.2.1+old.2.2+retained.eval x := by ac_rfl
     _ ≤ _ := Nat.add_le_add_right prior _
 
+set_option maxHeartbeats 1600000 in
+theorem run_row_work_overhead : ∃ p : Polynomial ℕ, ∀ {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits),
+    (runWithTerminalRowWork κ mode D tape).2 ≤ (runWithTerminalStreamWork κ mode D tape).2+p.eval (vertexSize D κ) := by
+  obtain ⟨raw,hRaw⟩ := PaidVertexRounding.polynomial_bound
+  obtain ⟨phase,hPhase⟩ := PhysicalVertexRoundingCost.polynomial_bound
+  obtain ⟨p,hp⟩ := PaidVertexAmplification.row_work_overhead raw (phase+PhysicalAmplifiedBinaryVertex.arithmeticPolynomial)
+  let wire : Polynomial ℕ := 2*(X+X*X+X*(X+X))+3*(X+X+X)+3
+  let exponent : Polynomial ℕ := (X+2)*X+1
+  let pad := X+wire+exponent+drawPolynomial X
+  refine ⟨p.comp pad,?_⟩
+  intro n κ mode D tape
+  let y := vertexSize D κ
+  let x := pad.eval y
+  let z := trialEnvelope.eval x+x
+  let e := confidenceExponent n κ
+  let B := ChargedVertexModes.priceWidth D
+  let T := trialLimit (BinaryFractionalGuesses.decodeInput D) (roundDrawBound n) e (e+1)
+  have hy : y ≤ x := by simp only [x,pad,eval_add,eval_X]; omega
+  have hx : x ≤ z := Nat.le_add_left _ _
+  have hn : n ≤ y := by dsimp only [y,vertexSize]; omega
+  have hb : B ≤ y := by dsimp only [B,y,vertexSize]; omega
+  have hd : D.demands.length ≤ y := by dsimp only [y,vertexSize]; omega
+  have confidence : κ ≤ y := by dsimp only [y,vertexSize]; omega
+  have he : e+1 ≤ x := by
+    have h := Nat.add_le_add_right ((exponent_le n κ).trans (Nat.mul_le_mul (Nat.add_le_add_right hn 2) confidence)) 1
+    have next : exponent.eval y ≤ x := by simp only [x,pad,eval_add,eval_X]; omega
+    simp only [exponent,eval_add,eval_mul,eval_ofNat,eval_X,eval_one] at next
+    exact h.trans next
+  have draw : roundDrawBound n ≤ x := by
+    have bound : (drawPolynomial X).eval y ≤ x := by simp only [x,pad,eval_add,eval_X]; omega
+    rw [drawPolynomial_eval,eval_X] at bound
+    unfold roundDrawBound EncodedUniformRounding.drawBound at bound ⊢
+    exact (show ((6*(4*n^2))^3+2)*(2*(6*(4*n^2))*(6*(4*n^2))) ≤
+      ((6*(4*y^2))^3+2)*(2*(6*(4*y^2))*(6*(4*y^2))) by gcongr).trans bound
+  have source : (PhysicalSourceDispatch.input D).length ≤ x := by
+    have bound : wire.eval y ≤ x := by simp only [x,pad,eval_add,eval_X]; omega
+    apply (PhysicalSourceSizeBounds.source_size_le D).trans
+    apply le_trans ?_ bound
+    simp only [wire,eval_add,eval_mul,eval_ofNat,eval_X,PhysicalSourceSizeBounds.sourceSizeBound]
+    have stored : LambdaRowProgram.rowBits D.costs.toList ≤ y := (Nat.le_add_right _ 1).trans hb
+    gcongr
+  have positive := ChargedVertexModes.priceWidth_positive D
+  have fits := ChargedVertexModes.priceWidth_bounds D
+  have eBound : e ≤ x := (Nat.le_succ _).trans he
+  have ht : T ≤ z := (trialLimit_le D (roundDrawBound n) e (e+1) (hn.trans hy) (hb.trans hy)
+    draw eBound he fits).trans (Nat.le_add_right _ _)
+  rw [eval_comp]
+  apply run_terminal_row_paid
+  simp only [BinarySolverOuterControls.vertex_draws,BinarySolverOuterControls.vertex_extra,
+    BinarySolverOuterControls.vertex_confidence]
+  intro dispatch reader
+  let plan := PhysicalCoverReader.plan (BinaryFractionalGuesses.solveInput D).1
+  have widths {rows : List (FractionalCoverRawCore.RawRow n)} {row : FractionalCoverRawCore.RawRow n}
+      (stored : plan=.covers rows) (member : row ∈ rows) :=
+    VertexReductionWidths.fractional_input D stored member
+  have cap : max B (1+PhysicalSourceDispatch.instructionPolynomial.eval (PhysicalSourceDispatch.input D).length) ≤
+      z+1+PhysicalSourceDispatch.instructionPolynomial.eval z := by
+    have H := eval_mono PhysicalSourceDispatch.instructionPolynomial (source.trans hx)
+    have price := (hb.trans hy).trans hx
+    exact max_le (by omega) (by omega)
+  exact hp D (PaidVertexRounding.runner mode) (roundDrawBound n) e (e+1) plan dispatch reader tape
+    (hn.trans hy) (hb.trans hy) eBound positive fits (ChargedPhysicalVertexSolver.rowsCount_le D)
+    (fun _ stored _ member bits => hRaw ((hn.trans hy).trans hx) ht cap mode _ (widths stored member) bits)
+    (fun _ stored _ member bits out ran => PhysicalAmplifiedBinaryVertex.runner_paid phase hPhase mode _ bits
+      (widths stored member) ((hn.trans hy).trans hx) ht cap ((PaidVertexRounding.runner_value mode T _ bits).symm.trans ran))
+
+def vertexWithTerminalRowWork (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    Read (Σ n,PhysicalAmplifiedVertexSolver.Result n) × (ℕ × ℕ) :=
+  vertexWithFramedRun runWithTerminalRowWork κ mode source tape
+
+theorem vertex_terminal_row_reference (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    let new := vertexWithTerminalRowWork κ mode source tape
+    let old := vertexWithTerminalStreamWork κ mode source tape
+    new.1=old.1 ∧ new.2.2=old.2.2 := by
+  simp only [vertexWithTerminalRowWork,vertexWithTerminalStreamWork,vertexWithFramedRun]
+  cases (PhysicalSourceInputJoin.vertexWithFramingRecords source).1.1 with
+  | none => exact ⟨rfl,True.intro⟩
+  | some encoded =>
+    obtain ⟨n,D⟩ := encoded
+    exact ⟨by simp only [run_terminal_row_reference],True.intro⟩
+
+theorem vertex_terminal_row_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let r := vertexWithTerminalRowWork κ mode source tape
+      r.1.2+r.2.1+r.2.2 ≤ p.eval (source.length+κ) := by
+  obtain ⟨paid,paidBound⟩ := vertex_terminal_stream_polynomial
+  obtain ⟨row,rowBound⟩ := run_row_work_overhead
+  let pad : Polynomial ℕ := X+X+1+C 2*X^2+X
+  refine ⟨paid+row.comp pad,fun κ mode source tape => ?_⟩
+  let x := source.length+κ
+  let old := vertexWithTerminalStreamWork κ mode source tape
+  let new := vertexWithTerminalRowWork κ mode source tape
+  have prior : old.1.2+old.2.1+old.2.2 ≤ paid.eval x := paidBound κ mode source tape
+  have same := vertex_terminal_row_reference κ mode source tape
+  change new.1=old.1 ∧ new.2.2=old.2.2 at same
+  have additional : new.2.1≤old.2.1+row.eval (pad.eval x) := by
+    unfold new old vertexWithTerminalRowWork vertexWithTerminalStreamWork vertexWithFramedRun
+    dsimp only
+    rw [PhysicalSourceInputJoin.vertex_framing_records_value]
+    cases parsed : (PhysicalSourceInputJoin.vertex source).1 with
+    | none => exact Nat.zero_le _
+    | some encoded =>
+      obtain ⟨n,D⟩ := encoded
+      have stored : (ChargedSourceAssembly.vertex source).1=some ⟨n,D⟩ := by
+        rwa [ChargedSourceAssembly.vertex_value,← PhysicalSourceInputJoin.vertex_value]
+      obtain ⟨size,demands,fields⟩ := ChargedSourceAssembly.vertex_dimensions stored
+      have width := rowBits_le D.costs.toList fields
+      rw [Vector.length_toList] at width
+      have bounds : vertexSize D κ ≤ pad.eval x := by
+        have hS : source.length ≤ x := Nat.le_add_right _ _
+        have hn := size.trans hS
+        have w := width.trans (show n*(source.length+source.length) ≤ x*(x+x) by gcongr)
+        have cost := w.trans_eq (show x*(x+x)=2*x^2 by ring)
+        have confidence : κ ≤ x := Nat.le_add_left _ _
+        simp only [pad,eval_add,eval_mul,eval_pow,eval_C,eval_X,eval_one,vertexSize,ChargedVertexModes.priceWidth]
+        omega
+      exact (rowBound κ mode D tape).trans (Nat.add_le_add_left (eval_mono _ bounds) _)
+  change new.1.2+new.2.1+new.2.2 ≤ (paid+row.comp pad).eval x
+  rw [same.1,same.2,eval_add,eval_comp]
+  omega
+
 end DirectedFlowCutGap.PaidFramedVertexWire

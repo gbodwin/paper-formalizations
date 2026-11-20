@@ -79,6 +79,36 @@ def runWithTerminalStreamWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mo
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) : Read (Result n) × ℕ :=
   runWithTerminalAmplificationWork (PaidVertexAmplification.runWithPlanStreamWork D (PaidVertexRounding.runner mode)) κ D tape
 
+def runWithTerminalRowWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) : Read (Result n) × ℕ :=
+  runWithTerminalAmplificationWork (PaidVertexAmplification.runWithPlanRowWork D (PaidVertexRounding.runner mode)) κ D tape
+
+theorem run_terminal_row_reference {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
+    (runWithTerminalRowWork κ mode D tape).1=(runWithTerminalStreamWork κ mode D tape).1 := by
+  simp only [runWithTerminalRowWork,runWithTerminalStreamWork,runWithTerminalAmplificationWork]
+  cases (PhysicalSourceReadback.runWithTerminalCharge D).1 with
+  | none => rfl
+  | some input =>
+    obtain ⟨plan,dispatch,reader⟩ := input
+    simp only [PaidVertexAmplification.runWithPlanRowWork_reference]
+
+theorem run_terminal_row_paid {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) (cap : ℕ)
+    (charged : let controls := BinarySolverOuterControls.vertex n κ
+      let plan := PhysicalCoverReader.plan (BinaryFractionalGuesses.solveInput D).1
+      let round := PaidVertexRounding.runner mode
+      ∀ dispatch reader,
+        (PaidVertexAmplification.runWithPlanRowWork D round controls.draws controls.extra controls.confidence
+          plan dispatch reader tape).2 ≤
+        (PaidVertexAmplification.runWithPlanStreamWork D round controls.draws controls.extra controls.confidence
+          plan dispatch reader tape).2+cap) :
+    (runWithTerminalRowWork κ mode D tape).2≤(runWithTerminalStreamWork κ mode D tape).2+cap := by
+  obtain ⟨dispatch,_,reader,_,measured,_⟩ := PhysicalSourceReadback.terminal_headers D
+  simp only [runWithTerminalRowWork,runWithTerminalStreamWork,runWithTerminalAmplificationWork,measured]
+  simpa only [Nat.add_assoc] using
+    Nat.add_le_add_left (charged dispatch reader) (PhysicalSourceReadback.runWithTerminalCharge D).2
+
 theorem run_terminal_scalar_reference {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
     (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
     (runWithTerminalScalarWork κ mode D tape).1=(runWithTerminalWork κ mode D tape).1 := by

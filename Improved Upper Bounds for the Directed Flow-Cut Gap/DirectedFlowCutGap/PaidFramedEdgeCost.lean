@@ -606,4 +606,151 @@ theorem wire_terminal_stream_polynomial : ∃ p : Polynomial ℕ,
     _ = old.1.2+old.2.1.total+old.2.2+retained.eval x := by ac_rfl
     _ ≤ _ := Nat.add_le_add_right prior _
 
+open EncodedVertexAmplification PhysicalSolverCostEnvelope in
+open PhysicalAmplifiedBinaryEdge (lineWithCost line_value) in
+open PhysicalBinaryEdgeCost (roundPolynomial widthPolynomial) in
+open RawNonnegativeRational in
+set_option maxHeartbeats 2300000 in
+theorem run_row_work_overhead : ∃ p : Polynomial ℕ, ∀ {n B : ℕ} (κ : ℕ) (D : Input n)
+    (mode : ChargedVertexModes.Mode) (tape : Bits), 1 ≤ B →
+    (∀ u v : Fin n, D.costs[u.val][v.val].num.size ≤ B ∧ D.costs[u.val][v.val].den.size ≤ B) →
+      RowWorkBound κ D mode tape (p.eval (n+D.demands.length+B+κ)) := by
+  obtain ⟨raw,hRaw⟩ := PaidVertexRounding.polynomial_bound
+  obtain ⟨phase,hPhase⟩ := PhysicalVertexRoundingCost.polynomial_bound
+  let work := roundPolynomial raw + roundControlBudget X + BinaryEdgeGadget.controlBudget X widthPolynomial
+  obtain ⟨p,hp⟩ := PaidVertexAmplification.row_work_overhead work (roundPolynomial phase)
+  let line : Polynomial ℕ := X*2+X^2
+  let costs := line+X+line*(2*X)+1
+  let vertices := BinaryEdgeGadget.dimension (X : Polynomial ℕ)
+  let exponent : Polynomial ℕ := (X+2)*X+1
+  let pad := X+line+(costs+1)+lineEncodingBudget+vertices+exponent+drawPolynomial vertices
+  refine ⟨p.comp pad,?_⟩
+  intro n B κ D mode tape positive fits
+  let y := n+D.demands.length+B+κ
+  let x := pad.eval y
+  let z := trialEnvelope.eval x+x
+  let binary := (lineWithCost D).1
+  let W := ChargedVertexModes.priceWidth binary
+  let e := confidenceExponent n κ
+  let draw := EncodedEdgeSolver.drawBound n
+  let T := ChargedPhysicalVertexSolver.trialLimit (BinaryFractionalGuesses.decodeInput binary) draw e (e+1)
+  have hn : n ≤ y := by dsimp only [y]; omega
+  have hd : D.demands.length ≤ y := by dsimp only [y]; omega
+  have hb : B ≤ y := by dsimp only [y]; omega
+  have hk : κ ≤ y := by dsimp only [y]; omega
+  have yx : y ≤ x := by simp only [x,pad,eval_add,eval_X]; omega
+  have xz : x ≤ z := Nat.le_add_left _ _
+  have hline : lineSize n ≤ line.eval y := by
+    simp only [line,eval_add,eval_mul,eval_ofNat,eval_X,lineSize,pow_two]
+    gcongr
+  have hs : PhysicalEdgeSolver.lineInputSizeBound n D.demands.length B ≤ costs.eval y := by
+    simp only [costs,eval_add,eval_mul,eval_ofNat,eval_X,eval_one,PhysicalEdgeSolver.lineInputSizeBound]
+    gcongr
+  have hl : lineSize n ≤ x := by
+    apply hline.trans
+    simp only [x,pad,eval_add,eval_X]
+    omega
+  have hW : W ≤ x := by
+    have store := PhysicalEdgeSolver.line_size_le D positive fits
+    rw [← line_value D] at store
+    change OriginalStoreInitial.inputSize binary.costs binary.demands ≤ _ at store
+    unfold OriginalStoreInitial.inputSize at store
+    have lim := store.trans hs
+    simp only [x,pad,eval_add,eval_one,W,ChargedVertexModes.priceWidth,eval_X]
+    omega
+  have he : e+1 ≤ x := by
+    have h := Nat.add_le_add_right ((exponent_le n κ).trans (Nat.mul_le_mul (Nat.add_le_add_right hn 2) hk)) 1
+    have next : exponent.eval y ≤ x := by simp only [x,pad,eval_add,eval_X]; omega
+    simp only [exponent,eval_add,eval_mul,eval_ofNat,eval_X,eval_one] at next
+    exact h.trans next
+  have dim : BinaryEdgeGadget.dimension n ≤ vertices.eval y := by
+    simp only [vertices,BinaryEdgeGadget.dimension,eval_add,eval_mul,eval_ofNat,eval_X]
+    gcongr
+  have vsize : BinaryEdgeGadget.dimension n ≤ z := by
+    apply dim.trans
+    simp only [x,z,pad,eval_add,eval_X]
+    omega
+  have draws : draw ≤ x := by
+    have h : (drawPolynomial vertices).eval y ≤ x := by simp only [x,pad,eval_add,eval_X]; omega
+    rw [drawPolynomial_eval] at h
+    apply le_trans ?_ h
+    have hdim : 2*n*(Nat.log2 n+4) ≤ vertices.eval y :=
+      (Nat.mul_le_mul_left _ (Nat.add_le_add_right (Nat.log2_le_self _) 4)).trans dim
+    unfold draw EncodedEdgeSolver.drawBound roundDrawBound EncodedUniformRounding.drawBound
+    gcongr
+  have source : (PhysicalSourceDispatch.input binary).length ≤ x := by
+    have length : (PhysicalSourceDispatch.input binary).length ≤ lineEncodingBudget.eval y :=
+      line_encoding_length D κ positive fits
+    apply length.trans
+    simp only [x,pad,eval_add,eval_X]
+    omega
+  have eBound : e ≤ x := (Nat.le_succ _).trans he
+  have good := ChargedVertexModes.priceWidth_bounds binary
+  have trials : T ≤ z :=
+    (trialLimit_le binary draw e (e+1) hl hW draws eBound he good).trans (Nat.le_add_right _ _)
+  let plan := PhysicalCoverReader.plan (BinaryFractionalGuesses.solveInput binary).1
+  have fields {rows : List (FractionalCoverRawCore.RawRow (lineSize n))}
+      {row : FractionalCoverRawCore.RawRow (lineSize n)}
+      (stored : plan=.covers rows) (member : row ∈ rows) :
+      BinaryEdgeGadget.InputFits (roundingInput D row) (widthPolynomial.eval z) := by
+    have bsize : widthPolynomial.eval z=z+1+PhysicalSourceDispatch.instructionPolynomial.eval z := by
+      simp only [widthPolynomial,eval_add,eval_X,eval_one]
+    have H := eval_mono PhysicalSourceDispatch.instructionPolynomial (source.trans xz)
+    have orig : B ≤ z := (hb.trans yx).trans xz
+    have cell := PhysicalCoverWidthEnvelope.rows_width binary rows stored row member
+    exact row_fits D row (fun i => Code.bounded_mono (cell i) (by omega))
+      (fun u v => ⟨(fits u v).1.trans (by omega),(fits u v).2.trans (by omega)⟩)
+  have original := (hn.trans yx).trans xz
+  unfold RowWorkBound
+  simp only [BinarySolverOuterControls.edge_draws,BinarySolverOuterControls.edge_extra,
+    BinarySolverOuterControls.edge_confidence,eval_comp]
+  intro dispatch reader
+  apply hp binary (roundWithGadgetWork D mode) draw e (e+1) plan dispatch reader tape hl hW eBound
+    (ChargedVertexModes.priceWidth_positive binary) good (ChargedPhysicalVertexSolver.rowsCount_le binary)
+  · intro rows stored row member bits
+    let input := EncodedVertexSolver.roundingInput (BinaryFractionalGuesses.decodeInput binary) row
+    have fitsRow : BinaryEdgeGadget.InputFits (roundingInput D input.weights) (widthPolynomial.eval z) := fields stored member
+    have rawPaid := round_paid raw hRaw D mode vsize original trials input bits fitsRow le_rfl
+    have combined := roundWithGadgetWork_paid D mode T input bits fitsRow
+    have controls := roundControlBudget_mono original
+    have gadget := BinaryEdgeGadget.controlBudget_mono original (le_refl (widthPolynomial.eval z))
+    simp only [work,eval_add,roundControlBudget_eval,BinaryEdgeGadget.controlBudget_eval,eval_X]
+    exact combined.trans (Nat.add_le_add (Nat.add_le_add rawPaid controls) gadget)
+  · intro rows stored row member bits out ran
+    let input := EncodedVertexSolver.roundingInput (BinaryFractionalGuesses.decodeInput binary) row
+    have fitsRow : BinaryEdgeGadget.InputFits (roundingInput D input.weights) (widthPolynomial.eval z) := fields stored member
+    exact PhysicalBinaryEdgeCost.round_paid phase hPhase D mode vsize original trials input bits fitsRow le_rfl
+      ((roundWithGadgetWork_reference D mode T input bits).symm.trans ran)
+
+theorem wire_terminal_row_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let r := edgeWithTerminalRowWork κ mode source tape
+      r.1.2+r.2.1.total+r.2.2 ≤ p.eval (source.length+κ) := by
+  obtain ⟨paid,paidBound⟩ := wire_terminal_stream_polynomial
+  obtain ⟨row,rowBound⟩ := run_row_work_overhead
+  let pad : Polynomial ℕ := 3*X+1
+  refine ⟨paid+row.comp pad,fun κ mode source tape => ?_⟩
+  let x := source.length+κ
+  let old := edgeWithTerminalStreamWork κ mode source tape
+  let new := edgeWithTerminalRowWork κ mode source tape
+  have prior : old.1.2+old.2.1.total+old.2.2 ≤ paid.eval x := paidBound κ mode source tape
+  have same : new.2=old.2 := (edge_terminal_row_reference κ mode source tape).2
+  have additional : new.1.2≤old.1.2+row.eval (pad.eval x) := by
+    apply edge_terminal_row_paid
+    intro n D stored
+    have found : (ChargedSourceAssembly.edge source).1=some ⟨n,D⟩ := by
+      rwa [ChargedSourceAssembly.edge_value,← PhysicalSourceInputJoin.edge_value]
+    obtain ⟨dim,demands,fields⟩ := ChargedSourceAssembly.edge_dimensions found
+    let raw := (PhysicalBinaryEdgeWire.decodeWithCost D).1
+    have cap : n+raw.demands.length+(source.length+1)+κ ≤ pad.eval x := by
+      change n+D.demands.length+(source.length+1)+κ ≤ _
+      simp only [pad,eval_add,eval_mul,eval_ofNat,eval_one,eval_X]
+      omega
+    intro dispatch reader
+    exact ((rowBound κ raw mode tape (Nat.succ_pos _) (decoded_widths D fields)) dispatch reader).trans
+      (Nat.add_le_add_left (eval_mono row cap) _)
+  change new.1.2+new.2.1.total+new.2.2≤(paid+row.comp pad).eval x
+  rw [same,eval_add,eval_comp]
+  omega
+
 end DirectedFlowCutGap.PaidDirectEdgeWire

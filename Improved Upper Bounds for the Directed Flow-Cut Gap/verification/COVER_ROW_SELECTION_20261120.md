@@ -1,0 +1,7 @@
+# Measure price comparisons and fee sums within cover rows
+
+The paid solvers visit each reached cover row with the original tape suffix. The measured selector reads mask slots and selected prices by index, accumulates the corresponding rational price, and combines returned fees using binary sums. Lean proves that the first equal-price row wins and verifies equality of the previous cut or witness, unread tape, and recorded fees for every tape. Tape exhaustion includes work spent on earlier rows and samples.
+
+`PaidVertexSampling.fromPlanWithSelectionWork_paid` bounds recorded work using the width of attempted and returned fees. `PaidVertexAmplification.row_work_overhead` establishes a common polynomial bound for all reached samples, including a failed attempt. `PaidFramedVertexWire.vertex_terminal_row_polynomial` and `PaidDirectEdgeWire.wire_terminal_row_polynomial` apply this result at both original inputs for every source, mode and tape. The bound uses the source length and numerical confidence. The edge result retains the existing boundary and framing fields. The vertex result keeps its earlier paid observation and frame count while adding the new work to its existing meter.
+
+The fixtures exercise the first equal-price row, late row exhaustion, two complete samples, second-sample exhaustion, the original empty vertex and edge wires, and trailing source rejection. A complete structural bit-time bound remains open.

@@ -36,6 +36,194 @@ def chooseRowsWith {n : ℕ} (D : BinaryFractionalGuesses.Input n) (costs : Frac
         selectResult a rest
       (r.1,r.2+4)
 
+private theorem chooseRows_cons {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (costs : FractionalCoverRawCore.RawRow n) (round : Runner n) (T : ℕ)
+    (y : FractionalCoverRawCore.RawRow n) (ys : List (FractionalCoverRawCore.RawRow n)) (tape : Bits) :
+    let first := round T ⟨D.adjacency,y,costs⟩ tape
+    chooseRowsWith D costs round T (y::ys) tape=match first.1 with
+      | none => (none,first.2+4)
+      | some a =>
+        let rest := chooseRowsWith D costs round T ys a.suffix
+        let chosen := match rest.1 with
+          | none => Read.failure
+          | some tail => selectResult a tail
+        (chosen.1,first.2+rest.2+chosen.2+4) := by
+  let first := round T ⟨D.adjacency,y,costs⟩ tape
+  let more (a : Result n) := Read.bind (chooseRowsWith D costs round T ys a.suffix) (selectResult a)
+  change ((Read.bind first more).1,(Read.bind first more).2+4)=_
+  cases h : first.1 with
+  | none =>
+    simp only [Read.bind,h]
+    rfl
+  | some a =>
+    simp only [Read.bind,h,more]
+    cases (chooseRowsWith D costs round T ys a.suffix).1 with
+    | none => rfl
+    | some result =>
+      simp only [Nat.add_assoc]
+      rfl
+
+private def selectResultWithControl {n : ℕ} {D : BinaryFractionalGuesses.Input n} (a : Result n)
+    (tail : RowResult D) : Read (RowResult D) × ℕ :=
+  let score := ChargedCutSelection.selectWithControl (a.mask,0) (tail.1.1,0)
+  let paid := CachedScalarRead.sumMeasured [a.paid,tail.1.2,score.1.2]
+  ((some ((score.1.1,paid.1),tail.2),score.1.2),score.2+paid.2+4)
+
+private theorem selectResultWithControl_reference {n : ℕ} {D : BinaryFractionalGuesses.Input n}
+    (a : Result n) (tail : RowResult D) :
+    (selectResultWithControl a tail).1=selectResult a tail := by
+  simp only [selectResultWithControl,selectResult,ChargedCutSelection.selectWithControl_value,
+    CachedScalarRead.sum_value,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc]
+
+def chooseRowsWithSelectionWork {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (costs : FractionalCoverRawCore.RawRow n) (round : Runner n) (T : ℕ) :
+    List (FractionalCoverRawCore.RawRow n) → Bits → Read (RowResult D) × ℕ
+  | [], tape => ((some ((none,1),tape),1),1)
+  | y::ys, tape =>
+    let first := round T ⟨D.adjacency,y,costs⟩ tape
+    match first.1 with
+    | none =>
+      let amount := BinaryNaturalOperations.add first.2 4
+      ((none,amount.1),amount.2+4)
+    | some a =>
+      let rest := chooseRowsWithSelectionWork D costs round T ys a.suffix
+      let chosen : Read (RowResult D) × ℕ := match rest.1.1 with
+        | none => (Read.failure,0)
+        | some tail => selectResultWithControl a tail
+      let amount := CachedScalarRead.sumMeasured [first.2,rest.1.2,chosen.1.2,4]
+      ((chosen.1.1,amount.1),rest.2+chosen.2+amount.2+8)
+
+theorem chooseRowsWithSelectionWork_reference {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (costs : FractionalCoverRawCore.RawRow n) (round : Runner n) (T : ℕ)
+    (rows : List (FractionalCoverRawCore.RawRow n)) (tape : Bits) :
+    (chooseRowsWithSelectionWork D costs round T rows tape).1=chooseRowsWith D costs round T rows tape := by
+  induction rows generalizing tape with
+  | nil => rfl
+  | cons y ys ih =>
+    let first := round T ⟨D.adjacency,y,costs⟩ tape
+    simp only [chooseRowsWithSelectionWork,chooseRows_cons]
+    cases h : first.1 with
+    | none =>
+      simp only [BinaryNaturalOperations.add_value]
+    | some a =>
+      dsimp only
+      rw [ih a.suffix]
+      let rest := chooseRowsWith D costs round T ys a.suffix
+      cases later : rest.1 with
+      | none =>
+        simp only [Read.failure,CachedScalarRead.sum_value,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc]
+      | some tail =>
+        simp only [selectResultWithControl_reference,
+          CachedScalarRead.sum_value,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc]
+
+private def selectedRowBudget {R : Type*} [Semiring R] (n B : R) : R :=
+  ChargedCutSelection.rowSelectionBudget n B+3*(96*(B+2)^2+4)+5
+
+private theorem selectResultWithControl_paid {n B : ℕ} {D : BinaryFractionalGuesses.Input n}
+    (a : Result n) (tail : RowResult D)
+    (charge : (selectResult a tail).2.size≤B)
+    (value : (a.paid+tail.1.2+(selectResult a tail).2).size≤B) :
+    (selectResultWithControl a tail).2 ≤ selectedRowBudget n B := by
+  let chosen := ChargedCutSelection.selectWithControl (a.mask,0) (tail.1.1,0)
+  let prior := selectResult a tail
+  let amounts := [a.paid,tail.1.2,chosen.1.2]
+  have price : chosen.2≤ChargedCutSelection.rowSelectionBudget n B :=
+    ChargedCutSelection.selectWithControl_paid (a.mask,0) (tail.1.1,0) charge
+  have same : chosen.1.2=prior.2 := congrArg Prod.snd (ChargedCutSelection.selectWithControl_value ..)
+  have sumWidth : amounts.sum.size≤B := by
+    simpa only [amounts,same,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc] using value
+  have addition := CachedScalarRead.sum_paid amounts sumWidth
+  simp only [amounts,List.length_cons,List.length_nil] at addition
+  change chosen.2+(CachedScalarRead.sumMeasured [a.paid,tail.1.2,chosen.1.2]).2+4≤_
+  unfold selectedRowBudget
+  omega
+
+def rowWorkBudget {R : Type*} [Semiring R] (n B : R) : R :=
+  selectedRowBudget n B+4*(96*(B+2)^2+4)+9+BinaryRawRational.budget B+8
+
+theorem chooseRowsWithSelectionWork_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (costs : FractionalCoverRawCore.RawRow n) (round : Runner n) (T : ℕ)
+    (rows : List (FractionalCoverRawCore.RawRow n)) (tape : Bits)
+    (paid : (chooseRowsWith D costs round T rows tape).2.size≤B)
+    (returned : ∀ out ∈ (chooseRowsWith D costs round T rows tape).1, out.1.2.size≤B) :
+    (chooseRowsWithSelectionWork D costs round T rows tape).2≤rows.length*rowWorkBudget n B+1 := by
+  induction rows generalizing tape with
+  | nil => simp only [chooseRowsWithSelectionWork,List.length_nil,Nat.zero_mul,Nat.zero_add,le_refl]
+  | cons y ys ih =>
+    let first := round T ⟨D.adjacency,y,costs⟩ tape
+    let before := chooseRowsWith D costs round T (y::ys) tape
+    cases h : first.1 with
+    | none =>
+      have original : before=(none,first.2+4) := by
+        unfold before
+        rw [chooseRows_cons]
+        change (match first.1 with | none => _ | some _ => _) = _
+        rw [h]
+      have cap : (first.2+4).size≤B := by simpa only [before,original] using paid
+      have a := (Nat.size_le_size (Nat.le_add_right first.2 4)).trans cap
+      have b := (Nat.size_le_size (Nat.le_add_left 4 first.2)).trans cap
+      have add := BinaryNaturalOperations.add_paid a b
+      simp only [chooseRowsWithSelectionWork,show (round T ⟨D.adjacency,y,costs⟩ tape).1=none from h]
+      change (BinaryNaturalOperations.add first.2 4).2+4≤_
+      rw [List.length_cons,Nat.add_mul,Nat.one_mul]
+      unfold rowWorkBudget
+      omega
+    | some a =>
+      let rest := chooseRowsWith D costs round T ys a.suffix
+      let next := chooseRowsWithSelectionWork D costs round T ys a.suffix
+      let chosen : Read (RowResult D) := match rest.1 with
+        | none => Read.failure
+        | some out => selectResult a out
+      let measured : Read (RowResult D) × ℕ := match rest.1 with
+        | none => (Read.failure,0)
+        | some out => selectResultWithControl a out
+      let fees := [first.2,rest.2,chosen.2,4]
+      have original : before=(chosen.1,first.2+rest.2+chosen.2+4) := by
+        unfold before
+        rw [chooseRows_cons]
+        change (match first.1 with | none => _ | some _ => _) = _
+        rw [h]
+      have sum : fees.sum=before.2 := by
+        rw [original]
+        simp only [fees,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc]
+      have fits {x : ℕ} (rel : x≤fees.sum) : x.size≤B := by
+        apply (Nat.size_le_size (rel.trans_eq sum)).trans paid
+      have tailFee : rest.2.size≤B := fits (by simp only [fees,List.sum_cons,List.sum_nil]; omega)
+      have headFee : chosen.2.size≤B := fits (by simp only [fees,List.sum_cons,List.sum_nil]; omega)
+      have outputFits (out : RowResult D) (visible : rest.1=some out) :
+          (a.paid+out.1.2+(selectResult a out).2).size≤B := by
+        let s := ChargedCutSelection.select (a.mask,0) (out.1.1,0)
+        let answer : RowResult D := ((s.1,a.paid+out.1.2+s.2),out.2)
+        have whole : before.1=some answer := by
+          rw [original]
+          simp only [chosen,visible,selectResult,answer,s]
+        exact returned answer (Option.mem_def.mpr whole)
+      have tailFits : ∀ out ∈ rest.1, out.1.2.size≤B := by
+        intro out present
+        apply (Nat.size_le_size ?_).trans (outputFits out (Option.mem_def.mp present))
+        omega
+      have prior : next.2≤ys.length*rowWorkBudget n B+1 := ih a.suffix tailFee tailFits
+      have same : measured.1=chosen := by
+        unfold measured chosen
+        cases rest.1 with
+        | none => rfl
+        | some result => exact selectResultWithControl_reference a result
+      have selection : measured.2 ≤ selectedRowBudget n B := by
+        unfold measured
+        cases visible : rest.1 with
+        | none => exact Nat.zero_le _
+        | some out =>
+          have one : (selectResult a out).2.size≤B := by simpa only [chosen,visible] using headFee
+          exact selectResultWithControl_paid a out one (outputFits out visible)
+      have amount := CachedScalarRead.sum_paid fees (fits (Nat.le_refl _))
+      simp only [fees,List.length_cons,List.length_nil] at amount
+      simp only [chooseRowsWithSelectionWork,show (round T ⟨D.adjacency,y,costs⟩ tape).1=some a from h,
+        chooseRowsWithSelectionWork_reference]
+      change next.2+measured.2+(CachedScalarRead.sumMeasured [first.2,rest.2,measured.1.2,4]).2+8≤_
+      rw [same,List.length_cons,Nat.add_mul,Nat.one_mul]
+      unfold rowWorkBudget at prior ⊢
+      omega
+
 theorem chooseRows_value {n : ℕ} (D : BinaryFractionalGuesses.Input n) (costs : FractionalCoverRawCore.RawRow n)
     (round : Runner n) (T : ℕ) (rows : List (FractionalCoverRawCore.RawRow n)) (tape : Bits) :
     (chooseRowsWith D costs round T rows tape).1 =
@@ -147,6 +335,102 @@ def fromPlanWith {n : ℕ} (D : BinaryFractionalGuesses.Input n) (costs : Fracti
       let choice := chooseRowsWith D costs round T rows tape
       (choice.1.map (fun (best,rest) => (((ChargedCutSelection.result best).elim .invalid .cut,best.2+4*n+10),rest)),
         choice.2+4*n+10)
+
+def fromPlanWithSelectionWork {n : ℕ} (D : BinaryFractionalGuesses.Input n) (costs : FractionalCoverRawCore.RawRow n)
+    (round : Runner n) (T : ℕ) (plan : PhysicalCoverReader.Plan n) (tape : Bits) : Read ((Output n × ℕ) × Bits) × ℕ :=
+  match plan with
+  | .covers rows =>
+    let choice := chooseRowsWithSelectionWork D costs round T rows tape
+    let overhead := 4*n+10
+    let billed := CachedScalarRead.sumMeasured [choice.1.2,4*n,10]
+    match choice.1.1 with
+    | none => ((none,billed.1),choice.2+billed.2+4)
+    | some (best,rest) =>
+      let charge := BinaryNaturalOperations.add best.2 overhead
+      ((some (((ChargedCutSelection.result best).elim .invalid .cut,charge.1),rest),billed.1),
+        choice.2+billed.2+charge.2+8)
+  | _ => (fromPlanWith D costs round T plan tape,0)
+
+theorem fromPlanWithSelectionWork_reference {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (costs : FractionalCoverRawCore.RawRow n) (round : Runner n) (T : ℕ)
+    (plan : PhysicalCoverReader.Plan n) (tape : Bits) :
+    (fromPlanWithSelectionWork D costs round T plan tape).1=fromPlanWith D costs round T plan tape := by
+  cases plan with
+  | invalid | infeasible _ | zero _ => rfl
+  | covers rows =>
+    simp only [fromPlanWithSelectionWork,fromPlanWith,chooseRowsWithSelectionWork_reference]
+    cases (chooseRowsWith D costs round T rows tape).1 with
+    | none => simp only [Option.map_none,CachedScalarRead.sum_value,List.sum_cons,List.sum_nil,
+        Nat.add_zero,Nat.add_assoc]
+    | some out =>
+      obtain ⟨best,rest⟩ := out
+      simp only [Option.map_some,BinaryNaturalOperations.add_value,CachedScalarRead.sum_value,List.sum_cons,
+        List.sum_nil,Nat.add_zero,Nat.add_assoc]
+
+def planWorkBudget {R : Type*} [Semiring R] (n count B : R) : R :=
+  count*rowWorkBudget n B+3*(96*(B+2)^2+4)+BinaryRawRational.budget B+14
+
+theorem planWorkBudget_mono {n count B n' count' B' : ℕ}
+    (dimensions : n≤n') (rows : count≤count') (width : B≤B') :
+    planWorkBudget n count B ≤ planWorkBudget n' count' B' := by
+  unfold planWorkBudget rowWorkBudget selectedRowBudget ChargedCutSelection.rowSelectionBudget
+    BinaryRawRational.budget
+  gcongr
+  exact BinaryCutPriceSelection.fieldControlBudget_mono dimensions
+
+open Polynomial in
+theorem planWorkBudget_eval (n count B : Polynomial ℕ) (x : ℕ) :
+    (planWorkBudget n count B).eval x=planWorkBudget (n.eval x) (count.eval x) (B.eval x) := by
+  simp only [planWorkBudget,rowWorkBudget,selectedRowBudget,ChargedCutSelection.rowSelectionBudget,
+    BinaryCutPriceSelection.fieldControlBudget_eval,BinaryRawRational.budget,eval_add,eval_mul,eval_pow,eval_ofNat]
+
+theorem fromPlanWithSelectionWork_paid {n B : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (costs : FractionalCoverRawCore.RawRow n) (round : Runner n) (T : ℕ)
+    (plan : PhysicalCoverReader.Plan n) (tape : Bits)
+    (paid : (fromPlanWith D costs round T plan tape).2.size≤B)
+    (returned : ∀ out ∈ (fromPlanWith D costs round T plan tape).1, out.1.2.size≤B) :
+    (fromPlanWithSelectionWork D costs round T plan tape).2≤
+      planWorkBudget n (ChargedPhysicalVertexSolver.rowsCount plan) B := by
+  cases plan with
+  | invalid | infeasible _ | zero _ => exact Nat.zero_le _
+  | covers rows =>
+    let old := chooseRowsWith D costs round T rows tape
+    let actual := chooseRowsWithSelectionWork D costs round T rows tape
+    let overhead := 4*n+10
+    let amounts := [old.2,4*n,10]
+    have billed : amounts.sum.size≤B := by
+      simpa only [amounts,fromPlanWith,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc] using paid
+    have previous : old.2.size≤B :=
+      (Nat.size_le_size (show old.2≤amounts.sum by simp [amounts])).trans billed
+    have exposed (result : RowResult D) (ready : old.1=some result) : (result.1.2+overhead).size≤B := by
+      let out : (Output n × ℕ) × Bits :=
+        (((ChargedCutSelection.result result.1).elim .invalid .cut,result.1.2+overhead),result.2)
+      have found : (fromPlanWith D costs round T (.covers rows) tape).1=some out := by
+        simp only [fromPlanWith,show (chooseRowsWith D costs round T rows tape).1=some result from ready,
+          Option.map_some,out,overhead,Nat.add_assoc]
+      exact returned out (Option.mem_def.mpr found)
+    have rowValues : ∀ result ∈ old.1, result.1.2.size≤B := fun result ready =>
+      (Nat.size_le_size (Nat.le_add_right _ _)).trans (exposed result (Option.mem_def.mp ready))
+    have rowWork : actual.2≤rows.length*rowWorkBudget n B+1 :=
+      chooseRowsWithSelectionWork_paid D costs round T rows tape previous rowValues
+    have sum := CachedScalarRead.sum_paid amounts billed
+    simp only [amounts,List.length_cons,List.length_nil] at sum
+    simp only [fromPlanWithSelectionWork,chooseRowsWithSelectionWork_reference,ChargedPhysicalVertexSolver.rowsCount]
+    cases ready : old.1 with
+    | none =>
+      change actual.2+(CachedScalarRead.sumMeasured [old.2,4*n,10]).2+4≤_
+      unfold planWorkBudget
+      omega
+    | some result =>
+      obtain ⟨best,rest⟩ := result
+      have total := exposed (best,rest) ready
+      have b : best.2.size≤B := (Nat.size_le_size (Nat.le_add_right _ _)).trans total
+      have d : overhead.size≤B := (Nat.size_le_size (Nat.le_add_left _ _)).trans total
+      have extra := BinaryNaturalOperations.add_paid b d
+      change actual.2+(CachedScalarRead.sumMeasured [old.2,4*n,10]).2+
+        (BinaryNaturalOperations.add best.2 overhead).2+8≤_
+      unfold planWorkBudget
+      omega
 
 theorem fromPlan_value {n : ℕ} (D : BinaryFractionalGuesses.Input n) (costs : FractionalCoverRawCore.RawRow n)
     (round : Runner n) (T : ℕ) (plan : PhysicalCoverReader.Plan n) (tape : Bits) :

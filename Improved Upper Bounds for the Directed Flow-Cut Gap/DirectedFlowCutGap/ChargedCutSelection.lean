@@ -45,6 +45,72 @@ def select {n : ℕ} {costs : Row n} (head : Flags n × ℕ)
     let cmp := BinaryRational.le a.1.price b.price
     (some (if cmp.1 then a.1 else b), base + cmp.2)
 
+private def scoreWithControl {n : ℕ} (costs : Row n) (mask : Flags n) : (Scored costs × ℕ) × ℕ :=
+  let counted := BinaryCutPriceSelection.cutScoreWithControl costs (.cut mask)
+  have reference : counted.1=BinaryCutPriceSelection.maskScore costs mask :=
+    BinaryCutPriceSelection.cutScore_control_value costs (.cut mask)
+  ((⟨mask,counted.1.1,by
+      rw [congrArg Prod.fst reference]
+      exact BinaryCutPriceSelection.maskScore_decodes costs mask⟩,counted.1.2),counted.2)
+
+private theorem scoreWithControl_value {n : ℕ} (costs : Row n) (mask : Flags n) :
+    (scoreWithControl costs mask).1=score costs mask := by
+  simp only [scoreWithControl,score,BinaryCutPriceSelection.cutScore_control_value,BinaryCutPriceSelection.cutScore]
+
+/-- Count the mask reads and fee arithmetic of the reached row comparison. -/
+def selectWithControl {n : ℕ} {costs : Row n} (head : Flags n × ℕ)
+    (tail : Option (Scored costs) × ℕ) : (Option (Scored costs) × ℕ) × ℕ :=
+  let a := scoreWithControl costs head.1
+  match tail.1 with
+  | none =>
+    let fee := CachedScalarRead.sumMeasured [head.2,tail.2,a.1.2,10]
+    ((some a.1.1,fee.1),a.2+fee.2+4)
+  | some b =>
+    let comp := BinaryRational.le a.1.1.price b.price
+    let fee := CachedScalarRead.sumMeasured [head.2,tail.2,a.1.2,10,comp.2]
+    ((some (if comp.1 then a.1.1 else b),fee.1),a.2+fee.2+4)
+
+theorem selectWithControl_value {n : ℕ} {costs : Row n} (head : Flags n × ℕ)
+    (tail : Option (Scored costs) × ℕ) : (selectWithControl head tail).1=select head tail := by
+  cases observed : tail.1 <;> simp only [selectWithControl,select,observed,scoreWithControl_value,CachedScalarRead.sum_value,
+    List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc]
+
+def rowSelectionBudget {R : Type*} [Semiring R] (n B : R) : R :=
+  BinaryCutPriceSelection.fieldControlBudget n+5*(96*(B+2)^2+4)+5
+
+theorem selectWithControl_paid {n B : ℕ} {costs : Row n} (head : Flags n × ℕ)
+    (tail : Option (Scored costs) × ℕ) (width : (select head tail).2.size≤B) :
+    (selectWithControl head tail).2≤rowSelectionBudget n B := by
+  let a := scoreWithControl costs head.1
+  have fields : a.2≤BinaryCutPriceSelection.fieldControlBudget n :=
+    BinaryCutPriceSelection.cutScore_control_paid costs (.cut head.1)
+  cases observed : tail.1 with
+  | none =>
+    let amounts := [head.2,tail.2,a.1.2,10]
+    have size : amounts.sum.size≤B := by
+      simpa only [amounts,a,scoreWithControl_value,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc,
+        select,observed] using width
+    have fee := CachedScalarRead.sum_paid amounts size
+    simp only [selectWithControl,observed]
+    change a.2+(CachedScalarRead.sumMeasured amounts).2+4≤_
+    simp only [amounts,List.length_cons,List.length_nil] at fee
+    dsimp only [amounts]
+    unfold rowSelectionBudget
+    omega
+  | some b =>
+    let c := BinaryRational.le a.1.1.price b.price
+    let amounts := [head.2,tail.2,a.1.2,10,c.2]
+    have size : amounts.sum.size≤B := by
+      simpa only [amounts,c,a,scoreWithControl_value,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc,
+        select,observed] using width
+    have fee := CachedScalarRead.sum_paid amounts size
+    simp only [selectWithControl,observed]
+    change a.2+(CachedScalarRead.sumMeasured amounts).2+4≤_
+    simp only [amounts,List.length_cons,List.length_nil] at fee
+    dsimp only [amounts]
+    unfold rowSelectionBudget
+    omega
+
 theorem select_value {n : ℕ} {costs : Row n} (head : Flags n × ℕ)
     (tail : Option (Scored costs) × ℕ) :
     (select head tail).1.map Scored.value = some

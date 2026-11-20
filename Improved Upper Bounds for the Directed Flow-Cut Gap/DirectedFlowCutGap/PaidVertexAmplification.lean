@@ -51,28 +51,58 @@ theorem samples_paid {A : Type} (one : Bits → Read ((A × ℕ) × Bits)) (budg
       omega
 
 private def collectWithCharges {A : Type} {answers : ℕ → Type} (empty : answers 0)
-    (prepend : ∀ k, A × ℕ → answers k → answers (k+1)) (one : Bits → Read ((A × ℕ) × Bits)) :
+    (prepend : ∀ k, A × ℕ → answers k → answers (k+1)) (one : Bits → Read ((A × ℕ) × Bits) × ℕ) :
     (k : ℕ) → Bits → Read (answers k × Bits) × ℕ
   | 0,tape => ((some (empty,tape),1),1)
   | k+1,tape =>
-    let head := one tape
+    let sample := one tape
+    let head := sample.1
     match head.1 with
     | none =>
       let fee := BinaryNaturalOperations.add head.2 4
-      ((none,fee.1),fee.2+4)
+      ((none,fee.1),fee.2+4+sample.2)
     | some (first,rest) =>
       let tail := collectWithCharges empty prepend one k rest
       let prior := BinaryNaturalOperations.add head.2 tail.1.2
       let fee := BinaryNaturalOperations.add prior.1 4
       ((tail.1.1.map (fun (later,suffix) => (prepend k first later,suffix)),fee.1),
-        tail.2+prior.2+fee.2+8)
+        tail.2+prior.2+fee.2+8+sample.2)
 
 /-- Charge the binary sums of earlier sample work while walking one literal
 tape. When a sample fails, its spent work is kept and later samples are skipped. -/
 def samplesWithCharges {A : Type} (one : Bits → Read ((A × ℕ) × Bits)) :
     (k : ℕ) → Bits → Read ((Fin k → A × ℕ) × Bits) × ℕ :=
   collectWithCharges (answers := fun k => Fin k → A × ℕ) Fin.elim0
-    (fun _ first later => Fin.cons (α := fun _ => A × ℕ) first later) one
+    (fun _ first later => Fin.cons (α := fun _ => A × ℕ) first later) (fun bits => (one bits,0))
+
+private theorem collectWithCharges_child {A : Type} {answers : ℕ → Type} (empty : answers 0)
+    (prepend : ∀ k, A × ℕ → answers k → answers (k+1))
+    (old : Bits → Read ((A × ℕ) × Bits)) (new : Bits → Read ((A × ℕ) × Bits) × ℕ) (k : ℕ)
+    (same : ∀ bits, (new bits).1=old bits) (tape : Bits) :
+    let before := collectWithCharges empty prepend (fun bits => (old bits,0)) k tape
+    let after := collectWithCharges empty prepend new k tape
+    after.1=before.1 ∧ ∀ cap, (∀ bits, (new bits).2≤cap) → after.2≤before.2+k*cap := by
+  induction k generalizing tape with
+  | zero => exact ⟨rfl,fun cap _ => by simp only [collectWithCharges,Nat.zero_mul,Nat.add_zero,le_refl]⟩
+  | succ k ih =>
+    simp only [collectWithCharges,same,Nat.add_zero]
+    cases (old tape).1 with
+    | none =>
+      refine ⟨rfl,fun cap paid => ?_⟩
+      have head := paid tape
+      dsimp only
+      rw [Nat.succ_mul]
+      omega
+    | some answer =>
+      obtain ⟨first,rest⟩ := answer
+      have tail := ih rest
+      dsimp only at tail ⊢
+      rw [tail.1]
+      refine ⟨rfl,fun cap paid => ?_⟩
+      have head := paid tape
+      have remaining := tail.2 cap paid
+      rw [Nat.succ_mul]
+      omega
 
 private theorem bind_charge {A B : Type} (r : Read A) (k : A → Read B) :
     (r >>= k).2=r.2+(r.1.map fun a => (k a).2).getD 0 := by
@@ -195,10 +225,15 @@ private def summarize {A : Type} (score : A → (Fraction × ℕ) × ℕ) :
   | 0,_ => ()
   | k+1,samples => pushSummary score k (samples 0) (summarize score k (Fin.tail samples))
 
+private def collectSummariesWithWork {A : Type} (score : A → (Fraction × ℕ) × ℕ)
+    (one : Bits → Read ((A × ℕ) × Bits) × ℕ) :
+    (k : ℕ) → Bits → Read (Summary A k × Bits) × ℕ :=
+  collectWithCharges () (pushSummary score) one
+
 private def collectSummaries {A : Type} (score : A → (Fraction × ℕ) × ℕ)
     (one : Bits → Read ((A × ℕ) × Bits)) :
     (k : ℕ) → Bits → Read (Summary A k × Bits) × ℕ :=
-  collectWithCharges () (pushSummary score) one
+  collectSummariesWithWork score (fun bits => (one bits,0))
 
 private theorem summarize_cons {A : Type} (score : A → (Fraction × ℕ) × ℕ) (k : ℕ)
     (a : A × ℕ) (samples : Fin k → A × ℕ) :
@@ -213,13 +248,13 @@ private theorem collectSummaries_reference {A : Type} (score : A → (Fraction �
   induction k generalizing tape with
   | zero => rfl
   | succ k ih =>
-    simp only [collectSummaries,samplesWithCharges,collectWithCharges]
+    simp only [collectSummaries,collectSummariesWithWork,samplesWithCharges,collectWithCharges]
     cases h : (one tape).1 with
     | none => rfl
     | some step =>
       obtain ⟨first,rest⟩ := step
       have tails := ih rest
-      simp only [collectSummaries,samplesWithCharges] at tails
+      simp only [collectSummaries,collectSummariesWithWork,samplesWithCharges] at tails
       dsimp only
       rw [tails]
       simp only [Option.map_map, Function.comp_def, summarize_cons]
@@ -454,14 +489,8 @@ theorem runWithPlanSelectionWork_reference {n : ℕ} (D : BinaryFractionalGuesse
     obtain ⟨cuts,rest⟩ := run
     simp only [finishSelection_reference]
 
-/-- Keep a successful suffix's minimum and total fee while unwinding the
-tape walk. A failed suffix never scores the earlier samples. -/
-def runWithPlanStreamWork {n : ℕ} (D : BinaryFractionalGuesses.Input n)
-    (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
-    (dispatch readback : ℕ) (tape : Bits) : Read (Result n) × ℕ :=
-  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
-  let score := BinaryCutPriceSelection.cutScoreWithControl D.costs
-  let all := collectSummaries score (PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan) (extra+1) tape
+private def streamResult {n : ℕ} (setup : BinaryAmplificationPreparation.Prepared n) (extra dispatch readback : ℕ)
+    (all : Read (Summary (Output n) (extra+1) × Bits) × ℕ) : Read (Result n) × ℕ :=
   let chosen : Read (Result n) × ℕ := match all.1.1 with
     | none => (Read.failure,0)
     | some (summary,rest) =>
@@ -472,6 +501,65 @@ def runWithPlanStreamWork {n : ℕ} (D : BinaryFractionalGuesses.Input n)
   let total := BinaryNaturalOperations.add setup.paid selected.1
   ((chosen.1.1,total.1),all.2+selected.2+total.2+8+chosen.2)
 
+/-- Keep a successful suffix's minimum and total fee while unwinding the
+tape walk. A failed suffix never scores the earlier samples. -/
+def runWithPlanStreamWork {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback : ℕ) (tape : Bits) : Read (Result n) × ℕ :=
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  let score := BinaryCutPriceSelection.cutScoreWithControl D.costs
+  let drawn := collectSummaries score (PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan) (extra+1) tape
+  streamResult setup extra dispatch readback drawn
+
+def runWithPlanRowWork {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback : ℕ) (tape : Bits) : Read (Result n) × ℕ :=
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  let score := BinaryCutPriceSelection.cutScoreWithControl D.costs
+  let drawn := collectSummariesWithWork score (PaidVertexSampling.fromPlanWithSelectionWork D setup.costs round setup.trials plan)
+    (extra+1) tape
+  streamResult setup extra dispatch readback drawn
+
+theorem runWithPlanRowWork_reference {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback : ℕ) (tape : Bits) :
+    (runWithPlanRowWork D round roundBound extra confidence plan dispatch readback tape).1 =
+      (runWithPlanStreamWork D round roundBound extra confidence plan dispatch readback tape).1 := by
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  let score := BinaryCutPriceSelection.cutScoreWithControl D.costs
+  let before := collectSummaries score (PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan) (extra+1) tape
+  let after := collectSummariesWithWork score (PaidVertexSampling.fromPlanWithSelectionWork D setup.costs round setup.trials plan)
+    (extra+1) tape
+  have observed := collectWithCharges_child () (pushSummary score)
+    (PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan)
+    (PaidVertexSampling.fromPlanWithSelectionWork D setup.costs round setup.trials plan)
+    (extra+1) (PaidVertexSampling.fromPlanWithSelectionWork_reference D setup.costs round setup.trials plan) tape
+  have same : after.1=before.1 := observed.1
+  change (streamResult setup extra dispatch readback after).1=(streamResult setup extra dispatch readback before).1
+  simp only [streamResult,same]
+
+theorem runWithPlanRowWork_paid {n : ℕ} (D : BinaryFractionalGuesses.Input n)
+    (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback cap : ℕ) (tape : Bits)
+    (charged : let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+      ∀ bits, (PaidVertexSampling.fromPlanWithSelectionWork D setup.costs round setup.trials plan bits).2≤cap) :
+    (runWithPlanRowWork D round roundBound extra confidence plan dispatch readback tape).2 ≤
+      (runWithPlanStreamWork D round roundBound extra confidence plan dispatch readback tape).2+(extra+1)*cap := by
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  let score := BinaryCutPriceSelection.cutScoreWithControl D.costs
+  let before := collectSummaries score (PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan) (extra+1) tape
+  let after := collectSummariesWithWork score (PaidVertexSampling.fromPlanWithSelectionWork D setup.costs round setup.trials plan)
+    (extra+1) tape
+  have observed := collectWithCharges_child () (pushSummary score)
+    (PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan)
+    (PaidVertexSampling.fromPlanWithSelectionWork D setup.costs round setup.trials plan)
+    (extra+1) (PaidVertexSampling.fromPlanWithSelectionWork_reference D setup.costs round setup.trials plan) tape
+  have same : after.1=before.1 := observed.1
+  have paid : after.2≤before.2+(extra+1)*cap := observed.2 cap charged
+  change (streamResult setup extra dispatch readback after).2≤(streamResult setup extra dispatch readback before).2+(extra+1)*cap
+  simp only [streamResult,same]
+  omega
+
 theorem runWithPlanStreamWork_reference {n : ℕ} (D : BinaryFractionalGuesses.Input n)
     (round : PaidVertexSampling.Runner n) (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
     (dispatch readback : ℕ) (tape : Bits) :
@@ -479,7 +567,7 @@ theorem runWithPlanStreamWork_reference {n : ℕ} (D : BinaryFractionalGuesses.I
       (runWithPlanSelectionWork D round roundBound extra confidence plan dispatch readback tape).1 := by
   let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
   let one := PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan
-  simp only [runWithPlanStreamWork,runWithPlanSelectionWork,collectSummaries_reference]
+  simp only [runWithPlanStreamWork,streamResult,runWithPlanSelectionWork,collectSummaries_reference]
   cases (samplesWithCharges one (extra+1) tape).1.1 with
   | none => rfl
   | some state =>
@@ -497,7 +585,7 @@ theorem runWithPlanStreamWork_paid {n B : ℕ} (D : BinaryFractionalGuesses.Inpu
   let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
   let one := PaidVertexSampling.fromPlanWith D setup.costs round setup.trials plan
   let score := BinaryCutPriceSelection.cutScoreWithControl D.costs
-  simp only [runWithPlanStreamWork,runWithPlanSelectionWork,collectSummaries_reference]
+  simp only [runWithPlanStreamWork,streamResult,runWithPlanSelectionWork,collectSummaries_reference]
   cases h : (samplesWithCharges one (extra+1) tape).1.1 with
   | none => exact Nat.le_add_right _ _
   | some state =>
