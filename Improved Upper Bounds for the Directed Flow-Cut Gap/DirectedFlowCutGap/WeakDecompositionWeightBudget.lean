@@ -17,7 +17,7 @@ open WeakDecomposition
 def clippedWeight {V : Type*} [Fintype V] (w : V × V → ℝ≥0) (e : V × V) : ℝ≥0 :=
   min 1 (TinyEdgePreprocessing.weight w e)
 
-private theorem one_le_clamped_path {V : Type*} [DecidableEq V]
+theorem one_le_clamped_path {V : Type*} [DecidableEq V]
     {G : Digraph V} {s t : V} (p : SimplePath G s t) (w : V × V → ℝ≥0)
     (bound : 1≤p.edgeWeight w) : 1≤p.edgeWeight (fun e => min 1 (w e)) := by
   by_cases h : ∃ e ∈ p.edges, 1 ≤ w e
@@ -141,7 +141,7 @@ theorem edge_uniform_at_preprocessed_weight {n : ℕ} (hn : 0<n)
   obtain ⟨X,valid,_,marginals⟩ := edge_family_of_preprocessed_factor G w _ hnFin hp oracle
   exact ⟨_,by simp only [Fintype.card_fin,le_rfl],edgeHorizon_pos ..,X,valid,marginals⟩
 
-private theorem smallMassHorizon_mono {n k : ℕ} (hn : 0<n) {α : ℝ} (ha : 0≤α)
+theorem smallMassHorizon_mono {n k : ℕ} (hn : 0<n) {α : ℝ} (ha : 0≤α)
     {W U : ℝ≥0} (le : W≤U) : smallMassHorizon n k W α ≤ smallMassHorizon n k U α := by
   unfold smallMassHorizon
   apply Nat.add_le_add_right
