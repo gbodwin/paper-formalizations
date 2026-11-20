@@ -1,5 +1,8 @@
 import DirectedFlowCutGap.ChargedSourceTables
 import DirectedFlowCutGap.EncodedEdgeInput
+import DirectedFlowCutGap.DirectNaturalView
+import DirectedFlowCutGap.TerminalArrayAssembly
+import DirectedFlowCutGap.PackedArraySchedule
 
 /-! Count source decoding after the framed tables have been read. Field
 validation, endpoint conversion and vector assembly share one input budget. -/
@@ -78,39 +81,31 @@ private theorem scan_paid {A B : Type} (decode : A → Read B) (xs : List A) (ca
     simp only [List.length_cons,Nat.add_mul,Nat.one_mul]
     omega
 
-private def wordValue : Bits → ℕ × ℕ
-  | [] => (0,1)
-  | b::bs =>
-    let tail := wordValue bs
-    ((if b then 1 else 0)+2*tail.1,tail.2+8*(bs.length+1)+4)
-
-private theorem wordValue_eq (bits : Bits) : (wordValue bits).1=value bits := by
-  induction bits with
-  | nil => rfl
-  | cons b rest ih => simp only [wordValue,value,ih]; cases b <;> simp
-
-private theorem wordValue_paid (bits : Bits) : (wordValue bits).2 ≤ 16*(bits.length+1)^2 := by
-  induction bits with
-  | nil => decide
-  | cons b rest ih =>
-    simp only [wordValue,List.length_cons]
-    nlinarith
+private theorem wordValue_paid (bits : Bits) : (DirectNaturalView.decode bits).2 ≤ 16*(bits.length+1)^2 := by
+  rw [DirectNaturalView.decode_eq]
+  exact BinaryNaturalView.decode_paid bits
 
 private def fraction (r : Row) : Read BinaryRational.Fraction := BinaryRational.fromBits r.1 r.2
 
 private theorem fraction_value (r : Row) : (fraction r).1 = readFraction r := rfl
 
 private def matrixRow (n : ℕ) (r : Row) : Read (Vector Bool n) :=
-  (readMatrixRow n r,12*(r.1.length+r.2.length+1)+n+6)
+  let row := if h : r.1.length=n ∧ r.2=[] then some (TerminalArrayAssembly.vector r.1 h.1) else none
+  (row,12*(r.1.length+r.2.length+1)+n+6)
+
+private theorem matrixRow_value (n : ℕ) (r : Row) : (matrixRow n r).1=readMatrixRow n r := by
+  unfold matrixRow readMatrixRow
+  dsimp only
+  split <;> simp_all
 
 private def pair (n : ℕ) (r : Row) : Read (Fin n × Fin n) :=
-  let a := wordValue r.1
-  let b := wordValue r.2
+  let a := DirectNaturalView.decode r.1
+  let b := DirectNaturalView.decode r.2
   let out := if h : a.1<n ∧ b.1<n then some (⟨a.1,h.1⟩,⟨b.1,h.2⟩) else none
   (out,a.2+b.2+16*(r.1.length+r.2.length+n+1)+20)
 
 private theorem pair_value (n : ℕ) (r : Row) : (pair n r).1=readDemand n r := by
-  simp only [pair,readDemand,wordValue_eq]
+  simp only [pair,readDemand,DirectNaturalView.decode_eq,BinaryNaturalView.decode_value]
 
 private structure Fits (rows : Table) (x : ℕ) : Prop where
   count : rows.length ≤ x
@@ -182,13 +177,15 @@ private theorem pairsBound {D : Table} {n x : ℕ} (hn : n ≤ x) (fits : Fits D
 private def vertexResult (costs : List BinaryRational.Fraction) (matrix : List (Vector Bool costs.length))
     (demands : List (Fin costs.length × Fin costs.length)) : Read EncodedVertexInput.Input :=
   if h : matrix.length=costs.length then
-    (some ⟨costs.length,⟨⟨matrix.toArray,by simpa using h⟩,demands,⟨costs.toArray,by simp⟩⟩⟩,0)
+    (some ⟨costs.length,⟨TerminalArrayAssembly.vector matrix h,demands,
+      TerminalArrayAssembly.vector costs rfl⟩⟩,0)
   else (none,0)
 
 private def edgeResult (n : ℕ) (costs : List BinaryRational.Fraction) (matrix : List (Vector Bool n))
     (demands : List (Fin n × Fin n)) : Read (Σ n, EncodedEdgeInput.Input n) :=
   if h : costs.length=n*n ∧ matrix.length=n then
-    (some ⟨n,⟨⟨matrix.toArray,by simpa using h.2⟩,demands,⟨costs.toArray,by simpa using h.1⟩⟩⟩,0)
+    (some ⟨n,⟨TerminalArrayAssembly.vector matrix h.2,demands,
+      TerminalArrayAssembly.vector costs h.1⟩⟩,0)
   else (none,0)
 
 private def vertexPayload (C M D : Table) : Read EncodedVertexInput.Input :=
@@ -210,7 +207,7 @@ def edgeAssembly (C M D : Table) : Read (Σ n, EncodedEdgeInput.Input n) :=
   (counts.1,counts.2+16*(C.length+M.length+D.length+1))
 
 theorem vertexAssembly_value (C M D : Table) : (vertexAssembly C M D).1=EncodedVertexInput.assemble C M D := by
-  simp only [vertexAssembly,vertexPayload,bind_value,scan_value,fraction_value,matrixRow,pair_value]
+  simp only [vertexAssembly,vertexPayload,bind_value,scan_value,fraction_value,matrixRow_value,pair_value]
   change _ = (C.mapM readFraction).bind (fun costs =>
     ((M.mapM (readMatrixRow costs.length)).bind (fun matrix =>
       (D.mapM (readDemand costs.length)).bind (fun demands =>
@@ -230,7 +227,7 @@ theorem vertexAssembly_value (C M D : Table) : (vertexAssembly C M D).1=EncodedV
         by_cases h : rows.length=costs.length <;> simp [vertexResult,h]
 
 theorem edgeAssembly_value (C M D : Table) : (edgeAssembly C M D).1=EncodedEdgeInput.assemble C M D := by
-  simp only [edgeAssembly,edgePayload,bind_value,scan_value,fraction_value,matrixRow,pair_value]
+  simp only [edgeAssembly,edgePayload,bind_value,scan_value,fraction_value,matrixRow_value,pair_value]
   change _ = (((C.mapM readFraction).bind (fun costs => (M.mapM (readMatrixRow M.length)).bind (fun matrix =>
     (D.mapM (readDemand M.length)).bind (fun demands =>
       if h : costs.length=M.length*M.length ∧ matrix.length=M.length then
@@ -369,7 +366,7 @@ theorem vertex_dimensions {n : ℕ} {D : BinaryFractionalGuesses.Input n} {sourc
     n ≤ source.length ∧ D.demands.length ≤ source.length ∧
       ∀ q ∈ D.costs.toList, BinaryRational.StoredBounded q source.length := by
   obtain ⟨C,M,Q,c,_,q,actual⟩ := parsed_tables vertexAssembly parsed
-  simp only [vertexAssembly,vertexPayload,bind_value,scan_value,fraction_value,matrixRow,pair_value] at actual
+  simp only [vertexAssembly,vertexPayload,bind_value,scan_value,fraction_value,matrixRow_value,pair_value] at actual
   obtain ⟨costs,rc,next⟩ := Option.bind_eq_some_iff.mp actual
   obtain ⟨matrix,_,next⟩ := Option.bind_eq_some_iff.mp next
   obtain ⟨demands,rd,out⟩ := Option.bind_eq_some_iff.mp next
@@ -387,7 +384,7 @@ theorem edge_dimensions {n : ℕ} {D : EncodedEdgeInput.Input n} {source : Bits}
     n ≤ source.length ∧ D.demands.length ≤ source.length ∧
       ∀ q ∈ D.costs.toList, BinaryRational.StoredBounded q source.length := by
   obtain ⟨C,M,Q,c,m,q,actual⟩ := parsed_tables edgeAssembly parsed
-  simp only [edgeAssembly,edgePayload,bind_value,scan_value,fraction_value,matrixRow,pair_value] at actual
+  simp only [edgeAssembly,edgePayload,bind_value,scan_value,fraction_value,matrixRow_value,pair_value] at actual
   obtain ⟨costs,rc,next⟩ := Option.bind_eq_some_iff.mp actual
   obtain ⟨matrix,_,next⟩ := Option.bind_eq_some_iff.mp next
   obtain ⟨demands,rd,out⟩ := Option.bind_eq_some_iff.mp next
@@ -398,5 +395,109 @@ theorem edge_dimensions {n : ℕ} {D : EncodedEdgeInput.Input n} {source : Bits}
     cases out
     exact ⟨m.count,hd,by simpa using hw⟩
   · cases out
+
+section Arrays
+
+open EncodedArrayStorage (Instruction fresh fresh_append)
+
+private def arrayCode {A : Type} (values : List A) : List (Instruction Unit) :=
+  (TerminalArrayAssembly.schedule values).map PackedArraySchedule.shape
+
+private def workBound (width : ℕ) : ℕ := 2*width^2+21*width+4
+private def spaceBound (width : ℕ) : ℕ := width^2+7*width+2
+
+private theorem array_code_paid {A : Type} (values : List A) {width : ℕ} (fits : values.length ≤ width) :
+    (arrayCode values).length ≤ workBound width ∧ fresh (arrayCode values) ≤ spaceBound width := by
+  obtain ⟨work,space⟩ := TerminalArrayAssembly.space values
+  simp only [arrayCode,List.length_map,PackedArraySchedule.shape_extent,workBound,spaceBound]
+  exact ⟨work.le.trans (by gcongr),space.trans (by gcongr)⟩
+
+/-- Arrays built by the successful row decoders before the first rejected row. -/
+private def matrixCode (n : ℕ) : Table → List (Instruction Unit)
+  | [] => []
+  | r::rest => match (matrixRow n r).1 with
+    | none => []
+    | some row => arrayCode row.toList ++ matrixCode n rest
+
+private theorem matrix_code_paid (n : ℕ) (rows : Table) {width : ℕ} (fits : n ≤ width) :
+    (matrixCode n rows).length ≤ rows.length*workBound width ∧
+      fresh (matrixCode n rows) ≤ rows.length*spaceBound width := by
+  induction rows with
+  | nil => simp [matrixCode,fresh]
+  | cons r rest ih =>
+      cases read : (matrixRow n r).1 with
+      | none => simp [matrixCode,read,fresh]
+      | some row =>
+          obtain ⟨work,space⟩ := array_code_paid row.toList (by simpa only [Vector.length_toList] using fits)
+          simp only [matrixCode,read,List.length_append,fresh_append,List.length_cons,Nat.add_mul,Nat.one_mul]
+          exact ⟨by omega,by omega⟩
+
+private def payloadCode {A : Type} (n : ℕ) (costs : List BinaryRational.Fraction) (rows : Table)
+    (finish : List (Vector Bool n) → Read A) : List (Instruction Unit) :=
+  matrixCode n rows ++ match (scan (matrixRow n) rows).1 with
+  | none => []
+  | some matrix => if (finish matrix).1.isSome then arrayCode matrix ++ arrayCode costs else []
+
+private theorem payload_code_paid {A : Type} {n width : ℕ} (costs : List BinaryRational.Fraction)
+    (rows : Table) (finish : List (Vector Bool n) → Read A) (size : n ≤ width)
+    (costFit : costs.length ≤ width) (rowFit : rows.length ≤ width) :
+    (payloadCode n costs rows finish).length ≤ (width+2)*workBound width ∧
+      fresh (payloadCode n costs rows finish) ≤ (width+2)*spaceBound width := by
+  obtain ⟨work,space⟩ := matrix_code_paid n rows size
+  have workRows := work.trans (Nat.mul_le_mul_right _ rowFit)
+  have spaceRows := space.trans (Nat.mul_le_mul_right _ rowFit)
+  have expand (k : ℕ) : (width+2)*k=width*k+(k+k) := by ring
+  unfold payloadCode
+  simp only [List.length_append,fresh_append,expand]
+  refine ⟨Nat.add_le_add workRows ?_,Nat.add_le_add spaceRows ?_⟩
+  all_goals
+    split
+    · exact Nat.zero_le _
+    · rename_i matrix read
+      have length : matrix.length ≤ width :=
+        (map_length _ ((scan_value (matrixRow n) rows).symm.trans read)).trans_le rowFit
+      obtain ⟨rowWork,rowSpace⟩ := array_code_paid matrix length
+      obtain ⟨costWork,costSpace⟩ := array_code_paid costs costFit
+      split
+      · first
+        | simpa only [List.length_append] using Nat.add_le_add rowWork costWork
+        | simpa only [fresh_append] using Nat.add_le_add rowSpace costSpace
+      · exact Nat.zero_le _
+
+/-- This proof-side schedule includes row arrays built on unsuccessful inputs. -/
+def vertexArrayCode (C M D : Table) : List (Instruction Unit) :=
+  match (scan fraction C).1 with
+  | none => []
+  | some costs => payloadCode costs.length costs M fun matrix =>
+      Read.bind (scan (pair costs.length) D) (vertexResult costs matrix)
+
+def edgeArrayCode (C M D : Table) : List (Instruction Unit) :=
+  match (scan fraction C).1 with
+  | none => []
+  | some costs => payloadCode M.length costs M fun matrix =>
+      Read.bind (scan (pair M.length) D) (edgeResult M.length costs matrix)
+
+def copyBudget (width : ℕ) : ℕ := (width+2)*workBound width
+def allocationBudget (width : ℕ) : ℕ := (width+2)*spaceBound width
+
+theorem vertex_array_paid {C M D : Table} {width : ℕ} (costs : C.length ≤ width) (rows : M.length ≤ width) :
+    (vertexArrayCode C M D).length ≤ copyBudget width ∧ fresh (vertexArrayCode C M D) ≤ allocationBudget width := by
+  unfold vertexArrayCode
+  split
+  · exact ⟨Nat.zero_le _,Nat.zero_le _⟩
+  · rename_i values read
+    have fits := (map_length _ ((scan_value fraction C).symm.trans read)).trans_le costs
+    exact payload_code_paid values M _ fits fits rows
+
+theorem edge_array_paid {C M D : Table} {width : ℕ} (costs : C.length ≤ width) (rows : M.length ≤ width) :
+    (edgeArrayCode C M D).length ≤ copyBudget width ∧ fresh (edgeArrayCode C M D) ≤ allocationBudget width := by
+  unfold edgeArrayCode
+  split
+  · exact ⟨Nat.zero_le _,Nat.zero_le _⟩
+  · rename_i values read
+    have fits := (map_length _ ((scan_value fraction C).symm.trans read)).trans_le costs
+    exact payload_code_paid values M _ rows fits rows
+
+end Arrays
 
 end DirectedFlowCutGap.ChargedSourceAssembly

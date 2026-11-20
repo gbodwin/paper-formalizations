@@ -1,6 +1,7 @@
 import DirectedFlowCutGap.OriginalSourceFramingRefinement
 import DirectedFlowCutGap.OriginalSourceTableReadback
 import DirectedFlowCutGap.ChargedSourceAssembly
+import DirectedFlowCutGap.PackedArrayReservations
 
 /-! Join the original typed decoders to the bit-addressed framing and
 readback. Every table field is read from the retained physical heap. -/
@@ -144,5 +145,98 @@ theorem parsePolynomial_eval (x : ℕ) :
     parsePolynomial.eval x=tablesBudget x+ChargedSourceAssembly.parseBudget x := by
   simp only [parsePolynomial,tablesBudget,framingBudget,tableBudget,eval_add,eval_mul,eval_pow,
     eval_ofNat,eval_X,eval_one,ChargedSourceAssembly.parsePolynomial_eval]
+
+section Arrays
+
+open EncodedArrayStorage (Instruction fresh allocateTrace)
+open ChargedSourceAssembly (copyBudget allocationBudget)
+
+private def inputArrayCode (assembly : Table → Table → Table → List (Instruction Unit))
+    (source : Bits) : List (Instruction Unit) :=
+  match (tables source).1 with
+  | none => []
+  | some (C,M,D,suffix) => if suffix.isEmpty then assembly C M D else []
+
+def vertexArrayCode : Bits → List (Instruction Unit) := inputArrayCode ChargedSourceAssembly.vertexArrayCode
+def edgeArrayCode : Bits → List (Instruction Unit) := inputArrayCode ChargedSourceAssembly.edgeArrayCode
+
+private theorem row_counts {source suffix : Bits} {C M D : Table}
+    (read : (tables source).1 = some (C,M,D,suffix)) :
+    C.length ≤ source.length ∧ M.length ≤ source.length := by
+  have old : (ChargedSourceTables.tables source).1=some (C,M,D,suffix) :=
+    ((ChargedSourceTables.tables_value source).trans (tables_value source).symm).trans read
+  have wire := congrArg List.length (ChargedSourceTables.tables_wire old)
+  simp only [PackingSourceInput.encode,List.length_append] at wire
+  have prices := EncodedVertexInput.table_prefix_has_fuel C []
+  have rows := EncodedVertexInput.table_prefix_has_fuel M []
+  simp only [List.append_nil] at prices rows
+  omega
+
+private theorem input_array_counts (assembly : Table → Table → Table → List (Instruction Unit))
+    (bounded : ∀ {C M D : Table} {width : ℕ}, C.length ≤ width → M.length ≤ width →
+      (assembly C M D).length ≤ copyBudget width ∧ fresh (assembly C M D) ≤ allocationBudget width)
+    (source : Bits) :
+    (inputArrayCode assembly source).length ≤ copyBudget source.length ∧
+      fresh (inputArrayCode assembly source) ≤ allocationBudget source.length := by
+  unfold inputArrayCode
+  cases read : (tables source).1 with
+  | none => exact ⟨Nat.zero_le _,Nat.zero_le _⟩
+  | some retained =>
+      obtain ⟨C,M,D,suffix⟩ := retained
+      obtain ⟨costs,rows⟩ := row_counts read
+      simp only
+      split
+      · exact bounded costs rows
+      · exact ⟨Nat.zero_le _,Nat.zero_le _⟩
+
+theorem vertex_array_counts (source : Bits) :
+    (vertexArrayCode source).length ≤ copyBudget source.length ∧
+      fresh (vertexArrayCode source) ≤ allocationBudget source.length :=
+  input_array_counts _ ChargedSourceAssembly.vertex_array_paid source
+
+theorem edge_array_counts (source : Bits) :
+    (edgeArrayCode source).length ≤ copyBudget source.length ∧
+      fresh (edgeArrayCode source) ≤ allocationBudget source.length :=
+  input_array_counts _ ChargedSourceAssembly.edge_array_paid source
+
+private theorem array_layout (source : Bits) (code : List (Instruction Unit)) (start : ℕ)
+    (bounds : code.length ≤ copyBudget source.length ∧ fresh code ≤ allocationBudget source.length) :
+    let placed := allocateTrace start code
+    let width := (start+allocationBudget source.length).size
+    let binary := BinaryAllocationTrace.allocate start.bits (code.map BinaryAllocationTrace.reservation)
+    (value binary.stop,binary.blocks.map (fun (a,b) => (value a,value b)))=placed ∧
+      binary.charge ≤ BinaryAllocationTrace.chargeBound (copyBudget source.length) width ∧
+      ∀ block∈placed.2, ∀ offset<block.2, (block.1+offset).size ≤ width := by
+  obtain ⟨same,paid,widths⟩ := PackedArrayReservations.binary_layout code start
+  have fits : (start+fresh code).size ≤ (start+allocationBudget source.length).size :=
+    Nat.size_le_size (Nat.add_le_add_left bounds.2 start)
+  refine ⟨same,paid.trans ?_, fun block member offset inside => (widths block member offset inside).trans fits⟩
+  unfold BinaryAllocationTrace.chargeBound
+  have copies := bounds.1
+  gcongr
+
+/-- Model the reached typed vector constructors and their reservations on any literal vertex source. -/
+theorem vertex_arrays (source : Bits) (start : ℕ) :
+    let code := vertexArrayCode source
+    let placed := allocateTrace start code
+    let width := (start+allocationBudget source.length).size
+    let binary := BinaryAllocationTrace.allocate start.bits (code.map BinaryAllocationTrace.reservation)
+    (value binary.stop,binary.blocks.map (fun (a,b) => (value a,value b)))=placed ∧
+      binary.charge ≤ BinaryAllocationTrace.chargeBound (copyBudget source.length) width ∧
+      ∀ block∈placed.2, ∀ offset<block.2, (block.1+offset).size ≤ width :=
+  array_layout source (vertexArrayCode source) start (vertex_array_counts source)
+
+/-- Model the reached typed vector constructors and their reservations on any literal edge source. -/
+theorem edge_arrays (source : Bits) (start : ℕ) :
+    let code := edgeArrayCode source
+    let placed := allocateTrace start code
+    let width := (start+allocationBudget source.length).size
+    let binary := BinaryAllocationTrace.allocate start.bits (code.map BinaryAllocationTrace.reservation)
+    (value binary.stop,binary.blocks.map (fun (a,b) => (value a,value b)))=placed ∧
+      binary.charge ≤ BinaryAllocationTrace.chargeBound (copyBudget source.length) width ∧
+      ∀ block∈placed.2, ∀ offset<block.2, (block.1+offset).size ≤ width :=
+  array_layout source (edgeArrayCode source) start (edge_array_counts source)
+
+end Arrays
 
 end DirectedFlowCutGap.PhysicalSourceInputJoin

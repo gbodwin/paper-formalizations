@@ -121,6 +121,32 @@ theorem wire_polynomial : ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (mode : Charged
     nlinarith [size.trans hS,demands.trans hS]
   exact (hp κ mode D tape).trans (eval_mono p padded)
 
+noncomputable def serializedLengthBound : Polynomial ℕ := 10*X^2+9*X+3
+
+theorem serialized_length_le {n : ℕ} {D : BinaryFractionalGuesses.Input n} {source : Bits}
+    (accepted : (PhysicalSourceInputJoin.vertex source).1=some ⟨n,D⟩) :
+    (PhysicalSourceDispatch.input D).length ≤ serializedLengthBound.eval source.length := by
+  let width := source.length
+  have original : (ChargedSourceAssembly.vertex source).1=some ⟨n,D⟩ := by
+    simpa only [ChargedSourceAssembly.vertex_value, ← PhysicalSourceInputJoin.vertex_value] using accepted
+  obtain ⟨nLe,dLe,fields⟩ := ChargedSourceAssembly.vertex_dimensions original
+  have rows := rowBits_le D.costs.toList fields
+  rw [Vector.length_toList] at rows
+  have rowsWide : LambdaRowProgram.rowBits D.costs.toList ≤ 2*width^2 := by
+    refine rows.trans ?_
+    calc
+      n*(source.length+source.length) ≤ width*(width+width) := Nat.mul_le_mul_right _ nLe
+      _ = 2*width^2 := by ring
+  refine (PhysicalSourceSizeBounds.source_size_le D).trans ?_
+  calc
+    _ ≤ PhysicalSourceSizeBounds.sourceSizeBound width width (2*width^2) := by
+      unfold PhysicalSourceSizeBounds.sourceSizeBound
+      gcongr
+    _ = serializedLengthBound.eval source.length := by
+      simp only [PhysicalSourceSizeBounds.sourceSizeBound,serializedLengthBound,
+        eval_add,eval_mul,eval_pow,eval_ofNat,eval_X]
+      ring
+
 /-- The physical parser and the counted fractional source controller use a
 polynomial amount of recorded work on each original source, including a
 malformed source that returns before dispatch. -/
@@ -130,8 +156,7 @@ theorem fractional_source_polynomial : ∃ p : Polynomial ℕ, ∀ source : Bits
       let work := PhysicalSourceReadback.runWithBitCharges D
       work.1.2 + work.2).getD 0) ≤ p.eval source.length := by
   obtain ⟨p, paid⟩ := PhysicalSourceReadback.bitCharges_polynomial
-  let lengthBound : Polynomial ℕ := 10*X^2+9*X+3
-  refine ⟨PhysicalSourceInputJoin.parsePolynomial+p.comp lengthBound, ?_⟩
+  refine ⟨PhysicalSourceInputJoin.parsePolynomial+p.comp serializedLengthBound, ?_⟩
   intro source
   let parsed := PhysicalSourceInputJoin.vertex source
   let width := source.length
@@ -146,26 +171,6 @@ theorem fractional_source_polynomial : ∃ p : Polynomial ℕ, ∀ source : Bits
   | none => exact Nat.zero_le _
   | some stored =>
       obtain ⟨n,D⟩ := stored
-      have original : (ChargedSourceAssembly.vertex source).1=some ⟨n,D⟩ := by
-        simpa only [ChargedSourceAssembly.vertex_value, ← PhysicalSourceInputJoin.vertex_value] using accepted
-      obtain ⟨nLe,dLe,fields⟩ := ChargedSourceAssembly.vertex_dimensions original
-      have rows := rowBits_le D.costs.toList fields
-      rw [Vector.length_toList] at rows
-      have rowsWide : LambdaRowProgram.rowBits D.costs.toList ≤ 2*width^2 := by
-        refine rows.trans ?_
-        calc
-          n*(source.length+source.length) ≤ width*(width+width) := Nat.mul_le_mul_right _ nLe
-          _ = 2*width^2 := by ring
-      have serialize : (PhysicalSourceDispatch.input D).length≤lengthBound.eval width := by
-        refine (PhysicalSourceSizeBounds.source_size_le D).trans ?_
-        calc
-          _ ≤ PhysicalSourceSizeBounds.sourceSizeBound width width (2*width^2) := by
-            unfold PhysicalSourceSizeBounds.sourceSizeBound
-            gcongr
-          _ = lengthBound.eval width := by
-            simp only [PhysicalSourceSizeBounds.sourceSizeBound,lengthBound,
-              eval_add,eval_mul,eval_pow,eval_ofNat,eval_X]
-            ring
-      exact (paid D).trans (eval_mono p serialize)
+      exact (paid D).trans (eval_mono p (serialized_length_le accepted))
 
 end DirectedFlowCutGap.PaidFramedVertexWire
