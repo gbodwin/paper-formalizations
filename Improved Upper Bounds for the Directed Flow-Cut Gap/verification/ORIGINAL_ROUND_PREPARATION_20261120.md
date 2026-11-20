@@ -1,0 +1,9 @@
+# Preparation arrays in the original solvers
+
+`VertexPreparationArrays` associates the heavy-mask and weight tabulations with the actual prepared graph and its survivor labels. The port preparation includes both shortcut tables and the retained graph fields. `VertexReductionArrays` follows the objective test into the actual zero mask or normalized prices, copy counts, and cloned graph. `UniformPreparationArrays` attaches the port fields, ratios, and counts, and bounds the chain layout when the total reaches one. Modeled table layouts use the same indexed callbacks as the value computation. The actual survivor and clone lists determine the label copies.
+
+`RunnerPreparationLayout.arrays` joins these schedules before the reached cutoff. `FramedPreparedRoundWork.vertex` and `.edge` apply the same literal attempt traversal as the cutoff-only layout and bound the recorded solver work and the binary reservation interpreter together. The earlier declarations still give the cutoff-only instances of the layout. The joint reservation bounds cover all source outcomes and literal tapes, including the last failed attempt.
+
+`BinaryArrayPayloadCopy.placed` follows an explicit bit-word copy between disjoint contiguous blocks with two header slots. The source and destination addresses advance in binary, and the observations preserve the complete word and its slot on both sides. `block_charge` bounds the executed copy accounting in the number of slots, address width, and payload width. The proof concerns a single copy. Additional work includes the inner pullbacks, lists and stack, and the memory operations of the complete solvers.
+
+`OriginalRoundPreparationSmoke.lean` checks a positive mass preparation with six ports, six replicas and 34 chain labels. It also checks the heavy branch with an empty residual and copies three words across a 101-bit address boundary.

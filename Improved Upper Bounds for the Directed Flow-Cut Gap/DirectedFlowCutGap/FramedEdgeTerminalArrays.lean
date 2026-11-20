@@ -87,7 +87,7 @@ private theorem bounds : ∃ cells copies : Polynomial ℕ, ∀ (κ : ℕ) (mode
     exact ⟨fixed.1.trans (eval_mono cells size),fixed.2.trans (eval_mono copies size)⟩
 
 set_option maxHeartbeats 1600000 in
-theorem polynomial : ∃ cells copies : Polynomial ℕ,
+theorem polynomialWith (layout : RoundArrayLayout.Runner) (bounded : RoundArrayLayout.Bounded layout) : ∃ cells copies : Polynomial ℕ,
     ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
       let input := PhysicalSourceInputJoin.edgeArrayCode source
       let x := source.length+κ
@@ -95,7 +95,7 @@ theorem polynomial : ∃ cells copies : Polynomial ℕ,
         (match (PhysicalSourceInputJoin.edge source).1 with
         | none => prefixCode=[]
         | some ⟨_,D⟩ => FramedEdgeStorage.AfterInput D input prefixCode) ∧
-        FramedEdgePackedLayout.Model κ mode source tape rounds ∧
+        FramedEdgePackedLayout.ModelWith layout κ mode source tape rounds ∧
         let placed := input++prefixCode++rounds++wireCode κ mode source tape
         fresh placed ≤ cells.eval x ∧ placed.length ≤ copies.eval x ∧
         ∀ start : ℕ,
@@ -105,7 +105,7 @@ theorem polynomial : ∃ cells copies : Polynomial ℕ,
           (value binary.stop,binary.blocks.map (fun (a,b) => (value a,value b)))=extent ∧
             binary.charge ≤ BinaryAllocationTrace.chargeBound (copies.eval x) width ∧
             ∀ block∈extent.2, ∀ offset<block.2, (block.1+offset).size ≤ width := by
-  obtain ⟨priorCells,priorCopies,prior⟩ := FramedEdgePackedLayout.polynomial
+  obtain ⟨priorCells,priorCopies,prior⟩ := FramedEdgePackedLayout.polynomialWith layout bounded
   obtain ⟨tailCells,tailCopies,after⟩ := bounds
   let cells := priorCells+tailCells
   let copies := priorCopies+tailCopies
@@ -129,5 +129,25 @@ theorem polynomial : ∃ cells copies : Polynomial ℕ,
   have width : (start+fresh placed).size ≤ (start+cells.eval x).size := Nat.size_le_size (Nat.add_le_add_left space start)
   exact ⟨same,paid.trans (by unfold BinaryAllocationTrace.chargeBound; gcongr),
     fun block mem offset fits => (widths block mem offset fits).trans width⟩
+
+theorem polynomial : ∃ cells copies : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let input := PhysicalSourceInputJoin.edgeArrayCode source
+      let x := source.length+κ
+      ∃ prefixCode rounds : Code,
+        (match (PhysicalSourceInputJoin.edge source).1 with
+        | none => prefixCode=[]
+        | some ⟨_,D⟩ => FramedEdgeStorage.AfterInput D input prefixCode) ∧
+        FramedEdgePackedLayout.Model κ mode source tape rounds ∧
+        let placed := input++prefixCode++rounds++wireCode κ mode source tape
+        fresh placed ≤ cells.eval x ∧ placed.length ≤ copies.eval x ∧
+        ∀ start : ℕ,
+          let extent := allocateTrace start placed
+          let width := (start+cells.eval x).size
+          let binary := BinaryAllocationTrace.allocate start.bits (placed.map BinaryAllocationTrace.reservation)
+          (value binary.stop,binary.blocks.map (fun (a,b) => (value a,value b)))=extent ∧
+            binary.charge ≤ BinaryAllocationTrace.chargeBound (copies.eval x) width ∧
+            ∀ block∈extent.2, ∀ offset<block.2, (block.1+offset).size ≤ width :=
+  polynomialWith RunnerCutoffStorage.Model RunnerCutoffStorage.arrays
 
 end DirectedFlowCutGap.FramedEdgeTerminalArrays

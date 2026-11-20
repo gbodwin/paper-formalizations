@@ -2,6 +2,7 @@ import DirectedFlowCutGap.FramedVertexStorage
 import DirectedFlowCutGap.FramedVertexTrials
 import DirectedFlowCutGap.RunnerCutoffStorage
 import DirectedFlowCutGap.BinaryArrayNestedStorage
+import DirectedFlowCutGap.RoundArrayLayout
 
 /-! Compose the original vertex source layout with the cutoff storage of each
 reached attempt in the literal row and sample order. -/
@@ -93,7 +94,7 @@ theorem source_tape (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : B
     obtain ⟨n,D⟩ := saved
     simpa only [Option.map_map,Function.comp_def] using typed_tape κ mode D tape
 
-def Model (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) (code : Code) : Prop :=
+def ModelWith (layout : RoundArrayLayout.Runner) (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) (code : Code) : Prop :=
   match (PhysicalSourceInputJoin.vertex source).1 with
   | none => code=[]
   | some ⟨n,D⟩ =>
@@ -103,8 +104,11 @@ def Model (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) (code
       let controls := BinarySolverOuterControls.vertex n κ
       let ready := BinaryAmplificationPreparation.prepare D.costs controls.draws controls.extra controls.confidence
       ∃ parts : List Code, code=parts.flatten ∧ List.Forall₂
-        (fun visit part => RunnerCutoffStorage.Model mode ready.trials visit.input visit.tape part)
+        (fun visit part => layout mode ready.trials visit.input visit.tape part)
         (attempts κ mode D cover tape).1 parts
+
+def Model (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) (code : Code) : Prop :=
+  ModelWith RunnerCutoffStorage.Model κ mode source tape code
 
 private theorem assemble {A : Type} (p : A → Code → Prop) (visits : List A) (cells steps : ℕ)
     (fits : ∀ visit ∈ visits, ∃ part, p visit part ∧ fresh part ≤ cells ∧ part.length ≤ steps) :
@@ -120,10 +124,10 @@ private theorem assemble {A : Type} (p : A → Code → Prop) (visits : List A) 
       omega
 
 set_option maxHeartbeats 1900000 in
-theorem polynomial : ∃ cells copies : Polynomial ℕ,
+theorem polynomialWith (layout : RoundArrayLayout.Runner) (bounded : RoundArrayLayout.Bounded layout) : ∃ cells copies : Polynomial ℕ,
     ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
       let x := source.length+κ
-      ∃ post rounds : Code, Prefix source post ∧ Model κ mode source tape rounds ∧
+      ∃ post rounds : Code, Prefix source post ∧ ModelWith layout κ mode source tape rounds ∧
         let code := PhysicalSourceInputJoin.vertexArrayCode source++post++rounds
         fresh code ≤ cells.eval x ∧ code.length ≤ copies.eval x ∧
         ∀ start : ℕ,
@@ -135,7 +139,7 @@ theorem polynomial : ∃ cells copies : Polynomial ℕ,
             ∀ block∈placed.2, ∀ offset<block.2, (block.1+offset).size ≤ width := by
   obtain ⟨priorCells,priorCopies,prior⟩ := FramedVertexStorage.array_polynomial
   obtain ⟨trials,visits,counts⟩ := FramedVertexTrials.polynomial
-  obtain ⟨roundCells,roundCopies,roundBound⟩ := RunnerCutoffStorage.arrays
+  obtain ⟨roundCells,roundCopies,roundBound⟩ := bounded
   let pad := X+trials
   let laterCells := visits*roundCells.comp pad
   let laterCopies := visits*roundCopies.comp pad
@@ -148,9 +152,9 @@ theorem polynomial : ∃ cells copies : Polynomial ℕ,
   let before := PhysicalSourceInputJoin.vertexArrayCode source++post
   have prefixSpace : fresh before ≤ priorCells.eval x := priorSpace.trans (eval_mono _ (Nat.le_add_right _ _))
   have prefixWork : before.length ≤ priorCopies.eval x := priorWork.trans (eval_mono _ (Nat.le_add_right _ _))
-  have suffix : ∃ rounds : Code, Model κ mode source tape rounds ∧ fresh rounds ≤ laterCells.eval x ∧
+  have suffix : ∃ rounds : Code, ModelWith layout κ mode source tape rounds ∧ fresh rounds ≤ laterCells.eval x ∧
       rounds.length ≤ laterCopies.eval x := by
-    unfold Model
+    unfold ModelWith
     cases parsed : (PhysicalSourceInputJoin.vertex source).1 with
     | none => exact ⟨[],rfl,Nat.zero_le _,Nat.zero_le _⟩
     | some saved =>
@@ -168,7 +172,7 @@ theorem polynomial : ∃ cells copies : Polynomial ℕ,
         simp only [pad,eval_add,eval_X]
         exact Nat.add_le_add nBound trialBound
       let model (v : LiteralRoundSchedule.Visit n) (code : Code) :=
-        RunnerCutoffStorage.Model mode ready.trials v.input v.tape code
+        layout mode ready.trials v.input v.tape code
       have each (v : LiteralRoundSchedule.Visit n) : ∃ code, model v code ∧
           fresh code ≤ roundCells.eval (pad.eval x) ∧ code.length ≤ roundCopies.eval (pad.eval x) := by
         obtain ⟨code,seen,space,work⟩ := roundBound mode ready.trials v.input v.tape
@@ -193,5 +197,20 @@ theorem polynomial : ∃ cells copies : Polynomial ℕ,
   have width : (start+fresh code).size ≤ (start+cells.eval x).size := Nat.size_le_size (Nat.add_le_add_left space start)
   exact ⟨same,paid.trans (by unfold BinaryAllocationTrace.chargeBound; gcongr),
     fun block mem offset fits => (widths block mem offset fits).trans width⟩
+
+theorem polynomial : ∃ cells copies : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let x := source.length+κ
+      ∃ post rounds : Code, Prefix source post ∧ Model κ mode source tape rounds ∧
+        let code := PhysicalSourceInputJoin.vertexArrayCode source++post++rounds
+        fresh code ≤ cells.eval x ∧ code.length ≤ copies.eval x ∧
+        ∀ start : ℕ,
+          let placed := allocateTrace start code
+          let width := (start+cells.eval x).size
+          let binary := BinaryAllocationTrace.allocate start.bits (code.map BinaryAllocationTrace.reservation)
+          (value binary.stop,binary.blocks.map (fun (a,b) => (value a,value b)))=placed ∧
+            binary.charge ≤ BinaryAllocationTrace.chargeBound (copies.eval x) width ∧
+            ∀ block∈placed.2, ∀ offset<block.2, (block.1+offset).size ≤ width :=
+  polynomialWith RunnerCutoffStorage.Model RunnerCutoffStorage.arrays
 
 end DirectedFlowCutGap.FramedVertexPackedLayout

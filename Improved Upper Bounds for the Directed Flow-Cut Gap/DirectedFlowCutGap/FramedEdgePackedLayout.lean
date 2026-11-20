@@ -11,7 +11,7 @@ open BinaryArrayNestedStorage (Code gridSchedule)
 open EncodedEdgeLineInput (lineSize)
 open PhysicalIntegerRoundingCost (eval_mono)
 
-def Model (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) (code : Code) : Prop :=
+def ModelWith (layout : RoundArrayLayout.Runner) (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) (code : Code) : Prop :=
   match (PhysicalSourceInputJoin.edge source).1 with
   | none => code=[]
   | some ⟨n,D⟩ =>
@@ -25,8 +25,11 @@ def Model (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) (code
       let visited := LiteralRoundSchedule.amplified line (PaidDirectEdgeWire.roundWithGadgetWork raw mode)
         controls.draws controls.extra controls.confidence cover tape
       ∃ parts : List Code, code=parts.flatten ∧ List.Forall₂
-        (fun visit part => EdgePackedRoundLayout.Model raw mode ready.trials visit.input.weights visit.tape part)
+        (fun visit part => EdgePackedRoundLayout.ModelWith layout raw mode ready.trials visit.input.weights visit.tape part)
         visited.1 parts
+
+def Model (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) (code : Code) : Prop :=
+  ModelWith RunnerCutoffStorage.Model κ mode source tape code
 
 private theorem collect {A : Type} (r : A → Code → Prop) (visits : List A) (cells copies : ℕ)
     (each : ∀ v ∈ visits, ∃ code, r v code ∧ fresh code ≤ cells ∧ code.length ≤ copies) :
@@ -58,14 +61,14 @@ private theorem visit_count {n : ℕ} (raw : EncodedEdgeLineInput.Input n) (mode
     omega
 
 set_option maxHeartbeats 2200000 in
-theorem polynomial : ∃ cells copies : Polynomial ℕ,
+theorem polynomialWith (layout : RoundArrayLayout.Runner) (bounded : RoundArrayLayout.Bounded layout) : ∃ cells copies : Polynomial ℕ,
     ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
     let pre := PhysicalSourceInputJoin.edgeArrayCode source
     let x := source.length+κ
     ∃ prefixCode roundCode : Code,
       (match (PhysicalSourceInputJoin.edge source).1 with
       | none => prefixCode=[]
-      | some ⟨_,D⟩ => FramedEdgeStorage.AfterInput D pre prefixCode) ∧ Model κ mode source tape roundCode ∧
+      | some ⟨_,D⟩ => FramedEdgeStorage.AfterInput D pre prefixCode) ∧ ModelWith layout κ mode source tape roundCode ∧
       let code := pre++prefixCode++roundCode
       fresh code ≤ cells.eval x ∧ code.length ≤ copies.eval x ∧
       ∀ start : ℕ,
@@ -77,7 +80,7 @@ theorem polynomial : ∃ cells copies : Polynomial ℕ,
           ∀ block∈placed.2, ∀ offset<block.2, (block.1+offset).size ≤ width := by
   obtain ⟨beforeCells,beforeCopies,before⟩ := FramedEdgeRoundLayout.polynomial
   obtain ⟨trials,trialBound⟩ := FramedEdgeTrials.polynomial
-  obtain ⟨roundCells,roundCopies,roundBound⟩ := EdgePackedRoundLayout.arrays
+  obtain ⟨roundCells,roundCopies,roundBound⟩ := EdgePackedRoundLayout.arraysWith layout bounded
   let pad := X+trials
   let afterCells := beforeCopies*roundCells.comp pad
   let afterCopies := beforeCopies*roundCopies.comp pad
@@ -102,9 +105,9 @@ theorem polynomial : ∃ cells copies : Polynomial ℕ,
     (Nat.le_add_right first.length earlier.length).trans previousWork
   have count : earlier.length ≤ beforeCopies.eval x :=
     (Nat.le_add_left earlier.length first.length).trans previousWork
-  have extra : ∃ code, Model κ mode source tape code ∧
+  have extra : ∃ code, ModelWith layout κ mode source tape code ∧
       fresh code ≤ afterCells.eval x ∧ code.length ≤ afterCopies.eval x := by
-    unfold Model
+    unfold ModelWith
     cases parsed : (PhysicalSourceInputJoin.edge source).1 with
     | none => exact ⟨[],rfl,Nat.zero_le _,Nat.zero_le _⟩
     | some saved =>
@@ -133,7 +136,7 @@ theorem polynomial : ∃ cells copies : Polynomial ℕ,
         simp only [pad,eval_add,eval_X]
         exact Nat.add_le_add base bound
       let model (v : LiteralRoundSchedule.Visit (lineSize n)) (c : Code) :=
-        EdgePackedRoundLayout.Model raw mode ready.trials v.input.weights v.tape c
+        EdgePackedRoundLayout.ModelWith layout raw mode ready.trials v.input.weights v.tape c
       have each (v : LiteralRoundSchedule.Visit (lineSize n)) : ∃ c, model v c ∧
           fresh c ≤ roundCells.eval (pad.eval x) ∧ c.length ≤ roundCopies.eval (pad.eval x) := by
         obtain ⟨c,run,used,events⟩ := roundBound raw mode ready.trials v.input.weights v.tape
@@ -158,5 +161,24 @@ theorem polynomial : ∃ cells copies : Polynomial ℕ,
   have fits : (start+fresh code).size ≤ (start+cells.eval x).size := Nat.size_le_size (Nat.add_le_add_left stored start)
   exact ⟨same,paid.trans (by unfold BinaryAllocationTrace.chargeBound; gcongr),
     fun block member offset inside => (widths block member offset inside).trans fits⟩
+
+theorem polynomial : ∃ cells copies : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+    let pre := PhysicalSourceInputJoin.edgeArrayCode source
+    let x := source.length+κ
+    ∃ prefixCode roundCode : Code,
+      (match (PhysicalSourceInputJoin.edge source).1 with
+      | none => prefixCode=[]
+      | some ⟨_,D⟩ => FramedEdgeStorage.AfterInput D pre prefixCode) ∧ Model κ mode source tape roundCode ∧
+      let code := pre++prefixCode++roundCode
+      fresh code ≤ cells.eval x ∧ code.length ≤ copies.eval x ∧
+      ∀ start : ℕ,
+        let placed := allocateTrace start code
+        let width := (start+cells.eval x).size
+        let binary := BinaryAllocationTrace.allocate start.bits (code.map BinaryAllocationTrace.reservation)
+        (value binary.stop,binary.blocks.map (fun (a,b) => (value a,value b)))=placed ∧
+          binary.charge ≤ BinaryAllocationTrace.chargeBound (copies.eval x) width ∧
+          ∀ block∈placed.2, ∀ offset<block.2, (block.1+offset).size ≤ width :=
+  polynomialWith RunnerCutoffStorage.Model RunnerCutoffStorage.arrays
 
 end DirectedFlowCutGap.FramedEdgePackedLayout

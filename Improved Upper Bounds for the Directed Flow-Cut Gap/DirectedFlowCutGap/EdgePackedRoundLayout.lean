@@ -1,5 +1,6 @@
 import DirectedFlowCutGap.EdgeRoundStorage
 import DirectedFlowCutGap.RunnerCutoffStorage
+import DirectedFlowCutGap.RoundArrayLayout
 
 /-! Insert the reached vertex cutoff storage after the edge gadget's arrays
 and before the cut projection, including when packed execution exhausts tape. -/
@@ -10,22 +11,26 @@ open BinaryArrayNestedStorage (Code gridSchedule)
 open FractionalCoverRawCore (RawRow)
 open PhysicalIntegerRoundingCost (eval_mono)
 
-def Model {n : ℕ} (D : Input n) (mode : ChargedVertexModes.Mode) (T : ℕ)
+def ModelWith (layout : RoundArrayLayout.Runner) {n : ℕ} (D : Input n) (mode : ChargedVertexModes.Mode) (T : ℕ)
     (row : RawRow (lineSize n)) (tape : Bits) (code : Code) : Prop :=
   let input := (BinaryEdgeProjection.roundingInputWithControl D row).1.1
   let g := (BinaryEdgeGadget.buildWithControl input).1.1
   let draw := PaidVertexRounding.runner mode T g.data tape
   let output := if draw.1.isSome then EdgeRoundStorage.projectionCode n g.size else []
-  ∃ cutoff : Code, RunnerCutoffStorage.Model mode T g.data tape cutoff ∧
+  ∃ cutoff : Code, layout mode T g.data tape cutoff ∧
     code=gridSchedule n n++EdgeGadgetArrayStorage.codeFor n g.size++cutoff++output
 
+def Model {n : ℕ} (D : Input n) (mode : ChargedVertexModes.Mode) (T : ℕ)
+    (row : RawRow (lineSize n)) (tape : Bits) (code : Code) : Prop :=
+  ModelWith RunnerCutoffStorage.Model D mode T row tape code
+
 set_option maxHeartbeats 1000000 in
-theorem arrays : ∃ cells copies : Polynomial ℕ, ∀ {n : ℕ} (D : Input n)
+theorem arraysWith (layout : RoundArrayLayout.Runner) (bounded : RoundArrayLayout.Bounded layout) : ∃ cells copies : Polynomial ℕ, ∀ {n : ℕ} (D : Input n)
     (mode : ChargedVertexModes.Mode) (T : ℕ) (row : RawRow (lineSize n)) (tape : Bits),
-    ∃ code : Code, Model D mode T row tape code ∧ fresh code ≤ cells.eval (n+T) ∧
+    ∃ code : Code, ModelWith layout D mode T row tape code ∧ fresh code ≤ cells.eval (n+T) ∧
       code.length ≤ copies.eval (n+T) := by
   obtain ⟨oldCells,oldCopies,oldBound⟩ := EdgeRoundStorage.polynomial
-  obtain ⟨cutoffCells,cutoffCopies,cutoffBound⟩ := RunnerCutoffStorage.arrays
+  obtain ⟨cutoffCells,cutoffCopies,cutoffBound⟩ := bounded
   let dimension := BinaryEdgeGadget.dimension (X : Polynomial ℕ)
   let pad := dimension+X
   refine ⟨oldCells+cutoffCells.comp pad,oldCopies+cutoffCopies.comp pad,?_⟩
@@ -61,5 +66,11 @@ theorem arrays : ∃ cells copies : Polynomial ℕ, ∀ {n : ℕ} (D : Input n)
     change code.length ≤ (oldCopies+cutoffCopies.comp pad).eval x
     simp only [code,List.length_append,eval_add,eval_comp] at rest ⊢
     omega
+
+theorem arrays : ∃ cells copies : Polynomial ℕ, ∀ {n : ℕ} (D : Input n)
+    (mode : ChargedVertexModes.Mode) (T : ℕ) (row : RawRow (lineSize n)) (tape : Bits),
+    ∃ code : Code, Model D mode T row tape code ∧ fresh code ≤ cells.eval (n+T) ∧
+      code.length ≤ copies.eval (n+T) :=
+  arraysWith RunnerCutoffStorage.Model RunnerCutoffStorage.arrays
 
 end DirectedFlowCutGap.EdgePackedRoundLayout

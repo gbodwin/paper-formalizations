@@ -43,15 +43,43 @@ private theorem work_le (charged cells copies : Polynomial ℕ) (x start recorde
   rw [Nat.add_assoc]
   exact Nat.add_le_add (actual.trans (eval_mono _ hxy)) (placed.trans room)
 
+theorem vertexWith (layout : RoundArrayLayout.Runner) (bounded : RoundArrayLayout.Bounded layout) : ∃ p : Polynomial ℕ,
+    ∀ (κ start : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let solver := PaidFramedVertexWire.vertexWithTerminalRowWork κ mode source tape
+      ∃ post rounds : Code, FramedVertexPackedLayout.Prefix source post ∧
+        FramedVertexPackedLayout.ModelWith layout κ mode source tape rounds ∧
+        let trace := PhysicalSourceInputJoin.vertexArrayCode source++post++rounds
+        solver.1.2+solver.2.1+solver.2.2+reservationWork start trace ≤ p.eval (source.length+κ+start.size) := by
+  obtain ⟨charged,paid⟩ := PaidFramedVertexWire.vertex_terminal_row_polynomial
+  obtain ⟨cells,copies,layout⟩ := FramedVertexPackedLayout.polynomialWith layout bounded
+  refine ⟨budget charged cells copies,?_⟩
+  intro κ start mode source tape
+  obtain ⟨post,rounds,prefixModel,roundModel,_,_,place⟩ := layout κ mode source tape
+  exact ⟨post,rounds,prefixModel,roundModel,
+    work_le charged cells copies (source.length+κ) start _ _ (paid κ mode source tape) (place start).2.1⟩
+
 theorem vertex : ∃ p : Polynomial ℕ,
     ∀ (κ start : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
       let solver := PaidFramedVertexWire.vertexWithTerminalRowWork κ mode source tape
       ∃ post rounds : Code, FramedVertexPackedLayout.Prefix source post ∧
         FramedVertexPackedLayout.Model κ mode source tape rounds ∧
         let trace := PhysicalSourceInputJoin.vertexArrayCode source++post++rounds
-        solver.1.2+solver.2.1+solver.2.2+reservationWork start trace ≤ p.eval (source.length+κ+start.size) := by
-  obtain ⟨charged,paid⟩ := PaidFramedVertexWire.vertex_terminal_row_polynomial
-  obtain ⟨cells,copies,layout⟩ := FramedVertexPackedLayout.polynomial
+        solver.1.2+solver.2.1+solver.2.2+reservationWork start trace ≤ p.eval (source.length+κ+start.size) :=
+  vertexWith RunnerCutoffStorage.Model RunnerCutoffStorage.arrays
+
+theorem edgeWith (layout : RoundArrayLayout.Runner) (bounded : RoundArrayLayout.Bounded layout) : ∃ p : Polynomial ℕ,
+    ∀ (κ start : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let solver := PaidDirectEdgeWire.edgeWithTerminalRowWork κ mode source tape
+      let input := PhysicalSourceInputJoin.edgeArrayCode source
+      ∃ post rounds : Code,
+        (match (PhysicalSourceInputJoin.edge source).1 with
+        | none => post=[]
+        | some ⟨_,D⟩ => FramedEdgeStorage.AfterInput D input post) ∧
+        FramedEdgePackedLayout.ModelWith layout κ mode source tape rounds ∧
+        let trace := input++post++rounds++FramedEdgeTerminalArrays.wireCode κ mode source tape
+        solver.1.2+solver.2.1.total+solver.2.2+reservationWork start trace ≤ p.eval (source.length+κ+start.size) := by
+  obtain ⟨charged,paid⟩ := PaidDirectEdgeWire.wire_terminal_row_polynomial
+  obtain ⟨cells,copies,layout⟩ := FramedEdgeTerminalArrays.polynomialWith layout bounded
   refine ⟨budget charged cells copies,?_⟩
   intro κ start mode source tape
   obtain ⟨post,rounds,prefixModel,roundModel,_,_,place⟩ := layout κ mode source tape
@@ -68,13 +96,7 @@ theorem edge : ∃ p : Polynomial ℕ,
         | some ⟨_,D⟩ => FramedEdgeStorage.AfterInput D input post) ∧
         FramedEdgePackedLayout.Model κ mode source tape rounds ∧
         let trace := input++post++rounds++FramedEdgeTerminalArrays.wireCode κ mode source tape
-        solver.1.2+solver.2.1.total+solver.2.2+reservationWork start trace ≤ p.eval (source.length+κ+start.size) := by
-  obtain ⟨charged,paid⟩ := PaidDirectEdgeWire.wire_terminal_row_polynomial
-  obtain ⟨cells,copies,layout⟩ := FramedEdgeTerminalArrays.polynomial
-  refine ⟨budget charged cells copies,?_⟩
-  intro κ start mode source tape
-  obtain ⟨post,rounds,prefixModel,roundModel,_,_,place⟩ := layout κ mode source tape
-  exact ⟨post,rounds,prefixModel,roundModel,
-    work_le charged cells copies (source.length+κ) start _ _ (paid κ mode source tape) (place start).2.1⟩
+        solver.1.2+solver.2.1.total+solver.2.2+reservationWork start trace ≤ p.eval (source.length+κ+start.size) :=
+  edgeWith RunnerCutoffStorage.Model RunnerCutoffStorage.arrays
 
 end DirectedFlowCutGap.FramedChargedReservations

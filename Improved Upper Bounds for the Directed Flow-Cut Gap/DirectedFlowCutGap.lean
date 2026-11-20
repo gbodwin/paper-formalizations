@@ -112,6 +112,7 @@ import DirectedFlowCutGap.AdaptiveRounding
 import DirectedFlowCutGap.AdaptiveVertexBound
 import DirectedFlowCutGap.AdaptiveWidthEnvelope
 import DirectedFlowCutGap.ApproximatePackingTrace
+import DirectedFlowCutGap.ArrayMaterializationLayout
 import DirectedFlowCutGap.AttainedOptima
 import DirectedFlowCutGap.AvoidingDemandScanCall
 import DirectedFlowCutGap.AvoidingDemandScanCallLift
@@ -147,6 +148,7 @@ import DirectedFlowCutGap.BinaryAmplificationPreparation
 import DirectedFlowCutGap.BinaryArithmetic
 import DirectedFlowCutGap.BinaryArrayBatch
 import DirectedFlowCutGap.BinaryArrayNestedStorage
+import DirectedFlowCutGap.BinaryArrayPayloadCopy
 import DirectedFlowCutGap.BinaryBorrowProgram
 import DirectedFlowCutGap.BinaryBoundedSampler
 import DirectedFlowCutGap.BinaryBudgetExpression
@@ -548,6 +550,7 @@ import DirectedFlowCutGap.FramedEdgeRoundLayout
 import DirectedFlowCutGap.FramedEdgeStorage
 import DirectedFlowCutGap.FramedEdgeTerminalArrays
 import DirectedFlowCutGap.FramedEdgeTrials
+import DirectedFlowCutGap.FramedPreparedRoundWork
 import DirectedFlowCutGap.FramedSolverRecords
 import DirectedFlowCutGap.FramedVertexPackedLayout
 import DirectedFlowCutGap.FramedVertexStorage
@@ -1090,6 +1093,7 @@ import DirectedFlowCutGap.RetainedPathSearch
 import DirectedFlowCutGap.RetainedSampledExecution
 import DirectedFlowCutGap.RetainedSurvivorEnumeration
 import DirectedFlowCutGap.RetainedTapeInput
+import DirectedFlowCutGap.RoundArrayLayout
 import DirectedFlowCutGap.RoundInputPackProgram
 import DirectedFlowCutGap.RoundMaskUpdateProgram
 import DirectedFlowCutGap.RoundStateUpdateProgram
@@ -1104,6 +1108,7 @@ import DirectedFlowCutGap.RowVerticesExecution
 import DirectedFlowCutGap.RowVerticesLabels
 import DirectedFlowCutGap.RowVerticesProgram
 import DirectedFlowCutGap.RunnerCutoffStorage
+import DirectedFlowCutGap.RunnerPreparationLayout
 import DirectedFlowCutGap.ScalarAdditionRowBounds
 import DirectedFlowCutGap.ScalarAdditionRowCall
 import DirectedFlowCutGap.ScalarAdditionRowEncoding
@@ -1182,12 +1187,17 @@ import DirectedFlowCutGap.TinyEdgePreprocessing
 import DirectedFlowCutGap.TotalGuardedPackedExecution
 import DirectedFlowCutGap.TotalRawGraphExecution
 import DirectedFlowCutGap.UniformCutoffStorage
+import DirectedFlowCutGap.UniformPreparationArrays
 import DirectedFlowCutGap.UniformWeightReduction
 import DirectedFlowCutGap.UnitCostReduction
 import DirectedFlowCutGap.ValidatedFractionalRows
 import DirectedFlowCutGap.VertexFlow
+import DirectedFlowCutGap.VertexGraphArrayLayout
 import DirectedFlowCutGap.VertexGridDistances
 import DirectedFlowCutGap.VertexListReverse
+import DirectedFlowCutGap.VertexPreparationArrays
+import DirectedFlowCutGap.VertexPreparationBounds
+import DirectedFlowCutGap.VertexReductionArrays
 import DirectedFlowCutGap.VertexReductionWidths
 import DirectedFlowCutGap.VertexReplication
 import DirectedFlowCutGap.VertexRounding
