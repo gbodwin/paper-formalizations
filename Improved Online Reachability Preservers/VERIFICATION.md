@@ -904,6 +904,8 @@ factor-four widths. The eight-vertex printed-mean example has uniform
 degree two and mean length four. Only the length-eight path requires a
 midpoint split, and the resulting half-4-bridge persists after the loops end.
 Independent review checked the repeated-parent analysis and both exact examples.
+A four-path example from the audit keeps the nested obstruction under every
+arrival permutation. Each central row is the inner partner of the other.
 [Conditional split proof](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean)
 · [Verified average-width witnesses](OnlineReachabilityPreservers/AverageSplitAudit.lean).
 

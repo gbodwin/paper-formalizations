@@ -274,4 +274,98 @@ theorem capSplitExample_nonmaximal :
       (∑ i, (capSplitExample i).length) < ∑ i, (paths i).length :=
   ⟨oppositeComparison 37,oppositeComparison_simple 37,oppositeComparison_free 37,by decide⟩
 
+/-- Each central path is the inner reversal partner of the other. -/
+def mutualNestedRows : Fin 4 → List (Fin 6) := ![[0,1,2,3],[3,0],[4,2,1,5],[5,4]]
+
+theorem mutualNestedRows_simple_mass :
+    (∀ i, (mutualNestedRows i).Nodup) ∧ (∑ i, (mutualNestedRows i).length) = 12 := by decide
+
+private def mutualOverlap (a b : Fin 4) : Prop :=
+  ∃ v, v ∈ mutualNestedRows a ∧ v ∈ mutualNestedRows b
+
+set_option synthInstance.maxSize 1024 in
+private theorem mutual_no_parallel :
+    ∀ (a r : Fin 4) (x y : Fin 6), a ≠ r →
+      BeforeIn mutualNestedRows a x y → BeforeIn mutualNestedRows r x y → False := by
+  unfold BeforeIn
+  decide
+
+set_option synthInstance.maxSize 1024 in
+private theorem mutual_no_triangle :
+    ∀ (r a b : Fin 4), r ≠ a → r ≠ b → a ≠ b →
+      mutualOverlap r a → mutualOverlap a b → mutualOverlap b r → False := by
+  unfold mutualOverlap
+  decide
+
+set_option synthInstance.maxSize 1024 in
+private theorem mutual_no_four_cycle :
+    ∀ (r a b c : Fin 4), r ≠ a → r ≠ b → r ≠ c → a ≠ b → a ≠ c → b ≠ c →
+      mutualOverlap r a → mutualOverlap a b → mutualOverlap b c → mutualOverlap c r → False := by
+  unfold mutualOverlap
+  decide
+
+/-- The mutual nesting example has no full bridge of any size. -/
+theorem mutualNestedRows_free (k : ℕ) : IsEmpty (Bridge (BeforeIn mutualNestedRows) k) := by
+  refine ⟨fun b => ?_⟩
+  have count := bridge_path_count_le b
+  simp only [Fintype.card_fin] at count
+  have small : k ≤ 2 := by omega
+  interval_cases k
+  · exact mutual_no_parallel (b.arc 0) b.river _ _ (b.river_ne_arc 0).symm (b.arcStep 0) b.riverStep
+  · have distinct : b.arc 0 ≠ b.arc 1 := fun h => (by decide : (0 : Fin 2) ≠ 1) (b.distinctArcs h)
+    exact mutual_no_triangle b.river (b.arc 0) (b.arc 1) (b.river_ne_arc 0) (b.river_ne_arc 1) distinct
+      ⟨_,b.riverStep.1,(b.arcStep 0).1⟩
+      ⟨_,(b.arcStep 0).2.1,(b.arcStep 1).1⟩
+      ⟨_,(b.arcStep 1).2.1,b.riverStep.2.1⟩
+  · have distinct {i j : Fin 3} (different : i ≠ j) : b.arc i ≠ b.arc j :=
+      fun h => different (b.distinctArcs h)
+    exact mutual_no_four_cycle b.river (b.arc 0) (b.arc 1) (b.arc 2)
+      (b.river_ne_arc 0) (b.river_ne_arc 1) (b.river_ne_arc 2)
+      (distinct (by decide)) (distinct (by decide)) (distinct (by decide))
+      ⟨_,b.riverStep.1,(b.arcStep 0).1⟩
+      ⟨_,(b.arcStep 0).2.1,(b.arcStep 1).1⟩
+      ⟨_,(b.arcStep 1).2.1,(b.arcStep 2).1⟩
+      ⟨_,(b.arcStep 2).2.1,b.riverStep.2.1⟩
+
+/-- Reordering the arrivals preserves full bridge exclusion. -/
+theorem mutualNestedRows_reordered_free (order : Fin 4 ≃ Fin 4) (k : ℕ) :
+    IsEmpty (Bridge (BeforeIn (fun i => mutualNestedRows (order i))) k) :=
+  ⟨fun b => (mutualNestedRows_free k).false (b.mapPaths order order.injective (fun _ _ _ h => h))⟩
+
+/-- A later inner partner exists in every arrival order. Whichever
+central row comes first supplies the two nested intervals. -/
+theorem mutualNestedRows_reordered_has_later_nested (order : Fin 4 ≃ Fin 4) :
+    ¬ NoLaterNestedOpposites (fun i => mutualNestedRows (order i)) := by
+  intro absent
+  have different : order.symm 0 ≠ order.symm 2 := fun h =>
+    (by decide : (0 : Fin 4) ≠ 2) (order.symm.injective h)
+  have step (i : Fin 4) (x y : Fin 6) (h : BeforeIn mutualNestedRows i x y) :
+      BeforeIn (fun i => mutualNestedRows (order i)) (order.symm i) x y := by
+    simpa only [BeforeIn,Equiv.apply_symm_apply] using h
+  rcases lt_or_gt_of_ne different with later | later
+  · exact absent (fun eq => (by decide : (1 : Fin 4) ≠ 0) (order.symm.injective eq))
+      (fun eq => (by decide : (1 : Fin 4) ≠ 2) (order.symm.injective eq)) later
+      (step 0 0 1 (by unfold BeforeIn; decide))
+      (step 0 1 2 (by unfold BeforeIn; decide))
+      (step 0 2 3 (by unfold BeforeIn; decide))
+      (step 1 3 0 (by unfold BeforeIn; decide))
+      (step 2 2 1 (by unfold BeforeIn; decide))
+  · exact absent (fun eq => (by decide : (3 : Fin 4) ≠ 2) (order.symm.injective eq))
+      (fun eq => (by decide : (3 : Fin 4) ≠ 0) (order.symm.injective eq)) later
+      (step 2 4 2 (by unfold BeforeIn; decide))
+      (step 2 2 1 (by unfold BeforeIn; decide))
+      (step 2 1 5 (by unfold BeforeIn; decide))
+      (step 3 5 4 (by unfold BeforeIn; decide))
+      (step 0 1 2 (by unfold BeforeIn; decide))
+
+/-- The obstruction to reordering occurs below the maximum as well. -/
+theorem mutualNestedRows_nonmaximal :
+    ∃ paths : Fin 4 → List (Fin 6), (∀ i, (paths i).Nodup) ∧
+      (∀ k, IsEmpty (Bridge (BeforeIn paths) k)) ∧
+      (∑ i, (mutualNestedRows i).length) < ∑ i, (paths i).length := by
+  let single (i : Fin 4) : Fin 6 := ⟨i.val, i.isLt.trans (by decide)⟩
+  let competitor := padSingletonPaths (oppositeRows 6) single
+  exact ⟨competitor,by decide,fun k =>
+    padSingletonPaths_free _ _ (fun j => oppositeRows_bridge_free 6 (j+2) le_rfl) k,by decide⟩
+
 end OnlineReachabilityPreservers.SourceAudit

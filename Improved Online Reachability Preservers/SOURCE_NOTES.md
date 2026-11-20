@@ -118,6 +118,12 @@ positive budgets and mass at least both counts, the stated exclusion lets
 the two splits, restriction, and peeling give all four fixed caps, both
 original budgets, and at least one sixteenth of the mass. The midpoint example exhibits
 the nesting in an eligible original family.
+Reordering arrivals does not always remove this pattern. The four paths
+`[(0,1,2,3),(3,0),(4,2,1,5),(5,4)]` exclude every full bridge in every
+arrival order. Each of the two length-four paths is the inner partner of
+the other. Whichever arrives first has a later inner partner. This
+six-vertex family also admits a larger bridge-free competitor at the same
+budgets.
 [Conditional half-bridge cleaning](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean).
 
 The pruning argument in [8], Lemma 20 also works for the half-bridge
