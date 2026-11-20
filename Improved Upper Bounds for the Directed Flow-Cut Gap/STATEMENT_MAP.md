@@ -26,6 +26,8 @@ The [measured mask readback](verification/PACKED_MASK_READBACK_20261120.md) uses
 [Physical source framing and edge composition](verification/PHYSICAL_SOURCE_FRAMING_20261120.md)
 The [packed scalar execution](verification/PACKED_SCALAR_EXECUTION_20261120.md) includes the control instructions, initial cache and guarded charge accumulation. The same packed run supplies the measured mask reader. Lean bounds their combined work and links the cache and terminal mask allocations in one binary reservation trace for every literal tape in the active regime.
 
+The [binary vertex fractional source proof](verification/BINARY_VERTEX_SOURCE_DISPATCH_20261120.md) joins the original physical parser, exact cached execution and counted terminal readback. Its separate cache layout follows the actual completed literal execution and bounds the binary reservations.
+
 [Recorded work for every source and tape](verification/PAID_SOURCE_SOLVERS_20261120.md)
 [Terminating packed rounding without numerical fuel](verification/FUEL_FREE_PACKED_ROUNDING_20261120.md)
 

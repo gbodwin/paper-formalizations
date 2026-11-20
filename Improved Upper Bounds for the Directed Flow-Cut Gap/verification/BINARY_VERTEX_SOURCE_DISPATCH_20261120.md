@@ -1,0 +1,9 @@
+# Binary fractional dispatch on the original vertex source
+
+The original fractional source program uses a fixed table and a binary cached driver. `BinaryCompleteCacheExecution.observes` preserves the entire earlier cached result and terminal-inclusive charge. Its termination proof uses the completed original trace. `PhysicalSourceBinaryCache.output_bounds` links the actual returned store and register widths to the proved source-length envelope. The binary driver keeps its two counters in tail position.
+
+`PhysicalSourceReadback.run` preserves the earlier plan and both legacy charges. Its measured counterpart runs the same dispatcher once and charges each terminal cache lookup while recovering the same plan. `bitCharges_polynomial` bounds the combined internal scalar and terminal work in the serialized source length. The original physical framer and this counted segment are joined by `PaidFramedVertexWire.fractional_source_polynomial`, which also retains parsing work on a malformed source.
+
+`VertexSourceCacheLayout.array_polynomial` identifies the actual cache walk through the complete literal source. A conservative allocation model bounds copy instructions, reserved cells and all allocated address widths, and gives exact agreement with a binary reservation trace from any supplied starting address. Terminal parser arrays and the remaining structural costs of the full source-to-cut computation remain separate obligations.
+
+The native fixtures preserve the prior charges for a 3-bit empty input, a 36-bit direct-demand obstruction and a 56-bit directed chain with a zero-price internal vertex. The last case returns the cut mask `[false,true,false]` and retains dispatch and boundary charges of 56,919,146 and 6,816,520. It measures 60,063,065 internal scalar operations and 683,534 terminal readback operations.
