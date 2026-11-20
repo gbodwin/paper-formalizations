@@ -458,6 +458,7 @@ import DirectedFlowCutGap.EpochScanData
 import DirectedFlowCutGap.EpochScanHeadProgram
 import DirectedFlowCutGap.EpochScanProgram
 import DirectedFlowCutGap.EpochSelectedRoundProgram
+import DirectedFlowCutGap.ExactEdgeWeightPadding
 import DirectedFlowCutGap.FairBitConfidence
 import DirectedFlowCutGap.FairBitWords
 import DirectedFlowCutGap.FinalDispatchCallLift
@@ -1107,6 +1108,7 @@ import DirectedFlowCutGap.WeakDecompositionBounds
 import DirectedFlowCutGap.WeakDecompositionExactWeight
 import DirectedFlowCutGap.WeakDecompositionOriginalFloor
 import DirectedFlowCutGap.WeakDecompositionSmallMass
+import DirectedFlowCutGap.WeakDecompositionWeightBudget
 import DirectedFlowCutGap.WeightSelfReduction
 import DirectedFlowCutGap.WitnessPrefix
 import DirectedFlowCutGap.WitnessSystem

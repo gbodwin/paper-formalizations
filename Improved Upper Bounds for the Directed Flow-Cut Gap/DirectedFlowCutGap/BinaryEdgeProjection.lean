@@ -9,30 +9,33 @@ open BinaryArithmetic EncodedEdgeLineInput RetainedGridState FractionalCoverRawC
 open BinaryVertexReductionArithmetic (batch batch_value batch_paid)
 open BinaryEdgeGadget (incident incident_iff incidentBudget incident_paid)
 
-private def arcWord {n : ℕ} (s t : Fin n) : ℕ × ℕ :=
+private def coordinateWord {n : ℕ} (ports : Bool) (s t : Fin n) : ℕ × ℕ :=
   let radix := BinaryNaturalView.encode n
   let tail := BinaryNaturalView.encode s.val
   let head := BinaryNaturalView.encode t.val
   let product := mul tail.1 radix.1
   let low := add false head.1 product.1
-  let index := add false (false::radix.1) low.1
+  let offset := if ports then false::radix.1 else []
+  let index := add false offset low.1
   let output := BinaryNaturalView.decode index.1
   (output.1,radix.2+tail.2+head.2+product.2+low.2+index.2+output.2+8)
 
-private theorem arcWord_value {n : ℕ} (s t : Fin n) : (arcWord s t).1=(edgeIndex (s,t)).val := by
-  change _ = n*2+(t.val+n*s.val)
-  simp only [arcWord,BinaryNaturalView.decode_value,(add_spec ..).1,(mul_spec ..).1,
-    value,Bool.toNat_false,zero_add,add_zero,BinaryNaturalView.encode_value]
-  ring
+private theorem coordinateWord_value {n : ℕ} (ports : Bool) (s t : Fin n) :
+    (coordinateWord ports s t).1=(if ports then n*2 else 0)+(t.val+n*s.val) := by
+  cases ports <;>
+    simp only [coordinateWord,BinaryNaturalView.decode_value,(add_spec ..).1,(mul_spec ..).1,
+      Bool.false_eq_true,ite_false,ite_true,value,Bool.toNat_false,zero_add,add_zero,BinaryNaturalView.encode_value] <;>
+    ring
 
-private theorem arcWord_paid {n : ℕ} (s t : Fin n) :
-    (arcWord s t).2 ≤ 1024*(n+2)^2 := by
+private theorem coordinateWord_paid {n : ℕ} (ports : Bool) (s t : Fin n) :
+    (coordinateWord ports s t).2 ≤ 1024*(n+2)^2 := by
   let radix := BinaryNaturalView.encode n
   let tail := BinaryNaturalView.encode s.val
   let head := BinaryNaturalView.encode t.val
   let product := mul tail.1 radix.1
   let low := add false head.1 product.1
-  let index := add false (false::radix.1) low.1
+  let offset := if ports then false::radix.1 else []
+  let index := add false offset low.1
   have len (x : ℕ) (h : x ≤ n) : (BinaryNaturalView.encode x).1.length ≤ n := by
     rw [BinaryNaturalView.encode_bits,Nat.size_eq_bits_len]
     exact (BinaryNaturalOperations.size_le_self x).trans h
@@ -52,8 +55,9 @@ private theorem arcWord_paid {n : ℕ} (s t : Fin n) :
   have l := add_spec false head.1 product.1
   have lLen : low.1.length ≤ 3*n+2 := l.2.1.trans (by omega)
   have lPaid : low.2 ≤ 16*(3*n+2) := l.2.2.trans (by omega)
-  have i := add_spec false (false::radix.1) low.1
-  rw [List.length_cons] at i
+  have preLen : offset.length ≤ n+1 := by
+    cases ports <;> simp [offset,lR]
+  have i := add_spec false offset low.1
   have iLen : index.1.length ≤ 3*n+3 := i.2.1.trans (by omega)
   have iPaid : index.2 ≤ 16*(3*n+3) := i.2.2.trans (by omega)
   have decoded := (BinaryNaturalView.decode_paid index.1).trans (Nat.mul_le_mul_left 16
@@ -65,11 +69,13 @@ private theorem arcWord_paid {n : ℕ} (s t : Fin n) :
   nlinarith only [rPaid,tPaid,hPaid,pPaid,lPaid,iPaid,decoded]
 
 private def arcPosition {n : ℕ} (s t : Fin n) : Fin (lineSize n) × ℕ :=
-  let result := arcWord s t
-  (⟨result.1,by rw [arcWord_value]; exact (edgeIndex (s,t)).isLt⟩,result.2)
+  let result := coordinateWord true s t
+  (⟨result.1,by
+    rw [coordinateWord_value]
+    exact (edgeIndex (s,t)).isLt⟩,result.2)
 
 @[simp] private theorem arcPosition_value {n : ℕ} (s t : Fin n) :
-    (arcPosition s t).1=edgeIndex (s,t) := Fin.ext (arcWord_value s t)
+    (arcPosition s t).1=edgeIndex (s,t) := Fin.ext (coordinateWord_value true s t)
 
 private def batchArcs {n : ℕ} {A : Type} (f : Fin n → Fin n → Fin (lineSize n) → A × ℕ) :
     Vector (Vector A n) n × ℕ :=
@@ -89,7 +95,39 @@ private theorem batchArcs_paid {n : ℕ} {A : Type}
   intro s
   apply batch_paid
   intro t
-  exact Nat.add_le_add (arcWord_paid s t) (paid s t _)
+  exact Nat.add_le_add (coordinateWord_paid true s t) (paid s t _)
+
+private def matrixPosition {n : ℕ} (s t : Fin n) : Fin (n*n) × ℕ :=
+  let result := coordinateWord false s t
+  (⟨result.1,by
+    have inside := (finProdFinEquiv (s,t)).isLt
+    change t.val+n*s.val<n*n at inside
+    simpa only [result,coordinateWord_value,Bool.false_eq_true,ite_false,zero_add] using inside⟩,result.2)
+
+@[simp] private theorem matrixPosition_value {n : ℕ} (s t : Fin n) :
+    (matrixPosition s t).1=finProdFinEquiv (s,t) := by
+  apply Fin.ext
+  change (coordinateWord false s t).1=t.val+n*s.val
+  simpa only [Bool.false_eq_true,ite_false,zero_add] using coordinateWord_value false s t
+
+def matrix {n : ℕ} {A : Type} (f : Fin (n*n) → A × ℕ) : Vector (Vector A n) n × ℕ :=
+  batch fun s => batch fun t =>
+    let position := matrixPosition s t
+    let answer := f position.1
+    (answer.1,position.2+answer.2)
+
+@[simp] theorem matrix_value {n : ℕ} {A : Type} (f : Fin (n*n) → A × ℕ) :
+    (matrix f).1=Vector.ofFn (fun s => Vector.ofFn fun t => (f (finProdFinEquiv (s,t))).1) := by
+  simp only [matrix,batch_value,matrixPosition_value]
+
+theorem matrix_paid {n : ℕ} {A : Type} (f : Fin (n*n) → A × ℕ) {cap : ℕ}
+    (paid : ∀ i, (f i).2 ≤ cap) : (matrix f).2 ≤ readbackBudget n cap := by
+  unfold matrix readbackBudget
+  apply batch_paid
+  intro s
+  apply batch_paid
+  intro t
+  exact Nat.add_le_add (coordinateWord_paid false s t) (paid _)
 
 def roundingInput {n : ℕ} (D : Input n) (row : RawRow (lineSize n)) : EncodedEdgeGadget.Input n × ℕ :=
   let weight := batchArcs fun _ _ i => (get row i,4)

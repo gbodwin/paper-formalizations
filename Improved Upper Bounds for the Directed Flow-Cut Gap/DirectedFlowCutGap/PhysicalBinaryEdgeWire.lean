@@ -6,29 +6,27 @@ stored rational fields. The source-size bound permits zero padding. -/
 namespace DirectedFlowCutGap.PhysicalBinaryEdgeWire
 
 open BinaryArithmetic BinaryRational FiniteDrawTrees Polynomial
-open BinaryVertexReductionArithmetic (batch batch_value batch_paid)
 open PhysicalAmplifiedEdgeSolver (EdgeResult model)
 open PhysicalIntegerRoundingCost (eval_mono)
 
 def decodeBudget {R : Type*} [Semiring R] (n b : R) : R :=
-  n^2*(40*(b+1)^2)+8*n^2+4+64*(n+1)^4
+  BinaryEdgeProjection.readbackBudget n (40*(b+1)^2)+4
 
 def decodeWithCost {n : ℕ} (D : EncodedEdgeInput.Input n) : EncodedEdgeLineInput.Input n × ℕ :=
-  let prices := batch fun i => BinaryRawRational.decode (BinaryFractionalRows.get D.costs i)
-  (⟨D.adjacency,D.demands,Vector.ofFn fun s => Vector.ofFn fun t => prices.1[(finProdFinEquiv (s,t)).val]⟩,
-    prices.2+64*(n+1)^4)
+  let prices := BinaryEdgeProjection.matrix fun i => BinaryRawRational.decode (BinaryFractionalRows.get D.costs i)
+  (⟨D.adjacency,D.demands,prices.1⟩,prices.2+4)
 
 @[simp] theorem decode_value {n : ℕ} (D : EncodedEdgeInput.Input n) : (decodeWithCost D).1=EncodedEdgeInput.decodeInput D := by
-  simp only [decodeWithCost,EncodedEdgeInput.decodeInput,batch_value,BinaryRawRational.decode_value,
-    BinaryFractionalRows.decode_get,Vector.getElem_ofFn]
+  simp only [decodeWithCost,EncodedEdgeInput.decodeInput,BinaryEdgeProjection.matrix_value,
+    BinaryRawRational.decode_value,BinaryFractionalRows.decode_get]
 
 theorem decode_paid {n b : ℕ} (D : EncodedEdgeInput.Input n)
     (fits : ∀ i, StoredBounded (BinaryFractionalRows.get D.costs i) b) :
     (decodeWithCost D).2 ≤ decodeBudget n b := by
-  unfold decodeBudget decodeWithCost
-  dsimp only
-  rw [pow_two n]
-  exact Nat.add_le_add_right (batch_paid _ fun i => BinaryRawRational.decode_paid (fits i)) _
+  apply Nat.add_le_add_right
+  exact BinaryEdgeProjection.matrix_paid
+    (fun i => BinaryRawRational.decode (BinaryFractionalRows.get D.costs i))
+    (fun i => BinaryRawRational.decode_paid (fits i))
 
 def runOn {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : EncodedEdgeInput.Input n) (tape : Bits) :
     Option (EdgeResult n) :=
@@ -118,7 +116,7 @@ theorem edge_wire_polynomial : ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (mode : Ch
   change parsed.2 ≤ _ at framing
   have stored := decode_paid D fits
   have load : decodeBudget n source.length ≤ (decodeBudget (X : Polynomial ℕ) X).eval x := by
-    simp only [decodeBudget,eval_add,eval_mul,eval_ofNat,eval_pow,eval_one,eval_X]
+    simp only [decodeBudget,BinaryEdgeProjection.readbackBudget,eval_add,eval_mul,eval_ofNat,eval_pow,eval_one,eval_X]
     gcongr
   have copying := stored.trans load
   simp only [eval_add,eval_comp]

@@ -289,7 +289,8 @@ theorem wire_polynomial : ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (source tape : 
   have conversion := (PhysicalBinaryEdgeWire.decode_paid D stored).trans
     (show PhysicalBinaryEdgeWire.decodeBudget m source.length ≤ load.eval x from by
       have hn := size.trans length
-      simp only [load,PhysicalBinaryEdgeWire.decodeBudget,eval_add,eval_mul,eval_pow,eval_one,eval_ofNat,eval_X]
+      simp only [load,PhysicalBinaryEdgeWire.decodeBudget,BinaryEdgeProjection.readbackBudget,
+        eval_add,eval_mul,eval_pow,eval_one,eval_ofNat,eval_X]
       gcongr)
   simp only [eval_add,eval_comp]
   change (ChargedSourceAssembly.edge source).2+(actual.paid+(PhysicalBinaryEdgeWire.decodeWithCost D).2) ≤
