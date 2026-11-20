@@ -68,10 +68,13 @@ private theorem equalNatural_paid {a b bound : ℕ} (aa : a ≤ bound) (bb : b �
   dsimp only
   nlinarith only [x,y,c']
 
-private def equalFin {m : ℕ} (a b : Fin m) : Bool × ℕ := equalNatural a.val b.val
+def equalFin {m : ℕ} (a b : Fin m) : Bool × ℕ := equalNatural a.val b.val
 
-private theorem equalFin_value {m : ℕ} (a b : Fin m) : (equalFin a b).1=true ↔ a=b := by
+theorem equalFin_value {m : ℕ} (a b : Fin m) : (equalFin a b).1=true ↔ a=b := by
   rw [equalFin,equalNatural_value,Fin.val_inj]
+
+theorem equalFin_paid {m : ℕ} (a b : Fin m) : (equalFin a b).2 ≤ 64*(m+1)^2 :=
+  equalNatural_paid a.isLt.le b.isLt.le
 
 private def equalLabel {n : ℕ} : DyadicEdgeWeights.Label n → DyadicEdgeWeights.Label n → Bool × ℕ
   | none,none => (true,2)
@@ -90,7 +93,7 @@ private theorem equalLabel_paid {n : ℕ} (a b : DyadicEdgeWeights.Label n) :
     have hj := (Nat.lt_succ_iff.mp j.isLt).trans (depth_le n)
     exact equalNatural_paid hi hj
 
-private def incident {n : ℕ} (l : Labels n) (e : Pair n) : RawNode n → Bool × ℕ
+def incident {n : ℕ} (l : Labels n) (e : Pair n) : RawNode n → Bool × ℕ
   | .inl _ => (false,2)
   | .inr (u,side,i) =>
     let v := if side then e.1 else e.2
@@ -100,7 +103,7 @@ private def incident {n : ℕ} (l : Labels n) (e : Pair n) : RawNode n → Bool 
       (label.1,base.2+label.2+8)
     else (false,base.2+6)
 
-private theorem incident_iff {n : ℕ} (l : Labels n) (e : Pair n) (x : RawNode n) :
+theorem incident_iff {n : ℕ} (l : Labels n) (e : Pair n) (x : RawNode n) :
     (incident l e x).1=true ↔ x=EdgeToVertex.right (labelAt l) e ∨ x=EdgeToVertex.left (labelAt l) e := by
   rcases x with pair | ⟨u,b,i⟩
   · simp [incident,EdgeToVertex.right,EdgeToVertex.left]
@@ -108,9 +111,9 @@ private theorem incident_iff {n : ℕ} (l : Labels n) (e : Pair n) (x : RawNode 
       ite_false,ite_true,Sum.inr.injEq,Prod.mk.injEq,false_and,true_and,and_false,false_or] <;>
     split <;> simp_all [equalFin_value,equalLabel_value]
 
-private def incidentBudget {R : Type*} [Semiring R] (n : R) : R := 128*(n+2)^2+10
+def incidentBudget {R : Type*} [Semiring R] (n : R) : R := 128*(n+2)^2+10
 
-private theorem incident_paid {n : ℕ} (l : Labels n) (e : Pair n) (x : RawNode n) :
+theorem incident_paid {n : ℕ} (l : Labels n) (e : Pair n) (x : RawNode n) :
     (incident l e x).2 ≤ incidentBudget n := by
   rcases x with pair | ⟨u,b,i⟩
   · simp [incident,incidentBudget]

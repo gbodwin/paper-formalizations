@@ -24,21 +24,31 @@ private theorem one_observe {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode
   rw [Option.map_map]
   exact PhysicalAmplifiedBinaryEdge.run_observe κ D mode bits
 
-private def lineOutput {n : ℕ} : EncodedEdgeSolver.Output n → EncodedVertexSolver.Output (lineSize n)
-  | .cut mask => .cut (toLine mask)
-  | .infeasible _ | .invalid => .invalid
+private def lineOutput {n : ℕ} : EncodedEdgeSolver.Output n → EncodedVertexSolver.Output (lineSize n) × ℕ
+  | .cut mask =>
+    let line := BinaryEdgeProjection.toLine mask
+    (.cut line.1,line.2+2)
+  | .infeasible _ | .invalid => (.invalid,2)
+
+private theorem lineOutput_paid {n : ℕ} (a : EncodedEdgeSolver.Output n) :
+    (lineOutput a).2 ≤ BinaryEdgeProjection.lineMaskBudget n+2 := by
+  cases a with
+  | cut mask => exact Nat.add_le_add_right (BinaryEdgeProjection.toLine_paid mask) 2
+  | infeasible _ | invalid => exact Nat.le_add_left _ _
 
 private def score {n : ℕ} (c : BinaryFractionalRows.Row (lineSize n)) (a : EncodedEdgeSolver.Output n) : Fraction × ℕ :=
-  let measured := BinaryCutPriceSelection.cutScore c (lineOutput a)
-  (measured.1,measured.2+128*(n+1)^4)
+  let output := lineOutput a
+  let measured := BinaryCutPriceSelection.cutScore c output.1
+  (measured.1,measured.2+output.2)
 
 private theorem score_price {n : ℕ} (D : Input n) (a : EncodedEdgeSolver.Output n) :
     ((decode (score (lineWithCost D).1.costs a).1).realValue : ℝ)=EncodedEdgeSolver.outputPrice D a := by
-  change ((decode (BinaryCutPriceSelection.cutScore (lineWithCost D).1.costs (lineOutput a)).1).realValue : ℝ)=_
+  change ((decode (BinaryCutPriceSelection.cutScore (lineWithCost D).1.costs (lineOutput a).1).1).realValue : ℝ)=_
   rw [BinaryCutPriceSelection.cutScore_decodes,EncodedVertexAmplification.codePrice_value,line_value,
     PhysicalEdgeSolver.decode_binaryLineInput]
   cases a with
   | cut mask =>
+    simp only [lineOutput,BinaryEdgeProjection.toLine_value]
     exact congrArg (fun x : ℝ≥0 => (x : ℝ)) (toLine_cost D mask)
   | infeasible _ | invalid =>
     simp [lineOutput,EncodedVertexSolver.outputPrice,EncodedVertexSolver.outputMask,EncodedCutSelection.optionPrice,
@@ -168,7 +178,8 @@ private theorem selection_fields {n B : ℕ} (D : Input n) (positive : 1 ≤ B)
     (fits : ∀ u v : Fin n, D.costs[u.val][v.val].num.size ≤ B ∧ D.costs[u.val][v.val].den.size ≤ B)
     (a : EncodedEdgeSolver.Output n) :
     StoredBounded (score (lineWithCost D).1.costs a).1 (lineSize n*(B+1)+1) ∧
-      (score (lineWithCost D).1.costs a).2 ≤ BinaryFractionalRows.sumBound (lineSize n) B+128*(n+1)^4 := by
+      (score (lineWithCost D).1.costs a).2 ≤
+        BinaryFractionalRows.sumBound (lineSize n) B+(BinaryEdgeProjection.lineMaskBudget n+2) := by
   have stored (i : Fin (lineSize n)) :
       StoredBounded (BinaryFractionalRows.get (lineWithCost D).1.costs i) B := by
     rw [line_value]
@@ -177,11 +188,12 @@ private theorem selection_fields {n B : ℕ} (D : Input n) (positive : 1 ≤ B)
     change q.num.bits.length ≤ B ∧ q.den.bits.length ≤ B
     rw [Nat.size_eq_bits_len,Nat.size_eq_bits_len]
     exact lineInput_cost_width D positive fits i
-  obtain ⟨width,work⟩ := BinaryCutPriceSelection.cutScore_charge (lineWithCost D).1.costs (lineOutput a) positive stored
-  exact ⟨width,Nat.add_le_add_right work _⟩
+  obtain ⟨width,work⟩ := BinaryCutPriceSelection.cutScore_charge (lineWithCost D).1.costs (lineOutput a).1 positive stored
+  exact ⟨width,Nat.add_le_add work (lineOutput_paid a)⟩
 
 private def selectionBudget {R : Type*} [Semiring R] (n l b : R) : R :=
-  2*(l*(2048*((l+1)*(b+1)+1)^2+4)+1+128*(n+1)^4)+2048*(l*(b+1)+2)^2+16
+  2*(l*(2048*((l+1)*(b+1)+1)^2+4)+1+(BinaryEdgeProjection.lineMaskBudget n+2))+
+    2048*(l*(b+1)+2)^2+16
 
 attribute [local irreducible] PhysicalSourceReadback.run PhysicalAmplifiedBinaryEdge.run
 
@@ -211,19 +223,20 @@ theorem run_polynomial : ∃ p : Polynomial ℕ,
   unfold run at ran
   obtain ⟨r,paid,rfl⟩ := Option.map_eq_some_iff.mp ran
   have both := PairedCutSearch.run_paid _ _ _ (each .mass) (each .size) (selection_fields D positive fits) bits paid
-  have selection : 2*(BinaryFractionalRows.sumBound (lineSize n) B+128*(n+1)^4)+
+  have selection : 2*(BinaryFractionalRows.sumBound (lineSize n) B+(BinaryEdgeProjection.lineMaskBudget n+2))+
       2048*(lineSize n*(B+1)+1+1)^2+16 ≤ budget.eval x := by
-    simp only [budget,selectionBudget,eval_add,eval_mul,eval_X,eval_pow,eval_ofNat,eval_one,
+    simp only [budget,selectionBudget,BinaryEdgeProjection.lineMaskBudget_eval,eval_add,eval_mul,eval_X,eval_pow,eval_ofNat,eval_one,
       BinaryFractionalRows.sumBound]
     have cmp : lineSize n*(B+1)+1+1 ≤ line.eval x*(x+1)+2 := by rw [Nat.add_assoc]; gcongr
     apply Nat.add_le_add_right _ 16
     apply Nat.add_le_add _ (Nat.mul_le_mul_left _ (Nat.pow_le_pow_left cmp 2))
+    have copy := BinaryEdgeProjection.lineMaskBudget_mono nle
     gcongr
   have build := line_paid D positive fits
   have buildBound : lineBudget (lineSize n) D.demands.length B ≤ setup.eval x := by
-    simp only [setup,lineBudget,lineAllowance,BinaryLineLabels.budget_eval,
-      BinaryLineLabels.demandBudget_eval,eval_add,eval_mul,eval_X,eval_ofNat,eval_pow,eval_one]
-    unfold BinaryLineLabels.budget BinaryLineLabels.demandBudget
+    simp only [setup,lineBudget,BinaryLineLabels.budget_eval,BinaryLineLabels.assemblyBudget_eval,
+      BinaryLineLabels.demandBudget_eval,eval_add,eval_mul,eval_X,eval_ofNat,eval_pow]
+    unfold BinaryLineLabels.budget BinaryLineLabels.demandBudget BinaryLineLabels.assemblyBudget
     gcongr
   simp only [eval_add]
   change r.paid+(lineWithCost D).2 ≤ q.eval x+q.eval x+budget.eval x+setup.eval x

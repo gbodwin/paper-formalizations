@@ -9,6 +9,7 @@ open BinaryArithmetic BinaryRational RawNonnegativeRational Polynomial
 open EncodedVertexAmplification EncodedEdgeLineInput PhysicalSolverCostEnvelope
 open PhysicalIntegerRoundingCost (eval_mono)
 open PhysicalAmplifiedBinaryEdge
+open BinaryEdgeProjection (pullbackBudget roundingBudget outputBudget readbackBudget)
 open PhysicalAmplifiedEdgeSolver (EdgeResult)
 open PhysicalAmplifiedBinaryVertex (arithmeticPolynomial)
 
@@ -18,7 +19,7 @@ noncomputable def roundPad : Polynomial ℕ := X+X^2*(widthPolynomial+1)+X+1
 
 noncomputable def roundPolynomial (q : Polynomial ℕ) : Polynomial ℕ :=
   (q+arithmeticPolynomial).comp roundPad+BinaryEdgeGadget.budget X widthPolynomial+
-    pullbackBudget X (BinaryEdgeGadget.dimension X)+64*(X+4)^2*(X+1)^2
+    pullbackBudget X (BinaryEdgeGadget.dimension X)+roundingBudget X
 
 private theorem row_fits {n b : ℕ} (D : Input n) (row : FractionalCoverRawCore.RawRow (lineSize n))
     (hw : ∀ i, (FractionalCoverRawCore.get row i).Bounded b)
@@ -48,10 +49,12 @@ theorem round_paid (q : Polynomial ℕ)
   let g := p.1
   let y := roundPad.eval z
   let w := widthPolynomial.eval z
+  change roundOn (BinaryEdgeProjection.roundingInput D r.weights).1
+    (BinaryEdgeProjection.roundingInput D r.weights).2 mode T tape=some out at ran
+  rw [BinaryEdgeProjection.roundingInput_value] at ran
   change ((PhysicalAmplifiedBinaryVertex.runner mode T g.data tape).map
-    (PhysicalVertexRounding.project
-      (fun cut => (toLine (EncodedEdgeRounding.pullback g cut),pullbackBudget n g.size))
-      (p.2+64*(n+4)^2*(n+1)^2)))=some out at ran
+    (PhysicalVertexRounding.project (BinaryEdgeProjection.pullback g)
+      (p.2+(BinaryEdgeProjection.roundingInput D r.weights).2)))=some out at ran
   obtain ⟨inner,call,rfl⟩ := Option.map_eq_some_iff.mp ran
   have dim : g.size ≤ z := (BinaryEdgeGadget.size_le _).trans dimensions
   have hy : y=z+z^2*(w+1)+z+1 := by
@@ -64,19 +67,24 @@ theorem round_paid (q : Polynomial ℕ)
     (dim.trans more) (trials.trans more) bytes call
   have gadget : p.2 ≤ BinaryEdgeGadget.budget z w :=
     (BinaryEdgeGadget.build_paid _ fits).trans (BinaryEdgeGadget.budget_mono hn width)
-  have project : 64*(n+4)^2*(n+1)^2 ≤ 64*(z+4)^2*(z+1)^2 := by gcongr
-  have pull : pullbackBudget n g.size ≤ pullbackBudget z (BinaryEdgeGadget.dimension z) := by
+  have project := (BinaryEdgeProjection.roundingInput_paid D r.weights).trans
+    (show roundingBudget n ≤ roundingBudget z by unfold roundingBudget readbackBudget; gcongr)
+  have liftPull : pullbackBudget n g.size ≤ pullbackBudget z (BinaryEdgeGadget.dimension z) := by
     have larger : g.size ≤ BinaryEdgeGadget.dimension z := by
       apply (BinaryEdgeGadget.size_le (roundingInput D r.weights)).trans
       unfold BinaryEdgeGadget.dimension
       gcongr
     unfold pullbackBudget
+    apply Nat.add_le_add _ (BinaryEdgeProjection.lineMaskBudget_mono hn)
+    unfold BinaryEdgeProjection.maskBudget BinaryEdgeGadget.incidentBudget
     gcongr
-  simp only [roundPolynomial,pullbackBudget,BinaryEdgeGadget.dimension,eval_add,eval_comp,eval_X,eval_ofNat,
-    eval_one,eval_mul,eval_pow,BinaryEdgeGadget.budget_eval]
-  change p.2+64*(n+4)^2*(n+1)^2+inner.paid+pullbackBudget n g.size ≤
+  have pull := (BinaryEdgeProjection.pullback_paid g inner.mask).trans liftPull
+  simp only [roundPolynomial,BinaryEdgeProjection.pullbackBudget_eval,roundingBudget,readbackBudget,
+    BinaryEdgeGadget.dimension,eval_add,eval_comp,eval_X,eval_ofNat,eval_mul,eval_pow,BinaryEdgeGadget.budget_eval]
+  change p.2+(BinaryEdgeProjection.roundingInput D r.weights).2+inner.paid+
+      (BinaryEdgeProjection.pullback g inner.mask).2 ≤
     (q.eval y+arithmeticPolynomial.eval y)+BinaryEdgeGadget.budget z w+
-      (pullbackBudget z (BinaryEdgeGadget.dimension z))+64*(z+4)^2*(z+1)^2
+      pullbackBudget z (BinaryEdgeGadget.dimension z)+roundingBudget z
   rw [eval_add] at innerPaid
   omega
 
@@ -184,17 +192,22 @@ theorem edge_polynomial : ∃ p : Polynomial ℕ, ∀ {n B : ℕ} (κ : ℕ) (D 
     (ChargedVertexModes.priceWidth_positive binary) good rounds hr
   have setup := line_paid D positive fits
   have liftLine : lineBudget (lineSize n) D.demands.length B ≤ (lineBudget line X X).eval y := by
-    simp only [lineBudget,lineAllowance,BinaryLineLabels.budget_eval,BinaryLineLabels.demandBudget_eval,eval_add,eval_mul,eval_ofNat,eval_X,eval_pow,eval_one]
-    unfold BinaryLineLabels.budget BinaryLineLabels.demandBudget
+    simp only [lineBudget,BinaryLineLabels.budget_eval,BinaryLineLabels.demandBudget_eval,
+      BinaryLineLabels.assemblyBudget_eval,eval_add,eval_mul,eval_ofNat,eval_X,eval_pow]
+    unfold BinaryLineLabels.budget BinaryLineLabels.demandBudget BinaryLineLabels.assemblyBudget
     gcongr
   have liftOutput : outputBudget n ≤ (outputBudget (X : Polynomial ℕ)).eval y := by
-    simp only [outputBudget,eval_add,eval_mul,eval_ofNat,eval_X,eval_pow,eval_one]
+    simp only [outputBudget,readbackBudget,BinaryLineLabels.budget_eval,
+      eval_add,eval_mul,eval_ofNat,eval_X,eval_pow]
+    unfold BinaryLineLabels.budget
     gcongr
   have totalLine := setup.trans liftLine
+  have totalOutput := (BinaryEdgeProjection.output_paid D r.output).trans liftOutput
   have meter := (BinarySolverOuterControls.edge_paid n κ).trans (BinarySolverOuterControls.budget_mono hn hk)
   simp only [finish,eval_add,eval_comp,BinarySolverOuterControls.budget_eval,eval_X]
   change r.dispatch+r.readback+
-      (r.roundingAndSelection+((lineWithCost D).2+(BinarySolverOuterControls.edge n κ).paid)+outputBudget n) ≤
+      (r.roundingAndSelection+((lineWithCost D).2+(BinarySolverOuterControls.edge n κ).paid)+
+        (BinaryEdgeProjection.output D r.output).2) ≤
     p.eval x+(lineBudget line X X).eval y+(outputBudget (X : Polynomial ℕ)).eval y+BinarySolverOuterControls.budget y y
   omega
 

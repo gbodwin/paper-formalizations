@@ -9,7 +9,7 @@ integer controller have separate deterministic polynomials. The composed
 vertex, edge and adaptive charge counters also have polynomial bounds in the
 original input dimensions. The original-input solvers also have counted parsing,
 and the adaptive solver can reuse a single charged threshold-demand computation.
-The physical source entry now counts serialization, binary dispatch fuel, validation and terminal decoding. The remaining structural operations and their bit-time composition are open.
+The physical source entry counts serialization, binary dispatch fuel, validation and terminal decoding. The edge solver also measures line adjacency, fractional row projection, gadget cut projection, and final output conversion. The complete bit-time composition still needs a width-sensitive refinement of the structural word operations.
 [Physical amplified solvers](verification/PHYSICAL_AMPLIFIED_SOLVERS_20261119.md)
 [Composed charge bounds](verification/PHYSICAL_AMPLIFIED_COST_20261119.md)
 [Original input phases](verification/ORIGINAL_INPUT_PHASES_20261119.md)
@@ -37,9 +37,9 @@ The physical source entry now counts serialization, binary dispatch fuel, valida
 | Lemma 27 | Actual maximal family, proved comparison candidate and exact stable-gate mass comparison | Complete finite stable-state component |
 | Theorem 28 | Actual repaired finite chain/port reduction:6n vertices,2W mass,2αW pullback | Constructive runtime |
 | Theorem 29 | Actual repaired finite reduction: 4n² vertices,3W weight,6αC cost, zero cases | Runtime; exact gap notation requires the stated bounded-instance interpretation |
-| Theorems30–31 | Actual dyadic edge-to-vertex and split-vertex constructions, path and cost bridges, and bounded-oracle forms. The original edge solver measures binary line labels, demand endpoints, and dyadic gadget assembly. | Complete constructive bit time |
+| Theorems30–31 | Actual dyadic edge-to-vertex and split-vertex constructions, path and cost bridges, and bounded-oracle forms. The original edge solver measures line assembly, row and cut transport, and dyadic gadget assembly. | Complete constructive bit time |
 | Theorem 32 | Actual endpoint-safe self-reduction and uniform vertex n^(1/3+ε) composition | Runtime |
-| Theorem 33 | `ExactFlowCutGap.vertex_law` and `ExactFlowCutGap.edge_law` give the finite probability laws at the paper's least integer factors on `Fin n` at the original total. The packed edge sampler realizes the smaller calibrated headline bound from literal bits, with polynomial tape, exact prices and original threshold coverage. The exact-weight edge oracle also gives a uniform quadratic-horizon family. | The near-linear uniform family at the exact original factor requires the positive-weight floor. The unrestricted uniform horizon and complete structural bit time remain open. |
+| Theorem 33 | `ExactFlowCutGap.vertex_law` and `ExactFlowCutGap.edge_law` give the finite probability laws at the paper's least integer factors on `Fin n` at the original total. The packed edge sampler realizes the smaller calibrated headline bound from literal bits. The exact-weight oracle gives a uniform quadratic-horizon family in general and a near-linear horizon under either the positive-weight floor or the small-mass condition. | The unrestricted near-linear uniform horizon and complete structural bit time remain open. |
 
 The current scoped gate is [the constructive workflow](../.github/workflows/flow-constructive-rounding.yml).
 The adaptive edge-family extension has a [separate exact-commit gate](../.github/workflows/flow-adaptive-family.yml) and a [proof scope record](verification/ADAPTIVE_EDGE_FAMILY_20261119.md).
@@ -52,6 +52,7 @@ The [binary source and terminal reader](verification/BINARY_SOURCE_READBACK_2026
 The [paired multicut solvers](verification/PAIRED_MULTICUT_20261119.md) run both modes on the same literal fair source, choose the cheaper cut at the original prices, and prove the Corollary 6 minimum bound with the original confidence.
 The [amplifier and controller boundary](verification/BINARY_ROUND_BOUNDARY_20261119.md) charges the exact trial computation, shares the decoded prices, and verifies the hard controller’s packed input words and mask copy. The same checkpoint gives a near-linear exact-weight family when the original weights already satisfy the positive-weight floor.
 The [dyadic gadget assembly](verification/BINARY_GADGET_LAYOUT_20261119.md) charges the actual arc collection, retained-label selection, adjacency matrix and price tests while preserving the exact reference layout.
+The [line projections and exact-weight family](verification/BINARY_EDGE_PROJECTIONS_20261120.md) verify the charged line matrix and each edge boundary, and give a near-linear exact-weight horizon when the total of the tiny weights is sufficiently small.
 The [exact marginal law](verification/WEAK_DECOMPOSITION_EXACT_MARGINALS_20261119.md) uses finite convex separation to obtain loss α from the original all-cost factor in both models, with validity on the whole support.
 The manifest `verification/component-verification.json` records an earlier
 component checkpoint.

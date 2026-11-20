@@ -2,9 +2,10 @@ import DirectedFlowCutGap.EncodedEdgeLineInput
 import DirectedFlowCutGap.BinaryDivision
 import DirectedFlowCutGap.BinaryNaturalView
 import DirectedFlowCutGap.BinaryVertexReductionArithmetic
+import DirectedFlowCutGap.BinaryEdgeGadget
 
-/-! Precompute the line graph's typed labels once, using charged binary
-comparisons, offsets and quotient/remainder. -/
+/-! Build the indexed line graph with charged binary labels, adjacency
+tests, demand coordinates and data movement. -/
 namespace DirectedFlowCutGap.BinaryLineLabels
 
 open BinaryArithmetic EncodedEdgeLineInput
@@ -201,15 +202,57 @@ theorem labels_paid (n : ℕ) : (labels n).2 ≤ budget n (lineSize n) := by
 open EdgeLineReduction (departs base)
 open RawNonnegativeRational (Code)
 open EncodedVertexSolver (GraphInput)
+open BinaryEdgeGadget (equalFin equalFin_value equalFin_paid)
 
-private def adjacent {n : ℕ} (D : Input n) (origin : Node (Fin n)) : Node (Fin n) → Bool
-  | .inl (v,false) => departs origin && decide (base origin=v)
-  | .inl (_,true) => false
-  | .inr (u,v) => departs origin && decide (base origin=u) && D.adjacency[u.val][v.val]
+private def departTo {n : ℕ} (origin : Node (Fin n)) (v : Fin n) : Bool × ℕ :=
+  if departs origin then
+    let same := equalFin (base origin) v
+    (same.1,same.2+4)
+  else (false,2)
 
-private def price {n : ℕ} (D : Input n) : Node (Fin n) → Code
-  | .inl _ => Code.zero
-  | .inr (u,v) => if D.adjacency[u.val][v.val] then D.costs[u.val][v.val] else Code.zero
+private theorem departTo_iff {n : ℕ} (origin : Node (Fin n)) (v : Fin n) :
+    (departTo origin v).1=true ↔ departs origin=true ∧ base origin=v := by
+  unfold departTo
+  split <;> simp_all [equalFin_value]
+
+private theorem departTo_paid {n : ℕ} (origin : Node (Fin n)) (v : Fin n) :
+    (departTo origin v).2 ≤ 64*(n+1)^2+4 := by
+  have paid := equalFin_paid (base origin) v
+  unfold departTo
+  split <;> dsimp only <;> omega
+
+private def adjacent {n : ℕ} (D : Input n) (origin : Node (Fin n)) : Node (Fin n) → Bool × ℕ
+  | .inl (v,false) => departTo origin v
+  | .inl (_,true) => (false,2)
+  | .inr (u,v) =>
+    if D.adjacency[u.val][v.val] then
+      let reach := departTo origin u
+      (reach.1,reach.2+4)
+    else (false,4)
+
+private theorem adjacent_iff {n : ℕ} (D : Input n) (origin target : Node (Fin n)) :
+    (adjacent D origin target).1=true ↔ (EdgeLineReduction.graph D.graph).Adj origin target := by
+  rcases target with ⟨v,side⟩ | ⟨u,v⟩
+  · cases side <;> simp [adjacent,departTo_iff,EdgeLineReduction.graph,EdgeLineReduction.adjacency]
+  · simp only [adjacent,EdgeLineReduction.graph,EdgeLineReduction.adjacency,Input.graph]
+    split <;> simp_all [departTo_iff]
+
+private theorem adjacent_paid {n : ℕ} (D : Input n) (origin target : Node (Fin n)) :
+    (adjacent D origin target).2 ≤ 64*(n+1)^2+8 := by
+  rcases target with ⟨v,side⟩ | ⟨u,v⟩
+  · have paid := departTo_paid origin v
+    cases side <;> simp only [adjacent] <;> omega
+  · have paid := departTo_paid origin u
+    simp only [adjacent]
+    split <;> dsimp only <;> omega
+
+private def price {n : ℕ} (D : Input n) : Node (Fin n) → Code × ℕ
+  | .inl _ => (Code.zero,2)
+  | .inr (u,v) => (if D.adjacency[u.val][v.val] then D.costs[u.val][v.val] else Code.zero,4)
+
+private theorem price_paid {n : ℕ} (D : Input n) (node : Node (Fin n)) :
+    (price D node).2 ≤ 4 := by
+  rcases node with port | ⟨u,v⟩ <;> simp [price]
 
 private def endpoint {n : ℕ} (tag : Bool) (i : Fin n) : Fin (lineSize n) × ℕ :=
   let word := BinaryNaturalView.encode i.val
@@ -281,19 +324,72 @@ def prepare {n : ℕ} (D : Input n) : GraphInput (lineSize n) × ℕ :=
   let data := labels n
   let node := fun i : Fin (lineSize n) => data.1[i.val]
   let demanded := demandRows D.demands
-  (⟨Vector.ofFn (fun i => Vector.ofFn fun j => adjacent D (node i) (node j)),
-    demanded.1,Vector.ofFn (fun i => price D (node i))⟩,data.2+demanded.2)
+  let arcs := batch fun i =>
+    let origin := node i
+    batch fun j =>
+      let a := adjacent D origin (node j)
+      (a.1,a.2+4)
+  let costs := batch fun i =>
+    let c := price D (node i)
+    (c.1,c.2+2)
+  (⟨arcs.1,demanded.1,costs.1⟩,data.2+demanded.2+arcs.2+costs.2+4)
 
 @[simp] theorem prepare_value {n : ℕ} (D : Input n) : (prepare D).1=lineInput D := by
-  simp only [prepare,labels_value,Vector.getElem_ofFn,demandRows_value]
+  have arcs : (prepare D).1.adjacency=(lineInput D).adjacency := by
+    apply Vector.ext
+    intro i hi
+    apply Vector.ext
+    intro j hj
+    apply Bool.eq_iff_iff.mpr
+    change (prepare D).1.adjacency[i][j]=true ↔ (lineInput D).graph.Adj ⟨i,hi⟩ ⟨j,hj⟩
+    rw [lineInput_adj]
+    simp only [prepare,batch_value,labels_value,Vector.getElem_ofFn,adjacent_iff]
+  have prices : (prepare D).1.costs=(lineInput D).costs := by
+    apply Vector.ext
+    intro i hi
+    simp only [prepare,batch_value,labels_value,lineInput,Vector.getElem_ofFn]
+    cases index n ⟨i,hi⟩ with
+    | inl port => rfl
+    | inr arc => cases arc; rfl
+  have demands : (prepare D).1.demands=(lineInput D).demands := by
+    simp only [prepare,demandRows_value,lineInput]
+  generalize (prepare D).1 = actual at arcs demands prices ⊢
+  generalize lineInput D = expected at arcs demands prices ⊢
+  cases actual
+  cases expected
+  cases arcs
+  cases demands
+  cases prices
   rfl
 
+def assemblyBudget {R : Type*} [Semiring R] (m : R) : R :=
+  m*(m*(64*(m+1)^2+12)+8*m+4)+8*m+4+(m*6+8*m+4)+4
+
 theorem prepare_paid {n : ℕ} (D : Input n) :
-    (prepare D).2 ≤ budget (lineSize n) (lineSize n)+demandBudget (lineSize n) D.demands.length := by
-  apply (Nat.add_le_add (labels_paid n) (demandRows_paid D.demands)).trans
-  have h : n ≤ lineSize n := by unfold lineSize; omega
-  unfold budget demandBudget
-  gcongr
+    (prepare D).2 ≤ budget (lineSize n) (lineSize n)+demandBudget (lineSize n) D.demands.length+
+      assemblyBudget (lineSize n) := by
+  let m := lineSize n
+  let node := fun i : Fin m => (labels n).1[i.val]
+  have hn : n ≤ m := by unfold m lineSize; omega
+  have arcs := batch_paid (fun i : Fin m => batch fun j : Fin m =>
+      let a := adjacent D (node i) (node j)
+      (a.1,a.2+4))
+    (cap := m*(64*(m+1)^2+12)+8*m+4) (fun i => by
+      apply batch_paid
+      intro j
+      have paid := adjacent_paid D (node i) (node j)
+      change (adjacent D (node i) (node j)).2+4 ≤ _
+      have scale : 64*(n+1)^2 ≤ 64*(m+1)^2 := by gcongr
+      omega)
+  have prices := batch_paid (fun i : Fin m => let c := price D (node i); (c.1,c.2+2))
+    (cap := 6) (fun i => Nat.add_le_add_right (price_paid D (node i)) 2)
+  have setup : (labels n).2+(demandRows D.demands).2 ≤ budget m m+demandBudget m D.demands.length := by
+    apply (Nat.add_le_add (labels_paid n) (demandRows_paid D.demands)).trans
+    unfold budget demandBudget
+    gcongr
+  change _ ≤ budget m m+demandBudget m D.demands.length+assemblyBudget m
+  unfold assemblyBudget
+  exact (Nat.add_le_add_right (Nat.add_le_add (Nat.add_le_add setup arcs) prices) 4).trans (by omega)
 
 open Polynomial in
 theorem budget_eval (a b : Polynomial ℕ) (x : ℕ) : (budget a b).eval x=budget (a.eval x) (b.eval x) := by
@@ -303,5 +399,10 @@ open Polynomial in
 theorem demandBudget_eval (a b : Polynomial ℕ) (x : ℕ) :
     (demandBudget a b).eval x=demandBudget (a.eval x) (b.eval x) := by
   simp only [demandBudget,eval_add,eval_mul,eval_pow,eval_ofNat]
+
+open Polynomial in
+theorem assemblyBudget_eval (a : Polynomial ℕ) (x : ℕ) :
+    (assemblyBudget a).eval x=assemblyBudget (a.eval x) := by
+  simp only [assemblyBudget,eval_add,eval_mul,eval_pow,eval_ofNat,eval_one]
 
 end DirectedFlowCutGap.BinaryLineLabels

@@ -162,6 +162,7 @@ import DirectedFlowCutGap.BinaryEdgeFamilyCalibration
 import DirectedFlowCutGap.BinaryEdgeFamilyControls
 import DirectedFlowCutGap.BinaryEdgeFamilyState
 import DirectedFlowCutGap.BinaryEdgeGadget
+import DirectedFlowCutGap.BinaryEdgeProjection
 import DirectedFlowCutGap.BinaryEpochParameters
 import DirectedFlowCutGap.BinaryEuclidean
 import DirectedFlowCutGap.BinaryFamilySampler
@@ -1105,6 +1106,7 @@ import DirectedFlowCutGap.WeakDecomposition
 import DirectedFlowCutGap.WeakDecompositionBounds
 import DirectedFlowCutGap.WeakDecompositionExactWeight
 import DirectedFlowCutGap.WeakDecompositionOriginalFloor
+import DirectedFlowCutGap.WeakDecompositionSmallMass
 import DirectedFlowCutGap.WeightSelfReduction
 import DirectedFlowCutGap.WitnessPrefix
 import DirectedFlowCutGap.WitnessSystem
