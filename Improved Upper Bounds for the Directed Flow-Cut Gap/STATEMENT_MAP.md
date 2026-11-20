@@ -16,6 +16,8 @@ The physical source entry counts serialization, binary dispatch fuel, validation
 The hard integer cutoff now calls a terminating packed interpreter without evaluating an initial fuel formula. `PaidTotalRawGraphExecution.complete_trace` bounds a complete reference trace using a tape extension inside the termination proof. The executable receives the original tape. `GuardedFuelFreeRounding.meets_old_entry` preserves the returned option and proves that recorded work stays within the earlier bound for every positive-level packed input.
 
 The [packed cut-mask copy](verification/PACKED_MASK_ASSEMBLY_20261120.md) certifies the hard branch’s output word length, measured typed mask construction and each allocated address width. Its recorded allowance, returned mask and unread tape agree with the earlier implementation.
+
+The [cached controller storage proof](verification/PACKED_CACHE_STORAGE_20261120.md) follows the initial cache fold and the executed packed prefix through halt or tape exhaustion. It bounds modeled persistent-array allocations, copy instructions, address widths and the operands of completed cache reads and appends.
 [Physical amplified solvers](verification/PHYSICAL_AMPLIFIED_SOLVERS_20261119.md)
 [Composed charge bounds](verification/PHYSICAL_AMPLIFIED_COST_20261119.md)
 [Original input phases](verification/ORIGINAL_INPUT_PHASES_20261119.md)

@@ -250,9 +250,15 @@ import DirectedFlowCutGap.CacheAdvanceProgram
 import DirectedFlowCutGap.CacheGatesProgram
 import DirectedFlowCutGap.CacheInstallProgram
 import DirectedFlowCutGap.CacheStabilizeProgram
+import DirectedFlowCutGap.CachedControllerStorage
 import DirectedFlowCutGap.CachedGuardedReferenceExecution
+import DirectedFlowCutGap.CachedHeapBuild
+import DirectedFlowCutGap.CachedHeapCopies
+import DirectedFlowCutGap.CachedHeapWidths
 import DirectedFlowCutGap.CachedReferenceExecution
 import DirectedFlowCutGap.CachedReferenceHeap
+import DirectedFlowCutGap.CachedVisitWidths
+import DirectedFlowCutGap.CachedWalkAddresses
 import DirectedFlowCutGap.CandidateBlockDifferenceProgram
 import DirectedFlowCutGap.CandidateBudgetCutProgram
 import DirectedFlowCutGap.CandidateBudgetData
@@ -786,6 +792,7 @@ import DirectedFlowCutGap.OutgoingCostProgram
 import DirectedFlowCutGap.PackedBooleanConstructor
 import DirectedFlowCutGap.PackedBooleanRead
 import DirectedFlowCutGap.PackedOriginalStore
+import DirectedFlowCutGap.PackedStoragePolynomial
 import DirectedFlowCutGap.PackedWordPairTable
 import DirectedFlowCutGap.PackingAmountExecution
 import DirectedFlowCutGap.PackingAmountProgram
@@ -875,6 +882,7 @@ import DirectedFlowCutGap.PackingZeroMaskRefinement
 import DirectedFlowCutGap.PackingZeroMaskTrace
 import DirectedFlowCutGap.PackingZeroRowConstruction
 import DirectedFlowCutGap.PackingZeroRowProgram
+import DirectedFlowCutGap.PaidCacheTrace
 import DirectedFlowCutGap.PaidDirectEdgeCost
 import DirectedFlowCutGap.PaidDirectEdgeWire
 import DirectedFlowCutGap.PaidEdgeRoundCost
