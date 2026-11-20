@@ -1,0 +1,7 @@
+# Physical framing records on the original solver inputs
+
+`OriginalSourceFraming.readBinaryWithRecords` counts the reached heap-list cells, call frames and stack cells, and request or emit events. The binary driver makes the same interpreter attempts and retains the exact earlier result and fee. The existing bit-model charge bounds those records. The framer still scans the complete literal source to initialize its binary length. Its request-count check rejects framing that reads past the end.
+
+`FramedSolverRecords.edge` and `FramedSolverRecords.vertex` carry the count from one typed parse through the corresponding paid solver. They preserve the previous paid result on every source and tape. A later rejection or failure retains the allocations already reached by the framer. The record count is polynomial in the source length. The sum of the prior recorded fee and record count is polynomial in the source length plus the numerical confidence degree. The count models the specified data records. Allocation beyond the framer and full source-to-cut bit time remain open.
+
+The 44-bit edge fixture preserves the original cut, unread tape and solver fee of 1,784,110,573, with 3,801 modeled records. All 44 proper source prefixes still reject with their earlier charges. A trailing source bit retains the earlier typed rejection fee of 430,370 and the same 3,801 records. The empty vertex solver retains its earlier fee of 3,748,215 and records 36.

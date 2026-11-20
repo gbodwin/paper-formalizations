@@ -172,13 +172,75 @@ private theorem request_digit {s : BitState 64} {r : Result Bits 64}
     split at step
     all_goals first | contradiction | (injection step with equal; subst r; rfl)
 
+/-- Record constructors reached by the physical heap append and call stack.
+A returned or borrowed list tail reuses its existing cells. The copied bit
+fields and source reads already have separate charges in `attempt`. -/
+private def attemptRecords {C : ℕ} (p : Program C) (s : BitState C) (completed : Bool) : ℕ :=
+  match p s.pc with
+  | .make _ _ _ => s.heap.length+1
+  | .request _ _ => s.heap.length+2
+  | .call _ _ _ => 2
+  | .emit _ _ => completed.toNat
+  | _ => 0
+
+private theorem append_record_cost {heap out : Heap} {cell : Cell Bits} {cost : ℕ}
+    (h : AppendCellExec heap cell out cost) : 2*(heap.length+1) ≤ cost := by
+  induction h with
+  | nil record => simp
+  | cons record rest ih => simp only [List.length_cons]; omega
+
+private theorem attempt_records_paid {C : ℕ} (p : Program C) (s : BitState C) :
+    attemptRecords p s (attempt p s).result.isSome ≤ (attempt p s).operations := by
+  have append (cell : Cell Bits) := append_record_cost (appendCell_exec s.heap cell)
+  cases code : p s.pc with
+  | make dst recipe next =>
+      have copied := append (recipe.cell s.registers)
+      simp only [attemptRecords,attempt,code,success,allocate]
+      omega
+  | request dst next =>
+      let bit := s.source.headD false
+      have copied := append (.flag bit)
+      simp only [attemptRecords,attempt,code,success,allocate]
+      change s.heap.length+2 ≤ (appendCell s.heap (.flag bit)).2+(increment true s.next).2+
+        (EncodedSequenceAccess.copyBits s.next).2+controlCost C
+      omega
+  | call entry cont dst => simp only [attemptRecords,attempt,code,success,controlCost]; omega
+  | emit src next =>
+      simp only [attemptRecords,attempt,code]
+      rcases read : (lookup (EncodedSequenceAccess.copyBits (s.registers.get src)).1 s.heap).1 with _ | cell
+      · simp only [Option.isSome_none,Bool.toNat_false,stopped,Nat.zero_le]
+      · cases cell <;> simp only [Option.isSome_some,Option.isSome_none,Bool.toNat_true,Bool.toNat_false,stopped,success,controlCost] <;> omega
+  | halt | move _ _ _ | branch _ _ _ _ _ | field _ _ _ _ | ret _ =>
+      rw [attemptRecords,code]
+      exact Nat.zero_le _
+
 private structure BinaryResult where
   state : BitState 64
   reads : Bits
 
 /-- Fuel and request counting use actual binary arithmetic. The natural
 measure in the termination proof is erased. -/
-private def binaryExecute (fuel : Bits) (s : BitState 64) (reads : Bits) : Option BinaryResult × ℕ :=
+private def binaryExecute (fuel : Bits) (s : BitState 64) (reads : Bits) : (Option BinaryResult × ℕ) × ℕ :=
+  let zero := isZero fuel
+  if empty : zero.1 = true then ((none,zero.2+8),0)
+  else
+    let step := attempt program s
+    let records := attemptRecords program s step.result.isSome
+    match step.result with
+    | none => ((some ⟨s,reads⟩,zero.2+step.operations+16),records)
+    | some r =>
+        let next := predCore fuel
+        let count := increment (requested r.events) reads
+        let tail := binaryExecute next.1 r.state count.1
+        ((tail.1.1,tail.1.2+step.operations+zero.2+next.2+count.2+16),tail.2+records)
+termination_by value fuel
+decreasing_by
+  have positive : 0<value fuel := Nat.pos_of_ne_zero (fun h => empty ((isZero_spec fuel).1.mpr h))
+  have fewer := (predCore_spec fuel).1 positive
+  change value (predCore fuel).1 < value fuel
+  omega
+
+private def previousBinaryExecute (fuel : Bits) (s : BitState 64) (reads : Bits) : Option BinaryResult × ℕ :=
   let zero := isZero fuel
   if empty : zero.1 = true then (none,zero.2+8)
   else
@@ -188,7 +250,7 @@ private def binaryExecute (fuel : Bits) (s : BitState 64) (reads : Bits) : Optio
     | some r =>
         let next := predCore fuel
         let count := increment (requested r.events) reads
-        let tail := binaryExecute next.1 r.state count.1
+        let tail := previousBinaryExecute next.1 r.state count.1
         (tail.1,tail.2+step.operations+zero.2+next.2+count.2+16)
 termination_by value fuel
 decreasing_by
@@ -197,14 +259,55 @@ decreasing_by
   change value (predCore fuel).1 < value fuel
   omega
 
+private theorem binaryExecute_reference (fuel : Bits) (s : BitState 64) (reads : Bits) :
+    (binaryExecute fuel s reads).1=previousBinaryExecute fuel s reads := by
+  induction count : value fuel using Nat.strong_induction_on generalizing fuel s reads with
+  | h k ih =>
+    rw [binaryExecute,previousBinaryExecute]
+    by_cases stopped : (isZero fuel).1=true
+    · simp only [stopped,dite_true]
+    · simp only [stopped,Bool.false_eq_true,dite_false]
+      cases step : (attempt program s).result with
+      | none => rfl
+      | some result =>
+          have positive := Nat.pos_of_ne_zero (fun h => stopped ((isZero_spec fuel).1.mpr h))
+          have reduced := (predCore_spec fuel).1 positive
+          have fewer : value (predCore fuel).1 < k := by omega
+          have tail := ih _ fewer (predCore fuel).1 result.state
+            (increment (requested result.events) reads).1 rfl
+          dsimp only
+          rw [tail]
+
+private theorem binaryExecute_records (fuel : Bits) (s : BitState 64) (reads : Bits) :
+    (binaryExecute fuel s reads).2 ≤ (binaryExecute fuel s reads).1.2 := by
+  induction count : value fuel using Nat.strong_induction_on generalizing fuel s reads with
+  | h k ih =>
+    have cost := attempt_records_paid program s
+    rw [binaryExecute]
+    split
+    · exact Nat.zero_le _
+    · rename_i active
+      cases step : (attempt program s).result with
+      | none =>
+        simp only [step,Option.isSome_none]
+        simpa only [step,Option.isSome_none] using cost.trans (by omega)
+      | some result =>
+        have positive := Nat.pos_of_ne_zero (fun h => active ((isZero_spec fuel).1.mpr h))
+        have reduced := (predCore_spec fuel).1 positive
+        have fewer : value (predCore fuel).1 < k := by omega
+        have tail := ih _ fewer (predCore fuel).1 result.state
+          (increment (requested result.events) reads).1 rfl
+        simp only [step,Option.isSome_some] at cost ⊢
+        omega
+
 private def controls (fuelWidth readWidth rounds : ℕ) : ℕ :=
   (rounds+1)*(64*(fuelWidth+readWidth+rounds+2))
 
 private theorem binaryExecute_ok (fuel : Bits) (s : BitState 64) (reads : Bits) (prior : ℕ)
     {r : Finished} (ran : execute (value fuel) s prior (value reads)=some r) :
-    ∃ out, (binaryExecute fuel s reads).1=some out ∧ out.state=r.state ∧ value out.reads=r.read ∧
+    ∃ out, (binaryExecute fuel s reads).1.1=some out ∧ out.state=r.state ∧ value out.reads=r.read ∧
       out.reads.length≤reads.length+value fuel ∧
-      (binaryExecute fuel s reads).2+prior≤r.paid+controls fuel.length reads.length (value fuel) := by
+      (binaryExecute fuel s reads).1.2+prior≤r.paid+controls fuel.length reads.length (value fuel) := by
   induction hfuel : value fuel using Nat.strong_induction_on generalizing fuel s reads prior r with
   | h amount ih =>
     rw [← hfuel]
@@ -262,7 +365,7 @@ private theorem binaryExecute_ok (fuel : Bits) (s : BitState 64) (reads : Bits) 
         refine ⟨out,oh,os,ov,remaining,?_⟩
         unfold controls
         rw [Nat.add_mul,Nat.one_mul]
-        change (binaryExecute next.1 step.state read.1).2+(attempt program s).operations+
+        change (binaryExecute next.1 step.state read.1).1.2+(attempt program s).operations+
           (isZero fuel).2+next.2+read.2+16+prior≤_
         omega
 
@@ -276,16 +379,45 @@ private theorem fuel_value (length : Bits) : value (fuelBits length).1=8*(value 
 
 /-- A literal binary length, fuel, and request count guard the same fixed
 framing program. All counts here are charges of the reference bit model. -/
-def readBinary (source : Bits) : Option (BitState 64) × ℕ :=
+def readBinaryWithRecords (source : Bits) : (Option (BitState 64) × ℕ) × ℕ :=
   let len := BinaryCounters.lengthBits source
   let fuel := fuelBits len.1
   let run := binaryExecute fuel.1 (initial source) []
+  let setup := len.2+fuel.2+run.1.2+24
+  let framed := match run.1.1 with
+    | none => (none,setup)
+    | some r =>
+        let within := lessEqual r.reads len.1
+        (if within.1 then some r.state else none,setup+within.2)
+  (framed,run.2)
+
+def readBinary (source : Bits) : Option (BitState 64) × ℕ := (readBinaryWithRecords source).1
+
+def readBinaryReference (source : Bits) : Option (BitState 64) × ℕ :=
+  let len := BinaryCounters.lengthBits source
+  let fuel := fuelBits len.1
+  let run := previousBinaryExecute fuel.1 (initial source) []
   let setup := len.2+fuel.2+run.2+24
   match run.1 with
   | none => (none,setup)
   | some r =>
       let within := lessEqual r.reads len.1
       (if within.1 then some r.state else none,setup+within.2)
+
+theorem readBinary_reference (source : Bits) : (readBinaryWithRecords source).1=readBinaryReference source := by
+  simp only [readBinaryWithRecords,readBinaryReference,binaryExecute_reference]
+
+theorem readBinary_records_paid (source : Bits) : (readBinaryWithRecords source).2 ≤ (readBinary source).2 := by
+  let len := BinaryCounters.lengthBits source
+  let fuel := fuelBits len.1
+  let run := binaryExecute fuel.1 (initial source) []
+  have work := binaryExecute_records fuel.1 (initial source) []
+  change run.2 ≤ run.1.2 at work
+  change run.2 ≤ (match run.1.1 with
+    | none => (none,len.2+fuel.2+run.1.2+24)
+    | some r => (if (lessEqual r.reads len.1).1 then some r.state else none,
+        len.2+fuel.2+run.1.2+24+(lessEqual r.reads len.1).2)).2
+  cases run.1.1 <;> dsimp only <;> omega
 
 theorem readBinary_checked (source : Bits) :
     let n := source.length
@@ -319,8 +451,8 @@ theorem readBinary_checked (source : Bits) :
   obtain ⟨ref,c,m,d,executed,_,_,_,_,_,_,_,_,_,_,paid⟩ := observe source
   have ready : execute (value fuel.1) (initial source) 0 (value [])=some ref := by rwa [fv]
   obtain ⟨out,result,state,count,width,work⟩ := binaryExecute_ok fuel.1 (initial source) [] 0 ready
-  have cost : run.2≤ref.paid+(steps+1)*(64*(2*steps+3)) := by
-    have paid : run.2≤ref.paid+controls fuel.1.length ([] : Bits).length (value fuel.1) := by
+  have cost : run.1.2≤ref.paid+(steps+1)*(64*(2*steps+3)) := by
+    have paid : run.1.2≤ref.paid+controls fuel.1.length ([] : Bits).length (value fuel.1) := by
       simpa only [run,Nat.add_zero] using work
     apply paid.trans
     rw [fv]
@@ -338,18 +470,18 @@ theorem readBinary_checked (source : Bits) :
   have comparePaid := within.2.trans (Nat.mul_le_mul_left 17 (Nat.add_le_add_right readWidth 1))
   have performed : readBinary source =
       (if (lessEqual out.reads len.1).1 then some out.state else none,
-        len.2+fuel.2+run.2+24+(lessEqual out.reads len.1).2) := by
-    unfold readBinary
-    have found : run.1=some out := result
-    change (match run.1 with
-      | none => (none,len.2+fuel.2+run.2+24)
+        len.2+fuel.2+run.1.2+24+(lessEqual out.reads len.1).2) := by
+    unfold readBinary readBinaryWithRecords
+    have found : run.1.1=some out := result
+    change (match run.1.1 with
+      | none => (none,len.2+fuel.2+run.1.2+24)
       | some r => (if (lessEqual r.reads len.1).1 then some r.state else none,
-          len.2+fuel.2+run.2+24+(lessEqual r.reads len.1).2)) = _
+          len.2+fuel.2+run.1.2+24+(lessEqual r.reads len.1).2)) = _
     rw [found]
   rw [performed]
   refine ⟨?_,?_⟩
   · simp only [read,executed,guard,state,n]
-  · change len.2+fuel.2+run.2+24+(lessEqual out.reads len.1).2≤539136*(n+7)^3+80+
+  · change len.2+fuel.2+run.1.2+24+(lessEqual out.reads len.1).2≤539136*(n+7)^3+80+
       (steps+1)*(64*(2*steps+3))+16*(n+1)^2+32*(n+10)+17*(steps+1)+24
     change ref.paid≤539136*(n+7)^3+80 at paid
     omega

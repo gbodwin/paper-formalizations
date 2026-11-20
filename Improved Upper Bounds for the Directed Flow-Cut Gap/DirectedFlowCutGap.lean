@@ -534,6 +534,7 @@ import DirectedFlowCutGap.FractionalCoverRawOracleEncoding
 import DirectedFlowCutGap.FractionalCoverWalkOracle
 import DirectedFlowCutGap.FractionalHeapRead
 import DirectedFlowCutGap.FramedDirectEdgeWire
+import DirectedFlowCutGap.FramedSolverRecords
 import DirectedFlowCutGap.FramedVertexStorage
 import DirectedFlowCutGap.FrozenEpochProbability
 import DirectedFlowCutGap.GraphAdjacencyProgram

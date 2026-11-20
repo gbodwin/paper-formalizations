@@ -24,6 +24,13 @@ def tables (source : Bits) : Read (Table × Table × Table × Bits) :=
   let phase := Read.bind (OriginalSourceFraming.readBinary source) retained
   (phase.1,phase.2+8)
 
+def tablesWithRecords (source : Bits) : Read (Table × Table × Table × Bits) × ℕ :=
+  let framed := OriginalSourceFraming.readBinaryWithRecords source
+  let phase := Read.bind framed.1 retained
+  ((phase.1,phase.2+8),framed.2)
+
+theorem tables_records_reference (source : Bits) : (tablesWithRecords source).1=tables source := rfl
+
 theorem tables_value (source : Bits) : (tables source).1=EncodedVertexInput.readTables source := by
   have frames := (OriginalSourceFraming.readBinary_checked source).1
   cases parsed : EncodedVertexInput.readTables source with
@@ -96,6 +103,29 @@ def vertex (source : Bits) : Read EncodedVertexInput.Input :=
 
 def edge (source : Bits) : Read (Σ n,EncodedEdgeInput.Input n) :=
   assembleInput ChargedSourceAssembly.edgeAssembly source
+
+private def assembleWithRecords {A : Type} (assemble : Table → Table → Table → Read A) (source : Bits) :
+    Read A × ℕ :=
+  let parsed := tablesWithRecords source
+  let result := Read.bind parsed.1 (finish assemble)
+  ((result.1,result.2+5),parsed.2)
+
+def vertexWithFramingRecords (source : Bits) : Read EncodedVertexInput.Input × ℕ :=
+  assembleWithRecords ChargedSourceAssembly.vertexAssembly source
+
+def edgeWithFramingRecords (source : Bits) : Read (Σ n,EncodedEdgeInput.Input n) × ℕ :=
+  assembleWithRecords ChargedSourceAssembly.edgeAssembly source
+
+theorem vertex_framing_records_value (source : Bits) : (vertexWithFramingRecords source).1=vertex source := rfl
+
+theorem edge_framing_records_value (source : Bits) : (edgeWithFramingRecords source).1=edge source := rfl
+
+theorem framing_records_bound (source : Bits) :
+    (vertexWithFramingRecords source).2 ≤ framingBudget source.length ∧
+      (edgeWithFramingRecords source).2 ≤ framingBudget source.length := by
+  have bound := (OriginalSourceFraming.readBinary_records_paid source).trans
+    (OriginalSourceFraming.readBinary_checked source).2
+  exact ⟨bound,bound⟩
 
 theorem vertex_value (source : Bits) : (vertex source).1=EncodedVertexInput.parse source := by
   simp only [vertex,assembleInput,bind_value,tables_value,EncodedVertexInput.parse]
