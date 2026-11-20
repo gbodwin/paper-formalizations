@@ -2,7 +2,8 @@ import DirectedFlowCutGap.CachedBinaryAttempt
 import DirectedFlowCutGap.PaidTotalGuardedExecution
 
 /-! Feed the binary cached operations into the same guarded recursion. The
-extra count records their arithmetic and the running-charge additions. -/
+extra count records their arithmetic and the running-charge additions. Both
+work totals are carried forward in tail position. -/
 namespace DirectedFlowCutGap.BinaryGuardedCacheExecution
 
 open BinaryArithmetic ImmutableReferenceSimulation ImmutableReferenceTerminal
@@ -11,26 +12,29 @@ open TotalGuardedPackedExecution (Next Ready blocked)
 open GuardedReferenceExecution (guardCost)
 open CachedScalarRead (sumMeasured sum_value sum_paid)
 
-def execute {C : ℕ} (p : Program C) (s : Ready p) (paid : ℕ) :
+private def executeFrom {C : ℕ} (p : Program C) (s : Ready p) (paid extra : ℕ) :
     (Option (FastState C) × ℕ) × ℕ :=
   if guard : blocked p s.1 then
     let fee := sumMeasured [paid,guardCost C]
-    ((none,fee.1),fee.2)
+    ((none,fee.1),extra+fee.2)
   else
     let measured := CachedBinaryAttempt.attempt p s.1
     match result : measured.1 with
     | .stopped final cost =>
         let fee := sumMeasured [paid,cost,guardCost C]
-        ((some final,fee.1),measured.2+fee.2)
+        ((some final,fee.1),extra+measured.2+fee.2)
     | .completed step =>
         let seen : CachedReferenceExecution.attempt p s.1=.completed step :=
           (CachedBinaryAttempt.value_eq p s.1).symm.trans result
         let progressed : Next p step.state s.1 := ⟨guard,step,seen,rfl⟩
         let fee := sumMeasured [paid,step.cost,guardCost C]
-        let tail := execute p ⟨step.state,s.2.inv progressed⟩ fee.1
-        (tail.1,measured.2+fee.2+tail.2)
+        executeFrom p ⟨step.state,s.2.inv progressed⟩ fee.1 (extra+measured.2+fee.2)
 termination_by s
 decreasing_by exact progressed
+
+def execute {C : ℕ} (p : Program C) (s : Ready p) (paid : ℕ) :
+    (Option (FastState C) × ℕ) × ℕ :=
+  executeFrom p s paid 0
 
 private theorem old_stop {C : ℕ} (p : Program C) (s : Ready p) (paid : ℕ)
     (guard : ¬blocked p s.1) {final : FastState C} {work : ℕ}
@@ -58,14 +62,14 @@ private theorem old_next {C : ℕ} (p : Program C) (s : Ready p) (paid : ℕ)
     cases ran <;> rfl
 
 set_option maxHeartbeats 800000 in
-theorem observes {C : ℕ} (p : Program C) (s : Ready p) (paid : ℕ) :
-    (execute p s paid).1=PaidTotalGuardedExecution.execute p s paid := by
+private theorem observesFrom {C : ℕ} (p : Program C) (s : Ready p) (paid extra : ℕ) :
+    (executeFrom p s paid extra).1=PaidTotalGuardedExecution.execute p s paid := by
   obtain ⟨start,accessible⟩ := s
-  induction accessible generalizing paid with
+  induction accessible generalizing paid extra with
   | intro state reach ih =>
     let ready : Ready p := ⟨state,.intro state reach⟩
-    change (execute p ready paid).1=PaidTotalGuardedExecution.execute p ready paid
-    rw [execute]
+    change (executeFrom p ready paid extra).1=PaidTotalGuardedExecution.execute p ready paid
+    rw [executeFrom]
     by_cases blockedHere : blocked p state
     · have found : blocked p ready.1 := blockedHere
       rw [dite_eq_left found,PaidTotalGuardedExecution.execute,dite_eq_left found]
@@ -85,7 +89,11 @@ theorem observes {C : ℕ} (p : Program C) (s : Ready p) (paid : ℕ) :
         have motion : Next p body.state state := ⟨free,body,prior,rfl⟩
         rw [old_next p ready paid free prior]
         simp only [sum_value,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc]
-        exact ih body.state motion (paid+(body.cost+guardCost C))
+        exact ih body.state motion (paid+(body.cost+guardCost C)) _
+
+theorem observes {C : ℕ} (p : Program C) (s : Ready p) (paid : ℕ) :
+    (execute p s paid).1=PaidTotalGuardedExecution.execute p s paid :=
+  observesFrom p s paid 0
 
 attribute [local irreducible] CachedBinaryAttempt.attempt CachedBinaryAttempt.budget CachedScalarRead.sumMeasured
 
@@ -109,13 +117,13 @@ private theorem observed_bound {C H B : ℕ} (p : Program C) (s : FastState C)
 set_option maxHeartbeats 1200000 in
 /-- A supplied complete raw trace bounds all scalar work on the actually
 executed prefix. The numerical length and common widths occur in the proof. -/
-theorem paid_of_trace {C H B t q maxH maxB limit : ℕ} {p : Program C} {initial final : BitState C}
+private theorem paidFrom {C H B t q maxH maxB limit : ℕ} {p : Program C} {initial final : BitState C}
     {events : List Event} (trace : Run p t q initial events final) (halt : tick p final=none)
-    (s : Ready p) (init : s.1.freeze=initial) (paid : ℕ) (fits : initial.Bounded H B)
+    (s : Ready p) (init : s.1.freeze=initial) (paid extra : ℕ) (fits : initial.Bounded H B)
     (wideH : H+t≤maxH) (wideB : B+t≤maxB)
     (room : paid+(t+1)*(stepBound C maxH maxB+guardCost C)≤limit) :
-    (execute p s paid).2≤(t+1)*(CachedBinaryAttempt.budget C maxH maxB+additionBudget limit) := by
-  induction trace generalizing s paid H B with
+    (executeFrom p s paid extra).2≤extra+(t+1)*(CachedBinaryAttempt.budget C maxH maxB+additionBudget limit) := by
+  induction trace generalizing s paid extra H B with
   | done atStop =>
       have wide : s.1.freeze.Bounded maxH maxB := by
         rw [init]
@@ -125,7 +133,7 @@ theorem paid_of_trace {C H B t q maxH maxB limit : ℕ} {p : Program C} {initial
       have base : paid+stepBound C maxH maxB+guardCost C≤limit := by
         simp only [Nat.zero_add,Nat.one_mul] at room
         omega
-      rw [execute]
+      rw [executeFrom]
       by_cases unavailable : blocked p s.1
       · rw [dite_eq_left unavailable]
         let fees := [paid,guardCost C]
@@ -134,7 +142,7 @@ theorem paid_of_trace {C H B t q maxH maxB limit : ℕ} {p : Program C} {initial
           omega
         have work := addition_paid (parts:=fees) (by simp [fees]) cap
         simp only [Nat.zero_add,Nat.one_mul]
-        exact work.trans (Nat.le_add_left _ _)
+        exact Nat.add_le_add_left (work.trans (Nat.le_add_left _ _)) _
       · rw [dite_eq_right unavailable]
         dsimp only
         have terminal := observed_tick p s.1
@@ -149,7 +157,7 @@ theorem paid_of_trace {C H B t q maxH maxB limit : ℕ} {p : Program C} {initial
             omega
           have bill := addition_paid (parts:=fees) (by simp [fees]) cap
           simp only [Nat.zero_add,Nat.one_mul]
-          exact Nat.add_le_add attempts bill
+          exact Nat.add_le_add (Nat.add_le_add_left attempts _) bill |>.trans_eq (Nat.add_assoc ..)
         · rename_i step seen
           rw [seen] at terminal
           cases terminal
@@ -166,7 +174,7 @@ theorem paid_of_trace {C H B t q maxH maxB limit : ℕ} {p : Program C} {initial
       have scaled := Nat.mul_le_mul_right single positive
       rw [Nat.one_mul] at scaled
       have base : paid+single≤limit := (Nat.add_le_add_left scaled paid).trans upper
-      rw [execute]
+      rw [executeFrom]
       by_cases unavailable : blocked p s.1
       · rw [dite_eq_left unavailable]
         let fees := [paid,guardCost C]
@@ -175,8 +183,9 @@ theorem paid_of_trace {C H B t q maxH maxB limit : ℕ} {p : Program C} {initial
           dsimp only [single] at base
           omega
         have bill := addition_paid (parts:=fees) (by simp [fees]) cap
-        change (sumMeasured fees).2≤((restCount+1)+1)*cycle
+        change extra+(sumMeasured fees).2≤extra+((restCount+1)+1)*cycle
         have part : additionBudget limit≤cycle := Nat.le_add_left _ _
+        apply Nat.add_le_add_left
         refine bill.trans (part.trans ?_)
         simpa only [Nat.one_mul] using Nat.mul_le_mul_right cycle positive
       · rw [dite_eq_right unavailable]
@@ -204,15 +213,25 @@ theorem paid_of_trace {C H B t q maxH maxB limit : ℕ} {p : Program C} {initial
           have room' : (sumMeasured fees).1+(restCount+1)*single≤limit := by
             rw [Nat.add_mul,Nat.one_mul] at upper
             omega
+          let accumulated := extra+(CachedBinaryAttempt.attempt p s.1).2+(sumMeasured fees).2
           have tail := ih halt ⟨next.state,s.2.inv progressed⟩ freezes (sumMeasured fees).1
-            nextFits (by omega) (by omega) room'
-          change (CachedBinaryAttempt.attempt p s.1).2+(sumMeasured fees).2+
-              (execute p ⟨next.state,s.2.inv progressed⟩ (sumMeasured fees).1).2≤
-            ((restCount+1)+1)*cycle
+            accumulated nextFits (by omega) (by omega) room'
+          change (executeFrom p ⟨next.state,s.2.inv progressed⟩ (sumMeasured fees).1 accumulated).2≤
+            extra+((restCount+1)+1)*cycle
+          have increase : accumulated≤extra+cycle := by
+            change extra+(CachedBinaryAttempt.attempt p s.1).2+(sumMeasured fees).2≤extra+cycle
+            rw [Nat.add_assoc]
+            exact Nat.add_le_add_left (Nat.add_le_add attempts bill) extra
+          change _≤accumulated+(restCount+1)*cycle at tail
           rw [Nat.add_mul,Nat.one_mul]
-          have total := Nat.add_le_add (Nat.add_le_add attempts bill) tail
-          change _≤cycle+(restCount+1)*cycle at total
-          rw [Nat.add_comm cycle ((restCount+1)*cycle)] at total
-          exact total
+          exact tail.trans (by omega)
+
+theorem paid_of_trace {C H B t q maxH maxB limit : ℕ} {p : Program C} {initial final : BitState C}
+    {events : List Event} (trace : Run p t q initial events final) (halt : tick p final=none)
+    (s : Ready p) (init : s.1.freeze=initial) (paid : ℕ) (fits : initial.Bounded H B)
+    (wideH : H+t≤maxH) (wideB : B+t≤maxB)
+    (room : paid+(t+1)*(stepBound C maxH maxB+guardCost C)≤limit) :
+    (execute p s paid).2≤(t+1)*(CachedBinaryAttempt.budget C maxH maxB+additionBudget limit) := by
+  simpa only [execute,Nat.zero_add] using paidFrom trace halt s init paid 0 fits wideH wideB room
 
 end DirectedFlowCutGap.BinaryGuardedCacheExecution

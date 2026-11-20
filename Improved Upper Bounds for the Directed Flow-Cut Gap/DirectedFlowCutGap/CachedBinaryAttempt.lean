@@ -1,8 +1,8 @@
 import DirectedFlowCutGap.CachedBinaryAppend
+import DirectedFlowCutGap.CachedBinaryRegisterCopy
 
-/-! Execute the cached instruction's indexes and numerical fees through the
-binary readers and appenders. Other instructions keep their established
-reference implementation. -/
+/-! Use binary indexes and arithmetic in the cached instruction interpreter.
+Each instruction preserves its original registers, continuation, events and fees. -/
 namespace DirectedFlowCutGap.CachedBinaryAttempt
 
 open BinaryArithmetic ImmutableReferenceSimulation ImmutableReferenceTerminal EncodedSequenceAccess
@@ -53,7 +53,27 @@ def attempt {C : ℕ} (p : Program C) (s : FastState C) : FastAttempt C × ℕ :
       match read.1.1 with
       | some (.flag value) => (.completed ⟨{s with pc := pc},[.emit value],charge.1⟩,read.2+charge.2)
       | _ => (.stopped s charge.1,read.2+charge.2)
-  | _ => (CachedReferenceExecution.attempt p s,0)
+  | .halt => (.stopped s (controlCost C), 0)
+  | .move dst src pc =>
+      let copied := copyBits (s.registers.get src)
+      let charge := sumMeasured [copied.2, controlCost C]
+      (.completed ⟨{s with registers := s.registers.set dst copied.1, pc := pc}, [], charge.1⟩, charge.2)
+  | .call entry continuation dst =>
+      let copied := CachedBinaryRegisterCopy.copy s.registers
+      let charge := sumMeasured [copied.1.2, copied.1.2, controlCost C]
+      let frame := ⟨continuation, dst, copied.1.1⟩
+      (.completed ⟨{s with registers := copied.1.1, stack := frame::s.stack, pc := entry}, [], charge.1⟩,
+        copied.2 + charge.2)
+  | .ret src =>
+      match s.stack with
+      | [] => (.stopped s (controlCost C), 0)
+      | frame::rest =>
+          let saved := CachedBinaryRegisterCopy.copy frame.saved
+          let result := copyBits (s.registers.get src)
+          let charge := sumMeasured [saved.1.2, result.2, controlCost C]
+          let registers := saved.1.1.set frame.destination result.1
+          (.completed ⟨{s with registers, stack := rest, pc := frame.continuation}, [], charge.1⟩,
+            saved.2 + charge.2)
 
 private theorem allocation_value {C : ℕ} (s : FastState C) (dst : Reg) (cell : Cell Bits)
     (pc : Fin C) (events : List Event) :
@@ -68,10 +88,29 @@ private theorem allocation_value {C : ℕ} (s : FastState C) (dst : Reg) (cell :
 theorem value_eq {C : ℕ} (p : Program C) (s : FastState C) :
     (attempt p s).1=CachedReferenceExecution.attempt p s := by
   cases label : p s.pc with
-  | halt => simp only [attempt,label]
-  | move dst src pc => simp only [attempt,label]
-  | call pc ret dst => simp only [attempt,label]
-  | ret src => simp only [attempt,label]
+  | halt =>
+      simp only [attempt,label,CachedReferenceExecution.attempt,ImmutableReferenceTerminal.attempt]
+      erw [label]
+      rfl
+  | move dst src pc =>
+      simp only [attempt,label,CachedReferenceExecution.attempt,ImmutableReferenceTerminal.attempt,
+        sum_value,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc]
+      erw [label]
+      rfl
+  | call pc ret dst =>
+      simp only [attempt,label,CachedReferenceExecution.attempt,ImmutableReferenceTerminal.attempt,
+        CachedBinaryRegisterCopy.value_eq,sum_value,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc]
+      erw [label]
+      rfl
+  | ret src =>
+      rcases s with ⟨store, next, registers, stack, pc, source⟩
+      change p pc = .ret src at label
+      cases stack <;>
+        simp only [attempt,label,CachedReferenceExecution.attempt,ImmutableReferenceTerminal.attempt,
+          CachedBinaryRegisterCopy.value_eq,sum_value,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc]
+      all_goals
+        try erw [label]
+        rfl
   | make dst recipe pc =>
       simp only [attempt,label,allocation_value,CachedReferenceExecution.attempt]
       cases s
@@ -98,6 +137,7 @@ theorem value_eq {C : ℕ} (p : Program C) (s : FastState C) :
       | some loaded => cases loaded <;> rfl
 
 attribute [local irreducible] CachedBinaryAppend.append CachedScalarRead.read CachedScalarRead.sumMeasured
+  CachedBinaryRegisterCopy.copy
 
 def sumsBudget (width : ℕ) : ℕ := 4*(96*(width+2)^2+4)+1
 
@@ -136,7 +176,14 @@ private theorem allocation_paid {C H B W : ℕ} (s : FastState C) (dst : Reg) (c
 
 def budget (C H B : ℕ) : ℕ :=
   1200*(CachedHeapWidths.readerWidth (H+1) B+2)^2+
-    CachedScalarRead.budget (CachedHeapWidths.readerWidth H B)+sumsBudget (stepBound C H B).size
+    CachedScalarRead.budget (CachedHeapWidths.readerWidth H B)+sumsBudget (stepBound C H B).size+
+    CachedBinaryRegisterCopy.budget (stepBound C H B).size
+
+private theorem first_copy_paid {width : ℕ} (r : Registers Bits) (fees : List ℕ)
+    (fits : (sumMeasured ((CachedBinaryRegisterCopy.copy r).1.2::fees)).1.size ≤ width) :
+    (CachedBinaryRegisterCopy.copy r).2 ≤ CachedBinaryRegisterCopy.budget width := by
+  rw [sum_value,List.sum_cons] at fits
+  exact CachedBinaryRegisterCopy.paid r ((Nat.size_le_size (Nat.le_add_right _ _)).trans fits)
 
 set_option maxHeartbeats 900000 in
 theorem paid {C H B : ℕ} (p : Program C) (s : FastState C) (fits : s.freeze.Bounded H B) :
@@ -161,6 +208,12 @@ theorem paid {C H B : ℕ} (p : Program C) (s : FastState C) (fits : s.freeze.Bo
   have includeAppend {q : ℕ} (bounded : q≤1200*(CachedHeapWidths.readerWidth (H+1) B+2)^2+
       sumsBudget (stepBound C H B).size) : q≤budget C H B := by
     unfold budget
+    omega
+  let W := (stepBound C H B).size
+  have includeControl {q r : ℕ} (first : q ≤ CachedBinaryRegisterCopy.budget W)
+      (second : r ≤ sumsBudget W) : q + r ≤ budget C H B := by
+    unfold budget
+    dsimp only [W] at first second
     omega
   cases label : p s.pc with
   | make dst recipe pc =>
@@ -195,6 +248,22 @@ theorem paid {C H B : ℕ} (p : Program C) (s : FastState C) (fits : s.freeze.Bo
       | some cell =>
           cases cell <;> simp only [looked,FastAttempt.freeze,FastResult.freeze,stopped,success] at charge ⊢
           all_goals exact includeRead (read src) (sums_paid (by simp) charge)
-  | _ => simp only [attempt,label,Nat.zero_le]
+  | halt => simp only [attempt,label,Nat.zero_le]
+  | move dst src pc =>
+      simp only [attempt,label,FastAttempt.freeze,FastResult.freeze,success] at charge ⊢
+      have fee : (sumMeasured [(copyBits (s.registers.get src)).2,controlCost C]).2 ≤ sumsBudget W :=
+        sums_paid (by simp) charge
+      have work := includeControl (Nat.zero_le (CachedBinaryRegisterCopy.budget W)) fee
+      simpa only [Nat.zero_add] using work
+  | call entry continuation dst =>
+      simp only [attempt,label,FastAttempt.freeze,FastResult.freeze,success] at charge ⊢
+      exact includeControl (first_copy_paid _ _ charge) (sums_paid (by simp) charge)
+  | ret src =>
+      simp only [attempt,label] at charge ⊢
+      cases stack : s.stack with
+      | nil => exact Nat.zero_le _
+      | cons frame rest =>
+          simp only [stack,FastAttempt.freeze,FastResult.freeze,success] at charge ⊢
+          exact includeControl (first_copy_paid _ _ charge) (sums_paid (by simp) charge)
 
 end DirectedFlowCutGap.CachedBinaryAttempt

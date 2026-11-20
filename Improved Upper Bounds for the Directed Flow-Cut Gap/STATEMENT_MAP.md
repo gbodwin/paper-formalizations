@@ -24,7 +24,7 @@ The [measured mask readback](verification/PACKED_MASK_READBACK_20261120.md) uses
 [Composed charge bounds](verification/PHYSICAL_AMPLIFIED_COST_20261119.md)
 [Original input phases](verification/ORIGINAL_INPUT_PHASES_20261119.md)
 [Physical source framing and edge composition](verification/PHYSICAL_SOURCE_FRAMING_20261120.md)
-The [packed scalar execution](verification/PACKED_SCALAR_EXECUTION_20261120.md) uses binary operands in the active cached controller, including initialization and guarded charge accumulation. The same packed run supplies the measured mask reader. Lean bounds their combined added work and preserves the earlier outcome on every literal tape.
+The [packed scalar execution](verification/PACKED_SCALAR_EXECUTION_20261120.md) includes the control instructions, initial cache and guarded charge accumulation. The same packed run supplies the measured mask reader. Lean bounds their combined work and links the cache and terminal mask allocations in one binary reservation trace for every literal tape in the active regime.
 
 [Recorded work for every source and tape](verification/PAID_SOURCE_SOLVERS_20261120.md)
 [Terminating packed rounding without numerical fuel](verification/FUEL_FREE_PACKED_ROUNDING_20261120.md)

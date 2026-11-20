@@ -1,4 +1,5 @@
 import DirectedFlowCutGap.BinaryGuardedCacheExecution
+import DirectedFlowCutGap.CachedRawProgramTable
 import DirectedFlowCutGap.BinaryCachedHeapBuild
 import DirectedFlowCutGap.PaidCacheTrace
 import DirectedFlowCutGap.PaidTotalGuardedExecution
@@ -67,12 +68,23 @@ private def startFromCache {n L H A : ℕ} {adj : PairFlags n} {trials : Bits} (
     TotalGuardedPackedExecution.Ready program :=
   ⟨cache,agrees.symm ▸ ready data positive⟩
 
+private def executeCode {C : ℕ} (code : Program C) {reference : Program C}
+    (same : code=reference) (start : TotalGuardedPackedExecution.Ready reference) :
+    (Option (FastState C) × ℕ) × ℕ :=
+  BinaryGuardedCacheExecution.execute code ⟨start.1,same.symm ▸ start.2⟩ 0
+
+private theorem executeCode_eq {C : ℕ} (code : Program C) {reference : Program C}
+    (same : code=reference) (start : TotalGuardedPackedExecution.Ready reference) :
+    executeCode code same start=BinaryGuardedCacheExecution.execute reference start 0 := by
+  subst code
+  rfl
+
 def runWithScalars {n L H A : ℕ} {adj : PairFlags n} {trials : Bits} (initial : BitState 26704)
     (data : RawGraphControllerLaw.Input (L:=L) adj trials H A initial) (positive : 0<L) :
     (Option (FastState 26704) × ℕ) × ℕ :=
   let cache := BinaryCachedHeapBuild.build initial
   let start := startFromCache initial data positive cache.1 (BinaryCachedHeapBuild.build_value initial)
-  let executed := BinaryGuardedCacheExecution.execute program start 0
+  let executed := executeCode CachedRawProgramTable.dispatch CachedRawProgramTable.dispatch_eq start
   (executed.1,cache.2+executed.2)
 
 def run {n L H A : ℕ} {adj : PairFlags n} {trials : Bits} (initial : BitState 26704)
@@ -83,7 +95,7 @@ private theorem run_value {n L H A : ℕ} {adj : PairFlags n} {trials : Bits} (i
     (data : RawGraphControllerLaw.Input (L:=L) adj trials H A initial) (positive : 0<L) :
     run initial data positive=PaidTotalGuardedExecution.execute program
       ⟨FastState.ofReference initial,ready data positive⟩ 0 := by
-  simp only [run,runWithScalars,BinaryGuardedCacheExecution.observes]
+  simp only [run,runWithScalars,executeCode_eq,BinaryGuardedCacheExecution.observes]
   apply congrArg (fun start => PaidTotalGuardedExecution.execute program start 0)
   apply Subtype.ext
   exact BinaryCachedHeapBuild.build_value initial
@@ -150,6 +162,10 @@ theorem scalar_paid {n L H A : ℕ} {adj : PairFlags n} {trials : Bits} (initial
       (steps+1)*(CachedBinaryAttempt.budget 26704 (H+steps) (A+steps)+BinaryGuardedCacheExecution.additionBudget limit) :=
     work.trans (Nat.mul_le_mul_right _ (Nat.add_le_add_right within 1))
   have packing := BinaryCachedHeapBuild.build_paid initial data.bounded
+  unfold runWithScalars
+  dsimp only
+  rw [executeCode_eq]
+  change cache.2+(BinaryGuardedCacheExecution.execute program start 0).2≤_
   exact Nat.add_le_add packing enlarged
 
 end DirectedFlowCutGap.PaidTotalRawGraphExecution

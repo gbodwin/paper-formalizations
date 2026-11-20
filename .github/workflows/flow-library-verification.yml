@@ -270,7 +270,7 @@ jobs:
         if: github.ref_name == 'codex/flow-packed-scalars-20261120'
         run: |
           paper='Improved Upper Bounds for the Directed Flow-Cut Gap'
-          for module in CachedScalarRead CachedBinaryAppend CachedBinaryAttempt BinaryCachedHeapBuild BinaryGuardedCacheExecution PaidTotalRawGraphExecution BinaryRawScalarPolynomial CachedGuardedMaskReadback GuardedFuelFreeRounding GuardedMaskReadbackPolynomial; do
+          for module in CachedScalarRead CachedBinaryAppend CachedBinaryRegisterCopy CachedBinaryAttempt BinaryCachedHeapBuild BinaryGuardedCacheExecution CachedRawProgramTable PaidTotalRawGraphExecution BinaryRawScalarPolynomial CachedWordRead CachedGuardedMaskReadback GuardedFuelFreeRounding GuardedMaskReadbackPolynomial PackedStoragePolynomial PackedArraySchedule PackedArrayReservations GuardedPackedArrayPlan; do
             lake env lean -j1 -DautoImplicit=false -DwarningAsError=true "$paper/DirectedFlowCutGap/$module.lean"
             printf 'PASS strict elaboration of %s\n' "$module"
           done

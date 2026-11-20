@@ -46,6 +46,6 @@ def main : IO Unit := do
   let ((legacy, readback), cache) := GuardedFuelFreeRounding.hardWithWork 0 adjacency 1 (by decide) tape
   let some cut := legacy.1 | throw (IO.userError "packed scalar execution did not return a cut")
   unless cut.mask.toList == [false] && cut.suffix == tape && cut.paid == 70312016 &&
-      legacy.2 == cut.paid && readback == 41293 && cache == 29870488 do
+      legacy.2 == cut.paid && readback == 41293 && cache == 35401218 do
     throw (IO.userError "packed scalar execution changed its observation or measured work")
   IO.println s!"PASS packed binary scalar execution, cut {cut.mask.toList}, suffix {cut.suffix}, retained charge {legacy.2}, readback {readback}, cache {cache}"

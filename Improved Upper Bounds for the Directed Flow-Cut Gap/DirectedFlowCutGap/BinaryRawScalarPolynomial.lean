@@ -51,7 +51,7 @@ private theorem scalar_covered :
   have K : Covered width steps := build.of_le fun x => (magnitudes x.1.1 x.1.2.1 x.1.2.2).2
   change Covered width (fun x => scalarBudget (cells x+1) (cells x) (steps x))
   simp only [scalarBudget,CachedBinaryAttempt.budget,CachedHeapWidths.readerWidth,CachedScalarRead.budget,
-    CachedBinaryAttempt.sumsBudget,BinaryGuardedCacheExecution.additionBudget,stepBound]
+    CachedBinaryAttempt.sumsBudget,CachedBinaryRegisterCopy.budget,BinaryGuardedCacheExecution.additionBudget,stepBound]
   cover_arithmetic
 
 open Polynomial in
