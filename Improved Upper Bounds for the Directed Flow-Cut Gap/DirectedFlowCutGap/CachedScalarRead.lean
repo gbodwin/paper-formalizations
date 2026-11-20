@@ -12,14 +12,14 @@ open CachedBinaryIndex (Indexes compute)
 open CachedHeapWidths (readerWidth)
 
 private def addMeasured (x y : ℕ) : ℕ × ℕ :=
-  let left := BinaryNaturalView.encode x
-  let right := BinaryNaturalView.encode y
+  let left := DirectNaturalView.encode x
+  let right := DirectNaturalView.encode y
   let sum := addCanonical left.1 right.1
-  let result := BinaryNaturalView.decode sum.1
+  let result := DirectNaturalView.decode sum.1
   (result.1,left.2+right.2+sum.2+result.2+4)
 
 private theorem add_value (x y : ℕ) : (addMeasured x y).1=x+y := by
-  simp only [addMeasured,BinaryNaturalView.decode_value,(canonical_values ..).1,BinaryNaturalView.encode_value]
+  simp only [addMeasured,DirectNaturalView.encode_eq,DirectNaturalView.decode_eq,BinaryNaturalView.decode_value,(canonical_values ..).1,BinaryNaturalView.encode_value]
 
 private theorem add_paid {B x y : ℕ} (hx : x.size≤B) (hy : y.size≤B) : (addMeasured x y).2≤96*(B+2)^2 := by
   let l := BinaryNaturalView.encode x
@@ -40,6 +40,7 @@ private theorem add_paid {B x y : ℕ} (hx : x.size≤B) (hy : y.size≤B) : (ad
   have wl := (BinaryNaturalView.encode_paid x).trans (cap (hx.trans (Nat.le_succ _)))
   have wr := (BinaryNaturalView.encode_paid y).trans (cap (hy.trans (Nat.le_succ _)))
   have wd := (BinaryNaturalView.decode_paid added.1).trans (cap (w.le.trans fits))
+  simp only [addMeasured,DirectNaturalView.encode_eq,DirectNaturalView.decode_eq]
   change l.2+r.2+added.2+(BinaryNaturalView.decode added.1).2+4≤_
   nlinarith only [wl,wr,work,wd,Nat.zero_le B,Nat.zero_le (B^2)]
 

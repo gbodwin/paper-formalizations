@@ -11,7 +11,7 @@ open CachedHeapCopies (payloadAfter addressAfter)
 open CachedScalarRead (sumMeasured sum_value sum_paid)
 
 private def nextWord (length : ℕ) : Bits × ℕ :=
-  let current := BinaryNaturalView.encode length
+  let current := DirectNaturalView.encode length
   let next := increment true current.1
   let common := trim next.1
   (common.1,current.2+next.2+common.2+4)
@@ -22,6 +22,7 @@ private theorem next_word (length : ℕ) : (nextWord length).1=(length+1).bits :
   have count := (increment_spec true current.1).1
   rw [show value current.1=length from BinaryNaturalView.encode_value _] at count
   have canon := trim_spec next.1
+  simp only [nextWord,DirectNaturalView.encode_eq]
   change (trim next.1).1=(length+1).bits
   rw [← show value next.1=length+1 from count,← canon.2.1]
   exact (normal_bits canon.1).symm
@@ -39,6 +40,7 @@ private theorem next_paid {length W : ℕ} (fits : length.size≤W) : (nextWord 
   have nextWidth : next.1.length≤W+1 := (increment_spec true current.1).2.1.trans (Nat.add_le_add_right width 1)
   have trimmed := (trim_spec next.1).2.2.2.le.trans
     (Nat.add_le_add_right (Nat.mul_le_mul_left 8 nextWidth) 1)
+  simp only [nextWord,DirectNaturalView.encode_eq]
   change current.2+next.2+(trim next.1).2+4≤_
   nlinarith only [charge,added,trimmed,Nat.zero_le W,Nat.zero_le (W^2)]
 
@@ -53,7 +55,7 @@ private def counterRead (a : Array ℕ) (index : ℕ) : ℕ := a[index]?.getD 0
 def counters (s : Store) (cell : Cell Bits) : Counters :=
   let length := s.cells.size
   let after := nextWord length
-  let newLength := BinaryNaturalView.decode after.1
+  let newLength := DirectNaturalView.decode after.1
   let copied := copyCell cell
   let payload := sumMeasured [counterRead s.cellPrefix length,copied.2]
   let zero := isZero after.1
@@ -66,7 +68,7 @@ def counters (s : Store) (cell : Cell Bits) : Counters :=
 theorem counter_values (s : Store) (c : Cell Bits) :
     (counters s c).payload=payloadAfter s c ∧ (counters s c).addresses=addressAfter s ∧
       (counters s c).legacy=(CachedReferenceHeap.append s c).2 := by
-  simp only [counters,payloadAfter,addressAfter,counterRead,sum_value,List.sum_cons,List.sum_nil,
+  simp only [counters,DirectNaturalView.decode_eq,payloadAfter,addressAfter,counterRead,sum_value,List.sum_cons,List.sum_nil,
     Nat.add_zero,next_word,BinaryNaturalView.decode_value,value_bits]
   constructor
   · trivial
@@ -179,6 +181,7 @@ theorem paid {s : Store} {c : Cell Bits} {H B : ℕ} (size : s.cells.size≤H)
   change (sumMeasured legacyInputs).2≤3*(96*(W+2)^2+4)+1 at fees
   change length.size≤W at oldWidth
   dsimp only [append,appendPrepared]
+  simp only [counters,DirectNaturalView.decode_eq]
   change word.2+decoded.2+copied.2+(sumMeasured payloadInputs).2+(isZero word.1).2+
     (predecessor word.1).2+(sumMeasured countInputs).2+(sumMeasured legacyInputs).2+
       2*(length.size+1)+16≤1200*(W+2)^2

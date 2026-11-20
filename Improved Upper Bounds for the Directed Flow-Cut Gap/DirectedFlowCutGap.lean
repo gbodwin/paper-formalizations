@@ -396,6 +396,7 @@ import DirectedFlowCutGap.DemandSelectionRefinement
 import DirectedFlowCutGap.DirectBinaryEdgeCost
 import DirectedFlowCutGap.DirectBinaryEdgeWire
 import DirectedFlowCutGap.DirectBinaryEdgeWireCost
+import DirectedFlowCutGap.DirectNaturalView
 import DirectedFlowCutGap.DyadicEdgeWeights
 import DirectedFlowCutGap.EarlyStopRetainedFlow
 import DirectedFlowCutGap.EdgeFlow
@@ -1147,6 +1148,7 @@ import DirectedFlowCutGap.SupportVertexVisit
 import DirectedFlowCutGap.SupportVisitAllocation
 import DirectedFlowCutGap.SupportVisitDecision
 import DirectedFlowCutGap.TabulatedIntegralFlow
+import DirectedFlowCutGap.TerminalArrayAssembly
 import DirectedFlowCutGap.TerminalPorts
 import DirectedFlowCutGap.TinyEdgePreprocessing
 import DirectedFlowCutGap.TotalGuardedPackedExecution
@@ -1161,6 +1163,7 @@ import DirectedFlowCutGap.VertexReductionWidths
 import DirectedFlowCutGap.VertexReplication
 import DirectedFlowCutGap.VertexRounding
 import DirectedFlowCutGap.VertexSourceCacheLayout
+import DirectedFlowCutGap.VertexSourceTerminalLayout
 import DirectedFlowCutGap.VertexToEdgeReduction
 import DirectedFlowCutGap.WeakCutExactMarginal
 import DirectedFlowCutGap.WeakDecomposition

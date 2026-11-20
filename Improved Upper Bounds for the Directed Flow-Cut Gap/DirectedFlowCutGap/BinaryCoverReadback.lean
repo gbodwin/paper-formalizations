@@ -1,6 +1,8 @@
 import DirectedFlowCutGap.PhysicalCoverAccess
 import DirectedFlowCutGap.BinaryRawRational
 import DirectedFlowCutGap.CachedScalarRead
+import DirectedFlowCutGap.TerminalArrayAssembly
+import DirectedFlowCutGap.PackedArraySchedule
 
 /-! Charge validation and conversion at the point where a reached physical
 record is read. The same lookup and list readers are used by both views. -/
@@ -85,7 +87,7 @@ private def rawBest (n : ℕ) (get : Bits → Read (Cell Bits)) (H : ℕ) (root 
   let xs ← readListWith get (rawFraction get H) H best
   let length := xs.length
   let cost := 16*(length+1)^2+12*(n+length+1)
-  if h : length=n then (some ⟨xs.toArray,by simpa using h⟩,cost) else (none,cost)
+  if h : length=n then (some (TerminalArrayAssembly.vector xs h),cost) else (none,cost)
 
 private theorem decodeList {n : ℕ} (xs : List BinaryRational.Fraction) (h : xs.length=n) :
     BinaryFractionalRows.decodeRow ⟨xs.toArray,by simpa using h⟩ =
@@ -96,7 +98,7 @@ private theorem decodeList {n : ℕ} (xs : List BinaryRational.Fraction) (h : xs
 
 private theorem rawBest_value (n : ℕ) (get : Bits → Read (Cell Bits)) (H : ℕ) (root : Bits) :
     (rawBest n get H root).1=(readBestWith n get H root).1 := by
-  simp only [rawBest,readBestWith,Read.bind_value]
+  simp only [rawBest,readBestWith,Read.bind_value,TerminalArrayAssembly.vector_value]
   cases found : (get root).1 with
   | none => rfl
   | some cell =>
@@ -157,11 +159,11 @@ private def mask (n : ℕ) (get : Bits → Read (Cell Bits)) (H : ℕ) (root : B
   let word ← readWordWith get H root
   let length := word.length
   let cost := 16*(length+1)^2+12*(n+length+1)
-  if h : length=n then (some (.zero ⟨word.toArray,by simpa using h⟩),cost) else (none,cost)
+  if h : length=n then (some (.zero (TerminalArrayAssembly.vector word h)),cost) else (none,cost)
 
 private theorem mask_value (n : ℕ) (get : Bits → Read (Cell Bits)) (H : ℕ) (root : Bits) :
     (mask n get H root).1=(readMaskWith n get H root).1 := by
-  simp only [mask,readMaskWith,Read.bind_value]
+  simp only [mask,readMaskWith,Read.bind_value,TerminalArrayAssembly.vector_value]
   cases (readWordWith get H root).1 with
   | none => rfl
   | some w =>
@@ -588,5 +590,93 @@ theorem readPlanWithBitCharge_paid (n : ℕ) (s : CachedReferenceHeap.Store) (ro
     change (CachedScalarRead.read s addr).1.1 = some (.pair a b) at seen
     rw [CachedScalarRead.value_eq,CachedReferenceHeap.read_eq] at seen
     exact lookup_bounded heap seen
+
+open EncodedArrayStorage (Instruction fresh) in
+private def arrayCode {A : Type} {n : ℕ} (result : Vector A n) : List (Instruction Unit) :=
+  (TerminalArrayAssembly.schedule result.toList).map PackedArraySchedule.shape
+
+private theorem array_code_counts {A : Type} {n : ℕ} (result : Vector A n) :
+    (arrayCode result).length = 2*n^2+21*n+4 ∧
+      EncodedArrayStorage.fresh (arrayCode result) ≤ n^2+7*n+2 := by
+  simpa only [arrayCode,List.length_map,PackedArraySchedule.shape_extent,Vector.length_toList] using
+    TerminalArrayAssembly.space result.toList
+
+open EncodedArrayStorage (Instruction fresh) in
+def terminalArrayCode {n : ℕ} : Plan n → List (Instruction Unit)
+  | .zero mask => arrayCode mask
+  | .covers rows => rows.flatMap arrayCode
+  | .invalid | .infeasible _ => []
+
+private theorem covers_code_counts {n : ℕ} (rows : List (RawRow n)) :
+    (terminalArrayCode (.covers rows)).length = rows.length*(2*n^2+21*n+4) ∧
+      EncodedArrayStorage.fresh (terminalArrayCode (.covers rows)) ≤ rows.length*(n^2+7*n+2) := by
+  induction rows with
+  | nil => simp [terminalArrayCode,EncodedArrayStorage.fresh]
+  | cons row rows ih =>
+      have counts := array_code_counts row
+      simp only [terminalArrayCode,List.flatMap_cons,List.length_append,List.length_cons,
+        Nat.add_mul,Nat.one_mul,EncodedArrayStorage.fresh_append] at ih ⊢
+      exact ⟨by omega,by omega⟩
+
+private theorem obstruction_not_rows {n H : ℕ} {get : Bits → Read (Cell Bits)} {root : Bits}
+    (rows : List (RawRow n)) : (obstruction n get H root).1 ≠ some (.covers rows) := by
+  intro read
+  simp only [obstruction,Read.bind_value] at read
+  obtain ⟨cell,_,after⟩ := Option.bind_eq_some_iff.mp read
+  cases cell with
+  | nil => cases after
+  | flag _ => cases after
+  | pair a b =>
+      simp only [Read.bind_value] at after
+      obtain ⟨source,_,more⟩ := Option.bind_eq_some_iff.mp after
+      obtain ⟨target,_,done⟩ := Option.bind_eq_some_iff.mp more
+      split at done <;> cases done
+
+private theorem mask_not_rows {n H : ℕ} {get : Bits → Read (Cell Bits)} {root : Bits}
+    (rows : List (RawRow n)) : (mask n get H root).1 ≠ some (.covers rows) := by
+  intro read
+  simp only [mask,Read.bind_value] at read
+  obtain ⟨bits,_,done⟩ := Option.bind_eq_some_iff.mp read
+  split at done <;> cases done
+
+private theorem read_rows_count {n H : ℕ} {get : Bits → Read (Cell Bits)} {root : Bits} {rows : List (RawRow n)}
+    (read : (planWith n get H root).1=some (.covers rows)) : rows.length < H := by
+  simp only [planWith,Read.bind_value] at read
+  obtain ⟨start,_,after⟩ := Option.bind_eq_some_iff.mp read
+  cases start with
+  | nil => cases after
+  | flag _ => cases after
+  | pair tag payload =>
+      simp only [Read.bind_value] at after
+      obtain ⟨label,_,body⟩ := Option.bind_eq_some_iff.mp after
+      cases label with
+      | pair _ _ => cases body
+      | flag kind =>
+          cases kind with
+          | false => exact (obstruction_not_rows rows body).elim
+          | true => exact (mask_not_rows rows body).elim
+      | nil =>
+          simp only [Read.bind_value] at body
+          obtain ⟨result,got,done⟩ := Option.bind_eq_some_iff.mp body
+          have entries : result=rows := by simpa only [Read.pure_value,Option.some.injEq,Plan.covers.injEq] using done
+          exact entries ▸ readList_length get (rawBest n get H) got
+
+theorem terminal_array_counts {n : ℕ} {s : CachedReferenceHeap.Store} {root : Bits} {plan : Plan n}
+    (read : (readPlanCached n s root).1 = some plan) :
+    let code := terminalArrayCode plan
+    code.length ≤ (s.cells.size+1)*(2*n^2+21*n+4) ∧
+    EncodedArrayStorage.fresh code ≤ (s.cells.size+1)*(n^2+7*n+2) := by
+  cases plan with
+  | invalid => simp [terminalArrayCode, EncodedArrayStorage.fresh]
+  | infeasible _ => simp [terminalArrayCode, EncodedArrayStorage.fresh]
+  | zero mask =>
+      have counts := array_code_counts mask
+      exact ⟨counts.1.le.trans (Nat.le_mul_of_pos_left _ (by omega)),
+        counts.2.trans (Nat.le_mul_of_pos_left _ (by omega))⟩
+  | covers rows =>
+      have count : rows.length ≤ s.cells.size+1 := (read_rows_count read).le.trans (Nat.le_succ _)
+      have counts := covers_code_counts rows
+      exact ⟨counts.1.le.trans (Nat.mul_le_mul_right _ count),
+        counts.2.trans (Nat.mul_le_mul_right _ count)⟩
 
 end DirectedFlowCutGap.BinaryCoverReadback

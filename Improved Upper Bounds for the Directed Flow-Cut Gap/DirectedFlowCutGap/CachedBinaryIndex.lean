@@ -1,4 +1,4 @@
-import DirectedFlowCutGap.BinaryNaturalView
+import DirectedFlowCutGap.DirectNaturalView
 
 /-! Form the three indexes of a cached read by binary carry and borrow.
 Compare the incoming address word with the actual array dimension. -/
@@ -14,13 +14,13 @@ structure Indexes where
   work : ℕ
 
 def compute (length : ℕ) (address : Bits) : Indexes :=
-  let extent := BinaryNaturalView.encode length
+  let extent := DirectNaturalView.encode length
   let compare := BinaryArithmetic.compare address extent.1
   let after := increment true address
   let before := BinaryArithmetic.predecessor address
-  let here := BinaryNaturalView.decode address
-  let next := BinaryNaturalView.decode after.1
-  let prior := BinaryNaturalView.decode before.1
+  let here := DirectNaturalView.decode address
+  let next := DirectNaturalView.decode after.1
+  let prior := DirectNaturalView.decode before.1
   ⟨here.1,next.1,prior.1,compare.less,
     extent.2+compare.steps+after.2+before.2+here.2+next.2+prior.2+8⟩
 
@@ -28,7 +28,7 @@ theorem values (length : ℕ) (address : Bits) :
     let index := compute length address
     index.address=value address ∧ index.successor=value address+1 ∧ index.predecessor=value address-1 ∧
       (index.inside=true ↔ value address<length) := by
-  simp only [compute,BinaryNaturalView.decode_value,(increment_spec true address).1,Bool.toNat_true,
+  simp only [compute,DirectNaturalView.encode_eq,DirectNaturalView.decode_eq,BinaryNaturalView.decode_value,(increment_spec true address).1,Bool.toNat_true,
     (predecessor_spec address).1,(compare_spec ..).1,BinaryNaturalView.encode_value, and_self]
 
 theorem paid {B length : ℕ} (address : Bits) (words : address.length≤B) (dimension : length.size≤B) :
@@ -53,6 +53,7 @@ theorem paid {B length : ℕ} (address : Bits) (words : address.length≤B) (dim
   have hereWork := (BinaryNaturalView.decode_paid address).trans (common _ (words.trans (Nat.le_succ _)))
   have nextWork := (BinaryNaturalView.decode_paid after.1).trans (common _ afterBits)
   have priorWork := (BinaryNaturalView.decode_paid before.1).trans (common _ (beforeBits.trans (Nat.le_succ _)))
+  simp only [compute,DirectNaturalView.encode_eq,DirectNaturalView.decode_eq]
   change extent.2+(BinaryArithmetic.compare address extent.1).steps+after.2+before.2+
     (BinaryNaturalView.decode address).2+(BinaryNaturalView.decode after.1).2+
       (BinaryNaturalView.decode before.1).2+8≤_

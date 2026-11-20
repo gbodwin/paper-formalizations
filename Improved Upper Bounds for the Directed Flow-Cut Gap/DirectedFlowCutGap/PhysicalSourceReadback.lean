@@ -60,12 +60,12 @@ def runWithCacheCharge {n : ℕ} (D : BinaryFractionalGuesses.Input n) : Option 
 def run {n : ℕ} (D : BinaryFractionalGuesses.Input n) : Option (Plan n × ℕ × ℕ) :=
   (runWithCacheCharge D).1
 
-/-- The counted source controller and terminal parser share one execution. -/
+/-- Count the source serialization, cached execution and terminal parser on one run. -/
 def runWithBitCharges {n : ℕ} (D : BinaryFractionalGuesses.Input n) : Read (Plan n) × ℕ :=
   let input := BinarySourceSerialization.run D
   let execution := PhysicalSourceBinaryCache.evaluate D input.1 (BinarySourceSerialization.run_value D)
   let out := execution.1.1
-  (BinaryCoverReadback.readPlanWithBitCharge n out.store out.registers.d,execution.2)
+  (BinaryCoverReadback.readPlanWithBitCharge n out.store out.registers.d,execution.2+input.2)
 
 theorem metered_plan {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
     (runWithBitCharges D).1.1=(run D).map Prod.fst := by
@@ -79,7 +79,8 @@ theorem metered_plan {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
 private theorem bitCharges_bound {n : ℕ} (D : BinaryFractionalGuesses.Input n) :
     let fuel := (BinarySourceFuel.compute (PhysicalSourceDispatch.input D).length).1
     (runWithBitCharges D).1.2 + (runWithBitCharges D).2 ≤
-      BinaryCoverReadback.measuredBudget (1+fuel) fuel + PhysicalSourceBinaryCache.budget fuel := by
+      BinaryCoverReadback.measuredBudget (1+fuel) fuel +
+        (PhysicalSourceBinaryCache.budget fuel + BinarySourceSerialization.budget (PhysicalSourceDispatch.input D).length) := by
   let input := BinarySourceSerialization.run D
   have same : input.1 = PhysicalSourceDispatch.input D := BinarySourceSerialization.run_value D
   let fuel := (BinarySourceFuel.compute input.1.length).1
@@ -100,7 +101,9 @@ private theorem bitCharges_bound {n : ℕ} (D : BinaryFractionalGuesses.Input n)
   have terminal := BinaryCoverReadback.readPlanWithBitCharge_paid n out.store out.registers.d enough
     size.2.2.1 (Registers.get_all size.2.2.2.1 .r3)
   have control := PhysicalSourceBinaryCache.paid D input.1 same
-  have summed := Nat.add_le_add (terminal.trans (BinaryCoverReadback.measuredBudget_mono count le_rfl)) control
+  have framing := BinarySourceSerialization.run_paid D
+  have summed := Nat.add_le_add (terminal.trans (BinaryCoverReadback.measuredBudget_mono count le_rfl))
+    (Nat.add_le_add control framing)
   simpa only [runWithBitCharges,out,fuel,same,input,BinarySourceSerialization.run_value] using summed
 
 open Polynomial OriginalGraphCostEnvelope in
@@ -110,8 +113,12 @@ theorem bitCharges_polynomial : ∃ p : Polynomial ℕ, ∀ {n : ℕ} (D : Binar
   have fuelFits : Covered (fun x : ℕ => x) fuel := by
     refine ⟨PhysicalSourceDispatch.instructionPolynomial+1, fun x => ?_⟩
     rw [eval_add,eval_one,show fuel x=_ from BinarySourceFuel.fuel_value x]
+  have serialization : Covered (fun length : ℕ => length) (fun length => BinarySourceSerialization.budget length) := by
+    refine ⟨BinarySourceSerialization.budget X, fun length => ?_⟩
+    rw [BinarySourceSerialization.budget_eval, eval_X]
   have fits : Covered (fun x : ℕ => x) (fun x =>
-      BinaryCoverReadback.measuredBudget (1+fuel x) (fuel x)+PhysicalSourceBinaryCache.budget (fuel x)) := by
+      BinaryCoverReadback.measuredBudget (1+fuel x) (fuel x)+
+        (PhysicalSourceBinaryCache.budget (fuel x)+BinarySourceSerialization.budget x)) := by
     cover_arithmetic
   obtain ⟨p, cap⟩ := fits
   exact ⟨p,fun D => (bitCharges_bound D).trans (cap (PhysicalSourceDispatch.input D).length)⟩
