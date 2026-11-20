@@ -11,6 +11,19 @@ private theorem stored_member {n : ℕ} (D : EncodedEdgeInput.Input n) (i : Fin 
   have hi : i.val < D.costs.toList.length := by simp only [Vector.length_toList,i.isLt]
   simpa only [Vector.getElem_toList] using List.getElem_mem hi
 
+private theorem decoded_widths {n width : ℕ} (D : EncodedEdgeInput.Input n)
+    (fields : ∀ q ∈ D.costs.toList, StoredBounded q width) (u v : Fin n) :
+    let raw := (PhysicalBinaryEdgeWire.decodeWithCost D).1
+    raw.costs[u.val][v.val].num.size ≤ width+1 ∧ raw.costs[u.val][v.val].den.size ≤ width+1 := by
+  let i := finProdFinEquiv (u,v)
+  let a := BinaryFractionalRows.get D.costs i
+  obtain ⟨hn,hd⟩ := fields a (stored_member D i)
+  simp only [PhysicalBinaryEdgeWire.decode_value,EncodedEdgeInput.decodeInput,Vector.getElem_ofFn,
+    BinaryFractionalRows.decode_get]
+  change (value a.num).size ≤ _ ∧ (value a.den).size ≤ _
+  exact ⟨((Nat.size_le.mpr (value_lt a.num)).trans hn).trans (Nat.le_succ _),
+    ((Nat.size_le.mpr (value_lt a.den)).trans hd).trans (Nat.le_succ _)⟩
+
 /-- The recorded work is polynomial in original source length and the
 numerical confidence degree, for malformed input, short tapes and success. -/
 theorem wire_polynomial : ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
@@ -34,16 +47,7 @@ theorem wire_polynomial : ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (mode : Charged
   let raw := PhysicalBinaryEdgeWire.decodeWithCost D
   have original (i : Fin (n*n)) : StoredBounded (BinaryFractionalRows.get D.costs i) source.length :=
     fields _ (stored_member D i)
-  have bound (u v : Fin n) :
-      raw.1.costs[u.val][v.val].num.size ≤ source.length+1 ∧ raw.1.costs[u.val][v.val].den.size ≤ source.length+1 := by
-    let i := finProdFinEquiv (u,v)
-    let a := BinaryFractionalRows.get D.costs i
-    obtain ⟨hn,hd⟩ := original i
-    simp only [raw,PhysicalBinaryEdgeWire.decode_value,EncodedEdgeInput.decodeInput,
-      Vector.getElem_ofFn,BinaryFractionalRows.decode_get]
-    change (value a.num).size ≤ _ ∧ (value a.den).size ≤ _
-    exact ⟨((Nat.size_le.mpr (value_lt a.num)).trans hn).trans (Nat.le_succ _),
-      ((Nat.size_le.mpr (value_lt a.den)).trans hd).trans (Nat.le_succ _)⟩
+  have bound := decoded_widths D fields
   have cap : n+raw.1.demands.length+(source.length+1)+κ ≤ pad.eval x := by
     change n+D.demands.length+(source.length+1)+κ ≤ _
     simp only [pad,eval_add,eval_mul,eval_ofNat,eval_one,eval_X]
@@ -57,5 +61,46 @@ theorem wire_polynomial : ∃ p : Polynomial ℕ, ∀ (κ : ℕ) (mode : Charged
     gcongr
   change raw.2+(run κ raw.1 mode tape).2 ≤ _
   exact Nat.add_le_add loads executed
+
+/-- The line phase is bounded before any tape-dependent rounding. A rejected
+literal source never reaches that phase. -/
+theorem wire_line_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      (edgeWithLineControl κ mode source tape).2 ≤ p.eval source.length := by
+  let dimension : Polynomial ℕ := X*2+X*X
+  let width : Polynomial ℕ := X+1
+  refine ⟨PhysicalAmplifiedBinaryEdge.lineControlBudget dimension width,?_⟩
+  intro κ mode source tape
+  unfold edgeWithLineControl
+  dsimp only
+  cases read : (PhysicalSourceInputJoin.edge source).1 with
+  | none => exact Nat.zero_le _
+  | some input =>
+    obtain ⟨n,D⟩ := input
+    have original : (ChargedSourceAssembly.edge source).1=some ⟨n,D⟩ := by
+      simpa only [ChargedSourceAssembly.edge_value,← PhysicalSourceInputJoin.edge_value] using read
+    obtain ⟨size,_,fields⟩ := ChargedSourceAssembly.edge_dimensions original
+    change (runOnWithLineControl κ mode D tape).2 ≤ _
+    rw [runOn_line_work]
+    have line := PhysicalAmplifiedBinaryEdge.line_control_paid (PhysicalBinaryEdgeWire.decodeWithCost D).1
+      (show 1 ≤ source.length+1 by omega) (decoded_widths D fields)
+    refine line.trans ?_
+    simp only [PhysicalAmplifiedBinaryEdge.lineControlBudget_eval,dimension,width,eval_add,eval_mul,eval_X,
+      eval_ofNat,eval_one,lineSize]
+    unfold PhysicalAmplifiedBinaryEdge.lineControlBudget BinaryLineLabels.controlBudget
+      BinaryArrayBatch.childCeiling BinaryVectorAccess.budget
+    dsimp only
+    gcongr
+
+theorem wire_work_with_line_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let result := edgeWithLineControl κ mode source tape
+      result.1.2+result.2 ≤ p.eval (source.length+κ) := by
+  obtain ⟨old,charged⟩ := wire_polynomial
+  obtain ⟨line,measured⟩ := wire_line_polynomial
+  refine ⟨old+line,fun κ mode source tape => ?_⟩
+  simp only [eval_add,edgeWithLineControl_value]
+  exact Nat.add_le_add (charged κ mode source tape)
+    ((measured κ mode source tape).trans (eval_mono line (Nat.le_add_right ..)))
 
 end DirectedFlowCutGap.PaidDirectEdgeWire

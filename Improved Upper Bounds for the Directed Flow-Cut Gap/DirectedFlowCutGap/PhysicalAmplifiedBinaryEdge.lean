@@ -15,10 +15,21 @@ open RetainedGridState (Flags)
 open LiteralTapeComposition (execute execute_map)
 open BinaryVertexReductionArithmetic (batch batch_value batch_paid)
 
-def lineWithCost {n : ℕ} (D : Input n) : BinaryFractionalGuesses.Input (lineSize n) × ℕ :=
+def lineWithControl {n : ℕ} (D : Input n) : (BinaryFractionalGuesses.Input (lineSize n) × ℕ) × ℕ :=
+  let line := BinaryLineLabels.prepareWithControl D
+  let prices := BinaryArrayBatch.runWithChildWork fun i =>
+    let price := BinaryVectorAccess.read line.1.1.costs i
+    (BinaryRawRational.encode price.1,price.2)
+  ((⟨line.1.1.adjacency,line.1.1.demands,prices.1.1⟩,prices.1.2+line.1.2+4),line.2+prices.2)
+
+def lineWithCost {n : ℕ} (D : Input n) : BinaryFractionalGuesses.Input (lineSize n) × ℕ := (lineWithControl D).1
+
+theorem line_reference {n : ℕ} (D : Input n) : lineWithCost D =
   let line := BinaryLineLabels.prepare D
   let c := batch fun i => BinaryRawRational.encode line.1.costs[i.val]
-  (⟨line.1.adjacency,line.1.demands,c.1⟩,c.2+line.2+4)
+  (⟨line.1.adjacency,line.1.demands,c.1⟩,c.2+line.2+4) := by
+  simp only [lineWithCost,lineWithControl,BinaryLineLabels.prepare,BinaryArrayBatch.child_projection,
+    BinaryVectorAccess.read_value,batch]
 
 @[simp] theorem line_value {n : ℕ} (D : Input n) : (lineWithCost D).1=binaryLineInput D := by
   have costs : (batch (fun i : Fin (lineSize n) => BinaryRawRational.encode (lineInput D).costs[i.val])).1 =
@@ -27,33 +38,62 @@ def lineWithCost {n : ℕ} (D : Input n) : BinaryFractionalGuesses.Input (lineSi
     intro i hi
     simp only [batch_value,Vector.getElem_ofFn,binaryLineInput,Vector.getElem_map,BinaryRawRational.encode_eq]
     rfl
-  simp only [lineWithCost,BinaryLineLabels.prepare_value,costs]
+  simp only [line_reference,BinaryLineLabels.prepare_value,costs]
   rfl
 
 def lineBudget {R : Type*} [Semiring R] (m demands b : R) : R :=
   m*(40*(b+2)^2)+8*m+4+(BinaryLineLabels.budget m m+BinaryLineLabels.demandBudget m demands+
     BinaryLineLabels.assemblyBudget m)+4
 
+private theorem encode_line_price_paid {n b : ℕ} (D : Input n) (positive : 1 ≤ b)
+    (fits : ∀ u v : Fin n, D.costs[u.val][v.val].num.size ≤ b ∧ D.costs[u.val][v.val].den.size ≤ b)
+    (i : Fin (lineSize n)) : (BinaryRawRational.encode (BinaryLineLabels.prepare D).1.costs[i.val]).2 ≤
+      40*(b+2)^2 := by
+  obtain ⟨a,c⟩ := lineInput_cost_width D positive fits i
+  have fields : (lineInput D).costs[i.val].Bounded b := ⟨(Nat.size_le.mp a).le,(Nat.size_le.mp c).le⟩
+  rw [BinaryLineLabels.prepare_value]
+  exact BinaryRawRational.encode_paid fields
+
 theorem line_paid {n b : ℕ} (D : Input n) (positive : 1 ≤ b)
     (fits : ∀ u v : Fin n, D.costs[u.val][v.val].num.size ≤ b ∧ D.costs[u.val][v.val].den.size ≤ b) :
     (lineWithCost D).2 ≤ lineBudget (lineSize n) D.demands.length b := by
   let line := BinaryLineLabels.prepare D
   have paid : (batch fun i : Fin (lineSize n) => BinaryRawRational.encode line.1.costs[i.val]).2 ≤
-      lineSize n*(40*(b+2)^2)+8*lineSize n+4 := by
-    apply batch_paid
-    intro i
-    obtain ⟨a,c⟩ := lineInput_cost_width D positive fits i
-    have fields : (lineInput D).costs[i.val].Bounded b :=
-      ⟨(Nat.size_le.mp a).le,(Nat.size_le.mp c).le⟩
-    rw [show line.1=lineInput D from BinaryLineLabels.prepare_value D]
-    exact BinaryRawRational.encode_paid fields
+      lineSize n*(40*(b+2)^2)+8*lineSize n+4 :=
+    batch_paid _ (encode_line_price_paid D positive fits)
   have layout : line.2 ≤ BinaryLineLabels.budget (lineSize n) (lineSize n)+
       BinaryLineLabels.demandBudget (lineSize n) D.demands.length+
       BinaryLineLabels.assemblyBudget (lineSize n) := BinaryLineLabels.prepare_paid D
+  rw [line_reference]
   change (batch fun i : Fin (lineSize n) => BinaryRawRational.encode line.1.costs[i.val]).2+line.2+4 ≤
     lineBudget (lineSize n) D.demands.length b
   unfold lineBudget
   omega
+
+def lineControlBudget {R : Type*} [Semiring R] (m b : R) : R :=
+  BinaryLineLabels.controlBudget m+BinaryArrayBatch.childCeiling m (40*(b+2)^2) (BinaryVectorAccess.budget m)
+
+theorem line_control_paid {n b : ℕ} (D : Input n) (positive : 1 ≤ b)
+    (fits : ∀ u v : Fin n, D.costs[u.val][v.val].num.size ≤ b ∧ D.costs[u.val][v.val].den.size ≤ b) :
+    (lineWithControl D).2 ≤ lineControlBudget (lineSize n) b := by
+  let m := lineSize n
+  let prices := (BinaryLineLabels.prepare D).1.costs
+  let encoded (i : Fin m) :=
+    let price := BinaryVectorAccess.read prices i
+    (BinaryRawRational.encode price.1,price.2)
+  have room : m.size ≤ m := BinaryNaturalOperations.size_le_self m
+  have old (i : Fin m) : (encoded i).1.2 ≤ 40*(b+2)^2 := by
+    simpa only [encoded,BinaryVectorAccess.read_value,prices] using encode_line_price_paid D positive fits i
+  have read (i : Fin m) : (encoded i).2 ≤ BinaryVectorAccess.budget m :=
+    BinaryVectorAccess.read_paid prices i room
+  have copy := (BinaryArrayBatch.runWithChildWork_paid encoded old read).trans (BinaryArrayBatch.childBudget_le m _ _)
+  exact Nat.add_le_add (BinaryLineLabels.prepare_control_paid D) copy
+
+open Polynomial in
+theorem lineControlBudget_eval (m b : Polynomial ℕ) (x : ℕ) :
+    (lineControlBudget m b).eval x=lineControlBudget (m.eval x) (b.eval x) := by
+  simp only [lineControlBudget,BinaryLineLabels.controlBudget_eval,BinaryArrayBatch.childCeiling,BinaryVectorAccess.budget,
+    eval_add,eval_mul,eval_pow,eval_ofNat,eval_one]
 
 def roundOn {n : ℕ} (D : EncodedEdgeGadget.Input n) (prepared : ℕ)
     (mode : ChargedVertexModes.Mode) (T : ℕ) (tape : Bits) : Option (Result (lineSize n)) :=

@@ -6,4 +6,6 @@ The shared batch fills an array in index order and records each callback fee dur
 
 The fixtures cover empty, singleton and nine-entry batches and the original line preparation with ordered and repeated demands. The two-vertex case retains the earlier fee of 5,591 and records 160,297 additional operations. The existing positive original edge fixture still selects the same edge and retains the same unread tape.
 
+`PhysicalAmplifiedBinaryEdge.lineWithControl` includes the subsequent read and encoding of each stored line price. `PaidDirectEdgeWire.edgeWithLineControl_value` preserves the entire paid original-source call on every source and tape. `wire_line_polynomial` bounds the measured line work by a polynomial in the literal source length. `wire_work_with_line_polynomial` adds this work to the earlier mixed recorded charge. The 44-bit original input returns the same demanded arc and unread tape, retains the earlier fee of 1,784,110,573 and records 168,857 line operations. Trailing source is rejected at the earlier parser fee of 430,370 with zero line operations.
+
 The array model describes persistent copies. Full source-to-cut bit time still requires accounting for the remaining graph transformations, list and frame storage, rounding and selection.
