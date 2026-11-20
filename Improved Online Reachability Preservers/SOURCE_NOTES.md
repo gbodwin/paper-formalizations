@@ -90,6 +90,36 @@ that disjoint consecutive splits preserve the bridge condition at every size
 in the acyclic scope. [Regularization](OnlineReachabilityPreservers/Regularization.lean)
 uses this to prove the upper caps with at most twice the ambient budgets.
 
+The midpoint counterexample can also run to termination under the printed
+averages. Start on eight vertices with the paths
+`[(0,4,5,1,2,6,7,3),(3,0),(2,1),(7,6,5,4)]`. Every vertex has degree two,
+the mean path length is four, and every bridge is excluded. The lower caps
+already hold. Only the first path is longer than the mean. Replacing it by
+its two consecutive halves gives the chain \(2\to3\to0\to1\) and river
+\((2,1)\), with the last arc earlier than the river. After the split every
+vertex still has degree two and every path has length at most four.
+The split increases the path count from four to five.
+The same chain occurs in the evaluated factor-four block construction on
+a padded, fully bridge-free input with eight vertices, 37 paths, and 46
+incidences. Its exact block widths are 23 for degrees and four for lengths.
+The padded system uses repeated singleton rows under the indexed convention.
+Both inputs admit larger fully bridge-free systems at their original budgets.
+The examples refute pointwise bridge preservation under the displayed
+operations. General cyclic cleaning with frozen input averages remains open
+in the scopes recorded in the statement map.
+[Checked average-width examples](OnlineReachabilityPreservers/AverageSplitAudit.lean).
+
+Through half-bridge size four, ordered disjoint pieces can be projected
+back when two distinct partners never reverse strictly nested intervals
+with the inner partner later than the common parent. Among repeated
+parents, a repeated river parent forces a forbidden parallel pair.
+The remaining repeat forces the nested pattern. For simple paths with
+positive budgets and mass at least both counts, the stated exclusion lets
+the two splits, restriction, and peeling give all four fixed caps, both
+original budgets, and at least one sixteenth of the mass. The midpoint example exhibits
+the nesting in an eligible original family.
+[Conditional half-bridge cleaning](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean).
+
 The pruning argument in [8], Lemma 20 also works for the half-bridge
 condition when processed in arrival order. An omitted incidence marks a
 retained earlier incidence at the same vertex. Reusing a mark would give a

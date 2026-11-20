@@ -896,6 +896,17 @@ peeling extension assumes every original path is nonempty, the original
 upper caps hold on the pruned system, and the original mean length is bounded.
 [Pruning and sharpness](OnlineReachabilityPreservers/OppositePruningGain.lean).
 
+The ordered-piece proof isolates a nested reversal pattern in the only
+remaining repeated-parent case for a four-corner half-bridge. Its absence
+permits the usual two splits and the frozen one-sixteenth cleaning bound.
+Two concrete proofs check splitting with the printed mean and with exact
+factor-four widths. The eight-vertex printed-mean example has uniform
+degree two and mean length four. Only the length-eight path requires a
+midpoint split, and the resulting half-4-bridge persists after the loops end.
+Independent review checked the repeated-parent analysis and both exact examples.
+[Conditional split proof](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean)
+· [Verified average-width witnesses](OnlineReachabilityPreservers/AverageSplitAudit.lean).
+
 ## Execution examples
 
 A finite execution check of the PaperLab example gave cumulative purchases
