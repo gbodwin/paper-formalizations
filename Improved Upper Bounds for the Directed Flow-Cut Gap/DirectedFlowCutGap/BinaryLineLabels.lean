@@ -3,6 +3,7 @@ import DirectedFlowCutGap.BinaryDivision
 import DirectedFlowCutGap.BinaryNaturalView
 import DirectedFlowCutGap.BinaryVertexReductionArithmetic
 import DirectedFlowCutGap.BinaryEdgeGadget
+import DirectedFlowCutGap.BinaryVectorAccess
 
 /-! Build the indexed line graph with charged binary labels, adjacency
 tests, demand coordinates and data movement. -/
@@ -163,21 +164,24 @@ private theorem locate_paid {n : ℕ} (divisor ports : Bits) (hn : value divisor
     change (coordinates x.1 [false,true]).2 ≤ 1100*(W+1)^2 at div
     nlinarith only [p,c,div]
 
-def labels (n : ℕ) : Vector (Node (Fin n)) (lineSize n) × ℕ :=
+private def labelsWithControl (n : ℕ) : (Vector (Node (Fin n)) (lineSize n) × ℕ) × ℕ :=
   let word := BinaryNaturalView.encode n
   let ports := false::word.1
   have nword : value word.1=n := BinaryNaturalView.encode_value n
   have twice : value ports=n*2 := by simp only [ports,value,Bool.toNat_false,zero_add,nword,Nat.mul_comm]
-  let out := batch (locate word.1 ports nword twice)
-  (out.1,word.2+out.2+8)
+  let out := BinaryArrayBatch.run (locate word.1 ports nword twice)
+  ((out.1.1,word.2+out.1.2+8),out.2)
+
+def labels (n : ℕ) : Vector (Node (Fin n)) (lineSize n) × ℕ := (labelsWithControl n).1
 
 theorem labels_value (n : ℕ) : (labels n).1=Vector.ofFn (index n) := by
-  simp only [labels,batch_value,locate_value]
+  simp only [labels,labelsWithControl,BinaryArrayBatch.run_value,locate_value]
 
 def budget {R : Type*} [Semiring R] (n m : R) : R :=
   16*(n+1)^2+m*(2048*(m+3)^2)+8*m+12
 
-theorem labels_paid (n : ℕ) : (labels n).2 ≤ budget n (lineSize n) := by
+private theorem labels_bounds (n : ℕ) : (labels n).2 ≤ budget n (lineSize n) ∧
+    (labelsWithControl n).2 ≤ BinaryArrayBatch.childCeiling (lineSize n) (2048*(lineSize n+3)^2) 0 := by
   let word := BinaryNaturalView.encode n
   let ports := false::word.1
   have nword : value word.1=n := BinaryNaturalView.encode_value _
@@ -189,15 +193,20 @@ theorem labels_paid (n : ℕ) : (labels n).2 ≤ budget n (lineSize n) := by
     exact BinaryNaturalOperations.size_le_self _
   have divs : word.1.length ≤ m+2 := words.trans (hn.trans (by omega))
   have p : ports.length ≤ m+2 := by unfold ports; simp only [List.length_cons]; omega
-  have paid := batch_paid (locate word.1 ports nword twice)
-    (fun i => locate_paid word.1 ports nword twice i divs p (Nat.le_add_right ..) (by omega))
+  have callback (i : Fin m) : (locate word.1 ports nword twice i).2 ≤ 2048*(m+3)^2 :=
+    locate_paid word.1 ports nword twice i divs p (Nat.le_add_right ..) (by omega)
+  have paid := batch_paid (locate word.1 ports nword twice) callback
   have framing := (BinaryNaturalView.encode_paid n).trans (Nat.mul_le_mul_left 16
     (Nat.pow_le_pow_left (Nat.add_le_add_right (BinaryNaturalOperations.size_le_self _) 1) 2))
-  change word.2+(batch (locate word.1 ports nword twice)).2+8 ≤ budget n m
-  change word.2 ≤ _ at framing
-  change (batch (locate word.1 ports nword twice)).2 ≤ m*(2048*(m+3)^2)+8*m+4 at paid
-  unfold budget
-  omega
+  constructor
+  · change word.2+(batch (locate word.1 ports nword twice)).2+8 ≤ budget n m
+    change word.2 ≤ _ at framing
+    change (batch (locate word.1 ports nword twice)).2 ≤ m*(2048*(m+3)^2)+8*m+4 at paid
+    unfold budget
+    omega
+  · exact (BinaryArrayBatch.run_paid _ callback).trans (BinaryArrayBatch.childBudget_le m _ 0)
+
+theorem labels_paid (n : ℕ) : (labels n).2 ≤ budget n (lineSize n) := (labels_bounds n).1
 
 open EdgeLineReduction (departs base)
 open RawNonnegativeRational (Code)
@@ -253,6 +262,57 @@ private def price {n : ℕ} (D : Input n) : Node (Fin n) → Code × ℕ
 private theorem price_paid {n : ℕ} (D : Input n) (node : Node (Fin n)) :
     (price D node).2 ≤ 4 := by
   rcases node with port | ⟨u,v⟩ <;> simp [price]
+
+private def adjacentWithControl {n : ℕ} (D : Input n) (origin : Node (Fin n)) : Node (Fin n) → (Bool × ℕ) × ℕ
+  | .inl port => (adjacent D origin (.inl port),0)
+  | .inr (u,v) =>
+    let present := BinaryVectorAccess.readMatrix D.adjacency u v
+    if present.1 then
+      let reach := departTo origin u
+      ((reach.1,reach.2+4),present.2)
+    else ((false,4),present.2)
+
+private theorem adjacentWithControl_value {n : ℕ} (D : Input n) (origin target : Node (Fin n)) :
+    (adjacentWithControl D origin target).1=adjacent D origin target := by
+  rcases target with port | ⟨u,v⟩
+  · rfl
+  · simp only [adjacentWithControl,BinaryVectorAccess.readMatrix_value,adjacent]
+    split <;> rfl
+
+private theorem adjacentWithControl_paid {n width : ℕ} (D : Input n) (origin target : Node (Fin n))
+    (fits : n.size≤width) : (adjacentWithControl D origin target).2 ≤ 2*BinaryVectorAccess.budget width := by
+  rcases target with port | ⟨u,v⟩
+  · exact Nat.zero_le _
+  · have read := BinaryVectorAccess.readMatrix_paid D.adjacency u v fits fits
+    unfold adjacentWithControl
+    dsimp only
+    split <;> exact read
+
+private def priceWithControl {n : ℕ} (D : Input n) : Node (Fin n) → (Code × ℕ) × ℕ
+  | .inl port => (price D (.inl port),0)
+  | .inr (u,v) =>
+    let present := BinaryVectorAccess.readMatrix D.adjacency u v
+    if present.1 then
+      let cost := BinaryVectorAccess.readMatrix D.costs u v
+      ((cost.1,4),present.2+cost.2)
+    else ((Code.zero,4),present.2)
+
+private theorem priceWithControl_value {n : ℕ} (D : Input n) (node : Node (Fin n)) :
+    (priceWithControl D node).1=price D node := by
+  rcases node with port | ⟨u,v⟩
+  · rfl
+  · simp only [priceWithControl,BinaryVectorAccess.readMatrix_value,price]
+    split <;> rfl
+
+private theorem priceWithControl_paid {n width : ℕ} (D : Input n) (node : Node (Fin n)) (fits : n.size≤width) :
+    (priceWithControl D node).2 ≤ 4*BinaryVectorAccess.budget width := by
+  rcases node with port | ⟨u,v⟩
+  · exact Nat.zero_le _
+  · have arc := BinaryVectorAccess.readMatrix_paid D.adjacency u v fits fits
+    have cost := BinaryVectorAccess.readMatrix_paid D.costs u v fits fits
+    unfold priceWithControl
+    dsimp only
+    split <;> omega
 
 private def endpoint {n : ℕ} (tag : Bool) (i : Fin n) : Fin (lineSize n) × ℕ :=
   let word := BinaryNaturalView.encode i.val
@@ -320,7 +380,34 @@ private theorem demandRows_paid {n : ℕ} (D : List (Fin n × Fin n)) :
     simp only [demandRows,List.length_cons,demandBudget,Nat.add_mul,Nat.one_mul] at *
     omega
 
-def prepare {n : ℕ} (D : Input n) : GraphInput (lineSize n) × ℕ :=
+private def arcEntry {n : ℕ} (D : Input n) (nodes : Vector (Node (Fin n)) (lineSize n))
+    (origin : Node (Fin n)) (j : Fin (lineSize n)) : (Bool × ℕ) × ℕ :=
+  let target := BinaryVectorAccess.read nodes j
+  let arc := adjacentWithControl D origin target.1
+  ((arc.1.1,arc.1.2+4),target.2+arc.2)
+
+private def arcRow {n : ℕ} (D : Input n) (nodes : Vector (Node (Fin n)) (lineSize n)) (i : Fin (lineSize n)) :
+    (Vector Bool (lineSize n) × ℕ) × ℕ :=
+  let origin := BinaryVectorAccess.read nodes i
+  let row := BinaryArrayBatch.runWithChildWork (arcEntry D nodes origin.1)
+  (row.1,origin.2+row.2)
+
+private def pricedEntry {n : ℕ} (D : Input n) (nodes : Vector (Node (Fin n)) (lineSize n))
+    (i : Fin (lineSize n)) : (Code × ℕ) × ℕ :=
+  let node := BinaryVectorAccess.read nodes i
+  let result := priceWithControl D node.1
+  ((result.1.1,result.1.2+2),node.2+result.2)
+
+def prepareWithControl {n : ℕ} (D : Input n) : (GraphInput (lineSize n) × ℕ) × ℕ :=
+  let data := labelsWithControl n
+  let demanded := demandRows D.demands
+  let arcs := BinaryArrayBatch.runWithChildWork (arcRow D data.1.1)
+  let costs := BinaryArrayBatch.runWithChildWork (pricedEntry D data.1.1)
+  ((⟨arcs.1.1,demanded.1,costs.1.1⟩,data.1.2+demanded.2+arcs.1.2+costs.1.2+4),data.2+arcs.2+costs.2)
+
+def prepare {n : ℕ} (D : Input n) : GraphInput (lineSize n) × ℕ := (prepareWithControl D).1
+
+theorem prepare_reference {n : ℕ} (D : Input n) : prepare D =
   let data := labels n
   let node := fun i : Fin (lineSize n) => data.1[i.val]
   let demanded := demandRows D.demands
@@ -332,7 +419,9 @@ def prepare {n : ℕ} (D : Input n) : GraphInput (lineSize n) × ℕ :=
   let costs := batch fun i =>
     let c := price D (node i)
     (c.1,c.2+2)
-  (⟨arcs.1,demanded.1,costs.1⟩,data.2+demanded.2+arcs.2+costs.2+4)
+  (⟨arcs.1,demanded.1,costs.1⟩,data.2+demanded.2+arcs.2+costs.2+4) := by
+  simp only [prepare,prepareWithControl,arcRow,arcEntry,pricedEntry,labels,
+    BinaryArrayBatch.child_projection,BinaryVectorAccess.read_value,adjacentWithControl_value,priceWithControl_value,batch]
 
 @[simp] theorem prepare_value {n : ℕ} (D : Input n) : (prepare D).1=lineInput D := by
   have arcs : (prepare D).1.adjacency=(lineInput D).adjacency := by
@@ -343,16 +432,16 @@ def prepare {n : ℕ} (D : Input n) : GraphInput (lineSize n) × ℕ :=
     apply Bool.eq_iff_iff.mpr
     change (prepare D).1.adjacency[i][j]=true ↔ (lineInput D).graph.Adj ⟨i,hi⟩ ⟨j,hj⟩
     rw [lineInput_adj]
-    simp only [prepare,batch_value,labels_value,Vector.getElem_ofFn,adjacent_iff]
+    simp only [prepare_reference,batch_value,labels_value,Vector.getElem_ofFn,adjacent_iff]
   have prices : (prepare D).1.costs=(lineInput D).costs := by
     apply Vector.ext
     intro i hi
-    simp only [prepare,batch_value,labels_value,lineInput,Vector.getElem_ofFn]
+    simp only [prepare_reference,batch_value,labels_value,lineInput,Vector.getElem_ofFn]
     cases index n ⟨i,hi⟩ with
     | inl port => rfl
     | inr arc => cases arc; rfl
   have demands : (prepare D).1.demands=(lineInput D).demands := by
-    simp only [prepare,demandRows_value,lineInput]
+    simp only [prepare_reference,demandRows_value,lineInput]
   generalize (prepare D).1 = actual at arcs demands prices ⊢
   generalize lineInput D = expected at arcs demands prices ⊢
   cases actual
@@ -387,13 +476,103 @@ theorem prepare_paid {n : ℕ} (D : Input n) :
     apply (Nat.add_le_add (labels_paid n) (demandRows_paid D.demands)).trans
     unfold budget demandBudget
     gcongr
+  rw [prepare_reference]
   change _ ≤ budget m m+demandBudget m D.demands.length+assemblyBudget m
   unfold assemblyBudget
   exact (Nat.add_le_add_right (Nat.add_le_add (Nat.add_le_add setup arcs) prices) 4).trans (by omega)
 
+def controlBudget {R : Type*} [Semiring R] (m : R) : R :=
+  let index := BinaryVectorAccess.budget m
+  let entry := 64*(m+1)^2+12
+  let row := m*entry+8*m+4
+  BinaryArrayBatch.childCeiling m (2048*(m+3)^2) 0+
+    BinaryArrayBatch.childCeiling m row (index+BinaryArrayBatch.childCeiling m entry (3*index))+
+    BinaryArrayBatch.childCeiling m 6 (5*index)
+
+/-- Additional measured scalar control of the same line-graph assembly.
+Each row retains its reached label reads and its own batch work. -/
+theorem prepare_control_paid {n : ℕ} (D : Input n) :
+    (prepareWithControl D).2 ≤ controlBudget (lineSize n) := by
+  let m := lineSize n
+  let nodes := (labelsWithControl n).1.1
+  let index := BinaryVectorAccess.budget m
+  let entry := 64*(m+1)^2+12
+  let row := m*entry+8*m+4
+  have hn : n ≤ m := by unfold m lineSize; omega
+  have dimensions : m.size ≤ m := BinaryNaturalOperations.size_le_self m
+  have stored : n.size ≤ m := (BinaryNaturalOperations.size_le_self n).trans hn
+  have reachable (i : Fin m) : (BinaryVectorAccess.read nodes i).2 ≤ index :=
+    BinaryVectorAccess.read_paid nodes i dimensions
+  have arcs (origin : Node (Fin n)) (j : Fin m) : (arcEntry D nodes origin j).1.2 ≤ entry := by
+    have old := adjacent_paid D origin (BinaryVectorAccess.read nodes j).1
+    have fits : 64*(n+1)^2 ≤ 64*(m+1)^2 := by gcongr
+    simp only [arcEntry,adjacentWithControl_value]
+    change (adjacent D origin (BinaryVectorAccess.read nodes j).1).2+4 ≤ entry
+    unfold entry
+    omega
+  have rows (i : Fin m) : (arcRow D nodes i).1.2 ≤ row ∧
+      (arcRow D nodes i).2 ≤ index+BinaryArrayBatch.childCeiling m entry (3*index) := by
+    let origin := BinaryVectorAccess.read nodes i
+    let cells := arcEntry D nodes origin.1
+    constructor
+    · change (BinaryArrayBatch.runWithChildWork cells).1.2 ≤ row
+      rw [BinaryArrayBatch.child_projection]
+      exact batch_paid (fun j => (cells j).1) (arcs origin.1)
+    · change origin.2+(BinaryArrayBatch.runWithChildWork cells).2 ≤ _
+      have each (j : Fin m) : (cells j).2 ≤ 3*index := by
+        have tested := adjacentWithControl_paid D origin.1 (BinaryVectorAccess.read nodes j).1 stored
+        change (BinaryVectorAccess.read nodes j).2+
+          (adjacentWithControl D origin.1 (BinaryVectorAccess.read nodes j).1).2 ≤ _
+        change _ ≤ 2*index at tested
+        have lookup := reachable j
+        omega
+      have total := (BinaryArrayBatch.runWithChildWork_paid cells (arcs origin.1) each).trans
+        (BinaryArrayBatch.childBudget_le m entry (3*index))
+      exact Nat.add_le_add (reachable i) total
+  have matrix := (BinaryArrayBatch.runWithChildWork_paid (arcRow D nodes)
+      (fun i => (rows i).1) (fun i => (rows i).2)).trans (BinaryArrayBatch.childBudget_le m row _)
+  have retail (i : Fin m) : (pricedEntry D nodes i).1.2 ≤ 6 := by
+    simp only [pricedEntry,priceWithControl_value]
+    exact Nat.add_le_add_right (price_paid D (BinaryVectorAccess.read nodes i).1) 2
+  have priceReads (i : Fin m) : (pricedEntry D nodes i).2 ≤ 5*index := by
+    have checked := priceWithControl_paid D (BinaryVectorAccess.read nodes i).1 stored
+    change _ ≤ 4*index at checked
+    have lookup := reachable i
+    change (BinaryVectorAccess.read nodes i).2+(priceWithControl D (BinaryVectorAccess.read nodes i).1).2 ≤ _
+    omega
+  have prices := (BinaryArrayBatch.runWithChildWork_paid (pricedEntry D nodes) retail priceReads).trans
+    (BinaryArrayBatch.childBudget_le m 6 (5*index))
+  exact Nat.add_le_add (Nat.add_le_add (labels_bounds n).2 matrix) prices
+
 open Polynomial in
 theorem budget_eval (a b : Polynomial ℕ) (x : ℕ) : (budget a b).eval x=budget (a.eval x) (b.eval x) := by
   simp only [budget,eval_add,eval_mul,eval_pow,eval_ofNat,eval_one]
+
+open Polynomial in
+theorem controlBudget_eval (m : Polynomial ℕ) (x : ℕ) : (controlBudget m).eval x=controlBudget (m.eval x) := by
+  simp only [controlBudget,BinaryVectorAccess.budget,BinaryArrayBatch.childCeiling,
+    eval_add,eval_mul,eval_pow,eval_ofNat,eval_one,eval_zero]
+
+open Polynomial in
+theorem prepare_control_polynomial : ∃ p : Polynomial ℕ,
+    ∀ {n : ℕ} (D : Input n), (prepareWithControl D).2 ≤ p.eval n := by
+  refine ⟨controlBudget (X*2+X*X),fun D => ?_⟩
+  simp only [controlBudget_eval,eval_add,eval_mul,eval_X,eval_ofNat]
+  exact prepare_control_paid D
+
+/-- Each array constructed by the line-graph preparation has a bounded
+persistent-copy schedule, including every inner adjacency row. -/
+theorem prepare_arrays {n : ℕ} (D : Input n) :
+    let nodes := (labels n).1
+    BinaryArrayBatch.StorageModel nodes ∧
+      (∀ i, BinaryArrayBatch.StorageModel (arcRow D nodes i).1.1) ∧
+      BinaryArrayBatch.StorageModel (prepare D).1.adjacency ∧
+      BinaryArrayBatch.StorageModel (prepare D).1.costs := by
+  let nodes := (labels n).1
+  exact ⟨BinaryArrayBatch.run_storage _,
+    fun i => BinaryArrayBatch.runWithChildWork_storage (arcEntry D nodes (BinaryVectorAccess.read nodes i).1),
+    BinaryArrayBatch.runWithChildWork_storage (arcRow D nodes),
+    BinaryArrayBatch.runWithChildWork_storage (pricedEntry D nodes)⟩
 
 open Polynomial in
 theorem demandBudget_eval (a b : Polynomial ℕ) (x : ℕ) :

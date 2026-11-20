@@ -1,5 +1,6 @@
 import DirectedFlowCutGap.BinaryRawRational
 import DirectedFlowCutGap.VertexReductionWidths
+import DirectedFlowCutGap.BinaryArrayBatch
 
 /-! Binary arithmetic for the aggregates, zero-objective flags, normalized
 costs and ceilings used by vertex replication. The raw fields and counted
@@ -11,14 +12,21 @@ open RawNonnegativeRational EncodedUnitCostReplication
 open VertexReductionWidths (InputFits)
 
 def batch {m : ℕ} {A : Type} (f : Fin m → A × ℕ) : Vector A m × ℕ :=
-  let data := Vector.ofFn f
-  (data.map Prod.fst,(data.toList.map Prod.snd).sum+8*m+4)
+  (BinaryArrayBatch.run f).1
+
+theorem batch_reference {m : ℕ} {A : Type} (f : Fin m → A × ℕ) :
+    batch f = (let data := Vector.ofFn f
+      (data.map Prod.fst,(data.toList.map Prod.snd).sum+8*m+4)) := by
+  rw [batch,BinaryArrayBatch.run_value]
+  apply Prod.ext
+  · apply Vector.ext
+    intro i fits
+    simp
+  · simp [Vector.toList_ofFn]
 
 @[simp] theorem batch_value {m : ℕ} {A : Type} (f : Fin m → A × ℕ) :
-    (batch f).1=Vector.ofFn (fun i => (f i).1) := by
-  apply Vector.ext
-  intro i hi
-  simp [batch]
+    (batch f).1=Vector.ofFn (fun i => (f i).1) :=
+  congrArg Prod.fst (BinaryArrayBatch.run_value f)
 
 theorem batch_paid {m cap : ℕ} {A : Type} (f : Fin m → A × ℕ) (cost : ∀ i, (f i).2 ≤ cap) :
     (batch f).2 ≤ m*cap+8*m+4 := by
@@ -27,7 +35,7 @@ theorem batch_paid {m cap : ℕ} {A : Type} (f : Fin m → A × ℕ) (cost : ∀
     calc
       _ ≤ ∑ _i : Fin m, cap := Finset.sum_le_sum (fun i _ => cost i)
       _ = _ := by simp
-  simp only [batch,Vector.toList_ofFn,List.map_ofFn,Function.comp_def]
+  simp only [batch,BinaryArrayBatch.run_value,List.map_ofFn,Function.comp_def]
   exact Nat.add_le_add_right (Nat.add_le_add_right hs _) _
 
 def scan {m : ℕ} (D : Input m) : List (Fin m) → Input.Totals × ℕ

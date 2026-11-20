@@ -145,6 +145,7 @@ import DirectedFlowCutGap.BinaryAdditionProgram
 import DirectedFlowCutGap.BinaryAllocationTrace
 import DirectedFlowCutGap.BinaryAmplificationPreparation
 import DirectedFlowCutGap.BinaryArithmetic
+import DirectedFlowCutGap.BinaryArrayBatch
 import DirectedFlowCutGap.BinaryBorrowProgram
 import DirectedFlowCutGap.BinaryBoundedSampler
 import DirectedFlowCutGap.BinaryBudgetExpression
@@ -239,6 +240,7 @@ import DirectedFlowCutGap.BinarySourceFuel
 import DirectedFlowCutGap.BinarySourceSerialization
 import DirectedFlowCutGap.BinaryTrimProgram
 import DirectedFlowCutGap.BinaryUniformArithmetic
+import DirectedFlowCutGap.BinaryVectorAccess
 import DirectedFlowCutGap.BinaryVertexReductionArithmetic
 import DirectedFlowCutGap.BinaryWalkCostCongruence
 import DirectedFlowCutGap.BinaryWeakDecomposition
