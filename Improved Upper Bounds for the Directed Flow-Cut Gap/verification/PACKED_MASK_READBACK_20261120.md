@@ -1,0 +1,7 @@
+# Binary readback of the packed cut mask
+
+`CachedBinaryIndex.compute` uses binary comparison, carry and borrow to compute the three indexes required by a cached read. The scalar reader preserves the cell and earlier charge, including a noncanonical bitword or an out-of-bounds address. Its width-sensitive scalar work bound applies to indexed reads.
+
+`CachedWordRead.word` follows the packed Boolean list and adds the measured index and counter work separately from the earlier observation. `CachedGuardedMaskReadback.returned_word` proves that a returned raw state points to the complete original mask. Every successful readback visits in-bounds addresses, and the packed driver performs no readback after tape exhaustion. The original hard cutoff uses this measured reader and the earlier measured cut-mask constructor. The returned option, tape, and original reported work retain their earlier proofs.
+
+For `0 < L ≤ n`, `GuardedFuelFreeRounding.hard_readback_polynomial` bounds the final mask reader’s additional modeled work by a fixed polynomial in the graph dimension plus the numerical trial count, uniformly over the literal tape. The executable singleton retains its cut, tape and total packed-run charge of 70,312,016 and reports 41,293 for the separately measured readback. The complete source-to-cut bit-time proof still needs the scalar accounting inside the controller and the remaining structural operations outside it.

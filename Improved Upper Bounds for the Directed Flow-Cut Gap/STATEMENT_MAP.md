@@ -18,6 +18,8 @@ The hard integer cutoff now calls a terminating packed interpreter without evalu
 The [packed cut-mask copy](verification/PACKED_MASK_ASSEMBLY_20261120.md) certifies the hard branch’s output word length, measured typed mask construction and each allocated address width. Its recorded allowance, returned mask and unread tape agree with the earlier implementation.
 
 The [cached controller storage proof](verification/PACKED_CACHE_STORAGE_20261120.md) follows the initial cache fold and the executed packed prefix through halt or tape exhaustion. It bounds modeled persistent-array allocations, copy instructions, address widths and the operands of completed cache reads and appends.
+
+The [measured mask readback](verification/PACKED_MASK_READBACK_20261120.md) uses binary index arithmetic and charges the cached reads of the actual final cut mask. Lean proves polynomial metadata work for every literal tape in the active regime and preserves the earlier result and recorded work.
 [Physical amplified solvers](verification/PHYSICAL_AMPLIFIED_SOLVERS_20261119.md)
 [Composed charge bounds](verification/PHYSICAL_AMPLIFIED_COST_20261119.md)
 [Original input phases](verification/ORIGINAL_INPUT_PHASES_20261119.md)

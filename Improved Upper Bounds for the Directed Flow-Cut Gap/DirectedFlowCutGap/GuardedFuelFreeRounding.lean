@@ -1,3 +1,4 @@
+import DirectedFlowCutGap.CachedGuardedMaskReadback
 import DirectedFlowCutGap.PaidTotalRawGraphExecution
 import DirectedFlowCutGap.GuardedIntegerRoundingWorkBounds
 import DirectedFlowCutGap.MaskBoundaryAssembly
@@ -20,26 +21,41 @@ private theorem mask_copy_paid (n : ℕ) (bits : Bits) :
     (MaskBoundaryAssembly.run n bits).2 ≤ maskCopyCharge n n := by
   simpa only [maskCopyCharge,two_mul] using MaskBoundaryAssembly.paid n bits
 
-private def collectMask {n : ℕ} (prepared boundary : ℕ)
-    (execution : Option (FastState 26704) × ℕ) : Read (Result n) :=
+private def collectMaskCounted {n : ℕ} (prepared boundary : ℕ)
+    (execution : Option (FastState 26704) × ℕ) : Read (Result n) × ℕ :=
   let work := prepared+execution.2
   match execution.1 with
-  | none => (none,work+boundary)
+  | none => ((none,work+boundary),0)
   | some final =>
-      let restored := readMask final
-      let base := work+restored.2+boundary
-      match restored.1 with
-      | none => (none,base)
+      let restored := CachedGuardedMaskReadback.measure final
+      let base := work+restored.1.2+boundary
+      match restored.1.1 with
+      | none => ((none,base),restored.2)
       | some bits =>
           let copy := MaskBoundaryAssembly.run n bits
           let paid := base+maskCopyCharge n n
-          (some ⟨copy.1,final.source,paid⟩,base+max (maskCopyCharge n n) copy.2)
+          ((some ⟨copy.1,final.source,paid⟩,base+max (maskCopyCharge n n) copy.2),restored.2)
+
+private def collectMask {n : ℕ} (prepared boundary : ℕ)
+    (execution : Option (FastState 26704) × ℕ) : Read (Result n) :=
+  (collectMaskCounted prepared boundary execution).1
+
+private theorem collect_readback {n : ℕ} (prepared boundary : ℕ)
+    (execution : Option (FastState 26704) × ℕ) :
+    (collectMaskCounted (n:=n) prepared boundary execution).2=CachedGuardedMaskReadback.work execution.1 := by
+  unfold collectMaskCounted CachedGuardedMaskReadback.work
+  cases execution.1 with
+  | none => rfl
+  | some final =>
+      dsimp only
+      cases (CachedGuardedMaskReadback.measure final).1.1 <;> rfl
 
 private theorem collectMask_eq {n : ℕ} (prepared boundary : ℕ)
     (execution : Option (FastState 26704) × ℕ)
     (width : ∀ out, execution.1=some out → ∀ bits, (readMask out).1=some bits → bits.length=n) :
     collectMask (n:=n) prepared boundary execution=collect prepared boundary 0 execution := by
-  unfold collectMask collect
+  unfold collectMask collectMaskCounted collect
+  simp only [CachedGuardedMaskReadback.measured_value]
   cases reached : execution.1 with
   | none => simp only [Nat.add_zero]
   | some out =>
@@ -54,7 +70,8 @@ private theorem collected_word {n : ℕ} (prepared boundary : ℕ)
     (execution : Option (FastState 26704) × ℕ) {cut : Result n}
     (done : (collectMask prepared boundary execution).1=some cut) :
     ∃ out bits, execution.1=some out ∧ (readMask out).1=some bits ∧ (MaskBoundaryAssembly.run n bits).1=cut.mask := by
-  unfold collectMask at done
+  unfold collectMask collectMaskCounted at done
+  simp only [CachedGuardedMaskReadback.measured_value] at done
   cases run : execution.1 with
   | none => simp only [run,reduceCtorEq] at done
   | some out =>
@@ -64,45 +81,14 @@ private theorem collected_word {n : ℕ} (prepared boundary : ℕ)
       simp only [run,read,Option.some.injEq] at done
       exact ⟨out,bits,rfl,read,congrArg Result.mask done⟩
 
-private theorem reference_of_paid {C : ℕ} (p : Program C) (fuel : ℕ) (entry : BitState C)
-    {out : FastState C} (done : (PaidGuardedExecution.execute p fuel (FastState.ofReference entry) 0).1=some out) :
-    ∃ q, GuardedReferenceExecution.execute p fuel entry 0=some (out.freeze,q) := by
-  let exec := PaidGuardedExecution.execute p fuel (FastState.ofReference entry) 0
-  have paid := PaidGuardedExecution.observation p fuel (FastState.ofReference entry) 0
-  change exec.1.map (fun u => (u,exec.2))=_ at paid
-  have old := CachedGuardedReferenceExecution.execute_ofReference p fuel entry 0
-  rw [← paid,done] at old
-  exact ⟨exec.2,old.symm⟩
-
-set_option maxHeartbeats 900000 in
 private theorem returned_width {n L H A : ℕ} {adj : PairFlags n} {trials : Bits} (initial : BitState 26704)
     (data : RawGraphControllerLaw.Input (L:=L) adj trials H A initial) (positive : 0<L)
     (out : FastState 26704) (done : (PaidTotalRawGraphExecution.run initial data positive).1=some out)
     (bits : Bits) (seen : (readMask out).1=some bits) : bits.length=n := by
-  rw [PaidTotalRawGraphExecution.run_eq] at done
-  obtain ⟨_,done⟩ := reference_of_paid _ _ _ done
-  let F := CandidateEnumeration.make n L
-  let EN := F.nodes.enumeration
-  let E := F.network.enumeration
-  have declared := RawGraphControllerProgram.guarded_cut positive EN E initial
-    data.bounded data.entry data.quiet data.dense data.graph data.trials
-  cases result : ControllerTapeModel.run positive E (OriginalGraphControllerLaw.ratio n) (value trials)
-      (OriginalGraphControllerLaw.epochs n) (OriginalGraphControllerLaw.epochs n)
-      (PhysicalControllerInitializer.initialCode adj positive) initial.source with
-  | none =>
-      rw [result] at declared
-      rw [declared _ _] at done
-      cases done
-  | some r =>
-      rcases r with ⟨answer,suffix,reads⟩
-      rw [result] at declared
-      obtain ⟨refState,_,ref,mask,_,_,_,_,_⟩ := declared
-      have same : out.freeze=refState := congrArg Prod.fst (Option.some.inj (done.symm.trans ref))
-      have natural := (PhysicalCoverAccess.readWord_value out.freeze.heap out.freeze.registers.d).symm.trans
-        ((congrArg Prod.fst (GuardedIntegerRoundingWork.readMask_eq out)).symm.trans seen)
-      change PhysicalCoverReader.readWord (eraseState out.freeze).heap (eraseState out.freeze).registers.d=some bits at natural
-      rw [same,mask] at natural
-      rw [← Option.some.inj natural,Vector.length_toList]
+  obtain ⟨word,observed,length⟩ := CachedGuardedMaskReadback.returned_word initial data positive out done
+  rw [CachedGuardedMaskReadback.measured_value,seen] at observed
+  rw [Option.some.inj observed]
+  exact length
 
 private theorem input {n : ℕ} (adj : PairFlags n) (L T : ℕ) (tape : Bits) :
     let words := boundaryWords n L T
@@ -114,11 +100,26 @@ private theorem input {n : ℕ} (adj : PairFlags n) (L T : ℕ) (tape : Bits) :
     PhysicalIntegerRounding.boundary_trials]
   simpa only [preparedCells_eq adj L T] using (RawGraphInputStore.prepare_spec (L:=L) adj T.bits tape).1
 
-def hard {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (positive : 0<L) (tape : Bits) : Read (Result n) :=
+def hardMeasured {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (positive : 0<L) (tape : Bits) : Read (Result n) × ℕ :=
   let words := boundaryWords n L T
   let entry := prepare (GraphRelaxationRefinement.matrix adj) words.dimension words.level words.trials tape
   let run := PaidTotalRawGraphExecution.run entry.1 (input adj L T tape) positive
-  collectMask entry.2 words.paid run
+  collectMaskCounted entry.2 words.paid run
+
+def hard {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (positive : 0<L) (tape : Bits) : Read (Result n) :=
+  (hardMeasured T adj L positive tape).1
+
+/-- Binary index and counter work in the actual final mask read. Tape
+exhaustion spends zero on this readback. -/
+theorem hard_readback_paid {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (positive : 0<L) (tape : Bits) :
+    let H := preparedCells n L T
+    let fuel := instructionBound n L (H+1) T.bits+1
+    (hardMeasured T adj L positive tape).2 ≤
+      (H+1+fuel)*(2*CachedWordRead.loadBudget (H+1+fuel) (H+fuel)) := by
+  unfold hardMeasured
+  dsimp only
+  rw [collect_readback]
+  exact CachedGuardedMaskReadback.raw_paid _ (input adj L T tape) positive
 
 theorem hard_mask_copy {n : ℕ} (T : ℕ) (adj : PairFlags n) (L : ℕ) (positive : 0<L) (tape : Bits)
     {cut : Result n} (done : (hard T adj L positive tape).1=some cut) :
