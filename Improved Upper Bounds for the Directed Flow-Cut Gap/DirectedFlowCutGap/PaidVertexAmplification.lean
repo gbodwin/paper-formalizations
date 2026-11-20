@@ -138,10 +138,13 @@ theorem samples_extra {A : Type} (old newer : Bits → Read ((A × ℕ) × Bits)
       change (newer tape >>= rest newer).2+4 ≤ (old tape >>= rest old).2+4+(k*cap+cap)
       omega
 
-theorem runWithPlan_extra {n : ℕ} (D : BinaryFractionalGuesses.Input n) (old newer : PaidVertexSampling.Runner n)
+theorem runWithPlan_extra_on_rows {n : ℕ} (D : BinaryFractionalGuesses.Input n) (old newer : PaidVertexSampling.Runner n)
     (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n) (dispatch readback cap : ℕ) (tape : Bits)
     (same : ∀ T input bits, (newer T input bits).1=(old T input bits).1)
-    (paid : ∀ T input bits, (newer T input bits).2 ≤ (old T input bits).2+cap) :
+    (paid : let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+      ∀ rows, plan=.covers rows → ∀ y ∈ rows, ∀ bits,
+        (newer setup.trials ⟨D.adjacency,y,setup.costs⟩ bits).2 ≤
+          (old setup.trials ⟨D.adjacency,y,setup.costs⟩ bits).2+cap) :
     (runWithPlan D newer roundBound extra confidence plan dispatch readback tape).2 ≤
       (runWithPlan D old roundBound extra confidence plan dispatch readback tape).2+
         (extra+1)*(ChargedPhysicalVertexSolver.rowsCount plan*cap) := by
@@ -154,7 +157,7 @@ theorem runWithPlan_extra {n : ℕ} (D : BinaryFractionalGuesses.Input n) (old n
   have sampleSame : (fun bits => (sample newer bits).1)=(fun bits => (sample old bits).1) := funext sameOne
   have added (bits : Bits) : (sample newer bits).2 ≤
       (sample old bits).2+ChargedPhysicalVertexSolver.rowsCount plan*cap :=
-    PaidVertexSampling.fromPlan_extra D setup.costs old newer setup.trials cap plan bits same (paid _)
+    PaidVertexSampling.fromPlan_extra_on_rows D setup.costs old newer setup.trials cap plan bits same paid
   let oldAll := samples (sample old) (extra+1) tape
   let newAll := samples (sample newer) (extra+1) tape
   have identical : newAll.1=oldAll.1 := by
@@ -168,5 +171,15 @@ theorem runWithPlan_extra {n : ℕ} (D : BinaryFractionalGuesses.Input n) (old n
     (extra+1)*(ChargedPhysicalVertexSolver.rowsCount plan*cap)
   simp only [Nat.add_zero] at total
   omega
+
+theorem runWithPlan_extra {n : ℕ} (D : BinaryFractionalGuesses.Input n) (old newer : PaidVertexSampling.Runner n)
+    (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n) (dispatch readback cap : ℕ) (tape : Bits)
+    (same : ∀ T input bits, (newer T input bits).1=(old T input bits).1)
+    (paid : ∀ T input bits, (newer T input bits).2 ≤ (old T input bits).2+cap) :
+    (runWithPlan D newer roundBound extra confidence plan dispatch readback tape).2 ≤
+      (runWithPlan D old roundBound extra confidence plan dispatch readback tape).2+
+        (extra+1)*(ChargedPhysicalVertexSolver.rowsCount plan*cap) :=
+  runWithPlan_extra_on_rows D old newer roundBound extra confidence plan dispatch readback cap tape same
+    (fun _ _ _ _ bits => paid _ _ bits)
 
 end DirectedFlowCutGap.PaidVertexAmplification

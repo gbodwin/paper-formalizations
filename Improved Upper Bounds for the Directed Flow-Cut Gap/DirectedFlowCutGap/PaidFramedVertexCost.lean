@@ -173,4 +173,71 @@ theorem fractional_source_polynomial : ∃ p : Polynomial ℕ, ∀ source : Bits
       obtain ⟨n,D⟩ := stored
       exact (paid D).trans (eval_mono p (serialized_length_le accepted))
 
+private theorem joined_framingBudget_eval (s : ℕ) :
+    (PhysicalSourceInputJoin.framingBudget (X : Polynomial ℕ)).eval s =
+      PhysicalSourceInputJoin.framingBudget s := by
+  simp only [PhysicalSourceInputJoin.framingBudget,eval_X,eval_add,eval_mul,eval_pow,eval_ofNat,eval_one]
+
+/-- Retain both the framer record count and the cached fractional source
+work from the same paid vertex execution. -/
+def vertexWithJoinedWork (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    Read (Σ n,PhysicalAmplifiedVertexSolver.Result n) × (ℕ × ℕ) :=
+  let parsed := PhysicalSourceInputJoin.vertexWithFramingRecords source
+  let executed : Read (Σ n,PhysicalAmplifiedVertexSolver.Result n) × ℕ := match parsed.1.1 with
+    | none => ((none,parsed.1.2),0)
+    | some ⟨n,D⟩ =>
+        let r := PaidFramedVertexWire.runWithCacheWork κ mode D tape
+        ((r.1.1.map (fun out => ⟨n,out⟩),parsed.1.2+r.1.2),r.2)
+  (executed.1,(executed.2,parsed.2))
+
+theorem vertexWithJoinedWork_reference (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    (vertexWithJoinedWork κ mode source tape).1=PaidFramedVertexWire.vertexWithCost κ mode source tape := by
+  unfold vertexWithJoinedWork PaidFramedVertexWire.vertexWithCost
+  dsimp only
+  rw [PhysicalSourceInputJoin.vertex_framing_records_value]
+  change _ = Read.bind (PhysicalSourceInputJoin.vertex source) _
+  unfold Read.bind
+  cases (PhysicalSourceInputJoin.vertex source).1 with
+  | none => rfl
+  | some encoded =>
+    obtain ⟨n,D⟩ := encoded
+    simp only [PaidFramedVertexWire.runWithCacheWork_reference]
+
+theorem vertexWithJoinedWork_frames (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) :
+    (vertexWithJoinedWork κ mode source tape).2.2=(PhysicalSourceInputJoin.vertexWithFramingRecords source).2 := rfl
+
+theorem vertex_joined_cache_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      (vertexWithJoinedWork κ mode source tape).2.1 ≤ p.eval source.length := by
+  obtain ⟨cache,paid⟩ := PhysicalSourceReadback.cache_polynomial
+  refine ⟨cache.comp PaidFramedVertexWire.serializedLengthBound,?_⟩
+  intro κ mode source tape
+  unfold vertexWithJoinedWork
+  dsimp only
+  rw [PhysicalSourceInputJoin.vertex_framing_records_value,eval_comp]
+  cases exactSource : (PhysicalSourceInputJoin.vertex source).1 with
+  | none => exact Nat.zero_le _
+  | some encoded =>
+    obtain ⟨n,D⟩ := encoded
+    change (PaidFramedVertexWire.runWithCacheWork κ mode D tape).2 ≤ _
+    rw [PaidFramedVertexWire.run_cache_work]
+    exact (paid D).trans (PhysicalIntegerRoundingCost.eval_mono cache (PaidFramedVertexWire.serialized_length_le exactSource))
+
+theorem vertex_joined_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let r := vertexWithJoinedWork κ mode source tape
+      r.1.2+r.2.1+r.2.2 ≤ p.eval (source.length+κ) := by
+  obtain ⟨p, paid⟩ := PaidFramedVertexWire.wire_polynomial
+  obtain ⟨c, cached⟩ := vertex_joined_cache_polynomial
+  let framing := PhysicalSourceInputJoin.framingBudget (X : Polynomial ℕ)
+  refine ⟨p+c+framing,?_⟩
+  intro κ mode source tape
+  have frame := ((PhysicalSourceInputJoin.framing_records_bound source).1.trans_eq
+    (joined_framingBudget_eval source.length).symm).trans
+      (PhysicalIntegerRoundingCost.eval_mono framing (Nat.le_add_right source.length κ))
+  have cache := (cached κ mode source tape).trans
+    (PhysicalIntegerRoundingCost.eval_mono c (Nat.le_add_right source.length κ))
+  simp only [eval_add,vertexWithJoinedWork_reference,vertexWithJoinedWork_frames]
+  exact Nat.add_le_add (Nat.add_le_add (paid κ mode source tape) cache) frame
+
 end DirectedFlowCutGap.PaidFramedVertexWire

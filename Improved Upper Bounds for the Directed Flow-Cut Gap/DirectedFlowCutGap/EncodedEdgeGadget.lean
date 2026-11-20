@@ -1,3 +1,5 @@
+import DirectedFlowCutGap.BinaryFilter
+import DirectedFlowCutGap.BinaryVectorAccess
 import DirectedFlowCutGap.EncodedEdgeLabels
 import DirectedFlowCutGap.EdgeToVertexReduction
 import DirectedFlowCutGap.CandidateEnumeration
@@ -64,49 +66,71 @@ private def rawEnumeration (n : ℕ) : CandidateEnumeration.Built (RawNode n) :=
   let result := CandidateEnumeration.sum ports labeled
   { result with work := vertices.work+sides.work+labels.work+ports.work+sideLabels.work+labeled.work+result.work+8 }
 
-private def filterLoop {A : Type*} (test : A → Bool × ℕ) (kept : List A) (paid : ℕ) : List A → List A × ℕ
-  | [] => (kept.reverse,paid+1)
-  | x::xs =>
-    let keep := test x
-    filterLoop test (if keep.1 then x::kept else kept) (paid+keep.2+8) xs
-
 private def filterWithCost {A : Type*} (test : A → Bool × ℕ) (xs : List A) : List A × ℕ :=
-  filterLoop test [] 0 xs
+  BinaryFilter.reference test [] 0 xs
 
 private theorem filterWithCost_value {A : Type*} (test : A → Bool × ℕ) (xs : List A) :
     (filterWithCost test xs).1=xs.filter (fun x => (test x).1) := by
   have loop (kept : List A) (paid : ℕ) (xs : List A) :
-      (filterLoop test kept paid xs).1=kept.reverse++xs.filter (fun x => (test x).1) := by
+      (BinaryFilter.reference test kept paid xs).1=kept.reverse++xs.filter (fun x => (test x).1) := by
     induction xs generalizing kept paid with
-    | nil => simp [filterLoop]
+    | nil => simp [BinaryFilter.reference]
     | cons x xs ih =>
-      simp only [filterLoop,List.filter_cons,ih]
+      simp only [BinaryFilter.reference,List.filter_cons,ih]
       split <;> simp_all
   simpa only [filterWithCost,List.reverse_nil,List.nil_append] using loop [] 0 xs
 
 private theorem filterWithCost_paid {A : Type*} (test : A → Bool × ℕ) (xs : List A) (cap : ℕ)
     (cost : ∀ x, (test x).2 ≤ cap) : (filterWithCost test xs).2 ≤ xs.length*(cap+8)+1 := by
   have loop (kept : List A) (paid : ℕ) (xs : List A) :
-      (filterLoop test kept paid xs).2 ≤ paid+xs.length*(cap+8)+1 := by
+      (BinaryFilter.reference test kept paid xs).2 ≤ paid+xs.length*(cap+8)+1 := by
     induction xs generalizing kept paid with
-    | nil => simp [filterLoop]
+    | nil => simp [BinaryFilter.reference]
     | cons x xs ih =>
       have head := cost x
-      simp only [filterLoop,List.length_cons,Nat.add_mul,Nat.one_mul]
+      simp only [BinaryFilter.reference,List.length_cons,Nat.add_mul,Nat.one_mul]
       exact (ih _ _).trans (by omega)
   simpa only [filterWithCost,Nat.zero_add] using loop [] 0 xs
 
 def edges {n : ℕ} (D : Input n) : List (Pair n) :=
   ((List.finRange n).product (List.finRange n)).filter fun e => D.adjacency[e.1.val][e.2.val]
 
-def edgesWithCost {n : ℕ} (D : Input n) : List (Pair n) × ℕ :=
+private def edgeCandidate {n : ℕ} (D : Input n) (e : Pair n) : (Bool × ℕ) × ℕ :=
+  let live := BinaryVectorAccess.readMatrix D.adjacency e.1 e.2
+  ((live.1,8),live.2)
+
+def edgesWithControl {n : ℕ} (D : Input n) : (List (Pair n) × ℕ) × ℕ :=
   let vertices := CandidateEnumeration.fin n
   let pairs := CandidateEnumeration.prod vertices vertices
-  let out := filterWithCost (fun e => (D.adjacency[e.1.val][e.2.val],8)) pairs.enumeration.vertices
-  (out.1,vertices.work+pairs.work+out.2+8)
+  let out := BinaryFilter.run (edgeCandidate D) pairs.enumeration.vertices
+  ((out.1.1,vertices.work+pairs.work+out.1.2+8),out.2)
+
+def edgesWithCost {n : ℕ} (D : Input n) : List (Pair n) × ℕ := (edgesWithControl D).1
+
+theorem edges_reference {n : ℕ} (D : Input n) : edgesWithCost D =
+    let vertices := CandidateEnumeration.fin n
+    let pairs := CandidateEnumeration.prod vertices vertices
+    let out := filterWithCost (fun e => (D.adjacency[e.1.val][e.2.val],8)) pairs.enumeration.vertices
+    (out.1,vertices.work+pairs.work+out.2+8) := by
+  simp only [edgesWithCost,edgesWithControl,BinaryFilter.run_reference,edgeCandidate,
+    BinaryVectorAccess.readMatrix_value,filterWithCost]
+
+def edgesControlBudget {R : Type*} [Semiring R] (n : R) : R :=
+  BinaryFilter.controlBudget (n*n) 8 (2*BinaryVectorAccess.budget n)
+
+theorem edges_control_paid {n : ℕ} (D : Input n) : (edgesWithControl D).2 ≤ edgesControlBudget n := by
+  let vertices := CandidateEnumeration.fin n
+  let pairs := CandidateEnumeration.prod vertices vertices
+  have len : pairs.enumeration.vertices.length=n*n := by
+    simp only [pairs,vertices,CandidateEnumeration.prod_length,CandidateEnumeration.fin_length]
+  have width : n.size≤n := Nat.size_le.mpr Nat.lt_two_pow_self
+  have paid := BinaryFilter.run_paid (edgeCandidate D) pairs.enumeration.vertices 8 (2*BinaryVectorAccess.budget n)
+    (fun e _ => ⟨le_rfl,BinaryVectorAccess.readMatrix_paid D.adjacency e.1 e.2 width width⟩)
+  rw [len] at paid
+  exact paid
 
 @[simp] theorem edgesWithCost_value {n : ℕ} (D : Input n) : (edgesWithCost D).1=edges D := by
-  simp only [edgesWithCost,filterWithCost_value,CandidateEnumeration.prod_vertices,CandidateEnumeration.fin_vertices]
+  simp only [edges_reference,filterWithCost_value,CandidateEnumeration.prod_vertices,CandidateEnumeration.fin_vertices]
   rfl
 
 def edgesBudget {R : Type*} [Semiring R] (n : R) : R := 48*(n+1)^2
@@ -116,6 +140,7 @@ theorem edgesWithCost_paid {n : ℕ} (D : Input n) : (edgesWithCost D).2 ≤ edg
   let pairs := CandidateEnumeration.prod vertices vertices
   have paid := filterWithCost_paid (fun e : Pair n => (D.adjacency[e.1.val][e.2.val],8))
     pairs.enumeration.vertices 8 (fun _ => le_rfl)
+  rw [edges_reference]
   change vertices.work+pairs.work+(filterWithCost _ _).2+8 ≤ _
   simp only [vertices,pairs,CandidateEnumeration.prod_length,CandidateEnumeration.fin_length,Nat.reduceAdd] at paid
   simp only [vertices,pairs,CandidateEnumeration.prod_work,CandidateEnumeration.fin_work,
@@ -216,16 +241,46 @@ private theorem filter_active_value {n : ℕ} (D : Input n) (l : Labels n) (test
   funext x
   exact Bool.eq_iff_iff.mpr ((exactTest x).trans (active_iff D l x).symm)
 
-private def selectedNodes {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → Bool × ℕ)
-    (exactTest : ∀ x, (test x).1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x) : List (Node D l) × ℕ :=
-  let candidates := rawEnumeration n
-  let out := filterWithCost test candidates.enumeration.vertices
+private def selectedNodesFrom {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → Bool × ℕ)
+    (exactTest : ∀ x, (test x).1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x)
+    (out : List (RawNode n) × ℕ)
+    (same : out.1=((rawEnumeration n).enumeration.vertices.filter fun x => (test x).1)) : List (Node D l) × ℕ :=
   let found := refineNodes D l out.1 (by
     intro x mem
-    have filtered : x ∈ candidates.enumeration.vertices.filter (fun y => (test y).1) :=
-      filterWithCost_value test _ ▸ mem
-    exact (exactTest x).mp (List.mem_filter.mp filtered).2)
-  (found,candidates.work+out.2+16*found.length+4)
+    rw [same] at mem
+    exact (exactTest x).mp (List.mem_filter.mp mem).2)
+  (found,(rawEnumeration n).work+out.2+16*found.length+4)
+
+private def selectedNodes {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → Bool × ℕ)
+    (exactTest : ∀ x, (test x).1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x) : List (Node D l) × ℕ :=
+  selectedNodesFrom D l test exactTest (filterWithCost test (rawEnumeration n).enumeration.vertices)
+    (filterWithCost_value test (rawEnumeration n).enumeration.vertices)
+
+private def selectedNodesWithControl {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → (Bool × ℕ) × ℕ)
+    (exactTest : ∀ x, (test x).1.1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x) :
+    (List (Node D l) × ℕ) × ℕ :=
+  let candidates := (rawEnumeration n).enumeration.vertices
+  let out := BinaryFilter.run test candidates
+  let found := selectedNodesFrom D l (fun x => (test x).1) exactTest out.1 (by
+    rw [BinaryFilter.run_reference]
+    exact filterWithCost_value _ _)
+  (found,out.2)
+
+private theorem selectedNodes_reference {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → (Bool × ℕ) × ℕ)
+    (exactTest : ∀ x, (test x).1.1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x) :
+    (selectedNodesWithControl D l test exactTest).1=selectedNodes D l (fun x => (test x).1) exactTest := by
+  let candidates := (rawEnumeration n).enumeration.vertices
+  have reference : (BinaryFilter.run test candidates).1=filterWithCost (fun x => (test x).1) candidates :=
+    BinaryFilter.run_reference _ _
+  unfold selectedNodesWithControl selectedNodes
+  dsimp only
+  have changeFilter (a b : List (RawNode n) × ℕ) (ha : a.1=candidates.filter (fun x => (test x).1.1))
+      (hb : b.1=candidates.filter (fun x => (test x).1.1)) (h : a=b) :
+      selectedNodesFrom D l (fun x => (test x).1) exactTest a ha =
+        selectedNodesFrom D l (fun x => (test x).1) exactTest b hb := by
+    subst b
+    rfl
+  exact changeFilter _ _ _ _ reference
 
 private theorem selectedNodes_value {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → Bool × ℕ)
     (exactTest : ∀ x, (test x).1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x) :
@@ -233,7 +288,7 @@ private theorem selectedNodes_value {n : ℕ} (D : Input n) (l : Labels n) (test
   have same (xs ys : List (RawNode n)) (hx : ∀ x ∈ xs, EdgeToVertex.Active D.graph (labelAt l) x)
       (hy : ∀ y ∈ ys, EdgeToVertex.Active D.graph (labelAt l) y) (h : xs=ys) :
       refineNodes D l xs hx=refineNodes D l ys hy := by subst ys; rfl
-  unfold selectedNodes nodes
+  unfold selectedNodes selectedNodesFrom nodes
   dsimp only
   apply same
   exact filter_active_value D l test exactTest
@@ -249,6 +304,42 @@ def nodeVectorWithCost {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n 
     (nodeVectorWithCost D l test exactTest).1=nodeVector D l :=
   Vector.toArray_injective (congrArg List.toArray (selectedNodes_value D l test exactTest))
 
+def nodeVectorWithControl {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → (Bool × ℕ) × ℕ)
+    (exactTest : ∀ x, (test x).1.1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x) :
+    (Vector (Node D l) (nodes D l).length × ℕ) × ℕ :=
+  let r := selectedNodesWithControl D l test exactTest
+  let vector : Vector (Node D l) (nodes D l).length := ⟨r.1.1.toArray,by
+    simp only [r,List.size_toArray,selectedNodes_reference,selectedNodes_value]⟩
+  ((vector,r.1.2),r.2)
+
+theorem nodeVector_reference {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → (Bool × ℕ) × ℕ)
+    (exactTest : ∀ x, (test x).1.1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x) :
+    (nodeVectorWithControl D l test exactTest).1 = nodeVectorWithCost D l (fun x => (test x).1) exactTest := by
+  have reference := selectedNodes_reference D l test exactTest
+  apply Prod.ext
+  · apply Vector.toArray_injective
+    exact congrArg (fun (r : List (Node D l) × ℕ) => r.1.toArray) reference
+  · exact congrArg (fun (r : List (Node D l) × ℕ) => r.2) reference
+
+private theorem rawEnumeration_length (n : ℕ) : (rawEnumeration n).enumeration.vertices.length ≤ 2*n*(n+4) := by
+  have hdepth : DyadicEdgeWeights.depth n ≤ n+1 := Nat.add_le_add_right (Nat.log_le_self 2 n) 1
+  have hlabels : (finiteLabels n).enumeration.vertices.length = DyadicEdgeWeights.depth n+2 := by
+    simp only [finiteLabels,CandidateEnumeration.pack_vertices,List.length_cons,List.length_map,List.length_finRange]
+  simp only [rawEnumeration,CandidateEnumeration.sum_length,CandidateEnumeration.prod_length,
+    CandidateEnumeration.fin_length,CandidateEnumeration.bool_vertices,List.length_cons,List.length_nil,hlabels]
+  rw [show n*2+n*(2*(DyadicEdgeWeights.depth n+2))=2*n*(DyadicEdgeWeights.depth n+3) by ring]
+  exact Nat.mul_le_mul_left _ (by omega)
+
+def nodeVectorControlBudget {R : Type*} [Semiring R] (n fee child : R) : R :=
+  BinaryFilter.controlBudget (2*n*(n+4)) fee child
+
+theorem nodeVector_control_paid {n fee child : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → (Bool × ℕ) × ℕ)
+    (exactTest : ∀ x, (test x).1.1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x)
+    (each : ∀ x, (test x).1.2≤fee ∧ (test x).2≤child) :
+    (nodeVectorWithControl D l test exactTest).2 ≤ nodeVectorControlBudget n fee child :=
+  (BinaryFilter.run_paid test (rawEnumeration n).enumeration.vertices fee child (fun x _ => each x)).trans
+    (BinaryFilter.controlBudget_mono (rawEnumeration_length n) le_rfl le_rfl)
+
 def nodeVectorBudget {R : Type*} [Semiring R] (n cap : R) : R := 256*(n+4)^2+2*n*(n+4)*(cap+24)+5
 
 theorem nodeVectorWithCost_paid {n : ℕ} (D : Input n) (l : Labels n) (test : RawNode n → Bool × ℕ)
@@ -260,11 +351,7 @@ theorem nodeVectorWithCost_paid {n : ℕ} (D : Input n) (l : Labels n) (test : R
   have hlabelWork : (finiteLabels n).work=16*(DyadicEdgeWeights.depth n+2)+16 := by
     simp only [finiteLabels,CandidateEnumeration.pack]
   let candidates := rawEnumeration n
-  have length : candidates.enumeration.vertices.length ≤ 2*n*(n+4) := by
-    simp only [candidates,rawEnumeration,CandidateEnumeration.sum_length,CandidateEnumeration.prod_length,
-      CandidateEnumeration.fin_length,CandidateEnumeration.bool_vertices,List.length_cons,List.length_nil,hlabels]
-    rw [show n*2+n*(2*(DyadicEdgeWeights.depth n+2))=2*n*(DyadicEdgeWeights.depth n+3) by ring]
-    exact Nat.mul_le_mul_left _ (by omega)
+  have length : candidates.enumeration.vertices.length ≤ 2*n*(n+4) := rawEnumeration_length n
   have work : candidates.work ≤ 256*(n+4)^2 := by
     simp only [candidates,rawEnumeration,CandidateEnumeration.sum_work,CandidateEnumeration.prod_work,
       CandidateEnumeration.fin_work,CandidateEnumeration.bool_work,CandidateEnumeration.fin_length,
@@ -273,7 +360,7 @@ theorem nodeVectorWithCost_paid {n : ℕ} (D : Input n) (l : Labels n) (test : R
     nlinarith only [hdepth,scaled]
   have filtered := filterWithCost_paid test candidates.enumeration.vertices cap cost
   have copied : (selectedNodes D l test exactTest).1.length ≤ candidates.enumeration.vertices.length := by
-    simp only [selectedNodes,refineNodes,List.length_map,List.length_attach,filterWithCost_value]
+    simp only [selectedNodes,selectedNodesFrom,refineNodes,List.length_map,List.length_attach,filterWithCost_value]
     exact List.length_filter_le _ _
   change candidates.work+(filterWithCost test candidates.enumeration.vertices).2+
     16*(selectedNodes D l test exactTest).1.length+4 ≤ _

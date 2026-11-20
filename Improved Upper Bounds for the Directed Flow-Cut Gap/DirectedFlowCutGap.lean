@@ -169,6 +169,7 @@ import DirectedFlowCutGap.BinaryEdgeProjection
 import DirectedFlowCutGap.BinaryEpochParameters
 import DirectedFlowCutGap.BinaryEuclidean
 import DirectedFlowCutGap.BinaryFamilySampler
+import DirectedFlowCutGap.BinaryFilter
 import DirectedFlowCutGap.BinaryFractionalCanonical
 import DirectedFlowCutGap.BinaryFractionalCore
 import DirectedFlowCutGap.BinaryFractionalDispatch

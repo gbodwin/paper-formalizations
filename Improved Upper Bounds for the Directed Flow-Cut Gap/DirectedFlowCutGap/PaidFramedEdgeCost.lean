@@ -174,18 +174,24 @@ private theorem roundControlBudget_mono {n m : ℕ} (h : n ≤ m) : roundControl
     gcongr
   · exact BinaryEdgeProjection.pullbackControlBudget_mono h (by unfold BinaryEdgeGadget.dimension; gcongr)
 
-/-- The additional work covers each reached fractional-row and cut projection
-in every requested sample, including rounds that run out of tape. -/
-theorem run_round_work_bound : ∃ p : Polynomial ℕ, ∀ {n B : ℕ} (κ : ℕ) (D : Input n)
-    (mode : ChargedVertexModes.Mode) (tape : Bits), 1 ≤ B →
-    (∀ u v : Fin n, D.costs[u.val][v.val].num.size ≤ B ∧ D.costs[u.val][v.val].den.size ≤ B) →
-      (runWithRoundWork κ D mode tape).2 ≤ (run κ D mode tape).2+p.eval (n+D.demands.length+B+κ) := by
+private noncomputable def roundVisits : Polynomial ℕ :=
+  let line := X*2+X*X
+  let price := line+X+line*(2*X)+2
+  let rows := 2*price+2*line+3
+  let rounds := (X+2)*X+1
+  rounds*rows
+
+private theorem round_visit_bound {n B : ℕ} (κ : ℕ) (D : Input n)
+    (positive : 1 ≤ B)
+    (fits : ∀ u v : Fin n, D.costs[u.val][v.val].num.size ≤ B ∧ D.costs[u.val][v.val].den.size ≤ B) :
+    let input := (PhysicalAmplifiedBinaryEdge.lineWithCost D).1
+    let reader := DirectBinaryEdgeWire.read (BinaryFractionalGuesses.solveInput input).1
+    ((BinarySolverOuterControls.edge n κ).extra+1)*ChargedPhysicalVertexSolver.rowsCount reader.1 ≤
+      roundVisits.eval (n+D.demands.length+B+κ) := by
   let line : Polynomial ℕ := X*2+X*X
   let price := line+X+line*(2*X)+2
   let rows := 2*price+2*line+3
   let rounds : Polynomial ℕ := (X+2)*X+1
-  refine ⟨rounds*(rows*roundControlBudget X),?_⟩
-  intro n B κ D mode tape positive fits
   let x := n+D.demands.length+B+κ
   let input := (PhysicalAmplifiedBinaryEdge.lineWithCost D).1
   let cover := BinaryFractionalGuesses.solveInput input
@@ -220,20 +226,39 @@ theorem run_round_work_bound : ∃ p : Polynomial ℕ, ∀ {n B : ℕ} (κ : ℕ
     simp only [rounds,eval_add,eval_X,eval_mul,eval_ofNat,eval_one]
     apply Nat.add_le_add_right
     exact (PhysicalSolverCostEnvelope.exponent_le n κ).trans (by gcongr)
-  have roundWork : roundControlBudget n ≤ (roundControlBudget X).eval x := by
+  change _ ≤ (rounds*rows).eval x
+  rw [eval_mul]
+  exact Nat.mul_le_mul samples readerRows
+
+/-- The additional work covers each reached fractional-row and cut projection
+in every requested sample, including rounds that run out of tape. -/
+theorem run_round_work_bound : ∃ p : Polynomial ℕ, ∀ {n B : ℕ} (κ : ℕ) (D : Input n)
+    (mode : ChargedVertexModes.Mode) (tape : Bits), 1 ≤ B →
+    (∀ u v : Fin n, D.costs[u.val][v.val].num.size ≤ B ∧ D.costs[u.val][v.val].den.size ≤ B) →
+      (runWithRoundWork κ D mode tape).2 ≤ (run κ D mode tape).2+p.eval (n+D.demands.length+B+κ) := by
+  refine ⟨roundVisits*roundControlBudget X,?_⟩
+  intro n B κ D mode tape positive fits
+  let x := n+D.demands.length+B+κ
+  have hn : n ≤ x := by dsimp only [x]; omega
+  have work : roundControlBudget n ≤ (roundControlBudget X).eval x := by
     rw [roundControlBudget_eval,eval_X]
     exact roundControlBudget_mono hn
+  have visits := round_visit_bound κ D positive fits
   have all := runWithRoundWork_extra κ D mode tape
-  dsimp only at all
+  dsimp only at all visits
   apply all.trans
-  simp only [eval_mul]
-  exact Nat.add_le_add_left (Nat.mul_le_mul samples (Nat.mul_le_mul readerRows roundWork)) _
+  rw [eval_mul,← Nat.mul_assoc]
+  exact Nat.add_le_add_left (Nat.mul_le_mul visits work) _
 
-theorem wire_round_work_polynomial : ∃ p : Polynomial ℕ,
+private theorem wire_runner_work_polynomial (runner : Runner)
+    (paid : ∃ p : Polynomial ℕ, ∀ {n B : ℕ} (κ : ℕ) (D : Input n)
+      (mode : ChargedVertexModes.Mode) (tape : Bits), 1 ≤ B →
+      (∀ u v : Fin n, D.costs[u.val][v.val].num.size ≤ B ∧ D.costs[u.val][v.val].den.size ≤ B) →
+        (runner κ D mode tape).2 ≤ (run κ D mode tape).2+p.eval (n+D.demands.length+B+κ)) : ∃ p : Polynomial ℕ,
     ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
-      (edgeWithRoundWork κ mode source tape).2 ≤ p.eval (source.length+κ) := by
+      (edgeWithRunner runner κ mode source tape).2 ≤ p.eval (source.length+κ) := by
   obtain ⟨baseline,old⟩ := wire_polynomial
-  obtain ⟨p,extra⟩ := run_round_work_bound
+  obtain ⟨p,extra⟩ := paid
   let pad : Polynomial ℕ := 3*X+1
   refine ⟨baseline+p.comp pad,?_⟩
   intro κ mode source tape
@@ -243,13 +268,13 @@ theorem wire_round_work_polynomial : ∃ p : Polynomial ℕ,
     let r := runOn κ mode data.2 tape
     (r.1.map (fun out => ⟨data.1,out⟩),r.2)
   let measured (data : Σ n,EncodedEdgeInput.Input n) : Read (Σ n,PhysicalAmplifiedEdgeSolver.EdgeResult n) :=
-    let r := runOnWithRoundWork κ mode data.2 tape
+    let r := runOnWithRunner runner κ mode data.2 tape
     (r.1.map (fun out => ⟨data.1,out⟩),r.2)
   have before : edgeWithCost κ mode source tape=Read.bind parsed legacy := by
     unfold edgeWithCost
     congr 1
-  have after : edgeWithRoundWork κ mode source tape=Read.bind parsed measured := by
-    unfold edgeWithRoundWork
+  have after : edgeWithRunner runner κ mode source tape=Read.bind parsed measured := by
+    unfold edgeWithRunner
     congr 1
   have bound := old κ mode source tape
   rw [before] at bound
@@ -274,7 +299,91 @@ theorem wire_round_work_polynomial : ∃ p : Polynomial ℕ,
     omega
   have paid := (extra κ raw.1 mode tape (Nat.le_add_left ..) words).trans
     (Nat.add_le_add_left (eval_mono p lift) _)
-  simp only [legacy,measured,runOnWithRoundWork,runOn_reference]
+  simp only [legacy,measured,runOnWithRunner,runOn_reference]
   exact (Nat.add_le_add_left paid _).trans_eq (Nat.add_assoc ..).symm
+
+theorem wire_round_work_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      (edgeWithRoundWork κ mode source tape).2 ≤ p.eval (source.length+κ) :=
+  wire_runner_work_polynomial runWithRoundWork run_round_work_bound
+
+/-- Each reached fractional row has bounded fields at the original wire.
+The measured runner includes gadget construction even if that round fails. -/
+theorem run_gadget_work_bound : ∃ p : Polynomial ℕ, ∀ {n B : ℕ} (κ : ℕ) (D : Input n)
+    (mode : ChargedVertexModes.Mode) (tape : Bits), 1 ≤ B →
+    (∀ u v : Fin n, D.costs[u.val][v.val].num.size ≤ B ∧ D.costs[u.val][v.val].den.size ≤ B) →
+      (runWithGadgetWork κ D mode tape).2 ≤ (run κ D mode tape).2+p.eval (n+D.demands.length+B+κ) := by
+  let line : Polynomial ℕ := X*2+X*X
+  let price := line+X+line*(2*X)+1
+  let inputLength := 2*(price+line*line+X*(line+line))+3*(line+line+X)+3
+  let width := X+1+PhysicalSourceDispatch.instructionPolynomial.comp inputLength
+  refine ⟨roundVisits*(roundControlBudget X+BinaryEdgeGadget.controlBudget X width),?_⟩
+  intro n B κ D mode tape positive fits
+  let x := n+D.demands.length+B+κ
+  let input := (PhysicalAmplifiedBinaryEdge.lineWithCost D).1
+  let cover := BinaryFractionalGuesses.solveInput input
+  let reader := DirectBinaryEdgeWire.read cover.1
+  let b := width.eval x
+  have hn : n ≤ x := by dsimp only [x]; omega
+  have hd : D.demands.length ≤ x := by dsimp only [x]; omega
+  have hB : B ≤ x := by dsimp only [x]; omega
+  have dim : lineSize n ≤ line.eval x := by
+    simp only [line,lineSize,eval_add,eval_mul,eval_X,eval_ofNat]
+    gcongr
+  have source : (PhysicalSourceDispatch.input input).length ≤ inputLength.eval x := by
+    have h := PhysicalSourceSizeBounds.line_source_size_le D positive fits
+    rw [← PhysicalAmplifiedBinaryEdge.line_value D] at h
+    apply h.trans
+    simp only [inputLength,PhysicalSourceSizeBounds.lineSourceSizeBound,PhysicalSourceSizeBounds.sourceSizeBound,
+      PhysicalEdgeSolver.lineInputSizeBound,eval_add,eval_mul,eval_X,eval_ofNat,eval_one,price]
+    gcongr
+  have rowWidth : 1+PhysicalSourceDispatch.instructionPolynomial.eval (PhysicalSourceDispatch.input input).length ≤ b := by
+    simp only [b,width,eval_add,eval_X,eval_comp,eval_one]
+    have limit := eval_mono PhysicalSourceDispatch.instructionPolynomial source
+    omega
+  have origWidth : B ≤ b := by
+    simp only [b,width,eval_add,eval_X,eval_one]
+    omega
+  have rowFits : ∀ rows, reader.1=.covers rows → ∀ y ∈ rows,
+      BinaryEdgeGadget.InputFits (roundingInput D y) b := by
+    intro rows picked y member
+    have actual : reader.1=PhysicalCoverReader.plan cover.1 := DirectBinaryEdgeWire.read_value _
+    rw [actual] at picked
+    have h := PhysicalCoverWidthEnvelope.rows_width input rows picked y member
+    exact row_fits D y (fun i => RawNonnegativeRational.Code.bounded_mono (h i) rowWidth)
+      (fun u v => ⟨(fits u v).1.trans origWidth,(fits u v).2.trans origWidth⟩)
+  have counts := round_visit_bound κ D positive fits
+  have use := runWithGadgetWork_extra κ D mode tape rowFits
+  dsimp only at use counts
+  apply use.trans
+  simp only [eval_mul,eval_add,roundControlBudget_eval,BinaryEdgeGadget.controlBudget_eval,eval_X]
+  rw [← Nat.mul_assoc]
+  exact Nat.add_le_add_left (Nat.mul_le_mul counts
+    (Nat.add_le_add (roundControlBudget_mono hn) (BinaryEdgeGadget.controlBudget_mono hn (le_refl b)))) _
+
+theorem wire_gadget_work_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      (edgeWithGadgetWork κ mode source tape).2 ≤ p.eval (source.length+κ) :=
+  wire_runner_work_polynomial runWithGadgetWork run_gadget_work_bound
+
+/-- The joined charge includes the reached projection and gadget work plus
+the original-input record and boundary fields from the same execution. -/
+theorem wire_joined_work_polynomial : ∃ p : Polynomial ℕ,
+    ∀ (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits),
+      let r := edgeWithJoinedWork κ mode source tape
+      r.1.2+r.2.1.total+r.2.2 ≤ p.eval (source.length+κ) := by
+  obtain ⟨paid,hPaid⟩ := wire_gadget_work_polynomial
+  obtain ⟨boundary,hBoundary⟩ := wire_boundary_polynomial
+  let framing := PhysicalSourceInputJoin.framingBudget (X : Polynomial ℕ)
+  refine ⟨paid+boundary+framing,?_⟩
+  intro κ mode source tape
+  have addFrame := (PhysicalSourceInputJoin.framing_records_bound source).2
+  have same : framing.eval source.length = PhysicalSourceInputJoin.framingBudget source.length := by
+    simp only [framing,PhysicalSourceInputJoin.framingBudget,eval_X,eval_add,eval_mul,eval_pow,eval_ofNat,eval_one]
+  have lift : source.length ≤ source.length+κ := Nat.le_add_right ..
+  simp only [eval_add,edgeWithJoinedWork_paid_value,edgeWithJoinedWork_boundary,edgeWithJoinedWork_frames]
+  exact Nat.add_le_add (Nat.add_le_add (hPaid κ mode source tape)
+    ((hBoundary κ mode source tape).trans (eval_mono boundary lift)))
+    ((addFrame.trans_eq same.symm).trans (eval_mono framing lift))
 
 end DirectedFlowCutGap.PaidDirectEdgeWire

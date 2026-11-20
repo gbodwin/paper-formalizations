@@ -17,7 +17,7 @@ private theorem scalar_list (xs : List Fraction) :
     simp only [List.map_cons,List.sum_cons,LambdaRowProgram.rowBits,List.length_cons,ih]
     omega
 
-private theorem row_fits {n b : ℕ} (D : Input n) (row : FractionalCoverRawCore.RawRow (lineSize n))
+theorem row_fits {n b : ℕ} (D : Input n) (row : FractionalCoverRawCore.RawRow (lineSize n))
     (hw : ∀ i, (FractionalCoverRawCore.get row i).Bounded b)
     (hc : ∀ u v : Fin n, D.costs[u.val][v.val].num.size ≤ b ∧ D.costs[u.val][v.val].den.size ≤ b) :
     BinaryEdgeGadget.InputFits (roundingInput D row) b := by

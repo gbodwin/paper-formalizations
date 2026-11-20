@@ -17,20 +17,77 @@ structure InputFits {n : ℕ} (D : Input n) (b : ℕ) : Prop where
   weights : ∀ u v : Fin n, D.weights[u.val][v.val].Bounded b
   costs : ∀ u v : Fin n, D.costs[u.val][v.val].Bounded b
 
-def labels {n : ℕ} (D : Input n) : Labels n × ℕ :=
-  batch fun u => batch fun v =>
+private def matrixWithControl {A : Type} {m : ℕ} (f : Fin m → Fin m → (A × ℕ) × ℕ) :
+    (Vector (Vector A m) m × ℕ) × ℕ :=
+  BinaryArrayBatch.runWithChildWork fun i => BinaryArrayBatch.runWithChildWork (f i)
+
+private theorem matrix_reference {A : Type} {m : ℕ} (f : Fin m → Fin m → (A × ℕ) × ℕ) :
+    (matrixWithControl f).1=batch (fun i => batch fun j => (f i j).1) := by
+  unfold matrixWithControl
+  rw [BinaryArrayBatch.child_projection]
+  change batch _=batch _
+  congr 1
+  funext i
+  exact BinaryArrayBatch.child_projection (f i)
+
+private def matrixControlBudget {R : Type*} [Semiring R] (m cap child : R) : R :=
+  BinaryArrayBatch.childCeiling m (m*cap+8*m+4) (BinaryArrayBatch.childCeiling m cap child)
+
+private theorem matrix_paid {A : Type} {m cap child : ℕ} (f : Fin m → Fin m → (A × ℕ) × ℕ)
+    (legacy : ∀ i j, (f i j).1.2≤cap) (extra : ∀ i j, (f i j).2≤child) :
+    (matrixWithControl f).2 ≤ matrixControlBudget m cap child := by
+  have rowFee (i : Fin m) : (BinaryArrayBatch.runWithChildWork (f i)).1.2 ≤ m*cap+8*m+4 := by
+    rw [BinaryArrayBatch.child_projection]
+    exact batch_paid _ (legacy i)
+  have rowWork (i : Fin m) : (BinaryArrayBatch.runWithChildWork (f i)).2≤BinaryArrayBatch.childCeiling m cap child :=
+    (BinaryArrayBatch.runWithChildWork_paid _ (legacy i) (extra i)).trans (BinaryArrayBatch.childBudget_le ..)
+  exact (BinaryArrayBatch.runWithChildWork_paid _ rowFee rowWork).trans (BinaryArrayBatch.childBudget_le ..)
+
+private def labelCell {n : ℕ} (D : Input n) (u v : Fin n) : (DyadicEdgeWeights.Label n × ℕ) × ℕ :=
+  let stored := BinaryVectorAccess.readMatrix D.weights u v
+  let q := BinaryRawRational.encode stored.1
+  let r := ChargedEdgeDyadicLabels.label n q.1
+  ((r.1,q.2+r.2+4),stored.2)
+
+def labelsWithControl {n : ℕ} (D : Input n) : (Labels n × ℕ) × ℕ := matrixWithControl (labelCell D)
+
+def labels {n : ℕ} (D : Input n) : Labels n × ℕ := (labelsWithControl D).1
+
+theorem labels_reference {n : ℕ} (D : Input n) : labels D = batch (fun u => batch fun v =>
     let q := BinaryRawRational.encode D.weights[u.val][v.val]
     let r := ChargedEdgeDyadicLabels.label n q.1
-    (r.1,q.2+r.2+4)
+    (r.1,q.2+r.2+4)) := by
+  simp only [labels,labelsWithControl,matrix_reference,labelCell,BinaryVectorAccess.readMatrix_value]
+
+private def labelCellBudget {R : Type*} [Semiring R] (n b : R) : R :=
+  40*(b+2)^2+ChargedEdgeDyadicLabels.labelBudget n (b+1)+4
+
+private theorem labelCell_paid {n b : ℕ} (D : Input n) (fit : InputFits D b) (u v : Fin n) :
+    (labelCell D u v).1.2 ≤ labelCellBudget n b := by
+  have w := fit.weights u v
+  have e := BinaryRawRational.encode_paid w
+  have r := ChargedEdgeDyadicLabels.label_paid n _ (BinaryRawRational.encode_width w)
+  simp only [labelCell,BinaryVectorAccess.readMatrix_value,labelCellBudget]
+  omega
+
+def labelsControlBudget {R : Type*} [Semiring R] (n b : R) : R :=
+  matrixControlBudget n (labelCellBudget n b) (2*BinaryVectorAccess.budget n)
+
+theorem labels_control_paid {n b : ℕ} (D : Input n) (fit : InputFits D b) :
+    (labelsWithControl D).2≤labelsControlBudget n b := by
+  have width : n.size≤n := BinaryNaturalOperations.size_le_self n
+  exact matrix_paid (labelCell D) (labelCell_paid D fit)
+    (fun u v => BinaryVectorAccess.readMatrix_paid D.weights u v width width)
 
 @[simp] theorem labels_value {n : ℕ} (D : Input n) : (labels D).1=labelTable D := by
-  simp only [labels,batch_value,labelTable,ChargedEdgeDyadicLabels.label_value,BinaryRawRational.encode_value]
+  simp only [labels_reference,batch_value,labelTable,ChargedEdgeDyadicLabels.label_value,BinaryRawRational.encode_value]
 
 def labelsBudget {R : Type*} [Semiring R] (n b : R) : R :=
   n*(n*(40*(b+2)^2+ChargedEdgeDyadicLabels.labelBudget n (b+1)+4)+8*n+4)+8*n+4
 
 theorem labels_paid {n b : ℕ} (D : Input n) (fit : InputFits D b) : (labels D).2 ≤ labelsBudget n b := by
-  unfold labels labelsBudget
+  rw [labels_reference]
+  unfold labelsBudget
   apply batch_paid
   intro u
   apply batch_paid
@@ -185,72 +242,167 @@ private theorem incidentLoop_control_paid {n : ℕ} (l : Labels n) (x : RawNode 
   BinaryShortScan.run_paid _ _ _ _ _ (fun e _ => ⟨Nat.add_le_add_right (incident_paid l e x) 4,
     incident_control_paid l e x (BinaryNaturalOperations.size_le_self n)⟩)
 
-private def keepLabel {n : ℕ} (l : Labels n) (es : List (Pair n)) : RawNode n → Bool × ℕ
-  | .inl _ => (true,2)
-  | .inr x => incidentLoop l (.inr x) 0 es
+private def keepLabelWithControl {n : ℕ} (l : Labels n) (es : List (Pair n)) : RawNode n → (Bool × ℕ) × ℕ
+  | .inl _ => ((true,2),0)
+  | .inr x => incidentLoopWithControl l (.inr x) 0 es
+
+private def keepLabel {n : ℕ} (l : Labels n) (es : List (Pair n)) (x : RawNode n) : Bool × ℕ :=
+  (keepLabelWithControl l es x).1
 
 private theorem keepLabel_iff {n : ℕ} (D : Input n) (l : Labels n) (es : List (Pair n))
     (correct : es=edges D) (x : RawNode n) : (keepLabel l es x).1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x := by
   subst es
   rcases x with ⟨u,side⟩ | x
-  · simp only [keepLabel,true_iff]
+  · simp only [keepLabel,keepLabelWithControl,true_iff]
     exact Or.inl ⟨u,side,rfl⟩
-  · simp only [keepLabel,incidentLoop_iff,EdgeToVertex.Active,Sum.inr_ne_inl,exists_false,false_or,edges_mem]
+  · change (incidentLoop l (.inr x) 0 (edges D)).1=true ↔ _
+    simp only [incidentLoop_iff,EdgeToVertex.Active,Sum.inr_ne_inl,exists_false,false_or,edges_mem]
+
+private theorem keepLabel_control_iff {n : ℕ} (D : Input n) (l : Labels n) (es : List (Pair n))
+    (correct : es=edges D) (x : RawNode n) :
+    (keepLabelWithControl l es x).1.1=true ↔ EdgeToVertex.Active D.graph (labelAt l) x :=
+  keepLabel_iff D l es correct x
 
 private theorem keepLabel_paid {n : ℕ} (l : Labels n) (es : List (Pair n)) (x : RawNode n) :
     (keepLabel l es x).2 ≤ es.length*(incidentBudget n+4)+2 := by
   rcases x with x | x
-  · simp [keepLabel]
+  · simp [keepLabel,keepLabelWithControl]
   · exact (incidentLoop_paid l (.inr x) 0 es).trans (by omega)
 
+private theorem keepLabel_control_paid {n : ℕ} (l : Labels n) (es : List (Pair n)) (x : RawNode n) :
+    (keepLabelWithControl l es x).2 ≤
+      BinaryShortScan.controlBudget es.length 0 (incidentBudget n+4) (2*BinaryVectorAccess.budget n) := by
+  rcases x with x | x
+  · exact Nat.zero_le _
+  · exact incidentLoop_control_paid l (.inr x) 0 es
+
+private def priceAtWithControl {n : ℕ} (D : Input n) (l : Labels n) (x : RawNode n) (e : Pair n) :
+    (Code × ℕ) × ℕ :=
+  let hit := incidentWithControl l e x
+  if hit.1.1 then
+    let price := BinaryVectorAccess.readMatrix D.costs e.1 e.2
+    ((price.1,hit.1.2+4),hit.2+price.2)
+  else ((Code.zero,hit.1.2+4),hit.2)
+
 private def priceAt {n : ℕ} (D : Input n) (l : Labels n) (x : RawNode n) (e : Pair n) : Code × ℕ :=
-  let r := incident l e x
-  (if r.1 then D.costs[e.1.val][e.2.val] else Code.zero,r.2+4)
+  (priceAtWithControl D l x e).1
+
+private theorem priceAt_reference {n : ℕ} (D : Input n) (l : Labels n) (x : RawNode n) (e : Pair n) :
+    priceAt D l x e=(if (incident l e x).1 then D.costs[e.1.val][e.2.val] else Code.zero,(incident l e x).2+4) := by
+  by_cases hit : (incidentWithControl l e x).1.1=true <;>
+    simp only [priceAt,priceAtWithControl,incident,BinaryVectorAccess.readMatrix_value,hit,Bool.false_eq_true,ite_true,ite_false]
+
+private theorem priceAt_control_paid {n : ℕ} (D : Input n) (l : Labels n) (x : RawNode n) (e : Pair n) :
+    (priceAtWithControl D l x e).2 ≤ 4*BinaryVectorAccess.budget n := by
+  have width := BinaryNaturalOperations.size_le_self n
+  have incident := incident_control_paid l e x width
+  have field := BinaryVectorAccess.readMatrix_paid D.costs e.1 e.2 width width
+  unfold priceAtWithControl
+  dsimp only
+  split <;> dsimp only <;> omega
 
 private theorem priceAt_value {n : ℕ} (D : Input n) (l : Labels n) (x : RawNode n) (e : Pair n) :
     (priceAt D l x e).1=edgeCharge D l x e := by
   have distinct : EdgeToVertex.right (labelAt l) e ≠ EdgeToVertex.left (labelAt l) e := by
     simp [EdgeToVertex.right,EdgeToVertex.left]
   by_cases r : x=EdgeToVertex.right (labelAt l) e
-  · simp [priceAt,incident_iff,edgeCharge,r,distinct,Code.add,Code.zero]
+  · simp [priceAt_reference,incident_iff,edgeCharge,r,distinct,Code.add,Code.zero]
   · by_cases h : x=EdgeToVertex.left (labelAt l) e
-    · simp [priceAt,incident_iff,edgeCharge,h,Ne.symm distinct,Code.add,Code.zero]
-    · simp [priceAt,incident_iff,edgeCharge,r,h,Code.add,Code.zero]
+    · simp [priceAt_reference,incident_iff,edgeCharge,h,Ne.symm distinct,Code.add,Code.zero]
+    · simp [priceAt_reference,incident_iff,edgeCharge,r,h,Code.add,Code.zero]
 
 private theorem priceAt_fit {n b : ℕ} (D : Input n) (l : Labels n) (fit : InputFits D b)
     (x : RawNode n) (e : Pair n) : (priceAt D l x e).1.Bounded b := by
-  dsimp only [priceAt]
+  rw [priceAt_reference]
   split
   · exact fit.costs e.1 e.2
   · exact Code.bounded_mono Code.bounded_zero (Nat.zero_le _)
 
-private def priceFields {n : ℕ} (D : Input n) (l : Labels n) (x : RawNode n) :
-    List (Pair n) → List Fraction × ℕ
-  | [] => ([],1)
+private def priceFieldsWithControl {n : ℕ} (D : Input n) (l : Labels n) (x : RawNode n) :
+    List (Pair n) → (List Fraction × ℕ) × ℕ
+  | [] => (([],1),1)
   | e::es =>
-    let c := priceAt D l x e
-    let a := BinaryRawRational.encode c.1
-    let rest := priceFields D l x es
-    (a.1::rest.1,c.2+a.2+rest.2+4)
+    let c := priceAtWithControl D l x e
+    let a := BinaryRawRational.encode c.1.1
+    let rest := priceFieldsWithControl D l x es
+    let fee := CachedScalarRead.sumMeasured [c.1.2,a.2,rest.1.2,4]
+    ((a.1::rest.1.1,fee.1),c.2+fee.2+rest.2+4)
+
+private def priceFields {n : ℕ} (D : Input n) (l : Labels n) (x : RawNode n) (es : List (Pair n)) :
+    List Fraction × ℕ := (priceFieldsWithControl D l x es).1
+
+private theorem priceFields_cons {n : ℕ} (D : Input n) (l : Labels n) (x : RawNode n) (e : Pair n) (es : List (Pair n)) :
+    priceFields D l x (e::es) =
+      let c := priceAt D l x e
+      let a := BinaryRawRational.encode c.1
+      let rest := priceFields D l x es
+      (a.1::rest.1,c.2+a.2+rest.2+4) := by
+  simp only [priceFields,priceAt,priceFieldsWithControl,CachedScalarRead.sum_value,List.sum_cons,List.sum_nil,
+    Nat.add_zero,Nat.add_assoc]
 
 private theorem priceFields_value {n : ℕ} (D : Input n) (l : Labels n) (x : RawNode n) (es : List (Pair n)) :
     (priceFields D l x es).1 = es.map (fun e => (BinaryRawRational.encode (priceAt D l x e).1).1) := by
   induction es with
   | nil => rfl
-  | cons e es ih => simp only [priceFields, List.map_cons, ih]
+  | cons e es ih => simp only [priceFields_cons,List.map_cons,ih]
 
 private theorem priceFields_paid {n b : ℕ} (D : Input n) (l : Labels n) (fit : InputFits D b)
     (x : RawNode n) (es : List (Pair n)) :
     (priceFields D l x es).2 ≤ es.length*(40*(b+2)^2+incidentBudget n+8)+1 := by
   induction es with
-  | nil => simp only [priceFields,List.length_nil,Nat.zero_mul,Nat.zero_add,le_rfl]
+  | nil => simp only [priceFields,priceFieldsWithControl,List.length_nil,Nat.zero_mul,Nat.zero_add,le_rfl]
   | cons e es ih =>
     have a := BinaryRawRational.encode_paid (priceAt_fit D l fit x e)
     have c := incident_paid l e x
-    change (incident l e x).2+4+
+    have oldFee : (priceAt D l x e).2=(incident l e x).2+4 := by rw [priceAt_reference]
+    rw [priceFields_cons]
+    change (priceAt D l x e).2+
       (BinaryRawRational.encode (priceAt D l x e).1).2+(priceFields D l x es).2+4 ≤ _
     simp only [List.length_cons,Nat.add_mul,Nat.one_mul]
     omega
+
+private def priceFieldsStepBudget {R : Type*} [Semiring R] (n e b : R) : R :=
+  let fee := e*(40*(b+2)^2+incidentBudget n+8)+1
+  4*(96*(fee+2)^2+4)+1+4*BinaryVectorAccess.budget n+4
+
+private theorem priceFields_control_aux {n b e : ℕ} (D : Input n) (l : Labels n) (fit : InputFits D b)
+    (x : RawNode n) (es : List (Pair n)) (small : es.length ≤ e) :
+    (priceFieldsWithControl D l x es).2 ≤ es.length*priceFieldsStepBudget n e b+1 := by
+  induction es with
+  | nil => simp only [priceFieldsWithControl,List.length_nil,Nat.zero_mul,Nat.zero_add,le_rfl]
+  | cons arc tail ih =>
+    let c := priceAtWithControl D l x arc
+    let price := BinaryRawRational.encode c.1.1
+    let rest := priceFieldsWithControl D l x tail
+    let fees := [c.1.2,price.2,rest.1.2,4]
+    let ceiling := e*(40*(b+2)^2+incidentBudget n+8)+1
+    have feeValue : fees.sum=(priceFields D l x (arc::tail)).2 := by
+      rw [priceFields_cons]
+      simp only [fees,c,price,rest,priceAt,priceFields,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc]
+    have reported := (priceFields_paid D l fit x (arc::tail)).trans
+      (Nat.add_le_add_right (Nat.mul_le_mul_right _ small) 1)
+    have width : fees.sum.size≤ceiling := by
+      rw [feeValue]
+      exact (BinaryNaturalOperations.size_le_self _).trans reported
+    have paid := CachedScalarRead.sum_paid fees width
+    have priced := priceAt_control_paid D l x arc
+    change c.2 ≤ _ at priced
+    have child := ih (Nat.le_of_succ_le small)
+    change c.2+(CachedScalarRead.sumMeasured fees).2+rest.2+4 ≤ _
+    change rest.2 ≤ _ at child
+    change (CachedScalarRead.sumMeasured fees).2 ≤ 4*(96*(ceiling+2)^2+4)+1 at paid
+    simp only [List.length_cons,Nat.add_mul,Nat.one_mul]
+    have overhead : c.2+(CachedScalarRead.sumMeasured fees).2+4≤priceFieldsStepBudget n e b := by
+      change _ ≤ 4*(96*(ceiling+2)^2+4)+1+4*BinaryVectorAccess.budget n+4
+      omega
+    omega
+
+private def priceFieldsControlBudget {R : Type*} [Semiring R] (n e b : R) : R := e*priceFieldsStepBudget n e b+1
+
+private theorem priceFields_control_paid {n b : ℕ} (D : Input n) (l : Labels n) (fit : InputFits D b)
+    (x : RawNode n) (es : List (Pair n)) :
+    (priceFieldsWithControl D l x es).2 ≤ priceFieldsControlBudget n es.length b :=
+  priceFields_control_aux D l fit x es le_rfl
 
 private def nodeCost {n : ℕ} (D : Input n) (l : Labels n) (es : List (Pair n)) (x : RawNode n) : Code × ℕ :=
   let a := priceFields D l x es
@@ -290,6 +442,41 @@ private theorem nodeCost_paid {n b : ℕ} (D : Input n) (l : Labels n) (fit : In
   unfold BinaryFractionalRows.sumBound at c
   omega
 
+private def nodeCostWithControl {n : ℕ} (D : Input n) (l : Labels n) (es : List (Pair n)) (x : RawNode n) :
+    (Code × ℕ) × ℕ :=
+  let row := priceFieldsWithControl D l x es
+  let rational := BinaryFractionalRows.sum row.1.1
+  let decoded := BinaryRawRational.decode rational.1
+  let fee := CachedScalarRead.sumMeasured [row.1.2,rational.2,decoded.2,4]
+  ((decoded.1,fee.1),row.2+fee.2)
+
+private theorem nodeCost_projection {n : ℕ} (D : Input n) (l : Labels n) (es : List (Pair n)) (x : RawNode n) :
+    (nodeCostWithControl D l es x).1=nodeCost D l es x := by
+  simp only [nodeCostWithControl,nodeCost,priceFields,CachedScalarRead.sum_value,List.sum_cons,List.sum_nil,
+    Nat.add_zero,Nat.add_assoc]
+
+private def nodeCostControlBudget {R : Type*} [Semiring R] (n e b : R) : R :=
+  priceFieldsControlBudget n e b+4*(96*(nodeCostBudget n e b+2)^2+4)+1
+
+private theorem nodeCost_control_paid {n b : ℕ} (D : Input n) (l : Labels n) (fit : InputFits D b)
+    (es : List (Pair n)) (x : RawNode n) : (nodeCostWithControl D l es x).2 ≤ nodeCostControlBudget n es.length b := by
+  let row := priceFieldsWithControl D l x es
+  let rational := BinaryFractionalRows.sum row.1.1
+  let decoded := BinaryRawRational.decode rational.1
+  let fees := [row.1.2,rational.2,decoded.2,4]
+  have total : fees.sum=(nodeCost D l es x).2 := by
+    simp only [fees,row,rational,decoded,nodeCost,priceFields,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc]
+  have width : fees.sum.size ≤ nodeCostBudget n es.length b := by
+    rw [total]
+    exact (BinaryNaturalOperations.size_le_self _).trans (nodeCost_paid D l fit es x)
+  have paid := CachedScalarRead.sum_paid fees width
+  have field := priceFields_control_paid D l fit x es
+  change row.2≤_ at field
+  change (CachedScalarRead.sumMeasured fees).2 ≤ 4*(96*(nodeCostBudget n es.length b+2)^2+4)+1 at paid
+  change row.2+(CachedScalarRead.sumMeasured fees).2≤_
+  unfold nodeCostControlBudget
+  omega
+
 private def weightField {n : ℕ} : RawNode n → Code × ℕ
   | .inr (_,_,some i) =>
     let q := BinaryRawRational.decode (ChargedEdgeDyadicLabels.powerFraction i.val)
@@ -319,6 +506,36 @@ private def adjacencyCell {n : ℕ} (D : Input n) (labels : Labels n) :
     else (false,4)
   | _,_ => (false,2)
 
+private def adjacencyCellWithControl {n : ℕ} (D : Input n) (labels : Labels n) :
+    RawNode n → RawNode n → (Bool × ℕ) × ℕ
+  | .inr (u,true,i), .inr (v,false,j) =>
+    let arc := BinaryVectorAccess.readMatrix D.adjacency u v
+    if arc.1 then
+      let label := BinaryVectorAccess.readMatrix labels u v
+      let a := equalLabel label.1 i
+      let b := equalLabel label.1 j
+      ((a.1 && b.1,a.2+b.2+8),arc.2+label.2)
+    else ((false,4),arc.2)
+  | x,y => (adjacencyCell D labels x y,0)
+
+private theorem adjacencyCell_projection {n : ℕ} (D : Input n) (labels : Labels n) (x y : RawNode n) :
+    (adjacencyCellWithControl D labels x y).1=adjacencyCell D labels x y := by
+  rcases x with ⟨u,b⟩ | ⟨u,b,i⟩ <;> rcases y with ⟨v,c⟩ | ⟨v,c,j⟩ <;>
+    cases b <;> cases c <;> try rfl
+  simp only [adjacencyCellWithControl,adjacencyCell,BinaryVectorAccess.readMatrix_value,labelAt]
+  by_cases live : D.adjacency[u.val][v.val]=true <;> simp [live]
+
+private theorem adjacencyCell_control_paid {n : ℕ} (D : Input n) (labels : Labels n) (x y : RawNode n) :
+    (adjacencyCellWithControl D labels x y).2 ≤ 4*BinaryVectorAccess.budget n := by
+  rcases x with ⟨u,b⟩ | ⟨u,b,i⟩ <;> rcases y with ⟨v,c⟩ | ⟨v,c,j⟩ <;>
+    cases b <;> cases c <;> try exact Nat.zero_le _
+  have width := BinaryNaturalOperations.size_le_self n
+  have arc := BinaryVectorAccess.readMatrix_paid D.adjacency u v width width
+  have label := BinaryVectorAccess.readMatrix_paid labels u v width width
+  unfold adjacencyCellWithControl
+  dsimp only
+  split <;> dsimp only <;> omega
+
 private theorem adjacencyCell_iff {n : ℕ} (D : Input n) (labels : Labels n) (x y : RawNode n) :
     (adjacencyCell D labels x y).1=true ↔ EdgeToVertex.RawAdj D.graph (labelAt labels) x y := by
   rcases x with ⟨u,b⟩ | ⟨u,b,i⟩ <;> rcases y with ⟨v,c⟩ | ⟨v,c,j⟩ <;>
@@ -344,6 +561,21 @@ private def adjacencyMatrix {n m : ℕ} (D : Input n) (l : Labels n) (v : Vector
     Vector (Vector Bool m) m × ℕ :=
   batch fun i => batch fun j => adjacencyCell D l v[i.val].val v[j.val].val
 
+private def adjacencyEntry {n m : ℕ} (D : Input n) (l : Labels n) (v : Vector (Node D l) m)
+    (i j : Fin m) : (Bool × ℕ) × ℕ :=
+  let u := BinaryVectorAccess.read v i
+  let w := BinaryVectorAccess.read v j
+  let adjacent := adjacencyCellWithControl D l u.1.val w.1.val
+  (adjacent.1,u.2+w.2+adjacent.2)
+
+private def adjacencyMatrixWithControl {n m : ℕ} (D : Input n) (l : Labels n) (v : Vector (Node D l) m) :
+    (Vector (Vector Bool m) m × ℕ) × ℕ := matrixWithControl (adjacencyEntry D l v)
+
+private theorem adjacencyMatrix_projection {n m : ℕ} (D : Input n) (l : Labels n)
+    (v : Vector (Node D l) m) : (adjacencyMatrixWithControl D l v).1=adjacencyMatrix D l v := by
+  simp only [adjacencyMatrixWithControl,matrix_reference,adjacencyEntry,BinaryVectorAccess.read_value,
+    adjacencyCell_projection,adjacencyMatrix]
+
 private theorem adjacencyMatrix_value {n : ℕ} (D : Input n) :
     (adjacencyMatrix D (labelTable D) (nodeVector D (labelTable D))).1=
       (EncodedEdgeGadget.build D).data.adjacency := by
@@ -365,6 +597,24 @@ private theorem adjacencyMatrix_paid {n m : ℕ} (D : Input n) (l : Labels n)
   apply batch_paid
   intro i
   exact batch_paid _ (fun j => adjacencyCell_paid D l v[i.val].val v[j.val].val)
+
+private def adjacencyControlBudget {R : Type*} [Semiring R] (n m : R) : R :=
+  matrixControlBudget m (adjacencyCellBudget n) (2*BinaryVectorAccess.budget m+4*BinaryVectorAccess.budget n)
+
+private theorem adjacencyMatrix_control_paid {n m : ℕ} (D : Input n) (l : Labels n)
+    (v : Vector (Node D l) m) : (adjacencyMatrixWithControl D l v).2 ≤ adjacencyControlBudget n m := by
+  apply matrix_paid
+  · intro i j
+    simp only [adjacencyEntry,adjacencyCell_projection]
+    exact adjacencyCell_paid D l _ _
+  · intro i j
+    have width := BinaryNaturalOperations.size_le_self m
+    have u := BinaryVectorAccess.read_paid v i width
+    have w := BinaryVectorAccess.read_paid v j width
+    have side := adjacencyCell_control_paid D l (BinaryVectorAccess.read v i).1.val (BinaryVectorAccess.read v j).1.val
+    unfold adjacencyEntry
+    dsimp only
+    omega
 
 private def weightBudget {R : Type*} [Semiring R] (n : R) : R := 40*(n+3)^2+8*(n+2)+8
 
@@ -389,6 +639,56 @@ def build {n : ℕ} (D : Input n) : Prepared D × ℕ :=
   let w := batch fun i => weightField v[i.val].val
   let c := batch fun i => nodeCost D l.1 es.1 v[i.val].val
   (⟨v.size,l.1,v,⟨a.1,w.1,c.1⟩⟩,l.2+w.2+c.2+a.2+es.2+nodes.2+8)
+
+private def weightEntry {n m : ℕ} {D : Input n} {l : Labels n} (v : Vector (Node D l) m)
+    (i : Fin m) : (Code × ℕ) × ℕ :=
+  let node := BinaryVectorAccess.read v i
+  (weightField node.1.val,node.2)
+
+private def costEntry {n m : ℕ} (D : Input n) (l : Labels n) (es : List (Pair n))
+    (v : Vector (Node D l) m) (i : Fin m) : (Code × ℕ) × ℕ :=
+  let node := BinaryVectorAccess.read v i
+  let cost := nodeCostWithControl D l es node.1.val
+  (cost.1,node.2+cost.2)
+
+private theorem weights_projection {n m : ℕ} {D : Input n} {l : Labels n} (v : Vector (Node D l) m) :
+    (BinaryArrayBatch.runWithChildWork (weightEntry v)).1=batch (fun i => weightField v[i.val].val) := by
+  rw [BinaryArrayBatch.child_projection]
+  change batch _ = batch _
+  simp only [weightEntry,BinaryVectorAccess.read_value]
+
+private theorem costs_projection {n m : ℕ} (D : Input n) (l : Labels n) (es : List (Pair n))
+    (v : Vector (Node D l) m) :
+    (BinaryArrayBatch.runWithChildWork (costEntry D l es v)).1=batch (fun i => nodeCost D l es v[i.val].val) := by
+  rw [BinaryArrayBatch.child_projection]
+  change batch _ = batch _
+  simp only [costEntry,BinaryVectorAccess.read_value,nodeCost_projection]
+
+def buildWithControl {n : ℕ} (D : Input n) : (Prepared D × ℕ) × ℕ :=
+  let labeled := labelsWithControl D
+  let edges := edgesWithControl D
+  let l := labeled.1.1
+  let es := edges.1.1
+  let nodes := nodeVectorWithControl D l (keepLabelWithControl l es)
+    (keepLabel_control_iff D l es (edgesWithCost_value D))
+  let v := nodes.1.1
+  let adjacency := adjacencyMatrixWithControl D l v
+  let weights := BinaryArrayBatch.runWithChildWork (weightEntry v)
+  let costs := BinaryArrayBatch.runWithChildWork (costEntry D l es v)
+  let g := ⟨v.size,l,v,⟨adjacency.1.1,weights.1.1,costs.1.1⟩⟩
+  let fee := CachedScalarRead.sumMeasured [labeled.1.2,weights.1.2,costs.1.2,adjacency.1.2,edges.1.2,nodes.1.2,8]
+  ((g,fee.1),labeled.2+edges.2+nodes.2+adjacency.2+weights.2+costs.2+fee.2)
+
+set_option maxHeartbeats 900000 in
+theorem build_control_projection {n : ℕ} (D : Input n) : (buildWithControl D).1=build D := by
+  let l := (labelsWithControl D).1.1
+  let es := (edgesWithControl D).1.1
+  let correct := keepLabel_control_iff D l es (edgesWithCost_value D)
+  have nodes := nodeVector_reference D l (keepLabelWithControl l es) correct
+  simp only [buildWithControl,build,adjacencyMatrix_projection,weights_projection,costs_projection,
+    CachedScalarRead.sum_value,List.sum_cons,List.sum_nil,Nat.add_zero,Nat.add_assoc]
+  rw [nodes]
+  rfl
 
 @[simp] theorem build_value {n : ℕ} (D : Input n) : (build D).1=EncodedEdgeGadget.build D := by
   let output (l : Labels n) : Prepared D :=
@@ -455,6 +755,90 @@ theorem build_paid {n b : ℕ} (D : Input n) (fit : InputFits D b) : (build D).2
   have throughEdges := Nat.add_le_add throughMatrix e
   exact Nat.add_le_add_right (Nat.add_le_add throughEdges limitsG) 8
 
+def controlBudget {R : Type*} [Semiring R] (n b : R) : R :=
+  let e := n*n
+  let m := dimension n
+  let selection := BinaryShortScan.controlBudget e 0 (incidentBudget n+4) (2*BinaryVectorAccess.budget n)
+  labelsControlBudget n b+edgesControlBudget n+nodeVectorControlBudget n (e*(incidentBudget n+4)+2) selection+
+    adjacencyControlBudget n m+BinaryArrayBatch.childCeiling m (weightBudget n) (BinaryVectorAccess.budget m)+
+    BinaryArrayBatch.childCeiling m (nodeCostBudget n e b) (BinaryVectorAccess.budget m+nodeCostControlBudget n e b)+
+    7*(96*(budget n b+2)^2+4)+1
+
+set_option maxHeartbeats 1400000 in
+theorem build_control_paid {n b : ℕ} (D : Input n) (fit : InputFits D b) :
+    (buildWithControl D).2 ≤ controlBudget n b := by
+  let labels := labelsWithControl D
+  let edges := edgesWithControl D
+  let l := labels.1.1
+  let es := edges.1.1
+  let correct := keepLabel_control_iff D l es (edgesWithCost_value D)
+  let nodes := nodeVectorWithControl D l (keepLabelWithControl l es) correct
+  let v := nodes.1.1
+  let m := (EncodedEdgeGadget.nodes D l).length
+  let adjacency := adjacencyMatrixWithControl D l v
+  let weights := BinaryArrayBatch.runWithChildWork (weightEntry v)
+  let costs := BinaryArrayBatch.runWithChildWork (costEntry D l es v)
+  let fees := [labels.1.2,weights.1.2,costs.1.2,adjacency.1.2,edges.1.2,nodes.1.2,8]
+  have msize : m ≤ dimension n := by
+    have measured : (buildWithControl D).1.1.size=(build D).1.size :=
+      congrArg (fun (r : Prepared D × ℕ) => r.1.size) (build_control_projection D)
+    change m = (build D).1.size at measured
+    exact measured.trans_le (size_le D)
+  have esize : es.length≤n*n := by
+    have exactEdges : es=EncodedEdgeGadget.edges D := edgesWithCost_value D
+    simpa only [exactEdges,pow_two] using edges_length D
+  have positive : m.size ≤ m := BinaryNaturalOperations.size_le_self m
+  have found := nodeVector_control_paid D l (keepLabelWithControl l es) correct
+    (fun x => ⟨keepLabel_paid l es x,keepLabel_control_paid l es x⟩)
+  have allNodes : nodes.2 ≤ nodeVectorControlBudget n ((n*n)*(incidentBudget n+4)+2)
+      (BinaryShortScan.controlBudget (n*n) 0 (incidentBudget n+4) (2*BinaryVectorAccess.budget n)) := by
+    refine found.trans ?_
+    unfold nodeVectorControlBudget
+    exact BinaryFilter.controlBudget_mono le_rfl (by gcongr)
+      (BinaryShortScan.controlBudget_mono esize le_rfl le_rfl le_rfl)
+  have adj : adjacency.2 ≤ adjacencyControlBudget n (dimension n) := by
+    refine (adjacencyMatrix_control_paid D l v).trans ?_
+    unfold adjacencyControlBudget matrixControlBudget BinaryArrayBatch.childCeiling BinaryVectorAccess.budget
+    gcongr
+  have weight : weights.2 ≤ BinaryArrayBatch.childCeiling (dimension n) (weightBudget n)
+      (BinaryVectorAccess.budget (dimension n)) := by
+    refine ((BinaryArrayBatch.runWithChildWork_paid (weightEntry v)
+      (fun i => weightField_paid (BinaryVectorAccess.read v i).1.val)
+      (fun i => BinaryVectorAccess.read_paid v i positive)).trans (BinaryArrayBatch.childBudget_le ..)).trans ?_
+    unfold BinaryArrayBatch.childCeiling BinaryVectorAccess.budget
+    gcongr
+  have cost : costs.2 ≤ BinaryArrayBatch.childCeiling (dimension n) (nodeCostBudget n (n*n) b)
+      (BinaryVectorAccess.budget (dimension n)+nodeCostControlBudget n (n*n) b) := by
+    have localCost (i : Fin m) : (costEntry D l es v i).2 ≤
+        BinaryVectorAccess.budget m+nodeCostControlBudget n es.length b :=
+      Nat.add_le_add (BinaryVectorAccess.read_paid v i positive)
+        (nodeCost_control_paid D l fit es (BinaryVectorAccess.read v i).1.val)
+    have legacyCost (i : Fin m) : (costEntry D l es v i).1.2 ≤ nodeCostBudget n es.length b := by
+      simp only [costEntry,nodeCost_projection]
+      exact nodeCost_paid D l fit es (BinaryVectorAccess.read v i).1.val
+    refine ((BinaryArrayBatch.runWithChildWork_paid (costEntry D l es v) legacyCost localCost).trans
+      (BinaryArrayBatch.childBudget_le ..)).trans ?_
+    simp only [BinaryArrayBatch.childCeiling,BinaryVectorAccess.budget,nodeCostBudget,nodeCostControlBudget,
+      priceFieldsControlBudget,priceFieldsStepBudget]
+    gcongr
+  have oldFee : fees.sum=(build D).2 := by
+    have measured := congrArg (fun (r : Prepared D × ℕ) => r.2) (build_control_projection D)
+    change (CachedScalarRead.sumMeasured fees).1=(build D).2 at measured
+    rwa [CachedScalarRead.sum_value] at measured
+  have width : fees.sum.size≤budget n b := by
+    rw [oldFee]
+    exact (BinaryNaturalOperations.size_le_self _).trans (build_paid D fit)
+  have fee := CachedScalarRead.sum_paid fees width
+  have labelsPaid := labels_control_paid D fit
+  have edgesPaid := edges_control_paid D
+  change (CachedScalarRead.sumMeasured fees).2≤7*(96*(budget n b+2)^2+4)+1 at fee
+  change labels.2≤_ at labelsPaid
+  change edges.2≤_ at edgesPaid
+  unfold controlBudget
+  change labels.2+edges.2+nodes.2+adjacency.2+weights.2+costs.2+(CachedScalarRead.sumMeasured fees).2≤_
+  dsimp only
+  omega
+
 theorem budget_mono {n m a b : ℕ} (h : n ≤ m) (w : a ≤ b) : budget n a ≤ budget m b := by
   simp only [budget,labelsBudget,ChargedEdgeDyadicLabels.labelBudget,ChargedEdgeDyadicLabels.checkBudget,
     nodeCostBudget,weightBudget,edgesBudget,nodeVectorBudget,incidentBudget,adjacencyBudget,adjacencyCellBudget,dimension]
@@ -466,6 +850,28 @@ theorem budget_eval (n b : Polynomial ℕ) (x : ℕ) :
     nodeCostBudget,weightBudget,edgesBudget,nodeVectorBudget,incidentBudget,adjacencyBudget,adjacencyCellBudget,dimension,
     Polynomial.eval_add,Polynomial.eval_mul,
     Polynomial.eval_pow,Polynomial.eval_one,Polynomial.eval_ofNat]
+
+attribute [local gcongr] BinaryFilter.controlBudget_mono BinaryShortScan.controlBudget_mono budget_mono
+
+set_option maxHeartbeats 1000000 in
+theorem controlBudget_mono {n m a b : ℕ} (size : n ≤ m) (width : a ≤ b) : controlBudget n a ≤ controlBudget m b := by
+  simp only [controlBudget,labelsControlBudget,labelCellBudget,edgesControlBudget,nodeVectorControlBudget,
+    adjacencyControlBudget,matrixControlBudget,BinaryArrayBatch.childCeiling,BinaryVectorAccess.budget,
+    incidentBudget,adjacencyCellBudget,weightBudget,nodeCostBudget,nodeCostControlBudget,
+    priceFieldsControlBudget,priceFieldsStepBudget,dimension,ChargedEdgeDyadicLabels.labelBudget,
+    ChargedEdgeDyadicLabels.checkBudget]
+  gcongr
+
+set_option maxHeartbeats 1000000 in
+theorem controlBudget_eval (n b : Polynomial ℕ) (x : ℕ) :
+    (controlBudget n b).eval x=controlBudget (n.eval x) (b.eval x) := by
+  simp only [controlBudget,labelsControlBudget,labelCellBudget,edgesControlBudget,nodeVectorControlBudget,
+    adjacencyControlBudget,matrixControlBudget,BinaryArrayBatch.childCeiling,BinaryVectorAccess.budget,
+    incidentBudget,adjacencyCellBudget,weightBudget,nodeCostBudget,nodeCostControlBudget,
+    priceFieldsControlBudget,priceFieldsStepBudget,dimension,ChargedEdgeDyadicLabels.labelBudget,
+    ChargedEdgeDyadicLabels.checkBudget,budget_eval,BinaryFilter.controlBudget_eval,BinaryShortScan.controlBudget_eval,
+    Polynomial.eval_add,Polynomial.eval_mul,Polynomial.eval_pow,Polynomial.eval_one,Polynomial.eval_zero,
+    Polynomial.eval_ofNat]
 
 theorem fields_fit {n b : ℕ} (D : Input n) (fit : InputFits D b) :
     VertexReductionWidths.InputFits (build D).1.data (n^2*(b+1)+n+1) := by

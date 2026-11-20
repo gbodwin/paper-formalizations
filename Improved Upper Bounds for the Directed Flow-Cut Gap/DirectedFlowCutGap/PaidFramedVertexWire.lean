@@ -13,19 +13,35 @@ open PhysicalAmplifiedVertexSolver (Result)
 private def addControls {n : ℕ} (paid : ℕ) (r : Result n) : Result n :=
   { r with roundingAndSelection := r.roundingAndSelection+paid }
 
-def run {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : BinaryFractionalGuesses.Input n)
-    (tape : Bits) : Read (Result n) :=
+private def runFromSource {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : BinaryFractionalGuesses.Input n)
+    (source : Option (PhysicalCoverReader.Plan n × ℕ × ℕ)) (tape : Bits) : Read (Result n) :=
   let controls := BinarySolverOuterControls.vertex n κ
-  match PhysicalSourceReadback.run D with
+  match source with
   | none => (none,controls.paid)
   | some (plan,dispatch,reader) =>
       let r := PaidVertexAmplification.runWithPlan D (PaidVertexRounding.runner mode) controls.draws controls.extra
         controls.confidence plan dispatch reader tape
       (r.1.map (addControls controls.paid),controls.paid+dispatch+reader+r.2)
 
+def run {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : BinaryFractionalGuesses.Input n)
+    (tape : Bits) : Read (Result n) := runFromSource κ mode D (PhysicalSourceReadback.run D) tape
+
+def runWithCacheWork {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : BinaryFractionalGuesses.Input n)
+    (tape : Bits) : Read (Result n) × ℕ :=
+  let source := PhysicalSourceReadback.runWithCacheCharge D
+  (runFromSource κ mode D source.1 tape,source.2)
+
+theorem runWithCacheWork_reference {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
+    (runWithCacheWork κ mode D tape).1=run κ mode D tape := rfl
+
+theorem run_cache_work {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode)
+    (D : BinaryFractionalGuesses.Input n) (tape : Bits) :
+    (runWithCacheWork κ mode D tape).2=(PhysicalSourceReadback.runWithCacheCharge D).2 := rfl
+
 theorem run_value {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : BinaryFractionalGuesses.Input n)
     (tape : Bits) : (run κ mode D tape).1=PhysicalAmplifiedBinaryVertex.vertex κ mode D tape := by
-  unfold run PhysicalAmplifiedBinaryVertex.vertex PhysicalAmplifiedVertexSolver.run
+  unfold run runFromSource PhysicalAmplifiedBinaryVertex.vertex PhysicalAmplifiedVertexSolver.run
   dsimp only
   cases sourceResult : PhysicalSourceReadback.run D with
   | none => rfl
@@ -45,7 +61,7 @@ theorem run_paid {n : ℕ} (κ : ℕ) (mode : ChargedVertexModes.Mode) (D : Bina
           (PaidVertexAmplification.runWithPlan D (PaidVertexRounding.runner mode) controls.draws controls.extra
             controls.confidence (PhysicalCoverReader.plan (BinaryFractionalGuesses.solveInput D).1) dispatch reader tape).2 := by
   obtain ⟨dispatch,reader,program,hd,hr⟩ := PhysicalSourceReadback.run_eq D
-  exact ⟨dispatch,reader,hd,hr,by simp only [run,program]⟩
+  exact ⟨dispatch,reader,hd,hr,by simp only [run,runFromSource,program]⟩
 
 def vertexWithCost (κ : ℕ) (mode : ChargedVertexModes.Mode) (source tape : Bits) : Read (Σ n, Result n) := do
   let ⟨n,D⟩ ← PhysicalSourceInputJoin.vertex source
