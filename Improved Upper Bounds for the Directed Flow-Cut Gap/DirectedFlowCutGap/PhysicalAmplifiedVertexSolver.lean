@@ -56,13 +56,18 @@ structure Result (n : ℕ) where
 
 def Result.observe {n : ℕ} (r : Result n) : Output n × Bits := (r.output,r.suffix)
 
+def runWithPlan {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Runner n)
+    (roundBound extra confidence : ℕ) (plan : PhysicalCoverReader.Plan n)
+    (dispatch readback : ℕ) (tape : Bits) : Option (Result n) :=
+  let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
+  (samples (fromPlanWith D setup.costs round setup.trials plan) (extra+1) tape).map fun (cuts,rest) =>
+    let (winner,paid) := ChargedAmplification.select D.costs extra cuts
+    ⟨winner,rest,dispatch,readback,paid+setup.paid⟩
+
 def run {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Runner n)
     (roundBound extra confidence : ℕ) (tape : Bits) : Option (Result n) :=
   (PhysicalSourceReadback.run D).bind fun (plan,dispatch,readback) =>
-    let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
-    (samples (fromPlanWith D setup.costs round setup.trials plan) (extra+1) tape).map fun (cuts,rest) =>
-      let (winner,paid) := ChargedAmplification.select D.costs extra cuts
-      ⟨winner,rest,dispatch,readback,paid+setup.paid⟩
+    runWithPlan D round roundBound extra confidence plan dispatch readback tape
 
 set_option maxHeartbeats 1600000 in
 theorem run_observe {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Runner n) (model : Rounding n)
@@ -92,7 +97,7 @@ theorem run_observe {n : ℕ} (D : BinaryFractionalGuesses.Input n) (round : Run
       ⟨(ChargedAmplification.select D.costs extra cuts).1,rest,paid,lookup,
         (ChargedAmplification.select D.costs extra cuts).2+
           (BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence).paid⟩ := by
-    simp only [run,source,Option.bind_some,sampled,T,G,plan,fromPlan,
+    simp only [run,source,Option.bind_some,runWithPlan,sampled,T,G,plan,fromPlan,
       BinaryAmplificationPreparation.costs_value,BinaryAmplificationPreparation.trials_value D]
   rw [native]
   change (sampled.map _).map Result.observe = (sampled.map _).map _

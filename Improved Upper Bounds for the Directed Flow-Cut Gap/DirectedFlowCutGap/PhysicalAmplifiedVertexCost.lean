@@ -170,7 +170,7 @@ theorem run_paid_on_rows {n B : ℕ} (D : BinaryFractionalGuesses.Input n) (roun
   let setup := BinaryAmplificationPreparation.prepare D.costs roundBound extra confidence
   have prep := BinaryAmplificationPreparation.prepare_paid D.costs roundBound extra confidence fits
     (x := n+B+roundBound+extra+confidence) (by omega) (by omega) (by omega) (by omega) (by omega)
-  simp only [PhysicalAmplifiedVertexSolver.run,source,Option.bind_some,
+  simp only [PhysicalAmplifiedVertexSolver.run,source,Option.bind_some,PhysicalAmplifiedVertexSolver.runWithPlan,
     BinaryAmplificationPreparation.costs_value,BinaryAmplificationPreparation.trials_value D] at h
   change ((PhysicalAmplifiedVertexSolver.samples one (extra+1) tape).map fun (cuts,rest) =>
     ⟨(ChargedAmplification.select D.costs extra cuts).1,rest,dispatch,lookup,

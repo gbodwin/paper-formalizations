@@ -54,6 +54,7 @@ The [amplifier and controller boundary](verification/BINARY_ROUND_BOUNDARY_20261
 The [dyadic gadget assembly](verification/BINARY_GADGET_LAYOUT_20261119.md) charges the actual arc collection, retained-label selection, adjacency matrix and price tests while preserving the exact reference layout.
 The [line projections and exact-weight family](verification/BINARY_EDGE_PROJECTIONS_20261120.md) verify the charged line matrix and each edge boundary, and give a near-linear exact-weight horizon when the total of the tiny weights is sufficiently small.
 The [weight-budget proof](verification/WEAK_DECOMPOSITION_WEIGHT_BUDGET_20261120.md) proves monotonicity in the exact total, gives two more edge horizons at the original factor, and measures the original edge and weak-cut wire matrices.
+The [direct binary edge entry](verification/DIRECT_BINARY_EDGE_WIRE_20261120.md) computes the cover plan from the original edge wire and passes it to the same physical rounding and selection. Lean proves identical results and unread tape for every input and both modes.
 The [exact marginal law](verification/WEAK_DECOMPOSITION_EXACT_MARGINALS_20261119.md) uses finite convex separation to obtain loss α from the original all-cost factor in both models, with validity on the whole support.
 The manifest `verification/component-verification.json` records an earlier
 component checkpoint.

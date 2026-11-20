@@ -1,0 +1,7 @@
+# Direct binary execution of the original edge wire
+
+`DirectBinaryEdgeWire.edgeWithCost` parses the original wire, assembles the measured line graph, and calls the charged binary fractional solver. It decodes the actual cover rows, then uses the same continuation for rounding and selection as the fixed-instruction path. `wire_observe` proves equality of the cut or witness, unread tape, and failure behavior for every wire, tape, confidence, and mode. `complete` transfers validity and the tape-suffix bound on sufficient input tapes.
+
+`run_prefix_paid` bounds the direct solver charge by the existing explicit fractional-solver bound. It also bounds readback using the certified count and stored binary widths of the reached output rows. `run_rounding_polynomial` bounds the recorded rounding and selection charges. The fixed-instruction entry remains available with its own execution and charge proofs.
+
+The positive two-vertex fixture starts from a 44-bit original edge wire and cuts the single demanded arc. It preserves the tape `[true,false,true]`. The recorded charges are 625 for parsing, 1,728,762,983 for the direct fractional solve, 22,941,270 for row readback, and 31,975,505 for the remaining phases. The fixture also checks counted rejection of a trailing bit. These counters include modeled structural operations. A width-sensitive bit-cost proof for the entire pipeline remains open.

@@ -372,6 +372,7 @@ import DirectedFlowCutGap.DemandRecordConstruction
 import DirectedFlowCutGap.DemandSelectedPayload
 import DirectedFlowCutGap.DemandSelectionOrigin
 import DirectedFlowCutGap.DemandSelectionRefinement
+import DirectedFlowCutGap.DirectBinaryEdgeWire
 import DirectedFlowCutGap.DyadicEdgeWeights
 import DirectedFlowCutGap.EarlyStopRetainedFlow
 import DirectedFlowCutGap.EdgeFlow
