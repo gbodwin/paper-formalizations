@@ -14,7 +14,7 @@ candidate functions.
 The corresponding charge theorems cover the price conversion,
 repricing, arithmetic and binary shortest-path and pivot calls of the
 actual covering recurrence, and the emitted lengths. The input
-budget widths control the widths of the repriced values; the
+budget widths control the widths of the repriced values. The
 covering step bound uses the existing fuel. The candidate-list
 proofs give the exact same ordered list for both graphs and bound
 the sum over all generated pairs. For vertices, the proof also
