@@ -4,8 +4,9 @@
 and zero length to the others. A demand is separated exactly when the
 distance under these lengths is at least one, including an unreachable
 demand. The verified binary shortest-path routine computes these distances
-with each demand's endpoints excluded. The returned score divides original
-vertex cost by the number of distinct separated demands.
+with each demand's endpoints excluded. The score divides original vertex
+cost by the number of separated entries. For distinct input pairs this is
+the number of separated demands in the set-based objective.
 
 `AmplifiedNormalizedVertexSparsest.run` solves the exact normalized vertex
 program once and computes the threshold and mode from those same lengths.
