@@ -1,0 +1,11 @@
+# Measured preparation for the budgeted sparsest-cut solvers
+
+`MeasuredFreeResources.edge_value` and `vertex_value` find the same first demand that can be separated at zero price. The edge entry masks out free arcs, then uses its ordered binary path scan. The vertex entry uses unit lengths on free internal vertices and excludes each demand's endpoints. The checks count the reached binary comparisons, conversions and distance calls. A successful free edge check also creates the same length matrix. A successful free vertex check returns its mask immediately and keeps the entire tape.
+
+`MeasuredSparsestDistances.edge_value` and `vertex_value` produce the previous rational distance table in raw binary rational form. The proofs give polynomial bounds on its field widths and modeled arithmetic. A missing path remains separate from a finite distance of zero. The vertex calculation accounts for comparing each tail to the demand source.
+
+`MeasuredHarmonicChoice.choose_value` uses the same threshold-times-count objective, including equality at the threshold. The binary scores preserve the first maximizing index. `MeasuredSparsestThreshold.edge_value` and `vertex_value` select the same first missing pair, all-zero result, or positive threshold. `MeasuredThresholdScaling.edge_value` and `vertex_value` canonicalize the selected threshold once and give the exact raw rounding input.
+
+`MeasuredPreparedSparsestRound.edge_value` and `vertex_value` preserve the result and unread suffix of the original amplified solvers for every supplied tape. The preparation charge now includes the free checks, optimizer, distance table, harmonic threshold selection and input scaling. Its bound uses the original vertex and demand counts and the stored price width. The deterministic tape execution, graph and vector storage, and the physical representation of the reported counters remain separate obligations. The existing probability statements apply with their original hypotheses on reachable demands, distinct pairs, positive normalization and the stated fair-bit budget.
+
+`MeasuredPreparedSparsestSmoke.lean` exercises a harmonic tie, a first missing path, and both positive and free branches for the edge and vertex solvers.
