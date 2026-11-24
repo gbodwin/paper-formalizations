@@ -224,4 +224,160 @@ theorem rational_to_real {n : ℕ} (rows : List (Row n)) (x : Fin n → ℚ) (h 
   simpa only [Row.eval,Rat.cast_id,Rat.cast_add,Rat.cast_sum,Rat.cast_mul] using
     (Rat.cast_nonneg.mpr holds : (0 : ℝ) ≤ ((r.eval x : ℚ) : ℝ))
 
+/-! A nonnegative objective is the last retained coordinate. Project all
+other coordinates, select its smallest permitted value, and reconstruct
+the eliminated variables with the same exact rational extension. -/
+
+private def lastProjection : (n : ℕ) → List (Row (n+1)) → List (Row 1)
+  | 0,rows => rows
+  | n+1,rows => lastProjection n (reduce rows)
+
+private def point {K : Type*} (q : K) : Fin 1 → K := fun _ => q
+
+private theorem lastProjection_complete {K : Type*} [Field K] [LinearOrder K] [IsStrictOrderedRing K]
+    (n : ℕ) (rows : List (Row (n+1))) (x : Fin (n+1) → K) (valid : Satisfies rows x) :
+    Satisfies (lastProjection n rows) (point (x (Fin.last n))) := by
+  induction n with
+  | zero =>
+    have same : point (x (Fin.last 0))=x := by
+      funext i
+      have unique : i=Fin.last 0 := Fin.ext (by have inside := i.isLt; change i.val<1 at inside; omega)
+      exact congrArg x unique.symm
+    simpa only [lastProjection,same] using valid
+  | succ n ih =>
+    have smaller := reduce_sound rows (x 0) (Fin.tail x) (by simpa only [Fin.cons_self_tail] using valid)
+    change Satisfies (lastProjection n (reduce rows)) (point (x (Fin.last n).succ))
+    exact ih (reduce rows) (Fin.tail x) smaller
+
+private def restoreLast : (n : ℕ) → List (Row (n+1)) → Vector ℚ 1 → Vector ℚ (n+1)
+  | 0,_,remaining => remaining
+  | n+1,rows,remaining => extendStored rows (restoreLast n (reduce rows) remaining)
+
+private theorem restoreLast_sound (n : ℕ) (rows : List (Row (n+1))) (q : Vector ℚ 1)
+    (valid : Satisfies (lastProjection n rows) q.get) :
+    Satisfies rows (restoreLast n rows q).get ∧ (restoreLast n rows q).get (Fin.last n)=q.get 0 := by
+  induction n with
+  | zero => exact ⟨valid,rfl⟩
+  | succ n ih =>
+    let next := restoreLast n (reduce rows) q
+    obtain ⟨good,unchanged⟩ := ih (reduce rows) valid
+    change Satisfies rows (extendStored rows next).get ∧
+      (extendStored rows next).get (Fin.last n).succ=q.get 0
+    rw [extendStored_value]
+    exact ⟨extend_sound rows next.get good,unchanged⟩
+
+private def positiveEndpoints (rows : List (Row 1)) : List ℚ :=
+  (lowerRows rows).map fun r => -r.constant/r.coeff 0
+
+private def leastPoint (rows : List (Row 1)) : ℚ :=
+  max 0 ((positiveEndpoints rows).max?.getD 0)
+
+private theorem eval_point {K : Type*} [Field K] (r : Row 1) (q : K) :
+    r.eval (point q)=(r.constant : K)+(r.coeff 0 : K)*q := by
+  simp only [Row.eval,Fin.sum_univ_one,point]
+
+private theorem all_endpoints_le {K : Type*} [Field K] [LinearOrder K] [IsStrictOrderedRing K]
+    (rows : List (Row 1)) (q : K) (valid : Satisfies rows (point q)) :
+    ∀ b∈positiveEndpoints rows, (b : K)≤q := by
+  intro b member
+  obtain ⟨r,inside,rfl⟩ := List.mem_map.mp member
+  obtain ⟨within,pos⟩ := mem_lowerRows.mp inside
+  have equation := valid r within
+  rw [eval_point] at equation
+  simp only [Rat.cast_div,Rat.cast_neg]
+  apply (div_le_iff₀ (Rat.cast_pos.mpr pos)).mpr
+  linarith only [equation]
+
+private theorem least_le {K : Type*} [Field K] [LinearOrder K] [IsStrictOrderedRing K]
+    (rows : List (Row 1)) (q : K) (nonneg : 0≤q) (valid : Satisfies rows (point q)) :
+    (leastPoint rows : K)≤q := by
+  have endpoints := all_endpoints_le rows q valid
+  unfold leastPoint
+  rw [Rat.cast_max,Rat.cast_zero]
+  apply max_le nonneg
+  cases hm : (positiveEndpoints rows).max? with
+  | none => simpa only [hm,Option.getD_none,Rat.cast_zero] using nonneg
+  | some p => simpa only [hm,Option.getD_some] using endpoints p (List.max?_eq_some_iff.mp hm).1
+
+private theorem endpoint_reached (rows : List (Row 1)) (b : ℚ) (inside : b∈positiveEndpoints rows) :
+    b≤leastPoint rows := by
+  unfold leastPoint
+  cases h : (positiveEndpoints rows).max? with
+  | none =>
+    rw [List.max?_eq_none_iff.mp h] at inside
+    exact (List.not_mem_nil inside).elim
+  | some top =>
+    exact ((List.max?_eq_some_iff.mp h).2 b inside).trans (le_max_right _ _)
+
+private theorem least_valid {K : Type*} [Field K] [LinearOrder K] [IsStrictOrderedRing K]
+    (rows : List (Row 1)) (q : K) (nonnegative : 0≤q) (valid : Satisfies rows (point q)) :
+    Satisfies rows (point (leastPoint rows)) := by
+  intro r within
+  simp only [eval_point,Rat.cast_id]
+  by_cases pos : 0<r.coeff 0
+  · have endpoint := endpoint_reached rows (-r.constant/r.coeff 0)
+      (List.mem_map.mpr ⟨r,mem_lowerRows.mpr ⟨within,pos⟩,rfl⟩)
+    have bound := (div_le_iff₀ pos).mp endpoint
+    rw [mul_comm] at bound
+    linarith only [bound]
+  · have qValid := valid r within
+    rw [eval_point] at qValid
+    have nonpos : (r.coeff 0 : K)≤0 := Rat.cast_nonpos.mpr (le_of_not_gt pos)
+    have next := mul_le_mul_of_nonpos_left (least_le rows q nonnegative valid) nonpos
+    have cast : (0 : K)≤(r.constant : K)+(r.coeff 0 : K)*(leastPoint rows : K) := by linarith only [qValid,next]
+    have casted : (0 : K)≤((r.constant+r.coeff 0*leastPoint rows : ℚ) : K) := by
+      rw [Rat.cast_add,Rat.cast_mul]
+      exact cast
+    exact Rat.cast_nonneg.mp casted
+
+def minimizeLast (n : ℕ) (rows : List (Row (n+1))) : Option (ℚ × (Fin (n+1) → ℚ)) :=
+  let projected := lastProjection n rows
+  let q := leastPoint projected
+  if projected.all (fun r => 0≤r.eval (point q)) then
+    let x := restoreLast n rows (Vector.ofFn (point q))
+    some (q,x.get)
+  else none
+
+theorem minimizeLast_sound (n : ℕ) (rows : List (Row (n+1))) {q : ℚ} {y : Fin (n+1) → ℚ}
+    (returned : minimizeLast n rows=some (q,y)) :
+    0≤q ∧ y (Fin.last n)=q ∧ Satisfies rows y := by
+  unfold minimizeLast at returned
+  dsimp only at returned
+  split at returned
+  · rename_i checked
+    obtain ⟨rfl,rfl⟩ := Prod.mk.inj (Option.some.inj returned)
+    let q := leastPoint (lastProjection n rows)
+    let v := Vector.ofFn (point q)
+    have actual : v.get=point q := by funext i; exact Vector.getElem_ofFn i.isLt
+    have valid : Satisfies (lastProjection n rows) v.get := by
+      rw [actual]
+      intro r within
+      exact decide_eq_true_eq.mp (List.all_eq_true.mp checked r within)
+    obtain ⟨yes,last⟩ := restoreLast_sound n rows v valid
+    rw [actual] at last
+    exact ⟨le_max_left _ _,last,yes⟩
+  · cases returned
+
+theorem minimizeLast_optimal {K : Type*} [Field K] [LinearOrder K] [IsStrictOrderedRing K]
+    (n : ℕ) (rows : List (Row (n+1))) {q : ℚ} {y : Fin (n+1) → ℚ}
+    (returned : minimizeLast n rows=some (q,y)) (x : Fin (n+1) → K)
+    (nonnegative : 0≤x (Fin.last n)) (valid : Satisfies rows x) : (q : K)≤x (Fin.last n) := by
+  unfold minimizeLast at returned
+  dsimp only at returned
+  split at returned
+  · obtain ⟨rfl,rfl⟩ := Prod.mk.inj (Option.some.inj returned)
+    exact least_le _ _ nonnegative (lastProjection_complete n rows x valid)
+  · cases returned
+
+theorem minimizeLast_complete {K : Type*} [Field K] [LinearOrder K] [IsStrictOrderedRing K]
+    (n : ℕ) (rows : List (Row (n+1))) (x : Fin (n+1) → K)
+    (nonnegative : 0≤x (Fin.last n)) (valid : Satisfies rows x) :
+    (minimizeLast n rows).isSome := by
+  have possible := least_valid _ _ nonnegative (lastProjection_complete n rows x valid)
+  have checked : (lastProjection n rows).all (fun r => 0≤r.eval (point (leastPoint (lastProjection n rows)))) := by
+    apply List.all_eq_true.mpr
+    intro r within
+    exact decide_eq_true_eq.mpr (possible r within)
+  simp only [minimizeLast,checked,ite_true,Option.isSome_some]
+
 end DirectedFlowCutGap.RationalFourierMotzkin

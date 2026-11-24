@@ -781,6 +781,9 @@ import DirectedFlowCutGap.MultiplicativeWeights
 import DirectedFlowCutGap.NNRatStoredBounds
 import DirectedFlowCutGap.NaturalFractionExecution
 import DirectedFlowCutGap.NaturalFractionProgram
+import DirectedFlowCutGap.NormalizedEdgeLP
+import DirectedFlowCutGap.NormalizedEdgeLPRound
+import DirectedFlowCutGap.NormalizedOptimalSparsity
 import DirectedFlowCutGap.NormalizedRowBounds
 import DirectedFlowCutGap.NormalizedRowExecution
 import DirectedFlowCutGap.NormalizedRowProgram
@@ -1049,6 +1052,7 @@ import DirectedFlowCutGap.RationalSparsestEdgeDistances
 import DirectedFlowCutGap.RationalSparsestEdgeExpectation
 import DirectedFlowCutGap.RationalSparsestEdgeRound
 import DirectedFlowCutGap.RationalSparsestEdgeThreshold
+import DirectedFlowCutGap.RationalSparsestFairTape
 import DirectedFlowCutGap.RationalWeakFamily
 import DirectedFlowCutGap.RationalWeakHorizon
 import DirectedFlowCutGap.RawGraphControllerLaw
@@ -1166,6 +1170,7 @@ import DirectedFlowCutGap.SourceRowTableProgram
 import DirectedFlowCutGap.SourceRowValidationProgram
 import DirectedFlowCutGap.SparsestEdgeBridge
 import DirectedFlowCutGap.SparsestEdgeCorollary
+import DirectedFlowCutGap.SparsestNormalizedPotentials
 import DirectedFlowCutGap.SparsestVertexBridge
 import DirectedFlowCutGap.SparsestVertexCorollary
 import DirectedFlowCutGap.SubpolynomialBounds
