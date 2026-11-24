@@ -144,7 +144,7 @@ theorem chosen_le (hn : 0 < n) (A : Adjacency n) (c : Weights n)
     simp only [found, Option.mem_some_iff]
   exact (List.le_of_mem_argmin candidate selected).trans (locally_best A c w m mode)
 
-private theorem scale_bound (n m : ℕ) (a b M N : ℝ≥0)
+theorem scale_bound (n m : ℕ) (a b M N : ℝ≥0)
     (cost : a ≤ 12*b) (mass : M ≤ 12*N) (mode : ChargedVertexModes.Mode) :
     scale n m a M mode ≤ 48 * scale n m b N mode := by
   have C : (a : ℝ) ≤ 12*(b : ℝ) := by exact_mod_cast cost
