@@ -711,4 +711,412 @@ theorem fastThinViolationWithDenseFlowWork_spec {n : ℕ} (G : Arcs (Fin n)) (d 
     simp only [Fintype.card_fin]
     rfl
 
+private theorem FinArcFlowTable.read_ext {n : ℕ} {a b : FinArcFlowTable n} (same : a.read = b.read) : a = b := by
+  apply Subtype.ext
+  refine Array.ext (a.property.trans b.property.symm) ?_
+  intro pos valid _
+  let index : Fin (n*n) := ⟨pos,a.property ▸ valid⟩
+  let arc : Fin n × Fin n := finProdFinEquiv.symm index
+  have address : (finFlowPosition arc).val = pos := congrArg Fin.val (finProdFinEquiv.apply_symm_apply index)
+  simpa only [FinArcFlowTable.read,address] using congrFun same arc
+
+private def doublePositiveCapacityWithWordWork : ℕ → ℤ → ℕ → ℤ × ℕ
+  | 0, value, work => (value,work+2)
+  | k+1, value, work => doublePositiveCapacityWithWordWork k (value+value) (work+4)
+
+private theorem doublePositiveCapacityWithWordWork_spec (k : ℕ) (value : ℤ) (work : ℕ) :
+    doublePositiveCapacityWithWordWork k value work = (value*2^k,work+4*k+2) := by
+  induction k generalizing value work with
+  | zero => simp [doublePositiveCapacityWithWordWork]
+  | succ k ih =>
+    rw [doublePositiveCapacityWithWordWork,ih,pow_succ]
+    apply Prod.ext
+    · dsimp only
+      ring
+    · dsimp only
+      omega
+
+private def writeThinCapacityList {n : ℕ} (load : (Fin n × Fin n) → ℕ × ℕ)
+    (table : FinArcFlowTable n) (edges : List (Fin n × Fin n)) (work : ℕ) : FinArcFlowTable n × ℕ :=
+  match edges with
+  | [] => (table,work+2)
+  | arc :: tail =>
+    let read := load arc
+    let power := doublePositiveCapacityWithWordWork read.1 1 0
+    let next := table.addAt arc power.1
+    writeThinCapacityList load next tail (work+read.2+power.2+11)
+
+private theorem writeThinCapacityList_spec {n : ℕ} (load : (Fin n × Fin n) → ℕ × ℕ)
+    (table : FinArcFlowTable n) (edges : List (Fin n × Fin n)) (work : ℕ) :
+    let result := writeThinCapacityList load table edges work
+    (∀ e, result.1.read e = table.read e+(edges.count e : ℤ)*2^(load e).1) ∧
+      result.2 = work+2+(edges.map (fun e => (load e).2+4*(load e).1+13)).sum := by
+  induction edges generalizing table work with
+  | nil => simp [writeThinCapacityList]
+  | cons arc tail ih =>
+    let read := load arc
+    simp only [writeThinCapacityList,doublePositiveCapacityWithWordWork_spec,one_mul,Nat.zero_add]
+    obtain ⟨values,tally⟩ := ih (table.addAt arc (2^read.1)) (work+read.2+(4*read.1+2)+11)
+    refine ⟨?_,?_⟩
+    · intro e
+      rw [values,FinArcFlowTable.read_addAt,List.count_cons]
+      by_cases eq : e = arc
+      · subst e
+        simp [read]
+        ring
+      · have h : (arc == e) = false := beq_eq_false_iff_ne.mpr (Ne.symm eq)
+        simp [eq,h]
+    · rw [tally,List.map_cons,List.sum_cons]
+      change work+read.2+(4*read.1+2)+11+2+_ = work+2+(read.2+4*read.1+13+_)
+      omega
+
+private theorem writeThinCapacityList_perm {n : ℕ} (load : (Fin n × Fin n) → ℕ × ℕ)
+    (table : FinArcFlowTable n) (a b : List (Fin n × Fin n)) (same : a.Perm b) :
+    writeThinCapacityList load table a 0 = writeThinCapacityList load table b 0 := by
+  obtain ⟨valuesA,workA⟩ := writeThinCapacityList_spec load table a 0
+  obtain ⟨valuesB,workB⟩ := writeThinCapacityList_spec load table b 0
+  apply Prod.ext
+  · apply FinArcFlowTable.read_ext
+    funext e
+    rw [valuesA,valuesB,same.count_eq]
+  · rw [workA,workB,(same.map _).sum_eq]
+
+/-- Initialize the pair table and evaluate the positive capacities once on the stored active arcs. -/
+def prepareThinCapacitiesWithWordWork {n : ℕ} (edges : Arcs (Fin n))
+    (load : (Fin n × Fin n) → ℕ × ℕ) : FinArcFlowTable n × ℕ :=
+  let start := zeroFinArcFlowTableWithWordWork n
+  let result := Quotient.lift (fun rows => writeThinCapacityList load start.1 rows 0)
+    (writeThinCapacityList_perm load start.1) edges.val
+  (result.1,start.2+result.2+4)
+
+private theorem list_sum_work_le {A : Type*} (rows : List A) (work : A → ℕ) (B : ℕ)
+    (each : ∀ r ∈ rows, work r ≤ B) : (rows.map work).sum ≤ rows.length*B := by
+  induction rows with
+  | nil => simp
+  | cons r tail ih =>
+    have head := each r List.mem_cons_self
+    have rest := ih (fun e h => each e (List.mem_cons_of_mem _ h))
+    simp only [List.map_cons,List.sum_cons,List.length_cons,Nat.add_mul,Nat.one_mul]
+    omega
+
+theorem prepareThinCapacitiesWithWordWork_spec {n : ℕ} (edges : Arcs (Fin n))
+    (load : (Fin n × Fin n) → ℕ × ℕ) (L B : ℕ)
+    (reads : ∀ e ∈ edges, (load e).1 ≤ L ∧ (load e).2 ≤ B) :
+    let result := prepareThinCapacitiesWithWordWork edges load
+    result.1.read = (fun e => if e ∈ edges then 2^(load e).1 else 0) ∧
+      result.2 ≤ 4*(n*n)+edges.card*(B+4*L+13)+11 := by
+  let start := zeroFinArcFlowTableWithWordWork n
+  obtain ⟨startValues,startWork⟩ := zeroFinArcFlowTableWithWordWork_spec n
+  obtain ⟨values,nodup⟩ := edges
+  revert reads nodup
+  refine Quotient.inductionOn values ?_
+  intro rows nodup reads
+  have simple : rows.Nodup := by simpa using nodup
+  have members : (⟨(rows : Multiset _),nodup⟩ : Arcs (Fin n)) = rows.toFinset := by ext e; exact List.mem_toFinset.symm
+  obtain ⟨exactValues,meter⟩ := writeThinCapacityList_spec load start.1 rows 0
+  let edges₀ : Arcs (Fin n) := ⟨(rows : Multiset _),nodup⟩
+  have listed : edges₀ = rows.toFinset := members
+  change (writeThinCapacityList load start.1 rows 0).1.read = (fun e => if e ∈ edges₀ then 2^(load e).1 else 0) ∧
+    start.2+(writeThinCapacityList load start.1 rows 0).2+4 ≤ 4*(n*n)+edges₀.card*(B+4*L+13)+11
+  simp only [listed]
+  refine ⟨?_,?_⟩
+  · funext e
+    rw [exactValues,show start.1.read = (fun _ => 0) from startValues]
+    simp only [List.mem_toFinset,zero_add]
+    by_cases member : e ∈ rows
+    · simp [member,List.count_eq_one_of_mem simple member]
+    · simp [member,List.count_eq_zero_of_not_mem member]
+  · rw [meter,show start.2 = 4*(n*n)+5 from startWork,List.toFinset_card_of_nodup simple]
+    have each (e : Fin n × Fin n) (member : e ∈ rows) : (load e).2+4*(load e).1+13 ≤ B+4*L+13 := by
+      have inside : e ∈ (⟨(rows : Multiset _),nodup⟩ : Arcs (Fin n)) := members.symm ▸ List.mem_toFinset.mpr member
+      obtain ⟨exp,steps⟩ := reads e inside
+      omega
+    have sum := list_sum_work_le rows (fun e => (load e).2+4*(load e).1+13) (B+4*L+13) each
+    omega
+
+theorem prepareThinCapacitiesWithWordWork_eq {n : ℕ} (edges : Arcs (Fin n))
+    (load : (Fin n × Fin n) → ℕ × ℕ) :
+    (prepareThinCapacitiesWithWordWork edges load).1.read = (fun e => if e ∈ edges then 2^(load e).1 else 0) :=
+  (prepareThinCapacitiesWithWordWork_spec edges load (edges.sup fun e => (load e).1)
+    (edges.sup fun e => (load e).2)
+    (fun _ present => ⟨Finset.le_sup (f := fun e => (load e).1) present,
+      Finset.le_sup (f := fun e => (load e).2) present⟩)).1
+
+@[inline] private def FinArcFlowTable.readAt {n : ℕ} (table : FinArcFlowTable n)
+    (index : Fin (n*n)) : ℤ :=
+  table.val[index.val]'(by rw [table.property]; exact index.isLt)
+
+private theorem FinArcFlowTable.readAt_eq {n : ℕ} (table : FinArcFlowTable n) (index : Fin (n*n)) :
+    table.readAt index = table.read (finProdFinEquiv.symm index) := by
+  change table.readAt index = table.readAt (finFlowPosition (finProdFinEquiv.symm index))
+  have same : finFlowPosition (finProdFinEquiv.symm index) = index :=
+    finProdFinEquiv.apply_symm_apply index
+  rw [same]
+
+private def residualIndexedFilter {n : ℕ} (capacity flow : FinArcFlowTable n)
+    (positions : List (Fin (n*n))) (kept : List (Fin n × Fin n)) (work : ℕ) :
+    List (Fin n × Fin n) × ℕ :=
+  match positions with
+  | [] => (kept,work+2)
+  | i :: tail =>
+    let keep := flow.readAt i < capacity.readAt i
+    let next := if keep then (i.divNat,i.modNat) :: kept else kept
+    residualIndexedFilter capacity flow tail next (work+16)
+
+private theorem residualIndexedFilter_spec {n : ℕ} (capacity flow : FinArcFlowTable n)
+    (positions : List (Fin (n*n))) (kept : List (Fin n × Fin n)) (work : ℕ) :
+    let result := residualIndexedFilter capacity flow positions kept work
+    result.1 = ((positions.filter (fun i => decide (flow.readAt i < capacity.readAt i))).map
+      finProdFinEquiv.symm).reverse++kept ∧ result.2 = work+16*positions.length+2 := by
+  induction positions generalizing kept work with
+  | nil => simp [residualIndexedFilter]
+  | cons i tail ih =>
+    by_cases keep : flow.readAt i < capacity.readAt i
+    · simp only [residualIndexedFilter,keep,ite_true,List.filter_cons,decide_true,
+        List.map_cons,List.reverse_cons]
+      obtain ⟨shape,wall⟩ := ih (finProdFinEquiv.symm i :: kept) (work+16)
+      exact ⟨shape.trans (by rw [List.append_assoc];rfl), wall.trans (by simp only [List.length_cons]; omega)⟩
+    · simp only [residualIndexedFilter,keep,ite_false,List.filter_cons,decide_false]
+      obtain ⟨shape,wall⟩ := ih kept (work+16)
+      exact ⟨shape,wall.trans (by simp only [List.length_cons]; omega)⟩
+
+/-- Reserve the residual-list work for one pass over all indexed pairs. -/
+def residualArcsWithArrayReads {n : ℕ} (capacity flow : FinArcFlowTable n)
+    (positions : List (Fin (n*n))) (simple : positions.Nodup) : Arcs (Fin n) × ℕ :=
+  let scanned := residualIndexedFilter capacity flow positions [] 2
+  have same := (residualIndexedFilter_spec capacity flow positions [] 2).1
+  have unique : scanned.1.Nodup := by
+    rw [same,List.append_nil,List.nodup_reverse]
+    exact (simple.filter _).map finProdFinEquiv.symm.injective
+  (⟨(scanned.1 : Multiset _),by simpa using unique⟩,scanned.2)
+
+theorem residualArcsWithArrayReads_spec {n : ℕ} (capacity flow : FinArcFlowTable n)
+    (positions : List (Fin (n*n))) (simple : positions.Nodup) (coverage : ∀ i, i ∈ positions) :
+    let result := residualArcsWithArrayReads capacity flow positions simple
+    result.1 = residualArcs capacity.read flow.read ∧ result.2 = 16*(n*n)+4 := by
+  let scanned := residualIndexedFilter capacity flow positions [] 2
+  obtain ⟨value,tally⟩ := residualIndexedFilter_spec capacity flow positions [] 2
+  have len : positions.length = n*n := by
+    have count : positions.toFinset = univ := eq_univ_of_forall (fun i => List.mem_toFinset.mpr (coverage i))
+    simpa only [List.toFinset_card_of_nodup simple,card_univ,Fintype.card_fin] using congrArg Finset.card count
+  refine ⟨?_,?_⟩
+  · ext e
+    change e ∈ scanned.1 ↔ e ∈ residualArcs capacity.read flow.read
+    change scanned.1 = _ at value
+    rw [value]
+    simp only [List.append_nil,List.mem_reverse,List.mem_map,List.mem_filter,decide_eq_true_eq,
+      residualArcs,mem_filter,mem_univ,true_and]
+    constructor
+    · rintro ⟨i,⟨_,h⟩,rfl⟩
+      simpa only [FinArcFlowTable.readAt_eq] using h
+    · intro residual
+      refine ⟨finProdFinEquiv e,⟨coverage _,?_⟩,finProdFinEquiv.symm_apply_apply e⟩
+      simpa only [FinArcFlowTable.readAt_eq,finProdFinEquiv.symm_apply_apply] using residual
+  · change scanned.2 = _
+    rw [tally,len]
+    omega
+
+private def tabulateFinRowsLoop {A : Type*} (n : ℕ) (row : Fin n → A) :
+    (k : ℕ) → k ≤ n → List A → ℕ → List A × ℕ
+  | 0, _, acc, work => (acc,work+2)
+  | k+1, bound, acc, work =>
+    let entry := row ⟨k,Nat.lt_of_succ_le bound⟩
+    tabulateFinRowsLoop n row k (Nat.le_of_succ_le bound) (entry::acc) (work+7)
+
+private theorem tabulateFinRowsLoop_spec {A : Type*} (n : ℕ) (row : Fin n → A) (k : ℕ)
+    (bound : k ≤ n) (acc : List A) (work : ℕ) :
+    tabulateFinRowsLoop n row k bound acc work =
+      ((List.finRange k).map (fun i => row ⟨i.val,Nat.lt_of_lt_of_le i.isLt bound⟩) ++ acc,work+7*k+2) := by
+  induction k generalizing acc work with
+  | zero => simp [tabulateFinRowsLoop]
+  | succ k ih =>
+    rw [tabulateFinRowsLoop,ih,List.finRange_succ_last,List.map_append,List.map_map]
+    refine Prod.ext ?_ (by omega)
+    simp only [List.map_cons,List.map_nil,List.append_assoc,List.singleton_append]
+    rfl
+
+/-- Construct each of the supplied index rows once. The tally covers the
+loop and list construction, with the supplied row operation charged separately. -/
+def tabulateFinRowsWithWordWork {A : Type*} (n : ℕ) (row : Fin n → A) : List A × ℕ :=
+  tabulateFinRowsLoop n row n (Nat.le_refl n) [] 2
+
+theorem tabulateFinRowsWithWordWork_spec {A : Type*} (n : ℕ) (row : Fin n → A) :
+    tabulateFinRowsWithWordWork n row = ((List.finRange n).map row,7*n+4) := by
+  rw [tabulateFinRowsWithWordWork,tabulateFinRowsLoop_spec]
+  exact Prod.ext (by simp) (by omega)
+
+
+private abbrev FinPairAddresses (n : ℕ) :=
+  {indices : List (Fin (n*n)) // indices.Nodup ∧ ∀ i, i ∈ indices}
+
+private def prepareFinPairAddresses (n : ℕ) : FinPairAddresses n × ℕ :=
+  let rows := tabulateFinRowsWithWordWork (n*n) id
+  have exactRows : rows.1 = List.finRange (n*n) := by
+    simpa only [List.map_id] using congrArg Prod.fst (tabulateFinRowsWithWordWork_spec (n*n) id)
+  (⟨rows.1, by rw [exactRows]; exact ⟨List.nodup_finRange _, fun i => List.mem_finRange i⟩⟩,rows.2)
+
+private theorem prepareFinPairAddresses_work (n : ℕ) :
+    (prepareFinPairAddresses n).2 = 7*(n*n)+4 :=
+  congrArg Prod.snd (tabulateFinRowsWithWordWork_spec (n*n) id)
+
+private def unitAugmentationsWithIndexedResidualWork {n : ℕ} (capacity : FinArcFlowTable n)
+    (positions : FinPairAddresses n) (s t : Fin n) : ℕ → FinArcFlowTable n →
+      (FinArcFlowTable n × ℕ) × ℕ × ℕ
+  | 0, table => ((table,0),0,2)
+  | fuel+1, table =>
+    let graph := residualArcsWithArrayReads capacity table positions.val positions.property.1
+    let path := routePathWithSearchWork graph.1 s t
+    let search := n^2+path.2.1+path.2.2
+    match path.1 with
+    | none => ((table,0),search,graph.2+5)
+    | some route =>
+      let next := augmentFinArcFlowWithWordWork table route
+      let rest := unitAugmentationsWithIndexedResidualWork capacity positions s t fuel next.1
+      ((rest.1.1,rest.1.2+1),search+rest.2.1,graph.2+next.2+rest.2.2+8)
+
+private theorem unitAugmentationsWithIndexedResidualWork_compare {n : ℕ} (capacity : FinArcFlowTable n)
+    (positions : FinPairAddresses n) (s t : Fin n) (fuel : ℕ) (flow : FinArcFlowTable n) :
+    let result := unitAugmentationsWithIndexedResidualWork capacity positions s t fuel flow
+    let prior := unitAugmentationsWithDenseFlowWork capacity.read s t fuel flow
+    result.1 = prior.1 ∧ result.2.1 = prior.2.1 ∧
+      result.2.2 ≤ prior.2.2+(result.1.2+1)*(16*(n*n)+4) := by
+  induction fuel generalizing flow with
+  | zero => simp [unitAugmentationsWithIndexedResidualWork,unitAugmentationsWithDenseFlowWork]
+  | succ fuel ih =>
+    let graph := residualArcsWithArrayReads capacity flow positions.val positions.property.1
+    obtain ⟨graphEq,work⟩ := residualArcsWithArrayReads_spec capacity flow positions.val
+      positions.property.1 positions.property.2
+    change graph.1 = residualArcs capacity.read flow.read at graphEq
+    change graph.2 = 16*(n*n)+4 at work
+    let selected := routePathWithSearchWork (residualArcs capacity.read flow.read) s t
+    cases path : selected.1 with
+    | none =>
+      change (routePathWithSearchWork (residualArcs capacity.read flow.read) s t).1 = none at path
+      simp only [unitAugmentationsWithIndexedResidualWork,unitAugmentationsWithDenseFlowWork,
+        ← show graph = residualArcsWithArrayReads capacity flow positions.val positions.property.1 from rfl,
+        graphEq,path,work,Nat.zero_add,Nat.one_mul,true_and]
+      omega
+    | some route =>
+      change (routePathWithSearchWork (residualArcs capacity.read flow.read) s t).1 = some route at path
+      let next := augmentFinArcFlowWithWordWork flow route
+      let rest := unitAugmentationsWithIndexedResidualWork capacity positions s t fuel next.1
+      let old := unitAugmentationsWithDenseFlowWork capacity.read s t fuel next.1
+      obtain ⟨same,tally,cap⟩ := ih next.1
+      change rest.1 = old.1 at same
+      change rest.2.1 = old.2.1 at tally
+      change rest.2.2 ≤ old.2.2+(rest.1.2+1)*(16*(n*n)+4) at cap
+      simp only [unitAugmentationsWithIndexedResidualWork,unitAugmentationsWithDenseFlowWork,
+        ← show graph = residualArcsWithArrayReads capacity flow positions.val positions.property.1 from rfl,
+        graphEq,path,work,← show next = augmentFinArcFlowWithWordWork flow route from rfl,
+        ← show rest = unitAugmentationsWithIndexedResidualWork capacity positions s t fuel next.1 from rfl,
+        ← show old = unitAugmentationsWithDenseFlowWork capacity.read s t fuel next.1 from rfl]
+      refine ⟨by rw [same], by rw [tally], ?_⟩
+      rw [Nat.add_mul (rest.1.2+1) 1,Nat.one_mul]
+      omega
+
+/-- Set up pair addresses once and build every residual graph from a single
+scan reading the stored capacity and flow at each address. -/
+def findLowCapacityCutWithIndexedResidualWork {n : ℕ} (capacity : FinArcFlowTable n)
+    (s t : Fin n) (supply : ℕ) : (Option (Finset (Fin n)) × ℕ) × ℕ :=
+  let positions := prepareFinPairAddresses n
+  let start := zeroFinArcFlowTableWithWordWork n
+  let aug := unitAugmentationsWithIndexedResidualWork capacity positions.1 s t supply start.1
+  let extra := positions.2+start.2+aug.2.2
+  if aug.1.2 = supply then ((none,aug.2.1),extra+6)
+  else
+    let residual := residualArcsWithArrayReads capacity aug.1.1 positions.1.val positions.1.property.1
+    let side := reachInWithArcInspections (reverseArcs residual.1) s n
+    ((some side.1,aug.2.1+(n^2+n^2+side.2)),extra+residual.2+10)
+
+theorem findLowCapacityCutWithIndexedResidualWork_compare {n : ℕ} (capacity : FinArcFlowTable n)
+    (s t : Fin n) (supply : ℕ) :
+    let out := findLowCapacityCutWithIndexedResidualWork capacity s t supply
+    let prior := findLowCapacityCutWithDenseFlowWork capacity.read s t supply
+    out.1 = prior.1 ∧ out.2 ≤ prior.2+(7*(n*n)+4)+(supply+2)*(16*(n*n)+4)+2 := by
+  let positions := prepareFinPairAddresses n
+  let start := zeroFinArcFlowTableWithWordWork n
+  let aug := unitAugmentationsWithIndexedResidualWork capacity positions.1 s t supply start.1
+  let old := unitAugmentationsWithDenseFlowWork capacity.read s t supply start.1
+  obtain ⟨same,tally,meter⟩ := unitAugmentationsWithIndexedResidualWork_compare capacity positions.1 s t supply start.1
+  have used : old.1.2 ≤ supply := by
+    have projected := congrArg Prod.snd (unitAugmentationsWithDenseFlowWork_spec capacity.read s t supply start.1).1
+    change old.1.2 = (unitAugmentations capacity.read s t supply start.1.read).2 at projected
+    rw [projected]
+    exact augmentationCount_le capacity.read s t supply start.1.read
+  change aug.1 = old.1 at same
+  change aug.2.1 = old.2.1 at tally
+  let R := 16*(n*n)+4
+  have extra : aug.2.2 ≤ old.2.2+(supply+1)*R := by
+    change aug.2.2 ≤ old.2.2+(aug.1.2+1)*R at meter
+    rw [same] at meter
+    exact meter.trans (Nat.add_le_add_left (Nat.mul_le_mul_right _ (Nat.add_le_add_right used _)) _)
+  have cost : positions.2 = 7*(n*n)+4 := prepareFinPairAddresses_work n
+  obtain ⟨residual,residualWork⟩ := residualArcsWithArrayReads_spec capacity old.1.1 positions.1.val
+    positions.1.property.1 positions.1.property.2
+  unfold findLowCapacityCutWithIndexedResidualWork findLowCapacityCutWithDenseFlowWork
+  simp only [← show positions = prepareFinPairAddresses n from rfl,
+    ← show start = zeroFinArcFlowTableWithWordWork n from rfl,
+    ← show aug = unitAugmentationsWithIndexedResidualWork capacity positions.1 s t supply start.1 from rfl,
+    ← show old = unitAugmentationsWithDenseFlowWork capacity.read s t supply start.1 from rfl, same,tally]
+  by_cases enough : old.1.2 = supply
+  · simp only [enough,ite_true,true_and]
+    have more : (supply+1)*R ≤ (supply+2)*R := Nat.mul_le_mul_right _ (by omega)
+    change positions.2+start.2+aug.2.2+6 ≤ start.2+old.2.2+4+(7*(n*n)+4)+(supply+2)*R+2
+    omega
+  · simp only [enough,ite_false,residual,residualWork,true_and]
+    change positions.2+start.2+aug.2.2+R+10 ≤ start.2+old.2.2+8+(7*(n*n)+4)+(supply+2)*R+2
+    rw [show (supply+2)*R = (supply+1)*R+R by ring]
+    omega
+
+/-- Store capacities once in the thin cut search and meter both reads
+at each visited pair during every residual graph scan. -/
+def fastThinViolationWithIndexedTablesWork {n : ℕ} (G : Arcs (Fin n)) (d : Fin n × Fin n)
+    (m : ℕ) (load : (Fin n × Fin n) → ℕ × ℕ) : (Option (Finset (Fin n)) × ℕ) × ℕ :=
+  if d.1 = d.2 then ((none,0),3)
+  else
+    let interval := reachInterval G d
+    let edges := G.filter (fun e => e.1 ∈ interval ∧ e.2 ∈ interval)
+    let capacities := prepareThinCapacitiesWithWordWork edges load
+    let cut := findLowCapacityCutWithIndexedResidualWork capacities.1 d.1 d.2 m
+    ((cut.1.1.map (· ∩ interval),cut.1.2+(2*n*m+m)),capacities.2+cut.2+8)
+
+theorem fastThinViolationWithIndexedTablesWork_spec {n : ℕ} (G : Arcs (Fin n)) (d : Fin n × Fin n)
+    (m : ℕ) (hm : m = G.card) (load : (Fin n × Fin n) → ℕ × ℕ) (L B : ℕ) :
+    let result := fastThinViolationWithIndexedTablesWork G d m load
+    result.1 = fastThinViolationWithSearchWork G d (fun e => (load e).1) ∧
+      ((∀ e ∈ G, (load e).1 ≤ L ∧ (load e).2 ≤ B) →
+        result.2 ≤ 15*(n*n)+m*(20*n+10+B+4*L+13)+(m+2)*(16*(n*n)+4)+43) := by
+  by_cases self : d.1 = d.2
+  · simp [fastThinViolationWithIndexedTablesWork,fastThinViolationWithSearchWork,self]
+  let interval := reachInterval G d
+  let edges := G.filter (fun e => e.1 ∈ interval ∧ e.2 ∈ interval)
+  let capacities := prepareThinCapacitiesWithWordWork edges load
+  let original := localArcCapacity G d (fun e => (load e).1)
+  let cut := findLowCapacityCutWithIndexedResidualWork capacities.1 d.1 d.2 m
+  let old := findLowCapacityCutWithDenseFlowWork capacities.1.read d.1 d.2 m
+  have exactCap : capacities.1.read = original := prepareThinCapacitiesWithWordWork_eq edges load
+  obtain ⟨record,scans⟩ := findLowCapacityCutWithIndexedResidualWork_compare capacities.1 d.1 d.2 m
+  have exactCut : cut.1 = findLowCapacityCutWithSearchWork original d.1 d.2 m := by
+    change cut.1 = old.1 at record
+    rw [record,findLowCapacityCutWithDenseFlowWork_eq,exactCap]
+  simp only [fastThinViolationWithIndexedTablesWork,fastThinViolationWithSearchWork,self,ite_false]
+  change ((cut.1.1.map (· ∩ interval),cut.1.2+(2*n*m+m)) = _) ∧ _
+  refine ⟨?_,?_⟩
+  · rw [exactCut,hm,Fintype.card_fin]
+    rfl
+  · intro valid
+    have edgeBudget : edges.card ≤ m := (card_le_card (filter_subset _ _)).trans_eq hm.symm
+    have prepared := (prepareThinCapacitiesWithWordWork_spec edges load L B
+      (fun e present => valid e (Finset.mem_of_mem_filter e present))).2
+    have prepareCap : capacities.2 ≤ 4*(n*n)+m*(B+4*L+13)+11 := prepared.trans (by gcongr)
+    have flow := (findLowCapacityCutWithDenseFlowWork_spec capacities.1.read d.1 d.2 m).2.2
+    have scanCap : cut.2 ≤ (4*(n*n)+m*(20*n+10)+18)+(7*(n*n)+4)+(m+2)*(16*(n*n)+4)+2 :=
+      scans.trans (by gcongr)
+    change capacities.2+cut.2+8 ≤ _
+    calc
+      _ ≤ (4*(n*n)+m*(B+4*L+13)+11)+
+          ((4*(n*n)+m*(20*n+10)+18)+(7*(n*n)+4)+(m+2)*(16*(n*n)+4)+2)+8 :=
+        Nat.add_le_add_right (Nat.add_le_add prepareCap scanCap) _
+      _ = _ := by ring
+
 end OnlineReachabilityPreservers

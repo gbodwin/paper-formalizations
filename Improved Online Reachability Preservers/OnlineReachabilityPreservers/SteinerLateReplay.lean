@@ -348,4 +348,32 @@ theorem lateSteinerWithThinSeparatorWork_bound {n : ℕ} {G : Arcs (Fin n)} (ear
     gcongr
   · exact thinRoundRunFromThresholdListWithSeparatorWork_bound G m hm rows edges count (thinRoundingFactor n τ)
 
+/-- Keep the hub phase and use stored capacities and indexed residual scans in the thin branch. -/
+def lateSteinerWithIndexedThinTablesWork {n : ℕ} (G : Arcs (Fin n)) (τ m : ℕ) (S : Finset (Fin n))
+    (rows : ThinThresholdList (Fin n)) (D : List (Fin n × Fin n)) : (Arcs (Fin n) × ℕ) × ℕ :=
+  lateSteinerWithThinWorkUsing G τ m S
+    (thinRoundRunFromThresholdListWithIndexedTablesWork G m rows (thinRoundingFactor n τ)) D
+
+theorem lateSteinerWithIndexedThinTablesWork_eq {n : ℕ} (G : Arcs (Fin n)) (τ m : ℕ) (hm : m = G.card)
+    (S : Finset (Fin n)) (rows : ThinThresholdList (Fin n)) (D : List (Fin n × Fin n)) :
+    (lateSteinerWithIndexedThinTablesWork G τ m S rows D).1 =
+      lateSteinerWithStoredThinThresholds G τ m S rows.val.toFinset D := by
+  let round := thinRoundRunFromThresholdListWithIndexedTablesWork G m rows (thinRoundingFactor n τ)
+  have same : (fun P => (round P).1) = thinRoundRunFromThresholdRows G m (thinRoundingFactor n τ) rows.val.toFinset :=
+    funext (thinRoundRunFromThresholdListWithIndexedTablesWork_eq G m hm rows (thinRoundingFactor n τ))
+  change (lateSteinerWithThinWorkUsing G τ m S round D).1 = _
+  rw [lateSteinerWithThinWorkUsing_project,same]
+  simp [lateSteinerWithStoredThinThresholds]
+
+theorem lateSteinerWithIndexedThinTablesWork_bound {n : ℕ} {G : Arcs (Fin n)} (early : EarlySteinerRule G)
+    (τ m : ℕ) (hm : m = G.card) (S : Finset (Fin n)) (rows : ThinThresholdList (Fin n))
+    (edges : ∀ r ∈ rows.val, r.1 ∈ G) (count : rows.val.length ≤ m)
+    (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (lateSteinerWithIndexedThinTablesWork G τ m S rows D).2 ≤ steinerThinIndexedTablesWorkBound n m D.length := by
+  apply lateSteinerWithThinWorkUsing_bound early τ m S _ (steinerThinIndexedTablesWorkBound n m) _ _ D feasible
+  · intro a b short
+    unfold steinerThinIndexedTablesWorkBound steinerStreamingThinWorkBound
+    gcongr
+  · exact thinRoundRunFromThresholdListWithIndexedTablesWork_bound G m hm rows edges count (thinRoundingFactor n τ)
+
 end OnlineReachabilityPreservers

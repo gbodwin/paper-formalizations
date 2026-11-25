@@ -44,7 +44,7 @@ theorem CutCovered.mono {G : Arcs V} {d : V × V} {l r : CutLoads V}
 
 omit [Fintype V] in
 /-- Every doubling leaves each exponent bounded by floor(log₂ |E|)+1. -/
-private theorem doubleCut_bounded {G C : Arcs V} {load : CutLoads V}
+theorem doubleCut_bounded {G C : Arcs V} {load : CutLoads V}
     (small : cutMass C load < G.card)
     (bounded : ∀ e ∈ G, load e ≤ G.card.log2+1) :
     ∀ e ∈ G, doubleCut C load e ≤ G.card.log2+1 := by

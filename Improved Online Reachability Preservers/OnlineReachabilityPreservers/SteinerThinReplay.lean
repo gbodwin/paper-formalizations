@@ -75,35 +75,6 @@ theorem prepareThinThresholdRowsByIndex_eq (G : Arcs V) (m : ℕ) (hm : m = G.ca
     change ((arcs.symm (arcs e)).val,(sample (arcs e)).val) = (e.val,(sample (arcs e)).val)
     rw [Equiv.symm_apply_apply]
 
-private def tabulateFinRowsLoop {A : Type*} (n : ℕ) (row : Fin n → A) :
-    (k : ℕ) → k ≤ n → List A → ℕ → List A × ℕ
-  | 0, _, acc, work => (acc,work+2)
-  | k+1, bound, acc, work =>
-    let entry := row ⟨k,Nat.lt_of_succ_le bound⟩
-    tabulateFinRowsLoop n row k (Nat.le_of_succ_le bound) (entry::acc) (work+7)
-
-private theorem tabulateFinRowsLoop_spec {A : Type*} (n : ℕ) (row : Fin n → A) (k : ℕ)
-    (bound : k ≤ n) (acc : List A) (work : ℕ) :
-    tabulateFinRowsLoop n row k bound acc work =
-      ((List.finRange k).map (fun i => row ⟨i.val,Nat.lt_of_lt_of_le i.isLt bound⟩) ++ acc,work+7*k+2) := by
-  induction k generalizing acc work with
-  | zero => simp [tabulateFinRowsLoop]
-  | succ k ih =>
-    rw [tabulateFinRowsLoop,ih,List.finRange_succ_last,List.map_append,List.map_map]
-    refine Prod.ext ?_ (by omega)
-    simp only [List.map_cons,List.map_nil,List.append_assoc,List.singleton_append]
-    rfl
-
-/-- Construct each of the supplied index rows once. The tally covers the
-loop and list construction, with the supplied row operation charged separately. -/
-private def tabulateFinRowsWithWordWork {A : Type*} (n : ℕ) (row : Fin n → A) : List A × ℕ :=
-  tabulateFinRowsLoop n row n (Nat.le_refl n) [] 2
-
-private theorem tabulateFinRowsWithWordWork_spec {A : Type*} (n : ℕ) (row : Fin n → A) :
-    tabulateFinRowsWithWordWork n row = ((List.finRange n).map row,7*n+4) := by
-  rw [tabulateFinRowsWithWordWork,tabulateFinRowsLoop_spec]
-  exact Prod.ext (by simp) (by omega)
-
 /-- Threshold rows stored as a list with distinct arc keys. -/
 abbrev ThinThresholdList (V : Type*) := {rows : List ((V × V) × ℕ) // (rows.map Prod.fst).Nodup}
 
@@ -760,6 +731,53 @@ theorem thinRoundRunFromThresholdListWithSeparatorWork_bound {n : ℕ} (G : Arcs
     rows edges count factor D feasible (10*m+8+thinSeparatorArrayWordCap n m)
     (thinCoverArrayPrefixFoldWithSeparatorWork_spec G m hm D).2).trans_eq
   unfold steinerThinSeparatorWorkBound steinerStreamingThinWorkBound
+  ring
+
+private def thinRoundPrefixAdvanceWithIndexedTablesWork {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) : ThinPrefixAdvance n :=
+  thinCoverArrayPrefixStepWithIndexedTablesWork G m (m*(m.log2+1)+1)
+
+private theorem thinRoundPrefixAdvanceWithIndexedTablesWork_exact {n : ℕ} (G : Arcs (Fin n))
+    (m : ℕ) (hm : m = G.card) : (thinRoundPrefixAdvanceWithIndexedTablesWork G m).Exact G :=
+  thinCoverArrayPrefixStepWithIndexedTablesWork_eq G m hm
+
+/-- Run the same thin checks with stored capacities and indexed residual scans. -/
+def thinRoundRunFromThresholdListWithIndexedTablesWork {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (rows : ThinThresholdList (Fin n)) (factor : ℕ)
+    (D : List (Fin n × Fin n)) : (Arcs (Fin n) × ℕ) × ℕ :=
+  thinRoundRunFromThresholdListUsing G m (thinRoundPrefixAdvanceWithIndexedTablesWork G m) rows factor D
+
+theorem thinRoundRunFromThresholdListWithIndexedTablesWork_eq {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (hm : m = G.card) (rows : ThinThresholdList (Fin n)) (factor : ℕ) (D : List (Fin n × Fin n)) :
+    (thinRoundRunFromThresholdListWithIndexedTablesWork G m rows factor D).1 =
+      thinRoundRunFromThresholdRows G m factor rows.val.toFinset D :=
+  thinRoundRunFromThresholdListUsing_eq G m _ (thinRoundPrefixAdvanceWithIndexedTablesWork_exact G m hm) rows factor D
+
+/-- Add capacity setup and residual-scan word work to the streaming thin bound. -/
+def steinerThinIndexedTablesWorkBound (n m p : ℕ) : ℕ :=
+  steinerStreamingThinWorkBound n m p+(m*(m.log2+1)+p)*thinIndexedTablesWordCap n m
+
+/-- A polynomial cap obtained by bounding the load logarithm by the arc count. -/
+def steinerThinIndexedTablesWorkPolynomial (n m p : ℕ) : ℕ :=
+  steinerStreamingThinWorkPolynomial n m p+(m*(m+1)+p)*
+    (15*(n*n)+m*(20*n+10+6+4*(m+1)+13)+(m+2)*(16*(n*n)+4)+43)
+
+theorem steinerThinIndexedTablesWorkBound_le (n m p : ℕ) :
+    steinerThinIndexedTablesWorkBound n m p ≤ steinerThinIndexedTablesWorkPolynomial n m p := by
+  unfold steinerThinIndexedTablesWorkBound steinerThinIndexedTablesWorkPolynomial thinIndexedTablesWordCap
+  have streaming := steinerStreamingThinWorkBound_le n m p
+  have logBound := Nat.log2_le_self m
+  gcongr
+
+theorem thinRoundRunFromThresholdListWithIndexedTablesWork_bound {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (hm : m = G.card) (rows : ThinThresholdList (Fin n))
+    (edges : ∀ r ∈ rows.val, r.1 ∈ G) (count : rows.val.length ≤ m) (factor : ℕ)
+    (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (thinRoundRunFromThresholdListWithIndexedTablesWork G m rows factor D).2 ≤
+      steinerThinIndexedTablesWorkBound n m D.length := by
+  apply (thinRoundRunFromThresholdListUsing_bound G m hm _ (thinRoundPrefixAdvanceWithIndexedTablesWork_exact G m hm)
+    rows edges count factor D feasible (10*m+8+thinIndexedTablesWordCap n m)
+    (thinCoverArrayPrefixFoldWithIndexedTablesWork_spec G m hm D feasible).2).trans_eq
+  unfold steinerThinIndexedTablesWorkBound steinerStreamingThinWorkBound
   ring
 
 end OnlineReachabilityPreservers
