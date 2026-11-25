@@ -589,9 +589,9 @@ pass. The
 covers that initialization, indexed updates on separating cuts, and
 indexed rounding with repeated doubling. The [late equality](OnlineReachabilityPreservers/SteinerLateReplay.lean#L284)
 preserves the rounded graph and previous search tally for every trace,
-including the missed-thick fallback. The [complete replay specification](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L793)
+including the missed-thick fallback. The [complete replay specification](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L825)
 preserves every earlier record and the evaluation count for every fixed
-bit sample. With reachable requests, the [prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L855)
+bit sample. With reachable requests, the [prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L887)
 adds the measured early and late work to the cumulative polynomial for
 each fixed height. Remaining time obligations include separator, hub,
 and container operations, bit arithmetic, and native array costs. The
@@ -605,9 +605,9 @@ decrements its reverse entry. The selected augmenting paths, final flow,
 cut and earlier search tally agree. For supply \(m\), the additional charge
 per thin separator call is bounded by \(4n^2+m(20n+10)+23\). The
 [thin bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L724)
-uses the feasible trace's bound on the number of calls. The [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L873)
+uses the feasible trace's bound on the number of calls. The [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L905)
 includes this charge in the fixed-height polynomial and returns the same
-prefix graphs on feasible traces. The [record equality](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L810)
+prefix graphs on feasible traces. The [record equality](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L842)
 also holds on exhaustion and infeasible traces.
 
 The [capacity preparation](OnlineReachabilityPreservers/SeparatorWork.lean#L803)
@@ -618,7 +618,7 @@ the exact residual graph. It reuses one list of pair addresses across
 augmentations and the final source-side search. The [separator specification](OnlineReachabilityPreservers/SeparatorWork.lean#L1084)
 preserves the returned cut and the earlier search tally for every load
 function. The additional work bound uses the load exponents' bound along
-feasible thin traces. The [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L919)
+feasible thin traces. The [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L951)
 includes these charges in a fixed-height polynomial on feasible traces.
 
 The [list route search](OnlineReachabilityPreservers/AssignmentListRouteWork.lean)
@@ -629,7 +629,7 @@ inspection count is recovered from the two arc counts and the search depth.
 The [cut comparison](OnlineReachabilityPreservers/SeparatorWork.lean#L1240)
 also meters finding the terminal source side from the reversed residual
 list. It returns the previous cut and search tally for every capacity
-table and augmentation supply. The [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L964)
+table and augmentation supply. The [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L996)
 includes these costs in its fixed-height polynomial on feasible traces.
 
 The [arc preparation](OnlineReachabilityPreservers/SteinerFinArcRowsWork.lean#L136)
@@ -641,7 +641,7 @@ and induced arcs. The [fractional loop](OnlineReachabilityPreservers/ThinSearchW
 shares those rows across the cut searches and updates. The metered filters
 restrict the same residual cut and select the same outgoing arcs for
 doubling. Search and evaluation records still agree for arbitrary inputs.
-The [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1026)
+The [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1058)
 includes these charges in the fixed-height polynomial on feasible traces.
 
 The late phase also scans the stored arc list to choose the least sampled
@@ -651,7 +651,7 @@ The replay has the same graph and search records and the same number of
 evaluations for all inputs. On feasible traces, the fixed-height
 polynomial includes the new interval and trace-list operations.
 [Hub selection and fallback scans](OnlineReachabilityPreservers/SteinerLateIntervalWork.lean)
-· [Complete prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1107).
+· [Complete prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1139).
 
 The list-backed hub evaluator uses both projected preserver algorithms
 and the same reachability decisions on their output arcs. It measures
@@ -662,11 +662,20 @@ one ordinary vertex list for the hub routing and reuses the ordinary arc
 list. On feasible traces it returns exactly the fixed-budget prefix graphs
 and the same number of evaluations. The work bound includes the measured
 late work, the earlier early search allowance, and the arc-inspection
-allowance for the rounded thin service tests. Early weighted work, the
-rest of those tests, the outer early and late graph union, other container
-operations, bit costs, and native costs remain open.
+allowance for the rounded thin service tests.
 [Measured routing and service](OnlineReachabilityPreservers/SteinerHubRouteWork.lean)
-· [Complete prefix bound with routing](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1291).
+· [Complete prefix bound with routing](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1440).
+
+The outer union uses a single filter of the late graph against the early
+arc set and a disjoint list append. Both operations have explicit
+word counts. The complete evaluator uses this union at each evaluated prefix. All graph and search records and the evaluation
+count agree with the earlier replay for every input. The fixed-height
+bound includes the new union on feasible traces. Early weighted work,
+the remaining thin service operations, other container operations, bit
+costs, and native costs remain open.
+[Exact metered union](OnlineReachabilityPreservers/SteinerPhaseUnionWork.lean#L70)
+· [Unchanged records](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1397)
+· [Complete prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1459).
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

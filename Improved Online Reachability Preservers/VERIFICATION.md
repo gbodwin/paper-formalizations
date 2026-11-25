@@ -32,20 +32,20 @@ An exact-source replay grants no coverage to a paper statement outside the
   preserve the ordinary capacities and residual graphs. The
   [separator comparison](OnlineReachabilityPreservers/SeparatorWork.lean#L1084)
   keeps the same cut and earlier search tally for arbitrary loads. The
-  [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L919)
+  [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L951)
   includes capacity setup and both indexed reads per residual pair within
   the fixed-height bound on feasible traces.
 - The [signed flow updates](OnlineReachabilityPreservers/SeparatorWork.lean#L485)
   produce the same flow as ordinary augmentation. The
   [exact separator comparison](OnlineReachabilityPreservers/SeparatorWork.lean#L668)
   also preserves every earlier search count. The
-  [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L873)
+  [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L905)
   includes array initialization and the two signed updates per routed arc
   in the combined source-level allowance on feasible traces.
 - The [incremental thin work bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L700)
   covers one dense load initialization per nonempty thin run, direct
   indexed updates along separating cuts, and threshold scans at the
-  successive checks. On a feasible trace, the [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L855)
+  successive checks. On a feasible trace, the [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L887)
   returns the ordinary fixed-budget prefix graphs and includes the measured
   early and late work at each fixed height. Equality to earlier replay
   records and evaluation counts also holds on bit exhaustion and on

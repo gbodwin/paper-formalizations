@@ -200,20 +200,20 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   evaluated late prefix. It advances the table for each thin request and
   reuses the rounded graph from the final check when all checks pass.
   The graph and search tally agree with those of the earlier evaluator.
-  On a feasible trace, the [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L855)
+  On a feasible trace, the [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L887)
   returns every ordinary fixed-budget prefix graph and includes polynomial
   allowances for the measured work of both phases at each fixed height.
   The [indexed thin separator](OnlineReachabilityPreservers/SeparatorWork.lean#L668)
   keeps one signed flow table per cut search and preserves the selected
-  cut and search tally. Its [full replay bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L873)
+  cut and search tally. Its [full replay bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L905)
   adds initialization and updates on both orientations of each augmenting
-  arc. The [replay with stored capacities](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L919)
+  arc. The [replay with stored capacities](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L951)
   also prepares each active capacity once per cut search and charges both
-  indexed reads at every pair in the residual scans. The [residual route replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L964)
+  indexed reads at every pair in the residual scans. The [residual route replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L996)
   uses those lists to find the same shortest routes and the final reachable
   source side, with the existing search tally preserved. On feasible
   traces the fixed-height bound includes the work of those list searches.
-  The [replay with prepared intervals](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1026)
+  The [replay with prepared intervals](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1058)
   shares one duplicate-free arc list across the trace. Each thin request
   in an evaluated thin run prepares its interval once and reuses it for
   the cut searches and updates. The fixed-height bound includes those
@@ -222,7 +222,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   a thick miss. Its fixed-height bound charges these scans and trace-list
   operations on feasible traces. The older graph and search records and
   the evaluation count agree for all inputs.
-  [Replay with late classification work](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1107).
+  [Replay with late classification work](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1139).
   The list-backed hub replay shares an explicit vertex list with both
   orientations of the hub routing. It charges their reachability searches,
   merging the hub arcs, the service query at each hit, and merging the
@@ -230,10 +230,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   prefix graphs and evaluation count in both seed branches. It uses a
   measured late word count alongside the earlier early search charge, and
   includes the earlier arc-inspection count for the rounded thin service
-  tests. Early weighted operations, the rest of those service tests, the
-  outer union of the two phases, other container work, bit costs, and
-  native execution costs remain open.
-  [Replay with list-backed hub routing](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1291).
+  tests.
+  [Replay with list-backed hub routing](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1440).
+  The outer union now filters the late graph against the early arc set
+  and appends the disjoint remainder. The count includes each membership
+  scan and the append. The replay keeps the same graph and search records
+  and evaluation count, and its fixed-height feasible-prefix bound includes
+  the new union. Early weighted operations, the remaining thin service
+  operations, other container work, bit costs, and native execution costs
+  remain open.
+  [Replay with the outer union charged](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1459).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
