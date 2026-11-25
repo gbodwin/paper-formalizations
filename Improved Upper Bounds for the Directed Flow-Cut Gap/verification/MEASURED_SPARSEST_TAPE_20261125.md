@@ -1,6 +1,6 @@
 # Paid execution of the budgeted sparsest-cut solvers
 
-`MeasuredPaidSparsestRound.edge_value` and `vertex_value` relate the typed rational solvers to the earlier amplified solvers on every supplied tape. The observable result includes the original-graph cut and exact unread suffix, or exhaustion. The equality transfers the earlier correctness and fair-tape guarantees with their stated demand and tape hypotheses.
+`MeasuredPaidSparsestRound.edge_value` and `vertex_value` relate the typed rational solvers to the earlier amplified solvers on every supplied tape. The observable result is the original-graph cut and exact unread suffix, or the same absent result. This includes tape exhaustion and the absence of a positive rounding threshold. The equality transfers the earlier correctness and fair-tape guarantees with their stated demand and tape hypotheses.
 
 `MeasuredCutSparsity` computes each sampled cut's exact original price per separated request. It checks each indexed request. In the vertex model, the request's endpoints are retained. `MeasuredTapeSelection` charges for successive attempts and the binary accumulation of their fees. It keeps the first equal-score cut and skips selection if an attempt exhausts the tape. The edge runner builds the gadget once and projects successful samples back to original arcs before scoring.
 
