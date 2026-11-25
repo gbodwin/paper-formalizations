@@ -568,7 +568,16 @@ sums these charges over the evaluated prefixes and retains the late
 threshold cache. Lean checks a polynomial bound at each fixed height,
 using a unit cost for an indexed array read and word-level arithmetic.
 The prefix graphs, earlier base tallies, and seeded evaluation count
-agree with the cached replay. Row construction, other container work,
+agree with the cached replay.
+
+The [one-pass threshold builder](OnlineReachabilityPreservers/SteinerThinReplay.lean)
+constructs the same cache from the supplied arc count and index. The
+finite replay uses the canonical arc order.
+Its \(11m+4\) word tally includes index traversal, the two reads per
+row, and list assembly. The [replay with cache construction](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean)
+charges this work on successful decoding and keeps the same fallback and
+tally on exhaustion. The cumulative bound for each feasible trace adds \(11m+21\)
+to the preparation and early trace polynomials. Other container work
 and bit and native costs remain open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)

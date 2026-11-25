@@ -75,6 +75,65 @@ theorem prepareThinThresholdRowsByIndex_eq (G : Arcs V) (m : ℕ) (hm : m = G.ca
     change ((arcs.symm (arcs e)).val,(sample (arcs e)).val) = (e.val,(sample (arcs e)).val)
     rw [Equiv.symm_apply_apply]
 
+private def tabulateFinRowsLoop {A : Type*} (n : ℕ) (row : Fin n → A) :
+    (k : ℕ) → k ≤ n → List A → ℕ → List A × ℕ
+  | 0, _, acc, work => (acc,work+2)
+  | k+1, bound, acc, work =>
+    let entry := row ⟨k,Nat.lt_of_succ_le bound⟩
+    tabulateFinRowsLoop n row k (Nat.le_of_succ_le bound) (entry::acc) (work+7)
+
+private theorem tabulateFinRowsLoop_spec {A : Type*} (n : ℕ) (row : Fin n → A) (k : ℕ)
+    (bound : k ≤ n) (acc : List A) (work : ℕ) :
+    tabulateFinRowsLoop n row k bound acc work =
+      ((List.finRange k).map (fun i => row ⟨i.val,Nat.lt_of_lt_of_le i.isLt bound⟩) ++ acc,work+7*k+2) := by
+  induction k generalizing acc work with
+  | zero => simp [tabulateFinRowsLoop]
+  | succ k ih =>
+    rw [tabulateFinRowsLoop,ih,List.finRange_succ_last,List.map_append,List.map_map]
+    refine Prod.ext ?_ (by omega)
+    simp only [List.map_cons,List.map_nil,List.append_assoc,List.singleton_append]
+    rfl
+
+/-- Construct each of the supplied index rows once. The tally covers the
+loop and list construction, with the supplied row operation charged separately. -/
+private def tabulateFinRowsWithWordWork {A : Type*} (n : ℕ) (row : Fin n → A) : List A × ℕ :=
+  tabulateFinRowsLoop n row n (Nat.le_refl n) [] 2
+
+private theorem tabulateFinRowsWithWordWork_spec {A : Type*} (n : ℕ) (row : Fin n → A) :
+    tabulateFinRowsWithWordWork n row = ((List.finRange n).map row,7*n+4) := by
+  rw [tabulateFinRowsWithWordWork,tabulateFinRowsLoop_spec]
+  exact Prod.ext (by simp) (by omega)
+
+/-- Build the late cache in one pass. In addition to the indexing and
+list work, charge each row's two reads, pairing, and dispatch. -/
+def prepareThinThresholdRowsByIndexWithWordWork (G : Arcs V) (m : ℕ) (hm : m = G.card)
+    (arcs : G ≃ Fin G.card) (sample : Fin G.card → Fin G.card) : Finset ((V × V) × ℕ) × ℕ :=
+  let row := thinThresholdRowByIndex hm arcs sample
+  let stored := tabulateFinRowsWithWordWork m row.toFun
+  have distinct : stored.1.Nodup := by
+    dsimp only [stored]
+    rw [tabulateFinRowsWithWordWork_spec]
+    exact (List.nodup_finRange m).map row.injective
+  (⟨stored.1,distinct⟩,stored.2+4*m)
+
+omit [LinearOrder V] [Fintype V] in
+theorem prepareThinThresholdRowsByIndexWithWordWork_spec (G : Arcs V) (m : ℕ) (hm : m = G.card)
+    (arcs : G ≃ Fin G.card) (sample : Fin G.card → Fin G.card) :
+    let out := prepareThinThresholdRowsByIndexWithWordWork G m hm arcs sample
+    out.1 = (prepareThinThresholdRowsByIndex G m hm arcs sample).1 ∧ out.2 = 11*m+4 := by
+  let row := thinThresholdRowByIndex hm arcs sample
+  have agree := tabulateFinRowsWithWordWork_spec m row
+  constructor
+  · apply eq_of_veq
+    change ↑(tabulateFinRowsWithWordWork m row).1 = ((univ : Finset (Fin m)).map row).val
+    rw [agree,Fin.univ_def]
+    rfl
+  · change (tabulateFinRowsWithWordWork m row).2+4*m = 11*m+4
+    rw [agree]
+    dsimp only
+    omega
+
+
 private def thinRoundWorkEntryUsing (G : Arcs V) (m : ℕ) (round : CutLoads V → Arcs V)
     (D : List (V × V)) (i : Fin D.length) : Fin D.length × Bool × ℕ :=
   let fraction := thinCoverRunWithSearchWork G (D.take (i.val+1))
