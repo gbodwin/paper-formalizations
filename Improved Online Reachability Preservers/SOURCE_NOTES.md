@@ -298,6 +298,21 @@ The existence of a suitable numbering after pruning remains open.
 [Ordered-block lower bound](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean)
 · [Fully bridge-free reversed paths](OnlineReachabilityPreservers/OppositePruningGain.lean).
 
+A common order also suffices when each row keeps any nonempty increasing
+subsequence, with a bound on total retained mass across all rows. For a
+concrete choice, form the precedence graph with an arc for each strict
+comparison on any input path. Keep one vertex on each path for each
+strongly connected component it visits. A topological order of the
+condensation orders all kept rows. If each path meets each component
+in at most \(b\) vertices, this again forces at least \(M/(12b)\) edges at
+the original counts. The more general proof uses the total number of
+path-component incidences, so the factor can be constant even if some
+paths meet a component in many vertices. A uniform bound on the loss
+for an arbitrary fully bridge-free family remains open.
+[Increasing subsequences](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L39)
+· [Component visits](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L170)
+· [Bounded component intersections](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L235).
+
 The base lattice paths alone also give a superlinear offline lower bound
 when the vertex and demand counts are comparable. Ordering vertices by
 layer and then lexicographically makes the path system acyclic. Its
