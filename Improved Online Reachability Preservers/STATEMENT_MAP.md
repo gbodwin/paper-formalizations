@@ -484,6 +484,23 @@ every prefix. The model charges indexed bit access and natural arithmetic at
 unit cost. Constructing and applying the key-index maps and the other unmetered
 container, native arithmetic, and allocation costs still require bounds.
 
+The [list-backed initial preparation](OnlineReachabilityPreservers/SteinerFinPreparationWork.lean)
+builds the hop rows directly from the input arc list with the checked
+list-backed search. It shares the increasing vertex enumeration between
+the table and both forest orientations. The rows match the ordinary hop
+table in values and order. The duplicate-free forest list enters the
+weighted plan without a deduplication pass. The
+[fixed-budget prefix evaluator with that preparation](OnlineReachabilityPreservers/SteinerFinReplayWork.lean)
+returns the same graph at every prefix for every bit word, including
+exhaustion, and preserves the original weight-read and decoder tallies.
+It bounds both list constructions together with the previously measured
+operations by a single fixed-height polynomial in the vertex, arc, and
+demand counts. The evaluator takes the graph, an input arc list with the
+same arc set, and the graph's distinct arc count. The arc-list count
+includes duplicate input records. Constructing the supplied graph and
+count, other weighted-plan operations, key-index and container work,
+and native arithmetic costs remain separate.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

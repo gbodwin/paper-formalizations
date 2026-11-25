@@ -311,14 +311,10 @@ private def decodeSteinerFixedBudgetAtIndex (G : Arcs V) (height n m : ℕ)
 def completeSteinerCachedDecoderWorkPolynomial (n m height : ℕ) : ℕ :=
   completeSteinerSeedDecodeWorkPolynomial n m height+7*steinerDecoderScaleCap n height+27
 
-/-- Use the measured fixed-budget sampler once in the existing cached prefix
-replay. Report its work separately from the established search and table
-counts. Bit access is a unit operation. Construction and application of
-the key-index maps and native execution costs are separate. -/
-def completeSteinerReplayWithCachedDecoderWork (G : Arcs V) (height n m : ℕ)
-    (hn : n = Fintype.card V) (hm : m = G.card)
+/-- Decode once and use the supplied initial forest plan at every prefix. -/
+def completeSteinerReplayWithDecoderWorkFromPreparation (G : Arcs V) (height n m : ℕ)
+    (hn : n = Fintype.card V) (hm : m = G.card) (prepared : SteinerSeedPreparation G height)
     (bits : Fin (steinerBitBudget G height) → Bool) (D : List (V × V)) :=
-  let prepared := prepareEarlyDistanceTableForSeed G height
   let scaleWidth := bitLengthWithWork prepared.1.val
   let width := max 1 scaleWidth.1
   have widthEq : width = (forestScale G height).log2+1 := by
@@ -330,6 +326,29 @@ def completeSteinerReplayWithCachedDecoderWork (G : Arcs V) (height n m : ℕ)
     | some seed => D.inits.map (completeSteinerDrawRunWithSearchWorkFromEarly G
         (prepared.2.1 seed.1) seed.2.1 seed.2.2)
   ((rounds,prepared.2.2),decoded.2+scaleWidth.2+8)
+
+/-- Use the measured fixed-budget sampler once in the existing cached prefix
+replay. Report its work separately from the established search and table
+counts. Bit access is a unit operation. Construction and application of
+the key-index maps and native execution costs are separate. -/
+def completeSteinerReplayWithCachedDecoderWork (G : Arcs V) (height n m : ℕ)
+    (hn : n = Fintype.card V) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (V × V)) :=
+  completeSteinerReplayWithDecoderWorkFromPreparation G height n m hn hm
+    (prepareEarlyDistanceTableForSeed G height) bits D
+
+theorem completeSteinerReplayWithDecoderWorkFromPreparation_eq (G : Arcs V) (height n m : ℕ)
+    (hn : n = Fintype.card V) (hm : m = G.card) (prepared : SteinerSeedPreparation G height)
+    (distanceWork templateWork : ℕ)
+    (same : let old := prepareEarlyDistanceTableForSeed G height
+      prepared = (old.1,old.2.1,distanceWork,templateWork,old.2.2.2.2))
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (V × V)) :
+    let out := completeSteinerReplayWithDecoderWorkFromPreparation G height n m hn hm prepared bits D
+    let old := completeSteinerReplayWithCachedDecoderWork G height n m hn hm bits D
+    out = ((old.1.1,distanceWork,templateWork,old.1.2.2.2),old.2) := by
+  dsimp only at same
+  subst prepared
+  rfl
 
 theorem completeSteinerReplayWithCachedDecoderWork_spec (G : Arcs V) (height n m : ℕ)
     (hn : n = Fintype.card V) (hm : m = G.card)
@@ -347,7 +366,7 @@ theorem completeSteinerReplayWithCachedDecoderWork_spec (G : Arcs V) (height n m
   let widthEq := congrArg (fun scale : ℕ => scale.log2+1) prepared.1.property
   have sameWidth : (⟨max 1 scaleWidth.1,exactWidth.trans widthEq⟩ : {w : ℕ // w = (forestScale G height).log2+1}) =
       ⟨width,widthEq⟩ := Subtype.ext exactWidth
-  unfold completeSteinerReplayWithCachedDecoderWork
+  unfold completeSteinerReplayWithCachedDecoderWork completeSteinerReplayWithDecoderWorkFromPreparation
   dsimp only
   rw [sameWidth]
   dsimp only [decodeSteinerFixedBudgetAtIndex]

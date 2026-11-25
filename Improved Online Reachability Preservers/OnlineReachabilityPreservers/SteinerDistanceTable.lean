@@ -29,6 +29,19 @@ def distanceTableWithSearchWork (G : Arcs V) : List ((V × V) × ℕ) × ℕ :=
   let evaluations := (vertexPairList V).map fun d => (d,hopsWithSearchWork G d.1 d.2)
   (evaluations.map fun row => (row.1,row.2.1), (evaluations.map fun row => row.2.2).sum)
 
+/-- The stored rows follow the canonical vertex order and contain the exact hop values. -/
+theorem distanceTableWithSearchWork_rows (G : Arcs V) :
+    let vertices := (univ : Finset V).sort
+    (distanceTableWithSearchWork G).1 =
+      vertices.flatMap (fun s => vertices.map fun t => ((s,t),hops G s t)) := by
+  unfold distanceTableWithSearchWork vertexPairList
+  simp only [List.map_map, List.map_flatMap]
+  apply List.flatMap_congr
+  intro s _
+  apply List.map_congr_left
+  intro t _
+  exact congrArg (fun d => ((s,t),d)) (hopsWithSearchWork_spec G s t).1
+
 /-- Read one stored hop value and record the number of key comparisons. -/
 def readDistanceRow (rows : List ((V × V) × ℕ)) (d : V × V) : ℕ × ℕ :=
   match rows with
@@ -521,30 +534,67 @@ private theorem earlyCapacityMetricFromPlan_congr (G : Arcs V) (height : ℕ) (s
   subst b
   rfl
 
-/-- Also meter preparation of the weighted link classes, scale, and fuel.
-The table, forest, and weighted plan are constructed once. -/
-def prepareEarlyDistanceTableForSeed (G : Arcs V) (height : ℕ) :
-    {scale : ℕ // scale = forestScale G height} ×
-    (EarlyRoundSample G height → List (V × V) → Arcs V × ℕ) × ℕ × ℕ × ℕ :=
-  let table := distanceTableWithSearchWork G
+/-- Shared forest scale, early prefix evaluator, and the three preparation tallies. -/
+abbrev SteinerSeedPreparation (G : Arcs V) (height : ℕ) :=
+  {scale : ℕ // scale = forestScale G height} ×
+    (EarlyRoundSample G height → List (V × V) → Arcs V × ℕ) × ℕ × ℕ × ℕ
+
+/-- Finish the weighted plan from the exact stored rows and paired forest.
+The two input charges are carried through as supplied by their builders. -/
+def prepareEarlyDistanceTableForSeedFrom (G : Arcs V) (height : ℕ)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height) :
+    SteinerSeedPreparation G height :=
   let query := readDistanceRow table.1
   let dist := fun d => (query d).1
   let known : ∀ d : V × V, dist d = hops G d.1 d.2 :=
-    fun d => (distanceTableReadWithSearchWork_spec G d).1
-  let template := heightForestWithDistanceWork (historyDistanceRead query)
-    (historyDistanceRead (fun d => query d.swap)) height
+    fun d => by
+      change (readDistanceRow table.1 d).1 = _
+      rw [rows]
+      exact (distanceTableReadWithSearchWork_spec G d).1
   let links := template.1
   let correct : links = heightForestFromDistances dist height :=
-    (heightForestWithDistanceTableWork_spec G height).1.trans (heightForestFromDistances_eq G dist known height).symm
+    exactForest.trans (heightForestFromDistances_eq G dist known height).symm
   let priced := prepareForestWeights links (forestWeightWithDistanceWork query)
   let spec := prepareForestWeights_spec links (forestWeightWithDistanceWork query) (Fintype.card V^2)
-    (fun _ => (distanceTableReadWithSearchWork_spec G _).2)
+    (fun e => by
+      let d := (heightForestLabel e.1,heightForestLabel e.2)
+      change (readDistanceRow table.1 d).2 ≤ _
+      rw [rows]
+      exact (distanceTableReadWithSearchWork_spec G d).2)
   let scale : priced.2.1.1 = forestScale G height :=
     (congrArg Prod.fst spec.2.2.1).trans (forestScaleFromWeights_eq G dist known height links correct)
   let build := fun sample : EarlyRoundSample G height =>
     let metric := earlyCapacityMetricFromPlan G height sample links query (priced.1,priced.2.1) scale
     earlyRoundedGraphWithSearchWorkFromMetric G height metric
   (⟨priced.2.1.1,scale⟩,build,table.2,template.2,priced.2.2)
+
+/-- Also meter preparation of the weighted link classes, scale, and fuel.
+The table, forest, and weighted plan are constructed once. -/
+def prepareEarlyDistanceTableForSeed (G : Arcs V) (height : ℕ) :
+    SteinerSeedPreparation G height :=
+  let table := distanceTableWithSearchWork G
+  let query := readDistanceRow table.1
+  let template := heightForestWithDistanceWork (historyDistanceRead query)
+    (historyDistanceRead (fun d => query d.swap)) height
+  prepareEarlyDistanceTableForSeedFrom G height table rfl template
+    (heightForestWithDistanceTableWork_spec G height).1
+
+/-- Replacing how the rows and arcs are built preserves the scale, prefix
+evaluator, and original weight-read charges. -/
+theorem prepareEarlyDistanceTableForSeedFrom_eq (G : Arcs V) (height : ℕ)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height) :
+    let out := prepareEarlyDistanceTableForSeedFrom G height table rows template exactForest
+    let old := prepareEarlyDistanceTableForSeed G height
+    out = (old.1,old.2.1,table.2,template.2,old.2.2.2.2) := by
+  rcases table with ⟨rowsValue, rowWork⟩
+  rcases template with ⟨links, templateWork⟩
+  dsimp only at rows exactForest
+  subst rowsValue
+  have sameLinks := exactForest.trans (heightForestWithDistanceTableWork_spec G height).1.symm
+  subst sameLinks
+  rfl
 
 /-- Preparation charges are bounded before any seed has been decoded. -/
 theorem prepareEarlyDistanceTableForSeed_work_le (G : Arcs V) (height : ℕ) :

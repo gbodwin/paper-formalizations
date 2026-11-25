@@ -49,6 +49,25 @@ theorem finVerticesWithWordWork_spec (n : ℕ) :
   obtain ⟨simple, all, cost⟩ := finVertexSuffixWithWordWork_spec n n le_rfl
   exact ⟨simple, fun v => (all v).mpr (by simp), cost⟩
 
+private theorem finVertexSuffixWithWordWork_pairwise (n k : ℕ) (fits : k ≤ n) :
+    (finVertexSuffixWithWordWork n k fits).1.Pairwise (· ≤ ·) := by
+  induction k with
+  | zero => exact List.Pairwise.nil
+  | succ k ih =>
+    change (⟨n-(k+1),by omega⟩ :: (finVertexSuffixWithWordWork n k (Nat.le_of_succ_le fits)).1).Pairwise (· ≤ ·)
+    refine List.pairwise_cons.mpr ⟨fun v present => ?_, ih (Nat.le_of_succ_le fits)⟩
+    have index := ((finVertexSuffixWithWordWork_spec n k (Nat.le_of_succ_le fits)).2.1 v).mp present
+    change n-(k+1) ≤ v.val
+    omega
+
+/-- The metered enumeration has the canonical increasing vertex order. -/
+theorem finVerticesWithWordWork_eq_sort (n : ℕ) :
+    (finVerticesWithWordWork n).1 = (Finset.univ : Finset (Fin n)).sort := by
+  let rows := (Finset.univ : Finset (Fin n))
+  obtain ⟨unique, full, _⟩ := finVerticesWithWordWork_spec n
+  apply List.Perm.eq_of_pairwise' (finVertexSuffixWithWordWork_pairwise n n le_rfl) (rows.pairwise_sort _)
+  exact (List.perm_ext_iff_of_nodup unique (rows.sort_nodup _)).mpr fun v => by simp [rows, full v]
+
 def withFinVerticesWithWordWork {n : ℕ} {A : Type*} (run : List (Fin n) → A × ℕ) : A × ℕ :=
   let vertices := finVerticesWithWordWork n
   let out := run vertices.1
