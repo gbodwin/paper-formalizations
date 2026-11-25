@@ -470,31 +470,50 @@ private structure ThinRoundArrayState (n : ℕ) where
   testWork : ℕ
   roundWork : ℕ
 
-private def thinRoundArrayStep {n : ℕ} (G : Arcs (Fin n)) (m fuel : ℕ)
+private abbrev ThinPrefixAdvance (n : ℕ) :=
+  FinThinPrefixState n → (Fin n × Fin n) → FinThinPrefixState n
+
+private def thinRoundArrayStep {n : ℕ} (advance : ThinPrefixAdvance n) (m : ℕ)
     (rows : ThinThresholdList (Fin n)) (factor : ℕ)
     (prior : ThinRoundArrayState n) (d : Fin n × Fin n) : ThinRoundArrayState n :=
-  let fractional := thinCoverArrayPrefixStep G m fuel prior.fractional d
+  let fractional := advance prior.fractional d
   let rounded := roundThinThresholdListWithWordWork rows.val rows.property factor (fun e => (fractional.loads.read e,6))
   let reach := reachInWithArcInspections rounded.1 d.2 n
   ⟨fractional,rounded.1,prior.missed || decide (d.1 ∉ reach.1),
     prior.testWork+(fractional.searchWork+m+reach.2),prior.roundWork+rounded.2+9⟩
 
-private def thinRoundArrayFold {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+private def thinRoundArrayFold {n : ℕ} (advance : ThinPrefixAdvance n) (m : ℕ)
     (rows : ThinThresholdList (Fin n)) (factor : ℕ)
     (D : List (Fin n × Fin n)) : ThinRoundArrayState n :=
-  let fuel := m*(m.log2+1)+1
-  D.foldl (thinRoundArrayStep G m fuel rows factor) ⟨FinThinPrefixState.initial n,∅,false,0,0⟩
+  D.foldl (thinRoundArrayStep advance m rows factor) ⟨FinThinPrefixState.initial n,∅,false,0,0⟩
 
-private theorem thinRoundArrayFold_values {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
-    (rows : ThinThresholdList (Fin n)) (factor : ℕ)
+private def ThinPrefixAdvance.Exact {n : ℕ} (advance : ThinPrefixAdvance n) (G : Arcs (Fin n)) : Prop :=
+  ∀ prior P d, prior.fractionalRecord = thinCoverRunWithSearchWork G P →
+    (advance prior d).fractionalRecord = thinCoverRunWithSearchWork G (P++[d])
+
+private def thinRoundPrefixAdvance {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) : ThinPrefixAdvance n :=
+  thinCoverArrayPrefixStep G m (m*(m.log2+1)+1)
+
+private def thinRoundPrefixAdvanceWithSeparatorWork {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) : ThinPrefixAdvance n :=
+  thinCoverArrayPrefixStepWithSeparatorWork G m (m*(m.log2+1)+1)
+
+private theorem thinRoundPrefixAdvance_exact {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card) :
+    (thinRoundPrefixAdvance G m).Exact G :=
+  fun prior P d same => (thinCoverArrayPrefixStep_spec G m hm prior P d same).1
+
+private theorem thinRoundPrefixAdvanceWithSeparatorWork_exact {n : ℕ} (G : Arcs (Fin n))
+    (m : ℕ) (hm : m = G.card) : (thinRoundPrefixAdvanceWithSeparatorWork G m).Exact G :=
+  fun prior P d same => (thinCoverArrayPrefixStepWithSeparatorWork_spec G m hm prior P d same).1
+
+private theorem thinRoundArrayFold_values {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (advance : ThinPrefixAdvance n) (stepExact : advance.Exact G) (rows : ThinThresholdList (Fin n)) (factor : ℕ)
     (D : List (Fin n × Fin n)) :
-    let out := thinRoundArrayFold G m rows factor D
+    let out := thinRoundArrayFold advance m rows factor D
     let round := roundedFromThinThresholdRows rows.val.toFinset factor
     out.fractional.fractionalRecord = thinCoverRunWithSearchWork G D ∧
       (out.missed,out.testWork) = thinRoundIndexedTotals G m round D ∧
       (D ≠ [] → out.rounded = round (thinCoverRunWithSearchWork G D).1.1) := by
   let round := roundedFromThinThresholdRows rows.val.toFinset factor
-  let fuel := m*(m.log2+1)+1
   induction D using List.reverseRecOn with
   | nil =>
     have blank : (emptyFinThinLoads n).read = fun _ => 0 := funext emptyFinThinLoads_read
@@ -502,14 +521,14 @@ private theorem thinRoundArrayFold_values {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
       thinCoverRunWithSearchWork,thinRoundIndexedTotals,blank,(emptyFinThinLoadsWithWordWork_spec n).1]
     rfl
   | append_singleton D d ih =>
-    let prior := thinRoundArrayFold G m rows factor D
-    let advanced := thinRoundArrayStep G m fuel rows factor prior d
+    let prior := thinRoundArrayFold advance m rows factor D
+    let advanced := thinRoundArrayStep advance m rows factor prior d
     obtain ⟨record,totals,_⟩ := ih
-    have foldEq : thinRoundArrayFold G m rows factor (D++[d]) = advanced := by
+    have foldEq : thinRoundArrayFold advance m rows factor (D++[d]) = advanced := by
       unfold thinRoundArrayFold
       rw [List.foldl_append]
       rfl
-    have fraction := (thinCoverArrayPrefixStep_spec G m hm prior.fractional D d record).1
+    have fraction := stepExact prior.fractional D d record
     change advanced.fractional.fractionalRecord = thinCoverRunWithSearchWork G (D++[d]) at fraction
     have loads := congrArg (fun x : (CutLoads (Fin n) × ℕ) × ℕ => x.1.1) fraction
     have work := congrArg Prod.snd fraction
@@ -532,30 +551,28 @@ private theorem thinRoundArrayFold_values {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
     simp only [rounded]
     rfl
 
-/-- Check the thin prefixes with one incrementally maintained load table and
-retain the last rounded graph for the successful branch. -/
-def thinRoundRunFromThresholdListWithWordWork {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
-    (rows : ThinThresholdList (Fin n)) (factor : ℕ)
+@[inline] private def thinRoundRunFromThresholdListUsing {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (advance : ThinPrefixAdvance n) (rows : ThinThresholdList (Fin n)) (factor : ℕ)
     (D : List (Fin n × Fin n)) : (Arcs (Fin n) × ℕ) × ℕ :=
   if D.isEmpty then ((∅,0),2)
   else
-    let out := thinRoundArrayFold G m rows factor D
+    let out := thinRoundArrayFold advance m rows factor D
     let result := if out.missed then (G,out.testWork) else (out.rounded,out.testWork+out.fractional.searchWork+m)
     (result,out.fractional.updateWork+out.roundWork+4)
 
-theorem thinRoundRunFromThresholdListWithWordWork_eq {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
-    (rows : ThinThresholdList (Fin n)) (factor : ℕ)
+private theorem thinRoundRunFromThresholdListUsing_eq {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (advance : ThinPrefixAdvance n) (stepExact : advance.Exact G) (rows : ThinThresholdList (Fin n)) (factor : ℕ)
     (D : List (Fin n × Fin n)) :
-    (thinRoundRunFromThresholdListWithWordWork G m rows factor D).1 =
+    (thinRoundRunFromThresholdListUsing G m advance rows factor D).1 =
       thinRoundRunFromThresholdRows G m factor rows.val.toFinset D := by
   classical
   by_cases empty : D.isEmpty = true
-  · simp [thinRoundRunFromThresholdListWithWordWork,thinRoundRunFromThresholdRows,thinRoundRunWithSearchWorkUsing,empty]
-  let out := thinRoundArrayFold G m rows factor D
+  · simp [thinRoundRunFromThresholdListUsing,thinRoundRunFromThresholdRows,thinRoundRunWithSearchWorkUsing,empty]
+  let out := thinRoundArrayFold advance m rows factor D
   let round := roundedFromThinThresholdRows rows.val.toFinset factor
   let entry := thinRoundWorkEntryUsing G m round D
   let checks := (univ : Finset (Fin D.length)).image entry
-  obtain ⟨fraction,totals,rounded⟩ := thinRoundArrayFold_values G m hm rows factor D
+  obtain ⟨fraction,totals,rounded⟩ := thinRoundArrayFold_values G m advance stepExact rows factor D
   have work := congrArg Prod.snd fraction
   have listed : (∑ row ∈ checks, row.2.2) = out.testWork := by
     dsimp only [checks]
@@ -579,7 +596,7 @@ theorem thinRoundRunFromThresholdListWithWordWork_eq {n : ℕ} (G : Arcs (Fin n)
   have graph := rounded nonempty
   change out.rounded = round (thinCoverRunWithSearchWork G D).1.1 at graph
   change out.fractional.searchWork = (thinCoverRunWithSearchWork G D).2 at work
-  simp only [thinRoundRunFromThresholdListWithWordWork,thinRoundRunFromThresholdRows,
+  simp only [thinRoundRunFromThresholdListUsing,thinRoundRunFromThresholdRows,
     thinRoundRunWithSearchWorkUsing,empty,Bool.false_eq_true,ite_false]
   change (if out.missed = true then (G,out.testWork) else (out.rounded,out.testWork+out.fractional.searchWork+m)) =
     (if (checks.filter (fun r => r.2.1 = true)).Nonempty then (G,_)
@@ -588,37 +605,37 @@ theorem thinRoundRunFromThresholdListWithWordWork_eq {n : ℕ} (G : Arcs (Fin n)
   · rw [ite_eq_left misses,ite_eq_left (failSeen.mpr misses),listed]
   · rw [ite_eq_right misses,ite_eq_right ((not_congr failSeen).mpr misses),listed,graph,work]
 
-private theorem thinRoundArrayFold_fractional {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+private theorem thinRoundArrayFold_fractional {n : ℕ} (advance : ThinPrefixAdvance n) (m : ℕ)
     (rows : ThinThresholdList (Fin n)) (factor : ℕ)
     (D : List (Fin n × Fin n)) :
-    (thinRoundArrayFold G m rows factor D).fractional = thinCoverArrayPrefixFold G m D := by
+    (thinRoundArrayFold advance m rows factor D).fractional =
+      D.foldl advance (FinThinPrefixState.initial n) := by
   induction D using List.reverseRecOn with
   | nil => rfl
   | append_singleton D d ih =>
-    simp only [thinRoundArrayFold,thinCoverArrayPrefixFold,List.foldl_append,List.foldl_cons,List.foldl_nil]
+    simp only [thinRoundArrayFold,List.foldl_append,List.foldl_cons,List.foldl_nil]
     dsimp only [thinRoundArrayStep]
     congr 1
 
 private theorem thinRoundArrayFold_roundWork {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
-    (rows : ThinThresholdList (Fin n))
+    (advance : ThinPrefixAdvance n) (stepExact : advance.Exact G) (rows : ThinThresholdList (Fin n))
     (edges : ∀ r ∈ rows.val, r.1 ∈ G) (count : rows.val.length ≤ m) (factor : ℕ)
     (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
-    (thinRoundArrayFold G m rows factor D).roundWork ≤ D.length*(13+m*(6+4*(m.log2+1)+12)) := by
+    (thinRoundArrayFold advance m rows factor D).roundWork ≤ D.length*(13+m*(6+4*(m.log2+1)+12)) := by
   let B := m*(6+4*(m.log2+1)+12)
-  let fuel := m*(m.log2+1)+1
   induction D using List.reverseRecOn with
   | nil => simp [thinRoundArrayFold]
   | append_singleton D d ih =>
-    let prior := thinRoundArrayFold G m rows factor D
-    let new := thinRoundArrayStep G m fuel rows factor prior d
+    let prior := thinRoundArrayFold advance m rows factor D
+    let new := thinRoundArrayStep advance m rows factor prior d
     let load (e : Fin n × Fin n) := (new.fractional.loads.read e,6)
     let rounded := roundThinThresholdListWithWordWork rows.val rows.property factor load
-    have foldEq : thinRoundArrayFold G m rows factor (D++[d]) = new := by
+    have foldEq : thinRoundArrayFold advance m rows factor (D++[d]) = new := by
       unfold thinRoundArrayFold
       rw [List.foldl_append]
       rfl
     have oldWork := ih (fun q present => feasible q (List.mem_append_left _ present))
-    have record := (thinRoundArrayFold_values G m hm rows factor (D++[d])).1
+    have record := (thinRoundArrayFold_values G m advance stepExact rows factor (D++[d])).1
     rw [foldEq] at record
     have loadEq := congrArg (fun x : (CutLoads (Fin n) × ℕ) × ℕ => x.1.1) record
     change new.fractional.loads.read = _ at loadEq
@@ -638,6 +655,32 @@ private theorem thinRoundArrayFold_roundWork {n : ℕ} (G : Arcs (Fin n)) (m : �
       _ ≤ D.length*(13+B)+(4+B)+9 := Nat.add_le_add_right (Nat.add_le_add oldWork roundWork) _
       _ = _ := by simp only [List.length_append,List.length_singleton]; ring
 
+/-- Check the thin prefixes with one incrementally maintained load table and
+retain the last rounded graph for the successful branch. -/
+def thinRoundRunFromThresholdListWithWordWork {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (rows : ThinThresholdList (Fin n)) (factor : ℕ)
+    (D : List (Fin n × Fin n)) : (Arcs (Fin n) × ℕ) × ℕ :=
+  thinRoundRunFromThresholdListUsing G m (thinRoundPrefixAdvance G m) rows factor D
+
+theorem thinRoundRunFromThresholdListWithWordWork_eq {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
+    (rows : ThinThresholdList (Fin n)) (factor : ℕ)
+    (D : List (Fin n × Fin n)) :
+    (thinRoundRunFromThresholdListWithWordWork G m rows factor D).1 =
+      thinRoundRunFromThresholdRows G m factor rows.val.toFinset D :=
+  thinRoundRunFromThresholdListUsing_eq G m _ (thinRoundPrefixAdvance_exact G m hm) rows factor D
+
+/-- Check the same thin prefixes with an indexed signed flow in each separator. -/
+def thinRoundRunFromThresholdListWithSeparatorWork {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (rows : ThinThresholdList (Fin n)) (factor : ℕ)
+    (D : List (Fin n × Fin n)) : (Arcs (Fin n) × ℕ) × ℕ :=
+  thinRoundRunFromThresholdListUsing G m (thinRoundPrefixAdvanceWithSeparatorWork G m) rows factor D
+
+theorem thinRoundRunFromThresholdListWithSeparatorWork_eq {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
+    (rows : ThinThresholdList (Fin n)) (factor : ℕ) (D : List (Fin n × Fin n)) :
+    (thinRoundRunFromThresholdListWithSeparatorWork G m rows factor D).1 =
+      thinRoundRunFromThresholdRows G m factor rows.val.toFinset D :=
+  thinRoundRunFromThresholdListUsing_eq G m _ (thinRoundPrefixAdvanceWithSeparatorWork_exact G m hm) rows factor D
+
 /-- Source-level work for one run of the incremental thin evaluator. -/
 def steinerStreamingThinWorkBound (n m p : ℕ) : ℕ :=
   (m*(m.log2+1)+p)*(10*m+8)+3*p+(4*(n*n)+5)+p*(13+m*(6+4*(m.log2+1)+12))+4
@@ -654,29 +697,69 @@ theorem steinerStreamingThinWorkBound_le (n m p : ℕ) :
 
 /-- Bound the additional table construction, updates and rounding work.
 The existing search count is preserved, with residual search internals separate. -/
-theorem thinRoundRunFromThresholdListWithWordWork_bound {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
-    (rows : ThinThresholdList (Fin n))
+private theorem thinRoundRunFromThresholdListUsing_bound {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
+    (advance : ThinPrefixAdvance n) (stepExact : advance.Exact G) (rows : ThinThresholdList (Fin n))
     (edges : ∀ r ∈ rows.val, r.1 ∈ G) (count : rows.val.length ≤ m) (factor : ℕ)
-    (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
-    (thinRoundRunFromThresholdListWithWordWork G m rows factor D).2 ≤
-      steinerStreamingThinWorkBound n m D.length := by
-  unfold steinerStreamingThinWorkBound
+    (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) (B : ℕ)
+    (updateWork : let out := D.foldl advance (FinThinPrefixState.initial n)
+      out.updateWork ≤ (out.updates+D.length)*B+3*D.length+(4*(n*n)+5)) :
+    (thinRoundRunFromThresholdListUsing G m advance rows factor D).2 ≤
+      (m*(m.log2+1)+D.length)*B+3*D.length+(4*(n*n)+5)+
+        D.length*(13+m*(6+4*(m.log2+1)+12))+4 := by
   by_cases empty : D.isEmpty = true
-  · simp only [thinRoundRunFromThresholdListWithWordWork,empty,ite_true]
+  · simp only [thinRoundRunFromThresholdListUsing,empty,ite_true]
     omega
-  let folded := thinRoundArrayFold G m rows factor D
-  have roundWork := thinRoundArrayFold_roundWork G m hm rows edges count factor D feasible
-  have sameFraction := thinRoundArrayFold_fractional G m rows factor D
-  obtain ⟨record,updateWork⟩ := thinCoverArrayPrefixFold_spec G m hm D
+  let folded := thinRoundArrayFold advance m rows factor D
+  have roundWork := thinRoundArrayFold_roundWork G m hm advance stepExact rows edges count factor D feasible
+  have sameFraction := thinRoundArrayFold_fractional advance m rows factor D
+  have record := (thinRoundArrayFold_values G m advance stepExact rows factor D).1
+  rw [sameFraction] at record
   have updates := (thinCoverRunWithSearchWork_spec G D feasible).2.2.1
   rw [← hm] at updates
   have updateCount := congrArg (fun x : (CutLoads (Fin n) × ℕ) × ℕ => x.1.2) record
   have upper := updateWork.trans
     (Nat.add_le_add_right (Nat.add_le_add_right
       (Nat.mul_le_mul_right _ (Nat.add_le_add_right (updateCount.trans_le updates) _)) _) _)
-  simp only [thinRoundRunFromThresholdListWithWordWork,empty,Bool.false_eq_true,ite_false]
+  simp only [thinRoundRunFromThresholdListUsing,empty,Bool.false_eq_true,ite_false]
   change folded.fractional.updateWork+folded.roundWork+4 ≤ _
   rw [sameFraction]
   exact Nat.add_le_add_right (Nat.add_le_add upper roundWork) _
+
+/-- Charge table construction, updates and rounding at every thin check. -/
+theorem thinRoundRunFromThresholdListWithWordWork_bound {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
+    (rows : ThinThresholdList (Fin n))
+    (edges : ∀ r ∈ rows.val, r.1 ∈ G) (count : rows.val.length ≤ m) (factor : ℕ)
+    (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (thinRoundRunFromThresholdListWithWordWork G m rows factor D).2 ≤
+      steinerStreamingThinWorkBound n m D.length :=
+  thinRoundRunFromThresholdListUsing_bound G m hm _ (thinRoundPrefixAdvance_exact G m hm)
+    rows edges count factor D feasible (10*m+8) (thinCoverArrayPrefixFold_spec G m hm D).2
+
+/-- Additional word work for a thin run with indexed residual flow. -/
+def steinerThinSeparatorWorkBound (n m p : ℕ) : ℕ :=
+  steinerStreamingThinWorkBound n m p+(m*(m.log2+1)+p)*thinSeparatorArrayWordCap n m
+
+/-- A polynomial cap for the signed-flow and rounding work of one thin run. -/
+def steinerThinSeparatorWorkPolynomial (n m p : ℕ) : ℕ :=
+  steinerStreamingThinWorkPolynomial n m p+(m*(m+1)+p)*thinSeparatorArrayWordCap n m
+
+theorem steinerThinSeparatorWorkBound_le (n m p : ℕ) :
+    steinerThinSeparatorWorkBound n m p ≤ steinerThinSeparatorWorkPolynomial n m p := by
+  unfold steinerThinSeparatorWorkBound steinerThinSeparatorWorkPolynomial
+  have streaming := steinerStreamingThinWorkBound_le n m p
+  have logBound := Nat.log2_le_self m
+  gcongr
+
+theorem thinRoundRunFromThresholdListWithSeparatorWork_bound {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (hm : m = G.card) (rows : ThinThresholdList (Fin n))
+    (edges : ∀ r ∈ rows.val, r.1 ∈ G) (count : rows.val.length ≤ m) (factor : ℕ)
+    (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (thinRoundRunFromThresholdListWithSeparatorWork G m rows factor D).2 ≤
+      steinerThinSeparatorWorkBound n m D.length := by
+  apply (thinRoundRunFromThresholdListUsing_bound G m hm _ (thinRoundPrefixAdvanceWithSeparatorWork_exact G m hm)
+    rows edges count factor D feasible (10*m+8+thinSeparatorArrayWordCap n m)
+    (thinCoverArrayPrefixFoldWithSeparatorWork_spec G m hm D).2).trans_eq
+  unfold steinerThinSeparatorWorkBound steinerStreamingThinWorkBound
+  ring
 
 end OnlineReachabilityPreservers

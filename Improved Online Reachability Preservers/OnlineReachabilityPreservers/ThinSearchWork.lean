@@ -268,6 +268,78 @@ theorem bumpFinThinLoadsOnCutWithWordWork_spec {n : ℕ} (table : FinThinLoadTab
   rw [members]
   exact bumpFinThinLoadsWithWordWork_spec table rows simple
 
+/-- Additional word allowance per call to the signed-flow thin separator. -/
+def thinSeparatorArrayWordCap (n m : ℕ) : ℕ := 4 * (n*n) + m * (20*n+10) + 23
+
+private abbrev ThinArraySeparator (n : ℕ) :=
+  CutLoads (Fin n) → (Option (Finset (Fin n)) × ℕ) × ℕ
+
+@[inline] private def thinCoverLoopWithArrayLoadWorkUsing {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (d : Fin n × Fin n) (findCut : ThinArraySeparator n) :
+    ℕ → FinThinLoadTable n → (FinThinLoadTable n × ℕ) × ℕ × ℕ
+  | 0, loads => ((loads,0),0,2)
+  | fuel+1, loads =>
+    let step := findCut loads.read
+    match step.1.1 with
+    | none => ((loads,0),step.1.2,step.2+4)
+    | some W =>
+      let cut := outgoingCut (intervalArcs G d) W
+      let updated := bumpFinThinLoadsOnCutWithWordWork loads cut
+      let rest := thinCoverLoopWithArrayLoadWorkUsing G m d findCut fuel updated.1
+      ((rest.1.1,rest.1.2+1),step.1.2+(2*n*m+2*m)+rest.2.1,step.2+updated.2+rest.2.2+4)
+
+private theorem thinCoverLoopWithArrayLoadWorkUsing_spec {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
+    (d : Fin n × Fin n) (findCut : ThinArraySeparator n) (separatorCap : ℕ)
+    (exactCut : ∀ load, (findCut load).1 = fastThinViolationWithSearchWork G d load ∧ (findCut load).2 ≤ separatorCap)
+    (fuel : ℕ) (loads : FinThinLoadTable n) :
+    let out := thinCoverLoopWithArrayLoadWorkUsing G m d findCut fuel loads
+    ((out.1.1.read,out.1.2),out.2.1) = thinCoverLoopWithSearchWork G d fuel loads.read ∧
+      out.2.2 ≤ (out.1.2+1)*(10*m+8+separatorCap) := by
+  subst m
+  induction fuel generalizing loads with
+  | zero =>
+    simp [thinCoverLoopWithArrayLoadWorkUsing,thinCoverLoopWithSearchWork]
+    omega
+  | succ fuel ih =>
+    let proposal := fastThinViolationWithSearchWork G d loads.read
+    let step := findCut loads.read
+    obtain ⟨sameCut, cutWork⟩ := exactCut loads.read
+    change step.1 = proposal at sameCut
+    change step.2 ≤ separatorCap at cutWork
+    cases separator : proposal.1 with
+    | none =>
+      change (fastThinViolationWithSearchWork G d loads.read).1 = none at separator
+      simp only [thinCoverLoopWithArrayLoadWorkUsing,thinCoverLoopWithSearchWork,
+        ← show step = findCut loads.read from rfl,sameCut,proposal,separator]
+      simp only [Nat.zero_add,Nat.one_mul,true_and]
+      omega
+    | some W =>
+      change (fastThinViolationWithSearchWork G d loads.read).1 = some W at separator
+      let cut := outgoingCut (intervalArcs G d) W
+      let updated := bumpFinThinLoadsOnCutWithWordWork loads cut
+      let rest := thinCoverLoopWithArrayLoadWorkUsing G G.card d findCut fuel updated.1
+      obtain ⟨loadEq,loadWork⟩ := bumpFinThinLoadsOnCutWithWordWork_spec loads cut
+      obtain ⟨tail,tailWork⟩ := ih updated.1
+      change updated.1.read = doubleCut cut loads.read at loadEq
+      change updated.2 = 10*cut.card+4 at loadWork
+      rw [loadEq] at tail
+      have inside : cut ⊆ G := (outgoingCut_subset _ _).trans (intervalArcs_subset _ _)
+      have limit : step.2+updated.2+4 ≤ 10*G.card+8+separatorCap := by
+        have count := Finset.card_le_card inside
+        omega
+      simp only [thinCoverLoopWithArrayLoadWorkUsing,thinCoverLoopWithSearchWork,
+        ← show step = findCut loads.read from rfl,sameCut,proposal,separator,Fintype.card_fin]
+      change (((rest.1.1.read,rest.1.2+1),proposal.2+(2*n*G.card+2*G.card)+rest.2.1) = _) ∧ _
+      rw [← tail]
+      refine ⟨rfl,?_⟩
+      let B := 10*G.card+8+separatorCap
+      change step.2+updated.2+rest.2.2+4 ≤ (rest.1.2+1+1)*B
+      change rest.2.2 ≤ (rest.1.2+1)*B at tailWork
+      calc
+        _ = rest.2.2+(step.2+updated.2+4) := by omega
+        _ ≤ (rest.1.2+1)*B+B := Nat.add_le_add tailWork limit
+        _ = _ := by simp only [Nat.add_mul,Nat.one_mul]
+
 /-- Follow the existing separator decisions with the load function backed by a
 current array. Preserve the existing search count and separately charge updates. -/
 def thinCoverLoopWithArrayLoadWork {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (d : Fin n × Fin n) :
@@ -283,44 +355,39 @@ def thinCoverLoopWithArrayLoadWork {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (d : F
       let rest := thinCoverLoopWithArrayLoadWork G m d fuel updated.1
       ((rest.1.1,rest.1.2+1),step.2+(2*n*m+2*m)+rest.2.1,updated.2+rest.2.2+4)
 
+private theorem thinCoverLoopWithArrayLoadWorkUsing_zero {n : ℕ} (G : Arcs (Fin n))
+    (m : ℕ) (d : Fin n × Fin n) (fuel : ℕ) (loads : FinThinLoadTable n) :
+    thinCoverLoopWithArrayLoadWorkUsing G m d (fun load => (fastThinViolationWithSearchWork G d load,0)) fuel loads =
+      thinCoverLoopWithArrayLoadWork G m d fuel loads := by
+  induction fuel generalizing loads with
+  | zero => rfl
+  | succ fuel ih =>
+    simp only [thinCoverLoopWithArrayLoadWorkUsing,thinCoverLoopWithArrayLoadWork,Nat.zero_add]
+    split
+    · rfl
+    · rw [ih]
+
 theorem thinCoverLoopWithArrayLoadWork_spec {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
     (d : Fin n × Fin n) (fuel : ℕ) (loads : FinThinLoadTable n) :
     let out := thinCoverLoopWithArrayLoadWork G m d fuel loads
     ((out.1.1.read,out.1.2),out.2.1) = thinCoverLoopWithSearchWork G d fuel loads.read ∧
       out.2.2 ≤ (out.1.2+1)*(10*m+8) := by
-  subst m
-  induction fuel generalizing loads with
-  | zero => simp [thinCoverLoopWithArrayLoadWork,thinCoverLoopWithSearchWork]
-  | succ fuel ih =>
-    let proposal := fastThinViolationWithSearchWork G d loads.read
-    cases separator : proposal.1 with
-    | none =>
-      change (fastThinViolationWithSearchWork G d loads.read).1 = none at separator
-      simp [thinCoverLoopWithArrayLoadWork,thinCoverLoopWithSearchWork,separator]
-    | some W =>
-      change (fastThinViolationWithSearchWork G d loads.read).1 = some W at separator
-      let cut := outgoingCut (intervalArcs G d) W
-      let updated := bumpFinThinLoadsOnCutWithWordWork loads cut
-      let rest := thinCoverLoopWithArrayLoadWork G G.card d fuel updated.1
-      obtain ⟨loadEq,loadWork⟩ := bumpFinThinLoadsOnCutWithWordWork_spec loads cut
-      obtain ⟨tail,tailWork⟩ := ih updated.1
-      change updated.1.read = doubleCut cut loads.read at loadEq
-      change updated.2 = 10*cut.card+4 at loadWork
-      rw [loadEq] at tail
-      have inside : cut ⊆ G := (outgoingCut_subset _ _).trans (intervalArcs_subset _ _)
-      have limit : updated.2+4 ≤ 10*G.card+8 := by
-        have count := Finset.card_le_card inside
-        omega
-      simp only [thinCoverLoopWithArrayLoadWork,thinCoverLoopWithSearchWork,separator,Fintype.card_fin]
-      change (((rest.1.1.read,rest.1.2+1),proposal.2+(2*n*G.card+2*G.card)+rest.2.1) = _) ∧ _
-      rw [← tail]
-      refine ⟨rfl,?_⟩
-      change updated.2+rest.2.2+4 ≤ (rest.1.2+1+1)*(10*G.card+8)
-      change rest.2.2 ≤ (rest.1.2+1)*(10*G.card+8) at tailWork
-      calc
-        _ = rest.2.2+(updated.2+4) := by omega
-        _ ≤ (rest.1.2+1)*(10*G.card+8)+(10*G.card+8) := Nat.add_le_add tailWork limit
-        _ = _ := by simp only [Nat.add_mul,Nat.one_mul]
+  simpa only [thinCoverLoopWithArrayLoadWorkUsing_zero,Nat.add_zero] using
+    thinCoverLoopWithArrayLoadWorkUsing_spec G m hm d (fun load => (fastThinViolationWithSearchWork G d load,0))
+      0 (fun _ => ⟨rfl,le_rfl⟩) fuel loads
+
+/-- Keep the same decisions and measure indexed residual-flow updates too. -/
+def thinCoverLoopWithArraySeparatorWork {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (d : Fin n × Fin n)
+    (fuel : ℕ) (loads : FinThinLoadTable n) : (FinThinLoadTable n × ℕ) × ℕ × ℕ :=
+  thinCoverLoopWithArrayLoadWorkUsing G m d (fastThinViolationWithDenseFlowWork G d m) fuel loads
+
+theorem thinCoverLoopWithArraySeparatorWork_spec {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
+    (d : Fin n × Fin n) (fuel : ℕ) (loads : FinThinLoadTable n) :
+    let out := thinCoverLoopWithArraySeparatorWork G m d fuel loads
+    ((out.1.1.read,out.1.2),out.2.1) = thinCoverLoopWithSearchWork G d fuel loads.read ∧
+      out.2.2 ≤ (out.1.2+1)*(10*m+8+thinSeparatorArrayWordCap n m) :=
+  thinCoverLoopWithArrayLoadWorkUsing_spec G m hm d (fastThinViolationWithDenseFlowWork G d m)
+    (thinSeparatorArrayWordCap n m) (fastThinViolationWithDenseFlowWork_spec G d m hm) fuel loads
 
 private theorem thinCoverRunWithSearchWorkFrom_append {n : ℕ} (G : Arcs (Fin n))
     (P D : List (Fin n × Fin n)) (loads : CutLoads (Fin n)) :
@@ -397,10 +464,40 @@ def FinThinPrefixState.initial (n : ℕ) : FinThinPrefixState n :=
   let prepared := emptyFinThinLoadsWithWordWork n
   ⟨prepared.1,0,0,prepared.2⟩
 
+@[inline] private def thinCoverArrayPrefixStepUsing {n : ℕ} (old : FinThinPrefixState n)
+    (evaluate : FinThinLoadTable n → (FinThinLoadTable n × ℕ) × ℕ × ℕ) : FinThinPrefixState n :=
+  let next := evaluate old.loads
+  ⟨next.1.1,old.updates+next.1.2,old.searchWork+next.2.1,old.updateWork+next.2.2+3⟩
+
+private theorem thinCoverArrayPrefixStepUsing_spec {n : ℕ} (G : Arcs (Fin n))
+    (old : FinThinPrefixState n) (D : List (Fin n × Fin n)) (d : Fin n × Fin n)
+    (earlier : old.fractionalRecord = thinCoverRunWithSearchWork G D)
+    (evaluate : FinThinLoadTable n → (FinThinLoadTable n × ℕ) × ℕ × ℕ) (B : ℕ)
+    (exactStep : let step := evaluate old.loads
+      ((step.1.1.read,step.1.2),step.2.1) =
+        thinCoverLoopWithSearchWork G d (G.card*(G.card.log2+1)+1) old.loads.read ∧
+      step.2.2 ≤ (step.1.2+1)*B) :
+    let next := thinCoverArrayPrefixStepUsing old evaluate
+    next.fractionalRecord = thinCoverRunWithSearchWork G (D++[d]) ∧
+      next.updateWork ≤ old.updateWork+(next.updates-old.updates+1)*B+3 := by
+  let fuel := G.card*(G.card.log2+1)+1
+  let step := evaluate old.loads
+  obtain ⟨same,work⟩ := exactStep
+  have appendEq := thinCoverRunWithSearchWork_append_one G D d
+  change thinCoverRunWithSearchWork G (D++[d]) = _ at appendEq
+  rw [← earlier] at appendEq
+  change thinCoverRunWithSearchWork G (D++[d]) =
+    let next := thinCoverLoopWithSearchWork G d fuel old.loads.read
+    ((next.1.1,old.updates+next.1.2),old.searchWork+next.2) at appendEq
+  rw [← same] at appendEq
+  refine ⟨appendEq.symm,?_⟩
+  change old.updateWork+step.2.2+3 ≤ old.updateWork+(old.updates+step.1.2-old.updates+1)*B+3
+  rw [Nat.add_sub_cancel_left]
+  exact Nat.add_le_add_right (Nat.add_le_add_left work _) _
+
 def thinCoverArrayPrefixStep {n : ℕ} (G : Arcs (Fin n)) (m fuel : ℕ)
     (old : FinThinPrefixState n) (d : Fin n × Fin n) : FinThinPrefixState n :=
-  let next := thinCoverLoopWithArrayLoadWork G m d fuel old.loads
-  ⟨next.1.1,old.updates+next.1.2,old.searchWork+next.2.1,old.updateWork+next.2.2+3⟩
+  thinCoverArrayPrefixStepUsing old (thinCoverLoopWithArrayLoadWork G m d fuel)
 
 theorem thinCoverArrayPrefixStep_spec {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
     (old : FinThinPrefixState n) (D : List (Fin n × Fin n)) (d : Fin n × Fin n)
@@ -410,19 +507,23 @@ theorem thinCoverArrayPrefixStep_spec {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm
       next.updateWork ≤ old.updateWork+(next.updates-old.updates+1)*(10*m+8)+3 := by
   subst m
   let fuel := G.card*(G.card.log2+1)+1
-  let step := thinCoverLoopWithArrayLoadWork G G.card d fuel old.loads
-  obtain ⟨same,work⟩ := thinCoverLoopWithArrayLoadWork_spec G G.card rfl d fuel old.loads
-  have appendEq := thinCoverRunWithSearchWork_append_one G D d
-  change thinCoverRunWithSearchWork G (D++[d]) = _ at appendEq
-  rw [← earlier] at appendEq
-  change thinCoverRunWithSearchWork G (D++[d]) =
-    let next := thinCoverLoopWithSearchWork G d fuel old.loads.read
-    ((next.1.1,old.updates+next.1.2),old.searchWork+next.2) at appendEq
-  rw [← same] at appendEq
-  refine ⟨appendEq.symm,?_⟩
-  change old.updateWork+step.2.2+3 ≤ old.updateWork+(old.updates+step.1.2-old.updates+1)*(10*G.card+8)+3
-  rw [Nat.add_sub_cancel_left]
-  exact Nat.add_le_add_right (Nat.add_le_add_left work _) _
+  exact thinCoverArrayPrefixStepUsing_spec G old D d earlier (thinCoverLoopWithArrayLoadWork G G.card d fuel)
+    (10*G.card+8) (thinCoverLoopWithArrayLoadWork_spec G G.card rfl d fuel old.loads)
+
+def thinCoverArrayPrefixStepWithSeparatorWork {n : ℕ} (G : Arcs (Fin n)) (m fuel : ℕ)
+    (old : FinThinPrefixState n) (d : Fin n × Fin n) : FinThinPrefixState n :=
+  thinCoverArrayPrefixStepUsing old (thinCoverLoopWithArraySeparatorWork G m d fuel)
+
+theorem thinCoverArrayPrefixStepWithSeparatorWork_spec {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
+    (old : FinThinPrefixState n) (D : List (Fin n × Fin n)) (d : Fin n × Fin n)
+    (earlier : old.fractionalRecord = thinCoverRunWithSearchWork G D) :
+    let next := thinCoverArrayPrefixStepWithSeparatorWork G m (m*(m.log2+1)+1) old d
+    next.fractionalRecord = thinCoverRunWithSearchWork G (D++[d]) ∧
+      next.updateWork ≤ old.updateWork+(next.updates-old.updates+1)*(10*m+8+thinSeparatorArrayWordCap n m)+3 := by
+  subst m
+  let fuel := G.card*(G.card.log2+1)+1
+  exact thinCoverArrayPrefixStepUsing_spec G old D d earlier (thinCoverLoopWithArraySeparatorWork G G.card d fuel)
+    (10*G.card+8+thinSeparatorArrayWordCap n G.card) (thinCoverLoopWithArraySeparatorWork_spec G G.card rfl d fuel old.loads)
 
 /-- Advance the same load table once per arrival in the thin trace. -/
 def thinCoverArrayPrefixFold {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (D : List (Fin n × Fin n)) :
@@ -430,33 +531,44 @@ def thinCoverArrayPrefixFold {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (D : List (F
   let fuel := m*(m.log2+1)+1
   D.foldl (thinCoverArrayPrefixStep G m fuel) (FinThinPrefixState.initial n)
 
-theorem thinCoverArrayPrefixFold_spec {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
+private theorem thinCoverArrayPrefixFoldUsing_spec {n : ℕ} (G : Arcs (Fin n)) (B : ℕ)
+    (advance : FinThinPrefixState n → (Fin n × Fin n) → FinThinPrefixState n)
+    (exactStep : ∀ prior P d, prior.fractionalRecord = thinCoverRunWithSearchWork G P →
+      let next := advance prior d
+      next.fractionalRecord = thinCoverRunWithSearchWork G (P++[d]) ∧
+        next.updateWork ≤ prior.updateWork+(next.updates-prior.updates+1)*B+3)
     (D : List (Fin n × Fin n)) :
-    let out := thinCoverArrayPrefixFold G m D
+    let out := D.foldl advance (FinThinPrefixState.initial n)
     out.fractionalRecord = thinCoverRunWithSearchWork G D ∧
-      out.updateWork ≤ (out.updates+D.length)*(10*m+8)+3*D.length+(4*(n*n)+5) := by
-  let B := 10*m+8
+      out.updateWork ≤ (out.updates+D.length)*B+3*D.length+(4*(n*n)+5) := by
   induction D using List.reverseRecOn with
   | nil =>
     have blank : (emptyFinThinLoads n).read = fun _ => 0 := funext emptyFinThinLoads_read
-    simp [thinCoverArrayPrefixFold,FinThinPrefixState.initial,FinThinPrefixState.fractionalRecord,
+    simp [FinThinPrefixState.initial,FinThinPrefixState.fractionalRecord,
       thinCoverRunWithSearchWork,thinCoverRunWithSearchWorkFrom,blank,
       (emptyFinThinLoadsWithWordWork_spec n).1,(emptyFinThinLoadsWithWordWork_spec n).2]
   | append_singleton D d ih =>
-    let prior := thinCoverArrayPrefixFold G m D
-    let advanced := thinCoverArrayPrefixStep G m (m*(m.log2+1)+1) prior d
+    let prior := D.foldl advance (FinThinPrefixState.initial n)
+    let advanced := advance prior d
     obtain ⟨same,oldWork⟩ := ih
     let initialCost := 4*(n*n)+5
     change prior.updateWork ≤ (prior.updates+D.length)*B+3*D.length+initialCost at oldWork
-    obtain ⟨next,newWork⟩ := thinCoverArrayPrefixStep_spec G m hm prior D d same
-    have output : thinCoverArrayPrefixFold G m (D++[d]) = advanced := by
-      unfold thinCoverArrayPrefixFold
+    obtain ⟨next,newWork⟩ := exactStep prior D d same
+    have output : (D++[d]).foldl advance (FinThinPrefixState.initial n) = advanced := by
       rw [List.foldl_append]
       rfl
     dsimp only
     rw [output]
     refine ⟨next,?_⟩
-    have updates : prior.updates ≤ advanced.updates := Nat.le_add_right _ _
+    have updates : prior.updates ≤ advanced.updates := by
+      have oldCount := congrArg (fun r : (CutLoads (Fin n) × ℕ) × ℕ => r.1.2) same
+      have nextCount := congrArg (fun r : (CutLoads (Fin n) × ℕ) × ℕ => r.1.2) next
+      have appendCount := congrArg (fun r : (CutLoads (Fin n) × ℕ) × ℕ => r.1.2)
+        (thinCoverRunWithSearchWork_append_one G D d)
+      change prior.updates = (thinCoverRunWithSearchWork G D).1.2 at oldCount
+      change advanced.updates = (thinCoverRunWithSearchWork G (D++[d])).1.2 at nextCount
+      change (thinCoverRunWithSearchWork G (D++[d])).1.2 = (thinCoverRunWithSearchWork G D).1.2+_ at appendCount
+      exact oldCount.le.trans (Nat.le_add_right _ _) |>.trans_eq (nextCount.trans appendCount).symm
     have total : prior.updates+D.length+(advanced.updates-prior.updates+1) =
         advanced.updates+(D++[d]).length := by
       simp only [List.length_append,List.length_singleton]
@@ -468,5 +580,27 @@ theorem thinCoverArrayPrefixFold_spec {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm
         Nat.add_le_add_right (Nat.add_le_add_right oldWork _) _
       _ = (prior.updates+D.length+(advanced.updates-prior.updates+1))*B+3*(D.length+1)+initialCost := by ring
       _ = _ := by rw [total,List.length_append,List.length_singleton]
+
+theorem thinCoverArrayPrefixFold_spec {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
+    (D : List (Fin n × Fin n)) :
+    let out := thinCoverArrayPrefixFold G m D
+    out.fractionalRecord = thinCoverRunWithSearchWork G D ∧
+      out.updateWork ≤ (out.updates+D.length)*(10*m+8)+3*D.length+(4*(n*n)+5) :=
+  thinCoverArrayPrefixFoldUsing_spec G (10*m+8) (thinCoverArrayPrefixStep G m (m*(m.log2+1)+1))
+    (thinCoverArrayPrefixStep_spec G m hm) D
+
+def thinCoverArrayPrefixFoldWithSeparatorWork {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (D : List (Fin n × Fin n)) : FinThinPrefixState n :=
+  let fuel := m*(m.log2+1)+1
+  D.foldl (thinCoverArrayPrefixStepWithSeparatorWork G m fuel) (FinThinPrefixState.initial n)
+
+theorem thinCoverArrayPrefixFoldWithSeparatorWork_spec {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
+    (D : List (Fin n × Fin n)) :
+    let out := thinCoverArrayPrefixFoldWithSeparatorWork G m D
+    out.fractionalRecord = thinCoverRunWithSearchWork G D ∧
+      out.updateWork ≤ (out.updates+D.length)*(10*m+8+thinSeparatorArrayWordCap n m)+3*D.length+(4*(n*n)+5) :=
+  thinCoverArrayPrefixFoldUsing_spec G (10*m+8+thinSeparatorArrayWordCap n m)
+    (thinCoverArrayPrefixStepWithSeparatorWork G m (m*(m.log2+1)+1))
+    (thinCoverArrayPrefixStepWithSeparatorWork_spec G m hm) D
 
 end OnlineReachabilityPreservers

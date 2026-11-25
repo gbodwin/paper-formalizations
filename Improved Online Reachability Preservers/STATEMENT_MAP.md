@@ -580,23 +580,37 @@ tally on exhaustion. The cumulative bound for each feasible trace adds \(11m+21\
 to the preparation and early trace polynomials. Other container work
 and bit and native costs remain open.
 
-The [incremental thin evaluator](OnlineReachabilityPreservers/SteinerThinReplay.lean#L537)
+The [incremental thin evaluator](OnlineReachabilityPreservers/SteinerThinReplay.lean#L660)
 initializes one dense load table for a nonempty thin run, carries it
 forward through the thin requests inside each evaluated late prefix, and
 uses the rounded graph already computed for the final check when all checks
 pass. The
-[thin work bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L657)
+[thin work bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L729)
 covers that initialization, indexed updates on separating cuts, and
 indexed rounding with repeated doubling. The [late equality](OnlineReachabilityPreservers/SteinerLateReplay.lean#L284)
 preserves the rounded graph and previous search tally for every trace,
-including the missed-thick fallback. The [complete replay specification](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L711)
+including the missed-thick fallback. The [complete replay specification](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L793)
 preserves every earlier record and the evaluation count for every fixed
-bit sample. With reachable requests, the [prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L773)
+bit sample. With reachable requests, the [prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L855)
 adds the measured early and late work to the cumulative polynomial for
 each fixed height. Remaining time obligations include separator, hub,
 and container operations, bit arithmetic, and native array costs. The
 inherited computation of the finite vertex count can also traverse the
 vertex enumeration in the compiled evaluator.
+
+The [indexed thin separator](OnlineReachabilityPreservers/SeparatorWork.lean#L667)
+replaces the signed flow function by one array of ordered pairs for each
+cut search. Each chosen augmenting arc increments its forward entry and
+decrements its reverse entry. The selected augmenting paths, final flow,
+cut and earlier search tally agree. For supply \(m\), the additional charge
+per thin separator call is bounded by \(4n^2+m(20n+10)+23\). The
+[thin bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L753)
+uses the feasible trace's bound on the number of calls. The [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L873)
+includes this charge in the fixed-height polynomial and returns the same
+prefix graphs on feasible traces. The [record equality](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L810)
+also holds on exhaustion and infeasible traces. Capacity evaluation and
+the residual-graph flow reads require their own word bounds, along with
+the remaining search and container operations, bit costs and native costs.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

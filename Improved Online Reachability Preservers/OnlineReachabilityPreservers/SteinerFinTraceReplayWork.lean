@@ -696,29 +696,54 @@ theorem completeFinSteinerReplayWithThinRowWork_prefixes {n : ℕ} (G : Arcs (Fi
 def steinerTracePhaseWorkPolynomial (n m height p : ℕ) : ℕ :=
   steinerTraceEarlySeedRankWorkPolynomial n height p+(p+1)*(steinerStreamingThinWorkPolynomial n m p+2)
 
+/-- Bound the measured trace with indexed signed flow in each thin separator. -/
+def steinerTraceDenseSeparatorWorkPolynomial (n m height p : ℕ) : ℕ :=
+  steinerTraceEarlySeedRankWorkPolynomial n height p+(p+1)*(steinerThinSeparatorWorkPolynomial n m p+2)
+
+private abbrev FinLateReplayEvaluator (n : ℕ) :=
+  ℕ → Finset (Fin n) → ThinThresholdList (Fin n) → List (Fin n × Fin n) →
+    (Arcs (Fin n) × ℕ) × ℕ
+
+private def completeFinSteinerReplayWithLateEvaluator {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (lateEval : FinLateReplayEvaluator n) :=
+  completeFinSteinerReplayWithCachedPhases G raw same height m hm bits D
+    (prepareThinThresholdListByIndexWithWordWork G m hm) fun early draw rows =>
+      replaySteinerTraceWithPhaseWork n (by simp) early draw (fun τ hubs => lateEval τ hubs rows) D
+
 /-- Reuse decoded thresholds and advance the fractional thin loads once per
 request inside each evaluated late prefix. -/
 def completeFinSteinerReplayWithStreamingThinWork {n : ℕ} (G : Arcs (Fin n))
     (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
     (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
-  completeFinSteinerReplayWithCachedPhases G raw same height m hm bits D
-    (prepareThinThresholdListByIndexWithWordWork G m hm) fun early draw rows =>
-      replaySteinerTraceWithPhaseWork n (by simp) early draw
-        (fun τ hubs => lateSteinerWithStreamingThinWork G τ m hubs rows) D
+  completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D
+    (fun τ hubs rows => lateSteinerWithStreamingThinWork G τ m hubs rows)
 
-/-- Preserve the prefix records and evaluation count on every input. The
-additional trace allowance applies when the demands are reachable. -/
-theorem completeFinSteinerReplayWithStreamingThinWork_spec {n : ℕ} (G : Arcs (Fin n))
+/-- Use indexed signed-flow updates in the thin separator at every late prefix. -/
+def completeFinSteinerReplayWithThinSeparatorWork {n : ℕ} (G : Arcs (Fin n))
     (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
-    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
-    let out := completeFinSteinerReplayWithStreamingThinWork G raw same height m hm bits D
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
+  completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D
+    (fun τ hubs rows => lateSteinerWithThinSeparatorWork G τ m hubs rows)
+
+private theorem completeFinSteinerReplayWithLateEvaluator_spec {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (lateEval : FinLateReplayEvaluator n) (L : ℕ)
+    (lateExact : ∀ τ hubs rows P, (lateEval τ hubs rows P).1 =
+      lateSteinerWithStoredThinThresholds G τ m hubs rows.val.toFinset P)
+    (lateWork : ∀ (_early : EarlySteinerRule G) τ hubs rows, (∀ r ∈ rows.val, r.1 ∈ G) →
+      rows.val.length ≤ m → ∀ P, P.length ≤ D.length → (∀ d ∈ P, Reach G d.1 d.2) →
+        (lateEval τ hubs rows P).2 ≤ L) :
+    let out := completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D lateEval
     let old := completeFinSteinerReplayWithThinRowWork G raw same height m hm bits D
     out.1 = old.1 ∧ out.2.2 = old.2.2 ∧
-      ((∀ d ∈ D, Reach G d.1 d.2) → out.2.1 ≤ steinerTracePhaseWorkPolynomial n m height D.length+11*m+21) := by
+      ((∀ d ∈ D, Reach G d.1 d.2) → out.2.1 ≤ (steinerTraceEarlySeedRankWorkPolynomial n height D.length+(D.length+1)*(L+2))+11*m+21) := by
   let prepared := prepareFinSteinerWeightedForSeedWithSeedWork G raw same height
   let indexes := finSteinerReplaySeedIndexesWithWordWork G height raw same
   let decoded := decodeSteinerSeedWithArrayViewsFromPreparedScale G height n m (by simp) hm prepared.1.1 indexes.1 bits
-  unfold completeFinSteinerReplayWithStreamingThinWork completeFinSteinerReplayWithThinRowWork
+  unfold completeFinSteinerReplayWithLateEvaluator completeFinSteinerReplayWithThinRowWork
     completeFinSteinerReplayWithSeedRankWorkUsing completeFinSteinerReplayWithCachedPhases
   dsimp only
   cases state : decoded.1.2 with
@@ -727,7 +752,7 @@ theorem completeFinSteinerReplayWithStreamingThinWork_spec {n : ℕ} (G : Arcs (
     have fallback := (steinerFallbackPrefixScanWithWordWork_spec G D).2.le.trans
       (steinerFallbackReplayWordWork_bound n D.length)
     change (steinerFallbackPrefixScanWithWordWork G D).2+8 ≤ _
-    unfold steinerTracePhaseWorkPolynomial steinerTraceEarlySeedRankWorkPolynomial steinerTraceEarlySeedWorkBound
+    unfold steinerTraceEarlySeedRankWorkPolynomial steinerTraceEarlySeedWorkBound
     omega
   | some entry =>
     rcases entry with ⟨seed,arrays⟩
@@ -740,33 +765,90 @@ theorem completeFinSteinerReplayWithStreamingThinWork_spec {n : ℕ} (G : Arcs (
     obtain ⟨listRows,rowCount,rowEdges,rowWork⟩ := prepareThinThresholdListByIndexWithWordWork_spec
       G m hm indexes.1.arcs arrays.thin
     have sameRows := listRows.trans (prepareThinThresholdRowsByIndexWithWordWork_spec G m hm indexes.1.arcs arrays.thin).1.symm
-    let late := fun τ hubs => lateSteinerWithStreamingThinWork G τ m hubs rows.1
+    let late := fun τ hubs => lateEval τ hubs rows.1
     let priorLate := fun τ hubs => lateSteinerWithStoredThinThresholds G τ m hubs oldRows.1
     have lateRecord (τ : ℕ) (hubs : Finset (Fin n)) (P : List (Fin n × Fin n)) : (late τ hubs P).1 = priorLate τ hubs P := by
       dsimp only [late,priorLate]
-      rw [lateSteinerWithStreamingThinWork_eq G τ m hm,show rows.1.val.toFinset = oldRows.1 from sameRows]
+      rw [lateExact,show rows.1.val.toFinset = oldRows.1 from sameRows]
     obtain ⟨records,calls⟩ := replaySteinerTraceWithPhaseWork_records_eq n (by simp) early seed.2.1 late priorLate lateRecord D
     refine ⟨congrArg (fun data : List (Arcs (Fin n) × ℕ) =>
       ((((data,prepared.1.2.2),decoded.2),prepared.2),indexes.2)) records,calls,?_⟩
     intro feasible
     let B := earlyRoundingSeedReadPolynomial n height*earlySeedArrayReadWordBudget height
-    let L := steinerStreamingThinWorkPolynomial n m D.length
     obtain ⟨_,perRead⟩ := finEarlySeedTrialsWithRankWork_spec G height width.val width.property arrays.early
     have earlyBound (P : List (Fin n × Fin n)) : (early P).2.2 ≤ (P.length+1)*B :=
       ((prepareFinSteinerWeightedForSeedWithSeedWork_spec G raw same height).2.2.2 samples _ perRead P).2
     have lateBound (τ : ℕ) (hubs : Finset (Fin n)) (P : List (Fin n × Fin n))
         (short : P.length ≤ D.length) (reachable : ∀ d ∈ P, Reach G d.1 d.2) : (late τ hubs P).2 ≤ L := by
-      have work := lateSteinerWithStreamingThinWork_bound (earlyRoundedRule G height seed.1) τ m hm hubs
-        rows.1 rowEdges rowCount.le P reachable
-      refine work.trans ((steinerStreamingThinWorkBound_le n m P.length).trans ?_)
-      unfold L steinerStreamingThinWorkPolynomial
-      gcongr
+      exact lateWork (earlyRoundedRule G height seed.1) τ hubs rows.1 rowEdges rowCount.le P short reachable
     have work := replaySteinerTraceWithPhaseWork_bound n (by simp) early B earlyBound seed.2.1 late D
       (fun d => Reach G d.1 d.2) feasible L lateBound
     change (replaySteinerTraceWithPhaseWork n (by simp) early seed.2.1 late D).2.1+rows.2+9+8 ≤ _
-    change _ ≤ steinerTracePhaseWorkPolynomial n m height D.length at work
+    change _ ≤ (steinerTraceEarlySeedRankWorkPolynomial n height D.length+(D.length+1)*(L+2)) at work
     change rows.2 = 11*m+4 at rowWork
     omega
+
+/-- Preserve the prefix records and evaluation count on every input. The
+additional trace allowance applies when the demands are reachable. -/
+theorem completeFinSteinerReplayWithStreamingThinWork_spec {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
+    let out := completeFinSteinerReplayWithStreamingThinWork G raw same height m hm bits D
+    let old := completeFinSteinerReplayWithThinRowWork G raw same height m hm bits D
+    out.1 = old.1 ∧ out.2.2 = old.2.2 ∧
+      ((∀ d ∈ D, Reach G d.1 d.2) → out.2.1 ≤ steinerTracePhaseWorkPolynomial n m height D.length+11*m+21) := by
+  apply completeFinSteinerReplayWithLateEvaluator_spec G raw same height m hm bits D
+    (fun τ hubs rows => lateSteinerWithStreamingThinWork G τ m hubs rows)
+    (steinerStreamingThinWorkPolynomial n m D.length)
+  · exact fun τ hubs rows P => lateSteinerWithStreamingThinWork_eq G τ m hm hubs rows P
+  · intro early τ hubs rows edges count P short reachable
+    have work := lateSteinerWithStreamingThinWork_bound early τ m hm hubs rows edges count P reachable
+    refine work.trans ((steinerStreamingThinWorkBound_le n m P.length).trans ?_)
+    unfold steinerStreamingThinWorkPolynomial
+    gcongr
+
+theorem completeFinSteinerReplayWithThinSeparatorWork_spec {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
+    let out := completeFinSteinerReplayWithThinSeparatorWork G raw same height m hm bits D
+    let old := completeFinSteinerReplayWithThinRowWork G raw same height m hm bits D
+    out.1 = old.1 ∧ out.2.2 = old.2.2 ∧
+      ((∀ d ∈ D, Reach G d.1 d.2) → out.2.1 ≤ steinerTraceDenseSeparatorWorkPolynomial n m height D.length+11*m+21) := by
+  apply completeFinSteinerReplayWithLateEvaluator_spec G raw same height m hm bits D
+    (fun τ hubs rows => lateSteinerWithThinSeparatorWork G τ m hubs rows)
+    (steinerThinSeparatorWorkPolynomial n m D.length)
+  · exact fun τ hubs rows P => lateSteinerWithThinSeparatorWork_eq G τ m hm hubs rows P
+  · intro early τ hubs rows edges count P short reachable
+    have work := lateSteinerWithThinSeparatorWork_bound early τ m hm hubs rows edges count P reachable
+    refine work.trans ((steinerThinSeparatorWorkBound_le n m P.length).trans ?_)
+    unfold steinerThinSeparatorWorkPolynomial steinerStreamingThinWorkPolynomial
+    gcongr
+
+private theorem completeFinSteinerReplayWithLateEvaluator_prefixes {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) (lateEval : FinLateReplayEvaluator n) (work : ℕ)
+    (issued : let out := completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D lateEval
+      out.1 = (completeFinSteinerReplayWithThinRowWork G raw same height m hm bits D).1 ∧
+      out.2.1 ≤ work) :
+    let out := completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D lateEval
+    let base := out.1.1.1
+    base.1.1.map Prod.fst = D.inits.map (completeSteinerRunWithBitBudget G height bits) ∧
+      (base.1.1.map Prod.snd).sum+base.1.2.1+base.1.2.2.1+base.1.2.2.2+base.2+out.1.1.2+out.1.2+out.2.1 ≤
+        completeFinSteinerPreparationWorkPolynomial n m raw.length height D.length +
+          finSteinerWeightPlanWorkPolynomial n height + finSteinerReplayIndexWorkPolynomial n raw.length +
+          work := by
+  obtain ⟨sameRun,budget⟩ := issued
+  have rows := (completeFinSteinerReplayWithThinRowWork_spec G raw same height m hm bits D).1
+  have ranks := (completeFinSteinerReplayWithSeedRankWork_spec G raw same height m hm bits D).1
+  have cached := (completeFinSteinerReplayWithStoredThinThresholds_spec G raw same height m hm bits D).1
+  have reads := (completeFinSteinerReplayWithEarlySeedReads_spec G raw same height m hm bits D).1
+  have trace := (completeFinSteinerReplayWithTraceWork_spec G raw same height m hm bits D).1
+  obtain ⟨prefixes,charged⟩ := completeFinSteinerReplayWithIndexPreparationWork_prefixes G raw same height m hm bits D feasible
+  dsimp only
+  rw [sameRun,rows,ranks,cached,reads,trace]
+  refine ⟨prefixes,?_⟩
+  omega
 
 /-- Exact fixed-budget prefix graphs with the additional word work of the
 incremental thin evaluator included in the same bound. -/
@@ -782,16 +864,27 @@ theorem completeFinSteinerReplayWithStreamingThinWork_prefixes {n : ℕ} (G : Ar
           finSteinerWeightPlanWorkPolynomial n height + finSteinerReplayIndexWorkPolynomial n raw.length +
           steinerTracePhaseWorkPolynomial n m height D.length + 11*m + 21 := by
   obtain ⟨sameRun,_,traceWork⟩ := completeFinSteinerReplayWithStreamingThinWork_spec G raw same height m hm bits D
-  have budget := traceWork feasible
-  have rows := (completeFinSteinerReplayWithThinRowWork_spec G raw same height m hm bits D).1
-  have ranks := (completeFinSteinerReplayWithSeedRankWork_spec G raw same height m hm bits D).1
-  have cached := (completeFinSteinerReplayWithStoredThinThresholds_spec G raw same height m hm bits D).1
-  have reads := (completeFinSteinerReplayWithEarlySeedReads_spec G raw same height m hm bits D).1
-  have trace := (completeFinSteinerReplayWithTraceWork_spec G raw same height m hm bits D).1
-  obtain ⟨prefixes,charged⟩ := completeFinSteinerReplayWithIndexPreparationWork_prefixes G raw same height m hm bits D feasible
-  dsimp only
-  rw [sameRun,rows,ranks,cached,reads,trace]
-  refine ⟨prefixes,?_⟩
-  omega
+  simpa only [completeFinSteinerReplayWithStreamingThinWork,Nat.add_assoc] using
+    completeFinSteinerReplayWithLateEvaluator_prefixes G raw same height m hm bits D feasible
+    (fun τ hubs rows => lateSteinerWithStreamingThinWork G τ m hubs rows)
+    (steinerTracePhaseWorkPolynomial n m height D.length + 11*m + 21) ⟨sameRun,traceWork feasible⟩
+
+/-- Exact fixed-budget prefix graphs with the additional signed-flow work. -/
+theorem completeFinSteinerReplayWithThinSeparatorWork_prefixes {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let out := completeFinSteinerReplayWithThinSeparatorWork G raw same height m hm bits D
+    let base := out.1.1.1
+    base.1.1.map Prod.fst = D.inits.map (completeSteinerRunWithBitBudget G height bits) ∧
+      (base.1.1.map Prod.snd).sum+base.1.2.1+base.1.2.2.1+base.1.2.2.2+base.2+out.1.1.2+out.1.2+out.2.1 ≤
+        completeFinSteinerPreparationWorkPolynomial n m raw.length height D.length +
+          finSteinerWeightPlanWorkPolynomial n height + finSteinerReplayIndexWorkPolynomial n raw.length +
+          steinerTraceDenseSeparatorWorkPolynomial n m height D.length + 11*m + 21 := by
+  obtain ⟨sameRun,_,traceWork⟩ := completeFinSteinerReplayWithThinSeparatorWork_spec G raw same height m hm bits D
+  simpa only [completeFinSteinerReplayWithThinSeparatorWork,Nat.add_assoc] using
+    completeFinSteinerReplayWithLateEvaluator_prefixes G raw same height m hm bits D feasible
+    (fun τ hubs rows => lateSteinerWithThinSeparatorWork G τ m hubs rows)
+    (steinerTraceDenseSeparatorWorkPolynomial n m height D.length + 11*m + 21) ⟨sameRun,traceWork feasible⟩
 
 end OnlineReachabilityPreservers

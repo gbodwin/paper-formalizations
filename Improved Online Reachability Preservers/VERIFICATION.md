@@ -20,10 +20,17 @@ An exact-source replay grants no coverage to a paper statement outside the
 
 ## Checked checkpoints
 
-- The [incremental thin work bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L657)
+- The [signed flow updates](OnlineReachabilityPreservers/SeparatorWork.lean#L484)
+  produce the same flow as ordinary augmentation. The
+  [exact separator comparison](OnlineReachabilityPreservers/SeparatorWork.lean#L667)
+  also preserves every earlier search count. The
+  [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L873)
+  includes array initialization and the two signed updates per routed arc
+  in the combined source-level allowance on feasible traces.
+- The [incremental thin work bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L729)
   covers one dense load initialization per nonempty thin run, direct
   indexed updates along separating cuts, and threshold scans at the
-  successive checks. On a feasible trace, the [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L773)
+  successive checks. On a feasible trace, the [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L855)
   returns the ordinary fixed-budget prefix graphs and includes the measured
   early and late work at each fixed height. Equality to earlier replay
   records and evaluation counts also holds on bit exhaustion and on

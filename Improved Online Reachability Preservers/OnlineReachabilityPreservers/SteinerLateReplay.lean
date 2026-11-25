@@ -293,23 +293,59 @@ theorem lateSteinerWithStreamingThinWork_eq {n : ℕ} (G : Arcs (Fin n)) (τ m :
   rw [lateSteinerWithThinWorkUsing_project,same]
   simp [lateSteinerWithStoredThinThresholds]
 
+private theorem lateSteinerWithThinWorkUsing_bound {n : ℕ} {G : Arcs (Fin n)} (early : EarlySteinerRule G)
+    (τ m : ℕ) (S : Finset (Fin n)) (round : List (Fin n × Fin n) → (Arcs (Fin n) × ℕ) × ℕ)
+    (budget : ℕ → ℕ) (mono : Monotone budget)
+    (cost : ∀ P, (∀ d ∈ P, Reach G d.1 d.2) → (round P).2 ≤ budget P.length)
+    (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (lateSteinerWithThinWorkUsing G τ m S round D).2 ≤ budget D.length := by
+  let traces := lateTracesWithSearchWorkFrom G S D ⟨[],[],[]⟩
+  obtain ⟨_,_,tcap,thins,_⟩ := lateTracesWithSearchWorkFrom_spec early S D ⟨[],[],[]⟩ D.length
+    (by simp) (by simp) feasible (by simp)
+  have actual := cost traces.1.thin thins
+  dsimp only [lateSteinerWithThinWorkUsing,lateSteinerWithTraceUsing]
+  split
+  · exact Nat.zero_le _
+  · exact actual.trans (mono tcap)
+
 theorem lateSteinerWithStreamingThinWork_bound {n : ℕ} {G : Arcs (Fin n)} (early : EarlySteinerRule G)
     (τ m : ℕ) (hm : m = G.card) (S : Finset (Fin n))
     (rows : ThinThresholdList (Fin n))
     (edges : ∀ r ∈ rows.val, r.1 ∈ G) (count : rows.val.length ≤ m)
     (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
     (lateSteinerWithStreamingThinWork G τ m S rows D).2 ≤ steinerStreamingThinWorkBound n m D.length := by
-  let traces := lateTracesWithSearchWorkFrom G S D ⟨[],[],[]⟩
-  obtain ⟨_,_,tcap,thins,_⟩ := lateTracesWithSearchWorkFrom_spec early S D ⟨[],[],[]⟩ D.length
-    (by simp) (by simp) feasible (by simp)
-  have actual := thinRoundRunFromThresholdListWithWordWork_bound G m hm rows edges count
-    (thinRoundingFactor n τ) traces.1.thin thins
-  have budget : steinerStreamingThinWorkBound n m traces.1.thin.length ≤ steinerStreamingThinWorkBound n m D.length := by
+  apply lateSteinerWithThinWorkUsing_bound early τ m S _ (steinerStreamingThinWorkBound n m) _ _ D feasible
+  · intro a b short
     unfold steinerStreamingThinWorkBound
     gcongr
-  dsimp only [lateSteinerWithStreamingThinWork,lateSteinerWithThinWorkUsing,lateSteinerWithTraceUsing]
-  split
-  · exact Nat.zero_le _
-  · exact actual.trans budget
+  · exact thinRoundRunFromThresholdListWithWordWork_bound G m hm rows edges count (thinRoundingFactor n τ)
+
+/-- Preserve hub processing and add the indexed separator to the thin branch. -/
+def lateSteinerWithThinSeparatorWork {n : ℕ} (G : Arcs (Fin n)) (τ m : ℕ) (S : Finset (Fin n))
+    (rows : ThinThresholdList (Fin n)) (D : List (Fin n × Fin n)) : (Arcs (Fin n) × ℕ) × ℕ :=
+  lateSteinerWithThinWorkUsing G τ m S
+    (thinRoundRunFromThresholdListWithSeparatorWork G m rows (thinRoundingFactor n τ)) D
+
+theorem lateSteinerWithThinSeparatorWork_eq {n : ℕ} (G : Arcs (Fin n)) (τ m : ℕ) (hm : m = G.card)
+    (S : Finset (Fin n)) (rows : ThinThresholdList (Fin n)) (D : List (Fin n × Fin n)) :
+    (lateSteinerWithThinSeparatorWork G τ m S rows D).1 =
+      lateSteinerWithStoredThinThresholds G τ m S rows.val.toFinset D := by
+  let round := thinRoundRunFromThresholdListWithSeparatorWork G m rows (thinRoundingFactor n τ)
+  have same : (fun P => (round P).1) = thinRoundRunFromThresholdRows G m (thinRoundingFactor n τ) rows.val.toFinset :=
+    funext (thinRoundRunFromThresholdListWithSeparatorWork_eq G m hm rows (thinRoundingFactor n τ))
+  change (lateSteinerWithThinWorkUsing G τ m S round D).1 = _
+  rw [lateSteinerWithThinWorkUsing_project,same]
+  simp [lateSteinerWithStoredThinThresholds]
+
+theorem lateSteinerWithThinSeparatorWork_bound {n : ℕ} {G : Arcs (Fin n)} (early : EarlySteinerRule G)
+    (τ m : ℕ) (hm : m = G.card) (S : Finset (Fin n)) (rows : ThinThresholdList (Fin n))
+    (edges : ∀ r ∈ rows.val, r.1 ∈ G) (count : rows.val.length ≤ m)
+    (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (lateSteinerWithThinSeparatorWork G τ m S rows D).2 ≤ steinerThinSeparatorWorkBound n m D.length := by
+  apply lateSteinerWithThinWorkUsing_bound early τ m S _ (steinerThinSeparatorWorkBound n m) _ _ D feasible
+  · intro a b short
+    unfold steinerThinSeparatorWorkBound steinerStreamingThinWorkBound
+    gcongr
+  · exact thinRoundRunFromThresholdListWithSeparatorWork_bound G m hm rows edges count (thinRoundingFactor n τ)
 
 end OnlineReachabilityPreservers
