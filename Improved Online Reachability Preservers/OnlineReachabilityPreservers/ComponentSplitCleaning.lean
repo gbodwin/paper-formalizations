@@ -1,3 +1,4 @@
+import Mathlib.Data.List.Chain
 import Mathlib.Data.Finset.Max
 import OnlineReachabilityPreservers.CyclicSplits
 import OnlineReachabilityPreservers.LocalFrozenCleaning
@@ -405,13 +406,14 @@ private theorem pack_separated_runs {V : Type*} (rank : V → ℕ) (small width 
     (chunkCap : ∀ block ∈ groups, block.length ≤ small) :
     ∃ pieces : List (List V), pieces.flatten = groups.flatten ∧ rankSeparatedRows rank pieces ∧
       (∀ block ∈ pieces, block.length ≤ width) ∧
-      (∀ block ∈ pieces.tail, width + 1 - small ≤ block.length) := by
+      (∀ block ∈ pieces.tail, width + 1 - small ≤ block.length) ∧
+      pieces.IsChain (fun a b => width + 1 ≤ a.length + b.length) := by
   induction groups with
-  | nil => exact ⟨[], rfl, List.Pairwise.nil, by simp, by simp⟩
+  | nil => exact ⟨[], rfl, List.Pairwise.nil, by simp, by simp, .nil⟩
   | cons head tail ih =>
     obtain ⟨origOrder, restSep⟩ := List.pairwise_cons.mp (show rankSeparatedRows rank (head :: tail) from separated)
     have headCap := chunkCap head List.mem_cons_self
-    obtain ⟨packed, flat, order, cap, heavy⟩ := ih restSep (fun a h => chunkCap a (List.mem_cons_of_mem _ h))
+    obtain ⟨packed, flat, order, cap, heavy, pairs⟩ := ih restSep (fun a h => chunkCap a (List.mem_cons_of_mem _ h))
     have headBefore (block : List V) (on : block ∈ packed) (x : V) (hx : x ∈ head) (y : V) (hy : y ∈ block) :
         rank x < rank y := by
       have appears : y ∈ tail.flatten := flat ▸ List.mem_flatten.mpr ⟨block, on, hy⟩
@@ -419,7 +421,7 @@ private theorem pack_separated_runs {V : Type*} (rank : V → ℕ) (small width 
       exact origOrder group groupOn x hx y member
     cases packed with
     | nil =>
-      refine ⟨[head], ?_, by simp [rankSeparatedRows], ?_, by simp⟩
+      refine ⟨[head], ?_, by simp [rankSeparatedRows], ?_, by simp, .singleton _⟩
       · simp only [List.flatten_cons, List.flatten_nil, List.append_nil]
         rw [← flat]
         simp
@@ -428,7 +430,7 @@ private theorem pack_separated_runs {V : Type*} (rank : V → ℕ) (small width 
       have firstBefore := (List.pairwise_cons.mp (show rankSeparatedRows rank (first :: rest) from order)).1
       have tailSep := rankSeparatedRows_tail order
       by_cases room : head.length + first.length ≤ width
-      · refine ⟨(head ++ first) :: rest, ?_, ?_, ?_, heavy⟩
+      · refine ⟨(head ++ first) :: rest, ?_, ?_, ?_, heavy, ?_⟩
         · simp only [List.flatten_cons, List.append_assoc]
           rw [← flat]
           rfl
@@ -442,9 +444,14 @@ private theorem pack_separated_runs {V : Type*} (rank : V → ℕ) (small width 
           rcases List.mem_cons.mp on with rfl | later
           · simpa only [List.length_append] using room
           · exact cap block (List.mem_cons_of_mem _ later)
-      · refine ⟨head :: first :: rest, ?_, ?_, ?_, ?_⟩
+        · cases rest with
+          | nil => exact .singleton _
+          | cons second rest =>
+            obtain ⟨large, later⟩ := List.isChain_cons_cons.mp pairs
+            exact List.isChain_cons_cons.mpr ⟨by simp only [List.length_append]; omega, later⟩
+      · refine ⟨head :: first :: rest, ?_, ?_, ?_, ?_, List.isChain_cons_cons.mpr ⟨by omega, pairs⟩⟩
         · simp only [List.flatten_cons]
-          exact congrArg (head++·) flat
+          exact congrArg (head ++ ·) flat
         · unfold rankSeparatedRows
           exact List.pairwise_cons.mpr ⟨headBefore, order⟩
         · intro block on
@@ -466,6 +473,18 @@ private theorem packedCount {V : Type*} (minimum : ℕ) (pieces : List (List V))
       rw [List.length_flatten]
       simpa [Nat.mul_comm] using List.sum_le_sum (l := rest) (f := fun _ => minimum)
         (g := List.length) heavy
+    simp only [List.length_cons, List.flatten_cons, List.length_append, Nat.mul_succ]
+    omega
+
+private theorem packedPairCount {V : Type*} (width : ℕ) (pieces : List (List V))
+    (pairs : pieces.IsChain (fun a b => width + 1 ≤ a.length + b.length)) :
+    (width + 1) * pieces.length ≤ 2 * pieces.flatten.length + (width + 1) := by
+  induction pieces using List.twoStepInduction with
+  | nil => simp
+  | singleton a => simp
+  | cons_cons a b rest ih _ =>
+    have large := (List.isChain_cons_cons.mp pairs).1
+    have smaller := ih pairs.tail.tail
     simp only [List.length_cons, List.flatten_cons, List.length_append, Nat.mul_succ]
     omega
 
@@ -515,7 +534,8 @@ private theorem packedWidthPieces {V : Type*} (rank : V → ℕ) (limit width : 
     (small : ∀ r, (row.filter (fun y => decide (rank y = r))).length ≤ limit) :
     ∃ pieces : List (List V), pieces.flatten = row ∧ rankSeparatedRows rank pieces ∧
       (∀ block ∈ pieces, block.length ≤ width) ∧
-      (width + 1 - limit) * pieces.length ≤ row.length + (width + 1 - limit) := by
+      (width + 1 - limit) * pieces.length ≤ row.length + (width + 1 - limit) ∧
+      (width + 1) * pieces.length ≤ 2 * row.length + (width + 1) := by
   obtain ⟨runs, flat, constant, separated⟩ := exists_constant_rank_runs rank ordered
   have short (run : List V) (on : run ∈ runs) : run.length ≤ limit := by
     obtain ⟨_, r, rankEq⟩ := constant run on
@@ -525,47 +545,48 @@ private theorem packedWidthPieces {V : Type*} (rank : V → ℕ) (limit width : 
     have filtered := sub.filter matchRank
     rw [all] at filtered
     exact filtered.length_le.trans (small r)
-  obtain ⟨pieces, flat', separation, cap, heavy⟩ := pack_separated_runs rank limit width fits separated short
-  exact ⟨pieces, flat'.trans flat, separation, cap, by simpa only [flat', flat] using packedCount _ pieces heavy⟩
+  obtain ⟨pieces, flat', separation, cap, heavy, pairs⟩ := pack_separated_runs rank limit width fits separated short
+  exact ⟨pieces, flat'.trans flat, separation, cap,
+    by simpa only [flat', flat] using packedCount _ pieces heavy,
+    by simpa only [flat', flat] using packedPairCount width pieces pairs⟩
 
 set_option maxHeartbeats 1000000 in
-private theorem frozen_cleaning_of_small_precedence_components {n p k : ℕ} {half : Bool}
+private theorem frozen_cleaning_of_component_visits {n p k M retention vNum vDen pNum pDen : ℕ} {half : Bool}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
-    (hn : 0 < n) (hp : 0 < p)
-    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
-    (small : ∀ i x, precedenceComponentVisitLength paths i x
-      ≤ (∑ i, (paths i).length)/p)
-    (legal : localOrderAdmissible half k (splitListVertices paths (4 * (∑ i, (paths i).length)/n))) :
-    let M := ∑ i, (paths i).length
+    (mass : (∑ i, (paths i).length) = M) (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (limit : ℕ) (fits : limit ≤ 4 * M / p)
+    (small : ∀ i x, precedenceComponentVisitLength paths i x ≤ limit)
+    (legal : localOrderAdmissible half k (splitListVertices paths (4 * M / n)))
+    (vPos : 0 < vDen) (pPos : 0 < pDen) (vRatio : vNum ≤ vDen) (pRatio : pNum ≤ pDen)
+    (vertexBudget : vNum * (n + M / (4 * M / n)) ≤ vDen * n)
+    (pathBudget : ∀ q,
+      let L := 4 * M / p
+      let minimum := L + 1 - limit
+      minimum * q ≤ M + p * minimum → (L + 1) * q ≤ 2 * M + p * (L + 1) → pNum * q ≤ pDen * p)
+    (retained : (vDen * pDen) * (retention + 2) ≤ 2 * (vNum * pNum) * retention) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
-      M ≤ 16 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+      M ≤ retention * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   classical
-  let M := ∑ i, (paths i).length
-  let D := 4 * M/n
-  let L := 4 * M/p
-  let smallSize := M/p
-  let minimum := L + 1 - smallSize
-  have fits : smallSize ≤ L := Nat.div_le_div_right (by omega)
-  have minimumPositive : 0 < minimum := by unfold minimum; omega
-  obtain ⟨dPos, dRoom, _⟩ := four_average_width hn dense
+  let D := 4 * M / n
+  let L := 4 * M / p
+  let minimum := L + 1 - limit
+  obtain ⟨dPos, _, _⟩ := four_average_width hn dense
   have copied := (regularization_list_counts paths simple (D := D) dPos Nat.one_pos).1
-  have vRoom : 3 * Fintype.card (ListVertexBlockIndex paths D) ≤ 4 * n := by
-    change 3 * (M/D) ≤ n at dRoom
-    rw [Fintype.card_fin] at copied
-    change Fintype.card (ListVertexBlockIndex paths D) ≤ n + M/D at copied
-    omega
+  rw [Fintype.card_fin, mass] at copied
+  have vRoom : vNum * Fintype.card (ListVertexBlockIndex paths D) ≤ vDen * n :=
+    (Nat.mul_le_mul_left vNum copied).trans vertexBudget
   let rows := splitListVertices paths D
   let rank (v : ListVertexBlockIndex paths D) := precedenceRank paths v.fst
   have order (i : Fin p) : (rows i).Pairwise (fun x y => rank x ≤ rank y) := by
     exact split_precedenceRank_order D i (simple i)
-  have fibreCap (i : Fin p) (r : ℕ) : ((rows i).filter (fun v => decide (rank v = r))).length ≤ smallSize := by
+  have fibreCap (i : Fin p) (r : ℕ) : ((rows i).filter (fun v => decide (rank v = r))).length ≤ limit := by
     have filtered := congrArg (fun l : List (Fin n) =>
       (l.filter (fun v => decide (precedenceRank paths v = r))).length) (splitListVertices_project paths D i)
     rw [List.filter_map, List.length_map] at filtered
-    exact filtered.trans_le (small_component_rank_fibre paths smallSize small i r)
-  choose packed flatten separated cap count using fun i =>
-    packedWidthPieces rank smallSize L fits (rows i) (order i) (fibreCap i)
+    exact filtered.trans_le (small_component_rank_fibre paths limit small i r)
+  choose packed flatten separated cap count pairs using fun i =>
+    packedWidthPieces rank limit L fits (rows i) (order i) (fibreCap i)
   let P := Σₗ i : Fin p, Fin (packed i).length
   let pieces (i : P) := (packed i.1).get i.2
   have membership (i : P) : pieces i ∈ packed i.1 := List.get_mem _ _
@@ -601,26 +622,21 @@ private theorem frozen_cleaning_of_small_precedence_components {n p k : ℕ} {ha
     cases half
     · exact bridgeFree_of_rank_separated_split legal (fun i : P => i.1) rank pieceStep rankMono apart
     · exact halfBridgeFree_of_rank_separated_split legal (fun i : P => i.1) arrival rank pieceStep rankMono apart
-  have qRoom : 3 * Fintype.card P ≤ 4 * p := by
-    have widthFloor : 4 * M < p * (L + 1) := Nat.lt_mul_div_succ (4 * M) hp
-    have smallFloor : p * smallSize ≤ M := by
-      rw [Nat.mul_comm]
-      exact Nat.div_mul_le_self M p
-    have enough : 3 * M ≤ p * minimum := by
-      rw [show p * minimum = p * (L + 1) - p * smallSize by simp [minimum, Nat.mul_sub_left_distrib]]
-      omega
-    have total : minimum * (∑ i, (packed i).length) ≤ M + p * minimum := by
+  have qRoom : pNum * Fintype.card P ≤ pDen * p := by
+    rw [Fintype.card_lex, Fintype.card_sigma]
+    simp only [Fintype.card_fin]
+    have rowMass : (∑ i, (rows i).length) = M := by simpa only [rows, splitListVertices_length] using mass
+    apply pathBudget
+    · change minimum * (∑ i, (packed i).length) ≤ M + p * minimum
       rw [mul_sum]
       calc
         _ ≤ ∑ i, ((rows i).length + minimum) := Finset.sum_le_sum fun i _ => count i
-        _ = _ := by simp [rows, M, sum_add_distrib]
-    rw [Fintype.card_lex, Fintype.card_sigma]
-    simp only [Fintype.card_fin]
-    apply Nat.le_of_mul_le_mul_left _ minimumPositive
-    calc
-      _ = 3 * (minimum * (∑ i, (packed i).length)) := by ring
-      _ ≤ 3 * (M + p * minimum) := Nat.mul_le_mul_left _ total
-      _ ≤ _ := by rw [show minimum * (4 * p) = 4 * (p * minimum) by ring]; omega
+        _ = _ := by simp [sum_add_distrib, rowMass]
+    · rw [mul_sum]
+      calc
+        _ ≤ ∑ i, (2 * (rows i).length + (L + 1)) := Finset.sum_le_sum fun i _ => pairs i
+        _ = 2 * (∑ i, (rows i).length) + p * (L + 1) := by simp [sum_add_distrib, mul_sum]
+        _ = _ := by rw [rowMass]
   have copiedDegree (v : ListVertexBlockIndex paths D) :
       (occurrences (fun i => (rows i).toFinset) v).card ≤ D := by
     simpa only [rows, splitListVertices_toFinset] using
@@ -641,8 +657,7 @@ private theorem frozen_cleaning_of_small_precedence_components {n p k : ℕ} {ha
       · exact (reverse v inI v inJ).false
   have total : (∑ i, (pieces i).length) = M := by
     change (∑ i : Sigma (fun j => Fin (packed j).length), ((packed i.1).get i.2).length) = M
-    rw [Fintype.sum_sigma]
-    unfold M
+    rw [Fintype.sum_sigma, ← mass]
     apply sum_congr rfl
     intro i _
     rw [← splitListVertices_length paths D i, show splitListVertices paths D i = (packed i).flatten from (flatten i).symm,
@@ -651,9 +666,98 @@ private theorem frozen_cleaning_of_small_precedence_components {n p k : ℕ} {ha
     have lengthRows := congrArg (List.map List.length) (List.ofFn_get (packed i))
     rw [List.map_ofFn] at lengthRows
     exact congrArg List.sum lengthRows
-  exact regularization_list_frozen_after_caps_with_room (half := half) pieces
+  exact regularization_list_frozen_after_caps_with_ratios (half := half) pieces
     (fun i => (sub i).nodup (splitListVertices_simple paths D i.1 (simple i.1)))
-    packedLegal hn hp dense long vRoom qRoom (fun i => cap i.1 _ (membership i)) degree total
+    packedLegal hn hp dense long vPos pPos vRatio pRatio vRoom qRoom
+    (fun i => cap i.1 _ (membership i)) degree total retained
+
+private theorem frozen_cleaning_of_small_precedence_components {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (small : ∀ i x, precedenceComponentVisitLength paths i x ≤ (∑ i, (paths i).length) / p)
+    (legal : localOrderAdmissible half k (splitListVertices paths (4 * (∑ i, (paths i).length) / n))) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 16 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let D := 4 * M / n
+  let L := 4 * M / p
+  let limit := M / p
+  let minimum := L + 1 - limit
+  have fits : limit ≤ L := Nat.div_le_div_right (by omega)
+  have minimumPositive : 0 < minimum := by unfold minimum; omega
+  obtain ⟨_, vertexRoom, _⟩ := four_average_width hn dense
+  have vertexBudget : 3 * (n + M / D) ≤ 4 * n := by
+    change 3 * (M / D) ≤ n at vertexRoom
+    omega
+  have widthFloor : 4 * M < p * (L + 1) := Nat.lt_mul_div_succ (4 * M) hp
+  have smallFloor : p * limit ≤ M := by
+    rw [Nat.mul_comm]
+    exact Nat.div_mul_le_self M p
+  have enough : 3 * M ≤ p * minimum := by
+    rw [show p * minimum = p * (L + 1) - p * limit by simp [minimum, Nat.mul_sub_left_distrib]]
+    omega
+  refine frozen_cleaning_of_component_visits (half := half) paths simple rfl hn hp dense long limit fits small legal
+    (vNum := 3) (vDen := 4) (pNum := 3) (pDen := 4)
+    (by decide) (by decide) (by decide) (by decide) vertexBudget ?_ (by decide)
+  dsimp only
+  intro q total _
+  change minimum * q ≤ M + p * minimum at total
+  apply Nat.le_of_mul_le_mul_left _ minimumPositive
+  calc
+    _ = 3 * (minimum * q) := by ring
+    _ ≤ 3 * (M + p * minimum) := Nat.mul_le_mul_left _ total
+    _ ≤ _ := by rw [show minimum * (4 * p) = 4 * (p * minimum) by ring]; omega
+
+private theorem frozen_cleaning_of_width_precedence_components {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (visits : ∀ i x, precedenceComponentVisitLength paths i x ≤ 4 * (∑ i, (paths i).length) / p)
+    (legal : localOrderAdmissible half k (splitListVertices paths (4 * (∑ i, (paths i).length) / n))) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 54 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let D := 4 * M / n
+  let L := 4 * M / p
+  by_cases substantial : 2 * n ≤ M
+  · obtain ⟨dPos, _, _⟩ := four_average_width hn dense
+    have dFloor : 4 * M < n * (D + 1) := Nat.lt_mul_div_succ (4 * M) hn
+    rw [Nat.mul_succ] at dFloor
+    have reserve : 7 * M ≤ 2 * (n * D) := by omega
+    have trim : 7 * (M / D) ≤ 2 * n := by
+      apply Nat.le_of_mul_le_mul_right _ dPos
+      calc
+        _ = 7 * ((M / D) * D) := by ring
+        _ ≤ 7 * M := Nat.mul_le_mul_left _ (Nat.div_mul_le_self _ _)
+        _ ≤ _ := reserve.trans_eq (by ring)
+    have vertexBudget : 7 * (n + M / D) ≤ 9 * n := by omega
+    refine frozen_cleaning_of_component_visits (half := half) paths simple rfl hn hp dense long L le_rfl visits legal
+      (vNum := 7) (vDen := 9) (pNum := 2) (pDen := 3)
+      (by decide) (by decide) (by decide) (by decide) vertexBudget ?_ (by decide)
+    dsimp only
+    intro q _ pairs
+    change (L + 1) * q ≤ 2 * M + p * (L + 1) at pairs
+    have lFloor : 4 * M < p * (L + 1) := Nat.lt_mul_div_succ (4 * M) hp
+    have positive : 0 < L + 1 := Nat.succ_pos L
+    apply Nat.le_of_mul_le_mul_left _ positive
+    calc
+      _ = 2 * ((L + 1) * q) := by ring
+      _ ≤ 2 * (2 * M + p * (L + 1)) := Nat.mul_le_mul_left _ pairs
+      _ ≤ 3 * (p * (L + 1)) := by omega
+      _ = _ := by ring
+  · have light : M ≤ 3 * max n p := by have top := le_max_left n p; omega
+    obtain ⟨n', fitsV, p', fitsP, clean, simple', free, keep, cap, caps⟩ :=
+      full_frozen_cleaning_sparse (k := k) hn hp dense long light
+    have allowed : localOrderAdmissible half k clean := by
+      cases half
+      · exact free
+      · exact free.halfFree
+    exact ⟨n', fitsV, p', fitsP, clean, simple', allowed, by omega, cap, caps⟩
 
 /-- Full-bridge cleaning at the original fixed averages for a possibly cyclic
 family, when no path spends more than one original mean path length inside
@@ -672,6 +776,30 @@ theorem regularization_list_frozen_of_small_precedence_components {n p k : ℕ}
     (·.fst) (fun {i _ _} => splitListVertices_step (simple i))
   exact frozen_cleaning_of_small_precedence_components (half := false) paths simple hn hp dense long small legal
 
+/-- If no component visit exceeds the full original upper length cap,
+full-bridge cleaning at any cutoff retains one fifty-fourth of the mass. -/
+theorem regularization_list_frozen_of_precedence_visits_within_cap {n p k : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : BridgeFree (Before paths) k) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (visits : ∀ i x, precedenceComponentVisitLength paths i x ≤ 4 * (∑ i, (paths i).length) / p) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) k ∧
+      M ≤ 54 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  have legal := free.split_list_vertices_any (copies := splitListVertices paths (4 * (∑ i, (paths i).length) / n))
+    (·.fst) (fun {i _ _} => splitListVertices_step (simple i))
+  exact frozen_cleaning_of_width_precedence_components (half := false) paths simple hn hp dense long visits legal
+
+private theorem bridgeFree_all_of_path_budget {V : Type*} {p' p : ℕ} {before : Fin p' → V → V → Prop}
+    (fits : p' ≤ p) (cutoff : BridgeFree before (p + 1)) :
+    ∀ j, IsEmpty (Bridge before j) := by
+  intro j
+  refine ⟨fun b => ?_⟩
+  have arcCount := Fintype.card_le_of_injective _ b.distinctArcs
+  simp only [Fintype.card_fin] at arcCount
+  exact (cutoff (k := j) (by omega)).false b
+
 /-- The component-based construction can preserve exclusion at every size
 when the input excludes every full bridge. -/
 theorem regularization_list_frozen_allFull_of_small_precedence_components {n p : ℕ}
@@ -687,12 +815,23 @@ theorem regularization_list_frozen_allFull_of_small_precedence_components {n p :
   obtain ⟨n', fitsV, p', fitsP, clean, simple', cutoff, retained, cap, caps⟩ :=
     regularization_list_frozen_of_small_precedence_components (k := p + 1)
       paths simple (fun _ _ => free _) hn hp dense long small
-  refine ⟨n', fitsV, p', fitsP, clean, simple', ?_, retained, cap, caps⟩
-  intro j
-  refine ⟨fun b => ?_⟩
-  have arcCount := Fintype.card_le_of_injective _ b.distinctArcs
-  simp only [Fintype.card_fin] at arcCount
-  exact (cutoff (k := j) (by omega)).false b
+  exact ⟨n', fitsV, p', fitsP, clean, simple', bridgeFree_all_of_path_budget fitsP cutoff, retained, cap, caps⟩
+
+/-- Capping the length of each component visit at the full original upper
+cap also works for full exclusion at every size. -/
+theorem regularization_list_frozen_allFull_of_precedence_visits_within_cap {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : ∀ j, IsEmpty (Bridge (Before paths) j)) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (visits : ∀ i x, precedenceComponentVisitLength paths i x ≤ 4 * (∑ i, (paths i).length) / p) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ (∀ j, IsEmpty (Bridge (Before clean) j)) ∧
+      M ≤ 54 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  obtain ⟨n', fitsV, p', fitsP, clean, simple', cutoff, retained, cap, caps⟩ :=
+    regularization_list_frozen_of_precedence_visits_within_cap (k := p + 1)
+      paths simple (fun _ _ => free _) hn hp dense long visits
+  exact ⟨n', fitsV, p', fitsP, clean, simple', bridgeFree_all_of_path_budget fitsP cutoff, retained, cap, caps⟩
 
 private theorem split_list_vertices_half_of_degree_cap {n p k D : ℕ}
     {paths : Fin p → List (Fin n)} (simple : ∀ i, (paths i).Nodup)
@@ -735,6 +874,18 @@ private theorem split_list_vertices_half_of_degree_cap {n p k D : ℕ}
       fun i => splitListVertices_step (simple _) (b.arcStep i)⟩
   exact free size old earlier
 
+private theorem split_list_vertices_half_of_degree_condition {n p k : ℕ}
+    {paths : Fin p → List (Fin n)} (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) k)
+    (degreeSafe : k ≤ 4 ∨ BridgeFree (Before paths) (k - 2) ∨
+      ∀ v, (occurrences (fun i => (paths i).toFinset) v).card ≤ 4 * (∑ i, (paths i).length) / n) :
+    HalfBridgeFree (Before (splitListVertices paths (4 * (∑ i, (paths i).length) / n))) k := by
+  rcases degreeSafe with short | full | capped
+  · exact free.split_list_vertices_short short (·.fst) (fun {i _ _} => splitListVertices_step (simple i))
+  · exact free.split_list_vertices_of_full full (by omega) (·.fst)
+      (fun {i _ _} => splitListVertices_step (simple i))
+  · exact split_list_vertices_half_of_degree_cap simple free capped
+
 /-- The same component-based cuts preserve half exclusion. For the degree
 split it suffices that the input excludes full bridges through two less
 than the half cutoff, that the half cutoff is at most four, or that all
@@ -752,11 +903,24 @@ theorem regularization_list_frozen_half_of_small_precedence_components {n p k : 
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) k ∧
       M ≤ 16 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
-  apply frozen_cleaning_of_small_precedence_components (half := true) paths simple hn hp dense long small
-  rcases degreeSafe with short | full | capped
-  · exact free.split_list_vertices_short short (·.fst) (fun {i _ _} => splitListVertices_step (simple i))
-  · exact free.split_list_vertices_of_full full (by omega) (·.fst)
-      (fun {i _ _} => splitListVertices_step (simple i))
-  · exact split_list_vertices_half_of_degree_cap simple free capped
+  exact frozen_cleaning_of_small_precedence_components (half := true) paths simple hn hp dense long small
+    (split_list_vertices_half_of_degree_condition simple free degreeSafe)
+
+/-- For half exclusion, a safe degree split and component visits within
+the upper length cap suffice to retain one fifty-fourth of the mass. -/
+theorem regularization_list_frozen_half_of_precedence_visits_within_cap {n p k : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) k)
+    (degreeSafe : k ≤ 4 ∨ BridgeFree (Before paths) (k - 2) ∨
+      ∀ v, (occurrences (fun i => (paths i).toFinset) v).card ≤ 4 * (∑ i, (paths i).length) / n)
+    (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (visits : ∀ i x, precedenceComponentVisitLength paths i x ≤ 4 * (∑ i, (paths i).length) / p) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) k ∧
+      M ≤ 54 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  exact frozen_cleaning_of_width_precedence_components (half := true) paths simple hn hp dense long visits
+    (split_list_vertices_half_of_degree_condition simple free degreeSafe)
 
 end OnlineReachabilityPreservers

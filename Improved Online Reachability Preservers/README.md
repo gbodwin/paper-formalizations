@@ -280,6 +280,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   The half-bridge result holds with the same guarantees when the degree
   split is safe at the given cutoff.
   [Component cuts and fixed-average cleaning](OnlineReachabilityPreservers/ComponentSplitCleaning.lean).
+  The visit limit can also be the full upper length cap, four times the
+  original mean. The resulting family meets the same budgets and caps
+  and retains at least \(M/54\). This version uses the combined length
+  of adjacent pieces to control their count.
+  [Component visits within the length cap](OnlineReachabilityPreservers/ComponentSplitCleaning.lean).
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)

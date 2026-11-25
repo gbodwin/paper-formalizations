@@ -758,8 +758,11 @@ For \(M\) at least both positive budgets, they retain \(M/16\) within both
 original budgets and all four frozen caps. The full exclusion remains at
 the input cutoff and can hold at every size. The half exclusion uses
 the original parent order and also needs capped input degrees, cutoff at most
-four, or full exclusion through two less than its cutoff. The unrestricted
-cyclic result remains open.
+four, or full exclusion through two less than its cutoff.
+The same bridge conclusions hold if each visit fits the larger limit
+\(\lfloor4M/p\rfloor\). Counting adjacent pieces permits the larger
+limit with \(M/54\) retention, both original budgets, and all four
+frozen caps. The unrestricted cyclic result remains open.
 
 For Lemmas 23 and 39, the [common-order extremal theorem](OnlineReachabilityPreservers/CommonOrderExtremal.lean)
 uses a finite maximum. For every positive pair of budgets and either

@@ -297,8 +297,17 @@ family keeps at least \(M/16\) and satisfies both budgets and all four
 original-average caps. Full exclusion is preserved at the input cutoff,
 including exclusion at all sizes. Half exclusion additionally uses an
 upper cap on all input degrees, a cutoff of at most four, or full
-exclusion through two less than the half cutoff. The unrestricted
-cyclic existence question remains open.
+exclusion through two less than the half cutoff.
+
+The same cuts work if each component visit fits the full upper length
+cap \(L=\lfloor4M/p\rfloor\). Each pair of adjacent packed pieces has
+combined length at least \(L+1\). Counting disjoint adjacent pairs
+gives at most three halves of the path budget. When \(M\ge 2n\), the
+degree split expands the vertex budget by at most \(9/7\).
+Restriction and peeling then keep \(M/54\) with both original budgets
+and all four caps. If \(M<2n\), the sparse construction suffices.
+The bridge guarantees and the half degree-splitting conditions stay
+the same. The unrestricted cyclic existence question remains open.
 [Component split and cleaning proofs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean).
 
 Splitting a vertex can also break the half exclusion, even with unique
