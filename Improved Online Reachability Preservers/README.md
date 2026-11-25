@@ -261,6 +261,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   search and container operations, and bit and native costs remain open.
   [Replay comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1566)
   · [Bounded full-prefix replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1636).
+  A measured forest-rounding evaluator can consume those charge reads.
+  It counts the forest membership scans, weights and charges read by
+  ancestor tests, and the capacity arithmetic. It returns the same
+  rounded forest as the earlier rounding and separately bounds the seed
+  reads. The complete replay still uses the earlier rounding evaluator.
+  [Charge magnitude after the weighted run](OnlineReachabilityPreservers/SteinerWeightedChargeWork.lean#L543)
+  · [Rounding with measured charge reads](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L871).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

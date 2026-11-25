@@ -710,6 +710,19 @@ conventions inside the weighted residual network. Post-solver charge reads
 during rounding, request attachments, remaining service and container
 operations, and bit and native costs remain open.
 
+The [charge magnitude bound](OnlineReachabilityPreservers/SteinerWeightedChargeWork.lean#L543)
+adds at most one unit per accepted cut to any starting charge. At fixed
+separator fuel, the total increase is at most the fuel times the number
+of requests. The [measured rounding evaluator](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L871)
+accepts a charge reader that reports its work. At each paid ancestor
+capacity query it counts the forest membership test, the weight and
+charge reads, and the rounded capacity arithmetic. Under the stated
+access bounds, the selected forest links agree with the earlier evaluator.
+The two work bounds cover capacity and weight accesses and seed reads.
+The replay still needs this rounding evaluator wired in. Tier and cutoff
+arithmetic, threshold comparisons, finite set assembly, remaining search
+and service work, and bit and native costs remain outside this bound.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

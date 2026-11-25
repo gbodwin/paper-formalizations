@@ -539,6 +539,23 @@ theorem weightedNetworkRunWithHistoryWork_spec (keys : List (V × V)) (distinct 
     change run.2 ≤ D.length * (fuel * (B + 10) + 13) + 3 at work
     omega
 
+/-- Each accepted cut adds at most one to any requested charge. -/
+theorem weightedNetworkRunWithHistoryWork_charge_le (keys : List (V × V)) (distinct : keys.Nodup)
+    (complete : ∀ e, e ∈ keys) (paid : Arcs V) (weight initial : V × V → ℕ × ℕ)
+    (scale fuel W I C : ℕ) (D : List (WeightedNetworkDemand V))
+    (weightWork : ∀ e, (weight e).2 ≤ W) (initialLoad : ∀ e, (initial e).1 ≤ I)
+    (initialWork : ∀ e, (initial e).2 ≤ C) (e : V × V) :
+    let run := weightedNetworkRunWithHistoryWork keys distinct paid weight initial scale fuel D
+    (run.1.1 e).1 ≤ I + D.length*fuel := by
+  let history := (weightedNetworkHistoryLoopWithWordWork keys distinct paid weight initial scale fuel D []).1
+  have shape (cut : Arcs V) : cut.card ≤ (Fintype.card V)^2 := by
+    simpa only [Fintype.card_prod, pow_two] using card_le_univ cut
+  have length : history.length ≤ D.length*fuel :=
+    (weightedNetworkHistoryLoopWithWordWork_spec keys distinct complete paid weight initial scale fuel
+      W I C (D.length*fuel) D [] (by simp) weightWork initialLoad initialWork).2.2.1
+  exact (weightedChargeHistoryWithWordWork_spec initial e history ((Fintype.card V)^2)
+    (fun cut _ => shape cut)).2.1.trans (Nat.add_le_add (initialLoad e) length)
+
 end Capacity
 
 end OnlineReachabilityPreservers
