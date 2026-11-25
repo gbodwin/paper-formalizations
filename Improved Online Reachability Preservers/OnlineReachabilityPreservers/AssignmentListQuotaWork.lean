@@ -85,8 +85,10 @@ theorem expensiveDemandWithWordWork_spec (G H Q : List (V × V)) (p F : ℕ) (si
     rw [qLen] at charge
     exact (Nat.add_le_add_right (Nat.add_le_add_right charge _) _).trans_eq (by unfold expensiveDemandWordBudget; ring)
 
-private def forwardQuotaRule (G : List (V × V)) : PathRule V :=
-  fun A d => forwardPath G.toFinset A d.1 d.2
+/-- Forward path growth, used as the base rule in quota assignments. -/
+def quotaPathRule (K : Arcs V) : PathRule V := fun H d => forwardPath K H d.1 d.2
+
+private def forwardQuotaRule (G : List (V × V)) : PathRule V := quotaPathRule G.toFinset
 
 private def quotaPurchaseWordBudget (n m : ℕ) : ℕ := 1+(4+forwardStepWordBudget n m)
 
@@ -325,11 +327,15 @@ def knownBudgetPathWithWordWork (G Q : List (V × V)) (depth p F : ℕ) (d : V �
   let selected := replayAssignmentWithWordWork G depth d planned.1.1 []
   (selected.1,planned.2+selected.2+6)
 
+/-- Bound the quota simulation and the replay needed for one selected path. -/
+def knownBudgetPathWordBudget (n m q p : ℕ) : ℕ :=
+  1+p*quotaTraceStepWordBudget n m q+(p+1)*quotaReplayStepWordBudget n m+6
+
 theorem knownBudgetPathWithWordWork_spec (G Q : List (V × V)) (p F : ℕ) (d : V × V) :
     let n := Fintype.card V
     let out := knownBudgetPathWithWordWork G Q n p F d
     out.1 = knownBudgetPath (forwardQuotaRule G) Q.toFinset p F d ∧
-      out.2 ≤ 1+p*quotaTraceStepWordBudget n G.length Q.length+(p+1)*quotaReplayStepWordBudget n G.length+6 := by
+      out.2 ≤ knownBudgetPathWordBudget n G.length Q.length p := by
   let n := Fintype.card V
   let plan := quotaTraceWithWordWork G n p F p [] Q
   obtain ⟨trace, _, _, len, charge⟩ := quotaTraceWithWordWork_spec G [] Q p F p List.nodup_nil
@@ -357,7 +363,7 @@ theorem certifiedQuotaPathWithWordWork_spec (G Q : List (V × V)) (p cap : ℕ) 
     let out := certifiedQuotaPathWithWordWork G Q n p cap d
     out.1 = knownBudgetPath rule Q.toFinset p (certifiedBudget rule Q.toFinset p cap) d ∧
       out.2 ≤ (cap+1)*(quotaCertificateTrialWordBudget n m q p+15)+5 +
-        (1+p*quotaTraceStepWordBudget n m q+(p+1)*quotaReplayStepWordBudget n m+6)+4 := by
+        knownBudgetPathWordBudget n m q p+4 := by
   let n := Fintype.card V
   let checked := certifiedBudgetListWithWordWork G Q n p cap
   let selected := knownBudgetPathWithWordWork G Q n p checked.1 d
@@ -370,57 +376,135 @@ theorem certifiedQuotaPathWithWordWork_spec (G Q : List (V × V)) (p cap : ℕ) 
 
 section QuotientSelection
 
-private def pairQuotaRule (K : Arcs V) : PathRule V := fun H d => forwardPath K H d.1 d.2
-
-private theorem pairQuotaPath_length (K : Arcs V) (p F : ℕ) (d : V × V) :
-    ((knownBudgetPath (pairQuotaRule K) univ p F d).getD []).length ≤ Fintype.card V := by
-  let rule := pairQuotaRule K
-  let trace := expensiveTrace rule p F p ∅ univ
+/-- The selected path uses at most one edge per vertex in the base rule's fuel bound. -/
+theorem knownQuotaPath_length_le (K Q : Arcs V) (p F : ℕ) (d : V × V) :
+    ((knownBudgetPath (quotaPathRule K) Q p F d).getD []).length ≤ Fintype.card V := by
+  let rule := quotaPathRule K
+  let trace := expensiveTrace rule p F p ∅ Q
   obtain ⟨H,_,same⟩ := assignedPath_uses_state rule (∅ : Arcs V) trace d
   change ((assignedPath rule ∅ trace d).getD []).length ≤ _
   rw [same]
   have length := (forwardPathListWithWordWork_spec K.toList H.toList d.1 d.2).2.2
   have choice := (forwardPathListWithWordWork_spec K.toList H.toList d.1 d.2).1
   rw [choice] at length
-  simpa [rule, pairQuotaRule] using length
+  simpa [rule, quotaPathRule] using length
 
-private theorem pairQuotaPath_subset (K : Arcs V) (p F : ℕ) (d : V × V) :
-    pathArcs (knownBudgetPath (pairQuotaRule K) univ p F d) ⊆ K := by
-  let rule := pairQuotaRule K
-  let trace := expensiveTrace rule p F p ∅ univ
-  have runSubset {H : Arcs V} (T : List (V × V)) (inside : H ⊆ K) : runRule rule H T ⊆ K := by
-    induction T generalizing H with
-    | nil => exact inside
-    | cons a T ih =>
-      exact ih (union_subset inside (forwardEdges_subset inside a))
+/-- Every arc in a selected quota path comes from the input graph. -/
+theorem knownQuotaPathArcs_subset (K Q : Arcs V) (p F : ℕ) (d : V × V) :
+    pathArcs (knownBudgetPath (quotaPathRule K) Q p F d) ⊆ K := by
+  let rule := quotaPathRule K
+  let trace := expensiveTrace rule p F p ∅ Q
+  have runSubset : runRule rule ∅ trace ⊆ K := forwardRunFrom_subset (empty_subset _) trace
   obtain ⟨H,sub,same⟩ := assignedPath_uses_state rule (∅ : Arcs V) trace d
   change pathArcs (assignedPath rule ∅ trace d) ⊆ K
   rw [same]
-  exact forwardEdges_subset (sub.trans (runSubset trace (empty_subset _))) d
+  exact forwardEdges_subset (sub.trans runSubset) d
+
+/-- The quotient edge set for one assigned demand when the budget is supplied. -/
+def knownQuotaArcs (Q : Arcs V) (p F : ℕ) (K : Arcs V) : List (V × V) → Arcs V
+  | [] => ∅
+  | d::_ => pathArcs (knownBudgetPath (quotaPathRule K) Q p F d)
+
+theorem knownQuotaArcs_subset (Q : Arcs V) (p F : ℕ) (K : Arcs V) (D : List (V × V)) :
+    knownQuotaArcs Q p F K D ⊆ K := by
+  cases D with
+  | nil => exact empty_subset _
+  | cons d _ => exact knownQuotaPathArcs_subset K Q p F d
+
+/-- Bound one prescribed-budget quotient selection and arc normalization. -/
+def knownQuotaArcWordBudget (n m q p : ℕ) : ℕ :=
+  1+knownBudgetPathWordBudget n m q p+2*(n*n^2)+12*n+9
+
+theorem knownQuotaArcWordBudget_mono_arcs (n q p : ℕ) :
+    Monotone (fun m => knownQuotaArcWordBudget n m q p) := by
+  intro m M ordered
+  change knownQuotaArcWordBudget n m q p ≤ knownQuotaArcWordBudget n M q p
+  dsimp only [knownQuotaArcWordBudget, knownBudgetPathWordBudget, quotaTraceStepWordBudget,
+    expensiveDemandWordBudget, quotaTrialWordBudget, quotaPurchaseWordBudget, quotaReplayStepWordBudget,
+    quotaSelectionWordBudget, forwardStepWordBudget, reachInListWordBudget]
+  gcongr
+
+theorem knownQuotaArcWordBudget_mono_quota (n m q : ℕ) :
+    Monotone (knownQuotaArcWordBudget n m q) := by
+  intro p P ordered
+  unfold knownQuotaArcWordBudget knownBudgetPathWordBudget
+  gcongr
+
+private def selectedArcsWithWordWork (chosen : Option (List (V × V)) × ℕ) : List (V × V) × ℕ :=
+  let edges := chosen.1.getD []
+  let distinct := insertListWithChecks edges []
+  (distinct.1,chosen.2+2*distinct.2+12*edges.length+9)
+
+private theorem selectedArcsWithWordWork_spec (chosen : Option (List (V × V)) × ℕ)
+    (short : (chosen.1.getD []).length ≤ Fintype.card V) :
+    let n := Fintype.card V
+    let out := selectedArcsWithWordWork chosen
+    out.1.Nodup ∧ out.1.toFinset = pathArcs chosen.1 ∧
+      out.2 ≤ chosen.2+2*(n*n^2)+12*n+9 := by
+  let edges := chosen.1.getD []
+  let distinct := insertListWithChecks edges []
+  obtain ⟨nodup, union, charged⟩ := insertListWithChecks_spec edges ([] : List (V × V)) List.nodup_nil
+  have cap : distinct.2 ≤ Fintype.card V * (Fintype.card V)^2 := by
+    apply charged.trans
+    rw [Fintype.card_prod, ← pow_two]
+    exact Nat.mul_le_mul_right _ short
+  refine ⟨nodup, ?_, ?_⟩
+  · simpa only [selectedArcsWithWordWork, List.toFinset_nil, empty_union, pathArcs, edges] using union
+  · change chosen.2+2*distinct.2+12*edges.length+9 ≤ _
+    gcongr
+
+/-- Normalize the exact assigned quotient path into a duplicate-free arc list. -/
+def knownQuotaArcsWithWordWork (Q : List (V × V)) (p F : ℕ) (K : List (V × V)) (depth : ℕ) :
+    List (V × V) → List (V × V) × ℕ
+  | [] => ([],1)
+  | d::_ => selectedArcsWithWordWork (knownBudgetPathWithWordWork K Q depth p F d)
+
+theorem knownQuotaArcsWithWordWork_spec (Q : List (V × V)) (p F : ℕ) (K D : List (V × V)) :
+    let n := Fintype.card V
+    let out := knownQuotaArcsWithWordWork Q p F K n D
+    out.1.Nodup ∧ out.1.toFinset = knownQuotaArcs Q.toFinset p F K.toFinset D ∧
+      out.2 ≤ knownQuotaArcWordBudget n K.length Q.length p := by
+  cases D with
+  | nil => simp [knownQuotaArcsWithWordWork, knownQuotaArcs, knownQuotaArcWordBudget]
+  | cons d rest =>
+    let n := Fintype.card V
+    let chosen := knownBudgetPathWithWordWork K Q n p F d
+    obtain ⟨same, cost⟩ := knownBudgetPathWithWordWork_spec K Q p F d
+    change chosen.2 ≤ knownBudgetPathWordBudget n K.length Q.length p at cost
+    have selection : chosen.1 = knownBudgetPath (quotaPathRule K.toFinset) Q.toFinset p F d := same
+    have short : (chosen.1.getD []).length ≤ n := by
+      rw [selection]
+      exact knownQuotaPath_length_le K.toFinset Q.toFinset p F d
+    obtain ⟨nodup, arcs, charged⟩ := selectedArcsWithWordWork_spec chosen short
+    refine ⟨nodup, arcs.trans (congrArg pathArcs selection), ?_⟩
+    change (selectedArcsWithWordWork chosen).2 ≤ _
+    unfold knownQuotaArcWordBudget
+    dsimp only [n] at cost
+    exact charged.trans (by omega)
 
 /-- The quotient edge set used to lift one preassigned pair. -/
 def onePairQuotaArcs (p : ℕ) (K : Arcs V) : List (V × V) → Arcs V
   | [] => ∅
   | d::_ =>
-    let rule := pairQuotaRule K
+    let rule := quotaPathRule K
     pathArcs (knownBudgetPath rule univ p (certifiedBudget rule univ p K.card) d)
 
 theorem onePairQuotaArcs_subset (p : ℕ) (K : Arcs V) (D : List (V × V)) :
     onePairQuotaArcs p K D ⊆ K := by
   cases D with
   | nil => exact empty_subset _
-  | cons d rest => exact pairQuotaPath_subset K p _ d
+  | cons d rest => exact knownQuotaPathArcs_subset K univ p _ d
 
 /-- The cost of choosing one quotient pair's path and normalizing its arcs. -/
 def onePairQuotaArcWordBudget (n m q p : ℕ) : ℕ :=
   1 + ((m+1)*(quotaCertificateTrialWordBudget n m q p+15)+5 +
-    (1+p*quotaTraceStepWordBudget n m q+(p+1)*quotaReplayStepWordBudget n m+6)+4) +
+    knownBudgetPathWordBudget n m q p+4) +
     2*(n*n^2)+12*n+3*m+9
 
 theorem onePairQuotaArcWordBudget_mono_arcs (n q p : ℕ) :
     Monotone (fun m => onePairQuotaArcWordBudget n m q p) := by
   intro m M ordered
-  dsimp only [onePairQuotaArcWordBudget, quotaCertificateTrialWordBudget, quotaTraceStepWordBudget,
+  dsimp only [onePairQuotaArcWordBudget, knownBudgetPathWordBudget, quotaCertificateTrialWordBudget, quotaTraceStepWordBudget,
     expensiveDemandWordBudget, quotaTrialWordBudget, quotaPurchaseWordBudget, quotaReplayStepWordBudget,
     quotaSelectionWordBudget, forwardStepWordBudget, reachInListWordBudget]
   gcongr
@@ -428,7 +512,7 @@ theorem onePairQuotaArcWordBudget_mono_arcs (n q p : ℕ) :
 theorem onePairQuotaArcWordBudget_mono_quota (n m q : ℕ) :
     Monotone (onePairQuotaArcWordBudget n m q) := by
   intro p P ordered
-  unfold onePairQuotaArcWordBudget quotaCertificateTrialWordBudget
+  unfold onePairQuotaArcWordBudget knownBudgetPathWordBudget quotaCertificateTrialWordBudget
   gcongr
 
 def onePairQuotaArcsWithWordWork (Q : List (V × V)) (p : ℕ) (K : List (V × V)) (depth : ℕ) :
@@ -436,10 +520,8 @@ def onePairQuotaArcsWithWordWork (Q : List (V × V)) (p : ℕ) (K : List (V × V
   | [] => ([],1)
   | d::_ =>
     let cap := K.length
-    let chosen := certifiedQuotaPathWithWordWork K Q depth p cap d
-    let edges := chosen.1.getD []
-    let distinct := insertListWithChecks edges []
-    (distinct.1,chosen.2+2*distinct.2+12*edges.length+3*cap+9)
+    let chosen := selectedArcsWithWordWork (certifiedQuotaPathWithWordWork K Q depth p cap d)
+    (chosen.1,chosen.2+3*cap)
 
 theorem onePairQuotaArcsWithWordWork_spec (Q : List (V × V)) (p : ℕ) (K D : List (V × V))
     (complete : Q.toFinset = univ) (simple : K.Nodup) :
@@ -452,33 +534,23 @@ theorem onePairQuotaArcsWithWordWork_spec (Q : List (V × V)) (p : ℕ) (K D : L
   | cons d rest =>
     let n := Fintype.card V
     let chosen := certifiedQuotaPathWithWordWork K Q n p K.length d
-    let edges := chosen.1.getD []
-    let distinct := insertListWithChecks edges []
     obtain ⟨same, cost⟩ := certifiedQuotaPathWithWordWork_spec K Q p K.length d
-    have chosenEq : chosen.1 = knownBudgetPath (pairQuotaRule K.toFinset) univ p
-        (certifiedBudget (pairQuotaRule K.toFinset) univ p K.toFinset.card) d := by
+    change chosen.2 ≤ (K.length+1)*(quotaCertificateTrialWordBudget n K.length Q.length p+15)+5 +
+      knownBudgetPathWordBudget n K.length Q.length p+4 at cost
+    have selection : chosen.1 = knownBudgetPath (quotaPathRule K.toFinset) univ p
+        (certifiedBudget (quotaPathRule K.toFinset) univ p K.toFinset.card) d := by
       change chosen.1 = _ at same
       rw [same, complete, ← List.toFinset_card_of_nodup simple]
       rfl
-    obtain ⟨nodup, union, charged⟩ := insertListWithChecks_spec edges ([] : List (V × V)) List.nodup_nil
-    have edgeLen : edges.length ≤ n := by
-      change (chosen.1.getD []).length ≤ n
-      rw [chosenEq]
-      exact pairQuotaPath_length K.toFinset p _ d
-    have normBound : distinct.2 ≤ n*n^2 := by
-      apply charged.trans
-      rw [Fintype.card_prod, ← pow_two]
-      exact Nat.mul_le_mul_right _ edgeLen
-    refine ⟨nodup, ?_, ?_⟩
-    · change distinct.1.toFinset = _
-      rw [union]
-      simp only [List.toFinset_nil, empty_union, edges, chosenEq, onePairQuotaArcs, pathArcs]
-    · change chosen.2+2*distinct.2+12*edges.length+3*K.length+9 ≤ _
-      unfold onePairQuotaArcWordBudget
-      have add := Nat.add_le_add_right (Nat.add_le_add_right
-        (Nat.add_le_add (Nat.add_le_add cost (Nat.mul_le_mul_left 2 normBound))
-          (Nat.mul_le_mul_left 12 edgeLen)) (3*K.length)) 9
-      exact add.trans (by dsimp only [n]; omega)
+    have short : (chosen.1.getD []).length ≤ n := by
+      rw [selection]
+      exact knownQuotaPath_length_le K.toFinset univ p _ d
+    obtain ⟨nodup, arcs, charged⟩ := selectedArcsWithWordWork_spec chosen short
+    refine ⟨nodup, arcs.trans (congrArg pathArcs selection), ?_⟩
+    change (selectedArcsWithWordWork chosen).2+3*K.length ≤ _
+    unfold onePairQuotaArcWordBudget
+    dsimp only [n] at cost
+    exact (Nat.add_le_add_right charged _).trans (by omega)
 
 end QuotientSelection
 

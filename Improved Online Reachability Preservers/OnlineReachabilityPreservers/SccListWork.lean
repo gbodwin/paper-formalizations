@@ -153,6 +153,26 @@ theorem projectPairsWithChecks_spec (label : V → V) (keys : List V) (pairs : L
   · intro e _
     exact (Nat.add_le_add (entry e.1).2 (entry e.2).2).trans_eq (by rw [two_mul])
 
+omit [Fintype V] in
+/-- Project a list of individual vertices through the shared label table,
+charging the table search and each mapped list cell. -/
+def projectVerticesWithWordWork (table : List (V × V)) (items : List V) : List V × ℕ :=
+  let result := mapListWithChecks (fun v => lookupLabelWithChecks v table) items
+  (result.1,4*result.2+8*items.length+4)
+
+omit [Fintype V] in
+theorem projectVerticesWithWordWork_spec (label : V → V) (vertices items : List V)
+    (complete : ∀ v : V, v ∈ vertices) :
+    let table := vertices.map (fun v => (v,label v))
+    let out := projectVerticesWithWordWork table items
+    out.1 = items.map label ∧ out.2 ≤ 4*(items.length*(vertices.length+1))+8*items.length+4 := by
+  let table := vertices.map (fun v => (v,label v))
+  have entry (v : V) := lookupLabelWithChecks_spec label vertices v (complete v)
+  obtain ⟨same, cost⟩ := mapListWithChecks_spec (fun v => lookupLabelWithChecks v table) label
+    items vertices.length (fun v _ => (entry v).1) (fun v _ => (entry v).2)
+  have cap := cost.trans (Nat.mul_le_mul_left items.length (Nat.le_succ vertices.length))
+  exact ⟨same, Nat.add_le_add_right (Nat.add_le_add_right (Nat.mul_le_mul_left 4 cap) _) _⟩
+
 /-- Project the arc list once, remove same-component pairs, and deduplicate. -/
 def condensationListWithChecks (table arcs : List (V × V)) : List (V × V) × ℕ :=
   let projected := projectPairsWithChecks table arcs

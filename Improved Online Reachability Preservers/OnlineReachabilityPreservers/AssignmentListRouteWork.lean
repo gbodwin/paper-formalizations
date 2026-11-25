@@ -1,3 +1,4 @@
+import OnlineReachabilityPreservers.PathAssignments
 import OnlineReachabilityPreservers.SccLiftListWork
 
 /-! Exact list-backed routing in the hop-decreasing subgraph, with operation counts. -/
@@ -96,5 +97,17 @@ theorem routePathListWithWordWork_spec (G : List (V × V)) (s t : V) :
       unfold reachInListWordBudget
       gcongr
     exact (Nat.add_le_add_right (Nat.add_le_add cost charged) 4).trans_eq (by unfold routePathListWordBudget; ring)
+
+/-- The selected lift is simple even when the quotient option is absent. -/
+theorem liftPath_length_le (G : Arcs V) (d : V × V) (p : Option (List (V × V))) :
+    ((liftPath G d p).getD []).length ≤ Fintype.card V := by
+  unfold liftPath
+  cases chosen : routePath (connectors G ∪ liftedArcs G (pathArcs p)) d.1 d.2 with
+  | none => simp
+  | some path =>
+    have distinct := (routePath_some chosen).2
+    have bound := card_le_univ (path.map Prod.fst ++ [d.2]).toFinset
+    rw [List.toFinset_card_of_nodup distinct, List.length_append, List.length_map, List.length_singleton] at bound
+    exact (Nat.le_succ _).trans bound
 
 end OnlineReachabilityPreservers

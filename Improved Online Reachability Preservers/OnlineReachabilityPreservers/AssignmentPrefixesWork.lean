@@ -132,18 +132,6 @@ theorem assignmentPrefixesWithWordWork_spec
     using assignmentPrefixesFromWithWordWork_spec choose plain same short query 0 D [] List.nodup_nil
       (fun j => by simpa only [zero_add] using cost j)
 
-/-- The selected lift is simple even when the quotient option is absent. -/
-theorem liftPath_length_le (G : Arcs V) (d : V × V) (p : Option (List (V × V))) :
-    ((liftPath G d p).getD []).length ≤ Fintype.card V := by
-  unfold liftPath
-  cases chosen : routePath (connectors G ∪ liftedArcs G (pathArcs p)) d.1 d.2 with
-  | none => simp
-  | some path =>
-    have distinct := (routePath_some chosen).2
-    have bound := card_le_univ (path.map Prod.fst ++ [d.2]).toFinset
-    rw [List.toFinset_card_of_nodup distinct, List.length_append, List.length_map, List.length_singleton] at bound
-    exact (Nat.le_succ _).trans bound
-
 /-- Bound the computation of one indexed pairwise path, including its
 square-root base and least dyadic quota. -/
 def indexedPairQueryWordBudget (n m i : ℕ) : ℕ :=

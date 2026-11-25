@@ -1,5 +1,6 @@
 import OnlineReachabilityPreservers.AssignmentListQuotaWork
 import OnlineReachabilityPreservers.AssignmentListRouteWork
+import OnlineReachabilityPreservers.AssignmentQuotaArithmeticWork
 import OnlineReachabilityPreservers.PairwiseNonAdaptive
 
 /-! Source-level operation counts for one pairwise path assignment in both models of Theorem 5. -/
@@ -81,77 +82,14 @@ private theorem knownPairPathWordBudget_mono_quota (n m : ℕ) : Monotone (known
   gcongr
 
 private def pairwiseBaseWithWordWork (n : ℕ) : ℕ × ℕ :=
-  let found := leastWhereWithChecks (fun k => (decide (n < (k+1)^2),5)) (List.range (n+1))
-  (found.1.getD n+1,found.2+14*(n+1)+5)
+  let root := natSqrtWithWordWork n
+  (root.1+1,root.2)
 
 private theorem pairwiseBaseWithWordWork_spec (n : ℕ) :
     let out := pairwiseBaseWithWordWork n
     out.1 = pairwiseBase n ∧ out.2 ≤ 20*(n+1)+5 := by
-  let P := fun k => n < (k+1)^2
-  let keys := List.range (n+1)
-  let domain := keys.toFinset.filter P
-  obtain ⟨same, work⟩ := leastWhereWithChecks_spec (fun k => (decide (P k),5)) P keys 5
-    (fun _ _ => rfl) (fun _ _ => le_rfl)
-  have inside : n.sqrt ∈ domain := by
-    apply mem_filter.mpr
-    exact ⟨List.mem_toFinset.mpr (List.mem_range.mpr (Nat.lt_succ_of_le (Nat.sqrt_le_self n))), Nat.lt_succ_sqrt' n⟩
-  obtain ⟨least, chosen⟩ := least?_some ⟨_,inside⟩
-  have right : least ≤ n.sqrt := least?_le chosen inside
-  have left : n.sqrt ≤ least := Nat.le_of_lt_succ
-    (Nat.sqrt_lt'.mpr (mem_filter.mp (least?_mem chosen)).2)
-  constructor
-  · change (leastWhereWithChecks (fun k => (decide (P k),5)) keys).1.getD n + 1 = _
-    rw [same, show keys.toFinset.filter P = domain from rfl, chosen, le_antisymm right left]
-    rfl
-  · change (leastWhereWithChecks (fun k => (decide (P k),5)) keys).2+14*(n+1)+5 ≤ _
-    have len : keys.length = n+1 := List.length_range
-    rw [len] at work
-    exact (Nat.add_le_add_right (Nat.add_le_add_right work _) _).trans_eq (by ring)
-
-private def coverByDoublingWithWordWork (needed : ℕ) : ℕ → ℕ → ℕ × ℕ
-  | 0, quota => (quota,1)
-  | steps+1, quota =>
-    if needed ≤ quota then (quota,4)
-    else
-      let rest := coverByDoublingWithWordWork needed steps (2*quota)
-      (rest.1,rest.2+6)
-
-private theorem coverByDoublingWithWordWork_cost (needed fuel quota : ℕ) :
-    (coverByDoublingWithWordWork needed fuel quota).2 ≤ 1+6*fuel := by
-  induction fuel generalizing quota with
-  | zero => simp [coverByDoublingWithWordWork]
-  | succ k ih =>
-    rw [coverByDoublingWithWordWork]
-    split
-    · change 4 ≤ 1+6*(k+1)
-      omega
-    · have bound := ih (2*quota)
-      change (coverByDoublingWithWordWork needed k (2*quota)).2+6 ≤ 1+6*(k+1)
-      omega
-
-private theorem coverByDoublingWithWordWork_exact {base : ℕ} (positive : 0 < base) (i fuel level : ℕ)
-    (before : level ≤ indexLevel base i) (enough : indexLevel base i ≤ level+fuel) :
-    (coverByDoublingWithWordWork (i+1) fuel (dyadicQuota base level)).1 =
-      dyadicQuota base (indexLevel base i) := by
-  induction fuel generalizing level with
-  | zero =>
-    have exactLevel : level = indexLevel base i := le_antisymm before (by simpa using enough)
-    simp [coverByDoublingWithWordWork, exactLevel]
-  | succ k ih =>
-    rw [coverByDoublingWithWordWork]
-    split
-    · rename_i covered
-      have exactLevel : level = indexLevel base i := le_antisymm before (indexLevel_le_of_cover positive covered)
-      rw [exactLevel]
-    · rename_i missing
-      have next : level+1 ≤ indexLevel base i := by
-        apply Nat.succ_le_of_lt
-        refine lt_of_le_of_ne before ?_
-        intro equal
-        exact missing (equal.symm ▸ indexLevel_covers positive i)
-      have continued := ih (level+1) next (by omega)
-      rw [dyadicQuota_succ] at continued
-      exact continued
+  obtain ⟨root, cost⟩ := natSqrtWithWordWork_spec n
+  exact ⟨congrArg (· + 1) root, cost⟩
 
 /-- The pairwise assignment for an arrival index. The dyadic quota is
 computed by doubling until the request count is covered. -/
@@ -159,7 +97,7 @@ def indexedPairPathWithWordWork (G : List (V × V)) (vertices : List V) (i : ℕ
     Option (List (V × V)) × ℕ :=
   let n := vertices.length
   let base := pairwiseBaseWithWordWork n
-  let quota := coverByDoublingWithWordWork (i+1) (i+1) base.1
+  let quota := indexQuotaWithWordWork base.1 i
   let assigned := knownPairPathWithWordWork G vertices quota.1 d
   (assigned.1, base.2+quota.2+assigned.2+3*n+10)
 
@@ -174,25 +112,18 @@ theorem indexedPairPathWithWordWork_spec (G : List (V × V)) (vertices : List V)
   have cover : vertices.toFinset = univ := by ext v; simp [complete]
   have count : vertices.length = n := by rw [← List.toFinset_card_of_nodup unique, cover, card_univ]
   let base := pairwiseBaseWithWordWork n
-  let quota := coverByDoublingWithWordWork (i+1) (i+1) base.1
+  let quota := indexQuotaWithWordWork base.1 i
   obtain ⟨baseEq,baseWork⟩ := pairwiseBaseWithWordWork_spec n
   have positive : 0 < pairwiseBase n := Nat.succ_pos _
-  have feasible : indexLevel (pairwiseBase n) i ≤ 0+(i+1) :=
-    (indexLevel_le_log2_succ positive i).trans (by have := Nat.log2_le_self i; omega)
+  have basePos : 0 < base.1 := by rw [baseEq]; exact positive
+  obtain ⟨quotaEq, quotaWork⟩ := indexQuotaWithWordWork_spec base.1 i basePos
   have target : quota.1 = dyadicQuota (pairwiseBase n) (indexLevel (pairwiseBase n) i) := by
-    unfold quota
-    rw [show base.1 = pairwiseBase n from baseEq]
-    have solved := coverByDoublingWithWordWork_exact positive i (i+1) 0 (Nat.zero_le _) feasible
-    simpa only [dyadicQuota, pow_zero, Nat.mul_one] using solved
+    rw [show quota.1 = _ from quotaEq, baseEq]
   have small : quota.1 ≤ n+1+2*(i+1) := by
     rw [target]
-    have bound := finalQuota_le positive (p := i+1) (Nat.succ_pos i)
     have baseSmall : pairwiseBase n ≤ n+1 := Nat.succ_le_succ (Nat.sqrt_le_self n)
-    exact (by simpa only [Nat.add_sub_cancel] using bound :
-      dyadicQuota (pairwiseBase n) (indexLevel (pairwiseBase n) i) ≤ max (pairwiseBase n) (2*(i+1))).trans
-        (max_le (baseSmall.trans (Nat.le_add_right _ _)) (Nat.le_add_left _ _))
+    exact (indexQuota_le_add positive i).trans (Nat.add_le_add_right baseSmall _)
   obtain ⟨path,work⟩ := knownPairPathWithWordWork_spec G vertices quota.1 d unique complete
-  have quotaWork := coverByDoublingWithWordWork_cost (i+1) (i+1) base.1
   have pathWork := work.trans (knownPairPathWordBudget_mono_quota n G.length small)
   dsimp only [indexedPairPathWithWordWork]
   rw [count]
