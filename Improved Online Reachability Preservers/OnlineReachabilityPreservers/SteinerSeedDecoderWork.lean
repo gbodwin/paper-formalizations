@@ -225,6 +225,17 @@ private theorem castDecoderBudget {G : Arcs V} {height width a b : ℕ}
   subst a
   rfl
 
+@[inline] private def decodeFixedSteinerBudgetUsing {Result : Type*} (G : Arcs V) (height width n m : ℕ)
+    (hn : n = Fintype.card V) (hm : m = G.card) (width_eq : width = (forestScale G height).log2+1)
+    (bits : Fin (steinerBitBudget G height) → Bool)
+    (decode : SteinerSeedDecoderSizes G height width → {b : ℕ} → (Fin b → Bool) →
+      BitCursor b → (Option Result × BitCursor b) × ℕ) :=
+  let setup := prepareSteinerSeedDecoderSizesWithWork G height width n m hn hm
+  let budget := steinerBitBudgetFromDecoderSizes setup.1
+  let same := steinerBitBudgetFromDecoderSizes_eq width_eq setup.1
+  let out := decode setup.1 (fun i : Fin budget => bits (Fin.cast same i)) ⟨0,Nat.zero_le budget⟩
+  ((out.1.1,out.1.2.position),setup.2+out.2+20)
+
 /-- Compute the fixed budget from the same arithmetic setup used by the
 metered reader. Return the seed and counts if present, the final bit
 position on either branch, and the work of setup and decoding together. -/
@@ -233,12 +244,34 @@ def decodeCompleteSteinerSeedWithFixedBudgetWork (G : Arcs V) (height width n m 
     (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
     (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card)
     (bits : Fin (steinerBitBudget G height) → Bool) :=
+  decodeFixedSteinerBudgetUsing G height width n m hn hm width_eq bits
+    (fun sizes {_} reader cursor => decodeCompleteSteinerSeedCursorWithWork G height width width_eq sizes
+      coordinates vertices arcs reader cursor)
+
+private def decodeFixedSteinerBudgetWithIndexedThin (G : Arcs V) (height width n m : ℕ)
+    (hn : n = Fintype.card V) (hm : m = G.card) (width_eq : width = (forestScale G height).log2+1)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) :=
+  decodeFixedSteinerBudgetUsing G height width n m hn hm width_eq bits
+    (fun sizes {_} reader cursor => decodeSteinerSeedCursorWithIndexedThin G height width width_eq sizes
+      coordinates vertices arcs reader cursor)
+
+private theorem decodeFixedSteinerBudgetWithIndexedThin_spec (G : Arcs V) (height width n m : ℕ)
+    (hn : n = Fintype.card V) (hm : m = G.card) (width_eq : width = (forestScale G height).log2+1)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) :
+    let out := decodeFixedSteinerBudgetWithIndexedThin G height width n m hn hm width_eq coordinates vertices arcs bits
+    ((out.1.1.map Prod.fst,out.1.2),out.2) =
+      decodeCompleteSteinerSeedWithFixedBudgetWork G height width n m hn hm width_eq coordinates vertices arcs bits ∧
+      ∀ packet, out.1.1 = some packet → ∀ e, packet.2 (arcs e) = packet.1.1.2.2 e := by
   let setup := prepareSteinerSeedDecoderSizesWithWork G height width n m hn hm
   let budget := steinerBitBudgetFromDecoderSizes setup.1
   let same := steinerBitBudgetFromDecoderSizes_eq width_eq setup.1
-  let out := decodeCompleteSteinerSeedCursorWithWork G height width width_eq setup.1 coordinates vertices arcs
-    (fun i : Fin budget => bits (Fin.cast same i)) ⟨0,Nat.zero_le budget⟩
-  ((out.1.1,out.1.2.position),setup.2+out.2+20)
+  obtain ⟨agreement,view⟩ := decodeSteinerSeedCursorWithIndexedThin_spec G height width width_eq setup.1
+    coordinates vertices arcs (fun i : Fin budget => bits (Fin.cast same i)) ⟨0,Nat.zero_le budget⟩
+  refine ⟨congrArg (fun v => ((v.1.1,v.1.2.position),setup.2+v.2+20)) agreement,view⟩
 
 theorem decodeCompleteSteinerSeedWithFixedBudgetWork_spec (G : Arcs V) (height width n m : ℕ)
     (hn : n = Fintype.card V) (hm : m = G.card) (width_eq : width = (forestScale G height).log2+1)
@@ -270,7 +303,7 @@ theorem decodeCompleteSteinerSeedWithFixedBudgetWork_spec (G : Arcs V) (height w
   · apply Prod.ext
     · exact result.trans (congrArg Prod.fst agreement)
     · exact position.trans (congrArg (fun state => state.2.position) agreement)
-  · dsimp only [decodeCompleteSteinerSeedWithFixedBudgetWork]
+  · dsimp only [decodeCompleteSteinerSeedWithFixedBudgetWork,decodeFixedSteinerBudgetUsing]
     rw [tally]
     change reference.2+16 ≤ _
     exact Nat.add_le_add_right work 16
@@ -324,17 +357,53 @@ private def decodeSteinerFixedBudgetAtIndex (G : Arcs V) (height n m : ℕ)
 def completeSteinerCachedDecoderWorkPolynomial (n m height : ℕ) : ℕ :=
   completeSteinerSeedDecodeWorkPolynomial n m height+7*steinerDecoderScaleCap n height+27
 
-/-- Decode one bit word using the width from the supplied forest preparation. -/
-def decodeSteinerSeedFromPreparedScale (G : Arcs V) (height n m : ℕ)
-    (hn : n = Fintype.card V) (hm : m = G.card) (scale : {s : ℕ // s = forestScale G height})
-    (indexes : SteinerReplaySeedIndexes G height) (bits : Fin (steinerBitBudget G height) → Bool) :=
+private def preparedSteinerWidthWithWork (G : Arcs V) (height : ℕ)
+    (scale : {s : ℕ // s = forestScale G height}) : {w : ℕ // w = (forestScale G height).log2+1} × ℕ :=
   let scaleWidth := bitLengthWithWork scale.val
   let width := max 1 scaleWidth.1
   have widthEq : width = (forestScale G height).log2+1 := by
     dsimp only [width, scaleWidth]
     rw [(bitLengthWithWork_spec _).1,max_size_eq_log2_add_one,scale.property]
-  let decoded := decodeSteinerFixedBudgetAtIndex G height n m hn hm indexes ⟨width,widthEq⟩ bits
-  (decoded.1.1.map Prod.fst,decoded.2+scaleWidth.2+8)
+  (⟨width,widthEq⟩,scaleWidth.2)
+
+/-- Decode one bit word using the width from the supplied forest preparation. -/
+def decodeSteinerSeedFromPreparedScale (G : Arcs V) (height n m : ℕ)
+    (hn : n = Fintype.card V) (hm : m = G.card) (scale : {s : ℕ // s = forestScale G height})
+    (indexes : SteinerReplaySeedIndexes G height) (bits : Fin (steinerBitBudget G height) → Bool) :=
+  let width := preparedSteinerWidthWithWork G height scale
+  let decoded := decodeSteinerFixedBudgetAtIndex G height n m hn hm indexes width.1 bits
+  (decoded.1.1.map Prod.fst,decoded.2+width.2+8)
+
+/-- Retain a direct indexed view of the thin thresholds from the same bit read. -/
+def decodeSteinerSeedWithIndexedThinFromPreparedScale (G : Arcs V) (height n m : ℕ)
+    (hn : n = Fintype.card V) (hm : m = G.card) (scale : {s : ℕ // s = forestScale G height})
+    (indexes : SteinerReplaySeedIndexes G height) (bits : Fin (steinerBitBudget G height) → Bool) :=
+  let width := preparedSteinerWidthWithWork G height scale
+  let decoded := decodeFixedSteinerBudgetWithIndexedThin G height width.1.val n m hn hm width.1.property
+    (indexes.coordinates width.1) indexes.vertices indexes.arcs bits
+  (decoded.1.1.map (fun entry => (entry.1.1,entry.2)),decoded.2+width.2+8)
+
+theorem decodeSteinerSeedWithIndexedThinFromPreparedScale_spec (G : Arcs V) (height n m : ℕ)
+    (hn : n = Fintype.card V) (hm : m = G.card) (scale : {s : ℕ // s = forestScale G height})
+    (indexes : SteinerReplaySeedIndexes G height) (bits : Fin (steinerBitBudget G height) → Bool) :
+    let out := decodeSteinerSeedWithIndexedThinFromPreparedScale G height n m hn hm scale indexes bits
+    let old := decodeSteinerSeedFromPreparedScale G height n m hn hm scale indexes bits
+    (out.1.map Prod.fst,out.2) = old ∧
+      ∀ entry, out.1 = some entry → ∀ e, entry.2 (indexes.arcs e) = entry.1.2.2 e := by
+  let width := preparedSteinerWidthWithWork G height scale
+  let codes := decodeFixedSteinerBudgetWithIndexedThin G height width.1.val n m hn hm width.1.property
+    (indexes.coordinates width.1) indexes.vertices indexes.arcs bits
+  obtain ⟨matchOld,view⟩ := decodeFixedSteinerBudgetWithIndexedThin_spec G height width.1.val n m hn hm width.1.property
+    (indexes.coordinates width.1) indexes.vertices indexes.arcs bits
+  refine ⟨?_,?_⟩
+  · have compare := congrArg (fun v => (v.1.1.map Prod.fst,v.2+width.2+8)) matchOld
+    simpa only [decodeSteinerSeedWithIndexedThinFromPreparedScale, decodeSteinerSeedFromPreparedScale,
+      decodeSteinerFixedBudgetAtIndex, width, Option.map_map, Function.comp_def] using compare
+  · intro entry same e
+    change (codes.1.1.map fun packet => (packet.1.1,packet.2)) = some entry at same
+    obtain ⟨packet,present,packetEq⟩ := Option.map_eq_some_iff.mp same
+    subst entry
+    exact view packet present e
 
 /-- Reuse one prepared forest and one set of seed indexes at every prefix. -/
 def completeSteinerReplayWithDecoderWorkUsingIndexes (G : Arcs V) (height n m : ℕ)
@@ -395,7 +464,7 @@ theorem completeSteinerReplayWithCachedDecoderWork_spec (G : Arcs V) (height n m
   have sameWidth : (⟨max 1 scaleWidth.1,exactWidth.trans widthEq⟩ : {w : ℕ // w = (forestScale G height).log2+1}) =
       ⟨width,widthEq⟩ := Subtype.ext exactWidth
   unfold completeSteinerReplayWithCachedDecoderWork completeSteinerReplayWithDecoderWorkFromPreparation
-    completeSteinerReplayWithDecoderWorkUsingIndexes decodeSteinerSeedFromPreparedScale
+    completeSteinerReplayWithDecoderWorkUsingIndexes decodeSteinerSeedFromPreparedScale preparedSteinerWidthWithWork
   dsimp only
   rw [sameWidth]
   dsimp only [decodeSteinerFixedBudgetAtIndex,steinerReplaySeedIndexes]

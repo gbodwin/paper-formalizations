@@ -980,17 +980,16 @@ structure SteinerSeedDecoderSizes (G : Arcs V) (height width : ℕ) where
   vertexWidth_eq : vertexWidth = uniformProposalWidth vertexCount
   arcWidth_eq : arcWidth = uniformProposalWidth arcCount
 
-/-- Decode a bounded bit input into the three seed arrays. The tally covers
-the cursor reads, rejection loops, buffer reservation and filling, and stage
-control. The prepared parameters and application of the returned seed and
-its index maps have separate costs. -/
-def decodeCompleteSteinerSeedCursorWithWork (G : Arcs V) (height width : ℕ)
+private abbrev CompleteSteinerSeedAndRejects (G : Arcs V) (height : ℕ) :=
+  (EarlyRoundSample G height × (Fin (completeSteinerHubCount V) → V) × ThinSample G) ×
+    ((Fin (completeSteinerHubCount V) → ℕ) × (G → ℕ))
+
+@[inline] private def readSteinerSeedCursorWithWork {Result : Type*} (G : Arcs V) (height width : ℕ)
     (width_eq : width = (forestScale G height).log2+1) (sizes : SteinerSeedDecoderSizes G height width)
-    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
-    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card)
-    {budget : ℕ} (bits : Fin budget → Bool) (cursor : BitCursor budget) :
-    (Option ((EarlyRoundSample G height × (Fin (completeSteinerHubCount V) → V) × ThinSample G) ×
-      ((Fin (completeSteinerHubCount V) → ℕ) × (G → ℕ))) × BitCursor budget) × ℕ :=
+    {budget : ℕ} (bits : Fin budget → Bool) (cursor : BitCursor budget)
+    (assemble : (count : ℕ) → count = Fintype.card (EarlySeedCoordinate G height) →
+      (Fin count → Fin (2^width)) → (Fin (completeSteinerHubCount V) → Fin (Fintype.card V) × ℕ) →
+      (Fin G.card → Fin G.card × ℕ) → Result) : (Option Result × BitCursor budget) × ℕ :=
   let early := consumeCursorWordsWithWork bits sizes.earlyCount width cursor
   match early.1.1 with
   | none => ((none,early.1.2),early.2+5)
@@ -1009,9 +1008,65 @@ def decodeCompleteSteinerSeedCursorWithWork (G : Arcs V) (height width : ℕ)
       let thinSeed := fun words i =>
         let entry : Fin sizes.arcCount × ℕ := words (Fin.cast sizes.arcCount_eq.symm i)
         (Fin.cast sizes.arcCount_eq entry.1,entry.2)
-      let seed := thin.1.1.map (fun words => assembleSeedAtWidth G height width sizes.earlyCount
-        width_eq count_eq coordinates vertices arcs earlyWords hubSeed (thinSeed words))
+      let seed := thin.1.1.map (fun words => assemble sizes.earlyCount count_eq earlyWords hubSeed (thinSeed words))
       ((seed,thin.1.2),early.2+hubs.2+thin.2+25)
+
+/-- Decode a bounded bit input into the three seed arrays. The tally covers
+the cursor reads, rejection loops, buffer reservation and filling, and stage
+control. The prepared parameters and application of the returned seed and
+its index maps have separate costs. -/
+def decodeCompleteSteinerSeedCursorWithWork (G : Arcs V) (height width : ℕ)
+    (width_eq : width = (forestScale G height).log2+1) (sizes : SteinerSeedDecoderSizes G height width)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card)
+    {budget : ℕ} (bits : Fin budget → Bool) (cursor : BitCursor budget) :
+    (Option (CompleteSteinerSeedAndRejects G height) × BitCursor budget) × ℕ :=
+  readSteinerSeedCursorWithWork G height width width_eq sizes bits cursor
+    (fun count count_eq => assembleSeedAtWidth G height width count width_eq count_eq coordinates vertices arcs)
+
+/-- Read the same seed and retain a direct view of its stored arc thresholds. -/
+def decodeSteinerSeedCursorWithIndexedThin (G : Arcs V) (height width : ℕ)
+    (width_eq : width = (forestScale G height).log2+1) (sizes : SteinerSeedDecoderSizes G height width)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card)
+    {budget : ℕ} (bits : Fin budget → Bool) (cursor : BitCursor budget) :
+    (Option (CompleteSteinerSeedAndRejects G height × (Fin G.card → Fin G.card)) × BitCursor budget) × ℕ :=
+  readSteinerSeedCursorWithWork G height width width_eq sizes bits cursor
+    (fun count count_eq early hubs thin =>
+      (assembleSeedAtWidth G height width count width_eq count_eq coordinates vertices arcs early hubs thin,
+        fun i => (thin i).1))
+
+theorem decodeSteinerSeedCursorWithIndexedThin_spec (G : Arcs V) (height width : ℕ)
+    (width_eq : width = (forestScale G height).log2+1) (sizes : SteinerSeedDecoderSizes G height width)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card)
+    {budget : ℕ} (bits : Fin budget → Bool) (cursor : BitCursor budget) :
+    let out := decodeSteinerSeedCursorWithIndexedThin G height width width_eq sizes coordinates vertices arcs bits cursor
+    ((out.1.1.map Prod.fst,out.1.2),out.2) =
+      decodeCompleteSteinerSeedCursorWithWork G height width width_eq sizes coordinates vertices arcs bits cursor ∧
+      ∀ packet, out.1.1 = some packet → ∀ e, packet.2 (arcs e) = packet.1.1.2.2 e := by
+  dsimp only [decodeSteinerSeedCursorWithIndexedThin, decodeCompleteSteinerSeedCursorWithWork, readSteinerSeedCursorWithWork]
+  generalize consumeCursorWordsWithWork bits sizes.earlyCount width cursor = early
+  cases early.1.1 with
+  | none => simp
+  | some earlyWords =>
+    dsimp only
+    generalize consumeCursorIndicesWithWork bits sizes.hubCount sizes.vertexCount
+      sizes.vertexWidth sizes.vertexWidth_eq early.1.2 = hubs
+    cases hubs.1.1 with
+    | none => simp
+    | some hubWords =>
+      dsimp only
+      generalize consumeCursorIndicesWithWork bits sizes.arcCount sizes.arcCount
+        sizes.arcWidth sizes.arcWidth_eq hubs.1.2 = thin
+      cases thin.1.1 with
+      | none => simp
+      | some words =>
+        refine ⟨rfl,?_⟩
+        intro packet same e
+        simp only [Option.map_some,Option.some.injEq] at same
+        subst packet
+        rfl
 
 /-- The metered decoder agrees on the seed, rejection counts and end cursor,
 even when the bits end during a rejection stage. Its work is linear in the
@@ -1027,7 +1082,8 @@ theorem decodeCompleteSteinerSeedCursorWithWork_spec (G : Arcs V) (height width 
       out.2 ≤ 24*(out.1.2.position-cursor.position)+29*(sizes.earlyCount+sizes.hubCount+sizes.arcCount)+55 := by
   rcases sizes with ⟨n,m,e,h,vw,aw,hn,hm,he,hh,hvw,haw⟩
   subst n m e h vw aw
-  dsimp only [decodeCompleteSteinerSeedCursorWithWork, decodeCompleteSteinerSeedCursorWithEndAtWidth]
+  dsimp only [decodeCompleteSteinerSeedCursorWithWork, readSteinerSeedCursorWithWork,
+    decodeCompleteSteinerSeedCursorWithEndAtWidth]
   have earlySpec := consumeCursorWordsWithWork_spec bits (earlySeedCoordinateCountByWidth V height width) width cursor
   dsimp only at earlySpec
   generalize consumeCursorWordsWithWork bits (earlySeedCoordinateCountByWidth V height width) width cursor = early

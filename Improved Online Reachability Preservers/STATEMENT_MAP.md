@@ -545,9 +545,19 @@ sums the reads over the metric purchases it actually computes. The
 [fixed-budget replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean)
 adds these unit read charges to its trace tally with a fixed-height
 polynomial bound. It preserves all previous graph and search records.
-The cumulative arithmetic cost of the seed ranks, thin-phase arc reads,
-other work within prefix computations, and bit and native arithmetic
-costs remain open.
+
+The [indexed thin decoder](OnlineReachabilityPreservers/SteinerSeedDecoderWork.lean)
+retains access to the thin threshold array in canonical arc order, with
+the same seed and decoder tally. After successful decoding, the
+[threshold cache](OnlineReachabilityPreservers/SteinerThinReplay.lean)
+takes one arc and one threshold directly from each stored position. The
+[cached replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean)
+shares these rows across late prefixes, including the thin branch's
+reachability checks and final rounding. It preserves all prefix graphs,
+earlier search and preparation tallies, and the seeded evaluation count.
+The extra \(2m+9\) allowance for \(m\) arcs covers the two reads per row
+and dispatch. Row construction, subsequent container work, cumulative
+early rank arithmetic, and bit and native costs remain open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

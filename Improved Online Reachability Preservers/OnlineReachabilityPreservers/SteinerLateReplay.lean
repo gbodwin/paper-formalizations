@@ -179,17 +179,41 @@ theorem lateSearchWorkBound_mono (n m : ℕ) : Monotone (lateSearchWorkBound n m
     liftSearchWorkBound
   gcongr
 
+/-- Use a stored thin evaluator together with the same hub trace. -/
+def lateSteinerWithSearchWorkUsing (G : Arcs V) (τ m : ℕ) (S : Finset V)
+    (roundThin : List (V × V) → Arcs V × ℕ) (D : List (V × V)) : Arcs V × ℕ :=
+  let traces := lateTracesWithSearchWorkFrom G S D ⟨[],[],[]⟩
+  let cost := traces.2+traces.1.thin.length*(2*Fintype.card V*m)
+  if traces.1.thin.any (fun d => decide (τ < (reachInterval G d).card)) then (G,cost)
+  else
+    let hubs := hubPreserverWithSearchWork G S traces.1.hits
+    let thin := roundThin traces.1.thin
+    (hubs.1 ∪ thin.1,cost+hubs.2+thin.2)
+
 /-- Replay the late strategy at cutoff zero. The counters cover hub interval
 inspections, the projected path algorithms and thin rounding. -/
 def lateSteinerWithSearchWork (G : Arcs V) (τ : ℕ) (S : Finset V)
     (sample : ThinSample G) (D : List (V × V)) : Arcs V × ℕ :=
-  let traces := lateTracesWithSearchWorkFrom G S D ⟨[],[],[]⟩
-  let cost := traces.2+traces.1.thin.length*(2*Fintype.card V*G.card)
-  if traces.1.thin.any (fun d => decide (τ < (reachInterval G d).card)) then (G,cost)
-  else
-    let hubs := hubPreserverWithSearchWork G S traces.1.hits
-    let thin := thinRoundRunWithSearchWork G (thinRoundingFactor (Fintype.card V) τ) sample traces.1.thin
-    (hubs.1 ∪ thin.1,cost+hubs.2+thin.2)
+  lateSteinerWithSearchWorkUsing G τ G.card S
+    (fun demands => thinRoundRunWithSearchWork G (thinRoundingFactor (Fintype.card V) τ) sample demands) D
+
+/-- Reuse the supplied thin-threshold rows in all the late fallback checks. -/
+def lateSteinerWithStoredThinThresholds (G : Arcs V) (τ m : ℕ) (S : Finset V)
+    (rows : Finset ((V × V) × ℕ)) (D : List (V × V)) : Arcs V × ℕ :=
+  lateSteinerWithSearchWorkUsing G τ m S
+    (fun demands => thinRoundRunFromThresholdRows G m (thinRoundingFactor (Fintype.card V) τ) rows demands) D
+
+theorem lateSteinerWithStoredThinThresholds_eq (G : Arcs V) (τ m : ℕ) (hm : m = G.card)
+    (S : Finset V) (sample : ThinSample G) (D : List (V × V)) :
+    let prepared := prepareThinThresholdRowsWithSeedReads G m sample
+    lateSteinerWithStoredThinThresholds G τ m S prepared.1 D = lateSteinerWithSearchWork G τ S sample D := by
+  intro prepared
+  let factor := thinRoundingFactor (Fintype.card V) τ
+  have same : thinRoundRunFromThresholdRows G m factor prepared.1 = thinRoundRunWithSearchWork G factor sample :=
+    funext (fun demands => thinRoundRunFromThresholdRows_eq G m hm factor sample demands)
+  change lateSteinerWithSearchWorkUsing G τ m S (thinRoundRunFromThresholdRows G m factor prepared.1) D =
+    lateSteinerWithSearchWorkUsing G τ G.card S (thinRoundRunWithSearchWork G factor sample) D
+  rw [same,hm]
 
 theorem lateSteinerWithSearchWork_spec {G : Arcs V} (early : EarlySteinerRule G) (τ : ℕ)
     (S : Finset V) (sample : ThinSample G) (D : List (V × V))

@@ -168,21 +168,26 @@ theorem completeFinSteinerReplayWithTraceWork_prefixes {n : ℕ} (G : Arcs (Fin 
 def steinerTraceEarlySeedReadWorkPolynomial (n height p : ℕ) : ℕ :=
   steinerTraceReplayWorkPolynomial n p+(p+1)*((p+1)*earlyRoundingSeedReadPolynomial n height+5)
 
-private def evaluateSteinerTraceWithEarlySeedReads (G : Arcs V)
+private def evaluateSteinerTraceWithEarlySeedReads
     (early : List (V × V) → Arcs V × ℕ × ℕ) (T τ : ℕ) (hubs : Finset V)
-    (thin : ThinSample G) (P : List (V × V)) : (Arcs V × ℕ) × ℕ :=
+    (late : ℕ → Finset V → List (V × V) → Arcs V × ℕ) (P : List (V × V)) : (Arcs V × ℕ) × ℕ :=
   let split := splitSteinerTraceWithWordWork T P
   let first := early split.1.1
-  let replay := completeSteinerDrawRunWithSearchWorkFromParts G (fun _ => (first.1,first.2.1))
-    τ hubs thin split.1.1 split.1.2
-  (replay,split.2+8+first.2.2+5)
+  let rest := late τ hubs split.1.2
+  ((first.1 ∪ rest.1,first.2.1+rest.2),split.2+8+first.2.2+5)
+
+private def replaySteinerTraceWithEarlySeedReadsUsing (n : ℕ) (hn : n = Fintype.card V)
+    (early : List (V × V) → Arcs V × ℕ × ℕ)
+    (draw : Fin (completeSteinerHubCount V) → V) (late : ℕ → Finset V → List (V × V) → Arcs V × ℕ)
+    (D : List (V × V)) : List (Arcs V × ℕ) × ℕ × ℕ :=
+  replaySteinerTraceWithCallback n hn draw D
+    (fun T τ hubs => evaluateSteinerTraceWithEarlySeedReads early T τ hubs late)
 
 private def replaySteinerTraceWithEarlySeedReads (G : Arcs V) (n : ℕ) (hn : n = Fintype.card V)
     (early : List (V × V) → Arcs V × ℕ × ℕ)
     (draw : Fin (completeSteinerHubCount V) → V) (thin : ThinSample G)
     (D : List (V × V)) : List (Arcs V × ℕ) × ℕ × ℕ :=
-  replaySteinerTraceWithCallback n hn draw D
-    (fun T τ hubs => evaluateSteinerTraceWithEarlySeedReads G early T τ hubs thin)
+  replaySteinerTraceWithEarlySeedReadsUsing n hn early draw (fun τ hubs => lateSteinerWithSearchWork G τ hubs thin) D
 
 private theorem replaySteinerTraceWithEarlySeedReads_spec (G : Arcs V) (n height : ℕ) (hn : n = Fintype.card V)
     (early : List (V × V) → Arcs V × ℕ × ℕ) (oldEarly : List (V × V) → Arcs V × ℕ)
@@ -192,7 +197,8 @@ private theorem replaySteinerTraceWithEarlySeedReads_spec (G : Arcs V) (n height
     let out := replaySteinerTraceWithEarlySeedReads G n hn early draw thin D
     let old := replaySteinerSeededPrefixesWithTraceWork G n hn oldEarly draw thin D
     out.1 = old.1 ∧ out.2.1 ≤ steinerTraceEarlySeedReadWorkPolynomial n height D.length ∧ out.2.2 = old.2.2 := by
-  let run := fun T τ hubs => evaluateSteinerTraceWithEarlySeedReads G early T τ hubs thin
+  let run := fun T τ hubs => evaluateSteinerTraceWithEarlySeedReads early T τ hubs
+    (fun threshold sampled => lateSteinerWithSearchWork G threshold sampled thin)
   let target := completeSteinerDrawRunWithSearchWorkFromEarly G oldEarly draw thin
   let extra := (D.length+1)*earlyRoundingSeedReadPolynomial n height+5
   have exactValue (P : List (V × V)) : (run (steinerEarlyCutoff n) (steinerThinThreshold n)
@@ -282,5 +288,87 @@ theorem completeFinSteinerReplayWithEarlySeedReads_prefixes {n : ℕ} (G : Arcs 
   dsimp only
   rw [equivalence,trace]
   exact ⟨prefixes,Nat.add_le_add charged reads⟩
+
+/-- Take one threshold and one arc directly from storage for each position.
+Reuse those rows across every late prefix of the successful replay. -/
+def completeFinSteinerReplayWithStoredThinThresholds {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
+  let prepared := prepareFinSteinerWeightedForSeedWithSeedReads G raw same height
+  let indexes := finSteinerReplaySeedIndexesWithWordWork G height raw same
+  let decoded := decodeSteinerSeedWithIndexedThinFromPreparedScale G height n m (by simp) hm
+    prepared.1.1 indexes.1 bits
+  let replay := match decoded.1 with
+    | none =>
+      let fallback := steinerFallbackPrefixScanWithWordWork G D
+      (fallback.1,fallback.2,0)
+    | some (seed,thin) =>
+      let rows := prepareThinThresholdRowsByIndex G m hm indexes.1.arcs thin
+      let out := replaySteinerTraceWithEarlySeedReadsUsing n (by simp) (prepared.1.2.1 seed.1) seed.2.1
+        (fun τ hubs => lateSteinerWithStoredThinThresholds G τ m hubs rows.1) D
+      (out.1,out.2.1+2*rows.2+9,out.2.2)
+  (((((replay.1,prepared.1.2.2),decoded.2),prepared.2),indexes.2),replay.2)
+
+theorem completeFinSteinerReplayWithStoredThinThresholds_spec {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
+    let out := completeFinSteinerReplayWithStoredThinThresholds G raw same height m hm bits D
+    let old := completeFinSteinerReplayWithEarlySeedReads G raw same height m hm bits D
+    out.1 = old.1 ∧ out.2.2 = old.2.2 ∧ out.2.1 ≤ old.2.1+2*m+9 := by
+  let prepared := prepareFinSteinerWeightedForSeedWithSeedReads G raw same height
+  let indexes := finSteinerReplaySeedIndexesWithWordWork G height raw same
+  let decoded := decodeSteinerSeedWithIndexedThinFromPreparedScale G height n m (by simp) hm
+    prepared.1.1 indexes.1 bits
+  let former := decodeSteinerSeedFromPreparedScale G height n m (by simp) hm prepared.1.1 indexes.1 bits
+  obtain ⟨read,thinView⟩ := decodeSteinerSeedWithIndexedThinFromPreparedScale_spec G height n m (by simp) hm
+    prepared.1.1 indexes.1 bits
+  have seedEq : decoded.1.map Prod.fst = former.1 := congrArg Prod.fst read
+  have workEq : decoded.2 = former.2 := congrArg Prod.snd read
+  unfold completeFinSteinerReplayWithStoredThinThresholds completeFinSteinerReplayWithEarlySeedReads
+  dsimp only
+  rw [show (decodeSteinerSeedWithIndexedThinFromPreparedScale G height n m (by simp) hm
+    prepared.1.1 indexes.1 bits).2 = former.2 from workEq]
+  cases branch : decoded.1 with
+  | none =>
+    have old : former.1 = none := by simpa only [branch,Option.map_none] using seedEq.symm
+    dsimp only [former,prepared,indexes] at old
+    rw [old]
+    exact ⟨rfl,rfl,(Nat.le_add_right _ _).trans (Nat.le_add_right _ _)⟩
+  | some entry =>
+    have old : former.1 = some entry.1 := by simpa only [branch,Option.map_some] using seedEq.symm
+    have sample : (fun e => entry.2 (indexes.1.arcs e)) = entry.1.2.2 := funext (thinView entry branch)
+    have rows := prepareThinThresholdRowsByIndex_eq G m hm indexes.1.arcs entry.2
+    have sameLate (τ : ℕ) (hubs : Finset (Fin n)) (E : List (Fin n × Fin n)) :
+        lateSteinerWithStoredThinThresholds G τ m hubs
+          (prepareThinThresholdRowsByIndex G m hm indexes.1.arcs entry.2).1 E =
+          lateSteinerWithSearchWork G τ hubs entry.1.2.2 E := by
+      rw [rows,sample]
+      exact lateSteinerWithStoredThinThresholds_eq G τ m hm hubs entry.1.2.2 E
+    have sameReplay := congrArg (fun late => replaySteinerTraceWithEarlySeedReadsUsing n (by simp)
+      (prepared.1.2.1 entry.1.1) entry.1.2.1 late D)
+      (funext fun τ => funext fun hubs => funext fun E => sameLate τ hubs E)
+    dsimp only [former,prepared,indexes] at old sameReplay
+    rw [old]
+    dsimp only
+    rw [sameReplay]
+    exact ⟨rfl,rfl,le_rfl⟩
+
+theorem completeFinSteinerReplayWithStoredThinThresholds_prefixes {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let out := completeFinSteinerReplayWithStoredThinThresholds G raw same height m hm bits D
+    let base := out.1.1.1
+    base.1.1.map Prod.fst = D.inits.map (completeSteinerRunWithBitBudget G height bits) ∧
+      (base.1.1.map Prod.snd).sum+base.1.2.1+base.1.2.2.1+base.1.2.2.2+base.2+out.1.1.2+out.1.2+out.2.1 ≤
+        completeFinSteinerPreparationWorkPolynomial n m raw.length height D.length +
+          finSteinerWeightPlanWorkPolynomial n height + finSteinerReplayIndexWorkPolynomial n raw.length +
+          steinerTraceEarlySeedReadWorkPolynomial n height D.length + 2*m + 9 := by
+  obtain ⟨equivalence,_,rows⟩ := completeFinSteinerReplayWithStoredThinThresholds_spec G raw same height m hm bits D
+  obtain ⟨prefixes,charged⟩ := completeFinSteinerReplayWithEarlySeedReads_prefixes G raw same height m hm bits D feasible
+  dsimp only
+  rw [equivalence]
+  refine ⟨prefixes,?_⟩
+  omega
 
 end OnlineReachabilityPreservers
