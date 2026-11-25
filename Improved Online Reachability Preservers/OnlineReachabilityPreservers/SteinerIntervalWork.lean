@@ -224,11 +224,12 @@ theorem intersectWithIntervalRowsWithWordWork_spec (interval : DemandIntervalRow
     simp [DemandIntervalRows.vertexSet,(memScanWithWordWork_spec v interval.vertices.val).1]
   · exact work (2*interval.vertices.val.length+1) (fun v _ => (memScanWithWordWork_spec v interval.vertices.val).2)
 
-private def memFinsetWithWordWork {A : Type*} [DecidableEq A] (key : A) (rows : Finset A) : Bool × ℕ :=
+/-- Scan a finite set for a key with a count independent of its listing. -/
+def memFinsetWithWordWork {A : Type*} [DecidableEq A] (key : A) (rows : Finset A) : Bool × ℕ :=
   let hit := filterFinsetWithWordWork (fun v => (decide (v = key),2)) rows
   (decide hit.1.Nonempty,hit.2+4)
 
-private theorem memFinsetWithWordWork_spec {A : Type*} [DecidableEq A] (key : A) (rows : Finset A) :
+theorem memFinsetWithWordWork_spec {A : Type*} [DecidableEq A] (key : A) (rows : Finset A) :
     let out := memFinsetWithWordWork key rows
     out.1 = decide (key ∈ rows) ∧ out.2 ≤ 12*rows.card+6 := by
   obtain ⟨shape,charged⟩ := filterFinsetWithWordWork_spec (fun v => (decide (v = key),2)) rows

@@ -649,11 +649,24 @@ hub for each non-self arrival and build the two ordered hub-leg lists.
 The same list drives the short-circuit test for a missed thick demand.
 The replay has the same graph and search records and the same number of
 evaluations for all inputs. On feasible traces, the fixed-height
-polynomial includes the new interval and trace-list operations. Hub
-routing and its reachability tests, the remaining early weighted work and
-container operations, bit costs, and native costs remain open.
+polynomial includes the new interval and trace-list operations.
 [Hub selection and fallback scans](OnlineReachabilityPreservers/SteinerLateIntervalWork.lean)
 · [Complete prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1107).
+
+The list-backed hub evaluator uses both projected preserver algorithms
+and the same reachability decisions on their output arcs. It measures
+the two orientations, each hit's service query, merging the two hub-leg
+outputs, and merging the result with the thin graph. The count also
+includes the late trace and fallback operations. The complete replay prepares
+one ordinary vertex list for the hub routing and reuses the ordinary arc
+list. On feasible traces it returns exactly the fixed-budget prefix graphs
+and the same number of evaluations. The work bound includes the measured
+late work, the earlier early search allowance, and the arc-inspection
+allowance for the rounded thin service tests. Early weighted work, the
+rest of those tests, the outer early and late graph union, other container
+operations, bit costs, and native costs remain open.
+[Measured routing and service](OnlineReachabilityPreservers/SteinerHubRouteWork.lean)
+· [Complete prefix bound with routing](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1291).
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

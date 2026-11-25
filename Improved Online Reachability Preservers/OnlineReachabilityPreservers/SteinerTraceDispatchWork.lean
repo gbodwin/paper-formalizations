@@ -169,6 +169,45 @@ theorem replayFirstOccurrencesWithWordWork_records_eq {V X : Type*} [DecidableEq
   obtain ⟨records,calls⟩ := replayFirstOccurrencesFrom_records_eq first second same [] (second []).1 D
   simp only [replayFirstOccurrencesWithWordWork,same,records,calls,and_self]
 
+private theorem replayFirstOccurrencesFrom_rel {V X Y : Type*} [DecidableEq V]
+    (first : List (V × V) → X × ℕ) (second : List (V × V) → Y × ℕ)
+    (rel : X → Y → Prop) (valid : V × V → Prop)
+    (agree : ∀ P, (∀ d ∈ P, valid d) → rel (first P).1 (second P).1)
+    (seen : List (V × V)) (earlier : ∀ d ∈ seen, valid d)
+    (x : X) (y : Y) (linked : rel x y) (D : List (V × V)) (validD : ∀ d ∈ D, valid d) :
+    let left := replayFirstOccurrencesFrom first seen x D
+    let right := replayFirstOccurrencesFrom second seen y D
+    List.Forall₂ rel left.1 right.1 ∧ left.2.2 = right.2.2 := by
+  induction D generalizing seen x y with
+  | nil => exact ⟨.cons linked .nil,rfl⟩
+  | cons d rest ih =>
+    have tail (r : V × V) (on : r ∈ rest) : valid r := validD r (List.mem_cons_of_mem _ on)
+    by_cases accepted : (nonselfRequestIsNewWithWordWork seen d).1 = true
+    · have next (r : V × V) (on : r ∈ d::seen) : valid r := by
+        rcases List.mem_cons.mp on with rfl | old
+        · exact validD r List.mem_cons_self
+        · exact earlier r old
+      have agreement := agree (d::seen).reverse (fun a on => next a (List.mem_reverse.mp on))
+      obtain ⟨remaining,count⟩ := ih (d::seen) next _ _ agreement tail
+      simp only [replayFirstOccurrencesFrom,accepted,ite_true]
+      exact ⟨.cons linked remaining,congrArg (·+1) count⟩
+    · obtain ⟨remaining,count⟩ := ih seen earlier x y linked tail
+      simp only [replayFirstOccurrencesFrom,accepted]
+      exact ⟨.cons linked remaining,count⟩
+
+/-- Related evaluations give related prefix records and the same number of evaluations. -/
+theorem replayFirstOccurrencesWithWordWork_rel {V X Y : Type*} [DecidableEq V]
+    (first : List (V × V) → X × ℕ) (second : List (V × V) → Y × ℕ)
+    (rel : X → Y → Prop) (valid : V × V → Prop)
+    (agree : ∀ P, (∀ d ∈ P, valid d) → rel (first P).1 (second P).1)
+    (D : List (V × V)) (validD : ∀ d ∈ D, valid d) :
+    let left := replayFirstOccurrencesWithWordWork first D
+    let right := replayFirstOccurrencesWithWordWork second D
+    List.Forall₂ rel left.1 right.1 ∧ left.2.2 = right.2.2 := by
+  obtain ⟨remaining,count⟩ := replayFirstOccurrencesFrom_rel first second rel valid agree []
+    (by simp) (first []).1 (second []).1 (agree [] (by simp)) D validD
+  exact ⟨remaining,congrArg (·+1) count⟩
+
 section SteinerTrace
 
 variable {V : Type*} [LinearOrder V] [Fintype V]

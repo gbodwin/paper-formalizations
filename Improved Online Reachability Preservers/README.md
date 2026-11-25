@@ -221,10 +221,19 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   arrival classification, both ordered hub-leg lists, and the test for
   a thick miss. Its fixed-height bound charges these scans and trace-list
   operations on feasible traces. The older graph and search records and
-  the evaluation count agree for all inputs. The hub routing and its
-  reachability tests, the remaining early weighted work and container
-  operations, bit costs, and native execution costs remain open.
+  the evaluation count agree for all inputs.
   [Replay with late classification work](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1107).
+  The list-backed hub replay shares an explicit vertex list with both
+  orientations of the hub routing. It charges their reachability searches,
+  merging the hub arcs, the service query at each hit, and merging the
+  resulting hub and thin graphs. On feasible traces it returns the same
+  prefix graphs and evaluation count in both seed branches. It uses a
+  measured late word count alongside the earlier early search charge, and
+  includes the earlier arc-inspection count for the rounded thin service
+  tests. Early weighted operations, the rest of those service tests, the
+  outer union of the two phases, other container work, bit costs, and
+  native execution costs remain open.
+  [Replay with list-backed hub routing](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1291).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

@@ -269,9 +269,10 @@ reachability test, in addition to the fractional prefix evaluator. -/
 def thinRoundPrefixWorkBound (n m p : ℕ) : ℕ :=
   (p+m*(m.log2+1))*thinSeparatorWorkBound n m+m+n*m
 
-private theorem thinRoundWorkEntry_bound (G : Arcs V) (factor : ℕ) (sample : ThinSample G)
+private theorem thinRoundWorkEntryUsing_bound (G : Arcs V) (round : CutLoads V → Arcs V)
+    (sub : ∀ load, round load ⊆ G)
     (D : List (V × V)) (i : Fin D.length) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
-    (thinRoundWorkEntry G factor sample D i).2.2 ≤
+    (thinRoundWorkEntryUsing G G.card round D i).2.2 ≤
       thinRoundPrefixWorkBound (Fintype.card V) G.card D.length := by
   have earlier : ∀ d ∈ D.take (i.val+1), Reach G d.1 d.2 :=
     fun d hd => feasible d (List.mem_of_mem_take hd)
@@ -279,13 +280,19 @@ private theorem thinRoundWorkEntry_bound (G : Arcs V) (factor : ℕ) (sample : T
   let result := thinCoverRunWithSearchWork G P
   let n := Fintype.card V
   let m := G.card
-  let R := roundedThinArcs G factor result.1.1 sample
+  let R := round result.1.1
   have frac := (thinCoverRunWithSearchWork_spec G P earlier).2.2.2.trans
     (Nat.mul_le_mul_right _ (Nat.add_le_add_right (show P.length ≤ D.length from (List.take_prefix _ _).length_le) _))
-  have arcs : R.card ≤ m := card_le_card (roundedThinArcs_subset _ _ _ _)
+  have arcs : R.card ≤ m := card_le_card (sub result.1.1)
   change result.2+m+(reachInWithArcInspections R (D.get i).2 n).2 ≤ _
   rw [reachInWithArcInspections_spec R (D.get i).2 n]
   exact Nat.add_le_add (Nat.add_le_add_right frac m) (Nat.mul_le_mul_left _ arcs)
+
+private theorem thinRoundWorkEntry_bound (G : Arcs V) (factor : ℕ) (sample : ThinSample G)
+    (D : List (V × V)) (i : Fin D.length) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (thinRoundWorkEntry G factor sample D i).2.2 ≤
+      thinRoundPrefixWorkBound (Fintype.card V) G.card D.length :=
+  thinRoundWorkEntryUsing_bound G _ (fun _ => roundedThinArcs_subset _ _ _ _) D i feasible
 
 private def thinRoundRunWithSearchWorkUsing (G : Arcs V) (count : Unit → ℕ) (round : CutLoads V → Arcs V)
     (D : List (V × V)) : Arcs V × ℕ :=
@@ -308,6 +315,51 @@ def thinRoundRunWithSearchWork (G : Arcs V) (factor : ℕ) (sample : ThinSample 
 def thinRoundRunFromThresholdRows (G : Arcs V) (m factor : ℕ) (rows : Finset ((V × V) × ℕ))
     (D : List (V × V)) : Arcs V × ℕ :=
   thinRoundRunWithSearchWorkUsing G (fun _ => m) (roundedFromThinThresholdRows rows factor) D
+
+/-- Polynomial allowance for the earlier thin search counts, including
+reachability arc inspections in the rounded-graph service tests. -/
+def thinRoundThresholdSearchWorkPolynomial (n m p : ℕ) : ℕ :=
+  (p+1)*((p+m*(m+1))*thinSeparatorWorkBound n m+m+n*m)
+
+theorem thinRoundRunFromThresholdRows_search_bound (G : Arcs V) (m : ℕ) (hm : m = G.card)
+    (factor : ℕ) (rows : Finset ((V × V) × ℕ)) (support : ∀ r ∈ rows, r.1 ∈ G)
+    (D : List (V × V)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (thinRoundRunFromThresholdRows G m factor rows D).2 ≤
+      thinRoundThresholdSearchWorkPolynomial (Fintype.card V) m D.length := by
+  subst m
+  let n := Fintype.card V
+  let m := G.card
+  let round := roundedFromThinThresholdRows rows factor
+  let records := (univ : Finset (Fin D.length)).image (thinRoundWorkEntryUsing G m round D)
+  let cost := ∑ row ∈ records, row.2.2
+  let B := thinRoundPrefixWorkBound n m D.length
+  have covered (load : CutLoads V) : round load ⊆ G := by
+    intro e he
+    obtain ⟨r,selected,rfl⟩ := mem_image.mp he
+    exact support r (mem_filter.mp selected).1
+  have total : cost ≤ D.length*B := by
+    dsimp only [cost,records]
+    rw [sum_image (fun a _ b _ equal => congrArg Prod.fst equal)]
+    calc
+      _ ≤ ∑ _ : Fin D.length, B :=
+        sum_le_sum (fun i _ => thinRoundWorkEntryUsing_bound G round covered D i feasible)
+      _ = _ := by simp
+  have cap : (thinCoverRunWithSearchWork G D).2+m ≤ B :=
+    (Nat.add_le_add_right (thinCoverRunWithSearchWork_spec G D feasible).2.2.2 _).trans (Nat.le_add_right _ _)
+  have legacy : (thinRoundRunFromThresholdRows G G.card factor rows D).2 ≤ (D.length+1)*B := by
+    by_cases empty : D.isEmpty = true
+    · simp [thinRoundRunFromThresholdRows,thinRoundRunWithSearchWorkUsing,empty]
+    simp only [thinRoundRunFromThresholdRows,thinRoundRunWithSearchWorkUsing,empty]
+    change (if (records.filter (fun r => r.2.1 = true)).Nonempty then (G,cost)
+      else (round (thinCoverRunWithSearchWork G D).1.1,cost+(thinCoverRunWithSearchWork G D).2+m)).2 ≤ _
+    rw [Nat.succ_mul]
+    split
+    · exact total.trans (Nat.le_add_right _ _)
+    · simpa only [Nat.add_assoc] using Nat.add_le_add total cap
+  refine legacy.trans ?_
+  unfold thinRoundThresholdSearchWorkPolynomial B thinRoundPrefixWorkBound
+  have logCap := Nat.log2_le_self m
+  gcongr
 
 theorem thinRoundRunFromThresholdRows_eq (G : Arcs V) (m : ℕ) (hm : m = G.card)
     (factor : ℕ) (sample : ThinSample G) (D : List (V × V)) :

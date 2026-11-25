@@ -702,4 +702,23 @@ theorem lateSteinerWithClassificationWork_bound {n : ℕ} {G : Arcs (Fin n)} (ea
     D feasible
   simpa only [lateSteinerWithClassificationWork,lengthEq,Fintype.card_fin] using bound
 
+/-- The graph selected by the stored-threshold evaluator on a feasible trace. -/
+theorem lateSteinerWithStoredThinThresholds_graph {G : Arcs V} (early : EarlySteinerRule G)
+    (τ m : ℕ) (S : Finset V) (rows : Finset ((V × V) × ℕ)) (D : List (V × V))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let traces := steinerPhaseTraces early 0 S D
+    (lateSteinerWithStoredThinThresholds G τ m S rows D).1 =
+      if traces.thin.any (fun d => decide (τ < (reachInterval G d).card)) then G
+      else hubPreserver G S traces.hits ∪
+        (thinRoundRunFromThresholdRows G m (thinRoundingFactor (Fintype.card V) τ) rows traces.thin).1 := by
+  let state : SteinerPhaseTraces V := ⟨[],[],[]⟩
+  obtain ⟨traces,_,_,_,_⟩ := lateTracesWithSearchWorkFrom_spec early S D state D.length
+    (by simp [state]) (by simp [state]) feasible (by simp [state])
+  change (lateTracesWithSearchWorkFrom G S D state).1 = steinerPhaseTraces early 0 S D at traces
+  dsimp only [lateSteinerWithStoredThinThresholds,lateSteinerWithSearchWorkUsing,lateSteinerWithTraceUsing]
+  rw [traces]
+  split
+  · rfl
+  · rw [(hubPreserverWithSearchWork_spec G S (steinerPhaseTraces early 0 S D).hits).1]
+
 end OnlineReachabilityPreservers
