@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.LocalFrozenCleaning
+import OnlineReachabilityPreservers.OppositeLinkForest
 
 /-! Contiguous regularization with unique intersections through bridge size six. -/
 
@@ -56,5 +57,73 @@ theorem regularization_list_frozen_unique_six {half : Bool} (paths : I → List 
   exact regularization_list_frozen_after_caps_with_room after (listRegularizedPaths_simple paths simple D L)
     (regularizedSix_bridge_free simple (fun {_ _ _ _} => unique) four free D L)
     hn hp dense long vCap iCap width degree mass
+
+/-- Few opposite links suffice for size-six cleaning at the original averages. -/
+theorem regularization_list_frozen_six_of_few_opposite_links {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (six : BridgeFree (ListBefore paths) 6)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (few : 18*Nat.card (oppositeLinkGraph paths (fun _ h => six (h.trans (by decide)))).edgeSet ≤
+      ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) 6 ∧
+      M ≤ 32*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let kept := removeOppositeIntersections paths
+  let K := ∑ i, (kept i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let pieces := listRegularizedPaths kept D L
+  have three : BridgeFree (ListBefore paths) 3 := fun _ h => six (h.trans (by decide))
+  let E := Nat.card (oppositeLinkGraph paths three).edgeSet
+  have retained : M ≤ K+E := removeOppositeIntersections_mass_with_link_count three simple
+  have enough : 8*(32+2)*M ≤ 9*32*K := by
+    change 18*E ≤ M at few
+    omega
+  have massCap : K ≤ M := sum_le_sum fun i _ => (removeOppositeIntersections_sublist paths i).length_le
+  have keptSimple (i : Fin p) : (kept i).Nodup := (removeOppositeIntersections_sublist paths i).nodup (simple i)
+  have keptFree : BridgeFree (ListBefore kept) 6 := removeOppositeIntersections_fullFree simple six
+  have keptFour : BridgeFree (ListBefore kept) 4 := fun _ hk => keptFree (hk.trans (by decide))
+  obtain ⟨widthD,trimD,_⟩ := four_average_width hn dense
+  obtain ⟨widthL,trimL,_⟩ := four_average_width hp long
+  change 0 < D at widthD
+  change 0 < L at widthL
+  obtain ⟨rawV,rawI⟩ := regularization_list_counts kept keptSimple widthD widthL
+  have vCap : 3*Fintype.card (ListVertexBlockIndex kept D) ≤ 4*n := by
+    have less : K/D ≤ M/D := Nat.div_le_div_right massCap
+    simp only [Fintype.card_fin] at rawV
+    change 3*(M/D) ≤ n at trimD
+    change Fintype.card (ListVertexBlockIndex kept D) ≤ n+K/D at rawV
+    omega
+  have iCap : 3*Fintype.card (ListBlockIndex (splitListVertices kept D) L) ≤ 4*p := by
+    have less : K/L ≤ M/L := Nat.div_le_div_right massCap
+    simp only [Fintype.card_fin] at rawI
+    change 3*(M/L) ≤ p at trimL
+    change Fintype.card (ListBlockIndex (splitListVertices kept D) L) ≤ p+K/L at rawI
+    omega
+  obtain ⟨mass,length,degree⟩ := regularization_list_mass_caps kept keptSimple D L widthD widthL
+  have legal : localOrderAdmissible false 6 pieces := regularizedSix_bridge_free (half := false) keptSimple
+    (fun {_ _ _ _} ab xa xb ya yb =>
+      removeOppositeIntersections_unique simple six.halfFree (by decide) ab xa xb ya yb) keptFour keptFree D L
+  exact regularization_list_frozen_after_caps_with_room_of_mass pieces
+    (listRegularizedPaths_simple kept keptSimple D L) legal
+    hn hp dense long vCap iCap length degree
+    (mass.trans_le massCap) (by rw [mass]; exact enough)
+
+/-- An all-size full-bridge-free input with sufficiently high mean degree
+has a size-six cleaned witness at the original budgets and averages. -/
+theorem regularization_list_frozen_six_of_fullFree {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (full : ∀ k, IsEmpty (Bridge (ListBefore paths) k))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (rich : 18*(n-1) ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) 6 ∧
+      M ≤ 32*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  have three : BridgeFree (ListBefore paths) 3 := fun {k} _ => full k
+  have few : Nat.card (oppositeLinkGraph paths three).edgeSet ≤ n-1 := by
+    simpa only [Fintype.card_fin] using oppositeLinkGraph_card_edgeSet three full
+  exact regularization_list_frozen_six_of_few_opposite_links paths simple (fun {k} _ => full k)
+    hn hp dense long ((Nat.mul_le_mul_left 18 few).trans rich)
 
 end OnlineReachabilityPreservers

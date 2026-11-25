@@ -666,6 +666,24 @@ that also excludes full bridges through four and whose mass is at least
 both positive budgets. At full cutoff six, the unrestricted statement with
 the original fixed averages remains open.
 
+An opposite-neighbor link joins consecutive common vertices of two
+oppositely ordered paths. In an input excluding full bridges through size
+three, a simple cycle of \(r\) links produces a full bridge of size at most
+\(r\). The existing pruning charges each removed incidence to a distinct
+link. With full exclusion at every size, the link graph is a forest and
+the pruning loss is at most \(n-1\) for \(n>0\).
+[Cycle bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L324)
+· [Pruning bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L505).
+
+For an input excluding full bridges through six, let \(E\) count these
+links. If \(M\ge18E\) and the mass \(M\) is at least both positive budgets,
+there is a cleaned family within both budgets with full exclusion through
+six, all four original-average caps, and mass at least \(M/32\). For an
+all-size full-bridge-free input, \(M\ge18(n-1)\) suffices in place of
+\(M\ge18E\).
+[Few opposite links](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L62)
+· [All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L115).
+
 | Source | Mathematical obligation |
 | --- | --- |
 | Definition 2 | Half-\(k\)-bridge-free means no bridge of size at most \(k\) whose last arc precedes the river. |

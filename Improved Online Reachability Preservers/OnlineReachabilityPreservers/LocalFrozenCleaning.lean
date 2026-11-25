@@ -277,6 +277,36 @@ private theorem frozen_cut_of_caps {k : ℕ} {half : Bool} (pieces : I → List 
   · rw [relabeledMass, mass]
     exact (rectanglePaths_mass_le Z A B).trans total
 
+/-- Restrict upper-capped pieces to the original budgets when both expanded
+supports fit within four thirds of those budgets and enough mass survives. -/
+theorem regularization_list_frozen_after_caps_with_room_of_mass {half : Bool} {k n p M retention : ℕ}
+    (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k paths)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (vertices : 3*Fintype.card V ≤ 4*n) (families : 3*Fintype.card I ≤ 4*p)
+    (lengthCap : ∀ i, (paths i).length ≤ 4*M/p)
+    (degreeCap : ∀ v, (occurrences (fun i => (paths i).toFinset) v).card ≤ 4*M/n)
+    (massCap : (∑ i, (paths i).length) ≤ M)
+    (massFloor : 8*(retention+2)*M ≤ 9*retention*(∑ i, (paths i).length)) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  obtain ⟨_,_,capD⟩ := four_average_width hn dense
+  obtain ⟨_,_,capL⟩ := four_average_width hp long
+  have count : (∑ i, (paths i).toFinset.card) = ∑ i, (paths i).length :=
+    sum_congr rfl fun i _ => List.toFinset_card_of_nodup (simple i)
+  exact frozen_cut_of_caps paths simple allowed
+    (M := M) (D := 4*M/n) (L := 4*M/p) (retention := retention)
+    (vNum := 3) (vDen := 4) (pNum := 3) (pDen := 4)
+    hn hp (by decide) (by decide) (by decide) (by decide) vertices families (count.trans_le massCap)
+    (by
+      rw [count]
+      calc
+        _ = 2*(8*(retention+2)*M) := by ring
+        _ ≤ 2*(9*retention*(∑ i, (paths i).length)) := Nat.mul_le_mul_left 2 massFloor
+        _ = _ := by ring)
+    lengthCap degreeCap capD capL
+
 /-- If both upper caps already hold, both supports may be larger than the
 original budgets by factors of four thirds. At full original mass the
 rectangle estimate and peeling keep at least one sixteenth. -/

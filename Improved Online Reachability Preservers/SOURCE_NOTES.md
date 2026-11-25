@@ -219,6 +219,30 @@ budgets and at least one 392nd of the maximum. Its four caps are measured
 against its own averages. The input-average conclusion at this unrestricted
 maximum remains open. [Output-average theorem](OnlineReachabilityPreservers/LocalAverageCleaning.lean).
 
+Consecutive common vertices on two oppositely ordered paths define an
+undirected link. If the family excludes full bridges through size three,
+a simple cycle of \(r\) such links yields a full bridge of size at most
+\(r\). A shortest reversible detour between two vertices of a row avoids
+that row on every link. In such a detour each link owner occurs in one
+consecutive run, which can be compressed to one step of the bridge.
+Full exclusion at every size gives a forest. The pruning step charges
+each removed incidence to a distinct link, so it loses at most \(n-1\)
+in that case for \(n>0\).
+[Cycle-to-bridge proof](OnlineReachabilityPreservers/OppositeLinkForest.lean#L324)
+· [Pruning loss](OnlineReachabilityPreservers/OppositeLinkForest.lean#L505).
+
+At full cutoff six, if the input has \(E\) opposite-neighbor links and
+mass \(M\ge18E\) at least both positive budgets, pruning keeps at least
+\(17M/18\). Use the original cap widths on the remaining unique intersections.
+The restriction to the two budgets keeps at least nine sixteenths of the
+pruned mass before deleting low incidences, which costs at most \(M/2\).
+The cleaned witness keeps at least \(M/32\), with all four original-average
+caps. The forest bound supplies the premise when the input excludes full
+bridges at every size and \(M\ge18(n-1)\). The output excludes full bridges
+through size six.
+[Conditional frozen cleaning](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L62)
+· [All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L115).
+
 The same splitting step can fail at larger bridge sizes with unique
 intersections. On seven vertices, take the six paths `[(0,1,2,3), (3,4),
 (4,0), (5,2), (1,6), (5,6)]`. There are 14 incidences, every vertex
