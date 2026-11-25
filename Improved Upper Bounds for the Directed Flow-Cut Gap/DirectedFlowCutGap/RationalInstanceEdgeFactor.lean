@@ -671,22 +671,37 @@ theorem least_le_endpointCap {n : ℕ} (A : Adjacency n) (w : Weights n) :
     least A w ≤ endpointCap A w :=
   least_le_of_factor A w _ (endpoint_factor A w)
 
-private theorem two_endpoints_split {n : ℕ} (A : Adjacency n) (w : Weights n)
+private def firstEndpoint {n : ℕ} (vertices : Finset (Fin n)) : Option (Fin n) :=
+  (List.finRange n).find? fun v => v ∈ vertices
+
+private def endpointColor {n : ℕ} (vertices : Finset (Fin n))
+    (proj : Edge n → Fin n) (e : Edge n) : Bool :=
+  match firstEndpoint vertices with
+  | none => false
+  | some u => decide (proj e = u)
+
+private theorem two_endpoints_color {n : ℕ} (A : Adjacency n) (w : Weights n)
     (proj : Edge n → Fin n)
     (inj : ∀ {s t : Fin n} (p : SimplePath (graph A) s t), Set.InjOn proj (↑p.edges : Set (Edge n)))
-    (few : ((positiveNonloops A w).image proj).card ≤ 2) :
-    ∃ side : Edge n → Bool, ∀ {s t : Fin n} (p : SimplePath (graph A) s t),
-      Set.InjOn side (↑(p.edges.filter fun e => 0 < weights w e) : Set (Edge n)) := by
+    (few : ((positiveNonloops A w).image proj).card ≤ 2)
+    {s t : Fin n} (p : SimplePath (graph A) s t) :
+    Set.InjOn (endpointColor ((positiveNonloops A w).image proj) proj)
+      (↑(p.edges.filter fun e => 0 < weights w e) : Set (Edge n)) := by
   let endpoints := (positiveNonloops A w).image proj
-  have inside {s t : Fin n} (p : SimplePath (graph A) s t) {e : Edge n}
-      (mem : e ∈ p.edges.filter fun e => 0 < weights w e) :
+  have inside {e : Edge n} (mem : e ∈ p.edges.filter fun e => 0 < weights w e) :
       proj e ∈ endpoints :=
     Finset.mem_image_of_mem proj (path_positive_subset A w p mem)
-  by_cases nonempty : endpoints.Nonempty
-  · obtain ⟨u,hu⟩ := nonempty
-    refine ⟨fun e => decide (proj e = u),fun p e he f hf sideEq => ?_⟩
+  intro e he f hf sideEq
+  change endpointColor endpoints proj e = endpointColor endpoints proj f at sideEq
+  cases found : firstEndpoint endpoints with
+  | none =>
+    have absent := List.find?_eq_none.mp found (proj e) (List.mem_finRange (proj e))
+    exact (absent (decide_eq_true (inside he))).elim
+  | some u =>
+    have hu : u ∈ endpoints :=
+      of_decide_eq_true (List.find?_some (p := fun v => decide (v ∈ endpoints)) found)
+    simp only [endpointColor,found] at sideEq
     apply inj p (Finset.mem_filter.mp he).1 (Finset.mem_filter.mp hf).1
-    change decide (proj e = u) = decide (proj f = u) at sideEq
     by_cases same : proj e = u
     · have fIsU : proj f = u := of_decide_eq_true (by simpa [same] using sideEq.symm)
       exact same.trans fIsU.symm
@@ -697,23 +712,37 @@ private theorem two_endpoints_split {n : ℕ} (A : Adjacency n) (w : Weights n)
         rw [Finset.card_erase_of_mem hu]
         exact Nat.sub_le_sub_right few _
       exact Finset.card_le_one_iff.mp other
-        (Finset.mem_erase.mpr ⟨same,inside p he⟩) (Finset.mem_erase.mpr ⟨fNeU,inside p hf⟩)
-  · refine ⟨fun _ => false,fun p e he _ _ _ => ?_⟩
-    exact (nonempty ⟨proj e,inside p he⟩).elim
+        (Finset.mem_erase.mpr ⟨same,inside he⟩) (Finset.mem_erase.mpr ⟨fNeU,inside hf⟩)
+
+def endpointSides {n : ℕ} (A : Adjacency n) (w : Weights n) : Edge n → Bool :=
+  let support := positiveNonloops A w
+  let tails := support.image Prod.fst
+  if tails.card ≤ 2 then endpointColor tails Prod.fst
+  else endpointColor (support.image Prod.snd) Prod.snd
+
+theorem endpointSides_spec {n : ℕ} (A : Adjacency n) (w : Weights n)
+    (h : endpointCap A w ≤ 2) {s t : Fin n} (p : SimplePath (graph A) s t) :
+    Set.InjOn (endpointSides A w) (↑(p.edges.filter fun e => 0 < weights w e) : Set (Edge n)) := by
+  unfold endpointSides
+  dsimp only
+  split
+  · rename_i ht
+    exact two_endpoints_color A w Prod.fst (fun p => path_distinct_tails p) ht p
+  · rename_i ht
+    unfold endpointCap at h
+    exact two_endpoints_color A w Prod.snd (fun p => path_distinct_heads p) ((min_le_iff.mp h).resolve_left ht) p
 
 theorem least_le_one_of_endpointCap_le_two {n : ℕ} (A : Adjacency n) (w : Weights n)
     (h : endpointCap A w ≤ 2) : least A w ≤ 1 := by
-  unfold endpointCap at h
-  rcases min_le_iff.mp h with tails | heads
-  · obtain ⟨side,ok⟩ := two_endpoints_split A w Prod.fst (fun p => path_distinct_tails p) tails
-    exact least_le_of_factor A w 1 (by simpa using TwoSideEdgeFactor.factor_one (graph A) (weights w) side ok)
-  · obtain ⟨side,ok⟩ := two_endpoints_split A w Prod.snd (fun p => path_distinct_heads p) heads
-    exact least_le_of_factor A w 1 (by simpa using TwoSideEdgeFactor.factor_one (graph A) (weights w) side ok)
+  apply least_le_of_factor A w 1
+  have factor := TwoSideEdgeFactor.factor_one (graph A) (weights w)
+    (endpointSides A w) (fun p => endpointSides_spec A w h p)
+  simpa using factor
 
-private def emptyCutAccepted {n : ℕ} (A : Adjacency n) (w : Weights n) : Bool :=
+def emptyCutAccepted {n : ℕ} (A : Adjacency n) (w : Weights n) : Bool :=
   decide (∅ ∈ candidates A (demands A w) Finset.univ)
 
-private theorem emptyCutAccepted_iff {n : ℕ} (A : Adjacency n) (w : Weights n) :
+theorem emptyCutAccepted_iff {n : ℕ} (A : Adjacency n) (w : Weights n) :
     emptyCutAccepted A w = true ↔
       IsIntegralEdgeCut (graph A) ∅ (edgeThresholdDemands (graph A) (weights w)) := by
   have demandSet : {e | e ∈ demands A w} = edgeThresholdDemands (graph A) (weights w) := by
@@ -722,7 +751,7 @@ private theorem emptyCutAccepted_iff {n : ℕ} (A : Adjacency n) (w : Weights n)
   rw [emptyCutAccepted,decide_eq_true_eq,mem_candidates,demandSet]
   simp
 
-private theorem emptyCutAccepted_zero {n : ℕ} (A : Adjacency n) (w : Weights n) :
+theorem emptyCutAccepted_zero {n : ℕ} (A : Adjacency n) (w : Weights n) :
     emptyCutAccepted A w = true ↔ least A w = 0 := by
   rw [emptyCutAccepted_iff]
   constructor

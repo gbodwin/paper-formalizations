@@ -33,22 +33,33 @@ private theorem hit_mass (w : V × V → ℝ≥0) (side : V × V → Bool) (e : 
 
 variable [Fintype V] [DecidableEq V]
 
-private def cut (G : Digraph V) (w : V × V → ℝ≥0) (side : V × V → Bool) (d : ℝ) :
+def levelCut (G : Digraph V) (w : V × V → ℝ≥0) (side : V × V → Bool) (d : ℝ) :
     Finset (V × V) := by
   classical
   exact (graphEdges G).filter fun e => d ∈ hit w side e
 
 omit [DecidableEq V] in
-private theorem cut_actual (G : Digraph V) (w : V × V → ℝ≥0)
-    (side : V × V → Bool) (d : ℝ) : cut G w side d ⊆ graphEdges G := by
+theorem mem_levelCut (G : Digraph V) (w : V × V → ℝ≥0) (side : V × V → Bool)
+    (d : ℝ) (e : V × V) :
+    e ∈ levelCut G w side d ↔ e ∈ graphEdges G ∧
+      (if side e then 1-(w e : ℝ) ≤ d else d ≤ (w e : ℝ)) := by
+  classical
+  rw [levelCut,Finset.mem_filter]
+  apply and_congr_right
+  intro _
+  cases shade : side e <;> simp [hit,shade]
+
+omit [DecidableEq V] in
+theorem levelCut_actual (G : Digraph V) (w : V × V → ℝ≥0)
+    (side : V × V → Bool) (d : ℝ) : levelCut G w side d ⊆ graphEdges G := by
   classical
   exact Finset.filter_subset _ _
 
-private theorem cut_valid (G : Digraph V) (w : V × V → ℝ≥0) (side : V × V → Bool)
+theorem levelCut_valid (G : Digraph V) (w : V × V → ℝ≥0) (side : V × V → Bool)
     (separate : ∀ {s t : V} (p : SimplePath G s t),
       Set.InjOn side (↑(p.edges.filter fun e => 0 < w e) : Set (V × V)))
     {d : ℝ} (range : d ∈ Icc (0 : ℝ) 1) :
-    IsIntegralEdgeCut G (cut G w side d) (edgeThresholdDemands G w) := by
+    IsIntegralEdgeCut G (levelCut G w side d) (edgeThresholdDemands G w) := by
   classical
   intro s t far p
   by_contra missed
@@ -116,25 +127,22 @@ private theorem cut_valid (G : Digraph V) (w : V × V → ℝ≥0) (side : V × 
 
 omit [DecidableEq V] in
 private theorem cut_fee (G : Digraph V) (w c : V × V → ℝ≥0) (side : V × V → Bool) (d : ℝ) :
-    (edgeCutCost G c (cut G w side d) : ℝ≥0∞) =
+    (edgeCutCost G c (levelCut G w side d) : ℝ≥0∞) =
       ∑ e ∈ graphEdges G, (hit w side e).indicator (fun _ => (c e : ℝ≥0∞)) d := by
   classical
-  rw [edgeCutCost_eq_sum_of_subset G c (cut_actual G w side d), ENNReal.ofNNReal_finsetSum,
-      cut, Finset.sum_filter]
+  rw [edgeCutCost_eq_sum_of_subset G c (levelCut_actual G w side d), ENNReal.ofNNReal_finsetSum,
+      levelCut, Finset.sum_filter]
   apply Finset.sum_congr rfl
   intro e _
   simp [Set.indicator_apply]
 
+omit [DecidableEq V] in
 set_option maxHeartbeats 700000 in
-/-- A two-part partition of the positive arcs that puts distinct arcs of
-each simple path on different sides yields a factor-one rounding oracle. -/
-theorem factor_one (G : Digraph V) (w : V × V → ℝ≥0) (side : V × V → Bool)
-    (separate : ∀ {s t : V} (p : SimplePath G s t),
-      Set.InjOn side (↑(p.edges.filter fun e => 0 < w e) : Set (V × V))) :
-    HasEdgeRoundingFactor G w 1 := by
-  refine ⟨zero_le_one,fun c => ?_⟩
-  let cENN (d : ℝ) := (edgeCutCost G c (cut G w side d) : ℝ≥0∞)
-  let cReal (d : ℝ) := (edgeCutCost G c (cut G w side d) : ℝ)
+/-- Some unit-interval level reaches the weighted cost bound. -/
+theorem exists_level_cost (G : Digraph V) (w c : V × V → ℝ≥0) (side : V × V → Bool) :
+    ∃ d ∈ Icc (0 : ℝ) 1, (edgeCutCost G c (levelCut G w side d) : ℝ) ≤ weightedEdgeCost G c w := by
+  let cENN (d : ℝ) := (edgeCutCost G c (levelCut G w side d) : ℝ≥0∞)
+  let cReal (d : ℝ) := (edgeCutCost G c (levelCut G w side d) : ℝ)
   have measurable : Measurable cENN := by
     unfold cENN
     simp_rw [cut_fee]
@@ -160,8 +168,18 @@ theorem factor_one (G : Digraph V) (w : V × V → ℝ≥0) (side : V × V → B
     simp
   obtain ⟨d,hd,within⟩ := exists_notMem_null_le_average (IsProbabilityMeasure.ne_zero uniformLevel) cInt outside
   rw [average_eq_integral] at within
-  exact ⟨cut G w side d,cut_actual G w side d,cut_valid G w side separate (by simpa using hd),
-    by simpa only [one_mul] using within.trans meanReal⟩
+  exact ⟨d,by simpa using hd,within.trans meanReal⟩
+
+/-- A two-part partition of the positive arcs that puts distinct arcs of
+each simple path on different sides yields a factor-one rounding oracle. -/
+theorem factor_one (G : Digraph V) (w : V × V → ℝ≥0) (side : V × V → Bool)
+    (separate : ∀ {s t : V} (p : SimplePath G s t),
+      Set.InjOn side (↑(p.edges.filter fun e => 0 < w e) : Set (V × V))) :
+    HasEdgeRoundingFactor G w 1 := by
+  refine ⟨zero_le_one,fun c => ?_⟩
+  obtain ⟨d,hd,paid⟩ := exists_level_cost G w c side
+  exact ⟨levelCut G w side d,levelCut_actual G w side d,levelCut_valid G w side separate hd,
+    by simpa only [one_mul] using paid⟩
 
 end
 end DirectedFlowCutGap.TwoSideEdgeFactor

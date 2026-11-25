@@ -35,6 +35,16 @@ private theorem parse_encode {n : ℕ} (A : Adjacency n) (w : Weights n) :
     parse (encode A w) = some ⟨n, frame A w⟩ := by
   simp [parse, encode, EncodedEdgeInput.parse_encode, frame]
 
+/-- Read adjacency and original lengths without preparing a particular sampler. -/
+def unpack (source : Bits) : Option (Σ n, Adjacency n × Weights n) :=
+  (parse source).map fun ⟨n,D⟩ => ⟨n,(D.adjacency,lengthMatrix D)⟩
+
+theorem unpack_encode {n : ℕ} (A : Adjacency n) (w : Weights n) :
+    unpack (encode A w) = some ⟨n,(A,w)⟩ := by
+  rw [unpack,parse_encode]
+  change some (⟨n,(A,lengthMatrix (frame A w))⟩ : Σ k, Adjacency k × Weights k) = _
+  rw [lengthMatrix_frame]
+
 structure Checked (n : ℕ) where
   adjacency : Adjacency n
   lengths : Weights n
