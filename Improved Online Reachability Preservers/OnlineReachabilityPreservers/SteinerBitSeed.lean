@@ -735,6 +735,116 @@ private theorem consumeBitArrayWithEnd_progress {A : Type*} {budget : ℕ} (coun
       | none => exact start
       | some value => exact start.trans (ih (fun i => read i.succ) next (fun i c => advances i.succ c))
 
+private def consumeCursorArrayLoopWithWork {A : Type*} {budget : ℕ}
+    (read : BitCursor budget → (Option A × BitCursor budget) × ℕ) :
+    ℕ → Array A → BitCursor budget → ℕ → (Option (Array A) × BitCursor budget) × ℕ
+  | 0, values, cursor, work => ((some values,cursor),work+2)
+  | remaining+1, values, cursor, work =>
+    let head := read cursor
+    match head.1.1 with
+    | none => ((none,head.1.2),work+head.2+3)
+    | some value => consumeCursorArrayLoopWithWork read remaining (values.push value)
+        head.1.2 (work+head.2+6)
+
+private theorem consumeCursorArrayLoopWithWork_spec {A : Type*} {budget : ℕ}
+    (read : BitCursor budget → (Option A × BitCursor budget) × ℕ)
+    (reference : BitCursor budget → Option A × BitCursor budget)
+    (same : ∀ c, (read c).1 = reference c)
+    (advances : ∀ c, c.position ≤ (read c).1.2.position)
+    (bounded : ∀ c, (read c).2 ≤ 24*((read c).1.2.position-c.position)+22)
+    (count : ℕ) (values : Array A) (cursor : BitCursor budget) (work : ℕ) :
+    let out := consumeCursorArrayLoopWithWork read count values cursor work
+    let ref := consumeBitArrayWithEnd count (fun _ => reference) cursor
+    out.1 = (ref.1.map (fun rest => values ++ Array.ofFn rest),ref.2) ∧
+      cursor.position ≤ out.1.2.position ∧
+      out.2 ≤ work+24*(out.1.2.position-cursor.position)+28*count+2 := by
+  induction count generalizing values cursor work with
+  | zero => simp [consumeCursorArrayLoopWithWork, consumeBitArrayWithEnd]
+  | succ count ih =>
+    dsimp only
+    rw [consumeCursorArrayLoopWithWork, consumeBitArrayWithEnd, ← same cursor]
+    have progress := advances cursor
+    have charge := bounded cursor
+    rcases parsed : read cursor with ⟨⟨head,next⟩,headWork⟩
+    simp only [parsed] at progress charge
+    cases head with
+    | none => exact ⟨rfl,progress,by dsimp only; omega⟩
+    | some value =>
+      dsimp only
+      let ref := consumeBitArrayWithEnd count (fun _ => reference) next
+      obtain ⟨agrees,moves,restWork⟩ := ih (values.push value) next (work+headWork+6)
+      refine ⟨?_,progress.trans moves,by omega⟩
+      rw [agrees]
+      change (ref.1.map (fun rest => values.push value ++ Array.ofFn rest),ref.2) =
+        ((ref.1.map (fun rest => (Fin.cases value rest : Fin (count+1) → A))).map
+          (fun rest => values ++ Array.ofFn rest),ref.2)
+      apply congrArg (·,ref.2)
+      cases ref.1 with
+      | none => rfl
+      | some rest =>
+        simp only [Option.map_some, Array.ofFn_succ', Fin.cases_zero, Fin.cases_succ,
+          ← Array.append_assoc, ← Array.push_eq_append]
+
+/-- Reserve a buffer for the requested number of words and fill it in order.
+The tally charges reservation per slot and one unit per array append. -/
+private def consumeCursorArrayWithWork {A : Type*} {budget : ℕ} (count : ℕ)
+    (read : BitCursor budget → (Option A × BitCursor budget) × ℕ)
+    (reference : BitCursor budget → Option A × BitCursor budget)
+    (same : ∀ c, (read c).1 = reference c) (advances : ∀ c, c.position ≤ (read c).1.2.position)
+    (bounded : ∀ c, (read c).2 ≤ 24*((read c).1.2.position-c.position)+22)
+    (cursor : BitCursor budget) : (Option (Fin count → A) × BitCursor budget) × ℕ :=
+  let readAll := consumeCursorArrayLoopWithWork read count (Array.emptyWithCapacity count) cursor (count+5)
+  let ref := consumeBitArrayWithEnd count (fun _ => reference) cursor
+  let expose (values : Array A) (found : readAll.1.1 = some values) : Fin count → A :=
+    have size : values.size = count := by
+      have spec := (consumeCursorArrayLoopWithWork_spec read reference same advances bounded count
+        (Array.emptyWithCapacity count) cursor (count+5)).1
+      change readAll.1 = _ at spec
+      have accepted := congrArg Prod.fst spec
+      change readAll.1.1 = (ref.1.map fun rest => Array.emptyWithCapacity count ++ Array.ofFn rest) at accepted
+      rw [found] at accepted
+      cases result : ref.1 with
+      | none => simp [result] at accepted
+      | some rest =>
+        have array : values = Array.ofFn rest := by simpa [result] using accepted
+        simp [array]
+    fun i => values[i.val]'(size.symm ▸ i.isLt)
+  ((readAll.1.1.pmap expose (fun _ found => found),readAll.1.2),readAll.2+3)
+
+private theorem consumeCursorArrayWithWork_spec {A : Type*} {budget : ℕ} (count : ℕ)
+    (read : BitCursor budget → (Option A × BitCursor budget) × ℕ)
+    (reference : BitCursor budget → Option A × BitCursor budget)
+    (same : ∀ c, (read c).1 = reference c) (advances : ∀ c, c.position ≤ (read c).1.2.position)
+    (bounded : ∀ c, (read c).2 ≤ 24*((read c).1.2.position-c.position)+22)
+    (cursor : BitCursor budget) :
+    let out := consumeCursorArrayWithWork count read reference same advances bounded cursor
+    out.1 = consumeBitArrayWithEnd count (fun _ => reference) cursor ∧
+      cursor.position ≤ out.1.2.position ∧
+      out.2 ≤ 24*(out.1.2.position-cursor.position)+29*count+10 := by
+  let readAll := consumeCursorArrayLoopWithWork read count (Array.emptyWithCapacity count) cursor (count+5)
+  let ref := consumeBitArrayWithEnd count (fun _ => reference) cursor
+  obtain ⟨agrees,progress,work⟩ := consumeCursorArrayLoopWithWork_spec read reference same advances bounded count
+    (Array.emptyWithCapacity count) cursor (count+5)
+  change readAll.1 = (_,ref.2) at agrees
+  dsimp only [consumeCursorArrayWithWork]
+  refine ⟨?_,progress,by omega⟩
+  have last : readAll.1.2 = ref.2 := congrArg Prod.snd agrees
+  have entries := congrArg Prod.fst agrees
+  change readAll.1.1 = (ref.1.map fun rest => Array.emptyWithCapacity count ++ Array.ofFn rest) at entries
+  simp only [Array.emptyWithCapacity_eq, Array.empty_append] at entries
+  refine Prod.ext ?_ last
+  cases found : ref.1 with
+  | none =>
+    simp only [found, Option.map_none] at entries
+    rw [Option.pmap_none' entries]
+  | some rest =>
+    simp only [found, Option.map_some] at entries
+    rw [Option.pmap_some' entries]
+    change some _ = some rest
+    apply congrArg some
+    funext i
+    exact Array.getElem_ofFn _
+
 /-- Track the final position even if a finite seed stops early. The state is
 the position after the last complete word, including rejected proposals. -/
 def decodeCompleteSteinerSeedCursorWithEndAtWidth (G : Arcs V) (height width : ℕ)
@@ -819,5 +929,138 @@ theorem decodeCompleteSteinerSeedCursorWithEndAtWidth_spec (G : Arcs V) (height 
       rw [← thinRead]
       refine ⟨?_,earlyMove.trans (hubMove.trans thinMove),thin.2.bounded⟩
       cases thin.1 <;> rfl
+
+private theorem consumeCursorWordWithWork_advances {budget : ℕ} (bits : Fin budget → Bool)
+    (width : ℕ) (cursor : BitCursor budget) :
+    cursor.position ≤ (consumeCursorWordWithWork bits width cursor).1.2.position := by
+  rw [(consumeCursorWordWithWork_spec bits width cursor).2.1]
+  exact Nat.le_add_right _ _
+
+private def consumeCursorWordsWithWork {budget : ℕ} (bits : Fin budget → Bool) (count width : ℕ)
+    (cursor : BitCursor budget) :=
+  consumeCursorArrayWithWork count (consumeCursorWordWithWork bits width) (consumeCursorWordWithEnd bits width)
+    (fun c => (consumeCursorWordWithWork_spec bits width c).1) (consumeCursorWordWithWork_advances bits width)
+    (fun c => (consumeCursorWordWithWork_spec bits width c).2.2.trans (by omega)) cursor
+
+private theorem consumeCursorWordsWithWork_spec {budget : ℕ} (bits : Fin budget → Bool) (count width : ℕ)
+    (cursor : BitCursor budget) :
+    let out := consumeCursorWordsWithWork bits count width cursor
+    out.1 = consumeBitArrayWithEnd count (fun _ => consumeCursorWordWithEnd bits width) cursor ∧
+      cursor.position ≤ out.1.2.position ∧
+      out.2 ≤ 24*(out.1.2.position-cursor.position)+29*count+10 :=
+  consumeCursorArrayWithWork_spec count _ _ _ _ _ cursor
+
+private def consumeCursorIndicesWithWork {budget : ℕ} (bits : Fin budget → Bool) (count N width : ℕ)
+    (width_eq : width = uniformProposalWidth N) (cursor : BitCursor budget) :=
+  consumeCursorArrayWithWork count (consumeCursorIndexAtWidthWithWork bits N width) (consumeCursorIndexWithEnd bits N)
+    (fun c => (consumeCursorIndexAtWidthWithWork_spec bits N width c width_eq).1)
+    (fun c => (consumeCursorIndexAtWidthWithWork_spec bits N width c width_eq).2.1)
+    (fun c => (consumeCursorIndexAtWidthWithWork_spec bits N width c width_eq).2.2) cursor
+
+private theorem consumeCursorIndicesWithWork_spec {budget : ℕ} (bits : Fin budget → Bool) (count N width : ℕ)
+    (width_eq : width = uniformProposalWidth N) (cursor : BitCursor budget) :
+    let out := consumeCursorIndicesWithWork bits count N width width_eq cursor
+    out.1 = consumeBitArrayWithEnd count (fun _ => consumeCursorIndexWithEnd bits N) cursor ∧
+      cursor.position ≤ out.1.2.position ∧
+      out.2 ≤ 24*(out.1.2.position-cursor.position)+29*count+10 :=
+  consumeCursorArrayWithWork_spec count _ _ _ _ _ cursor
+
+/-- Cardinalities and proposal widths available before the three seed reads. -/
+structure SteinerSeedDecoderSizes (G : Arcs V) (height width : ℕ) where
+  vertexCount : ℕ
+  arcCount : ℕ
+  earlyCount : ℕ
+  hubCount : ℕ
+  vertexWidth : ℕ
+  arcWidth : ℕ
+  vertexCount_eq : vertexCount = Fintype.card V
+  arcCount_eq : arcCount = G.card
+  earlyCount_eq : earlyCount = earlySeedCoordinateCountByWidth V height width
+  hubCount_eq : hubCount = completeSteinerHubCount V
+  vertexWidth_eq : vertexWidth = uniformProposalWidth vertexCount
+  arcWidth_eq : arcWidth = uniformProposalWidth arcCount
+
+/-- Decode a bounded bit input into the three seed arrays. The tally covers
+the cursor reads, rejection loops, buffer reservation and filling, and stage
+control. The prepared parameters and application of the returned seed and
+its index maps have separate costs. -/
+def decodeCompleteSteinerSeedCursorWithWork (G : Arcs V) (height width : ℕ)
+    (width_eq : width = (forestScale G height).log2+1) (sizes : SteinerSeedDecoderSizes G height width)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card)
+    {budget : ℕ} (bits : Fin budget → Bool) (cursor : BitCursor budget) :
+    (Option ((EarlyRoundSample G height × (Fin (completeSteinerHubCount V) → V) × ThinSample G) ×
+      ((Fin (completeSteinerHubCount V) → ℕ) × (G → ℕ))) × BitCursor budget) × ℕ :=
+  let early := consumeCursorWordsWithWork bits sizes.earlyCount width cursor
+  match early.1.1 with
+  | none => ((none,early.1.2),early.2+5)
+  | some earlyWords =>
+    let hubs := consumeCursorIndicesWithWork bits sizes.hubCount sizes.vertexCount
+      sizes.vertexWidth sizes.vertexWidth_eq early.1.2
+    match hubs.1.1 with
+    | none => ((none,hubs.1.2),early.2+hubs.2+9)
+    | some hubWords =>
+      let thin := consumeCursorIndicesWithWork bits sizes.arcCount sizes.arcCount
+        sizes.arcWidth sizes.arcWidth_eq hubs.1.2
+      let count_eq := sizes.earlyCount_eq.trans (earlySeedCoordinateCountByWidth_eq G height width width_eq)
+      let hubSeed := fun i =>
+        let entry := hubWords (Fin.cast sizes.hubCount_eq.symm i)
+        (Fin.cast sizes.vertexCount_eq entry.1,entry.2)
+      let thinSeed := fun words i =>
+        let entry : Fin sizes.arcCount × ℕ := words (Fin.cast sizes.arcCount_eq.symm i)
+        (Fin.cast sizes.arcCount_eq entry.1,entry.2)
+      let seed := thin.1.1.map (fun words => assembleSeedAtWidth G height width sizes.earlyCount
+        width_eq count_eq coordinates vertices arcs earlyWords hubSeed (thinSeed words))
+      ((seed,thin.1.2),early.2+hubs.2+thin.2+25)
+
+/-- The metered decoder agrees on the seed, rejection counts and end cursor,
+even when the bits end during a rejection stage. Its work is linear in the
+actual cursor advance and the total requested buffer sizes. -/
+theorem decodeCompleteSteinerSeedCursorWithWork_spec (G : Arcs V) (height width : ℕ)
+    (width_eq : width = (forestScale G height).log2+1) (sizes : SteinerSeedDecoderSizes G height width)
+    (coordinates : EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height)))
+    (vertices : V ≃ Fin (Fintype.card V)) (arcs : G ≃ Fin G.card)
+    {budget : ℕ} (bits : Fin budget → Bool) (cursor : BitCursor budget) :
+    let out := decodeCompleteSteinerSeedCursorWithWork G height width width_eq sizes coordinates vertices arcs bits cursor
+    out.1 = decodeCompleteSteinerSeedCursorWithEndAtWidth G height width width_eq coordinates vertices arcs bits cursor ∧
+      cursor.position ≤ out.1.2.position ∧
+      out.2 ≤ 24*(out.1.2.position-cursor.position)+29*(sizes.earlyCount+sizes.hubCount+sizes.arcCount)+55 := by
+  rcases sizes with ⟨n,m,e,h,vw,aw,hn,hm,he,hh,hvw,haw⟩
+  subst n m e h vw aw
+  dsimp only [decodeCompleteSteinerSeedCursorWithWork, decodeCompleteSteinerSeedCursorWithEndAtWidth]
+  have earlySpec := consumeCursorWordsWithWork_spec bits (earlySeedCoordinateCountByWidth V height width) width cursor
+  dsimp only at earlySpec
+  generalize consumeCursorWordsWithWork bits (earlySeedCoordinateCountByWidth V height width) width cursor = early
+    at earlySpec ⊢
+  obtain ⟨earlySame,earlyMove,earlyWork⟩ := earlySpec
+  rw [← earlySame]
+  cases early.1.1 with
+  | none =>
+    dsimp only
+    exact ⟨rfl,earlyMove,by omega⟩
+  | some earlyWords =>
+    dsimp only
+    have hubSpec := consumeCursorIndicesWithWork_spec bits (completeSteinerHubCount V) (Fintype.card V)
+      (uniformProposalWidth (Fintype.card V)) rfl early.1.2
+    dsimp only at hubSpec
+    generalize consumeCursorIndicesWithWork bits (completeSteinerHubCount V) (Fintype.card V)
+      (uniformProposalWidth (Fintype.card V)) rfl early.1.2 = hubs at hubSpec ⊢
+    obtain ⟨hubSame,hubMove,hubWork⟩ := hubSpec
+    rw [← hubSame]
+    cases hubs.1.1 with
+    | none =>
+      dsimp only
+      exact ⟨rfl,earlyMove.trans hubMove,by omega⟩
+    | some hubWords =>
+      dsimp only
+      have thinSpec := consumeCursorIndicesWithWork_spec bits G.card G.card
+        (uniformProposalWidth G.card) rfl hubs.1.2
+      dsimp only at thinSpec
+      generalize consumeCursorIndicesWithWork bits G.card G.card (uniformProposalWidth G.card) rfl hubs.1.2 = thin
+        at thinSpec ⊢
+      obtain ⟨thinSame,thinMove,thinWork⟩ := thinSpec
+      rw [← thinSame]
+      refine ⟨?_,earlyMove.trans (hubMove.trans thinMove),by omega⟩
+      simp only [Fin.cast_refl, id_eq]
 
 end OnlineReachabilityPreservers

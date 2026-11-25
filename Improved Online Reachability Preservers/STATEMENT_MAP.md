@@ -456,6 +456,22 @@ the [block sizes](OnlineReachabilityPreservers/SteinerHeightIndexWork.lean#L38)
 fit in \(h\operatorname{bits}(n+1)+1\) bits. These bounds cover
 one history conversion with the given label converter.
 
+The [metered decoder](OnlineReachabilityPreservers/SteinerBitSeed.lean)
+returns the exact three seed arrays and rejection counts on success and the
+same end cursor on both outcomes. It fills a reserved array for each reached
+stage. If \(b\) bits are consumed and \(q\) is the sum of the three requested
+array lengths, its tally is at most \(24b+29q+55\) after parameter setup. Complete rejected
+proposals count toward \(b\), and an incomplete proposal is left unread.
+The [fixed-budget decoder](OnlineReachabilityPreservers/SteinerSeedDecoderWork.lean)
+also charges calculation of the sizes, proposal widths, and total bit budget.
+It has a deterministic polynomial tally for every supplied bit word at fixed
+height. The [cached prefix replay](OnlineReachabilityPreservers/SteinerSeedDecoderWork.lean)
+performs that decode once, charges the word width from the prepared forest
+scale, and returns exactly the ordinary graph and measured search costs at
+every prefix. The model charges indexed bit access and natural arithmetic at
+unit cost. Constructing and applying the key-index maps and the other unmetered
+container, native arithmetic, and allocation costs still require bounds.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

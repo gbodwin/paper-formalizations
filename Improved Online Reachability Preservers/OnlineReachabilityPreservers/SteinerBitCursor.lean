@@ -305,4 +305,120 @@ theorem consumeCursorWordWithEnd_spec {budget : ℕ} (bits : Fin budget → Bool
     obtain ⟨value,next⟩ := answer
     exact ⟨rfl,consumeCursorWord_position bits width cursor next value word⟩
 
+private def cursorWordAccumWithWork {budget : ℕ} (bits : Fin budget → Bool) :
+    (width : ℕ) → (cursor : BitCursor budget) → ℕ → ℕ →
+      (cursor.position + width ≤ budget) → ℕ × ℕ
+  | 0, _, word, work, _ => (word,work+1)
+  | width+1, cursor, word, work, enough =>
+    let bit := bits ⟨cursor.position,by omega⟩
+    let next : BitCursor budget := ⟨cursor.position+1,by omega⟩
+    cursorWordAccumWithWork bits width next (2*word + if bit then 1 else 0) (work+8)
+      (by dsimp [next]; omega)
+
+private theorem cursorWordAccumWithWork_spec {budget : ℕ} (bits : Fin budget → Bool)
+    (width : ℕ) (cursor : BitCursor budget) (word work : ℕ) (enough : cursor.position + width ≤ budget) :
+    cursorWordAccumWithWork bits width cursor word work enough =
+      (cursorWordAccum bits width cursor word enough,work+8*width+1) := by
+  induction width generalizing cursor word work with
+  | zero => simp [cursorWordAccumWithWork,cursorWordAccum]
+  | succ width ih =>
+    rw [cursorWordAccumWithWork,cursorWordAccum,ih]
+    congr 1
+    omega
+
+/-- The cursor word reader with a unit work tally for bit reads, arithmetic,
+branches, record construction, and loop steps. Its tally excludes maintenance of the tally itself. -/
+def consumeCursorWordWithWork {budget : ℕ} (bits : Fin budget → Bool) (width : ℕ)
+    (cursor : BitCursor budget) : (Option (Fin (2^width)) × BitCursor budget) × ℕ :=
+  if enough : cursor.position + width ≤ budget then
+    let read := cursorWordAccumWithWork bits width cursor 0 0 enough
+    have bounded : read.1 < 2^width := by
+      dsimp only [read]
+      rw [cursorWordAccumWithWork_spec]
+      simpa only [cursorWordAccum_eq, Nat.zero_mul, Nat.zero_add] using
+        (uniformBitsEquiv width (cursorSlice bits cursor enough)).isLt
+    ((some ⟨read.1,bounded⟩,⟨cursor.position+width,enough⟩),read.2+8)
+  else ((none,cursor),5)
+
+theorem consumeCursorWordWithWork_spec {budget : ℕ} (bits : Fin budget → Bool) (width : ℕ)
+    (cursor : BitCursor budget) :
+    let out := consumeCursorWordWithWork bits width cursor
+    out.1 = consumeCursorWordWithEnd bits width cursor ∧
+      out.1.2.position = cursor.position + (if out.1.1.isSome then width else 0) ∧
+      out.2 ≤ 8*(out.1.2.position-cursor.position)+9 := by
+  by_cases enough : cursor.position+width ≤ budget
+  · simp [consumeCursorWordWithWork, consumeCursorWordWithEnd, consumeCursorWord, enough,
+      cursorWordAccumWithWork_spec]
+  · simp [consumeCursorWordWithWork, consumeCursorWordWithEnd, consumeCursorWord, enough]
+
+private def consumeCursorIndexLoopWithWork {budget : ℕ} (bits : Fin budget → Bool) (N width : ℕ) :
+    ℕ → BitCursor budget → ℕ → ℕ → (Option (Fin N × ℕ) × BitCursor budget) × ℕ
+  | 0, cursor, _, work => ((none,cursor),work+3)
+  | fuel+1, cursor, rejected, work =>
+    let read := consumeCursorWordWithWork bits width cursor
+    match read.1.1 with
+    | none => ((none,read.1.2),work+read.2+5)
+    | some word =>
+      if good : word.val < N then ((some (⟨word.val,good⟩,rejected),read.1.2),work+read.2+5)
+      else consumeCursorIndexLoopWithWork bits N width fuel read.1.2 (rejected+1) (work+read.2+7)
+
+private theorem consumeCursorIndexLoopWithWork_spec {budget : ℕ} (bits : Fin budget → Bool)
+    (N width : ℕ) (positive : 0 < width) (fuel : ℕ) (cursor : BitCursor budget) (rejected work : ℕ)
+    (enough : budget-cursor.position < fuel) :
+    let out := consumeCursorIndexLoopWithWork bits N width fuel cursor rejected work
+    out.1 = consumeCursorIndexLoopWithEnd bits N width positive cursor rejected ∧
+      cursor.position ≤ out.1.2.position ∧ out.2 ≤ work+24*(out.1.2.position-cursor.position)+14 := by
+  induction fuel generalizing cursor rejected work with
+  | zero => omega
+  | succ fuel ih =>
+    obtain ⟨same,position,readWork⟩ := consumeCursorWordWithWork_spec bits width cursor
+    dsimp only
+    rw [consumeCursorIndexLoopWithWork, consumeCursorIndexLoopWithEnd]
+    cases got : consumeCursorWord bits width cursor with
+    | none =>
+      have eq : (consumeCursorWordWithWork bits width cursor).1 = (none,cursor) := by
+        simpa only [consumeCursorWordWithEnd, got] using same
+      have wordEq : (consumeCursorWordWithWork bits width cursor).1.1 = none := congrArg Prod.fst eq
+      have cursorEq : (consumeCursorWordWithWork bits width cursor).1.2 = cursor := congrArg Prod.snd eq
+      simp only [wordEq, cursorEq, Nat.sub_self, Nat.mul_zero, Nat.zero_add] at readWork ⊢
+      exact ⟨trivial,le_rfl,by omega⟩
+    | some parsed =>
+      obtain ⟨word,next⟩ := parsed
+      have eq : (consumeCursorWordWithWork bits width cursor).1 = (some word,next) := by
+        simpa only [consumeCursorWordWithEnd, got] using same
+      have wordEq : (consumeCursorWordWithWork bits width cursor).1.1 = some word := congrArg Prod.fst eq
+      have cursorEq : (consumeCursorWordWithWork bits width cursor).1.2 = next := congrArg Prod.snd eq
+      simp only [wordEq, cursorEq, Option.isSome_some] at position readWork ⊢
+      change next.position = cursor.position+width at position
+      by_cases good : word.val < N
+      · simp only [dite_eq_left good]
+        exact ⟨trivial,by omega,by omega⟩
+      · simp only [dite_eq_right good]
+        have bounded := next.bounded
+        have smaller : budget-next.position < fuel := by omega
+        obtain ⟨agrees,progress,restWork⟩ := ih next (rejected+1) _ smaller
+        exact ⟨agrees,by omega,by omega⟩
+
+/-- Sample a finite index with the precomputed proposal width. Positive-width
+retries each charge a complete word. A zero-width draw uses no bits. -/
+def consumeCursorIndexAtWidthWithWork {budget : ℕ} (bits : Fin budget → Bool) (N width : ℕ)
+    (cursor : BitCursor budget) : (Option (Fin N × ℕ) × BitCursor budget) × ℕ :=
+  if 0 < width then
+    let read := consumeCursorIndexLoopWithWork bits N width (budget-cursor.position+1) cursor 0 0
+    (read.1,read.2+8)
+  else if valid : 0 < N then ((some (⟨0,valid⟩,0),cursor),7) else ((none,cursor),6)
+
+theorem consumeCursorIndexAtWidthWithWork_spec {budget : ℕ} (bits : Fin budget → Bool) (N width : ℕ)
+    (cursor : BitCursor budget) (width_eq : width = uniformProposalWidth N) :
+    let out := consumeCursorIndexAtWidthWithWork bits N width cursor
+    out.1 = consumeCursorIndexWithEnd bits N cursor ∧
+      cursor.position ≤ out.1.2.position ∧ out.2 ≤ 24*(out.1.2.position-cursor.position)+22 := by
+  subst width
+  by_cases positive : 0 < uniformProposalWidth N
+  · obtain ⟨agrees,progress,work⟩ := consumeCursorIndexLoopWithWork_spec bits N _ positive
+      (budget-cursor.position+1) cursor 0 0 (by omega)
+    simp only [consumeCursorIndexAtWidthWithWork, consumeCursorIndexWithEnd, ite_eq_left positive, dite_eq_left positive]
+    exact ⟨agrees,progress,by omega⟩
+  · by_cases valid : 0 < N <;> simp [consumeCursorIndexAtWidthWithWork, consumeCursorIndexWithEnd, positive, valid]
+
 end OnlineReachabilityPreservers
