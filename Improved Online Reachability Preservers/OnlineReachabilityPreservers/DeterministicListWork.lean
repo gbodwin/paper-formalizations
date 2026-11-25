@@ -17,15 +17,48 @@ theorem memScanWithChecks_spec {A : Type*} [DecidableEq A] (a : A) (xs : List A)
 
 variable {V : Type*} [LinearOrder V] [Fintype V]
 
+/-- One unit for inspecting the list tag and one for running the key test
+on a nonempty cell. The empty-cell inspection is also charged. -/
+def anyScanWordSteps {A : Type*} (test : A → Bool) : List A → ℕ
+  | [] => 1
+  | a :: rest => if test a then 2 else 2 + anyScanWordSteps test rest
+
+/-- The short-circuit scan count accounts for every inspected cell. -/
+theorem anyScanWordSteps_eq {A : Type*} (test : A → Bool) (keys : List A) :
+    let out := anyWithChecks test keys
+    anyScanWordSteps test keys = 2 * out.2 + if out.1 then 0 else 1 := by
+  change _ = 2 * (anyWithChecks test keys).2 + if (anyWithChecks test keys).1 then 0 else 1
+  induction keys with
+  | nil => rfl
+  | cons a rest ih =>
+    cases h : test a with
+    | true => simp [anyScanWordSteps, anyWithChecks,h]
+    | false =>
+      simp only [anyScanWordSteps, anyWithChecks,h, Bool.false_eq_true,↓reduceIte,ih]
+      omega
+
 omit [Fintype V] in
-private def reverseSweepWithChecks (reachable : List V) : List (V × V) → List V → List V × ℕ
-  | [], seen => (seen,0)
-  | e::arcs, seen =>
+private def reverseSweepWithMeasure (countWords : Bool) (reachable : List V) :
+    List (V × V) → List V → List V × ℕ
+  | [], seen => (seen, if countWords then 1 else 0)
+  | e :: arcs, seen =>
     let target := anyWithChecks (fun x => decide (e.2 = x)) reachable
     let source := anyWithChecks (fun x => decide (e.1 = x)) seen
-    let result := reverseSweepWithChecks reachable arcs
-      (if target.1 && !source.1 then e.1::seen else seen)
-    (result.1, target.2 + source.2 + result.2)
+    let result := reverseSweepWithMeasure countWords reachable arcs
+      (if target.1 && !source.1 then e.1 :: seen else seen)
+    if countWords then
+      let targetSteps := 2 * target.2 + if target.1 then 0 else 1
+      let sourceSteps := 2 * source.2 + if source.1 then 0 else 1
+      (result.1, 12 + targetSteps + sourceSteps + result.2)
+    else (result.1, target.2 + source.2 + result.2)
+
+omit [Fintype V] in
+private def reverseSweepWithChecks (reachable : List V) : List (V × V) → List V → List V × ℕ :=
+  reverseSweepWithMeasure false reachable
+
+omit [Fintype V] in
+private def reverseSweepWithWordWork (reachable : List V) : List (V × V) → List V → List V × ℕ :=
+  reverseSweepWithMeasure true reachable
 
 omit [Fintype V] in
 private theorem prependOrKeep_spec (seen : List V) (u : V) (yes : Prop) [Decidable yes]
@@ -46,7 +79,7 @@ private theorem reverseSweepWithChecks_spec (reachable : List V) (arcs : List (V
       (∀ v, v ∈ out.1 ↔ v ∈ seen ∨ ∃ w, (v,w) ∈ arcs ∧ w ∈ reachable) ∧
       out.2 ≤ arcs.length * (reachable.length + Fintype.card V) := by
   induction arcs generalizing seen with
-  | nil => simp [reverseSweepWithChecks, simple]
+  | nil => simp [reverseSweepWithChecks, reverseSweepWithMeasure, simple]
   | cons e arcs ih =>
     obtain ⟨target, targetCost⟩ := memScanWithChecks_spec e.2 reachable
     obtain ⟨source, sourceCost⟩ := memScanWithChecks_spec e.1 seen
@@ -54,7 +87,7 @@ private theorem reverseSweepWithChecks_spec (reachable : List V) (arcs : List (V
     have prepared : next.Nodup ∧ ∀ v, v ∈ next ↔ v ∈ seen ∨ v = e.1 ∧ e.2 ∈ reachable :=
       prependOrKeep_spec seen e.1 (e.2 ∈ reachable) simple
     obtain ⟨finalSimple, membership, count⟩ := ih next prepared.1
-    simp only [reverseSweepWithChecks, target, source]
+    simp only [reverseSweepWithChecks, reverseSweepWithMeasure, target, source, Bool.false_eq_true, ↓reduceIte]
     use finalSimple
     constructor
     · intro v
@@ -75,7 +108,7 @@ private theorem reverseSweepWithChecks_spec (reachable : List V) (arcs : List (V
         rw [← List.toFinset_card_of_nodup simple]
         exact card_le_univ _
       have budget := Nat.add_le_add (Nat.add_le_add targetCost (sourceCost.trans seenSize)) count
-      simpa only [next, List.length_cons, Nat.succ_mul, add_comm] using budget
+      simpa only [next, reverseSweepWithChecks, List.length_cons, Nat.succ_mul, add_comm] using budget
 
 /-- Compare list keys in every reverse-search membership test, including
 insertion into the set of discovered vertices. -/
@@ -85,6 +118,17 @@ def reachInListWithChecks (arcs : List (V × V)) (t : V) : ℕ → List V × ℕ
     let prior := reachInListWithChecks arcs t k
     let sweep := reverseSweepWithChecks prior.1 arcs prior.1
     (sweep.1, prior.2 + sweep.2)
+
+/-- Reverse reachability in the same list representation, with charges for
+loop control, list-cell inspection and construction, and key comparisons.
+A composite key test counts as one operation. Counter maintenance is
+excluded from this source-level tally. -/
+def reachInListWithWordWork (arcs : List (V × V)) (t : V) : ℕ → List V × ℕ
+  | 0 => ([t], 2)
+  | k+1 =>
+    let prior := reachInListWithWordWork arcs t k
+    let sweep := reverseSweepWithWordWork prior.1 arcs prior.1
+    (sweep.1, 4 + prior.2 + sweep.2)
 
 theorem reachInListWithChecks_spec (arcs : List (V × V)) (t : V) (k : ℕ) :
     let out := reachInListWithChecks arcs t k
@@ -454,5 +498,64 @@ theorem reachTestListWithChecks_spec (arcs : List (V × V)) (s t : V) (depth : �
   have reachedEq : found.1.toFinset = reachIn arcs.toFinset t depth := reached
   rw [← reachedEq]
   simp only [List.mem_toFinset]
+
+omit [Fintype V] in
+private theorem reverseSweepWithWordWork_spec (reachable : List V) (arcs : List (V × V))
+    (seen : List V) :
+    let measured := reverseSweepWithWordWork reachable arcs seen
+    let checked := reverseSweepWithChecks reachable arcs seen
+    measured.1 = checked.1 ∧ measured.2 ≤ 1 + 14 * arcs.length + 2 * checked.2 := by
+  change (reverseSweepWithWordWork reachable arcs seen).1 = (reverseSweepWithChecks reachable arcs seen).1 ∧
+    (reverseSweepWithWordWork reachable arcs seen).2 ≤ 1 + 14 * arcs.length + 2 * (reverseSweepWithChecks reachable arcs seen).2
+  induction arcs generalizing seen with
+  | nil => simp [reverseSweepWithWordWork, reverseSweepWithChecks, reverseSweepWithMeasure]
+  | cons e rest ih =>
+    let target := anyWithChecks (fun x => decide (e.2 = x)) reachable
+    let source := anyWithChecks (fun x => decide (e.1 = x)) seen
+    let next := if target.1 && !source.1 then e.1 :: seen else seen
+    obtain ⟨same,tail⟩ := ih next
+    have targetTicks : (if target.1 then 0 else 1) ≤ (1 : ℕ) := by split <;> decide
+    have sourceTicks : (if source.1 then 0 else 1) ≤ (1 : ℕ) := by split <;> decide
+    refine ⟨same,?_⟩
+    change 12 + (2*target.2 + if target.1 then 0 else 1) +
+      (2*source.2 + if source.1 then 0 else 1) + (reverseSweepWithWordWork reachable rest next).2 ≤
+      1 + 14*(rest.length+1) + 2*(target.2 + source.2 + (reverseSweepWithChecks reachable rest next).2)
+    omega
+
+omit [Fintype V] in
+private theorem reachInListWithWordWork_compares (arcs : List (V × V)) (t : V) (depth : ℕ) :
+    let measured := reachInListWithWordWork arcs t depth
+    let checked := reachInListWithChecks arcs t depth
+    measured.1 = checked.1 ∧ measured.2 ≤ 2 + depth * (5 + 14 * arcs.length) + 2 * checked.2 := by
+  change (reachInListWithWordWork arcs t depth).1 = (reachInListWithChecks arcs t depth).1 ∧
+    (reachInListWithWordWork arcs t depth).2 ≤ 2 + depth * (5 + 14 * arcs.length) + 2 * (reachInListWithChecks arcs t depth).2
+  induction depth with
+  | zero => simp [reachInListWithWordWork, reachInListWithChecks]
+  | succ k ih =>
+    let measured := reachInListWithWordWork arcs t k
+    let checked := reachInListWithChecks arcs t k
+    obtain ⟨same,work⟩ := ih
+    change measured.1 = checked.1 at same
+    change measured.2 ≤ 2 + k*(5+14*arcs.length) + 2*checked.2 at work
+    obtain ⟨reach,sweep⟩ := reverseSweepWithWordWork_spec checked.1 arcs checked.1
+    refine ⟨?_,?_⟩
+    · change (reverseSweepWithWordWork measured.1 arcs measured.1).1 = _
+      rw [same]
+      exact reach
+    · change 4 + measured.2 + (reverseSweepWithWordWork measured.1 arcs measured.1).2 ≤
+        2 + (k+1)*(5+14*arcs.length) + 2*(checked.2+(reverseSweepWithChecks checked.1 arcs checked.1).2)
+      rw [same, Nat.succ_mul]
+      omega
+
+/-- The metered reverse-search loop returns the same reachable set with an
+explicit polynomial word-operation bound for any requested depth. -/
+theorem reachInListWithWordWork_spec (arcs : List (V × V)) (t : V) (depth : ℕ) :
+    let out := reachInListWithWordWork arcs t depth
+    out.1.Nodup ∧ out.1.toFinset = reachIn arcs.toFinset t depth ∧
+      out.2 ≤ 2 + depth * (5 + arcs.length * (14 + 4 * Fintype.card V)) := by
+  obtain ⟨same,extra⟩ := reachInListWithWordWork_compares arcs t depth
+  obtain ⟨simple,reached,checks⟩ := reachInListWithChecks_spec arcs t depth
+  refine ⟨same.symm ▸ simple, same.symm ▸ reached, ?_⟩
+  exact extra.trans ((Nat.add_le_add_left (Nat.mul_le_mul_left 2 checks) _).trans_eq (by ring))
 
 end OnlineReachabilityPreservers

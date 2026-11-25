@@ -323,10 +323,20 @@ sorts the duplicate-free quotient arcs in the same order as the ordinary
 offline preserver. It charges the sort, edge filters, and bounded
 reachability checks, and the common lift gives the exact offline preserver
 with a polynomial key-comparison bound on general digraphs. The original
-raw arc list may contain duplicates. These theorems count abstract key
-comparisons in supplied list representations. Vertex enumeration,
-allocation, structural list work, primitive comparison costs, and bit
-arithmetic remain separate parts of the runtime analysis.
+raw arc list may contain duplicates. These comparison theorems count abstract
+key tests in supplied list representations.
+
+The [reverse-search tally](OnlineReachabilityPreservers/DeterministicListWork.lean#L552)
+also charges list-cell inspection and construction and loop control. The
+[SCC preparation tally](OnlineReachabilityPreservers/SccListWork.lean#L401)
+extends this model to the transpose, component labels, and exact
+duplicate-free quotient. Both give explicit polynomial bounds. The model
+starts from the supplied lists, counts each composite key test as one
+operation, and excludes counter maintenance. Lifting, connector construction,
+and demand processing have the comparison bounds above. The source-level
+preparation bound leaves vertex enumeration, native allocation and comparison
+costs, and bit arithmetic open.
+
 The [preassigned-path counter](OnlineReachabilityPreservers/AssignmentSearchWork.lean)
 combines the calls made by quota certification and path selection with the
 arc inspections and successor tests in each base rule and lifted path.
