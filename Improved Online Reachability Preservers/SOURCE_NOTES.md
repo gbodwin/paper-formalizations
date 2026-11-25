@@ -14,6 +14,28 @@ and preserves the bridge exclusions at the same cutoff.
 [Bridge Girth, Definition 6](https://arxiv.org/pdf/2212.11944v4)
 · [Checked nonemptiness](OnlineReachabilityPreservers/LocalOrderExtremal.lean).
 
+## The exact path count needs the indexed convention
+
+With distinct nonempty simple input paths, the exact budget \(p=n^2\) is
+already impossible for \(n\ge3\) under half-bridge exclusion through size
+three. Section 2.2 explicitly counts degenerate bridges. At most \(n\) rows
+can be singletons. Every longer row has a different first ordered pair,
+since equal first pairs give a half-2-bridge.
+The budget would force every off-diagonal ordered pair to occur. Choose
+three distinct vertices \(x,y,z\). Whichever of the rows starting with
+\((x,z)\) and \((y,z)\) arrives later is the river of a half-3-bridge.
+The first step goes between \(x\) and \(y\), and the other row gives the
+last step. Full exclusion through size three also forbids the witness.
+
+For positive \(n,p\), if repeated labels are allowed within a path,
+distinct constant rows of increasing lengths have unbounded mass and
+exclude every full bridge. The cited simple indexed convention avoids
+both problems. With distinct simple paths and an *at most* budget, deleting
+empty and singleton rows from any simple indexed system preserves either
+exclusion at cutoffs of at least two and loses at most \(p\) incidences.
+Every retained row is distinct and the arrival order is inherited.
+[Exact count obstruction, budget comparison, and unbounded sequence mass](OnlineReachabilityPreservers/DistinctPathBudgets.lean).
+
 ## Lemma 25 has a false denominator
 
 For an upper bound \(m\), mean at least \(a\), and threshold \(t<a\), the printed

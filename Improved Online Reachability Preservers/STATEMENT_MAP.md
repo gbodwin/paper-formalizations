@@ -27,6 +27,12 @@ its abstract and bibliographic record. All section and result numbers below refe
   containing a vertex. A bridge has distinct path indices, with a river and a chain
   of arcs. A 2-bridge can occur when two distinct paths contain the same ordered pair.
   In an acyclic system all path orders extend a common strict vertex order.
+  The [literal exact-count obstruction](OnlineReachabilityPreservers/DistinctPathBudgets.lean)
+  shows that a set of distinct nonempty simple paths with half-bridge cutoff
+  at least three cannot have exactly \(n^2\) paths when \(n\ge3\).
+  Keeping the nontrivial rows gives a distinct set within the budget and
+  loses at most one incidence per original row. If repetition within a row
+  is allowed, the displayed sequence definition gives an unbounded maximum.
 - A growth algorithm uses computable reachability queries and deterministic tie-breaking.
   Correctness, the size bound, and polynomial work are distinct claims. For uniform
   asymptotic bounds the constants are fixed before the input, and for the subpolynomial
