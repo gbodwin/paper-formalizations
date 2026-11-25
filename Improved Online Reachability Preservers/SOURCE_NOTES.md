@@ -304,9 +304,28 @@ exclude all full bridges and already attain the maximum mass \(2n\),
 so a bounded number of blocks in the original family cannot be assumed.
 Pruning opposite intersections first leaves at least half the mass and
 gives factor 48 when the pruned paths have such a one-descent numbering.
-The existence of a suitable numbering after pruning remains open.
 [Ordered-block lower bound](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean)
 · [Fully bridge-free reversed paths](OnlineReachabilityPreservers/OppositePruningGain.lean).
+
+The number of blocks can grow without bound even after opposite-intersection
+pruning. For every positive dimension \(d\), index the paths by the
+\(3^d\) ternary words. At each coordinate, the three words that agree off
+that coordinate use the steps of a directed triangle. Every path visits
+the coordinates in order and uses two adjacent vertices in each one.
+A bridge within one coordinate would need the river's first step.
+A bridge reaching a higher coordinate would need to leave its first
+coordinate in the river's row to recover that coordinate's original label.
+These facts exclude all full bridges. Distinct rows meet at most once, so
+pruning keeps every path in any arrival order.
+
+In any common numbering, every coordinate triangle has a descending step.
+Some path has at least \(\lceil d/3\rceil\) descending steps and hence
+needs at least \(1+\lceil d/3\rceil\) increasing blocks. At \(d=4\),
+no common numbering gives all 81 paths at most two blocks on the 324
+vertices. The mass is \(2n\), so the spanning-path lower construction
+already gives a constant-factor comparison for this family. The general
+extremal converse remains open.
+[Unbounded block requirement](OnlineReachabilityPreservers/TriangularCoordinatePaths.lean#L485).
 
 A common order also suffices when each row keeps any nonempty increasing
 subsequence, with a bound on total retained mass across all rows. For a
