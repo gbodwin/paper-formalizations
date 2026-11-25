@@ -208,6 +208,44 @@ theorem replayFirstOccurrencesWithWordWork_rel {V X Y : Type*} [DecidableEq V]
     (by simp) (first []).1 (second []).1 (agree [] (by simp)) D validD
   exact ⟨remaining,congrArg (·+1) count⟩
 
+private theorem replayFirstOccurrencesFrom_work_le {V X Y : Type*} [DecidableEq V]
+    (first : List (V × V) → X × ℕ) (second : List (V × V) → Y × ℕ) (limit extra : ℕ)
+    (perCall : ∀ P, P.length ≤ limit → (first P).2 ≤ (second P).2 + extra)
+    (seen : List (V × V)) (x : X) (y : Y) (D : List (V × V)) (fits : seen.length+D.length ≤ limit) :
+    (replayFirstOccurrencesFrom first seen x D).2.1 ≤
+      (replayFirstOccurrencesFrom second seen y D).2.1 + D.length * extra := by
+  induction D generalizing seen x y with
+  | nil => simp [replayFirstOccurrencesFrom]
+  | cons d tail ih =>
+    have shorter : seen.length+tail.length ≤ limit := by simp only [List.length_cons] at fits; omega
+    by_cases accepted : (nonselfRequestIsNewWithWordWork seen d).1 = true
+    · have extended : (d::seen).length+tail.length ≤ limit := by
+        simp only [List.length_cons] at fits ⊢
+        omega
+      have nextCost := perCall (d::seen).reverse (by rw [List.length_reverse]; omega)
+      have rest := ih (d::seen) (first (d::seen).reverse).1 (second (d::seen).reverse).1 extended
+      simp only [replayFirstOccurrencesFrom, accepted, ite_true, List.length_cons, Nat.succ_mul]
+      omega
+    · have rest := ih seen x y shorter
+      simp only [replayFirstOccurrencesFrom, accepted, Bool.false_eq_true, ite_false,
+        List.length_cons, Nat.succ_mul]
+      omega
+
+/-- Replacing a callback by one that costs at most `extra` more per call
+adds at most that amount per input prefix, including the empty prefix. -/
+theorem replayFirstOccurrencesWithWordWork_work_le {V X Y : Type*} [DecidableEq V]
+    (first : List (V × V) → X × ℕ) (second : List (V × V) → Y × ℕ)
+    (D : List (V × V)) (extra : ℕ)
+    (perCall : ∀ P, P.length ≤ D.length → (first P).2 ≤ (second P).2 + extra) :
+    (replayFirstOccurrencesWithWordWork first D).2.1 ≤
+      (replayFirstOccurrencesWithWordWork second D).2.1 + (D.length+1)*extra := by
+  have ordinary := replayFirstOccurrencesFrom_work_le first second D.length extra perCall []
+    (first []).1 (second []).1 D (by simp)
+  have initial := perCall [] (by simp)
+  rw [Nat.succ_mul]
+  dsimp only [replayFirstOccurrencesWithWordWork]
+  omega
+
 section SteinerTrace
 
 variable {V : Type*} [LinearOrder V] [Fintype V]

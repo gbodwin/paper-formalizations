@@ -210,6 +210,14 @@ def prepareFinSteinerWeightedForSeedWithHistoryWork {n : ℕ} (G : Arcs (Fin n))
       ⟨keys.1, (finForestNetworkPairKeysWithWordWork_spec n height).1⟩)
   (prepared.1, prepared.2 + keys.2 + 3)
 
+theorem prepareFinSteinerWeightedForSeedWithHistoryWork_setup {n : ℕ} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :
+    (prepareFinSteinerWeightedForSeedWithHistoryWork G arcs same height).2 =
+      (prepareFinSteinerWeightedForSeedWithSeedWork G arcs same height).2 +
+        (finForestNetworkPairKeysWithWordWork n height).2 + 3 := by
+  dsimp only [prepareFinSteinerWeightedForSeedWithHistoryWork, prepareFinSteinerWeightedForSeedWithSeedWork,
+    prepareFinSteinerWeightedWithPlan]
+
 /-- A fixed-height bound for evaluating all the needed early metrics of
 one demand prefix, including their weighted solver and seed reads. -/
 def finSteinerEarlyHistoryWordPolynomial (n height p seed : ℕ) : ℕ :=
