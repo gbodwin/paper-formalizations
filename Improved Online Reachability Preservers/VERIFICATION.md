@@ -20,6 +20,14 @@ An exact-source replay grants no coverage to a paper statement outside the
 
 ## Checked checkpoints
 
+- The [incremental thin work bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L657)
+  covers one dense load initialization per nonempty thin run, direct
+  indexed updates along separating cuts, and threshold scans at the
+  successive checks. On a feasible trace, the [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L773)
+  returns the ordinary fixed-budget prefix graphs and includes the measured
+  early and late work at each fixed height. Equality to earlier replay
+  records and evaluation counts also holds on bit exhaustion and on
+  traces with unreachable requests.
 - [e37ed035](https://github.com/gbodwin/paper-formalizations/commit/e37ed03514ebee7204137132576a7ad8802bb662)
   proves the DAG path computation, online restricted bounds, and two printed
   formula checks. Local replay and the 158-declaration audit passed.

@@ -580,6 +580,24 @@ tally on exhaustion. The cumulative bound for each feasible trace adds \(11m+21\
 to the preparation and early trace polynomials. Other container work
 and bit and native costs remain open.
 
+The [incremental thin evaluator](OnlineReachabilityPreservers/SteinerThinReplay.lean#L537)
+initializes one dense load table for a nonempty thin run, carries it
+forward through the thin requests inside each evaluated late prefix, and
+uses the rounded graph already computed for the final check when all checks
+pass. The
+[thin work bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L657)
+covers that initialization, indexed updates on separating cuts, and
+indexed rounding with repeated doubling. The [late equality](OnlineReachabilityPreservers/SteinerLateReplay.lean#L284)
+preserves the rounded graph and previous search tally for every trace,
+including the missed-thick fallback. The [complete replay specification](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L711)
+preserves every earlier record and the evaluation count for every fixed
+bit sample. With reachable requests, the [prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L773)
+adds the measured early and late work to the cumulative polynomial for
+each fixed height. Remaining time obligations include separator, hub,
+and container operations, bit arithmetic, and native array costs. The
+inherited computation of the finite vertex count can also traverse the
+vertex enumeration in the compiled evaluator.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

@@ -179,16 +179,33 @@ theorem lateSearchWorkBound_mono (n m : ℕ) : Monotone (lateSearchWorkBound n m
     liftSearchWorkBound
   gcongr
 
+@[inline] private def lateSteinerWithTraceUsing {X : Type*} (G : Arcs V) (τ m : ℕ) (S : Finset V)
+    (D : List (V × V)) (thick : (Arcs V × ℕ) → X)
+    (thin : ℕ → (Arcs V × ℕ) → List (V × V) → X) : X :=
+  let traces := lateTracesWithSearchWorkFrom G S D ⟨[],[],[]⟩
+  let cost := traces.2+traces.1.thin.length*(2*Fintype.card V*m)
+  if traces.1.thin.any (fun d => decide (τ < (reachInterval G d).card)) then thick (G,cost)
+  else thin cost (hubPreserverWithSearchWork G S traces.1.hits) traces.1.thin
+
+@[inline] private def lateSteinerWithThinWorkUsing (G : Arcs V) (τ m : ℕ) (S : Finset V)
+    (roundThin : List (V × V) → (Arcs V × ℕ) × ℕ) (D : List (V × V)) : (Arcs V × ℕ) × ℕ :=
+  lateSteinerWithTraceUsing G τ m S D (fun fallback => (fallback,0)) fun cost hubs demands =>
+    let thin := roundThin demands
+    ((hubs.1 ∪ thin.1.1,cost+hubs.2+thin.1.2),thin.2)
+
 /-- Use a stored thin evaluator together with the same hub trace. -/
 def lateSteinerWithSearchWorkUsing (G : Arcs V) (τ m : ℕ) (S : Finset V)
     (roundThin : List (V × V) → Arcs V × ℕ) (D : List (V × V)) : Arcs V × ℕ :=
-  let traces := lateTracesWithSearchWorkFrom G S D ⟨[],[],[]⟩
-  let cost := traces.2+traces.1.thin.length*(2*Fintype.card V*m)
-  if traces.1.thin.any (fun d => decide (τ < (reachInterval G d).card)) then (G,cost)
-  else
-    let hubs := hubPreserverWithSearchWork G S traces.1.hits
-    let thin := roundThin traces.1.thin
+  lateSteinerWithTraceUsing G τ m S D id fun cost hubs demands =>
+    let thin := roundThin demands
     (hubs.1 ∪ thin.1,cost+hubs.2+thin.2)
+
+private theorem lateSteinerWithThinWorkUsing_project (G : Arcs V) (τ m : ℕ) (S : Finset V)
+    (roundThin : List (V × V) → (Arcs V × ℕ) × ℕ) (D : List (V × V)) :
+    (lateSteinerWithThinWorkUsing G τ m S roundThin D).1 =
+      lateSteinerWithSearchWorkUsing G τ m S (fun P => (roundThin P).1) D := by
+  dsimp only [lateSteinerWithSearchWorkUsing,lateSteinerWithThinWorkUsing,lateSteinerWithTraceUsing]
+  split <;> rfl
 
 /-- Replay the late strategy at cutoff zero. The counters cover hub interval
 inspections, the projected path algorithms and thin rounding. -/
@@ -255,5 +272,44 @@ theorem lateSteinerWithSearchWork_spec {G : Arcs V} (early : EarlySteinerRule G)
     exact (Nat.le_add_right _ _).trans (Nat.le_add_right _ _)
   · simp only [out, hit]
     exact ⟨congrArg₂ (· ∪ ·) hb.1 tb.1, Nat.add_le_add (Nat.add_le_add cwork hwork) twork⟩
+
+/-- The stored thin thresholds now feed a single incremental fractional run
+per late evaluator call. Keep its extra work separate from the old searches. -/
+def lateSteinerWithStreamingThinWork {n : ℕ} (G : Arcs (Fin n)) (τ m : ℕ) (S : Finset (Fin n))
+    (rows : ThinThresholdList (Fin n))
+    (D : List (Fin n × Fin n)) : (Arcs (Fin n) × ℕ) × ℕ :=
+  lateSteinerWithThinWorkUsing G τ m S
+    (thinRoundRunFromThresholdListWithWordWork G m rows (thinRoundingFactor n τ)) D
+
+theorem lateSteinerWithStreamingThinWork_eq {n : ℕ} (G : Arcs (Fin n)) (τ m : ℕ) (hm : m = G.card)
+    (S : Finset (Fin n)) (rows : ThinThresholdList (Fin n))
+    (D : List (Fin n × Fin n)) :
+    (lateSteinerWithStreamingThinWork G τ m S rows D).1 =
+      lateSteinerWithStoredThinThresholds G τ m S rows.val.toFinset D := by
+  let round := thinRoundRunFromThresholdListWithWordWork G m rows (thinRoundingFactor n τ)
+  have same : (fun P => (round P).1) = thinRoundRunFromThresholdRows G m (thinRoundingFactor n τ) rows.val.toFinset :=
+    funext (thinRoundRunFromThresholdListWithWordWork_eq G m hm rows (thinRoundingFactor n τ))
+  change (lateSteinerWithThinWorkUsing G τ m S round D).1 = _
+  rw [lateSteinerWithThinWorkUsing_project,same]
+  simp [lateSteinerWithStoredThinThresholds]
+
+theorem lateSteinerWithStreamingThinWork_bound {n : ℕ} {G : Arcs (Fin n)} (early : EarlySteinerRule G)
+    (τ m : ℕ) (hm : m = G.card) (S : Finset (Fin n))
+    (rows : ThinThresholdList (Fin n))
+    (edges : ∀ r ∈ rows.val, r.1 ∈ G) (count : rows.val.length ≤ m)
+    (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (lateSteinerWithStreamingThinWork G τ m S rows D).2 ≤ steinerStreamingThinWorkBound n m D.length := by
+  let traces := lateTracesWithSearchWorkFrom G S D ⟨[],[],[]⟩
+  obtain ⟨_,_,tcap,thins,_⟩ := lateTracesWithSearchWorkFrom_spec early S D ⟨[],[],[]⟩ D.length
+    (by simp) (by simp) feasible (by simp)
+  have actual := thinRoundRunFromThresholdListWithWordWork_bound G m hm rows edges count
+    (thinRoundingFactor n τ) traces.1.thin thins
+  have budget : steinerStreamingThinWorkBound n m traces.1.thin.length ≤ steinerStreamingThinWorkBound n m D.length := by
+    unfold steinerStreamingThinWorkBound
+    gcongr
+  dsimp only [lateSteinerWithStreamingThinWork,lateSteinerWithThinWorkUsing,lateSteinerWithTraceUsing]
+  split
+  · exact Nat.zero_le _
+  · exact actual.trans budget
 
 end OnlineReachabilityPreservers

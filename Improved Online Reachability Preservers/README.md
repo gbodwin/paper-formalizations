@@ -195,6 +195,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   The [one-pass threshold builder](OnlineReachabilityPreservers/SteinerThinReplay.lean)
   accounts for cache construction in the same word model. Its tally is
   \(11m+4\) for \(m\) arcs, including the indexed reads and list assembly.
+  The [incremental thin evaluator](OnlineReachabilityPreservers/SteinerThinReplay.lean#L537)
+  keeps one load table throughout each nonempty thin run within an
+  evaluated late prefix. It advances the table for each thin request and
+  reuses the rounded graph from the final check when all checks pass.
+  The graph and search tally agree with those of the earlier evaluator.
+  On a feasible trace, the [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L773)
+  returns every ordinary fixed-budget prefix graph and includes polynomial
+  allowances for the measured work of both phases at each fixed height.
+  Search and container internals, bit costs, and native execution costs
+  remain open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

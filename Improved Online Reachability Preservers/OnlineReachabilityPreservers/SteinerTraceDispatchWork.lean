@@ -44,8 +44,10 @@ private def replayFirstOccurrencesFrom {V X : Type*} [DecidableEq V] (evaluate :
 
 private theorem replayFirstOccurrencesFrom_spec {V X : Type*} [DecidableEq V]
     (evaluate : List (V × V) → X × ℕ) (B C : ℕ)
-    (evalWork : ∀ P, P.length ≤ B → (evaluate P).2 ≤ C)
-    (seen pending : List (V × V)) (fits : seen.length+pending.length ≤ B) :
+    (valid : V × V → Prop)
+    (evalWork : ∀ P, P.length ≤ B → (∀ d ∈ P, valid d) → (evaluate P).2 ≤ C)
+    (seen pending : List (V × V)) (fits : seen.length+pending.length ≤ B)
+    (seenValid : ∀ d ∈ seen, valid d) (pendingValid : ∀ d ∈ pending, valid d) :
     let out := replayFirstOccurrencesFrom evaluate seen (evaluate seen.reverse).1 pending
     out.1 = pending.inits.map (fun P => (evaluate (P.foldl extendFirstOccurrences seen.reverse)).1) ∧
       out.2.1 ≤ pending.length*(10*B+31+C)+3 ∧
@@ -55,13 +57,20 @@ private theorem replayFirstOccurrencesFrom_spec {V X : Type*} [DecidableEq V]
   | cons d tail ih =>
     obtain ⟨accept,charge⟩ := nonselfRequestIsNewWithWordWork_spec seen d
     have room : seen.length+tail.length+1 ≤ B := by simpa only [List.length_cons, Nat.add_assoc] using fits
+    have tailValid : ∀ r ∈ tail, valid r := fun r h => pendingValid r (List.mem_cons_of_mem _ h)
     by_cases new : (nonselfRequestIsNewWithWordWork seen d).1 = true
     · have allowed := accept.mp new
       have absent : d ∉ seen.reverse := by simpa using allowed.2
       have extend : extendFirstOccurrences seen.reverse d = (d::seen).reverse := by
         simp [extendFirstOccurrences,allowed.1,absent]
-      obtain ⟨prefixes,work,calls⟩ := ih (d::seen) (by simp only [List.length_cons]; omega)
+      have enlarged : ∀ r ∈ d::seen, valid r := by
+        intro r h
+        rcases List.mem_cons.mp h with equal | prior
+        · exact equal.symm ▸ pendingValid d List.mem_cons_self
+        · exact seenValid r prior
+      obtain ⟨prefixes,work,calls⟩ := ih (d::seen) (by simp only [List.length_cons]; omega) enlarged tailValid
       have costs := evalWork ((d::seen).reverse) (by simp only [List.length_reverse,List.length_cons]; omega)
+        (fun r h => enlarged r (List.mem_reverse.mp h))
       rw [replayFirstOccurrencesFrom, ite_eq_left new]
       dsimp only
       refine ⟨?_, ?_, ?_⟩
@@ -83,7 +92,7 @@ private theorem replayFirstOccurrencesFrom_spec {V X : Type*} [DecidableEq V]
         by_cases visited : d ∈ seen.reverse
         · simp [extendFirstOccurrences,visited]
         exact (new (accept.mpr ⟨self,by simpa using visited⟩)).elim
-      obtain ⟨prefixes,work,calls⟩ := ih seen (by omega)
+      obtain ⟨prefixes,work,calls⟩ := ih seen (by omega) seenValid tailValid
       rw [replayFirstOccurrencesFrom, ite_eq_right new]
       dsimp only
       refine ⟨?_, ?_, ?_⟩
@@ -108,19 +117,57 @@ def replayFirstOccurrencesWithWordWork {V X : Type*} [DecidableEq V]
   let out := replayFirstOccurrencesFrom evaluate [] first.1 D
   (out.1,out.2.1+first.2+4,out.2.2+1)
 
+/-- The callback needs its bound only on demands satisfying the trace invariant. -/
+theorem replayFirstOccurrencesWithWordWork_spec_of_demand_property {V X : Type*} [LinearOrder V]
+    (evaluate : List (V × V) → X × ℕ) (D : List (V × V)) (C : ℕ)
+    (valid : V × V → Prop)
+    (evalWork : ∀ P, P.length ≤ D.length → (∀ d ∈ P, valid d) → (evaluate P).2 ≤ C)
+    (fullValid : ∀ d ∈ D, valid d) :
+    let out := replayFirstOccurrencesWithWordWork evaluate D
+    out.1 = D.inits.map (fun P => (evaluate (distinctNonselfTrace P)).1) ∧
+      out.2.1 ≤ D.length*(10*D.length+31+C)+C+7 ∧ out.2.2 = (distinctNonselfTrace D).length+1 := by
+  obtain ⟨prefixes,work,calls⟩ := replayFirstOccurrencesFrom_spec evaluate D.length C valid evalWork [] D
+    (by simp) (by simp) fullValid
+  have same (P : List (V × V)) : P.foldl extendFirstOccurrences [] = distinctNonselfTrace P := rfl
+  simp only [List.reverse_nil,same,List.length_nil, Nat.zero_add] at prefixes work calls
+  refine ⟨prefixes,?_,congrArg (· + 1) calls⟩
+  have first := evalWork [] (by simp) (by simp)
+  dsimp only [replayFirstOccurrencesWithWordWork]
+  omega
+
 theorem replayFirstOccurrencesWithWordWork_spec {V X : Type*} [LinearOrder V]
     (evaluate : List (V × V) → X × ℕ) (D : List (V × V)) (C : ℕ)
     (evalWork : ∀ P, P.length ≤ D.length → (evaluate P).2 ≤ C) :
     let out := replayFirstOccurrencesWithWordWork evaluate D
     out.1 = D.inits.map (fun P => (evaluate (distinctNonselfTrace P)).1) ∧
-      out.2.1 ≤ D.length*(10*D.length+31+C)+C+7 ∧ out.2.2 = (distinctNonselfTrace D).length+1 := by
-  obtain ⟨prefixes,work,calls⟩ := replayFirstOccurrencesFrom_spec evaluate D.length C evalWork [] D (by simp)
-  have same (P : List (V × V)) : P.foldl extendFirstOccurrences [] = distinctNonselfTrace P := rfl
-  simp only [List.reverse_nil,same,List.length_nil, Nat.zero_add] at prefixes work calls
-  refine ⟨prefixes,?_,congrArg (· + 1) calls⟩
-  have first := evalWork [] (by simp)
-  dsimp only [replayFirstOccurrencesWithWordWork]
-  omega
+      out.2.1 ≤ D.length*(10*D.length+31+C)+C+7 ∧ out.2.2 = (distinctNonselfTrace D).length+1 :=
+  replayFirstOccurrencesWithWordWork_spec_of_demand_property evaluate D C (fun _ => True)
+    (fun P len _ => evalWork P len) (by simp)
+
+private theorem replayFirstOccurrencesFrom_records_eq {V X : Type*} [DecidableEq V]
+    (first second : List (V × V) → X × ℕ) (same : ∀ P, (first P).1 = (second P).1)
+    (seen : List (V × V)) (previous : X) (D : List (V × V)) :
+    let left := replayFirstOccurrencesFrom first seen previous D
+    let right := replayFirstOccurrencesFrom second seen previous D
+    left.1 = right.1 ∧ left.2.2 = right.2.2 := by
+  induction D generalizing seen previous with
+  | nil => exact ⟨rfl,rfl⟩
+  | cons d rest ih =>
+    by_cases accepted : (nonselfRequestIsNewWithWordWork seen d).1 = true
+    · obtain ⟨records,calls⟩ := ih (d::seen) (second (d::seen).reverse).1
+      simp only [replayFirstOccurrencesFrom,accepted,ite_true,same,records,calls,and_self]
+    · obtain ⟨records,calls⟩ := ih seen previous
+      simp only [replayFirstOccurrencesFrom,accepted,Bool.false_eq_true,ite_false,records,calls,and_self]
+
+/-- The records and evaluation count depend only on the callback values. -/
+theorem replayFirstOccurrencesWithWordWork_records_eq {V X : Type*} [DecidableEq V]
+    (first second : List (V × V) → X × ℕ) (same : ∀ P, (first P).1 = (second P).1)
+    (D : List (V × V)) :
+    let left := replayFirstOccurrencesWithWordWork first D
+    let right := replayFirstOccurrencesWithWordWork second D
+    left.1 = right.1 ∧ left.2.2 = right.2.2 := by
+  obtain ⟨records,calls⟩ := replayFirstOccurrencesFrom_records_eq first second same [] (second []).1 D
+  simp only [replayFirstOccurrencesWithWordWork,same,records,calls,and_self]
 
 section SteinerTrace
 
