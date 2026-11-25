@@ -203,7 +203,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   On a feasible trace, the [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L855)
   returns every ordinary fixed-budget prefix graph and includes polynomial
   allowances for the measured work of both phases at each fixed height.
-  The [indexed thin separator](OnlineReachabilityPreservers/SeparatorWork.lean#L667)
+  The [indexed thin separator](OnlineReachabilityPreservers/SeparatorWork.lean#L668)
   keeps one signed flow table per cut search and preserves the selected
   cut and search tally. Its [full replay bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L873)
   adds initialization and updates on both orientations of each augmenting
@@ -213,8 +213,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   uses those lists to find the same shortest routes and the final reachable
   source side, with the existing search tally preserved. On feasible
   traces the fixed-height bound includes the work of those list searches.
-  Computing and applying the demand intervals, hub routing, other
-  container operations, bit costs, and native execution costs remain open.
+  The [replay with prepared intervals](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1026)
+  shares one duplicate-free arc list across the trace. Each thin request
+  in an evaluated thin run prepares its interval once and reuses it for
+  the cut searches and updates. The fixed-height bound includes those
+  interval computations. Late classification, hub routing, the remaining
+  early weighted work and container operations, bit costs, and native
+  execution costs remain open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

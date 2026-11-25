@@ -828,4 +828,56 @@ theorem thinRoundRunFromThresholdListWithResidualRouteWork_bound {n : ℕ} (G : 
   unfold steinerThinResidualRouteWorkBound steinerStreamingThinWorkBound
   ring
 
+private def thinRoundPrefixAdvanceWithIntervalWork {n : ℕ} (arcs : {r : List (Fin n × Fin n) // r.Nodup})
+    (m : ℕ) : ThinPrefixAdvance n :=
+  thinCoverArrayPrefixStepWithIntervalWork arcs m (m*(m.log2+1)+1)
+
+private theorem thinRoundPrefixAdvanceWithIntervalWork_exact {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (arcsEq : arcs.val.toFinset = G) (m : ℕ) (hm : m = G.card) :
+    (thinRoundPrefixAdvanceWithIntervalWork arcs m).Exact G :=
+  thinCoverArrayPrefixStepWithIntervalWork_eq G arcs arcsEq m hm
+
+/-- Replay each thin run with the demand interval prepared once per request. -/
+def thinRoundRunFromThresholdListWithIntervalWork {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (m : ℕ)
+    (rows : ThinThresholdList (Fin n)) (factor : ℕ) (D : List (Fin n × Fin n)) : (Arcs (Fin n) × ℕ) × ℕ :=
+  thinRoundRunFromThresholdListUsing G m (thinRoundPrefixAdvanceWithIntervalWork arcs m) rows factor D
+
+theorem thinRoundRunFromThresholdListWithIntervalWork_eq {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (arcsEq : arcs.val.toFinset = G) (m : ℕ) (hm : m = G.card)
+    (rows : ThinThresholdList (Fin n)) (factor : ℕ) (D : List (Fin n × Fin n)) :
+    (thinRoundRunFromThresholdListWithIntervalWork G arcs m rows factor D).1 =
+      thinRoundRunFromThresholdRows G m factor rows.val.toFinset D :=
+  thinRoundRunFromThresholdListUsing_eq G m _ (thinRoundPrefixAdvanceWithIntervalWork_exact G arcs arcsEq m hm) rows factor D
+
+/-- The interval scans, residual restriction and outgoing cut tests added to a request. -/
+def steinerThinIntervalExtraWork (n m : ℕ) : ℕ :=
+  n*(2*n+11)+6+m*(24*n+27)+2+demandIntervalRowsWordBudget n m+4
+
+def steinerThinIntervalWorkBound (n m p : ℕ) : ℕ :=
+  steinerThinResidualRouteWorkBound n m p+(m*(m.log2+1)+p)*steinerThinIntervalExtraWork n m
+
+def steinerThinIntervalWorkPolynomial (n m p : ℕ) : ℕ :=
+  steinerThinResidualRouteWorkPolynomial n m p+(m*(m+1)+p)*steinerThinIntervalExtraWork n m
+
+theorem steinerThinIntervalWorkBound_le (n m p : ℕ) :
+    steinerThinIntervalWorkBound n m p ≤ steinerThinIntervalWorkPolynomial n m p := by
+  unfold steinerThinIntervalWorkBound steinerThinIntervalWorkPolynomial
+  have route := steinerThinResidualRouteWorkBound_le n m p
+  have logBound := Nat.log2_le_self m
+  gcongr
+
+theorem thinRoundRunFromThresholdListWithIntervalWork_bound {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (arcsEq : arcs.val.toFinset = G) (m : ℕ) (hm : m = G.card)
+    (rows : ThinThresholdList (Fin n)) (edges : ∀ r ∈ rows.val, r.1 ∈ G) (count : rows.val.length ≤ m)
+    (factor : ℕ) (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (thinRoundRunFromThresholdListWithIntervalWork G arcs m rows factor D).2 ≤
+      steinerThinIntervalWorkBound n m D.length := by
+  apply (thinRoundRunFromThresholdListUsing_bound G m hm _ (thinRoundPrefixAdvanceWithIntervalWork_exact G arcs arcsEq m hm)
+    rows edges count factor D feasible (thinCoverIntervalWordCap n m)
+    (thinCoverArrayPrefixFoldWithIntervalWork_spec G arcs arcsEq m hm D feasible).2).trans_eq
+  unfold steinerThinIntervalWorkBound steinerThinResidualRouteWorkBound steinerStreamingThinWorkBound
+    thinCoverIntervalWordCap thinPreparedIntervalStepWordBudget steinerThinIntervalExtraWork
+  ring
+
 end OnlineReachabilityPreservers

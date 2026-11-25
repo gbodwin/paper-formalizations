@@ -808,4 +808,213 @@ theorem thinCoverArrayPrefixFoldWithResidualRouteWork_spec {n : ℕ} (G : Arcs (
     (thinCoverArrayPrefixStepWithResidualRouteWork G m (m*(m.log2+1)+1)) (fun q => Reach G q.1 q.2)
     (thinCoverArrayPrefixStepWithResidualRouteWork_spec G m hm) D feasible
 
+/-- Use the same interval rows for every cut test and load update of one request. -/
+def thinCoverLoopWithPreparedIntervalWork {n : ℕ} (m : ℕ) (d : Fin n × Fin n)
+    (interval : DemandIntervalRows (Fin n)) : ℕ → FinThinLoadTable n → (FinThinLoadTable n × ℕ) × ℕ × ℕ
+  | 0, loads => ((loads,0),0,2)
+  | fuel+1, loads =>
+    let proposal := fastThinViolationWithPreparedIntervalWork interval d m (fun e => (loads.read e,6))
+    match proposal.1.1 with
+    | none => ((loads,0),proposal.1.2,proposal.2+4)
+    | some W =>
+      let cut := outgoingCutFromIntervalRowsWithWordWork interval W
+      let updated := bumpFinThinLoadsOnCutWithWordWork loads cut.1
+      let rest := thinCoverLoopWithPreparedIntervalWork m d interval fuel updated.1
+      ((rest.1.1,rest.1.2+1),proposal.1.2+(2*n*m+2*m)+rest.2.1,proposal.2+cut.2+updated.2+rest.2.2+4)
+
+def thinPreparedIntervalStepWordBudget (n m : ℕ) : ℕ :=
+  thinSeparatorRouteWordCap n m+n*(2*n+11)+6+m*(24*n+27)+2+10*m+8
+
+set_option maxHeartbeats 750000 in
+theorem thinCoverLoopWithPreparedIntervalWork_spec {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
+    (d : Fin n × Fin n) (interval : DemandIntervalRows (Fin n))
+    (vertices : interval.vertexSet = reachInterval G d) (arcs : interval.arcSet = intervalArcs G d)
+    (size : interval.vertices.val.length ≤ n) (fuel : ℕ) (loads : FinThinLoadTable n) :
+    let out := thinCoverLoopWithPreparedIntervalWork m d interval fuel loads
+    ((out.1.1.read,out.1.2),out.2.1) = thinCoverLoopWithSearchWork G d fuel loads.read ∧
+      (Reach G d.1 d.2 → (∀ e ∈ G, loads.read e ≤ m.log2+1) →
+        out.2.2 ≤ (out.1.2+1)*thinPreparedIntervalStepWordBudget n m) := by
+  subst m
+  let m := G.card
+  let B := thinPreparedIntervalStepWordBudget n m
+  let sepCap := thinSeparatorRouteWordCap n m+n*(2*n+11)+6
+  have exactCut (snapshot : FinThinLoadTable n) :
+      let out := fastThinViolationWithPreparedIntervalWork interval d m (fun e => (snapshot.read e,6))
+      out.1 = fastThinViolationWithSearchWork G d snapshot.read ∧
+        ((∀ e ∈ G, snapshot.read e ≤ m.log2+1) → out.2 ≤ sepCap) := by
+    let read := fun e => (snapshot.read e,6)
+    have first := fastThinViolationWithIndexedTablesWork_spec G d m rfl read (m.log2+1) 6
+    obtain ⟨route,routeCost⟩ := fastThinViolationWithResidualRouteWork_compare G d m read
+    obtain ⟨prepared,preparedCost⟩ := fastThinViolationWithPreparedIntervalWork_compare G interval d m vertices arcs size read
+    refine ⟨prepared.trans (route.trans first.1),fun valid => ?_⟩
+    have idx := first.2 (fun e he => ⟨valid e he,le_rfl⟩)
+    change (fastThinViolationWithIndexedTablesWork G d m read).2 ≤ thinIndexedTablesWordCap n m at idx
+    change (fastThinViolationWithResidualRouteWork G d m read).2 ≤
+      (fastThinViolationWithIndexedTablesWork G d m read).2+thinResidualRouteWordCap n m at routeCost
+    change (fastThinViolationWithPreparedIntervalWork interval d m read).2 ≤
+      (fastThinViolationWithResidualRouteWork G d m read).2+n*(2*n+11)+6 at preparedCost
+    change (fastThinViolationWithPreparedIntervalWork interval d m read).2 ≤ sepCap
+    unfold sepCap thinSeparatorRouteWordCap
+    omega
+  induction fuel generalizing loads with
+  | zero =>
+    simp [thinCoverLoopWithPreparedIntervalWork,thinCoverLoopWithSearchWork,thinPreparedIntervalStepWordBudget]
+  | succ fuel ih =>
+    let proposal := fastThinViolationWithSearchWork G d loads.read
+    let first := fastThinViolationWithPreparedIntervalWork interval d G.card (fun e => (loads.read e,6))
+    obtain ⟨same,charged⟩ := exactCut loads
+    change first.1 = proposal at same
+    change (∀ e ∈ G, loads.read e ≤ m.log2+1) → first.2 ≤ sepCap at charged
+    cases found : proposal.1 with
+    | none =>
+      have oldFound : (fastThinViolationWithSearchWork G d loads.read).1 = none := found
+      have newFound : (fastThinViolationWithPreparedIntervalWork interval d G.card (fun e => (loads.read e,6))).1.1 = none :=
+        (congrArg Prod.fst same).trans found
+      simp only [thinCoverLoopWithPreparedIntervalWork,thinCoverLoopWithSearchWork,newFound,oldFound,
+        Nat.zero_add,Nat.one_mul]
+      refine ⟨?_,fun _ valid => ?_⟩
+      · change ((loads.read,0),first.1.2) = ((loads.read,0),proposal.2)
+        rw [same]
+      · have work := charged valid
+        change first.2+4 ≤ B
+        dsimp only [sepCap] at work
+        unfold B thinPreparedIntervalStepWordBudget
+        omega
+    | some W =>
+      let cut := outgoingCutFromIntervalRowsWithWordWork interval W
+      let oldCut := outgoingCut (intervalArcs G d) W
+      let updated := bumpFinThinLoadsOnCutWithWordWork loads cut.1
+      let tail := thinCoverLoopWithPreparedIntervalWork m d interval fuel updated.1
+      obtain ⟨cutEq,cutWork⟩ := outgoingCutFromIntervalRowsWithWordWork_spec interval W
+      rw [arcs] at cutEq cutWork
+      change cut.1 = oldCut at cutEq
+      change cut.2 ≤ (intervalArcs G d).card*(24*W.card+27)+2 at cutWork
+      have wLen : W.card ≤ n := by simpa only [Fintype.card_fin] using Finset.card_le_univ W
+      have intervalLen : (intervalArcs G d).card ≤ m := Finset.card_le_card (intervalArcs_subset _ _)
+      have cost : cut.2 ≤ m*(24*n+27)+2 := cutWork.trans (by gcongr)
+      obtain ⟨loadCorrect,loadCharged⟩ := bumpFinThinLoadsOnCutWithWordWork_spec loads cut.1
+      have loadEq : updated.1.read = doubleCut oldCut loads.read :=
+        loadCorrect.trans (congrArg (fun C => doubleCut C loads.read) cutEq)
+      have loadWork : updated.2 = 10*oldCut.card+4 := loadCharged.trans (congrArg (fun C => 10*C.card+4) cutEq)
+      have cutCount : oldCut.card ≤ m := (Finset.card_le_card (outgoingCut_subset _ _)).trans intervalLen
+      obtain ⟨rest,tailCost⟩ := ih updated.1
+      rw [loadEq] at rest
+      have oldFound : (fastThinViolationWithSearchWork G d loads.read).1 = some W := found
+      have newFound : (fastThinViolationWithPreparedIntervalWork interval d G.card (fun e => (loads.read e,6))).1.1 = some W :=
+        (congrArg Prod.fst same).trans found
+      simp only [thinCoverLoopWithPreparedIntervalWork,thinCoverLoopWithSearchWork,newFound,oldFound,Fintype.card_fin]
+      change (((tail.1.1.read,tail.1.2+1),first.1.2+(2*n*m+2*m)+tail.2.1) = _) ∧ _
+      rw [← rest, congrArg Prod.snd same]
+      refine ⟨rfl,fun reach valid => ?_⟩
+      have selected : fastThinViolation G d loads.read = some W :=
+        (fastThinViolationWithSearchWork_spec G d loads.read).1.symm.trans found
+      have mass : cutMass oldCut loads.read < m := (fastThinViolation_some reach selected).2.2
+      have next : ∀ e ∈ G, updated.1.read e ≤ m.log2+1 := loadEq.symm ▸ doubleCut_bounded mass valid
+      have spent := charged valid
+      have future := tailCost reach next
+      change tail.2.2 ≤ (tail.1.2+1)*B at future
+      have current : first.2+cut.2+updated.2+4 ≤ B := by
+        dsimp only [sepCap] at spent
+        unfold B thinPreparedIntervalStepWordBudget
+        omega
+      change first.2+cut.2+updated.2+tail.2.2+4 ≤ (tail.1.2+1+1)*B
+      calc
+        _ = tail.2.2+(first.2+cut.2+updated.2+4) := by omega
+        _ ≤ (tail.1.2+1)*B+B := Nat.add_le_add future current
+        _ = _ := by ring
+
+/-- Prepare the interval once within the fractional run for a demand. -/
+def thinCoverLoopWithIntervalWork {n : ℕ} (arcs : {r : List (Fin n × Fin n) // r.Nodup})
+    (m : ℕ) (d : Fin n × Fin n) (fuel : ℕ) (loads : FinThinLoadTable n) : (FinThinLoadTable n × ℕ) × ℕ × ℕ :=
+  let prepared := demandIntervalRowsWithWordWork arcs d n
+  let run := thinCoverLoopWithPreparedIntervalWork m d prepared.1 fuel loads
+  (run.1,run.2.1,run.2.2+prepared.2+4)
+
+theorem thinCoverLoopWithIntervalWork_spec {n : ℕ} (arcs : {r : List (Fin n × Fin n) // r.Nodup})
+    (m : ℕ) (hm : m = arcs.val.toFinset.card) (d : Fin n × Fin n)
+    (fuel : ℕ) (loads : FinThinLoadTable n) :
+    let G := arcs.val.toFinset
+    let out := thinCoverLoopWithIntervalWork arcs m d fuel loads
+    ((out.1.1.read,out.1.2),out.2.1) = thinCoverLoopWithSearchWork G d fuel loads.read ∧
+      (Reach G d.1 d.2 → (∀ e ∈ G, loads.read e ≤ m.log2+1) →
+        out.2.2 ≤ (out.1.2+1)*thinPreparedIntervalStepWordBudget n m+demandIntervalRowsWordBudget n m+4) := by
+  let prepared := demandIntervalRowsWithWordWork arcs d n
+  obtain ⟨vertices,edges,small,_,work⟩ := demandIntervalRowsWithWordWork_spec arcs d
+  rw [Fintype.card_fin] at vertices edges small work
+  have cardEq : arcs.val.length = m := (List.toFinset_card_of_nodup arcs.property).symm.trans hm.symm
+  obtain ⟨same,counted⟩ := thinCoverLoopWithPreparedIntervalWork_spec arcs.val.toFinset m hm d prepared.1
+    vertices edges small fuel loads
+  refine ⟨same,fun reach cap => ?_⟩
+  have original := counted reach cap
+  rw [cardEq] at work
+  exact Nat.add_le_add_right (Nat.add_le_add original work) 4
+
+def thinCoverIntervalWordCap (n m : ℕ) : ℕ :=
+  thinPreparedIntervalStepWordBudget n m+demandIntervalRowsWordBudget n m+4
+
+def thinCoverArrayPrefixStepWithIntervalWork {n : ℕ} (arcs : {r : List (Fin n × Fin n) // r.Nodup})
+    (m fuel : ℕ) (old : FinThinPrefixState n) (d : Fin n × Fin n) : FinThinPrefixState n :=
+  thinCoverArrayPrefixStepUsing old (thinCoverLoopWithIntervalWork arcs m d fuel)
+
+theorem thinCoverArrayPrefixStepWithIntervalWork_eq {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (arcsEq : arcs.val.toFinset = G) (m : ℕ) (hm : m = G.card)
+    (old : FinThinPrefixState n) (D : List (Fin n × Fin n)) (d : Fin n × Fin n)
+    (earlier : old.fractionalRecord = thinCoverRunWithSearchWork G D) :
+    (thinCoverArrayPrefixStepWithIntervalWork arcs m (m*(m.log2+1)+1) old d).fractionalRecord =
+      thinCoverRunWithSearchWork G (D++[d]) := by
+  subst G m
+  let m := arcs.val.toFinset.card
+  let fuel := m*(m.log2+1)+1
+  exact thinCoverArrayPrefixStepUsing_eq arcs.val.toFinset old D d earlier (thinCoverLoopWithIntervalWork arcs m d fuel)
+    (thinCoverLoopWithIntervalWork_spec arcs m rfl d fuel old.loads).1
+
+theorem thinCoverArrayPrefixStepWithIntervalWork_spec {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (arcsEq : arcs.val.toFinset = G) (m : ℕ) (hm : m = G.card)
+    (old : FinThinPrefixState n) (D : List (Fin n × Fin n)) (d : Fin n × Fin n)
+    (feasible : ∀ q ∈ D++[d], Reach G q.1 q.2) (earlier : old.fractionalRecord = thinCoverRunWithSearchWork G D) :
+    let next := thinCoverArrayPrefixStepWithIntervalWork arcs m (m*(m.log2+1)+1) old d
+    next.fractionalRecord = thinCoverRunWithSearchWork G (D++[d]) ∧
+      next.updateWork ≤ old.updateWork+(next.updates-old.updates+1)*thinCoverIntervalWordCap n m+3 := by
+  subst G m
+  let G := arcs.val.toFinset
+  let m := G.card
+  let fuel := m*(m.log2+1)+1
+  have head := feasible d (List.mem_append_right _ (List.mem_singleton_self _))
+  have projected := congrArg (fun r : (CutLoads (Fin n) × ℕ) × ℕ => r.1.1) earlier
+  have cap : ∀ e ∈ G, old.loads.read e ≤ m.log2+1 := by
+    change old.loads.read = (thinCoverRunWithSearchWork G D).1.1 at projected
+    rw [projected]
+    exact (thinCoverRunWithSearchWork_spec G D (fun q h => feasible q (List.mem_append_left _ h))).2.1
+  let run := thinCoverLoopWithIntervalWork arcs m d fuel old.loads
+  obtain ⟨same,work⟩ := thinCoverLoopWithIntervalWork_spec arcs m rfl d fuel old.loads
+  have exactWork := work head cap
+  have charged : run.2.2 ≤ (run.1.2+1)*thinCoverIntervalWordCap n m := by
+    have extra : demandIntervalRowsWordBudget n m+4 ≤ (run.1.2+1)*(demandIntervalRowsWordBudget n m+4) := by
+      have positive : 1 ≤ run.1.2+1 := by omega
+      simpa only [Nat.one_mul] using Nat.mul_le_mul_right (demandIntervalRowsWordBudget n m+4) positive
+    calc
+      _ ≤ _ := exactWork
+      _ = (run.1.2+1)*thinPreparedIntervalStepWordBudget n m+(demandIntervalRowsWordBudget n m+4) := by ring
+      _ ≤ (run.1.2+1)*thinPreparedIntervalStepWordBudget n m+
+          (run.1.2+1)*(demandIntervalRowsWordBudget n m+4) := Nat.add_le_add_left extra _
+      _ = _ := by unfold thinCoverIntervalWordCap; ring
+  exact thinCoverArrayPrefixStepUsing_spec G old D d earlier (thinCoverLoopWithIntervalWork arcs m d fuel)
+    (thinCoverIntervalWordCap n m) ⟨same,charged⟩
+
+/-- Each arrival prepares one interval and reuses it over the fractional updates. -/
+def thinCoverArrayPrefixFoldWithIntervalWork {n : ℕ} (arcs : {r : List (Fin n × Fin n) // r.Nodup})
+    (m : ℕ) (D : List (Fin n × Fin n)) : FinThinPrefixState n :=
+  let fuel := m*(m.log2+1)+1
+  D.foldl (thinCoverArrayPrefixStepWithIntervalWork arcs m fuel) (FinThinPrefixState.initial n)
+
+theorem thinCoverArrayPrefixFoldWithIntervalWork_spec {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (arcsEq : arcs.val.toFinset = G) (m : ℕ) (hm : m = G.card)
+    (D : List (Fin n × Fin n)) (feasible : ∀ q ∈ D, Reach G q.1 q.2) :
+    let out := thinCoverArrayPrefixFoldWithIntervalWork arcs m D
+    out.fractionalRecord = thinCoverRunWithSearchWork G D ∧
+      out.updateWork ≤ (out.updates+D.length)*thinCoverIntervalWordCap n m+3*D.length+(4*(n*n)+5) :=
+  thinCoverArrayPrefixFoldUsing_spec G (thinCoverIntervalWordCap n m)
+    (thinCoverArrayPrefixStepWithIntervalWork arcs m (m*(m.log2+1)+1)) (fun q => Reach G q.1 q.2)
+    (thinCoverArrayPrefixStepWithIntervalWork_spec G arcs arcsEq m hm) D feasible
+
 end OnlineReachabilityPreservers

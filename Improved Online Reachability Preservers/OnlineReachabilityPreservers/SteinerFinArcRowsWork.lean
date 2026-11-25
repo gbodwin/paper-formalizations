@@ -120,4 +120,43 @@ theorem finArcKeysWithWordWork_spec {n : ℕ} (G : Arcs (Fin n)) (raw : List (Fi
     _ ≤ 8*(n*n)+1+((n*n)*(2*raw.length+22)+4)+4 := by omega
     _ = _ := by ring
 
+/-- Prepare one duplicate-free list of ordinary arc keys for interval scans. -/
+def finArcRowsWithWordWork {n : ℕ} (raw : List (Fin n × Fin n)) :
+    {r : List (Fin n × Fin n) // r.Nodup} × ℕ :=
+  let ordered := finArcKeysWithWordWork raw
+  let arcs := raw.toFinset
+  let keys := arcs.map (toLex : (Fin n × Fin n) ≃ Fin n ×ₗ Fin n).toEmbedding
+  have distinct : (ordered.1.map ofLex).Nodup := by
+    rw [(finArcKeysWithWordWork_spec arcs raw rfl).1]
+    exact (keys.sort_nodup _).map ((toLex : (Fin n × Fin n) ≃ Fin n ×ₗ Fin n).symm.injective)
+  (⟨ordered.1.map ofLex,distinct⟩,ordered.2+7*ordered.1.length+4)
+
+def finArcRowsWordBudget (n inputSize : ℕ) : ℕ := (n*n)*(2*inputSize+30)+7*inputSize+13
+
+theorem finArcRowsWithWordWork_spec {n : ℕ} (G : Arcs (Fin n)) (raw : List (Fin n × Fin n))
+    (same : raw.toFinset = G) :
+    let out := finArcRowsWithWordWork raw
+    out.1.val.toFinset = G ∧ out.2 ≤ finArcRowsWordBudget n raw.length := by
+  let ordered := finArcKeysWithWordWork raw
+  let keys := G.map (toLex : (Fin n × Fin n) ≃ Fin n ×ₗ Fin n).toEmbedding
+  obtain ⟨sorted,spent⟩ := finArcKeysWithWordWork_spec G raw same
+  change ordered.1 = keys.sort at sorted
+  refine ⟨?_,?_⟩
+  · change (ordered.1.map ofLex).toFinset = G
+    rw [sorted]
+    ext edge
+    simp only [List.mem_toFinset,List.mem_map,Finset.mem_sort,keys,Finset.mem_map,Equiv.toEmbedding_apply]
+    constructor
+    · rintro ⟨_,⟨arc,inside,rfl⟩,rfl⟩
+      exact inside
+    · intro inside
+      exact ⟨toLex edge,⟨edge,inside,rfl⟩,rfl⟩
+  · have count : ordered.1.length = G.card := by
+      rw [sorted,Finset.length_sort,Finset.card_map]
+    have under : G.card ≤ raw.length := same ▸ List.toFinset_card_le raw
+    change ordered.2 ≤ (n*n)*(2*raw.length+30)+9 at spent
+    change ordered.2+7*ordered.1.length+4 ≤ finArcRowsWordBudget n raw.length
+    unfold finArcRowsWordBudget
+    omega
+
 end OnlineReachabilityPreservers

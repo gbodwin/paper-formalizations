@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.RouteWork
+import OnlineReachabilityPreservers.SteinerIntervalWork
 import OnlineReachabilityPreservers.AssignmentListRouteWork
 
 /-! Search work inside integer flow separation. -/
@@ -1340,5 +1341,56 @@ theorem fastThinViolationWithResidualRouteWork_compare {n : ℕ} (G : Arcs (Fin 
   · change stored.2+cut.2+8 ≤ stored.2+prior.2+8+thinResidualRouteWordCap n m
     unfold thinResidualRouteWordCap
     omega
+
+/-- Search inside the prepared interval and meter the restriction of its residual cut. -/
+def fastThinViolationWithPreparedIntervalWork {n : ℕ} (interval : DemandIntervalRows (Fin n))
+    (d : Fin n × Fin n) (m : ℕ) (load : (Fin n × Fin n) → ℕ × ℕ) :
+    (Option (Finset (Fin n)) × ℕ) × ℕ :=
+  if d.1 = d.2 then ((none,0),3)
+  else
+    let capacities := prepareThinCapacitiesWithWordWork interval.arcSet load
+    let raw := findLowCapacityCutWithMeteredListRoutes capacities.1 d.1 d.2 m
+    let clipped := match raw.1.1 with
+      | none => (none,3)
+      | some side =>
+        let inside := intersectWithIntervalRowsWithWordWork interval side
+        (some inside.1,inside.2+4)
+    ((clipped.1,raw.1.2+(2*n*m+m)),capacities.2+raw.2+clipped.2+8)
+
+theorem fastThinViolationWithPreparedIntervalWork_compare {n : ℕ} (G : Arcs (Fin n))
+    (interval : DemandIntervalRows (Fin n)) (d : Fin n × Fin n) (m : ℕ)
+    (vertices : interval.vertexSet = reachInterval G d) (arcs : interval.arcSet = intervalArcs G d)
+    (small : interval.vertices.val.length ≤ n) (load : (Fin n × Fin n) → ℕ × ℕ) :
+    let out := fastThinViolationWithPreparedIntervalWork interval d m load
+    let prior := fastThinViolationWithResidualRouteWork G d m load
+    out.1 = prior.1 ∧ out.2 ≤ prior.2+n*(2*n+11)+6 := by
+  by_cases self : d.1 = d.2
+  · simp [fastThinViolationWithPreparedIntervalWork,fastThinViolationWithResidualRouteWork,self]
+  let stored := prepareThinCapacitiesWithWordWork (intervalArcs G d) load
+  let raw := findLowCapacityCutWithMeteredListRoutes stored.1 d.1 d.2 m
+  let clipped := match raw.1.1 with
+    | none => (none,3)
+    | some side =>
+      let r := intersectWithIntervalRowsWithWordWork interval side
+      (some r.1,r.2+4)
+  simp only [fastThinViolationWithPreparedIntervalWork,fastThinViolationWithResidualRouteWork,self,ite_false,arcs]
+  change (clipped.1,raw.1.2+(2*n*m+m)) = (raw.1.1.map (· ∩ reachInterval G d),raw.1.2+(2*n*m+m)) ∧
+    stored.2+raw.2+clipped.2+8 ≤ stored.2+raw.2+8+n*(2*n+11)+6
+  cases choice : raw.1.1 with
+  | none =>
+    simp only [clipped,choice,Option.map_none,true_and]
+    omega
+  | some side =>
+    let done := intersectWithIntervalRowsWithWordWork interval side
+    obtain ⟨same,used⟩ := intersectWithIntervalRowsWithWordWork_spec interval side
+    change done.1 = side ∩ interval.vertexSet at same
+    change done.2 ≤ side.card*(2*interval.vertices.val.length+11)+2 at used
+    have size : side.card ≤ n := by simpa only [Fintype.card_fin] using card_le_univ side
+    have spent : done.2 ≤ n*(2*n+11)+2 := used.trans (by gcongr)
+    simp only [clipped,choice,Option.map_some]
+    change (some done.1,raw.1.2+(2*n*m+m)) = (some (side ∩ reachInterval G d),raw.1.2+(2*n*m+m)) ∧
+      stored.2+raw.2+(done.2+4)+8 ≤ stored.2+raw.2+8+n*(2*n+11)+6
+    rw [same,vertices]
+    exact ⟨rfl,by omega⟩
 
 end OnlineReachabilityPreservers

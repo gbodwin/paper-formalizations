@@ -598,7 +598,7 @@ and container operations, bit arithmetic, and native array costs. The
 inherited computation of the finite vertex count can also traverse the
 vertex enumeration in the compiled evaluator.
 
-The [indexed thin separator](OnlineReachabilityPreservers/SeparatorWork.lean#L667)
+The [indexed thin separator](OnlineReachabilityPreservers/SeparatorWork.lean#L668)
 replaces the signed flow function by one array of ordered pairs for each
 cut search. Each chosen augmenting arc increments its forward entry and
 decrements its reverse entry. The selected augmenting paths, final flow,
@@ -610,12 +610,12 @@ includes this charge in the fixed-height polynomial and returns the same
 prefix graphs on feasible traces. The [record equality](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L810)
 also holds on exhaustion and infeasible traces.
 
-The [capacity preparation](OnlineReachabilityPreservers/SeparatorWork.lean#L802)
+The [capacity preparation](OnlineReachabilityPreservers/SeparatorWork.lean#L803)
 initializes one pair table per cut search and evaluates a capacity once
-for each arc in the demand interval. The [residual scan](OnlineReachabilityPreservers/SeparatorWork.lean#L893)
+for each arc in the demand interval. The [residual scan](OnlineReachabilityPreservers/SeparatorWork.lean#L894)
 reads the stored capacity and signed flow at each ordered pair and constructs
 the exact residual graph. It reuses one list of pair addresses across
-augmentations and the final source-side search. The [separator specification](OnlineReachabilityPreservers/SeparatorWork.lean#L1083)
+augmentations and the final source-side search. The [separator specification](OnlineReachabilityPreservers/SeparatorWork.lean#L1084)
 preserves the returned cut and the earlier search tally for every load
 function. The additional work bound uses the load exponents' bound along
 feasible thin traces. The [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L919)
@@ -626,14 +626,25 @@ builds the same hop-decreasing graph and selects the same shortest route
 in every residual graph. It uses the reachable list both to select the
 route and to recover the previous successor-test count. The previous arc
 inspection count is recovered from the two arc counts and the search depth.
-The [cut comparison](OnlineReachabilityPreservers/SeparatorWork.lean#L1239)
+The [cut comparison](OnlineReachabilityPreservers/SeparatorWork.lean#L1240)
 also meters finding the terminal source side from the reversed residual
 list. It returns the previous cut and search tally for every capacity
 table and augmentation supply. The [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L964)
 includes these costs in its fixed-height polynomial on feasible traces.
-Remaining runtime obligations include computing and applying the demand
-intervals, hub routing, other container operations, bit costs, and native
-costs.
+
+The [arc preparation](OnlineReachabilityPreservers/SteinerFinArcRowsWork.lean#L136)
+builds one duplicate-free arc list once per complete replay. The work
+bound includes this pass and the earlier seed-index setup. For each
+thin request within an evaluated thin run, the [interval construction](OnlineReachabilityPreservers/SteinerIntervalWork.lean#L145)
+uses the forward and backward reaches to obtain the same interval vertices
+and induced arcs. The [fractional loop](OnlineReachabilityPreservers/ThinSearchWork.lean#L933)
+shares those rows across the cut searches and updates. The metered filters
+restrict the same residual cut and select the same outgoing arcs for
+doubling. Search and evaluation records still agree for arbitrary inputs.
+The [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1026)
+includes these charges in the fixed-height polynomial on feasible traces.
+Late classification and hub routing, the remaining early weighted work
+and container operations, bit costs, and native costs remain open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

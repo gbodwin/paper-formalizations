@@ -404,4 +404,34 @@ theorem lateSteinerWithThinResidualRouteWork_bound {n : ℕ} {G : Arcs (Fin n)} 
     gcongr
   · exact thinRoundRunFromThresholdListWithResidualRouteWork_bound G m hm rows edges count (thinRoundingFactor n τ)
 
+/-- Keep hub and fallback behavior while sharing the prepared interval within the thin separator. -/
+def lateSteinerWithThinIntervalWork {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (τ m : ℕ) (S : Finset (Fin n))
+    (rows : ThinThresholdList (Fin n)) (D : List (Fin n × Fin n)) : (Arcs (Fin n) × ℕ) × ℕ :=
+  lateSteinerWithThinWorkUsing G τ m S
+    (thinRoundRunFromThresholdListWithIntervalWork G arcs m rows (thinRoundingFactor n τ)) D
+
+theorem lateSteinerWithThinIntervalWork_eq {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (arcsEq : arcs.val.toFinset = G) (τ m : ℕ) (hm : m = G.card)
+    (S : Finset (Fin n)) (rows : ThinThresholdList (Fin n)) (D : List (Fin n × Fin n)) :
+    (lateSteinerWithThinIntervalWork G arcs τ m S rows D).1 =
+      lateSteinerWithStoredThinThresholds G τ m S rows.val.toFinset D := by
+  let round := thinRoundRunFromThresholdListWithIntervalWork G arcs m rows (thinRoundingFactor n τ)
+  have same : (fun P => (round P).1) = thinRoundRunFromThresholdRows G m (thinRoundingFactor n τ) rows.val.toFinset :=
+    funext (thinRoundRunFromThresholdListWithIntervalWork_eq G arcs arcsEq m hm rows (thinRoundingFactor n τ))
+  change (lateSteinerWithThinWorkUsing G τ m S round D).1 = _
+  rw [lateSteinerWithThinWorkUsing_project,same]
+  simp [lateSteinerWithStoredThinThresholds]
+
+theorem lateSteinerWithThinIntervalWork_bound {n : ℕ} {G : Arcs (Fin n)} (early : EarlySteinerRule G)
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (arcsEq : arcs.val.toFinset = G) (τ m : ℕ) (hm : m = G.card)
+    (S : Finset (Fin n)) (rows : ThinThresholdList (Fin n)) (edges : ∀ r ∈ rows.val, r.1 ∈ G)
+    (count : rows.val.length ≤ m) (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (lateSteinerWithThinIntervalWork G arcs τ m S rows D).2 ≤ steinerThinIntervalWorkBound n m D.length := by
+  apply lateSteinerWithThinWorkUsing_bound early τ m S _ (steinerThinIntervalWorkBound n m) _ _ D feasible
+  · intro a b short
+    unfold steinerThinIntervalWorkBound steinerThinResidualRouteWorkBound steinerStreamingThinWorkBound
+    gcongr
+  · exact thinRoundRunFromThresholdListWithIntervalWork_bound G arcs arcsEq m hm rows edges count (thinRoundingFactor n τ)
+
 end OnlineReachabilityPreservers

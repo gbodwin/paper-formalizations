@@ -20,17 +20,24 @@ An exact-source replay grants no coverage to a paper statement outside the
 
 ## Checked checkpoints
 
-- The [capacity table](OnlineReachabilityPreservers/SeparatorWork.lean#L802)
-  and [residual scan](OnlineReachabilityPreservers/SeparatorWork.lean#L893)
+- The residual-route checkpoint `15833d4c` preserves the selected
+  shortest routes, both earlier route-search counts, and the final
+  reachable source side. Independent review included all 4,672 route
+  evaluations on two- and three-vertex digraphs. Exact hosted CI replayed
+  276 project modules and audited 8,027 paper declarations.
+  [Route comparison](OnlineReachabilityPreservers/AssignmentListRouteWork.lean#L264)
+  · [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/45686879680).
+- The [capacity table](OnlineReachabilityPreservers/SeparatorWork.lean#L803)
+  and [residual scan](OnlineReachabilityPreservers/SeparatorWork.lean#L894)
   preserve the ordinary capacities and residual graphs. The
-  [separator comparison](OnlineReachabilityPreservers/SeparatorWork.lean#L1083)
+  [separator comparison](OnlineReachabilityPreservers/SeparatorWork.lean#L1084)
   keeps the same cut and earlier search tally for arbitrary loads. The
   [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L919)
   includes capacity setup and both indexed reads per residual pair within
   the fixed-height bound on feasible traces.
-- The [signed flow updates](OnlineReachabilityPreservers/SeparatorWork.lean#L484)
+- The [signed flow updates](OnlineReachabilityPreservers/SeparatorWork.lean#L485)
   produce the same flow as ordinary augmentation. The
-  [exact separator comparison](OnlineReachabilityPreservers/SeparatorWork.lean#L667)
+  [exact separator comparison](OnlineReachabilityPreservers/SeparatorWork.lean#L668)
   also preserves every earlier search count. The
   [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L873)
   includes array initialization and the two signed updates per routed arc

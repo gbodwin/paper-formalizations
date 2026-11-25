@@ -978,4 +978,76 @@ theorem completeFinSteinerReplayWithThinResidualRouteWork_prefixes {n : ℕ} (G 
     (fun τ hubs rows => lateSteinerWithThinResidualRouteWork G τ m hubs rows)
     (steinerTraceThinResidualRouteWorkPolynomial n m height D.length + 11*m + 21) ⟨sameRun,traceWork feasible⟩
 
+def steinerTraceThinIntervalWorkPolynomial (n m height p : ℕ) : ℕ :=
+  steinerTraceEarlySeedRankWorkPolynomial n height p+(p+1)*(steinerThinIntervalWorkPolynomial n m p+2)
+
+private theorem completeFinSteinerReplayWithThinIntervalEvaluator_spec {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (arcsEq : arcs.val.toFinset = G)
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
+    let late := fun τ hubs rows => lateSteinerWithThinIntervalWork G arcs τ m hubs rows
+    let out := completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D late
+    let old := completeFinSteinerReplayWithThinRowWork G raw same height m hm bits D
+    out.1 = old.1 ∧ out.2.2 = old.2.2 ∧
+      ((∀ d ∈ D, Reach G d.1 d.2) → out.2.1 ≤ steinerTraceThinIntervalWorkPolynomial n m height D.length+11*m+21) := by
+  apply completeFinSteinerReplayWithLateEvaluator_spec G raw same height m hm bits D
+    (fun τ hubs rows => lateSteinerWithThinIntervalWork G arcs τ m hubs rows)
+    (steinerThinIntervalWorkPolynomial n m D.length)
+  · exact fun τ hubs rows P => lateSteinerWithThinIntervalWork_eq G arcs arcsEq τ m hm hubs rows P
+  · intro early τ hubs rows edges count P short reachable
+    have work := lateSteinerWithThinIntervalWork_bound early arcs arcsEq τ m hm hubs rows edges count P reachable
+    refine work.trans ((steinerThinIntervalWorkBound_le n m P.length).trans ?_)
+    unfold steinerThinIntervalWorkPolynomial steinerThinResidualRouteWorkPolynomial steinerStreamingThinWorkPolynomial
+    gcongr
+
+/-- Prepare the original arc list once and share each thin demand interval across its cut searches. -/
+def completeFinSteinerReplayWithThinIntervalWork {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
+  let rows := finArcRowsWithWordWork raw
+  let out := completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D
+    (fun τ hubs thresholds => lateSteinerWithThinIntervalWork G rows.1 τ m hubs thresholds)
+  (out.1,out.2.1+rows.2+3,out.2.2)
+
+theorem completeFinSteinerReplayWithThinIntervalWork_spec {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
+    let out := completeFinSteinerReplayWithThinIntervalWork G raw same height m hm bits D
+    let old := completeFinSteinerReplayWithThinRowWork G raw same height m hm bits D
+    out.1 = old.1 ∧ out.2.2 = old.2.2 ∧
+      ((∀ d ∈ D, Reach G d.1 d.2) → out.2.1 ≤ steinerTraceThinIntervalWorkPolynomial n m height D.length+
+        11*m+21+finArcRowsWordBudget n raw.length+3) := by
+  obtain ⟨arcs,ready⟩ := finArcRowsWithWordWork_spec G raw same
+  obtain ⟨sameRecord,count,work⟩ := completeFinSteinerReplayWithThinIntervalEvaluator_spec G
+    (finArcRowsWithWordWork raw).1 arcs raw same height m hm bits D
+  exact ⟨sameRecord,count,fun feasible => Nat.add_le_add_right (Nat.add_le_add (work feasible) ready) 3⟩
+
+/-- Exact fixed-budget prefix graphs, including the thin interval searches and their cut applications. -/
+theorem completeFinSteinerReplayWithThinIntervalWork_prefixes {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let out := completeFinSteinerReplayWithThinIntervalWork G raw same height m hm bits D
+    let base := out.1.1.1
+    base.1.1.map Prod.fst = D.inits.map (completeSteinerRunWithBitBudget G height bits) ∧
+      (base.1.1.map Prod.snd).sum+base.1.2.1+base.1.2.2.1+base.1.2.2.2+base.2+out.1.1.2+out.1.2+out.2.1 ≤
+        completeFinSteinerPreparationWorkPolynomial n m raw.length height D.length +
+          finSteinerWeightPlanWorkPolynomial n height + finSteinerReplayIndexWorkPolynomial n raw.length +
+          steinerTraceThinIntervalWorkPolynomial n m height D.length+11*m+21+finArcRowsWordBudget n raw.length+3 := by
+  let arcs := finArcRowsWithWordWork raw
+  let late := fun τ hubs rows => lateSteinerWithThinIntervalWork G arcs.1 τ m hubs rows
+  let prior := completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D late
+  let work := steinerTraceThinIntervalWorkPolynomial n m height D.length+11*m+21
+  obtain ⟨exactArcs,assembly⟩ := finArcRowsWithWordWork_spec G raw same
+  obtain ⟨sameRecord,_,traceWork⟩ := completeFinSteinerReplayWithThinIntervalEvaluator_spec G
+    arcs.1 exactArcs raw same height m hm bits D
+  obtain ⟨samePrefix,charged⟩ := completeFinSteinerReplayWithLateEvaluator_prefixes G raw same height m hm bits D
+    feasible late work ⟨sameRecord,traceWork feasible⟩
+  refine ⟨samePrefix,?_⟩
+  have ready : arcs.2 ≤ finArcRowsWordBudget n raw.length := assembly
+  dsimp only [completeFinSteinerReplayWithThinIntervalWork]
+  change _+((prior.2.1+arcs.2)+3) ≤ _
+  have bounded := Nat.add_le_add_right (Nat.add_le_add charged ready) 3
+  simpa only [work,Nat.add_assoc] using bounded
+
 end OnlineReachabilityPreservers
