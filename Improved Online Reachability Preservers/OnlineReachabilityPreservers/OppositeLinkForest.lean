@@ -14,26 +14,29 @@ local notation "Before" => SourceAudit.BeforeIn
 variable {V I : Type*} [DecidableEq V] [LinearOrder I]
 
 /-- A link joins consecutive common vertices of two oppositely ordered paths. -/
-def oppositeLinkGraph (paths : I → List V) (three : BridgeFree (Before paths) 3) : SimpleGraph V where
+def oppositeLinkGraphOfHalfTwo (paths : I → List V) (two : HalfBridgeFree (Before paths) 2) : SimpleGraph V where
   Adj x y := ∃ a b, OppositeNeighbors paths a b x y
   symm := ⟨by
     rintro _ _ ⟨a,b,h⟩
-    exact ⟨b,a,oppositeNeighbors_swap three h⟩⟩
+    exact ⟨b,a,oppositeNeighbors_swap_of_halfTwo two h⟩⟩
   loopless := ⟨by
     rintro _ ⟨_,_,h⟩
     exact listBefore_ne h.2.1 rfl⟩
+
+def oppositeLinkGraph (paths : I → List V) (three : BridgeFree (Before paths) 3) : SimpleGraph V :=
+  oppositeLinkGraphOfHalfTwo paths (fun _ size => three.halfFree (size.trans (by decide)))
 
 omit [LinearOrder I] in
 private theorem listBefore_transitive {paths : I → List V} {a : I} {x y z : V}
     (xy : Before paths a x y) (yz : Before paths a y z) : Before paths a x z :=
   ⟨xy.1,yz.2.1,xy.2.2.trans yz.2.2⟩
 
-private theorem opposite_forward_unique {paths : I → List V} (three : BridgeFree (Before paths) 3)
+private theorem opposite_forward_unique {paths : I → List V} (two : HalfBridgeFree (Before paths) 2)
     {x y : V} {a b c d : I} (ab : OppositeNeighbors paths a b x y) (cd : OppositeNeighbors paths c d x y) :
     a = c ∧ b = d := by
   constructor <;> by_contra different
-  · exact no_parallel_list_steps three.halfFree (by decide) different ab.2.1 cd.2.1
-  · exact no_parallel_list_steps three.halfFree (by decide) different ab.2.2.1 cd.2.2.1
+  · exact no_parallel_list_steps two (by decide) different ab.2.1 cd.2.1
+  · exact no_parallel_list_steps two (by decide) different ab.2.2.1 cd.2.2.1
 
 private theorem opposite_adjacent_forward {paths : I → List V} (three : BridgeFree (Before paths) 3)
     {x y z : V} {a b c d : I} (xy : OppositeNeighbors paths a b x y) (yz : OppositeNeighbors paths c d y z)
@@ -399,6 +402,15 @@ theorem oppositeLinkGraph_cycle_forces_bridge {paths : I → List V} (three : Br
   obtain ⟨k,bound,bridge⟩ := detour_yields_bridge three detour
   exact ⟨k,by unfold m at bound; change k+2 ≤ length; omega, bridge⟩
 
+/-- At a finite full-bridge cutoff, a cycle of opposite links must be longer than the cutoff. -/
+theorem oppositeLinkGraph_cycle_length_gt_cutoff {paths : I → List V} {cutoff : ℕ}
+    (free : BridgeFree (Before paths) cutoff) (three : 3 ≤ cutoff) {u : V}
+    (cycle : (oppositeLinkGraph paths (fun _ h => free (h.trans three))).Walk u u)
+    (isCycle : cycle.IsCycle) : cutoff < cycle.length := by
+  by_contra! short
+  obtain ⟨_,size,⟨bridge⟩⟩ := oppositeLinkGraph_cycle_forces_bridge _ cycle isCycle
+  exact (free (size.trans short)).false bridge
+
 /-- With full bridge exclusion at every size, the opposite-neighbor graph is a forest. -/
 theorem oppositeLinkGraph_acyclic {paths : I → List V} (three : BridgeFree (Before paths) 3)
     (full : ∀ k, IsEmpty (Bridge (Before paths) k)) : (oppositeLinkGraph paths three).IsAcyclic := by
@@ -433,13 +445,13 @@ private structure OppositePruneCharge {p : ℕ} (paths : Fin p → List V) (i : 
 
 omit [Fintype V] in
 private theorem oppositePruneCharge_exists {p : ℕ} {paths : Fin p → List V}
-    (three : BridgeFree (Before paths) 3) (simple : ∀ i, (paths i).Nodup) {i : Fin p} {v : V}
+    (two : HalfBridgeFree (Before paths) 2) (simple : ∀ i, (paths i).Nodup) {i : Fin p} {v : V}
     (present : v ∈ paths i) (missing : v ∉ removeOppositeIntersections paths i) :
     Nonempty (OppositePruneCharge paths i v) := by
   rw [removeOppositeIntersections_mem] at missing
   push Not at missing
   obtain ⟨j,ji,u,forward,backward⟩ := missing present
-  have connected := oppositeNeighbors_connect three ji.ne' forward (removeOppositeIntersections_before simple backward)
+  have connected := oppositeNeighbors_connect_of_halfTwo two ji.ne' forward (removeOppositeIntersections_before simple backward)
   have initial {x y : V} (h : Relation.TransGen (OppositeNeighbors paths i j) x y) :
       ∃ z, OppositeNeighbors paths i j x z := by
     induction h with
@@ -449,15 +461,15 @@ private theorem oppositePruneCharge_exists {p : ℕ} {paths : Fin p → List V}
   exact ⟨⟨j,ji,w,adjacent⟩⟩
 
 /-- Each removed incidence charges a distinct opposite link in the original family. -/
-theorem removeOppositeIntersections_mass_with_link_count {p : ℕ} {paths : Fin p → List V}
-    (three : BridgeFree (Before paths) 3) (simple : ∀ i, (paths i).Nodup) :
+theorem removeOppositeIntersections_mass_with_half_two_link_count {p : ℕ} {paths : Fin p → List V}
+    (two : HalfBridgeFree (Before paths) 2) (simple : ∀ i, (paths i).Nodup) :
     (∑ i, (paths i).length) ≤ (∑ i, (removeOppositeIntersections paths i).length) +
-      Nat.card (oppositeLinkGraph paths three).edgeSet := by
+      Nat.card (oppositeLinkGraphOfHalfTwo paths two).edgeSet := by
   classical
   let retained := removeOppositeIntersections paths
   let omitted := (univ : Finset (Fin p × V)).filter fun x => x.2 ∈ paths x.1 ∧ x.2 ∉ retained x.1
-  let G := oppositeLinkGraph paths three
-  let witness (x : omitted) := Classical.choice (oppositePruneCharge_exists three simple
+  let G := oppositeLinkGraphOfHalfTwo paths two
+  let witness (x : omitted) := Classical.choice (oppositePruneCharge_exists two simple
     (mem_filter.mp x.property).2.1 (mem_filter.mp x.property).2.2)
   let charge (x : omitted) : G.edgeSet :=
     ⟨s(x.val.2,(witness x).next),G.mem_edgeSet.mpr ⟨x.val.1,(witness x).earlier,(witness x).link⟩⟩
@@ -467,11 +479,11 @@ theorem removeOppositeIntersections_mass_with_link_count {p : ℕ} {paths : Fin 
     rcases endpoints with ⟨sameStart,sameEnd⟩ | ⟨swappedStart,swappedEnd⟩
     · have aligned : OppositeNeighbors paths y.val.1 (witness y).earlier x.val.2 (witness x).next :=
         (congrArg₂ (OppositeNeighbors paths y.val.1 (witness y).earlier) sameStart sameEnd).mpr (witness y).link
-      exact Subtype.ext (Prod.ext (opposite_forward_unique three (witness x).link aligned).1 sameStart)
+      exact Subtype.ext (Prod.ext (opposite_forward_unique two (witness x).link aligned).1 sameStart)
     · have reversed : OppositeNeighbors paths (witness y).earlier y.val.1 x.val.2 (witness x).next :=
         (congrArg₂ (OppositeNeighbors paths (witness y).earlier y.val.1) swappedStart swappedEnd).mpr
-          (oppositeNeighbors_swap three (witness y).link)
-      have owners := opposite_forward_unique three (witness x).link reversed
+          (oppositeNeighbors_swap_of_halfTwo two (witness y).link)
+      have owners := opposite_forward_unique two (witness x).link reversed
       have backwards : y.val.1 < (witness y).earlier :=
         (congrArg₂ (fun a b : Fin p => a < b) owners.2 owners.1).mp (witness x).precedes
       exact (lt_asymm backwards (witness y).precedes).elim
@@ -499,6 +511,13 @@ theorem removeOppositeIntersections_mass_with_link_count {p : ℕ} {paths : Fin 
       card_sdiff_add_card_eq_card (subset i)]
   change (∑ i, (paths i).length) ≤ (∑ i, (retained i).length) + Nat.card G.edgeSet
   omega
+
+theorem removeOppositeIntersections_mass_with_link_count {p : ℕ} {paths : Fin p → List V}
+    (three : BridgeFree (Before paths) 3) (simple : ∀ i, (paths i).Nodup) :
+    (∑ i, (paths i).length) ≤ (∑ i, (removeOppositeIntersections paths i).length) +
+      Nat.card (oppositeLinkGraph paths three).edgeSet :=
+  removeOppositeIntersections_mass_with_half_two_link_count
+    (fun _ size => three.halfFree (size.trans (by decide))) simple
 
 /-- For full bridge exclusion at every size, pruning to unique intersections
 discards at most one less than the number of vertices. -/

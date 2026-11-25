@@ -985,4 +985,41 @@ theorem localOrderExtremal_frozen_up_to_eight_paths (n p k : ℕ) (half : Bool)
   · intro j small b _
     exact (legal small).false b
 
+/-- Split with the original width caps when a retained subsystem has
+sufficient mass, and the bridge condition survives those particular splits. -/
+theorem regularization_list_frozen_after_width_blocks_of_mass {half : Bool} {k n p M retention : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k (listRegularizedPaths paths (4*M/n) (4*M/p)))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (upper : (∑ i, (paths i).length) ≤ M)
+    (lower : 8*(retention+2)*M ≤ 9*retention*(∑ i, (paths i).length)) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let K := ∑ i, (paths i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let pieces := listRegularizedPaths paths D L
+  obtain ⟨widthD,trimD,_⟩ := four_average_width hn dense
+  obtain ⟨widthL,trimL,_⟩ := four_average_width hp long
+  change 0 < D at widthD
+  change 0 < L at widthL
+  obtain ⟨rawV,rawI⟩ := regularization_list_counts paths simple widthD widthL
+  have vCap : 3*Fintype.card (ListVertexBlockIndex paths D) ≤ 4*n := by
+    have less : K/D ≤ M/D := Nat.div_le_div_right upper
+    simp only [Fintype.card_fin] at rawV
+    change 3*(M/D) ≤ n at trimD
+    change Fintype.card (ListVertexBlockIndex paths D) ≤ n+K/D at rawV
+    omega
+  have iCap : 3*Fintype.card (ListBlockIndex (splitListVertices paths D) L) ≤ 4*p := by
+    have less : K/L ≤ M/L := Nat.div_le_div_right upper
+    simp only [Fintype.card_fin] at rawI
+    change 3*(M/L) ≤ p at trimL
+    change Fintype.card (ListBlockIndex (splitListVertices paths D) L) ≤ p+K/L at rawI
+    omega
+  obtain ⟨mass,length,degree⟩ := regularization_list_mass_caps paths simple D L widthD widthL
+  exact regularization_list_frozen_after_caps_with_room_of_mass pieces
+    (listRegularizedPaths_simple paths simple D L) allowed
+    hn hp dense long vCap iCap length degree (mass.trans_le upper) (by rw [mass]; exact lower)
+
 end OnlineReachabilityPreservers

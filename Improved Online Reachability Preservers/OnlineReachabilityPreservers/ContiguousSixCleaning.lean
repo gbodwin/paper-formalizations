@@ -84,31 +84,11 @@ theorem regularization_list_frozen_six_of_few_opposite_links {n p : ℕ} (paths 
   have keptSimple (i : Fin p) : (kept i).Nodup := (removeOppositeIntersections_sublist paths i).nodup (simple i)
   have keptFree : BridgeFree (ListBefore kept) 6 := removeOppositeIntersections_fullFree simple six
   have keptFour : BridgeFree (ListBefore kept) 4 := fun _ hk => keptFree (hk.trans (by decide))
-  obtain ⟨widthD,trimD,_⟩ := four_average_width hn dense
-  obtain ⟨widthL,trimL,_⟩ := four_average_width hp long
-  change 0 < D at widthD
-  change 0 < L at widthL
-  obtain ⟨rawV,rawI⟩ := regularization_list_counts kept keptSimple widthD widthL
-  have vCap : 3*Fintype.card (ListVertexBlockIndex kept D) ≤ 4*n := by
-    have less : K/D ≤ M/D := Nat.div_le_div_right massCap
-    simp only [Fintype.card_fin] at rawV
-    change 3*(M/D) ≤ n at trimD
-    change Fintype.card (ListVertexBlockIndex kept D) ≤ n+K/D at rawV
-    omega
-  have iCap : 3*Fintype.card (ListBlockIndex (splitListVertices kept D) L) ≤ 4*p := by
-    have less : K/L ≤ M/L := Nat.div_le_div_right massCap
-    simp only [Fintype.card_fin] at rawI
-    change 3*(M/L) ≤ p at trimL
-    change Fintype.card (ListBlockIndex (splitListVertices kept D) L) ≤ p+K/L at rawI
-    omega
-  obtain ⟨mass,length,degree⟩ := regularization_list_mass_caps kept keptSimple D L widthD widthL
   have legal : localOrderAdmissible false 6 pieces := regularizedSix_bridge_free (half := false) keptSimple
     (fun {_ _ _ _} ab xa xb ya yb =>
       removeOppositeIntersections_unique simple six.halfFree (by decide) ab xa xb ya yb) keptFour keptFree D L
-  exact regularization_list_frozen_after_caps_with_room_of_mass pieces
-    (listRegularizedPaths_simple kept keptSimple D L) legal
-    hn hp dense long vCap iCap length degree
-    (mass.trans_le massCap) (by rw [mass]; exact enough)
+  exact regularization_list_frozen_after_width_blocks_of_mass kept keptSimple legal
+    hn hp dense long massCap enough
 
 /-- An all-size full-bridge-free input with sufficiently high mean degree
 has a size-six cleaned witness at the original budgets and averages. -/

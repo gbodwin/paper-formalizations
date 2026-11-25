@@ -669,11 +669,14 @@ the original fixed averages remains open.
 An opposite-neighbor link joins consecutive common vertices of two
 oppositely ordered paths. In an input excluding full bridges through size
 three, a simple cycle of \(r\) links produces a full bridge of size at most
-\(r\). The existing pruning charges each removed incidence to a distinct
-link. With full exclusion at every size, the link graph is a forest and
-the pruning loss is at most \(n-1\) for \(n>0\).
-[Cycle bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L324)
-· [Pruning bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L505).
+\(r\). At full cutoff \(k\ge3\), every cycle has length greater than \(k\).
+The existing pruning charges each removed incidence to a distinct link
+using half exclusion through size two. With full exclusion at every size,
+the link graph is a forest and the loss is at most \(n-1\) for \(n>0\).
+[Cycle bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L327)
+· [Finite cutoff](OnlineReachabilityPreservers/OppositeLinkForest.lean#L406)
+· [Charge in half mode](OnlineReachabilityPreservers/OppositeLinkForest.lean#L464)
+· [Pruning bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L524).
 
 For an input excluding full bridges through six, let \(E\) count these
 links. If \(M\ge18E\) and the mass \(M\) is at least both positive budgets,
@@ -682,7 +685,13 @@ six, all four original-average caps, and mass at least \(M/32\). For an
 all-size full-bridge-free input, \(M\ge18(n-1)\) suffices in place of
 \(M\ge18E\).
 [Few opposite links](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L62)
-· [All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L115).
+· [All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L95).
+
+With half exclusion through size four, the same \(M\ge18E\) condition and
+mass at least both positive budgets give a cleaned family with half
+exclusion through four, both budgets, all four original-average caps and
+mass at least \(M/32\).
+[Half-four cleaning with few links](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L303).
 
 | Source | Mathematical obligation |
 | --- | --- |

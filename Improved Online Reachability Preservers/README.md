@@ -238,7 +238,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   at every size gives \(E\le n-1\) and bounds the loss under pruning to
   unique intersections by \(n-1\) for \(n>0\).
   [Frozen size-six cleaning](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L62)
-  · [Pruning bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L505).
+  · [Pruning bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L524).
+- The same link-count condition gives both budgets, all four original-average
+  caps and retention of \(M/32\) for half-bridge exclusion through size four,
+  using only the half-bridge assumption on the input.
+  [Frozen half-four cleaning](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L303).
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)

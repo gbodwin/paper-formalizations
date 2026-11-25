@@ -226,10 +226,14 @@ a simple cycle of \(r\) such links yields a full bridge of size at most
 that row on every link. In such a detour each link owner occurs in one
 consecutive run, which can be compressed to one step of the bridge.
 Full exclusion at every size gives a forest. The pruning step charges
-each removed incidence to a distinct link, so it loses at most \(n-1\)
-in that case for \(n>0\).
-[Cycle-to-bridge proof](OnlineReachabilityPreservers/OppositeLinkForest.lean#L324)
-· [Pruning loss](OnlineReachabilityPreservers/OppositeLinkForest.lean#L505).
+each removed incidence to a distinct link using half exclusion through
+size two. It therefore loses at most \(n-1\) in the full-bridge-free case
+for \(n>0\). At finite full cutoff \(k\ge3\), every cycle of links has
+length greater than \(k\).
+[Cycle-to-bridge proof](OnlineReachabilityPreservers/OppositeLinkForest.lean#L327)
+· [Finite cutoff](OnlineReachabilityPreservers/OppositeLinkForest.lean#L406)
+· [Charge in half mode](OnlineReachabilityPreservers/OppositeLinkForest.lean#L464)
+· [Pruning loss](OnlineReachabilityPreservers/OppositeLinkForest.lean#L524).
 
 At full cutoff six, if the input has \(E\) opposite-neighbor links and
 mass \(M\ge18E\) at least both positive budgets, pruning keeps at least
@@ -241,7 +245,14 @@ caps. The forest bound supplies the premise when the input excludes full
 bridges at every size and \(M\ge18(n-1)\). The output excludes full bridges
 through size six.
 [Conditional frozen cleaning](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L62)
-· [All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L115).
+· [All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L95).
+
+The same \(M\ge18E\) premise with mass at least both positive budgets
+also gives a cleaned half-four-free family with both original budgets,
+all four frozen caps and mass at least \(M/32\). The pruning bound uses
+half exclusion through two. Unique intersections then justify the width
+splits through half cutoff four.
+[Conditional half-four cleaning](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L303).
 
 The same splitting step can fail at larger bridge sizes with unique
 intersections. On seven vertices, take the six paths `[(0,1,2,3), (3,4),

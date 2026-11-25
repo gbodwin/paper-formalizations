@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.LocalFrozenCleaning
+import OnlineReachabilityPreservers.OppositeLinkForest
 
 /-! Consecutive local path cuts through half-bridge cutoff four. -/
 
@@ -296,5 +297,36 @@ theorem regularization_list_frozen_half_four_of_no_later_nested {n p : ℕ}
     (listRegularizedPaths_simple paths simple D L)
     (half := true) (k := 4) (listRegularizedPaths_halfFree_of_no_later_nested simple noNested allowed D L)
     hn hp dense long vertices families length degree mass
+
+/-- A half-four-free simple family with few opposite links can be cleaned
+at the original averages, with both original budgets. -/
+theorem regularization_list_frozen_half_four_of_few_opposite_links {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (ListBefore paths) 4)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (few : 18*Nat.card (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).edgeSet ≤
+      ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (ListBefore clean) 4 ∧
+      M ≤ 32*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let kept := removeOppositeIntersections paths
+  let K := ∑ i, (kept i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  have two : HalfBridgeFree (ListBefore paths) 2 := fun _ h => free (h.trans (by decide))
+  let E := Nat.card (oppositeLinkGraphOfHalfTwo paths two).edgeSet
+  have retained : M ≤ K+E := removeOppositeIntersections_mass_with_half_two_link_count two simple
+  have enough : 8*(32+2)*M ≤ 9*32*K := by
+    change 18*E ≤ M at few
+    omega
+  have massCap : K ≤ M := sum_le_sum fun i _ => (removeOppositeIntersections_sublist paths i).length_le
+  have keptSimple (i : Fin p) : (kept i).Nodup := (removeOppositeIntersections_sublist paths i).nodup (simple i)
+  have keptFree : HalfBridgeFree (ListBefore kept) 4 := removeOppositeIntersections_halfFree simple free
+  have legal : localOrderAdmissible true 4 (listRegularizedPaths kept D L) := listRegularizedPaths_halfFree keptSimple
+    (fun {_ _ _ _} ab xa xb ya yb =>
+      removeOppositeIntersections_unique simple free (by decide) ab xa xb ya yb) keptFree D L
+  exact regularization_list_frozen_after_width_blocks_of_mass kept keptSimple legal
+    hn hp dense long massCap enough
 
 end OnlineReachabilityPreservers

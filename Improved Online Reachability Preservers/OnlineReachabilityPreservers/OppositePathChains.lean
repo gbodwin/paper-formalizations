@@ -63,25 +63,30 @@ theorem oppositeNeighbors_in_unique {paths : I → List V}
   · exact zx.2.2.2 ⟨y,zy,yx.2.1,yx.2.2.1.2.1⟩
 
 /-- Adjacent common vertices occur in reverse order on the partner path. -/
-theorem oppositeNeighbors_swap {paths : I → List V}
-    (free : BridgeFree (ListBefore paths) 3) {a b : I} {x y : V}
+theorem oppositeNeighbors_swap_of_halfTwo {paths : I → List V}
+    (free : HalfBridgeFree (ListBefore paths) 2) {a b : I} {x y : V}
     (xy : OppositeNeighbors paths a b x y) : OppositeNeighbors paths b a y x := by
   refine ⟨xy.1.symm,xy.2.2.1,xy.2.1,?_⟩
   rintro ⟨z,yz,zx,inA⟩
   have xz : ListBefore paths a x z := by
     rcases listBefore_total xy.2.1.1 inA (listBefore_ne zx).symm with xz | zx'
     · exact xz
-    · exact (no_parallel_list_steps free.halfFree (by decide) xy.1 zx' zx).elim
+    · exact (no_parallel_list_steps free (by decide) xy.1 zx' zx).elim
   have zy : ListBefore paths a z y := by
     rcases listBefore_total inA xy.2.1.2.1 (listBefore_ne yz).symm with zy | yz'
     · exact zy
-    · exact (no_parallel_list_steps free.halfFree (by decide) xy.1 yz' yz).elim
+    · exact (no_parallel_list_steps free (by decide) xy.1 yz' yz).elim
   exact xy.2.2.2 ⟨z,xz,zy,yz.2.1⟩
 
 
+theorem oppositeNeighbors_swap {paths : I → List V}
+    (free : BridgeFree (ListBefore paths) 3) {a b : I} {x y : V}
+    (xy : OppositeNeighbors paths a b x y) : OppositeNeighbors paths b a y x :=
+  oppositeNeighbors_swap_of_halfTwo (fun _ size => free.halfFree (size.trans (by decide))) xy
+
 /-- A reversed shared interval decomposes into links between consecutive common vertices. -/
-theorem oppositeNeighbors_connect {paths : I → List V}
-    (free : BridgeFree (ListBefore paths) 3) {a b : I} (apart : a ≠ b)
+theorem oppositeNeighbors_connect_of_halfTwo {paths : I → List V}
+    (free : HalfBridgeFree (ListBefore paths) 2) {a b : I} (apart : a ≠ b)
     {x y : V} (xy : ListBefore paths a x y) (yx : ListBefore paths b y x) :
     Relation.TransGen (OppositeNeighbors paths a b) x y := by
   have connects (d : ℕ) : ∀ {x y : V},
@@ -97,11 +102,11 @@ theorem oppositeNeighbors_connect {paths : I → List V}
         have left : ListBefore paths b z x := by
           rcases listBefore_total onB yx.2.1 (listBefore_ne xz).symm with left | parallel
           · exact left
-          · exact (no_parallel_list_steps free.halfFree (by decide) apart xz parallel).elim
+          · exact (no_parallel_list_steps free (by decide) apart xz parallel).elim
         have right : ListBefore paths b y z := by
           rcases listBefore_total yx.1 onB (listBefore_ne zy).symm with right | parallel
           · exact right
-          · exact (no_parallel_list_steps free.halfFree (by decide) apart zy parallel).elim
+          · exact (no_parallel_list_steps free (by decide) apart zy parallel).elim
         have ltLeft : (paths a).idxOf z - (paths a).idxOf x < d := by
           have xzOrder := xz.2.2
           have zyOrder := zy.2.2
@@ -113,6 +118,12 @@ theorem oppositeNeighbors_connect {paths : I → List V}
         exact (ih _ ltLeft le_rfl xz left).trans (ih _ ltRight le_rfl zy right)
       · exact Relation.TransGen.single ⟨apart,xy,yx,between⟩
   exact connects _ le_rfl xy yx
+
+theorem oppositeNeighbors_connect {paths : I → List V}
+    (free : BridgeFree (ListBefore paths) 3) {a b : I} (apart : a ≠ b)
+    {x y : V} (xy : ListBefore paths a x y) (yx : ListBefore paths b y x) :
+    Relation.TransGen (OppositeNeighbors paths a b) x y :=
+  oppositeNeighbors_connect_of_halfTwo (fun _ size => free.halfFree (size.trans (by decide))) apart xy yx
 
 end OnlineReachabilityPreservers
 
