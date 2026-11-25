@@ -247,6 +247,16 @@ which invokes Theorem 15.
 · [Bridge Girth v1, Lemma 18](https://arxiv.org/pdf/2212.11944v1#page=18)
 · [Bridge Girth v4, Lemma 40](https://arxiv.org/pdf/2212.11944v4#page=35).
 
+The upper direction of Lemma 14 holds on arbitrary digraphs. For positive
+vertex and demand counts, let \(M\) be the fully bridge-free maximum mass
+under the indexed simple-path multiset convention of [8]. The actual
+offline preserver satisfies \(|E(H)|+p\le M+2n\), hence \(|E(H)|\le3M\).
+The compression of the pruned condensation has exactly \(p\) rows. Their
+incidence count is the number of retained quotient arcs plus \(p\). Each bridge
+uses distinct rows, so excluding bridges through size \(p\) already
+excludes every size. An empty demand list gives the empty preserver.
+[Checked general upper bound](OnlineReachabilityPreservers/OfflineBridgeExtremalUpper.lean#L56).
+
 With a common vertex order, a detour that uses the same path twice can be
 shortened to one step along that path. A detour with distinct path indices
 gives a bridge. The acyclic overlay therefore forces every consecutive arc.

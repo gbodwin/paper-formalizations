@@ -10,8 +10,9 @@ open Finset
 
 local notation "ListBefore" => SourceAudit.BeforeIn
 
-private theorem listBefore_of_sorted_finset {n p : ℕ} {paths : Fin p → Finset (Fin n)}
-    {i : Fin p} {u v : Fin n} (step : ListBefore (fun a => (paths a).sort) i u v) :
+/-- Reading each row as an increasing list preserves the path comparisons. -/
+theorem listBefore_of_sorted_finset {W I : Type*} [LinearOrder W] {paths : I → Finset W}
+    {i : I} {u v : W} (step : ListBefore (fun a => (paths a).sort) i u v) :
     PathBefore paths i u v := by
   let L := (paths i).sort
   have uAt : L.idxOf u < L.length := List.idxOf_lt_length_of_mem step.1
