@@ -35,6 +35,13 @@ def multiplier (A : Adjacency n) (w : Weights n) : ℚ≥0 :=
   let amount := scalableTotal A w
   if amount = 0 then 1 else min 2 ((originalTotal A w - fixedTotal A w) / amount)
 
+theorem multiplier_from_sums (A : Adjacency n) (w : Weights n) :
+    let r (e : Edge n) := originalWeight A (trimmed A w) e
+    let fixed := ∑ e, if 1 ≤ r e then (1 : ℚ≥0) else 0
+    let subunit := ∑ e, if 1 ≤ r e then (0 : ℚ≥0) else r e
+    multiplier A w = if subunit = 0 then 1 else min 2 ((originalTotal A w - fixed) / subunit) :=
+  rfl
+
 private theorem capped_total_le (A : Adjacency n) (w : Weights n) :
     fixedTotal A w + scalableTotal A w ≤ originalTotal A w := by
   unfold fixedTotal scalableTotal originalTotal
