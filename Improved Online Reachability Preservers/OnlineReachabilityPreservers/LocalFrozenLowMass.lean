@@ -419,4 +419,33 @@ theorem localOrderExtremal_frozen_small_side (n p k : ℕ) (half : Bool) (cutoff
   · intro j small b _
     exact (free small).false b
 
+/-- Use a small explicit witness at low mass, and original-width blocks
+when a retained subsystem keeps at least seven eighths of a dense input. -/
+theorem regularization_list_frozen_of_seven_eighths_mass {half : Bool} {k n p : ℕ}
+    (paths kept : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (keptSimple : ∀ i, (kept i).Nodup)
+    (halfFree : HalfBridgeFree (ListBefore paths) k) (cutoff : 2 ≤ k)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (upper : (∑ i, (kept i).length) ≤ ∑ i, (paths i).length)
+    (lower : 8*max n p < (∑ i, (paths i).length) → 7*(∑ i, (paths i).length) ≤ 8*(∑ i, (kept i).length))
+    (allowed : localOrderAdmissible half k (listRegularizedPaths kept
+      (4*(∑ i, (paths i).length)/n) (4*(∑ i, (paths i).length)/p))) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 32*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  by_cases low : M ≤ 8*max n p
+  · obtain ⟨n',hn',p',hp',clean,simp,full,keeps,cap,caps⟩ :=
+      regularization_list_frozen_low_mass paths simple halfFree cutoff hn hp dense long low
+    have valid : localOrderAdmissible half k clean := by
+      cases half
+      · exact full
+      · exact full.halfFree
+    exact ⟨n',hn',p',hp',clean,simp,valid,keeps.trans (by omega),cap,caps⟩
+  · have hnMass : 8*n ≤ M := (Nat.mul_le_mul_left _ (le_max_left _ _)).trans (Nat.le_of_lt (lt_of_not_ge low))
+    have hpMass : 8*p ≤ M := (Nat.mul_le_mul_left _ (le_max_right _ _)).trans (Nat.le_of_lt (lt_of_not_ge low))
+    exact regularization_list_frozen_after_large_width_blocks kept keptSimple allowed hn hp hnMass hpMass
+      upper (lower (lt_of_not_ge low))
+
 end OnlineReachabilityPreservers

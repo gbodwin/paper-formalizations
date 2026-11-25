@@ -235,24 +235,22 @@ length greater than \(k\).
 · [Charge in half mode](OnlineReachabilityPreservers/OppositeLinkForest.lean#L464)
 · [Pruning loss](OnlineReachabilityPreservers/OppositeLinkForest.lean#L524).
 
-At full cutoff six, if the input has \(E\) opposite-neighbor links and
-mass \(M\ge18E\) at least both positive budgets, pruning keeps at least
-\(17M/18\). Use the original cap widths on the remaining unique intersections.
-The restriction to the two budgets keeps at least nine sixteenths of the
-pruned mass before deleting low incidences, which costs at most \(M/2\).
-The cleaned witness keeps at least \(M/32\), with all four original-average
-caps. The forest bound supplies the premise when the input excludes full
-bridges at every size and \(M\ge18(n-1)\). The output excludes full bridges
-through size six.
-[Conditional frozen cleaning](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L62)
-· [All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L95).
+For simple inputs at full cutoff six or half cutoff four, mass \(M\ge8E\)
+at least both positive budgets gives a cleaned witness of mass at least
+\(M/32\) at that cutoff, with both original budgets and all four frozen
+caps. When \(M\le8\max(n,p)\), the proof uses the explicit low-mass
+witnesses. At higher mass, pruning keeps at least \(7M/8\), and the
+original widths expand each support by at most \(39/31\). Restriction
+keeps at least \((31/39)^2\) of the pruned mass before removing low
+incidences, which costs at most \(M/2\).
+[Full cutoff six](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L136)
+· [Half cutoff four](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L335).
 
-The same \(M\ge18E\) premise with mass at least both positive budgets
-also gives a cleaned half-four-free family with both original budgets,
-all four frozen caps and mass at least \(M/32\). The pruning bound uses
-half exclusion through two. Unique intersections then justify the width
-splits through half cutoff four.
-[Conditional half-four cleaning](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L303).
+An input excluding full bridges at every size already has \(E\le n-1\).
+At higher mass this gives the required pruning bound automatically. The
+size-six conclusion therefore holds at every mass at least both
+positive budgets for such a simple input family.
+[All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L151).
 
 The same splitting step can fail at larger bridge sizes with unique
 intersections. On seven vertices, take the six paths `[(0,1,2,3), (3,4),

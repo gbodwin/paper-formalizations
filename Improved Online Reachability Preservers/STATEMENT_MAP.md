@@ -689,20 +689,19 @@ the link graph is a forest and the loss is at most \(n-1\) for \(n>0\).
 · [Charge in half mode](OnlineReachabilityPreservers/OppositeLinkForest.lean#L464)
 · [Pruning bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L524).
 
-For an input excluding full bridges through six, let \(E\) count these
-links. If \(M\ge18E\) and the mass \(M\) is at least both positive budgets,
-there is a cleaned family within both budgets with full exclusion through
-six, all four original-average caps, and mass at least \(M/32\). For an
-all-size full-bridge-free input, \(M\ge18(n-1)\) suffices in place of
-\(M\ge18E\).
-[Few opposite links](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L62)
-· [All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L95).
+For simple paths with full exclusion through six or half exclusion through
+four, let \(E\) count these links. If \(M\ge8E\) and the mass \(M\) is
+at least both positive budgets, there is a cleaned family within both
+budgets with the input's cutoff and bridge mode, all four original-average
+caps, and mass at least \(M/32\).
+[Full cutoff six](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L136)
+· [Half cutoff four](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L335).
 
-With half exclusion through size four, the same \(M\ge18E\) condition and
-mass at least both positive budgets give a cleaned family with half
-exclusion through four, both budgets, all four original-average caps and
-mass at least \(M/32\).
-[Half-four cleaning with few links](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L303).
+For an input excluding full bridges at every size, the same size-six
+cleaning conclusion holds at every mass at least both positive budgets.
+The lower-mass case uses explicit witnesses. The larger-mass case uses the
+forest bound and the original cap widths.
+[All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L151).
 
 | Source | Mathematical obligation |
 | --- | --- |

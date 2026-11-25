@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.LocalFrozenCleaning
+import OnlineReachabilityPreservers.LocalFrozenLowMass
 import OnlineReachabilityPreservers.OppositeLinkForest
 
 /-! Contiguous regularization with unique intersections through bridge size six. -/
@@ -105,5 +106,61 @@ theorem regularization_list_frozen_six_of_fullFree {n p : ℕ} (paths : Fin p �
     simpa only [Fintype.card_fin] using oppositeLinkGraph_card_edgeSet three full
   exact regularization_list_frozen_six_of_few_opposite_links paths simple (fun {k} _ => full k)
     hn hp dense long ((Nat.mul_le_mul_left 18 few).trans rich)
+
+private theorem regularization_list_frozen_six_of_pruned_mass {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (six : BridgeFree (ListBefore paths) 6)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (enough : 8*max n p < (∑ i, (paths i).length) →
+      7*(∑ i, (paths i).length) ≤ 8*(∑ i, (removeOppositeIntersections paths i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) 6 ∧
+      M ≤ 32*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let kept := removeOppositeIntersections paths
+  let K := ∑ i, (kept i).length
+  have upper : K ≤ M := sum_le_sum fun i _ => (removeOppositeIntersections_sublist paths i).length_le
+  have keptSimple (i : Fin p) : (kept i).Nodup := (removeOppositeIntersections_sublist paths i).nodup (simple i)
+  have keptFree : BridgeFree (ListBefore kept) 6 := removeOppositeIntersections_fullFree simple six
+  have keptFour : BridgeFree (ListBefore kept) 4 := fun _ hk => keptFree (hk.trans (by decide))
+  have allowed : localOrderAdmissible false 6 (listRegularizedPaths kept (4*M/n) (4*M/p)) :=
+    regularizedSix_bridge_free (half := false) keptSimple
+      (fun {_ _ _ _} ab xa xb ya yb =>
+        removeOppositeIntersections_unique simple six.halfFree (by decide) ab xa xb ya yb)
+      keptFour keptFree _ _
+  exact regularization_list_frozen_of_seven_eighths_mass paths kept simple keptSimple six.halfFree (by decide)
+    hn hp dense long upper enough allowed
+
+/-- At full cutoff six it suffices that the original mass is at least eight
+times the number of opposite links. -/
+theorem regularization_list_frozen_six_of_eight_links {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (six : BridgeFree (ListBefore paths) 6)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (few : 8*Nat.card (oppositeLinkGraph paths (fun _ h => six (h.trans (by decide)))).edgeSet ≤
+      ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) 6 ∧
+      M ≤ 32*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  have three : BridgeFree (ListBefore paths) 3 := fun _ h => six (h.trans (by decide))
+  have loss := removeOppositeIntersections_mass_with_link_count three simple
+  exact regularization_list_frozen_six_of_pruned_mass paths simple six hn hp dense long (fun _ => by omega)
+
+/-- For all-size full-bridge-free input, retain the original caps through
+size six across the full density range. -/
+theorem regularization_list_frozen_six_of_fullFree_all_densities {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (full : ∀ k, IsEmpty (Bridge (ListBefore paths) k))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) 6 ∧
+      M ≤ 32*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  have six : BridgeFree (ListBefore paths) 6 := fun {k} _ => full k
+  have loss : (∑ i, (paths i).length) ≤ (∑ i, (removeOppositeIntersections paths i).length)+(n-1) := by
+    simpa only [Fintype.card_fin] using removeOppositeIntersections_mass_of_fullFree simple full
+  apply regularization_list_frozen_six_of_pruned_mass paths simple six hn hp dense long
+  intro large
+  have side : 8*n ≤ 8*max n p := Nat.mul_le_mul_left _ (le_max_left _ _)
+  omega
 
 end OnlineReachabilityPreservers

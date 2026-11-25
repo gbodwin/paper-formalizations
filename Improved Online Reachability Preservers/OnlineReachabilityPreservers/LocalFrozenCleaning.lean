@@ -1022,4 +1022,67 @@ theorem regularization_list_frozen_after_width_blocks_of_mass {half : Bool} {k n
     (listRegularizedPaths_simple paths simple D L) allowed
     hn hp dense long vCap iCap length degree (mass.trans_le upper) (by rw [mass]; exact lower)
 
+private theorem large_average_width_budget {M q : ℕ} (hq : 0 < q) (large : 8*q ≤ M) :
+    31*(M/(4*M/q)) ≤ 8*q := by
+  let width := 4*M/q
+  obtain ⟨widthPos,_,_⟩ := four_average_width hq (show q ≤ M by omega)
+  change 0 < width at widthPos
+  have floor := Nat.lt_mul_div_succ (4*M) hq
+  change 4*M < q*(width+1) at floor
+  rw [Nat.mul_succ] at floor
+  have lower : 31*M ≤ 8*(q*width) := by omega
+  have product : (31*(M/width))*width ≤ (8*q)*width := calc
+    _ = 31*((M/width)*width) := by ring
+    _ ≤ 31*M := Nat.mul_le_mul_left _ (Nat.div_mul_le_self _ _)
+    _ ≤ 8*(q*width) := lower
+    _ = _ := by ring
+  exact (Nat.mul_le_mul_right_iff widthPos).mp product
+
+/-- At larger averages the actual width blocks need at most 39/31 of each
+budget. If pruning loses at most one eighth of the original mass, the
+frozen peeling step still retains at least one thirty-second. -/
+theorem regularization_list_frozen_after_large_width_blocks {half : Bool} {k n p M : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k (listRegularizedPaths paths (4*M/n) (4*M/p)))
+    (hn : 0 < n) (hp : 0 < p) (dense : 8*n ≤ M) (long : 8*p ≤ M)
+    (upper : (∑ i, (paths i).length) ≤ M) (lower : 7*M ≤ 8*(∑ i, (paths i).length)) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 32*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let K := ∑ i, (paths i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let pieces := listRegularizedPaths paths D L
+  obtain ⟨widthD,_,capD⟩ := four_average_width hn (show n ≤ M by omega)
+  obtain ⟨widthL,_,capL⟩ := four_average_width hp (show p ≤ M by omega)
+  change 0 < D at widthD
+  change 0 < L at widthL
+  obtain ⟨rawV,rawI⟩ := regularization_list_counts paths simple widthD widthL
+  have vCap : 31*Fintype.card (ListVertexBlockIndex paths D) ≤ 39*n := by
+    have less : K/D ≤ M/D := Nat.div_le_div_right upper
+    have short : 31*(M/D) ≤ 8*n := large_average_width_budget hn dense
+    simp only [Fintype.card_fin] at rawV
+    change Fintype.card (ListVertexBlockIndex paths D) ≤ n+K/D at rawV
+    omega
+  have iCap : 31*Fintype.card (ListBlockIndex (splitListVertices paths D) L) ≤ 39*p := by
+    have less : K/L ≤ M/L := Nat.div_le_div_right upper
+    have short : 31*(M/L) ≤ 8*p := large_average_width_budget hp long
+    simp only [Fintype.card_fin] at rawI
+    change Fintype.card (ListBlockIndex (splitListVertices paths D) L) ≤ p+K/L at rawI
+    omega
+  obtain ⟨mass,length,degree⟩ := regularization_list_mass_caps paths simple D L widthD widthL
+  have keptSimple := listRegularizedPaths_simple paths simple D L
+  have count : (∑ i, (pieces i).toFinset.card) = K :=
+    (sum_congr rfl (fun i _ => List.toFinset_card_of_nodup (keptSimple i))).trans mass
+  exact frozen_cut_of_caps pieces keptSimple allowed
+    (M := M) (D := D) (L := L) (retention := 32)
+    (vNum := 31) (vDen := 39) (pNum := 31) (pDen := 39)
+    hn hp (by decide) (by decide) (by decide) (by decide) vCap iCap (count.trans_le upper)
+    (by
+      change 39*39*(32+2)*M ≤ 2*(31*31)*32*(∑ i, (pieces i).toFinset.card)
+      rw [count]
+      change 7*M ≤ 8*K at lower
+      omega)
+    length degree capD capL
+
 end OnlineReachabilityPreservers
