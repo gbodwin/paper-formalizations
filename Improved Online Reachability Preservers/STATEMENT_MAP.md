@@ -510,9 +510,22 @@ list work and arithmetic at unit cost. The
 substitutes that plan in the fixed-budget evaluator and adds its
 one-time work to the fixed-height polynomial. The cumulative allowance
 retains the old comparison tally as well as the new bound on that pass.
-All prefix graphs and existing tallies agree with the prior evaluator. Constructing and
-applying the seed key-index maps, other operations within the prefix
-runs, and bit and native arithmetic costs remain open.
+All prefix graphs and existing tallies agree with the prior evaluator.
+
+The [indexed replay](OnlineReachabilityPreservers/SteinerFinIndexedReplayWork.lean)
+also prepares the canonical seed indexes for `Fin n` vertex keys. It scans
+the raw arc list for each arithmetic lexicographic slot, then reserves and
+fills one sorted arc array. Repetitions and arbitrary input order produce
+the same canonical array. Vertex keys use their original numeric labels.
+The [early-coordinate rank](OnlineReachabilityPreservers/SteinerEarlyCoordinateRankWork.lean)
+uses arithmetic blocks for the trial, root, tier, and tree history.
+The [array rank](OnlineReachabilityPreservers/SteinerArrayRankWork.lean)
+charges each midpoint step on an arc lookup. Both lookup algorithms
+produce the canonical rank and have a checked per-call word-work bound.
+The replay charges construction of the indexes and preserves every
+prior record. Summing the index lookup work across the prefix
+computations, other operations within those computations, and bit
+and native arithmetic costs remain open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

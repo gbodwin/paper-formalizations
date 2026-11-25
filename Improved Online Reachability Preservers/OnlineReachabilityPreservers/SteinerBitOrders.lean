@@ -11,7 +11,7 @@ private def indexOfOrder (A : Type*) [LinearOrder A] [Fintype A] : A ≃ Fin (Fi
   (Fintype.orderIsoFinOfCardEq A rfl).symm.toEquiv
 
 /-- Cast the proof of the bound while retaining the same runtime index. -/
-@[inline] private def castFinIndex {n m : ℕ} (size : n = m) : Fin n ≃ Fin m where
+@[inline] def castFinIndex {n m : ℕ} (size : n = m) : Fin n ≃ Fin m where
   toFun i := ⟨i.val, size ▸ i.isLt⟩
   invFun i := ⟨i.val, size.symm ▸ i.isLt⟩
   left_inv _ := Fin.ext rfl

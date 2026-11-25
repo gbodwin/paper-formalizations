@@ -175,6 +175,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   The [weighted evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean)
   also charges the pass that prices the forest arcs and computes the scale
   and fuel. The checked prefixes and prior work tallies agree.
+  The [indexed replay](OnlineReachabilityPreservers/SteinerFinIndexedReplayWork.lean)
+  builds the canonical arc array once and uses arithmetic vertex and
+  early-coordinate ranks on `Fin n`. Lean bounds the construction,
+  proves a word-work bound for individual rank computations, and preserves
+  all earlier replay records.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

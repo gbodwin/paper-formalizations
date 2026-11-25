@@ -299,34 +299,59 @@ private theorem forestScale_le_decoderCap (G : Arcs V) (height : ℕ) :
   exact max_le (Nat.le_add_right _ _)
     ((Nat.mul_le_mul_left _ (Nat.pow_le_pow_left vertices 2)).trans (Nat.le_add_left _ _))
 
+/-- The three index orders consumed by the fixed-budget seed decoder. -/
+structure SteinerReplaySeedIndexes (G : Arcs V) (height : ℕ) where
+  vertices : V ≃ Fin (Fintype.card V)
+  arcs : G ≃ Fin G.card
+  coordinates : {w : ℕ // w = (forestScale G height).log2+1} →
+    EarlySeedCoordinate G height ≃ Fin (Fintype.card (EarlySeedCoordinate G height))
+
+/-- Canonical seed index orders for a general ordered vertex type. -/
+def steinerReplaySeedIndexes (G : Arcs V) (height : ℕ) : SteinerReplaySeedIndexes G height :=
+  let vertices := steinerUniverseArrayIndex V
+  ⟨vertices,steinerArcArrayIndex G,fun width => steinerEarlyCoordinateIndexLex G height width.val width.property vertices⟩
+
 private def decodeSteinerFixedBudgetAtIndex (G : Arcs V) (height n m : ℕ)
-    (hn : n = Fintype.card V) (hm : m = G.card)
+    (hn : n = Fintype.card V) (hm : m = G.card) (indexes : SteinerReplaySeedIndexes G height)
     (width : {w : ℕ // w = (forestScale G height).log2+1})
     (bits : Fin (steinerBitBudget G height) → Bool) :=
-  let vertices := steinerUniverseArrayIndex V
-  let coordinates := steinerEarlyCoordinateIndexLex G height width.val width.property vertices
-  let arcs := steinerArcArrayIndex G
-  decodeCompleteSteinerSeedWithFixedBudgetWork G height width.val n m hn hm width.property coordinates vertices arcs bits
+  decodeCompleteSteinerSeedWithFixedBudgetWork G height width.val n m hn hm width.property
+    (indexes.coordinates width) indexes.vertices indexes.arcs bits
 
 /-- The fixed-budget decoder work, including the forest's word-width calculation. -/
 def completeSteinerCachedDecoderWorkPolynomial (n m height : ℕ) : ℕ :=
   completeSteinerSeedDecodeWorkPolynomial n m height+7*steinerDecoderScaleCap n height+27
 
+/-- Decode one bit word using the width from the supplied forest preparation. -/
+def decodeSteinerSeedFromPreparedScale (G : Arcs V) (height n m : ℕ)
+    (hn : n = Fintype.card V) (hm : m = G.card) (scale : {s : ℕ // s = forestScale G height})
+    (indexes : SteinerReplaySeedIndexes G height) (bits : Fin (steinerBitBudget G height) → Bool) :=
+  let scaleWidth := bitLengthWithWork scale.val
+  let width := max 1 scaleWidth.1
+  have widthEq : width = (forestScale G height).log2+1 := by
+    dsimp only [width, scaleWidth]
+    rw [(bitLengthWithWork_spec _).1,max_size_eq_log2_add_one,scale.property]
+  let decoded := decodeSteinerFixedBudgetAtIndex G height n m hn hm indexes ⟨width,widthEq⟩ bits
+  (decoded.1.1.map Prod.fst,decoded.2+scaleWidth.2+8)
+
+/-- Reuse one prepared forest and one set of seed indexes at every prefix. -/
+def completeSteinerReplayWithDecoderWorkUsingIndexes (G : Arcs V) (height n m : ℕ)
+    (hn : n = Fintype.card V) (hm : m = G.card) (prepared : SteinerSeedPreparation G height)
+    (indexes : SteinerReplaySeedIndexes G height)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (V × V)) :=
+  let decoded := decodeSteinerSeedFromPreparedScale G height n m hn hm prepared.1 indexes bits
+  let rounds := match decoded.1 with
+    | none => steinerFallbackPrefixScan G D
+    | some seed => D.inits.map (completeSteinerDrawRunWithSearchWorkFromEarly G
+        (prepared.2.1 seed.1) seed.2.1 seed.2.2)
+  ((rounds,prepared.2.2),decoded.2)
+
 /-- Decode once and use the supplied initial forest plan at every prefix. -/
 def completeSteinerReplayWithDecoderWorkFromPreparation (G : Arcs V) (height n m : ℕ)
     (hn : n = Fintype.card V) (hm : m = G.card) (prepared : SteinerSeedPreparation G height)
     (bits : Fin (steinerBitBudget G height) → Bool) (D : List (V × V)) :=
-  let scaleWidth := bitLengthWithWork prepared.1.val
-  let width := max 1 scaleWidth.1
-  have widthEq : width = (forestScale G height).log2+1 := by
-    dsimp only [width, scaleWidth]
-    rw [(bitLengthWithWork_spec _).1,max_size_eq_log2_add_one,prepared.1.property]
-  let decoded := decodeSteinerFixedBudgetAtIndex G height n m hn hm ⟨width,widthEq⟩ bits
-  let rounds := match decoded.1.1.map Prod.fst with
-    | none => steinerFallbackPrefixScan G D
-    | some seed => D.inits.map (completeSteinerDrawRunWithSearchWorkFromEarly G
-        (prepared.2.1 seed.1) seed.2.1 seed.2.2)
-  ((rounds,prepared.2.2),decoded.2+scaleWidth.2+8)
+  completeSteinerReplayWithDecoderWorkUsingIndexes G height n m hn hm prepared
+    (steinerReplaySeedIndexes G height) bits D
 
 /-- Use the measured fixed-budget sampler once in the existing cached prefix
 replay. Report its work separately from the established search and table
@@ -368,9 +393,10 @@ theorem completeSteinerReplayWithCachedDecoderWork_spec (G : Arcs V) (height n m
   have sameWidth : (⟨max 1 scaleWidth.1,exactWidth.trans widthEq⟩ : {w : ℕ // w = (forestScale G height).log2+1}) =
       ⟨width,widthEq⟩ := Subtype.ext exactWidth
   unfold completeSteinerReplayWithCachedDecoderWork completeSteinerReplayWithDecoderWorkFromPreparation
+    completeSteinerReplayWithDecoderWorkUsingIndexes decodeSteinerSeedFromPreparedScale
   dsimp only
   rw [sameWidth]
-  dsimp only [decodeSteinerFixedBudgetAtIndex]
+  dsimp only [decodeSteinerFixedBudgetAtIndex,steinerReplaySeedIndexes]
   let vertices := steinerUniverseArrayIndex V
   let coordinates := steinerEarlyCoordinateIndexLex G height width widthEq vertices
   let arcs := steinerArcArrayIndex G
