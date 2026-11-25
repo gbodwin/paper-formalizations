@@ -1050,4 +1050,85 @@ theorem completeFinSteinerReplayWithThinIntervalWork_prefixes {n : ℕ} (G : Arc
   have bounded := Nat.add_le_add_right (Nat.add_le_add charged ready) 3
   simpa only [work,Nat.add_assoc] using bounded
 
+/-- Fixed-height replay allowance with the late classification, fallback tests
+and hub-leg preparation included in each evaluation. -/
+def steinerTraceClassificationWorkPolynomial (n m height p : ℕ) : ℕ :=
+  steinerTraceEarlySeedRankWorkPolynomial n height p+
+    (p+1)*(lateSteinerIntervalPreparationWordBudget n m p+steinerThinIntervalWorkPolynomial n m p+2)
+
+private theorem completeFinSteinerReplayWithClassificationEvaluator_spec {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (arcsEq : arcs.val.toFinset = G)
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
+    let late := fun τ hubs rows => lateSteinerWithClassificationWork G arcs τ m hubs rows
+    let out := completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D late
+    let old := completeFinSteinerReplayWithThinRowWork G raw same height m hm bits D
+    out.1 = old.1 ∧ out.2.2 = old.2.2 ∧
+      ((∀ d ∈ D, Reach G d.1 d.2) → out.2.1 ≤ steinerTraceClassificationWorkPolynomial n m height D.length+11*m+21) := by
+  apply completeFinSteinerReplayWithLateEvaluator_spec G raw same height m hm bits D
+    (fun τ hubs rows => lateSteinerWithClassificationWork G arcs τ m hubs rows)
+    (lateSteinerIntervalPreparationWordBudget n m D.length+steinerThinIntervalWorkPolynomial n m D.length)
+  · intro τ hubs rows P
+    exact (lateSteinerWithClassificationWork_eq G arcs arcsEq τ m hm hubs rows P).trans
+      (lateSteinerWithThinIntervalWork_eq G arcs arcsEq τ m hm hubs rows P)
+  · intro early τ hubs rows edges count P short reachable
+    have spent := lateSteinerWithClassificationWork_bound early arcs arcsEq τ m hm hubs rows edges count P reachable
+    refine spent.trans (Nat.add_le_add (lateSteinerIntervalPreparationWordBudget_mono n m short) ?_)
+    refine (steinerThinIntervalWorkBound_le n m P.length).trans ?_
+    unfold steinerThinIntervalWorkPolynomial steinerThinResidualRouteWorkPolynomial steinerStreamingThinWorkPolynomial
+    gcongr
+
+/-- Run the same replay with explicit late classification and fallback scans. -/
+def completeFinSteinerReplayWithClassificationWork {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
+  let rows := finArcRowsWithWordWork raw
+  let out := completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D
+    (fun τ hubs thresholds => lateSteinerWithClassificationWork G rows.1 τ m hubs thresholds)
+  (out.1,out.2.1+rows.2+3,out.2.2)
+
+theorem completeFinSteinerReplayWithClassificationWork_spec {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
+    let out := completeFinSteinerReplayWithClassificationWork G raw same height m hm bits D
+    let old := completeFinSteinerReplayWithThinIntervalWork G raw same height m hm bits D
+    out.1 = old.1 ∧ out.2.2 = old.2.2 ∧
+      ((∀ d ∈ D, Reach G d.1 d.2) → out.2.1 ≤ steinerTraceClassificationWorkPolynomial n m height D.length+
+        11*m+21+finArcRowsWordBudget n raw.length+3) := by
+  obtain ⟨arcs,ready⟩ := finArcRowsWithWordWork_spec G raw same
+  obtain ⟨current,count,work⟩ := completeFinSteinerReplayWithClassificationEvaluator_spec G
+    (finArcRowsWithWordWork raw).1 arcs raw same height m hm bits D
+  obtain ⟨previous,priorCount,_⟩ := completeFinSteinerReplayWithThinIntervalWork_spec G raw same height m hm bits D
+  exact ⟨current.trans previous.symm,count.trans priorCount.symm,
+    fun feasible => Nat.add_le_add_right (Nat.add_le_add (work feasible) ready) 3⟩
+
+/-- Exact fixed-budget prefix graphs with the late classification and thick
+fallback driven by metered scans of the original graph arcs. -/
+theorem completeFinSteinerReplayWithClassificationWork_prefixes {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let out := completeFinSteinerReplayWithClassificationWork G raw same height m hm bits D
+    let base := out.1.1.1
+    base.1.1.map Prod.fst = D.inits.map (completeSteinerRunWithBitBudget G height bits) ∧
+      (base.1.1.map Prod.snd).sum+base.1.2.1+base.1.2.2.1+base.1.2.2.2+base.2+out.1.1.2+out.1.2+out.2.1 ≤
+        completeFinSteinerPreparationWorkPolynomial n m raw.length height D.length +
+          finSteinerWeightPlanWorkPolynomial n height + finSteinerReplayIndexWorkPolynomial n raw.length +
+          steinerTraceClassificationWorkPolynomial n m height D.length+11*m+21+finArcRowsWordBudget n raw.length+3 := by
+  let arcs := finArcRowsWithWordWork raw
+  let late := fun τ hubs rows => lateSteinerWithClassificationWork G arcs.1 τ m hubs rows
+  let prior := completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D late
+  let work := steinerTraceClassificationWorkPolynomial n m height D.length+11*m+21
+  obtain ⟨exactArcs,assembly⟩ := finArcRowsWithWordWork_spec G raw same
+  obtain ⟨sameRecord,_,traceWork⟩ := completeFinSteinerReplayWithClassificationEvaluator_spec G
+    arcs.1 exactArcs raw same height m hm bits D
+  obtain ⟨samePrefix,charged⟩ := completeFinSteinerReplayWithLateEvaluator_prefixes G raw same height m hm bits D
+    feasible late work ⟨sameRecord,traceWork feasible⟩
+  refine ⟨samePrefix,?_⟩
+  have ready : arcs.2 ≤ finArcRowsWordBudget n raw.length := assembly
+  dsimp only [completeFinSteinerReplayWithClassificationWork]
+  change _+((prior.2.1+arcs.2)+3) ≤ _
+  have bounded := Nat.add_le_add_right (Nat.add_le_add charged ready) 3
+  simpa only [work,Nat.add_assoc] using bounded
+
 end OnlineReachabilityPreservers

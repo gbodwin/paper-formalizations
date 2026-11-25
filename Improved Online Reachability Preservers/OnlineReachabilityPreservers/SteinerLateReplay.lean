@@ -1,5 +1,6 @@
 import OnlineReachabilityPreservers.AlgorithmSearchWork
 import OnlineReachabilityPreservers.SteinerAssembly
+import OnlineReachabilityPreservers.SteinerLateIntervalWork
 import OnlineReachabilityPreservers.SteinerThinReplay
 
 /-! Compose the search charges for classification, hubs and thin rounding. -/
@@ -19,11 +20,14 @@ private theorem hubSearchWorkBound_mono (n m : ℕ) : Monotone (hubSearchWorkBou
   unfold hubSearchWorkBound liftSearchWorkBound
   gcongr
 
-def hubPreserverWithSearchWork (G : Arcs V) (S : Finset V) (D : List (V × V)) : Arcs V × ℕ :=
-  let hits := hitRequests G S D
+private def hubPreserverFromRequestsWithSearchWork (G : Arcs V) (n m : ℕ)
+    (hits : List ((V × V) × (V × V))) (count : ℕ) : Arcs V × ℕ :=
   let left := sinkPreserverWithSearchWork G (hits.map Prod.fst)
   let right := sourcePreserverWithSearchWork G (hits.map Prod.snd)
-  (left.1 ∪ right.1, D.length*(2*Fintype.card V*G.card)+left.2+right.2)
+  (left.1 ∪ right.1, count*(2*n*m)+left.2+right.2)
+
+def hubPreserverWithSearchWork (G : Arcs V) (S : Finset V) (D : List (V × V)) : Arcs V × ℕ :=
+  hubPreserverFromRequestsWithSearchWork G (Fintype.card V) G.card (hitRequests G S D) D.length
 
 theorem hubPreserverWithSearchWork_spec (G : Arcs V) (S : Finset V) (D : List (V × V)) :
     let out := hubPreserverWithSearchWork G S D
@@ -52,6 +56,11 @@ theorem hubPreserverWithSearchWork_spec (G : Arcs V) (S : Finset V) (D : List (V
 def lateStepSearchWorkBound (n m p : ℕ) : ℕ :=
   2*n*m+hubSearchWorkBound n m p+n*m
 
+private def advanceWithHubSearchWork (n fee : ℕ) (hubs : Arcs V × ℕ)
+    (st : SteinerPhaseTraces V) (d : V × V) : SteinerPhaseTraces V × ℕ :=
+  let found := reachInWithArcInspections hubs.1 d.2 n
+  (if d.1 ∈ found.1 then st else {st with hits := st.hits++[d]}, fee+hubs.2+found.2)
+
 private def lateStepWithSearchWork (G : Arcs V) (S : Finset V)
     (st : SteinerPhaseTraces V) (d : V × V) : SteinerPhaseTraces V × ℕ :=
   if d.1 = d.2 then (st,0)
@@ -61,9 +70,7 @@ private def lateStepWithSearchWork (G : Arcs V) (S : Finset V)
     match hitHub G S d with
     | none => (if d ∈ st.thin then st else {st with thin := st.thin++[d]}, 2*n*m)
     | some _ =>
-      let hubs := hubPreserverWithSearchWork G S st.hits
-      let found := reachInWithArcInspections hubs.1 d.2 n
-      (if d.1 ∈ found.1 then st else {st with hits := st.hits++[d]}, 2*n*m+hubs.2+found.2)
+      advanceWithHubSearchWork n (2*n*m) (hubPreserverWithSearchWork G S st.hits) st d
 
 private theorem lateStepWithSearchWork_spec {G : Arcs V} (early : EarlySteinerRule G) (S : Finset V)
     (st : SteinerPhaseTraces V) (d : V × V) :
@@ -100,11 +107,11 @@ private theorem lateStepWithSearchWork_spec {G : Arcs V} (early : EarlySteinerRu
       rw [same]
       rfl
     by_cases served : d.1 ∈ reaches (hubPreserver G S st.hits) d.2
-    · simp only [lateStepWithSearchWork, steinerPhaseStep, self, ite_false, Nat.not_lt_zero,
+    · simp only [lateStepWithSearchWork, advanceWithHubSearchWork, steinerPhaseStep, self, ite_false, Nat.not_lt_zero,
         hit, ← show hubs = hubPreserverWithSearchWork G S st.hits from rfl,
         reachInWithArcInspections_spec, reachEq, served, ite_true]
       exact ⟨trivial, Nat.le_succ _, Nat.le_succ _, fun _ h => Or.inl h, lim⟩
-    · simp only [lateStepWithSearchWork, steinerPhaseStep, self, ite_false, Nat.not_lt_zero,
+    · simp only [lateStepWithSearchWork, advanceWithHubSearchWork, steinerPhaseStep, self, ite_false, Nat.not_lt_zero,
         hit, ← show hubs = hubPreserverWithSearchWork G S st.hits from rfl,
         reachInWithArcInspections_spec, reachEq, served, ite_false]
       exact ⟨trivial, by simp, Nat.le_succ _, fun _ h => Or.inl h, lim⟩
@@ -433,5 +440,266 @@ theorem lateSteinerWithThinIntervalWork_bound {n : ℕ} {G : Arcs (Fin n)} (earl
     unfold steinerThinIntervalWorkBound steinerThinResidualRouteWorkBound steinerStreamingThinWorkBound
     gcongr
   · exact thinRoundRunFromThresholdListWithIntervalWork_bound G arcs arcsEq m hm rows edges count (thinRoundingFactor n τ)
+
+/-- Allow one arrival's classification, hub-leg preparation and trace edits. -/
+private def lateIntervalStepWordBudget (n m p : ℕ) : ℕ :=
+  hitHubFromArcRowsWordBudget n m+p*(hitHubFromArcRowsWordBudget n m+40)+44
+
+private def lateStepWithIntervalWork (G : Arcs V) (arcs : {r : List (V × V) // r.Nodup}) (n m : ℕ)
+    (S : Finset V) (st : SteinerPhaseTraces V) (d : V × V) : (SteinerPhaseTraces V × ℕ) × ℕ :=
+  if d.1 = d.2 then ((st,0),4)
+  else
+    let fee := 2*n*m
+    let selected := hitHubFromArcRowsWithWordWork arcs n S d
+    match selected.1 with
+    | none =>
+      let seen := memScanWithWordWork d st.thin
+      let next := if seen.1 then st else {st with thin := st.thin++[d]}
+      ((next,fee),selected.2+2*seen.2+2*st.thin.length+13)
+    | some _ =>
+      let hits := hitRequestsFromArcRowsWithWordWork arcs n S st.hits
+      let count := st.hits.length
+      let hubs := hubPreserverFromRequestsWithSearchWork G n m hits.1 count
+      -- Allow the length scan, both projections of the hub legs and a possible append.
+      (advanceWithHubSearchWork n fee hubs st d,selected.2+hits.2+24*count+28)
+
+private theorem lateStepWithIntervalWork_spec (G : Arcs V) (arcs : {r : List (V × V) // r.Nodup})
+    (arcsEq : arcs.val.toFinset = G) (S : Finset V) (st : SteinerPhaseTraces V) (d : V × V)
+    (p : ℕ) (hcap : st.hits.length ≤ p) (tcap : st.thin.length ≤ p) :
+    let out := lateStepWithIntervalWork G arcs (Fintype.card V) G.card S st d
+    out.1 = lateStepWithSearchWork G S st d ∧
+      out.2 ≤ lateIntervalStepWordBudget (Fintype.card V) arcs.val.length p := by
+  let n := Fintype.card V
+  let B := hitHubFromArcRowsWordBudget n arcs.val.length
+  let selected := hitHubFromArcRowsWithWordWork arcs n S d
+  obtain ⟨choice,word⟩ := hitHubFromArcRowsWithWordWork_spec arcs S d
+  change selected.1 = _ at choice
+  change selected.2 ≤ B at word
+  rw [arcsEq] at choice
+  by_cases self : d.1 = d.2
+  · simp only [lateStepWithIntervalWork,lateStepWithSearchWork,self,ite_true,true_and]
+    unfold lateIntervalStepWordBudget
+    omega
+  have sameChoice : (hitHubFromArcRowsWithWordWork arcs (Fintype.card V) S d).1 = hitHub G S d := choice
+  cases kind : hitHub G S d with
+  | none =>
+    let seen := memScanWithWordWork d st.thin
+    obtain ⟨member,checks⟩ := memScanWithWordWork_spec d st.thin
+    change seen.2 ≤ 2*st.thin.length+1 at checks
+    have work : selected.2+2*seen.2+2*st.thin.length+13 ≤ lateIntervalStepWordBudget n arcs.val.length p := by
+      have room : 6*p ≤ p*(B+40) := by
+        rw [Nat.mul_comm 6]
+        exact Nat.mul_le_mul_left _ (by omega)
+      change _ ≤ B+p*(B+40)+44
+      omega
+    simp only [lateStepWithIntervalWork,lateStepWithSearchWork,self,ite_false,sameChoice,kind,member,
+      decide_eq_true_eq]
+    exact ⟨trivial,work⟩
+  | some h =>
+    let hits := hitRequestsFromArcRowsWithWordWork arcs n S st.hits
+    obtain ⟨legs,charge⟩ := hitRequestsFromArcRowsWithWordWork_spec arcs S st.hits
+    change hits.1 = _ at legs
+    change hits.2 ≤ st.hits.length*(B+11)+2 at charge
+    rw [arcsEq] at legs
+    have sameLegs : (hitRequestsFromArcRowsWithWordWork arcs (Fintype.card V) S st.hits).1 =
+        hitRequests G S st.hits := legs
+    have work : selected.2+hits.2+24*st.hits.length+28 ≤ lateIntervalStepWordBudget n arcs.val.length p := by
+      have room : st.hits.length*(B+11)+24*st.hits.length ≤ p*(B+40) := by
+        calc
+          _ = st.hits.length*(B+35) := by ring
+          _ ≤ _ := Nat.mul_le_mul hcap (by omega)
+      change _ ≤ B+p*(B+40)+44
+      omega
+    simp only [lateStepWithIntervalWork,lateStepWithSearchWork,self,ite_false,sameChoice,kind,sameLegs,
+      hubPreserverWithSearchWork]
+    exact ⟨trivial,work⟩
+
+private def lateTracesWithIntervalWorkFrom (G : Arcs V) (arcs : {r : List (V × V) // r.Nodup}) (n m : ℕ)
+    (S : Finset V) : List (V × V) → SteinerPhaseTraces V → (SteinerPhaseTraces V × ℕ) × ℕ
+  | [], st => ((st,0),2)
+  | d::D, st =>
+    let step := lateStepWithIntervalWork G arcs n m S st d
+    let rest := lateTracesWithIntervalWorkFrom G arcs n m S D step.1.1
+    ((rest.1.1,step.1.2+rest.1.2),step.2+rest.2+8)
+
+private theorem lateStepWithSearchWork_sizes (G : Arcs V) (S : Finset V) (st : SteinerPhaseTraces V) (d : V × V) :
+    let step := lateStepWithSearchWork G S st d
+    step.1.hits.length ≤ st.hits.length+1 ∧ step.1.thin.length ≤ st.thin.length+1 := by
+  unfold lateStepWithSearchWork
+  split
+  · simp
+  · dsimp only
+    split
+    · split <;> simp
+    · unfold advanceWithHubSearchWork
+      dsimp only
+      split <;> simp
+
+private theorem lateTracesWithIntervalWorkFrom_spec {G : Arcs V}
+    (arcs : {r : List (V × V) // r.Nodup}) (arcsEq : arcs.val.toFinset = G)
+    (S : Finset V) (D : List (V × V)) (st : SteinerPhaseTraces V) (p : ℕ)
+    (hcap : st.hits.length+D.length ≤ p) (tcap : st.thin.length+D.length ≤ p) :
+    let out := lateTracesWithIntervalWorkFrom G arcs (Fintype.card V) G.card S D st
+    out.1 = lateTracesWithSearchWorkFrom G S D st ∧
+      out.2 ≤ D.length*(lateIntervalStepWordBudget (Fintype.card V) arcs.val.length p+8)+2 := by
+  let B := lateIntervalStepWordBudget (Fintype.card V) arcs.val.length p
+  induction D generalizing st with
+  | nil => simp [lateTracesWithIntervalWorkFrom,lateTracesWithSearchWorkFrom]
+  | cons d D ih =>
+    let step := lateStepWithIntervalWork G arcs (Fintype.card V) G.card S st d
+    let older := lateStepWithSearchWork G S st d
+    let rest := lateTracesWithIntervalWorkFrom G arcs (Fintype.card V) G.card S D step.1.1
+    obtain ⟨eq,word⟩ := lateStepWithIntervalWork_spec G arcs arcsEq S st d p (by omega) (by omega)
+    change step.1 = older at eq
+    change step.2 ≤ B at word
+    obtain ⟨hadd,tadd⟩ := lateStepWithSearchWork_sizes G S st d
+    have fewHits : step.1.1.hits.length+D.length ≤ p := by
+      rw [eq]
+      change older.1.hits.length ≤ st.hits.length+1 at hadd
+      simp only [List.length_cons] at hcap
+      omega
+    have fewThin : step.1.1.thin.length+D.length ≤ p := by
+      rw [eq]
+      change older.1.thin.length ≤ st.thin.length+1 at tadd
+      simp only [List.length_cons] at tcap
+      omega
+    obtain ⟨same,cost⟩ := ih step.1.1 fewHits fewThin
+    change rest.1 = _ at same
+    change rest.2 ≤ D.length*(B+8)+2 at cost
+    refine ⟨?_,?_⟩
+    · change (rest.1.1,step.1.2+rest.1.2) =
+        ((lateTracesWithSearchWorkFrom G S D older.1).1,older.2+(lateTracesWithSearchWorkFrom G S D older.1).2)
+      rw [same,eq]
+    · change step.2+rest.2+8 ≤ (D.length+1)*(B+8)+2
+      rw [Nat.add_mul,Nat.one_mul]
+      omega
+
+/-- Interval scans for classifying arrivals, preparing both hub legs and
+testing the thick fallback. This budget includes the trace-list bookkeeping. -/
+def lateSteinerIntervalPreparationWordBudget (n m p : ℕ) : ℕ :=
+  (p*(lateIntervalStepWordBudget n m p+8)+2) +
+    (p*(demandIntervalRowsWordBudget n m+n+8)+2) +
+    (2*p+20) + (p*(hitHubFromArcRowsWordBudget n m+35)+30)
+
+theorem lateSteinerIntervalPreparationWordBudget_mono (n m : ℕ) :
+    Monotone (lateSteinerIntervalPreparationWordBudget n m) := by
+  intro a b le
+  unfold lateSteinerIntervalPreparationWordBudget lateIntervalStepWordBudget
+  gcongr
+
+private def lateSteinerWithClassificationWorkUsing (G : Arcs V)
+    (arcs : {r : List (V × V) // r.Nodup}) (n τ m : ℕ) (S : Finset V)
+    (round : List (V × V) → (Arcs V × ℕ) × ℕ) (D : List (V × V)) : (Arcs V × ℕ) × ℕ :=
+  let traces := lateTracesWithIntervalWorkFrom G arcs n m S D ⟨[],[],[]⟩
+  let thin := traces.1.1.thin
+  let check := anyThickRequestWithIntervalRowsWork arcs n τ thin
+  let count := thin.length
+  let legacy := traces.1.2+count*(2*n*m)
+  let word := traces.2+check.2+(2*count+20)
+  if check.1 then ((G,legacy),word)
+  else
+    let hitTrace := traces.1.1.hits
+    let hits := hitRequestsFromArcRowsWithWordWork arcs n S hitTrace
+    let hitCount := hitTrace.length
+    let hubs := hubPreserverFromRequestsWithSearchWork G n m hits.1 hitCount
+    let rounded := round thin
+    ((hubs.1 ∪ rounded.1.1,legacy+hubs.2+rounded.1.2),word+(hits.2+24*hitCount+28)+rounded.2)
+
+private theorem lateSteinerWithClassificationWorkUsing_eq {G : Arcs V}
+    (arcs : {r : List (V × V) // r.Nodup}) (arcsEq : arcs.val.toFinset = G)
+    (n τ m : ℕ) (hn : n = Fintype.card V) (hm : m = G.card) (S : Finset V)
+    (round : List (V × V) → (Arcs V × ℕ) × ℕ) (D : List (V × V)) :
+    (lateSteinerWithClassificationWorkUsing G arcs n τ m S round D).1 =
+      (lateSteinerWithThinWorkUsing G τ m S round D).1 := by
+  subst n
+  subst m
+  let st : SteinerPhaseTraces V := ⟨[],[],[]⟩
+  let traces := lateTracesWithIntervalWorkFrom G arcs (Fintype.card V) G.card S D st
+  let old := lateTracesWithSearchWorkFrom G S D st
+  obtain ⟨same,_⟩ := lateTracesWithIntervalWorkFrom_spec arcs arcsEq S D st D.length (by simp [st]) (by simp [st])
+  change traces.1 = old at same
+  have check := (anyThickRequestWithIntervalRowsWork_spec arcs τ old.1.thin).1
+  have hits := (hitRequestsFromArcRowsWithWordWork_spec arcs S old.1.hits).1
+  rw [arcsEq] at check hits
+  dsimp only [lateSteinerWithClassificationWorkUsing,lateSteinerWithThinWorkUsing,lateSteinerWithTraceUsing]
+  rw [same,check,hits]
+  split <;> rfl
+
+private theorem lateSteinerWithClassificationWorkUsing_bound {G : Arcs V} (early : EarlySteinerRule G)
+    (arcs : {r : List (V × V) // r.Nodup}) (arcsEq : arcs.val.toFinset = G)
+    (depth τ m : ℕ) (hn : depth = Fintype.card V) (hm : m = G.card) (S : Finset V)
+    (round : List (V × V) → (Arcs V × ℕ) × ℕ) (budget : ℕ → ℕ) (mono : Monotone budget)
+    (cost : ∀ P, (∀ d ∈ P, Reach G d.1 d.2) → (round P).2 ≤ budget P.length)
+    (D : List (V × V)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (lateSteinerWithClassificationWorkUsing G arcs depth τ m S round D).2 ≤
+      lateSteinerIntervalPreparationWordBudget (Fintype.card V) arcs.val.length D.length+budget D.length := by
+  subst depth
+  subst m
+  let n := Fintype.card V
+  let p := D.length
+  let st : SteinerPhaseTraces V := ⟨[],[],[]⟩
+  let traces := lateTracesWithIntervalWorkFrom G arcs n G.card S D st
+  let old := lateTracesWithSearchWorkFrom G S D st
+  let check := anyThickRequestWithIntervalRowsWork arcs n τ traces.1.1.thin
+  let hits := hitRequestsFromArcRowsWithWordWork arcs n S traces.1.1.hits
+  obtain ⟨same,traceWork⟩ := lateTracesWithIntervalWorkFrom_spec arcs arcsEq S D st p (by simp [st,p]) (by simp [st,p])
+  obtain ⟨_,hcap,tcap,covered,_⟩ := lateTracesWithSearchWorkFrom_spec early S D st p
+    (by simp [st,p]) (by simp [st,p]) feasible (by simp [st])
+  change traces.1 = old at same
+  change traces.2 ≤ p*(lateIntervalStepWordBudget n arcs.val.length p+8)+2 at traceWork
+  have hlen : traces.1.1.hits.length ≤ p := by rw [same]; exact hcap
+  have tlen : traces.1.1.thin.length ≤ p := by rw [same]; exact tcap
+  have good : ∀ d ∈ traces.1.1.thin, Reach G d.1 d.2 := by rw [same]; exact covered
+  have thickWork := (anyThickRequestWithIntervalRowsWork_spec arcs τ traces.1.1.thin).2
+  change check.2 ≤ _ at thickWork
+  have thickBound : check.2 ≤ p*(demandIntervalRowsWordBudget n arcs.val.length+n+8)+2 :=
+    thickWork.trans (by gcongr)
+  have hubWork := (hitRequestsFromArcRowsWithWordWork_spec arcs S traces.1.1.hits).2
+  change hits.2 ≤ traces.1.1.hits.length*(hitHubFromArcRowsWordBudget n arcs.val.length+11)+2 at hubWork
+  have legsBound : hits.2 ≤ p*(hitHubFromArcRowsWordBudget n arcs.val.length+11)+2 :=
+    hubWork.trans (Nat.add_le_add_right (Nat.mul_le_mul_right _ hlen) _)
+  have hubBound : hits.2+24*traces.1.1.hits.length+28 ≤ p*(hitHubFromArcRowsWordBudget n arcs.val.length+35)+30 := by
+    calc
+      _ ≤ p*(hitHubFromArcRowsWordBudget n arcs.val.length+11)+2+24*p+28 := by gcongr
+      _ = _ := by ring
+  have roundBound : (round traces.1.1.thin).2 ≤ budget p := (cost _ good).trans (mono tlen)
+  have base := Nat.add_le_add (Nat.add_le_add traceWork thickBound) (Nat.add_le_add_right (Nat.mul_le_mul_left 2 tlen) 20)
+  dsimp only [lateSteinerWithClassificationWorkUsing]
+  unfold lateSteinerIntervalPreparationWordBudget
+  split
+  · exact (base.trans (Nat.le_add_right _ _)).trans (Nat.le_add_right _ _)
+  · exact Nat.add_le_add (Nat.add_le_add base hubBound) roundBound
+
+/-- Replay the same late branches using explicit graph-row scans for
+classification, hub-leg preparation and the thick fallback. -/
+def lateSteinerWithClassificationWork {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (τ m : ℕ) (S : Finset (Fin n))
+    (rows : ThinThresholdList (Fin n)) (D : List (Fin n × Fin n)) : (Arcs (Fin n) × ℕ) × ℕ :=
+  lateSteinerWithClassificationWorkUsing G arcs n τ m S
+    (thinRoundRunFromThresholdListWithIntervalWork G arcs m rows (thinRoundingFactor n τ)) D
+
+theorem lateSteinerWithClassificationWork_eq {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (arcsEq : arcs.val.toFinset = G) (τ m : ℕ) (hm : m = G.card)
+    (S : Finset (Fin n)) (rows : ThinThresholdList (Fin n)) (D : List (Fin n × Fin n)) :
+    (lateSteinerWithClassificationWork G arcs τ m S rows D).1 = (lateSteinerWithThinIntervalWork G arcs τ m S rows D).1 :=
+  lateSteinerWithClassificationWorkUsing_eq arcs arcsEq n τ m (Fintype.card_fin _).symm hm S _ D
+
+theorem lateSteinerWithClassificationWork_bound {n : ℕ} {G : Arcs (Fin n)} (early : EarlySteinerRule G)
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (arcsEq : arcs.val.toFinset = G) (τ m : ℕ) (hm : m = G.card)
+    (S : Finset (Fin n)) (rows : ThinThresholdList (Fin n)) (edges : ∀ r ∈ rows.val, r.1 ∈ G)
+    (count : rows.val.length ≤ m) (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (lateSteinerWithClassificationWork G arcs τ m S rows D).2 ≤
+      lateSteinerIntervalPreparationWordBudget n m D.length+steinerThinIntervalWorkBound n m D.length := by
+  have lengthEq : arcs.val.length = m := by rw [← List.toFinset_card_of_nodup arcs.property,arcsEq,hm]
+  have mono : Monotone (steinerThinIntervalWorkBound n m) := by
+    intro a b short
+    unfold steinerThinIntervalWorkBound steinerThinResidualRouteWorkBound steinerStreamingThinWorkBound
+    gcongr
+  have bound := lateSteinerWithClassificationWorkUsing_bound early arcs arcsEq n τ m (Fintype.card_fin _).symm hm S
+    (thinRoundRunFromThresholdListWithIntervalWork G arcs m rows (thinRoundingFactor n τ))
+    (steinerThinIntervalWorkBound n m) mono
+    (thinRoundRunFromThresholdListWithIntervalWork_bound G arcs arcsEq m hm rows edges count (thinRoundingFactor n τ))
+    D feasible
+  simpa only [lateSteinerWithClassificationWork,lengthEq,Fintype.card_fin] using bound
 
 end OnlineReachabilityPreservers

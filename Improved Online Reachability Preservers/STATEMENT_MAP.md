@@ -643,8 +643,17 @@ restrict the same residual cut and select the same outgoing arcs for
 doubling. Search and evaluation records still agree for arbitrary inputs.
 The [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1026)
 includes these charges in the fixed-height polynomial on feasible traces.
-Late classification and hub routing, the remaining early weighted work
-and container operations, bit costs, and native costs remain open.
+
+The late phase also scans the stored arc list to choose the least sampled
+hub for each non-self arrival and build the two ordered hub-leg lists.
+The same list drives the short-circuit test for a missed thick demand.
+The replay has the same graph and search records and the same number of
+evaluations for all inputs. On feasible traces, the fixed-height
+polynomial includes the new interval and trace-list operations. Hub
+routing and its reachability tests, the remaining early weighted work and
+container operations, bit costs, and native costs remain open.
+[Hub selection and fallback scans](OnlineReachabilityPreservers/SteinerLateIntervalWork.lean)
+· [Complete prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1107).
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

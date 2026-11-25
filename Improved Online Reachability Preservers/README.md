@@ -217,9 +217,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   shares one duplicate-free arc list across the trace. Each thin request
   in an evaluated thin run prepares its interval once and reuses it for
   the cut searches and updates. The fixed-height bound includes those
-  interval computations. Late classification, hub routing, the remaining
-  early weighted work and container operations, bit costs, and native
-  execution costs remain open.
+  interval computations. The late replay also uses the arc list for
+  arrival classification, both ordered hub-leg lists, and the test for
+  a thick miss. Its fixed-height bound charges these scans and trace-list
+  operations on feasible traces. The older graph and search records and
+  the evaluation count agree for all inputs. The hub routing and its
+  reachability tests, the remaining early weighted work and container
+  operations, bit costs, and native execution costs remain open.
+  [Replay with late classification work](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1107).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
