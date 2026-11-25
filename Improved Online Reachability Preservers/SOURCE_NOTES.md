@@ -306,12 +306,27 @@ strongly connected component it visits. A topological order of the
 condensation orders all kept rows. If each path meets each component
 in at most \(b\) vertices, this again forces at least \(M/(12b)\) edges at
 the original counts. The more general proof uses the total number of
-path-component incidences, so the factor can be constant even if some
-paths meet a component in many vertices. A uniform bound on the loss
-for an arbitrary fully bridge-free family remains open.
+path-component incidences. Selecting one vertex per visit can retain an
+arbitrarily small fraction of the mass. For every \(L\), a family of three
+fully bridge-free paths has mass \(3L+7\) and just three visits. Pruning
+opposite intersections retains all three paths as given. This leaves the
+general increasing-subsequence comparison and the extremal converse open.
 [Increasing subsequences](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L39)
 · [Component visits](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L170)
-· [Bounded component intersections](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L235).
+· [Bounded component intersections](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L235)
+· [Unbounded loss of selecting one vertex per visit](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L250).
+
+Order and select the subsequences independently inside each component.
+All comparisons across components follow the condensation order. If the
+chosen local subsequences retain at least \(M/L\) of the original mass across
+components, the resulting DAG forces at least \(M/(12L)\) edges at the
+original budgets. Rows with no chosen vertex contribute a singleton.
+Restriction to one component preserves its internal reachability and the
+full bridge exclusion. A uniform retention bound for those component
+subproblems would give the same bound for the whole family.
+[Combining the local selections](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L56)
+· [Internal reachability](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L152)
+· [Component reduction](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L208).
 
 The base lattice paths alone also give a superlinear offline lower bound
 when the vertex and demand counts are comparable. Ordering vertices by
