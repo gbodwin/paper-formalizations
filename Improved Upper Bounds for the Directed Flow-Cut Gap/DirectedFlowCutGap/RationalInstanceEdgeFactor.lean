@@ -506,15 +506,232 @@ private theorem supported_isNone {n : ℕ} (A : Adjacency n) (w : Weights n) (k 
   apply Bool.eq_iff_iff.mpr
   simp only [Option.isNone_iff_eq_none,counterprice,solve_none_iff,supported_feasible_iff]
 
-/-- Compute the exact integer factor using only positive-edge prices and cuts
-supported on those arcs. Retain the original graph and demand list. -/
+/-- Search an inclusive interval. Report the number of predicate calls. -/
+private def bisectFactor (accept : ℕ → Bool) : ℕ → ℕ → ℕ → ℕ × ℕ
+  | 0, lo, _ => (lo,0)
+  | fuel+1, lo, hi =>
+    if lo < hi then
+      let mid := lo+(hi-lo)/2
+      let result :=
+        if accept mid then bisectFactor accept fuel lo mid
+        else bisectFactor accept fuel (mid+1) hi
+      (result.1,result.2+1)
+    else (lo,0)
+
+private theorem bisectFactor_spec (accept : ℕ → Bool) (target fuel lo hi : ℕ)
+    (accepted : ∀ k, accept k = true ↔ target ≤ k)
+    (left : lo ≤ target) (right : target ≤ hi) (width : hi-lo < 2^fuel) :
+    (bisectFactor accept fuel lo hi).1 = target ∧ (bisectFactor accept fuel lo hi).2 ≤ fuel := by
+  induction fuel generalizing lo hi with
+  | zero =>
+    simp only [pow_zero] at width
+    simpa only [bisectFactor] using show lo=target ∧ 0≤0 from ⟨by omega,le_rfl⟩
+  | succ fuel ih =>
+    rw [bisectFactor]
+    by_cases interval : lo < hi
+    · rw [ite_eq_left interval]
+      let mid := lo+(hi-lo)/2
+      let choose := if accept mid then bisectFactor accept fuel lo mid
+        else bisectFactor accept fuel (mid+1) hi
+      change choose.1=target ∧ choose.2+1≤fuel+1
+      have leftWidth : mid-lo < 2^fuel := by
+        rw [Nat.pow_succ] at width
+        dsimp [mid]
+        omega
+      have rightWidth : hi-(mid+1) < 2^fuel := by
+        rw [Nat.pow_succ] at width
+        dsimp [mid]
+        omega
+      by_cases good : accept mid = true
+      · have step := ih lo mid left ((accepted mid).mp good) leftWidth
+        dsimp only [choose]
+        rw [ite_eq_left good]
+        exact ⟨step.1,Nat.succ_le_succ step.2⟩
+      · have lower : mid+1 ≤ target := Nat.succ_le_of_lt (Nat.lt_of_not_ge (fun le => good ((accepted mid).mpr le)))
+        have step := ih (mid+1) hi lower right rightWidth
+        dsimp only [choose]
+        rw [ite_eq_right good]
+        exact ⟨step.1,Nat.succ_le_succ step.2⟩
+    · rw [ite_eq_right interval]
+      exact ⟨by omega,Nat.zero_le _⟩
+
+private theorem supported_accepts_iff {n : ℕ} (A : Adjacency n) (w : Weights n) (k : ℕ) :
+    (solve (supportDimension A w) (supportedConstraints A w k)).isNone = true ↔ least A w ≤ k := by
+  rw [supported_isNone,Option.isNone_iff_eq_none,counterprice_none_iff]
+  refine ⟨least_le_of_factor A w k,fun bound => ⟨Nat.cast_nonneg _,fun c => ?_⟩⟩
+  obtain ⟨X,edges,cut,cost⟩ := (least_valid A w).round c
+  have cast : (least A w : ℝ) ≤ (k : ℝ) := by exact_mod_cast bound
+  exact ⟨X,edges,cut,cost.trans (mul_le_mul_of_nonneg_right cast (NNReal.coe_nonneg _))⟩
+
+private def positiveNonloops {n : ℕ} (A : Adjacency n) (w : Weights n) : Finset (Edge n) :=
+  Finset.univ.filter fun e => e.1 ≠ e.2 ∧ 0 < originalWeight A w e
+
+/-- Every simple path uses at most this many positive-weight edges.
+Count only actual positive-weight arcs with distinct endpoints. -/
+def endpointCap {n : ℕ} (A : Adjacency n) (w : Weights n) : ℕ :=
+  let positive := positiveNonloops A w
+  min (positive.image Prod.fst).card (positive.image Prod.snd).card
+
+theorem endpointCap_le_vertices {n : ℕ} (A : Adjacency n) (w : Weights n) :
+    endpointCap A w ≤ n := by
+  unfold endpointCap
+  exact (min_le_left ..).trans (by simpa using Finset.card_le_univ (s := (positiveNonloops A w).image Prod.fst))
+
+private theorem path_positive_card {n : ℕ} (A : Adjacency n) (w : Weights n)
+    {s t : Fin n} (p : SimplePath (graph A) s t) :
+    (p.edges.filter fun e => 0 < weights w e).card ≤ endpointCap A w := by
+  let paid := p.edges.filter fun e => 0 < weights w e
+  have contained : paid ⊆ positiveNonloops A w := by
+    intro e he
+    obtain ⟨mem,positive⟩ := Finset.mem_filter.mp he
+    have weight : (0 : ℚ≥0) < originalWeight A w e := by
+      rw [← NNRat.cast_lt (K := ℝ≥0),NNRat.cast_zero,originalWeight_eq,actualEdgeWeight_of_adj _ _ (p.edge_adj mem)]
+      exact positive
+    exact Finset.mem_filter.mpr ⟨Finset.mem_univ _,p.edge_ne mem,weight⟩
+  have distinctTails : Set.InjOn Prod.fst (↑paid : Set (Edge n)) := by
+    intro e he f hf equal
+    obtain ⟨i,rfl⟩ := (p.mem_edges e).mp (Finset.mem_filter.mp (show e ∈ paid from he)).1
+    obtain ⟨j,rfl⟩ := (p.mem_edges f).mp (Finset.mem_filter.mp (show f ∈ paid from hf)).1
+    have same : i.castSucc = j.castSucc := p.injective equal
+    exact congrArg p.edgeAt (Fin.ext (congrArg (fun j : Fin (p.edgeLength+1) => j.val) same))
+  have distinctHeads : Set.InjOn Prod.snd (↑paid : Set (Edge n)) := by
+    intro e he f hf equal
+    obtain ⟨i,rfl⟩ := (p.mem_edges e).mp (Finset.mem_filter.mp (show e ∈ paid from he)).1
+    obtain ⟨j,rfl⟩ := (p.mem_edges f).mp (Finset.mem_filter.mp (show f ∈ paid from hf)).1
+    have same : i.succ = j.succ := p.injective equal
+    have val := congrArg Fin.val same
+    change i.val+1 = j.val+1 at val
+    exact congrArg p.edgeAt (Fin.ext (by omega))
+  refine le_min ?_ ?_
+  · rw [← Finset.card_image_of_injOn distinctTails]
+    exact Finset.card_le_card (Finset.image_subset_image contained)
+  · rw [← Finset.card_image_of_injOn distinctHeads]
+    exact Finset.card_le_card (Finset.image_subset_image contained)
+
+private theorem endpoint_factor {n : ℕ} (A : Adjacency n) (w : Weights n) :
+    HasEdgeRoundingFactor (graph A) (weights w) (endpointCap A w : ℝ) := by
+  classical
+  let G := graph A
+  let v := weights w
+  let k := endpointCap A w
+  let Y := (graphEdges G).filter fun e => (1 : ℝ≥0) ≤ (k : ℝ≥0)*v e
+  have actual : Y ⊆ graphEdges G := Finset.filter_subset _ _
+  refine ⟨Nat.cast_nonneg _,fun c => ⟨Y,actual,?_,?_⟩⟩
+  · intro s t far p
+    by_contra missing
+    let paid := p.edges.filter fun e => 0<v e
+    have paid_weight : (∑ e ∈ paid, v e) = p.edgeWeight v := by
+      unfold SimplePath.edgeWeight
+      refine Finset.sum_subset (Finset.filter_subset _ _) fun e member absent => ?_
+      by_contra unequal
+      exact absent (Finset.mem_filter.mpr ⟨member,pos_iff_ne_zero.mpr unequal⟩)
+    have mass := (coe_le_edgeDistance_iff G v s t 1).mp far p
+    rw [← paid_weight] at mass
+    have nonempty : paid.Nonempty := by
+      by_contra absent
+      rw [Finset.not_nonempty_iff_eq_empty.mp absent,Finset.sum_empty] at mass
+      norm_num at mass
+    have small (e : Edge n) (member : e ∈ paid) : (k : ℝ≥0)*v e < 1 := by
+      apply lt_of_not_ge
+      intro large
+      have hp := (Finset.mem_filter.mp member).1
+      exact missing ⟨e,hp,Finset.mem_filter.mpr ⟨p.edges_subset_graphEdges hp,large⟩⟩
+    have strict := Finset.sum_lt_sum_of_nonempty nonempty small
+    simp only [← Finset.mul_sum,Finset.sum_const,nsmul_eq_mul,mul_one] at strict
+    have cap : (paid.card : ℝ≥0) ≤ k := by exact_mod_cast path_positive_card A w p
+    have bound : (k : ℝ≥0) ≤ (k : ℝ≥0)*∑ e ∈ paid, v e :=
+      le_mul_of_one_le_right (Nat.cast_nonneg k) mass
+    exact (not_lt_of_ge cap) (bound.trans_lt strict)
+  · rw [edgeCutCost_eq_sum_of_subset G c actual,weightedEdgeCost,← NNReal.coe_natCast,← NNReal.coe_mul,
+      NNReal.coe_le_coe,Finset.mul_sum]
+    calc
+      _ ≤ ∑ e ∈ Y, (k : ℝ≥0)*(c e*v e) := by
+        apply Finset.sum_le_sum
+        intro e he
+        have heavy := (Finset.mem_filter.mp he).2
+        calc
+          c e=c e*1 := (mul_one _).symm
+          _≤c e*((k : ℝ≥0)*v e) := mul_le_mul_of_nonneg_left heavy zero_le
+          _=(k : ℝ≥0)*(c e*v e) := by ac_rfl
+      _ ≤ _ := Finset.sum_le_sum_of_subset actual
+
+theorem least_le_endpointCap {n : ℕ} (A : Adjacency n) (w : Weights n) :
+    least A w ≤ endpointCap A w :=
+  least_le_of_factor A w _ (endpoint_factor A w)
+
+private def emptyCutAccepted {n : ℕ} (A : Adjacency n) (w : Weights n) : Bool :=
+  decide (∅ ∈ candidates A (demands A w) Finset.univ)
+
+private theorem emptyCutAccepted_iff {n : ℕ} (A : Adjacency n) (w : Weights n) :
+    emptyCutAccepted A w = true ↔
+      IsIntegralEdgeCut (graph A) ∅ (edgeThresholdDemands (graph A) (weights w)) := by
+  have demandSet : {e | e ∈ demands A w} = edgeThresholdDemands (graph A) (weights w) := by
+    ext e
+    exact RationalEdgeThresholds.demands_iff A w e
+  rw [emptyCutAccepted,decide_eq_true_eq,mem_candidates,demandSet]
+  simp
+
+private theorem emptyCutAccepted_zero {n : ℕ} (A : Adjacency n) (w : Weights n) :
+    emptyCutAccepted A w = true ↔ least A w = 0 := by
+  rw [emptyCutAccepted_iff]
+  constructor
+  · intro cut
+    have factor : HasEdgeRoundingFactor (graph A) (weights w) (0 : ℝ) := by
+      refine ⟨le_rfl,fun c => ⟨∅,Finset.empty_subset _,cut,?_⟩⟩
+      simp [edgeCutCost]
+    exact Nat.le_zero.mp (least_le_of_factor A w 0 (by simpa using factor))
+  · intro h
+    have factor := least_valid A w
+    rw [h,Nat.cast_zero] at factor
+    obtain ⟨X,valid,cost⟩ := factor.real_cost_round (fun _ => 1) (fun _ => zero_le_one)
+    have card : (X.card : ℝ) ≤ 0 := by simpa using cost
+    have empty : X = ∅ := Finset.card_eq_zero.mp (Nat.le_zero.mp (by exact_mod_cast card))
+    simpa [empty] using valid.2
+
+/-- Return the exact factor and the number of exact feasibility tests.
+Each test uses the same prepared positive-support cut list. -/
+def leastSupportedWithCalls {n : ℕ} (A : Adjacency n) (w : Weights n) : ℕ × ℕ :=
+  let hi := endpointCap A w
+  if hi = 0 then (0,0)
+  else if emptyCutAccepted A w then (0,0)
+  else if hi = 1 then (1,0) else
+    let cuts := supportedMinimalCuts A w
+    let accepts k := (solve (supportDimension A w) (supportedRows A w cuts k)).isNone
+    bisectFactor accepts (hi.log2+1) 1 hi
+
+theorem leastSupportedWithCalls_zero {n : ℕ} (A : Adjacency n) (w : Weights n)
+    (zeroCap : endpointCap A w = 0) : leastSupportedWithCalls A w = (0,0) := by
+  simp [leastSupportedWithCalls,zeroCap]
+
+theorem leastSupportedWithCalls_spec {n : ℕ} (A : Adjacency n) (w : Weights n) :
+    (leastSupportedWithCalls A w).1 = least A w ∧
+      (leastSupportedWithCalls A w).2 ≤ (endpointCap A w).log2+1 := by
+  unfold leastSupportedWithCalls
+  dsimp only
+  split
+  · rename_i h
+    have cap := least_le_endpointCap A w
+    rw [h] at cap
+    exact ⟨(Nat.le_zero.mp cap).symm,Nat.zero_le _⟩
+  · split
+    · rename_i accepted
+      exact ⟨((emptyCutAccepted_zero A w).mp accepted).symm,Nat.zero_le _⟩
+    · rename_i lost
+      have positive : 1 ≤ least A w := Nat.one_le_iff_ne_zero.mpr
+        fun h => lost ((emptyCutAccepted_zero A w).mpr h)
+      have bounded := least_le_endpointCap A w
+      split
+      · rename_i capOne
+        exact ⟨(Nat.le_antisymm (bounded.trans_eq capOne) positive).symm,Nat.zero_le _⟩
+      · exact bisectFactor_spec _ _ _ 1 _ (supported_accepts_iff A w) positive bounded
+          ((Nat.sub_le ..).trans_lt Nat.lt_log2_self)
+
+/-- The exact instance factor found using positive-edge prices. -/
 def leastSupported {n : ℕ} (A : Adjacency n) (w : Weights n) : ℕ :=
-  let cuts := supportedMinimalCuts A w
-  ((List.range (n+1)).filter fun k =>
-    (solve (supportDimension A w) (supportedRows A w cuts k)).isNone).min?.getD n
+  (leastSupportedWithCalls A w).1
 
 theorem leastSupported_eq {n : ℕ} (A : Adjacency n) (w : Weights n) :
-    leastSupported A w = least A w := by
-  simp only [leastSupported,least,accepted,supported_isNone]
+    leastSupported A w = least A w :=
+  (leastSupportedWithCalls_spec A w).1
 
 end DirectedFlowCutGap.RationalInstanceEdgeFactor
