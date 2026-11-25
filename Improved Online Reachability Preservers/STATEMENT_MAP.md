@@ -523,9 +523,20 @@ The [array rank](OnlineReachabilityPreservers/SteinerArrayRankWork.lean)
 charges each midpoint step on an arc lookup. Both lookup algorithms
 produce the canonical rank and have a checked per-call word-work bound.
 The replay charges construction of the indexes and preserves every
-prior record. Summing the index lookup work across the prefix
-computations, other operations within those computations, and bit
-and native arithmetic costs remain open.
+prior record.
+
+The [streaming trace evaluator](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean)
+prepares integer phase cutoffs and the duplicate-free sampled hub set
+once for the replay after successful decoding. It maintains first
+occurrences of non-self requests in arrival order and reuses the previous
+computed record for repeats and self requests. Each new first-occurrence
+prefix is split and evaluated once. Lean proves exact agreement with the earlier indexed
+replay and bounds the extra phase preparation, split, and trace work.
+The exhausted-word branch uses its own measured one-pass fallback.
+The previous summed prefix tally is retained as a conservative allowance
+when a previous result is reused. Summing the index lookup work across
+the prefix computations, other operations within those computations,
+and bit and native arithmetic costs remain open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

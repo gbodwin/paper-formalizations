@@ -16,6 +16,14 @@ private theorem distinctTrace_length_le (D : List (V × V)) : (distinctNonselfTr
   exact (card_le_card (fun _ h => List.mem_toFinset.mpr (mem_distinctNonselfTrace.mp
     (List.mem_toFinset.mp h)).1)).trans (List.toFinset_card_le D)
 
+/-- Combine the early and late graph searches for the two supplied phases. -/
+def completeSteinerDrawRunWithSearchWorkFromParts (G : Arcs V)
+    (early : List (V × V) → Arcs V × ℕ) (τ : ℕ) (hubs : Finset V)
+    (thin : ThinSample G) (earlyDemands lateDemands : List (V × V)) : Arcs V × ℕ :=
+  let first := early earlyDemands
+  let late := lateSteinerWithSearchWork G τ hubs thin lateDemands
+  (first.1 ∪ late.1,first.2+late.2)
+
 /-- Compose the early evaluator with the ordinary split and late graph searches. -/
 def completeSteinerDrawRunWithSearchWorkFromEarly (G : Arcs V)
     (early : List (V × V) → Arcs V × ℕ)
@@ -24,9 +32,8 @@ def completeSteinerDrawRunWithSearchWorkFromEarly (G : Arcs V)
   let n := Fintype.card V
   let T := steinerEarlyCutoff n
   let P := distinctNonselfTrace D
-  let first := early (P.take T)
-  let late := lateSteinerWithSearchWork G (steinerThinThreshold n) (sampledVertices draw) thin (P.drop T)
-  (first.1 ∪ late.1,first.2+late.2)
+  completeSteinerDrawRunWithSearchWorkFromParts G early (steinerThinThreshold n) (sampledVertices draw)
+    thin (P.take T) (P.drop T)
 
 /-- Compose exact graph outputs and search charges for all phases of one prefix. -/
 def completeSteinerDrawRunWithSearchWork (G : Arcs V) (height : ℕ) (sample : EarlyRoundSample G height)
@@ -155,7 +162,8 @@ theorem completeSteinerPrefixSearchReplayFromEarly_compareOnLengths (G : Arcs V)
           (original (trace.take cut)).2+(P.length+1)*K)
       have bound := Nat.add_le_add_right extra
         (lateSteinerWithSearchWork G (steinerThinThreshold (Fintype.card V)) (sampledVertices draw) thin (trace.drop cut)).2
-      simpa only [new,old,completeSteinerDrawRunWithSearchWorkFromEarly,add_right_comm] using bound
+      simpa only [new,old,completeSteinerDrawRunWithSearchWorkFromEarly,
+        completeSteinerDrawRunWithSearchWorkFromParts,add_right_comm] using bound
   constructor
   · change ((D.inits.map new).map Prod.fst) = (D.inits.map old).map Prod.fst
     rw [List.map_map,List.map_map]

@@ -45,7 +45,9 @@ theorem max_size_eq_log2_add_one (n : ℕ) : max 1 n.size = n.log2+1 := by
       · exact Nat.succ_le_of_lt (Nat.lt_size.mpr (Nat.log2_self_le zero))
     rw [size, max_eq_right (by omega)]
 
-private def fifthRootWithWork (value : ℕ) : ℕ → ℕ × ℕ
+/-- Search the supplied interval for the integer fifth root, with a
+word-work tally for the power tests. -/
+def fifthRootWithWork (value : ℕ) : ℕ → ℕ × ℕ
   | 0 => (0,2)
   | k+1 =>
     let square := (k+1)*(k+1)
@@ -53,7 +55,7 @@ private def fifthRootWithWork (value : ℕ) : ℕ → ℕ × ℕ
       let tail := fifthRootWithWork value k
       (tail.1,tail.2+16)
 
-private theorem fifthRootWithWork_spec (value cap : ℕ) :
+theorem fifthRootWithWork_spec (value cap : ℕ) :
     let result := fifthRootWithWork value cap
     result.1 = Nat.findGreatest (fun j => j^5 ≤ value) cap ∧ result.2 ≤ 16*cap+2 := by
   induction cap with

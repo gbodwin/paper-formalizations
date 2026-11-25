@@ -180,6 +180,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   early-coordinate ranks on `Fin n`. Lean bounds the construction,
   proves a word-work bound for individual rank computations, and preserves
   all earlier replay records.
+  The [streaming trace replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean)
+  prepares the phase cutoffs and hub set once, reuses previous results
+  for repeats and self requests, and charges the phase splits and fallback
+  pass while preserving every earlier record.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
