@@ -163,7 +163,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   gives the same seed coordinate order by ranking bounded histories one label
   at a time. Vertex and arc ranks use binary search in their sorted arrays,
   with at most one key comparison per bit of the array length. Full time
-  certification remains open.
+  certification remains open. The [paired forest construction](OnlineReachabilityPreservers/SteinerTemplatePreparationWork.lean)
+  generates the roots and bounded histories once for indexed vertices.
+  From a supplied distance table it produces the exact duplicate-free arc
+  list with polynomial source-level work for each fixed height.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

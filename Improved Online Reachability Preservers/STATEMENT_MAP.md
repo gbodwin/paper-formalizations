@@ -456,6 +456,18 @@ the [block sizes](OnlineReachabilityPreservers/SteinerHeightIndexWork.lean#L38)
 fit in \(h\operatorname{bits}(n+1)+1\) bits. These bounds cover
 one history conversion with the given label converter.
 
+The [shared history enumeration](OnlineReachabilityPreservers/SteinerHistoryEnumerationWork.lean)
+constructs every bounded history once in that same order, with no duplicate
+histories. The [paired forest builder](OnlineReachabilityPreservers/SteinerPairedTemplateListWork.lean)
+scans this list at each root for both orientations, builds the valid parent
+arcs and root links, and produces a duplicate-free list of exactly the
+standard forest arcs. The [distance-table instance](OnlineReachabilityPreservers/SteinerTemplatePreparationWork.lean)
+uses one supplied original-hop table for both directions. For vertices
+indexed by `Fin n`, its fixed-height polynomial covers generating the
+roots, enumerating the histories, the table lookups, and the arc list.
+The model treats arithmetic and original-key comparisons as unit
+operations. Building the supplied distance table has a separate tally.
+
 The [metered decoder](OnlineReachabilityPreservers/SteinerBitSeed.lean)
 returns the exact three seed arrays and rejection counts on success and the
 same end cursor on both outcomes. It fills a reserved array for each reached
