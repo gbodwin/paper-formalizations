@@ -343,9 +343,16 @@ includes sorting into the same lexicographic order, all tested greedy deletions,
 and the final lift. The model starts from the supplied arc and vertex lists,
 counts each composite key operation as one unit, and excludes counter maintenance.
 Each bound is an explicit polynomial in the vertex, raw arc, and request counts.
-Vertex enumeration, machine allocation and comparison costs, and bit arithmetic
-remain open. The preassigned paths and Steiner algorithm have the separate
-bounds below.
+For graphs with vertex keys in `Fin n`, the enumerator constructs a complete
+duplicate-free vertex list in exactly \(8n+1\) units of this tally. Both
+prefix algorithms and the offline algorithm have bounds that include
+constructing this list once. Conversion from other vertex representations,
+machine allocation and comparison costs, and bit arithmetic remain open.
+The preassigned paths and Steiner algorithm have the separate bounds below.
+[Vertex enumeration](OnlineReachabilityPreservers/DeterministicEnumerationWork.lean#L46)
+· [Sink prefixes](OnlineReachabilityPreservers/DeterministicEnumerationWork.lean#L69)
+· [Source prefixes](OnlineReachabilityPreservers/DeterministicEnumerationWork.lean#L84)
+· [Offline deletion and lift](OnlineReachabilityPreservers/DeterministicEnumerationWork.lean#L99).
 
 The [preassigned-path counter](OnlineReachabilityPreservers/AssignmentSearchWork.lean)
 combines the calls made by quota certification and path selection with the
