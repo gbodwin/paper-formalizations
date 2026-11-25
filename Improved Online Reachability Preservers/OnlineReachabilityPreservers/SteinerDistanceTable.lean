@@ -555,18 +555,23 @@ private theorem earlyCapacityMetricFromPlan_congr (G : Arcs V) (height : ℕ) (s
   subst b
   rfl
 
+private abbrev SteinerSeedPreparationResult (G : Arcs V) (height : ℕ) (Result : Type*) :=
+  {scale : ℕ // scale = forestScale G height} ×
+    (EarlyRoundSample G height → List (V × V) → Result) × ℕ × ℕ × ℕ
+
 /-- Shared forest scale, early prefix evaluator, and the three preparation tallies. -/
 abbrev SteinerSeedPreparation (G : Arcs V) (height : ℕ) :=
-  {scale : ℕ // scale = forestScale G height} ×
-    (EarlyRoundSample G height → List (V × V) → Arcs V × ℕ) × ℕ × ℕ × ℕ
+  SteinerSeedPreparationResult G height (Arcs V × ℕ)
 
-/-- Assemble the early evaluator with an already constructed weighted plan. -/
-def prepareEarlyDistanceTableForSeedFromWeights (G : Arcs V) (height : ℕ)
+private def prepareEarlyWithPlan {Result : Type*} (G : Arcs V) (height : ℕ)
     (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
     (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
     (plan : ForestWeightPlan V height)
-    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1))) :
-    SteinerSeedPreparation G height :=
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1)))
+    (evaluate : Arcs (HeightForestVertex V height) → (V × V → ℕ × ℕ) →
+      Arcs (ForestNetworkVertex V height) → Arcs (ForestNetworkVertex V height) → (scale fuel : ℕ) →
+      ForestTrialArray V height scale (earlyTrialCount V height) → List (V × V) → Result) :
+    SteinerSeedPreparationResult G height Result :=
   let query := readDistanceRow table.1
   let dist := fun d => (query d).1
   let known : ∀ d : V × V, dist d = hops G d.1 d.2 :=
@@ -587,9 +592,121 @@ def prepareEarlyDistanceTableForSeedFromWeights (G : Arcs V) (height : ℕ)
     (congrArg (fun x => x.2.1.1) matchesPlan).trans
       ((congrArg Prod.fst spec.2.2.1).trans (forestScaleFromWeights_eq G dist known height links correct))
   let build := fun sample : EarlyRoundSample G height =>
-    let metric := earlyCapacityMetricFromPlan G height sample links query (plan.1,plan.2.1) scale
-    earlyRoundedGraphWithSearchWorkFromMetric G height metric
+    let seed : ForestTrialArray V height plan.2.1.1 (earlyTrialCount V height) :=
+      cast (congrArg (fun k => ForestTrialArray V height k (earlyTrialCount V height)) scale.symm) sample
+    evaluate links query plan.1.1 plan.1.2 plan.2.1.1 plan.2.1.2 seed
   (⟨plan.2.1.1,scale⟩,build,table.2,template.2,plan.2.2)
+
+/-- Assemble the early evaluator with an already constructed weighted plan. -/
+def prepareEarlyDistanceTableForSeedFromWeights (G : Arcs V) (height : ℕ)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
+    (plan : ForestWeightPlan V height)
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1))) :
+    SteinerSeedPreparation G height :=
+  prepareEarlyWithPlan G height table rows template exactForest plan matchesPlan
+    (fun links query priced free scale fuel seed => earlyRoundedGraphWithSearchWorkFromMetric G height
+      (earlyMetricWithPreparedCapacityWork links query priced free scale fuel seed))
+
+private def earlyMetricWithPreparedCapacitySeedReads {height : ℕ} (links : Arcs (HeightForestVertex V height))
+    (read : V × V → ℕ × ℕ) (priced free : Arcs (ForestNetworkVertex V height))
+    (scale fuel : ℕ) (seed : ForestTrialArray V height scale (earlyTrialCount V height))
+    (P : List (V × V)) : Arcs (HeightForestVertex V height) × ℕ × ℕ :=
+  let out := weightedNetworkRunAtScaleWithCapacityWork priced (networkWeightWithDistanceWork read)
+    scale fuel (P.map (requestOnFreeForest free)) (fun _ => 0)
+  let rounded := roundedForestTrialsWithSeedReads links (forestWeightWithDistanceWork read) out.1.1 scale
+    (earlyTrialCount V height) seed
+  (rounded.1,out.2+rounded.2.1,rounded.2.2)
+
+private theorem earlyMetricWithPreparedCapacitySeedReads_spec {height : ℕ} (links : Arcs (HeightForestVertex V height))
+    (read : V × V → ℕ × ℕ) (priced free : Arcs (ForestNetworkVertex V height))
+    (scale fuel : ℕ) (seed : ForestTrialArray V height scale (earlyTrialCount V height))
+    (P : List (V × V)) :
+    let out := earlyMetricWithPreparedCapacitySeedReads links read priced free scale fuel seed P
+    (out.1,out.2.1) = earlyMetricWithPreparedCapacityWork links read priced free scale fuel seed P ∧
+      out.2.2 ≤ earlyTrialCount V height*(links.card*((scale.log2+1)*(height+2))) := by
+  let out := weightedNetworkRunAtScaleWithCapacityWork priced (networkWeightWithDistanceWork read)
+    scale fuel (P.map (requestOnFreeForest free)) (fun _ => 0)
+  obtain ⟨same,work⟩ := roundedForestTrialsWithSeedReads_spec links (forestWeightWithDistanceWork read)
+    out.1.1 scale (earlyTrialCount V height) seed
+  exact ⟨congrArg (fun x => (x.1,out.2+x.2)) same,work⟩
+
+/-- The seed-position reads of one metric purchase computation. -/
+def earlyRoundingSeedReadBound (G : Arcs V) (height : ℕ) : ℕ :=
+  earlyTrialCount V height*((heightForest G height).card*(((forestScale G height).log2+1)*(height+2)))
+
+/-- The seed-read allowance for metric rounding is polynomial in the
+vertex count at each fixed height. -/
+def earlyRoundingSeedReadPolynomial (n height : ℕ) : ℕ :=
+  let forest := (n*2)*((height+1)*n^height)
+  16*(height+1)^2*(n+1) * (forest^2*((2+n*forest^2)*(height+2)))
+
+theorem earlyRoundingSeedReadBound_le (G : Arcs V) (height : ℕ) :
+    earlyRoundingSeedReadBound G height ≤ earlyRoundingSeedReadPolynomial (Fintype.card V) height := by
+  let n := Fintype.card V
+  let forest := (n*2)*((height+1)*n^height)
+  have size : Fintype.card (HeightForestVertex V height) ≤ forest := by
+    cases isEmpty_or_nonempty V with
+    | inl empty => simp [HeightForestVertex]
+    | inr nonempty => exact heightForestVertex_card_le V height
+  have edges : (heightForest G height).card ≤ forest^2 := by
+    have bound : (heightForest G height).card ≤ Fintype.card (HeightForestVertex V height)^2 := by
+      simpa only [Fintype.card_prod,pow_two] using card_le_univ (heightForest G height)
+    exact bound.trans (Nat.pow_le_pow_left size 2)
+  have scale : forestScale G height ≤ 1+n*forest^2 := by
+    apply (forestNetworkScale_le G height).trans
+    exact max_le (by omega) ((Nat.mul_le_mul_left n (Nat.pow_le_pow_left size 2)).trans (by omega))
+  have width : (forestScale G height).log2+1 ≤ 2+n*forest^2 := by
+    have log := Nat.log2_le_self (forestScale G height)
+    omega
+  unfold earlyRoundingSeedReadBound earlyRoundingSeedReadPolynomial earlyTrialCount
+  dsimp only
+  gcongr
+  exact Nat.log2_le_self n
+
+/-- The usual weighted preparation with a separate seed read tally in
+its early prefix evaluator. -/
+abbrev SteinerSeedPreparationWithSeedReads (G : Arcs V) (height : ℕ) :=
+  SteinerSeedPreparationResult G height (Arcs V × ℕ × ℕ)
+
+/-- Build the early evaluator with the supplied weighted plan. -/
+def prepareEarlyDistanceTableForSeedFromWeightsWithSeedReads (G : Arcs V) (height : ℕ)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
+    (plan : ForestWeightPlan V height)
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1))) :
+    SteinerSeedPreparationWithSeedReads G height :=
+  prepareEarlyWithPlan G height table rows template exactForest plan matchesPlan
+    (fun links query priced free scale fuel seed => earlyRoundedGraphWithSeedReadsFromMetric G height
+      (earlyMetricWithPreparedCapacitySeedReads links query priced free scale fuel seed))
+
+theorem prepareEarlyDistanceTableForSeedFromWeightsWithSeedReads_spec (G : Arcs V) (height : ℕ)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
+    (plan : ForestWeightPlan V height)
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1))) :
+    let prepared := prepareEarlyDistanceTableForSeedFromWeightsWithSeedReads G height table rows template exactForest plan matchesPlan
+    let old := prepareEarlyDistanceTableForSeedFromWeights G height table rows template exactForest plan matchesPlan
+    prepared.1 = old.1 ∧ prepared.2.2 = old.2.2 ∧ ∀ (sample : EarlyRoundSample G height) (D : List (V × V)),
+      let out := prepared.2.1 sample D
+      (out.1,out.2.1) = old.2.1 sample D ∧ out.2.2 ≤ (D.length+1)*earlyRoundingSeedReadBound G height := by
+  intro prepared old
+  refine ⟨rfl,rfl,?_⟩
+  intro sample D
+  let seed : ForestTrialArray V height plan.2.1.1 (earlyTrialCount V height) :=
+    cast (congrArg (fun k => ForestTrialArray V height k (earlyTrialCount V height)) old.1.property.symm) sample
+  let metric := earlyMetricWithPreparedCapacitySeedReads template.1 (readDistanceRow table.1)
+    plan.1.1 plan.1.2 plan.2.1.1 plan.2.1.2 seed
+  have each (P : List (V × V)) := earlyMetricWithPreparedCapacitySeedReads_spec template.1 (readDistanceRow table.1)
+    plan.1.1 plan.1.2 plan.2.1.1 plan.2.1.2 seed P
+  obtain ⟨same,work⟩ := earlyRoundedGraphWithSeedReadsFromMetric_spec G height metric D
+    (earlyTrialCount V height*(template.1.card*((plan.2.1.1.log2+1)*(height+2)))) (fun P _ => (each P).2)
+  refine ⟨same.trans (congrArg (fun f => earlyRoundedGraphWithSearchWorkFromMetric G height f D)
+    (funext fun P => (each P).1)),?_⟩
+  change (earlyRoundedGraphWithSeedReadsFromMetric G height metric D).2.2 ≤
+    (D.length+1)*earlyRoundingSeedReadBound G height
+  have scale_eq : plan.2.1.1 = forestScale G height := old.1.property
+  simpa only [earlyRoundingSeedReadBound,exactForest,scale_eq] using work
 
 /-- Finish the weighted plan from the exact stored rows and paired forest.
 The two input charges are carried through as supplied by their builders. -/

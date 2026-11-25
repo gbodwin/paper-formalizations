@@ -301,4 +301,102 @@ theorem earlyRoundedGraphWithSearchWorkFromMetric_compare (G : Arcs V) (height :
     out.1 = old.1 ∧ out.2 ≤ old.2+(D.length+1)*K :=
   earlyRoundedGraphWithSearchWorkFromMetric_compareOnPrefixes G height original updated K D (fun P _ => metric P)
 
+private def earlyPrefixSeedReadRow (G : Arcs V) (height : ℕ)
+    (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ) :
+    List (V × V) ↪ (List (V × V) × Arcs (HeightForestVertex V height) × Bool × ℕ) × ℕ where
+  toFun P :=
+    let bought := if P.isEmpty then (∅,0,0) else metric P
+    (earlyPrefixWorkEntry G height (fun _ => (bought.1,bought.2.1)) P,bought.2.2)
+  inj' := by
+    have key (M : List (V × V) → Arcs (HeightForestVertex V height) × ℕ) (P : List (V × V)) :
+        (earlyPrefixWorkEntry G height M P).1 = P := by
+      unfold earlyPrefixWorkEntry
+      split <;> rfl
+    intro P Q same
+    exact (key _ P).symm.trans ((congrArg (fun x => x.1.1) same).trans (key _ Q))
+
+private theorem earlyPrefixSeedReadRow_spec (G : Arcs V) (height : ℕ)
+    (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
+    (B : ℕ) (P : List (V × V)) (bound : (metric P).2.2 ≤ B) :
+    let row := earlyPrefixSeedReadRow G height metric P
+    row.1 = earlyPrefixWorkRow G height (fun Q => ((metric Q).1,(metric Q).2.1)) P ∧ row.2 ≤ B := by
+  cases P with
+  | nil => exact ⟨rfl,Nat.zero_le B⟩
+  | cons d tail =>
+    refine ⟨?_,bound⟩
+    change earlyPrefixWorkEntry G height (fun _ => ((metric (d :: tail)).1,(metric (d :: tail)).2.1))
+      (d :: tail) = earlyPrefixWorkEntry G height (fun Q => ((metric Q).1,(metric Q).2.1)) (d :: tail)
+    unfold earlyPrefixWorkEntry
+    split <;> rfl
+
+/-- Evaluate every needed metric prefix once, retaining its seed reads
+alongside the existing search and weight-read count. -/
+def earlyRoundedGraphWithSeedReadsFromMetric (G : Arcs V) (height : ℕ)
+    (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
+    (D : List (V × V)) : Arcs V × ℕ × ℕ :=
+  let rows := D.inits.toFinset.map (earlyPrefixSeedReadRow G height metric)
+  let work := ∑ r ∈ rows, r.1.2.2.2
+  let reads := ∑ r ∈ rows, r.2
+  if (rows.filter fun r => r.1.2.2.1 = true).Nonempty then (G,work,reads)
+  else
+    let bought := rows.biUnion (fun r => r.1.2.1)
+    let expanded := expandLabelledLinksWithSearchWork G heightForestLabel bought
+    (expanded.1,work+expanded.2,reads)
+
+theorem earlyRoundedGraphWithSeedReadsFromMetric_spec (G : Arcs V) (height : ℕ)
+    (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
+    (D : List (V × V)) (B : ℕ) (bound : ∀ P ∈ D.inits, (metric P).2.2 ≤ B) :
+    let out := earlyRoundedGraphWithSeedReadsFromMetric G height metric D
+    (out.1,out.2.1) = earlyRoundedGraphWithSearchWorkFromMetric G height
+      (fun P => ((metric P).1,(metric P).2.1)) D ∧ out.2.2 ≤ (D.length+1)*B := by
+  let source := D.inits.toFinset
+  let row := earlyPrefixSeedReadRow G height metric
+  let old := earlyPrefixWorkRow G height (fun P => ((metric P).1,(metric P).2.1))
+  let rows := source.map row
+  let prior := source.map old
+  have each (P : List (V × V)) (mem : P ∈ source) :=
+    earlyPrefixSeedReadRow_spec G height metric B P (bound P (List.mem_toFinset.mp mem))
+  have reads : (∑ r ∈ rows, r.2) ≤ (D.length+1)*B := by
+    dsimp only [rows]
+    rw [sum_map]
+    calc
+      _ ≤ ∑ _ ∈ source, B := sum_le_sum fun P mem => (each P mem).2
+      _ = source.card*B := by simp
+      _ ≤ _ := Nat.mul_le_mul_right B (by simpa only [source,List.length_inits] using D.inits.toFinset_card_le)
+  have work : (∑ r ∈ rows, r.1.2.2.2) = ∑ r ∈ prior, r.2.2.2 := by
+    dsimp only [rows,prior]
+    rw [sum_map,sum_map]
+    exact sum_congr rfl fun P mem => congrArg (fun x => x.2.2.2) (each P mem).1
+  have misses : (rows.filter fun r => r.1.2.2.1 = true).Nonempty ↔
+      (prior.filter fun r => r.2.2.1 = true).Nonempty := by
+    constructor
+    · rintro ⟨r,mem⟩
+      obtain ⟨present,miss⟩ := mem_filter.mp mem
+      obtain ⟨P,inside,rfl⟩ := mem_map.mp present
+      exact ⟨old P,mem_filter.mpr ⟨mem_map_of_mem _ inside,(each P inside).1 ▸ miss⟩⟩
+    · rintro ⟨r,mem⟩
+      obtain ⟨present,miss⟩ := mem_filter.mp mem
+      obtain ⟨P,inside,rfl⟩ := mem_map.mp present
+      exact ⟨row P,mem_filter.mpr ⟨mem_map_of_mem _ inside,(each P inside).1.symm ▸ miss⟩⟩
+  have bought : rows.biUnion (fun r => r.1.2.1) = prior.biUnion (fun r => r.2.1) := by
+    ext e
+    constructor
+    · intro mem
+      obtain ⟨r,present,contains⟩ := mem_biUnion.mp mem
+      obtain ⟨P,inside,rfl⟩ := mem_map.mp present
+      exact mem_biUnion.mpr ⟨old P,mem_map_of_mem _ inside,(each P inside).1 ▸ contains⟩
+    · intro mem
+      obtain ⟨r,present,contains⟩ := mem_biUnion.mp mem
+      obtain ⟨P,inside,rfl⟩ := mem_map.mp present
+      exact mem_biUnion.mpr ⟨row P,mem_map_of_mem _ inside,(each P inside).1.symm ▸ contains⟩
+  dsimp only [earlyRoundedGraphWithSeedReadsFromMetric,earlyRoundedGraphWithSearchWorkFromMetric]
+  by_cases fail : (prior.filter fun r => r.2.2.1 = true).Nonempty
+  · have same := misses.mpr fail
+    rw [ite_eq_left same,ite_eq_left fail,work]
+    exact ⟨rfl,reads⟩
+  · have same := mt misses.mp fail
+    rw [ite_eq_right same,ite_eq_right fail,bought,work]
+    exact ⟨rfl,reads⟩
+
+
 end OnlineReachabilityPreservers

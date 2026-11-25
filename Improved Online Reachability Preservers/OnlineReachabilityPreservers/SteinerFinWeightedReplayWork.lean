@@ -63,10 +63,14 @@ private theorem finWeightsFromTemplateInputs_spec {n : ℕ} (G : Arcs (Fin n))
   dsimp only [finSteinerWeightPlanWorkPolynomial]
   gcongr
 
-/-- Prepare the exact weighted evaluator from the shared hop and forest
-lists. Return the weight-plan construction work as one additional tally. -/
-def prepareFinSteinerWeightedForSeedWithWordWork {n : ℕ} (G : Arcs (Fin n))
-    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) : SteinerSeedPreparation G height × ℕ :=
+private def prepareFinSteinerWeightedWithPlan {n : ℕ} {Result : Type*} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ)
+    (assemble : (table : List ((Fin n × Fin n) × ℕ) × ℕ) →
+      table.1 = (distanceTableWithSearchWork G).1 →
+      (template : Arcs (HeightForestVertex (Fin n) height) × ℕ) → template.1 = heightForest G height →
+      (plan : ForestWeightPlan (Fin n) height) →
+      plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1)) → Result) :
+    Result × ℕ :=
   let inputs := finSteinerTemplateInputsWithWordWork arcs height
   let correct := finSteinerTemplateInputsWithWordWork_spec G arcs same height
   let read := readDistanceRow inputs.1.1
@@ -74,8 +78,42 @@ def prepareFinSteinerWeightedForSeedWithWordWork {n : ℕ} (G : Arcs (Fin n))
   let exactForest := (arcsFromDistinctList_eq inputs.2.1 correct.2.2.1).trans correct.2.1
   let plan := prepareForestWeightsFromListWithWordWork inputs.2.1 correct.2.2.1 read
   let planEq := (finWeightsFromTemplateInputs_spec G arcs same height).1
-  (prepareEarlyDistanceTableForSeedFromWeights G height inputs.1 correct.1 (links,inputs.2.2+5)
-    exactForest plan.1 planEq,plan.2)
+  (assemble inputs.1 correct.1 (links,inputs.2.2+5) exactForest plan.1 planEq,plan.2)
+
+/-- Prepare the exact weighted evaluator from the shared hop and forest
+lists. Return the weight-plan construction work as one additional tally. -/
+def prepareFinSteinerWeightedForSeedWithWordWork {n : ℕ} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) : SteinerSeedPreparation G height × ℕ :=
+  prepareFinSteinerWeightedWithPlan G arcs same height (prepareEarlyDistanceTableForSeedFromWeights G height)
+
+/-- Reuse the same weighted plan and count seed reads in early rounding. -/
+def prepareFinSteinerWeightedForSeedWithSeedReads {n : ℕ} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :
+    SteinerSeedPreparationWithSeedReads G height × ℕ :=
+  prepareFinSteinerWeightedWithPlan G arcs same height (prepareEarlyDistanceTableForSeedFromWeightsWithSeedReads G height)
+
+theorem prepareFinSteinerWeightedForSeedWithSeedReads_spec {n : ℕ} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :
+    let out := prepareFinSteinerWeightedForSeedWithSeedReads G arcs same height
+    let old := prepareFinSteinerWeightedForSeedWithWordWork G arcs same height
+    out.1.1 = old.1.1 ∧ out.1.2.2 = old.1.2.2 ∧ out.2 = old.2 ∧
+      ∀ (sample : EarlyRoundSample G height) (D : List (Fin n × Fin n)),
+        let result := out.1.2.1 sample D
+        (result.1,result.2.1) = old.1.2.1 sample D ∧
+          result.2.2 ≤ (D.length+1)*earlyRoundingSeedReadPolynomial n height := by
+  let inputs := finSteinerTemplateInputsWithWordWork arcs height
+  let correct := finSteinerTemplateInputsWithWordWork_spec G arcs same height
+  let links := arcsFromDistinctList inputs.2.1 correct.2.2.1
+  let exactForest := (arcsFromDistinctList_eq inputs.2.1 correct.2.2.1).trans correct.2.1
+  let plan := prepareForestWeightsFromListWithWordWork inputs.2.1 correct.2.2.1 (readDistanceRow inputs.1.1)
+  let planEq := (finWeightsFromTemplateInputs_spec G arcs same height).1
+  obtain ⟨scale,initial,rounding⟩ := prepareEarlyDistanceTableForSeedFromWeightsWithSeedReads_spec
+    G height inputs.1 correct.1 (links,inputs.2.2+5) exactForest plan.1 planEq
+  refine ⟨scale,initial,rfl,fun sample D => ?_⟩
+  obtain ⟨preserves,work⟩ := rounding sample D
+  have cap : earlyRoundingSeedReadBound G height ≤ earlyRoundingSeedReadPolynomial n height := by
+    simpa only [Fintype.card_fin] using earlyRoundingSeedReadBound_le G height
+  exact ⟨preserves,work.trans (Nat.mul_le_mul_left _ cap)⟩
 
 theorem prepareFinSteinerWeightedForSeedWithWordWork_spec {n : ℕ} (G : Arcs (Fin n))
     (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :

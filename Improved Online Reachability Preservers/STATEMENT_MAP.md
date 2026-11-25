@@ -534,9 +534,20 @@ prefix is split and evaluated once. Lean proves exact agreement with the earlier
 replay and bounds the extra phase preparation, split, and trace work.
 The exhausted-word branch uses its own measured one-pass fallback.
 The previous summed prefix tally is retained as a conservative allowance
-when a previous result is reused. Summing the index lookup work across
-the prefix computations, other operations within those computations,
-and bit and native arithmetic costs remain open.
+when a previous result is reused.
+
+The [early rounding evaluator](OnlineReachabilityPreservers/SteinerRoundingWork.lean)
+records one gate read per trial, priced link, and tier, then one seed read
+per tested ancestor whenever the gate opens. Free links use no seed
+reads. Lean checks the same rounded graph and weight-read tally, and the
+[prepared early evaluator](OnlineReachabilityPreservers/SteinerDistanceTable.lean)
+sums the reads over the metric purchases it actually computes. The
+[fixed-budget replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean)
+adds these unit read charges to its trace tally with a fixed-height
+polynomial bound. It preserves all previous graph and search records.
+The cumulative arithmetic cost of the seed ranks, thin-phase arc reads,
+other work within prefix computations, and bit and native arithmetic
+costs remain open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
