@@ -393,7 +393,7 @@ general increasing-subsequence comparison and the extremal converse open.
 [Increasing subsequences](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L69)
 · [Component visits](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L184)
 · [Bounded component intersections](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L261)
-· [Unbounded loss of selecting one vertex per visit](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L347).
+· [Unbounded loss of selecting one vertex per visit](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L445).
 
 Write \(J\) for the total number of path-component visits. The visit
 construction yields a DAG forcing \(J\le 12|E(H)|\). When
@@ -408,6 +408,15 @@ opposite-pruned system, the original mass is bounded by \(28C|E(H)|\).
 [Aggregate bound](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L240)
 · [Component-wise bound](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L270)
 · [Bound after pruning](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L308).
+
+The component condition can fail by an arbitrarily large factor even after
+pruning. Take a lattice family with \(q=L^6\) original paths and add the
+private return paths. The expanded system has \(n\le 11q\), \(p=3q\),
+\(J=3q\), and \(M=(L+7)q\). Each path lies within one component and distinct
+paths meet at most once, so pruning retains all incidences. The example
+limits the component condition for a supplied family. The unrestricted
+extremal converse remains open.
+[Checked aggregate obstruction](OnlineReachabilityPreservers/OverlayLowerAudit.lean#L509).
 
 Order and select the subsequences independently inside each component.
 All comparisons across components follow the condensation order. If the

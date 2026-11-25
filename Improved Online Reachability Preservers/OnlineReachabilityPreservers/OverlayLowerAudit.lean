@@ -1,6 +1,7 @@
 import Mathlib.Data.Prod.Lex
 import OnlineReachabilityPreservers.AcyclicOverlay
 import OnlineReachabilityPreservers.CyclicReturnOverlay
+import OnlineReachabilityPreservers.OfflineComponentOrders
 
 /-! Lattice paths for the lower-bound direction of the Independence Lemma.
 The acyclic overlay gives a superlinear lower bound. Adding return paths
@@ -480,5 +481,121 @@ theorem multidimensional_offline_lattice_lower {dimension steps slopes : ℕ} (p
       (@gridVertex dimension steps slopes) (fun _ _ => rfl) (gridPaths_fullFree dimension steps slopes)
   exact ⟨G,D,dag,size.trans (gridLine_card _ _ _),reachable,fun H sub preserves =>
     (lower H sub preserves).trans (congrArg (steps * ·) size.symm)⟩
+
+private theorem layerPaths_unique {L : ℕ} {i j : LayerLine L} {x y : LayerVertex L}
+    (distinct : i ≠ j) (xi : x ∈ layerPaths i) (xj : x ∈ layerPaths j)
+    (yi : y ∈ layerPaths i) (yj : y ∈ layerPaths j) : x = y := by
+  classical
+  let number := Fintype.equivFin (LayerLine L)
+  let _ : LinearOrder (LayerLine L) := LinearOrder.lift' number number.injective
+  by_contra apart
+  have noParallel {u v : LayerVertex L} (left : ListBefore layerPaths i u v)
+      (right : ListBefore layerPaths j u v) : False :=
+    no_parallel_list_steps (fun k _ b _ => (latticePaths_fullFree L L k).false b)
+      (by decide : 2 ≤ 2) distinct left right
+  rcases listBefore_total xi yi apart with up | down <;>
+    rcases listBefore_total xj yj apart with forward | reverse
+  · exact noParallel up forward
+  · have a := (lattice_before_geometry up).1
+    have b := (lattice_before_geometry reverse).1
+    omega
+  · have a := (lattice_before_geometry down).1
+    have b := (lattice_before_geometry forward).1
+    omega
+  · exact noParallel down reverse
+
+/-- Even after opposite-intersection pruning, total component visits plus
+the vertex count can be arbitrarily smaller than the incidence mass. -/
+theorem lemma14_aggregate_component_mass_no_constant (C : ℕ) :
+    ∃ n p : ℕ, 2 ≤ n ∧ 0 < p ∧ p ≤ n^2 ∧ ∃ paths : Fin p → List (Fin n),
+      (∀ i, (paths i).Nodup) ∧ (∀ i, paths i ≠ []) ∧
+      (∀ k, IsEmpty (Bridge (ListBefore paths) k)) ∧
+      (∀ i, removeOppositeIntersections paths i = paths i) ∧
+      C * (n + ∑ i, ((paths i).toFinset.image (componentLabel (pathPrecedenceGraph paths))).card) <
+        ∑ i, (paths i).length := by
+  classical
+  let L := 22*C+1
+  have positive : 0 < L := by omega
+  let base := @layerPaths L
+  let rows := returnPaths base
+  let W := ReturnVertex (LayerVertex L) (LayerLine L)
+  let R := ReturnPath (LayerLine L)
+  let n := Fintype.card W
+  let p := Fintype.card R
+  let q := Fintype.card (LayerLine L)
+  let enc := Fintype.equivFin W
+  let ind := Fintype.equivFin R
+  let paths (i : Fin p) := (rows (ind.symm i)).map enc
+  have nCount : n = Fintype.card (LayerVertex L) + 3*q := by
+    change Fintype.card (ReturnVertex (LayerVertex L) (LayerLine L)) = _
+    exact returnVertex_card
+  have pCount : p = 3*q := by
+    change Fintype.card (ReturnPath (LayerLine L)) = _
+    exact returnPath_card _
+  have qCount : q = L^6 := by
+    simp only [q, Fintype.card_prod, Fintype.card_fin]
+    ring
+  have qPos : 0 < q := qCount.symm ▸ pow_pos positive 6
+  have atLeastTwo : 2 ≤ n := by omega
+  have vertexCount : n ≤ 11*q := by
+    have vertices := layer_vertex_card_le positive
+    change Fintype.card (LayerVertex L) ≤ 8*q at vertices
+    omega
+  have demandCount : p ≤ n^2 := by
+    have small : p ≤ n := by omega
+    exact small.trans (by rw [pow_two]; exact Nat.le_mul_self n)
+  have simple (i : R) : (rows i).Nodup := returnPaths_nodup latticePaths_simple i
+  have rankedSimple (i : Fin p) : (paths i).Nodup := (simple _).map enc.injective
+  refine ⟨n,p,atLeastTwo,by omega,demandCount,paths,?_,?_,?_,?_,?_⟩
+  · exact rankedSimple
+  · intro i
+    have nonzero : 0 < (paths i).length := by
+      simpa only [paths, List.length_map] using returnPaths_length_pos base (ind.symm i)
+    intro empty
+    simp [empty] at nonzero
+  · intro k
+    refine ⟨fun b => (returnPaths_fullFree base (latticePaths_fullFree L L) k).false ?_⟩
+    have undo (i : Fin p) : (paths i).map enc.symm = rows (ind.symm i) := by
+      simp [paths, List.map_map, Function.comp_def]
+    have back := b.mapVertices enc.symm enc.symm.injective (fun i x y step => by
+      have moved := listBefore_map enc.symm ((undo i).symm ▸ simple (ind.symm i)) step
+      simpa only [undo] using moved)
+    exact back.mapPaths ind.symm ind.symm.injective (fun _ _ _ step => step)
+  · intro i
+    have inOriginal {j : Fin p} {x : Fin n} (on : x ∈ paths j) : enc.symm x ∈ rows (ind.symm j) := by
+      obtain ⟨v, onRow, rfl⟩ := List.mem_map.mp on
+      simpa only [Equiv.symm_apply_apply] using onRow
+    have sub := removeOppositeIntersections_sublist paths i
+    apply sub.eq_of_length_le
+    rw [← List.toFinset_card_of_nodup (rankedSimple i),
+      ← List.toFinset_card_of_nodup (sub.nodup (rankedSimple i))]
+    apply card_le_card
+    intro x present
+    apply List.mem_toFinset.mpr
+    refine (removeOppositeIntersections_mem paths i x).mpr ⟨List.mem_toFinset.mp present, ?_⟩
+    rintro ⟨j, earlier, y, forward, reverse⟩
+    have back : ListBefore paths j y x := removeOppositeIntersections_before rankedSimple reverse
+    exact (listBefore_ne forward) (enc.symm.injective <|
+      returnPaths_unique_intersections base (fun {_ _ _ _} => layerPaths_unique)
+        (fun eq => earlier.ne (ind.symm.injective eq))
+        (inOriginal back.2.1) (inOriginal forward.1) (inOriginal back.1) (inOriginal forward.2.1))
+  · have visits := returnedRows_visit base latticePaths_simple enc ind
+    change ∀ i, ((paths i).toFinset.image (componentLabel (pathPrecedenceGraph paths))).card = 1 at visits
+    simp_rw [visits, sum_const, nsmul_eq_mul, Nat.cast_id, card_univ, Fintype.card_fin, Nat.mul_one]
+    have mass : (∑ i, (paths i).length) = (L+7)*q := by
+      simp only [paths, List.length_map]
+      rw [Equiv.sum_comp ind.symm (fun i => (rows i).length)]
+      change (∑ i, (returnPaths base i).length) = _
+      rw [returnPaths_mass]
+      have original : (∑ i, (base i).length) = q*(L+1) := by
+        simp only [base, layerPaths, latticePaths, List.length_ofFn, sum_const, nsmul_eq_mul,
+          Nat.cast_id, card_univ, q]
+      rw [original]
+      ring
+    rw [mass, pCount]
+    calc
+      _ ≤ C * (14*q) := Nat.mul_le_mul_left _ (by omega)
+      _ = (14*C)*q := by ring
+      _ < _ := Nat.mul_lt_mul_of_pos_right (by omega) qPos
 
 end OnlineReachabilityPreservers.SourceAudit

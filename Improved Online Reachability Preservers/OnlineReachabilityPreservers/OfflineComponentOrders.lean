@@ -335,12 +335,110 @@ section VisitCounterexample
 
 open SourceAudit
 
-private theorem singleReturnPaths_unique {V : Type*} (base : Unit → List V)
-    {i j : ReturnPath Unit} {x y : ReturnVertex V Unit} (distinct : i ≠ j)
-    (xi : x ∈ returnPaths base i) (xj : x ∈ returnPaths base j)
-    (yi : y ∈ returnPaths base i) (yj : y ∈ returnPaths base j) : x = y := by
-  rcases i with ⟨⟩ | ⟨⟩ | ⟨⟩ <;> rcases j with ⟨⟩ | ⟨⟩ | ⟨⟩ <;>
-    cases x <;> cases y <;> simp_all [returnPaths]
+/-- Every returned row lies within one component of the precedence graph,
+including both private return rows. -/
+theorem returnedRows_visit {V I : Type*} [DecidableEq V] [DecidableEq I] {n p : ℕ}
+    (base : I → List V) (simple : ∀ i, (base i).Nodup)
+    (vRank : ReturnVertex V I ≃ Fin n) (iRank : ReturnPath I ≃ Fin p) :
+    let paths (i : Fin p) := (returnPaths base (iRank.symm i)).map vRank
+    ∀ i, ((paths i).toFinset.image (componentLabel (pathPrecedenceGraph paths))).card = 1 := by
+  classical
+  dsimp only
+  let rows := returnPaths base
+  let paths (i : Fin p) := (rows (iRank.symm i)).map vRank
+  let G := pathPrecedenceGraph paths
+  have rowSimple (i : ReturnPath I) : (rows i).Nodup := returnPaths_nodup simple i
+  have edge (i : ReturnPath I) (x y : ReturnVertex V I) (step : ListBefore rows i x y) :
+      Edge G (vRank x) (vRank y) := by
+    have new := listBefore_map vRank ((rowSimple i).map vRank.injective) step
+    have ranked : ListBefore paths (iRank i) (vRank x) (vRank y) := by
+      have index : paths (iRank i) = (rows i).map vRank := by simp [paths]
+      unfold SourceAudit.BeforeIn
+      rw [index]
+      exact new
+    unfold G Edge pathPrecedenceGraph
+    exact mem_filter.mpr ⟨mem_univ _, iRank i, ranked⟩
+  have edgeOfPair (i : ReturnPath I) {x y : ReturnVertex V I} (apart : x ≠ y)
+      (inside : [x, y].Sublist (rows i)) : Edge G (vRank x) (vRank y) := by
+    apply edge i
+    apply listBefore_of_sublist (cut := fun _ => [x,y]) (rowSimple i) inside
+    simp [SourceAudit.BeforeIn, apart, List.idxOf_cons_ne _ apart]
+  have allComponent (i : I) : ∀ c : ReturnPath I,
+      c = .main i ∨ c = .first i ∨ c = .second i → ∀ x ∈ rows c,
+        SameComponent G (vRank x) (vRank (.start i)) := by
+    let start : ReturnVertex V I := .start i
+    let finish : ReturnVertex V I := .finish i
+    let turn : ReturnVertex V I := .turn i
+    let middle : List (ReturnVertex V I) := (base i).map ReturnVertex.original
+    have mainRow : rows (.main i) = start :: (middle ++ [finish]) := rfl
+    have go : Edge G (vRank start) (vRank finish) := by
+      apply edgeOfPair (.main i) (by simp [start, finish])
+      rw [mainRow]
+      exact .cons_cons start (List.singleton_sublist.mpr (by simp))
+    have first : Edge G (vRank finish) (vRank turn) :=
+      edgeOfPair (.first i) (by simp [finish, turn]) (List.Sublist.refl _)
+    have second : Edge G (vRank turn) (vRank start) :=
+      edgeOfPair (.second i) (by simp [turn, start]) (List.Sublist.refl _)
+    have back : Reach G (vRank finish) (vRank start) := (Relation.ReflTransGen.single first).tail second
+    have startCase : SameComponent G (vRank start) (vRank start) := SameComponent.refl G _
+    have finishCase : SameComponent G (vRank finish) (vRank start) := ⟨back, .single go⟩
+    have turnCase : SameComponent G (vRank turn) (vRank start) :=
+      ⟨.single second, (Relation.ReflTransGen.single go).tail first⟩
+    rintro c (rfl | rfl | rfl) x onRow
+    · rw [mainRow] at onRow
+      rcases List.mem_cons.mp onRow with rfl | onTail
+      · exact startCase
+      rcases List.mem_append.mp onTail with between | last
+      · have enter : Edge G (vRank start) (vRank x) := by
+          apply edgeOfPair (.main i) (by intro eq; subst x; simp [middle,start] at between)
+          rw [mainRow]
+          exact .cons_cons start (List.singleton_sublist.mpr (List.mem_append_left _ between))
+        have leave : Edge G (vRank x) (vRank finish) := by
+          apply edgeOfPair (.main i) (by intro eq; subst x; simp [middle,finish] at between)
+          rw [mainRow]
+          exact .cons start ((List.singleton_sublist.mpr between).append (List.Sublist.refl [finish]))
+        exact ⟨back.head leave, .single enter⟩
+      · exact (List.mem_singleton.mp last).symm ▸ finishCase
+    · change x ∈ [finish,turn] at onRow
+      rcases List.mem_cons.mp onRow with rfl | last
+      · exact finishCase
+      · exact (List.mem_singleton.mp last).symm ▸ turnCase
+    · change x ∈ [turn,start] at onRow
+      rcases List.mem_cons.mp onRow with rfl | last
+      · exact turnCase
+      · exact (List.mem_singleton.mp last).symm ▸ startCase
+  have hasRoot (i : ReturnPath I) : ∃ r : Fin n, ∀ x ∈ (rows i).map vRank, componentLabel G x = r := by
+    cases i with
+    | main j =>
+      refine ⟨componentLabel G (vRank (.start j)), fun _ h => ?_⟩
+      obtain ⟨x, hx, rfl⟩ := List.mem_map.mp h
+      exact componentLabel_eq.mpr (allComponent j (.main j) (Or.inl rfl) x hx)
+    | first j =>
+      refine ⟨componentLabel G (vRank (.start j)), fun _ h => ?_⟩
+      obtain ⟨x, hx, rfl⟩ := List.mem_map.mp h
+      exact componentLabel_eq.mpr (allComponent j (.first j) (Or.inr (Or.inl rfl)) x hx)
+    | second j =>
+      refine ⟨componentLabel G (vRank (.start j)), fun _ h => ?_⟩
+      obtain ⟨x, hx, rfl⟩ := List.mem_map.mp h
+      exact componentLabel_eq.mpr (allComponent j (.second j) (Or.inr (Or.inr rfl)) x hx)
+  intro i
+  obtain ⟨root, onlyRoot⟩ := hasRoot (iRank.symm i)
+  have positive : 0 < (paths i).length := by
+    simpa [paths, rows] using returnPaths_length_pos base (iRank.symm i)
+  have nonempty : paths i ≠ [] := by
+    intro empty
+    simp [empty] at positive
+  have justRoot : (paths i).toFinset.image (componentLabel G) = {root} := by
+    ext c
+    simp only [mem_image, mem_singleton, List.mem_toFinset]
+    constructor
+    · rintro ⟨x, present, rfl⟩
+      exact onlyRoot x present
+    · rintro rfl
+      exact ⟨(paths i).head nonempty, List.head_mem _, onlyRoot _ (List.head_mem _)⟩
+  change ((paths i).toFinset.image (componentLabel G)).card = 1
+  rw [justRoot, card_singleton]
+
 
 /-- Even three simple full-bridge-free rows can have arbitrarily many
 incidences per visit to a strongly connected component. -/
@@ -394,76 +492,11 @@ theorem component_visit_mass_no_uniform_factor (loss : ℕ) :
     rintro ⟨j, earlier, y, forward, reverse⟩
     have back : ListBefore paths j y x := removeOppositeIntersections_before rankedSimple reverse
     exact (listBefore_ne forward) (encode.symm.injective <|
-      singleReturnPaths_unique base (fun eq => earlier.ne (rowIndex.injective eq))
+      returnPaths_unique_intersections base (fun apart _ _ _ _ => (apart (Subsingleton.elim ..)).elim)
+        (fun eq => earlier.ne (rowIndex.injective eq))
         (inOriginal back.2.1) (inOriginal forward.1) (inOriginal back.1) (inOriginal forward.2.1))
-  have edge (i : ReturnPath Unit) (x y : W) (step : ListBefore rows i x y) :
-      Edge G (encode x) (encode y) := by
-    have new := listBefore_map encode ((simple i).map encode.injective) step
-    have after : ListBefore paths (rowIndex.symm i) (encode x) (encode y) := by
-      have eq : paths (rowIndex.symm i) = (rows i).map encode := by simp [paths]
-      unfold SourceAudit.BeforeIn
-      rw [eq]
-      exact new
-    unfold G Edge pathPrecedenceGraph
-    exact mem_filter.mpr ⟨mem_univ _, rowIndex.symm i, after⟩
-  let start : W := .start ()
-  let finish : W := .finish ()
-  let turn : W := .turn ()
-  let middle : List W := (base ()).map ReturnVertex.original
-  have mainRow : rows (.main ()) = start :: (middle ++ [finish]) := rfl
-  have noFinish : finish ∉ middle := by simp [middle, finish]
-  have startIndex : (rows (.main ())).idxOf start = 0 := by simp [mainRow]
-  have finishIndex : (rows (.main ())).idxOf finish = middle.length + 1 := by
-    rw [mainRow, List.idxOf_cons_ne _ (by simp [finish, start] : start ≠ finish),
-      List.idxOf_append_of_notMem noFinish]
-    simp
-  have startFinish : Edge G (encode start) (encode finish) := by
-    apply edge (.main ())
-    refine ⟨by simp [mainRow], by simp [mainRow], ?_⟩
-    rw [startIndex, finishIndex]
-    omega
-  have finishTurn : Edge G (encode finish) (encode turn) :=
-    edge (.first ()) finish turn (by simp [SourceAudit.BeforeIn, rows, returnPaths, finish, turn])
-  have turnStart : Edge G (encode turn) (encode start) :=
-    edge (.second ()) turn start (by simp [SourceAudit.BeforeIn, rows, returnPaths, turn, start])
-  have finishStart : Reach G (encode finish) (encode start) :=
-    (Relation.ReflTransGen.single finishTurn).tail turnStart
-  have sameComponent (v : W) : SameComponent G (encode v) (encode start) := by
-    cases v with
-    | start u => cases u; exact SameComponent.refl G _
-    | finish u => cases u; exact ⟨finishStart, .single startFinish⟩
-    | turn u => cases u; exact ⟨.single turnStart, (Relation.ReflTransGen.single startFinish).tail finishTurn⟩
-    | original v =>
-      have present : ReturnVertex.original v ∈ middle := by
-        simp [middle, base]
-      have mainPresent : ReturnVertex.original v ∈ rows (.main ()) := by
-        simp [mainRow, present]
-      have pos : (rows (.main ())).idxOf (.original v) = middle.idxOf (.original v) + 1 := by
-        rw [mainRow, List.idxOf_cons_ne _ (by simp [start]), List.idxOf_append_of_mem present]
-      have enter : Edge G (encode start) (encode (.original v)) := by
-        apply edge (.main ())
-        refine ⟨by simp [mainRow], mainPresent, ?_⟩
-        rw [startIndex, pos]
-        omega
-      have leave : Edge G (encode (.original v)) (encode finish) := by
-        apply edge (.main ())
-        refine ⟨mainPresent, by simp [mainRow], ?_⟩
-        rw [pos, finishIndex]
-        exact Nat.succ_lt_succ (List.idxOf_lt_length_of_mem present)
-      exact ⟨finishStart.head leave, .single enter⟩
-  have one (i : Fin 3) : ((paths i).toFinset.image (componentLabel G)).card = 1 := by
-    let root := componentLabel G (encode start)
-    have all (v : Fin (Fintype.card W)) : componentLabel G v = root :=
-      (encode.apply_symm_apply v) ▸ componentLabel_eq.mpr (sameComponent (encode.symm v))
-    have image : (paths i).toFinset.image (componentLabel G) = {root} := by
-      ext v
-      simp only [mem_image, mem_singleton, List.mem_toFinset]
-      constructor
-      · rintro ⟨u, _, rfl⟩
-        exact all u
-      · rintro rfl
-        exact ⟨(paths i).head (nonempty i), List.head_mem _, all _⟩
-    rw [image, card_singleton]
+  have one (i : Fin 3) : ((paths i).toFinset.image (componentLabel G)).card = 1 :=
+    returnedRows_visit base (fun _ => List.nodup_finRange _) encode rowIndex.symm i
   have mass : (∑ i, (paths i).length) = 3*loss+1+6 := by
     simp only [paths, List.length_map]
     rw [Equiv.sum_comp rowIndex (fun i => (rows i).length), returnPaths_mass]

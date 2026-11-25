@@ -266,6 +266,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   bound suffices for this hypothesis. Applying that condition after
   opposite-intersection pruning gives factor \(28C\).
   [Component lower bounds](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L240).
+- The component condition has an [unbounded obstruction](OnlineReachabilityPreservers/OverlayLowerAudit.lean#L509).
+  A lattice family with private return paths has \(M/(n+J)\) growing
+  with the number of layers. Every path lies within one component and
+  opposite-intersection pruning retains the entire family.
 - [`theorem14_dag_compression` and `offline_pairwise_initial`](OnlineReachabilityPreservers/OfflineIndependence.lean)
   prove the constructive independence reduction on DAGs and its initial
   offline pairwise consequence on arbitrary digraphs. The algorithm deletes

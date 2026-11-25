@@ -235,6 +235,16 @@ def returnPaths {V I : Type*} (paths : I → List V) : ReturnPath I → List (Re
   | .first i => [.finish i, .turn i]
   | .second i => [.turn i, .start i]
 
+set_option maxHeartbeats 1800000 in
+/-- Private endpoints and return rows preserve unique intersections. -/
+theorem returnPaths_unique_intersections {V I : Type*} (base : I → List V)
+    (unique : ∀ {i j x y}, i ≠ j → x ∈ base i → x ∈ base j → y ∈ base i → y ∈ base j → x = y)
+    {i j : ReturnPath I} {x y : ReturnVertex V I} (apart : i ≠ j)
+    (xi : x ∈ returnPaths base i) (xj : x ∈ returnPaths base j)
+    (yi : y ∈ returnPaths base i) (yj : y ∈ returnPaths base j) : x = y := by
+  cases i <;> cases j <;> cases x <;> cases y <;> simp_all [returnPaths]
+  all_goals exact unique ‹_› ‹_› ‹_› ‹_› ‹_›
+
 local notation "ListBefore" => BeforeIn
 
 section ListOrder
@@ -359,7 +369,8 @@ def returnedOverlay {V I : Type*} [DecidableEq V] [DecidableEq I] [Fintype I]
     (paths : I → List V) : Arcs (ReturnVertex V I) :=
   univ.biUnion (fun i => consecutiveListArcs (returnPaths paths i))
 
-private theorem returnVertex_card {V I : Type*} [Fintype V] [Fintype I] :
+/-- The return construction adds three private vertices per original path. -/
+theorem returnVertex_card {V I : Type*} [Fintype V] [Fintype I] :
     Fintype.card (ReturnVertex V I) = Fintype.card V + 3*Fintype.card I := by
   let e : ReturnVertex V I ≃ V ⊕ (I ⊕ (I ⊕ I)) :=
     { toFun := fun v => match v with
@@ -435,7 +446,8 @@ private def returnPathEquiv (I : Type*) : ReturnPath I ≃ I ⊕ (I ⊕ I) where
   left_inv := by rintro (i|i|i) <;> rfl
   right_inv := by rintro (i|i|i) <;> rfl
 
-private theorem returnPath_card (I : Type*) [Fintype I] : Fintype.card (ReturnPath I) = 3*Fintype.card I := by
+/-- The return construction uses three paths per original path. -/
+theorem returnPath_card (I : Type*) [Fintype I] : Fintype.card (ReturnPath I) = 3*Fintype.card I := by
   rw [Fintype.card_congr (returnPathEquiv I)]
   simp only [Fintype.card_sum]
   omega
