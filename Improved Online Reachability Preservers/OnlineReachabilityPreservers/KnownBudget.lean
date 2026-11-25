@@ -16,7 +16,8 @@ def pathArcs (path : Option (List (V × V))) : Arcs V := (path.getD []).toFinset
 def runRule (choose : PathRule V) (H : Arcs V) (D : List (V × V)) : Arcs V :=
   D.foldl (fun A d => A ∪ pathArcs (choose A d)) H
 
-private def expensive (choose : PathRule V) (p F : ℕ) (H : Arcs V) (Q : Finset (V × V)) :
+/-- Select the lexicographically first candidate whose new edges exceed the budget. -/
+def expensive (choose : PathRule V) (p F : ℕ) (H : Arcs V) (Q : Finset (V × V)) :
     Option (V × V) :=
   (least? ((Q.filter (fun d => F < p * (pathArcs (choose H d) \ H).card)).image toLex)).map ofLex
 
@@ -42,7 +43,7 @@ private theorem expensive_none {choose : PathRule V} {p F : ℕ} {H Q : Arcs V}
 
 /-- Simulate purchases whose new edges would exceed the per-request budget.
 The first phase ignores already assigned pairs. -/
-private def expensiveTrace (choose : PathRule V) (p F : ℕ) :
+def expensiveTrace (choose : PathRule V) (p F : ℕ) :
     ℕ → Arcs V → Finset (V × V) → List (V × V)
   | 0, _, _ => []
   | k + 1, H, Q =>
@@ -106,7 +107,7 @@ private theorem runRule_extends (choose : PathRule V) (H : Arcs V) (D : List (V 
   | cons d ds ih => exact subset_union_left.trans (ih (H ∪ pathArcs (choose H d)))
 
 /-- Reconstruct the path at the moment the pair was finalized, or use the frozen state. -/
-private def assignedPath (choose : PathRule V) (H : Arcs V) :
+def assignedPath (choose : PathRule V) (H : Arcs V) :
     List (V × V) → V × V → Option (List (V × V))
   | [], d => choose H d
   | a :: as, d => if a = d then choose H a else assignedPath choose (H ∪ pathArcs (choose H a)) as d
@@ -132,7 +133,8 @@ private theorem assignedPath_frozen (choose : PathRule V) (H : Arcs V) (T : List
     simp only [assignedPath, ite_eq_right ne]
     exact ih (H ∪ pathArcs (choose H a)) (fun h => hd (List.mem_cons.mpr (Or.inr h)))
 
-private theorem assignedPath_uses_state (choose : PathRule V) (H : Arcs V) (T : List (V × V))
+/-- The reconstructed path comes from a state contained in the final replay state. -/
+theorem assignedPath_uses_state (choose : PathRule V) (H : Arcs V) (T : List (V × V))
     (d : V × V) :
     ∃ A ⊆ runRule choose H T, assignedPath choose H T d = choose A d := by
   induction T generalizing H with

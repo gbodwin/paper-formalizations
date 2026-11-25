@@ -560,14 +560,15 @@ theorem offlinePreserverListWithChecks_spec (arcs : List (V × V)) (vertices : L
     (fun n p m k small => by dsimp only [offlineCoreListBudget, pruneStepListBudget, servesListBudget]; gcongr)
     arcs vertices demands simple enumerate
 
-private def hopsListWithWordWork (arcs : List (V × V)) (s t : V) (depth : ℕ) : ℕ × ℕ :=
+/-- Find the first reverse-search depth that reaches the source, with a list tally. -/
+def hopsListWithWordWork (arcs : List (V × V)) (s t : V) (depth : ℕ) : ℕ × ℕ :=
   let choices := List.range (depth+1)
   let least := leastWhereWithChecks (reachTestListWithWordWork arcs s t) choices
   (least.1.getD (depth+1), least.2+14*(depth+1)+5)
 
-private def hopsListWordBudget (n m : ℕ) : ℕ := (n+1)*(reachInListWordBudget n m+2*n+20)+5
+def hopsListWordBudget (n m : ℕ) : ℕ := (n+1)*(reachInListWordBudget n m+2*n+20)+5
 
-private theorem hopsListWithWordWork_spec (arcs : List (V × V)) (s t : V) :
+theorem hopsListWithWordWork_spec (arcs : List (V × V)) (s t : V) :
     let n := Fintype.card V
     let out := hopsListWithWordWork arcs s t n
     out.1 = hops arcs.toFinset s t ∧ out.2 ≤ hopsListWordBudget n arcs.length := by
