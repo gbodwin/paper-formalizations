@@ -239,4 +239,81 @@ theorem least_le_original_factor {n : ℕ} (A : Adjacency n) (w : Weights n) :
     least A w ≤ ExactFlowCutGap.efg n (totalEdgeWeight (graph A) (weights w)) :=
   least_le_of_factor A w _ (ExactFlowCutGap.efg_bound n _ (graph A) (weights w) rfl)
 
+def minimalCuts {n : ℕ} (cuts : List (Finset (Edge n))) : List (Finset (Edge n)) :=
+  cuts.filter fun X => cuts.all fun Y => decide (¬ Y ⊂ X)
+
+theorem minimalCuts_subset {n : ℕ} (cuts : List (Finset (Edge n))) : minimalCuts cuts ⊆ cuts :=
+  fun _ h => (List.mem_filter.mp h).1
+
+theorem exists_minimal_subset {n : ℕ} (cuts : List (Finset (Edge n))) (X : Finset (Edge n))
+    (valid : X ∈ cuts) : ∃ Y ∈ minimalCuts cuts, Y ⊆ X := by
+  let inner := cuts.filter fun Y => decide (Y ⊆ X)
+  have member : X ∈ inner := List.mem_filter.mpr ⟨valid,decide_eq_true (Finset.Subset.rfl)⟩
+  let Y := inner.minOn Finset.card (List.ne_nil_of_mem member)
+  have present : Y ∈ inner := List.minOn_mem
+  obtain ⟨listed,included⟩ := List.mem_filter.mp present
+  have inside : Y ⊆ X := of_decide_eq_true included
+  refine ⟨Y,List.mem_filter.mpr ⟨listed,List.all_eq_true.mpr ?_⟩,inside⟩
+  intro Z available
+  apply decide_eq_true
+  intro less
+  have smaller : Z ⊆ X := fun e hit => inside (less.subset hit)
+  have found : Z ∈ inner := List.mem_filter.mpr ⟨available,decide_eq_true smaller⟩
+  have lowest : Y.card ≤ Z.card := List.apply_minOn_le_of_mem (f:=Finset.card) found
+  exact (not_lt_of_ge lowest) (Finset.card_lt_card less)
+
+private def minimalConstraints {n : ℕ} (A : Adjacency n) (w : Weights n) (k : ℕ) : List (Row (n*n)) :=
+  (List.finRange (n*n)).map nonnegative ++ ((minimalCuts (candidates A (demands A w) ∅)).map (violation A w k))
+
+private theorem minimal_constraints_iff {n : ℕ} (A : Adjacency n) (w : Weights n) (k : ℕ)
+    (x : Fin (n*n) → ℝ) : Satisfies (minimalConstraints A w k) x ↔ Satisfies (constraints A w k) x := by
+  rw [constraints_iff]
+  constructor
+  · intro satisfied
+    have positive (i : Fin (n*n)) : 0 ≤ x i := by
+      have row := satisfied (nonnegative i) (List.mem_append_left _ (List.mem_map.mpr ⟨i,List.mem_finRange _,rfl⟩))
+      rwa [nonnegative_eval] at row
+    refine ⟨positive,fun X listed => ?_⟩
+    obtain ⟨Y,minimal,inside⟩ := exists_minimal_subset _ X listed
+    have row := satisfied (violation A w k Y) (List.mem_append_right _ (List.mem_map.mpr ⟨Y,minimal,rfl⟩))
+    rw [violation_eval,sub_nonneg] at row
+    refine row.trans ?_
+    unfold gap
+    exact sub_le_sub_right (Finset.sum_le_sum_of_subset_of_nonneg inside (fun e _ _ => positive (index n e))) _
+  · rintro ⟨pos,gaps⟩ r member
+    unfold minimalConstraints at member
+    rcases List.mem_append.mp member with member | member
+    · obtain ⟨i,_,rfl⟩ := List.mem_map.mp member
+      rw [nonnegative_eval]
+      exact pos i
+    · obtain ⟨X,selected,rfl⟩ := List.mem_map.mp member
+      rw [violation_eval,sub_nonneg]
+      exact gaps X (minimalCuts_subset _ selected)
+
+private theorem solve_none_iff {m : ℕ} (rows : List (Row m)) :
+    solve m rows = none ↔ ¬ ∃ x : Fin m → ℝ, Satisfies rows x := by
+  constructor
+  · rintro absent ⟨x,satisfies⟩
+    have present := RationalFourierMotzkin.solve_complete rows x satisfies
+    simp only [absent,Option.isSome_none,Bool.false_eq_true] at present
+  · intro impossible
+    cases found : solve m rows with
+    | none => rfl
+    | some x =>
+      exact (impossible ⟨_,RationalFourierMotzkin.rational_to_real rows x
+        (RationalFourierMotzkin.solve_sound rows x found)⟩).elim
+
+private theorem minimal_isNone {n : ℕ} (A : Adjacency n) (w : Weights n) (k : ℕ) :
+    (solve (n*n) (minimalConstraints A w k)).isNone = (counterprice A w k).isNone := by
+  apply Bool.eq_iff_iff.mpr
+  simp only [Option.isNone_iff_eq_none,counterprice,solve_none_iff,minimal_constraints_iff]
+
+/-- Compute the same exact factor using the cut constraints that are
+minimal under inclusion. -/
+def leastMinimal {n : ℕ} (A : Adjacency n) (w : Weights n) : ℕ :=
+  ((List.range (n+1)).filter fun k => (solve (n*n) (minimalConstraints A w k)).isNone).min?.getD n
+
+theorem leastMinimal_eq {n : ℕ} (A : Adjacency n) (w : Weights n) : leastMinimal A w = least A w := by
+  simp only [leastMinimal,least,accepted,minimal_isNone]
+
 end DirectedFlowCutGap.RationalInstanceEdgeFactor
