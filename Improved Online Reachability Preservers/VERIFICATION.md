@@ -937,6 +937,18 @@ witness and the restriction and peeling guarantees in the dense case.
 · [Vertex splitting](OnlineReachabilityPreservers/LocalRegularization.lean)
 · [Conditional cleaning through five](OnlineReachabilityPreservers/LocalFrozenCleaning.lean).
 
+The ordered-block lower construction for Lemma 14 passed independent
+review. Keeping one longest increasing block per original row preserves
+all full exclusions and at least a reciprocal of the number of blocks in
+mass. The resulting DAG lower bound uses the original vertex universe
+and exactly the original number of distinct requests. One common vertex
+numbering with at most one descent on each row gives factor 24. The proof
+also applies after opposite-intersection pruning and then gives factor 48
+against the original mass. The review checked that pruning preserves all
+full exclusions and each nonempty path, and that the numbering is a
+hypothesis on the actual family used by the lower construction.
+[Ordered-block and pruning proofs](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean).
+
 ## Execution examples
 
 A finite execution check of the PaperLab example gave cumulative purchases

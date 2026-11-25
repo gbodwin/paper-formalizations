@@ -280,6 +280,24 @@ and \(p\le n^2\). A bipartite graph supplies a separate bound linear in
 \(p\) when the consecutive overlay's path-count subtraction is substantial.
 [Exact distinct-demand lower bounds](OnlineReachabilityPreservers/OfflineDemandLower.lean).
 
+The same lower construction applies if each original path can be cut into
+at most \(b\) increasing blocks in one common vertex order. Keep one
+longest block per path. Each kept block is a subsequence of its own
+original path, so every bridge in the kept family lifts to a bridge in
+the original family. At least \(M/b\) incidences survive, and the acyclic
+lower construction gives a graph on the original vertices with exactly
+\(p\) distinct requests forcing at least \(M/(12b)\) edges. One common
+numbering with at most one descent per path gives factor 24. For two
+full-length reversed paths, each of their \(n-1\) adjacent pairs gives
+a descent in exactly one path, under every numbering. These two paths
+exclude all full bridges and already attain the maximum mass \(2n\),
+so a bounded number of blocks in the original family cannot be assumed.
+Pruning opposite intersections first leaves at least half the mass and
+gives factor 48 when the pruned paths have such a one-descent numbering.
+The existence of a suitable numbering after pruning remains open.
+[Ordered-block lower bound](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean)
+· [Fully bridge-free reversed paths](OnlineReachabilityPreservers/OppositePruningGain.lean).
+
 The base lattice paths alone also give a superlinear offline lower bound
 when the vertex and demand counts are comparable. Ordering vertices by
 layer and then lexicographically makes the path system acyclic. Its
