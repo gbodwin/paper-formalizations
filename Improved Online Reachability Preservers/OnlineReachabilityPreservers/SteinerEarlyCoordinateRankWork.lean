@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.SteinerFiniteIndexPreparationWork
+import OnlineReachabilityPreservers.SteinerRoundingWork
 
 /-! Compute one early seed coordinate by its arithmetic slots and history rank. -/
 
@@ -108,5 +109,42 @@ theorem finSteinerEarlyCoordinateIndexWithWordWork_eq {n : ℕ} (G : Arcs (Fin n
       steinerEarlyCoordinateIndexLex G height width widthEq (steinerUniverseArrayIndex (Fin n)) := by
   rw [← finSteinerVertexIndex_eq]
   exact Equiv.ext fun key => (finSteinerEarlyCoordinatePositionWithWordWork_spec G height width widthEq key).1
+
+/-- Account for the arithmetic rank and one access to the stored word. -/
+def readFinEarlySeedWordWithRankWork {n : ℕ} (G : Arcs (Fin n)) (height width : ℕ)
+    (widthEq : width = (forestScale G height).log2+1) (words : IndexedEarlySeedWords G height)
+    (key : EarlySeedCoordinate G height) : Fin (forestSeedSize (forestScale G height)) × ℕ :=
+  let rank := finSteinerEarlyCoordinatePositionWithWordWork G height width widthEq key
+  (words rank.1,rank.2+1)
+
+def earlySeedArrayReadWordBudget (height : ℕ) : ℕ :=
+  5*height+1+heightNodeIndexWordBudget height 1+35
+
+theorem readFinEarlySeedWordWithRankWork_spec {n : ℕ} (G : Arcs (Fin n)) (height width : ℕ)
+    (widthEq : width = (forestScale G height).log2+1) (words : IndexedEarlySeedWords G height)
+    (key : EarlySeedCoordinate G height) :
+    let out := readFinEarlySeedWordWithRankWork G height width widthEq words key
+    out.1 = words (finSteinerEarlyCoordinateIndexWithWordWork G height width widthEq key) ∧
+      out.2 ≤ earlySeedArrayReadWordBudget height :=
+  ⟨rfl,Nat.add_le_add_right (finSteinerEarlyCoordinatePositionWithWordWork_spec G height width widthEq key).2 1⟩
+
+/-- Read gates and ancestor samples from the same array when rounding uses them. -/
+def finEarlySeedTrialsWithRankWork {n : ℕ} (G : Arcs (Fin n)) (height width : ℕ)
+    (widthEq : width = (forestScale G height).log2+1) (words : IndexedEarlySeedWords G height) :
+    ForestTrialArrayWithSeedWork (Fin n) height (forestScale G height) (earlyTrialCount (Fin n) height) :=
+  let read := readFinEarlySeedWordWithRankWork G height width widthEq words
+  fun trial root tier =>
+    (read (trial,root,tier,none),fun side node => read (trial,root,tier,some (side,node)))
+
+theorem finEarlySeedTrialsWithRankWork_spec {n : ℕ} (G : Arcs (Fin n)) (height width : ℕ)
+    (widthEq : width = (forestScale G height).log2+1) (words : IndexedEarlySeedWords G height) :
+    let out := finEarlySeedTrialsWithRankWork G height width widthEq words
+    (fun i => forestRoundingSampleValues (forestScale G height) (out i)) =
+      (earlySeedCoordinates G height).symm
+        (fun c => words (finSteinerEarlyCoordinateIndexWithWordWork G height width widthEq c)) ∧
+    ∀ i, forestSampleWorkBound (out i) (earlySeedArrayReadWordBudget height) := by
+  have each (key : EarlySeedCoordinate G height) := readFinEarlySeedWordWithRankWork_spec G height width widthEq words key
+  exact ⟨rfl,fun i root tier =>
+    ⟨(each (i,root,tier,none)).2,fun side node => (each (i,root,tier,some (side,node))).2⟩⟩
 
 end OnlineReachabilityPreservers

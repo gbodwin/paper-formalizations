@@ -556,8 +556,20 @@ shares these rows across late prefixes, including the thin branch's
 reachability checks and final rounding. It preserves all prefix graphs,
 earlier search and preparation tallies, and the seeded evaluation count.
 The extra \(2m+9\) allowance for \(m\) arcs covers the two reads per row
-and dispatch. Row construction, subsequent container work, cumulative
-early rank arithmetic, and bit and native costs remain open.
+and dispatch.
+
+The [early and thin array views](OnlineReachabilityPreservers/SteinerSeedDecoderWork.lean)
+come from the same fixed-budget bit decode. The [early seed reader](OnlineReachabilityPreservers/SteinerEarlyCoordinateRankWork.lean)
+computes the arithmetic rank in the canonical seed order and reads the
+word once at each used gate or ancestor test. The [forest work tally](OnlineReachabilityPreservers/SteinerRoundingWork.lean)
+adds the returned rank costs while retaining the earlier weight tally.
+The [rank-aware replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean)
+sums these charges over the evaluated prefixes and retains the late
+threshold cache. Lean checks a polynomial bound at each fixed height,
+using a unit cost for an indexed array read and word-level arithmetic.
+The prefix graphs, earlier base tallies, and seeded evaluation count
+agree with the cached replay. Row construction, other container work,
+and bit and native costs remain open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

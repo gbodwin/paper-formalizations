@@ -115,6 +115,36 @@ theorem prepareFinSteinerWeightedForSeedWithSeedReads_spec {n : ℕ} (G : Arcs (
     simpa only [Fintype.card_fin] using earlyRoundingSeedReadBound_le G height
   exact ⟨preserves,work.trans (Nat.mul_le_mul_left _ cap)⟩
 
+/-- Prepare the same weighted plan for an early seed reader with its own work tally. -/
+def prepareFinSteinerWeightedForSeedWithSeedWork {n : ℕ} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :
+    SteinerSeedPreparationWithSeedWork G height × ℕ :=
+  prepareFinSteinerWeightedWithPlan G arcs same height (prepareEarlyDistanceTableForSeedFromWeightsWithSeedWork G height)
+
+theorem prepareFinSteinerWeightedForSeedWithSeedWork_spec {n : ℕ} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :
+    let out := prepareFinSteinerWeightedForSeedWithSeedWork G arcs same height
+    let old := prepareFinSteinerWeightedForSeedWithWordWork G arcs same height
+    out.1.1 = old.1.1 ∧ out.1.2.2 = old.1.2.2 ∧ out.2 = old.2 ∧
+      ∀ samples B, (∀ i, forestSampleWorkBound (samples i) B) → ∀ D,
+        let result := out.1.2.1 samples D
+        let plain := fun i => forestRoundingSampleValues (forestScale G height) (samples i)
+        (result.1,result.2.1) = old.1.2.1 plain D ∧
+          result.2.2 ≤ (D.length+1)*(earlyRoundingSeedReadPolynomial n height*B) := by
+  let inputs := finSteinerTemplateInputsWithWordWork arcs height
+  let correct := finSteinerTemplateInputsWithWordWork_spec G arcs same height
+  let links := arcsFromDistinctList inputs.2.1 correct.2.2.1
+  let exactForest := (arcsFromDistinctList_eq inputs.2.1 correct.2.2.1).trans correct.2.1
+  let plan := prepareForestWeightsFromListWithWordWork inputs.2.1 correct.2.2.1 (readDistanceRow inputs.1.1)
+  let planEq := (finWeightsFromTemplateInputs_spec G arcs same height).1
+  obtain ⟨scale,initial,rounding⟩ := prepareEarlyDistanceTableForSeedFromWeightsWithSeedWork_spec
+    G height inputs.1 correct.1 (links,inputs.2.2+5) exactForest plan.1 planEq
+  refine ⟨scale,initial,rfl,fun samples B reads D => ?_⟩
+  obtain ⟨preserves,work⟩ := rounding samples B reads D
+  have cap : earlyRoundingSeedReadBound G height ≤ earlyRoundingSeedReadPolynomial n height := by
+    simpa only [Fintype.card_fin] using earlyRoundingSeedReadBound_le G height
+  exact ⟨preserves,work.trans (Nat.mul_le_mul_left _ (Nat.mul_le_mul_right B cap))⟩
+
 theorem prepareFinSteinerWeightedForSeedWithWordWork_spec {n : ℕ} (G : Arcs (Fin n))
     (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :
     let out := prepareFinSteinerWeightedForSeedWithWordWork G arcs same height

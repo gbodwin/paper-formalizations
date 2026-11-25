@@ -464,90 +464,208 @@ private theorem roundedForestTierWithSeedReads_spec
   · simp only [roundedForestTierWithSeedReads,roundedForestTierWithWork,gate,ite_false]
     exact ⟨True.intro,by omega⟩
 
-private def roundedForestLinkWithSeedReads (links : Arcs (HeightForestVertex W h))
+private def finiteAllWithSeedWork {I : Type*} (checks : I → Bool × ℕ × ℕ) (s : Finset I) : Bool × ℕ × ℕ :=
+  let rows := s.map (rowWithSeedReads checks)
+  (decide (¬ (rows.filter fun row => row.2.1 = false).Nonempty),
+    ∑ row ∈ rows, row.2.2.1,∑ row ∈ rows, row.2.2.2)
+
+private theorem finiteAllWithSeedWork_spec {I : Type*} (checks : I → Bool × ℕ × ℕ)
+    (s : Finset I) (B : ℕ) (bound : ∀ i ∈ s, (checks i).2.2 ≤ B) :
+    let out := finiteAllWithSeedWork checks s
+    (out.1,out.2.1) = finiteAllWithWork (fun i => ((checks i).1,(checks i).2.1)) s ∧
+      out.2.2 ≤ s.card*B := by
+  let rows := s.map (rowWithSeedReads checks)
+  let project := fun i => ((checks i).1,(checks i).2.1)
+  have all : (finiteAllWithSeedWork checks s).1 = true ↔ ∀ i ∈ s, (checks i).1 = true := by
+    change decide (¬ (rows.filter fun row => row.2.1 = false).Nonempty) = true ↔ _
+    rw [decide_eq_true_eq]
+    constructor
+    · intro pass i member
+      by_contra falseFlag
+      have flag := Bool.eq_false_of_not_eq_true falseFlag
+      exact pass ⟨rowWithSeedReads checks i,mem_filter.mpr ⟨mem_map_of_mem _ member,flag⟩⟩
+    · rintro pass ⟨row,member⟩
+      obtain ⟨packed,flag⟩ := mem_filter.mp member
+      obtain ⟨i,inside,rfl⟩ := mem_map.mp packed
+      exact Bool.noConfusion (flag.symm.trans (pass i inside))
+  have old := (finiteAllWithWork_spec project s (∑ i ∈ s, (checks i).2.1)
+    (fun i mem => single_le_sum (f := fun j => (checks j).2.1) (fun _ _ => zero_le) mem)).1
+  refine ⟨Prod.ext (Bool.eq_iff_iff.mpr (all.trans old.symm)) ?_,rowSeedReads_le s checks B bound⟩
+  dsimp only [finiteAllWithSeedWork,finiteAllWithWork]
+  rw [sum_map,sum_map]
+  rfl
+
+/-- Evaluate one individually metered sample for each ancestor in a path test. -/
+def thresholdPathWithSeedWork (m : ℕ) (cutoff : HeightNode W h → ℕ × ℕ)
+    (ancestors : Finset (HeightNode W h)) (sample : HeightNode W h → Fin m × ℕ) : Bool × ℕ × ℕ :=
+  finiteAllWithSeedWork (fun node =>
+    let stop := cutoff node
+    let read := sample node
+    (decide (read.1.val < stop.1),stop.2,read.2)) ancestors
+
+omit [LinearOrder W] [Fintype W] in
+theorem thresholdPathWithSeedWork_spec (m : ℕ) (cutoff : HeightNode W h → ℕ × ℕ)
+    (ancestors : Finset (HeightNode W h)) (sample : HeightNode W h → Fin m × ℕ)
+    (B : ℕ) (bound : ∀ node ∈ ancestors, (sample node).2 ≤ B) :
+    let out := thresholdPathWithSeedWork m cutoff ancestors sample
+    (out.1,out.2.1) = thresholdPathWithWork m cutoff ancestors (fun node => (sample node).1) ∧
+      out.2.2 ≤ ancestors.card*B :=
+  finiteAllWithSeedWork_spec (fun node =>
+    let stop := cutoff node
+    let read := sample node
+    (decide (read.1.val < stop.1),stop.2,read.2)) ancestors B bound
+
+abbrev ForestRoundingSampleWithSeedWork (W : Type*) (h scale : ℕ) :=
+  W → Fin (scale.log2+1) → (Fin (forestSeedSize scale) × ℕ) ×
+    (Bool → HeightNode W h → Fin (forestSeedSize scale) × ℕ)
+
+def forestRoundingSampleValues (scale : ℕ) (sample : ForestRoundingSampleWithSeedWork W h scale) :
+    ForestRoundingSample W h scale := fun root tier =>
+  let pair := sample root tier
+  (pair.1.1,fun side node => (pair.2 side node).1)
+
+private def roundedForestTierWithSeedWork
+    (units : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
+    (scale : ℕ) (sample : ForestRoundingSampleWithSeedWork W h scale)
+    (e : HeightForestVertex W h × HeightForestVertex W h) (tier : Fin (scale.log2+1)) : Bool × ℕ × ℕ :=
+  let root := heightForestRoot e.1
+  let draw := sample root tier
+  let side := roundingArcSide e
+  let hist := roundingArcHistory e
+  if draw.1.1.val < 2^tier.val then
+    let cutoffs := historyCutoffWithWork (scale.log2+1) tier.val (fun node => units (heightForestLegArc root side node))
+    let passed := thresholdPathWithSeedWork _ cutoffs (historyAncestors hist) (draw.2 side)
+    (passed.1,passed.2.1,draw.1.2+passed.2.2)
+  else (false,0,draw.1.2)
+
+private theorem roundedForestTierWithSeedWork_spec
+    (units : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
+    (scale : ℕ) (sample : ForestRoundingSampleWithSeedWork W h scale)
+    (e : HeightForestVertex W h × HeightForestVertex W h) (tier : Fin (scale.log2+1))
+    (B : ℕ) (gateBound : ∀ root i, (sample root i).1.2 ≤ B)
+    (testBound : ∀ root i side node, ((sample root i).2 side node).2 ≤ B) :
+    let out := roundedForestTierWithSeedWork units scale sample e tier
+    (out.1,out.2.1) = roundedForestTierWithWork units scale (forestRoundingSampleValues scale sample) e tier ∧
+      out.2.2 ≤ (h+2)*B := by
+  let root := heightForestRoot e.1
+  let side := roundingArcSide e
+  let hist := roundingArcHistory e
+  let ancestors := historyAncestors hist
+  let cutoffs := historyCutoffWithWork (scale.log2+1) tier.val
+    (fun node => units (heightForestLegArc root side node))
+  have opening := gateBound root tier
+  by_cases openGate : (sample (heightForestRoot e.1) tier).1.1.val < 2^tier.val
+  · obtain ⟨preserves,meter⟩ := thresholdPathWithSeedWork_spec _ cutoffs ancestors ((sample root tier).2 side) B
+      (fun node _ => testBound root tier side node)
+    simp only [roundedForestTierWithSeedWork,roundedForestTierWithWork,forestRoundingSampleValues,
+      openGate,ite_true,historyLegWithWork]
+    refine ⟨preserves,?_⟩
+    exact (Nat.add_le_add opening
+      (meter.trans (Nat.mul_le_mul_right B (historyAncestors_card_le hist)))).trans_eq (by ring)
+  · simp only [roundedForestTierWithSeedWork,roundedForestTierWithWork,forestRoundingSampleValues,
+      openGate,ite_false,true_and]
+    exact opening.trans (Nat.le_mul_of_pos_left _ (by omega))
+
+/-- Uniform per-access bound for the gate and ancestor readers. -/
+def forestSampleWorkBound {scale : ℕ} (sample : ForestRoundingSampleWithSeedWork W h scale) (B : ℕ) : Prop :=
+  ∀ root tier,
+    (sample root tier).1.2 ≤ B ∧ ∀ side node, ((sample root tier).2 side node).2 ≤ B
+
+private abbrev ForestTierCheck (W : Type*) (h scale : ℕ) :=
+  (HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ) →
+    HeightForestVertex W h × HeightForestVertex W h → Fin (scale.log2+1) → Bool × ℕ × ℕ
+
+private def ValidForestTierCheck {scale : ℕ} (check : ForestTierCheck W h scale)
+    (sample : ForestRoundingSample W h scale) (bound : ℕ) : Prop :=
+  ∀ units e tier,
+    let result := check units e tier
+    (result.1,result.2.1) = roundedForestTierWithWork units scale sample e tier ∧ result.2.2 ≤ bound
+
+@[inline] private def roundedForestLinkWithSeedTally (links : Arcs (HeightForestVertex W h))
     (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
     (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ) (scale : ℕ)
-    (sample : ForestRoundingSample W h scale) (e : HeightForestVertex W h × HeightForestVertex W h) : Bool × ℕ × ℕ :=
+    (check : ForestTierCheck W h scale) (e : HeightForestVertex W h × HeightForestVertex W h) : Bool × ℕ × ℕ :=
   let cost := weight e
   if cost.1 = 0 then (true,cost.2,0)
   else
     let units := forestUnitsWithWork links weight charges scale
-    let selected := finiteAnyWithSeedReads (roundedForestTierWithSeedReads units scale sample e) univ
+    let selected := finiteAnyWithSeedReads (check units e) univ
     (selected.1,cost.2+selected.2.1,selected.2.2)
 
-private theorem roundedForestLinkWithSeedReads_spec (links : Arcs (HeightForestVertex W h))
+private theorem roundedForestLinkWithSeedTally_spec (links : Arcs (HeightForestVertex W h))
     (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
     (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ) (scale : ℕ)
-    (sample : ForestRoundingSample W h scale) (e : HeightForestVertex W h × HeightForestVertex W h) :
-    let out := roundedForestLinkWithSeedReads links weight charges scale sample e
+    (check : ForestTierCheck W h scale) (sample : ForestRoundingSample W h scale) (B : ℕ)
+    (valid : ValidForestTierCheck check sample B) (e : HeightForestVertex W h × HeightForestVertex W h) :
+    let out := roundedForestLinkWithSeedTally links weight charges scale check e
     (out.1,out.2.1) = roundedForestLinkWithWork links weight charges scale sample e ∧
-      out.2.2 ≤ (scale.log2+1)*(h+2) := by
+      out.2.2 ≤ (scale.log2+1)*B := by
   let units := forestUnitsWithWork links weight charges scale
-  let checked := roundedForestTierWithSeedReads units scale sample e
-  have sameTier (i : Fin (scale.log2+1)) := roundedForestTierWithSeedReads_spec units scale sample e i
-  obtain ⟨same,reads⟩ := finiteAnyWithSeedReads_spec checked univ (h+2) (fun i _ => (sameTier i).2)
+  let checked := check units e
+  have each (tier : Fin (scale.log2+1)) := valid units e tier
+  obtain ⟨same,reads⟩ := finiteAnyWithSeedReads_spec checked univ B (fun i _ => (each i).2)
   have keys : (fun i => ((checked i).1,(checked i).2.1)) = roundedForestTierWithWork units scale sample e :=
-    funext fun i => (sameTier i).1
+    funext fun i => (each i).1
   rw [keys] at same
   by_cases free : (weight e).1 = 0
-  · simp [roundedForestLinkWithSeedReads,roundedForestLinkWithWork,free]
-  · simp only [roundedForestLinkWithSeedReads,roundedForestLinkWithWork,free,ite_false]
+  · simp [roundedForestLinkWithSeedTally,roundedForestLinkWithWork,free]
+  · simp only [roundedForestLinkWithSeedTally,roundedForestLinkWithWork,free,ite_false]
     constructor
     · rw [← same]
     · simpa only [card_univ,Fintype.card_fin] using reads
 
-private def roundedForestLinksWithSeedReads (links : Arcs (HeightForestVertex W h))
+@[inline] private def roundedForestLinksWithSeedTally (links : Arcs (HeightForestVertex W h))
     (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
     (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ) (scale : ℕ)
-    (sample : ForestRoundingSample W h scale) : Arcs (HeightForestVertex W h) × ℕ × ℕ :=
-  let rows := links.map (rowWithSeedReads (roundedForestLinkWithSeedReads links weight charges scale sample))
+    (check : ForestTierCheck W h scale) : Arcs (HeightForestVertex W h) × ℕ × ℕ :=
+  let rows := links.map (rowWithSeedReads (roundedForestLinkWithSeedTally links weight charges scale check))
   ((rows.filter fun r => r.2.1 = true).image Prod.fst,∑ r ∈ rows, r.2.2.1,∑ r ∈ rows, r.2.2.2)
 
-private theorem roundedForestLinksWithSeedReads_spec (links : Arcs (HeightForestVertex W h))
+private theorem roundedForestLinksWithSeedTally_spec (links : Arcs (HeightForestVertex W h))
     (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
     (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ) (scale : ℕ)
-    (sample : ForestRoundingSample W h scale) :
-    let out := roundedForestLinksWithSeedReads links weight charges scale sample
+    (check : ForestTierCheck W h scale) (sample : ForestRoundingSample W h scale) (B : ℕ)
+    (valid : ValidForestTierCheck check sample B) :
+    let out := roundedForestLinksWithSeedTally links weight charges scale check
     (out.1,out.2.1) = roundedForestLinksWithWork links weight charges scale sample ∧
-      out.2.2 ≤ links.card*((scale.log2+1)*(h+2)) := by
-  let checked := roundedForestLinkWithSeedReads links weight charges scale sample
+      out.2.2 ≤ links.card*((scale.log2+1)*B) := by
+  let checked := roundedForestLinkWithSeedTally links weight charges scale check
   let prev := roundedForestLinkWithWork links weight charges scale sample
-  have same (e) := (roundedForestLinkWithSeedReads_spec links weight charges scale sample e).1
-  refine ⟨Prod.ext ?_ ?_,rowSeedReads_le links checked _ (fun e _ =>
-    (roundedForestLinkWithSeedReads_spec links weight charges scale sample e).2)⟩
+  have each (e) := roundedForestLinkWithSeedTally_spec links weight charges scale check sample B valid e
+  refine ⟨Prod.ext ?_ ?_,rowSeedReads_le links checked _ (fun e _ => (each e).2)⟩
   · ext e
     change e ∈ ((links.map (rowWithSeedReads checked)).filter fun r => r.2.1 = true).image Prod.fst ↔
       e ∈ ((links.map (rowWithWork prev)).filter fun r => r.2.1 = true).image Prod.fst
     simp only [mem_image,mem_filter,mem_map]
     constructor
     · rintro ⟨row,⟨⟨k,mem,rfl⟩,yes⟩,rfl⟩
-      exact ⟨rowWithWork prev k,⟨⟨k,mem,rfl⟩,(congrArg Prod.fst (same k)) ▸ yes⟩,rfl⟩
+      exact ⟨rowWithWork prev k,⟨⟨k,mem,rfl⟩,(congrArg Prod.fst (each k).1) ▸ yes⟩,rfl⟩
     · rintro ⟨row,⟨⟨k,mem,rfl⟩,yes⟩,rfl⟩
-      exact ⟨rowWithSeedReads checked k,⟨⟨k,mem,rfl⟩,(congrArg Prod.fst (same k)).symm ▸ yes⟩,rfl⟩
-  · dsimp only [roundedForestLinksWithSeedReads,roundedForestLinksWithWork]
+      exact ⟨rowWithSeedReads checked k,⟨⟨k,mem,rfl⟩,(congrArg Prod.fst (each k).1).symm ▸ yes⟩,rfl⟩
+  · dsimp only [roundedForestLinksWithSeedTally,roundedForestLinksWithWork]
     rw [sum_map,sum_map]
-    exact sum_congr rfl (fun e _ => congrArg Prod.snd (same e))
+    exact sum_congr rfl (fun e _ => congrArg Prod.snd (each e).1)
 
-/-- Round the same trials and count each root gate and ancestor sample
-read used by their link decisions. The middle field retains weight reads. -/
-def roundedForestTrialsWithSeedReads (links : Arcs (HeightForestVertex W h))
+@[inline] private def roundedForestTrialsWithSeedTally (links : Arcs (HeightForestVertex W h))
     (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
     (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ) (scale trials : ℕ)
-    (sample : ForestTrialArray W h scale trials) : Arcs (HeightForestVertex W h) × ℕ × ℕ :=
-  let evaluate := fun i => roundedForestLinksWithSeedReads links weight charges scale (sample i)
+    (check : Fin trials → ForestTierCheck W h scale) : Arcs (HeightForestVertex W h) × ℕ × ℕ :=
+  let evaluate := fun i => roundedForestLinksWithSeedTally links weight charges scale (check i)
   let rows := univ.map (rowWithSeedReads evaluate)
   (rows.biUnion (fun r => r.2.1),∑ r ∈ rows, r.2.2.1,∑ r ∈ rows, r.2.2.2)
 
-theorem roundedForestTrialsWithSeedReads_spec (links : Arcs (HeightForestVertex W h))
+private theorem roundedForestTrialsWithSeedTally_spec (links : Arcs (HeightForestVertex W h))
     (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
     (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ) (scale trials : ℕ)
-    (sample : ForestTrialArray W h scale trials) :
-    let out := roundedForestTrialsWithSeedReads links weight charges scale trials sample
+    (check : Fin trials → ForestTierCheck W h scale) (sample : ForestTrialArray W h scale trials)
+    (B : ℕ) (valid : ∀ i, ValidForestTierCheck (check i) (sample i) B) :
+    let out := roundedForestTrialsWithSeedTally links weight charges scale trials check
     (out.1,out.2.1) = roundedForestTrialsWithWork links weight charges scale trials sample ∧
-      out.2.2 ≤ trials*(links.card*((scale.log2+1)*(h+2))) := by
-  let evaluate := fun i : Fin trials => roundedForestLinksWithSeedReads links weight charges scale (sample i)
+      out.2.2 ≤ trials*(links.card*((scale.log2+1)*B)) := by
+  let evaluate := fun i : Fin trials => roundedForestLinksWithSeedTally links weight charges scale (check i)
   let prev := fun i : Fin trials => roundedForestLinksWithWork links weight charges scale (sample i)
-  have same (i : Fin trials) := roundedForestLinksWithSeedReads_spec links weight charges scale (sample i)
+  have each (i : Fin trials) := roundedForestLinksWithSeedTally_spec links weight charges scale
+    (check i) (sample i) B (valid i)
   refine ⟨Prod.ext ?_ ?_,?_⟩
   · ext e
     change e ∈ (univ.map (rowWithSeedReads evaluate)).biUnion (fun r => r.2.1) ↔
@@ -557,18 +675,63 @@ theorem roundedForestTrialsWithSeedReads_spec (links : Arcs (HeightForestVertex 
       obtain ⟨row,present,contains⟩ := mem_biUnion.mp he
       obtain ⟨i,inside,rfl⟩ := mem_map.mp present
       exact mem_biUnion.mpr ⟨rowWithWork prev i,mem_map_of_mem _ inside,
-        congrArg Prod.fst (same i).1 ▸ contains⟩
+        congrArg Prod.fst (each i).1 ▸ contains⟩
     · intro he
       obtain ⟨row,present,contains⟩ := mem_biUnion.mp he
       obtain ⟨i,inside,rfl⟩ := mem_map.mp present
       exact mem_biUnion.mpr ⟨rowWithSeedReads evaluate i,mem_map_of_mem _ inside,
-        (congrArg Prod.fst (same i).1).symm ▸ contains⟩
-  · dsimp only [roundedForestTrialsWithSeedReads,roundedForestTrialsWithWork]
+        (congrArg Prod.fst (each i).1).symm ▸ contains⟩
+  · dsimp only [roundedForestTrialsWithSeedTally,roundedForestTrialsWithWork]
     rw [sum_map,sum_map]
-    exact sum_congr rfl (fun i _ => congrArg Prod.snd (same i).1)
-  · simpa only [roundedForestTrialsWithSeedReads,card_univ,Fintype.card_fin] using
-      rowSeedReads_le univ evaluate _ (fun i _ => (same i).2)
+    exact sum_congr rfl (fun i _ => congrArg Prod.snd (each i).1)
+  · simpa only [roundedForestTrialsWithSeedTally,card_univ,Fintype.card_fin] using
+      rowSeedReads_le univ evaluate _ (fun i _ => (each i).2)
 
+/-- Count the root gates and ancestor sample reads. Retain the earlier
+weight tally as the middle field. -/
+def roundedForestTrialsWithSeedReads (links : Arcs (HeightForestVertex W h))
+    (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
+    (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ) (scale trials : ℕ)
+    (sample : ForestTrialArray W h scale trials) : Arcs (HeightForestVertex W h) × ℕ × ℕ :=
+  roundedForestTrialsWithSeedTally links weight charges scale trials
+    (fun i units => roundedForestTierWithSeedReads units scale (sample i))
+
+theorem roundedForestTrialsWithSeedReads_spec (links : Arcs (HeightForestVertex W h))
+    (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
+    (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ) (scale trials : ℕ)
+    (sample : ForestTrialArray W h scale trials) :
+    let out := roundedForestTrialsWithSeedReads links weight charges scale trials sample
+    (out.1,out.2.1) = roundedForestTrialsWithWork links weight charges scale trials sample ∧
+      out.2.2 ≤ trials*(links.card*((scale.log2+1)*(h+2))) :=
+  roundedForestTrialsWithSeedTally_spec links weight charges scale trials
+    (fun i units => roundedForestTierWithSeedReads units scale (sample i)) sample (h+2)
+    (fun i units => roundedForestTierWithSeedReads_spec units scale (sample i))
+
+abbrev ForestTrialArrayWithSeedWork (W : Type*) (h scale trials : ℕ) :=
+  Fin trials → ForestRoundingSampleWithSeedWork W h scale
+
+/-- Aggregate the work returned by the sampled gates and ancestor tests. -/
+def roundedForestTrialsWithSeedWork (links : Arcs (HeightForestVertex W h))
+    (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
+    (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ) (scale trials : ℕ)
+    (sample : ForestTrialArrayWithSeedWork W h scale trials) : Arcs (HeightForestVertex W h) × ℕ × ℕ :=
+  roundedForestTrialsWithSeedTally links weight charges scale trials
+    (fun i units => roundedForestTierWithSeedWork units scale (sample i))
+
+theorem roundedForestTrialsWithSeedWork_spec (links : Arcs (HeightForestVertex W h))
+    (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
+    (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ) (scale trials : ℕ)
+    (sample : ForestTrialArrayWithSeedWork W h scale trials) (B : ℕ)
+    (cap : ∀ i, forestSampleWorkBound (sample i) B) :
+    let out := roundedForestTrialsWithSeedWork links weight charges scale trials sample
+    let plain := fun i => forestRoundingSampleValues scale (sample i)
+    (out.1,out.2.1) = roundedForestTrialsWithWork links weight charges scale trials plain ∧
+      out.2.2 ≤ trials*(links.card*((scale.log2+1)*((h+2)*B))) :=
+  roundedForestTrialsWithSeedTally_spec links weight charges scale trials
+    (fun i units => roundedForestTierWithSeedWork units scale (sample i))
+    (fun i => forestRoundingSampleValues scale (sample i)) ((h+2)*B)
+    (fun i units e tier => roundedForestTierWithSeedWork_spec units scale (sample i) e tier B
+      (fun root k => (cap i root k).1) (fun root k side node => (cap i root k).2 side node))
 
 end Forest
 

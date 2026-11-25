@@ -190,6 +190,8 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   After successful decoding, the replay pairs each arc with its
   threshold using two indexed reads. The late phase reuses those
   rows across prefixes, and the earlier graphs and search tallies agree.
+  The rank-aware replay also charges the arithmetic rank of each early
+  seed read and sums this work through forest rounding and the prefixes.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
