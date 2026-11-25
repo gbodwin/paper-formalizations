@@ -240,6 +240,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   operations, other container work, bit costs, and native execution costs
   remain open.
   [Replay with the outer union charged](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1459).
+  The weighted network evaluator now has a separate implementation that
+  takes a complete list of ordered pairs and stores accepted cuts in a
+  list. It charges the scans for free and paid arcs, the charge reads,
+  the rounded capacity arithmetic, and the paid outgoing cut. It returns
+  the same charge values and ordered cuts as the earlier weighted run.
+  Integrating it into the forest replay and measuring the remaining
+  search and rounding operations are open.
+  [Weighted charge history](OnlineReachabilityPreservers/SteinerWeightedChargeWork.lean).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

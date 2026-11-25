@@ -22,7 +22,8 @@ private theorem orderedPairKeys_nodup : (orderedPairKeys (V := V)).Nodup :=
   (sort_nodup (s := (univ : Finset (V ×ₗ V))) (· ≤ ·)).map
     (fun _ _ same => congrArg toLex same)
 
-private abbrev CapacityRows (V : Type*) :=
+/-- Integer capacities stored as rows with distinct ordered-pair keys. -/
+abbrev CapacityRows (V : Type*) :=
   {rows : List ((V × V) × ℤ) // (rows.map Prod.fst).Nodup}
 
 private def capacityWithWeightRead (edges : Arcs V) (d : WeightedNetworkDemand V)
@@ -87,21 +88,35 @@ private theorem prepareWeightedCapacityRows_spec (edges : Arcs V) (d : WeightedN
     rw [orderedPairKeys_length]
     exact Nat.add_le_add_left sum _
 
-private def residualArcsFromCapacityRows (rows : CapacityRows V) (flow : ArcFlow V) : Arcs V × ℕ :=
+/-- Form the next residual graph from the cached rows. -/
+def residualArcsFromCapacityRows (rows : CapacityRows V) (flow : ArcFlow V) : Arcs V × ℕ :=
   let kept := rows.val.filter fun row => flow row.1 < row.2
   let keys := kept.map Prod.fst
   have sub : keys.Sublist (rows.val.map Prod.fst) := List.filter_sublist.map _
   (⟨keys,sub.nodup rows.property⟩,rows.val.length)
 
-private theorem residualArcsFromCapacityRows_eq (rows : CapacityRows V) (capacity flow : ArcFlow V)
-    (same : rows.val = orderedPairKeys.map (fun e => (e,capacity e))) :
-    residualArcsFromCapacityRows rows flow =
-      (residualArcs capacity flow,Fintype.card V^2) := by
+omit [LinearOrder V] in
+theorem residualArcsFromCapacityRows_eq_of_keys (table : CapacityRows V) (keys : List (V × V))
+    (complete : ∀ e, e ∈ keys) (cap flow : ArcFlow V)
+    (shape : table.val = keys.map (fun e => (e, cap e))) :
+    residualArcsFromCapacityRows table flow = (residualArcs cap flow, keys.length) := by
   apply Prod.ext
   · ext e
-    simp [residualArcsFromCapacityRows, residualArcs, same, List.mem_map, mem_orderedPairKeys]
-    exact ⟨by rintro ⟨_,_,rfl,h⟩; exact h, fun h => ⟨e.1,e.2,rfl,h⟩⟩
-  · simp [residualArcsFromCapacityRows, same, orderedPairKeys_length]
+    change e ∈ (table.val.filter fun row => flow row.1 < row.2).map Prod.fst ↔ e ∈ residualArcs cap flow
+    simp only [residualArcs, shape, List.mem_map, List.mem_filter,
+      decide_eq_true_eq, mem_filter, mem_univ, true_and]
+    constructor
+    · rintro ⟨entry, ⟨⟨a, present, rfl⟩, h⟩, rfl⟩
+      exact h
+    · intro h
+      exact ⟨(e, cap e), ⟨⟨e, complete e, rfl⟩, h⟩, rfl⟩
+  · simp [residualArcsFromCapacityRows, shape]
+
+private theorem residualArcsFromCapacityRows_eq (rows : CapacityRows V) (capacity flow : ArcFlow V)
+    (same : rows.val = orderedPairKeys.map (fun e => (e, capacity e))) :
+    residualArcsFromCapacityRows rows flow = (residualArcs capacity flow, Fintype.card V^2) := by
+  rw [← orderedPairKeys_length]
+  exact residualArcsFromCapacityRows_eq_of_keys rows orderedPairKeys mem_orderedPairKeys capacity flow same
 
 /-- Build the full capacity table once. Residual graph searches reuse its
 values by a linear scan of the rows, with no searches by capacity key. -/

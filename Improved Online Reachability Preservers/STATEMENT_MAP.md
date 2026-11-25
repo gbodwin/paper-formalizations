@@ -677,6 +677,18 @@ costs, and native costs remain open.
 · [Unchanged records](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1397)
 · [Complete prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1459).
 
+The weighted run can also consume a supplied list of all ordered pairs
+with each pair listed once. It stores accepted cuts in reverse order
+for charge reads and returns them in their original order. The
+[weighted history evaluator](OnlineReachabilityPreservers/SteinerWeightedChargeWork.lean)
+proves equality of all charge values and the full cut list at the
+same scale and fuel. Its bound includes explicit membership scans,
+charge reads, integer capacity arithmetic with doubling, outgoing
+cut selection, and the earlier residual search counts. The proof
+also bounds each read of a returned charge. Constructing the list
+for the metric forest and threading the evaluator through complete
+early replay remain open.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
