@@ -45,7 +45,7 @@ its abstract and bibliographic record. All section and result numbers below refe
 | Theorem 2 | One of the two endpoint promises \(P\subseteq S\times V\) and \(P\subseteq V\times S\). Adaptive deterministic bound \(O(\sqrt{np\lvert S\rvert}+n)\) on general digraphs, including prefixes, with no advance knowledge of \(S,p\). Uses Theorems 9 and 11. | [Both orientations](OnlineReachabilityPreservers/DagReduction.lean) proved on general digraphs with an explicit finite edge bound. Both list evaluators have polynomial source-level tallies across all prefixes. |
 | Theorem 3, cited [8] | Lower bound \(\Omega((np)^{2/3}+n)\) against the stronger adversary that starts with an empty graph and inserts edges before each demand. Definition 18 of [8](https://arxiv.org/pdf/2212.11944v4) gives the game, Theorem 29 gives the lattice, and Lemma 45 states a general transfer. | [Checked](OnlineReachabilityPreservers/StrongAdversary.lean) for exact counts \(n\ge2\) and \(1\le p\le n^2\), with distinct feasible demands and constant 576. The proof forces every edge of each revealed line directly from its slope. |
 | Theorem 4 | Offline deterministic polynomial-time pairwise bound \(O(n^{3/4}p^{1/2}+n^{2-\sqrt2+o(1)}p^{1/\sqrt2}+n)\), also rounded to \(O(n^{.75}p^{.5}+n^{.59}p^{.71}+n)\). Uses the independence construction in Lemma 14 and the Appendix B extremal estimate, with degeneracies and the additive \(p\) handled in the graph bound. | [Both edge bounds](OnlineReachabilityPreservers/OfflineSharp.lean) hold for the constructed preserver on general digraphs. The limiting bound holds with zero exponent slack. The exact greedy deletion evaluator has a polynomial source-level tally. |
-| Theorem 5 | Both Theorems 1 and 2 transfer to preassigned simple paths, either with the total \(p\) known or with the arrival index \(i\) as a path-selection input. In the restricted case \(S\) is given. Uses Theorems 15 and 16. Fully non-adaptive path selection with neither parameter is left open. | The [pairwise rates](OnlineReachabilityPreservers/PairwiseNonAdaptive.lean) and [both endpoint promises](OnlineReachabilityPreservers/RestrictedNonAdaptive.lean) are checked for both models on general digraphs. The [path lift](OnlineReachabilityPreservers/PathAssignments.lean) uses a subset of the shared connectors in each simple path. The [pairwise selectors](OnlineReachabilityPreservers/AssignmentListPairwiseWork.lean) and [restricted selectors](OnlineReachabilityPreservers/AssignmentListRestrictedWork.lean) have polynomial source-level tallies per query. All-prefix tallies are checked for the pairwise selectors. |
+| Theorem 5 | Both Theorems 1 and 2 transfer to preassigned simple paths, either with the total \(p\) known or with the arrival index \(i\) as a path-selection input. In the restricted case \(S\) is given. Uses Theorems 15 and 16. Fully non-adaptive path selection with neither parameter is left open. | The [pairwise rates](OnlineReachabilityPreservers/PairwiseNonAdaptive.lean) and [both endpoint promises](OnlineReachabilityPreservers/RestrictedNonAdaptive.lean) are checked for both models on general digraphs. The [path lift](OnlineReachabilityPreservers/PathAssignments.lean) uses a subset of the shared connectors in each simple path. The [pairwise selectors](OnlineReachabilityPreservers/AssignmentListPairwiseWork.lean) and [restricted selectors](OnlineReachabilityPreservers/AssignmentListRestrictedWork.lean) have polynomial source-level tallies per query. Exact all-prefix edge sets and polynomial source-level bounds in both models are checked for the pairwise and both restricted selectors. |
 | Theorems 6 and 7, cited [1,15,21] | Prior offline approximation with \(\min(n^{4/7+\varepsilon},p^{1/2+\varepsilon})\) and online competitive ratio \(\widetilde O(p^{1/2+\varepsilon})\) from [21]. | Cited background |
 | Theorems 8 and 21 | Same new online unit-cost directed Steiner forest result, randomized polynomial time and competitive ratio \(O(n^{3/5+\varepsilon})\). Theorem 21 uses the early-pair algorithm of [21], all-pairs thick-demand hitting, the thin-pair online rounding from the [24] framework, the two orientations of Theorem 2, and Lemmas 20 and 22. | [The full online algorithm](OnlineReachabilityPreservers/SteinerComplete.lean) checks the expected \(O(n^{3/5+\varepsilon})\) rate against any feasible offline solution on a fixed demand trace, including zero optimum and repeated requests. The first block of distinct non-self requests is chosen independently of the random seeds. Correctness and monotonicity hold on every realization. Formal end-to-end runtime remains open. |
 | Theorem 9 | A DAG algorithm lifts to general digraphs by SCC contraction, adding at most \(2n\) edges via one in-tree and one out-tree per component. Needs online composition, representative edges, and a budget monotone in demand and endpoint counts. Keeping isolated labels preserves the vertex count. | [SCC lift with exact overhead](OnlineReachabilityPreservers/DagReduction.lean) and prefix monotonicity proved for a DAG algorithm on arbitrary lists. The distinct-demand lift keeps first occurrences after SCC projection. Lean checks preservation of every original request, prefix monotonicity, and the same budget with the \(2n\) overhead when the bound is monotone in the projected demand and endpoint counts. A [separately metered reference](OnlineReachabilityPreservers/AlgorithmSearchWork.lean) returns the same stable deduplication result using at most \(p^2\) pair-equality tests on one \(p\)-entry projected trace. |
@@ -375,17 +375,18 @@ The bounds are explicit polynomials in the input list lengths and the total
 or index, with a complete duplicate-free vertex list and the same unit
 charges for key operations and natural-number arithmetic.
 
-The all-prefix evaluator selects each assigned path once and charges every
-insertion into the accumulated edge list. It returns duplicate-free lists
-for the empty prefix and each subsequent arrival. Each list represents the
-exact assigned-path union. The **known-total** and **arrival-index** bounds
-include one complete enumeration when vertex keys are in `Fin n`. The
-restricted all-prefix accumulation and bit and machine costs have separate
-proof obligations.
-[Known-total prefixes](OnlineReachabilityPreservers/AssignmentPrefixesWork.lean#L150)
-· [Arrival-index prefixes](OnlineReachabilityPreservers/AssignmentPrefixesWork.lean#L166)
-· [Known-total with enumeration](OnlineReachabilityPreservers/AssignmentPrefixesWork.lean#L183)
-· [Arrival-index with enumeration](OnlineReachabilityPreservers/AssignmentPrefixesWork.lean#L198).
+The [one-arrival update](OnlineReachabilityPreservers/AssignmentPrefixesWork.lean#L47)
+selects the current demand's assigned path and inserts its edges into the
+accumulated list. It uses the current demand and index and does not consume
+any later demand. The all-prefix evaluator applies this update once per
+arrival and returns a duplicate-free list representing the exact
+assigned-path union at every prefix, including the empty prefix.
+The bounds include one complete enumeration when vertex keys are in
+`Fin n`. Native execution and bit costs have separate proof obligations.
+[Known-total prefixes](OnlineReachabilityPreservers/AssignmentPrefixesWork.lean#L181)
+· [Arrival-index prefixes](OnlineReachabilityPreservers/AssignmentPrefixesWork.lean#L197)
+· [Known-total with enumeration](OnlineReachabilityPreservers/AssignmentPrefixesWork.lean#L214)
+· [Arrival-index with enumeration](OnlineReachabilityPreservers/AssignmentPrefixesWork.lean#L229).
 
 The endpoint-restricted list selectors use a complete duplicate-free vertex
 list and a duplicate-free list of allowed sources or sinks. They charge
@@ -399,6 +400,17 @@ selector, including for an empty allowed set.
 · [Indexed sinks](OnlineReachabilityPreservers/AssignmentListRestrictedWork.lean#L149)
 · [Known-total sources](OnlineReachabilityPreservers/AssignmentListRestrictedWork.lean#L213)
 · [Indexed sources](OnlineReachabilityPreservers/AssignmentListRestrictedWork.lean#L230).
+
+All four restricted prefix bounds include the endpoint list traversals,
+the selected paths, and the insertion at every arrival.
+[Known-total sink prefixes](OnlineReachabilityPreservers/RestrictedAssignmentPrefixesWork.lean#L18)
+· [Known-total sink prefixes with enumeration](OnlineReachabilityPreservers/RestrictedAssignmentPrefixesWork.lean#L33)
+· [Known-total source prefixes](OnlineReachabilityPreservers/RestrictedAssignmentPrefixesWork.lean#L81)
+· [Known-total source prefixes with enumeration](OnlineReachabilityPreservers/RestrictedAssignmentPrefixesWork.lean#L98)
+· [Arrival-index sink prefixes](OnlineReachabilityPreservers/RestrictedAssignmentPrefixesWork.lean#L48)
+· [Arrival-index sink prefixes with enumeration](OnlineReachabilityPreservers/RestrictedAssignmentPrefixesWork.lean#L66)
+· [Arrival-index source prefixes](OnlineReachabilityPreservers/RestrictedAssignmentPrefixesWork.lean#L113)
+· [Arrival-index source prefixes with enumeration](OnlineReachabilityPreservers/RestrictedAssignmentPrefixesWork.lean#L133).
 
 The [weighted capacity counter](OnlineReachabilityPreservers/SteinerCapacityWork.lean)
 prepares one capacity row per ordered pair before a separator call.

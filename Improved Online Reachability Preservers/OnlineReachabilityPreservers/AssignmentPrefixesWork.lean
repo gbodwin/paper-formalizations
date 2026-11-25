@@ -31,16 +31,53 @@ private theorem plannedArcs_cons_offset (choose : ℕ → V × V → Option (Lis
       rw [show i+(j.val+1) = i+1+j.val by omega]
       exact on
 
+/-- Buy the chosen path at one arrival using only the current demand and its
+index. Return the new duplicate-free edge list when the input list is
+duplicate-free. -/
+def assignmentStepWithWordWork (choose : ℕ → V × V → Option (List (V × V)) × ℕ)
+    (i : ℕ) (d : V × V) (H : List (V × V)) : List (V × V) × ℕ :=
+  let chosen := choose i d
+  let edges := chosen.1.getD []
+  let bought := insertListWithChecks edges H
+  (bought.1, chosen.2+2*bought.2+12*edges.length+7)
+
+/-- Charge one path query followed by duplicate-free insertion. -/
+def assignmentStepWordBudget (n query : ℕ) : ℕ := query+2*(n*n^2)+12*n+7
+
+theorem assignmentStepWithWordWork_spec [Fintype V]
+    (choose : ℕ → V × V → Option (List (V × V)) × ℕ)
+    (i : ℕ) (d : V × V) (H : List (V × V)) (simple : H.Nodup)
+    (path : Option (List (V × V))) (same : (choose i d).1 = path)
+    (short : (path.getD []).length ≤ Fintype.card V) :
+    let n := Fintype.card V
+    let out := assignmentStepWithWordWork choose i d H
+    out.1.Nodup ∧ out.1.toFinset = H.toFinset ∪ pathArcs path ∧
+      out.2 ≤ assignmentStepWordBudget n (choose i d).2 := by
+  let n := Fintype.card V
+  let chosen := choose i d
+  let edges := chosen.1.getD []
+  let bought := insertListWithChecks edges H
+  obtain ⟨distinct, sameSet, charged⟩ := insertListWithChecks_spec edges H simple
+  have edgeLength : edges.length ≤ n := by simpa only [edges, chosen, same] using short
+  have insertCost : bought.2 ≤ n*n^2 := by
+    apply charged.trans
+    rw [Fintype.card_prod, ← pow_two]
+    exact Nat.mul_le_mul_right _ edgeLength
+  refine ⟨distinct, ?_, ?_⟩
+  · change bought.1.toFinset = _
+    exact sameSet.trans (by simp only [edges, chosen, same, pathArcs])
+  · change chosen.2+2*bought.2+12*edges.length+7 ≤ _
+    unfold assignmentStepWordBudget
+    gcongr
+
 private def assignmentPrefixesFromWithWordWork
     (choose : ℕ → V × V → Option (List (V × V)) × ℕ) :
     ℕ → List (V × V) → List (V × V) → List (List (V × V)) × ℕ
   | _, [], H => ([H],3)
   | i, d::ds, H =>
-    let chosen := choose i d
-    let edges := chosen.1.getD []
-    let purchased := insertListWithChecks edges H
-    let suffix := assignmentPrefixesFromWithWordWork choose (i+1) ds purchased.1
-    (H::suffix.1, chosen.2+2*purchased.2+12*edges.length+suffix.2+12)
+    let bought := assignmentStepWithWordWork choose i d H
+    let suffix := assignmentPrefixesFromWithWordWork choose (i+1) ds bought.1
+    (H::suffix.1, bought.2+suffix.2+5)
 
 /-- Select each requested path once and return the accumulated edge list
 at the empty prefix and after each arrival. Insertion reuses the previously
@@ -53,7 +90,7 @@ def assignmentPrefixesWithWordWork
 /-- Source-level word tally for a sequence of bounded path queries and
 duplicate-free insertions. -/
 def assignmentPrefixesWordBudget (n p query : ℕ) : ℕ :=
-  3+p*(query+2*(n*n^2)+12*n+12)
+  3+p*(assignmentStepWordBudget n query+5)
 
 variable [Fintype V]
 
@@ -73,28 +110,22 @@ private theorem assignmentPrefixesFromWithWordWork_spec
   | nil => simp [assignmentPrefixesFromWithWordWork, plannedArcs, assignmentPrefixesWordBudget, simple]
   | cons d D ih =>
     let n := Fintype.card V
-    let chosen := choose i d
-    let edges := chosen.1.getD []
-    let purchased := insertListWithChecks edges H
-    let suffix := assignmentPrefixesFromWithWordWork choose (i+1) D purchased.1
-    obtain ⟨boughtSimple, boughtSet, boughtWork⟩ := insertListWithChecks_spec edges H simple
-    have bought : purchased.1.toFinset = H.toFinset ∪ pathArcs (plain i d) := by
-      apply boughtSet.trans
-      simp only [edges, chosen, same, pathArcs]
-    have queryNow : chosen.2 ≤ query := by simpa using cost 0
+    let bought := assignmentStepWithWordWork choose i d H
+    let suffix := assignmentPrefixesFromWithWordWork choose (i+1) D bought.1
+    obtain ⟨boughtSimple, boughtSet, boughtWork⟩ :=
+      assignmentStepWithWordWork_spec choose i d H simple (plain i d) (same i d) (short i d)
+    have boughtEq : bought.1.toFinset = H.toFinset ∪ pathArcs (plain i d) := boughtSet
+    have queryNow : (choose i d).2 ≤ query := by simpa using cost 0
+    have stepWork : bought.2 ≤ assignmentStepWordBudget n query := by
+      apply boughtWork.trans
+      unfold assignmentStepWordBudget
+      gcongr
     have queryRest (j : Fin D.length) : (choose (i+1+j) (D.get j)).2 ≤ query := by
       have h := cost j.succ
       change (choose (i+(j.val+1)) (D.get j)).2 ≤ query at h
       rw [show i+1+j.val = i+(j.val+1) by omega]
       exact h
-    obtain ⟨simpleRest, restSet, restWork⟩ := ih (i+1) purchased.1 boughtSimple queryRest
-    have shortNow : edges.length ≤ n := by
-      simp only [edges, chosen, same]
-      exact short i d
-    have insertCost : purchased.2 ≤ n*n^2 := by
-      apply boughtWork.trans
-      rw [Fintype.card_prod, ← pow_two]
-      exact Nat.mul_le_mul_right _ shortNow
+    obtain ⟨simpleRest, restSet, restWork⟩ := ih (i+1) bought.1 boughtSimple queryRest
     refine ⟨?_, ?_, ?_⟩
     · change ∀ A ∈ H::suffix.1, List.Nodup A
       intro A member
@@ -109,10 +140,10 @@ private theorem assignmentPrefixesFromWithWordWork_spec
       congr 1
       apply List.map_congr_left
       intro P _
-      rw [bought, Function.comp_apply, plannedArcs_cons_offset, union_assoc]
-    · change chosen.2+2*purchased.2+12*edges.length+suffix.2+12 ≤ _
+      rw [boughtEq, Function.comp_apply, plannedArcs_cons_offset, union_assoc]
+    · change bought.2+suffix.2+5 ≤ _
       calc
-        _ ≤ query+2*(n*n^2)+12*n+assignmentPrefixesWordBudget n D.length query+12 := by gcongr
+        _ ≤ assignmentStepWordBudget n query+assignmentPrefixesWordBudget n D.length query+5 := by gcongr
         _ = assignmentPrefixesWordBudget n (d::D).length query := by
           simp only [assignmentPrefixesWordBudget, List.length_cons]
           ring

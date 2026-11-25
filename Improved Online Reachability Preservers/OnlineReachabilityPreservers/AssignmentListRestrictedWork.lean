@@ -239,4 +239,12 @@ theorem indexedSourcePathWithWordWork_spec (G : List (V × V)) (vertices sources
     (fun K r => indexedSinkPathWithWordWork_spec K vertices sources i r unique complete sourceSet)
     (fun _ _ => by unfold indexedSinkPath; exact liftPath_length_le _ _ _) G d
 
+theorem indexedSinkPathWordBudget_mono_index (n m σ : ℕ) :
+    Monotone (indexedSinkPathWordBudget n m σ) := by
+  intro i j ordered
+  have quota : n+1+2*(i+1) ≤ n+1+2*(j+1) := by gcongr
+  have bound := knownSinkPathWordBudget_mono_quota n m σ quota
+  unfold indexedSinkPathWordBudget
+  gcongr
+
 end OnlineReachabilityPreservers
