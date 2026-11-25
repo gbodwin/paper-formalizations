@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.RouteWork
+import OnlineReachabilityPreservers.AssignmentListRouteWork
 
 /-! Search work inside integer flow separation. -/
 
@@ -1118,5 +1119,226 @@ theorem fastThinViolationWithIndexedTablesWork_spec {n : ℕ} (G : Arcs (Fin n))
           ((4*(n*n)+m*(20*n+10)+18)+(7*(n*n)+4)+(m+2)*(16*(n*n)+4)+2)+8 :=
         Nat.add_le_add_right (Nat.add_le_add prepareCap scanCap) _
       _ = _ := by ring
+
+private def residualRowsWithArrayReads {n : ℕ} (capacity flow : FinArcFlowTable n)
+    (positions : FinPairAddresses n) : {arcs : List (Fin n × Fin n) // arcs.Nodup} × ℕ :=
+  let scanned := residualIndexedFilter capacity flow positions.val [] 2
+  have unique : scanned.1.Nodup := by
+    rw [(residualIndexedFilter_spec capacity flow positions.val [] 2).1,List.append_nil,List.nodup_reverse]
+    exact (positions.property.1.filter _).map finProdFinEquiv.symm.injective
+  (⟨scanned.1,unique⟩,scanned.2)
+
+private theorem residualRowsWithArrayReads_spec {n : ℕ} (capacity flow : FinArcFlowTable n)
+    (positions : FinPairAddresses n) :
+    let original := residualArcsWithArrayReads capacity flow positions.val positions.property.1
+    let rows := residualRowsWithArrayReads capacity flow positions
+    rows.1.val.toFinset = original.1 ∧ rows.2 = original.2 := by
+  refine ⟨?_,rfl⟩
+  ext arc
+  exact List.mem_toFinset
+
+private def unitAugmentationsWithMeteredRoutes {n : ℕ} (capacity : FinArcFlowTable n)
+    (positions : FinPairAddresses n) (s t : Fin n) : ℕ → FinArcFlowTable n →
+      (FinArcFlowTable n × ℕ) × ℕ × ℕ
+  | 0, flow => ((flow,0),0,2)
+  | fuel+1, flow =>
+    let graph := residualRowsWithArrayReads capacity flow positions
+    let path := routePathListWithLegacyFees graph.1.val s t n
+    let search := n^2+path.1.2.1+path.1.2.2
+    match path.1.1 with
+    | none => ((flow,0),search,graph.2+path.2+5)
+    | some route =>
+      let next := augmentFinArcFlowWithWordWork flow route
+      let rest := unitAugmentationsWithMeteredRoutes capacity positions s t fuel next.1
+      ((rest.1.1,rest.1.2+1),search+rest.2.1,graph.2+path.2+next.2+rest.2.2+8)
+
+private def meteredResidualRouteBudget (n : ℕ) : ℕ :=
+  routePathListWordBudget n (n*n)+2*(n*n)+2*n+36
+
+private theorem meteredResidualRouteBudget_le {n : ℕ} (arcs : List (Fin n × Fin n)) (short : arcs.length ≤ n*n) :
+    routePathListWordBudget n arcs.length+2*arcs.length+2*n+36 ≤ meteredResidualRouteBudget n := by
+  unfold meteredResidualRouteBudget
+  exact Nat.add_le_add_right (Nat.add_le_add_right (Nat.add_le_add
+    (routePathListWordBudget_mono_arcs n short) (Nat.mul_le_mul_left _ short)) _) _
+
+set_option maxHeartbeats 850000 in
+private theorem unitAugmentationsWithMeteredRoutes_compare {n : ℕ} (capacity : FinArcFlowTable n)
+    (positions : FinPairAddresses n) (s t : Fin n) (fuel : ℕ) (flow : FinArcFlowTable n) :
+    let result := unitAugmentationsWithMeteredRoutes capacity positions s t fuel flow
+    let prior := unitAugmentationsWithIndexedResidualWork capacity positions s t fuel flow
+    result.1 = prior.1 ∧ result.2.1 = prior.2.1 ∧
+      result.2.2 ≤ prior.2.2+(result.1.2+1)*meteredResidualRouteBudget n := by
+  induction fuel generalizing flow with
+  | zero => simp [unitAugmentationsWithMeteredRoutes,unitAugmentationsWithIndexedResidualWork]
+  | succ fuel ih =>
+    let graph := residualRowsWithArrayReads capacity flow positions
+    let original := residualArcsWithArrayReads capacity flow positions.val positions.property.1
+    let path := routePathListWithLegacyFees graph.1.val s t n
+    let oldPath := routePathWithSearchWork original.1 s t
+    obtain ⟨shape,graphWork⟩ := residualRowsWithArrayReads_spec capacity flow positions
+    change graph.1.val.toFinset = original.1 at shape
+    change graph.2 = original.2 at graphWork
+    obtain ⟨same,work⟩ := routePathListWithLegacyFees_spec graph.1.val s t graph.1.property
+    have pathEq : path.1 = oldPath := by
+      change path.1 = routePathWithSearchWork original.1 s t
+      rw [← shape]
+      simpa only [Fintype.card_fin] using same
+    have card : graph.1.val.length ≤ n*n := by
+      rw [← List.toFinset_card_of_nodup graph.1.property]
+      simpa only [Fintype.card_prod,Fintype.card_fin] using card_le_univ graph.1.val.toFinset
+    rw [Fintype.card_fin] at work
+    change path.2 ≤ routePathListWordBudget n graph.1.val.length+2*graph.1.val.length+2*n+36 at work
+    have cost : path.2 ≤ meteredResidualRouteBudget n := work.trans (meteredResidualRouteBudget_le _ card)
+    cases chosen : oldPath.1 with
+    | none =>
+      simp only [unitAugmentationsWithMeteredRoutes,unitAugmentationsWithIndexedResidualWork,
+        ← show original = residualArcsWithArrayReads capacity flow positions.val positions.property.1 from rfl,
+        ← show graph = residualRowsWithArrayReads capacity flow positions from rfl,
+        ← show path = routePathListWithLegacyFees graph.1.val s t n from rfl,
+        ← show oldPath = routePathWithSearchWork original.1 s t from rfl,
+        pathEq,chosen,graphWork,Nat.zero_add,Nat.one_mul,true_and]
+      omega
+    | some route =>
+      let next := augmentFinArcFlowWithWordWork flow route
+      let rest := unitAugmentationsWithMeteredRoutes capacity positions s t fuel next.1
+      let old := unitAugmentationsWithIndexedResidualWork capacity positions s t fuel next.1
+      obtain ⟨table,ledger,charge⟩ := ih next.1
+      change rest.1 = old.1 at table
+      change rest.2.1 = old.2.1 at ledger
+      change rest.2.2 ≤ old.2.2+(rest.1.2+1)*meteredResidualRouteBudget n at charge
+      simp only [unitAugmentationsWithMeteredRoutes,unitAugmentationsWithIndexedResidualWork,
+        ← show original = residualArcsWithArrayReads capacity flow positions.val positions.property.1 from rfl,
+        ← show graph = residualRowsWithArrayReads capacity flow positions from rfl,
+        ← show path = routePathListWithLegacyFees graph.1.val s t n from rfl,
+        ← show oldPath = routePathWithSearchWork original.1 s t from rfl,
+        pathEq,chosen,graphWork,
+        ← show next = augmentFinArcFlowWithWordWork flow route from rfl,
+        ← show rest = unitAugmentationsWithMeteredRoutes capacity positions s t fuel next.1 from rfl,
+        ← show old = unitAugmentationsWithIndexedResidualWork capacity positions s t fuel next.1 from rfl]
+      refine ⟨by rw [table],by rw [ledger],?_⟩
+      rw [Nat.add_mul (rest.1.2+1) 1,Nat.one_mul]
+      omega
+
+/-- Resolve the routes and the terminal source side from the stored residual rows. -/
+def findLowCapacityCutWithMeteredListRoutes {n : ℕ} (capacity : FinArcFlowTable n)
+    (s t : Fin n) (supply : ℕ) : (Option (Finset (Fin n)) × ℕ) × ℕ :=
+  let positions := prepareFinPairAddresses n
+  let start := zeroFinArcFlowTableWithWordWork n
+  let aug := unitAugmentationsWithMeteredRoutes capacity positions.1 s t supply start.1
+  let extra := positions.2+start.2+aug.2.2
+  if aug.1.2 = supply then ((none,aug.2.1),extra+6)
+  else
+    let graph := residualRowsWithArrayReads capacity aug.1.1 positions.1
+    let side := sourceSideFromResidualListWithWordWork graph.1.val s n
+    let size := graph.1.val.length
+    ((some side.1,aug.2.1+(n^2+n^2+n*size)),extra+graph.2+side.2+size+12)
+
+def terminalResidualSideWordBound (n : ℕ) : ℕ := reachInListWordBudget n (n*n)+8*(n*n)+8
+
+set_option maxHeartbeats 1000000 in
+theorem findLowCapacityCutWithMeteredListRoutes_compare {n : ℕ} (capacity : FinArcFlowTable n)
+    (s t : Fin n) (supply : ℕ) :
+    let out := findLowCapacityCutWithMeteredListRoutes capacity s t supply
+    let prior := findLowCapacityCutWithIndexedResidualWork capacity s t supply
+    out.1 = prior.1 ∧
+      out.2 ≤ prior.2+(supply+1)*meteredResidualRouteBudget n+terminalResidualSideWordBound n := by
+  let positions := prepareFinPairAddresses n
+  let start := zeroFinArcFlowTableWithWordWork n
+  let aug := unitAugmentationsWithMeteredRoutes capacity positions.1 s t supply start.1
+  let old := unitAugmentationsWithIndexedResidualWork capacity positions.1 s t supply start.1
+  let dense := unitAugmentationsWithDenseFlowWork capacity.read s t supply start.1
+  obtain ⟨same,fee,meter⟩ := unitAugmentationsWithMeteredRoutes_compare capacity positions.1 s t supply start.1
+  change aug.1 = old.1 at same
+  change aug.2.1 = old.2.1 at fee
+  change aug.2.2 ≤ old.2.2+(aug.1.2+1)*meteredResidualRouteBudget n at meter
+  have count : old.1.2 ≤ supply := by
+    have matchDense : old.1 = dense.1 :=
+      (unitAugmentationsWithIndexedResidualWork_compare capacity positions.1 s t supply start.1).1
+    have projected := congrArg Prod.snd (unitAugmentationsWithDenseFlowWork_spec capacity.read s t supply start.1).1
+    change dense.1.2 = (unitAugmentations capacity.read s t supply start.1.read).2 at projected
+    rw [matchDense,projected]
+    exact augmentationCount_le capacity.read s t supply start.1.read
+  have used : aug.1.2 ≤ supply := by rw [same]; exact count
+  have routes : aug.2.2 ≤ old.2.2+(supply+1)*meteredResidualRouteBudget n :=
+    meter.trans (Nat.add_le_add_left (Nat.mul_le_mul_right _ (Nat.add_le_add_right used _)) _)
+  unfold findLowCapacityCutWithMeteredListRoutes findLowCapacityCutWithIndexedResidualWork
+  simp only [← show positions = prepareFinPairAddresses n from rfl,
+    ← show start = zeroFinArcFlowTableWithWordWork n from rfl,
+    ← show aug = unitAugmentationsWithMeteredRoutes capacity positions.1 s t supply start.1 from rfl,
+    ← show old = unitAugmentationsWithIndexedResidualWork capacity positions.1 s t supply start.1 from rfl,
+    same,fee]
+  by_cases enough : old.1.2 = supply
+  · simp only [enough,ite_true,true_and]
+    omega
+  · simp only [enough,ite_false]
+    let graph := residualRowsWithArrayReads capacity old.1.1 positions.1
+    let residual := residualArcsWithArrayReads capacity old.1.1 positions.1.val positions.1.property.1
+    let side := sourceSideFromResidualListWithWordWork graph.1.val s n
+    obtain ⟨edges,scan⟩ := residualRowsWithArrayReads_spec capacity old.1.1 positions.1
+    change graph.1.val.toFinset = residual.1 at edges
+    change graph.2 = residual.2 at scan
+    obtain ⟨sideEq,sideWork⟩ := sourceSideFromResidualListWithWordWork_spec graph.1.val s
+    rw [Fintype.card_fin] at sideEq sideWork
+    change side.1 = reaches (reverseArcs graph.1.val.toFinset) s at sideEq
+    have sideExact : side.1 = (reachInWithArcInspections (reverseArcs residual.1) s n).1 := by
+      simp only [sideEq, edges, reachInWithArcInspections_spec, reaches, Fintype.card_fin]
+    have size : graph.1.val.length = residual.1.card := by
+      rw [← List.toFinset_card_of_nodup graph.1.property,edges]
+    have cap : graph.1.val.length ≤ n*n := by
+      rw [← List.toFinset_card_of_nodup graph.1.property]
+      simpa only [Fintype.card_prod,Fintype.card_fin] using card_le_univ graph.1.val.toFinset
+    have spend : side.2+graph.1.val.length+2 ≤ terminalResidualSideWordBound n := by
+      change side.2 ≤ reachInListWordBudget n graph.1.val.length+7*graph.1.val.length+6 at sideWork
+      unfold terminalResidualSideWordBound
+      have reach : reachInListWordBudget n graph.1.val.length ≤ reachInListWordBudget n (n*n) := by
+        unfold reachInListWordBudget
+        gcongr
+      omega
+    refine ⟨?_,?_⟩
+    · change (some side.1,old.2.1+(n^2+n^2+n*graph.1.val.length)) = _
+      rw [sideExact,size,reachInWithArcInspections_spec,reverseArcs_card]
+    · change positions.2+start.2+aug.2.2+graph.2+side.2+graph.1.val.length+12 ≤
+        positions.2+start.2+old.2.2+residual.2+10+
+          (supply+1)*meteredResidualRouteBudget n+terminalResidualSideWordBound n
+      omega
+
+/-- Extra list work for residual routes and the terminal reachability search. -/
+def thinResidualRouteWordCap (n m : ℕ) : ℕ :=
+  (m+1)*meteredResidualRouteBudget n+terminalResidualSideWordBound n
+
+/-- Keep the indexed capacities and flow, and search their residual lists directly. -/
+def fastThinViolationWithResidualRouteWork {n : ℕ} (G : Arcs (Fin n)) (d : Fin n × Fin n)
+    (m : ℕ) (load : (Fin n × Fin n) → ℕ × ℕ) : (Option (Finset (Fin n)) × ℕ) × ℕ :=
+  if d.1 = d.2 then ((none,0),3)
+  else
+    let interval := reachInterval G d
+    let edges := G.filter (fun e => e.1 ∈ interval ∧ e.2 ∈ interval)
+    let capacities := prepareThinCapacitiesWithWordWork edges load
+    let cut := findLowCapacityCutWithMeteredListRoutes capacities.1 d.1 d.2 m
+    ((cut.1.1.map (· ∩ interval),cut.1.2+(2*n*m+m)),capacities.2+cut.2+8)
+
+theorem fastThinViolationWithResidualRouteWork_compare {n : ℕ} (G : Arcs (Fin n)) (d : Fin n × Fin n)
+    (m : ℕ) (load : (Fin n × Fin n) → ℕ × ℕ) :
+    let out := fastThinViolationWithResidualRouteWork G d m load
+    let prior := fastThinViolationWithIndexedTablesWork G d m load
+    out.1 = prior.1 ∧ out.2 ≤ prior.2+thinResidualRouteWordCap n m := by
+  by_cases self : d.1 = d.2
+  · simp [fastThinViolationWithResidualRouteWork, fastThinViolationWithIndexedTablesWork,self]
+  let interval := reachInterval G d
+  let edges := G.filter (fun e => e.1 ∈ interval ∧ e.2 ∈ interval)
+  let stored := prepareThinCapacitiesWithWordWork edges load
+  let cut := findLowCapacityCutWithMeteredListRoutes stored.1 d.1 d.2 m
+  let prior := findLowCapacityCutWithIndexedResidualWork stored.1 d.1 d.2 m
+  obtain ⟨same,work⟩ := findLowCapacityCutWithMeteredListRoutes_compare stored.1 d.1 d.2 m
+  change cut.1 = prior.1 at same
+  change cut.2 ≤ prior.2+(m+1)*meteredResidualRouteBudget n+terminalResidualSideWordBound n at work
+  simp only [fastThinViolationWithResidualRouteWork, fastThinViolationWithIndexedTablesWork,self,ite_false]
+  refine ⟨?_,?_⟩
+  · change (cut.1.1.map (· ∩ interval),cut.1.2+(2*n*m+m)) =
+      (prior.1.1.map (· ∩ interval),prior.1.2+(2*n*m+m))
+    rw [same]
+  · change stored.2+cut.2+8 ≤ stored.2+prior.2+8+thinResidualRouteWordCap n m
+    unfold thinResidualRouteWordCap
+    omega
 
 end OnlineReachabilityPreservers

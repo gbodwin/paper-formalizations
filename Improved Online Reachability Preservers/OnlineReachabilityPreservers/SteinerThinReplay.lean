@@ -780,4 +780,52 @@ theorem thinRoundRunFromThresholdListWithIndexedTablesWork_bound {n : ℕ} (G : 
   unfold steinerThinIndexedTablesWorkBound steinerStreamingThinWorkBound
   ring
 
+private def thinRoundPrefixAdvanceWithResidualRouteWork {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) : ThinPrefixAdvance n :=
+  thinCoverArrayPrefixStepWithResidualRouteWork G m (m*(m.log2+1)+1)
+
+private theorem thinRoundPrefixAdvanceWithResidualRouteWork_exact {n : ℕ} (G : Arcs (Fin n))
+    (m : ℕ) (hm : m = G.card) : (thinRoundPrefixAdvanceWithResidualRouteWork G m).Exact G :=
+  thinCoverArrayPrefixStepWithResidualRouteWork_eq G m hm
+
+/-- Run thin checks with indexed residual scans and direct list routes. -/
+def thinRoundRunFromThresholdListWithResidualRouteWork {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (rows : ThinThresholdList (Fin n)) (factor : ℕ)
+    (D : List (Fin n × Fin n)) : (Arcs (Fin n) × ℕ) × ℕ :=
+  thinRoundRunFromThresholdListUsing G m (thinRoundPrefixAdvanceWithResidualRouteWork G m) rows factor D
+
+theorem thinRoundRunFromThresholdListWithResidualRouteWork_eq {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (hm : m = G.card) (rows : ThinThresholdList (Fin n)) (factor : ℕ) (D : List (Fin n × Fin n)) :
+    (thinRoundRunFromThresholdListWithResidualRouteWork G m rows factor D).1 =
+      thinRoundRunFromThresholdRows G m factor rows.val.toFinset D :=
+  thinRoundRunFromThresholdListUsing_eq G m _ (thinRoundPrefixAdvanceWithResidualRouteWork_exact G m hm) rows factor D
+
+/-- Include residual route and terminal reachability work in the thin bound. -/
+def steinerThinResidualRouteWorkBound (n m p : ℕ) : ℕ :=
+  steinerStreamingThinWorkBound n m p+(m*(m.log2+1)+p)*thinSeparatorRouteWordCap n m
+
+/-- A polynomial cap obtained by bounding the load logarithm by the arc count. -/
+def steinerThinResidualRouteWorkPolynomial (n m p : ℕ) : ℕ :=
+  steinerStreamingThinWorkPolynomial n m p+(m*(m+1)+p)*
+    (15*(n*n)+m*(20*n+10+6+4*(m+1)+13)+(m+2)*(16*(n*n)+4)+43+thinResidualRouteWordCap n m)
+
+theorem steinerThinResidualRouteWorkBound_le (n m p : ℕ) :
+    steinerThinResidualRouteWorkBound n m p ≤ steinerThinResidualRouteWorkPolynomial n m p := by
+  unfold steinerThinResidualRouteWorkBound steinerThinResidualRouteWorkPolynomial thinSeparatorRouteWordCap
+    thinIndexedTablesWordCap
+  have streaming := steinerStreamingThinWorkBound_le n m p
+  have logBound := Nat.log2_le_self m
+  gcongr
+
+theorem thinRoundRunFromThresholdListWithResidualRouteWork_bound {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (hm : m = G.card) (rows : ThinThresholdList (Fin n))
+    (edges : ∀ r ∈ rows.val, r.1 ∈ G) (count : rows.val.length ≤ m) (factor : ℕ)
+    (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (thinRoundRunFromThresholdListWithResidualRouteWork G m rows factor D).2 ≤
+      steinerThinResidualRouteWorkBound n m D.length := by
+  apply (thinRoundRunFromThresholdListUsing_bound G m hm _ (thinRoundPrefixAdvanceWithResidualRouteWork_exact G m hm)
+    rows edges count factor D feasible (10*m+8+thinSeparatorRouteWordCap n m)
+    (thinCoverArrayPrefixFoldWithResidualRouteWork_spec G m hm D feasible).2).trans_eq
+  unfold steinerThinResidualRouteWorkBound steinerStreamingThinWorkBound
+  ring
+
 end OnlineReachabilityPreservers

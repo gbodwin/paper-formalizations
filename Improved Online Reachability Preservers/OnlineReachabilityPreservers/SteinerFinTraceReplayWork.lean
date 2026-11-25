@@ -933,4 +933,49 @@ theorem completeFinSteinerReplayWithIndexedThinTablesWork_prefixes {n : ℕ} (G 
     (fun τ hubs rows => lateSteinerWithIndexedThinTablesWork G τ m hubs rows)
     (steinerTraceIndexedThinWorkPolynomial n m height D.length + 11*m + 21) ⟨sameRun,traceWork feasible⟩
 
+def steinerTraceThinResidualRouteWorkPolynomial (n m height p : ℕ) : ℕ :=
+  steinerTraceEarlySeedRankWorkPolynomial n height p+(p+1)*(steinerThinResidualRouteWorkPolynomial n m p+2)
+
+/-- Search the indexed residual arcs as lists in the thin separator at each late prefix. -/
+def completeFinSteinerReplayWithThinResidualRouteWork {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
+  completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D
+    (fun τ hubs rows => lateSteinerWithThinResidualRouteWork G τ m hubs rows)
+
+theorem completeFinSteinerReplayWithThinResidualRouteWork_spec {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
+    let out := completeFinSteinerReplayWithThinResidualRouteWork G raw same height m hm bits D
+    let old := completeFinSteinerReplayWithThinRowWork G raw same height m hm bits D
+    out.1 = old.1 ∧ out.2.2 = old.2.2 ∧
+      ((∀ d ∈ D, Reach G d.1 d.2) → out.2.1 ≤ steinerTraceThinResidualRouteWorkPolynomial n m height D.length+11*m+21) := by
+  apply completeFinSteinerReplayWithLateEvaluator_spec G raw same height m hm bits D
+    (fun τ hubs rows => lateSteinerWithThinResidualRouteWork G τ m hubs rows)
+    (steinerThinResidualRouteWorkPolynomial n m D.length)
+  · exact fun τ hubs rows P => lateSteinerWithThinResidualRouteWork_eq G τ m hm hubs rows P
+  · intro early τ hubs rows edges count P short reachable
+    have work := lateSteinerWithThinResidualRouteWork_bound early τ m hm hubs rows edges count P reachable
+    refine work.trans ((steinerThinResidualRouteWorkBound_le n m P.length).trans ?_)
+    unfold steinerThinResidualRouteWorkPolynomial steinerStreamingThinWorkPolynomial
+    gcongr
+
+/-- Exact fixed-budget prefix graphs with the thin residual routes and terminal reachability metered. -/
+theorem completeFinSteinerReplayWithThinResidualRouteWork_prefixes {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let out := completeFinSteinerReplayWithThinResidualRouteWork G raw same height m hm bits D
+    let base := out.1.1.1
+    base.1.1.map Prod.fst = D.inits.map (completeSteinerRunWithBitBudget G height bits) ∧
+      (base.1.1.map Prod.snd).sum+base.1.2.1+base.1.2.2.1+base.1.2.2.2+base.2+out.1.1.2+out.1.2+out.2.1 ≤
+        completeFinSteinerPreparationWorkPolynomial n m raw.length height D.length +
+          finSteinerWeightPlanWorkPolynomial n height + finSteinerReplayIndexWorkPolynomial n raw.length +
+          steinerTraceThinResidualRouteWorkPolynomial n m height D.length + 11*m + 21 := by
+  obtain ⟨sameRun,_,traceWork⟩ := completeFinSteinerReplayWithThinResidualRouteWork_spec G raw same height m hm bits D
+  simpa only [completeFinSteinerReplayWithThinResidualRouteWork,Nat.add_assoc] using
+    completeFinSteinerReplayWithLateEvaluator_prefixes G raw same height m hm bits D feasible
+    (fun τ hubs rows => lateSteinerWithThinResidualRouteWork G τ m hubs rows)
+    (steinerTraceThinResidualRouteWorkPolynomial n m height D.length + 11*m + 21) ⟨sameRun,traceWork feasible⟩
+
 end OnlineReachabilityPreservers

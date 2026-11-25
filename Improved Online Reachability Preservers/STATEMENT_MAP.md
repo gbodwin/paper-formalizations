@@ -620,9 +620,20 @@ preserves the returned cut and the earlier search tally for every load
 function. The additional work bound uses the load exponents' bound along
 feasible thin traces. The [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L919)
 includes these charges in a fixed-height polynomial on feasible traces.
-Remaining runtime obligations include route selection, reachability and
-interval calculations, hub work, other container operations, bit costs,
-and native costs.
+
+The [list route search](OnlineReachabilityPreservers/AssignmentListRouteWork.lean)
+builds the same hop-decreasing graph and selects the same shortest route
+in every residual graph. It uses the reachable list both to select the
+route and to recover the previous successor-test count. The previous arc
+inspection count is recovered from the two arc counts and the search depth.
+The [cut comparison](OnlineReachabilityPreservers/SeparatorWork.lean#L1239)
+also meters finding the terminal source side from the reversed residual
+list. It returns the previous cut and search tally for every capacity
+table and augmentation supply. The [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L964)
+includes these costs in its fixed-height polynomial on feasible traces.
+Remaining runtime obligations include computing and applying the demand
+intervals, hub routing, other container operations, bit costs, and native
+costs.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

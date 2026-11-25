@@ -722,4 +722,90 @@ theorem thinCoverArrayPrefixFoldWithIndexedTablesWork_spec {n : ℕ} (G : Arcs (
     (thinCoverArrayPrefixStepWithIndexedTablesWork G m (m*(m.log2+1)+1)) (fun q => Reach G q.1 q.2)
     (thinCoverArrayPrefixStepWithIndexedTablesWork_spec G m hm) D feasible
 
+def thinSeparatorRouteWordCap (n m : ℕ) : ℕ :=
+  thinIndexedTablesWordCap n m+thinResidualRouteWordCap n m
+
+/-- Charge the route and terminal reachability computations in each thin cut search. -/
+def thinCoverLoopWithResidualRouteWork {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (d : Fin n × Fin n)
+    (fuel : ℕ) (loads : FinThinLoadTable n) : (FinThinLoadTable n × ℕ) × ℕ × ℕ :=
+  thinCoverLoopWithArrayLoadWorkUsing G m d
+    (fun load => fastThinViolationWithResidualRouteWork G d m (fun e => (load e,6))) fuel loads
+
+theorem thinCoverLoopWithResidualRouteWork_spec {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
+    (d : Fin n × Fin n) (fuel : ℕ) (loads : FinThinLoadTable n) :
+    let out := thinCoverLoopWithResidualRouteWork G m d fuel loads
+    ((out.1.1.read,out.1.2),out.2.1) = thinCoverLoopWithSearchWork G d fuel loads.read ∧
+      (Reach G d.1 d.2 → (∀ e ∈ G, loads.read e ≤ m.log2+1) →
+        out.2.2 ≤ (out.1.2+1)*(10*m+8+thinSeparatorRouteWordCap n m)) := by
+  subst m
+  let m := G.card
+  let findCut : ThinArraySeparator n := fun load => fastThinViolationWithResidualRouteWork G d m (fun e => (load e,6))
+  let valid := fun snapshot : FinThinLoadTable n => Reach G d.1 d.2 ∧ ∀ e ∈ G, snapshot.read e ≤ m.log2+1
+  have exactCut (snapshot : FinThinLoadTable n) : (findCut snapshot.read).1 = fastThinViolationWithSearchWork G d snapshot.read ∧
+      (valid snapshot → (findCut snapshot.read).2 ≤ thinSeparatorRouteWordCap n m) := by
+    let read := fun e => (snapshot.read e,6)
+    have c := fastThinViolationWithIndexedTablesWork_spec G d m rfl read (m.log2+1) 6
+    obtain ⟨same,spent⟩ := fastThinViolationWithResidualRouteWork_compare G d m read
+    exact ⟨same.trans c.1, fun h => spent.trans
+      (Nat.add_le_add_right (c.2 (fun e he => ⟨h.2 e he,le_rfl⟩)) _)⟩
+  have closed (snapshot : FinThinLoadTable n) (W : Finset (Fin n))
+      (found : (findCut snapshot.read).1.1 = some W) (h : valid snapshot) :
+      valid (bumpFinThinLoadsOnCutWithWordWork snapshot (outgoingCut (intervalArcs G d) W)).1 := by
+    let cut := outgoingCut (intervalArcs G d) W
+    have output : fastThinViolation G d snapshot.read = some W :=
+      (fastThinViolationWithSearchWork_spec G d snapshot.read).1.symm.trans
+        ((congrArg Prod.fst (exactCut snapshot).1).symm.trans found)
+    have small : cutMass cut snapshot.read < m := (fastThinViolation_some h.1 output).2.2
+    have updated := (bumpFinThinLoadsOnCutWithWordWork_spec snapshot cut).1
+    exact ⟨h.1,updated ▸ doubleCut_bounded small h.2⟩
+  obtain ⟨record,work⟩ := thinCoverLoopWithArrayLoadWorkUsing_spec_of_invariant G m rfl d findCut
+    (thinSeparatorRouteWordCap n m) valid exactCut closed fuel loads
+  exact ⟨record,fun reach cap => work ⟨reach,cap⟩⟩
+
+def thinCoverArrayPrefixStepWithResidualRouteWork {n : ℕ} (G : Arcs (Fin n)) (m fuel : ℕ)
+    (old : FinThinPrefixState n) (d : Fin n × Fin n) : FinThinPrefixState n :=
+  thinCoverArrayPrefixStepUsing old (thinCoverLoopWithResidualRouteWork G m d fuel)
+
+theorem thinCoverArrayPrefixStepWithResidualRouteWork_eq {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
+    (old : FinThinPrefixState n) (D : List (Fin n × Fin n)) (d : Fin n × Fin n)
+    (earlier : old.fractionalRecord = thinCoverRunWithSearchWork G D) :
+    (thinCoverArrayPrefixStepWithResidualRouteWork G m (m*(m.log2+1)+1) old d).fractionalRecord =
+      thinCoverRunWithSearchWork G (D++[d]) := by
+  subst m
+  let fuel := G.card*(G.card.log2+1)+1
+  exact thinCoverArrayPrefixStepUsing_eq G old D d earlier (thinCoverLoopWithResidualRouteWork G G.card d fuel)
+    (thinCoverLoopWithResidualRouteWork_spec G G.card rfl d fuel old.loads).1
+
+theorem thinCoverArrayPrefixStepWithResidualRouteWork_spec {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
+    (old : FinThinPrefixState n) (D : List (Fin n × Fin n)) (d : Fin n × Fin n)
+    (feasible : ∀ q ∈ D++[d], Reach G q.1 q.2) (earlier : old.fractionalRecord = thinCoverRunWithSearchWork G D) :
+    let next := thinCoverArrayPrefixStepWithResidualRouteWork G m (m*(m.log2+1)+1) old d
+    next.fractionalRecord = thinCoverRunWithSearchWork G (D++[d]) ∧
+      next.updateWork ≤ old.updateWork+(next.updates-old.updates+1)*(10*m+8+thinSeparatorRouteWordCap n m)+3 := by
+  subst m
+  let fuel := G.card*(G.card.log2+1)+1
+  have head := feasible d (List.mem_append_right _ (List.mem_singleton_self _))
+  have projected := congrArg (fun r : (CutLoads (Fin n) × ℕ) × ℕ => r.1.1) earlier
+  have cap : ∀ e ∈ G, old.loads.read e ≤ G.card.log2+1 := by
+    change old.loads.read = (thinCoverRunWithSearchWork G D).1.1 at projected
+    rw [projected]
+    exact (thinCoverRunWithSearchWork_spec G D (fun q h => feasible q (List.mem_append_left _ h))).2.1
+  obtain ⟨same,work⟩ := thinCoverLoopWithResidualRouteWork_spec G G.card rfl d fuel old.loads
+  exact thinCoverArrayPrefixStepUsing_spec G old D d earlier (thinCoverLoopWithResidualRouteWork G G.card d fuel)
+    (10*G.card+8+thinSeparatorRouteWordCap n G.card) ⟨same,work head cap⟩
+
+def thinCoverArrayPrefixFoldWithResidualRouteWork {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (D : List (Fin n × Fin n)) : FinThinPrefixState n :=
+  let fuel := m*(m.log2+1)+1
+  D.foldl (thinCoverArrayPrefixStepWithResidualRouteWork G m fuel) (FinThinPrefixState.initial n)
+
+theorem thinCoverArrayPrefixFoldWithResidualRouteWork_spec {n : ℕ} (G : Arcs (Fin n)) (m : ℕ) (hm : m = G.card)
+    (D : List (Fin n × Fin n)) (feasible : ∀ q ∈ D, Reach G q.1 q.2) :
+    let out := thinCoverArrayPrefixFoldWithResidualRouteWork G m D
+    out.fractionalRecord = thinCoverRunWithSearchWork G D ∧
+      out.updateWork ≤ (out.updates+D.length)*(10*m+8+thinSeparatorRouteWordCap n m)+3*D.length+(4*(n*n)+5) :=
+  thinCoverArrayPrefixFoldUsing_spec G (10*m+8+thinSeparatorRouteWordCap n m)
+    (thinCoverArrayPrefixStepWithResidualRouteWork G m (m*(m.log2+1)+1)) (fun q => Reach G q.1 q.2)
+    (thinCoverArrayPrefixStepWithResidualRouteWork_spec G m hm) D feasible
+
 end OnlineReachabilityPreservers

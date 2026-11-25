@@ -764,3 +764,27 @@ theorem reachTestListWithWordWork_spec (arcs : List (V × V)) (s t : V) (depth :
 
 
 end OnlineReachabilityPreservers
+
+namespace OnlineReachabilityPreservers
+
+variable {V : Type*} [LinearOrder V] [Fintype V]
+
+/-- Keep the reverse-reach list used by the priority path search. -/
+def forwardPathWithReachListWork (G H : List (V × V)) (s t : V) (depth : ℕ) :
+    (Option (List (V × V)) × List V) × ℕ :=
+  let reach := reachInListWithWordWork G t depth
+  let path := growListWithWordWork G H reach.1 t depth s
+  ((path.1,reach.1),reach.2+path.2+4)
+
+theorem forwardPathWithReachListWork_spec (G H : List (V × V)) (s t : V) :
+    let n := Fintype.card V
+    let out := forwardPathWithReachListWork G H s t n
+    (out.1.1,out.2) = forwardPathListWithWordWork G H s t n ∧
+      out.1.2.length = (reaches G.toFinset t).card := by
+  have reach := reachInListWithWordWork_spec G t (Fintype.card V)
+  refine ⟨rfl,?_⟩
+  change (reachInListWithWordWork G t (Fintype.card V)).1.length = _
+  rw [← List.toFinset_card_of_nodup reach.1,reach.2.1]
+  rfl
+
+end OnlineReachabilityPreservers

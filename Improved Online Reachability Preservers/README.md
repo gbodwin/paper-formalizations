@@ -209,10 +209,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   adds initialization and updates on both orientations of each augmenting
   arc. The [replay with stored capacities](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L919)
   also prepares each active capacity once per cut search and charges both
-  indexed reads at every pair in the residual scans. The fixed-height bound
-  includes these operations on feasible traces. Route searches,
-  reachability and interval computations, hub work, other container
-  operations, bit costs, and native execution costs remain open.
+  indexed reads at every pair in the residual scans. The [residual route replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L964)
+  uses those lists to find the same shortest routes and the final reachable
+  source side, with the existing search tally preserved. On feasible
+  traces the fixed-height bound includes the work of those list searches.
+  Computing and applying the demand intervals, hub routing, other
+  container operations, bit costs, and native execution costs remain open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
