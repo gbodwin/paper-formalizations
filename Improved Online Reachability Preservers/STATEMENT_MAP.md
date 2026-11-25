@@ -438,6 +438,18 @@ scale and the counts of finite seed coordinates before the measured replay.
 The cached bit entry point shares the measured preparation and uses an
 arithmetic coordinate count. Index enumeration, allocation, arithmetic in
 lookups, and the cost of other container operations still need time bounds.
+The [bounded-history rank](OnlineReachabilityPreservers/SteinerHeightIndexWork.lean#L63)
+and [unrank](OnlineReachabilityPreservers/SteinerHeightIndexWork.lean#L111)
+agree exactly with the lexicographic history index used in the early
+coordinate order. With a supplied label converter of tally at most
+\(C\), either direction at height \(h\) charges at most
+\(6h^2+(C+24)h+7\) source-level operations. The tally includes each
+block calculation, list step, and arithmetic operation, with division
+and remainder charged as unit operations. For \(n\) vertex labels,
+the [block sizes](OnlineReachabilityPreservers/SteinerHeightIndexWork.lean#L38)
+fit in \(h\operatorname{bits}(n+1)+1\) bits. These bounds cover
+one history conversion with the given label converter.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

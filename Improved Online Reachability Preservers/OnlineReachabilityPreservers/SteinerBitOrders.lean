@@ -64,7 +64,8 @@ private theorem heightNodeLex_nil {V : Type*} {n h : ℕ} (vertices : V ≃ Fin 
     (heightNodeLexIndex vertices (h+1) ⟨[],bound⟩).val = 0 := by
   rfl
 
-private theorem heightNodeLex_cons {V : Type*} {n h : ℕ} (vertices : V ≃ Fin n)
+/-- The canonical rank is one plus the label offset and the suffix rank. -/
+theorem heightNodeLex_cons {V : Type*} {n h : ℕ} (vertices : V ≃ Fin n)
     (v : V) (rest : List V) (bound : (v :: rest).length ≤ h + 1) :
     (heightNodeLexIndex vertices (h+1) ⟨v::rest,bound⟩).val =
       (vertices v).val * heightLexBlockCount n h +
