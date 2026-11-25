@@ -1,5 +1,6 @@
 import DirectedFlowCutGap.RationalExactEdgeOracle
 import DirectedFlowCutGap.RationalFourierMotzkin
+import DirectedFlowCutGap.TwoSideEdgeFactor
 import Mathlib.Data.Finset.Sort
 import Mathlib.Logic.Equiv.Fin.Basic
 
@@ -577,35 +578,46 @@ theorem endpointCap_le_vertices {n : ℕ} (A : Adjacency n) (w : Weights n) :
   unfold endpointCap
   exact (min_le_left ..).trans (by simpa using Finset.card_le_univ (s := (positiveNonloops A w).image Prod.fst))
 
+private theorem path_positive_subset {n : ℕ} (A : Adjacency n) (w : Weights n)
+    {s t : Fin n} (p : SimplePath (graph A) s t) :
+    (p.edges.filter fun e => 0 < weights w e) ⊆ positiveNonloops A w := by
+  intro e he
+  obtain ⟨mem,positive⟩ := Finset.mem_filter.mp he
+  have weight : (0 : ℚ≥0) < originalWeight A w e := by
+    rw [← NNRat.cast_lt (K := ℝ≥0),NNRat.cast_zero,originalWeight_eq,actualEdgeWeight_of_adj _ _ (p.edge_adj mem)]
+    exact positive
+  exact Finset.mem_filter.mpr ⟨Finset.mem_univ _,p.edge_ne mem,weight⟩
+
+private theorem path_distinct_tails {n : ℕ} {A : Adjacency n} {s t : Fin n}
+    (p : SimplePath (graph A) s t) : Set.InjOn Prod.fst (↑p.edges : Set (Edge n)) := by
+  intro e he f hf equal
+  obtain ⟨i,rfl⟩ := (p.mem_edges e).mp he
+  obtain ⟨j,rfl⟩ := (p.mem_edges f).mp hf
+  have same : i.castSucc = j.castSucc := p.injective equal
+  exact congrArg p.edgeAt (Fin.ext (congrArg (fun j : Fin (p.edgeLength+1) => j.val) same))
+
+private theorem path_distinct_heads {n : ℕ} {A : Adjacency n} {s t : Fin n}
+    (p : SimplePath (graph A) s t) : Set.InjOn Prod.snd (↑p.edges : Set (Edge n)) := by
+  intro e he f hf equal
+  obtain ⟨i,rfl⟩ := (p.mem_edges e).mp he
+  obtain ⟨j,rfl⟩ := (p.mem_edges f).mp hf
+  have same : i.succ = j.succ := p.injective equal
+  have val := congrArg Fin.val same
+  change i.val+1 = j.val+1 at val
+  exact congrArg p.edgeAt (Fin.ext (by omega))
+
 private theorem path_positive_card {n : ℕ} (A : Adjacency n) (w : Weights n)
     {s t : Fin n} (p : SimplePath (graph A) s t) :
     (p.edges.filter fun e => 0 < weights w e).card ≤ endpointCap A w := by
   let paid := p.edges.filter fun e => 0 < weights w e
-  have contained : paid ⊆ positiveNonloops A w := by
-    intro e he
-    obtain ⟨mem,positive⟩ := Finset.mem_filter.mp he
-    have weight : (0 : ℚ≥0) < originalWeight A w e := by
-      rw [← NNRat.cast_lt (K := ℝ≥0),NNRat.cast_zero,originalWeight_eq,actualEdgeWeight_of_adj _ _ (p.edge_adj mem)]
-      exact positive
-    exact Finset.mem_filter.mpr ⟨Finset.mem_univ _,p.edge_ne mem,weight⟩
-  have distinctTails : Set.InjOn Prod.fst (↑paid : Set (Edge n)) := by
-    intro e he f hf equal
-    obtain ⟨i,rfl⟩ := (p.mem_edges e).mp (Finset.mem_filter.mp (show e ∈ paid from he)).1
-    obtain ⟨j,rfl⟩ := (p.mem_edges f).mp (Finset.mem_filter.mp (show f ∈ paid from hf)).1
-    have same : i.castSucc = j.castSucc := p.injective equal
-    exact congrArg p.edgeAt (Fin.ext (congrArg (fun j : Fin (p.edgeLength+1) => j.val) same))
-  have distinctHeads : Set.InjOn Prod.snd (↑paid : Set (Edge n)) := by
-    intro e he f hf equal
-    obtain ⟨i,rfl⟩ := (p.mem_edges e).mp (Finset.mem_filter.mp (show e ∈ paid from he)).1
-    obtain ⟨j,rfl⟩ := (p.mem_edges f).mp (Finset.mem_filter.mp (show f ∈ paid from hf)).1
-    have same : i.succ = j.succ := p.injective equal
-    have val := congrArg Fin.val same
-    change i.val+1 = j.val+1 at val
-    exact congrArg p.edgeAt (Fin.ext (by omega))
+  have contained : paid ⊆ positiveNonloops A w := path_positive_subset A w p
+  have toPath : (↑paid : Set (Edge n)) ⊆ ↑p.edges := Finset.filter_subset _ _
+  have tails := (path_distinct_tails p).mono toPath
+  have heads := (path_distinct_heads p).mono toPath
   refine le_min ?_ ?_
-  · rw [← Finset.card_image_of_injOn distinctTails]
+  · rw [← Finset.card_image_of_injOn tails]
     exact Finset.card_le_card (Finset.image_subset_image contained)
-  · rw [← Finset.card_image_of_injOn distinctHeads]
+  · rw [← Finset.card_image_of_injOn heads]
     exact Finset.card_le_card (Finset.image_subset_image contained)
 
 private theorem endpoint_factor {n : ℕ} (A : Adjacency n) (w : Weights n) :
@@ -659,6 +671,45 @@ theorem least_le_endpointCap {n : ℕ} (A : Adjacency n) (w : Weights n) :
     least A w ≤ endpointCap A w :=
   least_le_of_factor A w _ (endpoint_factor A w)
 
+private theorem two_endpoints_split {n : ℕ} (A : Adjacency n) (w : Weights n)
+    (proj : Edge n → Fin n)
+    (inj : ∀ {s t : Fin n} (p : SimplePath (graph A) s t), Set.InjOn proj (↑p.edges : Set (Edge n)))
+    (few : ((positiveNonloops A w).image proj).card ≤ 2) :
+    ∃ side : Edge n → Bool, ∀ {s t : Fin n} (p : SimplePath (graph A) s t),
+      Set.InjOn side (↑(p.edges.filter fun e => 0 < weights w e) : Set (Edge n)) := by
+  let endpoints := (positiveNonloops A w).image proj
+  have inside {s t : Fin n} (p : SimplePath (graph A) s t) {e : Edge n}
+      (mem : e ∈ p.edges.filter fun e => 0 < weights w e) :
+      proj e ∈ endpoints :=
+    Finset.mem_image_of_mem proj (path_positive_subset A w p mem)
+  by_cases nonempty : endpoints.Nonempty
+  · obtain ⟨u,hu⟩ := nonempty
+    refine ⟨fun e => decide (proj e = u),fun p e he f hf sideEq => ?_⟩
+    apply inj p (Finset.mem_filter.mp he).1 (Finset.mem_filter.mp hf).1
+    change decide (proj e = u) = decide (proj f = u) at sideEq
+    by_cases same : proj e = u
+    · have fIsU : proj f = u := of_decide_eq_true (by simpa [same] using sideEq.symm)
+      exact same.trans fIsU.symm
+    · have fNeU : proj f ≠ u := by
+        intro h
+        simp [same,h] at sideEq
+      have other : (endpoints.erase u).card ≤ 1 := by
+        rw [Finset.card_erase_of_mem hu]
+        exact Nat.sub_le_sub_right few _
+      exact Finset.card_le_one_iff.mp other
+        (Finset.mem_erase.mpr ⟨same,inside p he⟩) (Finset.mem_erase.mpr ⟨fNeU,inside p hf⟩)
+  · refine ⟨fun _ => false,fun p e he _ _ _ => ?_⟩
+    exact (nonempty ⟨proj e,inside p he⟩).elim
+
+theorem least_le_one_of_endpointCap_le_two {n : ℕ} (A : Adjacency n) (w : Weights n)
+    (h : endpointCap A w ≤ 2) : least A w ≤ 1 := by
+  unfold endpointCap at h
+  rcases min_le_iff.mp h with tails | heads
+  · obtain ⟨side,ok⟩ := two_endpoints_split A w Prod.fst (fun p => path_distinct_tails p) tails
+    exact least_le_of_factor A w 1 (by simpa using TwoSideEdgeFactor.factor_one (graph A) (weights w) side ok)
+  · obtain ⟨side,ok⟩ := two_endpoints_split A w Prod.snd (fun p => path_distinct_heads p) heads
+    exact least_le_of_factor A w 1 (by simpa using TwoSideEdgeFactor.factor_one (graph A) (weights w) side ok)
+
 private def emptyCutAccepted {n : ℕ} (A : Adjacency n) (w : Weights n) : Bool :=
   decide (∅ ∈ candidates A (demands A w) Finset.univ)
 
@@ -694,7 +745,7 @@ def leastSupportedWithCalls {n : ℕ} (A : Adjacency n) (w : Weights n) : ℕ ×
   let hi := endpointCap A w
   if hi = 0 then (0,0)
   else if emptyCutAccepted A w then (0,0)
-  else if hi = 1 then (1,0) else
+  else if hi ≤ 2 then (1,0) else
     let cuts := supportedMinimalCuts A w
     let accepts k := (solve (supportDimension A w) (supportedRows A w cuts k)).isNone
     bisectFactor accepts (hi.log2+1) 1 hi
@@ -721,8 +772,9 @@ theorem leastSupportedWithCalls_spec {n : ℕ} (A : Adjacency n) (w : Weights n)
         fun h => lost ((emptyCutAccepted_zero A w).mpr h)
       have bounded := least_le_endpointCap A w
       split
-      · rename_i capOne
-        exact ⟨(Nat.le_antisymm (bounded.trans_eq capOne) positive).symm,Nat.zero_le _⟩
+      · rename_i capTwo
+        exact ⟨(Nat.le_antisymm (least_le_one_of_endpointCap_le_two A w capTwo) positive).symm,
+          Nat.zero_le _⟩
       · exact bisectFactor_spec _ _ _ 1 _ (supported_accepts_iff A w) positive bounded
           ((Nat.sub_le ..).trans_lt Nat.lt_log2_self)
 

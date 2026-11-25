@@ -506,15 +506,19 @@ private theorem adaptive_congr (A : Adjacency n) {q r : Weights n} (same : weigh
       max (RationalOriginalEdgeFamily.floor k a) (originalWeight A r e)
     rw [arc]
 
-def family (A : Adjacency n) (w : Weights n) : RationalWeakFamily.History (Edge n) :=
-  let p := prepare A w
+/-- Continue from a preparation already computed on the graph and weights. -/
+def familyPrepared (A : Adjacency n) (w : Weights n) (p : Preparation n) :
+    RationalWeakFamily.History (Edge n) :=
   if p.preserves then
     RationalOriginalEdgeFamily.adaptive A p.proposed (RationalInstanceEdgeFactor.leastSupported A p.proposed)
   else RationalPrunedEdgeFamily.family A w
 
+def family (A : Adjacency n) (w : Weights n) : RationalWeakFamily.History (Edge n) :=
+  familyPrepared A w (prepare A w)
+
 theorem family_reference (A : Adjacency n) (w : Weights n) :
     family A w = RationalBudgetedRescaleEdgeFamily.family A w := by
-  unfold family RationalBudgetedRescaleEdgeFamily.family
+  unfold family familyPrepared RationalBudgetedRescaleEdgeFamily.family
   dsimp only
   rw [prepare_preserves,RationalBudgetedRescaleEdgeFamily.eligible]
   by_cases accepted : RationalPrunedEdgeFamily.preserves A w (RationalBudgetedRescaleEdgeFamily.rescaled A w) = true
@@ -528,13 +532,22 @@ theorem family_reference (A : Adjacency n) (w : Weights n) :
     exact adaptive_congr A same _
   · simp only [ite_eq_right accepted]
 
-def draw (A : Adjacency n) (w : Weights n) (trials : ℕ) (tape : List Bool) :
-    Option ((Option (Finset (Edge n)) × ℕ) × EncodedSolverBits.Tape) :=
-  EncodedSolverBits.run (BinaryFamilySampler.choose (family A w).cuts trials) tape
+abbrev Draw (n : ℕ) := Option ((Option (Finset (Edge n)) × ℕ) × EncodedSolverBits.Tape)
+
+private def drawHistory (history : RationalWeakFamily.History (Edge n)) (trials : ℕ)
+    (tape : List Bool) : Draw n :=
+  EncodedSolverBits.run (BinaryFamilySampler.choose history.cuts trials) tape
+
+def drawPrepared (A : Adjacency n) (w : Weights n) (p : Preparation n) (trials : ℕ)
+    (tape : List Bool) : Draw n :=
+  drawHistory (familyPrepared A w p) trials tape
+
+def draw (A : Adjacency n) (w : Weights n) (trials : ℕ) (tape : List Bool) : Draw n :=
+  drawHistory (family A w) trials tape
 
 theorem draw_reference (A : Adjacency n) (w : Weights n) (trials : ℕ) (tape : List Bool) :
     draw A w trials tape = RationalBudgetedRescaleEdgeFamily.draw A w trials tape := by
-  unfold draw RationalBudgetedRescaleEdgeFamily.draw
+  unfold draw drawHistory RationalBudgetedRescaleEdgeFamily.draw
   rw [family_reference]
 
 end DirectedFlowCutGap.MeasuredBudgetRescaleEdgeFamily
