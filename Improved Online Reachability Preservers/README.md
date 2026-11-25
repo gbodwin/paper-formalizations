@@ -206,7 +206,8 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
 - At cutoff four, a cleaned witness for the unrestricted maximum in either
   bridge mode retains at least \(M/392\) of the maximizing incidence mass \(M\).
   It meets both budgets and all four factor-four bounds around its own
-  averages. [Output-average cleaning](OnlineReachabilityPreservers/LocalAverageCleaning.lean).
+  averages. The same conclusion holds at the unrestricted full-bridge
+  cutoff six. [Output-average cleaning](OnlineReachabilityPreservers/LocalAverageCleaning.lean).
 - For full-bridge cutoffs three through five, a cleaned maximizing family
   retains at least \(M/119\) and meets both budgets and all four factor-four
   caps measured against the original averages. The path split places matching

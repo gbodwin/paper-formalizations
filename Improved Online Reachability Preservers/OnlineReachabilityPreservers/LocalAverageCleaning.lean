@@ -152,10 +152,10 @@ theorem relabelListPathsFin_spec {V I : Type*}
 
 private theorem listOutputAverageCaps_relabel {V I : Type*}
     [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] (paths : I → List V)
-    (simple : ∀ i, (paths i).Nodup) (half : Bool) (allowed : localOrderAdmissible half 4 paths)
+    (simple : ∀ i, (paths i).Nodup) (half : Bool) {k : ℕ} (allowed : localOrderAdmissible half k paths)
     (caps : listOutputAverageCaps paths) :
     ∃ clean : Fin (Fintype.card I) → List (Fin (Fintype.card V)),
-      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half 4 clean ∧
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       (∑ i, (clean i).length) = (∑ i, (paths i).length) ∧ listOutputAverageCaps clean := by
   let vIso : Fin (Fintype.card V) ≃o V := Fintype.orderIsoFinOfCardEq V rfl
   let iIso : Fin (Fintype.card I) ≃o I := Fintype.orderIsoFinOfCardEq I rfl
@@ -178,13 +178,13 @@ private theorem restrictListPaths_mass_eq {V I : Type*} [LinearOrder V]
 private theorem clean_quarter_support {V I : Type*}
     [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
     (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
-    (unique : ∀ {i j x y}, i ≠ j → x ∈ paths i → x ∈ paths j → y ∈ paths i → y ∈ paths j → x = y)
-    (half : Bool) (allowed : localOrderAdmissible half 4 paths)
+    (half : Bool) {k : ℕ}
+    (splitAllowed : ∀ D L, localOrderAdmissible half k (listRegularizedPaths paths D L))
     {n p : ℕ} (hn : 0 < n) (hp : 0 < p)
     (vertices : Fintype.card V ≤ n/4) (indices : Fintype.card I ≤ p/4)
     (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
-      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half 4 clean ∧
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       (∑ i, (paths i).length) ≤ 4*(∑ i, (clean i).length) ∧
       (∑ i, (clean i).length) ≤ (∑ i, (paths i).length) ∧ listOutputAverageCaps clean := by
   let M := ∑ i, (paths i).length
@@ -237,10 +237,11 @@ private theorem clean_quarter_support {V I : Type*}
           restrictListPath_length (afterSimple i.val) A]
         exact (card_le_card inter_subset_left).trans ((List.toFinset_card_le _).trans (length i.val))
       exact ⟨by rw [rowLength]; exact minLength i, Nat.cast_le.mpr bound⟩
-  have legal : localOrderAdmissible half 4 restricted := by
+  have legal : localOrderAdmissible half k restricted := by
+    have legalAfter := splitAllowed D L
     cases half
-    · exact restrictListPaths_fullFree afterSimple (listRegularizedPaths_fullFree simple unique allowed D L) A B
-    · exact restrictListPaths_halfFree afterSimple (listRegularizedPaths_halfFree simple unique allowed D L) A B
+    · exact restrictListPaths_fullFree afterSimple legalAfter A B
+    · exact restrictListPaths_halfFree afterSimple legalAfter A B
   obtain ⟨clean,cleanSimple,cleanLegal,cleanMass,cleanCaps⟩ :=
     listOutputAverageCaps_relabel restricted restrictedSimple half legal cap
   refine ⟨Fintype.card A, ?_, Fintype.card B, ?_, clean, cleanSimple, cleanLegal, ?_, ?_, cleanCaps⟩
@@ -252,17 +253,17 @@ private theorem clean_quarter_support {V I : Type*}
   · rw [cleanMass, mass]
     exact (rectanglePaths_mass_le Z A B).trans_eq total
 
-private theorem clean_linear_mass {n p M : ℕ} (half : Bool) (hn : 0 < n) (hp : 0 < p)
+private theorem clean_linear_mass {n p M k : ℕ} (half : Bool) (hn : 0 < n) (hp : 0 < p)
     (dense : n ≤ M) (long : p ≤ M) (mass : M ≤ 392 * max n p) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
-      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half 4 clean ∧
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       M ≤ 392*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ listOutputAverageCaps clean := by
   by_cases nle : n ≤ p
   · let clean : Fin p → List (Fin 1) := fun _ => [0]
-    have free : BridgeFree (ListBefore clean) 4 := by
+    have free : BridgeFree (ListBefore clean) k := by
       intro k _
       exact ⟨fun b => listBefore_ne b.riverStep (Subsingleton.elim _ _)⟩
-    have allowed : localOrderAdmissible half 4 clean := by cases half; exacts [free, free.halfFree]
+    have allowed : localOrderAdmissible half k clean := by cases half; exacts [free, free.halfFree]
     have simple (i : Fin p) : (clean i).Nodup := by simp [clean]
     have length : (∑ i, (clean i).length) = p := by simp [clean]
     have degree (v : Fin 1) : (occurrences (fun i => (clean i).toFinset) v).card = p := by
@@ -277,10 +278,10 @@ private theorem clean_linear_mass {n p M : ℕ} (half : Bool) (hn : 0 < n) (hp :
       · intro i
         norm_num [clean]
   · let clean : Fin 1 → List (Fin n) := fun _ => List.finRange n
-    have free : BridgeFree (ListBefore clean) 4 := by
+    have free : BridgeFree (ListBefore clean) k := by
       intro k _
       exact ⟨fun b => b.river_ne_arc 0 (Subsingleton.elim _ _)⟩
-    have allowed : localOrderAdmissible half 4 clean := by cases half; exacts [free, free.halfFree]
+    have allowed : localOrderAdmissible half k clean := by cases half; exacts [free, free.halfFree]
     have simple (i : Fin 1) : (clean i).Nodup := List.nodup_finRange _
     have length : (∑ i, (clean i).length) = n := by simp [clean]
     have degree (v : Fin n) : (occurrences (fun i => (clean i).toFinset) v).card = 1 := by
@@ -295,25 +296,25 @@ private theorem clean_linear_mass {n p M : ℕ} (half : Bool) (hn : 0 < n) (hp :
         rw [List.length_finRange]
         exact ⟨by linarith only [Nat.cast_nonneg (α := ℝ) n], le_rfl⟩
 
-/-- Through size four, retain a constant fraction of the mass within both original
-budgets. Each degree and length is within a factor of four of its output average. -/
-theorem regularization_list_output_average_four {n p : ℕ} (paths : Fin p → List (Fin n))
-    (simple : ∀ i, (paths i).Nodup) (half : Bool) (allowed : localOrderAdmissible half 4 paths)
+private theorem regularization_list_output_average_supported {n p k : ℕ} (size : k = 4 ∨ k = 6)
+    (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (half : Bool) (allowed : localOrderAdmissible half k paths)
+    (fourForHalfSix : k = 6 → half = true → BridgeFree (ListBefore paths) 4)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
-      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half 4 clean ∧
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       (∑ i, (paths i).length) ≤ 392*(∑ i, (clean i).length) ∧
       (∑ i, (clean i).length) ≤ (∑ i, (paths i).length) ∧ listOutputAverageCaps clean := by
   let M := ∑ i, (paths i).length
   by_cases budgets : 4 ≤ n ∧ 4 ≤ p
-  · have free : HalfBridgeFree (ListBefore paths) 4 := by
+  · have free : HalfBridgeFree (ListBefore paths) k := by
       cases half
-      · exact (show BridgeFree (ListBefore paths) 4 from allowed).halfFree
+      · exact (show BridgeFree (ListBefore paths) k from allowed).halfFree
       · exact allowed
     let kept := removeOppositeIntersections paths
     let marks (i : Fin p) := (kept i).toFinset
     have keptSimple (i : Fin p) : (kept i).Nodup := (removeOppositeIntersections_sublist paths i).nodup (simple i)
-    have halfMass : M ≤ 2*(∑ i, (kept i).length) := removeOppositeIntersections_mass simple free (by decide)
+    have halfMass : M ≤ 2*(∑ i, (kept i).length) := removeOppositeIntersections_mass simple free (by omega)
     have keptMass : (∑ i, (kept i).length) ≤ M :=
       sum_le_sum (fun i _ => (removeOppositeIntersections_sublist paths i).length_le)
     have lengths (i : Fin p) : (marks i).card = (kept i).length := List.toFinset_card_of_nodup (keptSimple i)
@@ -332,13 +333,24 @@ theorem regularization_list_output_average_four {n p : ℕ} (paths : Fin p → L
     · have quarterSimple (i : B) : (quarter i).Nodup := restrictListPath_nodup (keptSimple i.val) A
       have quarterUnique : ∀ {i j x y}, i ≠ j → x ∈ quarter i → x ∈ quarter j → y ∈ quarter i → y ∈ quarter j → x = y :=
         restrictListPaths_unique (fun different a b c d =>
-          removeOppositeIntersections_unique simple free (by decide) different a b c d) A B
-      have quarterAllowed : localOrderAdmissible half 4 quarter := by
+          removeOppositeIntersections_unique simple free (by omega) different a b c d) A B
+      have quarterAllowed : localOrderAdmissible half k quarter := by
         cases half
         · exact restrictListPaths_fullFree keptSimple (removeOppositeIntersections_fullFree simple allowed) A B
         · exact restrictListPaths_halfFree keptSimple (removeOppositeIntersections_halfFree simple allowed) A B
+      have splitAllowed (D L : ℕ) : localOrderAdmissible half k (listRegularizedPaths quarter D L) := by
+        rcases size with rfl | rfl
+        · cases half
+          · exact listRegularizedPaths_fullFree quarterSimple quarterUnique quarterAllowed D L
+          · exact listRegularizedPaths_halfFree quarterSimple quarterUnique quarterAllowed D L
+        · have four : BridgeFree (ListBefore quarter) 4 := by
+            cases half
+            · exact fun _ hk => (show BridgeFree (ListBefore quarter) 6 from quarterAllowed) (hk.trans (by decide))
+            · exact restrictListPaths_fullFree keptSimple
+                (removeOppositeIntersections_fullFree simple (fourForHalfSix rfl rfl)) A B
+          exact regularizedSix_bridge_free quarterSimple (fun {_ _ _ _} => quarterUnique) four quarterAllowed D L
       obtain ⟨n',vn,p',ip,clean,cleanSimple,cleanAllowed,cleanMass,cleanUpper,caps⟩ :=
-        clean_quarter_support quarter quarterSimple quarterUnique half quarterAllowed hn hp
+        clean_quarter_support quarter quarterSimple half splitAllowed hn hp
           (by simpa only [Fintype.card_coe, Fintype.card_fin] using vBudget)
           (by simpa only [Fintype.card_coe, Fintype.card_fin] using iBudget) enough.1 enough.2
       refine ⟨n',vn,p',ip,clean,cleanSimple,cleanAllowed,?_,cleanUpper.trans upper,caps⟩
@@ -366,6 +378,31 @@ theorem regularization_list_output_average_four {n p : ℕ} (paths : Fin p → L
       have leMax : n ≤ max n p := le_max_left _ _
       omega
 
+/-- Through size four, retain a constant fraction of the mass within both original
+budgets. Each degree and length is within a factor of four of its output average. -/
+theorem regularization_list_output_average_four {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (half : Bool) (allowed : localOrderAdmissible half 4 paths)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half 4 clean ∧
+      (∑ i, (paths i).length) ≤ 392*(∑ i, (clean i).length) ∧
+      (∑ i, (clean i).length) ≤ (∑ i, (paths i).length) ∧ listOutputAverageCaps clean :=
+  regularization_list_output_average_supported (Or.inl rfl) paths simple half allowed
+    (by omega) hn hp dense long
+
+/-- Through size six, the same output-average bounds hold for full exclusion.
+For half exclusion, the input also excludes full bridges through size four. -/
+theorem regularization_list_output_average_six {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (half : Bool) (allowed : localOrderAdmissible half 6 paths)
+    (fourForHalf : half = true → BridgeFree (ListBefore paths) 4)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half 6 clean ∧
+      (∑ i, (paths i).length) ≤ 392*(∑ i, (clean i).length) ∧
+      (∑ i, (clean i).length) ≤ (∑ i, (paths i).length) ∧ listOutputAverageCaps clean :=
+  regularization_list_output_average_supported (Or.inr rfl) paths simple half allowed
+    (fun _ => fourForHalf) hn hp dense long
+
 /-- At the unrestricted maximum through size four, the cleaned system
 retains a constant fraction of the mass and satisfies the output-average caps. -/
 theorem localOrderExtremal_output_average_four (n p : ℕ) (half : Bool) (hn : 0 < n) (hp : 0 < p) :
@@ -379,5 +416,19 @@ theorem localOrderExtremal_output_average_four (n p : ℕ) (half : Bool) (hn : 0
   obtain ⟨paths,simple,allowed,maximal,dense,long⟩ := localOrderExtremal_isDense n p 4 half hn hp
   exact ⟨paths,simple,allowed,maximal,
     regularization_list_output_average_four paths simple half allowed hn hp dense long⟩
+
+/-- The unrestricted full-bridge-free maximum through size six admits a
+constant-mass witness with both original budgets and its own average caps. -/
+theorem localOrderExtremal_output_average_full_six (n p : ℕ) (hn : 0 < n) (hp : 0 < p) :
+    ∃ paths : Fin p → List (Fin n), (∀ i, (paths i).Nodup) ∧ BridgeFree (ListBefore paths) 6 ∧
+      (∀ other : Fin p → List (Fin n), (∀ i, (other i).Nodup) → BridgeFree (ListBefore other) 6 →
+        (∑ i, (other i).length) ≤ ∑ i, (paths i).length) ∧
+      ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+        (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) 6 ∧
+        (∑ i, (paths i).length) ≤ 392*(∑ i, (clean i).length) ∧
+        (∑ i, (clean i).length) ≤ (∑ i, (paths i).length) ∧ listOutputAverageCaps clean := by
+  obtain ⟨paths,simple,allowed,maximal,dense,long⟩ := localOrderExtremal_isDense n p 6 false hn hp
+  exact ⟨paths,simple,allowed,maximal,
+    regularization_list_output_average_six paths simple false allowed (by simp) hn hp dense long⟩
 
 end OnlineReachabilityPreservers

@@ -210,6 +210,15 @@ remains a counterexample to using only the opposite-cut constraints.
 · [Six-bridge cleaning with unique intersections](OnlineReachabilityPreservers/ContiguousSixCleaning.lean)
 · [Noncontiguous example](OnlineReachabilityPreservers/CyclicSplitLimits.lean).
 
+At full cutoff six, opposite-intersection pruning followed by restricting
+to a quarter of each support permits the contiguous construction on an
+unrestricted maximizing family of indexed simple paths. If the quarter
+support is too sparse, a single row or a family of singletons supplies
+the required mass at this constant. The resulting witness keeps both
+budgets and at least one 392nd of the maximum. Its four caps are measured
+against its own averages. The input-average conclusion at this unrestricted
+maximum remains open. [Output-average theorem](OnlineReachabilityPreservers/LocalAverageCleaning.lean).
+
 The same splitting step can fail at larger bridge sizes with unique
 intersections. On seven vertices, take the six paths `[(0,1,2,3), (3,4),
 (4,0), (5,2), (1,6), (5,6)]`. There are 14 incidences, every vertex

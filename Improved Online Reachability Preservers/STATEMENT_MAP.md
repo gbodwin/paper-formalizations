@@ -602,6 +602,15 @@ The half-bridge version at size six requires full exclusion through size
 four for the vertex-copy step. The general cyclic existence claims remain
 open. The size-seven counterexample below applies to the printed split.
 
+At full cutoff six, [output-average cleaning](OnlineReachabilityPreservers/LocalAverageCleaning.lean)
+starts at the unrestricted maximum over indexed simple paths. It retains
+at least \(M/392\) of the maximizing mass \(M\), keeps both budgets, and
+meets all four factor-four caps around the cleaned witness's own averages.
+The same construction preserves half exclusion through six for an input
+that also excludes full bridges through four and whose mass is at least
+both positive budgets. At full cutoff six, the unrestricted statement with
+the original fixed averages remains open.
+
 | Source | Mathematical obligation |
 | --- | --- |
 | Definition 2 | Half-\(k\)-bridge-free means no bridge of size at most \(k\) whose last arc precedes the river. |
