@@ -265,6 +265,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   positive budgets.
   [Pruning bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L524)
   · [All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L151).
+- If each simple path visits at most one original mean path length of
+  vertices inside any one precedence component, component cuts preserve
+  full-bridge exclusion at the given cutoff. They also preserve exclusion
+  of every full bridge when the input has that property. For positive
+  budgets and mass at least both budgets, the cleaned family meets both
+  budgets and all four original-average caps and retains at least \(M/16\).
+  The half-bridge result holds with the same guarantees when the degree
+  split is safe at the given cutoff.
+  [Component cuts and fixed-average cleaning](OnlineReachabilityPreservers/ComponentSplitCleaning.lean).
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)

@@ -280,6 +280,27 @@ of the block-splitting step on a dense input. The extremal cleaning
 existence claim remains open.
 [Checked dense block split](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L558).
 
+Cuts between precedence components give another sufficient hypothesis
+for cleaning cyclic paths. The precedence graph has an arc for each
+strict comparison on an original path. Along a projected chain, the
+component ranks are nondecreasing. When a parent occurs twice in
+different pieces, the rank separation puts the first entrance before
+the last exit in that parent. Shortcutting this section keeps the river
+and the last arc's parent, so ordering the pieces by parent also
+preserves the half-bridge arrival condition.
+
+If each simple path contains at most \(\lfloor M/p\rfloor\) vertices
+in any one component, whole visits pack into pieces of width
+\(\lfloor4M/p\rfloor\) within four thirds of the path budget.
+With positive budgets and \(M\) at least both budgets, the cleaned
+family keeps at least \(M/16\) and satisfies both budgets and all four
+original-average caps. Full exclusion is preserved at the input cutoff,
+including exclusion at all sizes. Half exclusion additionally uses an
+upper cap on all input degrees, a cutoff of at most four, or full
+exclusion through two less than the half cutoff. The unrestricted
+cyclic existence question remains open.
+[Component split and cleaning proofs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean).
+
 Splitting a vertex can also break the half exclusion, even with unique
 intersections. In arrival order take the paths `(4,2), (0,2), (0,1), (1,2),
 (2,3), (3,4)`. The only vertex above average degree is `2`. Its four
