@@ -37,26 +37,13 @@ theorem reverseArcList_toFinset (arcs : List (V × V)) :
   ext e
   simp [reverseArcs]
 
-private def membershipWithWordWork {A : Type*} [DecidableEq A] (key : A) (keys : List A) : Bool × ℕ :=
-  let found := anyWithChecks (fun item => decide (key = item)) keys
-  (found.1, 2 * found.2 + if found.1 then 0 else 1)
-
-private theorem membershipWithWordWork_spec {A : Type*} [DecidableEq A] (key : A) (keys : List A) :
-    let out := membershipWithWordWork key keys
-    out.1 = decide (key ∈ keys) ∧ out.2 ≤ 2 * keys.length + 1 := by
-  obtain ⟨same, cost⟩ := memScanWithChecks_spec key keys
-  refine ⟨same, ?_⟩
-  change 2 * (anyWithChecks (fun item => decide (key = item)) keys).2 +
-    (if (anyWithChecks (fun item => decide (key = item)) keys).1 then 0 else 1) ≤ 2 * keys.length + 1
-  split <;> omega
-
 private def componentLabelListWithMeasure (countWords : Bool) (arcs transpose : List (V × V))
     (depth : ℕ) (v : V) : V × ℕ :=
   let search := if countWords then reachInListWithWordWork else reachInListWithChecks
   let inward := search arcs v depth
   let outward := search transpose v depth
   let label := leastWhereWithChecks (fun u =>
-    if countWords then membershipWithWordWork u outward.1
+    if countWords then memScanWithWordWork u outward.1
     else anyWithChecks (fun w => decide (u = w)) outward.1) inward.1
   let work := inward.2 + outward.2 + label.2
   (label.1.getD v, if countWords then work + 10*inward.1.length + 7 else work)
@@ -295,10 +282,7 @@ theorem condensedForwardListWithChecks_spec (arcs : List (V × V)) (vertices : L
       condensationListBudget n arcs.length + demands.length*(2*n+forwardStepListBudget n arcs.length)
     exact (Nat.add_le_add (Nat.add_le_add prep queries) runCost).trans_eq (by ring)
 
-/-- The reverse-search word budget used by the component label computation. -/
-private def labelSearchWordBudget (n m : ℕ) : ℕ := 2 + n * (5 + m * (14 + 4 * n))
-
-private def labelRowWordBudget (n m : ℕ) : ℕ := 2 * labelSearchWordBudget n m + n * (2*n+12) + 7
+private def labelRowWordBudget (n m : ℕ) : ℕ := 2 * reachInListWordBudget n m + n * (2*n+12) + 7
 
 private def componentLabelWithWordWork (arcs transpose : List (V × V)) (depth : ℕ) (v : V) : V × ℕ :=
   componentLabelListWithMeasure true arcs transpose depth v
@@ -319,11 +303,11 @@ private theorem componentLabelWithWordWork_spec (arcs : List (V × V)) (v : V) :
     rw [← List.toFinset_card_of_nodup outSimple]
     exact card_le_univ _
   obtain ⟨label, labelWork⟩ := leastWhereWithChecks_spec
-    (fun u => membershipWithWordWork u outward.1) (fun u => u ∈ outward.1) inward.1 (2*n+1)
-    (fun u _ => (membershipWithWordWork_spec u outward.1).1)
-    (fun u _ => (membershipWithWordWork_spec u outward.1).2.trans (by omega))
+    (fun u => memScanWithWordWork u outward.1) (fun u => u ∈ outward.1) inward.1 (2*n+1)
+    (fun u _ => (memScanWithWordWork_spec u outward.1).1)
+    (fun u _ => (memScanWithWordWork_spec u outward.1).2.trans (by omega))
   refine ⟨?_,?_⟩
-  · change (leastWhereWithChecks (fun u => membershipWithWordWork u outward.1) inward.1).1.getD v = _
+  · change (leastWhereWithChecks (fun u => memScanWithWordWork u outward.1) inward.1).1.getD v = _
     rw [label]
     have sets : inward.1.toFinset.filter (fun u => u ∈ outward.1) = componentVertices arcs.toFinset v := by
       have inEq : inward.1.toFinset = reachIn arcs.toFinset v n := inResult
@@ -335,9 +319,9 @@ private theorem componentLabelWithWordWork_spec (arcs : List (V × V)) (v : V) :
     rw [sets]
     rfl
   · change inward.2 + outward.2 + (leastWhereWithChecks _ inward.1).2 + 10*inward.1.length+7 ≤ _
-    have forwardBudget : inward.2 ≤ labelSearchWordBudget n arcs.length := inWork
-    have reverseBudget : outward.2 ≤ labelSearchWordBudget n arcs.length := by
-      simpa only [labelSearchWordBudget, List.length_map] using outWork
+    have forwardBudget : inward.2 ≤ reachInListWordBudget n arcs.length := inWork
+    have reverseBudget : outward.2 ≤ reachInListWordBudget n arcs.length := by
+      simpa only [reachInListWordBudget, List.length_map] using outWork
     have choiceBudget := labelWork.trans (Nat.mul_le_mul_right (2*n+1+1) inSize)
     have sumBudget := Nat.add_le_add (Nat.add_le_add (Nat.add_le_add forwardBudget reverseBudget) choiceBudget)
       (Nat.mul_le_mul_left 10 inSize)

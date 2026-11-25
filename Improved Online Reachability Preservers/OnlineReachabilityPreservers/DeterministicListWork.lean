@@ -37,6 +37,20 @@ theorem anyScanWordSteps_eq {A : Type*} (test : A → Bool) (keys : List A) :
       simp only [anyScanWordSteps, anyWithChecks,h, Bool.false_eq_true,↓reduceIte,ih]
       omega
 
+/-- Report the exact key membership with the list scan charge. -/
+def memScanWithWordWork {A : Type*} [DecidableEq A] (key : A) (keys : List A) : Bool × ℕ :=
+  let found := anyWithChecks (fun item => decide (key = item)) keys
+  (found.1, 2 * found.2 + if found.1 then 0 else 1)
+
+theorem memScanWithWordWork_spec {A : Type*} [DecidableEq A] (key : A) (keys : List A) :
+    let out := memScanWithWordWork key keys
+    out.1 = decide (key ∈ keys) ∧ out.2 ≤ 2 * keys.length + 1 := by
+  obtain ⟨same, cost⟩ := memScanWithChecks_spec key keys
+  refine ⟨same, ?_⟩
+  change 2 * (anyWithChecks (fun item => decide (key = item)) keys).2 +
+    (if (anyWithChecks (fun item => decide (key = item)) keys).1 then 0 else 1) ≤ 2 * keys.length + 1
+  split <;> omega
+
 omit [Fintype V] in
 private def reverseSweepWithMeasure (countWords : Bool) (reachable : List V) :
     List (V × V) → List V → List V × ℕ
@@ -273,43 +287,46 @@ private theorem nextVertexListWithChecks_spec (G H : List (V × V)) (R : List V)
   exact (Nat.add_le_add workOld workNew).trans_eq (by ring)
 
 omit [Fintype V] in
-private def growListWithChecks (G H : List (V × V)) (R : List V) (t : V) :
+private def growListWithWork (successor : V → Option V × ℕ) (baseCharge stepCharge : ℕ) (t : V) :
     ℕ → V → Option (List (V × V)) × ℕ
-  | 0, u => (if u = t then some [] else none, 1)
+  | 0, u => (if u = t then some [] else none, baseCharge)
   | k+1, u =>
-    if u = t then (some [], 1)
+    if u = t then (some [], baseCharge)
     else
-      let next := nextVertexListWithChecks G H R u
+      let next := successor u
       match next.1 with
-      | none => (none, 1+next.2)
+      | none => (none, stepCharge+next.2)
       | some v =>
-        let rest := growListWithChecks G H R t k v
-        (rest.1.map ((u,v)::·), 1+next.2+rest.2)
+        let rest := growListWithWork successor baseCharge stepCharge t k v
+        (rest.1.map ((u,v)::·), stepCharge+next.2+rest.2)
 
 omit [Fintype V] in
-private theorem growListWithChecks_spec (G H : List (V × V)) (R : List V) (t : V) (k : ℕ) (u : V) :
-    let out := growListWithChecks G H R t k u
+private theorem growListWithWork_spec (G H : List (V × V)) (R : List V)
+    (successor : V → Option V × ℕ) (baseCharge stepCharge bound : ℕ) (t : V) (k : ℕ) (u : V)
+    (baseLe : baseCharge ≤ stepCharge + bound)
+    (successorSpec : ∀ v, (successor v).1 = nextVertex G.toFinset H.toFinset R.toFinset v ∧
+      (successor v).2 ≤ bound) :
+    let out := growListWithWork successor baseCharge stepCharge t k u
     out.1 = growFrom G.toFinset H.toFinset R.toFinset t k u ∧
-      out.2 ≤ (k+1)*(1+R.length*(G.length+H.length+2)) ∧
+      out.2 ≤ (k+1)*(stepCharge+bound) ∧
       (out.1.getD []).length ≤ k := by
-  let B := R.length*(G.length+H.length+2)
   induction k generalizing u with
   | zero =>
-    by_cases same : u = t <;> simp [growListWithChecks, growFrom, same]
+    by_cases same : u = t <;> simpa [growListWithWork, growFrom, same] using baseLe
   | succ k ih =>
-    have product : 1+B ≤ (k+1+1)*(1+B) := Nat.le_mul_of_pos_left _ (by omega)
+    have product : stepCharge+bound ≤ (k+1+1)*(stepCharge+bound) := Nat.le_mul_of_pos_left _ (by omega)
     by_cases same : u = t
-    · have cap : 1 ≤ (k+1+1)*(1+B) := (Nat.le_add_right 1 B).trans product
-      simpa [growListWithChecks, growFrom, same] using cap
-    obtain ⟨answers, calls⟩ := nextVertexListWithChecks_spec G H R u
-    let next := nextVertexListWithChecks G H R u
+    · have cap := baseLe.trans product
+      simpa [growListWithWork, growFrom, same] using cap
+    obtain ⟨answers, calls⟩ := successorSpec u
+    let next := successor u
     change next.1 = _ at answers
-    change next.2 ≤ B at calls
+    change next.2 ≤ bound at calls
     cases picked : next.1 with
     | none =>
       have missing := answers.symm.trans picked
-      have out : growListWithChecks G H R t (k+1) u = (none, 1+next.2) := by
-        rw [growListWithChecks, ite_eq_right same]
+      have out : growListWithWork successor baseCharge stepCharge t (k+1) u = (none, stepCharge+next.2) := by
+        rw [growListWithWork, ite_eq_right same]
         change (match next.1 with | none => _ | some v => _) = _
         rw [picked]
       have path : growFrom G.toFinset H.toFinset R.toFinset t (k+1) u = none := by
@@ -319,16 +336,16 @@ private theorem growListWithChecks_spec (G H : List (V × V)) (R : List V) (t : 
     | some v =>
       have found := answers.symm.trans picked
       obtain ⟨result, checks, length⟩ := ih v
-      let rest := growListWithChecks G H R t k v
+      let rest := growListWithWork successor baseCharge stepCharge t k v
       change rest.1 = _ at result
-      change rest.2 ≤ (k+1)*(1+B) at checks
+      change rest.2 ≤ (k+1)*(stepCharge+bound) at checks
       change (rest.1.getD []).length ≤ k at length
-      have needed : 1+next.2+rest.2 ≤ (k+1+1)*(1+B) := by
+      have needed : stepCharge+next.2+rest.2 ≤ (k+1+1)*(stepCharge+bound) := by
         rw [Nat.succ_mul]
         omega
-      have out : growListWithChecks G H R t (k+1) u =
-          (rest.1.map ((u,v)::·), 1+next.2+rest.2) := by
-        rw [growListWithChecks, ite_eq_right same]
+      have out : growListWithWork successor baseCharge stepCharge t (k+1) u =
+          (rest.1.map ((u,v)::·), stepCharge+next.2+rest.2) := by
+        rw [growListWithWork, ite_eq_right same]
         change (match next.1 with | none => _ | some v => _) = _
         rw [picked]
       have path : growFrom G.toFinset H.toFinset R.toFinset t (k+1) u =
@@ -344,6 +361,19 @@ private theorem growListWithChecks_spec (G H : List (V × V)) (R : List V) (t : 
       | some path =>
         simpa only [got, Option.map_some, Option.getD_some, List.length_cons] using
           Nat.succ_le_succ (show path.length ≤ k by simpa only [got, Option.getD_some] using length)
+
+omit [Fintype V] in
+private def growListWithChecks (G H : List (V × V)) (R : List V) (t : V) :
+    ℕ → V → Option (List (V × V)) × ℕ :=
+  growListWithWork (nextVertexListWithChecks G H R) 1 1 t
+
+omit [Fintype V] in
+private theorem growListWithChecks_spec (G H : List (V × V)) (R : List V) (t : V) (k : ℕ) (u : V) :
+    let out := growListWithChecks G H R t k u
+    out.1 = growFrom G.toFinset H.toFinset R.toFinset t k u ∧
+      out.2 ≤ (k+1)*(1+R.length*(G.length+H.length+2)) ∧
+      (out.1.getD []).length ≤ k :=
+  growListWithWork_spec G H R _ 1 1 _ t k u (Nat.le_add_right _ _) (nextVertexListWithChecks_spec G H R)
 
 /-- Run both deterministic path searches with list-backed graph and vertex sets.
 Every vertex or edge-key comparison in these searches is counted. -/
@@ -547,6 +577,9 @@ private theorem reachInListWithWordWork_compares (arcs : List (V × V)) (t : V) 
       rw [same, Nat.succ_mul]
       omega
 
+/-- Reverse search to the vertex count, in the source-level tally. -/
+def reachInListWordBudget (n m : ℕ) : ℕ := 2 + n * (5 + m * (14 + 4 * n))
+
 /-- The metered reverse-search loop returns the same reachable set with an
 explicit polynomial word-operation bound for any requested depth. -/
 theorem reachInListWithWordWork_spec (arcs : List (V × V)) (t : V) (depth : ℕ) :
@@ -557,5 +590,177 @@ theorem reachInListWithWordWork_spec (arcs : List (V × V)) (t : V) (depth : ℕ
   obtain ⟨simple,reached,checks⟩ := reachInListWithChecks_spec arcs t depth
   refine ⟨same.symm ▸ simple, same.symm ▸ reached, ?_⟩
   exact extra.trans ((Nat.add_le_add_left (Nat.mul_le_mul_left 2 checks) _).trans_eq (by ring))
+
+omit [Fintype V] in
+def leastSuccessorWithWordWork (arcs : List (V × V)) (u : V) (candidates : List V) : Option V × ℕ :=
+  let found := leastWhereWithChecks (fun v => memScanWithWordWork (u,v) arcs) candidates
+  (found.1, found.2+8*candidates.length+1)
+
+omit [Fintype V] in
+theorem leastSuccessorWithWordWork_spec (arcs : List (V × V)) (u : V) (candidates : List V) :
+    let out := leastSuccessorWithWordWork arcs u candidates
+    out.1 = least? (candidates.toFinset.filter (Edge arcs.toFinset u)) ∧
+      out.2 ≤ 1+candidates.length*(2*arcs.length+10) := by
+  obtain ⟨same, work⟩ := leastWhereWithChecks_spec
+    (fun v => memScanWithWordWork (u,v) arcs) (Edge arcs.toFinset u) candidates (2*arcs.length+1)
+    (fun v _ => (memScanWithWordWork_spec (u,v) arcs).1.trans (Bool.eq_iff_iff.mpr (by simp [Edge])))
+    (fun v _ => (memScanWithWordWork_spec (u,v) arcs).2)
+  exact ⟨same,(Nat.add_le_add_right (Nat.add_le_add_right work _) _).trans_eq (by ring)⟩
+
+omit [Fintype V] in
+private def nextVertexWithWordWork (G H : List (V × V)) (R : List V) (u : V) : Option V × ℕ :=
+  let old := leastSuccessorWithWordWork H u R
+  let new := leastSuccessorWithWordWork G u R
+  (old.1.or new.1,old.2+new.2+6)
+
+omit [Fintype V] in
+private theorem nextVertexWithWordWork_spec (G H : List (V × V)) (R : List V) (u : V) :
+    let out := nextVertexWithWordWork G H R u
+    out.1 = nextVertex G.toFinset H.toFinset R.toFinset u ∧
+      out.2 ≤ 8+R.length*(2*(G.length+H.length)+20) := by
+  obtain ⟨old, oldWork⟩ := leastSuccessorWithWordWork_spec H u R
+  obtain ⟨new, newWork⟩ := leastSuccessorWithWordWork_spec G u R
+  simp only [nextVertexWithWordWork,old,new,nextVertex,true_and]
+  exact (Nat.add_le_add_right (Nat.add_le_add oldWork newWork) 6).trans_eq (by ring)
+
+omit [Fintype V] in
+private def growListWithWordWork (G H : List (V × V)) (R : List V) (t : V) :
+    ℕ → V → Option (List (V × V)) × ℕ :=
+  growListWithWork (nextVertexWithWordWork G H R) 5 9 t
+
+omit [Fintype V] in
+private theorem growListWithWordWork_spec (G H : List (V × V)) (R : List V) (t : V) (k : ℕ) (u : V) :
+    let out := growListWithWordWork G H R t k u
+    out.1 = growFrom G.toFinset H.toFinset R.toFinset t k u ∧
+      out.2 ≤ (k+1)*(17+R.length*(2*(G.length+H.length)+20)) ∧
+      (out.1.getD []).length ≤ k := by
+  have compiled := growListWithWork_spec G H R (nextVertexWithWordWork G H R) 5 9
+    (8+R.length*(2*(G.length+H.length)+20)) t k u (by omega) (nextVertexWithWordWork_spec G H R)
+  simpa only [growListWithWordWork, ← Nat.add_assoc] using compiled
+
+/-- A source-level tally for one priority path, with the vertex-count
+parameter supplied to the evaluator. Counter-only arithmetic and scans
+are excluded. -/
+def forwardPathListWithWordWork (G H : List (V × V)) (s t : V) (depth : ℕ) : Option (List (V × V)) × ℕ :=
+  let reach := reachInListWithWordWork G t depth
+  let path := growListWithWordWork G H reach.1 t depth s
+  (path.1, reach.2+path.2+4)
+
+theorem forwardPathListWithWordWork_spec (G H : List (V × V)) (s t : V) :
+    let n := Fintype.card V
+    let out := forwardPathListWithWordWork G H s t n
+    out.1 = forwardPath G.toFinset H.toFinset s t ∧
+      out.2 ≤ reachInListWordBudget n G.length+(n+1)*(17+n*(2*(G.length+H.length)+20))+4 ∧
+      (out.1.getD []).length ≤ n := by
+  let n := Fintype.card V
+  let reach := reachInListWithWordWork G t n
+  obtain ⟨simple, correct, work⟩ := reachInListWithWordWork_spec G t n
+  have count : reach.1.length ≤ n := by
+    rw [← List.toFinset_card_of_nodup simple]
+    exact card_le_univ _
+  obtain ⟨path, growing, length⟩ := growListWithWordWork_spec G H reach.1 t n s
+  have same : (forwardPathListWithWordWork G H s t n).1 = forwardPath G.toFinset H.toFinset s t := by
+    change (growListWithWordWork G H reach.1 t n s).1 = _
+    rw [path, show reach.1.toFinset = _ from correct]
+    rfl
+  exact ⟨same, Nat.add_le_add_right (Nat.add_le_add work (growing.trans (by gcongr))) 4, length⟩
+
+private def forwardStepWithWordWork (G H : List (V × V)) (depth : ℕ) (d : V × V) : List (V × V) × ℕ :=
+  let chosen := forwardPathListWithWordWork G H d.1 d.2 depth
+  let edges := chosen.1.getD []
+  let inserted := insertListWithChecks edges H
+  (inserted.1, chosen.2+2*inserted.2+12*edges.length+7)
+
+def forwardStepWordBudget (n m : ℕ) : ℕ :=
+  reachInListWordBudget n m+(n+1)*(17+n*(2*(m+n^2)+20))+4+2*(n*n^2)+12*n+7
+
+private theorem forwardStepWithWordWork_spec (G H : List (V × V)) (d : V × V) (simple : H.Nodup) :
+    let n := Fintype.card V
+    let out := forwardStepWithWordWork G H n d
+    out.1.Nodup ∧ out.1.toFinset = forwardStep G.toFinset H.toFinset d ∧
+      out.2 ≤ forwardStepWordBudget n G.length := by
+  let n := Fintype.card V
+  let chosen := forwardPathListWithWordWork G H d.1 d.2 n
+  let edges := chosen.1.getD []
+  let inserted := insertListWithChecks edges H
+  obtain ⟨path, pathWork, len⟩ := forwardPathListWithWordWork_spec G H d.1 d.2
+  have oldSize : H.length ≤ n^2 := by
+    rw [← List.toFinset_card_of_nodup simple, pow_two, ← Fintype.card_prod]
+    exact card_le_univ _
+  have changed : chosen.2 ≤ reachInListWordBudget n G.length+(n+1)*(17+n*(2*(G.length+n^2)+20))+4 :=
+    pathWork.trans (by gcongr)
+  obtain ⟨clean, union, costs⟩ := insertListWithChecks_spec edges H simple
+  have insertBudget : inserted.2 ≤ n*n^2 := by
+    apply costs.trans
+    rw [Fintype.card_prod, ← pow_two]
+    exact Nat.mul_le_mul_right _ len
+  refine ⟨clean, ?_, ?_⟩
+  · change inserted.1.toFinset = _
+    rw [union, forwardStep, forwardEdges]
+    change chosen.1 = _ at path
+    simp only [edges, path]
+  · change chosen.2+2*inserted.2+12*edges.length+7 ≤ forwardStepWordBudget n G.length
+    unfold forwardStepWordBudget
+    gcongr
+
+/-- Revised structural charges for exactly the same list-backed sequence of
+priority searches and insertions. The depth is supplied once by the caller. -/
+def forwardRunListWithWordWork (G : List (V × V)) (depth : ℕ) :
+    List (V × V) → List (V × V) → List (V × V) × ℕ
+  | [], H => (H,1)
+  | d :: trace, H =>
+    let first := forwardStepWithWordWork G H depth d
+    let rest := forwardRunListWithWordWork G depth trace first.1
+    (rest.1,4+first.2+rest.2)
+
+theorem forwardRunListWithWordWork_spec (G D H : List (V × V)) (simple : H.Nodup) :
+    let n := Fintype.card V
+    let out := forwardRunListWithWordWork G n D H
+    out.1.Nodup ∧ out.1.toFinset = forwardRunFrom G.toFinset H.toFinset D ∧
+      out.2 ≤ 1 + D.length*(4+forwardStepWordBudget n G.length) := by
+  induction D generalizing H with
+  | nil => simp [forwardRunListWithWordWork,forwardRunFrom,simple]
+  | cons d trace ih =>
+    let n := Fintype.card V
+    let first := forwardStepWithWordWork G H n d
+    obtain ⟨firstSimple, firstEq, firstWork⟩ := forwardStepWithWordWork_spec G H d simple
+    obtain ⟨restSimple, restEq, restWork⟩ := ih first.1 firstSimple
+    refine ⟨restSimple, ?_, ?_⟩
+    · change (forwardRunListWithWordWork G n trace first.1).1.toFinset = _
+      change first.1.toFinset = _ at firstEq
+      rw [restEq, firstEq]
+      rfl
+    · change first.2 ≤ forwardStepWordBudget n G.length at firstWork
+      change (forwardRunListWithWordWork G n trace first.1).2 ≤
+        1+trace.length*(4+forwardStepWordBudget n G.length) at restWork
+      change 4 + first.2 + (forwardRunListWithWordWork G n trace first.1).2 ≤
+        1+(trace.length+1)*(4+forwardStepWordBudget n G.length)
+      rw [Nat.succ_mul]
+      omega
+
+/-- A bounded graph reachability test with a source-level list tally. -/
+def reachTestListWithWordWork (arcs : List (V × V)) (s t : V) (depth : ℕ) : Bool × ℕ :=
+  let reached := reachInListWithWordWork arcs t depth
+  let member := memScanWithWordWork s reached.1
+  (member.1, reached.2+member.2+4)
+
+theorem reachTestListWithWordWork_spec (arcs : List (V × V)) (s t : V) (depth : ℕ) :
+    let n := Fintype.card V
+    let out := reachTestListWithWordWork arcs s t depth
+    out.1 = decide (s ∈ reachIn arcs.toFinset t depth) ∧
+      out.2 ≤ 2 + depth*(5+arcs.length*(14+4*n))+2*n+5 := by
+  let n := Fintype.card V
+  let reached := reachInListWithWordWork arcs t depth
+  obtain ⟨simple, same, work⟩ := reachInListWithWordWork_spec arcs t depth
+  have size : reached.1.length ≤ n := by
+    rw [← List.toFinset_card_of_nodup simple]
+    exact card_le_univ _
+  obtain ⟨member, scan⟩ := memScanWithWordWork_spec s reached.1
+  have scanBound : (memScanWithWordWork s reached.1).2 ≤ 2*n+1 := scan.trans (by gcongr)
+  refine ⟨?_, (Nat.add_le_add_right (Nat.add_le_add work scanBound) 4).trans_eq (by ring)⟩
+  change (memScanWithWordWork s reached.1).1 = _
+  rw [member, ← show reached.1.toFinset = _ from same]
+  simp only [List.mem_toFinset]
+
 
 end OnlineReachabilityPreservers

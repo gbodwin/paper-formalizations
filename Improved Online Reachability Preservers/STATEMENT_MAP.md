@@ -41,10 +41,10 @@ its abstract and bibliographic record. All section and result numbers below refe
 | Source | Scope and dependencies | Lean coverage |
 | --- | --- | --- |
 | Definition 1 | For each demand, equivalence of input and preserver reachability. | [Preserves](OnlineReachabilityPreservers/Online.lean) and prefix correctness. |
-| Theorem 1 | Adaptive deterministic polynomial-time pairwise online bound. The sharp terms are \(n^{(2+\alpha)/(3+\alpha)+o(1)}p^{2/(3+\alpha)}\) and \(n^{2-2\alpha+o(1)}p^\alpha\), with \(+n\) and \(\alpha\in(0.700,0.701)\) the middle root of the printed cubic. The rounded upper bound is \(O(n^{.72}p^{.56}+n^{.6}p^{.7}+n)\). Uses Theorem 9, Lemma 10, and Appendix A through Theorem 38. | [Both edge bounds](OnlineReachabilityPreservers/OnlineSharp.lean) hold at every prefix on general digraphs. A single function of the vertex count with limit zero supplies the unrounded slack uniformly over demand counts. Formal runtime remains open. |
-| Theorem 2 | One of the two endpoint promises \(P\subseteq S\times V\) and \(P\subseteq V\times S\). Adaptive deterministic bound \(O(\sqrt{np\lvert S\rvert}+n)\) on general digraphs, including prefixes, with no advance knowledge of \(S,p\). Uses Theorems 9 and 11. | [Both orientations](OnlineReachabilityPreservers/DagReduction.lean) proved on general digraphs with an explicit finite edge bound. Formal runtime certification pending. |
+| Theorem 1 | Adaptive deterministic polynomial-time pairwise online bound. The sharp terms are \(n^{(2+\alpha)/(3+\alpha)+o(1)}p^{2/(3+\alpha)}\) and \(n^{2-2\alpha+o(1)}p^\alpha\), with \(+n\) and \(\alpha\in(0.700,0.701)\) the middle root of the printed cubic. The rounded upper bound is \(O(n^{.72}p^{.56}+n^{.6}p^{.7}+n)\). Uses Theorem 9, Lemma 10, and Appendix A through Theorem 38. | [Both edge bounds](OnlineReachabilityPreservers/OnlineSharp.lean) hold at every prefix on general digraphs. A single function of the vertex count with limit zero supplies the unrounded slack uniformly over demand counts. The list evaluator has a polynomial source-level tally across all prefixes. |
+| Theorem 2 | One of the two endpoint promises \(P\subseteq S\times V\) and \(P\subseteq V\times S\). Adaptive deterministic bound \(O(\sqrt{np\lvert S\rvert}+n)\) on general digraphs, including prefixes, with no advance knowledge of \(S,p\). Uses Theorems 9 and 11. | [Both orientations](OnlineReachabilityPreservers/DagReduction.lean) proved on general digraphs with an explicit finite edge bound. Both list evaluators have polynomial source-level tallies across all prefixes. |
 | Theorem 3, cited [8] | Lower bound \(\Omega((np)^{2/3}+n)\) against the stronger adversary that starts with an empty graph and inserts edges before each demand. Definition 18 of [8](https://arxiv.org/pdf/2212.11944v4) gives the game, Theorem 29 gives the lattice, and Lemma 45 states a general transfer. | [Checked](OnlineReachabilityPreservers/StrongAdversary.lean) for exact counts \(n\ge2\) and \(1\le p\le n^2\), with distinct feasible demands and constant 576. The proof forces every edge of each revealed line directly from its slope. |
-| Theorem 4 | Offline deterministic polynomial-time pairwise bound \(O(n^{3/4}p^{1/2}+n^{2-\sqrt2+o(1)}p^{1/\sqrt2}+n)\), also rounded to \(O(n^{.75}p^{.5}+n^{.59}p^{.71}+n)\). Uses the independence construction in Lemma 14 and the Appendix B extremal estimate, with degeneracies and the additive \(p\) handled in the graph bound. | [Both edge bounds](OnlineReachabilityPreservers/OfflineSharp.lean) hold for the constructed preserver on general digraphs. The limiting bound holds with zero exponent slack. Formal runtime remains open. |
+| Theorem 4 | Offline deterministic polynomial-time pairwise bound \(O(n^{3/4}p^{1/2}+n^{2-\sqrt2+o(1)}p^{1/\sqrt2}+n)\), also rounded to \(O(n^{.75}p^{.5}+n^{.59}p^{.71}+n)\). Uses the independence construction in Lemma 14 and the Appendix B extremal estimate, with degeneracies and the additive \(p\) handled in the graph bound. | [Both edge bounds](OnlineReachabilityPreservers/OfflineSharp.lean) hold for the constructed preserver on general digraphs. The limiting bound holds with zero exponent slack. The exact greedy deletion evaluator has a polynomial source-level tally. |
 | Theorem 5 | Both Theorems 1 and 2 transfer to preassigned simple paths, either with the total \(p\) known or with the arrival index \(i\) as a path-selection input. In the restricted case \(S\) is given. Uses Theorems 15 and 16. Fully non-adaptive path selection with neither parameter is left open. | The [pairwise rates](OnlineReachabilityPreservers/PairwiseNonAdaptive.lean) and [both endpoint promises](OnlineReachabilityPreservers/RestrictedNonAdaptive.lean) are checked for both models on general digraphs. The [path lift](OnlineReachabilityPreservers/PathAssignments.lean) uses a subset of the shared connectors in each simple path. Formal runtime remains open. |
 | Theorems 6 and 7, cited [1,15,21] | Prior offline approximation with \(\min(n^{4/7+\varepsilon},p^{1/2+\varepsilon})\) and online competitive ratio \(\widetilde O(p^{1/2+\varepsilon})\) from [21]. | Cited background |
 | Theorems 8 and 21 | Same new online unit-cost directed Steiner forest result, randomized polynomial time and competitive ratio \(O(n^{3/5+\varepsilon})\). Theorem 21 uses the early-pair algorithm of [21], all-pairs thick-demand hitting, the thin-pair online rounding from the [24] framework, the two orientations of Theorem 2, and Lemmas 20 and 22. | [The full online algorithm](OnlineReachabilityPreservers/SteinerComplete.lean) checks the expected \(O(n^{3/5+\varepsilon})\) rate against any feasible offline solution on a fixed demand trace, including zero optimum and repeated requests. The first block of distinct non-self requests is chosen independently of the random seeds. Correctness and monotonicity hold on every realization. Formal end-to-end runtime remains open. |
@@ -326,16 +326,26 @@ with a polynomial key-comparison bound on general digraphs. The original
 raw arc list may contain duplicates. These comparison theorems count abstract
 key tests in supplied list representations.
 
-The [reverse-search tally](OnlineReachabilityPreservers/DeterministicListWork.lean#L552)
+The [reverse-search tally](OnlineReachabilityPreservers/DeterministicListWork.lean#L585)
 also charges list-cell inspection and construction and loop control. The
-[SCC preparation tally](OnlineReachabilityPreservers/SccListWork.lean#L401)
+[SCC preparation tally](OnlineReachabilityPreservers/SccListWork.lean#L385)
 extends this model to the transpose, component labels, and exact
-duplicate-free quotient. Both give explicit polynomial bounds. The model
-starts from the supplied lists, counts each composite key test as one
-operation, and excludes counter maintenance. Lifting, connector construction,
-and demand processing have the comparison bounds above. The source-level
-preparation bound leaves vertex enumeration, native allocation and comparison
-costs, and bit arithmetic open.
+duplicate-free quotient.
+
+The [forward-run tally](OnlineReachabilityPreservers/DeterministicListWork.lean#L716)
+adds successor selection and purchases. The
+[sink](OnlineReachabilityPreservers/SccLiftListWork.lean#L976) and
+[source](OnlineReachabilityPreservers/SccLiftListWork.lean#L999) prefix theorems
+return the exact edge set at every reveal. They charge both connector directions,
+the lift, and materializing and recomputing all prefixes. The
+[offline tally](OnlineReachabilityPreservers/SccLiftListWork.lean#L1021)
+includes sorting into the same lexicographic order, all tested greedy deletions,
+and the final lift. The model starts from the supplied arc and vertex lists,
+counts each composite key operation as one unit, and excludes counter maintenance.
+Each bound is an explicit polynomial in the vertex, raw arc, and request counts.
+Vertex enumeration, machine allocation and comparison costs, and bit arithmetic
+remain open. The preassigned paths and Steiner algorithm have the separate
+bounds below.
 
 The [preassigned-path counter](OnlineReachabilityPreservers/AssignmentSearchWork.lean)
 combines the calls made by quota certification and path selection with the
