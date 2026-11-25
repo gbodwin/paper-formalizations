@@ -234,6 +234,103 @@ theorem theorem14_lower_of_uniform_component_retention {n p loss : ℕ} (hn : 2 
     _ ≤ ∑ c : Fin n, loss * ∑ i, (parts c i).length := sum_le_sum (fun c _ => posMass c)
     _ = loss * ∑ i, ∑ c : Fin n, (parts c i).length := by rw [← mul_sum, sum_comm]
 
+/-- Combine the spanning-path and component-visit lower constructions.
+If total mass is at most `C` times vertices plus visits, one of the
+two graphs forces at least a fraction `1/(14*C)` of that mass. -/
+theorem theorem14_lower_of_aggregate_component_mass {n p C : ℕ}
+    (hn : 2 ≤ n) (hp0 : 0 < p) (hp : p ≤ n^2) (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (nonempty : ∀ i, paths i ≠ [])
+    (free : ∀ k, IsEmpty (Bridge (ListBefore paths) k))
+    (mass : (∑ i, (paths i).length) ≤ C *
+      (n + ∑ i, ((paths i).toFinset.image (componentLabel (pathPrecedenceGraph paths))).card)) :
+    ∃ (G : Arcs (Fin n)) (D : Finset (Fin n × Fin n)), IsDAG G ∧ D.card = p ∧
+      ∀ H ⊆ G, Preserves G H D.toList → (∑ i, (paths i).length) ≤ (14*C)*H.card := by
+  let J := ∑ i, ((paths i).toFinset.image (componentLabel (pathPrecedenceGraph paths))).card
+  have witness : ∃ (G : Arcs (Fin n)) (D : Finset (Fin n × Fin n)), IsDAG G ∧ D.card = p ∧
+      ∀ H ⊆ G, Preserves G H D.toList → n-1 ≤ H.card ∧ J ≤ 12*H.card := by
+    by_cases visitsLarge : 12*(n-1) ≤ J
+    · obtain ⟨G,D,dag,size,lower⟩ := theorem14_component_visit_lower hn hp paths simple nonempty free
+      refine ⟨G,D,dag,size,fun H sub serves => ?_⟩
+      have visits : J ≤ 12*H.card := lower H sub serves
+      exact ⟨by omega,visits⟩
+    · obtain ⟨G,D,dag,size,lower⟩ := offline_linear_vertex_lower hn hp0 hp
+      refine ⟨G,D,dag,size,fun H sub serves => ?_⟩
+      have vertices := lower H sub serves
+      exact ⟨vertices,by omega⟩
+  obtain ⟨G,D,dag,size,lower⟩ := witness
+  refine ⟨G,D,dag,size,fun H sub serves => ?_⟩
+  obtain ⟨vertices,visits⟩ := lower H sub serves
+  calc
+    _ ≤ C*(n+J) := mass
+    _ ≤ C*(14*H.card) := Nat.mul_le_mul_left _ (by omega)
+    _ = _ := by ring
+
+/-- A linear incidence bound in each precedence component suffices, even
+when an individual path has many vertices in a component. -/
+theorem theorem14_lower_of_sparse_precedence_components {n p C : ℕ} (hn : 2 ≤ n) (hp0 : 0 < p)
+    (hp : p ≤ n^2) (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (nonempty : ∀ i, paths i ≠ [])
+    (free : ∀ k, IsEmpty (Bridge (ListBefore paths) k))
+    (sparse :
+      let label := componentLabel (pathPrecedenceGraph paths)
+      ∀ c : Fin n, (∑ i, (pathsInPrecedenceComponent paths c i).length) ≤ C *
+        (((univ : Finset (Fin n)).filter (fun v => label v = c)).card +
+          ((univ : Finset (Fin p)).filter (fun i => c ∈ (paths i).toFinset.image label)).card)) :
+    ∃ (G : Arcs (Fin n)) (D : Finset (Fin n × Fin n)), IsDAG G ∧ D.card = p ∧
+      ∀ H ⊆ G, Preserves G H D.toList → (∑ i, (paths i).length) ≤ (14*C)*H.card := by
+  classical
+  let label := componentLabel (pathPrecedenceGraph paths)
+  let visits (i : Fin p) := (paths i).toFinset.image label
+  let vertexCount (c : Fin n) := ((univ : Finset (Fin n)).filter (fun v => label v = c)).card
+  let visitCount (c : Fin n) := ((univ : Finset (Fin p)).filter (fun i => c ∈ visits i)).card
+  have vertexTotal : (∑ c, vertexCount c) = n := by
+    have total := card_eq_sum_card_fiberwise (s := (univ : Finset (Fin n))) (t := univ) (f := label) (by simp)
+    simpa only [vertexCount,card_univ,Fintype.card_fin] using total.symm
+  have visitTotal : (∑ c, visitCount c) = ∑ i, (visits i).card := by
+    calc
+      _ = ∑ c : Fin n, ∑ i : Fin p, if c ∈ visits i then 1 else 0 := by simp only [visitCount,Finset.card_filter]
+      _ = ∑ i : Fin p, ∑ c : Fin n, if c ∈ visits i then 1 else 0 := Finset.sum_comm
+      _ = _ := by
+        apply sum_congr rfl
+        intro i _
+        rw [← Finset.card_filter]
+        exact congrArg Finset.card (by ext c; simp)
+  apply theorem14_lower_of_aggregate_component_mass hn hp0 hp paths simple nonempty free
+  calc
+    (∑ i, (paths i).length) = ∑ i, ∑ c : Fin n, (pathsInPrecedenceComponent paths c i).length :=
+      sum_congr rfl fun i _ => pathsInPrecedenceComponent_sum_length simple i
+    _ = ∑ c : Fin n, ∑ i, (pathsInPrecedenceComponent paths c i).length := sum_comm
+    _ ≤ ∑ c : Fin n, C*(vertexCount c+visitCount c) := sum_le_sum (fun c _ => sparse c)
+    _ = _ := by rw [← Finset.mul_sum,Finset.sum_add_distrib,vertexTotal,visitTotal]
+
+/-- The component bound can be applied after removing opposite
+intersections, at a factor-two cost in original mass. -/
+theorem theorem14_lower_of_sparse_pruned_components {n p C : ℕ} (hn : 2 ≤ n) (hp0 : 0 < p)
+    (hp : p ≤ n^2) (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (nonempty : ∀ i, paths i ≠ [])
+    (free : ∀ k, IsEmpty (Bridge (ListBefore paths) k))
+    (sparse :
+      let kept := removeOppositeIntersections paths
+      let label := componentLabel (pathPrecedenceGraph kept)
+      ∀ c : Fin n, (∑ i, (pathsInPrecedenceComponent kept c i).length) ≤ C *
+        (((univ : Finset (Fin n)).filter (fun v => label v = c)).card +
+          ((univ : Finset (Fin p)).filter (fun i => c ∈ (kept i).toFinset.image label)).card)) :
+    ∃ (G : Arcs (Fin n)) (D : Finset (Fin n × Fin n)), IsDAG G ∧ D.card = p ∧
+      ∀ H ⊆ G, Preserves G H D.toList → (∑ i, (paths i).length) ≤ (28*C)*H.card := by
+  let kept := removeOppositeIntersections paths
+  have keptSimple (i : Fin p) : (kept i).Nodup := (removeOppositeIntersections_sublist paths i).nodup (simple i)
+  have keptNonempty (i : Fin p) : kept i ≠ [] :=
+    List.ne_nil_of_mem (removeOppositeIntersections_getLast_mem simple i (nonempty i))
+  have keptFree (k : ℕ) : IsEmpty (Bridge (ListBefore kept) k) :=
+    removeOppositeIntersections_fullFree (k := k + 2) simple (fun j _ => free j) le_rfl
+  have freeThree : HalfBridgeFree (ListBefore paths) 3 := fun j _ b _ => (free j).false b
+  have retained : (∑ i, (paths i).length) ≤ 2*(∑ i, (kept i).length) :=
+    removeOppositeIntersections_mass simple freeThree le_rfl
+  obtain ⟨G,D,dag,size,lower⟩ := theorem14_lower_of_sparse_precedence_components hn hp0 hp kept
+    keptSimple keptNonempty keptFree sparse
+  refine ⟨G,D,dag,size,fun H sub serves => ?_⟩
+  exact retained.trans <| (Nat.mul_le_mul_left 2 (lower H sub serves)).trans_eq (by ring)
+
 section VisitCounterexample
 
 open SourceAudit

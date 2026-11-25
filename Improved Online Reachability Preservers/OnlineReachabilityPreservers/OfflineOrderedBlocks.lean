@@ -35,16 +35,15 @@ private theorem before_of_increasing_finset {V I : Type*} [LinearOrder V]
     exact (step.2.2.asymm across).elim
 
 /-- An increasing subsequence on each row gives an exact-count lower
-construction controlled by the total retained mass. -/
-theorem theorem14_lower_of_increasing_subsequences {n p loss : ℕ} (hn : 2 ≤ n) (hp : p ≤ n^2)
+construction that forces a constant fraction of the retained mass. -/
+private theorem theorem14_lower_retained_increasing_subsequences {n p : ℕ} (hn : 2 ≤ n) (hp : p ≤ n^2)
     (paths kept : Fin p → List (Fin n)) (rank : Fin n ≃ Fin n)
     (simple : ∀ i, (paths i).Nodup) (nonempty : ∀ i, kept i ≠ [])
     (free : ∀ k, IsEmpty (Bridge (ListBefore paths) k))
     (subsets : ∀ i, (kept i).Sublist (paths i))
-    (ordered : ∀ i, ((kept i).map rank).Pairwise (· < ·))
-    (retained : (∑ i, (paths i).length) ≤ loss * ∑ i, (kept i).length) :
+    (ordered : ∀ i, ((kept i).map rank).Pairwise (· < ·)) :
     ∃ (G : Arcs (Fin n)) (D : Finset (Fin n × Fin n)), IsDAG G ∧ D.card = p ∧
-      ∀ H ⊆ G, Preserves G H D.toList → (∑ i, (paths i).length) ≤ (12*loss)*H.card := by
+      ∀ H ⊆ G, Preserves G H D.toList → (∑ i, (kept i).length) ≤ 12*H.card := by
   let ranked (i : Fin p) := (kept i).map rank
   let family (i : Fin p) := (ranked i).toFinset
   have rankedSimple (i : Fin p) : (ranked i).Nodup := ((subsets i).nodup (simple i)).map rank.injective
@@ -63,10 +62,25 @@ theorem theorem14_lower_of_increasing_subsequences {n p loss : ℕ} (hn : 2 ≤ 
     rw [show (family i).card = (ranked i).length from List.toFinset_card_of_nodup (rankedSimple i)]
     exact List.length_map rank
   obtain ⟨G,D,acyclic,demands,size⟩ := theorem14_acyclic_extremal_lower hn hp family touches allowed
+  exact ⟨G,D,acyclic,demands,fun H sub serves => familyMass ▸ size H sub serves⟩
+
+/-- Compare the original incidence mass with an increasing subsequence
+on each row, while keeping the original vertex and demand counts. -/
+theorem theorem14_lower_of_increasing_subsequences {n p loss : ℕ} (hn : 2 ≤ n) (hp : p ≤ n^2)
+    (paths kept : Fin p → List (Fin n)) (rank : Fin n ≃ Fin n)
+    (simple : ∀ i, (paths i).Nodup) (nonempty : ∀ i, kept i ≠ [])
+    (free : ∀ k, IsEmpty (Bridge (ListBefore paths) k))
+    (subsets : ∀ i, (kept i).Sublist (paths i))
+    (ordered : ∀ i, ((kept i).map rank).Pairwise (· < ·))
+    (retained : (∑ i, (paths i).length) ≤ loss * ∑ i, (kept i).length) :
+    ∃ (G : Arcs (Fin n)) (D : Finset (Fin n × Fin n)), IsDAG G ∧ D.card = p ∧
+      ∀ H ⊆ G, Preserves G H D.toList → (∑ i, (paths i).length) ≤ (12*loss)*H.card := by
+  obtain ⟨G,D,acyclic,demands,size⟩ :=
+    theorem14_lower_retained_increasing_subsequences hn hp paths kept rank simple nonempty free subsets ordered
   refine ⟨G,D,acyclic,demands,fun H sub serves => ?_⟩
   calc
     _ ≤ loss * (∑ i, (kept i).length) := retained
-    _ ≤ loss * (12 * H.card) := Nat.mul_le_mul_left _ (familyMass ▸ size H sub serves)
+    _ ≤ loss * (12 * H.card) := Nat.mul_le_mul_left _ (size H sub serves)
     _ = (12*loss)*H.card := by ring
 
 /-- Each path may have its own block boundaries. Keeping its longest
@@ -166,14 +180,13 @@ noncomputable def pathPrecedenceGraph {n p : ℕ} (paths : Fin p → List (Fin n
 
 /-- Retain one vertex for each strongly connected component visited by each
 path. The component order makes the retained rows increasing in a common order.
-The comparison uses the total number of component visits. -/
-theorem theorem14_lower_of_component_visits {n p loss : ℕ} (hn : 2 ≤ n) (hp : p ≤ n^2)
+The lower construction forces a constant fraction of the component visits. -/
+theorem theorem14_component_visit_lower {n p : ℕ} (hn : 2 ≤ n) (hp : p ≤ n^2)
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup) (nonempty : ∀ i, paths i ≠ [])
-    (free : ∀ k, IsEmpty (Bridge (ListBefore paths) k))
-    (retained : (∑ i, (paths i).length) ≤ loss *
-      ∑ i, ((paths i).toFinset.image (componentLabel (pathPrecedenceGraph paths))).card) :
+    (free : ∀ k, IsEmpty (Bridge (ListBefore paths) k)) :
     ∃ (G : Arcs (Fin n)) (D : Finset (Fin n × Fin n)), IsDAG G ∧ D.card = p ∧
-      ∀ H ⊆ G, Preserves G H D.toList → (∑ i, (paths i).length) ≤ (12*loss)*H.card := by
+      ∀ H ⊆ G, Preserves G H D.toList →
+        (∑ i, ((paths i).toFinset.image (componentLabel (pathPrecedenceGraph paths))).card) ≤ 12*H.card := by
   classical
   let G := pathPrecedenceGraph paths
   let label := componentLabel G
@@ -227,8 +240,21 @@ theorem theorem14_lower_of_component_visits {n p loss : ℕ} (hn : 2 ≤ n) (hp 
     exact Prod.Lex.toLex_lt_toLex.mpr (Or.inl (reaches_card_lt (condensation_dag G) step))
   have visits (i : Fin p) : ((paths i).toFinset.image label).card = (kept i).length := by
     rw [image_eq, List.toFinset_card_of_nodup (keptLabelsSimple i), List.length_map]
-  apply theorem14_lower_of_increasing_subsequences hn hp paths kept rank simple keptNonempty free subsets ordered
-  simpa only [← visits] using retained
+  simpa only [show componentLabel (pathPrecedenceGraph paths) = label from rfl, visits] using
+    theorem14_lower_retained_increasing_subsequences hn hp paths kept rank simple keptNonempty free subsets ordered
+
+/-- Compare the original incidence mass with the total number of visits
+to strongly connected components of the precedence graph. -/
+theorem theorem14_lower_of_component_visits {n p loss : ℕ} (hn : 2 ≤ n) (hp : p ≤ n^2)
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup) (nonempty : ∀ i, paths i ≠ [])
+    (free : ∀ k, IsEmpty (Bridge (ListBefore paths) k))
+    (retained : (∑ i, (paths i).length) ≤ loss *
+      ∑ i, ((paths i).toFinset.image (componentLabel (pathPrecedenceGraph paths))).card) :
+    ∃ (G : Arcs (Fin n)) (D : Finset (Fin n × Fin n)), IsDAG G ∧ D.card = p ∧
+      ∀ H ⊆ G, Preserves G H D.toList → (∑ i, (paths i).length) ≤ (12*loss)*H.card := by
+  obtain ⟨G,D,acyclic,demands,size⟩ := theorem14_component_visit_lower hn hp paths simple nonempty free
+  refine ⟨G,D,acyclic,demands,fun H sub serves => ?_⟩
+  exact retained.trans <| (Nat.mul_le_mul_left loss (size H sub serves)).trans_eq (by ring)
 
 /-- A uniform bound on the number of vertices of a path in any one
 component suffices for the component-visit lower bound. -/

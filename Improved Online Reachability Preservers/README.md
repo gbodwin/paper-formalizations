@@ -247,6 +247,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   checks the reverse construction in a common vertex order. Any preserver of
   the endpoint demands must retain exactly the total incidence count minus
   the path count in consecutive edges.
+- For a fully bridge-free family of nonempty simple paths, let \(M\) be its
+  incidence mass, \(n\) its vertex count, and \(J\) the total number of visits
+  to strongly connected components of the precedence graph, counted once
+  per path and component. For \(n\ge 2\), \(1\le p\le n^2\), and
+  \(M\le C(n+J)\), a DAG on exactly \(n\) vertices with \(p\) distinct demands forces
+  \(M\le 14C|E(H)|\) for every preserver \(H\). A component-wise linear
+  bound suffices for this hypothesis. Applying that condition after
+  opposite-intersection pruning gives factor \(28C\).
+  [Component lower bounds](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L240).
 - [`theorem14_dag_compression` and `offline_pairwise_initial`](OnlineReachabilityPreservers/OfflineIndependence.lean)
   prove the constructive independence reduction on DAGs and its initial
   offline pairwise consequence on arbitrary digraphs. The algorithm deletes

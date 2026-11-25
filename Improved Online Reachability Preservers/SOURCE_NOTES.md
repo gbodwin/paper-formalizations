@@ -390,10 +390,24 @@ arbitrarily small fraction of the mass. For every \(L\), a family of three
 fully bridge-free paths has mass \(3L+7\) and just three visits. Pruning
 opposite intersections retains all three paths as given. This leaves the
 general increasing-subsequence comparison and the extremal converse open.
-[Increasing subsequences](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L39)
-· [Component visits](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L170)
-· [Bounded component intersections](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L235)
-· [Unbounded loss of selecting one vertex per visit](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L250).
+[Increasing subsequences](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L69)
+· [Component visits](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L184)
+· [Bounded component intersections](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L261)
+· [Unbounded loss of selecting one vertex per visit](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L347).
+
+Write \(J\) for the total number of path-component visits. The visit
+construction yields a DAG forcing \(J\le 12|E(H)|\). When
+\(J\ge 12(n-1)\), that graph also forces \(n-1\le |E(H)|\). Otherwise
+the spanning-path construction forces both bounds. For \(n\ge 2\) and
+\(1\le p\le n^2\), every preserver of the selected graph's \(p\) distinct
+demands therefore satisfies \(n+J\le 14|E(H)|\). This gives the conditional
+converse \(M\le 14C|E(H)|\) when \(M\le C(n+J)\). It also applies when each
+component's mass is at most \(C\) times its vertex count plus its count of
+visiting paths. When the component condition is verified on the
+opposite-pruned system, the original mass is bounded by \(28C|E(H)|\).
+[Aggregate bound](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L240)
+· [Component-wise bound](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L270)
+· [Bound after pruning](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L308).
 
 Order and select the subsequences independently inside each component.
 All comparisons across components follow the condensation order. If the
