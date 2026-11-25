@@ -924,6 +924,19 @@ peeling. The sparse case uses a separate fully bridge-free witness.
 · [Arrival transport](OnlineReachabilityPreservers/SynchronizedPathSplits.lean)
 · [Frozen proof](OnlineReachabilityPreservers/LocalFrozenCleaning.lean).
 
+The vertex-projection extension was reviewed independently. When distinct
+corners collide, a closed portion of the projected chain has at least two
+arcs. Erasing closed portions keeps the river and leaves a bridge at least
+two sizes smaller. With full exclusion through size \(r\), this prevents
+collisions for half-bridges of size at most \(r+2\), allowing both the last
+arc and the river to keep their arrival indices. Taking \(r=3\) extends
+the frozen cleaning construction through half cutoff five with the same
+full-through-three input condition. The review checked the small-mass
+witness and the restriction and peeling guarantees in the dense case.
+[Projection with size loss](OnlineReachabilityPreservers/BridgeVertexProjection.lean)
+· [Vertex splitting](OnlineReachabilityPreservers/LocalRegularization.lean)
+· [Conditional cleaning through five](OnlineReachabilityPreservers/LocalFrozenCleaning.lean).
+
 ## Execution examples
 
 A finite execution check of the PaperLab example gave cumulative purchases

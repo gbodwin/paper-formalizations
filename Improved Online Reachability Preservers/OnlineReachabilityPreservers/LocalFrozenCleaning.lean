@@ -470,7 +470,7 @@ theorem regularization_list_frozen_shortened_paths {half : Bool} {k : ℕ}
     (sum_le_sum fun i _ => (sub i).length_le)
 
 private theorem regularization_list_balanced_synchronized {half : Bool} {k : ℕ} (three : 3 ≤ k)
-    (five : k ≤ 5) (halfShort : half = true → k ≤ 4) (paths : I → List V)
+    (five : k ≤ 5) (paths : I → List V)
     (simple : ∀ i, (paths i).Nodup) (freeThree : BridgeFree (ListBefore paths) 3)
     (free : localOrderAdmissible half k paths)
     (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
@@ -500,8 +500,8 @@ private theorem regularization_list_balanced_synchronized {half : Bool} {k : ℕ
     cases half
     · exact (show BridgeFree (ListBefore paths) k from free).split_list_vertices_any
         (fun v => v.fst) (fun {_ _ _} => project)
-    · exact (show HalfBridgeFree (ListBefore paths) k from free).split_list_vertices_short
-        (halfShort rfl) (fun v => v.fst) (fun {_ _ _} => project)
+    · exact (show HalfBridgeFree (ListBefore paths) k from free).split_list_vertices_of_full
+        freeThree five (fun v => v.fst) (fun {_ _ _} => project)
   obtain ⟨indexes⟩ := exists_packedPathRanks copies copiesSimple copiesFreeThree
   let selected := baseRankCuts (fun i => (copies i).length) L
   let cuts := synchronizedCuts selected (oppositeCutPartner indexes)
@@ -568,7 +568,7 @@ theorem regularization_list_balanced_full_short_dense {k : ℕ} (three : 3 ≤ k
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
       M ≤ 119*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
-  regularization_list_balanced_synchronized (half := false) three five (by simp) paths simple
+  regularization_list_balanced_synchronized (half := false) three five paths simple
     (fun _ bound => free (bound.trans three)) free hn hp dense long
 
 end OnlineReachabilityPreservers
@@ -601,8 +601,32 @@ theorem regularization_list_frozen_full_short {n p k : ℕ} (three : 3 ≤ k) (f
         (by simpa only [Fintype.card_fin] using hn) (by simpa only [Fintype.card_fin] using hp)
         (by simpa only [Fintype.card_fin] using nHigh) (by simpa only [Fintype.card_fin] using pHigh))
 
-/-- A half-4-free family with no full bridge through size three admits
-frozen cleaning by synchronized cuts, including families with nested reversals. -/
+/-- With full exclusion through size three, the original budgets and all
+four frozen caps hold for half-bridge cutoffs from three through five. -/
+theorem regularization_list_frozen_half_short_of_full_three {n p k : ℕ}
+    (three : 3 ≤ k) (five : k ≤ 5) (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (fullThree : BridgeFree (ListBefore paths) 3)
+    (free : HalfBridgeFree (ListBefore paths) k)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (ListBefore clean) k ∧
+      M ≤ 119*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  by_cases thin : M ≤ 3*max n p
+  · obtain ⟨n',vn,p',ip,clean,nodup,legal,retained,upper,caps⟩ :=
+      full_frozen_cleaning_sparse (k := k) hn hp dense long thin
+    exact ⟨n',vn,p',ip,clean,nodup,legal.halfFree,by omega,upper,caps⟩
+  · have nHigh : 3*n ≤ M := (Nat.mul_le_mul_left 3 (le_max_left _ _)).trans (le_of_not_ge thin)
+    have pHigh : 3*p ≤ M := (Nat.mul_le_mul_left 3 (le_max_right _ _)).trans (le_of_not_ge thin)
+    simpa only [Fintype.card_fin, localOrderAdmissible, Bool.true_eq, ↓reduceIte] using
+      (regularization_list_balanced_synchronized (half := true) three five
+        paths simple fullThree free (by simpa only [Fintype.card_fin] using hn)
+        (by simpa only [Fintype.card_fin] using hp) (by simpa only [Fintype.card_fin] using nHigh)
+        (by simpa only [Fintype.card_fin] using pHigh))
+
+/-- The half-four instance allows nested reversals when full bridges
+through size three are excluded. -/
 theorem regularization_list_frozen_half_four_of_full_three {n p : ℕ} (paths : Fin p → List (Fin n))
     (simple : ∀ i, (paths i).Nodup) (fullThree : BridgeFree (ListBefore paths) 3)
     (free : HalfBridgeFree (ListBefore paths) 4)
@@ -610,19 +634,9 @@ theorem regularization_list_frozen_half_four_of_full_three {n p : ℕ} (paths : 
     let M := ∑ i, (paths i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (ListBefore clean) 4 ∧
-      M ≤ 119*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
-  let M := ∑ i, (paths i).length
-  by_cases thin : M ≤ 3*max n p
-  · obtain ⟨n',vn,p',ip,clean,nodup,legal,retained,upper,caps⟩ :=
-      full_frozen_cleaning_sparse (k := 4) hn hp dense long thin
-    exact ⟨n',vn,p',ip,clean,nodup,legal.halfFree,by omega,upper,caps⟩
-  · have nHigh : 3*n ≤ M := (Nat.mul_le_mul_left 3 (le_max_left _ _)).trans (le_of_not_ge thin)
-    have pHigh : 3*p ≤ M := (Nat.mul_le_mul_left 3 (le_max_right _ _)).trans (le_of_not_ge thin)
-    simpa only [Fintype.card_fin, localOrderAdmissible, Bool.true_eq, ↓reduceIte] using
-      (regularization_list_balanced_synchronized (half := true) (k := 4) (by decide) (by decide)
-        (fun _ => le_rfl) paths simple fullThree free (by simpa only [Fintype.card_fin] using hn)
-        (by simpa only [Fintype.card_fin] using hp) (by simpa only [Fintype.card_fin] using nHigh)
-        (by simpa only [Fintype.card_fin] using pHigh))
+      M ≤ 119*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_half_short_of_full_three (by decide) (by decide)
+    paths simple fullThree free hn hp dense long
 
 /-- A maximizing family through size five has a full-bridge-free cleaned
 witness with the original caps and at least one 119th of its mass. -/

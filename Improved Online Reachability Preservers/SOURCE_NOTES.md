@@ -132,13 +132,16 @@ Mirroring cuts between adjacent shared vertices gives another way to keep
 the original caps. Full exclusion through size three makes the reversed
 intervals into chains and pairs a cut with at most one other cut. Projecting
 back from these pieces preserves the last-arc arrival condition through
-half-bridge size five. The preceding degree split is used in half mode
-through size four. At that cutoff, using mirrored cuts in the dense case
-and a separate bridge-free witness in the sparse case keeps both original
-budgets, all four frozen caps, and at least \(M/119\) for simple inputs
-that also exclude full bridges through size three.
+half-bridge size five. A collision during degree splitting would erase at
+least two arcs in the projected chain. At half cutoff five this would leave
+a full bridge of size at most three, which the input excludes. Using these
+splits in the dense case and a separate bridge-free witness in the sparse
+case keeps both original budgets, all four frozen caps, and at least
+\(M/119\) for simple inputs with full exclusion through size three and a
+half cutoff between three and five.
 [Mirrored cuts](OnlineReachabilityPreservers/SynchronizedPathSplits.lean)
-· [Frozen half-four cleaning](OnlineReachabilityPreservers/LocalFrozenCleaning.lean).
+· [Projection with a collision](OnlineReachabilityPreservers/BridgeVertexProjection.lean)
+· [Frozen half-bridge cleaning](OnlineReachabilityPreservers/LocalFrozenCleaning.lean).
 
 The pruning argument in [8], Lemma 20 also works for the half-bridge
 condition when processed in arrival order. An omitted incidence marks a

@@ -28,18 +28,31 @@ private theorem suffixFrom {u v x : V} {E : List (I × V)} (walk : LabeledWalk b
     · obtain ⟨F, suffix, subwalk, vertices⟩ := ih next
       exact ⟨F, suffix.trans (List.suffix_cons _ _), subwalk, vertices.trans (List.suffix_cons _ _)⟩
 
-/-- Erase closed sections while keeping a subsequence of the original edges. -/
-private theorem eraseCycles {u v : V} {E : List (I × V)} (walk : LabeledWalk before u v E) :
-    ∃ F, F.Sublist E ∧ LabeledWalk before u v F ∧ (u :: F.map Prod.snd).Nodup := by
+/-- Erase closed sections while keeping a subsequence of the original edges.
+A nontrivial erasure removes at least two edges when steps are strict. -/
+private theorem eraseCycles {u v : V} {E : List (I × V)} (walk : LabeledWalk before u v E)
+    (strict : ∀ {i x y}, before i x y → x ≠ y) :
+    ∃ F, F.Sublist E ∧ LabeledWalk before u v F ∧ (u :: F.map Prod.snd).Nodup ∧
+      (F = E ∨ F.length + 2 ≤ E.length) := by
   induction walk with
-  | nil a => exact ⟨[], List.Sublist.refl _, .nil _, by simp⟩
+  | nil a => exact ⟨[], List.Sublist.refl _, .nil _, by simp, Or.inl rfl⟩
   | @cons x y z i D edge tail ih =>
     classical
-    obtain ⟨F, sub, short, distinct⟩ := ih
+    obtain ⟨F, sub, short, distinct, loss⟩ := ih
     by_cases occurs : x ∈ y :: F.map Prod.snd
-    · obtain ⟨Q, suffix, walk, vertices⟩ := suffixFrom short occurs
-      exact ⟨Q, suffix.sublist.trans (sub.trans (List.sublist_cons_self _ _)), walk, vertices.sublist.nodup distinct⟩
-    · exact ⟨(i,y)::F, sub.cons_cons _, .cons edge short, List.nodup_cons.mpr ⟨occurs,distinct⟩⟩
+    · obtain ⟨Q, suffix, shorterWalk, vertices⟩ := suffixFrom short occurs
+      have different : Q.length < F.length := by
+        apply lt_of_not_ge
+        intro same
+        have equal := vertices.eq_of_length_le (by simpa only [List.length_cons, List.length_map] using Nat.succ_le_succ same)
+        exact strict edge (List.cons.inj equal).1
+      have bound := sub.length_le
+      exact ⟨Q, suffix.sublist.trans (sub.trans (List.sublist_cons_self _ _)), shorterWalk,
+        vertices.sublist.nodup distinct, Or.inr (by simp only [List.length_cons]; omega)⟩
+    · refine ⟨(i,y)::F, sub.cons_cons _, .cons edge short, List.nodup_cons.mpr ⟨occurs,distinct⟩, ?_⟩
+      rcases loss with rfl | smaller
+      · exact Or.inl rfl
+      · exact Or.inr (by simp only [List.length_cons]; omega)
 
 private theorem ofIndexed : ∀ {n : ℕ} (v : Fin (n+1) → V) (a : Fin n → I),
     (∀ i, before (a i) (v i.castSucc) (v i.succ)) →
@@ -78,18 +91,27 @@ private theorem indexed {u v : V} {E : List (I × V)} (walk : LabeledWalk before
 
 end LabeledWalk
 
-/-- Project vertices without requiring global injectivity. Erasing closed sections
-may shorten the bridge and drops some arcs, while keeping its river. -/
-theorem Bridge.project_vertices {V W I : Type*} {before : I → V → V → Prop} {after : I → W → W → Prop}
+private theorem Bridge.project_vertices_aux {V W I : Type*} {before : I → V → V → Prop} {after : I → W → W → Prop}
     {k : ℕ} (b : Bridge before k) (project : V → W)
     (steps : ∀ {i x y}, before i x y → after i (project x) (project y))
     (strict : ∀ {i x y}, after i x y → x ≠ y) :
-    ∃ j ≤ k, ∃ short : Bridge after j, short.river = b.river := by
+    ∃ j ≤ k, ∃ short : Bridge after j, short.river = b.river ∧
+      (Function.Injective (project ∘ b.vertex) ∨ j + 2 ≤ k) := by
   let v := project ∘ b.vertex
   let E := List.ofFn fun i => (b.arc i, v i.succ)
   have walk : LabeledWalk after (v 0) (v (Fin.last (k+1))) E :=
     LabeledWalk.ofIndexed v b.arc (fun i => steps (b.arcStep i))
-  obtain ⟨F, sub, short, vertices⟩ := walk.eraseCycles
+  obtain ⟨F, sub, short, vertices, loss⟩ := walk.eraseCycles strict
+  have shortOrDistinct : Function.Injective v ∨ F.length + 2 ≤ E.length := by
+    rcases loss with rfl | fewer
+    · left
+      apply List.nodup_ofFn.mp
+      have mapped : E.map Prod.snd = List.ofFn (v ∘ Fin.succ) := by
+        simp only [E, List.map_ofFn, Function.comp_def]
+      rw [mapped] at vertices
+      rw [List.ofFn_succ]
+      exact vertices
+    · exact Or.inr fewer
   have colorBefore : E.map Prod.fst = List.ofFn b.arc := by simp [E, List.map_ofFn, Function.comp_def]
   have distinct : (F.map Prod.fst).Nodup := by
     apply (sub.map Prod.fst).nodup
@@ -116,11 +138,34 @@ theorem Bridge.project_vertices {V W I : Type*} {before : I → V → V → Prop
       exact Fin.cast_injective _ same
     have riverAbsent (i : Fin (tail.length+1)) : b.river ≠ index i :=
       fresh (List.mem_map_of_mem ((e::tail).get_mem i))
-    refine ⟨tail.length,?_,⟨x,index,b.river, LabeledWalk.indexedVertex_inj vertices,injective,riverAbsent,?_,projected⟩,rfl⟩
+    refine ⟨tail.length,?_,⟨x,index,b.river, LabeledWalk.indexedVertex_inj vertices,injective,riverAbsent,?_,projected⟩,
+      rfl, shortOrDistinct.imp_right ?_⟩
     · have bound := sub.length_le
       simpa [E] using Nat.le_of_succ_le_succ (show tail.length+1 ≤ k+1 by simpa [E] using bound)
     · change after b.river (x 0) (x (Fin.last (tail.length+1)))
       rw [show x 0 = v 0 from start, show x (Fin.last (tail.length+1)) = v (Fin.last (k+1)) from last]
       exact steps b.riverStep
+    · simp only [E, List.length_ofFn, List.length_cons]
+      omega
+
+/-- Project vertices without requiring global injectivity. Erasing closed sections
+may shorten the bridge and drops some arcs, while keeping its river. -/
+theorem Bridge.project_vertices {V W I : Type*} {before : I → V → V → Prop} {after : I → W → W → Prop}
+    {k : ℕ} (b : Bridge before k) (project : V → W)
+    (steps : ∀ {i x y}, before i x y → after i (project x) (project y))
+    (strict : ∀ {i x y}, after i x y → x ≠ y) :
+    ∃ j ≤ k, ∃ short : Bridge after j, short.river = b.river := by
+  obtain ⟨j, bound, short, river, _⟩ := b.project_vertices_aux project steps strict
+  exact ⟨j,bound,short,river⟩
+
+/-- If projected corners collide, removing closed sections leaves a bridge
+with at least two fewer arcs and the original river. -/
+theorem Bridge.project_vertices_with_collision {V W I : Type*} {before : I → V → V → Prop}
+    {after : I → W → W → Prop} {k : ℕ} (b : Bridge before k) (project : V → W)
+    (steps : ∀ {i x y}, before i x y → after i (project x) (project y))
+    (strict : ∀ {i x y}, after i x y → x ≠ y) (collision : ¬ Function.Injective (project ∘ b.vertex)) :
+    ∃ j, j + 2 ≤ k ∧ ∃ short : Bridge after j, short.river = b.river := by
+  obtain ⟨j, _, short, river, fewer⟩ := b.project_vertices_aux project steps strict
+  exact ⟨j,fewer.resolve_left collision,short,river⟩
 
 end OnlineReachabilityPreservers

@@ -98,6 +98,25 @@ theorem HalfBridgeFree.split_list_vertices_short [LinearOrder I]
     (fun same {_ _ _ _} diff left right => no_parallel_list_steps free (by omega) diff left right) b
   exact free hk old earlier
 
+/-- Full exclusion through `fullSize` prevents collisions in the projection
+of a half-bridge with at most `fullSize + 2` corners. Thus the last arc is
+kept, along with its strict arrival relation to the river. -/
+theorem HalfBridgeFree.split_list_vertices_of_full [LinearOrder I]
+    {paths : I → List V} {copies : I → List W} {size fullSize : ℕ}
+    (free : HalfBridgeFree (ListBefore paths) size) (fullFree : BridgeFree (ListBefore paths) fullSize)
+    (short : size ≤ fullSize + 2) (project : W → V)
+    (steps : ∀ {i x y}, ListBefore copies i x y → ListBefore paths i (project x) (project y)) :
+    HalfBridgeFree (ListBefore copies) size := by
+  intro k hk b earlier
+  have different : Function.Injective (project ∘ b.vertex) := by
+    by_contra collision
+    obtain ⟨j,smaller,old,_⟩ := b.project_vertices_with_collision project steps listBefore_ne collision
+    exact (fullFree (k := j) (by omega)).false old
+  let old : Bridge (ListBefore paths) k :=
+    ⟨project ∘ b.vertex, b.arc, b.river, different, b.distinctArcs, b.river_ne_arc,
+      steps b.riverStep, fun j => steps (b.arcStep j)⟩
+  exact free hk old earlier
+
 theorem BridgeFree.split_list_vertices {paths : I → List V} {copies : I → List W}
     (free : BridgeFree (ListBefore paths) 4) (project : W → V)
     (steps : ∀ {i x y}, ListBefore copies i x y → ListBefore paths i (project x) (project y))
