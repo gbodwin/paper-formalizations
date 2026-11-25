@@ -168,17 +168,20 @@ theorem splitListVertices_toFinset (paths : I → List V) (width : ℕ) (i : I) 
   · rintro ⟨x, _, rfl⟩
     exact ⟨⟨x.val, List.mem_toFinset.mp x.property⟩, List.mem_attach _ _, rfl⟩
 
-private theorem splitListVertices_simple (paths : I → List V) (width : ℕ) (i : I) (simple : (paths i).Nodup) :
+/-- Vertex copies preserve simplicity within a row. -/
+theorem splitListVertices_simple (paths : I → List V) (width : ℕ) (i : I) (simple : (paths i).Nodup) :
     (splitListVertices paths width i).Nodup :=
   List.Nodup.of_map (fun v => v.fst) ((splitListVertices_project paths width i).symm ▸ simple)
 
-private theorem splitListVertices_step {paths : I → List V} {width : ℕ} {i : I} {x y : ListVertexBlockIndex paths width}
+/-- An ordered step on vertex copies projects to the original row. -/
+theorem splitListVertices_step {paths : I → List V} {width : ℕ} {i : I} {x y : ListVertexBlockIndex paths width}
     (simple : (paths i).Nodup) (step : ListBefore (splitListVertices paths width) i x y) :
     ListBefore paths i x.fst y.fst := by
   have keeps := listBefore_map (fun v : ListVertexBlockIndex paths width => v.fst) ((splitListVertices_project paths width i).symm ▸ simple) step
   simpa only [splitListVertices_project] using keeps
 
-private theorem splitListVertices_unique {paths : I → List V} {width : ℕ}
+/-- Vertex copies preserve the unique-intersection property. -/
+theorem splitListVertices_unique {paths : I → List V} {width : ℕ}
     (simple : ∀ i, (paths i).Nodup)
     (unique : ∀ {a b x y}, a ≠ b → x ∈ paths a → x ∈ paths b → y ∈ paths a → y ∈ paths b → x = y)
     {a b : I} {x y : ListVertexBlockIndex paths width} (different : a ≠ b)
@@ -233,7 +236,8 @@ private theorem splitListPaths_sublist (paths : I → List V) (width : ℕ) (i :
     List.Sublist (splitListPaths paths width i) (paths i.fst) := List.filter_sublist
 
 omit [LinearOrder I] [Fintype I] in
-private theorem splitListPaths_disjoint {paths : I → List V} {width : ℕ} {i j : ListBlockIndex paths width}
+/-- Different consecutive blocks of one row have disjoint vertex sets. -/
+theorem splitListPaths_disjoint {paths : I → List V} {width : ℕ} {i j : ListBlockIndex paths width}
     {x : V} (different : i ≠ j) (parent : i.fst = j.fst)
     (first : x ∈ splitListPaths paths width i) (second : x ∈ splitListPaths paths width j) : False := by
   rcases i with ⟨i, a⟩

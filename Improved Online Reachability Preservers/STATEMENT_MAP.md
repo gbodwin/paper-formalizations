@@ -483,6 +483,17 @@ prefix has an operand bound of \((5n+4)\cdot 2|E|\).
 
 ## Appendix dependencies
 
+For Lemmas 23 and 39, the [contiguous six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)
+uses the original relative order of pieces in addition to the mirrored-cut
+condition. It assumes full exclusion through size three. With unique
+intersections and mass at least both positive input counts, the
+[checked width-block cleaning](OnlineReachabilityPreservers/ContiguousSixCleaning.lean)
+preserves full exclusion through size six with both original budgets and
+all four frozen caps, retaining at least one sixteenth of the input mass.
+The half-bridge version at size six requires full exclusion through size
+four for the vertex-copy step. The general cyclic existence claims remain
+open. The size-seven counterexample below applies to the printed split.
+
 | Source | Mathematical obligation |
 | --- | --- |
 | Definition 2 | Half-\(k\)-bridge-free means no bridge of size at most \(k\) whose last arc precedes the river. |

@@ -69,16 +69,16 @@ private theorem cyclicNeighbors {k : ℕ} (short : k ≤ 1) {i j : Fin (k+2)} (d
     j = i+1 ∨ i = j+1 := by
   interval_cases k <;> fin_cases i <;> fin_cases j <;> first | contradiction | decide
 
-/-- Around a bridge of size at most five, any two edges are neighbors or
-have one intervening edge. Mirrored cuts keep their parent paths distinct. -/
-def listBridge_after_opposite_safe_split_through_five {paths : I → List V} {pieces : J → List V} {k : ℕ}
+private theorem bridgeSlots_parent_near {paths : I → List V} {pieces : J → List V} {k : ℕ}
     (parent : J → I)
     (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
     (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
     (noParallel : 2 ≤ k → ∀ {a b x y}, a ≠ b → ListBefore paths a x y → ListBefore paths b x y → False)
     (together : 2 ≤ k → ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
       ListBefore paths (parent i) x y → ListBefore pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
-    (short : k ≤ 3) (b : Bridge (ListBefore pieces) k) : Bridge (ListBefore paths) k := by
+    (b : Bridge (ListBefore pieces) k) :
+    (∀ i, parent (bridgeSlots b i) ≠ parent (bridgeSlots b (i+1))) ∧
+    (2 ≤ k → ∀ i, i ≠ (i+1)+1 → parent (bridgeSlots b i) ≠ parent (bridgeSlots b ((i+1)+1))) := by
   let slots := bridgeSlots b
   have meet := bridgeSlots_corners b (paths := pieces) id (fun {_ _ _} h => h)
   have meetProjected := bridgeSlots_corners b parent (fun {_ _ _} h => steps h)
@@ -103,6 +103,43 @@ def listBridge_after_opposite_safe_split_through_five {paths : I → List V} {pi
     · have reverseParent : parent (slots l) ≠ parent (slots j) := same ▸ neighbors i
       exact partsApart (together large same.symm reverseParent (same ▸ old) current right left).symm
     · exact noParallel large (neighbors i) old (steps current)
+  exact ⟨neighbors,nextPair⟩
+
+private abbrev liftBridgeOfInjectiveSlots {paths : I → List V} {pieces : J → List V} {k : ℕ}
+    (parent : J → I)
+    (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
+    (b : Bridge (ListBefore pieces) k)
+    (parentInjective : Function.Injective (parent ∘ bridgeSlots b)) : Bridge (ListBefore paths) k := by
+  let slots := bridgeSlots b
+  refine ⟨b.vertex, parent ∘ b.arc, parent b.river, b.distinctVertices,
+    ?_, ?_, steps b.riverStep, fun i => steps (b.arcStep i)⟩
+  · intro i j equal
+    have matchSlots : (i.castSucc : Fin (k+2)) = j.castSucc := parentInjective (by
+      simpa only [Function.comp_apply, slots, bridgeSlots, Fin.snoc_castSucc] using equal)
+    exact Fin.ext (congrArg (fun i : Fin (k+2) => i.val) matchSlots)
+  · intro i equal
+    have matchSlots : (Fin.last (k+1) : Fin (k+2)) = i.castSucc := parentInjective (by
+      simpa only [Function.comp_apply, slots, bridgeSlots, Fin.snoc_castSucc, Fin.snoc_last] using equal)
+    have same := congrArg Fin.val matchSlots
+    simp only [Fin.val_last, Fin.val_castSucc] at same
+    have bound := i.isLt
+    omega
+
+/-- Around a bridge of size at most five, any two edges are neighbors or
+have one intervening edge. Mirrored cuts keep their parent paths distinct. -/
+def listBridge_after_opposite_safe_split_through_five {paths : I → List V} {pieces : J → List V} {k : ℕ}
+    (parent : J → I)
+    (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
+    (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
+    (noParallel : 2 ≤ k → ∀ {a b x y}, a ≠ b → ListBefore paths a x y → ListBefore paths b x y → False)
+    (together : 2 ≤ k → ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
+      ListBefore paths (parent i) x y → ListBefore pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
+    (short : k ≤ 3) (b : Bridge (ListBefore pieces) k) : Bridge (ListBefore paths) k := by
+  let slots := bridgeSlots b
+  have nearby := bridgeSlots_parent_near parent (fun {_ _ _} => steps)
+    (fun {_ _ _} => disjoint) (fun h {_ _ _ _} => noParallel h) (fun h {_ _ _ _ _} => together h) b
+  have neighbors := nearby.1
+  have nextPair := nearby.2
   have parentInjective : Function.Injective (parent ∘ slots) := by
     intro i j same
     by_contra! different
@@ -117,19 +154,91 @@ def listBridge_after_opposite_safe_split_through_five {paths : I → List V} {pi
       · exact neighbors j same.symm
       · exact nextPair large i different same
       · exact nextPair large j different.symm same.symm
-  refine ⟨b.vertex, parent ∘ b.arc, parent b.river, b.distinctVertices,
-    ?_, ?_, steps b.riverStep, fun i => steps (b.arcStep i)⟩
-  · intro i j equal
-    have matchSlots : (i.castSucc : Fin (k+2)) = j.castSucc := parentInjective (by
-      simpa only [Function.comp_apply, slots, bridgeSlots, Fin.snoc_castSucc] using equal)
-    exact Fin.ext (congrArg (fun i : Fin (k+2) => i.val) matchSlots)
-  · intro i equal
-    have matchSlots : (Fin.last (k+1) : Fin (k+2)) = i.castSucc := parentInjective (by
-      simpa only [Function.comp_apply, slots, bridgeSlots, Fin.snoc_castSucc, Fin.snoc_last] using equal)
-    have same := congrArg Fin.val matchSlots
-    simp only [Fin.val_last, Fin.val_castSucc] at same
-    have bound := i.isLt
-    omega
+  exact liftBridgeOfInjectiveSlots parent (fun {_ _ _} => steps) b parentInjective
+
+private theorem cyclicNearSix (i j : Fin 6) (apart : i ≠ j) (nonopposite : j ≠ i+3) :
+    j = i+1 ∨ i = j+1 ∨ j = (i+1)+1 ∨ i = (j+1)+1 := by
+  revert i j
+  decide
+
+/-- A mirrored split into contiguous pieces lifts every six-bridge provided
+all original full bridges through size three are excluded. -/
+def listBridge_after_contiguous_opposite_safe_split_six {paths : I → List V} {pieces : J → List V}
+    [LinearOrder I] (parent : J → I)
+    (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
+    (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
+    (together : ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
+      ListBefore paths (parent i) x y → ListBefore pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
+    (separated : ∀ {i j}, i ≠ j → parent i = parent j →
+      (∀ {x y}, x ∈ pieces i → y ∈ pieces j → ListBefore paths (parent i) x y) ∨
+      (∀ {x y}, x ∈ pieces i → y ∈ pieces j → ListBefore paths (parent i) y x))
+    (free : BridgeFree (ListBefore paths) 3) (b : Bridge (ListBefore pieces) 4) : Bridge (ListBefore paths) 4 := by
+  let s := bridgeSlots b
+  let p (i : Fin 6) := parent (s i)
+  let v := b.vertex
+  have meet := bridgeSlots_corners b (paths := pieces) id (fun {_ _ _} h => h)
+  have separatePieces {i j : Fin 6} (apart : i ≠ j) : s i ≠ s j :=
+    fun eq => apart (bridgeSlots_injective b eq)
+  have nearby := bridgeSlots_parent_near parent (fun {_ _ _} => steps)
+    (fun {_ _ _} => disjoint)
+    (fun _ {_ _ _ _} diff one two => no_parallel_list_steps free.halfFree (by decide) diff one two)
+    (fun _ {_ _ _ _ _} => together) b
+  have neighbor := nearby.1
+  have atTwo := nearby.2
+  have near (i j : Fin 6) (apart : i ≠ j) (nonopposite : j ≠ i+3) : p i ≠ p j := by
+    rcases cyclicNearSix i j apart nonopposite with rfl | rfl | rfl | rfl
+    · exact neighbor _
+    · exact (neighbor _).symm
+    · exact atTwo (by decide) _ apart
+    · exact (atTwo (by decide) _ apart.symm).symm
+  have e0 : ListBefore paths (p 0) (v 0) (v 1) := steps (b.arcStep 0)
+  have e1 : ListBefore paths (p 1) (v 1) (v 2) := steps (b.arcStep 1)
+  have e2 : ListBefore paths (p 2) (v 2) (v 3) := steps (b.arcStep 2)
+  have e3 : ListBefore paths (p 3) (v 3) (v 4) := steps (b.arcStep 3)
+  have e4 : ListBefore paths (p 4) (v 4) (v 5) := steps (b.arcStep 4)
+  have river : ListBefore paths (p 5) (v 0) (v 5) := steps b.riverStep
+  have noThree (old : Bridge (ListBefore paths) 1) : False := (free (by decide)).false old
+  have opposite0 : p 0 ≠ p 3 := by
+    intro eq
+    rcases separated (separatePieces (by decide : (0 : Fin 6) ≠ 3)) eq with first | last
+    · exact noThree (threeListBridge (near 1 2 (by decide) (by decide))
+        (near 0 1 (by decide) (by decide)) (near 0 2 (by decide) (by decide)) e1 e2
+        (first (meet 0).2 (meet 3).1))
+    · exact noThree (threeListBridge (near 0 5 (by decide) (by decide))
+        (near 4 0 (by decide) (by decide)) (near 4 5 (by decide) (by decide))
+        (last (meet 0).1 (meet 3).2) river e4)
+  have opposite1 : p 1 ≠ p 4 := by
+    intro eq
+    rcases separated (separatePieces (by decide : (1 : Fin 6) ≠ 4)) eq with first | last
+    · exact noThree (threeListBridge (near 2 3 (by decide) (by decide))
+        (near 1 2 (by decide) (by decide)) (near 1 3 (by decide) (by decide)) e2 e3
+        (first (meet 1).2 (meet 4).1))
+    · exact noThree (threeListBridge (near 5 1 (by decide) (by decide))
+        (near 0 5 (by decide) (by decide)) (near 0 1 (by decide) (by decide))
+        river (last (meet 1).1 (meet 4).2) e0)
+  have opposite2 : p 2 ≠ p 5 := by
+    intro eq
+    rcases separated (separatePieces (by decide : (2 : Fin 6) ≠ 5)) eq with first | last
+    · exact noThree (threeListBridge (near 3 4 (by decide) (by decide))
+        (near 2 3 (by decide) (by decide)) (near 2 4 (by decide) (by decide)) e3 e4
+        (first (meet 2).2 (meet 5).1))
+    · exact noThree (threeListBridge (near 0 1 (by decide) (by decide))
+        (near 2 0 (by decide) (by decide)) (near 2 1 (by decide) (by decide)) e0 e1
+        (last (meet 2).1 (meet 5).2))
+  have parentInjective : Function.Injective p := by
+    intro i j same
+    by_contra apart
+    by_cases antipodal : j = i+3
+    · subst j
+      fin_cases i
+      · exact opposite0 same
+      · exact opposite1 same
+      · exact opposite2 same
+      · exact opposite0 same.symm
+      · exact opposite1 same.symm
+      · exact opposite2 same.symm
+    · exact near i j apart antipodal same
+  exact liftBridgeOfInjectiveSlots parent (fun {_ _ _} => steps) b parentInjective
 
 /-- A split through cutoff four can keep opposite intersections in a common block. -/
 def listBridge_after_opposite_safe_split {paths : I → List V} {pieces : J → List V}

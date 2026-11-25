@@ -191,6 +191,25 @@ half of the original averages.
 · [Local upper caps](OnlineReachabilityPreservers/LocalRegularization.lean)
 · [Bridge Girth, Lemma 20](https://arxiv.org/pdf/2212.11944v4).
 
+For actual contiguous pieces, the mirrored-cut argument also lifts a
+size-six bridge when the input excludes full bridges through size three.
+The slot argument first distinguishes parents of neighboring slots and
+slots separated by one other step. The three antipodal pairs of slots
+remain. In each pair, the two possible orders of disjoint contiguous
+pieces would both give an original full 3-bridge if the parents agreed.
+This applies to the actual consecutive width blocks under unique
+intersections, where opposite-cut constraints are vacuous. For positive
+budgets and mass at least both counts, the cleaned witness meets both
+budgets and all four frozen caps and retains at least one sixteenth of
+the input mass. The half-bridge version through size six assumes full
+exclusion through size four to justify the vertex-copy projection.
+The earlier packing that can reorder positions need not make contiguous
+pieces in the original order. The six-vertex noncontiguous example
+remains a counterexample to using only the opposite-cut constraints.
+[Six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)
+· [Six-bridge cleaning with unique intersections](OnlineReachabilityPreservers/ContiguousSixCleaning.lean)
+· [Noncontiguous example](OnlineReachabilityPreservers/CyclicSplitLimits.lean).
+
 The same splitting step can fail at larger bridge sizes with unique
 intersections. On seven vertices, take the six paths `[(0,1,2,3), (3,4),
 (4,0), (5,2), (1,6), (5,6)]`. There are 14 incidences, every vertex
