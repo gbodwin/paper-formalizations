@@ -1,5 +1,6 @@
 import DirectedFlowCutGap.RationalExactEdgeOracle
 import DirectedFlowCutGap.RationalFourierMotzkin
+import Mathlib.Data.Finset.Sort
 import Mathlib.Logic.Equiv.Fin.Basic
 
 /-! Compute the least integer rounding factor of one rational instance.
@@ -315,5 +316,205 @@ def leastMinimal {n : ℕ} (A : Adjacency n) (w : Weights n) : ℕ :=
 
 theorem leastMinimal_eq {n : ℕ} (A : Adjacency n) (w : Weights n) : leastMinimal A w = least A w := by
   simp only [leastMinimal,least,accepted,minimal_isNone]
+
+private def support {n : ℕ} (A : Adjacency n) (w : Weights n) : Finset (Fin (n*n)) :=
+  Finset.univ.filter fun j => originalWeight A w ((index n).symm j) ≠ 0
+
+private theorem mem_support {n : ℕ} (A : Adjacency n) (w : Weights n) (j : Fin (n*n)) :
+    j ∈ support A w ↔ originalWeight A w ((index n).symm j) ≠ 0 := by
+  simp [support]
+
+/-- Number of price coordinates carried by the support solver. -/
+def supportDimension {n : ℕ} (A : Adjacency n) (w : Weights n) : ℕ :=
+  (support A w).card
+
+theorem supportDimension_eq {n : ℕ} (A : Adjacency n) (w : Weights n) :
+    supportDimension A w = (Finset.univ.filter fun e => 0 < originalWeight A w e).card := by
+  have mapped : (Finset.univ.filter fun e => 0 < originalWeight A w e).map (index n).toEmbedding =
+      support A w := by
+    ext j
+    simp only [Finset.mem_map,Equiv.coe_toEmbedding,Finset.mem_filter,Finset.mem_univ,true_and,mem_support]
+    constructor
+    · rintro ⟨e,positive,rfl⟩
+      simpa only [Equiv.symm_apply_apply] using ne_of_gt positive
+    · intro nonzero
+      exact ⟨(index n).symm j,pos_iff_ne_zero.mpr nonzero,(index n).apply_symm_apply j⟩
+  simp only [supportDimension,← mapped,Finset.card_map]
+
+private def supportIso {n : ℕ} (A : Adjacency n) (w : Weights n) :
+    Fin (supportDimension A w) ≃ ↥(support A w) :=
+  ((support A w).orderIsoOfFin rfl).toEquiv
+
+private def zeroArcs {n : ℕ} (A : Adjacency n) (w : Weights n) : Finset (Edge n) :=
+  Finset.univ.filter fun e => originalWeight A w e = 0
+
+/-- Check demands in the original graph, enumerating only cuts on positive-weight arcs.
+Retain the inclusion-minimal valid cuts among those candidates. -/
+def supportedMinimalCuts {n : ℕ} (A : Adjacency n) (w : Weights n) : List (Finset (Edge n)) :=
+  minimalCuts (candidates A (demands A w) (zeroArcs A w))
+
+private theorem supported_candidates_iff {n : ℕ} (A : Adjacency n) (w : Weights n) (X : Finset (Edge n)) :
+    X ∈ candidates A (demands A w) (zeroArcs A w) ↔
+      X ∈ candidates A (demands A w) ∅ ∧ ∀ e ∈ X, originalWeight A w e ≠ 0 := by
+  rw [mem_candidates,mem_candidates]
+  simp [Finset.disjoint_left,zeroArcs,and_assoc]
+
+private def supportedViolation {n : ℕ} (A : Adjacency n) (w : Weights n)
+    (k : ℕ) (X : Finset (Edge n)) : Row (supportDimension A w) :=
+  let full := violation A w k X
+  let coord := supportIso A w
+  ⟨fun i => full.coeff (coord i).val,full.constant⟩
+
+private def supportedRows {n : ℕ} (A : Adjacency n) (w : Weights n) (cuts : List (Finset (Edge n))) (k : ℕ) :
+    List (Row (supportDimension A w)) :=
+  (List.finRange (supportDimension A w)).map nonnegative ++ cuts.map (supportedViolation A w k)
+
+private abbrev supportedConstraints {n : ℕ} (A : Adjacency n) (w : Weights n) (k : ℕ) :=
+  supportedRows A w (supportedMinimalCuts A w) k
+
+private theorem sum_supported {n : ℕ} (A : Adjacency n) (w : Weights n) (f : Fin (n*n) → ℝ)
+    (vanishes : ∀ j ∉ support A w, f j = 0) :
+    (∑ i, f (supportIso A w i).val) = ∑ j, f j := by
+  rw [← Finset.sum_subset (Finset.subset_univ (support A w)) (fun j _ hj => vanishes j hj)]
+  let coord := supportIso A w
+  apply Finset.sum_bij (fun i _ => (coord i).val)
+  · exact fun i _ => (coord i).property
+  · exact fun i _ j _ same => coord.injective (Subtype.ext same)
+  · intro j hj
+    refine ⟨coord.symm ⟨j,hj⟩,Finset.mem_univ _,?_⟩
+    exact congrArg Subtype.val (coord.apply_symm_apply ⟨j,hj⟩)
+  · exact fun _ _ => rfl
+
+private theorem supportedViolation_eval {n : ℕ} (A : Adjacency n) (w : Weights n)
+    (k : ℕ) (X : Finset (Edge n)) (x : Fin (n*n) → ℝ)
+    (inside : ∀ e ∈ X, originalWeight A w e ≠ 0) :
+    (supportedViolation A w k X).eval (fun i => x (supportIso A w i).val) =
+      gap A w k X (fun e => x (index n e))-1 := by
+  rw [← violation_eval A w k X x]
+  unfold Row.eval supportedViolation
+  congr 1
+  apply sum_supported A w (fun j => ((violation A w k X).coeff j : ℝ)*x j)
+  intro j absent
+  have zero : originalWeight A w ((index n).symm j) = 0 := by
+    simpa only [mem_support,not_not] using absent
+  have hX : (index n).symm j ∉ X := fun h => inside _ h zero
+  simp [violation,hX,zero]
+
+private theorem supportedConstraints_iff {n : ℕ} (A : Adjacency n) (w : Weights n)
+    (k : ℕ) (x : Fin (n*n) → ℝ) :
+    Satisfies (supportedConstraints A w k) (fun i => x (supportIso A w i).val) ↔
+      (∀ j ∈ support A w, 0 ≤ x j) ∧
+        ∀ X ∈ candidates A (demands A w) (zeroArcs A w), 1 ≤ gap A w k X (fun e => x (index n e)) := by
+  constructor
+  · intro satisfied
+    have positive (j : Fin (n*n)) (hj : j ∈ support A w) : 0 ≤ x j := by
+      let i := (supportIso A w).symm ⟨j,hj⟩
+      have row := satisfied (nonnegative i) (List.mem_append_left _
+        (List.mem_map.mpr ⟨i,List.mem_finRange i,rfl⟩))
+      rw [nonnegative_eval] at row
+      simpa [i] using row
+    refine ⟨positive,fun X listed => ?_⟩
+    obtain ⟨Y,minimal,inside⟩ := exists_minimal_subset _ X listed
+    have row := satisfied (supportedViolation A w k Y) (List.mem_append_right _ (List.mem_map.mpr ⟨Y,minimal,rfl⟩))
+    have hY := ((supported_candidates_iff A w Y).mp (minimalCuts_subset _ minimal)).2
+    rw [supportedViolation_eval A w k Y x hY,sub_nonneg] at row
+    refine row.trans ?_
+    unfold gap
+    have hX := ((supported_candidates_iff A w X).mp listed).2
+    have nonneg (e : Edge n) (he : e ∈ X) : 0 ≤ x (index n e) :=
+      positive _ ((mem_support A w _).mpr (by simpa only [Equiv.symm_apply_apply] using hX e he))
+    exact sub_le_sub_right (Finset.sum_le_sum_of_subset_of_nonneg inside fun e he _ => nonneg e he) _
+  · rintro ⟨positive,gaps⟩ r member
+    rcases List.mem_append.mp member with member | member
+    · obtain ⟨i,_,rfl⟩ := List.mem_map.mp member
+      rw [nonnegative_eval]
+      exact positive _ (supportIso A w i).property
+    · obtain ⟨X,selected,rfl⟩ := List.mem_map.mp member
+      have listed := minimalCuts_subset _ selected
+      rw [supportedViolation_eval A w k X x ((supported_candidates_iff A w X).mp listed).2,sub_nonneg]
+      exact gaps X listed
+
+private def extendPrice {n : ℕ} (A : Adjacency n) (w : Weights n)
+    (y : Fin (supportDimension A w) → ℝ) (outside : ℝ) (j : Fin (n*n)) : ℝ :=
+  if hj : j ∈ support A w then y ((supportIso A w).symm ⟨j,hj⟩) else outside
+
+private theorem extendPrice_apply {n : ℕ} (A : Adjacency n) (w : Weights n)
+    (y : Fin (supportDimension A w) → ℝ) (outside : ℝ) (i : Fin (supportDimension A w)) :
+    extendPrice A w y outside (supportIso A w i).val = y i := by
+  rw [extendPrice,dite_eq_left (supportIso A w i).property]
+  exact congrArg y ((supportIso A w).symm_apply_apply i)
+
+private theorem extendPrice_potential {n : ℕ} (A : Adjacency n) (w : Weights n)
+    (y : Fin (supportDimension A w) → ℝ) (p q : ℝ) :
+    mwPotential (fun e => (actualEdgeWeight (graph A) (weights w) e : ℝ)) (fun e => extendPrice A w y p (index n e)) =
+      mwPotential (fun e => (actualEdgeWeight (graph A) (weights w) e : ℝ)) (fun e => extendPrice A w y q (index n e)) := by
+  unfold mwPotential
+  refine Finset.sum_congr rfl fun e _ => ?_
+  by_cases hit : index n e ∈ support A w
+  · simp [extendPrice,hit]
+  · have zero : originalWeight A w e = 0 := by
+      simpa only [mem_support,Equiv.symm_apply_apply,not_not] using hit
+    simp [← originalWeight_cast A w e,zero]
+
+private theorem supported_feasible_iff {n : ℕ} (A : Adjacency n) (w : Weights n) (k : ℕ) :
+    (∃ y : Fin (supportDimension A w) → ℝ, Satisfies (supportedConstraints A w k) y) ↔
+      ∃ x : Fin (n*n) → ℝ, Satisfies (constraints A w k) x := by
+  constructor
+  · rintro ⟨y,feasible⟩
+    let paid := mwPotential (fun e => (actualEdgeWeight (graph A) (weights w) e : ℝ))
+      (fun e => extendPrice A w y 0 (index n e))
+    let outside := 1+(k : ℝ)*paid
+    let x := extendPrice A w y outside
+    have restricted : (fun i => x (supportIso A w i).val) = y :=
+      funext (extendPrice_apply A w y outside)
+    have projected : Satisfies (supportedConstraints A w k) (fun i => x (supportIso A w i).val) := by
+      rwa [restricted]
+    obtain ⟨positive,gaps⟩ := (supportedConstraints_iff A w k x).mp projected
+    have samePaid : mwPotential (fun e => (actualEdgeWeight (graph A) (weights w) e : ℝ))
+        (fun e => x (index n e)) = paid := extendPrice_potential A w y outside 0
+    have paid_nonneg : 0 ≤ paid := by
+      unfold paid mwPotential
+      refine Finset.sum_nonneg fun e _ => mul_nonneg ?_ (NNReal.coe_nonneg _)
+      by_cases hi : index n e ∈ support A w
+      · simpa only [extendPrice,dite_eq_left hi,x] using positive (index n e) hi
+      · simp [extendPrice,hi]
+    have nonneg (j : Fin (n*n)) : 0 ≤ x j := by
+      by_cases hj : j ∈ support A w
+      · exact positive j hj
+      · simp only [x,extendPrice,dite_eq_right hj,outside]
+        exact add_nonneg zero_le_one (mul_nonneg (Nat.cast_nonneg _) paid_nonneg)
+    refine ⟨x,(constraints_iff A w k x).mpr ⟨nonneg,fun X listed => ?_⟩⟩
+    by_cases inside : ∀ e ∈ X, originalWeight A w e ≠ 0
+    · exact gaps X ((supported_candidates_iff A w X).mpr ⟨listed,inside⟩)
+    · push Not at inside
+      obtain ⟨e,he,zero⟩ := inside
+      have absent : index n e ∉ support A w := by
+        simp [mem_support,zero]
+      have expensive : outside ≤ ∑ f ∈ X, x (index n f) := by
+        simpa only [x,extendPrice,dite_eq_right absent] using
+          (Finset.single_le_sum (f := fun f => x (index n f)) (fun f _ => nonneg (index n f)) he)
+      unfold gap
+      rw [samePaid]
+      exact le_sub_iff_add_le.mpr expensive
+  · rintro ⟨x,feasible⟩
+    obtain ⟨positive,gaps⟩ := (constraints_iff A w k x).mp feasible
+    refine ⟨_,(supportedConstraints_iff A w k x).mpr ⟨fun j _ => positive j,fun X listed => ?_⟩⟩
+    exact gaps X ((supported_candidates_iff A w X).mp listed).1
+
+private theorem supported_isNone {n : ℕ} (A : Adjacency n) (w : Weights n) (k : ℕ) :
+    (solve (supportDimension A w) (supportedConstraints A w k)).isNone = (counterprice A w k).isNone := by
+  apply Bool.eq_iff_iff.mpr
+  simp only [Option.isNone_iff_eq_none,counterprice,solve_none_iff,supported_feasible_iff]
+
+/-- Compute the exact integer factor using only positive-edge prices and cuts
+supported on those arcs. Retain the original graph and demand list. -/
+def leastSupported {n : ℕ} (A : Adjacency n) (w : Weights n) : ℕ :=
+  let cuts := supportedMinimalCuts A w
+  ((List.range (n+1)).filter fun k =>
+    (solve (supportDimension A w) (supportedRows A w cuts k)).isNone).min?.getD n
+
+theorem leastSupported_eq {n : ℕ} (A : Adjacency n) (w : Weights n) :
+    leastSupported A w = least A w := by
+  simp only [leastSupported,least,accepted,supported_isNone]
 
 end DirectedFlowCutGap.RationalInstanceEdgeFactor

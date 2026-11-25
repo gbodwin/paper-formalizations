@@ -148,13 +148,13 @@ private theorem total_le (A : Adjacency n) (w : Weights n) :
   rwa [originalWeight_eq,originalWeight_eq,actualEdgeWeight_of_adj _ _ arc,actualEdgeWeight_of_adj _ _ arc] at inequality
 
 def familyFor (A : Adjacency n) (w : Weights n) : RationalWeakFamily.History (Edge n) :=
-  let α : ℚ≥0 := RationalInstanceEdgeFactor.leastMinimal A w
+  let α : ℚ≥0 := RationalInstanceEdgeFactor.leastSupported A w
   if α = 0 then RationalOriginalEdgeFamily.adaptive A w α
   else RationalOriginalEdgeFamily.build A w α (count A w)
 
 theorem familyFor_reference (A : Adjacency n) (w : Weights n) :
     familyFor A w = RationalPositiveArcEdgeFamily.family A w := by
-  rw [familyFor,RationalInstanceEdgeFactor.leastMinimal_eq]
+  rw [familyFor,RationalInstanceEdgeFactor.leastSupported_eq]
   rfl
 
 def family (A : Adjacency n) (w : Weights n) : RationalWeakFamily.History (Edge n) :=
