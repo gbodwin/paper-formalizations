@@ -71,6 +71,10 @@ private theorem trimmed_floor (A : Adjacency n) (w : Weights n) (e : Edge n)
   · rw [actualEdgeWeight_of_not_adj _ _ arc] at positive
     exact (lt_irrefl _ positive).elim
 
+theorem cutoff_lt_of_trimmed_positive (A : Adjacency n) (w : Weights n) (e : Edge n)
+    (positive : 0 < originalWeight A (trimmed A w) e) : cutoff n < originalWeight A (trimmed A w) e :=
+  trimmed_floor A w e positive
+
 def keepsDemands (A : Adjacency n) (w : Weights n) : Bool :=
   decide (demands A w ⊆ demands A (trimmed A w))
 
