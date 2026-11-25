@@ -1085,8 +1085,31 @@ theorem regularization_list_frozen_after_large_width_blocks {half : Bool} {k n p
       omega)
     length degree capD capL
 
-/-- With no split loss, tune the two expansion ratios independently before
-trimming and peeling at the original averages. -/
+/-- A rectangle with separate vertex and path ratios can absorb some
+earlier loss while trimming and peeling at the original averages. -/
+theorem regularization_list_frozen_after_caps_with_ratios_of_mass {half : Bool}
+    {k n p M retention vNum vDen pNum pDen : ℕ}
+    (paths : I → List V) (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (vPos : 0 < vDen) (pPos : 0 < pDen) (vRatio : vNum ≤ vDen) (pRatio : pNum ≤ pDen)
+    (vertices : vNum * Fintype.card V ≤ vDen * n) (families : pNum * Fintype.card I ≤ pDen * p)
+    (lengthCap : ∀ i, (paths i).length ≤ 4 * M / p)
+    (degreeCap : ∀ v, (occurrences (fun i => (paths i).toFinset) v).card ≤ 4 * M / n)
+    (mass : (∑ i, (paths i).length) ≤ M)
+    (enough : (vDen * pDen) * (retention + 2) * M ≤
+      2 * (vNum * pNum) * retention * (∑ i, (paths i).length)) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ retention * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  obtain ⟨_, _, capD⟩ := four_average_width hn dense
+  obtain ⟨_, _, capL⟩ := four_average_width hp long
+  have total : (∑ i, (paths i).toFinset.card) = ∑ i, (paths i).length :=
+    sum_congr rfl (fun i _ => List.toFinset_card_of_nodup (simple i))
+  exact frozen_cut_of_caps paths simple allowed hn hp vPos pPos vRatio pRatio vertices families
+    (total.trans_le mass) (by rw [total]; exact enough) lengthCap degreeCap capD capL
+
+/-- Fit upper-capped pieces of unchanged mass within the original budgets
+using separate bounds for the two expanded supports. -/
 theorem regularization_list_frozen_after_caps_with_ratios {half : Bool}
     {k n p M retention vNum vDen pNum pDen : ℕ}
     (paths : I → List V) (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths)
@@ -1099,12 +1122,9 @@ theorem regularization_list_frozen_after_caps_with_ratios {half : Bool}
     (enough : (vDen * pDen) * (retention + 2) ≤ 2 * (vNum * pNum) * retention) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
-      M ≤ retention * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
-  obtain ⟨_, _, capD⟩ := four_average_width hn dense
-  obtain ⟨_, _, capL⟩ := four_average_width hp long
-  have total : (∑ i, (paths i).toFinset.card) = M := by
-    simp only [List.toFinset_card_of_nodup (simple _), mass]
-  exact frozen_cut_of_caps paths simple allowed hn hp vPos pPos vRatio pRatio vertices families total.le
-    (by rw [total]; exact Nat.mul_le_mul_right M enough) lengthCap degreeCap capD capL
+      M ≤ retention * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_after_caps_with_ratios_of_mass paths simple allowed hn hp dense long vPos pPos
+    vRatio pRatio vertices families lengthCap degreeCap mass.le
+    (by rw [mass]; exact Nat.mul_le_mul_right M enough)
 
 end OnlineReachabilityPreservers

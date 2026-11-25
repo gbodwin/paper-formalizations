@@ -788,7 +788,12 @@ four, or full exclusion through two less than its cutoff.
 The same bridge conclusions hold if each visit fits the larger limit
 \(\lfloor4M/p\rfloor\). Counting adjacent pieces permits the larger
 limit with \(M/54\) retention, both original budgets, and all four
-frozen caps. The unrestricted cyclic result remains open.
+frozen caps. If visits longer than that cap hold at most \(M/56\) of the
+mass, [deleting the long visits](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L961)
+preserves the bridge exclusions and leaves all remaining visits within it.
+The original caps and both budgets still hold in a witness with at least
+\(M/108\) mass, with the same degree condition in half mode.
+The unrestricted cyclic result remains open.
 
 For Lemmas 23 and 39, the [common-order extremal theorem](OnlineReachabilityPreservers/CommonOrderExtremal.lean)
 uses a finite maximum. For every positive pair of budgets and either

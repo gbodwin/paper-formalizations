@@ -307,8 +307,23 @@ degree split expands the vertex budget by at most \(9/7\).
 Restriction and peeling then keep \(M/54\) with both original budgets
 and all four caps. If \(M<2n\), the sparse construction suffices.
 The bridge guarantees and the half degree-splitting conditions stay
-the same. The unrestricted cyclic existence question remains open.
+the same.
 [Component split and cleaning proofs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean).
+
+If visits longer than \(L\) contain at most \(M/56\) incidences, remove
+each such visit as a whole. The test uses the original precedence
+components. The new precedence graph only loses comparisons, so its
+components subdivide the original ones. The retained mass is at least
+\(55M/56\), and every remaining visit fits \(L\). In the dense case the
+two support ratios give a rectangle with at least \(55M/108\) incidences
+before peeling. Peeling at the original averages loses at most \(M/2\).
+The resulting \(M/108\) guarantee includes both budgets and all four
+original-average caps. Full exclusion survives at any finite cutoff or at
+all sizes. Half exclusion uses the same three degree-splitting conditions.
+The unrestricted cyclic existence question remains open.
+[Removing long original visits](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L961)
+· [Full exclusion at all sizes](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1038)
+· [Half exclusion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1055).
 
 Splitting a vertex can also break the half exclusion, even with unique
 intersections. In arrival order take the paths `(4,2), (0,2), (0,1), (1,2),
