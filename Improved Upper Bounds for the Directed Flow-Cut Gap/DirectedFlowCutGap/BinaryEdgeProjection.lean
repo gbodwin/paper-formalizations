@@ -718,4 +718,18 @@ theorem pullbackBudget_eval (p q : Polynomial ℕ) (x : ℕ) :
     (pullbackBudget p q).eval x=pullbackBudget (p.eval x) (q.eval x) := by
   simp only [pullbackBudget,maskBudget,incidentBudget,lineMaskBudget_eval,eval_add,eval_mul,eval_pow,eval_ofNat]
 
+def originalMask {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) : PairFlags n × ℕ :=
+  let projected := edgeMaskWithControl g mask
+  (projected.1.1,projected.1.2+projected.2)
+
+theorem originalMask_value {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) : (originalMask g mask).1 = EncodedEdgeRounding.pullback g mask :=
+  edgeMask_value g mask
+
+theorem originalMask_paid {n : ℕ} {D : EncodedEdgeGadget.Input n} (g : EncodedEdgeGadget.Prepared D)
+    (mask : Flags g.size) : (originalMask g mask).2 ≤ pullbackBudget n g.size+pullbackControlBudget n g.size :=
+  Nat.add_le_add ((edgeMask_paid g mask).trans (Nat.le_add_right ..))
+    ((edgeMask_control_paid g mask).trans (Nat.le_add_right ..))
+
 end DirectedFlowCutGap.BinaryEdgeProjection

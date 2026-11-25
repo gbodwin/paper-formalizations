@@ -16,7 +16,7 @@ open MultiplicityCover (Column)
 
 variable {n m : ℕ}
 
-private def indicator (p : Bool) : ℕ := if p then 1 else 0
+def indicator (p : Bool) : ℕ := if p then 1 else 0
 
 private theorem indicator_le (p : Bool) : indicator p ≤ 1 := by
   cases p <;> decide
@@ -118,14 +118,17 @@ private theorem vertexTest_charge (v : Fin n) (d : Edge n) (p : Option (Candidat
     change (MeasuredPathMembership.internal v d.1 d.2 q.edges).2 ≤ _
     omega
 
-private def resourceCount (calls : Fin m → Bool × ℕ) : ℕ × ℕ := sumChecks (List.ofFn calls)
+def resourceCount (calls : Fin m → Bool × ℕ) : ℕ × ℕ := sumChecks (List.ofFn calls)
 
-private theorem resourceCount_value (calls : Fin m → Bool × ℕ) :
+theorem resourceCount_value (calls : Fin m → Bool × ℕ) :
     (resourceCount calls).1 = ∑ j : Fin m, indicator (calls j).1 := by
   simp only [resourceCount,sumChecks_value,List.map_ofFn,List.sum_ofFn]
   rfl
 
-private theorem resourceCount_charge (calls : Fin m → Bool × ℕ) {perDemand : ℕ}
+theorem resourceCount_le (calls : Fin m → Bool × ℕ) : (resourceCount calls).1 ≤ m := by
+  simpa only [resourceCount,List.length_ofFn] using sumChecks_count (List.ofFn calls)
+
+theorem resourceCount_charge (calls : Fin m → Bool × ℕ) {perDemand : ℕ}
     (fits : ∀ j, (calls j).2 ≤ perDemand) : (resourceCount calls).2 ≤ rowWork m perDemand := by
   simpa only [resourceCount,rowWork,List.length_ofFn] using
     sumChecks_charge (List.ofFn calls) (Nat.le_of_eq List.length_ofFn)

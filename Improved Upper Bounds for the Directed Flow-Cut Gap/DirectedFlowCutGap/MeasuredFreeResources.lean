@@ -74,11 +74,11 @@ theorem positiveGraph_charge (A : Adjacency n) (c : Weights n) {B : ℕ} (fit : 
   · unfold priceWork
     omega
 
-private def missingEdge (A : Adjacency n) (c : Weights n) (d : Edge n) : Bool × ℕ :=
+def missingEdge (A : Adjacency n) (c : Weights n) (d : Edge n) : Bool × ℕ :=
   let seen := MeasuredSparsestDistances.edge A c d
   (seen.1.isNone,seen.2+1)
 
-private theorem missingEdge_value (A : Adjacency n) (c : Weights n) (d : Edge n) :
+theorem missingEdge_value (A : Adjacency n) (c : Weights n) (d : Edge n) :
     (missingEdge A c d).1 = (RationalSparsestEdgeDistances.distance A c d).isNone := by
   rw [← MeasuredSparsestDistances.edge_value]
   cases h : (MeasuredSparsestDistances.edge A c d).1 <;> simp [missingEdge,h]
@@ -181,7 +181,7 @@ theorem freeMask_charge (c : BinaryFractionalRows.Row n) {B : ℕ}
     (fit : ∀ i, StoredBounded (c.get i) B) : (freeMask c).2 ≤ n*(priceWork B+1) :=
   tabulate_charge _ (fun i => Nat.add_le_add_right (positivePrice_charge _ (fit i)) 1)
 
-private def vertexTest (A : Adjacency n) (w : BinaryFractionalRows.Row n) (d : Edge n) : Bool × ℕ :=
+def vertexTest (A : Adjacency n) (w : BinaryFractionalRows.Row n) (d : Edge n) : Bool × ℕ :=
   let distance := MeasuredSparsestDistances.vertex A w d
   match distance.1 with
   | none => (true,distance.2+1)
@@ -189,7 +189,7 @@ private def vertexTest (A : Adjacency n) (w : BinaryFractionalRows.Row n) (d : E
     let cut := BinaryRawRational.le Code.one q
     (cut.1,distance.2+cut.2+1)
 
-private theorem vertexTest_value (A : Adjacency n) (mask : Flags n) (d : Edge n) :
+theorem vertexTest_value (A : Adjacency n) (mask : Flags n) (d : Edge n) :
     (vertexTest A (RationalVertexSparsityCode.indicator mask) d).1 =
       RationalVertexSparsityCode.separates A mask d := by
   simp only [RationalVertexSparsityCode.separates,← MeasuredSparsestDistances.vertex_value]
@@ -208,11 +208,11 @@ private theorem indicator_fit (mask : Flags n) (i : Fin n) :
   · norm_num [StoredBounded,BinaryRational.one]
   · exact BinaryFractionalWalkBounds.zero_stored
 
-private def vertexTestWork (n : ℕ) : ℕ :=
+def vertexTestWork (n : ℕ) : ℕ :=
   MeasuredSparsestDistances.vertexWork n 1+
     BinaryRawRational.budget (MeasuredSparsestDistances.distanceWidth n 1)+1
 
-private theorem vertexTest_charge (A : Adjacency n) (mask : Flags n) (d : Edge n) :
+theorem vertexTest_charge (A : Adjacency n) (mask : Flags n) (d : Edge n) :
     (vertexTest A (RationalVertexSparsityCode.indicator mask) d).2 ≤ vertexTestWork n := by
   obtain ⟨fits,paid⟩ :=
     MeasuredSparsestDistances.vertex_bounds A (RationalVertexSparsityCode.indicator mask) d (indicator_fit mask)
