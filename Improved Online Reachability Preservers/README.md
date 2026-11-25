@@ -172,6 +172,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   and preserves every fixed-budget prefix graph and the decoder work.
   Its polynomial includes the explicit table and forest construction
   and the previously measured searches and table reads.
+  The [weighted evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean)
+  also charges the pass that prices the forest arcs and computes the scale
+  and fuel. The checked prefixes and prior work tallies agree.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

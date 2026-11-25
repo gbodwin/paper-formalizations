@@ -127,10 +127,11 @@ theorem finSteinerTemplateInputsWithWordWork_spec {n : ℕ} (G : Arcs (Fin n))
   change vertices.2 = _ at enumeration
   exact ⟨tableEq,forestSpec.1,forestSpec.2.1,by omega,forestSpec.2.2⟩
 
-private def arcsFromDistinctList {W : Type*} (rows : List (W × W)) (distinct : rows.Nodup) : Arcs W :=
+/-- Construct the arc set of an already duplicate-free arc list. -/
+def arcsFromDistinctList {W : Type*} (rows : List (W × W)) (distinct : rows.Nodup) : Arcs W :=
   ⟨(rows : Multiset (W × W)),Multiset.coe_nodup.mpr distinct⟩
 
-private theorem arcsFromDistinctList_eq {W : Type*} [DecidableEq W] (rows : List (W × W))
+theorem arcsFromDistinctList_eq {W : Type*} [DecidableEq W] (rows : List (W × W))
     (distinct : rows.Nodup) :
     arcsFromDistinctList rows distinct = rows.toFinset := by
   ext e

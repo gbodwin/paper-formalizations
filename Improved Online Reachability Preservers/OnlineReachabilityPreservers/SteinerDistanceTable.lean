@@ -330,11 +330,16 @@ private theorem selectedPreparedForestArcs_eq (links : Arcs (HeightForestVertex 
     obtain ⟨present,chosen⟩ := mem_filter.mp found
     exact mem_image.mpr ⟨row e, mem_filter.mpr ⟨mem_map_of_mem _ present,chosen⟩,rfl⟩
 
+/-- The priced arcs, free arcs, scale, separator fuel, and original table-read tally. -/
+abbrev ForestWeightPlan (V : Type*) (height : ℕ) :=
+  (Arcs (ForestNetworkVertex V height) × Arcs (ForestNetworkVertex V height)) ×
+    (ℕ × ℕ) × ℕ
+
 /-- Evaluate each link once to build both weighted classes and their fixed
 scale and fuel. The extra charge counts the original weight reads. -/
-private def prepareForestWeights (links : Arcs (HeightForestVertex V height))
+def prepareForestWeights (links : Arcs (HeightForestVertex V height))
     (read : HeightForestVertex V height × HeightForestVertex V height → ℕ × ℕ) :
-    (Arcs (ForestNetworkVertex V height) × Arcs (ForestNetworkVertex V height)) × (ℕ × ℕ) × ℕ :=
+    ForestWeightPlan V height :=
   let rows := links.map (storedForestWeightRow read)
   let priced := selectedPreparedForestArcs rows (fun w => 0 < w)
   let free := selectedPreparedForestArcs rows (fun w => w = 0)
@@ -377,6 +382,22 @@ private theorem prepareForestWeights_spec (links : Arcs (HeightForestVertex V he
     calc
       _ ≤ ∑ _ ∈ links, B := sum_le_sum (fun e _ => each e)
       _ = _ := by simp
+
+omit [Fintype V] in
+/-- The ordinary plan partitions the forest arcs and retains both totals. -/
+theorem prepareForestWeights_exact (links : Arcs (HeightForestVertex V height))
+    (read : HeightForestVertex V height × HeightForestVertex V height → ℕ × ℕ) :
+    let out := prepareForestWeights links read
+    let copy := (forestNetworkCopy (V := V) (height := height)).prodMap (forestNetworkCopy (V := V) (height := height))
+    let total := ∑ e ∈ links, (read e).1
+    let scale := max 1 total
+    out = (((links.filter fun e => 0 < (read e).1).map copy,
+      (links.filter fun e => (read e).1 = 0).map copy),
+      (scale,(scale.log2+1)*total+1),∑ e ∈ links, (read e).2) := by
+  dsimp only [prepareForestWeights]
+  rw [selectedPreparedForestArcs_eq links read, selectedPreparedForestArcs_eq links read, sum_map]
+  rw [sum_map]
+  rfl
 
 private theorem forestScaleFromWeights_eq (G : Arcs V) (dist : V × V → ℕ)
     (values : ∀ d : V × V, dist d = hops G d.1 d.2) (height : ℕ)
@@ -539,11 +560,12 @@ abbrev SteinerSeedPreparation (G : Arcs V) (height : ℕ) :=
   {scale : ℕ // scale = forestScale G height} ×
     (EarlyRoundSample G height → List (V × V) → Arcs V × ℕ) × ℕ × ℕ × ℕ
 
-/-- Finish the weighted plan from the exact stored rows and paired forest.
-The two input charges are carried through as supplied by their builders. -/
-def prepareEarlyDistanceTableForSeedFrom (G : Arcs V) (height : ℕ)
+/-- Assemble the early evaluator with an already constructed weighted plan. -/
+def prepareEarlyDistanceTableForSeedFromWeights (G : Arcs V) (height : ℕ)
     (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
-    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height) :
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
+    (plan : ForestWeightPlan V height)
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1))) :
     SteinerSeedPreparation G height :=
   let query := readDistanceRow table.1
   let dist := fun d => (query d).1
@@ -555,19 +577,38 @@ def prepareEarlyDistanceTableForSeedFrom (G : Arcs V) (height : ℕ)
   let links := template.1
   let correct : links = heightForestFromDistances dist height :=
     exactForest.trans (heightForestFromDistances_eq G dist known height).symm
-  let priced := prepareForestWeights links (forestWeightWithDistanceWork query)
   let spec := prepareForestWeights_spec links (forestWeightWithDistanceWork query) (Fintype.card V^2)
     (fun e => by
       let d := (heightForestLabel e.1,heightForestLabel e.2)
       change (readDistanceRow table.1 d).2 ≤ _
       rw [rows]
       exact (distanceTableReadWithSearchWork_spec G d).2)
-  let scale : priced.2.1.1 = forestScale G height :=
-    (congrArg Prod.fst spec.2.2.1).trans (forestScaleFromWeights_eq G dist known height links correct)
+  let scale : plan.2.1.1 = forestScale G height :=
+    (congrArg (fun x => x.2.1.1) matchesPlan).trans
+      ((congrArg Prod.fst spec.2.2.1).trans (forestScaleFromWeights_eq G dist known height links correct))
   let build := fun sample : EarlyRoundSample G height =>
-    let metric := earlyCapacityMetricFromPlan G height sample links query (priced.1,priced.2.1) scale
+    let metric := earlyCapacityMetricFromPlan G height sample links query (plan.1,plan.2.1) scale
     earlyRoundedGraphWithSearchWorkFromMetric G height metric
-  (⟨priced.2.1.1,scale⟩,build,table.2,template.2,priced.2.2)
+  (⟨plan.2.1.1,scale⟩,build,table.2,template.2,plan.2.2)
+
+/-- Finish the weighted plan from the exact stored rows and paired forest.
+The two input charges are carried through as supplied by their builders. -/
+def prepareEarlyDistanceTableForSeedFrom (G : Arcs V) (height : ℕ)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height) :
+    SteinerSeedPreparation G height :=
+  let plan := prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1))
+  prepareEarlyDistanceTableForSeedFromWeights G height table rows template exactForest plan rfl
+
+theorem prepareEarlyDistanceTableForSeedFromWeights_eq (G : Arcs V) (height : ℕ)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
+    (plan : ForestWeightPlan V height)
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1))) :
+    prepareEarlyDistanceTableForSeedFromWeights G height table rows template exactForest plan matchesPlan =
+      prepareEarlyDistanceTableForSeedFrom G height table rows template exactForest := by
+  subst plan
+  rfl
 
 /-- Also meter preparation of the weighted link classes, scale, and fuel.
 The table, forest, and weighted plan are constructed once. -/

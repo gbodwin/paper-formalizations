@@ -5,14 +5,15 @@ import OnlineReachabilityPreservers.SteinerHeightIndexWork
 
 namespace OnlineReachabilityPreservers
 
-private def bitLengthWithWork (n : ℕ) : ℕ × ℕ :=
+/-- Compute bit length by halving, with word work for every division and step. -/
+def bitLengthWithWork (n : ℕ) : ℕ × ℕ :=
   if n = 0 then (0,3) else
     let tail := bitLengthWithWork (n/2)
     (tail.1+1,tail.2+7)
 termination_by n
 decreasing_by omega
 
-private theorem bitLengthWithWork_spec (n : ℕ) :
+theorem bitLengthWithWork_spec (n : ℕ) :
     let result := bitLengthWithWork n
     result.1 = n.size ∧ result.2 = 7*n.size+3 := by
   induction n using Nat.strong_induction_on with
@@ -30,12 +31,12 @@ private theorem bitLengthWithWork_spec (n : ℕ) :
       exact ⟨by simpa only [same, Nat.succ_eq_add_one] using size.symm,
         by simp only [work, size, Nat.succ_eq_add_one]; omega⟩
 
-private theorem bitLengthWork_le (n : ℕ) : (bitLengthWithWork n).2 ≤ 7*n+3 := by
+theorem bitLengthWork_le (n : ℕ) : (bitLengthWithWork n).2 ≤ 7*n+3 := by
   rw [(bitLengthWithWork_spec n).2]
   have bound := Nat.size_le.mpr (Nat.lt_two_pow_self (n := n))
   omega
 
-private theorem max_size_eq_log2_add_one (n : ℕ) : max 1 n.size = n.log2+1 := by
+theorem max_size_eq_log2_add_one (n : ℕ) : max 1 n.size = n.log2+1 := by
   by_cases zero : n = 0
   · simp [zero, Nat.log2_zero]
   · have size : n.size = n.log2+1 := by

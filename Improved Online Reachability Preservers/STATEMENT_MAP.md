@@ -498,8 +498,21 @@ operations by a single fixed-height polynomial in the vertex, arc, and
 demand counts. The evaluator takes the graph, an input arc list with the
 same arc set, and the graph's distinct arc count. The arc-list count
 includes duplicate input records. Constructing the supplied graph and
-count, other weighted-plan operations, key-index and container work,
-and native arithmetic costs remain separate.
+count remains a separate operation.
+
+The [weighted plan pass](OnlineReachabilityPreservers/SteinerWeightedPlanWork.lean)
+reads each forest arc's two labels and stored hop weight once. It builds
+the duplicate-free priced and free lists, accumulates the weight sum
+and original comparison tally, and computes the exact scale and
+separator fuel. Lean checks the label traversals, lookup charges,
+list work and arithmetic at unit cost. The
+[weighted preparation and replay](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean)
+substitutes that plan in the fixed-budget evaluator and adds its
+one-time work to the fixed-height polynomial. The cumulative allowance
+retains the old comparison tally as well as the new bound on that pass.
+All prefix graphs and existing tallies agree with the prior evaluator. Constructing and
+applying the seed key-index maps, other operations within the prefix
+runs, and bit and native arithmetic costs remain open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
