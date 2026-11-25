@@ -688,7 +688,11 @@ preserves full exclusion through size six with both original budgets and
 all four frozen caps, retaining at least one sixteenth of the input mass.
 The half-bridge version at size six requires full exclusion through size
 four for the vertex-copy step. The general cyclic existence claims remain
-open. The size-seven counterexample below applies to the printed split.
+open. The size-seven counterexample below applies to the printed midpoint
+split. The factor-four block split before trimming and peeling also creates
+a full size-seven bridge in the dense branch on a simple input with unique
+intersections, all-size full exclusion, and zero pruning loss.
+[Dense width-block counterexample](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L558).
 
 At full cutoff six, [output-average cleaning](OnlineReachabilityPreservers/LocalAverageCleaning.lean)
 starts at the unrestricted maximum over indexed simple paths. It retains

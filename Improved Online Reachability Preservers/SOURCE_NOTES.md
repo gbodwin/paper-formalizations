@@ -264,6 +264,22 @@ has unique intersections and excludes every bridge. The arbitrary-size
 cleaning existence lemma for cyclic families needs a different argument.
 [Checked half-7 example](OnlineReachabilityPreservers/UniqueSplitAudit.lean).
 
+The factor-four block split from the frozen cleaning argument can also
+create a full size-seven bridge before trimming and peeling in the dense
+branch. Add 161 private vertices before the four-vertex path in the
+example, and take the disjoint union with the side-40 layered lattice.
+The ambient budgets are \(n=16{,}793{,}600{,}168\) and
+\(p=4{,}096{,}000{,}006\). The incidence mass is
+\(M=167{,}936{,}000{,}175>8\max(n,p)\), with one common vertex at most
+for any pair of rows. Lean checks full exclusion at every size and
+that opposite-intersection pruning keeps the entire input. The actual
+block widths \(\lfloor 4M/n\rfloor=39\) and
+\(\lfloor 4M/p\rfloor=163\) leave the cyclic part's vertex copies
+together and create the same seven-bridge. This identifies a failure
+of the block-splitting step on a dense input. The extremal cleaning
+existence claim remains open.
+[Checked dense block split](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L558).
+
 Splitting a vertex can also break the half exclusion, even with unique
 intersections. In arrival order take the paths `(4,2), (0,2), (0,1), (1,2),
 (2,3), (3,4)`. The only vertex above average degree is `2`. Its four

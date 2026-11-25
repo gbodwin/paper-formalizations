@@ -598,4 +598,13 @@ theorem lemma14_aggregate_component_mass_no_constant (C : ℕ) :
       _ = (14*C)*q := by ring
       _ < _ := Nat.mul_lt_mul_of_pos_right (by omega) qPos
 
+/-- The layered lattice has simple rows, all-size full bridge exclusion,
+and at most one shared vertex between different rows. -/
+theorem layerPaths_simple_full_and_unique (L : ℕ) :
+    (∀ i : LayerLine L, (layerPaths i).Nodup) ∧
+    (∀ k, IsEmpty (Bridge (ListBefore (@layerPaths L)) k)) ∧
+    (∀ {a b : LayerLine L} {x y}, a ≠ b → x ∈ layerPaths a → x ∈ layerPaths b →
+      y ∈ layerPaths a → y ∈ layerPaths b → x = y) :=
+  ⟨latticePaths_simple,latticePaths_fullFree L L,fun {_ _ _ _} => layerPaths_unique⟩
+
 end OnlineReachabilityPreservers.SourceAudit
