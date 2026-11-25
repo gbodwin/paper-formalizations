@@ -245,9 +245,17 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   list. It charges the scans for free and paid arcs, the charge reads,
   the rounded capacity arithmetic, and the paid outgoing cut. It returns
   the same charge values and ordered cuts as the earlier weighted run.
-  Integrating it into the forest replay and measuring the remaining
-  search and rounding operations are open.
   [Weighted charge history](OnlineReachabilityPreservers/SteinerWeightedChargeWork.lean).
+  The early forest evaluator builds the complete duplicate-free key list
+  once from its roots, sides, histories, and network labels. It uses the
+  measured weighted solver at each metric prefix. The scale, original
+  setup tallies, and rounded graph agree with the earlier evaluator. The
+  ordinary search tally is no larger, and a separate fixed-height budget
+  bounds the new weighted solver and the seed reads. The complete prefix
+  replay still needs this evaluator wired in. The cost of charge lookups
+  in rounding and the remaining search and container operations are open.
+  [Forest pair keys](OnlineReachabilityPreservers/SteinerForestPairKeysWork.lean#L194)
+  · [Weighted early evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L223).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

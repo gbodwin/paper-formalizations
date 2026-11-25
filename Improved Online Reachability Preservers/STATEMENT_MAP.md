@@ -685,9 +685,23 @@ proves equality of all charge values and the full cut list at the
 same scale and fuel. Its bound includes explicit membership scans,
 charge reads, integer capacity arithmetic with doubling, outgoing
 cut selection, and the earlier residual search counts. The proof
-also bounds each read of a returned charge. Constructing the list
-for the metric forest and threading the evaluator through complete
-early replay remain open.
+also bounds each read of a returned charge.
+
+The [explicit forest-pair enumerator](OnlineReachabilityPreservers/SteinerForestPairKeysWork.lean#L194)
+forms the ordered pairs from the finite roots, the two sides, the history
+nodes, and the three network labels. The one-time list construction uses
+polynomial work at fixed height. The
+[metric prefix evaluator](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L1236)
+shares this list across its weighted calls and preserves each rounded
+early graph and the initial setup tallies. Its old search and weight tally
+does not increase. A separate tally covers the measured weighted run and
+the seed-access costs, with a
+[fixed-height bound](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L223)
+for every prefix and seed with bounded access costs. Connecting that early
+evaluator to the complete replay and measuring post-solver charge reads
+during rounding remain open. The request-specific attachment unions also
+retain their existing evaluation. The weighted count still uses the
+earlier conventions for searches inside the residual network.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

@@ -367,11 +367,21 @@ theorem weightedNetworkViolationFromHistoryWithWordWork_spec (keys : List (V × 
     change table.2 + old.2 + (weightedHistoryOutgoingCutWithWordWork paid side).2 + 12 ≤ _
     omega
 
+/-- The separator bound is monotone in the graph size, scale, read budget,
+and number of stored cuts. -/
+theorem weightedHistorySeparatorWordBudget_le {n n' m m' scale scale' W W' H H' : ℕ}
+    (verts : n ≤ n') (edges : m ≤ m') (scales : scale ≤ scale')
+    (reads : W ≤ W') (history : H ≤ H') (I C : ℕ) :
+    weightedHistorySeparatorWordBudget n m scale W I C H ≤
+      weightedHistorySeparatorWordBudget n' m' scale' W' I C H' := by
+  unfold weightedHistorySeparatorWordBudget weightedCapacityHistoryRowBudget
+    weightedSeparatorWorkBound residualStepWorkBound
+  gcongr
+
 private theorem weightedHistorySeparatorWordBudget_mono (n m scale W I C : ℕ) :
     Monotone (weightedHistorySeparatorWordBudget n m scale W I C) := by
   intro a b hab
-  unfold weightedHistorySeparatorWordBudget weightedCapacityHistoryRowBudget
-  gcongr
+  exact weightedHistorySeparatorWordBudget_le le_rfl le_rfl le_rfl le_rfl hab I C
 
 private theorem weightedSeparatorLoop_old_value (paid : Arcs V) (d : WeightedNetworkDemand V)
     (weight charges : V × V → ℕ) (scale fuel : ℕ) :
