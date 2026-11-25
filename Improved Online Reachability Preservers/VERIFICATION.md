@@ -909,6 +909,21 @@ arrival permutation. Each central row is the inner partner of the other.
 [Conditional split proof](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean)
 · [Verified average-width witnesses](OnlineReachabilityPreservers/AverageSplitAudit.lean).
 
+Independent review checked both directions of the criterion for a fixed
+ordered split. A surviving nested reversal has four required piece steps.
+They give a half-4-bridge with the later inner partner as the river. Every
+new half-4-bridge projects to a forbidden bridge or forces such a reversal.
+The previous sufficient condition is a corollary with the same hypotheses.
+The review also checked that mirrored cuts in packed ranks preserve path
+order and transport strict last-arc arrival. This gives frozen half-four
+cleaning when the input excludes full bridges through size three. In the
+dense case both expanded supports fit the rectangle estimate and the
+construction retains at least one 119th of the original mass after
+peeling. The sparse case uses a separate fully bridge-free witness.
+[Exact split criterion](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean)
+· [Arrival transport](OnlineReachabilityPreservers/SynchronizedPathSplits.lean)
+· [Frozen proof](OnlineReachabilityPreservers/LocalFrozenCleaning.lean).
+
 ## Execution examples
 
 A finite execution check of the PaperLab example gave cumulative purchases

@@ -469,17 +469,17 @@ theorem regularization_list_frozen_shortened_paths {half : Bool} {k : ℕ}
     (by simpa [shortened, L, M] using retained)
     (sum_le_sum fun i _ => (sub i).length_le)
 
-/-- Preserve both original budgets and the frozen four-factor caps for
-simple systems with full bridge exclusion through size five. -/
-theorem regularization_list_balanced_full_short_dense {k : ℕ} (three : 3 ≤ k) (five : k ≤ 5) (paths : I → List V)
-    (simple : ∀ i, (paths i).Nodup) (free : BridgeFree (ListBefore paths) k)
+private theorem regularization_list_balanced_synchronized {half : Bool} {k : ℕ} (three : 3 ≤ k)
+    (five : k ≤ 5) (halfShort : half = true → k ≤ 4) (paths : I → List V)
+    (simple : ∀ i, (paths i).Nodup) (freeThree : BridgeFree (ListBefore paths) 3)
+    (free : localOrderAdmissible half k paths)
     (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
     (dense : 3*Fintype.card V ≤ ∑ i, (paths i).length) (long : 3*Fintype.card I ≤ ∑ i, (paths i).length) :
     let n := Fintype.card V
     let p := Fintype.card I
     let M := ∑ i, (paths i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
-      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       M ≤ 119*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let n := Fintype.card V
   let p := Fintype.card I
@@ -489,15 +489,19 @@ theorem regularization_list_balanced_full_short_dense {k : ℕ} (three : 3 ≤ k
   let copies := splitListVertices paths D
   have copiesSimple (i : I) : (copies i).Nodup :=
     List.Nodup.of_map (fun v => v.fst) ((splitListVertices_project paths D i).symm ▸ simple i)
-  have copiesFree : BridgeFree (ListBefore copies) k := by
-    apply free.split_list_vertices_any (fun v : ListVertexBlockIndex paths D => v.fst)
-    intro i x y step
+  have project {i : I} {x y : ListVertexBlockIndex paths D} (step : ListBefore copies i x y) :
+      ListBefore paths i x.fst y.fst := by
     have orig := listBefore_map (fun v : ListVertexBlockIndex paths D => v.fst)
       ((splitListVertices_project paths D i).symm ▸ simple i) step
     simpa only [copies, splitListVertices_project] using orig
-  have copiesFreeThree : BridgeFree (ListBefore copies) 3 := by
-    intro j hj
-    exact copiesFree (hj.trans three)
+  have copiesFreeThree : BridgeFree (ListBefore copies) 3 :=
+    freeThree.split_list_vertices_any (fun v => v.fst) (fun {_ _ _} => project)
+  have copiesFree : localOrderAdmissible half k copies := by
+    cases half
+    · exact (show BridgeFree (ListBefore paths) k from free).split_list_vertices_any
+        (fun v => v.fst) (fun {_ _ _} => project)
+    · exact (show HalfBridgeFree (ListBefore paths) k from free).split_list_vertices_short
+        (halfShort rfl) (fun v => v.fst) (fun {_ _ _} => project)
   obtain ⟨indexes⟩ := exists_packedPathRanks copies copiesSimple copiesFreeThree
   let selected := baseRankCuts (fun i => (copies i).length) L
   let cuts := synchronizedCuts selected (oppositeCutPartner indexes)
@@ -541,14 +545,31 @@ theorem regularization_list_balanced_full_short_dense {k : ℕ} (three : 3 ≤ k
     apply (packedPathPiece_degree_le indexes cuts v).trans
     simpa only [copies, splitListVertices_toFinset] using
       (splitVertices_degree (fun i => (paths i).toFinset) hD v)
-  have piecesFree : BridgeFree (ListBefore pieces) k :=
-    packedPathPiece_fullFree_short copiesSimple three five indexes copiesFree selected
-  exact frozen_cut_of_caps (half := false) (retention := 119) pieces pieceSimple piecesFree
+  have piecesFree : localOrderAdmissible half k pieces := by
+    cases half
+    · exact packedPathPiece_fullFree_short copiesSimple three five indexes copiesFree selected
+    · exact packedPathPiece_halfFree_short copiesSimple five indexes copiesFreeThree copiesFree selected
+  exact frozen_cut_of_caps (retention := 119) pieces pieceSimple piecesFree
       (M := M) (n := n) (p := p) (D := D) (L := L)
       hn hp (by decide) (by decide) (by decide) (by decide) vertices families total.le
       (by
         change (14*17) * (119+2) * M ≤ 2 * (11*11) * 119 * (∑ i, (Z i).card)
         rw [total]) lengthCap degreeCap capD capL
+
+/-- Preserve both original budgets and the frozen four-factor caps for
+simple systems with full bridge exclusion through size five. -/
+theorem regularization_list_balanced_full_short_dense {k : ℕ} (three : 3 ≤ k) (five : k ≤ 5) (paths : I → List V)
+    (simple : ∀ i, (paths i).Nodup) (free : BridgeFree (ListBefore paths) k)
+    (hn : 0 < Fintype.card V) (hp : 0 < Fintype.card I)
+    (dense : 3*Fintype.card V ≤ ∑ i, (paths i).length) (long : 3*Fintype.card I ≤ ∑ i, (paths i).length) :
+    let n := Fintype.card V
+    let p := Fintype.card I
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
+      M ≤ 119*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_balanced_synchronized (half := false) three five (by simp) paths simple
+    (fun _ bound => free (bound.trans three)) free hn hp dense long
 
 end OnlineReachabilityPreservers
 
@@ -579,6 +600,29 @@ theorem regularization_list_frozen_full_short {n p k : ℕ} (three : 3 ≤ k) (f
       (regularization_list_balanced_full_short_dense three five paths simple free
         (by simpa only [Fintype.card_fin] using hn) (by simpa only [Fintype.card_fin] using hp)
         (by simpa only [Fintype.card_fin] using nHigh) (by simpa only [Fintype.card_fin] using pHigh))
+
+/-- A half-4-free family with no full bridge through size three admits
+frozen cleaning by synchronized cuts, including families with nested reversals. -/
+theorem regularization_list_frozen_half_four_of_full_three {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (fullThree : BridgeFree (ListBefore paths) 3)
+    (free : HalfBridgeFree (ListBefore paths) 4)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (ListBefore clean) 4 ∧
+      M ≤ 119*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  by_cases thin : M ≤ 3*max n p
+  · obtain ⟨n',vn,p',ip,clean,nodup,legal,retained,upper,caps⟩ :=
+      full_frozen_cleaning_sparse (k := 4) hn hp dense long thin
+    exact ⟨n',vn,p',ip,clean,nodup,legal.halfFree,by omega,upper,caps⟩
+  · have nHigh : 3*n ≤ M := (Nat.mul_le_mul_left 3 (le_max_left _ _)).trans (le_of_not_ge thin)
+    have pHigh : 3*p ≤ M := (Nat.mul_le_mul_left 3 (le_max_right _ _)).trans (le_of_not_ge thin)
+    simpa only [Fintype.card_fin, localOrderAdmissible, Bool.true_eq, ↓reduceIte] using
+      (regularization_list_balanced_synchronized (half := true) (k := 4) (by decide) (by decide)
+        (fun _ => le_rfl) paths simple fullThree free (by simpa only [Fintype.card_fin] using hn)
+        (by simpa only [Fintype.card_fin] using hp) (by simpa only [Fintype.card_fin] using nHigh)
+        (by simpa only [Fintype.card_fin] using pHigh))
 
 /-- A maximizing family through size five has a full-bridge-free cleaned
 witness with the original caps and at least one 119th of its mass. -/

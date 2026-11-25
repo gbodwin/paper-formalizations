@@ -25,19 +25,86 @@ theorem noLaterNestedOpposites_of_unique {paths : I → List V}
   intro a b c _ _ later u v w z uv vw wz zu wv
   exact listBefore_ne vw (unique later.ne vw.1 wv.2.1 vw.2.1 wv.1)
 
-/-- The only possible repeated parent in a new four-corner half bridge
-would give two strictly nested, reversed intervals. Ordered pieces avoid
-the other repeat, which would give a parallel pair on distinct parent paths. -/
-theorem HalfBridgeFree.split_ordered_list_paths {paths : I → List V} {pieces : J → List V}
-    (free : HalfBridgeFree (ListBefore paths) 4) (noNested : NoLaterNestedOpposites paths)
+/-- A nested reversal survives the cuts if the four required steps each survive
+in one piece and the two steps on the central path use different pieces.
+The names `early` and `late` refer to their order in the central path. -/
+def CutRetainsNestedOpposites (paths : I → List V) (pieces : J → List V)
+    (parent : J → I) : Prop :=
+  ∃ (early late outer inner : J) (u v w z : V),
+    early ≠ late ∧ parent early = parent late ∧
+    parent outer ≠ parent early ∧ parent outer ≠ parent inner ∧ parent early < parent inner ∧
+    ListBefore paths (parent early) v w ∧
+    ListBefore pieces early u v ∧ ListBefore pieces late w z ∧
+    ListBefore pieces outer z u ∧ ListBefore pieces inner w v
+
+/-- Any retained nested reversal produces an actual half-4-bridge. -/
+theorem CutRetainsNestedOpposites.not_half_free {paths : I → List V} {pieces : J → List V}
+    {parent : J → I} (monotone : Monotone parent)
+    (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
+    (pattern : CutRetainsNestedOpposites paths pieces parent) :
+    ¬ HalfBridgeFree (ListBefore pieces) 4 := by
+  rintro free
+  obtain ⟨early,late,outer,inner,u,v,w,z,earlyLate,parents,outerEarly,outerInner,earlyInner,
+    vw,uv,wz,zu,wv⟩ := pattern
+  have oldUV := steps uv
+  have oldWZ : ListBefore paths (parent early) w z := parents.symm ▸ steps wz
+  have uw := lt_trans oldUV.2.2 vw.2.2
+  have vz := lt_trans vw.2.2 oldWZ.2.2
+  have uz := lt_trans oldUV.2.2 vz
+  have uV : u ≠ v := listBefore_ne oldUV
+  have vW : v ≠ w := listBefore_ne vw
+  have wZ : w ≠ z := listBefore_ne oldWZ
+  have uW : u ≠ w := fun eq => (lt_irrefl _ (eq ▸ uw))
+  have vZ : v ≠ z := fun eq => (lt_irrefl _ (eq ▸ vz))
+  have uZ : u ≠ z := fun eq => (lt_irrefl _ (eq ▸ uz))
+  have innerEarly : inner ≠ early := fun eq => earlyInner.ne (congrArg parent eq).symm
+  have innerLate : inner ≠ late := fun eq => earlyInner.ne (parents.trans (congrArg parent eq).symm)
+  have outerNeEarly : outer ≠ early := fun eq => outerEarly (congrArg parent eq)
+  have outerNeLate : outer ≠ late := fun eq => outerEarly ((congrArg parent eq).trans parents.symm)
+  have innerNeOuter : inner ≠ outer := fun eq => outerInner (congrArg parent eq).symm
+  let corners : Fin 4 → V := ![w,z,u,v]
+  let arcs : Fin 3 → J := ![late,outer,early]
+  have differentCorners : Function.Injective corners := by
+    intro i j eq
+    fin_cases i <;> fin_cases j <;> simp [corners] at eq ⊢ <;> exfalso <;>
+      first | exact uV eq | exact vW eq | exact wZ eq | exact uW eq | exact vZ eq | exact uZ eq
+            | exact uV eq.symm | exact vW eq.symm | exact wZ eq.symm | exact uW eq.symm
+            | exact vZ eq.symm | exact uZ eq.symm
+  have differentArcs : Function.Injective arcs := by
+    intro i j eq
+    fin_cases i <;> fin_cases j <;> simp [arcs] at eq ⊢ <;> exfalso <;>
+      first | exact earlyLate eq | exact outerNeEarly eq | exact outerNeLate eq
+            | exact earlyLate eq.symm | exact outerNeEarly eq.symm | exact outerNeLate eq.symm
+  have riverApart (i : Fin 3) : inner ≠ arcs i := by
+    fin_cases i
+    · exact innerLate
+    · exact innerNeOuter
+    · exact innerEarly
+  have chain (i : Fin 3) : ListBefore pieces (arcs i) (corners i.castSucc) (corners i.succ) := by
+    fin_cases i
+    · exact wz
+    · exact zu
+    · exact uv
+  let bridge : Bridge (ListBefore pieces) 2 := ⟨corners,arcs,inner,differentCorners,differentArcs,
+    riverApart,wv,chain⟩
+  have order : early < inner := by
+    by_contra! wrong
+    exact earlyInner.not_ge (monotone wrong)
+  exact free (by decide) bridge order
+
+/-- For ordered pieces of a half-4-free family the surviving nested reversal
+is the exact obstruction to remaining half-4-free. -/
+theorem HalfBridgeFree.split_ordered_iff_no_retained_nested {paths : I → List V} {pieces : J → List V}
+    (free : HalfBridgeFree (ListBefore paths) 4)
     (parent : J → I) (monotone : Monotone parent)
     (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
     (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
     (ordered : ∀ {i j}, i ≠ j → parent i = parent j →
       (∀ ⦃x y⦄, x ∈ pieces i → y ∈ pieces j → ListBefore paths (parent i) x y) ∨
       (∀ ⦃x y⦄, x ∈ pieces j → y ∈ pieces i → ListBefore paths (parent i) x y)) :
-    HalfBridgeFree (ListBefore pieces) 4 := by
-  intro k cutoff b earlier
+    HalfBridgeFree (ListBefore pieces) 4 ↔ ¬ CutRetainsNestedOpposites paths pieces parent := by
+  refine ⟨fun child pattern => pattern.not_half_free monotone steps child,?_⟩
+  intro noNested k cutoff b earlier
   by_cases small : k ≤ 1
   · have oldShort : HalfBridgeFree (ListBefore paths) 3 := by
       intro s limit
@@ -69,8 +136,9 @@ theorem HalfBridgeFree.split_ordered_list_paths {paths : I → List V} {pieces :
     intro eq
     rcases ordered (apart (by decide)) eq with before | after
     · exact no_parallel_list_steps free (by decide) adjR0.symm (before step0.1 step2.2.1) (steps river)
-    · exact noNested adj01.symm oppositeR1.symm (eq ▸ earlierParent)
-        (eq.symm ▸ steps step2) (after step2.2.1 step0.1) (steps step0) (steps step1) (steps river)
+    · exact noNested ⟨b.arc 2,b.arc 0,b.arc 1,b.river,_,_,_,_,
+        apart (by decide),eq.symm,adj12,oppositeR1.symm,earlierParent,
+        eq ▸ after step2.2.1 step0.1,step2,step0,step1,river⟩
   have different : Function.Injective (parent ∘ b.arc) := by
     intro i j equal
     change parent (b.arc i) = parent (b.arc j) at equal
@@ -92,6 +160,24 @@ theorem HalfBridgeFree.split_ordered_list_paths {paths : I → List V} {pieces :
     ⟨b.vertex,parent ∘ b.arc,parent b.river,b.distinctVertices,different,riverApart,
       steps b.riverStep,fun i => steps (b.arcStep i)⟩
   exact free cutoff old earlierParent
+
+/-- No nested reversal in the input is sufficient for any collection of
+ordered disjoint pieces to preserve half-bridge exclusion through four. -/
+theorem HalfBridgeFree.split_ordered_list_paths {paths : I → List V} {pieces : J → List V}
+    (free : HalfBridgeFree (ListBefore paths) 4) (noNested : NoLaterNestedOpposites paths)
+    (parent : J → I) (monotone : Monotone parent)
+    (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
+    (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
+    (ordered : ∀ {i j}, i ≠ j → parent i = parent j →
+      (∀ ⦃x y⦄, x ∈ pieces i → y ∈ pieces j → ListBefore paths (parent i) x y) ∨
+      (∀ ⦃x y⦄, x ∈ pieces j → y ∈ pieces i → ListBefore paths (parent i) x y)) :
+    HalfBridgeFree (ListBefore pieces) 4 := by
+  apply (free.split_ordered_iff_no_retained_nested parent monotone steps disjoint ordered).mpr
+  intro pattern
+  obtain ⟨early,late,outer,inner,u,v,w,z,_,parents,outerEarly,outerInner,earlyInner,
+    vw,uv,wz,zu,wv⟩ := pattern
+  exact noNested outerEarly outerInner earlyInner (steps uv) vw (parents.symm ▸ steps wz)
+    (steps zu) (steps wv)
 
 end OnlineReachabilityPreservers
 

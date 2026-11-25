@@ -109,10 +109,12 @@ operations. General cyclic cleaning with frozen input averages remains open
 in the scopes recorded in the statement map.
 [Checked average-width examples](OnlineReachabilityPreservers/AverageSplitAudit.lean).
 
-Through half-bridge size four, ordered disjoint pieces can be projected
-back when two distinct partners never reverse strictly nested intervals
-with the inner partner later than the common parent. Among repeated
-parents, a repeated river parent forces a forbidden parallel pair.
+For a fixed collection of ordered, disjoint pieces of a half-4-free family,
+half exclusion through size four is equivalent to excluding a retained
+nested reversal. Two partners must reverse strictly nested intervals, the
+inner partner must arrive later than the central path, and all four steps
+must survive, with the two central steps in different pieces. Among
+repeated parents, a repeated river parent forces a forbidden parallel pair.
 The remaining repeat forces the nested pattern. For simple paths with
 positive budgets and mass at least both counts, the stated exclusion lets
 the two splits, restriction, and peeling give all four fixed caps, both
@@ -125,6 +127,18 @@ the other. Whichever arrives first has a later inner partner. This
 six-vertex family also admits a larger bridge-free competitor at the same
 budgets.
 [Conditional half-bridge cleaning](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean).
+
+Mirroring cuts between adjacent shared vertices gives another way to keep
+the original caps. Full exclusion through size three makes the reversed
+intervals into chains and pairs a cut with at most one other cut. Projecting
+back from these pieces preserves the last-arc arrival condition through
+half-bridge size five. The preceding degree split is used in half mode
+through size four. At that cutoff, using mirrored cuts in the dense case
+and a separate bridge-free witness in the sparse case keeps both original
+budgets, all four frozen caps, and at least \(M/119\) for simple inputs
+that also exclude full bridges through size three.
+[Mirrored cuts](OnlineReachabilityPreservers/SynchronizedPathSplits.lean)
+· [Frozen half-four cleaning](OnlineReachabilityPreservers/LocalFrozenCleaning.lean).
 
 The pruning argument in [8], Lemma 20 also works for the half-bridge
 condition when processed in arrival order. An omitted incidence marks a

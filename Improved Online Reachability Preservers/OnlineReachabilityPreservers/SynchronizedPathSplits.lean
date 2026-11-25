@@ -1,7 +1,7 @@
 import OnlineReachabilityPreservers.LocalRegularization
 import OnlineReachabilityPreservers.OppositePathChains
 
-/-! Split full-bridge-free path systems through size four by mirroring cuts between opposite intersections. -/
+/-! Split locally ordered paths by mirroring cuts between opposite intersections. -/
 
 namespace OnlineReachabilityPreservers
 
@@ -334,12 +334,12 @@ private theorem packedPathPiece_disjoint {paths : I → List V} (indexes : Packe
   exact congrArg (Sigma.mk a) (Fin.ext same)
 
 omit [Fintype I] in
-theorem packedPathPiece_fullFree_short {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
-    {size : ℕ} (three : 3 ≤ size) (five : size ≤ 5)
-    (indexes : PackedPathRanks paths) (free : BridgeFree (ListBefore paths) size)
-    (selected : Finset (PackedBoundary paths)) :
+private theorem packedPathPiece_lifts_bridge {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
+    (indexes : PackedPathRanks paths) (freeThree : BridgeFree (ListBefore paths) 3)
+    (selected : Finset (PackedBoundary paths)) {k : ℕ} (short : k ≤ 3) :
     let cuts := synchronizedCuts selected (oppositeCutPartner indexes)
-    BridgeFree (ListBefore (packedPathPiece indexes cuts)) size := by
+    ∀ b : Bridge (ListBefore (packedPathPiece indexes cuts)) k,
+      ∃ old : Bridge (ListBefore paths) k, old.river = b.river.fst ∧ old.arc = fun i => (b.arc i).fst := by
   let cuts := synchronizedCuts selected (oppositeCutPartner indexes)
   let pieces := packedPathPiece indexes cuts
   let parent (j : PackedBlockIndex cuts) := j.fst
@@ -347,26 +347,68 @@ theorem packedPathPiece_fullFree_short {paths : I → List V} (simple : ∀ i, (
       ListBefore paths (parent j) x y :=
     listBefore_of_sublist (paths := fun k : PackedBlockIndex cuts => paths (parent k)) (cut := pieces)
       (simple j.fst) List.filter_sublist xy
-  have freeThree : BridgeFree (ListBefore paths) 3 := fun _ hk => free (hk.trans three)
-  change BridgeFree (ListBefore pieces) size
-  intro k hk
-  refine ⟨fun b => (free hk).false ?_⟩
-  refine listBridge_after_opposite_safe_split_through_five (paths := paths) (pieces := pieces) parent
+  change ∀ b : Bridge (ListBefore pieces) k,
+    ∃ old : Bridge (ListBefore paths) k, old.river = parent b.river ∧ old.arc = parent ∘ b.arc
+  intro b
+  have together : ∀ {j j' q x y}, parent j = parent j' → parent j ≠ parent q →
+      ListBefore paths (parent j) x y → ListBefore pieces q y x → x ∈ pieces j → y ∈ pieces j' → j = j' := by
+    intro j j' q x y same apart xy yx hx hy
+    have bx := (mem_packedPathPiece indexes cuts j x).mp hx |>.2
+    have by' := (mem_packedPathPiece indexes cuts j' y).mp hy |>.2
+    have cy := (mem_packedPathPiece indexes cuts q y).mp yx.1 |>.2
+    have cx := (mem_packedPathPiece indexes cuts q x).mp yx.2.1 |>.2
+    have synced := (oppositePath_blocks_eq_iff indexes freeThree selected apart xy (step yx)).mpr (cy.trans cx.symm)
+    obtain ⟨i,s⟩ := j
+    obtain ⟨i',t⟩ := j'
+    change i = i' at same
+    subst i'
+    exact congrArg (Sigma.mk i) (Fin.ext (bx.symm.trans (synced.trans by')))
+  let old := listBridge_after_opposite_safe_split_through_five (paths := paths) (pieces := pieces) parent
     (fun {i _ _} h => step (j := i) h)
     (fun {_ _ _} different same x y => different (packedPathPiece_disjoint indexes cuts same x y))
-    (fun _ {_ _ _ _} different x y => no_parallel_list_steps free.halfFree (by omega) different x y)
-    ?_ (by omega) b
-  intro _ j j' q x y same apart xy yx hx hy
-  have bx := (mem_packedPathPiece indexes cuts j x).mp hx |>.2
-  have by' := (mem_packedPathPiece indexes cuts j' y).mp hy |>.2
-  have cy := (mem_packedPathPiece indexes cuts q y).mp yx.1 |>.2
-  have cx := (mem_packedPathPiece indexes cuts q x).mp yx.2.1 |>.2
-  have synced := (oppositePath_blocks_eq_iff indexes freeThree selected apart xy (step yx)).mpr (cy.trans cx.symm)
-  obtain ⟨i,s⟩ := j
-  obtain ⟨i',t⟩ := j'
-  change i = i' at same
-  subst i'
-  exact congrArg (Sigma.mk i) (Fin.ext (bx.symm.trans (synced.trans by')))
+    (fun _ {_ _ _ _} different x y => no_parallel_list_steps freeThree.halfFree (by decide) different x y)
+    (fun _ {_ _ _ _ _} => together) short b
+  exact ⟨old,rfl,rfl⟩
+
+omit [Fintype I] in
+theorem packedPathPiece_fullFree_short {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
+    {size : ℕ} (three : 3 ≤ size) (five : size ≤ 5)
+    (indexes : PackedPathRanks paths) (free : BridgeFree (ListBefore paths) size)
+    (selected : Finset (PackedBoundary paths)) :
+    let cuts := synchronizedCuts selected (oppositeCutPartner indexes)
+    BridgeFree (ListBefore (packedPathPiece indexes cuts)) size := by
+  have freeThree : BridgeFree (ListBefore paths) 3 := fun _ hk => free (hk.trans three)
+  change BridgeFree (ListBefore (packedPathPiece indexes (synchronizedCuts selected (oppositeCutPartner indexes)))) size
+  intro k hk
+  refine ⟨fun b => ?_⟩
+  obtain ⟨old,_,_⟩ := packedPathPiece_lifts_bridge simple indexes freeThree selected (by omega) b
+  exact (free hk).false old
+
+omit [Fintype I] in
+/-- If full bridges through size three are excluded, mirrored cuts also
+preserve half-bridge exclusion for any cutoff up to five. -/
+theorem packedPathPiece_halfFree_short {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
+    {size : ℕ} (five : size ≤ 5) (indexes : PackedPathRanks paths)
+    (freeThree : BridgeFree (ListBefore paths) 3) (free : HalfBridgeFree (ListBefore paths) size)
+    (selected : Finset (PackedBoundary paths)) :
+    let cuts := synchronizedCuts selected (oppositeCutPartner indexes)
+    HalfBridgeFree (ListBefore (packedPathPiece indexes cuts)) size := by
+  let cuts := synchronizedCuts selected (oppositeCutPartner indexes)
+  change HalfBridgeFree (ListBefore (packedPathPiece indexes cuts)) size
+  intro k hk b earlier
+  obtain ⟨old,river,arc⟩ := packedPathPiece_lifts_bridge simple indexes freeThree selected (by omega) b
+  apply free hk old
+  have parentMono : Monotone (fun j : PackedBlockIndex cuts => j.fst) := by
+    intro a b order
+    rcases Sigma.Lex.le_def.mp order with first | ⟨same,_⟩
+    · exact first.le
+    · exact same.le
+  have arcLast : old.arc (Fin.last k) = (b.arc (Fin.last k)).fst := congrFun arc (Fin.last k)
+  have different : (b.arc (Fin.last k)).fst ≠ b.river.fst := by
+    rw [← arcLast, ← river]
+    exact (old.river_ne_arc (Fin.last k)).symm
+  rw [arcLast, river]
+  exact (parentMono earlier.le).lt_of_ne different
 
 omit [Fintype I] in
 theorem packedPathPiece_fullFree {paths : I → List V} (simple : ∀ i, (paths i).Nodup)
