@@ -569,17 +569,17 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   thirds of the incidence mass (M), pruning that subfamily and trimming
   its vertex blocks retain at least (M/216). The witness meets both
   original budgets and all four frozen caps through half cutoff four or
-  full cutoff six. [Cleaning the overlong subfamily](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L190).
+  full cutoff six. [Cleaning the overlong subfamily](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L191).
 - If such rows carry at most seven fifteenths of the mass, keeping the
   length-capped subfamily yields the original budgets and frozen caps
   with mass at least (M/104). The theorem preserves full exclusion at
   any cutoff and half exclusion through size four.
-  [Cleaning the length-capped subfamily](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L128).
+  [Cleaning the length-capped subfamily](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L154).
 - The same bound holds if clipping every row at the cap deletes at most
   (7M/15) incidences. Combining clipping with the sharper charge for
   overlong rows yields a witness of mass at least (M/2000) when those rows
   carry at least (7M/12), through half cutoff four or full cutoff six.
-  [Clipping and the overlong case](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L206).
+  [Clipping and the overlong case](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L232).
 - If either positive budget is at most 29, an unrestricted maximum at any
   cutoff of at least two has a witness with both budgets, all four frozen
   caps, and at least \(M/8\) incidences. The witness excludes full bridges
@@ -591,7 +591,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   separate argument gives an \(M/104\) witness at any full cutoff of
   at least two or half cutoffs two through four.
   [Cleaning by counting triples](OnlineReachabilityPreservers/FrozenPathTriples.lean).
-- A [length-capped subfamily using at most half the path budget](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L98)
+- A [length-capped subfamily using at most half the path budget](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L124)
   needs only two fifths of the original mass before trimming and peeling.
   When a shared vertex partition of the overlong paths fits in that half
   budget, an ordered-pair bound controls clipping. The
@@ -608,7 +608,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   full cutoff six or half cutoff four. Each case uses its own bridge
   exclusion on the input and output.
   [Frozen size-six cleaning](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L136)
-  · [Frozen half-four cleaning](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L339).
+  · [Frozen half-four cleaning](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L340).
 - Full bridge exclusion at every size bounds the loss under pruning to
   unique intersections by \(n-1\) for \(n>0\). Combining this bound with
   explicit low-mass witnesses gives the same frozen size-six conclusion
@@ -650,7 +650,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   retains at least \(M/32\). This holds at the unrestricted half-four
   maximum when \(p^2\ge16n^2(n-1)\).
   [Link count](OnlineReachabilityPreservers/OppositeLinkForest.lean#L877)
-  · [Cleaning at large path budgets](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L392).
+  · [Cleaning at large path budgets](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L393).
   Taking both orientations of each edge as two-vertex paths realizes
   every graph of girth greater than four as an opposite-link graph of
   a half-four-free family. The paths have four incidences per graph edge.
@@ -664,7 +664,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   budgets, a subset of at most \(M/8\) nested links gives a cleaned family
   with at least \(M/32\), both budgets, and all four original-average caps.
   [Cleaning with few nested links](OnlineReachabilityPreservers/NestedOppositeCleaning.lean#L147).
-  The [post-split repair](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L442)
+  The [post-split repair](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L443)
   marks the starting incidence of each inner step in a nested reversal
   that survives the width cuts. [Trimming full blocks first](OnlineReachabilityPreservers/FrozenBlockTrimming.lean#L153)
   gives both original budgets, all four caps, and retention at least \(M/12\)
@@ -790,11 +790,17 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   most \(M\), fits both original budgets, and meets all four original caps.
   It applies at the unrestricted maximum. The proof handles the
   conflicts left by contiguous path cuts before splitting vertices.
+- [Full-six cleaning](OnlineReachabilityPreservers/FrozenFullSixCleaning.lean)
+  gives both original budgets, all four caps, and retention at least
+  \(M/5000\) at the unrestricted full cutoff-six maximum. The proof handles
+  reversed comparisons across contiguous pieces using an independent set
+  of incidences. Each incidence has at most one incoming and one outgoing
+  conflict, and an independent set may have to omit two vertices of a triangle.
 - The [literal set versions](OnlineReachabilityPreservers/FrozenDistinctCleaning.lean)
   give distinct nonempty output paths with the same caps. They apply to
   the literal exact-count maximum when the positive original budgets are feasible.
-  The retention factors are \(5000\) at half cutoff four and \(119\) at
-  full cutoffs three through five. The all-size full family theorem gives
+  The retention factors are \(5000\) at half cutoff four and full cutoff
+  six, and \(119\) at full cutoffs three through five. The all-size full family theorem gives
   the distinct output guarantee with factor \(40\).
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
@@ -1017,5 +1023,5 @@ and kernel replay.
 The companion PaperLab includes an interactive trace and a source-linked
 proof map. Open cases include general cyclic cleaning at half cutoffs of
 five or more, frozen-average cleaning under only a finite full cutoff of
-six or more, and a native execution-time bound for the Steiner algorithm.
+seven or more, and a native execution-time bound for the Steiner algorithm.
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).

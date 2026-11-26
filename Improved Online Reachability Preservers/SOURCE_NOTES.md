@@ -47,7 +47,7 @@ singletons, and directed bipartite blocks give distinct witnesses.
 In the odd vertex boundary case, one singleton at each block vertex
 supplies the extra unit of degree. This gives the frozen caps relative
 to the original mass, including at the literal exact-count maximum
-for half cutoff four and full cutoffs three through five.
+for half cutoff four and full cutoffs three through six.
 [Feasible literal maximum](OnlineReachabilityPreservers/DistinctPathBudgets.lean)
 · [Literal cleaning](OnlineReachabilityPreservers/FrozenDistinctCleaning.lean).
 
@@ -274,8 +274,27 @@ unrestricted maximizing family of indexed simple paths. If the quarter
 support is too sparse, a single row or a family of singletons supplies
 the required mass at this constant. The resulting witness keeps both
 budgets and at least one 392nd of the maximum. Its four caps are measured
-against its own averages. The input-average conclusion at this unrestricted
-maximum remains open. [Output-average theorem](OnlineReachabilityPreservers/LocalAverageCleaning.lean).
+against its own averages.
+[Output-average theorem](OnlineReachabilityPreservers/LocalAverageCleaning.lean).
+
+The original-average conclusion at full cutoff six has a separate
+proof. A reverse comparison within one width piece gives a conflict
+when its opposite interval crosses two pieces. The conflict is at
+the later endpoint of the split interval. Full exclusion
+through three allows at most one incoming and one outgoing conflict
+per incidence. After selecting an independent set, the retained pieces
+satisfy the hypothesis of the contiguous full-six lift. In the mixed
+case, a heavy incidence with an outgoing conflict to a light piece
+either has no predecessor or has a heavy predecessor. Include the
+former and delete their light targets. For the latter, include the
+predecessors and remove their neighbors from the remaining heavy candidates. Selecting the heaviest light
+pieces within the remaining path budget then retains at least \(13M/25\)
+before vertex trimming and peeling. The other mass cases use the
+same inequalities as for half cutoff four. The cleaned full-six witness
+keeps at least \(M/5000\), both original budgets, and all four original caps.
+[Opposite-cut conflicts](OnlineReachabilityPreservers/FrozenFullSixConflicts.lean)
+· [Incidence selection](OnlineReachabilityPreservers/FrozenFullSixRepair.lean)
+· [Full-six cleaning](OnlineReachabilityPreservers/FrozenFullSixCleaning.lean).
 
 Consecutive common vertices on two oppositely ordered paths define an
 undirected link. If the family excludes full bridges through size three,
@@ -302,7 +321,7 @@ original widths expand each support by at most \(39/31\). Restriction
 keeps at least \((31/39)^2\) of the pruned mass before removing low
 incidences, which costs at most \(M/2\).
 [Full cutoff six](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L136)
-· [Half cutoff four](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L339).
+· [Half cutoff four](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L340).
 
 An input excluding full bridges at every size already has \(E\le n-1\).
 At higher mass this gives the required pruning bound automatically. The
@@ -434,7 +453,7 @@ block widths \(\lfloor 4M/n\rfloor=39\) and
 together and create the same seven-bridge. This identifies a failure
 of the block-splitting step on a dense input. The extremal cleaning
 existence claim remains open.
-[Checked dense block split](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L558).
+[Checked dense block split](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L538).
 
 Cuts between precedence components give another sufficient hypothesis
 for cleaning cyclic paths. The precedence graph has an arc for each

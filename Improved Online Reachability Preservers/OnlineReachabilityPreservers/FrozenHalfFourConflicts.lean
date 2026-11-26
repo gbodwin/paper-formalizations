@@ -210,7 +210,7 @@ theorem mem_pieceIncidences {pieces : J → List V} {rows : Finset J} {a : J × 
   simp [pieceIncidences]
 
 omit [Fintype J] [DecidableEq J] in
-private theorem pieceIncidences_card {pieces : J → List V} (simple : ∀ i, (pieces i).Nodup)
+theorem pieceIncidences_card {pieces : J → List V} (simple : ∀ i, (pieces i).Nodup)
     (rows : Finset J) : (pieceIncidences pieces rows).card = ∑ i ∈ rows, (pieces i).length := by
   calc
     _ = ∑ a ∈ rows.product (univ : Finset V), (if a.2 ∈ pieces a.1 then 1 else 0) := by

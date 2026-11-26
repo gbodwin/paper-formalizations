@@ -95,13 +95,13 @@ variable {n p : ℕ}
 private def heavyRows (paths : Fin p → List (Fin n)) (width : ℕ) : Finset (Fin p) :=
   univ.filter fun i => width < (paths i).length
 
-private def heavyPieces (paths : Fin p → List (Fin n)) (width : ℕ) : Finset (ListBlockIndex paths width) :=
+def heavyPieces (paths : Fin p → List (Fin n)) (width : ℕ) : Finset (ListBlockIndex paths width) :=
   univ.filter fun i => width < (paths i.fst).length
 
-private def lightPieces (paths : Fin p → List (Fin n)) (width : ℕ) : Finset (ListBlockIndex paths width) :=
+def lightPieces (paths : Fin p → List (Fin n)) (width : ℕ) : Finset (ListBlockIndex paths width) :=
   univ.filter fun i => (paths i.fst).length ≤ width ∧ i.snd.val = 0
 
-private theorem same_path_block {paths : Fin p → List (Fin n)} {width : ℕ} {a b : ListBlockIndex paths width}
+theorem same_path_block {paths : Fin p → List (Fin n)} {width : ℕ} {a b : ListBlockIndex paths width}
     (row : a.fst = b.fst) (index : a.snd.val = b.snd.val) : a = b := by
   rcases a with ⟨i,s⟩
   rcases b with ⟨j,t⟩
@@ -110,7 +110,7 @@ private theorem same_path_block {paths : Fin p → List (Fin n)} {width : ℕ} {
   obtain rfl := Fin.ext index
   rfl
 
-private theorem short_block_zero {paths : Fin p → List (Fin n)} {width : ℕ} {i : ListBlockIndex paths width}
+theorem short_block_zero {paths : Fin p → List (Fin n)} {width : ℕ} {i : ListBlockIndex paths width}
     (small : (paths i.fst).length ≤ width) {v : Fin n} (occurs : v ∈ splitListPaths paths width i) :
     i.snd.val = 0 := by
   obtain ⟨original,eq⟩ := mem_localPathBlock.mp occurs
@@ -167,7 +167,7 @@ private theorem heavyPieces_width {paths : Fin p → List (Fin n)} (simple : ∀
       omega
     _ = _ := by rw [sum_add_distrib]; simp [H,heavyRows,listMassAboveWidth]
 
-private theorem splitPath_step {paths : Fin p → List (Fin n)} (simple : ∀ i, (paths i).Nodup) {width : ℕ}
+theorem splitPath_step {paths : Fin p → List (Fin n)} (simple : ∀ i, (paths i).Nodup) {width : ℕ}
     {i : ListBlockIndex paths width} {x y : Fin n} (step : Before (splitListPaths paths width) i x y) :
     Before paths i.fst x y :=
   listBefore_of_sublist (paths := fun j : ListBlockIndex paths width => paths j.fst)
@@ -210,15 +210,31 @@ private theorem half_four_path_charge {p M Q : ℕ} (hp : 0 < p) {a b : ℝ} (bP
     _ = _ := by field_simp [bPos.ne',pPos.ne']
 
 set_option maxHeartbeats 1200000 in
-private theorem half_four_of_moderate_overlong_mass (paths : Fin p → List (Fin n))
-    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 4)
-    (hn : 0 < n) (hp : 0 < p)
+/-- With moderate mass on overlong rows and large length excess, the width
+budgets and exact vertex trimming finish any repair attaining the stated
+pre-peeling mass in one of the two path budgets. -/
+theorem regularization_list_frozen_after_moderate_width_cut {half : Bool} {k : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (size : half = true → k ≤ 4) (hn : 0 < n) (hp : 0 < p)
     (largeN : 8*n ≤ ∑ i, (paths i).length) (largeP : 8*p ≤ ∑ i, (paths i).length)
     (moderate : let M := ∑ i, (paths i).length; 50*listMassAboveWidth paths (4*M/p) ≤ 29*M)
-    (excess : let M := ∑ i, (paths i).length; 12*M ≤ 25*listLengthExcess paths (4*M/p)) :
+    (excess : let M := ∑ i, (paths i).length; 12*M ≤ 25*listLengthExcess paths (4*M/p))
+    (repair : let M := ∑ i, (paths i).length
+      let L := 4*M/p
+      let pieces := splitListPaths paths L
+      let heavy := heavyPieces paths L
+      let light := lightPieces paths L
+      Disjoint heavy light → (∀ i, pieces i ≠ [] → i ∈ heavy ∪ light) →
+      heavy.card ≤ p → 11*light.card ≤ 13*(p-heavy.card) →
+      50*(∑ i ∈ heavy, (pieces i).length) ≤ 29*(∑ i, (pieces i).length) →
+      ∃ (deleted : Finset (ListBlockIndex paths L × Fin n)) (kept : Finset (ListBlockIndex paths L)),
+        localOrderAdmissible half k (erasePieceIncidences pieces deleted) ∧ kept.card ≤ p ∧
+        ((kept = heavy ∧ 3*(∑ i, (pieces i).length) ≤ 10*(∑ i ∈ kept,
+          (erasePieceIncidences pieces deleted i).length)) ∨
+          337*(∑ i, (pieces i).length) ≤ 650*(∑ i ∈ kept, (erasePieceIncidences pieces deleted i).length))) :
     let M := ∑ i, (paths i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
-      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) 4 ∧
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       M ≤ 5000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   classical
   let M := ∑ i, (paths i).length
@@ -238,9 +254,6 @@ private theorem half_four_of_moderate_overlong_mass (paths : Fin p → List (Fin
   have vRoom := dense_width_product hn largeN
   have pRoom : 31*M ≤ 8*(L*p) := dense_width_product hp largeP
   have pieceSimple (i : J) : (pieces i).Nodup := List.filter_sublist.nodup (simple i.fst)
-  have steps {i : J} {x y : Fin n} : Before pieces i x y → Before paths i.fst x y := splitPath_step simple
-  have apart {i j : J} {x : Fin n} :
-      i ≠ j → i.fst = j.fst → x ∈ pieces i → x ∈ pieces j → False := splitListPaths_disjoint
   have total : (∑ i : J, (pieces i).length) = M := splitListPaths_size paths simple L
   have heavyMass : (∑ i ∈ heavy, (pieces i).length) = S := heavyPieces_mass simple L
   have separate : Disjoint heavy light := disjoint_left.mpr fun _ h l =>
@@ -283,17 +296,20 @@ private theorem half_four_of_moderate_overlong_mass (paths : Fin p → List (Fin
   have hyp : 50*(∑ i ∈ heavy, (pieces i).length) ≤ 29*(∑ i : J, (pieces i).length) := by
     rw [heavyMass,total]
     exact moderate
-  obtain ⟨deleted,kept,coverCut,countK,big⟩ := nestedCut_repair_budget free pieceSimple (fun {_ _ _} => steps)
-    (fun {_ _ _} => apart) heavy light separate covers (heavyPieces_contain_sources L) heavyFits lightRoom hyp
+  obtain ⟨deleted,kept,filteredAllowed,countK,big⟩ := repair separate covers heavyFits lightRoom hyp
   let filtered := erasePieceIncidences pieces deleted
   let rows (i : kept) := filtered i.val
-  have filteredFree : HalfBridgeFree (Before filtered) 4 := by
-    exact erasePieceIncidences_halfFree free pieceSimple (block_parent_mono (fun i => (paths i).toFinset) L)
-      (fun {_ _ _} => steps) (fun {_ _ _} => apart) (fun {_ _} => listBlocks_ordered paths L)
-      deleted (fun {_ _} => coverCut)
-  have rowFree : HalfBridgeFree (Before rows) 4 := by
-    intro j short bridge arrives
-    exact filteredFree short (bridge.mapPaths Subtype.val Subtype.val_injective (fun _ _ _ h => h)) arrives
+  have rowAllowed : localOrderAdmissible half k rows := by
+    cases half
+    · change BridgeFree (Before filtered) k at filteredAllowed
+      change BridgeFree (Before rows) k
+      intro j short
+      exact ⟨fun bridge => (filteredAllowed short).false
+        (bridge.mapPaths Subtype.val Subtype.val_injective (fun _ _ _ h => h))⟩
+    · change HalfBridgeFree (Before filtered) k at filteredAllowed
+      change HalfBridgeFree (Before rows) k
+      intro j short bridge arrives
+      exact filteredAllowed short (bridge.mapPaths Subtype.val Subtype.val_injective (fun _ _ _ h => h)) arrives
   have rowSimple (i : kept) : (rows i).Nodup :=
     (erasePieceIncidences_sublist pieces deleted i.val).nodup (pieceSimple i.val)
   have rowWidth (i : kept) : (rows i).length ≤ L :=
@@ -307,8 +323,8 @@ private theorem half_four_of_moderate_overlong_mass (paths : Fin p → List (Fin
     _ ≤ ∑ i : J, (pieces i).length := sum_le_sum_of_subset (subset_univ _)
     _ = _ := total
   rw [total,← massK] at big
-  refine regularization_list_frozen_of_length_capped_exact_budget (half := true) (k := 4) rows
-    rowSimple rowFree (fun _ => le_rfl) hn hp dense long (by simpa using countK) rowWidth upper (by decide) ?_
+  refine regularization_list_frozen_of_length_capped_exact_budget (half := half) (k := k) rows
+    rowSimple rowAllowed size hn hp dense long (by simpa using countK) rowWidth upper (by decide) ?_
   have realPos : (0:ℝ) < M := by exact_mod_cast positive
   have realUpper : (K:ℝ) ≤ M := by exact_mod_cast upper
   have vertexLoss := half_four_budget_loss (K := K) positive vRoom
@@ -325,23 +341,72 @@ private theorem half_four_of_moderate_overlong_mass (paths : Fin p → List (Fin
     have keep := nested_repair_full_retention realPos (by exact_mod_cast lower) realUpper
     linarith only [keep,fee,vertexLoss]
 
-/-- Every simple half-four-free family whose mass reaches both original budgets
-has a half-four-free witness with both budgets and all four original-average caps. -/
-theorem regularization_list_frozen_half_four (paths : Fin p → List (Fin n))
+set_option maxHeartbeats 1200000 in
+private theorem half_four_of_moderate_overlong_mass (paths : Fin p → List (Fin n))
     (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 4)
-    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    (hn : 0 < n) (hp : 0 < p)
+    (largeN : 8*n ≤ ∑ i, (paths i).length) (largeP : 8*p ≤ ∑ i, (paths i).length)
+    (moderate : let M := ∑ i, (paths i).length; 50*listMassAboveWidth paths (4*M/p) ≤ 29*M)
+    (excess : let M := ∑ i, (paths i).length; 12*M ≤ 25*listLengthExcess paths (4*M/p)) :
     let M := ∑ i, (paths i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) 4 ∧
+      M ≤ 5000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  classical
+  let M := ∑ i, (paths i).length
+  let L := 4*M/p
+  let J := ListBlockIndex paths L
+  let pieces := splitListPaths paths L
+  let heavy := heavyPieces paths L
+  let light := lightPieces paths L
+  refine regularization_list_frozen_after_moderate_width_cut (half := true) (k := 4) paths simple
+    (fun _ => le_rfl) hn hp largeN largeP moderate excess ?_
+  dsimp only
+  intro separate covers heavyFits lightRoom hyp
+  have pieceSimple (i : J) : (pieces i).Nodup := List.filter_sublist.nodup (simple i.fst)
+  have steps {i : J} {x y : Fin n} : Before pieces i x y → Before paths i.fst x y := splitPath_step simple
+  have apart {i j : J} {x : Fin n} :
+      i ≠ j → i.fst = j.fst → x ∈ pieces i → x ∈ pieces j → False := splitListPaths_disjoint
+  obtain ⟨deleted,kept,coverCut,countK,big⟩ := nestedCut_repair_budget free pieceSimple (fun {_ _ _} => steps)
+    (fun {_ _ _} => apart) heavy light separate covers (heavyPieces_contain_sources L) heavyFits lightRoom hyp
+  have filteredFree := erasePieceIncidences_halfFree free pieceSimple
+    (block_parent_mono (fun i => (paths i).toFinset) L) (fun {_ _ _} => steps)
+    (fun {_ _ _} => apart) (fun {_ _} => listBlocks_ordered paths L)
+    deleted (fun {_ _} => coverCut)
+  exact ⟨deleted,kept,filteredFree,countK,big⟩
+
+/-- The common low-mass, clipping, and overlong-row branches for frozen
+cleaning at half cutoff four or full cutoff six. -/
+theorem regularization_list_frozen_four_or_six (half : Bool) (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half (if half then 4 else 6) paths)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (middle : let M := ∑ i, (paths i).length
+      8*n ≤ M → 8*p ≤ M → 50*listMassAboveWidth paths (4*M/p) ≤ 29*M →
+      12*M ≤ 25*listLengthExcess paths (4*M/p) →
+      ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+        (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half (if half then 4 else 6) clean ∧
+        M ≤ 5000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half (if half then 4 else 6) clean ∧
       M ≤ 5000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let M := ∑ i, (paths i).length
   let L := 4*M/p
   let T := listLengthExcess paths L
   let S := listMassAboveWidth paths L
+  let k := if half then 4 else 6
+  have inputHalf : HalfBridgeFree (Before paths) k := by
+    cases half
+    · exact (show BridgeFree (Before paths) 6 from allowed).halfFree
+    · exact allowed
   by_cases low : M ≤ 8*max n p
   · obtain ⟨v,vCap,q,qCap,clean,cleanSimple,cleanFree,mass,upper,caps⟩ :=
-      regularization_list_frozen_low_mass paths simple free (by decide) hn hp dense long low
-    exact ⟨v,vCap,q,qCap,clean,cleanSimple,(fun _ small => cleanFree.halfFree small),
+      regularization_list_frozen_low_mass paths simple inputHalf (by cases half <;> decide) hn hp dense long low
+    have cleanAllowed : localOrderAdmissible half k clean := by
+      cases half
+      · exact cleanFree
+      · exact cleanFree.halfFree
+    exact ⟨v,vCap,q,qCap,clean,cleanSimple,cleanAllowed,
       mass.trans (Nat.mul_le_mul_right _ (by decide)),upper,caps⟩
   have largeN : 8*n ≤ M := (Nat.mul_le_mul_left _ (le_max_left _ _)).trans (le_of_not_ge low)
   have largeP : 8*p ≤ M := (Nat.mul_le_mul_left _ (le_max_right _ _)).trans (le_of_not_ge low)
@@ -351,10 +416,16 @@ theorem regularization_list_frozen_half_four (paths : Fin p → List (Fin n))
   · let clipped (i : Fin p) := (paths i).take L
     let K := ∑ i, (clipped i).length
     have sub (i : Fin p) : (clipped i).Sublist (paths i) := List.take_sublist _ _
-    have clipFree : HalfBridgeFree (Before clipped) 4 := by
-      intro r short bridge arrives
-      exact free short (bridge.mapPaths id Function.injective_id
-        (fun i _ _ step => listBefore_of_sublist (simple i) (sub i) step)) arrives
+    have clipAllowed : localOrderAdmissible half k clipped := by
+      have step (i : Fin p) (x y : Fin n) : Before clipped i x y → Before paths i x y :=
+        listBefore_of_sublist (simple i) (sub i)
+      cases half
+      · change BridgeFree (Before paths) 6 at allowed
+        intro r short
+        exact ⟨fun bridge => (allowed short).false (bridge.mapPaths id Function.injective_id step)⟩
+      · change HalfBridgeFree (Before paths) 4 at allowed
+        intro r short bridge arrives
+        exact allowed short (bridge.mapPaths id Function.injective_id step) arrives
     have lengths : K+T = M := by
       unfold K T listLengthExcess M
       rw [← sum_add_distrib]
@@ -368,8 +439,8 @@ theorem regularization_list_frozen_half_four (paths : Fin p → List (Fin n))
       change ((paths i).take L).length ≤ L
       rw [List.length_take]
       exact min_le_left _ _
-    refine regularization_list_frozen_of_length_capped_exact_budget (half := true) (k := 4) clipped
-      (fun i => (sub i).nodup (simple i)) clipFree (fun _ => le_rfl) hn hp dense long (by simp)
+    refine regularization_list_frozen_of_length_capped_exact_budget (half := half) (k := k) clipped
+      (fun i => (sub i).nodup (simple i)) clipAllowed (by intro yes; subst half; decide) hn hp dense long (by simp)
       clipWidth upper (by decide) ?_
     have vertexLoss := half_four_budget_loss (K := K) positive (dense_width_product hn largeN)
     have pathLoss := half_four_path_charge (Q := p) (M := M) hp (a := 1) (b := 1) (by norm_num) le_rfl
@@ -380,7 +451,7 @@ theorem regularization_list_frozen_half_four (paths : Fin p → List (Fin n))
     linarith only [keep,pathLoss,vertexLoss]
   have excess : 12*M ≤ 25*T := le_of_not_ge small
   by_cases large : 29*M ≤ 50*S
-  · refine regularization_list_frozen_from_overlong_budget (retention := 5000) true paths simple free hn hp
+  · refine regularization_list_frozen_from_overlong_budget (retention := 5000) half paths simple allowed hn hp
       dense long (by decide) ?_
     dsimp only
     intro K lower upper
@@ -391,7 +462,18 @@ theorem regularization_list_frozen_half_four (paths : Fin p → List (Fin n))
     change (M:ℝ)/5000 ≤ (K:ℝ)-(K:ℝ)^2/(12*(M:ℝ))-(M:ℝ)/4-
       (min ((S:ℝ)/16) (((S:ℝ)-(T:ℝ))/12)+(K:ℝ)/12)
     linarith only [keep,min_le_right ((S:ℝ)/16) (((S:ℝ)-(T:ℝ))/12)]
-  exact half_four_of_moderate_overlong_mass paths simple free hn hp largeN largeP (le_of_not_ge large) excess
+  exact middle largeN largeP (le_of_not_ge large) excess
+
+/-- Every simple half-four-free family whose mass reaches both original budgets
+has a half-four-free witness with both budgets and all four original-average caps. -/
+theorem regularization_list_frozen_half_four (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 4)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) 4 ∧
+      M ≤ 5000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=   regularization_list_frozen_four_or_six true paths simple free hn hp dense long
+    (half_four_of_moderate_overlong_mass paths simple free hn hp)
 
 /-- At half cutoff four, a constant fraction of the unrestricted maximum
 fits both budgets and all four original-average caps. -/

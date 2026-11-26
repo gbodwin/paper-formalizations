@@ -1,5 +1,6 @@
 import OnlineReachabilityPreservers.DistinctPathBudgets
 import OnlineReachabilityPreservers.FrozenBoundaryCases
+import OnlineReachabilityPreservers.FrozenFullSixCleaning
 import OnlineReachabilityPreservers.FrozenHalfFourCleaning
 import OnlineReachabilityPreservers.HalfGridCleaning
 
@@ -411,6 +412,19 @@ theorem regularization_list_frozen_full_short_distinct {n p k : ℕ} (three : 3 
   regularization_list_frozen_distinct_of_indexed (half := false) paths distinct nonempty simple free (by omega)
     hn hp dense (by decide) (regularization_list_frozen_full_short three five paths simple free hn hp dense)
 
+/-- The original full-six caps can be attained with distinct nonempty output paths. -/
+theorem regularization_list_frozen_full_six_distinct {n p : ℕ} (paths : Fin p → List (Fin n))
+    (distinct : Function.Injective paths) (nonempty : ∀ i, paths i ≠ []) (simple : ∀ i, (paths i).Nodup)
+    (free : BridgeFree (Before paths) 6) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) 6 ∧
+      M ≤ 5000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_distinct_of_indexed (half := false) paths distinct nonempty simple free (by decide)
+    hn hp dense (by decide) (regularization_list_frozen_full_six paths simple free hn hp dense)
+
 /-- The all-size full-bridge cleaning also has distinct nonempty output. -/
 theorem regularization_list_frozen_full_all_distinct {n p : ℕ} (paths : Fin p → List (Fin n))
     (distinct : Function.Injective paths) (nonempty : ∀ i, paths i ≠ []) (simple : ∀ i, (paths i).Nodup)
@@ -471,6 +485,25 @@ theorem localOrderDistinctExtremal_frozen_full_short {n p k : ℕ} (three : 3 �
   obtain ⟨paths,distinct,rows,free,maximal,dense,_⟩ :=
     localOrderDistinctExtremal_isDense (k := k) false hp feasible
   exact ⟨paths,distinct,rows,free,maximal,regularization_list_frozen_full_short_distinct three five paths distinct
+    (fun i => (rows i).1) (fun i => (rows i).2) free hn hp dense⟩
+
+/-- The full-six cleaning bound at the feasible literal exact-count maximum. -/
+theorem localOrderDistinctExtremal_frozen_full_six {n p : ℕ} (hn : 0 < n) (hp : 0 < p)
+    (feasible : ∃ paths : Fin p → List (Fin n), Function.Injective paths ∧
+      (∀ i, paths i ≠ [] ∧ (paths i).Nodup) ∧ BridgeFree (Before paths) 6) :
+    ∃ paths : Fin p → List (Fin n), Function.Injective paths ∧
+      (∀ i, paths i ≠ [] ∧ (paths i).Nodup) ∧ BridgeFree (Before paths) 6 ∧
+      (∀ other : Fin p → List (Fin n), Function.Injective other →
+        (∀ i, other i ≠ [] ∧ (other i).Nodup) → BridgeFree (Before other) 6 →
+        (∑ i, (other i).length) ≤ ∑ i, (paths i).length) ∧
+      let M := ∑ i, (paths i).length
+      ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+        Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧
+        (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) 6 ∧
+        M ≤ 5000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  obtain ⟨paths,distinct,rows,free,maximal,dense,_⟩ :=
+    localOrderDistinctExtremal_isDense (k := 6) false hp feasible
+  exact ⟨paths,distinct,rows,free,maximal,regularization_list_frozen_full_six_distinct paths distinct
     (fun i => (rows i).1) (fun i => (rows i).2) free hn hp dense⟩
 
 end OnlineReachabilityPreservers

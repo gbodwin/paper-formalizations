@@ -1403,10 +1403,23 @@ bridge. A maximizing set therefore reaches both original budgets.
 At input mean length above four, the lower length cap and half-two
 exclusion force a distinct nonempty output. At smaller means, the
 disjoint-path, singleton, and bipartite constructions give the literal
-witness directly. The half-four result retains \(M/5000\), the full
-result through cutoffs three to five retains \(M/119\), and the all-size
+witness directly. The half-four and full-six results retain \(M/5000\).
+The full result at cutoffs three to five retains \(M/119\), and the all-size
 full family theorem retains \(M/40\). Each guarantee uses both original
 budgets and all four original-average caps.
+
+At full cutoff six, [the unrestricted indexed cleaning result](OnlineReachabilityPreservers/FrozenFullSixCleaning.lean)
+retains at least \(M/5000\) of the maximizing mass with both budgets and
+all four original caps. At the moderate overlong mass, a conflict joins
+a later central piece incidence to an opposite-step incidence. Full-three
+exclusion gives both directed degree bounds. Choosing an independent set
+covers the conflicts by its complement, so the retained family satisfies
+the contiguous full-six lift. The path-budget proof retains either
+\(3M/10\) on the heavy pieces alone or \(13M/25\) within the mixed path budget
+before the final vertex trim and peel. The other mass branches are shared
+with the half-four proof.
+[Conflict classification](OnlineReachabilityPreservers/FrozenFullSixConflicts.lean)
+· [Path-budget selection](OnlineReachabilityPreservers/FrozenFullSixRepair.lean).
 
 For Lemmas 23 and 39, the [contiguous six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)
 uses the original relative order of pieces in addition to the mirrored-cut
@@ -1416,12 +1429,12 @@ intersections and mass at least both positive input counts, the
 preserves full exclusion through size six with both original budgets and
 all four frozen caps, retaining at least one sixteenth of the input mass.
 The half-bridge version at size six requires full exclusion through size
-four for the vertex-copy step. The general cyclic existence claims at
-these higher cutoffs remain open. The size-seven counterexample below
+four for the vertex-copy step. The general cyclic existence claim at
+half cutoff six remains open. The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates
 a full size-seven bridge in the dense branch on a simple input with unique
 intersections, all-size full exclusion, and zero pruning loss.
-[Dense width-block counterexample](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L558).
+[Dense width-block counterexample](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L538).
 
 At half cutoff four, a [balanced midpoint split with no valid arrival permutation](OnlineReachabilityPreservers/HalfFourSplitOrderAudit.lean#L103)
 starts from a half-free indexed family with uniform degree two and mean
@@ -1437,8 +1450,7 @@ at least \(M/392\) of the maximizing mass \(M\), keeps both budgets, and
 meets all four factor-four caps around the cleaned witness's own averages.
 The same construction preserves half exclusion through six for an input
 that also excludes full bridges through four and whose mass is at least
-both positive budgets. At full cutoff six, the unrestricted statement with
-the original fixed averages remains open.
+both positive budgets.
 
 An opposite-neighbor link joins consecutive common vertices of two
 oppositely ordered paths. In an input excluding full bridges through size
@@ -1458,7 +1470,7 @@ at least both positive budgets, there is a cleaned family within both
 budgets with the input's cutoff and bridge mode, all four original-average
 caps, and mass at least \(M/32\).
 [Full cutoff six](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L136)
-· [Half cutoff four](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L339).
+· [Half cutoff four](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L340).
 
 For an input excluding full bridges at every size, the same size-six
 cleaning conclusion holds at every mass at least both positive budgets.
@@ -1516,20 +1528,20 @@ uses triangle and four-cycle exclusion to inject ordered two-link walks
 into ordered pairs of distinct vertices. Cauchy–Schwarz gives
 \(4E^2\le n^2(n-1)\). For a simple half-four-free family with positive
 budgets and \(M\) at least both counts, the
-[incidence condition](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L369)
+[incidence condition](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L370)
 \(M^2\ge16n^2(n-1)\) gives \(8E\le M\) and hence a cleaned family
 with both original budgets, all four original-average caps, and
 retention of \(M/32\). At the unrestricted half-four maximum, the
-[path-budget condition](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L392)
+[path-budget condition](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L393)
 \(p^2\ge16n^2(n-1)\) gives this stronger retention bound.
 
 For any fixed ordered disjoint split, each retained nested reversal marks
 the starting incidence of its inner step. The
-[post-split repair](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L442)
-deletes exactly the [distinct marked incidences](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L472)
+[post-split repair](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L443)
+deletes exactly the [distinct marked incidences](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L473)
 and restores half exclusion through size four. For the original-width
 blocks, at most \(M/12\) such incidences suffice for
-[both budgets and all four original-average caps](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L558),
+[both budgets and all four original-average caps](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L559),
 with retention at least \(M/64\) after restriction and peeling. Each
 mark [charges a distinct incidence](OnlineReachabilityPreservers/ActiveNestedCutCounting.lean#L58)
 with a successor in a non-first central block. Exclusion through size
@@ -1553,7 +1565,7 @@ or the [later nonterminal count](OnlineReachabilityPreservers/FrozenBlockTrimmin
 is at most \(M/4\).
 
 If rows longer than \(\lfloor 4M/p\rfloor\) carry at least \(2M/3\),
-the [overlong-subfamily theorem](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L190)
+the [overlong-subfamily theorem](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L191)
 prunes opposing intersections only in that subfamily before splitting.
 Its path pieces already fit in the original path budget, and
 [vertex trimming](OnlineReachabilityPreservers/BalancedRegularization.lean#L644)
@@ -1562,21 +1574,21 @@ block width times the vertex budget. Peeling uses the actual piece count.
 The witness retains at least \(M/216\) and has all four original-average
 caps and both original budgets through half cutoff four or full cutoff six.
 When those overlong rows carry at most \(7M/15\), the
-[length-capped subfamily](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L128)
+[length-capped subfamily](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L154)
 retains at least \(8M/15\) before trimming. It requires only vertex splits,
 so the construction preserves full exclusion at every cutoff and half
 exclusion through size four. It meets both original budgets and all four
 frozen caps and retains at least \(M/104\). The
-[underlying theorem](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L62)
+[underlying theorem](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L88)
 applies to any length-capped subfamily carrying that much mass.
-The [clipped subfamily](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L167)
+The [clipped subfamily](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L193)
 keeps the first \(\lfloor4M/p\rfloor\) entries of every row. It therefore
 works when the excess \(T\) above that width is at most \(7M/15\).
 If the overlong rows carry mass \(S\) and there are \(q\) such rows, the
 [excess identity](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L20)
 gives \(S=T+q\lfloor4M/p\rfloor\). For large \(T\), it sharpens the
 bound on how many path pieces peeling can delete. Combining the cases
-[covers \(S\ge7M/12\)](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L206)
+[covers \(S\ge7M/12\)](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L232)
 with retention at least \(M/2000\) through half cutoff four or full cutoff
 six. With these two arguments, inputs having \(T>7M/15\) and \(S<7M/12\)
 still require a separate criterion.
@@ -1609,7 +1621,7 @@ half cutoffs two through four.
 
 When the length-capped subfamily uses at most half the available paths,
 the path peeling charge is at most \(M/8\). The
-[half-budget lemma](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L98)
+[half-budget lemma](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L124)
 then needs initial mass at least \(2M/5\) and retains \(M/90\) within
 both original budgets and all four frozen caps. In the
 [common partition application](OnlineReachabilityPreservers/FrozenOverlongPartitions.lean#L48),
@@ -1904,7 +1916,7 @@ original averages.
 | Source | Mathematical obligation |
 | --- | --- |
 | Definition 2 | Half-\(k\)-bridge-free means no bridge of size at most \(k\) whose last arc precedes the river. |
-| Lemmas 23 and 39 | [Acyclic cleaning](OnlineReachabilityPreservers/BalancedRegularization.lean) checks both original budgets, all four degree and length caps, and retention of at least one sixteenth of the original mass when the mass is at least both original counts. It preserves the bridge exclusions at every size. [Local cleaning](OnlineReachabilityPreservers/LocalBalancedRegularization.lean) gives the same budgets and caps through size four under unique intersections and through size three for arbitrary simple paths with mass at least both counts. For simple paths excluding half-bridges through size four whose mass is at least twice both counts, [opposite-intersection pruning](OnlineReachabilityPreservers/OppositeIntersectionPruning.lean) followed by local cleaning gives both original budgets, at least one thirty-second of the mass, lower caps at one eighth of the original averages and upper caps at four times those averages. It preserves the half exclusion and preserves full exclusion when the input has it. The [pruning bound with first incidences](OnlineReachabilityPreservers/OppositeIntersectionPruning.lean) retains at least \((M+s)/2\) incidences, where \(s\) is the number of original nonempty paths. At a maximum with positive vertex budget, \(s=p\). [Two opposite rows](OnlineReachabilityPreservers/OppositePruningGain.lean) attain equality for every positive vertex count. If every original path is nonempty, the pruned paths satisfy both upper caps, and the original mean path length is at most \(C\), the [frozen peeling argument](OnlineReachabilityPreservers/LocalFrozenCleaning.lean) yields both budgets, all four original-average caps, and retention at least \(M/(2C)\). [Output-average cleaning](OnlineReachabilityPreservers/LocalAverageCleaning.lean) gives a witness at the unrestricted size-four maximum in either bridge mode. It meets both budgets, retains at least one 392nd of the maximizing mass, and keeps all four factor-four caps relative to the witness's averages. [Full-bridge cleaning with frozen averages](OnlineReachabilityPreservers/LocalFrozenCleaning.lean) retains at least one 119th of the maximum without unique intersections, within both original budgets and all four original-average caps at full bridge cutoffs three through five. When the mass lies between the larger budget and eight times it, the [low-mass witnesses](OnlineReachabilityPreservers/LocalFrozenLowMass.lean) retain at least one eighth of the mass and meet both budgets and all four original-average caps. They exclude every full bridge, and apply to both modes for simple families excluding half-bridges at a cutoff of at least two. This includes every unrestricted maximum when either positive budget is at most eight. [Length truncation](OnlineReachabilityPreservers/LocalFrozenCleaning.lean) and [a common vertex partition](OnlineReachabilityPreservers/VertexPartitionCleaning.lean) give both budgets, all four frozen caps and mass at least \(M/16\) when the length-capped subsystem fits both original budgets and still has at least \(3M/4\) incidences. Keeping the pieces of a common partition preserves both bridge exclusions at every cutoff. The subsequent vertex split is justified for full bridges at every cutoff and for half-bridges through size four. Already capped degrees also suffice at any cutoff. Both shared partitions can also be applied together. The [occupied-support cleaning theorem](OnlineReachabilityPreservers/CommonPartitionCleaning.lean) preserves mass and both exclusions at every cutoff while splitting every incidence by its path and vertex parts. It counts only occupied copies and pieces, using the number of incident parts of each original vertex and each original path. If the full mass meets the two upper caps after partitioning and each occupied support fits within four thirds of its original budget, a restriction to both budgets has all four frozen caps and at least \(M/16\) mass. The common-partition proof also gives an explicit grouping criterion in terms of occupied input supports, upper-cap capacities, and the numbers of opposite groups. [Ordered-path cleaning](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean) retains \(M/16\) and all four frozen caps through size four by splitting, restriction, and peeling for simple paths with positive budgets and mass at least both counts, when there are no two distinct partners reversing strictly nested intervals with the inner partner later than the split parent. For any fixed ordered disjoint split, half-4 exclusion is equivalent to the absence of a nested reversal whose required four steps all survive in the pieces. [Synchronized cleaning](OnlineReachabilityPreservers/LocalFrozenCleaning.lean) keeps both budgets, all four original caps and at least \(M/119\) for simple systems with a half cutoff from three through five that also exclude full bridges through size three. A collision under the degree-split projection would erase at least two steps and leave a forbidden full bridge. Mirrored path cuts then preserve the half exclusion up to size five. The [average-width examples](OnlineReachabilityPreservers/AverageSplitAudit.lean) exhibit the failure after the printed mean-width midpoint procedure terminates and after the exact factor-four-width block split. The same audit proves that every arrival permutation of one fully bridge-free family still has the nested obstruction. The [unrestricted half-four witness](OnlineReachabilityPreservers/FrozenHalfFourCleaning.lean) retains at least \(M/5000\) under the frozen caps and both original budgets. Cyclic half cutoffs of at least five and the remaining finite full cutoffs stay open. The printed path split can create a [half-7-bridge with unique intersections](OnlineReachabilityPreservers/UniqueSplitAudit.lean). The degree split can create a [half-5-bridge without unique intersections and a half-6-bridge with unique intersections](OnlineReachabilityPreservers/VertexSplitAudit.lean). The same split preserves full exclusion at all sizes. |
+| Lemmas 23 and 39 | [Acyclic cleaning](OnlineReachabilityPreservers/BalancedRegularization.lean) checks both original budgets, all four degree and length caps, and retention of at least one sixteenth of the original mass when the mass is at least both original counts. It preserves the bridge exclusions at every size. [Local cleaning](OnlineReachabilityPreservers/LocalBalancedRegularization.lean) gives the same budgets and caps through size four under unique intersections and through size three for arbitrary simple paths with mass at least both counts. For simple paths excluding half-bridges through size four whose mass is at least twice both counts, [opposite-intersection pruning](OnlineReachabilityPreservers/OppositeIntersectionPruning.lean) followed by local cleaning gives both original budgets, at least one thirty-second of the mass, lower caps at one eighth of the original averages and upper caps at four times those averages. It preserves the half exclusion and preserves full exclusion when the input has it. The [pruning bound with first incidences](OnlineReachabilityPreservers/OppositeIntersectionPruning.lean) retains at least \((M+s)/2\) incidences, where \(s\) is the number of original nonempty paths. At a maximum with positive vertex budget, \(s=p\). [Two opposite rows](OnlineReachabilityPreservers/OppositePruningGain.lean) attain equality for every positive vertex count. If every original path is nonempty, the pruned paths satisfy both upper caps, and the original mean path length is at most \(C\), the [frozen peeling argument](OnlineReachabilityPreservers/LocalFrozenCleaning.lean) yields both budgets, all four original-average caps, and retention at least \(M/(2C)\). [Output-average cleaning](OnlineReachabilityPreservers/LocalAverageCleaning.lean) gives a witness at the unrestricted size-four maximum in either bridge mode. It meets both budgets, retains at least one 392nd of the maximizing mass, and keeps all four factor-four caps relative to the witness's averages. [Full-bridge cleaning with frozen averages](OnlineReachabilityPreservers/LocalFrozenCleaning.lean) retains at least one 119th of the maximum without unique intersections, within both original budgets and all four original-average caps at full bridge cutoffs three through five. When the mass lies between the larger budget and eight times it, the [low-mass witnesses](OnlineReachabilityPreservers/LocalFrozenLowMass.lean) retain at least one eighth of the mass and meet both budgets and all four original-average caps. They exclude every full bridge, and apply to both modes for simple families excluding half-bridges at a cutoff of at least two. This includes every unrestricted maximum when either positive budget is at most eight. [Length truncation](OnlineReachabilityPreservers/LocalFrozenCleaning.lean) and [a common vertex partition](OnlineReachabilityPreservers/VertexPartitionCleaning.lean) give both budgets, all four frozen caps and mass at least \(M/16\) when the length-capped subsystem fits both original budgets and still has at least \(3M/4\) incidences. Keeping the pieces of a common partition preserves both bridge exclusions at every cutoff. The subsequent vertex split is justified for full bridges at every cutoff and for half-bridges through size four. Already capped degrees also suffice at any cutoff. Both shared partitions can also be applied together. The [occupied-support cleaning theorem](OnlineReachabilityPreservers/CommonPartitionCleaning.lean) preserves mass and both exclusions at every cutoff while splitting every incidence by its path and vertex parts. It counts only occupied copies and pieces, using the number of incident parts of each original vertex and each original path. If the full mass meets the two upper caps after partitioning and each occupied support fits within four thirds of its original budget, a restriction to both budgets has all four frozen caps and at least \(M/16\) mass. The common-partition proof also gives an explicit grouping criterion in terms of occupied input supports, upper-cap capacities, and the numbers of opposite groups. [Ordered-path cleaning](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean) retains \(M/16\) and all four frozen caps through size four by splitting, restriction, and peeling for simple paths with positive budgets and mass at least both counts, when there are no two distinct partners reversing strictly nested intervals with the inner partner later than the split parent. For any fixed ordered disjoint split, half-4 exclusion is equivalent to the absence of a nested reversal whose required four steps all survive in the pieces. [Synchronized cleaning](OnlineReachabilityPreservers/LocalFrozenCleaning.lean) keeps both budgets, all four original caps and at least \(M/119\) for simple systems with a half cutoff from three through five that also exclude full bridges through size three. A collision under the degree-split projection would erase at least two steps and leave a forbidden full bridge. Mirrored path cuts then preserve the half exclusion up to size five. The [average-width examples](OnlineReachabilityPreservers/AverageSplitAudit.lean) exhibit the failure after the printed mean-width midpoint procedure terminates and after the exact factor-four-width block split. The same audit proves that every arrival permutation of one fully bridge-free family still has the nested obstruction. The [unrestricted half-four witness](OnlineReachabilityPreservers/FrozenHalfFourCleaning.lean) retains at least \(M/5000\) under the frozen caps and both original budgets. The unrestricted full-six witness retains at least \(M/5000\) under the same caps and budgets. Cyclic half cutoffs of at least five and the remaining finite full cutoffs of at least seven stay open. The printed path split can create a [half-7-bridge with unique intersections](OnlineReachabilityPreservers/UniqueSplitAudit.lean). The degree split can create a [half-5-bridge without unique intersections and a half-6-bridge with unique intersections](OnlineReachabilityPreservers/VertexSplitAudit.lean). The same split preserves full exclusion at all sizes. |
 | Definition 3 and Lemma 24 | In a triple of distinct path indices, the middle path meets \(\pi_1\) before meeting \(\pi_3\), with \(\pi_3\) earlier in arrival order than the middle path. [CyclicIntersections](OnlineReachabilityPreservers/CyclicIntersections.lean) proves the fiber bound for arbitrary simple paths and the left and right order properties when a witness is chosen for each middle path. The right order becomes strict under full bridge-freeness. Multiple witnesses for one middle path can occur. [IntersectionOrder](OnlineReachabilityPreservers/IntersectionOrder.lean) proves uniqueness under a common vertex order for the incidence counts downstream. |
 | Lemmas 25–27 | The corrected tail inequality is checked in [SourceAudit](OnlineReachabilityPreservers/SourceAudit.lean). [GeneralInitial](OnlineReachabilityPreservers/GeneralInitial.lean) proves the chain lower count for distinct path triples and the initial \(O(n+(np)^{2/3}+p)\) incidence bound for arbitrary ordered simple paths. Opposite-intersection pruning provides unique witnesses before counting, and every retained triple is a triple in the original paths. [PairwiseInitial](OnlineReachabilityPreservers/PairwiseInitial.lean) uses the same threshold argument in the common-order case. |
 | Lemma 28 | Close pairs in the ordered \(R\)-fibers charge into sampled branching subsystems. For \(\ell\ge h\ge Cp/(\ell d^2)\), the mean \(Q\)-count is \(\Omega(h\sum_R\lvert R\rvert^2/(\ell p))\). [LocalBranching](OnlineReachabilityPreservers/LocalBranching.lean) proves the finite lower comparison and its dense normalization for local path orders with unique intersections. Every online charge with its right endpoint on the base has its left start before that endpoint on the base. The full-bridge-free charges have both endpoints off the base. [BranchWindow](OnlineReachabilityPreservers/BranchWindow.lean) supplies the common scaling arithmetic. The right-side distance uses the two distinct middle paths. |
