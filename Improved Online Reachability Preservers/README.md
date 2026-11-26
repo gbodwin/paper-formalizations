@@ -435,6 +435,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   positive budgets.
   [Pruning bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L528)
   · [All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L151).
+  The [common-order cleaning](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L37)
+  preserves exclusion of every full bridge for inputs with that property.
+  With positive budgets and mass at least both, it keeps at least \(M/32\),
+  both budgets, and all four original-average caps when \(M\le 8\max(n,p)\)
+  or \(24n\le M\).
 - In half-bridge-free systems through size three, there are no triangles
   of opposite links. If two opposite links connect distinct vertices on
   one path, the intermediate vertex belongs to that path. Half-bridge exclusion

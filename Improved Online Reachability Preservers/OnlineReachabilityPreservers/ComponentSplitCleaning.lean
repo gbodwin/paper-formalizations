@@ -1826,4 +1826,14 @@ theorem regularization_list_frozen_of_few_long_shortReturnRuns {n p k : ℕ} {ha
       (splitListVertices_admissible_of_halfDegreeSplitCondition kept simpleKept freeKept halfSafe))
     (by decide) (by dsimp only [kept,M]; dsimp only at mostly; omega)
 
+/-- In full mode the degree split always preserves bridge exclusion. The absence
+of short returns in the original precedence graph then permits the path cuts. -/
+theorem listRegularizedPaths_fullFree_of_noShortPrecedenceCycle {n p k : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : BridgeFree (Before paths) k) (longCycles : NoShortPrecedenceCycle paths (k-2)) (D L : ℕ) :
+    BridgeFree (Before (listRegularizedPaths paths D L)) k :=
+  width_blocks_admissible_of_noShortReturnAcrossWidthCuts (half := false) paths simple
+    (free.split_list_vertices_any (·.fst) (fun {i _ _} => splitListVertices_step (simple i)))
+    longCycles.noShortReturnAcrossWidthCuts
+
 end OnlineReachabilityPreservers

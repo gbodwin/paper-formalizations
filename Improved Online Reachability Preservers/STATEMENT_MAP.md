@@ -1067,6 +1067,16 @@ The lower-mass case uses explicit witnesses. The larger-mass case uses the
 forest bound and the original cap widths.
 [All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L151).
 
+The [common-order deletion](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L128)
+also yields [cleaning with full exclusion at every size](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L37)
+for input that excludes every full bridge and has mass \(M\) at least
+both positive budgets. It meets the two budgets and all four original
+caps with retention \(M/32\) when \(M\le8\max(n,p)\) or \(24n\le M\).
+In the latter range, deleting at most \(3n\) incidences leaves at least
+seven eighths of the original mass and a common order. The resulting
+precedence graph allows both width splits at any cutoff. The output
+excludes every full bridge by its path budget.
+
 For half-bridge exclusion through size three, the
 [opposite-link graph has no triangles](OnlineReachabilityPreservers/OppositeLinkForest.lean#L576).
 Each link joins consecutive common vertices of two paths that traverse
