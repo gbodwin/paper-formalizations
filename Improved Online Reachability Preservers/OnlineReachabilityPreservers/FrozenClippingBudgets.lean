@@ -31,22 +31,32 @@ theorem listLengthExcess_mul_le_halfTwo {k n p L : ℕ} (paths : Fin p → List 
   change (∑ i, (paths i).length^2) ≤ 2*(n*n-n)+M at pairs
   omega
 
+/-- In the dense case, rounding the original width leaves these lower
+bounds on its clipping coefficient and capacity. -/
+theorem dense_clipping_coefficient {M q : ℕ} (hq : 0 < q) (dense : 8*q ≤ M) :
+    126 ≤ 4*(4*M/q)-2 ∧ 61*M ≤ 4*((4*(4*M/q)-2)*q) := by
+  let L := 4*M/q
+  let A := 4*L-2
+  have width : 32 ≤ L := (Nat.le_div_iff_mul_le hq).mpr (by omega)
+  have rounded : 4*M < L*q+q := four_average_width_product hq
+  have area : A*q+2*q = 4*(L*q) := by
+    rw [← Nat.add_mul]
+    have scaled : A+2 = 4*L := Nat.sub_add_cancel (by omega)
+    rw [scaled]
+    ring
+  change 126 ≤ A ∧ 61*M ≤ 4*(A*q)
+  refine ⟨?_,by omega⟩
+  dsimp [A]
+  omega
+
 private theorem clipping_budget_of_path_count {M n p : ℕ} (hp : 0 < p)
     (dense : 8*n ≤ M) (long : 8*p ≤ M) (count : p ≤ 227 ∨ n*n-n ≤ 235*p) :
     30*(n*n-n) ≤ 7*M*(4*(4*M/p)-2) := by
-  let L := 4*M/p
-  let A := 4*L-2
-  have width : 32 ≤ L := (Nat.le_div_iff_mul_le hp).mpr (by omega)
-  have minimum : 126 ≤ A := by dsimp [A]; omega
+  let A := 4*(4*M/p)-2
+  obtain ⟨minimum, capacity⟩ := dense_clipping_coefficient hp long
   change 30*(n*n-n) ≤ 7*M*A
   rcases count with small | large
-  · have rounded : 4*M < L*p+p := four_average_width_product hp
-    have area : A*p+2*p = 4*(L*p) := by
-      rw [← Nat.add_mul]
-      have scaled : A+2 = 4*L := Nat.sub_add_cancel (by omega)
-      rw [scaled]
-      ring
-    have capacity : 61*M ≤ 4*(A*p) := by omega
+  · change 61*M ≤ 4*(A*p) at capacity
     have squares : 64*(n*n-n) ≤ M^2 := calc
       _ ≤ 64*(n*n) := Nat.mul_le_mul_left _ (Nat.sub_le _ _)
       _ = (8*n)^2 := by ring

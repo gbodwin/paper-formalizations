@@ -752,6 +752,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   every full cutoff of at least two and at half cutoffs two through four.
   The ordered-pair budget bounds the mass deleted by clipping, so this
   proof only needs to split vertices.
+- With positive budgets and \(p\le156\), [clipping both dimensions](OnlineReachabilityPreservers/FrozenDegreeClipping.lean)
+  gives a cleaned witness of mass at least \(M/104\) with both original
+  budgets and all four original-average caps at
+  every full or half cutoff of at least two. In the dense branch at
+  cutoff three or higher, both length and degree clipping use rowwise
+  deletions, which preserve the original arrival order.
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion

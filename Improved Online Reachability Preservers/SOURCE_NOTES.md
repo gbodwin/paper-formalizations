@@ -291,6 +291,18 @@ through four. The general cyclic cases outside the checked hypotheses
 remain open.
 [Clipping at the original width](OnlineReachabilityPreservers/FrozenClippingBudgets.lean).
 
+Degree clipping also keeps the original row and vertex labels. A common
+vertex after the first one in the earlier row determines a later
+reverse partner, which is unique under half exclusion through size
+three. Counting these occurrences bounds the cost of clipping degrees
+and lengths together. For positive budgets and \(p\le156\), a cleaned
+witness retains \(M/104\) of the unrestricted maximum with the original
+budgets and all four original-average caps at every full and half cutoff
+of at least two. The dense branch at cutoff three or higher uses the two
+rowwise clipping operations. The other branches use the low-mass
+witness or the size-two construction.
+[Clipping both dimensions](OnlineReachabilityPreservers/FrozenDegreeClipping.lean).
+
 The same splitting step can fail at larger bridge sizes with unique
 intersections. On seven vertices, take the six paths `[(0,1,2,3), (3,4),
 (4,0), (5,2), (1,6), (5,6)]`. There are 14 incidences, every vertex

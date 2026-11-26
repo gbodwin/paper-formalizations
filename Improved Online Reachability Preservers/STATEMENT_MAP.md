@@ -1752,6 +1752,22 @@ original budgets, and \(M/104\) of the unrestricted maximum at every full cutoff
 least two and half cutoffs two through four.
 [Squared lengths and frozen clipping](OnlineReachabilityPreservers/FrozenClippingBudgets.lean).
 
+For half exclusion through size three, the degree-side count satisfies
+\(\sum_v d_v(d_v-1)\le p(p-1)+2M\). For each pair of rows, every common
+vertex after the first in the earlier row charges that row's incidence
+at the vertex. It has at most one later reverse partner. The ordered
+pair count uses both orientations. Capping each vertex's occurrences
+keeps the earliest rows at that vertex and removes exactly the excess
+degree. When \(M>8\max(n,p)\), the original length and degree excesses
+\(T,Y\) obey \(488T\le Mp\) and \(1008Y\le M(p+16)\).
+For \(p\le156\) their combined cost satisfies \(104(T+Y)\le51M\).
+Clipping both sides and peeling retain at least \(M/104\)
+with both original budgets and all four original-average caps. The
+low-mass witness and size-two case give the rest of the stated range.
+With positive budgets the conclusion holds for the unrestricted maximum
+at every full or half cutoff of at least two.
+[Degree counting and two-sided clipping](OnlineReachabilityPreservers/FrozenDegreeClipping.lean).
+
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
 and nonempty simple rows. At the prescribed widths \(7\) and \(20\) it
