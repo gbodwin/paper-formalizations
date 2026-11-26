@@ -217,10 +217,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   shares one duplicate-free arc list across the trace. Each thin request
   in an evaluated thin run prepares its interval once and reuses it for
   the cut searches and updates. The fixed-height bound includes those
-  interval computations. A separate [thin replay](OnlineReachabilityPreservers/SteinerThinReplay.lean#L1061)
+  interval computations. A separate [thin replay](OnlineReachabilityPreservers/SteinerThinReplay.lean#L1069)
   also charges each service test using the arc list retained by rounding.
   It returns the same graph and ordinary inspection count for every
-  trace, and the [feasible-trace bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L1089)
+  trace, and the [feasible-trace bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L1097)
   includes the additional list work. The late replay uses the arc list for
   arrival classification, both ordered hub-leg lists, and the test for
   a thick miss. Its fixed-height bound charges these scans and trace-list
@@ -371,7 +371,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   original vertices at each reached metric. This enumeration, later
   service steps, and bit and native costs remain outside the bound.
   [Complete replay with measured weighted search](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2233).
-  The [late evaluator](OnlineReachabilityPreservers/SteinerHubRouteWork.lean#L509)
+  The [late evaluator](OnlineReachabilityPreservers/SteinerHubRouteWork.lean#L528)
   also uses the measured thin service tests. The [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2330)
   combines this with the measured weighted search and preserves every
   previous record and evaluation count. Its [feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2389)
@@ -380,6 +380,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   vertex count. It retains the same prefix records and adds only the
   trial-count setup tally, bounded by \(7n+12\). Other arithmetic and
   bit and native execution costs remain outside this bound.
+  The [thin arithmetic replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2520)
+  also measures the update cap and the shared part of the rounding
+  factor once. Each late call adds its cutoff to that stored offset.
+  The [feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2566)
+  includes this setup and per-call work and keeps all prefix records
+  and evaluation counts.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

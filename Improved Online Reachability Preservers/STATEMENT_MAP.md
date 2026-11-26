@@ -613,9 +613,9 @@ also holds on exhaustion and infeasible traces.
 The [rounded-list service check](OnlineReachabilityPreservers/SteinerThinReplay.lean#L268)
 tests the current request directly on the retained arcs. The graph,
 miss decision, and ordinary arc inspection tally agree with the
-earlier check. The [thin fold](OnlineReachabilityPreservers/SteinerThinReplay.lean#L1061)
+earlier check. The [thin fold](OnlineReachabilityPreservers/SteinerThinReplay.lean#L1069)
 preserves the same graph and inspection tally for every trace,
-including an entire-graph fallback after a miss. The [polynomial cap](OnlineReachabilityPreservers/SteinerThinReplay.lean#L1089)
+including an entire-graph fallback after a miss. The [polynomial cap](OnlineReachabilityPreservers/SteinerThinReplay.lean#L1097)
 adds the service work at each request on feasible traces with valid
 threshold rows. This checkpoint covers the thin run.
 
@@ -913,7 +913,7 @@ calculation still enumerates the original vertices at each reached
 metric. This enumeration, later service steps, and bit and native costs
 remain outside the bound.
 
-The [late evaluator with measured thin service](OnlineReachabilityPreservers/SteinerHubRouteWork.lean#L509)
+The [late evaluator with measured thin service](OnlineReachabilityPreservers/SteinerHubRouteWork.lean#L528)
 uses the rounded-list check whenever the late replay runs a thin cover.
 The hub routing and thick fallback agree with the earlier evaluator.
 The [combined whole-replay comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2330)
@@ -933,6 +933,15 @@ has identical prefix records and evaluation counts, with only the new
 setup tally added to its recorded work. The [feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2437)
 adds at most \(7n+12\). This measures the trial-count calculation for
 the metric, and bit and native execution costs remain outside the ledger.
+
+The [thin parameter setup](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2477)
+halves the supplied vertex and arc counts to obtain the exact thin
+update cap and rounding offset. The [late comparison](OnlineReachabilityPreservers/SteinerHubRouteWork.lean#L515)
+uses those same parameters and adds the supplied late cutoff to the
+offset. The [complete comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2520)
+preserves every prefix record and evaluation count on all traces. The
+[feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2566)
+adds at most \(7(n+m)+19+4(p+1)\) for the setup and reached calls.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

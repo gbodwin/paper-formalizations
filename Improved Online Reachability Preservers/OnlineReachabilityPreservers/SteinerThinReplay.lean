@@ -1049,6 +1049,14 @@ theorem thinRoundRunFromThresholdListWithIntervalWork_bound {n : ℕ} (G : Arcs 
     thinCoverIntervalWordCap thinPreparedIntervalStepWordBudget steinerThinIntervalExtraWork
   ring
 
+/-- Replay each thin prefix with a supplied cap on the number of load updates. -/
+def thinRoundRunFromThresholdListWithServiceWorkAtFuel {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (m fuel : ℕ)
+    (rows : ThinThresholdList (Fin n)) (factor : ℕ) (D : List (Fin n × Fin n)) : (Arcs (Fin n) × ℕ) × ℕ :=
+  if D.isEmpty then ((∅,0),2)
+  else thinRoundArrayResult G m
+    (thinRoundArrayFoldWithServiceWork (thinCoverArrayPrefixStepWithIntervalWork arcs m fuel) m rows factor D)
+
 /-- Replay the thin prefixes and charge each service test on its retained arc list. -/
 def thinRoundRunFromThresholdListWithServiceWork {n : ℕ} (G : Arcs (Fin n))
     (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (m : ℕ)

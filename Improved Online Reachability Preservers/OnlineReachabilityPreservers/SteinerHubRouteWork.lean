@@ -495,6 +495,15 @@ theorem lateSteinerWithListHubWork_graph {n : ℕ} {G : Arcs (Fin n)} (early : E
   have old := lateSteinerWithStoredThinThresholds_graph early τ m sample rows.val.toFinset D feasible
   exact exactGraph.trans (by simpa only [Fintype.card_fin] using old.symm)
 
+/-- Use a prepared thin update cap and rounding factor during late replay. -/
+def lateSteinerWithThinServiceWorkAtControls {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (τ m fuel factor : ℕ)
+    (vertices : List (Fin n)) (sample : Finset (Fin n))
+    (rows : ThinThresholdList (Fin n)) (D : List (Fin n × Fin n)) : Arcs (Fin n) × ℕ :=
+  lateSteinerWithListHubWorkUsing arcs n τ vertices sample (fun T =>
+    let thin := thinRoundRunFromThresholdListWithServiceWorkAtFuel G arcs m fuel rows factor T
+    (thin.1.1,thin.2+thin.1.2)) D
+
 /-- Run the same late phase while charging each thin service test on its
 retained rounded arc list. -/
 def lateSteinerWithThinServiceWork {n : ℕ} (G : Arcs (Fin n))
@@ -503,6 +512,16 @@ def lateSteinerWithThinServiceWork {n : ℕ} (G : Arcs (Fin n))
   lateSteinerWithListHubWorkUsing arcs n τ vertices sample (fun T =>
     let thin := thinRoundRunFromThresholdListWithServiceWork G arcs m rows (thinRoundingFactor n τ) T
     (thin.1.1,thin.2+thin.1.2)) D
+
+theorem lateSteinerWithThinServiceWorkAtControls_eq {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (τ m fuel factor : ℕ)
+    (exactFuel : fuel = m*(m.log2+1)+1) (exactFactor : factor = thinRoundingFactor n τ)
+    (vertices : List (Fin n)) (sample : Finset (Fin n))
+    (rows : ThinThresholdList (Fin n)) (D : List (Fin n × Fin n)) :
+    lateSteinerWithThinServiceWorkAtControls G arcs τ m fuel factor vertices sample rows D =
+      lateSteinerWithThinServiceWork G arcs τ m vertices sample rows D := by
+  subst fuel factor
+  rfl
 
 /-- Classification, hub routing, and any thick fallback keep their earlier
 result. The thin service work adds at most one rounded-list budget per request. -/

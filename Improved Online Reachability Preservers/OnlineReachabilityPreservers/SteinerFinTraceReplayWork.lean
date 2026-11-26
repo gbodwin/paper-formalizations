@@ -2458,4 +2458,136 @@ theorem completeFinSteinerReplayWithMeasuredTrialCountWork_prefixes {n : ℕ} (G
   rw [records,setup,index,replay]
   exact ⟨graphs,counts,by omega⟩
 
+/-- The thin update cap and the part of the rounding factor shared by all late prefixes. -/
+structure FinThinReplayControls (n m : ℕ) where
+  fuel : ℕ
+  roundingOffset : ℕ
+  wordWork : ℕ
+  fuel_eq : fuel = m*(m.log2+1)+1
+  roundingOffset_eq : roundingOffset = 4*(n.log2+1)
+
+/-- Prepare both thin parameters by counted halving on the supplied sizes. -/
+def finThinReplayControlsWithWordWork (n m : ℕ) : FinThinReplayControls n m :=
+  let arcWidth := bitLengthWithWork m
+  let vertexWidth := bitLengthWithWork n
+  ⟨m*(max 1 arcWidth.1)+1,4*(max 1 vertexWidth.1),arcWidth.2+vertexWidth.2+13,
+    by rw [(bitLengthWithWork_spec m).1,max_size_eq_log2_add_one],
+    by rw [(bitLengthWithWork_spec n).1,max_size_eq_log2_add_one]⟩
+
+theorem finThinReplayControlsWithWordWork_bound (n m : ℕ) :
+    (finThinReplayControlsWithWordWork n m).wordWork ≤ 7*(n+m)+19 := by
+  have arcs := bitLengthWork_le m
+  have vertices := bitLengthWork_le n
+  change (bitLengthWithWork m).2+(bitLengthWithWork n).2+13 ≤ 7*(n+m)+19
+  omega
+
+@[inline] private def thinControlsLateEvaluator {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (m : ℕ) (vertices : List (Fin n))
+    (controls : FinThinReplayControls n m) : FinLateReplayEvaluator n :=
+  fun τ sample rows D =>
+    let out := lateSteinerWithThinServiceWorkAtControls G arcs τ m controls.fuel
+      (τ+controls.roundingOffset) vertices sample rows D
+    ((out.1,0),out.2+4)
+
+private theorem thinControlsLateEvaluator_spec {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (m : ℕ) (vertices : List (Fin n))
+    (controls : FinThinReplayControls n m) (τ : ℕ) (sample : Finset (Fin n))
+    (rows : ThinThresholdList (Fin n)) (D : List (Fin n × Fin n)) :
+    let out := thinControlsLateEvaluator G arcs m vertices controls τ sample rows D
+    let prior := thinServiceLateEvaluator G arcs m vertices τ sample rows D
+    out.1 = prior.1 ∧ out.2 = prior.2+4 := by
+  have factor : τ+controls.roundingOffset = thinRoundingFactor n τ := by
+    rw [controls.roundingOffset_eq,thinRoundingFactor]
+  dsimp only [thinControlsLateEvaluator,thinServiceLateEvaluator]
+  rw [lateSteinerWithThinServiceWorkAtControls_eq G arcs τ m _ _ controls.fuel_eq factor]
+  exact ⟨rfl,rfl⟩
+
+/-- Prepare the thin cap and rounding offset once for the complete replay. -/
+def completeFinSteinerReplayWithMeasuredThinControlsWork {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
+  let controls := finThinReplayControlsWithWordWork n m
+  let prepared := prepareFinSteinerWeightedForSeedWithMetricTrialCountWork G raw same height
+  let arcs := finArcRowsWithWordWork raw
+  let vertices := finVerticesWithWordWork n
+  let out := completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D
+    (thinControlsLateEvaluator G arcs.1 m vertices.1 controls) (meteredPhaseUnion (Fin n))
+    (prepared.1,prepared.2+controls.wordWork)
+  (out.1,out.2.1+arcs.2+vertices.2+5,out.2.2)
+
+/-- Both evaluations use the same parameters and produce the same prefix
+records. Add the setup and the word allowance at each reached late call. -/
+theorem completeFinSteinerReplayWithMeasuredThinControlsWork_compare {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
+    let out := completeFinSteinerReplayWithMeasuredThinControlsWork G raw same height m hm bits D
+    let prior := completeFinSteinerReplayWithMeasuredTrialCountWork G raw same height m hm bits D
+    out.1.1.1 = prior.1.1.1 ∧ out.1.1.2 = prior.1.1.2+(finThinReplayControlsWithWordWork n m).wordWork ∧
+      out.1.2 = prior.1.2 ∧ out.2.2 = prior.2.2 ∧ out.2.1 ≤ prior.2.1+(D.length+1)*4 := by
+  let controls := finThinReplayControlsWithWordWork n m
+  let prepared := prepareFinSteinerWeightedForSeedWithMetricTrialCountWork G raw same height
+  let indexes := finSteinerReplaySeedIndexesWithWordWork G height raw same
+  let decoded := decodeSteinerSeedWithArrayViewsFromPreparedScale G height n m (by simp) hm prepared.1.1 indexes.1 bits
+  let arcs := finArcRowsWithWordWork raw
+  let vertices := finVerticesWithWordWork n
+  let join := meteredPhaseUnion (Fin n)
+  unfold completeFinSteinerReplayWithMeasuredThinControlsWork completeFinSteinerReplayWithMeasuredTrialCountWork
+    completeFinSteinerReplayWithThinServiceUsing completeFinSteinerReplayWithLateEvaluator
+    completeFinSteinerReplayWithCachedPhases replayFromCachedFinSteinerSeed
+  dsimp only
+  cases state : decoded.1.2 with
+  | none => exact ⟨rfl,rfl,rfl,rfl,Nat.le_add_right _ _⟩
+  | some entry =>
+    rcases entry with ⟨seed,arrays⟩
+    dsimp only
+    let width := decoded.1.1
+    let samples := finEarlySeedTrialsWithRankWork G height width.val width.property arrays.early
+    let early := prepared.1.2.1 samples
+    let rows := prepareThinThresholdListByIndexWithWordWork G m hm indexes.1.arcs arrays.thin
+    let late := fun τ hubs => thinControlsLateEvaluator G arcs.1 m vertices.1 controls τ hubs rows.1
+    let prior := fun τ hubs => thinServiceLateEvaluator G arcs.1 m vertices.1 τ hubs rows.1
+    have compare (τ : ℕ) (hubs : Finset (Fin n)) (P : List (Fin n × Fin n)) :=
+      thinControlsLateEvaluator_spec G arcs.1 m vertices.1 controls τ hubs rows.1 P
+    obtain ⟨records,calls,work⟩ := replaySteinerTraceWithPhaseWork_changeLate n (by simp)
+      early seed.2.1 late prior D join 4 (fun τ hubs P => (compare τ hubs P).1)
+      (fun τ hubs P _ => (compare τ hubs P).2.le)
+    let out := replaySteinerTraceWithPhaseWork n (by simp) early seed.2.1 late D join
+    let old := replaySteinerTraceWithPhaseWork n (by simp) early seed.2.1 prior D join
+    change ((out.1,prepared.1.2.2),decoded.2) = ((old.1,prepared.1.2.2),decoded.2) ∧
+      _ ∧ _ ∧ out.2.2 = old.2.2 ∧ out.2.1+rows.2+9+8+arcs.2+vertices.2+5 ≤
+        old.2.1+rows.2+9+8+arcs.2+vertices.2+5+(D.length+1)*4
+    change out.1 = old.1 at records
+    change out.2.1 ≤ old.2.1+(D.length+1)*4 at work
+    exact ⟨by rw [records],rfl,rfl,calls,by omega⟩
+
+/-- The shared thin parameters and the per-call addition to the rounding factor. -/
+def steinerTraceThinControlsExtraPolynomial (n m p : ℕ) : ℕ := 7*(n+m)+19+(p+1)*4
+
+theorem completeFinSteinerReplayWithMeasuredThinControlsWork_prefixes {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let out := completeFinSteinerReplayWithMeasuredThinControlsWork G raw same height m hm bits D
+    let base := out.1.1.1
+    base.1.1.map Prod.fst = D.inits.map (completeSteinerRunWithBitBudget G height bits) ∧
+      out.2.2 = (completeFinSteinerReplayWithThinRowWork G raw same height m hm bits D).2.2 ∧
+      (base.1.1.map Prod.snd).sum+base.1.2.1+base.1.2.2.1+base.1.2.2.2+base.2+out.1.1.2+out.1.2+out.2.1 ≤
+        completeFinSteinerPreparationWorkPolynomial n m raw.length height D.length +
+          finSteinerWeightPlanWorkPolynomial n height + finSteinerReplayIndexWorkPolynomial n raw.length +
+          (steinerTraceEarlySeedRankWorkPolynomial n height D.length+11*m+21) +
+          (steinerTracePhaseUnionWorkPolynomial n m height D.length+11*m+21) +
+          finArcRowsWordBudget n raw.length+8*n+6+finForestNetworkPairKeysWordPolynomial n height+3 +
+          steinerTraceEarlyHistoryExtraPolynomial n height D.length + finSteinerForestDepthWordPolynomial n height +
+          steinerTraceMetricResidualRowsExtraPolynomial n raw.length height D.length +
+          steinerTraceThinServiceExtraPolynomial n m D.length + (7*n+12) +
+          steinerTraceThinControlsExtraPolynomial n m D.length := by
+  obtain ⟨records,setup,index,calls,replay⟩ := completeFinSteinerReplayWithMeasuredThinControlsWork_compare G raw same height m hm bits D
+  obtain ⟨graphs,counts,work⟩ := completeFinSteinerReplayWithMeasuredTrialCountWork_prefixes G raw same height m hm bits D feasible
+  have thinWork := finThinReplayControlsWithWordWork_bound n m
+  dsimp only
+  rw [records,setup,index,calls]
+  refine ⟨graphs,counts,?_⟩
+  unfold steinerTraceThinControlsExtraPolynomial
+  omega
+
 end OnlineReachabilityPreservers
