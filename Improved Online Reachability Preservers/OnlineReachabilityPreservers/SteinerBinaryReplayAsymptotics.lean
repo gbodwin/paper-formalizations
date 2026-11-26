@@ -1,4 +1,4 @@
-import OnlineReachabilityPreservers.SteinerBinaryReplaySizeWork
+import OnlineReachabilityPreservers.SteinerBinaryReplayResultWork
 import OnlineReachabilityPreservers.SteinerIntegerBounds
 import Lean.Elab.Tactic
 
@@ -184,6 +184,27 @@ theorem completeFinSteinerReplayWithBinaryPhasesWork_polynomial (height : ℕ) :
   refine ⟨C,k,?_⟩
   intro n G raw same bits D feasible
   have tally := (completeFinSteinerReplayWithBinaryPhasesWork_input_sizes G raw same height G.card rfl bits D feasible).2.2
+  have supplied := steinerBitBudget_polynomial G height
+  simp only [Fintype.card_fin] at supplied
+  exact (Nat.add_le_add tally supplied).trans (work ⟨n,G.card,raw.length,D.length⟩)
+
+set_option maxHeartbeats 3000000 in
+/-- The metered final result and its prescribed fair-bit supply obey a
+polynomial bound at any fixed forest height. -/
+theorem finSteinerBinaryFinalGraphWithWork_polynomial (height : ℕ) :
+    ∃ C k : ℕ, ∀ {n : ℕ} (G : Arcs (Fin n)) (raw : List (Fin n × Fin n)) (same : raw.toFinset = G)
+      (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)),
+      (∀ d ∈ D, Reach G d.1 d.2) →
+      (finSteinerBinaryFinalGraphWithWork G raw same height bits D).2+steinerBitBudget G height ≤
+        C*(n+G.card+raw.length+D.length+1)^k := by
+  have bound : ReplayPolynomialBound (fun s =>
+    finSteinerBinaryFinalGraphWorkBudget s.vertices s.arcs s.rawLength height s.demands+
+      completeSteinerSeedPolynomial s.vertices s.arcs height*s.arcs) := by
+    bound_replay_polynomial
+  obtain ⟨C,k,work⟩ := bound
+  refine ⟨C,k,?_⟩
+  intro n G raw same bits D feasible
+  have tally := (finSteinerBinaryFinalGraphWithWork_spec G raw same height bits D feasible).2
   have supplied := steinerBitBudget_polynomial G height
   simp only [Fintype.card_fin] at supplied
   exact (Nat.add_le_add tally supplied).trans (work ⟨n,G.card,raw.length,D.length⟩)

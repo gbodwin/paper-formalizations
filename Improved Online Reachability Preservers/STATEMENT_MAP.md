@@ -1332,6 +1332,13 @@ and [keeps every edge bought on an earlier prefix](OnlineReachabilityPreservers/
 The [finite-seed expected bound](OnlineReachabilityPreservers/SteinerBinaryReplayCompetitive.lean#L56)
 applies directly to this executable graph. It uses one fixed feasible trace
 and any serving offline subgraph.
+The [metered final-result entry](OnlineReachabilityPreservers/SteinerBinaryReplayResultWork.lean#L50)
+counts the input arcs once and folds over the replay records to find the
+last graph and sum the recorded search fields. Its
+[graph and tally theorem](OnlineReachabilityPreservers/SteinerBinaryReplayResultWork.lean#L68)
+includes both passes. The [expected bound](OnlineReachabilityPreservers/SteinerBinaryReplayResultWork.lean#L111)
+and the [fixed-height work and bit bound](OnlineReachabilityPreservers/SteinerBinaryReplayAsymptotics.lean#L194)
+apply to this entry point.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

@@ -535,6 +535,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   applies Theorem 21 to the final graph returned by this replay. Uniform
   fixed-length seeds give the claimed expected edge bound on every fixed
   feasible trace, against any offline subgraph that serves it.
+  The [metered final result](OnlineReachabilityPreservers/SteinerBinaryReplayResultWork.lean#L68)
+  also charges for counting the input arcs and scanning the retained
+  records to return the final graph. Its recorded work and fair-bit supply
+  obey a [fixed-height polynomial](OnlineReachabilityPreservers/SteinerBinaryReplayAsymptotics.lean#L194).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
