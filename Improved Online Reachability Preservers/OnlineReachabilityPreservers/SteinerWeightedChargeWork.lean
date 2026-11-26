@@ -557,6 +557,291 @@ theorem weightedNetworkRunWithHistoryWork_charge_le (keys : List (V × V)) (dist
   exact (weightedChargeHistoryWithWordWork_spec initial e history ((Fintype.card V)^2)
     (fun cut _ => shape cut)).2.1.trans (Nat.add_le_add (initialLoad e) length)
 
+private def unitFlowFromRoutes (paths : List (List (V × V))) : ArcFlow V :=
+  paths.foldr (fun path flow => augmentArcFlow flow path.toFinset) (fun _ => 0)
+
+private def readUnitFlowFromRoutesWithWordWork (key : V × V) : List (List (V × V)) → ℤ × ℕ
+  | [] => (0,3)
+  | path::earlier =>
+    let forward := memScanWithWordWork key path
+    let backward := memScanWithWordWork key.swap path
+    let past := readUnitFlowFromRoutesWithWordWork key earlier
+    (past.1+(if forward.1 then 1 else 0)-(if backward.1 then 1 else 0),
+      past.2+forward.2+backward.2+10)
+
+omit [Fintype V] in
+private theorem readUnitFlowFromRoutesWithWordWork_spec (key : V × V) (paths : List (List (V × V)))
+    (n : ℕ) (bounded : ∀ path ∈ paths, path.length ≤ n) :
+    let out := readUnitFlowFromRoutesWithWordWork key paths
+    out.1 = unitFlowFromRoutes paths key ∧ out.2 ≤ paths.length*(4*n+12)+3 := by
+  induction paths with
+  | nil => simp [readUnitFlowFromRoutesWithWordWork,unitFlowFromRoutes]
+  | cons path earlier ih =>
+    obtain ⟨same,work⟩ := ih (fun p on => bounded p (List.mem_cons_of_mem _ on))
+    obtain ⟨forward,readForward⟩ := memScanWithWordWork_spec key path
+    obtain ⟨backward,readBack⟩ := memScanWithWordWork_spec key.swap path
+    have length := bounded path List.mem_cons_self
+    refine ⟨?_,?_⟩
+    · change (readUnitFlowFromRoutesWithWordWork key earlier).1+
+          (if (memScanWithWordWork key path).1 then 1 else 0)-
+          (if (memScanWithWordWork key.swap path).1 then 1 else 0) =
+        unitFlowFromRoutes (path::earlier) key
+      rw [same,forward,backward]
+      change _ =
+        unitFlowFromRoutes earlier key+(if key ∈ path.toFinset then 1 else 0)-
+          (if key.swap ∈ path.toFinset then 1 else 0)
+      simp
+    · simp only [readUnitFlowFromRoutesWithWordWork,List.length_cons]
+      rw [Nat.succ_mul earlier.length (4*n+12)]
+      omega
+
+private def residualCapacityRowsWithWordWork (paths : List (List (V × V))) :
+    List ((V × V) × ℤ) → List (V × V) × ℕ
+  | [] => ([],3)
+  | row::rows =>
+    let current := readUnitFlowFromRoutesWithWordWork row.1 paths
+    let rest := residualCapacityRowsWithWordWork paths rows
+    let kept := if current.1 < row.2 then row.1::rest.1 else rest.1
+    (kept,current.2+rest.2+10)
+
+omit [Fintype V] in
+private theorem residualCapacityRowsWithWordWork_spec (paths : List (List (V × V)))
+    (rows : List ((V × V) × ℤ)) (n : ℕ) (bounded : ∀ path ∈ paths, path.length ≤ n) :
+    let out := residualCapacityRowsWithWordWork paths rows
+    (∀ e, e ∈ out.1 ↔ ∃ row ∈ rows, row.1 = e ∧ unitFlowFromRoutes paths e < row.2) ∧
+      out.1.length ≤ rows.length ∧ out.2 ≤ rows.length*(paths.length*(4*n+12)+13)+3 := by
+  induction rows with
+  | nil => simp [residualCapacityRowsWithWordWork]
+  | cons row rows ih =>
+    obtain ⟨same,work⟩ := readUnitFlowFromRoutesWithWordWork_spec row.1 paths n bounded
+    obtain ⟨existing,size,spent⟩ := ih
+    have fee : (residualCapacityRowsWithWordWork paths (row::rows)).2 ≤
+        (row::rows).length*(paths.length*(4*n+12)+13)+3 := by
+      simp only [residualCapacityRowsWithWordWork,List.length_cons]
+      rw [Nat.succ_mul rows.length (paths.length*(4*n+12)+13)]
+      omega
+    refine ⟨?_,?_,fee⟩
+    · intro e
+      simp only [residualCapacityRowsWithWordWork,same]
+      by_cases pass : unitFlowFromRoutes paths row.1 < row.2
+      · simp only [pass,ite_true,List.mem_cons,existing]
+        constructor
+        · rintro (rfl | ⟨r,member,eq,flow⟩)
+          · exact ⟨row,Or.inl rfl,rfl,pass⟩
+          · exact ⟨r,Or.inr member,eq,flow⟩
+        · rintro ⟨r,(rfl | member),eq,flow⟩
+          · exact Or.inl eq.symm
+          · exact Or.inr ⟨r,member,eq,flow⟩
+      · simp only [pass,ite_false,existing,List.mem_cons]
+        constructor
+        · rintro ⟨r,member,eq,flow⟩
+          exact ⟨r,Or.inr member,eq,flow⟩
+        · rintro ⟨r,(rfl | member),eq,flow⟩
+          · exact (pass (eq.symm ▸ flow)).elim
+          · exact ⟨r,member,eq,flow⟩
+    · simp only [residualCapacityRowsWithWordWork,same,List.length_cons]
+      split
+      · simpa only [List.length_cons] using Nat.succ_le_succ size
+      · exact size.trans (Nat.le_succ _)
+
+private theorem residualCapacityRowsWithWordWork_set (paths : List (List (V × V)))
+    (keys : List (V × V)) (complete : ∀ e, e ∈ keys) (capacity : ArcFlow V)
+    (n : ℕ) (bounded : ∀ path ∈ paths, path.length ≤ n) :
+    (residualCapacityRowsWithWordWork paths (keys.map (fun e => (e,capacity e)))).1.toFinset =
+      residualArcs capacity (unitFlowFromRoutes paths) := by
+  ext e
+  rw [List.mem_toFinset,(residualCapacityRowsWithWordWork_spec paths _ n bounded).1 e]
+  simp only [residualArcs,mem_filter,mem_univ,true_and,List.mem_map]
+  constructor
+  · rintro ⟨row,⟨x,_,rfl⟩,rfl,flow⟩
+    exact flow
+  · intro flow
+    exact ⟨(e,capacity e),⟨e,complete e,rfl⟩,rfl,flow⟩
+
+private def augmentFromCapacityRowsWithWordWork (rows : List ((V × V) × ℤ)) (s t : V)
+    (depth : ℕ) : ℕ → List (List (V × V)) → (List (List (V × V)) × ℕ) × ℕ
+  | 0, paths => ((paths,0),3)
+  | fuel+1, paths =>
+    let graph := residualCapacityRowsWithWordWork paths rows
+    let route := routePathListWithWordWork graph.1 s t depth
+    match route.1 with
+    | none => ((paths,0),graph.2+route.2+7)
+    | some edges =>
+      let later := augmentFromCapacityRowsWithWordWork rows s t depth fuel (edges::paths)
+      ((later.1.1,later.1.2+1),graph.2+route.2+later.2+12)
+
+private def residualPathRowsWordBudget (n supply : ℕ) : ℕ :=
+  n^2*(supply*(4*n+12)+13)+3
+
+private def weightedResidualRowsStepWordBudget (n supply : ℕ) : ℕ :=
+  residualPathRowsWordBudget n supply + routePathListWordBudget n (n^2) + 12
+
+private theorem routePath_length_le_vertices (G : Arcs V) (s t : V) (edges : List (V × V))
+    (chosen : routePath G s t = some edges) : edges.length ≤ Fintype.card V := by
+  have simple := (routePath_some chosen).2
+  have large := Finset.card_le_univ (edges.map Prod.fst ++ [t]).toFinset
+  rw [List.toFinset_card_of_nodup simple,List.length_append,List.length_map,List.length_singleton] at large
+  exact (Nat.le_succ _).trans large
+
+private theorem augmentFromCapacityRowsWithWordWork_spec
+    (keys : List (V × V)) (complete : ∀ e, e ∈ keys)
+    (size : keys.length ≤ (Fintype.card V)^2) (cap : ArcFlow V) (s t : V) (supply fuel : ℕ)
+    (paths : List (List (V × V))) (room : paths.length+fuel ≤ supply)
+    (bounded : ∀ path ∈ paths, path.length ≤ Fintype.card V) :
+    let n := Fintype.card V
+    let out := augmentFromCapacityRowsWithWordWork (keys.map fun e => (e,cap e)) s t n fuel paths
+    (unitFlowFromRoutes out.1.1,out.1.2) = unitAugmentations cap s t fuel (unitFlowFromRoutes paths) ∧
+      out.1.1.length ≤ paths.length+fuel ∧
+      (∀ path ∈ out.1.1, path.length ≤ n) ∧ out.2 ≤ fuel*weightedResidualRowsStepWordBudget n supply+3 := by
+  let n := Fintype.card V
+  let rows := keys.map (fun e => (e,cap e))
+  let Budget := weightedResidualRowsStepWordBudget n supply
+  induction fuel generalizing paths with
+  | zero => simpa [augmentFromCapacityRowsWithWordWork,unitAugmentations] using bounded
+  | succ fuel ih =>
+    let graph := residualCapacityRowsWithWordWork paths rows
+    let route := routePathListWithWordWork graph.1 s t n
+    have graphExact : graph.1.toFinset = residualArcs cap (unitFlowFromRoutes paths) :=
+      residualCapacityRowsWithWordWork_set paths keys complete cap n bounded
+    obtain ⟨_,length,graphWork⟩ := residualCapacityRowsWithWordWork_spec paths rows n bounded
+    change graph.1.length ≤ rows.length at length
+    change graph.2 ≤ rows.length*(paths.length*(4*n+12)+13)+3 at graphWork
+    have rowSize : rows.length ≤ n^2 := (List.length_map _).trans_le size
+    have inside : paths.length ≤ supply := by omega
+    have work : graph.2 ≤ residualPathRowsWordBudget n supply :=
+      graphWork.trans (Nat.add_le_add_right (Nat.mul_le_mul rowSize
+        (Nat.add_le_add_right (Nat.mul_le_mul_right _ inside) 13)) 3)
+    obtain ⟨same,spent⟩ := routePathListWithWordWork_spec graph.1 s t
+    change route.1 = routePath graph.1.toFinset s t at same
+    rw [graphExact] at same
+    have routing : route.2 ≤ routePathListWordBudget n (n^2) :=
+      spent.trans (routePathListWordBudget_mono_arcs n (length.trans rowSize))
+    change let out := augmentFromCapacityRowsWithWordWork rows s t n (fuel+1) paths
+      (unitFlowFromRoutes out.1.1,out.1.2) = unitAugmentations cap s t (fuel+1) (unitFlowFromRoutes paths) ∧
+        out.1.1.length ≤ paths.length+(fuel+1) ∧ (∀ p ∈ out.1.1, p.length ≤ n) ∧ out.2 ≤ (fuel+1)*Budget+3
+    cases chosen : route.1 with
+    | none =>
+      have reference := same.symm.trans chosen
+      have unfoldStep : augmentFromCapacityRowsWithWordWork rows s t n (fuel+1) paths =
+          ((paths,0),graph.2+route.2+7) := by
+        rw [augmentFromCapacityRowsWithWordWork]
+        change (match route.1 with
+          | none => ((paths,0),graph.2+route.2+7)
+          | some edges =>
+            let later := augmentFromCapacityRowsWithWordWork rows s t n fuel (edges::paths)
+            ((later.1.1,later.1.2+1),graph.2+route.2+later.2+12)) = _
+        rw [chosen]
+      simp only [unfoldStep,unitAugmentations,reference,true_and]
+      refine ⟨Nat.le_add_right _ _,bounded,?_⟩
+      rw [Nat.succ_mul fuel Budget]
+      have step : graph.2+route.2+12 ≤ Budget := Nat.add_le_add_right (Nat.add_le_add work routing) 12
+      omega
+    | some path =>
+      have reference := same.symm.trans chosen
+      have routeSize := routePath_length_le_vertices _ _ _ _ reference
+      have allowed : ∀ p ∈ path::paths, p.length ≤ n := by
+        intro p on
+        rcases List.mem_cons.mp on with rfl | old
+        · exact routeSize
+        · exact bounded p old
+      have more : (path::paths).length+fuel ≤ supply := by simp only [List.length_cons]; omega
+      let later := augmentFromCapacityRowsWithWordWork rows s t n fuel (path::paths)
+      obtain ⟨sameRest,restLength,restOk,restWork⟩ := ih (path::paths) more allowed
+      have next : unitFlowFromRoutes (path::paths) = augmentArcFlow (unitFlowFromRoutes paths) path.toFinset := rfl
+      rw [next] at sameRest
+      have unfoldStep : augmentFromCapacityRowsWithWordWork rows s t n (fuel+1) paths =
+          ((later.1.1,later.1.2+1),graph.2+route.2+later.2+12) := by
+        rw [augmentFromCapacityRowsWithWordWork]
+        change (match route.1 with
+          | none => ((paths,0),graph.2+route.2+7)
+          | some edges =>
+            let later := augmentFromCapacityRowsWithWordWork rows s t n fuel (edges::paths)
+            ((later.1.1,later.1.2+1),graph.2+route.2+later.2+12)) = _
+        rw [chosen]
+      simp only [unfoldStep,unitAugmentations,reference]
+      refine ⟨?_,?_,restOk,?_⟩
+      · have augRest : (unitFlowFromRoutes later.1.1,later.1.2) =
+            unitAugmentations cap s t fuel (augmentArcFlow (unitFlowFromRoutes paths) path.toFinset) := sameRest
+        exact congrArg (fun r : ArcFlow V × ℕ => (r.1,r.2+1)) augRest
+      · exact restLength.trans_eq (by simp only [List.length_cons]; omega)
+      · change later.2 ≤ fuel*Budget+3 at restWork
+        rw [Nat.succ_mul fuel Budget]
+        have step : graph.2+route.2+12 ≤ Budget := Nat.add_le_add_right (Nat.add_le_add work routing) 12
+        omega
+
+/-- Search residual capacity rows using a supplied vertex count and an
+explicit history of augmenting paths. -/
+def findLowCapacityCutFromHistoryRowsWithWordWork (rows : CapacityRows V) (s t : V)
+    (depth supply : ℕ) : Option (Finset V) × ℕ :=
+  let run := augmentFromCapacityRowsWithWordWork rows.val s t depth supply []
+  if run.1.2 = supply then (none,run.2+6)
+  else
+    let residual := residualCapacityRowsWithWordWork run.1.1 rows.val
+    let side := sourceSideFromResidualListWithWordWork residual.1 s depth
+    (some side.1,run.2+residual.2+side.2+10)
+
+def weightedResidualRowsSearchWordBudget (n supply : ℕ) : ℕ :=
+  supply*weightedResidualRowsStepWordBudget n supply+residualPathRowsWordBudget n supply+
+    reachInListWordBudget n (n^2)+7*n^2+19
+
+theorem findLowCapacityCutFromHistoryRowsWithWordWork_spec (rows : CapacityRows V)
+    (keys : List (V × V)) (unique : keys.Nodup) (complete : ∀ e, e ∈ keys)
+    (capacity : ArcFlow V) (exactRows : rows.val = keys.map (fun e => (e,capacity e)))
+    (s t : V) (depth supply : ℕ) (size : depth = Fintype.card V) :
+    let out := findLowCapacityCutFromHistoryRowsWithWordWork rows s t depth supply
+    out.1 = findLowCapacityCut capacity s t supply ∧
+      out.2 ≤ weightedResidualRowsSearchWordBudget depth supply := by
+  subst depth
+  let n := Fintype.card V
+  let run := augmentFromCapacityRowsWithWordWork rows.val s t n supply []
+  have count : keys.length ≤ n^2 := by
+    rw [← List.toFinset_card_of_nodup unique]
+    simpa only [n,pow_two,Fintype.card_prod] using Finset.card_le_univ keys.toFinset
+  obtain ⟨aug,length,paths,work⟩ := augmentFromCapacityRowsWithWordWork_spec keys complete count capacity s t supply supply []
+    (by simp) (by simp)
+  rw [← exactRows] at aug length paths work
+  have equal : (unitFlowFromRoutes run.1.1,run.1.2) = unitAugmentations capacity s t supply (fun _ => 0) := aug
+  have small : run.1.1.length ≤ supply := by simpa only [List.length_nil,Nat.zero_add] using length
+  have cost : run.2 ≤ supply*weightedResidualRowsStepWordBudget n supply+3 := work
+  let res := residualCapacityRowsWithWordWork run.1.1 rows.val
+  have resExact : res.1.toFinset = residualArcs capacity (unitFlowFromRoutes run.1.1) := by
+    rw [show res = residualCapacityRowsWithWordWork run.1.1 rows.val from rfl,exactRows]
+    exact residualCapacityRowsWithWordWork_set run.1.1 keys complete capacity n paths
+  obtain ⟨_,len,scan⟩ := residualCapacityRowsWithWordWork_spec run.1.1 rows.val n paths
+  have rowSize : rows.val.length ≤ n^2 := by rw [exactRows,List.length_map]; exact count
+  have resLen : res.1.length ≤ n^2 := len.trans rowSize
+  have resWork : res.2 ≤ residualPathRowsWordBudget n supply := scan.trans
+    (Nat.add_le_add_right (Nat.mul_le_mul rowSize (Nat.add_le_add_right (Nat.mul_le_mul_right _ small) 13)) 3)
+  let side := sourceSideFromResidualListWithWordWork res.1 s n
+  obtain ⟨same,sideWork⟩ := sourceSideFromResidualListWithWordWork_spec res.1 s
+  have sideEq : side.1 = residualReach capacity (unitFlowFromRoutes run.1.1) s := by
+    change side.1 = reaches (reverseArcs (residualArcs capacity (unitFlowFromRoutes run.1.1))) s
+    exact same.trans (by rw [resExact])
+  have sideCost : side.2 ≤ reachInListWordBudget n (n^2)+7*n^2+6 := by
+    apply sideWork.trans
+    unfold reachInListWordBudget
+    gcongr
+  have countEq := congrArg Prod.snd equal
+  have flowEq := congrArg Prod.fst equal
+  change run.1.2 = (unitAugmentations capacity s t supply (fun _ => 0)).2 at countEq
+  change unitFlowFromRoutes run.1.1 = (unitAugmentations capacity s t supply (fun _ => 0)).1 at flowEq
+  unfold findLowCapacityCutFromHistoryRowsWithWordWork findLowCapacityCut
+  dsimp only
+  rw [← show run = augmentFromCapacityRowsWithWordWork rows.val s t n supply [] from rfl, ← countEq]
+  by_cases full : run.1.2 = supply
+  · simp only [full,ite_true,true_and]
+    change run.2+6 ≤ weightedResidualRowsSearchWordBudget n supply
+    exact (Nat.add_le_add_right cost 6).trans (by unfold weightedResidualRowsSearchWordBudget; omega)
+  · simp only [full,ite_false,Option.some.injEq]
+    refine ⟨sideEq.trans (congrArg (fun f => residualReach capacity f s) flowEq),?_⟩
+    change run.2+res.2+side.2+10 ≤ weightedResidualRowsSearchWordBudget n supply
+    calc
+      _ ≤ (supply*weightedResidualRowsStepWordBudget n supply+3)+residualPathRowsWordBudget n supply+
+          (reachInListWordBudget n (n^2)+7*n^2+6)+10 :=
+        Nat.add_le_add_right (Nat.add_le_add (Nat.add_le_add cost resWork) sideCost) 10
+      _ = _ := by unfold weightedResidualRowsSearchWordBudget; omega
+
+
 end Capacity
 
 end OnlineReachabilityPreservers

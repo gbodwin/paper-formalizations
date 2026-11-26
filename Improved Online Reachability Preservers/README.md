@@ -349,6 +349,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   link selection. Remaining work includes parts of weighted search and
   its vertex enumeration, later service steps, and bit and native costs.
   [Complete replay with list-backed trials](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2172).
+  A standalone weighted residual search uses the stored capacity rows and
+  an explicit vertex count. It measures the flow reads from the retained
+  augmenting paths, the residual row scans, the route searches, and the
+  final source-side search. It returns the same cut decision and vertex set.
+  [Measured weighted residual search](OnlineReachabilityPreservers/SteinerWeightedChargeWork.lean#L787).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

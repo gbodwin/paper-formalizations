@@ -875,6 +875,17 @@ includes the trial, tier, and link assembly. Parts of weighted search,
 including its vertex enumeration, later service steps, and bit and
 native execution costs remain open.
 
+The [standalone weighted residual search](OnlineReachabilityPreservers/SteinerWeightedChargeWork.lean#L787)
+uses the supplied vertex count as its search depth. It keeps the chosen
+augmenting paths and computes each residual flow entry using forward and
+reverse membership scans. It reuses the capacity rows for every route
+search and for the terminal source-side search. When the rows contain
+the reference capacity for every ordered pair and the depth equals the
+vertex count, its cut decision and vertex set agree with the reference.
+The word bound is polynomial in the vertex count and numeric supply.
+The complete replay still uses the preceding weighted separator at this
+checkpoint.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
