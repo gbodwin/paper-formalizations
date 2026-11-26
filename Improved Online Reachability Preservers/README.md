@@ -391,6 +391,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   lists. Its recorded bit-list work is polynomial in the two input
   lengths. The [binary trial-count evaluator](OnlineReachabilityPreservers/SteinerEarlyBitArithmeticWork.lean#L68)
   computes the early trial count with a polynomial bit-list tally as well.
+  The [binary initializer](OnlineReachabilityPreservers/SteinerThinBitInitializationWork.lean#L85)
+  builds the actual zero load table from binary dimensions. Its bound counts
+  the cells, the numeric payload width, and the input word lengths.
   The [binary indexed load access](OnlineReachabilityPreservers/SteinerBinaryIndexedWork.lean#L112)
   agrees with thin load table reads and replacements. Its bound is polynomial
   in the address word lengths and the number of supplied cells. The

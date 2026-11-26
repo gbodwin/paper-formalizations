@@ -1006,6 +1006,14 @@ checks exact equality of the rounded arc sets. Its tally includes a list
 walk and a binary comparison per row. The finite table and binary inputs
 are supplied.
 
+The [binary load initializer](OnlineReachabilityPreservers/SteinerThinBitInitializationWork.lean#L85)
+constructs the fixed-width zero payload and all \(n^2\) row-major cells
+from binary dimensions. Doubling the partial list directly follows the
+[binary repetition bound](OnlineReachabilityPreservers/SteinerThinBitInitializationWork.lean#L30).
+The measured work is polynomial in the count of cells, the numeric
+payload width, and the lengths of both dimension words. The shared zero
+payload is constructed even when there are no cells.
+
 The [binary-label search](OnlineReachabilityPreservers/SteinerBinaryReachWork.lean#L152)
 uses bit-by-bit equality on supplied encoded arcs. At any depth the output
 is the exact ordered list used by the word-work search, encoded vertex by
