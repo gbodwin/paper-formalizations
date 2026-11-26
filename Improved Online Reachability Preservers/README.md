@@ -402,8 +402,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   values. The [binary threshold scan](OnlineReachabilityPreservers/SteinerThinBitScanWork.lean#L95)
   combines these tests with exact encoded load reads. It returns the same
   rounded arc set as the word-work evaluator on duplicate-free encoded rows.
-  Input encoding, table conversion, and the full replay's bit and native costs
-  remain open.
+  The [binary-label reachability evaluator](OnlineReachabilityPreservers/SteinerBinaryReachWork.lean#L185)
+  agrees with the list demand test given injective bounded-width labels.
+  It charges comparisons bit by bit and preserves the order of visited
+  vertex lists. Input encoding, table conversion, and the full replay's
+  bit and native costs remain open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

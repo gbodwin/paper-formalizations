@@ -332,13 +332,13 @@ with a polynomial key-comparison bound on general digraphs. The original
 raw arc list may contain duplicates. These comparison theorems count abstract
 key tests in supplied list representations.
 
-The [reverse-search tally](OnlineReachabilityPreservers/DeterministicListWork.lean#L585)
+The [reverse-search tally](OnlineReachabilityPreservers/DeterministicListWork.lean#L622)
 also charges list-cell inspection and construction and loop control. The
 [SCC preparation tally](OnlineReachabilityPreservers/SccListWork.lean#L405)
 extends this model to the transpose, component labels, and exact
 duplicate-free quotient.
 
-The [forward-run tally](OnlineReachabilityPreservers/DeterministicListWork.lean#L716)
+The [forward-run tally](OnlineReachabilityPreservers/DeterministicListWork.lean#L753)
 adds successor selection and purchases. The
 [sink](OnlineReachabilityPreservers/SccLiftListWork.lean#L976) and
 [source](OnlineReachabilityPreservers/SccLiftListWork.lean#L999) prefix theorems
@@ -1004,7 +1004,16 @@ of passing rows. On duplicate-free arc rows the
 [reference comparison](OnlineReachabilityPreservers/SteinerThinBitScanWork.lean#L95)
 checks exact equality of the rounded arc sets. Its tally includes a list
 walk and a binary comparison per row. The finite table and binary inputs
-are supplied, and the reachability check on the rounded arcs is separate.
+are supplied.
+
+The [binary-label search](OnlineReachabilityPreservers/SteinerBinaryReachWork.lean#L152)
+uses bit-by-bit equality on supplied encoded arcs. At any depth the output
+is the exact ordered list used by the word-work search, encoded vertex by
+vertex. The [Boolean demand test](OnlineReachabilityPreservers/SteinerBinaryReachWork.lean#L185)
+agrees with its word-work counterpart. Given injective labels of width at
+most \(w\), each sweep costs at most \(1+m(14+2(5w+8)n)\) in the
+list-and-bit tally. Label construction, counter representation, and
+integration with the thin-service replay remain separate.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

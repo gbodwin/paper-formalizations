@@ -74,6 +74,36 @@ omit [Fintype V] in
 private def reverseSweepWithWordWork (reachable : List V) : List (V × V) → List V → List V × ℕ :=
   reverseSweepWithMeasure true reachable
 
+/-- Add the source of one arc if its target is already reachable and its
+source has not yet been recorded in this sweep. -/
+def reversePredecessorStep {A : Type*} [DecidableEq A] (reachable seen : List A) (arc : A × A) : List A :=
+  if arc.2 ∈ reachable ∧ arc.1 ∉ seen then arc.1 :: seen else seen
+
+theorem reversePredecessorStep_nodup {A : Type*} [DecidableEq A] (reachable seen : List A) (arc : A × A)
+    (simple : seen.Nodup) : (reversePredecessorStep reachable seen arc).Nodup := by
+  unfold reversePredecessorStep
+  split
+  · rename_i condition
+    exact List.nodup_cons.mpr ⟨condition.2,simple⟩
+  · exact simple
+
+omit [Fintype V] in
+private theorem reverseSweepWithWordWork_output (reachable : List V) (arcs : List (V × V)) (seen : List V) :
+    (reverseSweepWithWordWork reachable arcs seen).1 = arcs.foldl (reversePredecessorStep reachable) seen := by
+  induction arcs generalizing seen with
+  | nil => rfl
+  | cons arc rest ih =>
+    unfold reverseSweepWithWordWork
+    rw [reverseSweepWithMeasure]
+    simp only [List.foldl_cons,(memScanWithChecks_spec arc.2 reachable).1,
+      (memScanWithChecks_spec arc.1 seen).1]
+    have step : (if decide (arc.2 ∈ reachable) && !(decide (arc.1 ∈ seen)) then arc.1 :: seen else seen) =
+        reversePredecessorStep reachable seen arc := by
+      by_cases target : arc.2 ∈ reachable <;> by_cases source : arc.1 ∈ seen <;>
+        simp [reversePredecessorStep,target,source]
+    rw [step]
+    exact ih _
+
 omit [Fintype V] in
 private theorem prependOrKeep_spec (seen : List V) (u : V) (yes : Prop) [Decidable yes]
     (simple : seen.Nodup) :
@@ -143,6 +173,13 @@ def reachInListWithWordWork (arcs : List (V × V)) (t : V) : ℕ → List V × �
     let prior := reachInListWithWordWork arcs t k
     let sweep := reverseSweepWithWordWork prior.1 arcs prior.1
     (sweep.1, 4 + prior.2 + sweep.2)
+
+omit [Fintype V] in
+/-- A word-work sweep preserves the exact vertex order of the predecessor fold. -/
+theorem reachInListWithWordWork_succ_output (arcs : List (V × V)) (target : V) (depth : ℕ) :
+    let seen := (reachInListWithWordWork arcs target depth).1
+    (reachInListWithWordWork arcs target (depth+1)).1 = arcs.foldl (reversePredecessorStep seen) seen :=
+  reverseSweepWithWordWork_output _ arcs _
 
 theorem reachInListWithChecks_spec (arcs : List (V × V)) (t : V) (k : ℕ) :
     let out := reachInListWithChecks arcs t k
