@@ -1227,8 +1227,12 @@ table preparation and the bounded flow computation. Pair states and free
 rows are supplied. The [paid table advance](OnlineReachabilityPreservers/SteinerBinaryWeightedUpdateWork.lean#L138)
 adds one reference charge to each selected paid state. Membership makes
 repeated cut entries count once. The update keeps the ordered labels and
-proves the new word widths and a work bound for this one cut. Running the
-two operations repeatedly from the changing table remains to be integrated.
+proves the new word widths and a work bound for this one cut. The [weighted loop](OnlineReachabilityPreservers/SteinerBinaryWeightedLoopWork.lean#L62)
+uses each updated table for the next separator call. With the supplied
+fuel for a single demand, the final charges and chronological paid cuts
+agree with the reference. Its bound includes each cut and update and the
+final probe when reached. Preparation and the whole weighted trace still
+need integration at this layer.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
