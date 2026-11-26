@@ -346,8 +346,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   The complete replay shares the same list with the expansion step.
   Its prefix graphs and evaluation counts agree on every trace, and the
   feasible-prefix bound includes trial and tier enumeration and forest
-  link selection. Remaining work includes parts of weighted search and
-  its vertex enumeration, later service steps, and bit and native costs.
+  link selection.
   [Complete replay with list-backed trials](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2172).
   A standalone weighted residual search uses the stored capacity rows and
   an explicit vertex count. It measures the flow reads from the retained
@@ -359,6 +358,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   the reference charges and accepted cuts in order. The proof bounds the
   run and the cost and magnitude of each charge read.
   [Weighted cover with residual rows](OnlineReachabilityPreservers/SteinerWeightedChargeWork.lean#L1018).
+  The complete replay counts the forest vertex rows once and supplies
+  the exact weighted-network depth to each early metric. The same
+  accepted cuts give the same charge values and lookup costs, and all
+  prefix graphs and evaluation counts agree with the earlier replay.
+  The feasible-prefix bound includes the depth setup and weighted
+  residual searches. The trial-count calculation still enumerates the
+  original vertices at each reached metric. This enumeration, later
+  service steps, and bit and native costs remain outside the bound.
+  [Complete replay with measured weighted search](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2233).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

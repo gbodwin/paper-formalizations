@@ -951,4 +951,112 @@ theorem prepareFinSteinerWeightedForSeedWithMetricTrialRowsWork_spec {n : ℕ} (
   dsimp only [F]
   ring
 
+/-- Count the forest vertex rows once and reuse the weighted-network depth
+in every residual search. -/
+def prepareFinSteinerWeightedForSeedWithMetricResidualRowsWork {n : ℕ} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :
+    SteinerSeedPreparationWithSeedWork G height × ℕ :=
+  let rows := finForestNetworkRowsWithWordWork n height
+  let valid := finForestNetworkRowsWithWordWork_spec n height
+  let forestSize := rows.vertices.length
+  let depth := 3*forestSize
+  let prepared := prepareFinSteinerWeightedWithPlanAndRows G arcs same height
+    (fun table rowsEq template exact plan consistent forestRows _ forestDistinct =>
+      prepareEarlyDistanceTableForSeedFromWeightsWithMetricResidualRowsWork G height arcs n (by simp) forestRows forestDistinct depth
+        ⟨rows.keys,valid.2.2.2.1⟩ rows.vertices valid.1 table rowsEq template exact plan consistent)
+  (prepared.1,prepared.2+rows.wordWork+4*forestSize+10)
+
+/-- One measured length pass on the prepared forest vertex list. -/
+def finSteinerForestDepthWordPolynomial (n height : ℕ) : ℕ :=
+  4*(2*n*(n+1)^height)+13
+
+def finSteinerEarlyMetricResidualRowsWordPolynomial (n m height p seed : ℕ) : ℕ :=
+  let F := 2*n*(n+1)^height
+  let S := 1+n*F^2
+  let fuel := (S+1)*S+1
+  finSteinerEarlyMetricPrefixAssemblyWordPolynomial n m height p seed +
+    (p+1)*earlyWeightedResidualRowsExtraWordBudget (3*F) (F^2) (F^2) S fuel
+      (forestMetricLabelWordBudget height (n^2)) height (16*(height+1)^2*(n+1)) p seed
+
+theorem finSteinerEarlyMetricResidualRowsWordPolynomial_mono (n m height seed : ℕ) :
+    Monotone (fun p => finSteinerEarlyMetricResidualRowsWordPolynomial n m height p seed) := by
+  intro p q short
+  exact Nat.add_le_add (finSteinerEarlyMetricPrefixAssemblyWordPolynomial_mono n m height seed short)
+    (Nat.mul_le_mul (Nat.add_le_add_right short 1)
+      (earlyWeightedResidualRowsExtraWordBudget_le le_rfl le_rfl le_rfl le_rfl le_rfl le_rfl le_rfl short le_rfl))
+
+theorem prepareFinSteinerWeightedForSeedWithMetricResidualRowsWork_spec {n : ℕ} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :
+    let out := prepareFinSteinerWeightedForSeedWithMetricResidualRowsWork G arcs same height
+    let old := prepareFinSteinerWeightedForSeedWithHistoryWork G arcs same height
+    out.1.1 = old.1.1 ∧ out.1.2.2 = old.1.2.2 ∧ out.2 ≤ old.2+finSteinerForestDepthWordPolynomial n height ∧
+      ∀ (samples : ForestTrialArrayWithSeedWork (Fin n) height (forestScale G height) (earlyTrialCount (Fin n) height))
+        (B : ℕ), (∀ i, forestSampleWorkBound (samples i) B) → ∀ (D : List (Fin n × Fin n)),
+        let result := out.1.2.1 samples D
+        let prior := old.1.2.1 samples D
+        result.1 = prior.1 ∧ result.2.1 ≤ prior.2.1 ∧
+          result.2.2 ≤ finSteinerEarlyMetricResidualRowsWordPolynomial n arcs.length height D.length B := by
+  let inputs := finSteinerTemplateInputsWithWordWork arcs height
+  let correct := finSteinerTemplateInputsWithWordWork_spec G arcs same height
+  let links := arcsFromDistinctList inputs.2.1 correct.2.2.1
+  let exactForest := (arcsFromDistinctList_eq inputs.2.1 correct.2.2.1).trans correct.2.1
+  let read := readDistanceRow inputs.1.1
+  let plan := prepareForestWeightsFromListWithWordWork inputs.2.1 correct.2.2.1 read
+  have planEq := (finWeightsFromTemplateInputs_spec G arcs same height).1
+  let rows := finForestNetworkRowsWithWordWork n height
+  obtain ⟨distinct, all, forestSize, uniqueKeys, allKeys, _, _⟩ := finForestNetworkRowsWithWordWork_spec n height
+  let depth := 3*rows.vertices.length
+  have whole : rows.vertices.toFinset = Finset.univ := by
+    ext t
+    exact iff_of_true (List.mem_toFinset.mpr (all t)) (Finset.mem_univ t)
+  have vertexCount : rows.vertices.length = Fintype.card (HeightForestVertex (Fin n) height) := by
+    rw [← List.toFinset_card_of_nodup distinct,whole,Finset.card_univ]
+  have exactDepth : depth = Fintype.card (ForestNetworkVertex (Fin n) height) := by
+    change 3*rows.vertices.length = _
+    rw [vertexCount]
+    simp [ForestNetworkVertex]
+  have cover : inputs.2.1.toFinset = links := (arcsFromDistinctList_eq inputs.2.1 correct.2.2.1).symm
+  obtain ⟨scales, setup, evaluate⟩ := prepareEarlyDistanceTableForSeedFromWeightsWithMetricResidualRowsWork_spec G height
+    arcs same n (by simp) inputs.2.1 correct.2.2.1 depth exactDepth ⟨rows.keys,uniqueKeys⟩ allKeys rows.vertices distinct all
+    inputs.1 correct.1 (links,inputs.2.2+5) exactForest cover plan.1 planEq
+  refine ⟨scales,setup,?_,fun samples B seedCap D => ?_⟩
+  · dsimp only [prepareFinSteinerWeightedForSeedWithMetricResidualRowsWork,prepareFinSteinerWeightedForSeedWithHistoryWork,
+      prepareFinSteinerWeightedWithPlan,prepareFinSteinerWeightedWithPlanAndRows]
+    rw [(finForestNetworkRowsWithWordWork_keys n height).2]
+    have lengthWork := Nat.mul_le_mul_left 4 forestSize
+    unfold finSteinerForestDepthWordPolynomial
+    omega
+  obtain ⟨graph, search, work⟩ := evaluate samples B seedCap D
+  have scale : plan.1.2.1.1 = forestScale G height :=
+    (prepareFinSteinerWeightedForSeedWithHistoryWork G arcs same height).1.1.property
+  let F := 2*n*(n+1)^height
+  obtain ⟨network,linkBound,paidBound,scaleBound,fuelBound⟩ := finForestPlan_limits G height links read plan.1 planEq scale
+  have trials : earlyTrialCount (Fin n) height ≤ 16*(height+1)^2*(n+1) := by
+    simp only [earlyTrialCount,Fintype.card_fin]
+    gcongr
+    exact Nat.log2_le_self n
+  have freeCount : plan.1.1.2.card ≤ (3*F)^2 := by
+    refine (Finset.card_le_univ _).trans ?_
+    rw [Fintype.card_prod,← pow_two]
+    exact Nat.pow_le_pow_left network 2
+  have attachments := earlyAttachmentWordBudget_le (height := height) forestSize freeCount (le_refl D.length)
+  have common := finSteinerEarlyMetricWordPolynomial_bound G height links read plan.1 planEq scale D.length B
+    (forestMetricLabelWordBudget height (n^2))
+  have templateBound := pairedForestList_length_le G inputs.2.1 correct.2.2.1 correct.2.1
+  have expansion := earlySteinerExpansionAndValidationWordBudget_le (n := n) (m := arcs.length) (h := height) le_rfl templateBound (le_refl D.length)
+  have rounding := earlyWeightedResidualRowsExtraWordBudget_le (h := height) (exactDepth.trans_le network)
+    linkBound paidBound scaleBound fuelBound
+    (le_refl (forestMetricLabelWordBudget height (n^2))) trials (le_refl D.length) (le_refl B)
+  have assembly := earlyPrefixAssemblyWordBudget_le (p := D.length) le_rfl linkBound
+  rw [Nat.mul_add,Nat.mul_add] at work
+  simp only [Fintype.card_fin] at work
+  have combined := Nat.add_le_add
+    (Nat.add_le_add (Nat.add_le_add common (Nat.mul_le_mul_left (D.length+1) attachments))
+      (Nat.mul_le_mul_left (D.length+1) rounding)) (Nat.add_le_add expansion assembly)
+  refine ⟨graph,search,work.trans (combined.trans_eq ?_)⟩
+  unfold finSteinerEarlyMetricResidualRowsWordPolynomial finSteinerEarlyMetricPrefixAssemblyWordPolynomial
+    finSteinerEarlyMetricValidationWordPolynomial finSteinerEarlyMetricLabelWordPolynomial
+  dsimp only [F]
+  ring
+
 end OnlineReachabilityPreservers

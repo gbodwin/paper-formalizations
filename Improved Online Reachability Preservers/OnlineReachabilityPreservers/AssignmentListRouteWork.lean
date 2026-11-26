@@ -73,10 +73,13 @@ def routePathListWithWordWork (G : List (V × V)) (s t : V) (depth : ℕ) :
 def routePathListWordBudget (n m : ℕ) : ℕ :=
   routeArcsListWordBudget n m+reachInListWordBudget n m+(n+1)*(17+n*(2*m+20))+8
 
-theorem routePathListWordBudget_mono_arcs (n : ℕ) : Monotone (routePathListWordBudget n) := by
-  intro a b ordered
+theorem routePathListWordBudget_le {n n' m m' : ℕ} (vertices : n ≤ n') (arcs : m ≤ m') :
+    routePathListWordBudget n m ≤ routePathListWordBudget n' m' := by
   unfold routePathListWordBudget routeArcsListWordBudget hopsListWordBudget reachInListWordBudget
   gcongr
+
+theorem routePathListWordBudget_mono_arcs (n : ℕ) : Monotone (routePathListWordBudget n) :=
+  fun _ _ short => routePathListWordBudget_le le_rfl short
 
 theorem routePathListWithWordWork_spec (G : List (V × V)) (s t : V) :
     let n := Fintype.card V

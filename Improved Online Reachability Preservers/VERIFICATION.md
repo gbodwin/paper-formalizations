@@ -25,7 +25,7 @@ An exact-source replay grants no coverage to a paper statement outside the
   reachable source side. Independent review included all 4,672 route
   evaluations on two- and three-vertex digraphs. Exact hosted CI replayed
   276 project modules and audited 8,027 paper declarations.
-  [Route comparison](OnlineReachabilityPreservers/AssignmentListRouteWork.lean#L264)
+  [Route comparison](OnlineReachabilityPreservers/AssignmentListRouteWork.lean#L267)
   · [Exact GitHub Actions run](https://github.com/gbodwin/paper-formalizations/actions/runs/45686879680).
 - The [capacity table](OnlineReachabilityPreservers/SeparatorWork.lean#L803)
   and [residual scan](OnlineReachabilityPreservers/SeparatorWork.lean#L894)

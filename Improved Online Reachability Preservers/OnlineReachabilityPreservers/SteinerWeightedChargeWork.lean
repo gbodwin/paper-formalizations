@@ -1041,6 +1041,58 @@ theorem weightedNetworkRunWithResidualRowsWork_spec (keys : List (V × V)) (dist
     initialLoad initialWork
 
 
+theorem weightedResidualRowsSearchWordBudget_le {n n' s s' : ℕ}
+    (vertices : n ≤ n') (supply : s ≤ s') :
+    weightedResidualRowsSearchWordBudget n s ≤ weightedResidualRowsSearchWordBudget n' s' := by
+  have squares := Nat.pow_le_pow_left vertices 2
+  have routes := routePathListWordBudget_le vertices squares
+  unfold weightedResidualRowsSearchWordBudget weightedResidualRowsStepWordBudget residualPathRowsWordBudget
+    reachInListWordBudget
+  gcongr
+
+theorem weightedNetworkResidualRowsWordBudget_le {n n' m m' scale scale' fuel fuel' W W' p p' : ℕ}
+    (vertices : n ≤ n') (paid : m ≤ m') (scales : scale ≤ scale') (fuels : fuel ≤ fuel')
+    (weights : W ≤ W') (requests : p ≤ p') (I C : ℕ) :
+    weightedNetworkResidualRowsWordBudget n m scale fuel W I C p ≤
+      weightedNetworkResidualRowsWordBudget n' m' scale' fuel' W' I C p' := by
+  have size : p*fuel ≤ p'*fuel' := Nat.mul_le_mul requests fuels
+  have history := weightedHistorySeparatorWordBudget_le vertices paid scales weights size I C
+  have residual := weightedResidualRowsSearchWordBudget_le vertices scales
+  have step := Nat.add_le_add history residual
+  unfold weightedNetworkResidualRowsWordBudget
+  exact Nat.add_le_add_right (Nat.add_le_add (Nat.mul_le_mul requests
+    (Nat.add_le_add_right (Nat.mul_le_mul fuels (Nat.add_le_add_right step 10)) 13))
+    (Nat.mul_le_mul_left 6 size)) 12
+
+/-- Both separators produce exactly the same cut history. The charge
+reader therefore also returns the same tally at each queried key. -/
+theorem weightedNetworkRunWithResidualRowsWork_compare (keys : List (V × V)) (distinct : keys.Nodup)
+    (complete : ∀ e, e ∈ keys) (paid : Arcs V) (weight initial : V × V → ℕ × ℕ)
+    (depth scale fuel W I C : ℕ) (D : List (WeightedNetworkDemand V)) (size : depth = Fintype.card V)
+    (weightWork : ∀ e, (weight e).2 ≤ W) (initialLoad : ∀ e, (initial e).1 ≤ I)
+    (initialWork : ∀ e, (initial e).2 ≤ C) :
+    (weightedNetworkRunWithResidualRowsWork keys distinct paid weight initial depth scale fuel D).1 =
+      (weightedNetworkRunWithHistoryWork keys distinct paid weight initial scale fuel D).1 := by
+  subst depth
+  let n := Fintype.card V
+  let H := D.length*fuel
+  let measured d past := weightedNetworkViolationFromHistoryRowsWithWordWork keys distinct paid d weight initial n scale past
+  let old d past := weightedNetworkViolationFromHistoryWithWordWork keys distinct paid d weight initial scale past
+  let B := weightedHistoryRowsSeparatorWordBudget n paid.card scale W I C H
+  have verified d past := weightedNetworkViolationFromHistoryRowsWithWordWork_spec keys distinct complete paid d
+    weight initial n scale W I C past rfl weightWork initialLoad initialWork
+  have fresh := weightedNetworkHistoryLoopUsingWithWordWork_spec measured
+    paid weight initial scale fuel H B D [] (by simp [H]) (fun d past => (verified d past).1)
+    (fun d past short => (verified d past).2.trans (Nat.add_le_add_right
+      (weightedHistorySeparatorWordBudget_mono _ _ _ _ _ _ short) _))
+  have prior := weightedNetworkHistoryLoopWithWordWork_spec keys distinct complete paid weight initial scale fuel W I C H
+    D [] (by simp [H]) weightWork initialLoad initialWork
+  have record : (weightedNetworkHistoryLoopUsingWithWordWork measured fuel D []).1 =
+      (weightedNetworkHistoryLoopUsingWithWordWork old fuel D []).1 := fresh.2.1.trans prior.2.1.symm
+  exact congrArg (fun cuts => ((fun key => weightedChargeHistoryWithWordWork initial key cuts),
+    (reverseWeightedCutsWithWordWork cuts []).1)) record
+
+
 end Capacity
 
 end OnlineReachabilityPreservers
