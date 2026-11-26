@@ -1520,6 +1520,13 @@ that case a single spanning row or a uniform directed bipartite family
 replaces the indexed witness within both original budgets. When all
 indexed witness rows have length at least two they are already distinct.
 
+[Output-average full component cleaning](OnlineReachabilityPreservers/IncreasingFullAverageCleaning.lean)
+retains at least \(M/523\) with both original budgets and all four caps
+relative to the output averages. It applies at full cutoffs of at least
+three when each input precedence component excludes full bridges at every
+size. When the cutoff covers the smaller budget, it applies at the
+unrestricted indexed maximum and the output excludes every full bridge.
+
 An opposite-neighbor link joins consecutive common vertices of two
 oppositely ordered paths. In an input excluding full bridges through size
 three, a simple cycle of \(r\) links produces a full bridge of size at most

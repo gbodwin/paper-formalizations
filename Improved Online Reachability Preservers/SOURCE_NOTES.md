@@ -291,13 +291,25 @@ original-average version remains open at unrestricted half cutoff five.
 Output-average cleaning at half cutoff five also works for the feasible
 literal maximum over distinct nonempty paths. If every row of the indexed
 witness has length at least two, half-two exclusion already makes the rows
-distinct. Otherwise the output length cap below gives output mass at most
+distinct. Otherwise the lower output-length cap gives output mass at most
 four times the output row count, so \(M\le1568p\). One spanning path or a
-complete directed bipartite block of length-two paths supplies a distinct
+one-way complete bipartite block of length-two paths supplies a distinct
 witness with uniform degrees and lengths within both budgets. This retains
 at least \(M/7056\) with all four caps relative to its own averages. The
 same transfer applies at cutoff four in either mode and full cutoff six.
 [Output-average caps for literal path sets](OnlineReachabilityPreservers/OutputAverageDistinctCleaning.lean).
+
+At any full cutoff of at least three, if every precedence component
+excludes full bridges at every size, the dense-case elimination loses at
+most two incidences per original vertex and gives one common order. After
+relabeling by that order, the degree copies stay increasing and the
+contiguous path pieces are convex. Full bridge exclusion survives both
+splits, so the quarter-support proof gives the four output-average caps.
+Sparse input uses a single spanning path or singleton paths. The result
+keeps at least \(M/523\) within both original budgets. A full cutoff that
+covers the smaller original budget rules out every bridge and gives this
+conclusion at the unrestricted indexed maximum.
+[Full exclusion with output-average caps](OnlineReachabilityPreservers/IncreasingFullAverageCleaning.lean).
 
 The original-average conclusion at full cutoff six has a separate
 proof. A reverse comparison within one width piece gives a conflict

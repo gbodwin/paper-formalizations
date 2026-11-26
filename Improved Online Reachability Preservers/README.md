@@ -576,6 +576,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   literal maximum. The witness is also a literal system and fits both
   original budgets.
   [Output-average cleaning for distinct paths](OnlineReachabilityPreservers/OutputAverageDistinctCleaning.lean).
+- At a full cutoff covering the smaller budget, the unrestricted indexed
+  maximum has a witness that excludes full bridges at every size, retains
+  at least \(M/523\), and meets both original budgets and all four
+  output-average caps. The same mass and caps hold at full cutoffs of at
+  least three when each precedence component of the input already excludes
+  full bridges at every size.
+  [Output-average cleaning of full components](OnlineReachabilityPreservers/IncreasingFullAverageCleaning.lean).
 - If paths longer than the original upper length cap carry at least two
   thirds of the incidence mass (M), pruning that subfamily and trimming
   its vertex blocks retain at least (M/216). The witness meets both

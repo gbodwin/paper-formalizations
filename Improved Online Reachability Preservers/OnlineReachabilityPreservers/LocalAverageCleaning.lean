@@ -253,7 +253,9 @@ private theorem clean_quarter_support {V I : Type*}
   · rw [cleanMass, mass]
     exact (rectanglePaths_mass_le Z A B).trans_eq total
 
-private theorem clean_linear_mass {n p M k : ℕ} (half : Bool) (hn : 0 < n) (hp : 0 < p)
+/-- A single spanning path or singleton paths give output-average caps
+when the original mass is at most 392 times the larger budget. -/
+theorem regularization_list_output_average_of_linear_mass {n p M k : ℕ} (half : Bool) (hn : 0 < n) (hp : 0 < p)
     (dense : n ≤ M) (long : p ≤ M) (mass : M ≤ 392 * max n p) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
@@ -357,14 +359,14 @@ theorem regularization_list_output_average_of_pruned_rectangle_splits {n p k : �
       change m ≤ 4*(∑ i, (clean i).length) at cleanMass
       change M ≤ 392*(∑ i, (clean i).length)
       omega
-    · apply clean_linear_mass half hn hp dense long
+    · apply regularization_list_output_average_of_linear_mass half hn hp dense long
       have bound : m ≤ max n p := by
         rcases not_and_or.mp enough with tooFew | tooShort
         · exact (Nat.le_of_lt (Nat.lt_of_not_ge tooFew)).trans (le_max_left _ _)
         · exact (Nat.le_of_lt (Nat.lt_of_not_ge tooShort)).trans (le_max_right _ _)
       change M ≤ _
       omega
-  · apply clean_linear_mass half hn hp dense long
+  · apply regularization_list_output_average_of_linear_mass half hn hp dense long
     have count (i : Fin p) : (paths i).length ≤ n := by
       rw [← List.toFinset_card_of_nodup (simple i)]
       simpa only [Fintype.card_fin] using card_le_univ (paths i).toFinset
