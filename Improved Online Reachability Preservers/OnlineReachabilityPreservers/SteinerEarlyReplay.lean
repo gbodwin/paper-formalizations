@@ -428,43 +428,52 @@ private structure ExpandedMetricRow (V : Type*) (height : ℕ) where
   searches : ℕ
   work : ℕ
 
-@[inline] private def earlyExpandedMetricValue (n height : ℕ)
+private abbrev EarlyExpansionValidation (V : Type*) := Arcs V → V × V → Bool × ℕ × ℕ
+
+private def earlyExpansionArcInspections (n : ℕ) (H : Arcs V) (d : V × V) : Bool × ℕ × ℕ :=
+  let checked := reachInWithArcInspections H d.2 n
+  (decide (d.1 ∉ checked.1),checked.2,0)
+
+@[inline] private def earlyExpandedMetricValue (height : ℕ)
     (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
     (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ)
+    (validate : EarlyExpansionValidation V)
     (P : List (V × V)) : ExpandedMetricRow V height :=
   match P.getLast? with
   | none => ⟨P,∅,false,0,8⟩
   | some d =>
     let bought := metric P
     let expanded := expand bought.1
-    let check := reachInWithArcInspections expanded.1 d.2 n
-    ⟨P,bought.1,decide (d.1 ∉ check.1),bought.2.1+check.2,bought.2.2+expanded.2+8⟩
+    let check := validate expanded.1 d
+    ⟨P,bought.1,check.1,bought.2.1+check.2.1,bought.2.2+expanded.2+check.2.2+8⟩
 
-private def earlyExpandedMetricRow (n height : ℕ)
+private def earlyExpandedMetricRow (height : ℕ)
     (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
-    (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ) :
+    (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ)
+    (validate : EarlyExpansionValidation V) :
     List (V × V) ↪ ExpandedMetricRow V height where
-  toFun := earlyExpandedMetricValue n height metric expand
+  toFun := earlyExpandedMetricValue height metric expand validate
   inj' := by
-    have key (P : List (V × V)) : (earlyExpandedMetricValue n height metric expand P).requests = P := by
+    have key (P : List (V × V)) : (earlyExpandedMetricValue height metric expand validate P).requests = P := by
       unfold earlyExpandedMetricValue
       split <;> rfl
     intro P Q same
     exact (key P).symm.trans ((congrArg ExpandedMetricRow.requests same).trans (key Q))
 
-omit [Fintype V] in
-private theorem earlyExpandedMetricRow_apply (n height : ℕ)
-    (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
-    (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ) (P : List (V × V)) :
-    earlyExpandedMetricRow n height metric expand P = earlyExpandedMetricValue n height metric expand P := rfl
-
-/-- Use the metered expansion when validating each early prefix and when
-returning the final union of the bought links. -/
-def earlyRoundedGraphWithSeedReadsAndExpansionFromMetric (G : Arcs V) (n height : ℕ)
+omit [LinearOrder V] [Fintype V] in
+private theorem earlyExpandedMetricRow_apply (height : ℕ)
     (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
     (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ)
-    (D : List (V × V)) : Arcs V × ℕ × ℕ :=
-  let rows := D.inits.toFinset.map (earlyExpandedMetricRow n height metric expand)
+    (validate : EarlyExpansionValidation V) (P : List (V × V)) :
+    earlyExpandedMetricRow height metric expand validate P = earlyExpandedMetricValue height metric expand validate P := rfl
+
+/-- Use the supplied expansion and validation routines at each early
+prefix, then expand the final bought union when all checks succeed. -/
+def earlyRoundedGraphWithSeedReadsExpansionAndValidationFromMetric (G : Arcs V) (height : ℕ)
+    (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
+    (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ)
+    (validate : EarlyExpansionValidation V) (D : List (V × V)) : Arcs V × ℕ × ℕ :=
+  let rows := D.inits.toFinset.map (earlyExpandedMetricRow height metric expand validate)
   let searches := ∑ r ∈ rows, r.searches
   let work := ∑ r ∈ rows, r.work
   if (rows.filter fun r => r.failed = true).Nonempty then (G,searches,work+6)
@@ -472,15 +481,27 @@ def earlyRoundedGraphWithSeedReadsAndExpansionFromMetric (G : Arcs V) (n height 
     let expanded := expand (rows.biUnion ExpandedMetricRow.bought)
     (expanded.1,searches,work+expanded.2+6)
 
+/-- Use the metered expansion when validating each early prefix and when
+returning the final union of the bought links. -/
+def earlyRoundedGraphWithSeedReadsAndExpansionFromMetric (G : Arcs V) (n height : ℕ)
+    (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
+    (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ)
+    (D : List (V × V)) : Arcs V × ℕ × ℕ :=
+  earlyRoundedGraphWithSeedReadsExpansionAndValidationFromMetric G height metric expand (earlyExpansionArcInspections n) D
+
 private theorem earlyExpandedMetricRow_compare (G : Arcs V) (n height : ℕ) (size : n = Fintype.card V)
     (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
     (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ)
-    (P : List (V × V)) (B E : ℕ) (metricCap : (metric P).2.2 ≤ B)
+    (validate : EarlyExpansionValidation V) (P : List (V × V)) (B E C : ℕ) (metricCap : (metric P).2.2 ≤ B)
     (expansion : (expand (metric P).1).1 = (expandLabelledLinksWithSearchWork G heightForestLabel (metric P).1).1 ∧
-      (expand (metric P).1).2 ≤ E) :
-    let row := earlyExpandedMetricRow n height metric expand P
+      (expand (metric P).1).2 ≤ E)
+    (validation : ∀ d,
+      let out := validate (expand (metric P).1).1 d
+      let old := reachInWithArcInspections (expand (metric P).1).1 d.2 n
+      out.1 = decide (d.1 ∉ old.1) ∧ out.2.1 ≤ old.2 ∧ out.2.2 ≤ C) :
+    let row := earlyExpandedMetricRow height metric expand validate P
     let old := earlyPrefixSeedReadRow G height metric P
-    row.bought = old.1.2.1 ∧ row.failed = old.1.2.2.1 ∧ row.searches ≤ old.1.2.2.2 ∧ row.work ≤ B+E+8 := by
+    row.bought = old.1.2.1 ∧ row.failed = old.1.2.2.1 ∧ row.searches ≤ old.1.2.2.2 ∧ row.work ≤ B+E+C+8 := by
   subst n
   cases ending : P.getLast? with
   | none =>
@@ -488,36 +509,49 @@ private theorem earlyExpandedMetricRow_compare (G : Arcs V) (n height : ℕ) (si
     subst P
     exact ⟨rfl,rfl,le_rfl,Nat.le_add_left _ _⟩
   | some d =>
-    let next := earlyExpandedMetricRow (Fintype.card V) height metric expand P
+    let next := earlyExpandedMetricRow height metric expand validate P
     let prior := earlyPrefixSeedReadRow G height metric P
     have oldExact : prior.1 = earlyPrefixWorkEntry G height (fun Q => ((metric Q).1,(metric Q).2.1)) P :=
       (earlyPrefixSeedReadRow_spec G height metric B P metricCap).1
     change next.bought = prior.1.2.1 ∧ next.failed = prior.1.2.2.1 ∧
-      next.searches ≤ prior.1.2.2.2 ∧ next.work ≤ B+E+8
+      next.searches ≤ prior.1.2.2.2 ∧ next.work ≤ B+E+C+8
     rw [oldExact]
-    simp only [next,earlyExpandedMetricRow_apply,earlyExpandedMetricValue,ending,earlyPrefixWorkEntry,expansion.1,true_and]
-    exact ⟨Nat.add_le_add_right (Nat.le_add_right _ _) _,
-      Nat.add_le_add_right (Nat.add_le_add metricCap expansion.2) 8⟩
+    obtain ⟨checked,search,work⟩ := validation d
+    let priorGraph := (expandLabelledLinksWithSearchWork G heightForestLabel (metric P).1).1
+    let priorSearch := reachInWithArcInspections priorGraph d.2 (Fintype.card V)
+    have sameMiss : (validate (expand (metric P).1).1 d).1 = decide (d.1 ∉ priorSearch.1) :=
+      checked.trans (by dsimp only [priorSearch,priorGraph]; rw [expansion.1])
+    have lessSearch : (validate (expand (metric P).1).1 d).2.1 ≤ priorSearch.2 :=
+      search.trans (by dsimp only [priorSearch,priorGraph]; rw [expansion.1])
+    simp only [next,earlyExpandedMetricRow_apply,earlyExpandedMetricValue,ending,earlyPrefixWorkEntry,sameMiss,true_and]
+    exact ⟨rfl,Nat.add_le_add (Nat.le_add_right _ _) lessSearch,
+      Nat.add_le_add_right (Nat.add_le_add (Nat.add_le_add metricCap expansion.2) work) 8⟩
 
-theorem earlyRoundedGraphWithSeedReadsAndExpansionFromMetric_compare (G : Arcs V) (n height : ℕ)
+theorem earlyRoundedGraphWithSeedReadsExpansionAndValidationFromMetric_compare (G : Arcs V) (n height : ℕ)
     (size : n = Fintype.card V) (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
     (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ)
-    (support : Arcs (HeightForestVertex V height)) (D : List (V × V)) (B E : ℕ)
+    (validate : EarlyExpansionValidation V)
+    (support : Arcs (HeightForestVertex V height)) (D : List (V × V)) (B E C : ℕ)
     (expansion : ∀ H ⊆ support, (expand H).1 = (expandLabelledLinksWithSearchWork G heightForestLabel H).1 ∧
       (expand H).2 ≤ E)
     (supported : ∀ P ∈ D.inits, (metric P).1 ⊆ support)
-    (metricCap : ∀ P ∈ D.inits, (metric P).2.2 ≤ B) :
-    let out := earlyRoundedGraphWithSeedReadsAndExpansionFromMetric G n height metric expand D
+    (metricCap : ∀ P ∈ D.inits, (metric P).2.2 ≤ B)
+    (validation : ∀ H ⊆ support, ∀ d,
+      let out := validate (expand H).1 d
+      let old := reachInWithArcInspections (expand H).1 d.2 n
+      out.1 = decide (d.1 ∉ old.1) ∧ out.2.1 ≤ old.2 ∧ out.2.2 ≤ C) :
+    let out := earlyRoundedGraphWithSeedReadsExpansionAndValidationFromMetric G height metric expand validate D
     let old := earlyRoundedGraphWithSeedReadsFromMetric G height metric D
-    out.1 = old.1 ∧ out.2.1 ≤ old.2.1 ∧ out.2.2 ≤ (D.length+1)*(B+E+8)+E+6 := by
+    out.1 = old.1 ∧ out.2.1 ≤ old.2.1 ∧ out.2.2 ≤ (D.length+1)*(B+E+C+8)+E+6 := by
   let source := D.inits.toFinset
-  let read := earlyExpandedMetricRow n height metric expand
+  let read := earlyExpandedMetricRow height metric expand validate
   let prior := earlyPrefixSeedReadRow G height metric
   let rows := source.map read
   let old := source.map prior
   have each (P : List (V × V)) (on : P ∈ source) :=
-    earlyExpandedMetricRow_compare G n height size metric expand P B E
+    earlyExpandedMetricRow_compare G n height size metric expand validate P B E C
       (metricCap P (List.mem_toFinset.mp on)) (expansion _ (supported P (List.mem_toFinset.mp on)))
+      (validation _ (supported P (List.mem_toFinset.mp on)))
   have failure : (rows.filter fun r => r.failed = true).Nonempty ↔
       (old.filter fun r => r.1.2.2.1 = true).Nonempty := by
     constructor
@@ -554,12 +588,12 @@ theorem earlyRoundedGraphWithSeedReadsAndExpansionFromMetric_compare (G : Arcs V
     dsimp only [rows,old]
     rw [sum_map,sum_map]
     exact sum_le_sum (fun P on => (each P on).2.2.1)
-  have wordCount : (∑ r ∈ rows,r.work) ≤ (D.length+1)*(B+E+8) := by
+  have wordCount : (∑ r ∈ rows,r.work) ≤ (D.length+1)*(B+E+C+8) := by
     dsimp only [rows]
     rw [sum_map]
     calc
-      _ ≤ ∑ _P ∈ source,(B+E+8) := sum_le_sum fun P on => (each P on).2.2.2
-      _ = source.card*(B+E+8) := by simp
+      _ ≤ ∑ _P ∈ source,(B+E+C+8) := sum_le_sum fun P on => (each P on).2.2.2
+      _ = source.card*(B+E+C+8) := by simp
       _ ≤ _ := Nat.mul_le_mul_right _ (D.inits.toFinset_card_le.trans_eq (List.length_inits D))
   have final := expansion _ holds
   have finalCost := final.2
@@ -583,5 +617,20 @@ theorem earlyRoundedGraphWithSeedReadsAndExpansionFromMetric_compare (G : Arcs V
     simp only [fresh,before,ite_eq_right success,ite_eq_right fallback]
     exact ⟨final.1.trans (by dsimp only [finalOld]; rw [bought]),searchCount.trans (Nat.le_add_right _ _),
       Nat.add_le_add_right (Nat.add_le_add wordCount finalCost) 6⟩
+
+theorem earlyRoundedGraphWithSeedReadsAndExpansionFromMetric_compare (G : Arcs V) (n height : ℕ)
+    (size : n = Fintype.card V) (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
+    (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ)
+    (support : Arcs (HeightForestVertex V height)) (D : List (V × V)) (B E : ℕ)
+    (expansion : ∀ H ⊆ support, (expand H).1 = (expandLabelledLinksWithSearchWork G heightForestLabel H).1 ∧
+      (expand H).2 ≤ E)
+    (supported : ∀ P ∈ D.inits, (metric P).1 ⊆ support)
+    (metricCap : ∀ P ∈ D.inits, (metric P).2.2 ≤ B) :
+    let out := earlyRoundedGraphWithSeedReadsAndExpansionFromMetric G n height metric expand D
+    let old := earlyRoundedGraphWithSeedReadsFromMetric G height metric D
+    out.1 = old.1 ∧ out.2.1 ≤ old.2.1 ∧ out.2.2 ≤ (D.length+1)*(B+E+8)+E+6 := by
+  simpa only [earlyRoundedGraphWithSeedReadsAndExpansionFromMetric,Nat.add_zero] using
+    earlyRoundedGraphWithSeedReadsExpansionAndValidationFromMetric_compare G n height size metric expand (earlyExpansionArcInspections n)
+      support D B E 0 expansion supported metricCap (fun _ _ _ => ⟨rfl,le_rfl,le_rfl⟩)
 
 end OnlineReachabilityPreservers

@@ -1949,4 +1949,65 @@ theorem completeFinSteinerReplayWithMetricExpansionWork_prefixes {n : ℕ} (G : 
   rw [setup, decode, index]
   omega
 
+/-- Count the reverse search and source test on each expanded early
+prefix, together with the measured expansion work. -/
+def completeFinSteinerReplayWithMetricValidationWork {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
+  completeFinSteinerReplayWithHubRoutingUsing G raw same height m hm bits D (meteredPhaseUnion (Fin n))
+    (prepareFinSteinerWeightedForSeedWithMetricValidationWork G raw same height)
+
+def steinerTraceMetricValidationExtraPolynomial (n m height p : ℕ) : ℕ :=
+  (p+1)*finSteinerEarlyMetricValidationWordPolynomial n m height p (earlySeedArrayReadWordBudget height)
+
+/-- Metering early validation preserves exact prefix graphs and the number
+of evaluations for every trace. -/
+theorem completeFinSteinerReplayWithMetricValidationWork_compare {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
+    let out := completeFinSteinerReplayWithMetricValidationWork G raw same height m hm bits D
+    let old := completeFinSteinerReplayWithEarlyHistoryWork G raw same height m hm bits D
+    let base := out.1.1.1
+    let prior := old.1.1.1
+    base.1.1.map Prod.fst = prior.1.1.map Prod.fst ∧
+      (base.1.1.map Prod.snd).sum ≤ (prior.1.1.map Prod.snd).sum ∧ out.2.2 = old.2.2 ∧
+      base.1.2 = prior.1.2 ∧ base.2 = prior.2 ∧ out.1.2 = old.1.2 ∧
+      out.1.1.2 ≤ old.1.1.2+3 ∧ out.2.1 ≤ old.2.1 + steinerTraceMetricValidationExtraPolynomial n raw.length height D.length := by
+  let fresh := prepareFinSteinerWeightedForSeedWithMetricValidationWork G raw same height
+  let prior := prepareFinSteinerWeightedForSeedWithHistoryWork G raw same height
+  let extra := finSteinerEarlyMetricValidationWordPolynomial n raw.length height D.length (earlySeedArrayReadWordBudget height)
+  obtain ⟨scale, setup, work, each⟩ := prepareFinSteinerWeightedForSeedWithMetricValidationWork_spec G raw same height
+  have compare := completeFinSteinerReplayWithPreparedEarlyWork_compare G raw same height m hm bits D
+    fresh prior 3 extra scale setup work.le (fun samples reads P => by
+      obtain ⟨graph, search, bound⟩ := each samples (earlySeedArrayReadWordBudget height) reads P
+      exact ⟨graph, search, fun short =>
+        bound.trans (finSteinerEarlyMetricValidationWordPolynomial_mono n raw.length height _ short)⟩)
+  exact compare
+
+/-- On feasible traces the complete prefix graphs and evaluation count
+agree with the reference replay, with early validation in the bound. -/
+theorem completeFinSteinerReplayWithMetricValidationWork_prefixes {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let out := completeFinSteinerReplayWithMetricValidationWork G raw same height m hm bits D
+    let base := out.1.1.1
+    base.1.1.map Prod.fst = D.inits.map (completeSteinerRunWithBitBudget G height bits) ∧
+      out.2.2 = (completeFinSteinerReplayWithThinRowWork G raw same height m hm bits D).2.2 ∧
+      (base.1.1.map Prod.snd).sum+base.1.2.1+base.1.2.2.1+base.1.2.2.2+base.2+out.1.1.2+out.1.2+out.2.1 ≤
+        completeFinSteinerPreparationWorkPolynomial n m raw.length height D.length +
+          finSteinerWeightPlanWorkPolynomial n height + finSteinerReplayIndexWorkPolynomial n raw.length +
+          (steinerTraceEarlySeedRankWorkPolynomial n height D.length+11*m+21) +
+          (steinerTracePhaseUnionWorkPolynomial n m height D.length+11*m+21) +
+          finArcRowsWordBudget n raw.length+8*n+6+finForestNetworkPairKeysWordPolynomial n height+3 +
+          steinerTraceEarlyHistoryExtraPolynomial n height D.length + 3 +
+          steinerTraceMetricValidationExtraPolynomial n raw.length height D.length := by
+  obtain ⟨graphs, search, counts, setup, decode, index, keyWork, replayWork⟩ :=
+    completeFinSteinerReplayWithMetricValidationWork_compare G raw same height m hm bits D
+  obtain ⟨exactGraphs, exactCounts, oldWork⟩ :=
+    completeFinSteinerReplayWithEarlyHistoryWork_prefixes G raw same height m hm bits D feasible
+  refine ⟨graphs.trans exactGraphs, counts.trans exactCounts, ?_⟩
+  rw [setup, decode, index]
+  omega
+
 end OnlineReachabilityPreservers

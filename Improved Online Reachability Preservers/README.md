@@ -298,11 +298,17 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   all early prefix expansions and the final expansion when validation
   succeeds. The same checks produce the same fallback decision, graphs,
   and replay evaluation count. Its feasible-prefix work bound includes
-  the expansion. Tier and cutoff arithmetic, threshold comparisons,
-  parts of validation, search and set assembly, further service work, and
-  bit and native costs remain open.
-  [Early expansion and validation](OnlineReachabilityPreservers/SteinerEarlyReplay.lean#L502)
+  the expansion.
+  [Early expansion and validation](OnlineReachabilityPreservers/SteinerEarlyReplay.lean#L621)
   · [Complete replay with measured expansion](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1928).
+  The measured early validation scans the supplied arcs for the expanded
+  graph, runs the reverse reachability search, and tests the source. The
+  feasible-prefix work bound covers these steps on every nonempty early prefix
+  check, preserving the same graph and evaluation count. Tier and cutoff
+  arithmetic, threshold comparisons, remaining search and set assembly,
+  further service work, and bit and native costs remain open.
+  [Measured demand check](OnlineReachabilityPreservers/SteinerIntervalWork.lean#L298)
+  · [Complete replay with measured early validation](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1989).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

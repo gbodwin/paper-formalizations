@@ -779,7 +779,7 @@ the evaluator returns the earlier expanded graph, including overlapping
 routes. Its fixed-height bound uses the lengths of both supplied lists
 and the cardinality of the bought graph.
 
-The [early replay](OnlineReachabilityPreservers/SteinerEarlyReplay.lean#L502)
+The [early replay](OnlineReachabilityPreservers/SteinerEarlyReplay.lean#L621)
 uses that expansion before each nonempty metric prefix check and for the
 union of bought links when all checks succeed. The old reachability
 checks and fallback decision agree, and the old ordinary search tally is
@@ -789,10 +789,22 @@ Every bought link belongs to that template. The
 [complete comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1904)
 preserves all output graphs and evaluation counts for every input trace.
 The [feasible-prefix work bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1928)
-adds the route, union, and label work of both uses of expansion. Tier and
-cutoff arithmetic, threshold comparisons, parts of validation, search
-and set assembly, further service work, and bit and native costs remain
-open.
+adds the route, union, and label work of both uses of expansion.
+
+The [demand check](OnlineReachabilityPreservers/SteinerIntervalWork.lean#L298)
+filters the original arc list for membership in the expanded graph, runs
+reverse reachability on those rows, and tests the source against the
+result. It computes reachability in the intersection of the supplied
+arc set and the expanded graph. The [early preparation](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L1917)
+proves that each expanded graph is a subgraph of the supplied arcs and
+uses the measured check on every nonempty metric prefix. The
+[complete comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1965)
+keeps the same prefix graphs and evaluation count for every trace. Its
+[feasible-prefix work bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1989)
+includes arc filtering, reverse searching, and source membership for those
+checks. Tier and cutoff arithmetic, threshold comparisons, remaining
+search and set assembly, further service work, and bit and native costs
+remain open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

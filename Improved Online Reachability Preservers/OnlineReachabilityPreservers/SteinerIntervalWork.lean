@@ -278,4 +278,72 @@ theorem outgoingCutFromIntervalRowsWithWordWork_spec (interval : DemandIntervalR
     simp [outgoingCut,(outwardEndpointTestWithWordWork_spec side e).1]
   · exact spent (24*side.card+17) (fun e _ => (outwardEndpointTestWithWordWork_spec side e).2)
 
+/-- Validate one expanded request. Recover its arc rows from the original
+input list, run the metered reverse search, and test the source. -/
+def expandedDemandMissWithWordWork (arcs : List (V × V)) (expanded : Arcs V)
+    (d : V × V) (depth : ℕ) : Bool × ℕ :=
+  let selected := filterListWithWordWork (fun e => memFinsetWithWordWork e expanded) arcs
+  let reached := reachInListWithWordWork selected.1 d.2 depth
+  let source := memScanWithWordWork d.1 reached.1
+  (!source.1,selected.2+reached.2+source.2+8)
+
+def expandedDemandMissWordBudget (n m b : ℕ) : ℕ :=
+  m*(12*b+16)+reachInListWordBudget n m+2*n+11
+
+theorem expandedDemandMissWordBudget_le {n m m' b b' : ℕ} (arcs : m ≤ m') (bought : b ≤ b') :
+    expandedDemandMissWordBudget n m b ≤ expandedDemandMissWordBudget n m' b' := by
+  unfold expandedDemandMissWordBudget reachInListWordBudget
+  gcongr
+
+theorem expandedDemandMissWithWordWork_spec (arcs : List (V × V)) (expanded : Arcs V) (d : V × V) :
+    let n := Fintype.card V
+    let out := expandedDemandMissWithWordWork arcs expanded d n
+    out.1 = decide (d.1 ∉ reachIn (arcs.toFinset ∩ expanded) d.2 n) ∧
+      out.2 ≤ expandedDemandMissWordBudget n arcs.length expanded.card := by
+  let n := Fintype.card V
+  let selected := filterListWithWordWork (fun e => memFinsetWithWordWork e expanded) arcs
+  let reached := reachInListWithWordWork selected.1 d.2 n
+  let source := memScanWithWordWork d.1 reached.1
+  obtain ⟨rows,filterWork⟩ := filterListWithWordWork_spec (fun e => memFinsetWithWordWork e expanded) arcs
+    (12*expanded.card+6) (fun e _ => (memFinsetWithWordWork_spec e expanded).2)
+  change selected.1 = _ at rows
+  have arcsExact : selected.1.toFinset = arcs.toFinset ∩ expanded := by
+    rw [rows]
+    ext e
+    simp only [mem_inter,List.mem_toFinset,List.mem_filter,(memFinsetWithWordWork_spec e expanded).1,decide_eq_true_eq]
+  have arcCount : selected.1.length ≤ arcs.length := by
+    rw [rows]
+    exact List.length_filter_le _ _
+  obtain ⟨simple,reachable,reachWork⟩ := reachInListWithWordWork_spec selected.1 d.2 n
+  have reachedCount : reached.1.length ≤ n := by
+    rw [← List.toFinset_card_of_nodup simple]
+    exact card_le_univ _
+  obtain ⟨member,scan⟩ := memScanWithWordWork_spec d.1 reached.1
+  refine ⟨?_,?_⟩
+  · change (!source.1) = _
+    change source.1 = _ at member
+    change reached.1.toFinset = _ at reachable
+    have membership : d.1 ∈ reached.1 ↔ d.1 ∈ reachIn (arcs.toFinset ∩ expanded) d.2 n := by
+      rw [← List.mem_toFinset,reachable,arcsExact]
+    rw [member,← decide_not]
+    apply Bool.eq_iff_iff.mpr
+    simpa only [decide_eq_true_eq] using not_congr membership
+  · change selected.2+reached.2+source.2+8 ≤ _
+    change selected.2 ≤ _ at filterWork
+    change source.2 ≤ _ at scan
+    have search : reached.2 ≤ reachInListWordBudget n arcs.length := reachWork.trans (by
+      unfold reachInListWordBudget
+      gcongr)
+    have test : source.2 ≤ 2*n+1 := scan.trans (by gcongr)
+    have kept : selected.2 ≤ arcs.length*(12*expanded.card+16)+2 := filterWork.trans_eq (by ring)
+    change _ ≤ arcs.length*(12*expanded.card+16)+reachInListWordBudget n arcs.length+2*n+11
+    omega
+
+theorem expandedDemandMissWithWordWork_of_subgraph (arcs : List (V × V)) (expanded : Arcs V)
+    (d : V × V) (complete : expanded ⊆ arcs.toFinset) :
+    let n := Fintype.card V
+    let out := expandedDemandMissWithWordWork arcs expanded d n
+    out.1 = decide (d.1 ∉ reachIn expanded d.2 n) ∧ out.2 ≤ expandedDemandMissWordBudget n arcs.length expanded.card := by
+  simpa only [inter_eq_right.mpr complete] using expandedDemandMissWithWordWork_spec arcs expanded d
+
 end OnlineReachabilityPreservers

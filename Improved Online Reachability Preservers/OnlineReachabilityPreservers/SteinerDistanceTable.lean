@@ -1880,4 +1880,109 @@ theorem prepareEarlyDistanceTableForSeedFromWeightsWithMetricExpansionWork_spec 
   dsimp only [limit]
   ring
 
+private def validateExpandedEarlyDemandWithWordWork (arcs : List (V × V)) (n : ℕ)
+    (expanded : Arcs V) (d : V × V) : Bool × ℕ × ℕ :=
+  let checked := expandedDemandMissWithWordWork arcs expanded d n
+  (checked.1,0,checked.2+5)
+
+/-- Add the reverse search and terminal test for each expanded prefix. -/
+def earlySteinerExpansionAndValidationWordBudget (n m h rows p : ℕ) : ℕ :=
+  earlySteinerExpansionWordBudget n m h rows p + (p+1)*(expandedDemandMissWordBudget n m m+5)
+
+theorem earlySteinerExpansionAndValidationWordBudget_le {n m m' h r r' p p' : ℕ}
+    (arcs : m ≤ m') (rows : r ≤ r') (prefixes : p ≤ p') :
+    earlySteinerExpansionAndValidationWordBudget n m h r p ≤
+      earlySteinerExpansionAndValidationWordBudget n m' h r' p' :=
+  Nat.add_le_add (earlySteinerExpansionWordBudget_le arcs rows prefixes)
+    (Nat.mul_le_mul (Nat.add_le_add_right prefixes 1)
+      (Nat.add_le_add_right (expandedDemandMissWordBudget_le arcs arcs) 5))
+
+/-- Validate each expanded early prefix with the metered reverse search
+on the original arc rows. -/
+def prepareEarlyDistanceTableForSeedFromWeightsWithMetricValidationWork (G : Arcs V) (height : ℕ)
+    (arcs : List (V × V)) (n : ℕ) (size : n = Fintype.card V)
+    (forestRows : List (HeightForestVertex V height × HeightForestVertex V height))
+    (keys : ForestPairKeys V height) (vertices : List (HeightForestVertex V height)) (distinct : vertices.Nodup)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
+    (plan : ForestWeightPlan V height)
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1))) :
+    SteinerSeedPreparationWithSeedWork G height :=
+  prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWorkUsing G height keys table rows template exactForest plan
+    matchesPlan labelMetricWeights (meteredForestRequests vertices distinct)
+    (fun metric => earlyRoundedGraphWithSeedReadsExpansionAndValidationFromMetric G height metric
+      (fun bought => expandForestLinksFromRowsWithWordWork arcs n size bought forestRows)
+      (validateExpandedEarlyDemandWithWordWork arcs n))
+
+theorem prepareEarlyDistanceTableForSeedFromWeightsWithMetricValidationWork_spec (G : Arcs V) (height : ℕ)
+    (arcs : List (V × V)) (same : arcs.toFinset = G) (n : ℕ) (size : n = Fintype.card V)
+    (forestRows : List (HeightForestVertex V height × HeightForestVertex V height))
+    (keys : ForestPairKeys V height) (complete : ∀ e, e ∈ keys.val)
+    (vertices : List (HeightForestVertex V height)) (distinct : vertices.Nodup) (all : ∀ v, v ∈ vertices)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
+    (templateRows : forestRows.toFinset = template.1)
+    (plan : ForestWeightPlan V height)
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1))) :
+    let prepared := prepareEarlyDistanceTableForSeedFromWeightsWithMetricValidationWork G height arcs n size forestRows keys vertices distinct
+      table rows template exactForest plan matchesPlan
+    let old := prepareEarlyDistanceTableForSeedFromWeightsWithHistoryWork G height keys table rows template exactForest
+      plan matchesPlan
+    prepared.1 = old.1 ∧ prepared.2.2 = old.2.2 ∧
+    ∀ (samples : ForestTrialArrayWithSeedWork V height (forestScale G height) (earlyTrialCount V height))
+      (B : ℕ), (∀ i, forestSampleWorkBound (samples i) B) → ∀ (D : List (V × V)),
+      let result := prepared.2.1 samples D
+      let prior := old.2.1 samples D
+      let N := Fintype.card (ForestNetworkVertex V height)
+      let W := forestMetricLabelWordBudget height ((Fintype.card V)^2)
+      let scale := plan.2.1.1
+      let fuel := plan.2.1.2
+      result.1 = prior.1 ∧ result.2.1 ≤ prior.2.1 ∧
+      result.2.2 ≤ (D.length+1) * (earlyWeightedHistoryWordBudget N plan.1.1.card scale fuel W D.length +
+        earlyRoundingChargeWordBudget N template.1.card scale fuel W height (earlyTrialCount V height) D.length +
+        earlyRoundingSeedReadBound G height * B + earlyAttachmentWordBudget height vertices.length plan.1.2.card D.length) +
+          earlySteinerExpansionAndValidationWordBudget n arcs.length height forestRows.length D.length := by
+  let expand := fun bought => expandForestLinksFromRowsWithWordWork arcs n size bought forestRows
+  let limit := expandForestLinksFromRowsWordBudget n arcs.length height forestRows.length forestRows.length
+  have expansion (H : Arcs (HeightForestVertex V height)) (supports : H ⊆ template.1) :
+      (expand H).1 = (expandLabelledLinksWithSearchWork G heightForestLabel H).1 ∧ (expand H).2 ≤ limit := by
+    have cover : H ⊆ forestRows.toFinset := templateRows.symm ▸ supports
+    obtain ⟨exactGraph,work⟩ := expandForestLinksFromRowsWithWordWork_complete arcs n size H forestRows cover
+    have enough := (Finset.card_le_card cover).trans (List.toFinset_card_le _)
+    change (expand H).1 = _ at exactGraph
+    rw [same] at exactGraph
+    exact ⟨exactGraph.trans (expandLabelledLinksWithSearchWork_spec G heightForestLabel H).1.symm,
+      work.trans (expandForestLinksFromRowsWordBudget_le le_rfl enough le_rfl)⟩
+  let validate := validateExpandedEarlyDemandWithWordWork arcs n
+  let checkBudget := expandedDemandMissWordBudget n arcs.length arcs.length+5
+  have checked (H : Arcs (HeightForestVertex V height)) (supports : H ⊆ template.1) (d : V × V) :
+      let out := validate (expand H).1 d
+      let old := reachInWithArcInspections (expand H).1 d.2 n
+      out.1 = decide (d.1 ∉ old.1) ∧ out.2.1 ≤ old.2 ∧ out.2.2 ≤ checkBudget := by
+    have subgraph : (expand H).1 ⊆ arcs.toFinset := by
+      rw [same,(expansion H supports).1,(expandLabelledLinksWithSearchWork_spec G heightForestLabel H).1]
+      exact expandLabelledLinks_sub G heightForestLabel H
+    have cardBound := (Finset.card_le_card subgraph).trans (List.toFinset_card_le arcs)
+    have exactCheck := expandedDemandMissWithWordWork_of_subgraph arcs (expand H).1 d subgraph
+    have results : (expandedDemandMissWithWordWork arcs (expand H).1 d n).1 =
+        decide (d.1 ∉ reachIn (expand H).1 d.2 n) ∧
+        (expandedDemandMissWithWordWork arcs (expand H).1 d n).2 ≤
+          expandedDemandMissWordBudget n arcs.length (expand H).1.card := by
+      simpa only [size] using exactCheck
+    refine ⟨?_,Nat.zero_le _,Nat.add_le_add_right (results.2.trans (expandedDemandMissWordBudget_le le_rfl cardBound)) 5⟩
+    rw [reachInWithArcInspections_spec]
+    exact results.1
+  apply prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWorkUsing_spec G height keys complete table rows
+    template exactForest plan matchesPlan labelMetricWeights _
+    (labelMetricWeights_spec _ _ (readDistanceRow_work_bound G table.1 rows))
+    _ _ (fun _ _ le => earlyAttachmentWordBudget_le le_rfl le_rfl le)
+    (meteredForestRequests_spec vertices distinct all plan.1.2)
+  intro metric D B supported bounded
+  obtain ⟨graph,search,work⟩ := earlyRoundedGraphWithSeedReadsExpansionAndValidationFromMetric_compare G n height size
+    metric expand validate template.1 D B limit checkBudget expansion supported bounded checked
+  refine ⟨graph,search,work.trans_eq ?_⟩
+  unfold earlySteinerExpansionAndValidationWordBudget earlySteinerExpansionWordBudget
+  dsimp only [limit,checkBudget]
+  ring
+
 end OnlineReachabilityPreservers
