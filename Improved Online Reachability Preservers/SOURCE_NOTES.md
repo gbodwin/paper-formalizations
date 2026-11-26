@@ -444,14 +444,28 @@ After clipping at the original length width, degree blocks can be fixed
 before deleting anything at a vertex. In a proposed half-five bridge,
 the terminal collision crosses two different arrival blocks. The third
 and fourth arcs use the two ends of an actual reversed comparison across
-that cut, so deleting one reverse-partner color on those comparisons
-preserves half-five exclusion. Let \(K\) be the clipped mass and \(A\) the
+that cut. The earlier row enters the shared vertex, and the later row
+leaves it along the reverse comparison. Deleting one reverse-partner
+color on those comparisons preserves half-five exclusion. Let \(K\) be the clipped mass and \(A\) the
 number of distinct participating copied incidences. The total weight
 retained across both colors is \(2K-A\). Selecting vertex copies by
 that weight and choosing a color leaves enough mass to peel when
 \(A+2(M-K)\le23M/25\). The witness retains at least \(M/5000\) with
 both original budgets and all four original-average caps.
 [Exact degree cuts and clipping](OnlineReachabilityPreservers/HalfFiveDegreeCutCleaning.lean).
+
+The two exact cuts can be repaired together in degree-first order.
+First fix the degree copies in arrival blocks and the path pieces of
+those copied rows. Mark the two ends of each crossed degree comparison
+and each crossed path comparison involving the same copied vertex.
+Each copied incidence in a row lies in just one path piece, so the
+single deletion color on the union also covers the degree conflicts
+when projected to the copied rows. The preserved copied rows then
+support the path-cut projection. If \(A\) distinct incidences are marked,
+the two colors together retain weight \(2M-A\). Both support trims use
+that weight. If \(A\le81M/100\), the final half-five witness retains
+at least \(M/5000\) within both original budgets and all four original caps.
+[Joint repair of the actual cuts](OnlineReachabilityPreservers/HalfFiveDegreeFirstCleaning.lean).
 
 The half-five conflict graph can have two incoming conflicts at one
 incidence. Take the paths

@@ -1475,6 +1475,12 @@ gives the same \(M/5000\) and all four original caps within both original
 budgets if \(A+2(M-K)\le23M/25\), where \(K\) is the clipped mass and
 \(A\) is the number of distinct copied incidences in a reversed comparison
 across an actual degree cut of the clipped rows.
+[The joint repair in degree-first order](OnlineReachabilityPreservers/HalfFiveDegreeFirstCleaning.lean)
+counts distinct affected incidences of both actual cuts. The path
+comparisons are formed on the copied vertices. For the same simple
+half-five-free input with mass at least both positive budgets, union
+size at most \(81M/100\) gives \(M/5000\), both budgets, and all four
+original-average caps.
 Original-average half-five cleaning for general inputs remains open.
 
 For Lemmas 23 and 39, the [contiguous six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)

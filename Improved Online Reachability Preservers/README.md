@@ -641,6 +641,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   length width, let \(K\) be their mass and \(A\) the number of participating
   copied incidences. If \(A+2(M-K)\le23M/25\), the witness retains
   \(M/5000\) within both original budgets and all four original caps.
+- [Repairing both actual cuts in degree-first order](OnlineReachabilityPreservers/HalfFiveDegreeFirstCleaning.lean)
+  also gives \(M/5000\), both original budgets, and all four original
+  caps at half cutoff five. The union of the crossed degree comparisons
+  and the crossed path comparisons on copied vertices must mark at most
+  81 percent of the incidences.
 - If either positive budget is at most 29, an unrestricted maximum at any
   cutoff of at least two has a witness with both budgets, all four frozen
   caps, and at least \(M/8\) incidences. The witness excludes full bridges
