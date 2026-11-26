@@ -1063,8 +1063,16 @@ retains exactly the encoded rows whose flow is strictly below capacity, in
 input order. If the supplied table describes every ordered vertex pair,
 the [composed binary flow cut](OnlineReachabilityPreservers/SteinerBinaryFlowCutWork.lean#L151)
 returns the exact reference cut and charges both the table scan and the graph
-search. Creating the capacity and flow words and carrying out augmentations
-are separate steps.
+search.
+
+The [signed unit update](OnlineReachabilityPreservers/SteinerBinaryFlowAugmentWork.lean#L20)
+adds or subtracts one on an encoded word, increasing its magnitude width
+by at most one. It also handles both signs of zero. The [table refinement](OnlineReachabilityPreservers/SteinerBinaryFlowAugmentWork.lean#L155)
+checks membership of the arc and its reverse in the supplied path, applies
+the two indicators of the reference flow update, and preserves every key
+and capacity word in order. Repeated path entries count once by membership.
+Both directions contribute opposite updates to the same entry. The tally
+includes bitwise label comparisons and arithmetic. Path selection is supplied.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
