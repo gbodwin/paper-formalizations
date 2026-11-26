@@ -321,9 +321,9 @@ The resulting \(M/108\) guarantee includes both budgets and all four
 original-average caps. Full exclusion survives at any finite cutoff or at
 all sizes. Half exclusion uses the same three degree-splitting conditions.
 The unrestricted cyclic existence question remains open.
-[Removing long original visits](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L961)
-· [Full exclusion at all sizes](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1038)
-· [Half exclusion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1055).
+[Removing long original visits](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1028)
+· [Full exclusion at all sizes](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1105)
+· [Half exclusion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1122).
 
 At cutoff \(k\), ordered disjoint pieces of one path can be cut wherever
 there is no return from a later piece to an earlier one in at most
@@ -334,8 +334,8 @@ interior arc. When two arc parents recur in reverse piece order, the
 return uses only the steps strictly between those arcs. Forward
 repetitions can be shortened while keeping the river and last arc's
 parents. This preserves half exclusion in parent arrival order.
-[Full bridge criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1222)
-· [Half bridge criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1236).
+[Full bridge criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1289)
+· [Half bridge criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1303).
 
 If the precedence graph has no directed cycle of length at most
 \(k-2\), all contiguous cuts meet this test. In the degree split, the
@@ -351,9 +351,9 @@ cycles, it gives \(M/32\) under the same original caps. The support
 restriction keeps at least \((9/16)(17/18)M=17M/32\), and peeling loses
 at most \(M/2\). The existence of a suitable cleaning for every cyclic
 input is still open.
-[Half exclusion after a degree split](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1288)
-· [Factor-four cleaning](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1479)
-· [Cleaning after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1536).
+[Half exclusion after a degree split](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1355)
+· [Factor-four cleaning](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1552)
+· [Cleaning after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1600).
 
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
@@ -365,9 +365,19 @@ through \(k-2\), or degrees already within the upper cap. Short cycles
 can remain if they create no bounded return across a cut. The same
 retention and caps hold after rowwise deletions costing at most \(M/18\)
 when the surviving rows satisfy the local condition at the original width.
-[Degree-splitting conditions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1439)
-· [Cleaning with the local return condition](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1464)
-· [Local condition after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1506).
+[Degree-splitting conditions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1506)
+· [Cleaning with the local return condition](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1537)
+· [Local condition after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1579).
+
+The cuts need not be equally spaced. A boundary in a row is safe if no
+pair of vertices straddles it with a return of at most \(\max(0,k-3)\)
+precedence edges. Consecutive vertices with the same last safe boundary
+form a run. Pack these runs into pieces of the original upper width.
+The rank uses the original positions even if longer runs are removed
+first. The ordered-cut proof preserves the river and last arc's parent.
+[Safe boundary](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1629)
+· [Exact rank comparison](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1666)
+· [Pruning bound](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1802).
 
 Splitting a vertex can also break the half exclusion, even with unique
 intersections. In arrival order take the paths `(4,2), (0,2), (0,1), (1,2),
