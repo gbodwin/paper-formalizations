@@ -1455,7 +1455,14 @@ length-width cut and its reverse stays within a piece of the other parent.
 Let \(U\) be the total original degree excess above \(\lfloor4M/n\rfloor\).
 The \(M/5000\) guarantee holds if \(20E\le3M\) or
 \(100U+50E\le43M\). It preserves half-five exclusion and all four caps
-within both original budgets. Half-five cleaning for general inputs remains open.
+within both original budgets.
+
+[A single deletion for both splits](OnlineReachabilityPreservers/HalfFiveSharedWidthCleaning.lean)
+uses the union of the path-cut conflict incidences and the incidences
+at vertices above the original degree width. Under the same input
+assumptions, a union of size at most \(4M/5\) gives a witness of mass
+at least \(M/5000\) with both budgets and all four original-average caps.
+Half-five cleaning for general inputs remains open.
 
 For Lemmas 23 and 39, the [contiguous six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)
 uses the original relative order of pieces in addition to the mirrored-cut

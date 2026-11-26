@@ -11,6 +11,40 @@ open scoped Sigma.Lex
 
 local notation "Before" => SourceAudit.BeforeIn
 
+/-- Trimming consecutive path pieces back to the original budget costs
+at most two thirty-firsts of the mass in the dense case. -/
+theorem trimSplitListPaths_at_original_width {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (hp : 0 < p) (dense : 8*p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    let L := 4*M/p
+    ∃ kept : Finset (ListBlockIndex paths L), kept.card ≤ p ∧
+      31*(∑ i ∈ univ \ kept, (splitListPaths paths L i).length) ≤ 2*M := by
+  let M := ∑ i, (paths i).length
+  let L := 4*M/p
+  let raw := splitListPaths paths L
+  have long : p ≤ M := by omega
+  have Mpos := hp.trans_le long
+  have width : 0 < L := (four_average_width hp long).1
+  have capacity : 31*M ≤ 8*(L*p) := by
+    have floor := four_average_width_product hp (M := M)
+    change 4*M < L*p+p at floor
+    omega
+  have rawMass : (∑ i, (raw i).length) = M := splitListPaths_size paths simple L
+  obtain ⟨filled,full,leftover⟩ := splitListPaths_full_block_profile paths simple width
+  have remaining : (univ \ filled).card ≤ p := by simpa only [Fintype.card_fin] using leftover.le
+  obtain ⟨kept,budget,trimLoss⟩ := trim_full_weight_blocks_quadratic (fun i => (raw i).length)
+    filled width full remaining (by rw [rawMass]; omega)
+  let omitted := ∑ i ∈ univ \ kept, (raw i).length
+  refine ⟨kept,budget,?_⟩
+  change 31*omitted ≤ 2*M
+  apply (Nat.mul_le_mul_left_iff Mpos).mp
+  calc
+    _ = (31*M)*omitted := by ring
+    _ ≤ (8*(L*p))*omitted := Nat.mul_le_mul_right _ capacity
+    _ = 2*(4*(L*p)*omitted) := by ring
+    _ ≤ 2*M^2 := Nat.mul_le_mul_left _ (rawMass ▸ trimLoss)
+    _ = _ := by ring
+
 private theorem halfFive_repaired_path_widths {n p : ℕ}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (free : HalfBridgeFree (Before paths) 5) (hp : 0 < p)
@@ -32,11 +66,6 @@ private theorem halfFive_repaired_path_widths {n p : ℕ}
   let raw := splitListPaths paths L
   let parent (j : J) := j.fst
   let affected := oppositeWidthConflictIncidences paths raw parent
-  have Mpos : 0 < M := hp.trans_le long
-  have capacity : 31*M ≤ 8*(L*p) := by
-    have floor := four_average_width_product hp (M := M)
-    change 4*M < L*p+p at floor
-    omega
   have width : 0 < L := (four_average_width hp long).1
   have rawSimple (i : J) : (raw i).Nodup := List.filter_sublist.nodup (simple i.fst)
   have rawLength (i : J) : (raw i).length ≤ L := localPathBlock_length _ (simple i.fst) width i.snd.val
@@ -46,19 +75,9 @@ private theorem halfFive_repaired_path_widths {n p : ℕ}
   have apart {i j : J} {x : Fin n} :
       i ≠ j → parent i = parent j → x ∈ raw i → x ∈ raw j → False := splitListPaths_disjoint
   let orig (i : Fin p) := (paths i).toFinset
-  obtain ⟨filled,full,leftover⟩ := splitListPaths_full_block_profile paths simple width
-  have remaining : (univ \ filled).card ≤ p := by simpa only [Fintype.card_fin] using leftover.le
-  obtain ⟨kept,budget,trimLoss⟩ := trim_full_weight_blocks_quadratic (fun i => (raw i).length)
-    filled width full remaining (by rw [rawMass]; omega)
+  obtain ⟨kept,budget,trimBudget⟩ := trimSplitListPaths_at_original_width paths simple hp pDense
   let omitted := ∑ i ∈ univ \ kept, (raw i).length
-  have trimBound : 31*omitted ≤ 2*M := by
-    apply (Nat.mul_le_mul_left_iff Mpos).mp
-    calc
-      _ = (31*M)*omitted := by ring
-      _ ≤ (8*(L*p))*omitted := Nat.mul_le_mul_right _ capacity
-      _ = 2*(4*(L*p)*omitted) := by ring
-      _ ≤ 2*M^2 := Nat.mul_le_mul_left _ (rawMass ▸ trimLoss)
-      _ = _ := by ring
+  have trimBound : 31*omitted ≤ 2*M := trimBudget
   have trimExact : omitted+(∑ i ∈ kept, (raw i).length) = M :=
     (sum_sdiff (subset_univ kept)).trans rawMass
   obtain ⟨color,colorBudget⟩ := oppositeWidthDeletion_small paths raw parent

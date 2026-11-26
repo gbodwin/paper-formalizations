@@ -348,6 +348,28 @@ for the path repair outside these and the other checked conditions remains open.
 [Crossed opposite comparisons](OnlineReachabilityPreservers/HalfFivePathRepair.lean)
 · [Path budget and joint clipping criterion](OnlineReachabilityPreservers/HalfFivePathCleaning.lean).
 
+The two repairs can use the same original reverse-partner colors. Mark
+the union of the crossed path-cut incidences and all incidences at vertices
+above the original degree width. Delete one color from that union. The
+remaining pieces preserve half-five exclusion. If a vertex still has
+degree above the width, its pieces all use the retained color at that
+vertex. The degree split then preserves exclusion through five. With
+union size at most \(4M/5\), one color keeps at least \(3M/5\)
+before the exact row and vertex trims. Peeling gives \(M/5000\) within
+both original budgets and all four original caps.
+[Shared deletion and both trims](OnlineReachabilityPreservers/HalfFiveSharedWidthCleaning.lean).
+
+The half-five conflict graph can have two incoming conflicts at one
+incidence. Take the paths
+`[(4,1),(5,1),(0,3),(0,6,1,2,4,5),(3,2)]` in this order. They exclude
+half-bridges at every size. Cutting into width-three pieces gives the
+river \(0\to1\) on the early piece of the fourth path. Both chains
+\(0\to3\to2\to4\to1\) and \(0\to3\to2\to5\to1\) become
+forbidden half-five bridges. Their reverse comparisons target the same
+incidence at vertex 1. This rules out an incoming-degree-one bound for
+the arrival-oriented half-five conflict relation.
+[Checked half-five incoming conflicts](OnlineReachabilityPreservers/VertexSplitAudit.lean).
+
 Consecutive common vertices on two oppositely ordered paths define an
 undirected link. If the family excludes full bridges through size three,
 a simple cycle of \(r\) such links yields a full bridge of size at most

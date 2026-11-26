@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.LocalRegularization
+import OnlineReachabilityPreservers.HalfFivePathRepair
 
 /-! Splitting a vertex alone can create a half-bridge, even with unique intersections. -/
 
@@ -166,5 +167,92 @@ theorem vertexSplitFiveExample_blocks_create_half_five :
     unfold BeforeIn
     decide
   exact ⟨⟨v,a,1,fun {_ _} => hv _ _,fun {_ _} => ha _ _,hr,river,chain⟩,by change (0 : Fin 5) < 1; decide⟩
+
+/-- Two early rows end at vertex 1 under the long fourth row. -/
+def incomingCutPaths : Fin 5 → List (Fin 7) :=
+  ![[4,1],[5,1],[0,3],[0,6,1,2,4,5],[3,2]]
+
+/-- Each path in the incoming-conflict example is simple. -/
+theorem incomingCutPaths_simple : ∀ i, (incomingCutPaths i).Nodup := by decide
+
+set_option maxRecDepth 8192 in
+set_option synthInstance.maxSize 2048 in
+set_option maxHeartbeats 2600000 in
+private theorem incomingCut_no_early_prefix :
+    ∀ (a r : Fin 5) (s u t : Fin 7), a < r → BeforeIn incomingCutPaths r s t →
+      BeforeIn incomingCutPaths a u t → s ∉ reaches (prefixArcs incomingCutPaths r t) u := by
+  decide
+
+/-- The unsplit input excludes half-bridges at every cutoff. -/
+theorem incomingCutPaths_halfFree (k : ℕ) : HalfBridgeFree (BeforeIn incomingCutPaths) k := by
+  intro s small bridge earlier
+  exact incomingCut_no_early_prefix (bridge.arc (Fin.last s)) bridge.river _ _ _ earlier
+    bridge.riverStep (bridge.arcStep (Fin.last s)) (halfBridge_prefix_membership incomingCutPaths bridge)
+
+abbrev IncomingCutPiece := ListBlockIndex incomingCutPaths 3
+
+def incomingCutEarly : IncomingCutPiece := ⟨3,⟨0,by decide⟩⟩
+def incomingCutLate : IncomingCutPiece := ⟨3,⟨1,by decide⟩⟩
+def incomingCutSource0 : IncomingCutPiece := ⟨0,⟨0,by decide⟩⟩
+def incomingCutSource1 : IncomingCutPiece := ⟨1,⟨0,by decide⟩⟩
+
+/-- A single incidence on the overlong parent is the target of two
+different incoming conflicts after the width-three split. -/
+theorem incomingCutPaths_two_conflicts :
+    incomingCutSource0 ≠ incomingCutSource1 ∧
+      OppositeWidthConflict incomingCutPaths (splitListPaths incomingCutPaths 3) Sigma.fst
+        (incomingCutSource0,1) (incomingCutEarly,1) ∧
+      OppositeWidthConflict incomingCutPaths (splitListPaths incomingCutPaths 3) Sigma.fst
+        (incomingCutSource1,1) (incomingCutEarly,1) := by
+  refine ⟨by decide,?_,?_⟩
+  · refine ⟨rfl,by decide,4,Or.inr ⟨incomingCutLate,by decide,rfl,by decide,by decide,?_,?_⟩⟩
+    · unfold BeforeIn
+      decide
+    · unfold BeforeIn
+      decide
+  · refine ⟨rfl,by decide,5,Or.inr ⟨incomingCutLate,by decide,rfl,by decide,by decide,?_,?_⟩⟩
+    · unfold BeforeIn
+      decide
+    · unfold BeforeIn
+      decide
+
+set_option synthInstance.maxSize 2048 in
+private def incomingCut_bridge (i : Fin 2) : Bridge (BeforeIn (splitListPaths incomingCutPaths 3)) 3 := by
+  let vertex : Fin 5 → Fin 7 := ![0,3,2,⟨i.val+4,by omega⟩,1]
+  let first : IncomingCutPiece := ⟨2,⟨0,by decide⟩⟩
+  let second : IncomingCutPiece := ⟨4,⟨0,by decide⟩⟩
+  let last : IncomingCutPiece := if i = 0 then incomingCutSource0 else incomingCutSource1
+  let arc : Fin 4 → IncomingCutPiece := ![first,second,incomingCutLate,last]
+  have distinctV : ∀ a b, vertex a = vertex b → a = b := by
+    dsimp only [vertex]
+    revert i
+    decide
+  have distinctA : ∀ a b, arc a = arc b → a = b := by
+    dsimp only [arc,last,first,second]
+    revert i
+    decide
+  have distinctR : ∀ j, incomingCutEarly ≠ arc j := by
+    dsimp only [arc,last,first,second]
+    revert i
+    decide
+  have river : BeforeIn (splitListPaths incomingCutPaths 3) incomingCutEarly (vertex 0) (vertex (Fin.last 4)) := by
+    unfold BeforeIn
+    dsimp only [vertex]
+    revert i
+    decide
+  have steps : ∀ j, BeforeIn (splitListPaths incomingCutPaths 3) (arc j) (vertex j.castSucc) (vertex j.succ) := by
+    unfold BeforeIn
+    dsimp only [arc,last,first,second,vertex]
+    revert i
+    decide
+  exact ⟨vertex,arc,incomingCutEarly,fun {_ _} => distinctV _ _,fun {_ _} => distinctA _ _,distinctR,river,steps⟩
+
+/-- Each of the two early sources produces a forbidden bridge with the
+same river piece. -/
+theorem incomingCutPaths_creates_two_half_bridges :
+    ∃ first second : Bridge (BeforeIn (splitListPaths incomingCutPaths 3)) 3,
+      first.river = second.river ∧ first.arc (Fin.last 3) ≠ second.arc (Fin.last 3) ∧
+        first.arc (Fin.last 3) < first.river ∧ second.arc (Fin.last 3) < second.river :=
+  ⟨incomingCut_bridge 0,incomingCut_bridge 1,by decide⟩
 
 end OnlineReachabilityPreservers.SourceAudit

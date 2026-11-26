@@ -129,26 +129,31 @@ theorem oppositeWidthDeletion_covers {paths : Fin p → List V} {pieces : J → 
   · exact Or.inl (mem_filter.mpr ⟨aIn,selectA⟩)
   · exact Or.inr (mem_filter.mpr ⟨bIn,selectB⟩)
 
+/-- A Boolean coloring of a finite set has a class of size at most half. -/
+theorem exists_smallBoolColor {A : Type*} (affected : Finset A) (color : A → Bool) :
+    ∃ c : Bool, 2*(affected.filter fun x => color x = c).card ≤ affected.card := by
+  let selected (c : Bool) := affected.filter fun x => color x = c
+  have count : (selected false).card+(selected true).card = affected.card := by
+    have complement (x : A) : color x = true ↔ ¬color x = false := by
+      cases color x <;> decide
+    change (affected.filter fun x => color x = false).card+
+      (affected.filter fun x => color x = true).card = _
+    simpa only [complement] using
+      (card_filter_add_card_filter_not (s := affected) (fun x => color x = false))
+  by_cases smaller : (selected false).card ≤ (selected true).card
+  · refine ⟨false,?_⟩
+    change 2*(selected false).card ≤ affected.card
+    omega
+  · refine ⟨true,?_⟩
+    change 2*(selected true).card ≤ affected.card
+    omega
+
 /-- One deletion color contains at most half of the implicated incidences. -/
 theorem oppositeWidthDeletion_small (paths : Fin p → List V) (pieces : J → List V)
     (parent : J → Fin p) :
     ∃ c : Bool, 2*(oppositeWidthDeletion paths pieces parent c).card ≤
-      (oppositeWidthConflictIncidences paths pieces parent).card := by
-  let conflicts := oppositeWidthConflictIncidences paths pieces parent
-  let remove := oppositeWidthDeletion paths pieces parent
-  have count : (remove false).card+(remove true).card = conflicts.card := by
-    let col (a : J × V) := reversePartnerColor paths a.2 (parent a.1)
-    have complement (a : J × V) : col a = true ↔ ¬col a = false := by cases col a <;> decide
-    change (conflicts.filter fun a => col a = false).card+
-      (conflicts.filter fun a => col a = true).card = conflicts.card
-    simpa only [complement] using
-      (card_filter_add_card_filter_not (s := conflicts) (fun a => col a = false))
-  by_cases le : (remove false).card ≤ (remove true).card
-  · refine ⟨false,?_⟩
-    change 2*(remove false).card ≤ conflicts.card
-    omega
-  · refine ⟨true,?_⟩
-    change 2*(remove true).card ≤ conflicts.card
-    omega
+      (oppositeWidthConflictIncidences paths pieces parent).card :=
+  exists_smallBoolColor (oppositeWidthConflictIncidences paths pieces parent)
+    (fun a => reversePartnerColor paths a.2 (parent a.1))
 
 end OnlineReachabilityPreservers
