@@ -1,6 +1,7 @@
 import OnlineReachabilityPreservers.AlgorithmSearchWork
 import OnlineReachabilityPreservers.SeparatorWork
 import OnlineReachabilityPreservers.SteinerEarlyRound
+import OnlineReachabilityPreservers.SteinerPhaseUnionWork
 
 /-! Compose weighted separation, route expansion and failure tests across early prefixes. -/
 
@@ -434,18 +435,25 @@ private def earlyExpansionArcInspections (n : ℕ) (H : Arcs V) (d : V × V) : B
   let checked := reachInWithArcInspections H d.2 n
   (decide (d.1 ∉ checked.1),checked.2,0)
 
-@[inline] private def earlyExpandedMetricValue (height : ℕ)
+@[inline] private def earlyExpandedMetricValueWithLast (height : ℕ)
     (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
     (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ)
     (validate : EarlyExpansionValidation V)
-    (P : List (V × V)) : ExpandedMetricRow V height :=
-  match P.getLast? with
+    (P : List (V × V)) (last : Option (V × V)) : ExpandedMetricRow V height :=
+  match last with
   | none => ⟨P,∅,false,0,8⟩
   | some d =>
     let bought := metric P
     let expanded := expand bought.1
     let check := validate expanded.1 d
     ⟨P,bought.1,check.1,bought.2.1+check.2.1,bought.2.2+expanded.2+check.2.2+8⟩
+
+@[inline] private def earlyExpandedMetricValue (height : ℕ)
+    (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
+    (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ)
+    (validate : EarlyExpansionValidation V)
+    (P : List (V × V)) : ExpandedMetricRow V height :=
+  earlyExpandedMetricValueWithLast height metric expand validate P P.getLast?
 
 private def earlyExpandedMetricRow (height : ℕ)
     (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
@@ -455,7 +463,7 @@ private def earlyExpandedMetricRow (height : ℕ)
   toFun := earlyExpandedMetricValue height metric expand validate
   inj' := by
     have key (P : List (V × V)) : (earlyExpandedMetricValue height metric expand validate P).requests = P := by
-      unfold earlyExpandedMetricValue
+      unfold earlyExpandedMetricValue earlyExpandedMetricValueWithLast
       split <;> rfl
     intro P Q same
     exact (key P).symm.trans ((congrArg ExpandedMetricRow.requests same).trans (key Q))
@@ -523,7 +531,7 @@ private theorem earlyExpandedMetricRow_compare (G : Arcs V) (n height : ℕ) (si
       checked.trans (by dsimp only [priorSearch,priorGraph]; rw [expansion.1])
     have lessSearch : (validate (expand (metric P).1).1 d).2.1 ≤ priorSearch.2 :=
       search.trans (by dsimp only [priorSearch,priorGraph]; rw [expansion.1])
-    simp only [next,earlyExpandedMetricRow_apply,earlyExpandedMetricValue,ending,earlyPrefixWorkEntry,sameMiss,true_and]
+    simp only [next,earlyExpandedMetricRow_apply,earlyExpandedMetricValue,earlyExpandedMetricValueWithLast,ending,earlyPrefixWorkEntry,sameMiss,true_and]
     exact ⟨rfl,Nat.add_le_add (Nat.le_add_right _ _) lessSearch,
       Nat.add_le_add_right (Nat.add_le_add (Nat.add_le_add metricCap expansion.2) work) 8⟩
 
@@ -580,10 +588,10 @@ theorem earlyRoundedGraphWithSeedReadsExpansionAndValidationFromMetric_compare (
     obtain ⟨P,on,rfl⟩ := mem_map.mp mem
     cases ending : P.getLast? with
     | none =>
-      simp only [read,earlyExpandedMetricRow_apply,earlyExpandedMetricValue,ending,Finset.notMem_empty] at used
+      simp only [read,earlyExpandedMetricRow_apply,earlyExpandedMetricValue,earlyExpandedMetricValueWithLast,ending,Finset.notMem_empty] at used
     | some d =>
       exact supported P (List.mem_toFinset.mp on) (by
-        simpa only [read,earlyExpandedMetricRow_apply,earlyExpandedMetricValue,ending] using used)
+        simpa only [read,earlyExpandedMetricRow_apply,earlyExpandedMetricValue,earlyExpandedMetricValueWithLast,ending] using used)
   have searchCount : (∑ r ∈ rows,r.searches) ≤ ∑ r ∈ old,r.1.2.2.2 := by
     dsimp only [rows,old]
     rw [sum_map,sum_map]
@@ -632,5 +640,270 @@ theorem earlyRoundedGraphWithSeedReadsAndExpansionFromMetric_compare (G : Arcs V
   simpa only [earlyRoundedGraphWithSeedReadsAndExpansionFromMetric,Nat.add_zero] using
     earlyRoundedGraphWithSeedReadsExpansionAndValidationFromMetric_compare G n height size metric expand (earlyExpansionArcInspections n)
       support D B E 0 expansion supported metricCap (fun _ _ _ => ⟨rfl,le_rfl,le_rfl⟩)
+
+private def reverseEarlyPrefixWithWordWork {A : Type*} : List A → List A → List A × ℕ
+  | [], output => (output,1)
+  | a::rest, output =>
+    let reversed := reverseEarlyPrefixWithWordWork rest (a::output)
+    (reversed.1,reversed.2+3)
+
+private theorem reverseEarlyPrefixWithWordWork_spec {A : Type*} (xs acc : List A) :
+    reverseEarlyPrefixWithWordWork xs acc = (xs.reverse ++ acc,3*xs.length+1) := by
+  induction xs generalizing acc with
+  | nil => rfl
+  | cons a rest ih =>
+    simp only [reverseEarlyPrefixWithWordWork,ih,List.reverse_cons,List.append_assoc,List.singleton_append,List.length_cons]
+    congr 1
+
+private structure CollectedEarlyMetrics (V : Type*) [DecidableEq V] (height : ℕ) where
+  links : List (Arcs (HeightForestVertex V height))
+  failed : Bool
+  searches : ℕ
+  work : ℕ
+
+private def collectEarlyMetricsWithWordWork (height : ℕ)
+    (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
+    (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ)
+    (validate : EarlyExpansionValidation V) : List (V × V) → List (V × V) → CollectedEarlyMetrics V height
+  | _, [] => ⟨[],false,0,2⟩
+  | reversed, d :: todo =>
+    let extended := d::reversed
+    let ordered := reverseEarlyPrefixWithWordWork extended []
+    let row := earlyExpandedMetricValueWithLast height metric expand validate ordered.1 (some d)
+    let rest := collectEarlyMetricsWithWordWork height metric expand validate extended todo
+    ⟨row.bought::rest.links,row.failed || rest.failed,row.searches+rest.searches,
+      row.work+rest.work+ordered.2+28⟩
+
+private theorem nonemptyEarlyPrefixes_cons {A : Type*} (previous todo : List A) (d : A) :
+    (List.inits (d::todo)).tail.map (fun P => previous++P) =
+      (previous++[d]) :: (todo.inits.tail.map (fun P => (previous++[d])++P)) := by
+  rw [List.inits_cons,List.tail_cons,List.map_map]
+  cases todo with
+  | nil => simp
+  | cons e more => simp [List.map_map, Function.comp_def,List.append_assoc]
+
+omit [Fintype V] in
+private theorem collectEarlyMetricsWithWordWork_spec (height : ℕ)
+    (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
+    (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ)
+    (validate : EarlyExpansionValidation V) (reversed D : List (V × V)) :
+    let out := collectEarlyMetricsWithWordWork height metric expand validate reversed D
+    let rows := (D.inits.tail.map (fun P => reversed.reverse++P)).map (earlyExpandedMetricValue height metric expand validate)
+    out.links = rows.map ExpandedMetricRow.bought ∧ out.failed = rows.any ExpandedMetricRow.failed ∧
+      out.searches = (rows.map ExpandedMetricRow.searches).sum ∧
+      out.work ≤ (rows.map ExpandedMetricRow.work).sum + D.length*(3*(reversed.length+D.length)+29)+2 := by
+  induction D generalizing reversed with
+  | nil => simp [collectEarlyMetricsWithWordWork]
+  | cons d todo ih =>
+    let read := earlyExpandedMetricValue height metric expand validate
+    let P := reversed.reverse++[d]
+    let rows := (todo.inits.tail.map (fun Q => (d::reversed).reverse++Q)).map read
+    let rest := collectEarlyMetricsWithWordWork height metric expand validate (d::reversed) todo
+    have root : P.getLast? = some d := by simp [P]
+    have same : earlyExpandedMetricValueWithLast height metric expand validate P (some d) = read P := by
+      dsimp only [read,earlyExpandedMetricValue]
+      rw [root]
+    have shape : ((d::todo).inits.tail.map (fun Q => reversed.reverse++Q)).map read = read P :: rows := by
+      rw [nonemptyEarlyPrefixes_cons,List.map_cons]
+      simp only [P,rows,List.reverse_cons]
+    obtain ⟨links,failed,searches,work⟩ := ih (d::reversed)
+    dsimp only
+    change (collectEarlyMetricsWithWordWork height metric expand validate reversed (d::todo)).links =
+      (((d::todo).inits.tail.map (fun Q => reversed.reverse++Q)).map read).map ExpandedMetricRow.bought ∧
+      _
+    rw [shape]
+    simp only [collectEarlyMetricsWithWordWork,reverseEarlyPrefixWithWordWork_spec,List.reverse_cons,List.append_nil]
+    change (earlyExpandedMetricValueWithLast height metric expand validate P (some d)).bought::rest.links =
+        (read P :: rows).map ExpandedMetricRow.bought ∧
+      ((earlyExpandedMetricValueWithLast height metric expand validate P (some d)).failed || rest.failed) =
+        (read P :: rows).any ExpandedMetricRow.failed ∧
+      (earlyExpandedMetricValueWithLast height metric expand validate P (some d)).searches+rest.searches =
+        ((read P :: rows).map ExpandedMetricRow.searches).sum ∧
+      (earlyExpandedMetricValueWithLast height metric expand validate P (some d)).work+rest.work+
+          (3*(reversed.length+1)+1)+28 ≤
+        ((read P :: rows).map ExpandedMetricRow.work).sum + (todo.length+1)*(3*(reversed.length+(todo.length+1))+29)+2
+    rw [same]
+    change rest.links = rows.map ExpandedMetricRow.bought at links
+    change rest.failed = rows.any ExpandedMetricRow.failed at failed
+    change rest.searches = (rows.map ExpandedMetricRow.searches).sum at searches
+    change rest.work ≤ _ at work
+    simp only [List.map_cons,List.any_cons,List.sum_cons,links,failed,searches,true_and]
+    change rest.work ≤ (rows.map ExpandedMetricRow.work).sum + todo.length*(3*(reversed.length+1+todo.length)+29)+2 at work
+    have room : reversed.length+1+todo.length = reversed.length+(todo.length+1) := by omega
+    rw [room] at work
+    rw [Nat.succ_mul todo.length (3*(reversed.length+(todo.length+1))+29)]
+    omega
+
+private def unionEarlyMetricLinksWithWordWork {A : Type*} [DecidableEq A] : List (Finset A) → Finset A × ℕ
+  | [] => (∅,2)
+  | H::others =>
+    let rest := unionEarlyMetricLinksWithWordWork others
+    let combined := unionFinsetWithWordWork H rest.1
+    (combined.1,rest.2+combined.2+5)
+
+private theorem unionEarlyMetricLinksWithWordWork_spec {A : Type*} [DecidableEq A] (support : Finset A)
+    (links : List (Finset A)) (supported : ∀ H ∈ links, H ⊆ support) :
+    let union := unionEarlyMetricLinksWithWordWork links
+    (∀ e, e ∈ union.1 ↔ ∃ H ∈ links, e ∈ H) ∧ union.1 ⊆ support ∧
+      union.2 ≤ links.length*(support.card*(12*support.card+19)+5*support.card+15)+2 := by
+  induction links with
+  | nil => simp [unionEarlyMetricLinksWithWordWork]
+  | cons H links ih =>
+    let prior := unionEarlyMetricLinksWithWordWork links
+    have this : H ⊆ support := supported H List.mem_cons_self
+    obtain ⟨members,contained,work⟩ := ih (fun K on => supported K (List.mem_cons_of_mem _ on))
+    obtain ⟨exact,cost⟩ := unionFinsetWithWordWork_spec H prior.1
+    have cap : (unionFinsetWithWordWork H prior.1).2 ≤ support.card*(12*support.card+19)+5*support.card+10 :=
+      cost.trans (by gcongr)
+    change (∀ e, e ∈ (unionFinsetWithWordWork H prior.1).1 ↔ _) ∧
+      (unionFinsetWithWordWork H prior.1).1 ⊆ support ∧ prior.2+(unionFinsetWithWordWork H prior.1).2+5 ≤ _
+    rw [exact]
+    refine ⟨?_,union_subset this contained,?_⟩
+    · intro e
+      rw [mem_union,members e]
+      simp only [List.mem_cons,exists_eq_or_imp]
+    · rw [List.length_cons,Nat.succ_mul links.length (support.card*(12*support.card+19)+5*support.card+15)]
+      change prior.2 ≤ links.length*(support.card*(12*support.card+19)+5*support.card+15)+2 at work
+      omega
+
+/-- Starting with the empty prefix, extend the reversed history one request
+at a time. Each nonempty prefix is read once using its known final request.
+Merge the bought graphs only when the checks all succeed. -/
+def earlyRoundedGraphWithMeasuredPrefixAssembly (G : Arcs V) (height : ℕ)
+    (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
+    (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ)
+    (validate : EarlyExpansionValidation V) (D : List (V × V)) : Arcs V × ℕ × ℕ :=
+  let collected := collectEarlyMetricsWithWordWork height metric expand validate [] D
+  if collected.failed then (G,collected.searches,collected.work+14) else
+    let combined := unionEarlyMetricLinksWithWordWork collected.links
+    let expanded := expand combined.1
+    (expanded.1,collected.searches,collected.work+combined.2+expanded.2+14)
+
+def earlyPrefixAssemblyWordBudget (p links : ℕ) : ℕ :=
+  p*(3*p+29) + p*(links*(12*links+19)+5*links+15) + 4
+
+theorem earlyPrefixAssemblyWordBudget_le {p p' b b' : ℕ} (prefixes : p ≤ p') (links : b ≤ b') :
+    earlyPrefixAssemblyWordBudget p b ≤ earlyPrefixAssemblyWordBudget p' b' := by
+  unfold earlyPrefixAssemblyWordBudget
+  gcongr
+
+private theorem early_inits_nodup {A : Type*} (D : List A) : D.inits.Nodup := by
+  induction D with
+  | nil => simp
+  | cons a D ih =>
+    rw [List.inits_cons]
+    refine List.nodup_cons.mpr ⟨?_,ih.map (fun _ _ eq => (List.cons.inj eq).2)⟩
+    simp
+
+omit [Fintype V] in
+/-- Measured assembly has the same graph and ordinary search tally as the
+prefix-table implementation. The additional bound covers building prefix
+lists, collecting the failure flags and work, and merging bought links. -/
+theorem earlyRoundedGraphWithMeasuredPrefixAssembly_compare (G : Arcs V) (height : ℕ)
+    (metric : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
+    (expand : Arcs (HeightForestVertex V height) → Arcs V × ℕ)
+    (validate : EarlyExpansionValidation V) (D : List (V × V))
+    (support : Arcs (HeightForestVertex V height)) (supported : ∀ P ∈ D.inits, (metric P).1 ⊆ support) :
+    let out := earlyRoundedGraphWithMeasuredPrefixAssembly G height metric expand validate D
+    let old := earlyRoundedGraphWithSeedReadsExpansionAndValidationFromMetric G height metric expand validate D
+    out.1 = old.1 ∧ out.2.1 = old.2.1 ∧
+      out.2.2 ≤ old.2.2 + earlyPrefixAssemblyWordBudget D.length support.card := by
+  let read := earlyExpandedMetricValue height metric expand validate
+  let rows := D.inits.tail.map read
+  let collected := collectEarlyMetricsWithWordWork height metric expand validate [] D
+  let old := D.inits.toFinset.map (earlyExpandedMetricRow height metric expand validate)
+  have fullRows : D.inits.map read = read [] :: rows := by
+    cases D <;> simp [rows]
+  have member (r) : r ∈ old ↔ r ∈ D.inits.map read := by
+    simp only [old,mem_map,List.mem_toFinset,List.mem_map,earlyExpandedMetricRow_apply,read]
+  have rowSum (f : ExpandedMetricRow V height → ℕ) :
+      ∑ r ∈ old, f r = ((D.inits.map read).map f).sum := by
+    simp only [old,sum_map,List.sum_toFinset _ (early_inits_nodup D),List.map_map]
+    rfl
+  obtain ⟨links,failed,searches,work⟩ := collectEarlyMetricsWithWordWork_spec height metric expand validate [] D
+  have chosen : collected.links = rows.map ExpandedMetricRow.bought := by simpa [collected,rows,read] using links
+  have missed : collected.failed = rows.any ExpandedMetricRow.failed := by simpa [collected,rows,read] using failed
+  have searched : collected.searches = ∑ r ∈ old, r.searches := by
+    rw [rowSum _,fullRows,List.map_cons,List.sum_cons]
+    change collected.searches = 0+(rows.map ExpandedMetricRow.searches).sum
+    simpa [collected,rows,read] using searches
+  have charged : collected.work ≤ (∑ r ∈ old,r.work) + D.length*(3*D.length+29)+2-8 := by
+    have tally : collected.work ≤ (rows.map ExpandedMetricRow.work).sum + D.length*(3*D.length+29)+2 := by
+      simpa [collected,rows,read] using work
+    rw [rowSum _,fullRows,List.map_cons,List.sum_cons]
+    change collected.work ≤ 8+(rows.map ExpandedMetricRow.work).sum+D.length*(3*D.length+29)+2-8
+    omega
+  have failure : (old.filter fun r => r.failed = true).Nonempty ↔ collected.failed = true := by
+    rw [filter_nonempty_iff,missed,List.any_eq_true]
+    constructor
+    · rintro ⟨r,on,miss⟩
+      have seen := (member r).mp on
+      rw [fullRows] at seen
+      rcases List.mem_cons.mp seen with rfl | after
+      · simp [read,earlyExpandedMetricValue,earlyExpandedMetricValueWithLast] at miss
+      · exact ⟨r,after,miss⟩
+    · rintro ⟨r,on,miss⟩
+      exact ⟨r,(member r).mpr (fullRows.symm ▸ List.mem_cons_of_mem _ on),miss⟩
+  have contained (H) (on : H ∈ collected.links) : H ⊆ support := by
+    rw [chosen] at on
+    obtain ⟨r,rowOn,rowEquals⟩ := List.mem_map.mp on
+    subst H
+    obtain ⟨P,prefixOn,prefixEquals⟩ := List.mem_map.mp (show r ∈ D.inits.tail.map read from rowOn)
+    subst r
+    have cap := supported P (List.mem_of_mem_tail prefixOn)
+    cases endOf : P.getLast? with
+    | none => simp [read,earlyExpandedMetricValue,earlyExpandedMetricValueWithLast,endOf]
+    | some d => simpa only [read,earlyExpandedMetricValue,earlyExpandedMetricValueWithLast,endOf] using cap
+  let combined := unionEarlyMetricLinksWithWordWork collected.links
+  obtain ⟨edgeIn,_,fee⟩ := unionEarlyMetricLinksWithWordWork_spec support collected.links contained
+  have exactUnion : combined.1 = old.biUnion ExpandedMetricRow.bought := by
+    ext e
+    change e ∈ (unionEarlyMetricLinksWithWordWork collected.links).1 ↔ _
+    rw [edgeIn e]
+    constructor
+    · rintro ⟨H,on,used⟩
+      rw [chosen] at on
+      obtain ⟨r,rowOn,rowEquals⟩ := List.mem_map.mp on
+      exact mem_biUnion.mpr ⟨r,(member r).mpr (fullRows.symm ▸ List.mem_cons_of_mem _ rowOn),rowEquals.symm ▸ used⟩
+    · intro used
+      obtain ⟨r,on,edge⟩ := mem_biUnion.mp used
+      have seen := (member r).mp on
+      rw [fullRows] at seen
+      rcases List.mem_cons.mp seen with rfl | after
+      · simp [read,earlyExpandedMetricValue,earlyExpandedMetricValueWithLast] at edge
+      · exact ⟨r.bought,chosen.symm ▸ List.mem_map_of_mem after,edge⟩
+  have feeCap : combined.2 ≤ D.length*(support.card*(12*support.card+19)+5*support.card+15)+2 := by
+    have length : collected.links.length = D.length := by
+      rw [chosen,List.length_map]
+      simp only [rows,List.length_map,List.length_tail,List.length_inits,Nat.add_sub_cancel]
+    simpa only [combined,length] using fee
+  have enough : 8 ≤ ∑ r ∈ old,r.work := by
+    rw [rowSum _,fullRows,List.map_cons,List.sum_cons]
+    exact Nat.le_add_right _ _
+  have charges : collected.work + 8 ≤ (∑ r ∈ old,r.work) + D.length*(3*D.length+29)+2 := by omega
+  let fresh : Arcs V × ℕ × ℕ := if collected.failed = true then (G,collected.searches,collected.work+14) else
+    ((expand combined.1).1,collected.searches,collected.work+combined.2+(expand combined.1).2+14)
+  let prior : Arcs V × ℕ × ℕ := if (old.filter fun r => r.failed = true).Nonempty then
+    (G,(∑ r ∈ old,r.searches),(∑ r ∈ old,r.work)+6) else
+    let expanded := expand (old.biUnion ExpandedMetricRow.bought)
+    (expanded.1,(∑ r ∈ old,r.searches),(∑ r ∈ old,r.work)+expanded.2+6)
+  change fresh.1 = prior.1 ∧ fresh.2.1 = prior.2.1 ∧ fresh.2.2 ≤ prior.2.2 + _
+  by_cases misses : collected.failed = true
+  · have miss := failure.mpr misses
+    dsimp only [fresh,prior]
+    rw [ite_eq_left misses,ite_eq_left miss]
+    refine ⟨rfl,searched,?_⟩
+    change collected.work+14 ≤ (∑ r ∈ old,r.work)+6 + earlyPrefixAssemblyWordBudget D.length support.card
+    unfold earlyPrefixAssemblyWordBudget
+    omega
+  · have pass := mt failure.mp misses
+    dsimp only [fresh,prior]
+    rw [ite_eq_right misses,ite_eq_right pass]
+    refine ⟨congrArg (fun H => (expand H).1) exactUnion,searched,?_⟩
+    change collected.work+combined.2+(expand combined.1).2+14 ≤
+      (∑ r ∈ old,r.work)+(expand (old.biUnion ExpandedMetricRow.bought)).2+6 + earlyPrefixAssemblyWordBudget D.length support.card
+    rw [exactUnion]
+    unfold earlyPrefixAssemblyWordBudget
+    omega
 
 end OnlineReachabilityPreservers

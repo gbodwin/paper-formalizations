@@ -779,7 +779,7 @@ the evaluator returns the earlier expanded graph, including overlapping
 routes. Its fixed-height bound uses the lengths of both supplied lists
 and the cardinality of the bought graph.
 
-The [early replay](OnlineReachabilityPreservers/SteinerEarlyReplay.lean#L621)
+The [early replay](OnlineReachabilityPreservers/SteinerEarlyReplay.lean#L629)
 uses that expansion before each nonempty metric prefix check and for the
 union of bought links when all checks succeed. The old reachability
 checks and fallback decision agree, and the old ordinary search tally is
@@ -802,9 +802,21 @@ uses the measured check on every nonempty metric prefix. The
 keeps the same prefix graphs and evaluation count for every trace. Its
 [feasible-prefix work bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1989)
 includes arc filtering, reverse searching, and source membership for those
-checks. Tier and cutoff arithmetic, threshold comparisons, remaining
-search and set assembly, further service work, and bit and native costs
-remain open.
+checks.
+
+The [measured prefix assembly](OnlineReachabilityPreservers/SteinerEarlyReplay.lean#L802)
+builds successive nonempty prefix lists by reversing the extended history,
+uses the new request as the final request, and collects bought links and
+validation records. It merges the bought graphs only if all checks pass.
+Both branches return the same graph and ordinary search tally as the
+prior prefix table. The [prepared evaluator](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L2005)
+shares the same metric, expansion, and validation. The
+[complete comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2026)
+retains all graphs and evaluation counts, and its
+[feasible-prefix work bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2050)
+includes this assembly. Tier and cutoff arithmetic, threshold comparisons,
+remaining search and set assembly, further service work, and bit and
+native costs remain open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

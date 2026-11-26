@@ -299,16 +299,23 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   succeeds. The same checks produce the same fallback decision, graphs,
   and replay evaluation count. Its feasible-prefix work bound includes
   the expansion.
-  [Early expansion and validation](OnlineReachabilityPreservers/SteinerEarlyReplay.lean#L621)
+  [Early expansion and validation](OnlineReachabilityPreservers/SteinerEarlyReplay.lean#L629)
   · [Complete replay with measured expansion](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1928).
   The measured early validation scans the supplied arcs for the expanded
   graph, runs the reverse reachability search, and tests the source. The
   feasible-prefix work bound covers these steps on every nonempty early prefix
-  check, preserving the same graph and evaluation count. Tier and cutoff
-  arithmetic, threshold comparisons, remaining search and set assembly,
-  further service work, and bit and native costs remain open.
+  check, preserving the same graph and evaluation count.
   [Measured demand check](OnlineReachabilityPreservers/SteinerIntervalWork.lean#L298)
   · [Complete replay with measured early validation](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1989).
+  Early assembly extends the reversed request history and recovers each
+  nonempty prefix with its final request. It records the checks and merges
+  the bought links once all checks pass. The graph and ordinary search tally
+  agree with those from the prefix table, and the feasible trace bound now
+  includes this assembly inside the complete replay. Tier and cutoff
+  arithmetic, threshold comparisons, remaining search and set assembly,
+  further service work, and bit and native costs remain open.
+  [Measured prefix assembly](OnlineReachabilityPreservers/SteinerEarlyReplay.lean#L802)
+  · [Complete replay with measured prefix assembly](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2050).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

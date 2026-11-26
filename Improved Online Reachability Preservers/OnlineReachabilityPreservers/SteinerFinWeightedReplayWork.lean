@@ -700,4 +700,77 @@ theorem prepareFinSteinerWeightedForSeedWithMetricValidationWork_spec {n : ℕ} 
   exact ⟨graph,search,work.trans (Nat.add_le_add
     (Nat.add_le_add common (Nat.mul_le_mul_left _ attachments)) expansion)⟩
 
+/-- Collect each early metric from its nonempty prefix and charge the
+final bought-link union inside the finite preparation. -/
+def prepareFinSteinerWeightedForSeedWithMetricPrefixAssemblyWork {n : ℕ} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :
+    SteinerSeedPreparationWithSeedWork G height × ℕ :=
+  let rows := finForestNetworkRowsWithWordWork n height
+  let valid := finForestNetworkRowsWithWordWork_spec n height
+  let prepared := prepareFinSteinerWeightedWithPlanAndRows G arcs same height
+    (fun table rowsEq template exact plan consistent forestRows _ =>
+      prepareEarlyDistanceTableForSeedFromWeightsWithMetricPrefixAssemblyWork G height arcs n (by simp) forestRows
+        ⟨rows.keys,valid.2.2.2.1⟩ rows.vertices valid.1 table rowsEq template exact plan consistent)
+  (prepared.1,prepared.2+rows.wordWork+3)
+
+def finSteinerEarlyMetricPrefixAssemblyWordPolynomial (n m height p seed : ℕ) : ℕ :=
+  let F := 2*n*(n+1)^height
+  finSteinerEarlyMetricValidationWordPolynomial n m height p seed + earlyPrefixAssemblyWordBudget p (F^2)
+
+theorem finSteinerEarlyMetricPrefixAssemblyWordPolynomial_mono (n m height seed : ℕ) :
+    Monotone (fun p => finSteinerEarlyMetricPrefixAssemblyWordPolynomial n m height p seed) := by
+  intro p q short
+  exact Nat.add_le_add (finSteinerEarlyMetricValidationWordPolynomial_mono n m height seed short)
+    (earlyPrefixAssemblyWordBudget_le short le_rfl)
+
+theorem prepareFinSteinerWeightedForSeedWithMetricPrefixAssemblyWork_compare {n : ℕ} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :
+    let fresh := prepareFinSteinerWeightedForSeedWithMetricPrefixAssemblyWork G arcs same height
+    let prior := prepareFinSteinerWeightedForSeedWithMetricValidationWork G arcs same height
+    fresh.1.1 = prior.1.1 ∧ fresh.1.2.2 = prior.1.2.2 ∧ fresh.2 = prior.2 ∧
+      ∀ (samples : ForestTrialArrayWithSeedWork (Fin n) height (forestScale G height) (earlyTrialCount (Fin n) height))
+        (D : List (Fin n × Fin n)),
+        let out := fresh.1.2.1 samples D
+        let old := prior.1.2.1 samples D
+        out.1 = old.1 ∧ out.2.1 = old.2.1 ∧ out.2.2 ≤ old.2.2 + earlyPrefixAssemblyWordBudget D.length ((2*n*(n+1)^height)^2) := by
+  let inputs := finSteinerTemplateInputsWithWordWork arcs height
+  let correct := finSteinerTemplateInputsWithWordWork_spec G arcs same height
+  let links := arcsFromDistinctList inputs.2.1 correct.2.2.1
+  let exactForest := (arcsFromDistinctList_eq inputs.2.1 correct.2.2.1).trans correct.2.1
+  let read := readDistanceRow inputs.1.1
+  let plan := prepareForestWeightsFromListWithWordWork inputs.2.1 correct.2.2.1 read
+  have planEq := (finWeightsFromTemplateInputs_spec G arcs same height).1
+  let rows := finForestNetworkRowsWithWordWork n height
+  let valid := finForestNetworkRowsWithWordWork_spec n height
+  obtain ⟨scale, setup, evaluate⟩ := prepareEarlyDistanceTableForSeedFromWeightsWithMetricPrefixAssemblyWork_compare G height
+    arcs n (by simp) inputs.2.1 ⟨rows.keys,valid.2.2.2.1⟩ rows.vertices valid.1
+    inputs.1 correct.1 (links,inputs.2.2+5) exactForest plan.1 planEq
+  refine ⟨scale,setup,rfl,fun samples D => ?_⟩
+  obtain ⟨graph,search,work⟩ := evaluate samples D
+  have bound : links.card ≤ (2*n*(n+1)^height)^2 := by
+    calc
+      _ = inputs.2.1.length := by
+        unfold links
+        rw [arcsFromDistinctList_eq, List.toFinset_card_of_nodup correct.2.2.1]
+      _ ≤ _ := pairedForestList_length_le G inputs.2.1 correct.2.2.1 correct.2.1
+  exact ⟨graph,search,work.trans (Nat.add_le_add_left (earlyPrefixAssemblyWordBudget_le le_rfl bound) _)⟩
+
+theorem prepareFinSteinerWeightedForSeedWithMetricPrefixAssemblyWork_spec {n : ℕ} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :
+    let out := prepareFinSteinerWeightedForSeedWithMetricPrefixAssemblyWork G arcs same height
+    let old := prepareFinSteinerWeightedForSeedWithHistoryWork G arcs same height
+    out.1.1 = old.1.1 ∧ out.1.2.2 = old.1.2.2 ∧ out.2 = old.2+3 ∧
+      ∀ (samples : ForestTrialArrayWithSeedWork (Fin n) height (forestScale G height) (earlyTrialCount (Fin n) height))
+        (B : ℕ), (∀ i, forestSampleWorkBound (samples i) B) → ∀ (D : List (Fin n × Fin n)),
+        let result := out.1.2.1 samples D
+        let prior := old.1.2.1 samples D
+        result.1 = prior.1 ∧ result.2.1 ≤ prior.2.1 ∧
+          result.2.2 ≤ finSteinerEarlyMetricPrefixAssemblyWordPolynomial n arcs.length height D.length B := by
+  obtain ⟨scale,setup,record,each⟩ := prepareFinSteinerWeightedForSeedWithMetricPrefixAssemblyWork_compare G arcs same height
+  obtain ⟨oldScale,oldSetup,oldRecord,earlier⟩ := prepareFinSteinerWeightedForSeedWithMetricValidationWork_spec G arcs same height
+  refine ⟨scale.trans oldScale,setup.trans oldSetup,record.trans oldRecord,fun samples B cap D => ?_⟩
+  obtain ⟨graph,search,work⟩ := each samples D
+  obtain ⟨oldGraph,oldSearch,oldWork⟩ := earlier samples B cap D
+  exact ⟨graph.trans oldGraph,search.le.trans oldSearch,work.trans (Nat.add_le_add_right oldWork _)⟩
+
 end OnlineReachabilityPreservers

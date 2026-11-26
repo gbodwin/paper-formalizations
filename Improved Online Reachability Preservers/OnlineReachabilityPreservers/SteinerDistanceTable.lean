@@ -1985,4 +1985,53 @@ theorem prepareEarlyDistanceTableForSeedFromWeightsWithMetricValidationWork_spec
   dsimp only [limit,checkBudget]
   ring
 
+/-- Replace the early prefix table by a metered traversal and union while
+sharing the same forest metric, route expansion and validation. -/
+def prepareEarlyDistanceTableForSeedFromWeightsWithMetricPrefixAssemblyWork (G : Arcs V) (height : ℕ)
+    (arcs : List (V × V)) (n : ℕ) (size : n = Fintype.card V)
+    (forestRows : List (HeightForestVertex V height × HeightForestVertex V height))
+    (keys : ForestPairKeys V height) (vertices : List (HeightForestVertex V height)) (distinct : vertices.Nodup)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
+    (plan : ForestWeightPlan V height)
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1))) :
+    SteinerSeedPreparationWithSeedWork G height :=
+  prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWorkUsing G height keys table rows template exactForest plan
+    matchesPlan labelMetricWeights (meteredForestRequests vertices distinct)
+    (fun metric => earlyRoundedGraphWithMeasuredPrefixAssembly G height metric
+      (fun bought => expandForestLinksFromRowsWithWordWork arcs n size bought forestRows)
+      (validateExpandedEarlyDemandWithWordWork arcs n))
+
+theorem prepareEarlyDistanceTableForSeedFromWeightsWithMetricPrefixAssemblyWork_compare (G : Arcs V) (height : ℕ)
+    (arcs : List (V × V)) (n : ℕ) (size : n = Fintype.card V)
+    (forestRows : List (HeightForestVertex V height × HeightForestVertex V height))
+    (keys : ForestPairKeys V height) (vertices : List (HeightForestVertex V height)) (distinct : vertices.Nodup)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
+    (plan : ForestWeightPlan V height)
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1))) :
+    let fresh := prepareEarlyDistanceTableForSeedFromWeightsWithMetricPrefixAssemblyWork G height arcs n size forestRows keys vertices distinct
+      table rows template exactForest plan matchesPlan
+    let prior := prepareEarlyDistanceTableForSeedFromWeightsWithMetricValidationWork G height arcs n size forestRows keys vertices distinct
+      table rows template exactForest plan matchesPlan
+    fresh.1 = prior.1 ∧ fresh.2.2 = prior.2.2 ∧
+      ∀ (samples : ForestTrialArrayWithSeedWork V height (forestScale G height) (earlyTrialCount V height)) (D : List (V × V)),
+        let out := fresh.2.1 samples D
+        let old := prior.2.1 samples D
+        out.1 = old.1 ∧ out.2.1 = old.2.1 ∧ out.2.2 ≤ old.2.2 + earlyPrefixAssemblyWordBudget D.length template.1.card := by
+  intro fresh prior
+  refine ⟨rfl,rfl,fun samples D => ?_⟩
+  let expand := fun bought => expandForestLinksFromRowsWithWordWork arcs n size bought forestRows
+  let validate := validateExpandedEarlyDemandWithWordWork arcs n
+  let scale := plan.2.1.1
+  have exactScale : scale = forestScale G height := prior.1.property
+  let SeedAt := fun s => ForestTrialArrayWithSeedWork V height s (earlyTrialCount V height)
+  let seed : SeedAt scale := cast (congrArg SeedAt exactScale.symm) samples
+  let weights := labelMetricWeights (height := height) (readDistanceRow table.1)
+  let requests := meteredForestRequests vertices distinct plan.1.2
+  let metric P := earlyMetricWithPreparedRequestsWork keys template.1 weights plan.1.1 scale plan.2.1.2 seed (requests P)
+  have supported (P : List (V × V)) : (metric P).1 ⊆ template.1 :=
+    earlyMetricWithPreparedRequestsWork_sub keys template.1 weights plan.1.1 scale plan.2.1.2 seed (requests P)
+  exact earlyRoundedGraphWithMeasuredPrefixAssembly_compare G height metric expand validate D template.1 (fun P _ => supported P)
+
 end OnlineReachabilityPreservers
