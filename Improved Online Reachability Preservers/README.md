@@ -454,8 +454,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   With the rows for a fixed sample, the [binary thin run](OnlineReachabilityPreservers/SteinerBinaryThinRoundRunWork.lean#L198)
   starts at zero and returns the exact thin graph. An empty list gives an
   empty graph, any missed prefix selects the original graph, and otherwise
-  the last rounded graph is returned. Seed and graph preparation, the other
-  replay phases, and native execution bounds remain to be integrated.
+  the last rounded graph is returned. The [indexed sample entry](OnlineReachabilityPreservers/SteinerBinaryThinSampleWork.lean#L197)
+  constructs these rows using the decoder's shared arc index and its stored
+  thresholds. The graph inputs, other replay phases, and native execution
+  bounds remain to be integrated.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

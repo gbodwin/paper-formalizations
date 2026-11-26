@@ -1171,6 +1171,18 @@ It allocates its own table, and its work bound substitutes the global load
 budget for the total number of successful cuts. The sample rows and other
 binary inputs are supplied.
 
+The [binary threshold cache](OnlineReachabilityPreservers/SteinerBinaryThinSampleWork.lean#L110)
+reads one stored threshold per arc in the supplied shared index order. It
+represents each value at the specified width and gives each arc its encoded
+labels. The [entry using the indexed sample](OnlineReachabilityPreservers/SteinerBinaryThinSampleWork.lean#L197)
+runs the same binary thin phase with the constructed cache. It uses the arc
+count word's width for the thresholds and skips preparation on an empty
+request list. On a successful fixed-budget decode, the [sample projection](OnlineReachabilityPreservers/SteinerBinaryThinSampleWork.lean#L247)
+identifies the indexed thresholds with the thin sample of that same packet.
+The accounting includes the scan of the arc count word, charges parity and
+halving at the reserved operand width, and uses the supplied endpoint
+label-read allowance and indexed read model.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
