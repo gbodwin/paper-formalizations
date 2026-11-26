@@ -348,6 +348,17 @@ of the counts allowed by the two budgets. The resulting witness
 retains at least \(M/8\) and meets all four original-average caps.
 [Degree-three grids](OnlineReachabilityPreservers/HalfGridCleaning.lean).
 
+Every bridge of size \(r\) uses \(r\) distinct vertices and \(r\)
+distinct path indices. Thus a full cutoff of at least \(\min(n,p)\)
+already excludes every full bridge. The all-size cleaning theorem
+then applies to the unrestricted maximum for positive budgets and
+gives \(M/40\) with both original budgets and all four frozen caps.
+The same finite-label witness format gives the \(M/16\) result through
+cutoff three in both modes. With an empty budget or a cutoff below
+two, the indexed maximum equals \(np\), and it already meets the
+caps. An empty set of labels makes its corresponding cap vacuous.
+[Finite-budget cases](OnlineReachabilityPreservers/FrozenBoundaryCases.lean).
+
 The same splitting step can fail at larger bridge sizes with unique
 intersections. On seven vertices, take the six paths `[(0,1,2,3), (3,4),
 (4,0), (5,2), (1,6), (5,6)]`. There are 14 incidences, every vertex

@@ -769,6 +769,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   and \(p(p-1)\le108n\). A single witness meets both original budgets
   and all four original-average caps and excludes every half-bridge.
   Horizontal paths arrive before the two directions of each column.
+- The [finite-budget cases](OnlineReachabilityPreservers/FrozenBoundaryCases.lean)
+  package the original caps at the unrestricted maximum through cutoff
+  three in either mode, with a witness of mass at least \(M/16\).
+  A full cutoff of at least \(\min(n,p)\) covers every bridge size and
+  gives the all-size witness of mass at least \(M/40\) for positive
+  budgets. An empty budget or cutoff below two admits the full \(np\)
+  incidence mass in the indexed convention.
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion

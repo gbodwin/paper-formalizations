@@ -1801,6 +1801,17 @@ of the unrestricted maximum. Both this construction and the low-mass
 branch give one witness excluding half-bridges at every size.
 [Half-bridge grid cleaning](OnlineReachabilityPreservers/HalfGridCleaning.lean).
 
+The [finite-budget cases](OnlineReachabilityPreservers/FrozenBoundaryCases.lean)
+give an exact \(np\) maximizer meeting all four caps with either
+empty budget or a cutoff below two, in the indexed convention. For
+positive budgets and cutoff at most three, the previously checked
+split-and-peel witness is relabeled on finite ordinals with both
+budgets, the four original caps, and \(M/16\) in either mode.
+When \(k\ge\min(n,p)\), both injective labels in a bridge certificate
+show that full exclusion through \(k\) is all-size exclusion. The
+all-size construction gives \(M/40\) of that unrestricted maximum,
+using both original budgets and all four original caps.
+
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
 and nonempty simple rows. At the prescribed widths \(7\) and \(20\) it
