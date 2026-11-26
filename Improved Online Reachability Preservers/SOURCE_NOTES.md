@@ -435,9 +435,8 @@ the four-cycle \(0\to1\to2\to3\to0\) and the chord \(2\to1\). The cycle
 alone preserves all three demands. In particular, the original chord and
 the route \(2\to3\to0\to1\) give two distinct simple paths for the last
 demand. This falsifies the inference of uniqueness from bridge-freeness
-alone. The asymptotic extremal lower bound remains a separate
-proof obligation. Corollary 42 of [8] invokes Theorem 37, so its comparison
-with the acyclic extremum inherits the lower-direction gap from Lemma 40.
+alone. Corollary 42 of [8] invokes Theorem 37, so the cited proof of its
+comparison with the acyclic extremum inherits the gap from Lemma 40.
 The same uniqueness inference appears in Lemma 18 of arXiv v1 and in
 Lemma 40 of v2 through v4. The corresponding v1 comparison is Corollary 20,
 which invokes Theorem 15.
@@ -454,6 +453,24 @@ incidence count is the number of retained quotient arcs plus \(p\). Each bridge
 uses distinct rows, so excluding bridges through size \(p\) already
 excludes every size. An empty demand list gives the empty preserver.
 [Checked general upper bound](OnlineReachabilityPreservers/OfflineBridgeExtremalUpper.lean#L56).
+
+The extremal converse holds by a vertex elimination argument. Restrict
+the paths to the vertices that remain. A longest simple consecutive
+chain with distinct row labels ends at a vertex that can leave on at
+most three rows. Two unused rows would give a bridge using their heads
+and the chain between them. Two used rows other than the last would
+give a bridge using the corresponding earlier steps on the chain.
+Assign the chosen vertex the largest remaining number and discard its
+incidence in each row that still has a successor. Each vertex loses at
+most three incidences, and the retained subsequences increase in one
+order. Each nonempty row keeps its last vertex. For maximum mass
+\(M\ge6n\), at least \(M/2\) survives. For smaller mass, the spanning path
+gives a linear lower bound. Together these give a DAG on exactly
+\(n\ge2\) vertices with exactly \(p\le n^2\) distinct demands whose every
+preserver has at least \(M/24\) edges.
+[Consecutive-chain bound](OnlineReachabilityPreservers/OfflineConsecutiveEndpoint.lean#L197)
+· [Common-order subsequences](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L128)
+· [Checked extremal converse](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L204).
 
 With a common vertex order, a detour that uses the same path twice can be
 shortened to one step along that path. A detour with distinct path indices
@@ -477,8 +494,7 @@ into a directed cycle. A return path as river has no alternate first
 edge. A chain for a base river that uses a return would use the same base
 path twice. The two SCC connector forests
 therefore serve all the overlay demands using only a linear number of
-edges. The existential extremal lower bound for arbitrary digraphs remains
-open across the intermediate demand range.
+edges.
 [Checked unbounded gap in the cited overlay](OnlineReachabilityPreservers/OverlayLowerAudit.lean)
 · [Checked bridge exclusion for the added return paths](OnlineReachabilityPreservers/CyclicReturnOverlay.lean).
 
@@ -521,8 +537,7 @@ Some path has at least \(\lceil d/3\rceil\) descending steps and hence
 needs at least \(1+\lceil d/3\rceil\) increasing blocks. At \(d=4\),
 no common numbering gives all 81 paths at most two blocks on the 324
 vertices. The mass is \(2n\), so the spanning-path lower construction
-already gives a constant-factor comparison for this family. The general
-extremal converse remains open.
+already gives a constant-factor comparison for this family.
 [Unbounded block requirement](OnlineReachabilityPreservers/TriangularCoordinatePaths.lean#L485).
 
 A common order also suffices when each row keeps any nonempty increasing
@@ -536,8 +551,7 @@ the original counts. The more general proof uses the total number of
 path-component incidences. Selecting one vertex per visit can retain an
 arbitrarily small fraction of the mass. For every \(L\), a family of three
 fully bridge-free paths has mass \(3L+7\) and just three visits. Pruning
-opposite intersections retains all three paths as given. This leaves the
-general increasing-subsequence comparison and the extremal converse open.
+opposite intersections retains all three paths as given.
 [Increasing subsequences](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L69)
 · [Component visits](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L184)
 · [Bounded component intersections](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L261)
@@ -562,8 +576,7 @@ pruning. Take a lattice family with \(q=L^6\) original paths and add the
 private return paths. The expanded system has \(n\le 11q\), \(p=3q\),
 \(J=3q\), and \(M=(L+7)q\). Each path lies within one component and distinct
 paths meet at most once, so pruning retains all incidences. The example
-limits the component condition for a supplied family. The unrestricted
-extremal converse remains open.
+limits the component condition for a supplied family.
 [Checked aggregate obstruction](OnlineReachabilityPreservers/OverlayLowerAudit.lean#L509).
 
 Order and select the subsequences independently inside each component.

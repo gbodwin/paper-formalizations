@@ -552,6 +552,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   checks the reverse construction in a common vertex order. Any preserver of
   the endpoint demands must retain exactly the total incidence count minus
   the path count in consecutive edges.
+- [`theorem14_offline_extremal_lower`](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L204)
+  proves the unrestricted converse. For every \(n\ge2\) and \(0\le p\le n^2\),
+  one DAG on exactly \(n\) vertices with \(p\) distinct demands forces at
+  least one twenty-fourth of the maximum fully bridge-free incidence mass.
+  The [common-order construction](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L128)
+  removes at most three incidences per vertex and keeps the last vertex
+  of each nonempty path. A spanning path supplies the lower bound when
+  the maximum mass is below \(6n\).
 - For a fully bridge-free family of nonempty simple paths, let \(M\) be its
   incidence mass, \(n\) its vertex count, and \(J\) the total number of visits
   to strongly connected components of the precedence graph, counted once
@@ -577,8 +585,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   For a universal constant `C`, a DAG with exactly `n` vertices and `p`
   distinct demands forces at least `1/(C K)` of the mass of every simple
   path system that excludes full bridges through size four. Theorem 43
-  bounds that mass by a linear term in each regime. The general extremal
-  lower bound remains open between these regimes.
+  bounds that mass by a linear term in each regime.
 - [`layered_offline_lower`](OnlineReachabilityPreservers/OverlayLowerAudit.lean)
   gives DAGs on \(4(L+1)L^5\) vertices with \(L^6\) distinct feasible demands
   that force exactly \(L^7\) edges for every positive integer \(L\). This gives
@@ -684,6 +691,6 @@ The library is included in the repository's module index, declaration audit,
 and kernel replay.
 
 The companion PaperLab includes an interactive trace and a source-linked
-proof map. The general extremal converse in Lemma 14 and the end-to-end
-running-time proofs remain open.
+proof map. General cyclic cleaning at the original averages and the
+end-to-end Steiner running-time bound remain open.
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).
