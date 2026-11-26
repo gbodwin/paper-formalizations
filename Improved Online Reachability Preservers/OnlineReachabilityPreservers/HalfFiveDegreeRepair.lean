@@ -22,7 +22,8 @@ private theorem partnerCopy_index {paths : I → List V} {width : ℕ} {i : I}
   obtain ⟨old,_,rfl⟩ := List.mem_map.mp present
   rfl
 
-private theorem partnerCopy_mono {paths : I → List V} {width : ℕ} {i j : I}
+/-- Inside the same original vertex, earlier rows receive no later block number. -/
+theorem splitListVertices_block_mono {paths : I → List V} {width : ℕ} {i j : I}
     {u v : ListVertexBlockIndex paths width} (same : u.fst = v.fst) (earlier : i ≤ j)
     (presentU : u ∈ splitListVertices paths width i) (presentV : v ∈ splitListVertices paths width j) :
     u.snd.val ≤ v.snd.val := by
@@ -91,13 +92,13 @@ theorem splitListVertices_halfFive_of_original_colors {p : ℕ}
   obtain ⟨same, riverBefore⟩ :=
     free.project_half_five_terminal_collision project (fun {_ _ _} => step) b earlier
   change (b.vertex 2).fst = (b.vertex 4).fst at same
-  have earlierBlock := partnerCopy_mono same.symm riverBefore.le b.riverStep.2.1 (b.arcStep 1).2.1
+  have earlierBlock := splitListVertices_block_mono same.symm riverBefore.le b.riverStep.2.1 (b.arcStep 1).2.1
   have blocksDifferent : (b.vertex 4).snd.val ≠ (b.vertex 2).snd.val := by
     intro eq
     exact (by decide : (4:Fin 5) ≠ 2) (b.distinctVertices (partnerCopy_eq same.symm eq))
   have distinctOrdered : (b.vertex 4).snd.val < (b.vertex 2).snd.val := earlierBlock.lt_of_ne blocksDifferent
   have riverBeforeReturn : b.river < b.arc 2 := lt_of_not_ge fun closer =>
-    distinctOrdered.not_ge (partnerCopy_mono same closer (b.arcStep 2).1 b.riverStep.2.1)
+    distinctOrdered.not_ge (splitListVertices_block_mono same closer (b.arcStep 2).1 b.riverStep.2.1)
   let corner := project (b.vertex 2)
   let other := project (b.vertex 3)
   have heavy : width < (occurrences (fun j => (rows j).toFinset) corner).card :=
@@ -171,14 +172,14 @@ theorem halfFiveDegreeRepair_halfFree (paths : Fin p → List (Fin n)) (simple :
   change (b.vertex 2).fst = (b.vertex 4).fst at same
   have atReturn := (mem_halfFiveDegreeRepair.mp (b.arcStep 2).1).1
   have atLast := mem_halfFiveDegreeRepair.mp (b.arcStep 3).2.1
-  have earlierBlock := partnerCopy_mono same.symm riverBefore.le
+  have earlierBlock := splitListVertices_block_mono same.symm riverBefore.le
     (mem_halfFiveDegreeRepair.mp b.riverStep.2.1).1 (mem_halfFiveDegreeRepair.mp (b.arcStep 1).2.1).1
   have blocksDifferent : (b.vertex 4).snd.val ≠ (b.vertex 2).snd.val := by
     intro eq
     exact (by decide : (4:Fin 5) ≠ 2) (b.distinctVertices (vertexBlock_eq_of_same_label same.symm eq))
   have distinctOrdered : (b.vertex 4).snd.val < (b.vertex 2).snd.val := earlierBlock.lt_of_ne blocksDifferent
   have riverBeforeReturn : b.river < b.arc 2 := lt_of_not_ge fun closer =>
-    distinctOrdered.not_ge (partnerCopy_mono same closer atReturn
+    distinctOrdered.not_ge (splitListVertices_block_mono same closer atReturn
       (mem_halfFiveDegreeRepair.mp b.riverStep.2.1).1)
   have targetHeavy := degree_width_lt_of_positive_block atReturn
     ((Nat.zero_le ((b.vertex 4).snd.val)).trans_lt distinctOrdered)

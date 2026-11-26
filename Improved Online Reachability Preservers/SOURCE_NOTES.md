@@ -440,6 +440,19 @@ The actual copy count and the row budget leave at least \(M/5000\) after
 peeling, with both budgets and all four original-average caps.
 [Cleaning by the overfull vertex mass](OnlineReachabilityPreservers/HalfFiveHeavyWidthCleaning.lean).
 
+After clipping at the original length width, degree blocks can be fixed
+before deleting anything at a vertex. In a proposed half-five bridge,
+the terminal collision crosses two different arrival blocks. The third
+and fourth arcs use the two ends of an actual reversed comparison across
+that cut, so deleting one reverse-partner color on those comparisons
+preserves half-five exclusion. Let \(K\) be the clipped mass and \(A\) the
+number of distinct participating copied incidences. The total weight
+retained across both colors is \(2K-A\). Selecting vertex copies by
+that weight and choosing a color leaves enough mass to peel when
+\(A+2(M-K)\le23M/25\). The witness retains at least \(M/5000\) with
+both original budgets and all four original-average caps.
+[Exact degree cuts and clipping](OnlineReachabilityPreservers/HalfFiveDegreeCutCleaning.lean).
+
 The half-five conflict graph can have two incoming conflicts at one
 incidence. Take the paths
 `[(4,1),(5,1),(0,3),(0,6,1,2,4,5),(3,2)]` in this order. They exclude
