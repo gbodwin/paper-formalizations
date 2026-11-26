@@ -328,11 +328,18 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   nonempty prefix with its final request. It records the checks and merges
   the bought links once all checks pass. The graph and ordinary search tally
   agree with those from the prefix table, and the feasible trace bound now
-  includes this assembly inside the complete replay. Tier and cutoff
-  arithmetic, threshold comparisons, remaining search and set assembly,
-  further service work, and bit and native costs remain open.
+  includes this assembly inside the complete replay.
   [Measured prefix assembly](OnlineReachabilityPreservers/SteinerEarlyReplay.lean#L802)
   · [Complete replay with measured prefix assembly](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2050).
+  Every reached early metric now uses the measured gates, ancestor
+  cutoffs, and parent-arc keys from the forest trials. This uses the same
+  weighted separator run and preserves the prefix graphs and evaluation
+  count on every trace. The feasible-prefix polynomial includes the new
+  charges. Remaining work includes trial and tier containers, weighted
+  search and its vertex enumeration, later service steps, and bit and
+  native execution costs.
+  [Prepared arithmetic](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L804)
+  · [Complete replay with measured rounding](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2111).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
