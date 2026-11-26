@@ -996,6 +996,16 @@ proves the original inequality and a polynomial tally in the supplied word
 lengths, including when the load represents a much larger value. This is the
 arithmetic for a single row on supplied encodings.
 
+The [decoded load read](OnlineReachabilityPreservers/SteinerBinaryIndexedWork.lean#L158)
+selects the encoded cell that represents the reference entry. The
+[binary threshold scan](OnlineReachabilityPreservers/SteinerThinBitScanWork.lean#L64)
+reads and tests each supplied row, preserving the order and multiplicity
+of passing rows. On duplicate-free arc rows the
+[reference comparison](OnlineReachabilityPreservers/SteinerThinBitScanWork.lean#L95)
+checks exact equality of the rounded arc sets. Its tally includes a list
+walk and a binary comparison per row. The finite table and binary inputs
+are supplied, and the reachability check on the rounded arcs is separate.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

@@ -96,8 +96,8 @@ theorem binaryPairAddressWithWork_spec (base row column : List Bool) :
 
 /-- Access a dense table using the same row-major address as the indexed
 thin load table, with all address operations on explicit bit lists. -/
-def thinLoadAccessWithBinaryWork (cells : List ℕ) (base row column : List Bool)
-    (replacement : Option ℕ) : (Option ℕ × List ℕ) × ℕ :=
+def thinLoadAccessWithBinaryWork {α : Type*} (cells : List α) (base row column : List Bool)
+    (replacement : Option α) : (Option α × List α) × ℕ :=
   let address := binaryPairAddressWithWork base row column
   let accessed := accessBinaryIndexedListWithWork replacement address.1 cells
   (accessed.1,address.2+accessed.2+4)
@@ -145,5 +145,47 @@ theorem thinLoadAccessWithBinaryWork_refines {n : ℕ} (table : FinThinLoadTable
     have cap : accessed.2 ≤ 3+(n*n)*(9*(column.length+row.length*(base.length+2)+1)+13) :=
       cellWork.trans (by gcongr)
     exact Nat.add_le_add_right (Nat.add_le_add addrWork cap) 4
+
+/-- The address allowance increases with either supplied label width. -/
+theorem thinLoadAccessBinaryWorkBudget_le {cells base row column row' column' : ℕ}
+    (rows : row ≤ row') (columns : column ≤ column') :
+    thinLoadAccessBinaryWorkBudget cells base row column ≤ thinLoadAccessBinaryWorkBudget cells base row' column' := by
+  unfold thinLoadAccessBinaryWorkBudget binaryPairAddressWorkBudget
+  gcongr
+  exact binaryMultiplicationWorkBudget_le le_rfl rows
+
+/-- Read an encoded cell corresponding to the reference table entry. -/
+theorem thinLoadAccessWithBinaryWork_read_decoded {α : Type*} {n : ℕ} (table : FinThinLoadTable n)
+    (cells : List α) (decode : α → ℕ) (arc : Fin n × Fin n) (base row column : List Bool)
+    (representation : cells.map decode = table.val.toList) (size : binaryWordValue base = n)
+    (first : binaryWordValue row = arc.1.val) (second : binaryWordValue column = arc.2.val) :
+    let out := thinLoadAccessWithBinaryWork cells base row column none
+    (∃ cell ∈ cells, out.1.1 = some cell ∧ decode cell = table.read arc) ∧
+      out.2 ≤ thinLoadAccessBinaryWorkBudget (n*n) base.length row.length column.length := by
+  let address := binaryPairAddressWithWork base row column
+  let accessed := accessBinaryIndexedListWithWork none address.1 cells
+  obtain ⟨addressValue,addressLength,addressWork⟩ := binaryPairAddressWithWork_spec base row column
+  obtain ⟨read,_,walkWork⟩ := accessBinaryIndexedListWithWork_spec (none : Option α) address.1 cells
+  change binaryWordValue address.1 = _ at addressValue
+  rw [size,first,second] at addressValue
+  change accessed.1.1 = cells[binaryWordValue address.1]? at read
+  have inside : arc.2.val+n*arc.1.val < table.val.size := table.property.symm ▸ (finProdFinEquiv arc).isLt
+  have mapped : accessed.1.1.map decode = some (table.read arc) := by
+    rw [read,← List.getElem?_map,representation,addressValue,Array.getElem?_toList,Array.getElem?_eq_getElem inside]
+    rfl
+  change (∃ cell ∈ cells, accessed.1.1 = some cell ∧ decode cell = table.read arc) ∧
+    address.2+accessed.2+4 ≤ thinLoadAccessBinaryWorkBudget (n*n) base.length row.length column.length
+  constructor
+  · cases found : accessed.1.1 with
+    | none => simp [found] at mapped
+    | some cell =>
+      rw [found] at mapped
+      exact ⟨cell,List.mem_of_getElem? (read.symm.trans found),rfl,Option.some.inj mapped⟩
+  · have count : cells.length = n*n := by
+      simpa only [List.length_map,Array.length_toList,table.property] using congrArg List.length representation
+    change address.1.length ≤ column.length+row.length*(base.length+2)+1 at addressLength
+    change accessed.2 ≤ 3+cells.length*(9*address.1.length+13) at walkWork
+    rw [count] at walkWork
+    exact Nat.add_le_add_right (Nat.add_le_add addressWork (walkWork.trans (by gcongr))) 4
 
 end OnlineReachabilityPreservers
