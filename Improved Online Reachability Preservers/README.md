@@ -383,7 +383,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   The [thin arithmetic replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2520)
   also measures the update cap and the shared part of the rounding
   factor once. Each late call adds its cutoff to that stored offset.
-  The [feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2566)
+  The [feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2578)
   includes this setup and per-call work and keeps all prefix records
   and evaluation counts.
   A [binary setup evaluator](OnlineReachabilityPreservers/SteinerThinBitArithmeticWork.lean#L64)
@@ -465,12 +465,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   full-graph fallback. Its bound adds the hub word work and the binary thin
   work. The [prepared late controls](OnlineReachabilityPreservers/SteinerBinaryLateControlsWork.lean#L88)
   compute the count words, rounding factor, and fuel for that evaluator.
-  The [seeded replay with binary late rounds](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2692)
+  The [seeded replay with binary late rounds](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2789)
   runs that evaluator with the decoded thin sample at each prefix and
   keeps the measured early evaluator. It proves the exact reference graph
   at every feasible prefix, including the budget-exhaustion fallback.
-  A whole-run bound for this combination and a native execution bound
-  remain open.
+  Its [whole-run tally](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2801)
+  includes preparation, seed decoding, indexing, and the mixed work
+  at every replayed prefix. A native execution bound remains open.
   In the early weighted cover, the [binary charge update](OnlineReachabilityPreservers/SteinerBinaryWeightedLoadWork.lean#L44)
   maintains the remainder, doubling factor, and exact weighted numerator
   for one paid edge, with a bound in the input word widths. The [binary weighted capacity](OnlineReachabilityPreservers/SteinerBinaryWeightedCapacityWork.lean#L129)

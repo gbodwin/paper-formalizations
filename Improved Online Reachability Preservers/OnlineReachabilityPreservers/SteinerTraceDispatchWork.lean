@@ -210,26 +210,48 @@ theorem replayFirstOccurrencesWithWordWork_rel {V X Y : Type*} [DecidableEq V]
 
 private theorem replayFirstOccurrencesFrom_work_le {V X Y : Type*} [DecidableEq V]
     (first : List (V × V) → X × ℕ) (second : List (V × V) → Y × ℕ) (limit extra : ℕ)
-    (perCall : ∀ P, P.length ≤ limit → (first P).2 ≤ (second P).2 + extra)
-    (seen : List (V × V)) (x : X) (y : Y) (D : List (V × V)) (fits : seen.length+D.length ≤ limit) :
+    (valid : V × V → Prop) (perCall : ∀ P, P.length ≤ limit → (∀ d ∈ P, valid d) → (first P).2 ≤ (second P).2 + extra)
+    (seen : List (V × V)) (earlier : ∀ d ∈ seen, valid d)
+    (x : X) (y : Y) (D : List (V × V)) (validD : ∀ d ∈ D, valid d) (fits : seen.length+D.length ≤ limit) :
     (replayFirstOccurrencesFrom first seen x D).2.1 ≤
       (replayFirstOccurrencesFrom second seen y D).2.1 + D.length * extra := by
   induction D generalizing seen x y with
   | nil => simp [replayFirstOccurrencesFrom]
   | cons d tail ih =>
     have shorter : seen.length+tail.length ≤ limit := by simp only [List.length_cons] at fits; omega
+    have validTail (e : V × V) (inside : e ∈ tail) : valid e := validD e (List.mem_cons_of_mem _ inside)
     by_cases accepted : (nonselfRequestIsNewWithWordWork seen d).1 = true
     · have extended : (d::seen).length+tail.length ≤ limit := by
         simp only [List.length_cons] at fits ⊢
         omega
+      have next (e : V × V) (inside : e ∈ d::seen) : valid e := by
+        rcases List.mem_cons.mp inside with rfl | old
+        · exact validD e List.mem_cons_self
+        · exact earlier e old
       have nextCost := perCall (d::seen).reverse (by rw [List.length_reverse]; omega)
-      have rest := ih (d::seen) (first (d::seen).reverse).1 (second (d::seen).reverse).1 extended
+        (fun e inside => next e (List.mem_reverse.mp inside))
+      have rest := ih (d::seen) next (first (d::seen).reverse).1 (second (d::seen).reverse).1 validTail extended
       simp only [replayFirstOccurrencesFrom, accepted, ite_true, List.length_cons, Nat.succ_mul]
       omega
-    · have rest := ih seen x y shorter
+    · have rest := ih seen earlier x y validTail shorter
       simp only [replayFirstOccurrencesFrom, accepted, Bool.false_eq_true, ite_false,
         List.length_cons, Nat.succ_mul]
       omega
+
+/-- The per-call comparison only needs to hold on demands satisfying the
+input property. The dispatcher preserves it when removing repeated requests. -/
+theorem replayFirstOccurrencesWithWordWork_work_le_of_demand_property {V X Y : Type*} [DecidableEq V]
+    (first : List (V × V) → X × ℕ) (second : List (V × V) → Y × ℕ)
+    (D : List (V × V)) (extra : ℕ) (valid : V × V → Prop) (validD : ∀ d ∈ D, valid d)
+    (perCall : ∀ P, P.length ≤ D.length → (∀ d ∈ P, valid d) → (first P).2 ≤ (second P).2 + extra) :
+    (replayFirstOccurrencesWithWordWork first D).2.1 ≤
+      (replayFirstOccurrencesWithWordWork second D).2.1 + (D.length+1)*extra := by
+  have ordinary := replayFirstOccurrencesFrom_work_le first second D.length extra valid perCall [] (by simp)
+    (first []).1 (second []).1 D validD (by simp)
+  have initial := perCall [] (by simp) (by simp)
+  rw [Nat.succ_mul]
+  dsimp only [replayFirstOccurrencesWithWordWork]
+  omega
 
 /-- Replacing a callback by one that costs at most `extra` more per call
 adds at most that amount per input prefix, including the empty prefix. -/
@@ -238,13 +260,9 @@ theorem replayFirstOccurrencesWithWordWork_work_le {V X Y : Type*} [DecidableEq 
     (D : List (V × V)) (extra : ℕ)
     (perCall : ∀ P, P.length ≤ D.length → (first P).2 ≤ (second P).2 + extra) :
     (replayFirstOccurrencesWithWordWork first D).2.1 ≤
-      (replayFirstOccurrencesWithWordWork second D).2.1 + (D.length+1)*extra := by
-  have ordinary := replayFirstOccurrencesFrom_work_le first second D.length extra perCall []
-    (first []).1 (second []).1 D (by simp)
-  have initial := perCall [] (by simp)
-  rw [Nat.succ_mul]
-  dsimp only [replayFirstOccurrencesWithWordWork]
-  omega
+      (replayFirstOccurrencesWithWordWork second D).2.1 + (D.length+1)*extra :=
+  replayFirstOccurrencesWithWordWork_work_le_of_demand_property first second D extra (fun _ => True)
+    (by simp) (fun P short _ => perCall P short)
 
 section SteinerTrace
 

@@ -940,7 +940,7 @@ update cap and rounding offset. The [late comparison](OnlineReachabilityPreserve
 uses those same parameters and adds the supplied late cutoff to the
 offset. The [complete comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2520)
 preserves every prefix record and evaluation count on all traces. The
-[feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2566)
+[feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2578)
 adds at most \(7(n+m)+19+4(p+1)\) for the setup and reached calls.
 
 The [binary arithmetic](OnlineReachabilityPreservers/SteinerBinaryArithmetic.lean#L45)
@@ -1211,14 +1211,16 @@ counts. The [prepared-control entry](OnlineReachabilityPreservers/SteinerBinaryL
 computes those sizes and the rounding factor from the graph counts and
 late threshold. Its [control calculation](OnlineReachabilityPreservers/SteinerBinaryLateControlsWork.lean#L35)
 proves the exact binary widths and fuel and adds the setup charge to the
-same mixed work model. The [full seeded replay with binary late rounds](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2614)
+same mixed work model. The [full seeded replay with binary late rounds](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2674)
 passes the shared decoded arc index and thin sample directly to this
 evaluator at each evaluated prefix. It keeps the measured early phase and
-returns the [exact fixed-budget prefix graphs](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2692)
+returns the [exact fixed-budget prefix graphs](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2789)
 on feasible traces with the reference evaluation count. Decoder exhaustion
-uses the same fallback as the reference. This comparison establishes
-graph and count equality. A whole-run work bound for this combination
-remains open.
+uses the same fallback as the reference. The [work comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2696)
+bounds the added binary late charge at each feasible evaluation. The
+[full tally](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2801)
+includes the earlier measured work, all retained setup counters, and
+the binary late allowance within this mixed model.
 
 The [binary weighted charge update](OnlineReachabilityPreservers/SteinerBinaryWeightedLoadWork.lean#L44)
 stores the current remainder, doubling factor, and weighted numerator for
