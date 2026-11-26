@@ -62,12 +62,12 @@ private theorem forwardVertexPairs_twice {n : ℕ} (path : List (Fin n)) (simple
   omega
 
 /-- Each ordered pair of distinct vertices appears in that order on at most
-one row under half-bridge exclusion through size two. Count all comparisons
-and apply Cauchy--Schwarz to the row lengths. -/
-theorem listMass_square_le_halfTwo {n p k : ℕ} (paths : Fin p → List (Fin n))
+one row under half-bridge exclusion through size two. Counting comparisons
+bounds the sum of squared row lengths. -/
+theorem listLength_square_sum_le_halfTwo {n p k : ℕ} (paths : Fin p → List (Fin n))
     (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (ListBefore paths) k) (cutoff : 2 ≤ k) :
     let M := ∑ i, (paths i).length
-    M^2 ≤ p*(2*(n*n-n)+M) := by
+    (∑ i, (paths i).length^2) ≤ 2*(n*n-n)+M := by
   let M := ∑ i, (paths i).length
   let pairs := (univ : Finset (Fin p)).sigma (fun i => forwardVertexPairs (paths i))
   let distinct := (univ : Finset (Fin n)).offDiag
@@ -90,11 +90,20 @@ theorem listMass_square_le_halfTwo {n p k : ℕ} (paths : Fin p → List (Fin n)
     unfold M
     rw [mul_sum,← sum_add_distrib]
     exact sum_congr rfl (fun i _ => forwardVertexPairs_twice (paths i) (simple i))
+  dsimp only
+  rw [← total]
+  exact Nat.add_le_add_right (Nat.mul_le_mul_left _ comparisons) _
+
+/-- Apply Cauchy--Schwarz to the comparison bound on the row lengths. -/
+theorem listMass_square_le_halfTwo {n p k : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (ListBefore paths) k) (cutoff : 2 ≤ k) :
+    let M := ∑ i, (paths i).length
+    M^2 ≤ p*(2*(n*n-n)+M) := by
+  let M := ∑ i, (paths i).length
   have squares : M^2 ≤ p*(∑ i : Fin p, (paths i).length^2) := by
     simpa [M] using
       sum_mul_sq_le_sq_mul_sq (R := ℕ) (univ : Finset (Fin p)) (fun _ => 1) (fun i => (paths i).length)
-  rw [← total] at squares
-  exact squares.trans (Nat.mul_le_mul_left _ (Nat.add_le_add_right (Nat.mul_le_mul_left _ comparisons) _))
+  exact squares.trans (Nat.mul_le_mul_left _ (listLength_square_sum_le_halfTwo paths simple free cutoff))
 
 private theorem mass_le_eight_of_small_budget {n p M : ℕ} (hn : 0 < n) (hp : 0 < p) (small : min n p ≤ 29)
     (moment : M^2 ≤ p*(2*(n*n-n)+M)) : M ≤ 8*max n p := by

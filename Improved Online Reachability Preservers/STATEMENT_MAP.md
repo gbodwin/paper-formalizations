@@ -1739,6 +1739,19 @@ all four original-average caps, and at least \(M/288\) at half cutoff
 four and full cutoffs four and six.
 [Cleaning at a large path budget](OnlineReachabilityPreservers/FrozenManyRows.lean#L39).
 
+Counting all ordered comparisons also controls the loss from clipping
+paths at the original width \(L=\lfloor4M/p\rfloor\). With half exclusion
+through size two, the sum of \(\ell_i(\ell_i-1)\) is at most
+\(2n(n-1)\). If \(T=\sum_i(\ell_i-L)_+\), the clipping inequality gives
+\((4L-2)T\le2n(n-1)\). When \(M>8\max(n,p)\), \(p\le227\) or
+\(n(n-1)\le235p\) suffices for \(15T\le7M\). The low-mass construction
+covers the other density branch. Clipping keeps a sublist of every row,
+and splitting vertices preserves full exclusion at any input cutoff.
+With positive budgets this yields all four original-average caps, both
+original budgets, and \(M/104\) of the unrestricted maximum at every full cutoff of at
+least two and half cutoffs two through four.
+[Squared lengths and frozen clipping](OnlineReachabilityPreservers/FrozenClippingBudgets.lean).
+
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
 and nonempty simple rows. At the prescribed widths \(7\) and \(20\) it

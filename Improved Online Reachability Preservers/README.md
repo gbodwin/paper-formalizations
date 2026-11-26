@@ -746,6 +746,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   Such a maximizing family has nonempty rows and average length at most
   twelve. Opposite-intersection pruning then gives a cleaned witness with
   \(M/288\), both budgets, and all four original-average caps.
+- For positive budgets, the [clipping theorem](OnlineReachabilityPreservers/FrozenClippingBudgets.lean)
+  gives both original budgets, all four caps and at least \(M/104\) of the
+  unrestricted maximum when \(p\le227\) or \(n(n-1)\le235p\). It applies at
+  every full cutoff of at least two and at half cutoffs two through four.
+  The ordered-pair budget bounds the mass deleted by clipping, so this
+  proof only needs to split vertices.
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion

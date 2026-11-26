@@ -279,6 +279,18 @@ Both conclusions use the original four caps and budgets. They cover
 cutoff four in both modes and cutoff six in full mode.
 [Rounded capacities, repaired classes and pruning](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L514).
 
+Clipping uses a separate count of ordered comparisons and preserves
+the original row labels. In the indexed simple-path convention, half exclusion
+through size two gives at most \(n(n-1)\) ordered comparisons across all
+rows. At the original upper length cap \(L\), the coefficient \(4L-2\)
+times the incidence loss is at most twice that count. For positive budgets
+with \(p\le227\) or \(n(n-1)\le235p\), this bound and the low-mass construction give
+\(M/104\) of the unrestricted maximum within both original budgets and
+all four caps, at any full cutoff of at least two and half cutoffs two
+through four. The general cyclic cases outside the checked hypotheses
+remain open.
+[Clipping at the original width](OnlineReachabilityPreservers/FrozenClippingBudgets.lean).
+
 The same splitting step can fail at larger bridge sizes with unique
 intersections. On seven vertices, take the six paths `[(0,1,2,3), (3,4),
 (4,0), (5,2), (1,6), (5,6)]`. There are 14 incidences, every vertex

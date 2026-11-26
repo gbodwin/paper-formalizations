@@ -97,7 +97,7 @@ private theorem coloredPairCount_sum_fibers {V : Type*} [DecidableEq V] {q : ℕ
   rw [card_eq_sum_card_fiberwise (f := fun edge : V × V => part edge.1) (t := univ) (by simp)]
   exact sum_congr rfl (fun b _ => congrArg Finset.card (equal b))
 
-private theorem overflow_le_ordered_pairs {x cap : ℕ} (positive : 0 < cap) :
+theorem overflow_le_ordered_pairs {x cap : ℕ} (positive : 0 < cap) :
     (4*cap-2)*(x-cap) ≤ x*x-x := by
   by_cases small : x ≤ cap
   · simp [Nat.sub_eq_zero_of_le small]
