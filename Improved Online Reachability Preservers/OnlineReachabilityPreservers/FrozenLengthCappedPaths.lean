@@ -105,4 +105,64 @@ theorem regularization_list_frozen_of_small_overlong_mass {half : Bool} {k n p :
   exact regularization_list_frozen_of_length_capped_mass chosen (fun i => simple i.val) admissible size hn hp dense long
     cap (fun i => (mem_filter.mp i.property).2) (by omega) (by change 15*listMassAboveWidth paths L ≤ 7*M at small; omega)
 
+/-- Clipping every row at the upper length cap suffices if it deletes at
+most seven fifteenths of the original incidence mass. -/
+theorem regularization_list_frozen_of_small_length_excess {half : Bool} {k n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k paths) (size : half = true → k ≤ 4)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (small : let M := ∑ i, (paths i).length; 15*listLengthExcess paths (4*M/p) ≤ 7*M) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 104*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let L := 4*M/p
+  let clipped (i : Fin p) := (paths i).take L
+  let K := ∑ i, (clipped i).length
+  have sub (i : Fin p) : List.Sublist (clipped i) (paths i) := List.take_sublist _ _
+  have lengths : K+listLengthExcess paths L = M := by
+    unfold K listLengthExcess M
+    rw [← sum_add_distrib]
+    apply sum_congr rfl
+    intro i _
+    rw [show (clipped i).length = min L (paths i).length from List.length_take]
+    omega
+  have admissible : localOrderAdmissible half k clipped := by
+    have steps (i : Fin p) (x y : Fin n) : ListBefore clipped i x y → ListBefore paths i x y :=
+      listBefore_of_sublist (simple i) (sub i)
+    cases half
+    · change BridgeFree (ListBefore paths) k at allowed
+      change BridgeFree (ListBefore clipped) k
+      intro t former
+      exact ⟨fun b => (allowed former).false (b.mapPaths id Function.injective_id steps)⟩
+    · change HalfBridgeFree (ListBefore paths) k at allowed
+      change HalfBridgeFree (ListBefore clipped) k
+      intro t former b earlier
+      exact allowed former (b.mapPaths id Function.injective_id steps) earlier
+  exact regularization_list_frozen_of_length_capped_mass clipped (fun i => (sub i).nodup (simple i)) admissible size
+    hn hp dense long (by simp) (fun i => by change ((paths i).take L).length ≤ L; rw [List.length_take]; exact min_le_left _ _) (by omega)
+    (by change 15*listLengthExcess paths L ≤ 7*M at small; omega)
+
+/-- At least seven twelfths of the mass on overlong rows suffices by
+combining the bounded clipping loss and the pruned overlong cases. -/
+theorem regularization_list_frozen_of_seven_twelfths_overlong_mass {n p : ℕ} (half : Bool)
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half (if half then 4 else 6) paths)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (overlong : let M := ∑ i, (paths i).length; 7*M ≤ 12*listMassAboveWidth paths (4*M/p)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half (if half then 4 else 6) clean ∧
+      M ≤ 2000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let T := listLengthExcess paths (4*M/p)
+  by_cases short : 15*T ≤ 7*M
+  · have cutoff (h : half = true) : (if half then (4:ℕ) else 6) ≤ 4 := by simp [h]
+    obtain ⟨v,vCap,r,rCap,clean,simpleClean,free,retained,total,caps⟩ :=
+      regularization_list_frozen_of_small_length_excess paths simple allowed cutoff hn hp dense long short
+    exact ⟨v,vCap,r,rCap,clean,simpleClean,free,retained.trans (Nat.mul_le_mul_right _ (by decide)),total,caps⟩
+  · exact regularization_list_frozen_of_overlong_mass_and_excess half paths simple allowed hn hp dense long overlong
+      (by change 7*M ≤ 15*T; omega)
+
 end OnlineReachabilityPreservers

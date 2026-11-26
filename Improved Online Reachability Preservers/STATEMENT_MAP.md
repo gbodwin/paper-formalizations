@@ -1497,7 +1497,7 @@ or the [later nonterminal count](OnlineReachabilityPreservers/FrozenBlockTrimmin
 is at most \(M/4\).
 
 If rows longer than \(\lfloor 4M/p\rfloor\) carry at least \(2M/3\),
-the [overlong-subfamily theorem](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L41)
+the [overlong-subfamily theorem](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L190)
 prunes opposing intersections only in that subfamily before splitting.
 Its path pieces already fit in the original path budget, and
 [vertex trimming](OnlineReachabilityPreservers/BalancedRegularization.lean#L644)
@@ -1513,6 +1513,17 @@ exclusion through size four. It meets both original budgets and all four
 frozen caps and retains at least \(M/104\). The
 [underlying theorem](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L23)
 applies to any length-capped subfamily carrying that much mass.
+The [clipped subfamily](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L110)
+keeps the first \(\lfloor4M/p\rfloor\) entries of every row. It therefore
+works when the excess \(T\) above that width is at most \(7M/15\).
+If the overlong rows carry mass \(S\) and there are \(q\) such rows, the
+[excess identity](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L20)
+gives \(S=T+q\lfloor4M/p\rfloor\). For large \(T\), it sharpens the
+bound on how many path pieces peeling can delete. Combining the cases
+[covers \(S\ge7M/12\)](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L149)
+with retention at least \(M/2000\) through half cutoff four or full cutoff
+six. With these two arguments, inputs having \(T>7M/15\) and \(S<7M/12\)
+still require a separate criterion.
 
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
