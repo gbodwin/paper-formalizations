@@ -1,3 +1,4 @@
+import Mathlib.Data.Nat.BinaryRec
 import OnlineReachabilityPreservers.SteinerEarlyRound
 import OnlineReachabilityPreservers.SteinerWeightedChargeWork
 
@@ -36,36 +37,47 @@ private theorem rootCappedCapacityWithWork_spec (tier : ℕ) (units : HeightNode
   · simp [rootCappedCapacityWithWork,rootCappedCapacity,root]
   · simpa [rootCappedCapacityWithWork,rootCappedCapacity,root] using cap v
 
-/-- Compute the ancestor minimum from one cached row per ancestor. -/
-def historyCapacityWithWork (tier : ℕ) (units : HeightNode V height → ℕ × ℕ)
+@[inline] private def historyCapacityUsingWithWork (cap : HeightNode V height → ℕ × ℕ)
     (v : HeightNode V height) : ℕ × ℕ :=
   let source := historyAncestors v
-  let row := rowWithWork (rootCappedCapacityWithWork tier units)
+  let row := rowWithWork cap
   let results := source.map row
   have present : v ∈ source := mem_historyAncestors.mpr List.prefix_rfl
   (results.inf' ⟨row v,mem_map_of_mem _ present⟩ (fun e => e.2.1),∑ e ∈ results, e.2.2)
+
+private theorem historyCapacityUsingWithWork_spec (cap : HeightNode V height → ℕ × ℕ)
+    (tier : ℕ) (units : HeightNode V height → ℕ) (B : ℕ)
+    (rowSpec : ∀ a, (cap a).1 = rootCappedCapacity tier units a ∧ (cap a).2 ≤ B)
+    (v : HeightNode V height) :
+    let out := historyCapacityUsingWithWork cap v
+    out.1 = historyCapacityUnits tier units v ∧ out.2 ≤ (height+1)*B := by
+  let source := historyAncestors v
+  let row := rowWithWork cap
+  let values := source.map row
+  have exact : (historyCapacityUsingWithWork cap v).1 = historyCapacityUnits tier units v := by
+    have fixed : source.Nonempty := ⟨v,mem_historyAncestors.mpr List.prefix_rfl⟩
+    have mapped : values.Nonempty := fixed.map
+    let read (r : HeightNode V height × (ℕ × ℕ)) := r.2.1
+    change values.inf' mapped read = source.inf' fixed (rootCappedCapacity tier units)
+    calc
+      _ = source.inf' fixed (read ∘ row) := Finset.inf'_map read mapped
+      _ = _ := congrArg (source.inf' fixed) (funext fun a => (rowSpec a).1)
+  refine ⟨exact,?_⟩
+  exact (rowWork_le source cap B (fun a _ => (rowSpec a).2)).trans
+    (Nat.mul_le_mul_right B (historyAncestors_card_le v))
+
+/-- Compute the ancestor minimum from one cached row per ancestor. -/
+def historyCapacityWithWork (tier : ℕ) (units : HeightNode V height → ℕ × ℕ)
+    (v : HeightNode V height) : ℕ × ℕ :=
+  historyCapacityUsingWithWork (rootCappedCapacityWithWork tier units) v
 
 theorem historyCapacityWithWork_spec (tier : ℕ) (units : HeightNode V height → ℕ × ℕ)
     (B : ℕ) (bound : ∀ v, (units v).2 ≤ B) (v : HeightNode V height) :
     let out := historyCapacityWithWork tier units v
     out.1 = historyCapacityUnits tier (fun a => (units a).1) v ∧
-      out.2 ≤ (height+1)*B := by
-  let S := historyAncestors v
-  let row := rowWithWork (rootCappedCapacityWithWork tier units)
-  let values := S.map row
-  have rowSpec (a : HeightNode V height) := rootCappedCapacityWithWork_spec tier units B bound a
-  have value : (historyCapacityWithWork tier units v).1 =
-      historyCapacityUnits tier (fun a => (units a).1) v := by
-    have fixed : S.Nonempty := ⟨v,mem_historyAncestors.mpr List.prefix_rfl⟩
-    have mapped : values.Nonempty := fixed.map
-    let read (r : HeightNode V height × (ℕ × ℕ)) := r.2.1
-    change values.inf' mapped read = S.inf' fixed (rootCappedCapacity tier (fun a => (units a).1))
-    calc
-      _ = S.inf' fixed (read ∘ row) := Finset.inf'_map read mapped
-      _ = _ := congrArg (S.inf' fixed) (funext fun a => (rowSpec a).1)
-  refine ⟨value,?_⟩
-  simpa only [historyCapacityWithWork] using (rowWork_le S (rootCappedCapacityWithWork tier units) B
-    (fun a _ => (rowSpec a).2)).trans (Nat.mul_le_mul_right B (historyAncestors_card_le v))
+      out.2 ≤ (height+1)*B :=
+  historyCapacityUsingWithWork_spec _ tier (fun a => (units a).1) B
+    (rootCappedCapacityWithWork_spec tier units B bound) v
 
 /-- The two ancestor minima are evaluated once each. -/
 def historyCutoffWithWork (sampleTier tier : ℕ) (units : HeightNode V height → ℕ × ℕ)
@@ -87,6 +99,116 @@ theorem historyCutoffWithWork_spec (sampleTier tier : ℕ) (units : HeightNode V
     obtain ⟨bottom,down⟩ := historyCapacityWithWork_spec tier units B bound (heightParent v)
     simp only [historyCutoffWithWork,historyCutoff,root,ite_false,top,bottom,true_and]
     exact (Nat.add_le_add up down).trans_eq (by ring)
+
+/-- Round up to a strict dyadic capacity with a tier cap. Halving stops
+when the cap is reached, so the loop length is bounded by the tier. -/
+def cappedDyadicCapacityWithWordWork : ℕ → ℕ → ℕ × ℕ
+  | 0, units => if units = 0 then (0,4) else (1,4)
+  | tier+1, units =>
+    if units = 0 then (0,4) else if units = 1 then (2,6) else
+      let smaller := cappedDyadicCapacityWithWordWork tier (units / 2)
+      (smaller.1+smaller.1,smaller.2+8)
+
+theorem cappedDyadicCapacityWithWordWork_spec (tier units : ℕ) :
+    let out := cappedDyadicCapacityWithWordWork tier units
+    out.1 = min (2^tier) (dyadicCapacity units) ∧ out.2 ≤ 8*(tier+1)+3 := by
+  induction tier generalizing units with
+  | zero =>
+    by_cases zero : units = 0
+    · simp [zero,cappedDyadicCapacityWithWordWork,dyadicCapacity]
+    · have positive : 1 ≤ dyadicCapacity units := (Nat.pos_of_ne_zero zero).trans_le (dyadicCapacity_bounds units).1
+      simp [zero,cappedDyadicCapacityWithWordWork,min_eq_left positive]
+  | succ tier ih =>
+    by_cases zero : units = 0
+    · simp [zero,cappedDyadicCapacityWithWordWork,dyadicCapacity]
+      omega
+    by_cases one : units = 1
+    · subst units
+      have bound : 2 ≤ (2:ℕ)^(tier+1) := by
+        simpa only [pow_one] using Nat.pow_le_pow_right (by decide : 0 < (2:ℕ)) (show 1 ≤ tier+1 by omega)
+      have value : dyadicCapacity 1 = 2 := by decide
+      simp only [cappedDyadicCapacityWithWordWork,show (1:ℕ) ≠ 0 by decide,ite_false,ite_true,value,min_eq_right bound,true_and]
+      omega
+    have halfPositive : units / 2 ≠ 0 := by omega
+    have shiftPositive : units >>> 1 ≠ 0 := by simpa only [Nat.shiftRight_one] using halfPositive
+    have binary := Nat.log2_eq_succ_log2_shiftRight shiftPositive
+    rw [Nat.shiftRight_one] at binary
+    obtain ⟨value,work⟩ := ih (units / 2)
+    simp only [cappedDyadicCapacityWithWordWork,zero,one,ite_false]
+    refine ⟨?_,by omega⟩
+    simp only [value,dyadicCapacity,ite_eq_right zero,ite_eq_right halfPositive]
+    rw [show units.log2+1 = (units/2).log2+1+1 from by omega,
+      pow_succ (2:ℕ) tier,pow_succ (2:ℕ) ((units/2).log2+1),Nat.mul_min_mul_right,Nat.mul_two]
+
+private def rootCappedCapacityFromPowerWithWordWork (tier power : ℕ) (units : HeightNode V height → ℕ × ℕ)
+    (v : HeightNode V height) : ℕ × ℕ :=
+  if v = heightRoot then (power,9) else
+    let amount := units v
+    let rounded := cappedDyadicCapacityWithWordWork tier amount.1
+    (rounded.1,amount.2+rounded.2+14)
+
+omit [Fintype V] in
+private theorem rootCappedCapacityFromPowerWithWordWork_spec (tier power : ℕ) (exactPower : power = 2^tier)
+    (units : HeightNode V height → ℕ × ℕ) (B : ℕ) (bound : ∀ v, (units v).2 ≤ B) (v : HeightNode V height) :
+    let out := rootCappedCapacityFromPowerWithWordWork tier power units v
+    out.1 = rootCappedCapacity tier (fun a => (units a).1) v ∧ out.2 ≤ B+8*(tier+1)+17 := by
+  by_cases root : v = heightRoot
+  · simp only [rootCappedCapacityFromPowerWithWordWork,rootCappedCapacity,root,ite_true,exactPower,true_and]
+    omega
+  · obtain ⟨value,work⟩ := cappedDyadicCapacityWithWordWork_spec tier (units v).1
+    simp only [rootCappedCapacityFromPowerWithWordWork,rootCappedCapacity,root,ite_false,value,true_and]
+    have read := bound v
+    omega
+
+/-- Compute one ancestor cutoff given the two powers used throughout a
+rounding tier. Meter the arithmetic and the supplied capacity reads. -/
+def historyCutoffFromPowersWithWordWork (samplePower tierPower tier : ℕ)
+    (units : HeightNode V height → ℕ × ℕ) (v : HeightNode V height) : ℕ × ℕ :=
+  if v = heightRoot then (samplePower,4) else
+    let cap := rootCappedCapacityFromPowerWithWordWork tier tierPower units
+    let top := historyCapacityUsingWithWork cap v
+    let bottom := historyCapacityUsingWithWork cap (heightParent v)
+    (samplePower*top.1/bottom.1,top.2+bottom.2+8)
+
+theorem historyCutoffFromPowersWithWordWork_spec (sampleTier tier samplePower tierPower : ℕ)
+    (sampleExact : samplePower = 2^sampleTier) (tierExact : tierPower = 2^tier)
+    (units : HeightNode V height → ℕ × ℕ) (B : ℕ) (bound : ∀ v, (units v).2 ≤ B) (v : HeightNode V height) :
+    let out := historyCutoffFromPowersWithWordWork samplePower tierPower tier units v
+    out.1 = historyCutoff sampleTier tier (fun a => (units a).1) v ∧
+      out.2 ≤ 2*(height+1)*(B+8*(tier+1)+17)+8 := by
+  by_cases root : v = heightRoot
+  · simp [historyCutoffFromPowersWithWordWork,historyCutoff,root,sampleExact]
+  let cap := rootCappedCapacityFromPowerWithWordWork tier tierPower units
+  have read := rootCappedCapacityFromPowerWithWordWork_spec tier tierPower tierExact units B bound
+  obtain ⟨top,spentTop⟩ := historyCapacityUsingWithWork_spec cap tier (fun a => (units a).1) _ read v
+  obtain ⟨bottom,spentBottom⟩ := historyCapacityUsingWithWork_spec cap tier (fun a => (units a).1) _ read (heightParent v)
+  simp only [historyCutoffFromPowersWithWordWork,historyCutoff,root,ite_false]
+  change samplePower*(historyCapacityUsingWithWork cap v).1/(historyCapacityUsingWithWork cap (heightParent v)).1 = _ ∧
+    (historyCapacityUsingWithWork cap v).2+(historyCapacityUsingWithWork cap (heightParent v)).2+8 ≤ _
+  rw [sampleExact,top,bottom]
+  refine ⟨rfl,?_⟩
+  calc
+    _ ≤ (height+1)*(B+8*(tier+1)+17)+(height+1)*(B+8*(tier+1)+17)+8 :=
+      Nat.add_le_add_right (Nat.add_le_add spentTop spentBottom) 8
+    _ = _ := by ring
+
+/-- Include construction of both powers in the word bound for a cutoff. -/
+def historyCutoffWithArithmeticWordWork (sampleTier tier : ℕ)
+    (units : HeightNode V height → ℕ × ℕ) (v : HeightNode V height) : ℕ × ℕ :=
+  let sample := twoPowerWithWordWork sampleTier
+  let bound := twoPowerWithWordWork tier
+  let checked := historyCutoffFromPowersWithWordWork sample.1 bound.1 tier units v
+  (checked.1,checked.2+sample.2+bound.2+4)
+
+theorem historyCutoffWithArithmeticWordWork_spec (sampleTier tier : ℕ)
+    (units : HeightNode V height → ℕ × ℕ) (B : ℕ) (bound : ∀ v, (units v).2 ≤ B) (v : HeightNode V height) :
+    let out := historyCutoffWithArithmeticWordWork sampleTier tier units v
+    out.1 = historyCutoff sampleTier tier (fun a => (units a).1) v ∧
+      out.2 ≤ 2*(height+1)*(B+8*(tier+1)+17)+6*(sampleTier+tier)+18 := by
+  obtain ⟨value,work⟩ := historyCutoffFromPowersWithWordWork_spec sampleTier tier (2^sampleTier) (2^tier)
+    rfl rfl units B bound v
+  simp only [historyCutoffWithArithmeticWordWork,twoPowerWithWordWork_spec,value,true_and]
+  omega
 
 private def finiteAllWithWork {I : Type*} (checks : I → Bool × ℕ) (s : Finset I) : Bool × ℕ :=
   let rows := s.map (rowWithWork checks)

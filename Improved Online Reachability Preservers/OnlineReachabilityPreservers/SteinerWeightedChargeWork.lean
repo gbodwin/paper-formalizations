@@ -42,13 +42,14 @@ theorem weightedChargeHistoryWithWordWork_spec {E : Type*} [DecidableEq E]
     · rw [Nat.succ_mul]
       omega
 
-private def twoPowerWithWordWork : ℕ → ℕ × ℕ
+/-- Compute a power of two using one metered doubling per exponent step. -/
+def twoPowerWithWordWork : ℕ → ℕ × ℕ
   | 0 => (1, 3)
   | n + 1 =>
     let previous := twoPowerWithWordWork n
     (previous.1 + previous.1, previous.2 + 6)
 
-private theorem twoPowerWithWordWork_spec (n : ℕ) :
+theorem twoPowerWithWordWork_spec (n : ℕ) :
     twoPowerWithWordWork n = (2^n, 6*n+3) := by
   induction n with
   | zero => rfl
