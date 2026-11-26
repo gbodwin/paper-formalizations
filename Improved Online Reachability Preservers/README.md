@@ -707,27 +707,34 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   all four caps for positive budgets and mass at least both counts. A broader
   [support condition](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L233)
   uses the actual number of occupied vertex copies.
-- [Quadratic trimming](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L89)
+- [Quadratic trimming](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L143)
   works on a subsystem within the original budgets that carries at least
   nine sixteenths of the original mass and whose original-width splits
   preserve the chosen bridge exclusion. It keeps every nonfinal block
   and trims among the final blocks in each dimension. It retains at least
   \(M/104\) with both budgets and all four caps. Selecting the heaviest vertex
   copies before splitting gives this guarantee when at most
-  [seven ninths of the vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L250).
+  [seven ninths of the vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L271).
   This version preserves the matching input exclusion at cutoff four in
   either mode or at full cutoff six.
-- [Cleaning with disjoint reverse partners](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L149)
+- [Cleaning with disjoint reverse partners](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L192)
   covers simple paths whose reversed comparisons are confined to disjoint
   pairs of paths. For positive budgets and mass at least both counts,
   the witness retains at least \(M/104\) within both original budgets and
   all four original-average caps, with the same exclusion at cutoff four
   in either mode or at full cutoff six. The proof selects the heavier
   path of each pair and, when needed, uses the
-  [width splits with half the path budget](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L31).
-  The [two-class theorem](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L265)
+  [width splits with half the path budget](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L97).
+  The [two-class theorem](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L308)
   gives the same guarantee whenever the paths can be partitioned into
   two classes and every reversed comparison crosses between classes.
+- At the same cutoffs, a repaired two-class partition may delete up to
+  \(M/24\) incidences. Alternatively, one subfamily with unique intersections
+  suffices if rowwise shortening retains at least \(13M/24\). Each condition
+  gives a witness with at least \(M/288\), both original budgets and all four
+  original-average caps. Opposite-intersection pruning meets the second
+  condition when there are at most \(11M/24\) opposite links.
+  [Repair and pruning theorems](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L514).
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion

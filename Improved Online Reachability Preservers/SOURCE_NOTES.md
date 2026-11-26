@@ -266,6 +266,19 @@ size-six conclusion therefore holds at every mass at least both
 positive budgets for such a simple input family.
 [All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L151).
 
+Using the actual rounded widths permits more loss at these cutoffs.
+When \(M>8\max(n,p)\), each width times its original budget is at least
+\(31M/8\). Separate quadratic bounds for the vertex and path blocks
+let a family of sublists with unique intersections keep at least
+\(M/288\) after peeling when its mass is at least \(13M/24\). The same
+conclusion follows when opposite links number at most \(11M/24\).
+The low-mass construction covers the remaining budgets. A second
+sufficient condition allows deleting up to \(M/24\) while making all
+remaining reversals cross a partition of the paths into two classes.
+Both conclusions use the original four caps and budgets. They cover
+cutoff four in both modes and cutoff six in full mode.
+[Rounded capacities, repaired classes and pruning](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L514).
+
 The same splitting step can fail at larger bridge sizes with unique
 intersections. On seven vertices, take the six paths `[(0,1,2,3), (3,4),
 (4,0), (5,2), (1,6), (5,6)]`. There are 14 incidences, every vertex

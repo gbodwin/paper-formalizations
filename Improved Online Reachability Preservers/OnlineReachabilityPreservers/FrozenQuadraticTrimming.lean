@@ -11,8 +11,7 @@ open scoped Sigma.Lex
 
 private theorem average_width_times_budget {M q : ℕ} (positive : 0 < q) (dense : q ≤ M) :
     3 * M ≤ (4 * M / q) * q := by
-  have next := Nat.lt_mul_div_succ (4 * M) positive
-  rw [Nat.mul_succ, Nat.mul_comm q (4 * M / q)] at next
+  have next := four_average_width_product positive (M := M)
   omega
 
 private theorem large_cropped_mass {M K R lost : ℕ} (positive : 0 < M) (upper : K ≤ M)
@@ -33,23 +32,20 @@ private theorem large_cropped_mass {M K R lost : ℕ} (positive : 0 < M) (upper 
   exact_mod_cast clipped
 
 private theorem trim_width_supports {V I : Type*} [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
-    (paths : I → Finset V) (fullV : Finset V) (fullI : Finset I) {n p D L M : ℕ}
+    (paths : I → Finset V) (fullV : Finset V) (fullI : Finset I) {n p D L : ℕ}
     (Dpos : 0 < D) (Lpos : 0 < L)
     (vFilled : ∀ v ∈ fullV, (occurrences paths v).card = D) (vRest : (univ \ fullV).card ≤ n)
     (iFilled : ∀ i ∈ fullI, (paths i).card = L) (iRest : (univ \ fullI).card ≤ p)
-    (vWidth : 3 * M ≤ D * n) (iWidth : 3 * M ≤ L * p)
-    (mPositive : 0 < M) (upper : ∑ i, (paths i).card ≤ M)
-    (lower : 9 * M ≤ 16 * (∑ i, (paths i).card)) :
-    ∃ A : Finset V, ∃ B : Finset I, A.card ≤ n ∧ B.card ≤ p ∧
-      261 * M ≤ 512 * (∑ i ∈ B, (paths i ∩ A).card) := by
-  let K := ∑ i, (paths i).card
-  have vRoom : K ≤ D * n := (upper.trans (by omega : M ≤ 3 * M)).trans vWidth
-  have iRoom : K ≤ L * p := (upper.trans (by omega : M ≤ 3 * M)).trans iWidth
+    (vRoom : ∑ i, (paths i).card ≤ D * n) (iRoom : ∑ i, (paths i).card ≤ L * p) :
+    ∃ A : Finset V, ∃ B : Finset I, ∃ lostV lostI : ℕ, A.card ≤ n ∧ B.card ≤ p ∧
+      (∑ i, (paths i).card) ≤ (∑ i ∈ B, (paths i ∩ A).card) + (lostV + lostI) ∧
+      4 * (D * n) * lostV ≤ (∑ i, (paths i).card) ^ 2 ∧
+      4 * (L * p) * lostI ≤ (∑ i, (paths i).card) ^ 2 := by
   obtain ⟨A, va, lostV, boundV, exactV⟩ := trim_full_vertex_blocks_quadratic paths fullV Dpos vFilled vRest vRoom
   obtain ⟨B, ib, boundI⟩ := trim_full_weight_blocks_quadratic (fun i => (paths i).card) fullI Lpos iFilled iRest iRoom
   let lostI := ∑ i ∈ univ \ B, (paths i).card
   let R := ∑ i ∈ B, (paths i ∩ A).card
-  have originalColumns : (∑ i ∈ (univ : Finset I), (paths i ∩ A).card) + lostV = K := by
+  have originalColumns : (∑ i ∈ (univ : Finset I), (paths i ∩ A).card) + lostV = ∑ i, (paths i).card := by
     rw [Finset.sum_subtype (univ : Finset I) (fun _ => Iff.rfl) (fun i => (paths i ∩ A).card)]
     have equal (i : (univ : Finset I)) : (rectanglePaths paths A univ i).card = (paths i.val ∩ A).card := by
       rw [← card_image_of_injective _ Subtype.val_injective]
@@ -66,36 +62,24 @@ private theorem trim_width_supports {V I : Type*} [LinearOrder V] [Fintype V] [L
     _ = (∑ i ∈ univ \ B, (paths i ∩ A).card) + R := (sum_sdiff (subset_univ B)).symm
     _ ≤ lostI + R := Nat.add_le_add_right (sum_le_sum fun i _ => card_le_card inter_subset_left) R
     _ = _ := Nat.add_comm _ _
-  have both : 6 * M * (lostV + lostI) ≤ K ^ 2 := by
-    have timesV : 12 * M * lostV ≤ K ^ 2 := by
-      apply le_trans _ boundV
-      have scaled := Nat.mul_le_mul_right lostV (Nat.mul_le_mul_left 4 vWidth)
-      simpa only [← Nat.mul_assoc] using scaled
-    have timesI : 12 * M * lostI ≤ K ^ 2 := by
-      apply le_trans _ boundI
-      have scaled := Nat.mul_le_mul_right lostI (Nat.mul_le_mul_left 4 iWidth)
-      simpa only [← Nat.mul_assoc] using scaled
-    have factor : 2 * (6 * M * (lostV + lostI)) ≤ 2 * K ^ 2 := calc
-      _ = 12 * M * lostV + 12 * M * lostI := by ring
-      _ ≤ K ^ 2 + K ^ 2 := Nat.add_le_add timesV timesI
-      _ = _ := by ring
-    omega
-  exact ⟨A, B, va, ib, large_cropped_mass mPositive upper lower (by omega) both⟩
+  exact ⟨A, B, lostV, lostI, va, ib, (by omega), boundV, boundI⟩
 
-/-- A subsystem carrying at least nine sixteenths of the original mass
-can be split at the original widths and trimmed back to both budgets.
-If the splits preserve the chosen bridge exclusion, frozen peeling keeps
-at least one 104th of the original mass. -/
-theorem regularization_list_frozen_after_quadratic_width_trim {V I : Type*}
-    [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] {half : Bool} {k n p M : ℕ}
+/-- Trim the two supports at the original widths, with separate quadratic
+loss bounds at their actual rounded capacities. -/
+theorem regularization_list_frozen_after_quadratic_width_trim_of_loss {V I : Type*}
+    [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] {half : Bool} {k n p M retention : ℕ}
     (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
     (allowed : localOrderAdmissible half k (listRegularizedPaths paths (4 * M / n) (4 * M / p)))
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
     (vertices : Fintype.card V ≤ n) (rows : Fintype.card I ≤ p)
-    (upper : ∑ i, (paths i).length ≤ M) (lower : 9 * M ≤ 16 * (∑ i, (paths i).length)) :
+    (upper : ∑ i, (paths i).length ≤ M)
+    (enough : let K := ∑ i, (paths i).length
+      ∀ R lostV lostI : ℕ, K ≤ R + (lostV + lostI) →
+        4 * ((4 * M / n) * n) * lostV ≤ K ^ 2 →
+        4 * ((4 * M / p) * p) * lostI ≤ K ^ 2 → (retention + 2) * M ≤ 2 * retention * R) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
-      M ≤ 104 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧
+      M ≤ retention * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧
       frozenListCaps n p M clean := by
   let D := 4 * M / n
   let L := 4 * M / p
@@ -111,12 +95,15 @@ theorem regularization_list_frozen_after_quadratic_width_trim {V I : Type*}
     (sum_congr rfl fun i _ => List.toFinset_card_of_nodup (pieceSimple i)).trans mass
   obtain ⟨fullV, fullI, filledV, restV, filledI, restI⟩ :=
     listRegularizedPaths_full_block_profiles paths simple Dpos Lpos
-  obtain ⟨A, B, va, ib, kept⟩ := trim_width_supports raw fullV fullI Dpos Lpos filledV
+  have vRoom : (∑ i, (raw i).card) ≤ D * n :=
+    ((setMass.trans_le upper).trans (by omega : M ≤ 3 * M)).trans (average_width_times_budget hn dense)
+  have iRoom : (∑ i, (raw i).card) ≤ L * p :=
+    ((setMass.trans_le upper).trans (by omega : M ≤ 3 * M)).trans (average_width_times_budget hp long)
+  obtain ⟨A, B, lostV, lostI, va, ib, kept, chargeV, chargeI⟩ := trim_width_supports raw fullV fullI Dpos Lpos filledV
     (by exact restV.le.trans vertices)
     (fun i active => (List.toFinset_card_of_nodup (pieceSimple i)).trans (filledI i active))
-    (by exact restI.le.trans rows)
-    (average_width_times_budget hn dense) (average_width_times_budget hp long) (hn.trans_le dense)
-    (setMass.trans_le upper) (by rw [setMass]; exact lower)
+    (restI.le.trans rows) vRoom iRoom
+  rw [setMass] at kept chargeV chargeI
   let crop := restrictListPaths pieces A B
   have cropSimple (i : B) : (crop i).Nodup := restrictListPath_nodup (pieceSimple i.val) A
   have cropAllowed : localOrderAdmissible half k crop := by
@@ -141,14 +128,48 @@ theorem regularization_list_frozen_after_quadratic_width_trim {V I : Type*}
     _ ≤ ∑ i ∈ B, (raw i).card := sum_le_sum fun _ _ => card_le_card inter_subset_left
     _ ≤ ∑ i, (raw i).card := sum_le_sum_of_subset (subset_univ B)
     _ ≤ M := setMass.trans_le upper
-  refine regularization_list_frozen_after_caps_with_ratios_of_mass (retention := 104)
+  refine regularization_list_frozen_after_caps_with_ratios_of_mass (retention := retention)
     (vNum := 1) (vDen := 1) (pNum := 1) (pDen := 1) crop cropSimple cropAllowed hn hp dense long
       (by decide) (by decide) (by decide) (by decide) ?_ ?_ cropLength cropDegree cropUpper ?_
   · simpa only [one_mul, Fintype.card_coe] using va
   · simpa only [one_mul, Fintype.card_coe] using ib
-  · change 106 * M ≤ 208 * (∑ i, (crop i).length)
-    rw [cropMass]
-    exact (show ∀ {Q : ℕ}, 261 * M ≤ 512 * Q → 106 * M ≤ 208 * Q by intro _ h; omega) kept
+  · simp only [one_mul, cropMass]
+    exact enough _ lostV lostI kept chargeV chargeI
+
+/-- A subsystem carrying at least nine sixteenths of the original mass
+can be split at the original widths and trimmed back to both budgets.
+If the splits preserve the chosen bridge exclusion, frozen peeling keeps
+at least one 104th of the original mass. -/
+theorem regularization_list_frozen_after_quadratic_width_trim {V I : Type*}
+    [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] {half : Bool} {k n p M : ℕ}
+    (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k (listRegularizedPaths paths (4 * M / n) (4 * M / p)))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (vertices : Fintype.card V ≤ n) (rows : Fintype.card I ≤ p)
+    (upper : ∑ i, (paths i).length ≤ M) (lower : 9 * M ≤ 16 * (∑ i, (paths i).length)) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 104 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧
+      frozenListCaps n p M clean := by
+  apply regularization_list_frozen_after_quadratic_width_trim_of_loss paths simple allowed hn hp dense long
+    vertices rows upper
+  dsimp only
+  intro R lostV lostI kept boundV boundI
+  have timesV : 12 * M * lostV ≤ (∑ i, (paths i).length) ^ 2 := by
+    apply le_trans _ boundV
+    have scaled := Nat.mul_le_mul_right lostV (Nat.mul_le_mul_left 4 (average_width_times_budget hn dense))
+    simpa only [← Nat.mul_assoc] using scaled
+  have timesI : 12 * M * lostI ≤ (∑ i, (paths i).length) ^ 2 := by
+    apply le_trans _ boundI
+    have scaled := Nat.mul_le_mul_right lostI (Nat.mul_le_mul_left 4 (average_width_times_budget hp long))
+    simpa only [← Nat.mul_assoc] using scaled
+  have totalLoss : 6 * M * (lostV + lostI) ≤ (∑ i, (paths i).length) ^ 2 := by
+    have scaled : 2 * (6 * M * (lostV + lostI)) ≤ 2 * (∑ i, (paths i).length) ^ 2 := calc
+      _ = 12 * M * lostV + 12 * M * lostI := by ring
+      _ ≤ _ := by rw [two_mul]; exact add_le_add timesV timesI
+    exact (Nat.mul_le_mul_left_iff (by decide)).mp scaled
+  have massBound := large_cropped_mass (hn.trans_le dense) upper lower kept totalLoss
+  omega
 
 local notation "Before" => SourceAudit.BeforeIn
 

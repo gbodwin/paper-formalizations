@@ -1147,9 +1147,16 @@ theorem regularization_list_frozen_after_caps_with_ratios {half : Bool}
     vRatio pRatio vertices families lengthCap degreeCap mass.le
     (by rw [mass]; exact Nat.mul_le_mul_right M enough)
 
+/-- The product of the original width and its budget loses less than one
+budget to rounding. -/
+theorem four_average_width_product {M q : ℕ} (positive : 0 < q) :
+    4 * M < (4 * M / q) * q + q := by
+  have next := Nat.lt_mul_div_succ (4 * M) positive
+  simpa only [Nat.mul_succ, Nat.mul_comm q (4 * M / q)] using next
+
 /-- If all pieces fit in the path budget, only the vertex blocks need
-trimming. Peeling pays for the actual number of pieces. -/
-theorem regularization_list_frozen_trim_vertices_quadratic {half : Bool} {k n p M retention : ℕ}
+trimming. The quadratic loss uses the exact vertex width times its budget. -/
+theorem regularization_list_frozen_trim_vertices_quadratic_of_width {half : Bool} {k n p M retention : ℕ}
     (pieces : I → List V) (simple : ∀ i, (pieces i).Nodup) (allowed : localOrderAdmissible half k pieces)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M) (positive : 0 < retention)
     (full : Finset V) (filled : ∀ v ∈ full, (occurrences (fun i => (pieces i).toFinset) v).card = 4*M/n)
@@ -1158,7 +1165,7 @@ theorem regularization_list_frozen_trim_vertices_quadratic {half : Bool} {k n p 
     (degreeCap : ∀ v, (occurrences (fun i => (pieces i).toFinset) v).card ≤ 4*M/n)
     (mass : (∑ i, (pieces i).length) ≤ M)
     (enough : let K : ℝ := ((∑ i, (pieces i).length : ℕ) : ℝ)
-      (M:ℝ)/retention ≤ K-K^2/(12*M)-(M:ℝ)/4-((M:ℝ)/(4*(p:ℝ)))*(Fintype.card I)) :
+      (M:ℝ)/retention ≤ K-K^2/(4*((4*M/n*n : ℕ):ℝ))-(M:ℝ)/4-((M:ℝ)/(4*(p:ℝ)))*(Fintype.card I)) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
@@ -1169,23 +1176,18 @@ theorem regularization_list_frozen_trim_vertices_quadratic {half : Bool} {k n p 
   obtain ⟨width,_,capD⟩ := four_average_width hn dense
   obtain ⟨_,_,capL⟩ := four_average_width hp long
   have capacity : 3*M ≤ D*n := by
-    have bound := Nat.lt_mul_div_succ (4*M) hn
-    change 4*M < n*(D+1) at bound
-    rw [Nat.mul_succ,Nat.mul_comm n D] at bound
+    have bound := four_average_width_product hn (M := M)
+    change 3*M ≤ (4*M/n)*n
     omega
   have counted : (∑ i, (Z i).card) = K := sum_congr rfl (fun i _ => List.toFinset_card_of_nodup (simple i))
   have fits : (∑ i, (Z i).card) ≤ D*n := by rw [counted]; omega
   obtain ⟨A,capA,loss,trim,crop⟩ := trim_full_vertex_blocks_quadratic Z full width filled rest fits
   rw [counted] at trim crop
-  have trim' : 12*M*loss ≤ K^2 := calc
-    _ = (4*(3*M))*loss := by ring
-    _ ≤ (4*(D*n))*loss := Nat.mul_le_mul_right _ (Nat.mul_le_mul_left _ capacity)
-    _ ≤ _ := trim
-  have massPos : (0:ℝ) < M := by exact_mod_cast hn.trans_le dense
-  have lossLe : (loss:ℝ) ≤ (K:ℝ)^2/(12*(M:ℝ)) := by
-    apply (le_div_iff₀ (by positivity)).mpr
+  have capacityPos : (0:ℝ) < ((D*n : ℕ):ℝ) := by exact_mod_cast Nat.mul_pos width hn
+  have lossLe : (loss:ℝ) ≤ (K:ℝ)^2/(4*((D*n : ℕ):ℝ)) := by
+    apply (le_div_iff₀ (by positivity : 0 < 4*((D*n : ℕ):ℝ))).mpr
     rw [mul_comm]
-    exact_mod_cast trim'
+    exact_mod_cast trim
   let d : ℝ := (M:ℝ)/(4*(n:ℝ))
   let l : ℝ := (M:ℝ)/(4*(p:ℝ))
   have d0 : 0 ≤ d := by dsimp [d]; positivity
@@ -1203,7 +1205,7 @@ theorem regularization_list_frozen_trim_vertices_quadratic {half : Bool} {k n p 
     refine enough.trans ?_
     have piecesCount : (all.card:ℝ) = Fintype.card I := by rw [card_univ]
     rw [piecesCount] at lower
-    change (K:ℝ)-(K:ℝ)^2/(12*(M:ℝ))-(M:ℝ)/4-l*(Fintype.card I:ℝ) ≤ _
+    change (K:ℝ)-(K:ℝ)^2/(4*((D*n : ℕ):ℝ))-(M:ℝ)/4-l*(Fintype.card I:ℝ) ≤ _
     linarith
   have retained : M ≤ retention*(∑ i : B, (rectanglePaths Z C B i).card) := by
     have rPos : (0:ℝ) < retention := by exact_mod_cast positive
@@ -1213,5 +1215,33 @@ theorem regularization_list_frozen_trim_vertices_quadratic {half : Bool} {k n p 
   have bCap : B.card ≤ p := (card_le_card bSub).trans (by simpa [all] using pathsCap)
   exact finish_frozen_rectangle pieces simple allowed C B ((card_le_card cSub).trans capA) bCap retained
     (counted.trans_le mass) minD minL lengthCap degreeCap capD capL
+
+/-- A bound using only the mass in the denominator of the vertex loss. -/
+theorem regularization_list_frozen_trim_vertices_quadratic {half : Bool} {k n p M retention : ℕ}
+    (pieces : I → List V) (simple : ∀ i, (pieces i).Nodup) (allowed : localOrderAdmissible half k pieces)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M) (positive : 0 < retention)
+    (full : Finset V) (filled : ∀ v ∈ full, (occurrences (fun i => (pieces i).toFinset) v).card = 4*M/n)
+    (rest : (univ \ full).card ≤ n) (pathsCap : Fintype.card I ≤ p)
+    (lengthCap : ∀ i, (pieces i).length ≤ 4*M/p)
+    (degreeCap : ∀ v, (occurrences (fun i => (pieces i).toFinset) v).card ≤ 4*M/n)
+    (mass : (∑ i, (pieces i).length) ≤ M)
+    (enough : let K : ℝ := ((∑ i, (pieces i).length : ℕ) : ℝ)
+      (M:ℝ)/retention ≤ K-K^2/(12*M)-(M:ℝ)/4-((M:ℝ)/(4*(p:ℝ)))*(Fintype.card I)) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  apply regularization_list_frozen_trim_vertices_quadratic_of_width pieces simple allowed hn hp dense long positive
+    full filled rest pathsCap lengthCap degreeCap mass
+  let K : ℝ := ((∑ i, (pieces i).length : ℕ) : ℝ)
+  have floor := four_average_width_product hn (M := M)
+  have budget : 3*M ≤ (4*M/n)*n := by omega
+  have budgetReal : 3*(M:ℝ) ≤ ((4*M/n*n : ℕ):ℝ) := by exact_mod_cast budget
+  have mPos : (0:ℝ) < M := by exact_mod_cast hn.trans_le dense
+  have charged : K^2/(4*((4*M/n*n : ℕ):ℝ)) ≤ K^2/(12*(M:ℝ)) := by
+    apply div_le_div_of_nonneg_left (sq_nonneg _) (by positivity)
+    linarith
+  change (M:ℝ)/retention ≤ K-K^2/(4*((4*M/n*n : ℕ):ℝ))-(M:ℝ)/4-((M:ℝ)/(4*(p:ℝ)))*(Fintype.card I)
+  change (M:ℝ)/retention ≤ K-K^2/(12*M)-(M:ℝ)/4-((M:ℝ)/(4*(p:ℝ)))*(Fintype.card I) at enough
+  linarith
 
 end OnlineReachabilityPreservers

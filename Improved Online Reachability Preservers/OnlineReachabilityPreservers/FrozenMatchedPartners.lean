@@ -1,4 +1,6 @@
 import OnlineReachabilityPreservers.FrozenQuadraticTrimming
+import OnlineReachabilityPreservers.LocalFrozenLowMass
+import OnlineReachabilityPreservers.OppositeLinkForest
 
 /-! Frozen cleaning when the initial subsystem has few paths. -/
 
@@ -26,18 +28,19 @@ private theorem half_path_peel_inequality {M K : ℕ} (positive : 0 < M)
     field_simp
   linarith
 
-/-- A subsystem with at most half the path budget and at least seven sixteenths
-of the original mass has room for width splits and frozen peeling. -/
-theorem regularization_list_frozen_after_half_path_width_splits {V I : Type*}
-    [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] {half : Bool} {k n p M : ℕ}
+private theorem frozen_after_half_path_splits_of_charge {V I : Type*}
+    [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] {half : Bool} {k n p M retention : ℕ}
     (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
     (allowed : localOrderAdmissible half k (listRegularizedPaths paths (4 * M / n) (4 * M / p)))
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
     (vertices : Fintype.card V ≤ n) (rows : 2 * Fintype.card I ≤ p)
-    (upper : ∑ i, (paths i).length ≤ M) (lower : 7 * M ≤ 16 * (∑ i, (paths i).length)) :
+    (upper : ∑ i, (paths i).length ≤ M) (positive : 0 < retention)
+    (enough : let K := ∑ i, (paths i).length
+      (M : ℝ) / retention ≤ (K : ℝ) - (K : ℝ)^2/(4*((4*M/n*n : ℕ) : ℝ)) - (M : ℝ)/4 -
+        ((M : ℝ)/(4*(p : ℝ)))*((Fintype.card I + K/(4*M/p) : ℕ) : ℝ)) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
-      M ≤ 104 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+      M ≤ retention * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let K := ∑ i, (paths i).length
   let D := 4 * M / n
   let L := 4 * M / p
@@ -51,44 +54,90 @@ theorem regularization_list_frozen_after_half_path_width_splits {V I : Type*}
   have count : Q ≤ Fintype.card I + K / L := (regularization_list_counts paths simple Dpos Lpos).2
   have Kdiv : K / L ≤ M / L := Nat.div_le_div_right upper
   have pieceBudget : Q ≤ p := by omega
-  have capacity : 3 * M ≤ L * p := by
-    have floor := Nat.lt_mul_div_succ (4 * M) hp
-    change 4 * M < p * (L + 1) at floor
-    rw [Nat.mul_succ, Nat.mul_comm p L] at floor
-    omega
-  have chargeBound : 3 * M * (K / L) ≤ p * K := calc
-    _ ≤ (L * p) * (K / L) := Nat.mul_le_mul_right _ capacity
-    _ = p * ((K / L) * L) := by ring
+  have pieceSimple := listRegularizedPaths_simple paths simple D L
+  obtain ⟨mass, length, degree⟩ := regularization_list_mass_caps paths simple D L Dpos Lpos
+  obtain ⟨fullV, _, filledV, restV, _, _⟩ := listRegularizedPaths_full_block_profiles paths simple Dpos Lpos
+  apply regularization_list_frozen_trim_vertices_quadratic_of_width pieces pieceSimple allowed hn hp dense long
+    positive fullV filledV (restV.le.trans vertices) pieceBudget length degree (mass.trans_le upper)
+  dsimp only
+  rw [mass]
+  have charge : ((M : ℝ)/(4*(p : ℝ)))*(Q : ℝ) ≤
+      ((M : ℝ)/(4*(p : ℝ)))*((Fintype.card I + K/L : ℕ) : ℝ) :=
+    mul_le_mul_of_nonneg_left (by exact_mod_cast count) (by positivity)
+  exact enough.trans (sub_le_sub_left charge _)
+
+private theorem frozen_half_path_peel_charge {M K p L r a b : ℕ}
+    (hp : 0 < p) (ha : 0 < a) (rows : 2*r ≤ p) (capacity : a*M ≤ b*(L*p)) :
+    ((M : ℝ)/(4*(p : ℝ)))*((r + K/L : ℕ) : ℝ) ≤ (M : ℝ)/8 + (b : ℝ)*(K : ℝ)/(4*(a : ℝ)) := by
+  have chargeBound : a*M*(K/L) ≤ b*p*K := calc
+    _ ≤ (b*(L*p))*(K/L) := Nat.mul_le_mul_right _ capacity
+    _ = (b*p)*((K/L)*L) := by ring
     _ ≤ _ := Nat.mul_le_mul_left _ (Nat.div_mul_le_self _ _)
   let unit : ℝ := (M : ℝ) / (4 * (p : ℝ))
   have nonnegative : 0 ≤ unit := by dsimp [unit]; positivity
   have ppos : (0 : ℝ) < p := by exact_mod_cast hp
-  have origCharge : unit * (Fintype.card I : ℝ) ≤ (M : ℝ) / 8 := by
-    have ratio : 2 * (Fintype.card I : ℝ) ≤ p := by exact_mod_cast rows
+  have apos : (0 : ℝ) < a := by exact_mod_cast ha
+  have origCharge : unit * (r : ℝ) ≤ (M : ℝ) / 8 := by
+    have ratio : 2 * (r : ℝ) ≤ p := by exact_mod_cast rows
     have h := mul_le_mul_of_nonneg_left ratio nonnegative
     have fee : unit * (p : ℝ) = (M : ℝ) / 4 := by dsimp [unit]; field_simp
     rw [fee] at h
     linarith
-  have extraCharge : unit * ((K / L : ℕ) : ℝ) ≤ (K : ℝ) / 12 := by
-    have ratio : 3 * (M : ℝ) * ((K / L : ℕ) : ℝ) ≤ (p : ℝ) * K := by exact_mod_cast chargeBound
+  have extraCharge : unit * ((K/L : ℕ) : ℝ) ≤ (b : ℝ)*K/(4*(a : ℝ)) := by
+    have ratio : (a : ℝ)*M*((K/L : ℕ) : ℝ) ≤ (b : ℝ)*p*K := by exact_mod_cast chargeBound
     calc
-      _ = (3 * (M : ℝ) * ((K / L : ℕ) : ℝ)) / (12 * (p : ℝ)) := by dsimp [unit]; ring
-      _ ≤ ((p : ℝ) * K) / (12 * (p : ℝ)) := (div_le_div_iff_of_pos_right (by positivity)).mpr ratio
+      _ = ((a : ℝ)*M*((K/L : ℕ) : ℝ))/(4*(a : ℝ)*p) := by dsimp [unit]; field_simp
+      _ ≤ ((b : ℝ)*p*K)/(4*(a : ℝ)*p) := (div_le_div_iff_of_pos_right (by positivity)).mpr ratio
       _ = _ := by field_simp
-  have overall : unit * (Q : ℝ) ≤ (M : ℝ) / 8 + (K : ℝ) / 12 := calc
-    _ ≤ unit * ((Fintype.card I : ℝ) + ((K / L : ℕ) : ℝ)) :=
-      mul_le_mul_of_nonneg_left (by exact_mod_cast count) nonnegative
-    _ = unit * (Fintype.card I : ℝ) + unit * ((K / L : ℕ) : ℝ) := mul_add _ _ _
-    _ ≤ _ := add_le_add origCharge extraCharge
-  have math := half_path_peel_inequality (hn.trans_le dense) lower upper overall
-  have pieceSimple := listRegularizedPaths_simple paths simple D L
-  obtain ⟨mass, length, degree⟩ := regularization_list_mass_caps paths simple D L Dpos Lpos
-  obtain ⟨fullV, _, filledV, restV, _, _⟩ := listRegularizedPaths_full_block_profiles paths simple Dpos Lpos
-  apply regularization_list_frozen_trim_vertices_quadratic pieces pieceSimple allowed hn hp dense long
-    (retention := 104) (by decide) fullV filledV (restV.le.trans vertices) pieceBudget length degree (mass.trans_le upper)
-  dsimp only
-  rw [mass]
-  exact math
+  rw [Nat.cast_add, mul_add]
+  exact add_le_add origCharge extraCharge
+
+/-- A subsystem with at most half the path budget and at least seven sixteenths
+of the original mass has room for width splits and frozen peeling. -/
+theorem regularization_list_frozen_after_half_path_width_splits {V I : Type*}
+    [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] {half : Bool} {k n p M : ℕ}
+    (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k (listRegularizedPaths paths (4 * M / n) (4 * M / p)))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (vertices : Fintype.card V ≤ n) (rows : 2 * Fintype.card I ≤ p)
+    (upper : ∑ i, (paths i).length ≤ M) (lower : 7 * M ≤ 16 * (∑ i, (paths i).length)) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 104 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  apply frozen_after_half_path_splits_of_charge paths simple allowed hn hp dense long vertices rows upper (by decide)
+  let K := ∑ i, (paths i).length
+  let Q : ℝ := ((M : ℝ)/(4*(p : ℝ)))*((Fintype.card I + K/(4*M/p) : ℕ) : ℝ)
+  have floorP := four_average_width_product hp (M := M)
+  have floorN := four_average_width_product hn (M := M)
+  have capacity : 3*M ≤ 1*((4*M/p)*p) := by omega
+  have vertexCapacity : 3*(M : ℝ) ≤ ((4*M/n*n : ℕ) : ℝ) := by
+    exact_mod_cast (show 3*M ≤ (4*M/n)*n by omega)
+  have mpos : (0 : ℝ) < M := by exact_mod_cast hn.trans_le dense
+  have charge : Q ≤ (M : ℝ)/8 + (K : ℝ)/12 := by
+    have bound := frozen_half_path_peel_charge (K := K) hp (show 0 < 3 by decide) rows capacity
+    norm_num [Q] at bound ⊢
+    exact bound
+  have lost : (K : ℝ)^2/(4*((4*M/n*n : ℕ) : ℝ)) ≤ (K : ℝ)^2/(12*(M : ℝ)) := by
+    apply div_le_div_of_nonneg_left (sq_nonneg _) (by positivity)
+    linarith
+  have enough := half_path_peel_inequality (hn.trans_le dense) lower upper charge
+  change (M : ℝ) / 104 ≤ (K : ℝ) - (K : ℝ)^2/(4*((4*M/n*n : ℕ) : ℝ)) - (M : ℝ)/4 - Q
+  linarith
+
+private theorem unique_row_width_splits_admissible {V I : Type*}
+    [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] {half : Bool} {k : ℕ}
+    (cutoff : k = 4 ∨ (k = 6 ∧ half = false)) (paths : I → List V)
+    (simple : ∀ i, (paths i).Nodup)
+    (unique : ∀ {a b x y}, a ≠ b → x ∈ paths a → x ∈ paths b →
+      y ∈ paths a → y ∈ paths b → x = y)
+    (allowed : localOrderAdmissible half k paths) (D L : ℕ) :
+    localOrderAdmissible half k (listRegularizedPaths paths D L) := by
+  rcases cutoff with rfl | ⟨rfl, rfl⟩
+  · cases half
+    · exact listRegularizedPaths_fullFree simple (fun {_ _ _ _} => unique) allowed D L
+    · exact listRegularizedPaths_halfFree simple (fun {_ _ _ _} => unique) allowed D L
+  · have four : BridgeFree (Before paths) 4 := fun _ h => allowed (h.trans (by decide))
+    exact regularizedSix_bridge_free simple (fun {_ _ _ _} => unique) four allowed D L
 
 private theorem frozen_of_unique_row_subset {half : Bool} {k n p : ℕ}
     (cutoff : k = 4 ∨ (k = 6 ∧ half = false)) (paths : Fin p → List (Fin n))
@@ -128,13 +177,7 @@ private theorem frozen_of_unique_row_subset {half : Bool} {k n p : ℕ}
   have upper : ∑ i, (working i).length ≤ M := by
     rw [keeps]
     exact sum_le_sum_of_subset (subset_univ A)
-  have safe (D L : ℕ) : localOrderAdmissible half k (listRegularizedPaths working D L) := by
-    rcases cutoff with rfl | ⟨rfl, rfl⟩
-    · cases half
-      · exact listRegularizedPaths_fullFree simpleWorking uniqueWorking legal D L
-      · exact listRegularizedPaths_halfFree simpleWorking uniqueWorking legal D L
-    · have four : BridgeFree (Before working) 4 := fun _ h => legal (h.trans (by decide))
-      exact regularizedSix_bridge_free simpleWorking (fun {_ _ _ _} => uniqueWorking) four legal D L
+  have safe := unique_row_width_splits_admissible cutoff working simpleWorking (fun {_ _ _ _} => uniqueWorking) legal
   have vertices : Fintype.card ↥(univ : Finset (Fin n)) ≤ n := by simp
   rcases enough with large | ⟨small, large⟩
   · exact regularization_list_frozen_after_quadratic_width_trim working simpleWorking (safe _ _)
@@ -314,5 +357,263 @@ theorem regularization_list_frozen_of_two_reverse_classes {half : Bool} {k n p :
   by_cases zeroFew : 2 * (group false).card ≤ p
   · exact enough false (Or.inr ⟨zeroFew, by omega⟩)
   · exact enough true (Or.inr ⟨by omega, by omega⟩)
+
+private theorem dense_width_capacity {M q : ℕ} (positive : 0 < q) (large : 8*q ≤ M) :
+    31*M ≤ 8*((4*M/q)*q) := by
+  have floor := four_average_width_product positive (M := M)
+  omega
+
+private theorem dense_two_support_crop {M K R lostV lostI vertexCapacity pathCapacity : ℕ}
+    (positive : 0 < M) (upper : K ≤ M) (lower : 13*M ≤ 24*K)
+    (retained : K ≤ R + (lostV + lostI))
+    (roomV : 31*M ≤ 8*vertexCapacity) (roomI : 31*M ≤ 8*pathCapacity)
+    (chargeV : 4*vertexCapacity*lostV ≤ K^2) (chargeI : 4*pathCapacity*lostI ≤ K^2) :
+    290*M ≤ 576*R := by
+  have lossV : 31*M*lostV ≤ 2*K^2 := calc
+    _ ≤ (8*vertexCapacity)*lostV := Nat.mul_le_mul_right _ roomV
+    _ = 2*(4*vertexCapacity*lostV) := by ring
+    _ ≤ _ := Nat.mul_le_mul_left _ chargeV
+  have lossI : 31*M*lostI ≤ 2*K^2 := calc
+    _ ≤ (8*pathCapacity)*lostI := Nat.mul_le_mul_right _ roomI
+    _ = 2*(4*pathCapacity*lostI) := by ring
+    _ ≤ _ := Nat.mul_le_mul_left _ chargeI
+  have paid : 31*M*K ≤ 31*M*R+4*K^2 := calc
+    _ ≤ 31*M*(R+(lostV+lostI)) := Nat.mul_le_mul_left _ retained
+    _ = 31*M*R+(31*M*lostV+31*M*lostI) := by ring
+    _ ≤ _ := by have h := add_le_add lossV lossI; omega
+  have paidReal : 31*(M:ℝ)*K ≤ 31*(M:ℝ)*R+4*(K:ℝ)^2 := by exact_mod_cast paid
+  have lowerReal : 0 ≤ 24*(K:ℝ)-13*M := sub_nonneg.mpr (by exact_mod_cast lower)
+  have upperReal : (K:ℝ) ≤ M := by exact_mod_cast upper
+  have room : 0 ≤ 692*(M:ℝ)-96*K := by linarith [Nat.cast_nonneg (α := ℝ) M]
+  have enough : 290*(M:ℝ)*M ≤ 576*(R:ℝ)*M := by
+    nlinarith only [paidReal, mul_nonneg lowerReal room, sq_nonneg (M:ℝ)]
+  apply (Nat.mul_le_mul_right_iff positive).mp
+  exact_mod_cast enough
+
+private theorem dense_half_support_mass {M K p n r : ℕ} (positive : 0 < M) (hp : 0 < p)
+    (upper : K ≤ M) (lower : 5*M ≤ 12*K) (rows : 2*r ≤ p)
+    (roomV : 31*M ≤ 8*((4*M/n)*n)) (roomI : 31*M ≤ 8*((4*M/p)*p)) :
+    (M:ℝ)/288 ≤ (K:ℝ)-(K:ℝ)^2/(4*((4*M/n*n : ℕ):ℝ))-(M:ℝ)/4-
+      ((M:ℝ)/(4*(p:ℝ)))*((r+K/(4*M/p) : ℕ):ℝ) := by
+  have mPos : (0:ℝ) < M := by exact_mod_cast positive
+  have capacity : 31*(M:ℝ) ≤ 8*((4*M/n*n : ℕ):ℝ) := by exact_mod_cast roomV
+  have loss : (K:ℝ)^2/(4*((4*M/n*n : ℕ):ℝ)) ≤ (K:ℝ)^2/(31*(M:ℝ)/2) := by
+    apply div_le_div_of_nonneg_left (sq_nonneg _) (by positivity)
+    linarith
+  have charge := frozen_half_path_peel_charge (K := K) hp (show 0 < 31 by decide) rows roomI
+  have lowerReal : 0 ≤ 12*(K:ℝ)-5*M := sub_nonneg.mpr (by exact_mod_cast lower)
+  have upperReal : (K:ℝ) ≤ M := by exact_mod_cast upper
+  have room : 0 ≤ 338*(M:ℝ)-24*K := by linarith
+  have paid : ((M:ℝ)/288+3*(M:ℝ)/8)*(31*(M:ℝ)) ≤ 29*(M:ℝ)*K-2*(K:ℝ)^2 := by
+    nlinarith only [mul_nonneg lowerReal room, sq_nonneg (M:ℝ)]
+  have bound : (M:ℝ)/288+3*(M:ℝ)/8 ≤ 29*(K:ℝ)/31-(K:ℝ)^2/(31*(M:ℝ)/2) := by
+    have div := (le_div_iff₀ (by positivity : 0 < 31*(M:ℝ))).mpr paid
+    convert div using 1
+    field_simp
+  norm_num at charge
+  push_cast at loss ⊢
+  linarith
+
+private theorem frozen_of_two_reverse_classes_of_mass {half : Bool} {k n p : ℕ}
+    (cutoff : k = 4 ∨ (k = 6 ∧ half = false)) (paths kept : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths)
+    (sub : ∀ i, (kept i).Sublist (paths i)) (classes : Fin p → Bool)
+    (separated : ∀ {i j x y}, i ≠ j → Before kept i x y → Before kept j y x → classes i ≠ classes j)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (retained : let M := ∑ i, (paths i).length
+      let mass (c : Bool) := ∑ i ∈ (univ : Finset (Fin p)).filter (fun i => classes i = c), (kept i).length
+      (∃ c, 13*M ≤ 24*mass c) ∨ 23*M ≤ 24*(∑ i, (kept i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 288*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  have two : 2 ≤ k := by rcases cutoff with rfl | ⟨rfl, _⟩ <;> decide
+  have free : HalfBridgeFree (Before paths) k := by
+    cases half
+    · exact (show BridgeFree (Before paths) k from allowed).halfFree
+    · exact allowed
+  by_cases low : M ≤ 8*max n p
+  · obtain ⟨n', hn', p', hp', clean, cleanSimple, cleanFree, mass, upper, caps⟩ :=
+      regularization_list_frozen_low_mass paths simple free two hn hp dense long low
+    have cleanAllowed : localOrderAdmissible half k clean := by cases half; exact cleanFree; exact cleanFree.halfFree
+    exact ⟨n', hn', p', hp', clean, cleanSimple, cleanAllowed, by omega, upper, caps⟩
+  have vRoom := dense_width_capacity hn (show 8*n ≤ M by have h := le_max_left n p; omega)
+  have iRoom := dense_width_capacity hp (show 8*p ≤ M by have h := le_max_right n p; omega)
+  let group (c : Bool) := (univ : Finset (Fin p)).filter (fun i => classes i = c)
+  let mass (c : Bool) := ∑ i ∈ group c, (kept i).length
+  have member {i : Fin p} {c : Bool} (found : i ∈ group c) : classes i = c := (mem_filter.mp found).2
+  have full : group false ∪ group true = univ := by
+    ext i
+    cases seen : classes i <;> simp [group, seen]
+  have disjointGroups : Disjoint (group false) (group true) := by
+    rw [disjoint_left]
+    exact fun i left right => Bool.false_ne_true ((member left).symm.trans (member right))
+  have totalMass : mass false + mass true = ∑ i, (kept i).length := by
+    rw [← full, sum_union disjointGroups]
+  have totalRows : (group false).card + (group true).card = p := by
+    rw [← card_union_of_disjoint disjointGroups, full, card_univ, Fintype.card_fin]
+  have enough (c : Bool) (bound : 13*M ≤ 24*mass c ∨ (2*(group c).card ≤ p ∧ 5*M ≤ 12*mass c)) :
+      ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+        (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+        M ≤ 288*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+    let chosen (i : group c) := kept i.val
+    have chosenSimple (i : group c) : (chosen i).Nodup := (sub i.val).nodup (simple i.val)
+    have liftStep (i : group c) (x y : Fin n) (step : Before chosen i x y) : Before paths i.val x y :=
+      listBefore_of_sublist (simple i.val) (sub i.val) step
+    have chosenAllowed : localOrderAdmissible half k chosen := by
+      cases half
+      · intro j size
+        exact ⟨fun b => (allowed size).false (b.mapPaths Subtype.val Subtype.val_injective liftStep)⟩
+      · intro j size b earlier
+        exact allowed size (b.mapPaths Subtype.val Subtype.val_injective liftStep) earlier
+    have unique {i j : group c} {x y : Fin n} (different : i ≠ j)
+        (xi : x ∈ chosen i) (xj : x ∈ chosen j) (yi : y ∈ chosen i) (yj : y ∈ chosen j) : x = y := by
+      by_contra unequal
+      have different' : i.val ≠ j.val := fun eq => different (Subtype.ext eq)
+      have same : classes i.val = classes j.val := (member i.property).trans (member j.property).symm
+      rcases listBefore_total xi yi unequal with xy | yx <;> rcases listBefore_total xj yj unequal with xy' | yx'
+      · exact no_parallel_list_steps free two different' (liftStep i x y xy) (liftStep j x y xy')
+      · exact separated different' xy yx' same
+      · exact separated different' yx xy' same
+      · exact no_parallel_list_steps free two different' (liftStep i y x yx) (liftStep j y x yx')
+    have safe := unique_row_width_splits_admissible cutoff chosen chosenSimple (fun {_ _ _ _} => unique) chosenAllowed
+    have counted : (∑ i, (chosen i).length) = mass c :=
+      (sum_subtype (group c) (fun _ => Iff.rfl) (fun i => (kept i).length)).symm
+    have upper : (∑ i, (chosen i).length) ≤ M := calc
+      _ = mass c := counted
+      _ ≤ ∑ i, (kept i).length := sum_le_sum_of_subset (subset_univ _)
+      _ ≤ M := sum_le_sum (fun i _ => (sub i).length_le)
+    rcases bound with large | ⟨few, sufficient⟩
+    · apply regularization_list_frozen_after_quadratic_width_trim_of_loss chosen chosenSimple (safe _ _) hn hp dense long
+        (by simp) (by simpa [Fintype.card_coe, Fintype.card_fin] using card_le_univ (group c)) upper
+      dsimp only
+      intro R lostV lostI keptMass lostVBound lostIBound
+      exact dense_two_support_crop (hn.trans_le dense) upper (by rwa [counted]) keptMass vRoom iRoom lostVBound lostIBound
+    · apply frozen_after_half_path_splits_of_charge chosen chosenSimple (safe _ _) hn hp dense long (by simp)
+        (by simpa only [Fintype.card_coe] using few) upper (by decide)
+      exact dense_half_support_mass (hn.trans_le dense) hp upper (by rwa [counted])
+        (by simpa only [Fintype.card_coe] using few) vRoom iRoom
+  by_cases zeroLarge : 13*M ≤ 24*mass false
+  · exact enough false (Or.inl zeroLarge)
+  by_cases oneLarge : 13*M ≤ 24*mass true
+  · exact enough true (Or.inl oneLarge)
+  have combined : 23*M ≤ 24*(∑ i, (kept i).length) := by
+    rcases retained with ⟨c, hc⟩ | hc
+    · cases c
+      · exact (zeroLarge hc).elim
+      · exact (oneLarge hc).elim
+    · exact hc
+  by_cases zeroFew : 2*(group false).card ≤ p
+  · exact enough false (Or.inr ⟨zeroFew, by omega⟩)
+  · exact enough true (Or.inr ⟨by omega, by omega⟩)
+
+/-- Repair a two-class partition by deleting at most one twenty-fourth of
+all incidences. At cutoff four in either mode, or cutoff six in full mode,
+frozen cleaning then keeps at least one 288th of the input mass. -/
+theorem regularization_list_frozen_of_repaired_reverse_classes {half : Bool} {k n p : ℕ}
+    (cutoff : k = 4 ∨ (k = 6 ∧ half = false)) (paths kept : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths)
+    (sub : ∀ i, (kept i).Sublist (paths i)) (classes : Fin p → Bool)
+    (separated : ∀ {i j x y}, i ≠ j → Before kept i x y → Before kept j y x → classes i ≠ classes j)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (retained : 23*(∑ i, (paths i).length) ≤ 24*(∑ i, (kept i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 288*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  frozen_of_two_reverse_classes_of_mass cutoff paths kept simple allowed sub classes (fun {_ _ _ _} => separated)
+    hn hp dense long (Or.inr retained)
+
+/-- A rowwise sublist family with unique intersections suffices when its mass
+is at least thirteen twenty-fourths of the original mass. -/
+theorem regularization_list_frozen_of_large_unique_sublists {half : Bool} {k n p : ℕ}
+    (cutoff : k = 4 ∨ (k = 6 ∧ half = false)) (paths kept : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths)
+    (sub : ∀ i, (kept i).Sublist (paths i))
+    (unique : ∀ {i j x y}, i ≠ j → x ∈ kept i → x ∈ kept j → y ∈ kept i → y ∈ kept j → x = y)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (retained : 13*(∑ i, (paths i).length) ≤ 24*(∑ i, (kept i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 288*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  refine frozen_of_two_reverse_classes_of_mass cutoff paths kept simple allowed sub (fun _ => false)
+    ?separated hn hp dense long ?mass
+  case separated =>
+    intro i j x y different xy yx _
+    exact listBefore_ne xy (unique different xy.1 yx.2.1 xy.2.1 yx.1)
+  case mass =>
+    left
+    refine ⟨false, ?_⟩
+    simpa using retained
+
+/-- If the number of opposite links is at most eleven twenty-fourths of
+the input mass, opposite-intersection pruning supplies a large unique family. -/
+theorem regularization_list_frozen_of_eleven_twentyfourths_links {half : Bool} {k n p : ℕ}
+    (cutoff : k = 4 ∨ (k = 6 ∧ half = false)) (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths)
+    (two : HalfBridgeFree (Before paths) 2)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (links : 24*Nat.card (oppositeLinkGraphOfHalfTwo paths two).edgeSet ≤ 11*(∑ i, (paths i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 288*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  have loss := removeOppositeIntersections_mass_with_half_two_link_count two simple
+  exact regularization_list_frozen_of_large_unique_sublists cutoff paths (removeOppositeIntersections paths)
+    simple allowed (removeOppositeIntersections_sublist paths)
+    (fun {_ _ _ _} different xi xj yi yj => removeOppositeIntersections_unique simple two (by decide) different xi xj yi yj)
+    hn hp dense long (by omega)
+
+/-- In the earlier row of a reversed pair in one class, remove the later
+endpoint of the reversed comparison. -/
+noncomputable def removeSameClassReverseEnds {V : Type*} [DecidableEq V] {p : ℕ}
+    (paths : Fin p → List V) (classes : Fin p → Bool) (i : Fin p) : List V := by
+  classical
+  exact (paths i).filter fun v => decide (¬ ∃ j, classes i = classes j ∧ LaterReversePartner paths v i j)
+
+theorem removeSameClassReverseEnds_sublist {V : Type*} [DecidableEq V] {p : ℕ}
+    (paths : Fin p → List V) (classes : Fin p → Bool) (i : Fin p) :
+    (removeSameClassReverseEnds paths classes i).Sublist (paths i) := List.filter_sublist
+
+theorem removeSameClassReverseEnds_separates {V : Type*} [DecidableEq V] {p : ℕ}
+    (paths : Fin p → List V) (simple : ∀ i, (paths i).Nodup) (classes : Fin p → Bool)
+    {i j : Fin p} {x y : V} (different : i ≠ j)
+    (xy : Before (removeSameClassReverseEnds paths classes) i x y)
+    (yx : Before (removeSameClassReverseEnds paths classes) j y x) : classes i ≠ classes j := by
+  have survives {a : Fin p} {v : V} (hv : v ∈ removeSameClassReverseEnds paths classes a) :
+      ¬ ∃ b, classes a = classes b ∧ LaterReversePartner paths v a b := by
+    classical
+    have test : v ∈ paths a ∧ ¬ ∃ b, classes a = classes b ∧ LaterReversePartner paths v a b := by
+      simpa only [removeSameClassReverseEnds, List.mem_filter, decide_eq_true_eq] using hv
+    exact test.2
+  have beforeXY := listBefore_of_sublist (simple i) (removeSameClassReverseEnds_sublist paths classes i) xy
+  have beforeYX := listBefore_of_sublist (simple j) (removeSameClassReverseEnds_sublist paths classes j) yx
+  intro same
+  rcases lt_or_gt_of_ne different with earlier | later
+  · exact survives xy.2.1 ⟨j, same, earlier, x, beforeXY, beforeYX⟩
+  · exact survives yx.2.1 ⟨i, same.symm, later, y, beforeYX, beforeXY⟩
+
+/-- Count each removed occurrence once, even if several reversed comparisons
+would mark it. This provides a direct sufficient test for two-class repair. -/
+theorem regularization_list_frozen_of_sparse_same_class_reverse_ends {half : Bool} {k n p : ℕ}
+    (cutoff : k = 4 ∨ (k = 6 ∧ half = false)) (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths) (classes : Fin p → Bool)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (loss : 24*(∑ i, ((paths i).length-(removeSameClassReverseEnds paths classes i).length)) ≤
+      ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 288*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let kept := removeSameClassReverseEnds paths classes
+  have sub := removeSameClassReverseEnds_sublist paths classes
+  change 24*(∑ i, ((paths i).length-(kept i).length)) ≤ ∑ i, (paths i).length at loss
+  have accounted : (∑ i, ((paths i).length-(kept i).length)) + (∑ i, (kept i).length) = ∑ i, (paths i).length := by
+    rw [← sum_add_distrib]
+    exact sum_congr rfl fun i _ => Nat.sub_add_cancel (sub i).length_le
+  exact regularization_list_frozen_of_repaired_reverse_classes cutoff paths kept simple allowed sub classes
+    (fun {_ _ _ _} => removeSameClassReverseEnds_separates paths simple classes) hn hp dense long (by omega)
 
 end OnlineReachabilityPreservers

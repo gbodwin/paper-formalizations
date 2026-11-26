@@ -1655,7 +1655,7 @@ additional width blocks must fit within four thirds of the original
 vertex budget. This includes
 [inputs with at most \(n/16\) vertices having an outgoing partner](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L299).
 
-[Quadratic trimming of both supports](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L89)
+[Quadratic trimming of both supports](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L143)
 starts with a subsystem within the original budgets, with mass \(K\)
 between \(9M/16\) and \(M\). Its splits at the original factor-four
 widths must preserve the chosen bridge exclusion. All nonfinal blocks
@@ -1664,13 +1664,13 @@ most \(K^2/(6M)\) because the width times its budget is at least \(3M\)
 in each dimension. At least \(261M/512\)
 remains before peeling, so the cleaned mass is at least \(M/104\) with
 both original budgets and all four caps. If the vertex-only split uses
-at most \(16n/9\) copies, the [heaviest original-budget set](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L177)
+at most \(16n/9\) copies, the [heaviest original-budget set](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L198)
 retains the needed nine sixteenths. The unique intersections justify
 the width splits at cutoff four in either mode or at full cutoff six,
 with the corresponding input exclusion. A sufficient condition is that
-[at most seven ninths of the original vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L250).
+[at most seven ninths of the original vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L271).
 
-[Half-budget width splits](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L31)
+[Half-budget width splits](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L97)
 use a subsystem of simple paths within the original vertex budget and at
 most half the original path budget. When it carries \(K\) between
 \(7M/16\) and \(M\)
@@ -1686,12 +1686,12 @@ When the paired rows hold at most \(7M/8\), keeping the unpaired rows as well gi
 least \(9M/16\) for quadratic trimming of both supports. When the paired
 rows hold more than \(7M/8\), their selected rows alone give at least
 \(7M/16\) in at most half the original path budget. This proves
-[frozen cleaning for matched reverse partners](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L149)
+[frozen cleaning for matched reverse partners](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L192)
 with at least \(M/104\), both original budgets, and all four original caps.
 It preserves the input exclusion at cutoff four in either mode or at full
 cutoff six, for positive budgets and mass at least both counts.
 
-The [two-class theorem](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L265)
+The [two-class theorem](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L308)
 gives the same original budgets, caps, retention and cutoff guarantees
 when simple paths can be partitioned into two classes with every reversed
 comparison crossing classes. Each class has unique intersections under
@@ -1699,6 +1699,22 @@ the matching input bridge exclusion. A class with mass at least
 \(9M/16\) permits trimming both supports. If both are below that mass,
 each carries at least \(7M/16\) and one uses at most half the original
 path budget.
+
+A repair may delete at most \(M/24\) incidences as sublists of the original
+rows before assigning every remaining reversed comparison across two classes.
+Beyond the low-mass cases, each rounded width times its budget is at least
+\(31M/8\). A single class of mass at least \(13M/24\) pays for quadratic
+trimming on both sides, or each class has mass at least \(5M/12\) and the one
+with fewer rows can keep all its path pieces. Either proof gives at least
+\(M/288\), with both budgets and all four caps at the original averages.
+The same thresholds apply at cutoff four in either mode and at full cutoff
+six. A filter can perform the repair by dropping the later vertex of a
+reversed comparison in its earlier row whenever the rows share a class.
+The hypothesis counts removed incidences. Also, a unique sublist family
+of mass at least \(13M/24\) suffices by itself. Opposite-intersection
+pruning supplies such a family whenever the opposite-link count is at most
+\(11M/24\).
+[Repaired classes and unique sublists](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L514).
 
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
