@@ -335,9 +335,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   cutoffs, and parent-arc keys from the forest trials. This uses the same
   weighted separator run and preserves the prefix graphs and evaluation
   count on every trace. The feasible-prefix polynomial includes the new
-  charges. Remaining work includes trial and tier containers, weighted
-  search and its vertex enumeration, later service steps, and bit and
-  native execution costs.
+  charges.
   [Prepared arithmetic](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L804)
   · [Complete replay with measured rounding](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2111).
   A standalone list-backed rounding evaluator builds the trial and tier
@@ -345,6 +343,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   With the full forest link list, it returns the same graph and bounds
   the assembly and seed reads.
   [Measured trial and tier rows](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L1750).
+  The complete replay shares the same list with the expansion step.
+  Its prefix graphs and evaluation counts agree on every trace, and the
+  feasible-prefix bound includes trial and tier enumeration and forest
+  link selection. Remaining work includes parts of weighted search and
+  its vertex enumeration, later service steps, and bit and native costs.
+  [Complete replay with list-backed trials](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2172).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
