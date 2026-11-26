@@ -262,6 +262,31 @@ theorem fullBridgeFree_increasing_subsequences_two_of_components (paths : Fin p 
 noncomputable def precedenceComponentNontrivialRows (paths : Fin p → List (Fin n)) (c : Fin n) : Finset (Fin p) :=
   univ.filter fun i => 2 ≤ (pathsInPrecedenceComponent paths c i).length
 
+/-- A strict step certifies that its original row is nontrivial in the component. -/
+theorem precedenceComponent_row_mem_of_step {paths : Fin p → List (Fin n)} {c x y : Fin n} {i : Fin p}
+    (step : ListBefore (pathsInPrecedenceComponent paths c) i x y) : i ∈ precedenceComponentNontrivialRows paths c := by
+  refine mem_filter.mpr ⟨mem_univ _,?_⟩
+  have late := List.idxOf_lt_length_of_mem step.2.1
+  have before := step.2.2
+  omega
+
+/-- A local bridge uses one distinct nontrivial row per arc and for the river. -/
+theorem precedenceComponent_bridge_size_le_rows {paths : Fin p → List (Fin n)} {c : Fin n} {d : ℕ}
+    (bridge : Bridge (ListBefore (pathsInPrecedenceComponent paths c)) d) :
+    d+2 ≤ (precedenceComponentNontrivialRows paths c).card := by
+  let localPaths := pathsInPrecedenceComponent paths c
+  let rows := precedenceComponentNontrivialRows paths c
+  let smaller : Bridge (fun i : rows => ListBefore localPaths i.val) d :=
+    { vertex := bridge.vertex
+      arc := fun i => ⟨bridge.arc i,precedenceComponent_row_mem_of_step (bridge.arcStep i)⟩
+      river := ⟨bridge.river,precedenceComponent_row_mem_of_step bridge.riverStep⟩
+      distinctVertices := bridge.distinctVertices
+      distinctArcs := fun _ _ eq => bridge.distinctArcs (congrArg Subtype.val eq)
+      river_ne_arc := fun i eq => bridge.river_ne_arc i (congrArg Subtype.val eq)
+      riverStep := bridge.riverStep
+      arcStep := bridge.arcStep }
+  simpa only [Fintype.card_coe] using SourceAudit.bridge_path_count_le smaller
+
 /-- If each component has at most the given cutoff's worth of nontrivial
 rows, the global exclusion at that cutoff excludes every bridge locally. -/
 theorem precedenceComponents_fullFree_of_nontrivialRows_le {k : ℕ} (paths : Fin p → List (Fin n))
@@ -270,25 +295,7 @@ theorem precedenceComponents_fullFree_of_nontrivialRows_le {k : ℕ} (paths : Fi
     ∀ c d, IsEmpty (Bridge (ListBefore (pathsInPrecedenceComponent paths c)) d) := by
   intro c d
   refine ⟨fun bridge => ?_⟩
-  let localPaths := pathsInPrecedenceComponent paths c
-  let rows := precedenceComponentNontrivialRows paths c
-  have needed {i x y} (step : ListBefore localPaths i x y) : i ∈ rows := by
-    refine mem_filter.mpr ⟨mem_univ _,?_⟩
-    change 2 ≤ (localPaths i).length
-    have late := List.idxOf_lt_length_of_mem step.2.1
-    have before := step.2.2
-    omega
-  let smaller : Bridge (fun i : rows => ListBefore localPaths i.val) d :=
-    { vertex := bridge.vertex
-      arc := fun i => ⟨bridge.arc i,needed (bridge.arcStep i)⟩
-      river := ⟨bridge.river,needed bridge.riverStep⟩
-      distinctVertices := bridge.distinctVertices
-      distinctArcs := fun _ _ eq => bridge.distinctArcs (congrArg Subtype.val eq)
-      river_ne_arc := fun i eq => bridge.river_ne_arc i (congrArg Subtype.val eq)
-      riverStep := bridge.riverStep
-      arcStep := bridge.arcStep }
-  have bounded : d+2 ≤ rows.card := by simpa only [Fintype.card_coe] using SourceAudit.bridge_path_count_le smaller
-  exact (free (bounded.trans (few c))).false
+  exact (free ((precedenceComponent_bridge_size_le_rows bridge).trans (few c))).false
     (bridge.mapPaths id Function.injective_id (fun i _ _ step =>
       listBefore_of_sublist (simple i) List.filter_sublist step))
 

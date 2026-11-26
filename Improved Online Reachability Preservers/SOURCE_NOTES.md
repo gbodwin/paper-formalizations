@@ -472,7 +472,7 @@ gives a linear lower bound. Together these give a DAG on exactly
 preserver has at least \(M/24\) edges.
 [Consecutive-chain bound](OnlineReachabilityPreservers/OfflineConsecutiveEndpoint.lean#L197)
 · [Common-order subsequences](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L209)
-· [Checked extremal converse](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L308).
+· [Checked extremal converse](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L315).
 
 With a common vertex order, a detour that uses the same path twice can be
 shortened to one step along that path. A detour with distinct path indices
