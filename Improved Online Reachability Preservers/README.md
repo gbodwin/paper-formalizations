@@ -467,7 +467,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   and native execution bounds remain open.
   In the early weighted cover, the [binary charge update](OnlineReachabilityPreservers/SteinerBinaryWeightedLoadWork.lean#L44)
   maintains the remainder, doubling factor, and exact weighted numerator
-  for one paid edge, with a bound in the input word widths.
+  for one paid edge, with a bound in the input word widths. The [binary weighted capacity](OnlineReachabilityPreservers/SteinerBinaryWeightedCapacityWork.lean#L129)
+  rounds that numerator by the cost and caps the capacity at the supplied
+  flow amount.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

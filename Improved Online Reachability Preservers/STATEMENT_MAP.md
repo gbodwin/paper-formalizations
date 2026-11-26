@@ -1213,9 +1213,12 @@ The [binary weighted charge update](OnlineReachabilityPreservers/SteinerBinaryWe
 stores the current remainder, doubling factor, and weighted numerator for
 one positive-cost edge. It adds the factor to the numerator and resets the
 remainder and doubles the factor at the cost boundary. The two additions
-and comparison have a bound in their input word widths. Building the
-weighted capacity table and integrating the update into the early cover
-remain separate obligations.
+and comparison have a bound in their input word widths. The [capped weighted capacity](OnlineReachabilityPreservers/SteinerBinaryWeightedCapacityWork.lean#L129)
+reuses the numerator, increments a binary candidate and its stored cost
+multiple, and stops when the multiple reaches the numerator or the flow
+supply is reached. It returns the exact clipped rounded capacity. The
+bound is polynomial in the numeric supply and the input word widths.
+Building the weighted table and integrating the early cover remain open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
