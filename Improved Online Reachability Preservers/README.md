@@ -678,6 +678,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   for all path pieces and enough mass after clipping, the
   [frozen cleaning theorem](OnlineReachabilityPreservers/ClippedVertexPartitions.lean#L199)
   attains both budgets and all four caps with at least \(M/16\).
+- A color may depend on both the path and the vertex of an incidence.
+  Giving each row piece and vertex copy its color
+  [preserves both bridge exclusions](OnlineReachabilityPreservers/IncidenceColorCleaning.lean#L45)
+  at every cutoff. If the colored pieces meet the upper caps and their
+  occupied supports fit within four thirds of each original budget,
+  [the frozen witness](OnlineReachabilityPreservers/IncidenceColorCleaning.lean#L213)
+  fits both budgets, meets all four caps and retains at least \(M/16\).
+  The existence of a suitable coloring for arbitrary input remains open.
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion
@@ -888,15 +896,16 @@ path system.
 Theorem 38 for arbitrary simple paths with no half-bridge through size four.
 One exponent slack depends only on the vertex count and tends to zero.
 [LocalOfflineBound](OnlineReachabilityPreservers/LocalOfflineBound.lean) proves
-Theorem 43 for arbitrary simple paths, with the exact limiting exponent and a
-constant that works for every vertex and path count.
+Theorem 43 for arbitrary simple paths excluding full bridges through size
+four, with the exact limiting exponent and a constant that works for every
+vertex and path count.
 
 Build from the repository root with `lake build OnlineReachabilityPreservers`.
 The library is included in the repository's module index, declaration audit,
 and kernel replay.
 
 The companion PaperLab includes an interactive trace and a source-linked
-proof map. Open cases include general cyclic half-four cleaning, full
-cleaning under only a finite cutoff of six or more, and the end-to-end
-Steiner running-time bound.
+proof map. Open cases include general cyclic half-four cleaning at the
+original averages, frozen-average cleaning under only a finite full cutoff
+of six or more, and a native execution-time bound for the Steiner algorithm.
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).

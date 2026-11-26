@@ -53,7 +53,7 @@ its abstract and bibliographic record. All section and result numbers below refe
 | Theorem 4 | Offline deterministic polynomial-time pairwise bound \(O(n^{3/4}p^{1/2}+n^{2-\sqrt2+o(1)}p^{1/\sqrt2}+n)\), also rounded to \(O(n^{.75}p^{.5}+n^{.59}p^{.71}+n)\). Uses the independence construction in Lemma 14 and the Appendix B extremal estimate, with degeneracies and the additive \(p\) handled in the graph bound. | [Both edge bounds](OnlineReachabilityPreservers/OfflineSharp.lean) hold for the constructed preserver on general digraphs. The limiting bound holds with zero exponent slack. The exact greedy deletion evaluator has a polynomial source-level tally. |
 | Theorem 5 | Both Theorems 1 and 2 transfer to preassigned simple paths, either with the total \(p\) known or with the arrival index \(i\) as a path-selection input. In the restricted case \(S\) is given. Uses Theorems 15 and 16. Fully non-adaptive path selection with neither parameter is left open. | The [pairwise rates](OnlineReachabilityPreservers/PairwiseNonAdaptive.lean) and [both endpoint promises](OnlineReachabilityPreservers/RestrictedNonAdaptive.lean) are checked for both models on general digraphs. The [path lift](OnlineReachabilityPreservers/PathAssignments.lean) uses a subset of the shared connectors in each simple path. The [pairwise selectors](OnlineReachabilityPreservers/AssignmentListPairwiseWork.lean) and [restricted selectors](OnlineReachabilityPreservers/AssignmentListRestrictedWork.lean) have polynomial source-level tallies per query. Exact all-prefix edge sets and polynomial source-level bounds in both models are checked for the pairwise and both restricted selectors. |
 | Theorems 6 and 7, cited [1,15,21] | Prior offline approximation with \(\min(n^{4/7+\varepsilon},p^{1/2+\varepsilon})\) and online competitive ratio \(\widetilde O(p^{1/2+\varepsilon})\) from [21]. | Cited background |
-| Theorems 8 and 21 | Same new online unit-cost directed Steiner forest result, randomized polynomial time and competitive ratio \(O(n^{3/5+\varepsilon})\). Theorem 21 uses the early-pair algorithm of [21], all-pairs thick-demand hitting, the thin-pair online rounding from the [24] framework, the two orientations of Theorem 2, and Lemmas 20 and 22. | [The full online algorithm](OnlineReachabilityPreservers/SteinerComplete.lean) checks the expected \(O(n^{3/5+\varepsilon})\) rate against any feasible offline solution on a fixed demand trace, including zero optimum and repeated requests. The first block of distinct non-self requests is chosen independently of the random seeds. Correctness and monotonicity hold on every realization. Formal end-to-end runtime remains open. |
+| Theorems 8 and 21 | Same new online unit-cost directed Steiner forest result, randomized polynomial time and competitive ratio \(O(n^{3/5+\varepsilon})\). Theorem 21 uses the early-pair algorithm of [21], all-pairs thick-demand hitting, the thin-pair online rounding from the [24] framework, the two orientations of Theorem 2, and Lemmas 20 and 22. | [The full online algorithm](OnlineReachabilityPreservers/SteinerComplete.lean) checks the expected \(O(n^{3/5+\varepsilon})\) rate against any feasible offline solution on a fixed demand trace, including zero optimum and repeated requests. The first block of distinct non-self requests is chosen independently of the random seeds. Correctness and monotonicity hold on every realization. The [arrival implementation](OnlineReachabilityPreservers/SteinerBinaryArrivals.lean#L188) bounds total recorded work plus the prescribed bit supply by a polynomial in the input sizes at fixed height. A native execution bound remains open. |
 | Theorem 9 | A DAG algorithm lifts to general digraphs by SCC contraction, adding at most \(2n\) edges via one in-tree and one out-tree per component. Needs online composition, representative edges, and a budget monotone in demand and endpoint counts. Keeping isolated labels preserves the vertex count. | [SCC lift with exact overhead](OnlineReachabilityPreservers/DagReduction.lean) and prefix monotonicity proved for a DAG algorithm on arbitrary lists. The distinct-demand lift keeps first occurrences after SCC projection. Lean checks preservation of every original request, prefix monotonicity, and the same budget with the \(2n\) overhead when the bound is monotone in the projected demand and endpoint counts. A [separately metered reference](OnlineReachabilityPreservers/AlgorithmSearchWork.lean) returns the same stable deduplication result using at most \(p^2\) pair-equality tests on one \(p\)-entry projected trace. |
 | Algorithms 1 and 2, Lemma 10 | Forward and backward growth prefer a previously bought feasible edge at every vertex. Ordered compression keeps new-edge tails and the terminal in the forward case, or the origin and new-edge heads in the backward case. The family is acyclic, its size is exactly \(m+p\) on reachable processed requests starting with an empty preserver, and it excludes bridges with the first or last arc earlier than the river, respectively. | [Growth](OnlineReachabilityPreservers/Growth.lean) and [ordered compression](OnlineReachabilityPreservers/Bridges.lean) checked. |
 | Theorem 11 | DAG upper bound for both endpoint promises. The printed proof uses Lemmas 12 and 13 when the average degree is large. | [Both orientations](OnlineReachabilityPreservers/Restricted.lean) use a direct count of collisions between new-edge tails, which uses the same earlier-edge conflicts as the forbidden-bridge proof and handles shared endpoints. The exact bound also covers small average degree. |
@@ -135,7 +135,10 @@ chooses one height for each positive exponent slack and absorbs the
 polylogarithmic loss. The [complete construction](OnlineReachabilityPreservers/SteinerComplete.lean)
 uses the first \(T\) distinct non-self arrivals, so the early cost proof
 applies to a fixed input trace. Lemma 20 still supplies the offline
-lower bound when the late phase starts. Formal runtime remains open.
+lower bound when the late phase starts. The
+[arrival implementation](OnlineReachabilityPreservers/SteinerBinaryArrivals.lean#L188)
+has polynomial total recorded work and bit supply at fixed height.
+A native execution bound remains open.
 
 ## Search and sampling work
 
@@ -1325,8 +1328,9 @@ bounds this size allowance by a constant times a fixed power of the sum
 of the input sizes plus one. The [combined theorem](OnlineReachabilityPreservers/SteinerBinaryReplayAsymptotics.lean#L171)
 bounds the recorded work and the fixed supply of fair bits by one such
 polynomial. Its degree and leading bound depend only on the forest height.
-The [returned graph](OnlineReachabilityPreservers/SteinerBinaryReplayCompetitive.lean#L22)
-is the last executable record and equals the reference for every seed.
+On every feasible trace, the [last executable graph](OnlineReachabilityPreservers/SteinerBinaryReplayCompetitive.lean#L22)
+equals the fixed-budget reference for every supplied bit word, including
+on exhaustion.
 It [serves all feasible requests](OnlineReachabilityPreservers/SteinerBinaryReplayCompetitive.lean#L36)
 and [keeps every edge bought on an earlier prefix](OnlineReachabilityPreservers/SteinerBinaryReplayCompetitive.lean#L46).
 The [finite-seed expected bound](OnlineReachabilityPreservers/SteinerBinaryReplayCompetitive.lean#L56)
@@ -1580,6 +1584,22 @@ mass remains for the half-budget lemma. Combining with ordinary clipping
 gives \(M/104\) at every full cutoff and at half cutoffs through four.
 The construction uses a common partition to preserve bridge exclusion
 when splitting paths.
+
+An [incidence coloring](OnlineReachabilityPreservers/IncidenceColorCleaning.lean#L45)
+assigns a color to each pair of a path and a vertex on it. Tag the row
+pieces and vertex copies with that color. Every bridge stays in one
+color. Projecting therefore preserves distinct vertices, distinct rows,
+and the original arrival order. The transformation preserves the mass
+and both bridge exclusions at every cutoff. The occupied support counts
+sum the number of incident colors at each
+[original vertex](OnlineReachabilityPreservers/IncidenceColorCleaning.lean#L142)
+and on each [original path](OnlineReachabilityPreservers/IncidenceColorCleaning.lean#L175).
+If the upper caps hold in each colored piece and the occupied supports
+are at most four thirds of the original budgets,
+[restriction and peeling](OnlineReachabilityPreservers/IncidenceColorCleaning.lean#L213)
+retain at least \(M/16\) with both original budgets and all four frozen
+caps. A bound guaranteeing those color supports for arbitrary input is
+still needed.
 
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
