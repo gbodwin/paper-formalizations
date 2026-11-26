@@ -1101,6 +1101,14 @@ capacity row for every ordered vertex pair and the original arc labels.
 The bound uses the numeric supply and controls how wide the flow magnitudes
 can grow. Graph and capacity preparation and the full replay are separate.
 
+For any nonnegative capacity table, [clipping at the augmentation supply](OnlineReachabilityPreservers/SteinerClippedFlowCut.lean#L13)
+keeps the exact optional separator result. A cut returned below the supply
+has no crossing capacity affected by clipping, so its source side also
+matches the original residual cut. The [binary clipped power](OnlineReachabilityPreservers/SteinerBinaryClippedPowerWork.lean#L89)
+computes the lesser of \(2^\ell\) and the supplied ceiling. It scans at most
+the ceiling's width to build a candidate. Both its output width and the
+polynomial list-and-bit tally are bounded by the supplied input widths.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

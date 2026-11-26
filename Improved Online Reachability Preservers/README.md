@@ -433,6 +433,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   starts with zero flow, applies its own augmentations, and agrees with the
   reference separator on whether it finds a cut and on the cut's arc set.
   The tally is polynomial in the numeric supply, table size, and word widths.
+  [Capacity clipping](OnlineReachabilityPreservers/SteinerClippedFlowCut.lean#L13)
+  preserves the exact reference response when each nonnegative capacity is
+  capped at the supply. The [binary clipped power](OnlineReachabilityPreservers/SteinerBinaryClippedPowerWork.lean#L89)
+  evaluates a capped power of two within the supplied word widths.
   Generating the capacity rows from the replay state and integrating the
   remaining phases still need bit or native execution bounds.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
