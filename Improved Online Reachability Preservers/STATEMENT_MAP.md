@@ -1462,6 +1462,10 @@ uses the union of the path-cut conflict incidences and the incidences
 at vertices above the original degree width. Under the same input
 assumptions, a union of size at most \(4M/5\) gives a witness of mass
 at least \(M/5000\) with both budgets and all four original-average caps.
+[Counting the copies at overfull original vertices](OnlineReachabilityPreservers/HalfFiveHeavyWidthCleaning.lean)
+gives the same conclusion if those vertices carry at least 71 percent of
+the original mass. This condition uses the original degree width
+\(\lfloor4M/n\rfloor\) and places no restriction on the conflict count.
 Half-five cleaning for general inputs remains open.
 
 For Lemmas 23 and 39, the [contiguous six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)

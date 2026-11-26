@@ -144,6 +144,12 @@ private theorem splitListPaths_degree_lower (paths : I → List V) (simple : ∀
     Subtype.ext (congrArg (fun j : copied => j.val.fst) eq)
   simpa only [Fintype.card_coe] using Fintype.card_le_of_injective charge injective
 
+/-- The contiguous pieces of a simple family preserve each vertex degree. -/
+theorem splitListPaths_degree_eq (paths : I → List V) (simple : ∀ i, (paths i).Nodup) (width : ℕ) (v : V) :
+    (occurrences (fun j => (splitListPaths paths width j).toFinset) v).card =
+      (occurrences (fun i => (paths i).toFinset) v).card :=
+  le_antisymm (splitListPaths_degree paths width v) (splitListPaths_degree_lower paths simple v)
+
 variable [Fintype V]
 
 /-- Every nonfinal slot in the two width splits has full degree or full

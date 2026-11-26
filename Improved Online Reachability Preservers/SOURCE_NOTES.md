@@ -359,6 +359,18 @@ before the exact row and vertex trims. Peeling gives \(M/5000\) within
 both original budgets and all four original caps.
 [Shared deletion and both trims](OnlineReachabilityPreservers/HalfFiveSharedWidthCleaning.lean).
 
+When vertices above the original degree width carry at least 71 percent
+of the mass, the actual copy count gives another half-five witness. Choose
+the deletion color with fewer incidences at those vertices in the retained
+row pieces. The degree split preserves each retained incidence and its row.
+If those vertices had original mass \(S\), retained mass \(K\) in those
+pieces, and the omitted row pieces had original mass \(Y\), then
+\(S\le2K+Y\). With degree width \(D=\lfloor4M/n\rfloor\), the number \(Q\)
+of allocated copies over those vertices satisfies \(DQ\le S+K+Y\).
+The actual copy count and the row budget leave at least \(M/5000\) after
+peeling, with both budgets and all four original-average caps.
+[Cleaning by the overfull vertex mass](OnlineReachabilityPreservers/HalfFiveHeavyWidthCleaning.lean).
+
 The half-five conflict graph can have two incoming conflicts at one
 incidence. Take the paths
 `[(4,1),(5,1),(0,3),(0,6,1,2,4,5),(3,2)]` in this order. They exclude

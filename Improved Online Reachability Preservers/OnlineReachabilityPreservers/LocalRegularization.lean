@@ -292,7 +292,8 @@ theorem splitListPaths_size (paths : I → List V) (simple : ∀ i, (paths i).No
   rw [Fintype.sum_sigma]
   exact sum_congr rfl fun i _ => localPathBlock_sum (paths i) (simple i) width
 
-private theorem splitListPaths_degree (paths : I → List V) (width : ℕ) (v : V) :
+/-- Splitting paths into disjoint pieces cannot increase any degree. -/
+theorem splitListPaths_degree (paths : I → List V) (width : ℕ) (v : V) :
     (occurrences (fun i => (splitListPaths paths width i).toFinset) v).card ≤
       (occurrences (fun i => (paths i).toFinset) v).card := by
   let marks (i : ListBlockIndex paths width) := (splitListPaths paths width i).toFinset
