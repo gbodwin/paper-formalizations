@@ -457,12 +457,14 @@ excludes every size. An empty demand list gives the empty preserver.
 The extremal converse holds by a vertex elimination argument. Restrict
 the paths to the vertices that remain. A longest simple consecutive
 chain with distinct row labels ends at a vertex that can leave on at
-most three rows. Two unused rows would give a bridge using their heads
+most two rows. Two unused rows would give a bridge using their heads
 and the chain between them. Two used rows other than the last would
-give a bridge using the corresponding earlier steps on the chain.
+give a bridge using the corresponding earlier steps on the chain. An
+unused row and a used row before the last also give a bridge, by
+comparing the unused row's head with the used step.
 Assign the chosen vertex the largest remaining number and discard its
 incidence in each row that still has a successor. Each vertex loses at
-most three incidences, and the retained subsequences increase in one
+most two incidences, and the retained subsequences increase in one
 order. Each nonempty row keeps its last vertex. For maximum mass
 \(M\ge6n\), at least \(M/2\) survives. For smaller mass, the spanning path
 gives a linear lower bound. Together these give a DAG on exactly
@@ -470,7 +472,7 @@ gives a linear lower bound. Together these give a DAG on exactly
 preserver has at least \(M/24\) edges.
 [Consecutive-chain bound](OnlineReachabilityPreservers/OfflineConsecutiveEndpoint.lean#L197)
 · [Common-order subsequences](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L128)
-· [Checked extremal converse](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L204).
+· [Checked extremal converse](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L215).
 
 With a common vertex order, a detour that uses the same path twice can be
 shortened to one step along that path. A detour with distinct path indices

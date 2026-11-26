@@ -28,16 +28,16 @@ private noncomputable def laterRows (paths : I → List V) (S : Finset V) (x : V
   classical
   exact univ.filter fun i => ∃ y ∈ S, ListBefore paths i x y
 
-private theorem exists_laterRows_le_three [Fintype V] (paths : I → List V)
+private theorem exists_laterRows_le_two [Fintype V] (paths : I → List V)
     (simple : ∀ i, (paths i).Nodup) (free : ∀ d, IsEmpty (Bridge (ListBefore paths) d))
-    {S : Finset V} (nonempty : S.Nonempty) : ∃ x ∈ S, (laterRows paths S x).card ≤ 3 := by
+    {S : Finset V} (nonempty : S.Nonempty) : ∃ x ∈ S, (laterRows paths S x).card ≤ 2 := by
   classical
   let restricted (i : I) := (paths i).filter fun x => decide (x ∈ S)
   have sub (i : I) : (restricted i).Sublist (paths i) := List.filter_sublist
   have restrictedFree (d : ℕ) : IsEmpty (Bridge (ListBefore restricted) d) :=
     ⟨fun b => (free d).false (b.mapPaths id Function.injective_id
       (fun i _ _ step => listBefore_of_sublist (simple i) (sub i) step))⟩
-  obtain ⟨x,inSet,sparse⟩ := exists_consecutiveOutgoingRows_le_three restricted restrictedFree nonempty
+  obtain ⟨x,inSet,sparse⟩ := exists_consecutiveOutgoingRows_le_two restricted restrictedFree nonempty
   refine ⟨x,inSet,(card_le_card ?_).trans sparse⟩
   intro i inRows
   obtain ⟨y,alsoInSet,step⟩ := (mem_filter.mp inRows).2
@@ -62,14 +62,14 @@ private theorem mem_laterLowerRows {paths : I → List V} {S : Finset V} {rank :
 private theorem exists_rank_with_few_later_lower [Fintype V] (paths : I → List V)
     (simple : ∀ i, (paths i).Nodup) (free : ∀ d, IsEmpty (Bridge (ListBefore paths) d)) (S : Finset V) :
     ∃ rank : V → ℕ, Set.InjOn rank (S : Set V) ∧ (∀ x ∈ S, rank x < S.card) ∧
-      ∀ x ∈ S, (laterLowerRows paths S rank x).card ≤ 3 := by
+      ∀ x ∈ S, (laterLowerRows paths S rank x).card ≤ 2 := by
   classical
   induction S using Finset.strongInduction with
   | H S previous =>
     by_cases empty : S = ∅
     · subst S
       exact ⟨fun _ => 0,by simp [Set.InjOn],by simp,by simp⟩
-    obtain ⟨top,topIn,topRows⟩ := exists_laterRows_le_three paths simple free (Finset.nonempty_iff_ne_empty.mpr empty)
+    obtain ⟨top,topIn,topRows⟩ := exists_laterRows_le_two paths simple free (Finset.nonempty_iff_ne_empty.mpr empty)
     let rest := S.erase top
     obtain ⟨oldRank,oldInjective,oldRoom,oldLoss⟩ := previous rest (erase_ssubset topIn)
     let rank (x : V) := if x = top then rest.card else oldRank x
@@ -98,7 +98,7 @@ private theorem exists_rank_with_few_later_lower [Fintype V] (paths : I → List
         exact Nat.lt_succ_self _
       · rw [offTop atX,card]
         exact (oldRoom x (mem_erase.mpr ⟨atX,hx⟩)).trans (Nat.lt_succ_self _)
-    · have topLoss : (laterLowerRows paths S rank top).card ≤ 3 := by
+    · have topLoss : (laterLowerRows paths S rank top).card ≤ 2 := by
         apply le_trans (card_le_card (t := laterRows paths S top) ?_) topRows
         intro i mark
         obtain ⟨y,inside,step,_⟩ := mem_laterLowerRows.mp mark
@@ -123,15 +123,15 @@ private theorem exists_rank_with_few_later_lower [Fintype V] (paths : I → List
 
 variable {n p : ℕ}
 
-/-- Delete at most three incidences per vertex to give the retained paths
+/-- Delete at most two incidences per vertex to give the retained paths
 one common vertex order. Every nonempty row keeps its last vertex. -/
-theorem fullBridgeFree_increasing_subsequences (paths : Fin p → List (Fin n))
+theorem fullBridgeFree_increasing_subsequences_two (paths : Fin p → List (Fin n))
     (simple : ∀ i, (paths i).Nodup) (free : ∀ d, IsEmpty (Bridge (ListBefore paths) d)) :
     ∃ rank : Fin n ≃ Fin n, ∃ kept : Fin p → List (Fin n),
       (∀ i, (kept i).Sublist (paths i)) ∧ (∀ i, ((kept i).map rank).Pairwise (· < ·)) ∧
       (∀ i (nonempty : paths i ≠ []), (paths i).getLast nonempty ∈ kept i) ∧
-      (∀ x, (occurrences (fun i => (paths i).toFinset \ (kept i).toFinset) x).card ≤ 3) ∧
-      (∑ i, (paths i).length) ≤ (∑ i, (kept i).length)+3*n := by
+      (∀ x, (occurrences (fun i => (paths i).toFinset \ (kept i).toFinset) x).card ≤ 2) ∧
+      (∑ i, (paths i).length) ≤ (∑ i, (kept i).length)+2*n := by
   classical
   obtain ⟨number,distinct,room,loss⟩ := exists_rank_with_few_later_lower paths simple free univ
   let rank (x : Fin n) : Fin n := ⟨number x,by simpa using room x (mem_univ _)⟩
@@ -180,15 +180,15 @@ theorem fullBridgeFree_increasing_subsequences (paths : Fin p → List (Fin n))
       intro mark
       obtain ⟨_,_,before,_⟩ := mem_laterLowerRows.mp mark
       exact ⟨before.1,fun retained => retained.2 mark⟩
-    have localLoss (x : Fin n) : (occurrences omitted x).card ≤ 3 := by
+    have localLoss (x : Fin n) : (occurrences omitted x).card ≤ 2 := by
       rw [counts]
       exact loss x (mem_univ _)
     refine ⟨localLoss,?_⟩
-    have omittedMass : (∑ i, (omitted i).card) ≤ 3*n := by
+    have omittedMass : (∑ i, (omitted i).card) ≤ 2*n := by
       rw [← sum_occurrences omitted]
       calc
-        _ ≤ ∑ _ : Fin n, 3 := sum_le_sum (fun x _ => localLoss x)
-        _ = 3*n := by simp [Nat.mul_comm]
+        _ ≤ ∑ _ : Fin n, 2 := sum_le_sum (fun x _ => localLoss x)
+        _ = 2*n := by simp [Nat.mul_comm]
     have mass : (∑ i, (omitted i).card) + (∑ i, (kept i).length) = ∑ i, (paths i).length := by
       rw [← sum_add_distrib]
       apply sum_congr rfl
@@ -198,6 +198,17 @@ theorem fullBridgeFree_increasing_subsequences (paths : Fin p → List (Fin n))
       rw [← List.toFinset_card_of_nodup (keptSimple i),← List.toFinset_card_of_nodup (simple i)]
       exact card_sdiff_add_card_eq_card subset
     omega
+
+/-- The three-incidence form of the common-order deletion bound. -/
+theorem fullBridgeFree_increasing_subsequences (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : ∀ d, IsEmpty (Bridge (ListBefore paths) d)) :
+    ∃ rank : Fin n ≃ Fin n, ∃ kept : Fin p → List (Fin n),
+      (∀ i, (kept i).Sublist (paths i)) ∧ (∀ i, ((kept i).map rank).Pairwise (· < ·)) ∧
+      (∀ i (nonempty : paths i ≠ []), (paths i).getLast nonempty ∈ kept i) ∧
+      (∀ x, (occurrences (fun i => (paths i).toFinset \ (kept i).toFinset) x).card ≤ 3) ∧
+      (∑ i, (paths i).length) ≤ (∑ i, (kept i).length)+3*n := by
+  obtain ⟨rank,kept,sub,ordered,last,pointwise,loss⟩ := fullBridgeFree_increasing_subsequences_two paths simple free
+  exact ⟨rank,kept,sub,ordered,last,fun x => (pointwise x).trans (by decide),by omega⟩
 
 /-- At the original budgets, one DAG forces a constant fraction of the
 maximum incidence mass over all fully bridge-free simple path families. -/

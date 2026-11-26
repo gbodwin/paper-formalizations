@@ -193,10 +193,10 @@ noncomputable def consecutiveOutgoingRows (paths : I → List V) (S : Finset V) 
   exact univ.filter fun row => ∃ w ∈ S, ConsecutiveListStep paths row t w
 
 /-- In every nonempty vertex subset there is a vertex with outgoing
-consecutive steps on at most three distinct rows. -/
-theorem exists_consecutiveOutgoingRows_le_three (paths : I → List V)
+consecutive steps on at most two distinct rows. -/
+theorem exists_consecutiveOutgoingRows_le_two (paths : I → List V)
     (free : ∀ d, IsEmpty (Bridge (ListBefore paths) d)) {S : Finset V} (nonempty : S.Nonempty) :
-    ∃ t ∈ S, (consecutiveOutgoingRows paths S t).card ≤ 3 := by
+    ∃ t ∈ S, (consecutiveOutgoingRows paths S t).card ≤ 2 := by
   classical
   obtain ⟨k,⟨c⟩,longest⟩ := longestConsecutiveChain paths nonempty
   let t := c.vertex (Fin.last k)
@@ -278,9 +278,47 @@ theorem exists_consecutiveOutgoingRows_le_three (paths : I → List V)
     rcases lt_or_gt_of_ne (fun equal => distinct (congrArg c.row equal)) with order | order
     · exact noBoth order earlyB beforeA beforeB
     · exact noBoth order earlyA beforeB beforeA
-  refine ⟨t,c.inside _,(card_le_card covered).trans ?_⟩
-  have total := card_union_le (unused ∪ last) earlier
-  have first := card_union_le unused last
-  omega
+  have oneOutsideLast : (unused ∪ earlier).card ≤ 1 := by
+    by_cases allUsed : unused = ∅
+    · simpa only [allUsed,empty_union] using earlyCount
+    · obtain ⟨i,unusedI⟩ := Finset.nonempty_iff_ne_empty.mpr allUsed
+      obtain ⟨unusedOut,fresh⟩ := mem_filter.mp unusedI
+      obtain ⟨w,inside,step⟩ := target unusedOut
+      obtain ⟨position,rfl,earlyPosition⟩ := oldTarget fresh inside step
+      have emptyEarlier : earlier = ∅ := by
+        apply eq_empty_iff_forall_notMem.mpr
+        intro row marked
+        obtain ⟨usedOut,j,rfl,earlyJ⟩ := mem_filter.mp marked
+        obtain ⟨_,_,usedStep⟩ := target usedOut
+        have before := c.end_before_earlier_row free earlyJ usedStep.1.1
+        by_cases left : position.val ≤ j.val
+        · have forward : position ≤ j.castSucc := left
+          apply consecutiveChain_no_river_from_end free c forward (Nat.lt_of_succ_lt earlyJ)
+            (fun equal => fresh ⟨j,equal⟩) step.1 before
+          intro q _ stop
+          change q.val < j.val at stop
+          exact ⟨fun equal => fresh ⟨q,equal.symm⟩,
+            fun equal => by have := congrArg Fin.val (c.distinctRows equal); omega⟩
+        · have forward : j.succ ≤ position := Nat.lt_of_not_ge left
+          have first : ListBefore paths (c.row j) t (c.vertex j.succ) :=
+            ⟨before.1,(c.step j).1.2.1,before.2.2.trans (c.step j).1.2.2⟩
+          apply consecutiveChain_no_river_from_end free c forward earlyPosition
+            (fun equal => fresh ⟨j,equal.symm⟩) first step.1
+          intro q start _
+          change j.val+1 ≤ q.val at start
+          exact ⟨fun equal => by have := congrArg Fin.val (c.distinctRows equal); omega,
+            fun equal => fresh ⟨q,equal.symm⟩⟩
+      simpa only [emptyEarlier,union_empty] using unusedCount
+  have rearranged : out ⊆ (unused ∪ earlier) ∪ last := by
+    simpa only [union_assoc,union_comm last earlier] using covered
+  refine ⟨t,c.inside _,(card_le_card rearranged).trans ?_⟩
+  exact (card_union_le (unused ∪ earlier) last).trans (Nat.add_le_add oneOutsideLast lastCount)
+
+/-- A convenient three-row form of the consecutive-chain bound. -/
+theorem exists_consecutiveOutgoingRows_le_three (paths : I → List V)
+    (free : ∀ d, IsEmpty (Bridge (ListBefore paths) d)) {S : Finset V} (nonempty : S.Nonempty) :
+    ∃ t ∈ S, (consecutiveOutgoingRows paths S t).card ≤ 3 := by
+  obtain ⟨t,inside,bound⟩ := exists_consecutiveOutgoingRows_le_two paths free nonempty
+  exact ⟨t,inside,bound.trans (by decide)⟩
 
 end OnlineReachabilityPreservers

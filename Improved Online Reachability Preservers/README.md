@@ -440,6 +440,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   With positive budgets and mass at least both, it keeps at least \(M/32\),
   both budgets, and all four original-average caps when \(M\le 8\max(n,p)\)
   or \(24n\le M\).
+  A [two-incidence deletion bound](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L128)
+  and trimming at ratios that account for the retained mass give the
+  [all-mass result](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L109).
+  It keeps at least \(M/40\), both original budgets, the four original-average
+  caps, and exclusion of every full bridge when the input has that exclusion.
 - In half-bridge-free systems through size three, there are no triangles
   of opposite links. If two opposite links connect distinct vertices on
   one path, the intermediate vertex belongs to that path. Half-bridge exclusion
@@ -557,12 +562,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   checks the reverse construction in a common vertex order. Any preserver of
   the endpoint demands must retain exactly the total incidence count minus
   the path count in consecutive edges.
-- [`theorem14_offline_extremal_lower`](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L204)
+- [`theorem14_offline_extremal_lower`](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L215)
   proves the unrestricted converse. For every \(n\ge2\) and \(0\le p\le n^2\),
   one DAG on exactly \(n\) vertices with \(p\) distinct demands forces at
   least one twenty-fourth of the maximum fully bridge-free incidence mass.
   The [common-order construction](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L128)
-  removes at most three incidences per vertex and keeps the last vertex
+  removes at most two incidences per vertex and keeps the last vertex
   of each nonempty path. A spanning path supplies the lower bound when
   the maximum mass is below \(6n\).
 - For a fully bridge-free family of nonempty simple paths, let \(M\) be its
@@ -696,6 +701,6 @@ The library is included in the repository's module index, declaration audit,
 and kernel replay.
 
 The companion PaperLab includes an interactive trace and a source-linked
-proof map. General cyclic cleaning at the original averages and the
-end-to-end Steiner running-time bound remain open.
+proof map. General cyclic cleaning at a prescribed finite bridge cutoff
+and the end-to-end Steiner running-time bound remain open.
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).
