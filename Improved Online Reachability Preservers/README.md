@@ -764,6 +764,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   all four original-average caps. This holds in both modes when
   \(n(n-1)\le28p\) and the input cutoff is at least two, or when
   \(p(p-1)\le40n\) and the input cutoff is at least three.
+- In half mode at input cutoff at least three, [degree-three grids](OnlineReachabilityPreservers/HalfGridCleaning.lean)
+  extend the \(M/8\) guarantee to positive budgets with \(p\le n\)
+  and \(p(p-1)\le108n\). A single witness meets both original budgets
+  and all four original-average caps and excludes every half-bridge.
+  Horizontal paths arrive before the two directions of each column.
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion

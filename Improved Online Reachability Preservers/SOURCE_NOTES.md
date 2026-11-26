@@ -334,6 +334,20 @@ above the original upper length cap and vertices above the original
 upper degree cap. The bound holds in both modes at every cutoff.
 [Extremal copy bounds](OnlineReachabilityPreservers/ExtremalCopyBounds.lean).
 
+The vertex-budget condition extends in half mode when \(p\le n\).
+The squared-degree estimate gives \(M\le12n\) if \(p(p-1)\le108n\)
+and the input excludes half-bridges through size three. For
+\(8n<M\le12n\), use disjoint square grids. Each point lies on one
+horizontal path and on both directions of its column. Horizontal rows
+arrive first. A chain with a vertical river stays in one column, where
+the other direction goes the wrong way. A chain with a horizontal
+river must end on a later vertical path. Thus the same witness
+excludes half-bridges at every size. The side length is
+\(\lceil M/(4p)\rceil\), and the number of disjoint grids is the smaller
+of the counts allowed by the two budgets. The resulting witness
+retains at least \(M/8\) and meets all four original-average caps.
+[Degree-three grids](OnlineReachabilityPreservers/HalfGridCleaning.lean).
+
 The same splitting step can fail at larger bridge sizes with unique
 intersections. On seven vertices, take the six paths `[(0,1,2,3), (3,4),
 (4,0), (5,2), (1,6), (5,6)]`. There are 14 incidences, every vertex

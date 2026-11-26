@@ -1790,6 +1790,17 @@ bridge exclusions at every cutoff. The rectangle of rows and vertices
 above their original upper caps fits four copies, so its mass is at
 most \(M/4\). The two separate clipping losses still require bounds.
 
+In half mode with positive budgets, \(p\le n\) and \(p(p-1)\le108n\)
+suffice at every input cutoff of at least three. The squared-degree
+inequality gives \(M\le12n\). In the range \(M>8n\) it also gives
+\(16n\le p^2\), which lets a square grid of width
+\(\lceil M/(4p)\rceil\) fit both budgets. The grid has degree three and
+a fixed arrival order with all horizontal paths before vertical paths.
+Disjoint copies meet all four frozen caps and retain at least \(M/8\)
+of the unrestricted maximum. Both this construction and the low-mass
+branch give one witness excluding half-bridges at every size.
+[Half-bridge grid cleaning](OnlineReachabilityPreservers/HalfGridCleaning.lean).
+
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
 and nonempty simple rows. At the prescribed widths \(7\) and \(20\) it

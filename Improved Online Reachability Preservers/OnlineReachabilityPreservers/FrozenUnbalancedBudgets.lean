@@ -32,15 +32,16 @@ theorem listMass_square_le_halfThree_degree {k n p : ℕ} (paths : Fin p → Lis
   rw [mass] at square
   exact square.trans (Nat.mul_le_mul_left _ moment)
 
-private theorem mass_le_eight_of_quadratic {M q c : ℕ} (hq : 0 < q) (hc : c ≤ 8)
-    (bound : M^2 ≤ q*(8*c*q+(8-c)*M)) : M ≤ 8*q := by
+/-- Compare a quadratic bound with the positive factors above `a*q`. -/
+theorem mass_le_mul_of_quadratic {M q a c : ℕ} (hq : 0 < q) (hc : c ≤ a)
+    (bound : M^2 ≤ q*(a*c*q+(a-c)*M)) : M ≤ a*q := by
   by_contra! high
-  have highReal : 0 < (M : ℝ)-8*(q : ℝ) := sub_pos.mpr (by exact_mod_cast high)
+  have highReal : 0 < (M : ℝ)-(a : ℝ)*(q : ℝ) := sub_pos.mpr (by exact_mod_cast high)
   have positive : 0 < (M : ℝ) := by
     have h : 0 < M := by omega
     exact_mod_cast h
   have larger : 0 < (M : ℝ)+(c : ℝ)*(q : ℝ) := by positivity
-  have castBound : ((M^2 : ℕ) : ℝ) ≤ ((q*(8*c*q+(8-c)*M) : ℕ) : ℝ) := Nat.cast_le.mpr bound
+  have castBound : ((M^2 : ℕ) : ℝ) ≤ ((q*(a*c*q+(a-c)*M) : ℕ) : ℝ) := Nat.cast_le.mpr bound
   push_cast [Nat.cast_sub hc] at castBound
   nlinarith only [mul_pos highReal larger, castBound]
 
@@ -60,11 +61,11 @@ theorem regularization_list_frozen_of_unbalanced_budgets {n p k : ℕ} (paths : 
   have low : M ≤ 8*max n p := by
     rcases shape with manyPaths | ⟨three,manyVertices⟩
     · have raw : M^2 ≤ p*(2*(n*n-n)+M) := listMass_square_le_halfTwo paths simple free two
-      have cap : M ≤ 8*p := mass_le_eight_of_quadratic hp (c := 7) (by decide)
+      have cap : M ≤ 8*p := mass_le_mul_of_quadratic hp (a := 8) (c := 7) (by decide)
         (raw.trans (Nat.mul_le_mul_left _ (by omega)))
       exact cap.trans (Nat.mul_le_mul_left _ (le_max_right _ _))
     · have raw : M^2 ≤ n*(p*p-p+3*M) := listMass_square_le_halfThree_degree paths simple free three
-      have cap : M ≤ 8*n := mass_le_eight_of_quadratic hn (c := 5) (by decide)
+      have cap : M ≤ 8*n := mass_le_mul_of_quadratic hn (a := 8) (c := 5) (by decide)
         (raw.trans (Nat.mul_le_mul_left _ (by omega)))
       exact cap.trans (Nat.mul_le_mul_left _ (le_max_left _ _))
   obtain ⟨n',vn,p',pn,clean,simpleClean,freeAtBudget,retained,upper,caps⟩ :=
