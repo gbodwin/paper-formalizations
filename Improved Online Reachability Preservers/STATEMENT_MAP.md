@@ -1125,6 +1125,15 @@ zero without a load read. The result preserves key order and multiplicity.
 The tally includes binary label membership, the indexed lookup and the
 clipped arithmetic on the supplied load and ceiling words.
 
+The [prepared binary thin separator](OnlineReachabilityPreservers/SteinerBinaryThinCutWork.lean#L49)
+agrees with the reference thin test on whether it finds a cut and on the
+outgoing arcs of the returned cut. Intersecting the source side with the
+demand interval keeps the same outgoing arcs because every interval arc
+has both endpoints inside. The [entry from encoded graph rows](OnlineReachabilityPreservers/SteinerBinaryThinCutWork.lean#L141)
+also computes the interval. Both entries take the pair keys, count words,
+and current binary load cells as inputs. The tally includes the capacity
+construction and the bounded solver.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

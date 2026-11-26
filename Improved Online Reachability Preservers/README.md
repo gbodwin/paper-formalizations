@@ -441,8 +441,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   obtains the exact ordered interval arcs from the supplied encoded graph.
   The [binary capacity scan](OnlineReachabilityPreservers/SteinerBinaryThinCapacityWork.lean#L87)
   forms the clipped capacities from the encoded load table for supplied
-  arc keys. Integrating the remaining replay phases and native execution
-  still needs separate bounds.
+  arc keys. The [binary thin cut](OnlineReachabilityPreservers/SteinerBinaryThinCutWork.lean#L141)
+  computes the interval, capacities, and reference outgoing cut from the
+  original encoded graph and current binary load cells. Running the
+  complete replay and accounting for native execution remain open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
