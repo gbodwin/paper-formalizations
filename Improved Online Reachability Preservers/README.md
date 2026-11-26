@@ -478,6 +478,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   keys and labels. The [weighted loop](OnlineReachabilityPreservers/SteinerBinaryWeightedLoopWork.lean#L62)
   generates and applies those cuts successively for one demand. It returns
   the represented reference charges and the same chronological cuts.
+  The [weighted trace](OnlineReachabilityPreservers/SteinerBinaryWeightedTraceWork.lean#L78)
+  carries the updated table through every demand with its own free arcs.
+  Starting from supplied encoded rows and the reference numeric controls,
+  it returns the full reference cut history and final paid charges.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

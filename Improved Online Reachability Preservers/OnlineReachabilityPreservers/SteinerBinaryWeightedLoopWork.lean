@@ -37,7 +37,7 @@ private theorem binaryWeightedCoverStepBudget_mono (n arcs rows free labels cost
     chargeBinaryWeightedPairRowsWorkBudget chargeBinaryWeightedPairRowWorkBudget chargeBinaryWeightedLoadWorkBudget
   gcongr
 
-private theorem BinaryWeightedPairRow.amount_le {V : Type*} {edges : Arcs V} {weight charges : V × V → ℕ}
+theorem BinaryWeightedPairRow.amount_le {V : Type*} {edges : Arcs V} {weight charges : V × V → ℕ}
     {code : V → List Bool} {cost a a' : ℕ} {row : BinaryWeightedPairRow V}
     (stored : row.Encodes edges weight charges code cost a) (bound : a ≤ a') :
     row.Encodes edges weight charges code cost a' := by
@@ -47,7 +47,7 @@ private theorem BinaryWeightedPairRow.amount_le {V : Type*} {edges : Arcs V} {we
   obtain ⟨c,s,shape,value,encoded,short,amount⟩ := paid inside
   exact ⟨c,s,shape,value,encoded,short,amount.trans bound⟩
 
-private theorem BinaryWeightedPairRow.chargeWidths_le {V : Type*} {r r' p p' : ℕ} {row : BinaryWeightedPairRow V}
+theorem BinaryWeightedPairRow.chargeWidths_le {V : Type*} {r r' p p' : ℕ} {row : BinaryWeightedPairRow V}
     (widths : row.ChargeWidths r p) (rem : r ≤ r') (pow : p ≤ p') : row.ChargeWidths r' p' := by
   intro cost state present
   obtain ⟨left,right⟩ := widths cost state present
@@ -195,5 +195,18 @@ theorem binaryWeightedCoverLoopWithWork_refines (arcs free : List (V × V)) (sou
         change probe.2+next.2+tail.2+8 ≤ 2+(fuel+1)*fee
         rw [Nat.add_mul,Nat.one_mul]
         omega
+
+/-- Increasing the free-list size or any of the starting state widths
+increases the uniform allowance for the same fixed fuel. -/
+theorem binaryWeightedCoverLoopWorkBudget_le (n arcs rows labels cost cap supply fuel : ℕ)
+    {free free' r r' p p' a a' : ℕ} (freeSize : free ≤ free') (rem : r ≤ r') (pow : p ≤ p') (amt : a ≤ a') :
+    binaryWeightedCoverLoopWorkBudget n arcs rows free labels cost r p a cap supply fuel ≤
+      binaryWeightedCoverLoopWorkBudget n arcs rows free' labels cost r' p' a' cap supply fuel := by
+  have amount : a+fuel*(p+fuel+1) ≤ a'+fuel*(p'+fuel+1) := by gcongr
+  have divCost := binaryCeilingDivWorkBudget_mono_widths amount (le_refl cost) 0 0 supply
+  unfold binaryWeightedCoverLoopWorkBudget binaryWeightedCoverStepBudget binaryWeightedCapacityRowsWorkBudget
+    binaryWeightedCapacityAtWorkBudget chargeBinaryWeightedPairRowsWorkBudget chargeBinaryWeightedPairRowWorkBudget
+    chargeBinaryWeightedLoadWorkBudget
+  gcongr
 
 end OnlineReachabilityPreservers

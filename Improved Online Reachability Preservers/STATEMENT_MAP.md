@@ -1235,8 +1235,13 @@ proves the new word widths and a work bound for this one cut. The [weighted loop
 uses each updated table for the next separator call. With the supplied
 fuel for a single demand, the final charges and chronological paid cuts
 agree with the reference. Its bound includes each cut and update and the
-final probe when reached. Preparation and the whole weighted trace still
-need integration at this layer.
+final probe when reached. The [weighted trace](OnlineReachabilityPreservers/SteinerBinaryWeightedTraceWork.lean#L78)
+extends the comparison to the entire chronological weighted network run.
+Each request uses its own supplied free arcs, and the next request starts
+from the preceding updated paid table. The theorem verifies the full cut
+history, final paid charges, and work including the append operations.
+Preparation of the initial encoded tables and integration with early
+rounding remain open at this layer.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
