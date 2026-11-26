@@ -1256,7 +1256,11 @@ paid cost. When the keys are complete, the [exact total](OnlineReachabilityPrese
 gives the [reference scale, its binary word, and the fuel](OnlineReachabilityPreservers/SteinerBinaryWeightedInitWork.lean#L170).
 The work includes paid cost encodings, word additions, and the supplied
 reader fees. Wiring the forest readers and the early rounding into this
-binary trace remains open.
+binary trace remains open. The [weighted run from zero](OnlineReachabilityPreservers/SteinerBinaryWeightedRunWork.lean#L96)
+already combines the initial table, computed controls, and chronological
+trace with the [metered encoding of typed requests](OnlineReachabilityPreservers/SteinerBinaryWeightedRunWork.lean#L51).
+It returns the reference cut history and paid charges on complete
+distinct keys with the supplied positive-cost and injective label readers.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
