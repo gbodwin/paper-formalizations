@@ -1630,6 +1630,31 @@ for \(n=128,p=4098,M=8320\) retains at least \(M/8\) and excludes full
 bridges through any requested cutoff. General cyclic frozen-average
 statements at the remaining cutoffs stay open.
 
+Under half exclusion through size three, a pair of paths that share two
+vertices must compare them in opposite directions. At a shared vertex
+\(v\), put an edge from an earlier path to a later one if some \(u\)
+precedes \(v\) in the earlier path and follows \(v\) in the later path.
+Each path has [at most one such outgoing partner](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L23)
+at \(v\). Assigning opposite colors along these edges is possible by
+recursing from later to earlier paths. The
+[vertex-only split](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L123)
+keeps all incidences and makes intersections unique. It preserves
+[full exclusion at any cutoff](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L91)
+and [half exclusion through four](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L96).
+Choosing one color separately at each vertex, and taking the complementary
+choices, instead partitions the original incidences into two subfamilies
+with unique intersections and no extra paths or vertices.
+[Rowwise mass identity](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L142)
+· [Unique intersections](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L162).
+For simple inputs with positive budgets and mass \(M\) at least both
+budgets, [frozen cleaning](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L233)
+retains \(M/16\) with both original budgets and all four original caps.
+It preserves the selected input exclusion at cutoff four in either mode
+or at full cutoff six. The occupied vertex copies plus the bound on
+additional width blocks must fit within four thirds of the original
+vertex budget. This includes
+[inputs with at most \(n/16\) vertices having an outgoing partner](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L299).
+
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
 and nonempty simple rows. At the prescribed widths \(7\) and \(20\) it

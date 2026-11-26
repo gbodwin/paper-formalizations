@@ -697,6 +697,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   at its original upper length cap. A different family supplies the
   [frozen witness](OnlineReachabilityPreservers/LayeredIncidenceColorAudit.lean#L287)
   for its original counts and mass.
+- Given half exclusion through size three, [vertex copies for reversed intersections](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L123)
+  retain every incidence and make intersections unique. They preserve
+  full exclusion at every cutoff and half exclusion through size four.
+  When at most one sixteenth of the vertices have an outgoing reverse
+  partner, [frozen cleaning](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L299)
+  keeps the input's exclusion at cutoff four in either mode or at full
+  cutoff six. It retains at least \(M/16\) within both original budgets and
+  all four caps for positive budgets and mass at least both counts. A broader
+  [support condition](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L233)
+  uses the actual number of occupied vertex copies.
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion
