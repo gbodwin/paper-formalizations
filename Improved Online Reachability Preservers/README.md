@@ -492,6 +492,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   from the total paid cost. The [weighted run from zero](OnlineReachabilityPreservers/SteinerBinaryWeightedRunWork.lean#L96)
   combines these steps and encodes typed requests with their own free arcs.
   Its work bound includes preparation and the full chronological cover.
+  The [metric forest labels](OnlineReachabilityPreservers/SteinerBinaryForestLabelsWork.lean#L64)
+  distinguish every network vertex and supply the exact network size.
+  The rank uses the network tag, original root, side, and bounded history.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

@@ -1261,6 +1261,11 @@ already combines the initial table, computed controls, and chronological
 trace with the [metered encoding of typed requests](OnlineReachabilityPreservers/SteinerBinaryWeightedRunWork.lean#L51).
 It returns the reference cut history and paid charges on complete
 distinct keys with the supplied positive-cost and injective label readers.
+The [finite metric forest label reader](OnlineReachabilityPreservers/SteinerBinaryForestLabelsWork.lean#L64)
+computes its shared history block and binary width once. Each label uses
+the network tag, original root, side, and history rank. The proof gives
+injectivity, the exact vertex count, and the recorded ranking and encoding
+work.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
