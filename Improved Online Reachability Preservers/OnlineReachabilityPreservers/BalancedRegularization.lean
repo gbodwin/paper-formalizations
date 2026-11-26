@@ -54,8 +54,8 @@ private theorem trim_weights {A : Type*} [DecidableEq A] (s : Finset A) (weight 
       _ = s.card*(n*R) := by ring
       _ ≤ s.card*(r.card*T) := Nat.mul_le_mul_left s.card good
       _ = _ := by ring
-
-private theorem trim_weights_ratio {A : Type*} [DecidableEq A] (s : Finset A)
+/-- Retain a prescribed fraction of the weight within a smaller budget. -/
+theorem trim_weights_ratio {A : Type*} [DecidableEq A] (s : Finset A)
     (weight : A → ℕ) {n a b : ℕ} (ratio : a ≤ b) (expanded : a*s.card ≤ b*n) :
     ∃ t ⊆ s, t.card ≤ n ∧ a*(∑ j ∈ s, weight j) ≤ b*(∑ j ∈ t, weight j) := by
   by_cases keep : s.card ≤ n

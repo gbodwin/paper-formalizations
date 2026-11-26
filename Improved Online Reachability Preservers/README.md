@@ -707,6 +707,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   all four caps for positive budgets and mass at least both counts. A broader
   [support condition](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L233)
   uses the actual number of occupied vertex copies.
+- [Quadratic trimming](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L89)
+  works on a subsystem within the original budgets that carries at least
+  nine sixteenths of the original mass and whose original-width splits
+  preserve the chosen bridge exclusion. It retains at least \(M/104\)
+  with both budgets and all four caps. Selecting the heaviest vertex
+  copies before splitting gives this guarantee when at most
+  [seven ninths of the vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L250).
+  This version preserves the matching input exclusion at cutoff four in
+  either mode or at full cutoff six.
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion
