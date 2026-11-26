@@ -299,8 +299,19 @@ at least \(M/7056\) with all four caps relative to its own averages. The
 same transfer applies at cutoff four in either mode and full cutoff six.
 [Output-average caps for literal path sets](OnlineReachabilityPreservers/OutputAverageDistinctCleaning.lean).
 
-At any full cutoff of at least three, if every precedence component
-excludes full bridges at every size, the dense-case elimination loses at
+The output-average witnesses cover every half cutoff through five and
+every full cutoff through six. At cutoffs up to three, both splits
+preserve exclusion on the selected rectangle with arbitrary intersections.
+At full cutoff five, opposite pruning gives unique intersections, the
+degree split preserves full exclusion, and the row split lifts all
+possible bridge sizes through five. At the unrestricted indexed maxima
+the mass bound is \(M/392\). At feasible literal maxima for cutoff at
+least two, the transfer to distinct nonempty paths gives \(M/7056\).
+[Output-average cleaning across the small cutoffs](OnlineReachabilityPreservers/OutputAverageShortCleaning.lean).
+
+Take simple input excluding full bridges through a cutoff of at least
+three, with mass at least both positive budgets. If every precedence
+component excludes full bridges at every size, dense-case elimination loses at
 most two incidences per original vertex and gives one common order. After
 relabeling by that order, the degree copies stay increasing and the
 contiguous path pieces are convex. Full bridge exclusion survives both

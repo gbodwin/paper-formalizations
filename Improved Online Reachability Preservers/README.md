@@ -564,24 +564,20 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   applies this at any positive vertex and path budgets in a common vertex order.
   For each bridge cutoff up to size three, the [locally ordered extremum](OnlineReachabilityPreservers/LocalOrderExtremal.lean)
   gives the same caps and mass guarantee at the corresponding maximum over all simple lists.
-- At cutoff four, a cleaned witness for the unrestricted maximum in either
-  bridge mode retains at least \(M/392\) of the maximizing incidence mass \(M\).
-  It meets both budgets and all four factor-four bounds around its own
-  averages. The same conclusion holds at the unrestricted half-five and
-  full-six cutoffs.
-  [Half-five output-average cleaning](OnlineReachabilityPreservers/HalfFiveAverageCleaning.lean)
-  · [Cutoff four and full cutoff six](OnlineReachabilityPreservers/LocalAverageCleaning.lean).
-- At those same cutoffs, a feasible literal system of distinct nonempty
-  paths has an output-average witness of mass at least \(M/7056\) at its
-  literal maximum. The witness is also a literal system and fits both
-  original budgets.
-  [Output-average cleaning for distinct paths](OnlineReachabilityPreservers/OutputAverageDistinctCleaning.lean).
+- At every half cutoff through five and full cutoff through six, a
+  witness at the unrestricted indexed maximum retains at least \(M/392\),
+  fits both budgets, and satisfies all four factor-four caps around its
+  own averages. For cutoffs of at least two in the same ranges, the
+  feasible literal maximum over distinct nonempty paths has a literal
+  witness of mass at least \(M/7056\) with the same budgets and caps.
+  [Indexed and literal output-average cleaning](OnlineReachabilityPreservers/OutputAverageShortCleaning.lean).
 - At a full cutoff covering the smaller budget, the unrestricted indexed
   maximum has a witness that excludes full bridges at every size, retains
   at least \(M/523\), and meets both original budgets and all four
-  output-average caps. The same mass and caps hold at full cutoffs of at
-  least three when each precedence component of the input already excludes
-  full bridges at every size.
+  output-average caps. For simple input excluding full bridges through a
+  cutoff of at least three, with mass at least both positive budgets, the
+  same conclusion at that cutoff holds when every input precedence
+  component excludes full bridges at every size.
   [Output-average cleaning of full components](OnlineReachabilityPreservers/IncreasingFullAverageCleaning.lean).
 - If paths longer than the original upper length cap carry at least two
   thirds of the incidence mass (M), pruning that subfamily and trimming

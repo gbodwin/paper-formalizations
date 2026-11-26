@@ -1520,11 +1520,19 @@ that case a single spanning row or a uniform directed bipartite family
 replaces the indexed witness within both original budgets. When all
 indexed witness rows have length at least two they are already distinct.
 
+[Output-average cleaning for each small cutoff](OnlineReachabilityPreservers/OutputAverageShortCleaning.lean)
+covers half cutoffs through five and full cutoffs through six at every
+positive indexed maximum. It covers the corresponding feasible literal
+maxima of distinct nonempty paths from cutoff two. The retention factors
+are \(M/392\) and \(M/7056\), respectively. Both models meet both
+budgets and all four caps relative to the output averages.
+
 [Output-average full component cleaning](OnlineReachabilityPreservers/IncreasingFullAverageCleaning.lean)
 retains at least \(M/523\) with both original budgets and all four caps
-relative to the output averages. It applies at full cutoffs of at least
-three when each input precedence component excludes full bridges at every
-size. When the cutoff covers the smaller budget, it applies at the
+relative to the output averages. At a cutoff of at least three, it applies
+to simple full-bridge-free input through that cutoff with mass at least
+both positive budgets, provided each precedence component excludes full
+bridges at every size. When the cutoff covers the smaller budget, it applies at the
 unrestricted indexed maximum and the output excludes every full bridge.
 
 An opposite-neighbor link joins consecutive common vertices of two
