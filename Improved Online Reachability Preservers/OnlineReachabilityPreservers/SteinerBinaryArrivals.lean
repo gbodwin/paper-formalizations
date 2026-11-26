@@ -215,4 +215,160 @@ theorem theorem21_online_steiner_binary_arrivals {ε : ℝ} (epsilon : 0 < ε) :
     simp_rw [fun bits => (finSteinerBinaryServeWithWork_spec G raw same height bits D).2]
     exact expected raw same D sub reachable
 
+/-- Compute the exact seed length, draw the word once, and prepare the
+empty prefix. Subsequent arrivals reuse the stored array. -/
+def finSteinerBinaryArrivalStartFromBitSource {n : ℕ} {m : Type → Type} [Monad m]
+    (G : Arcs (Fin n)) (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height : ℕ)
+    (nextBit : m Bool) : m (Vector Bool (steinerBitBudget G height) × FinSteinerBinaryArrivalState n) := do
+  let budget := finSteinerBitBudgetWithWork G raw same height
+  let sampled ← readSteinerSeedWithWork budget.1 nextBit
+  let first := finSteinerBinaryArrivalStart G raw same height (fun i => sampled.1[i.val])
+  pure (sampled.1, {first with work := first.work + (budget.2 + sampled.2 + 6)})
+
+/-- A single arrival uses the same word drawn before service. -/
+def finSteinerBinaryArrivalStepFromSeed {n : ℕ} (G : Arcs (Fin n)) (raw : List (Fin n × Fin n))
+    (same : raw.toFinset = G) (height : ℕ) (seed : Vector Bool (steinerBitBudget G height))
+    (state : FinSteinerBinaryArrivalState n) (demand : Fin n × Fin n) : FinSteinerBinaryArrivalState n :=
+  finSteinerBinaryArrivalStep G raw same height (fun i => seed[i.val]) state demand
+
+/-- Run the sampled initialization once and invoke the array-backed
+arrival operation for each demand in turn. -/
+def finSteinerBinaryServeFromBitSource {n : ℕ} {m : Type → Type} [Monad m]
+    (G : Arcs (Fin n)) (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height : ℕ)
+    (nextBit : m Bool) (D : List (Fin n × Fin n)) : m (FinSteinerBinaryArrivalState n) := do
+  let (seed, first) ← finSteinerBinaryArrivalStartFromBitSource G raw same height nextBit
+  pure (D.foldl (finSteinerBinaryArrivalStepFromSeed G raw same height seed) first)
+
+private theorem finSteinerBinaryArrivalFold_work_offset {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height : ℕ)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (state : FinSteinerBinaryArrivalState n) (extra : ℕ) :
+    let step := finSteinerBinaryArrivalStep G raw same height bits
+    let out := D.foldl step state
+    D.foldl step {state with work := state.work + extra} = {out with work := out.work + extra} := by
+  have addWork (s : FinSteinerBinaryArrivalState n) (demand : Fin n × Fin n) :
+      let step := finSteinerBinaryArrivalStep G raw same height bits
+      let next := step s demand
+      step {s with work := s.work + extra} demand = {next with work := next.work + extra} := by
+    simp only [finSteinerBinaryArrivalStep]
+    congr 1
+    omega
+  induction D generalizing state with
+  | nil => rfl
+  | cons first rest ih =>
+    dsimp only
+    rw [List.foldl_cons, List.foldl_cons, addWork]
+    exact ih _
+
+/-- The seeded arrival run consumes the prescribed prefix, keeps the
+same graph and history, and charges initialization once. -/
+theorem finSteinerBinaryServeFromBitSource_stream {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height : ℕ)
+    (stream : ℕ → Bool) (start : ℕ) (D : List (Fin n × Fin n)) :
+    let size := steinerBitBudget G height
+    let bits := fun i : Fin size => stream (start+i.val)
+    let old := finSteinerBinaryServeWithWork G raw same height bits D
+    let extra := (finSteinerBitBudgetWithWork G raw same height).2 + 6*size+11
+    (finSteinerBinaryServeFromBitSource G raw same height (steinerBitStreamSource stream) D).run start =
+      ({old with work := old.work + extra}, start+size) := by
+  let size := steinerBitBudget G height
+  let bits (i : Fin size) := stream (start+i.val)
+  have read (i : Fin size) : (Vector.ofFn bits)[i.val] = bits i := by simp
+  have sameStep : finSteinerBinaryArrivalStepFromSeed G raw same height (Vector.ofFn bits) =
+      finSteinerBinaryArrivalStep G raw same height bits := by
+    unfold finSteinerBinaryArrivalStepFromSeed
+    rw [funext read]
+  simp only [finSteinerBinaryServeFromBitSource, finSteinerBinaryArrivalStartFromBitSource, StateT.run_bind,
+    readSteinerSeedWithWork_stream, StateT.run_pure]
+  change (D.foldl (finSteinerBinaryArrivalStepFromSeed G raw same height (Vector.ofFn bits))
+    { (finSteinerBinaryArrivalStart G raw same height (fun i => (Vector.ofFn bits)[i.val])) with
+      work := (finSteinerBinaryArrivalStart G raw same height (fun i => (Vector.ofFn bits)[i.val])).work +
+        ((finSteinerBitBudgetWithWork G raw same height).2 + (6*size+5)+6)}, start+size) = _
+  simp only [sameStep, read, finSteinerBinaryServeWithWork]
+  rw [finSteinerBinaryArrivalFold_work_offset]
+  simp only [Nat.add_assoc]
+  rfl
+
+/-- Include computing and drawing the word in the fixed-height work bound. -/
+theorem finSteinerBinaryServeFromBitSource_polynomial (height : ℕ) :
+    ∃ C k : ℕ, ∀ {n : ℕ} (G : Arcs (Fin n)) (raw : List (Fin n × Fin n)) (same : raw.toFinset = G)
+      (stream : ℕ → Bool) (start : ℕ) (D : List (Fin n × Fin n)),
+      (∀ d ∈ D, Reach G d.1 d.2) →
+      ((finSteinerBinaryServeFromBitSource G raw same height (steinerBitStreamSource stream) D).run start).1.work ≤
+        C*(n+G.card+raw.length+D.length+1)^k := by
+  obtain ⟨C, k, arrival⟩ := finSteinerBinaryServeWithWork_polynomial height
+  obtain ⟨S, j, initialization⟩ := finSteinerSeedInitializationWorkBudget_polynomial height
+  refine ⟨C+S, max k j, ?_⟩
+  intro n G raw same stream start D feasible
+  let size := n+G.card+raw.length+D.length+1
+  have positive : 0 < size := by dsimp [size]; omega
+  let bits (i : Fin (steinerBitBudget G height)) := stream (start+i.val)
+  let out := finSteinerBinaryServeWithWork G raw same height bits D
+  have arrived : out.work ≤ C*size^k :=
+    (Nat.le_add_right _ _).trans (arrival G raw same bits D feasible)
+  have budget := finSteinerBitBudgetWithWork_le G raw same height
+  have draws := steinerBitBudget_polynomial G height
+  simp only [Fintype.card_fin] at draws
+  have initialized : (finSteinerBitBudgetWithWork G raw same height).2 + 6*steinerBitBudget G height+11 ≤
+      S*size^j := by
+    apply le_trans _ (initialization n G.card raw.length D.length)
+    unfold finSteinerSeedInitializationWorkBudget
+    omega
+  have first := arrived.trans (Nat.mul_le_mul_left C (Nat.pow_le_pow_right positive (le_max_left k j)))
+  have second := initialized.trans (Nat.mul_le_mul_left S (Nat.pow_le_pow_right positive (le_max_right k j)))
+  rw [finSteinerBinaryServeFromBitSource_stream]
+  change out.work+((finSteinerBitBudgetWithWork G raw same height).2+6*steinerBitBudget G height+11) ≤ _
+  exact (Nat.add_le_add first second).trans_eq (Nat.add_mul _ _ _).symm
+
+open MeasureTheory
+open scoped ENNReal
+
+/-- Theorem 21 with initialization from a single stream of fair bits.
+The run consumes its exact fixed budget before service, works on every
+scripted stream, and keeps the competitive expectation under fair bits. -/
+theorem theorem21_online_steiner_sampled_arrivals {ε : ℝ} (epsilon : 0 < ε) :
+    ∃ (height : ℕ) (K : ℝ) (C k : ℕ), 0 < height ∧ 0 < K ∧
+      (∀ {n : ℕ} (G : Arcs (Fin n)) (raw : List (Fin n × Fin n)) (same : raw.toFinset = G)
+        (stream : ℕ → Bool) (D : List (Fin n × Fin n)),
+        (∀ d ∈ D, Reach G d.1 d.2) →
+        let result := (finSteinerBinaryServeFromBitSource G raw same height (steinerBitStreamSource stream) D).run 0
+        result.2 = steinerBitBudget G height ∧ result.1.graph ⊆ G ∧ Preserves G result.1.graph D ∧
+          result.1.work ≤ C*(n+G.card+raw.length+D.length+1)^k) ∧
+      (∀ {n : ℕ} (G : Arcs (Fin n)) (raw : List (Fin n × Fin n)) (same : raw.toFinset = G)
+        (stream : ℕ → Bool) {D E : List (Fin n × Fin n)},
+        D <+: E → (∀ d ∈ E, Reach G d.1 d.2) →
+          ((finSteinerBinaryServeFromBitSource G raw same height (steinerBitStreamSource stream) D).run 0).1.graph ⊆
+            ((finSteinerBinaryServeFromBitSource G raw same height (steinerBitStreamSource stream) E).run 0).1.graph) ∧
+      (∀ {n : ℕ} {G Z : Arcs (Fin n)} (raw : List (Fin n × Fin n)) (same : raw.toFinset = G)
+        (D : List (Fin n × Fin n)), Z ⊆ G → (∀ d ∈ D, Reach Z d.1 d.2) →
+        (∫⁻ stream, (((finSteinerBinaryServeFromBitSource G raw same height
+          (steinerBitStreamSource stream) D).run 0).1.graph.card : ℝ≥0∞) ∂fairBitMeasure) ≤
+            ENNReal.ofReal (K * (n : ℝ) ^ (3/5 + ε) * Z.card)) := by
+  obtain ⟨height, K, _, _, high, positive, correct, monotone, expected⟩ := theorem21_online_steiner_binary_arrivals epsilon
+  obtain ⟨C, k, cost⟩ := finSteinerBinaryServeFromBitSource_polynomial height
+  refine ⟨height, K, C, k, high, positive, ?_, ?_, ?_⟩
+  · intro n G raw same stream D feasible
+    let bits (i : Fin (steinerBitBudget G height)) := stream (0+i.val)
+    obtain ⟨subset, serve, _⟩ := correct G raw same bits D feasible
+    have bound := cost G raw same stream 0 D feasible
+    dsimp only
+    rw [finSteinerBinaryServeFromBitSource_stream] at bound ⊢
+    exact ⟨Nat.zero_add _, subset, serve, bound⟩
+  · intro n G raw same stream D E prior feasible
+    let bits (i : Fin (steinerBitBudget G height)) := stream (0+i.val)
+    rw [finSteinerBinaryServeFromBitSource_stream, finSteinerBinaryServeFromBitSource_stream]
+    exact monotone G raw same bits prior feasible
+  · intro n G Z raw same D sub feasible
+    let loss (bits : Fin (steinerBitBudget G height) → Bool) :=
+      (finSteinerBinaryServeWithWork G raw same height bits D).graph.card
+    have agreement (stream : ℕ → Bool) :
+        ((finSteinerBinaryServeFromBitSource G raw same height (steinerBitStreamSource stream) D).run 0).1.graph.card =
+          loss (fairBitPrefix (steinerBitBudget G height) stream) := by
+      rw [finSteinerBinaryServeFromBitSource_stream]
+      simp only [loss, Nat.zero_add]
+      rfl
+    simp_rw [agreement]
+    rw [fairBitPrefix_lintegral_eq]
+    exact ENNReal.ofReal_le_ofReal (expected raw same D sub feasible)
+
 end OnlineReachabilityPreservers

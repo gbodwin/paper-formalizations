@@ -122,4 +122,105 @@ theorem theorem21_online_steiner_binary_final_work_expected {ε : ℝ} (epsilon 
   simp_rw [fun bits => (finSteinerBinaryFinalGraphWithWork_spec G raw same height bits D feasible).1]
   exact expected raw same D sub reaches
 
+/-- Compute the exact seed length from the graph and height before any bits
+or demands are supplied. The already checked weighted preparation provides
+the forest scale and its recorded work. -/
+def finSteinerBitBudgetWithWork {n : ℕ} (G : Arcs (Fin n)) (raw : List (Fin n × Fin n))
+    (same : raw.toFinset = G) (height : ℕ) : {b : ℕ // b = steinerBitBudget G height} × ℕ :=
+  let count := countReplayArcSetWithWork G.val
+  have countEq : count.1 = G.card := congrArg Prod.fst (countReplayArcSetWithWork_spec G.val)
+  let pre := prepareFinSteinerWeightedForSeedWithWordWork G raw same height
+  let scaleWidth := bitLengthWithWork pre.1.1.val
+  let width := max 1 scaleWidth.1
+  have widthEq : width = (forestScale G height).log2+1 := by
+    dsimp only [width, scaleWidth]
+    rw [(bitLengthWithWork_spec _).1, max_size_eq_log2_add_one, pre.1.1.property]
+  let sizes := prepareSteinerSeedDecoderSizesWithWork G height width n count.1 (by simp) countEq
+  (⟨steinerBitBudgetFromDecoderSizes sizes.1, steinerBitBudgetFromDecoderSizes_eq widthEq sizes.1⟩,
+    count.2 + pre.1.2.2.1 + pre.1.2.2.2.1 + pre.2 + scaleWidth.2 + sizes.2 + 20)
+
+/-- Recorded work to compute the budget, including the hop table, forest
+list, weighted plan, and size arithmetic. -/
+def finSteinerBitBudgetWorkBound (n m raw height : ℕ) : ℕ :=
+  (4*m+3) + (distanceTableListWorkPolynomial n raw+8*n+9) +
+    (heightForestListDistanceWorkPolynomial n height 1+5) + finSteinerWeightPlanWorkPolynomial n height +
+    (7*(1+n*((2*n)*((height+1)*n^height))^2)+3) + (30*n+7*m+5*height+57) + 20
+
+theorem finSteinerBitBudgetWithWork_le {n : ℕ} (G : Arcs (Fin n)) (raw : List (Fin n × Fin n))
+    (same : raw.toFinset = G) (height : ℕ) :
+    (finSteinerBitBudgetWithWork G raw same height).2 ≤ finSteinerBitBudgetWorkBound n G.card raw.length height := by
+  let count := countReplayArcSetWithWork G.val
+  have countEq : count.1 = G.card := congrArg Prod.fst (countReplayArcSetWithWork_spec G.val)
+  have countWork : count.2 = 4*G.card+3 := congrArg Prod.snd (countReplayArcSetWithWork_spec G.val)
+  let pre := prepareFinSteinerWeightedForSeedWithWordWork G raw same height
+  let scaleWidth := bitLengthWithWork pre.1.1.val
+  let width := max 1 scaleWidth.1
+  let sizes := prepareSteinerSeedDecoderSizesWithWork G height width n count.1 (by simp) countEq
+  have budget : forestScale G height ≤ 1+n*((2*n)*((height+1)*n^height))^2 := by
+    have scale := forestNetworkScale_le G height
+    rw [Fintype.card_fin] at scale
+    have vertices : Fintype.card (HeightForestVertex (Fin n) height) ≤ (2*n)*((height+1)*n^height) := by
+      cases isEmpty_or_nonempty (Fin n) with
+      | inl empty => simp [HeightForestVertex]
+      | inr nonempty => simpa only [Fintype.card_fin, Nat.mul_comm n 2] using heightForestVertex_card_le (Fin n) height
+    apply scale.trans (max_le (Nat.le_add_right _ _) ?_)
+    exact (Nat.mul_le_mul_left _ (Nat.pow_le_pow_left vertices 2)).trans (Nat.le_add_left _ _)
+  have scaleWork : scaleWidth.2 ≤ 7*(1+n*((2*n)*((height+1)*n^height))^2)+3 := by
+    change (bitLengthWithWork pre.1.1.val).2 ≤ _
+    rw [pre.1.1.property]
+    exact (bitLengthWork_le _).trans (Nat.add_le_add_right (Nat.mul_le_mul_left 7 budget) 3)
+  obtain ⟨preEq, planWork⟩ := prepareFinSteinerWeightedForSeedWithWordWork_spec G raw same height
+  obtain ⟨_, distanceWork, forestWork⟩ := prepareFinSteinerForSeedWithWordWork_spec G raw same height
+  rw [← preEq] at distanceWork forestWork
+  have sizesWork : sizes.2 ≤ 30*n+7*G.card+5*height+57 := by
+    have h := prepareSteinerSeedDecoderSizesWithWork_le G height width n count.1 (by simp) countEq
+    exact h.trans_eq (congrArg (fun m => 30*n+7*m+5*height+57) countEq)
+  change count.2 + pre.1.2.2.1 + pre.1.2.2.2.1 + pre.2 + scaleWidth.2 + sizes.2 + 20 ≤ _
+  rw [countWork]
+  unfold finSteinerBitBudgetWorkBound
+  change pre.1.2.2.1 ≤ _ at distanceWork
+  change pre.1.2.2.2.1 ≤ _ at forestWork
+  change pre.2 ≤ _ at planWork
+  omega
+
+/-- Fill a fixed-size array in order, calling the supplied bit action once
+for each position. Work charges one draw and one append in each iteration. -/
+def readSteinerSeedWithWork {size : ℕ} {m : Type → Type} [Monad m]
+    (count : {b : ℕ // b = size}) (nextBit : m Bool) : m (Vector Bool size × ℕ) := do
+  let word ← Vector.ofFnM (fun _ : Fin count.val => nextBit)
+  pure (word.cast count.property, 6*count.val+5)
+
+/-- A deterministic stream supplies the next bit and advances its cursor. -/
+def steinerBitStreamSource (stream : ℕ → Bool) : StateM ℕ Bool :=
+  fun position => (stream position, position+1)
+
+private theorem steinerBitStreamSource_draws (stream : ℕ → Bool) (size start : ℕ) :
+    (Vector.ofFnM (fun _ : Fin size => steinerBitStreamSource stream)).run start =
+      (Vector.ofFn (fun i : Fin size => stream (start+i.val)), start+size) := by
+  induction size generalizing start with
+  | zero =>
+    rw [Vector.ofFnM_zero]
+    have emptyWord : (Vector.ofFn fun i : Fin 0 => stream (start+i.val)) = #v[] := by
+      ext i inside
+      omega
+    rw [emptyWord]
+    rfl
+  | succ size ih =>
+    rw [Vector.ofFnM_succ]
+    simp only [StateT.run_bind, StateT.run_pure, ih]
+    change ((Vector.ofFn (fun i : Fin size => stream (start+i.val))).push (stream (start+size)),
+      start+size+1) = _
+    rw [Vector.ofFn_succ]
+    rfl
+
+/-- The sampler returns the next consecutive bits, consumes exactly the
+specified count, and leaves the rest of the source available. -/
+theorem readSteinerSeedWithWork_stream {size : ℕ} (count : {b : ℕ // b = size})
+    (stream : ℕ → Bool) (start : ℕ) :
+    (readSteinerSeedWithWork count (steinerBitStreamSource stream)).run start =
+      ((Vector.ofFn (fun i : Fin size => stream (start+i.val)), 6*size+5), start+size) := by
+  obtain ⟨n, rfl⟩ := count
+  simp only [readSteinerSeedWithWork, StateT.run_bind, steinerBitStreamSource_draws, StateT.run_pure, Vector.cast_rfl]
+  rfl
+
 end OnlineReachabilityPreservers

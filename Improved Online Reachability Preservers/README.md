@@ -546,6 +546,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   One [Theorem 21 statement](OnlineReachabilityPreservers/SteinerBinaryArrivals.lean#L188)
   gives feasibility, irrevocability, polynomial recorded work including the
   bit supply, and the expected edge bound on a fixed feasible trace.
+  The [sampled arrival theorem](OnlineReachabilityPreservers/SteinerBinaryArrivals.lean#L329)
+  starts from a stream of independent fair bits. It computes the exact bit
+  budget from the input graph, draws that many bits into one array before
+  any demand, and reuses the array throughout the run. Its fixed-height
+  recorded work includes those initialization steps. The competitive
+  expectation holds against any offline subgraph serving the fixed trace.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

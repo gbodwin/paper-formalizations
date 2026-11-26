@@ -209,4 +209,19 @@ theorem finSteinerBinaryFinalGraphWithWork_polynomial (height : ℕ) :
   simp only [Fintype.card_fin] at supplied
   exact (Nat.add_le_add tally supplied).trans (work ⟨n,G.card,raw.length,D.length⟩)
 
+/-- Include computing the exact seed length and building its stored bit
+array. The graph-size polynomial bounds the length before it is computed. -/
+def finSteinerSeedInitializationWorkBudget (n m raw height : ℕ) : ℕ :=
+  finSteinerBitBudgetWorkBound n m raw height + 6*(completeSteinerSeedPolynomial n m height*m)+11
+
+set_option maxHeartbeats 3000000 in
+theorem finSteinerSeedInitializationWorkBudget_polynomial (height : ℕ) :
+    ∃ C k : ℕ, ∀ n m raw p,
+      finSteinerSeedInitializationWorkBudget n m raw height ≤ C*(n+m+raw+p+1)^k := by
+  have bound : ReplayPolynomialBound (fun s =>
+    finSteinerSeedInitializationWorkBudget s.vertices s.arcs s.rawLength height) := by
+    bound_replay_polynomial
+  obtain ⟨C,k,work⟩ := bound
+  exact ⟨C,k,fun n m raw p => work ⟨n,m,raw,p⟩⟩
+
 end OnlineReachabilityPreservers
