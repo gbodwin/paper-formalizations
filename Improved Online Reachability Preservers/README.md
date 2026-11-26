@@ -270,7 +270,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   phase. Its prefix graphs and evaluation count agree with the earlier
   replay. The measured polynomial includes these reads and the capacity
   rounding.
-  [Early rounding preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L366)
+  [Early rounding preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L382)
   · [Complete replay with charge reads](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1737).
   Given a complete list of distinct forest vertices, a measured attachment
   builder scans the two leaf groups together and counts both unions with
@@ -280,11 +280,17 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   enumeration and uses them for all evaluated early metric prefixes.
   Its prefix graphs and evaluation counts agree with the history replay,
   and the feasible-prefix polynomial includes the attachment work.
-  The remaining scope includes other terminal-label reads, tier and
-  cutoff arithmetic, threshold comparisons, further search and set
-  assembly, service work, and bit and native costs.
   [Shared forest rows and keys](OnlineReachabilityPreservers/SteinerForestPairKeysWork.lean#L236)
   · [Complete replay with attachment work](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1806).
+  The weighted separator and forest rounding also meter both terminal
+  labels and the stored-distance lookup when they query a weight. The
+  original weight values, prefix graphs, and evaluation count are exact.
+  The feasible-prefix work bound includes these queries. Tier and cutoff
+  arithmetic, threshold comparisons, label reads during route expansion,
+  further search and set assembly, service work, and bit and native costs
+  remain open.
+  [Measured weight query](OnlineReachabilityPreservers/SteinerForestLabelWork.lean#L73)
+  · [Complete replay with measured metric reads](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1867).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

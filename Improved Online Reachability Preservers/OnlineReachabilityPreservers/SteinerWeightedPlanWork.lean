@@ -47,34 +47,14 @@ private theorem weightedArcListsWithWordWork_spec {A B : Type*} (copy : A → B)
         Nat.mul_succ, Nat.add_comm]
       omega
 
-private def forestListWeightWithWordWork {V : Type*} {h : ℕ} (read : V × V → ℕ × ℕ)
-    (e : HeightForestVertex V h × HeightForestVertex V h) : ℕ × ℕ × ℕ :=
-  let s := forestLabelWithWordWork e.1
-  let t := forestLabelWithWordWork e.2
-  let known := read (s.1,t.1)
-  (known.1,known.2,s.2+t.2+8*known.2+16)
-
 private theorem forestListWeightWithWordWork_spec {V : Type*} [LinearOrder V] {h : ℕ}
     (read : V × V → ℕ × ℕ) (B : ℕ) (budget : ∀ d, (read d).2 ≤ B)
     (e : HeightForestVertex V h × HeightForestVertex V h) :
-    let out := forestListWeightWithWordWork read e
+    let out := forestDistanceQueryWithWordWork read e
     let old := forestWeightWithDistanceWork read e
     out.1 = old.1 ∧ out.2.1 = old.2 ∧ out.2.2 ≤ 10*h+8*B+34 := by
-  let a := forestLabelWithWordWork e.1
-  let b := forestLabelWithWordWork e.2
-  obtain ⟨left,costL⟩ := forestLabelWithWordWork_spec e.1
-  obtain ⟨right,costR⟩ := forestLabelWithWordWork_spec e.2
-  have query := budget (a.1,b.1)
-  change a.1 = _ at left
-  change b.1 = _ at right
-  change a.2 ≤ _ at costL
-  change b.2 ≤ _ at costR
-  change (read (a.1,b.1)).1 = _ ∧ (read (a.1,b.1)).2 = _ ∧ a.2+b.2+8*(read (a.1,b.1)).2+16 ≤ _
-  refine ⟨?_,?_,by omega⟩
-  · rw [left,right]
-    rfl
-  · rw [left,right]
-    rfl
+  obtain ⟨values,work⟩ := forestDistanceQueryWithWordWork_spec read B budget e
+  exact ⟨congrArg Prod.fst values,congrArg Prod.snd values,work⟩
 
 variable {V : Type*} [LinearOrder V] {height : ℕ}
 
@@ -107,7 +87,7 @@ def prepareForestWeightsFromListWithWordWork
     (edges : List (HeightForestVertex V height × HeightForestVertex V height))
     (distinct : edges.Nodup) (read : V × V → ℕ × ℕ) : ForestWeightPlan V height × ℕ :=
   let lift := copyForestArc (V := V) (height := height)
-  let weight := forestListWeightWithWordWork read
+  let weight := forestDistanceQueryWithWordWork read
   let out := weightedArcListsWithWordWork lift weight edges
   let spec := weightedArcListsWithWordWork_spec lift weight edges
   have paid : out.paid.Nodup := spec.1.symm ▸ (distinct.filter _).map lift.injective
@@ -126,7 +106,7 @@ theorem prepareForestWeightsFromListWithWordWork_spec
     out.1 = prepareForestWeights (arcsFromDistinctList edges distinct) (forestWeightWithDistanceWork read) ∧
       out.2 ≤ edges.length*(10*height+8*B+56)+7*(1+edges.length*K)+26 := by
   let copy := copyForestArc (V := V) (height := height)
-  let weight := forestListWeightWithWordWork (h := height) read
+  let weight := forestDistanceQueryWithWordWork (h := height) read
   let plain := forestWeightWithDistanceWork (height := height) read
   let gathered := weightedArcListsWithWordWork copy weight edges
   let out := prepareForestWeightsFromListWithWordWork edges distinct read
