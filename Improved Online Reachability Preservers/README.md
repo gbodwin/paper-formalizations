@@ -265,13 +265,19 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   rounded forest as the earlier rounding and separately bounds the seed
   reads.
   [Charge magnitude after the weighted run](OnlineReachabilityPreservers/SteinerWeightedChargeWork.lean#L544)
-  · [Rounding with measured charge reads](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L993).
+  · [Rounding with measured charge reads](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L1235).
   The standalone cutoff evaluator computes powers by doubling and clips
   a strictly rounded capacity with at most as many halvings as the tier
   number. Its word bound includes the supplied reads and cutoff arithmetic. It can
   reuse the powers across cutoffs in the same rounding tier.
   [Capped dyadic capacity](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L112)
   · [Cutoff arithmetic](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L203).
+  A separate evaluator constructs the actual ancestor prefixes,
+  scans them for each minimum, and builds the parent history. Given
+  the two powers, its cutoff agrees with the reference and its word
+  bound includes those operations.
+  [Exact ancestor rows](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L276)
+  · [Cutoff with measured ancestors](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L429).
   The complete replay uses this charge reader in the early rounding
   phase. Its prefix graphs and evaluation count agree with the earlier
   replay. The measured polynomial includes these reads and the capacity

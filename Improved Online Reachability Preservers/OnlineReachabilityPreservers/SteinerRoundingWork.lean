@@ -210,6 +210,248 @@ theorem historyCutoffWithArithmeticWordWork_spec (sampleTier tier : ℕ)
   simp only [historyCutoffWithArithmeticWordWork,twoPowerWithWordWork_spec,value,true_and]
   omega
 
+private def extendHistoryWithWordWork {A : Type*} (next : A) : List A → List A × ℕ
+  | [] => ([next],3)
+  | a::rest =>
+    let extended := extendHistoryWithWordWork next rest
+    (a::extended.1,extended.2+4)
+
+private theorem extendHistoryWithWordWork_spec {A : Type*} (next : A) (row : List A) :
+    extendHistoryWithWordWork next row = (row++[next],4*row.length+3) := by
+  induction row with
+  | nil => rfl
+  | cons a rest ih =>
+    simp only [extendHistoryWithWordWork,ih,List.cons_append,List.length_cons]
+    congr 1
+
+private def heightPrefixRowsFromWithWordWork (current todo : List V)
+    (fits : current.length+todo.length ≤ height) : List (HeightNode V height) × ℕ :=
+  let node : HeightNode V height := ⟨current,le_trans (Nat.le_add_right _ _) fits⟩
+  match todo with
+  | [] => ([node],4)
+  | x::rest =>
+    let extended := extendHistoryWithWordWork x current
+    have room : extended.1.length+rest.length ≤ height := by
+      simp only [extended,extendHistoryWithWordWork_spec,List.length_append,List.length_cons,List.length_nil,Nat.zero_add]
+      have available : current.length+(rest.length+1) ≤ height := fits
+      omega
+    let more := heightPrefixRowsFromWithWordWork extended.1 rest room
+    (node::more.1,extended.2+more.2+7)
+termination_by structural todo
+
+omit [DecidableEq V] [Fintype V] in
+private theorem heightPrefixRowsFromWithWordWork_spec (current todo : List V)
+    (fits : current.length+todo.length ≤ height) :
+    let out := heightPrefixRowsFromWithWordWork current todo fits
+    out.1.map Subtype.val = todo.inits.map (fun initial => current++initial) ∧
+      out.2 ≤ (todo.length+1)*(4*(current.length+todo.length)+12) := by
+  induction todo generalizing current with
+  | nil =>
+    change [current] = [current++[]] ∧ 4 ≤ 1*(4*(current.length+0)+12)
+    simp
+  | cons x rest ih =>
+    have room : (current++[x]).length+rest.length ≤ height := by
+      simp only [List.length_append,List.length_cons,List.length_nil,Nat.zero_add]
+      have available : current.length+(rest.length+1) ≤ height := fits
+      omega
+    let tail := heightPrefixRowsFromWithWordWork (current++[x]) rest room
+    obtain ⟨exact,work⟩ := ih (current++[x]) room
+    change tail.1.map Subtype.val = _ at exact
+    change tail.2 ≤ _ at work
+    simp only [heightPrefixRowsFromWithWordWork,extendHistoryWithWordWork_spec]
+    change current::(tail.1.map Subtype.val) = _ ∧ 4*current.length+3+tail.2+7 ≤ _
+    constructor
+    · rw [exact,List.inits_cons,List.map_cons,List.map_map]
+      simp [Function.comp_def,List.append_assoc]
+    · simp only [List.length_cons,List.length_append,List.length_nil,Nat.zero_add] at work ⊢
+      have size : current.length+1+rest.length = current.length+(rest.length+1) := by omega
+      rw [size] at work
+      rw [Nat.succ_mul (rest.length+1) (4*(current.length+(rest.length+1))+12)]
+      omega
+
+/-- Enumerate the actual prefixes of a stored history in order. -/
+def historyAncestorRowsWithWordWork (node : HeightNode V height) : List (HeightNode V height) × ℕ :=
+  heightPrefixRowsFromWithWordWork [] node.val (by simpa using node.property)
+
+theorem historyAncestorRowsWithWordWork_spec (node : HeightNode V height) :
+    let out := historyAncestorRowsWithWordWork node
+    out.1.map Subtype.val = node.val.inits ∧ out.1.length = node.val.length+1 ∧
+      (∀ a, a ∈ out.1 ↔ a ∈ historyAncestors node) ∧ out.2 ≤ (height+1)*(4*height+12) := by
+  let out := historyAncestorRowsWithWordWork node
+  obtain ⟨exact,work⟩ := heightPrefixRowsFromWithWordWork_spec (height := height) [] node.val (by simpa using node.property)
+  have shape : out.1.map Subtype.val = node.val.inits := by
+    simpa [out,historyAncestorRowsWithWordWork] using exact
+  have length : out.1.length = node.val.length+1 := by
+    have same := congrArg List.length shape
+    simpa only [List.length_map,List.length_inits] using same
+  refine ⟨shape,length,?_,?_⟩
+  · intro a
+    have on : a ∈ out.1 ↔ a.val ∈ out.1.map Subtype.val := by
+      constructor
+      · exact List.mem_map_of_mem
+      · intro on
+        obtain ⟨b,seen,same⟩ := List.mem_map.mp on
+        exact (Subtype.ext same : b = a) ▸ seen
+    rw [on,shape,List.mem_inits,mem_historyAncestors]
+  · have cap : out.2 ≤ (node.val.length+1)*(4*node.val.length+12) := by
+      simpa only [out,historyAncestorRowsWithWordWork,List.length_nil,Nat.zero_add] using work
+    exact cap.trans (by gcongr <;> exact node.property)
+
+private def minHistoryRowsWithWordWork {A : Type*} (read : A → ℕ × ℕ) (upper : ℕ) : List A → ℕ × ℕ
+  | [] => (upper,2)
+  | a::rest =>
+    let row := read a
+    let tail := minHistoryRowsWithWordWork read upper rest
+    (min row.1 tail.1,row.2+tail.2+10)
+
+private theorem minHistoryRowsWithWordWork_spec {A : Type*} (read : A → ℕ × ℕ) (upper B : ℕ)
+    (rows : List A) (reads : ∀ a ∈ rows, (read a).2 ≤ B) :
+    let out := minHistoryRowsWithWordWork read upper rows
+    out.1 ≤ upper ∧ (∀ a ∈ rows, out.1 ≤ (read a).1) ∧
+      (∀ lower ≤ upper, (∀ a ∈ rows, lower ≤ (read a).1) → lower ≤ out.1) ∧
+      out.2 ≤ rows.length*(B+10)+2 := by
+  induction rows with
+  | nil => simp [minHistoryRowsWithWordWork]
+  | cons a rest ih =>
+    have front := reads a List.mem_cons_self
+    let tail := minHistoryRowsWithWordWork read upper rest
+    obtain ⟨cap,small,large,work⟩ := ih (fun b on => reads b (List.mem_cons_of_mem _ on))
+    change min (read a).1 tail.1 ≤ upper ∧
+      (∀ b ∈ a::rest, min (read a).1 tail.1 ≤ (read b).1) ∧
+      (∀ lower ≤ upper, (∀ b ∈ a::rest, lower ≤ (read b).1) → lower ≤ min (read a).1 tail.1) ∧
+      (read a).2+tail.2+10 ≤ (a::rest).length*(B+10)+2
+    refine ⟨(min_le_right _ _).trans cap,?_,?_,?_⟩
+    · intro b on
+      rcases List.mem_cons.mp on with rfl | still
+      · exact min_le_left _ _
+      · exact (min_le_right _ _).trans (small b still)
+    · intro lower bound below
+      exact le_min (below a List.mem_cons_self)
+        (large lower bound (fun b on => below b (List.mem_cons_of_mem _ on)))
+    · change tail.2 ≤ rest.length*(B+10)+2 at work
+      rw [List.length_cons,Nat.succ_mul rest.length (B+10)]
+      omega
+
+/-- Minimum capped capacity along the actual stored prefixes of a history.
+Includes construction of the prefix rows and arithmetic in the minimum. -/
+def historyCapacityFromRowsWithWordWork (tier power : ℕ) (units : HeightNode V height → ℕ × ℕ)
+    (node : HeightNode V height) : ℕ × ℕ :=
+  let ancestors := historyAncestorRowsWithWordWork node
+  let minimum := minHistoryRowsWithWordWork (rootCappedCapacityFromPowerWithWordWork tier power units) power ancestors.1
+  (minimum.1,ancestors.2+minimum.2+5)
+
+theorem historyCapacityFromRowsWithWordWork_spec (tier power : ℕ) (exactPower : power = 2^tier)
+    (units : HeightNode V height → ℕ × ℕ) (B : ℕ) (bound : ∀ v, (units v).2 ≤ B) (node : HeightNode V height) :
+    let out := historyCapacityFromRowsWithWordWork tier power units node
+    out.1 = historyCapacityUnits tier (fun a => (units a).1) node ∧
+      out.2 ≤ (height+1)*(B+8*(tier+1)+4*height+39)+7 := by
+  let read := rootCappedCapacityFromPowerWithWordWork tier power units
+  let ancestors := historyAncestorRowsWithWordWork node
+  let minimum := minHistoryRowsWithWordWork read power ancestors.1
+  have exact (a) := rootCappedCapacityFromPowerWithWordWork_spec tier power exactPower units B bound a
+  obtain ⟨_,length,contains,form⟩ := historyAncestorRowsWithWordWork_spec node
+  obtain ⟨top,small,large,work⟩ := minHistoryRowsWithWordWork_spec read power (B+8*(tier+1)+17) ancestors.1
+    (fun a _ => (exact a).2)
+  refine ⟨?_,?_⟩
+  · change minimum.1 = historyCapacityUnits tier (fun a => (units a).1) node
+    apply le_antisymm
+    · unfold historyCapacityUnits
+      apply le_inf'
+      intro a on
+      exact (small a ((contains a).mpr on)).trans_eq (exact a).1
+    · apply large
+      · rw [exactPower]
+        exact historyCapacityUnits_bounded tier (fun a => (units a).1) node
+      · intro a on
+        rw [(exact a).1]
+        exact historyCapacityUnits_le tier (fun a => (units a).1) (mem_historyAncestors.mp ((contains a).mp on))
+  · change ancestors.2+minimum.2+5 ≤ _
+    change minimum.2 ≤ ancestors.1.length*(B+8*(tier+1)+17+10)+2 at work
+    change ancestors.1.length = node.val.length+1 at length
+    have spent : minimum.2 ≤ (height+1)*(B+8*(tier+1)+17+10)+2 := work.trans (by
+      rw [length]
+      gcongr
+      exact node.property)
+    have cap : ancestors.2 ≤ (height+1)*(4*height+12) := form
+    calc
+      _ ≤ (height+1)*(4*height+12)+((height+1)*(B+8*(tier+1)+17+10)+2)+5 :=
+        Nat.add_le_add_right (Nat.add_le_add cap spent) 5
+      _ = _ := by ring
+
+private def historyDropLastWithWordWork {A : Type*} : List A → List A × ℕ
+  | [] => ([],2)
+  | [_] => ([],4)
+  | a::b::rest =>
+    let shortened := historyDropLastWithWordWork (b::rest)
+    (a::shortened.1,shortened.2+7)
+
+private theorem historyDropLastWithWordWork_spec {A : Type*} (row : List A) :
+    let out := historyDropLastWithWordWork row
+    out.1 = row.dropLast ∧ out.2 ≤ 7*row.length+2 := by
+  induction row with
+  | nil => exact ⟨rfl,le_rfl⟩
+  | cons a rest ih =>
+    cases rest with
+    | nil => simp [historyDropLastWithWordWork]
+    | cons b rest =>
+      obtain ⟨value,work⟩ := ih
+      simp only [historyDropLastWithWordWork,List.dropLast_cons_cons,value,true_and]
+      simp only [List.length_cons] at work ⊢
+      omega
+
+private def heightParentHistoryWithWordWork (v : HeightNode V height) : HeightNode V height × ℕ :=
+  let rows := historyDropLastWithWordWork v.val
+  have fits : rows.1.length ≤ height := by
+    rw [(historyDropLastWithWordWork_spec v.val).1]
+    exact (List.dropLast_prefix v.val).length_le.trans v.property
+  (⟨rows.1,fits⟩,rows.2+3)
+
+omit [DecidableEq V] [Fintype V] in
+private theorem heightParentHistoryWithWordWork_spec (v : HeightNode V height) :
+    let out := heightParentHistoryWithWordWork v
+    out.1 = heightParent v ∧ out.2 ≤ 7*height+5 := by
+  obtain ⟨same,spent⟩ := historyDropLastWithWordWork_spec v.val
+  refine ⟨Subtype.ext same,?_⟩
+  have bound := Nat.mul_le_mul_left 7 v.property
+  change (historyDropLastWithWordWork v.val).2+3 ≤ _
+  omega
+
+/-- Use the stored history prefixes and cached powers when computing one
+rounding cutoff. The tally includes building the parent history. -/
+def historyCutoffFromRowsWithWordWork (samplePower tierPower tier : ℕ)
+    (units : HeightNode V height → ℕ × ℕ) (v : HeightNode V height) : ℕ × ℕ :=
+  if v = heightRoot then (samplePower,4) else
+    let parent := heightParentHistoryWithWordWork v
+    let top := historyCapacityFromRowsWithWordWork tier tierPower units v
+    let bottom := historyCapacityFromRowsWithWordWork tier tierPower units parent.1
+    (samplePower*top.1/bottom.1,top.2+bottom.2+parent.2+9)
+
+theorem historyCutoffFromRowsWithWordWork_spec (sampleTier tier samplePower tierPower : ℕ)
+    (sampleExact : samplePower = 2^sampleTier) (tierExact : tierPower = 2^tier)
+    (units : HeightNode V height → ℕ × ℕ) (B : ℕ) (bound : ∀ v, (units v).2 ≤ B) (v : HeightNode V height) :
+    let out := historyCutoffFromRowsWithWordWork samplePower tierPower tier units v
+    out.1 = historyCutoff sampleTier tier (fun a => (units a).1) v ∧
+      out.2 ≤ 2*(height+1)*(B+8*(tier+1)+4*height+39)+7*height+28 := by
+  by_cases root : v = heightRoot
+  · simp [historyCutoffFromRowsWithWordWork,historyCutoff,root,sampleExact]
+  let parent := heightParentHistoryWithWordWork v
+  obtain ⟨parentExact,parentWork⟩ := heightParentHistoryWithWordWork_spec v
+  obtain ⟨top,topWork⟩ := historyCapacityFromRowsWithWordWork_spec tier tierPower tierExact units B bound v
+  obtain ⟨bottom,bottomWork⟩ := historyCapacityFromRowsWithWordWork_spec tier tierPower tierExact units B bound parent.1
+  simp only [historyCutoffFromRowsWithWordWork,historyCutoff,root,ite_false]
+  change samplePower*(historyCapacityFromRowsWithWordWork tier tierPower units v).1 /
+      (historyCapacityFromRowsWithWordWork tier tierPower units parent.1).1 = _ ∧ _
+  constructor
+  · rw [sampleExact,top,bottom,parentExact]
+  · change (historyCapacityFromRowsWithWordWork tier tierPower units v).2 +
+      (historyCapacityFromRowsWithWordWork tier tierPower units parent.1).2 + parent.2 + 9 ≤ _
+    let C := (height+1)*(B+8*(tier+1)+4*height+39)+7
+    calc
+      _ ≤ C+C+(7*height+5)+9 := Nat.add_le_add_right (Nat.add_le_add (Nat.add_le_add topWork bottomWork) parentWork) 9
+      _ = _ := by
+        dsimp only [C]
+        ring
+
 private def finiteAllWithWork {I : Type*} (checks : I → Bool × ℕ) (s : Finset I) : Bool × ℕ :=
   let rows := s.map (rowWithWork checks)
   (decide (¬ (rows.filter fun r => r.2.1 = false).Nonempty),∑ r ∈ rows, r.2.2)

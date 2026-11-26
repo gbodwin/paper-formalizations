@@ -714,7 +714,7 @@ outside the work bound.
 The [charge magnitude bound](OnlineReachabilityPreservers/SteinerWeightedChargeWork.lean#L544)
 adds at most one unit per accepted cut to any starting charge. At fixed
 separator fuel, the total increase is at most the fuel times the number
-of requests. The [measured rounding evaluator](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L993)
+of requests. The [measured rounding evaluator](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L1235)
 accepts a charge reader that reports its work. At each paid ancestor
 capacity query it counts the forest membership test, the weight and
 charge reads, and the rounded capacity arithmetic. Under the stated
@@ -827,6 +827,15 @@ tier. The [standalone bound](OnlineReachabilityPreservers/SteinerRoundingWork.le
 includes generating the powers by doubling. Parent construction,
 ancestor enumeration, row mapping and minimum folds, integration into
 rounding, and bit costs remain outside this bound.
+
+The [ancestor row construction](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L276)
+enumerates exactly the prefixes of the stored history in increasing
+length. The [list minimum](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L343)
+returns the same capped capacity and charges enumeration, supplied
+reads, and comparisons. The [cutoff from these rows](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L429)
+charges building the parent history and both minima. It gives the
+reference cutoff when supplied the two correct powers. This is a
+standalone evaluation, and the complete rounding integration is open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
