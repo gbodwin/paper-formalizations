@@ -337,12 +337,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [Cleaning with a small mass of long visits](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1014).
 - At cutoff \(k\), the factor-four blocks retain at least \(M/16\) in either
   bridge mode when the precedence graph has no directed cycle of length at
-  most \(k\). If removing at most \(M/18\) incidences from the rows suffices
+  most \(k-2\). If removing at most \(M/18\) incidences from the rows suffices
   to obtain this property, the construction retains at least \(M/32\).
   Both guarantees use the two positive original budgets and all four caps
   computed from the original averages, for mass at least both budgets.
-  [No short cycles](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1317)
-  · [After deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1331).
+  [No short cycles](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1409)
+  · [After deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1437).
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)

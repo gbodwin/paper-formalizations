@@ -327,20 +327,23 @@ The unrestricted cyclic existence question remains open.
 
 At cutoff \(k\), ordered disjoint pieces of one path can be cut wherever
 there is no return from a later piece to an earlier one in at most
-\(k-1\) precedence edges. A bridge detour would supply such a return if
-the river's parent recurred or if repeated arc parents occurred in
-reverse piece order. Forward repetitions can be shortened while keeping
-the river and last arc's parents. This preserves half exclusion when
-the new order preserves parent arrival.
-[Full bridge criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1188)
-· [Half bridge criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1202).
+\(\max(0,k-3)\) precedence edges. A repeated river parent must occur at
+an interior arc, since a first or last arc shares a corner with the
+river. A short return then starts or ends at the nearer corner of the
+interior arc. When two arc parents recur in reverse piece order, the
+return uses only the steps strictly between those arcs. Forward
+repetitions can be shortened while keeping the river and last arc's
+parents. This preserves half exclusion in parent arrival order.
+[Full bridge criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1222)
+· [Half bridge criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1236).
 
-If the precedence graph has no directed cycle of length at most \(k\),
-all contiguous cuts meet this test. A collision between two projected
-corners after the degree split would also close a directed walk of
-length at most \(k-1\). Its first edge and the bounded return contradict
-the same condition, so the degree split preserves half exclusion with
-its original arc and river indices. The width-block construction gives
+If the precedence graph has no directed cycle of length at most
+\(k-2\), all contiguous cuts meet this test. In the degree split, the
+original river endpoints are distinct. A collision of projected detour
+corners with one exterior arc would give a size-two bridge with the
+river. Every remaining collision closes a walk of length at most
+\(k-3\). Excluding those cycles alone preserves half exclusion in
+the degree split with the original arc and river indices. The width-block construction gives
 both budgets, the original four caps, and \(M/16\) in either bridge mode
 on a simple family of mass at least both positive budgets. If rowwise
 deletions of at most \(M/18\) incidences suffice to eliminate the short
@@ -348,9 +351,9 @@ cycles, it gives \(M/32\) under the same original caps. The support
 restriction keeps at least \((9/16)(17/18)M=17M/32\), and peeling loses
 at most \(M/2\). The existence of a suitable cleaning for every cyclic
 input is still open.
-[Half exclusion after a degree split](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1224)
-· [Factor-four cleaning](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1317)
-· [Cleaning after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1331).
+[Half exclusion after a degree split](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1288)
+· [Factor-four cleaning](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1409)
+· [Cleaning after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1437).
 
 Splitting a vertex can also break the half exclusion, even with unique
 intersections. In arrival order take the paths `(4,2), (0,2), (0,1), (1,2),
