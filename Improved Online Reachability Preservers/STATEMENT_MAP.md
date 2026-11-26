@@ -963,12 +963,12 @@ word permits redundant high zeros. The two bounds apply to setup
 calculations on supplied binary lists. Input encoding and bit and native
 execution costs for the full replay remain open.
 
-The [binary list access](OnlineReachabilityPreservers/SteinerBinaryIndexedWork.lean#L80)
+The [binary list access](OnlineReachabilityPreservers/SteinerBinaryIndexedWork.lean#L23)
 reads the old cell and optionally replaces it by walking the supplied
 list, with a binary zero test and decrement. The
-[address calculation](OnlineReachabilityPreservers/SteinerBinaryIndexedWork.lean#L135)
+[address calculation](OnlineReachabilityPreservers/SteinerBinaryIndexedWork.lean#L78)
 computes the row-major index by binary multiplication and addition.
-The [thin load table comparison](OnlineReachabilityPreservers/SteinerBinaryIndexedWork.lean#L169)
+The [thin load table comparison](OnlineReachabilityPreservers/SteinerBinaryIndexedWork.lean#L112)
 matches both the indexed read and the replacement in the list representation.
 The bound includes the address arithmetic and list traversal but treats each
 stored payload as one cell. Table conversion and native execution costs remain
@@ -986,6 +986,15 @@ For a duplicate-free cut, the [array comparison](OnlineReachabilityPreservers/St
 matches every entry of the existing thin load update. The model assumes
 fixed-width cells and supplied binary labels. It does not charge constructing
 those encodings or run the separator or complete replay.
+
+The thin rounding test for a sample \(s\), factor \(f\), and load \(\ell\)
+is \(s < f\,2^\ell\). The [binary right shift](OnlineReachabilityPreservers/SteinerThinBitRoundingWork.lean#L27)
+computes \(\lfloor s/2^\ell\rfloor\), stopping when the threshold word is empty
+or the shift count is zero. The [binary comparison](OnlineReachabilityPreservers/SteinerBinaryArithmetic.lean#L331)
+uses a subtraction borrow. The [rounding specification](OnlineReachabilityPreservers/SteinerThinBitRoundingWork.lean#L79)
+proves the original inequality and a polynomial tally in the supplied word
+lengths, including when the load represents a much larger value. This is the
+arithmetic for a single row on supplied encodings.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

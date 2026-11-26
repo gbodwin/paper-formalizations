@@ -5,63 +5,6 @@ import OnlineReachabilityPreservers.ThinSearchWork
 
 namespace OnlineReachabilityPreservers
 
-private def binaryZeroWithWork : List Bool → Bool × ℕ
-  | [] => (true,3)
-  | bit::tail =>
-    if bit then (false,4)
-    else
-      let out := binaryZeroWithWork tail
-      (out.1,out.2+4)
-
-private theorem binaryZeroWithWork_spec (bits : List Bool) :
-    let out := binaryZeroWithWork bits
-    out.1 = decide (binaryWordValue bits = 0) ∧ out.2 ≤ 4*bits.length+3 := by
-  induction bits with
-  | nil => decide
-  | cons bit tail ih =>
-    cases bit with
-    | true =>
-      change false = decide (1+2*binaryWordValue tail = 0) ∧ 4 ≤ 4*(tail.length+1)+3
-      exact ⟨(decide_eq_false (by omega)).symm,by omega⟩
-    | false =>
-      let out := binaryZeroWithWork tail
-      obtain ⟨equal,work⟩ := ih
-      change out.1 = decide (0+2*binaryWordValue tail = 0) ∧ out.2+4 ≤ 4*(tail.length+1)+3
-      change out.2 ≤ 4*tail.length+3 at work
-      exact ⟨by simpa using equal,by omega⟩
-
-private def binaryDecrementWithWork : List Bool → List Bool × ℕ
-  | [] => ([],3)
-  | bit::tail =>
-    if bit then (false::tail,4)
-    else
-      let out := binaryDecrementWithWork tail
-      (true::out.1,out.2+5)
-
-private theorem binaryDecrementWithWork_spec (bits : List Bool) :
-    let out := binaryDecrementWithWork bits
-    out.1.length = bits.length ∧ out.2 ≤ 5*bits.length+3 ∧
-      (0 < binaryWordValue bits → binaryWordValue out.1+1 = binaryWordValue bits) := by
-  induction bits with
-  | nil => decide
-  | cons bit tail ih =>
-    cases bit with
-    | true =>
-      change tail.length+1 = tail.length+1 ∧ 4 ≤ 5*(tail.length+1)+3 ∧
-        (0 < 1+2*binaryWordValue tail → 0+2*binaryWordValue tail+1 = 1+2*binaryWordValue tail)
-      exact ⟨rfl,by omega,fun _ => by omega⟩
-    | false =>
-      let out := binaryDecrementWithWork tail
-      obtain ⟨size,work,value⟩ := ih
-      change out.1.length = tail.length at size
-      change out.2 ≤ 5*tail.length+3 at work
-      change out.1.length+1 = tail.length+1 ∧ out.2+5 ≤ 5*(tail.length+1)+3 ∧
-        (0 < 0+2*binaryWordValue tail → 1+2*binaryWordValue out.1+1 = 0+2*binaryWordValue tail)
-      refine ⟨congrArg (·+1) size,by omega,fun positive => ?_⟩
-      have lower := value (by omega)
-      change binaryWordValue out.1+1 = binaryWordValue tail at lower
-      omega
-
 /-- Read a cell and optionally replace it. The table is represented by a
 list, and the index is a least-significant-bit-first word. -/
 def accessBinaryIndexedListWithWork {α : Type*} (replacement : Option α) (index : List Bool) :

@@ -253,4 +253,129 @@ theorem positiveBinaryLengthWithWork_spec (bits : List Bool) :
     rw [Nat.max_eq_right nonempty]
     exact ⟨value,length.trans (Nat.le_succ _),by omega⟩
 
+/-- Test whether every supplied bit is zero, stopping at the first one. -/
+def binaryZeroWithWork : List Bool → Bool × ℕ
+  | [] => (true,3)
+  | bit::tail =>
+    if bit then (false,4)
+    else
+      let out := binaryZeroWithWork tail
+      (out.1,out.2+4)
+
+theorem binaryZeroWithWork_spec (bits : List Bool) :
+    let out := binaryZeroWithWork bits
+    out.1 = decide (binaryWordValue bits = 0) ∧ out.2 ≤ 4*bits.length+3 := by
+  induction bits with
+  | nil => decide
+  | cons bit tail ih =>
+    cases bit with
+    | true =>
+      change false = decide (1+2*binaryWordValue tail = 0) ∧ 4 ≤ 4*(tail.length+1)+3
+      exact ⟨(decide_eq_false (by omega)).symm,by omega⟩
+    | false =>
+      let out := binaryZeroWithWork tail
+      obtain ⟨equal,work⟩ := ih
+      change out.1 = decide (0+2*binaryWordValue tail = 0) ∧ out.2+4 ≤ 4*(tail.length+1)+3
+      change out.2 ≤ 4*tail.length+3 at work
+      exact ⟨by simpa using equal,by omega⟩
+
+/-- Decrement a fixed-width word, letting a borrow wrap at the end. -/
+def binaryDecrementWithWork : List Bool → List Bool × ℕ
+  | [] => ([],3)
+  | bit::tail =>
+    if bit then (false::tail,4)
+    else
+      let out := binaryDecrementWithWork tail
+      (true::out.1,out.2+5)
+
+theorem binaryDecrementWithWork_spec (bits : List Bool) :
+    let out := binaryDecrementWithWork bits
+    out.1.length = bits.length ∧ out.2 ≤ 5*bits.length+3 ∧
+      (0 < binaryWordValue bits → binaryWordValue out.1+1 = binaryWordValue bits) := by
+  induction bits with
+  | nil => decide
+  | cons bit tail ih =>
+    cases bit with
+    | true =>
+      change tail.length+1 = tail.length+1 ∧ 4 ≤ 5*(tail.length+1)+3 ∧
+        (0 < 1+2*binaryWordValue tail → 0+2*binaryWordValue tail+1 = 1+2*binaryWordValue tail)
+      exact ⟨rfl,by omega,fun _ => by omega⟩
+    | false =>
+      let out := binaryDecrementWithWork tail
+      obtain ⟨size,work,value⟩ := ih
+      change out.1.length = tail.length at size
+      change out.2 ≤ 5*tail.length+3 at work
+      change out.1.length+1 = tail.length+1 ∧ out.2+5 ≤ 5*(tail.length+1)+3 ∧
+        (0 < 0+2*binaryWordValue tail → 1+2*binaryWordValue out.1+1 = 0+2*binaryWordValue tail)
+      refine ⟨congrArg (·+1) size,by omega,fun positive => ?_⟩
+      have lower := value (by omega)
+      change binaryWordValue out.1+1 = binaryWordValue tail at lower
+      omega
+
+private def nextBinaryBorrow (left right borrow : Bool) : Bool :=
+  if left == right then borrow else !left
+
+private theorem binaryBorrow_digit (left right borrow : Bool) :
+    nextBinaryBorrow left right borrow = decide (bitDigit left < bitDigit right+bitDigit borrow) := by
+  cases left <;> cases right <;> cases borrow <;> decide
+
+/-- Compare the two words by scanning the borrow in binary subtraction. -/
+def binaryLessWithWork (left right : List Bool) (borrow : Bool) : Bool × ℕ :=
+  if empty : left = [] ∧ right = [] then (borrow,4) else
+    let next := nextBinaryBorrow (left.headD false) (right.headD false) borrow
+    let result := binaryLessWithWork left.tail right.tail next
+    (result.1,result.2+14)
+termination_by left.length+right.length
+decreasing_by exact binaryWord_shorter empty
+
+theorem binaryLessWithWork_spec (left right : List Bool) (borrow : Bool) :
+    let out := binaryLessWithWork left right borrow
+    out.1 = decide (binaryWordValue left < binaryWordValue right+bitDigit borrow) ∧
+      out.2 ≤ 14*(left.length+right.length)+4 := by
+  induction total : left.length+right.length using Nat.strong_induction_on generalizing left right borrow with
+  | h steps previous =>
+    by_cases empty : left = [] ∧ right = []
+    · obtain ⟨rfl,rfl⟩ := empty
+      cases borrow <;> simp [binaryLessWithWork,binaryWordValue,bitDigit]
+    rw [binaryLessWithWork,dite_eq_right empty]
+    let x := left.headD false
+    let y := right.headD false
+    let extra := nextBinaryBorrow x y borrow
+    let result := binaryLessWithWork left.tail right.tail extra
+    have shorter := binaryWord_shorter empty
+    obtain ⟨value,work⟩ := previous (left.tail.length+right.tail.length) (by rwa [← total])
+      left.tail right.tail extra rfl
+    rw [← total]
+    change result.1 = decide (binaryWordValue left < binaryWordValue right+bitDigit borrow) ∧
+      result.2+14 ≤ 14*(left.length+right.length)+4
+    change result.1 = _ at value
+    change result.2 ≤ 14*(left.tail.length+right.tail.length)+4 at work
+    refine ⟨?_,by omega⟩
+    rw [value,binaryWordValue_head_tail left,binaryWordValue_head_tail right]
+    change decide (binaryWordValue left.tail < binaryWordValue right.tail+bitDigit extra) =
+      decide (bitDigit x+2*binaryWordValue left.tail < bitDigit y+2*binaryWordValue right.tail+bitDigit borrow)
+    rw [decide_eq_decide]
+    have digit := binaryBorrow_digit x y borrow
+    change extra = _ at digit
+    have bit : ∀ b : Bool, bitDigit b ≤ 1 := by intro b; cases b <;> decide
+    have leftBit := bit x
+    have rightBit := bit y
+    have borrowBit := bit borrow
+    by_cases below : bitDigit x < bitDigit y+bitDigit borrow
+    · rw [decide_eq_true below] at digit
+      rw [digit]
+      change binaryWordValue left.tail < binaryWordValue right.tail+1 ↔ _
+      omega
+    · rw [decide_eq_false below] at digit
+      rw [digit]
+      change binaryWordValue left.tail < binaryWordValue right.tail+0 ↔ _
+      omega
+
+/-- Compare two binary words, allowing different lengths and high zero padding. -/
+theorem binaryLessWithWork_noBorrow_spec (left right : List Bool) :
+    let out := binaryLessWithWork left right false
+    out.1 = decide (binaryWordValue left < binaryWordValue right) ∧
+      out.2 ≤ 14*(left.length+right.length)+4 := by
+  simpa only [bitDigit,Bool.false_eq_true,ite_false,Nat.add_zero] using binaryLessWithWork_spec left right false
+
 end OnlineReachabilityPreservers
