@@ -303,6 +303,17 @@ rowwise clipping operations. The other branches use the low-mass
 witness or the size-two construction.
 [Clipping both dimensions](OnlineReachabilityPreservers/FrozenDegreeClipping.lean).
 
+The length and degree counts also bound mass when the two budgets are
+far apart. Cauchy--Schwarz gives \(M^2\le p(2n(n-1)+M)\) from the row
+count at cutoff two and \(M^2\le n(p(p-1)+3M)\) from the vertex count at
+cutoff three. The budget inequalities \(n(n-1)\le28p\) and
+\(p(p-1)\le40n\), respectively, give \(M\le8p\) or \(M\le8n\).
+The low-mass construction then retains at least \(M/8\), both original
+budgets, and all four original-average caps. Its witness excludes full
+bridges of every size. The result applies to the unrestricted maximum
+in either mode with positive budgets.
+[Squared-mass bounds and cleaning](OnlineReachabilityPreservers/FrozenUnbalancedBudgets.lean).
+
 The same splitting step can fail at larger bridge sizes with unique
 intersections. On seven vertices, take the six paths `[(0,1,2,3), (3,4),
 (4,0), (5,2), (1,6), (5,6)]`. There are 14 incidences, every vertex

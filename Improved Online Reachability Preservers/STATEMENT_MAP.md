@@ -1770,6 +1770,18 @@ With positive budgets the conclusion holds for the unrestricted maximum
 at every full or half cutoff of at least two.
 [Degree counting and two-sided clipping](OnlineReachabilityPreservers/FrozenDegreeClipping.lean).
 
+Applying Cauchy--Schwarz to the degree count gives
+\(M^2\le n(p(p-1)+3M)\) at half cutoffs of at least three. Together with
+the row bound \(M^2\le p(2n(n-1)+M)\), this gives an \(M/8\) witness
+relative to the unrestricted maximum with both original budgets and
+all four original-average caps. The positive budgets must satisfy
+\(n(n-1)\le28p\) at an input cutoff of at least two or
+\(p(p-1)\le40n\) at an input cutoff of at least three. The input may
+use either mode. The low-mass proof chooses full exclusion through the
+original vertex count, which covers every bridge size because a bridge
+has distinct vertices.
+[Unbalanced budget bounds](OnlineReachabilityPreservers/FrozenUnbalancedBudgets.lean).
+
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
 and nonempty simple rows. At the prescribed widths \(7\) and \(20\) it

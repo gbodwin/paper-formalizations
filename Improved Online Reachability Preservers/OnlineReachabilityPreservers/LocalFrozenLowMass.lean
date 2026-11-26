@@ -362,14 +362,15 @@ private theorem listMass_le_product {n p : ℕ} (paths : Fin p → List (Fin n))
 
 /-- If at most eight incidences per unit of the larger budget are needed,
 one of the small witnesses meets the frozen caps. Full bridge exclusion in
-the witness covers both bridge modes. -/
-theorem regularization_list_frozen_low_mass {n p k : ℕ} (paths : Fin p → List (Fin n))
+the witness holds up to any requested output cutoff. -/
+theorem regularization_list_frozen_low_mass_at_cutoff {n p k : ℕ} (outputCutoff : ℕ)
+    (paths : Fin p → List (Fin n))
     (simple : ∀ i, (paths i).Nodup) (halfFree : HalfBridgeFree (ListBefore paths) k) (cutoff : 2 ≤ k)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
     (low : (∑ i, (paths i).length) ≤ 8*max n p) :
     let M := ∑ i, (paths i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
-      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) outputCutoff ∧
       M ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let M := ∑ i, (paths i).length
   by_cases sparse : M ≤ 4*max n p
@@ -387,6 +388,17 @@ theorem regularization_list_frozen_low_mass {n p k : ℕ} (paths : Fin p → Lis
       obtain ⟨width,positive,vertices,demands,degree,fits⟩ :=
         rectangular_degree_bounds hn other larger smaller count
       exact frozen_cleaning_bipartite_rows positive hp vertices demands long smaller degree fits
+
+/-- The low-mass witness with full exclusion at the input cutoff. -/
+theorem regularization_list_frozen_low_mass {n p k : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (halfFree : HalfBridgeFree (ListBefore paths) k) (cutoff : 2 ≤ k)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (low : (∑ i, (paths i).length) ≤ 8*max n p) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
+      M ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_low_mass_at_cutoff k paths simple halfFree cutoff hn hp dense long low
 
 /-- At any cutoff of at least two, an unrestricted maximum has a
 frozen-cap witness in both bridge modes when either budget is at most eight. -/
