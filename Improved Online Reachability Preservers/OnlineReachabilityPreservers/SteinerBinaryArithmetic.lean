@@ -88,6 +88,15 @@ def mulBinaryWordsWithWork (x : List Bool) : List Bool → List Bool × ℕ
 
 private def binaryMulStepBudget (x y : ℕ) : ℕ := 20*(y*(x+2))+12
 
+/-- An upper bound for the shift-and-add loop at the supplied word lengths. -/
+def binaryMultiplicationWorkBudget (x y : ℕ) : ℕ := 3+y*binaryMulStepBudget x y
+
+theorem binaryMultiplicationWorkBudget_le {x x' y y' : ℕ}
+    (left : x ≤ x') (right : y ≤ y') :
+    binaryMultiplicationWorkBudget x y ≤ binaryMultiplicationWorkBudget x' y' := by
+  unfold binaryMultiplicationWorkBudget binaryMulStepBudget
+  gcongr
+
 theorem mulBinaryWordsWithWork_spec (x y : List Bool) :
     let out := mulBinaryWordsWithWork x y
     binaryWordValue out.1 = binaryWordValue x*binaryWordValue y ∧
@@ -220,5 +229,28 @@ theorem binaryWordValue_size_eq_length {word : List Bool} (canonical : Canonical
   have upper := Nat.size_le.mpr (binaryWordValue_lt_pow word)
   have lower := Nat.lt_size.mpr (binaryWordValue_pow_le_of_last last)
   omega
+
+/-- Return the binary encoding of the input length, with a minimum of one. -/
+def positiveBinaryLengthWithWork (bits : List Bool) : List Bool × ℕ :=
+  if bits.isEmpty then ([true],4) else
+    let width := binaryWordLengthWithWork bits
+    (width.1,width.2+2)
+
+theorem positiveBinaryLengthWithWork_spec (bits : List Bool) :
+    let out := positiveBinaryLengthWithWork bits
+    binaryWordValue out.1 = max 1 bits.length ∧ out.1.length ≤ bits.length+1 ∧
+      out.2 ≤ 5+bits.length*(20*bits.length+9) := by
+  cases bits with
+  | nil => decide
+  | cons b tail =>
+    let bits := b::tail
+    let width := binaryWordLengthWithWork bits
+    obtain ⟨value,length,work⟩ := binaryWordLengthWithWork_spec bits
+    change binaryWordValue width.1 = max 1 bits.length ∧ width.1.length ≤ bits.length+1 ∧
+      width.2+2 ≤ 5+bits.length*(20*bits.length+9)
+    change width.2 ≤ 3+bits.length*(20*bits.length+9) at work
+    have nonempty : 1 ≤ bits.length := by simp [bits]
+    rw [Nat.max_eq_right nonempty]
+    exact ⟨value,length.trans (Nat.le_succ _),by omega⟩
 
 end OnlineReachabilityPreservers

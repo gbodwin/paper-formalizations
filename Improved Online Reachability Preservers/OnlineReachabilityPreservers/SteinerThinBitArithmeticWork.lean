@@ -5,28 +5,6 @@ import OnlineReachabilityPreservers.SteinerFinTraceReplayWork
 
 namespace OnlineReachabilityPreservers
 
-private def positiveBinaryLengthWithWork (bits : List Bool) : List Bool × ℕ :=
-  if bits.isEmpty then ([true],4) else
-    let width := binaryWordLengthWithWork bits
-    (width.1,width.2+2)
-
-private theorem positiveBinaryLengthWithWork_spec (bits : List Bool) :
-    let out := positiveBinaryLengthWithWork bits
-    binaryWordValue out.1 = max 1 bits.length ∧ out.1.length ≤ bits.length+1 ∧
-      out.2 ≤ 5+bits.length*(20*bits.length+9) := by
-  cases bits with
-  | nil => decide
-  | cons b tail =>
-    let bits := b::tail
-    let width := binaryWordLengthWithWork bits
-    obtain ⟨value,length,work⟩ := binaryWordLengthWithWork_spec bits
-    change binaryWordValue width.1 = max 1 bits.length ∧ width.1.length ≤ bits.length+1 ∧
-      width.2+2 ≤ 5+bits.length*(20*bits.length+9)
-    change width.2 ≤ 3+bits.length*(20*bits.length+9) at work
-    have nonempty : 1 ≤ bits.length := by simp [bits]
-    rw [Nat.max_eq_right nonempty]
-    exact ⟨value,length.trans (Nat.le_succ _),by omega⟩
-
 /-- Return the thin update cap and rounding offset as binary words. The
 input words encode the counts of vertices and arcs. -/
 def thinReplayControlsWithBinaryWork (vertexBits arcBits : List Bool) : (List Bool × List Bool) × ℕ :=

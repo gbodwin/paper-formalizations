@@ -945,18 +945,23 @@ adds at most \(7(n+m)+19+4(p+1)\) for the setup and reached calls.
 
 The [binary arithmetic](OnlineReachabilityPreservers/SteinerBinaryArithmetic.lean#L45)
 evaluates addition with a carry on explicit bit lists. The
-[multiplication](OnlineReachabilityPreservers/SteinerBinaryArithmetic.lean#L91)
-uses shifts and additions. The [length counter](OnlineReachabilityPreservers/SteinerBinaryArithmetic.lean#L156)
+[multiplication](OnlineReachabilityPreservers/SteinerBinaryArithmetic.lean#L100)
+uses shifts and additions. The [length counter](OnlineReachabilityPreservers/SteinerBinaryArithmetic.lean#L165)
 increments a binary word for each input bit. All three preserve decoded
 values and bound the output length and recorded work. The
-[thin setup evaluator](OnlineReachabilityPreservers/SteinerThinBitArithmeticWork.lean#L44)
+[thin setup evaluator](OnlineReachabilityPreservers/SteinerThinBitArithmeticWork.lean#L22)
 combines these operations with a polynomial bound in the input lengths.
 On canonical encodings of the two input counts, its
-[refinement theorem](OnlineReachabilityPreservers/SteinerThinBitArithmeticWork.lean#L86)
+[refinement theorem](OnlineReachabilityPreservers/SteinerThinBitArithmeticWork.lean#L64)
 matches the update cap and rounding offset used in the complete replay.
-The bound applies to this separate setup calculation on supplied binary
-lists. Input encoding and bit and native execution costs for the full
-replay remain open.
+The [binary trial-count evaluator](OnlineReachabilityPreservers/SteinerEarlyBitArithmeticWork.lean#L23)
+increments the binary height, squares it, multiplies it by the vertex
+width, and shifts by four bits. Its exact
+[reference comparison](OnlineReachabilityPreservers/SteinerEarlyBitArithmeticWork.lean#L68)
+requires a canonical binary encoding of the vertex count. The height
+word permits redundant high zeros. The two bounds apply to setup
+calculations on supplied binary lists. Input encoding and bit and native
+execution costs for the full replay remain open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
