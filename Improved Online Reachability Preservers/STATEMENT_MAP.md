@@ -1183,6 +1183,14 @@ The accounting includes the scan of the arc count word, charges parity and
 halving at the reserved operand width, and uses the supplied endpoint
 label-read allowance and indexed read model.
 
+The [finite-input entry](OnlineReachabilityPreservers/SteinerBinaryFinInputWork.lean#L174)
+reads the label width from the word for the vertex count and encodes the
+typed graph and demand lists in their given order. The [pair builder](OnlineReachabilityPreservers/SteinerBinaryFinInputWork.lean#L130)
+encodes each entry of the supplied vertex list and pairs the resulting
+words, including self-pairs and any repeated vertices. When the vertex
+list is complete, every ordered pair has a key. The refinement retains
+the same thin graph and charges the encodings and generated pair rows.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

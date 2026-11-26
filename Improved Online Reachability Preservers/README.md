@@ -456,8 +456,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   empty graph, any missed prefix selects the original graph, and otherwise
   the last rounded graph is returned. The [indexed sample entry](OnlineReachabilityPreservers/SteinerBinaryThinSampleWork.lean#L197)
   constructs these rows using the decoder's shared arc index and its stored
-  thresholds. The graph inputs, other replay phases, and native execution
-  bounds remain to be integrated.
+  thresholds. The [finite-input entry](OnlineReachabilityPreservers/SteinerBinaryFinInputWork.lean#L174)
+  encodes the graph and requests and generates all ordered pairs from the
+  supplied vertex list. The numeric controls and seed index are supplied.
+  The other replay phases and native execution bounds remain to be integrated.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
