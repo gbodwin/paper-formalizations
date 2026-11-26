@@ -529,6 +529,8 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   depends only on the vertex and arc counts, raw arc list length, forest
   height, and demand count. The same theorem checks the reference graph
   at every feasible prefix and the exact evaluation count.
+  At fixed forest height a [single polynomial](OnlineReachabilityPreservers/SteinerBinaryReplayAsymptotics.lean#L171)
+  bounds the sum of the recorded work and the prescribed number of fair bits.
   The [executable competitive bound](OnlineReachabilityPreservers/SteinerBinaryReplayCompetitive.lean#L56)
   applies Theorem 21 to the final graph returned by this replay. Uniform
   fixed-length seeds give the claimed expected edge bound on every fixed

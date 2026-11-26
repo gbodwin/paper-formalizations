@@ -1320,6 +1320,11 @@ original vertex count and forest height. With this allowance, the
 gives the exact feasible prefix graphs and evaluation count together
 with a common bound on all eight work fields. The bound uses only the
 vertex and arc counts, raw arc list length, height, and number of requests.
+The [fixed-height growth theorem](OnlineReachabilityPreservers/SteinerBinaryReplayAsymptotics.lean#L159)
+bounds this size allowance by a constant times a fixed power of the sum
+of the input sizes plus one. The [combined theorem](OnlineReachabilityPreservers/SteinerBinaryReplayAsymptotics.lean#L171)
+bounds the recorded work and the fixed supply of fair bits by one such
+polynomial. Its degree and leading bound depend only on the forest height.
 The [returned graph](OnlineReachabilityPreservers/SteinerBinaryReplayCompetitive.lean#L22)
 is the last executable record and equals the reference for every seed.
 It [serves all feasible requests](OnlineReachabilityPreservers/SteinerBinaryReplayCompetitive.lean#L36)
