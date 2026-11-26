@@ -734,6 +734,17 @@ branch. Its [feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTrace
 includes the new early rounding count. The proof still leaves request
 attachments and the other operations listed above outside the tally.
 
+The [forest attachment builder](OnlineReachabilityPreservers/SteinerForestAttachmentsWork.lean#L162)
+takes a complete duplicate-free list of forest vertices. It scans each
+row once for the source and sink leaf groups, charges the traversals for
+their depth and terminal label, and forms the two exact arc unions with
+the base free arcs. The
+[request-list evaluator](OnlineReachabilityPreservers/SteinerForestAttachmentsWork.lean#L210)
+keeps the earlier requests, including order and repetitions. It bounds
+the recorded work by the number of requests times the per-request
+budget, plus the empty-list charge. The supplied vertex list and the
+new request builder are separate from the complete replay so far.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

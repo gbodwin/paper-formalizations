@@ -275,6 +275,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   set assembly and service work, and bit and native costs remain open.
   [Early rounding preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L331)
   · [Complete replay with charge reads](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1737).
+  Given a complete list of distinct forest vertices, a measured attachment
+  builder scans the two leaf groups together and counts both unions with
+  the free arcs. It returns the same weighted requests in the same order.
+  The complete replay still needs this attachment builder wired in.
+  [Metered forest requests](OnlineReachabilityPreservers/SteinerForestAttachmentsWork.lean#L210).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
