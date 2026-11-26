@@ -410,8 +410,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   It charges comparisons bit by bit and preserves the order of visited
   vertex lists. The [binary trial evaluator](OnlineReachabilityPreservers/SteinerThinBitServiceWork.lean#L79)
   uses the passing labels directly and agrees with the existing thin replay's
-  miss flag on valid encoded inputs. Input encoding, table conversion, and
-  the full replay's bit and native costs remain open.
+  miss flag on valid encoded inputs. On a supplied sequence of distinct-arc
+  cuts and queries, the [binary trace evaluator](OnlineReachabilityPreservers/SteinerThinBitCutTraceWork.lean#L164)
+  starts from zero and agrees on every miss flag and the ending indexed loads.
+  The terminal multiplicity bound keeps all earlier updates within the
+  payload width. The full replay still needs a bit bound for producing the
+  input traces and integrating the remaining phases, as well as native costs.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

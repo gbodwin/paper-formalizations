@@ -1030,6 +1030,17 @@ matches the thin replay's miss flag at depth \(n\). The tally covers the
 rounding scan and the reachability check for that trial. Label construction,
 load table conversion, counter representation, and the full replay remain open.
 
+The [cut-trace evaluator](OnlineReachabilityPreservers/SteinerThinBitCutTraceWork.lean#L74)
+uses the same bit table for every supplied cut and query. Each cut's arcs
+are distinct. Repeated uses of an arc in different cuts are allowed.
+If all initial loads plus their terminal counts fit the payload width,
+every intermediate increment fits as well. Lean checks the exact flags
+in order and the complete ending load table against the indexed reference.
+The [empty-table entry point](OnlineReachabilityPreservers/SteinerThinBitCutTraceWork.lean#L164)
+also accounts for the initial binary allocation. The work bound sums the
+charges for the supplied cut arcs and trials. Producing cuts from the
+input graph and integrating every phase of the replay are separate.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
