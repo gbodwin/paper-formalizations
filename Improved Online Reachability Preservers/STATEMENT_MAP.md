@@ -947,6 +947,17 @@ The lower-mass case uses explicit witnesses. The larger-mass case uses the
 forest bound and the original cap widths.
 [All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L151).
 
+For half-bridge exclusion through size three, the
+[opposite-link graph has no triangles](OnlineReachabilityPreservers/OppositeLinkForest.lean#L572).
+Each link joins consecutive common vertices of two paths that traverse
+them in opposite orders. The [two-link property](OnlineReachabilityPreservers/OppositeLinkForest.lean#L616)
+puts the intermediate vertex on any path that contains both distinct endpoints.
+At cutoff four, the [four-cycle exclusion](OnlineReachabilityPreservers/OppositeLinkForest.lean#L789)
+uses that property to compare the last arcs in competing detours. It
+shows that [every cycle has length at least five](OnlineReachabilityPreservers/OppositeLinkForest.lean#L842).
+The unrestricted cleaning claim with all four original-average caps
+remains open.
+
 | Source | Mathematical obligation |
 | --- | --- |
 | Definition 2 | Half-\(k\)-bridge-free means no bridge of size at most \(k\) whose last arc precedes the river. |

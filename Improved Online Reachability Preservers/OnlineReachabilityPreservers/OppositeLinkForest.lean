@@ -528,4 +528,344 @@ theorem removeOppositeIntersections_mass_of_fullFree {p : ℕ} {paths : Fin p �
   exact (removeOppositeIntersections_mass_with_link_count three simple).trans
     (Nat.add_le_add_left (oppositeLinkGraph_card_edgeSet three full) _)
 
+omit [Fintype V] in
+private theorem halfThree_river_before_final {paths : I → List V} (free : HalfBridgeFree (Before paths) 3)
+    {a b r : I} (ab : a ≠ b) (ra : r ≠ a) (rb : r ≠ b)
+    {x y z : V} (xy : Before paths a x y) (yz : Before paths b y z) (xz : Before paths r x z) : r < b := by
+  have permitted : ¬ b < r := free (k := 1) (by decide) (threeListBridge ab ra rb xy yz xz)
+  exact (le_of_not_gt permitted).lt_of_ne rb
+
+omit [Fintype V] in
+private theorem halfThree_no_opposite_triangle_on_path {paths : I → List V} (free : HalfBridgeFree (Before paths) 3)
+    {x y z : V} {line : I} (xy : Before paths line x y) (yz : Before paths line y z)
+    (linkXY : ∃ a b, OppositeNeighbors paths a b x y)
+    (linkYZ : ∃ a b, OppositeNeighbors paths a b y z)
+    (linkXZ : ∃ a b, OppositeNeighbors paths a b x z) : False := by
+  obtain ⟨_,backXY,opXY⟩ := linkXY
+  obtain ⟨_,backYZ,opYZ⟩ := linkYZ
+  obtain ⟨frontXZ,backXZ,opXZ⟩ := linkXZ
+  have legYX : Before paths backXY y x := opXY.2.2.1
+  have legZY : Before paths backYZ z y := opYZ.2.2.1
+  have legZX : Before paths backXZ z x := opXZ.2.2.1
+  have same : frontXZ = line := by
+    by_contra different
+    exact no_parallel_list_steps free (by decide) different opXZ.2.1 (listBefore_transitive xy yz)
+  subst frontXZ
+  have missing : y ∉ paths backXZ := fun mem => opXZ.2.2.2 ⟨y,xy,yz,mem⟩
+  have outsideXY : backXZ ≠ backXY := fun same => missing (same.symm ▸ legYX.1)
+  have outsideYZ : backXZ ≠ backYZ := fun same => missing (same.symm ▸ legZY.2.1)
+  have two : backYZ ≠ backXY := by
+    intro same
+    have step := listBefore_transitive legZY (same.symm ▸ legYX)
+    exact no_parallel_list_steps free (by decide) outsideYZ legZX step
+  have differentLine : backXY ≠ line := by
+    intro same
+    exact (lt_asymm xy.2.2 (same ▸ legYX).2.2)
+  have forward := halfThree_river_before_final free two outsideYZ outsideXY legZY legYX legZX
+  have backward := halfThree_river_before_final free opXZ.1 differentLine outsideXY.symm yz legZX legYX
+  exact (not_lt_of_ge backward.le) forward
+
+omit [Fintype V] in
+/-- Three opposite links cannot form a triangle in a half-3-bridge-free
+system. The ordering of the two competing last arcs would have to run
+in both directions. -/
+theorem halfThree_oppositeLinkGraph_no_triangle {paths : I → List V} (free : HalfBridgeFree (Before paths) 3)
+    {x y z : V}
+    (xy : (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).Adj x y)
+    (yz : (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).Adj y z)
+    (zx : (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).Adj z x) : False := by
+  let G := oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))
+  have xy' : G.Adj y x := xy.symm
+  have yz' : G.Adj z y := yz.symm
+  have zx' : G.Adj x z := zx.symm
+  have apartXY : x ≠ y := G.ne_of_adj xy
+  have apartYZ : y ≠ z := G.ne_of_adj yz
+  have apartZX : z ≠ x := G.ne_of_adj zx
+  have noCommon (owner : I) (atX : x ∈ paths owner) (atY : y ∈ paths owner) (atZ : z ∈ paths owner) : False := by
+    rcases listBefore_total atX atY apartXY with orderedXY | orderedYX
+    · rcases listBefore_total atY atZ apartYZ with orderedYZ | orderedZY
+      · exact halfThree_no_opposite_triangle_on_path free orderedXY orderedYZ xy yz zx'
+      · rcases listBefore_total atX atZ apartZX.symm with orderedXZ | orderedZX
+        · exact halfThree_no_opposite_triangle_on_path free orderedXZ orderedZY zx' yz' xy
+        · exact halfThree_no_opposite_triangle_on_path free orderedZX orderedXY zx xy yz'
+    · rcases listBefore_total atX atZ apartZX.symm with orderedXZ | orderedZX
+      · exact halfThree_no_opposite_triangle_on_path free orderedYX orderedXZ xy' zx' yz
+      · rcases listBefore_total atY atZ apartYZ with orderedYZ | orderedZY
+        · exact halfThree_no_opposite_triangle_on_path free orderedYZ orderedZX yz zx xy'
+        · exact halfThree_no_opposite_triangle_on_path free orderedZY orderedYX yz' xy' zx
+  obtain ⟨a,ar,sideXY⟩ := xy
+  obtain ⟨b,_,sideYZ⟩ := yz
+  obtain ⟨c,_,sideXZ⟩ := zx'
+  have stepXY := sideXY.2.1
+  have stepYX := sideXY.2.2.1
+  have stepYZ := sideYZ.2.1
+  have stepXZ := sideXZ.2.1
+  have ab : a ≠ b := fun same => noCommon a stepXY.1 stepXY.2.1 (same.symm ▸ stepYZ.2.1)
+  have ca : c ≠ a := fun same => noCommon c stepXZ.1 (same.symm ▸ stepXY.2.1) stepXZ.2.1
+  have cb : c ≠ b := fun same => noCommon c stepXZ.1 (same.symm ▸ stepYZ.1) stepXZ.2.1
+  have arc : ar ≠ c := fun same => noCommon ar stepYX.2.1 stepYX.1 (same.symm ▸ stepXZ.2.1)
+  have bar : b ≠ ar := fun same => noCommon b (same.symm ▸ stepYX.2.1) stepYZ.1 stepYZ.2.1
+  have forward := halfThree_river_before_final free ab ca cb stepXY stepYZ stepXZ
+  have backward := halfThree_river_before_final free arc bar cb.symm stepYX stepXZ stepYZ
+  exact (not_lt_of_ge backward.le) forward
+
+
+omit [Fintype V] in
+/-- If two vertices of a path are joined by two opposite links, the
+intermediate vertex lies on the same path. -/
+theorem halfThree_mem_of_two_opposite_links {paths : I → List V} (free : HalfBridgeFree (Before paths) 3)
+    {x w z : V} {line : I} (xz : Before paths line x z)
+    (left : (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).Adj x w)
+    (right : (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).Adj w z) :
+    w ∈ paths line := by
+  obtain ⟨c,e,left⟩ := left
+  obtain ⟨d,f,right⟩ := right
+  by_contra missing
+  have lineC : line ≠ c := fun same => missing (same.symm ▸ left.2.1.2.1)
+  have lineE : line ≠ e := fun same => missing (same.symm ▸ left.2.2.1.1)
+  have lineD : line ≠ d := fun same => missing (same.symm ▸ right.2.1.1)
+  have lineF : line ≠ f := fun same => missing (same.symm ▸ right.2.2.1.2.1)
+  have cd : c ≠ d := by
+    intro same
+    exact no_parallel_list_steps free (by decide) lineC xz
+      (listBefore_transitive left.2.1 (same.symm ▸ right.2.1))
+  have before := halfThree_river_before_final free cd lineC lineD left.2.1 right.2.1 xz
+  have ed : e = d := by
+    by_contra different
+    have after := halfThree_river_before_final free lineE.symm (fun same => different same.symm) lineD.symm
+      left.2.2.1 xz right.2.1
+    exact (not_lt_of_ge after.le) before
+  subst e
+  have zd : z ∈ paths d := right.2.1.2.1
+  have xd : x ∈ paths d := left.2.2.1.2.1
+  have zxD : Before paths d z x := by
+    rcases listBefore_total zd xd (listBefore_ne xz).symm with zx | xz'
+    · exact zx
+    · exact (no_parallel_list_steps free (by decide) lineD xz xz').elim
+  have cf : c ≠ f := by
+    intro same
+    have zc : z ∈ paths c := same.symm ▸ right.2.2.1.1
+    have zxC : Before paths c z x := by
+      rcases listBefore_total zc left.2.1.1 (listBefore_ne xz).symm with zx | xz'
+      · exact zx
+      · exact (no_parallel_list_steps free (by decide) lineC xz xz').elim
+    have flipped := oppositeNeighbors_swap_of_halfTwo (fun _ h => free (h.trans (by decide))) right
+    exact flipped.2.2.2 ⟨x,same ▸ zxC,same ▸ left.2.1,xd⟩
+  have earlier := halfThree_river_before_final free lineF lineC.symm cf xz right.2.2.1 left.2.1
+  have later := halfThree_river_before_final free cd.symm right.1.symm cf.symm zxD left.2.1 right.2.2.1
+  exact (not_lt_of_ge later.le) earlier
+
+
+omit [Fintype V] in
+private theorem halfFour_river_before_final {paths : I → List V} (free : HalfBridgeFree (Before paths) 4)
+    {a b c r : I} (ab : a ≠ b) (ac : a ≠ c) (bc : b ≠ c) (ra : r ≠ a) (rb : r ≠ b) (rc : r ≠ c)
+    {x y z t : V} (xz : x ≠ z) (yt : y ≠ t)
+    (first : Before paths a x y) (second : Before paths b y z) (last : Before paths c z t)
+    (direct : Before paths r x t) : r < c := by
+  let bridge : Bridge (Before paths) 2 := {
+    vertex := ![x,y,z,t]
+    arc := ![a,b,c]
+    river := r
+    distinctVertices := by
+      intro i j eq
+      have xy := listBefore_ne first
+      have yz := listBefore_ne second
+      have zt := listBefore_ne last
+      have xt := listBefore_ne direct
+      fin_cases i <;> fin_cases j <;> simp_all
+    distinctArcs := by
+      intro i j eq
+      fin_cases i <;> fin_cases j <;> simp_all
+    river_ne_arc := by intro i; fin_cases i <;> first | exact ra | exact rb | exact rc
+    riverStep := direct
+    arcStep := by intro i; fin_cases i <;> first | exact first | exact second | exact last }
+  exact (le_of_not_gt (free (k := 2) (by decide) bridge)).lt_of_ne rc
+
+private abbrev LinkedOpposite {paths : I → List V} (free : HalfBridgeFree (Before paths) 3) (x y : V) : Prop :=
+  (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).Adj x y
+
+omit [Fintype V] in
+private theorem halfThree_middle_on_line {paths : I → List V} (free : HalfBridgeFree (Before paths) 3)
+    {i : I} {x w z : V} (xmem : x ∈ paths i) (zmem : z ∈ paths i) (xz : x ≠ z)
+    (left : LinkedOpposite free x w) (right : LinkedOpposite free w z) : w ∈ paths i := by
+  rcases listBefore_total xmem zmem xz with straight | reversed
+  · exact halfThree_mem_of_two_opposite_links free straight left right
+  · exact halfThree_mem_of_two_opposite_links free reversed right.symm left.symm
+
+omit [Fintype V] in
+private theorem halfFour_square_return_order {paths : I → List V}
+    (free : HalfBridgeFree (Before paths) 4) {u x w z : V}
+    (oppUW : u ≠ w) (oppXZ : x ≠ z)
+    (ux : LinkedOpposite (fun _ h => free (h.trans (by decide))) u x)
+    (xw : LinkedOpposite (fun _ h => free (h.trans (by decide))) x w)
+    (wz : LinkedOpposite (fun _ h => free (h.trans (by decide))) w z)
+    (zu : LinkedOpposite (fun _ h => free (h.trans (by decide))) z u)
+    (noFull : ∀ i, u ∈ paths i → x ∈ paths i → w ∈ paths i → z ∈ paths i → False) :
+    ∃ a b, Before paths a x u ∧ Before paths b z u ∧ b < a := by
+  let three : HalfBridgeFree (Before paths) 3 := fun _ h => free (h.trans (by decide))
+  have noUW {i : I} (umem : u ∈ paths i) (wmem : w ∈ paths i) : False :=
+    noFull i umem (halfThree_middle_on_line three umem wmem oppUW ux xw)
+      wmem (halfThree_middle_on_line three umem wmem oppUW zu.symm wz.symm)
+  have noXZ {i : I} (xmem : x ∈ paths i) (zmem : z ∈ paths i) : False :=
+    noFull i (halfThree_middle_on_line three xmem zmem oppXZ ux.symm zu.symm) xmem
+      (halfThree_middle_on_line three xmem zmem oppXZ xw wz) zmem
+  obtain ⟨_,a,oppUX⟩ := ux
+  obtain ⟨_,c,oppXW⟩ := xw
+  obtain ⟨_,d,oppWZ⟩ := wz
+  obtain ⟨b,_,oppZU⟩ := zu
+  have xu := oppUX.2.2.1
+  have wx := oppXW.2.2.1
+  have zw := oppWZ.2.2.1
+  have stepZU := oppZU.2.1
+  have dc : d ≠ c := fun same => noXZ (same.symm ▸ wx.2.1) zw.1
+  have da : d ≠ a := fun same => noUW (same.symm ▸ xu.2.1) zw.2.1
+  have ca : c ≠ a := fun same => noUW (same.symm ▸ xu.2.1) wx.1
+  have bd : b ≠ d := fun same => noUW stepZU.2.1 (same.symm ▸ zw.2.1)
+  have bc : b ≠ c := fun same => noUW stepZU.2.1 (same.symm ▸ wx.1)
+  have ba : b ≠ a := fun same => noXZ (same.symm ▸ xu.1) stepZU.1
+  exact ⟨a,b,xu,stepZU,halfFour_river_before_final free dc da ca bd bc ba oppXZ.symm oppUW.symm zw wx xu stepZU⟩
+
+omit [Fintype V] in
+private theorem halfFour_no_square_with_row_min {paths : I → List V}
+    (free : HalfBridgeFree (Before paths) 4) {u x w z : V} {p : I}
+    (oppUW : u ≠ w) (oppXZ : x ≠ z)
+    (ux : LinkedOpposite (fun _ h => free (h.trans (by decide))) u x)
+    (xw : LinkedOpposite (fun _ h => free (h.trans (by decide))) x w)
+    (wz : LinkedOpposite (fun _ h => free (h.trans (by decide))) w z)
+    (zu : LinkedOpposite (fun _ h => free (h.trans (by decide))) z u)
+    (orderUX : Before paths p u x) (orderXZ : Before paths p x z) : False := by
+  let three : HalfBridgeFree (Before paths) 3 := fun _ h => free (h.trans (by decide))
+  have orderUZ := listBefore_transitive orderUX orderXZ
+  have uniqueUZ : ∀ q, Before paths q u z → q = p := by
+    intro q step
+    by_contra distinct
+    exact no_parallel_list_steps free (by decide) distinct step orderUZ
+  obtain ⟨frontUZ,backZU,opUZ⟩ := zu.symm
+  have exactUZ := uniqueUZ frontUZ opUZ.2.1
+  subst frontUZ
+  have awayX : x ∉ paths backZU := fun member => opUZ.2.2.2 ⟨x,orderUX,orderXZ,member⟩
+  have only {i : I} (uMem : u ∈ paths i) (xMem : x ∈ paths i) (zMem : z ∈ paths i) : i = p := by
+    rcases listBefore_total uMem zMem (listBefore_ne orderUZ) with ordered | backwards
+    · exact uniqueUZ i ordered
+    · have eq : i = backZU := by
+        by_contra different
+        exact no_parallel_list_steps free (by decide) different backwards opUZ.2.2.1
+      exact (awayX (eq ▸ xMem)).elim
+  have onlyUW {i : I} (uMem : u ∈ paths i) (wMem : w ∈ paths i) : i = p :=
+    only uMem (halfThree_middle_on_line three uMem wMem oppUW ux xw)
+      (halfThree_middle_on_line three uMem wMem oppUW zu.symm wz.symm)
+  have onlyXZ {i : I} (xMem : x ∈ paths i) (zMem : z ∈ paths i) : i = p :=
+    only (halfThree_middle_on_line three xMem zMem oppXZ ux.symm zu.symm) xMem zMem
+  obtain ⟨_,a,opUX⟩ := ux
+  obtain ⟨_,c,opXW⟩ := xw
+  obtain ⟨_,d,opWZ⟩ := wz
+  let b := backZU
+  have xu := opUX.2.2.1
+  have wx := opXW.2.2.1
+  have zw := opWZ.2.2.1
+  have stepZU : Before paths b z u := opUZ.2.2.1
+  have aNot : a ≠ p := by
+    intro same
+    exact lt_asymm orderUX.2.2 (same ▸ xu).2.2
+  have bNot : b ≠ p := opUZ.1.symm
+  have ab : a ≠ b := fun same => awayX (show x ∈ paths b from same ▸ xu.1)
+  have priority := halfThree_river_before_final three bNot.symm aNot ab orderXZ stepZU xu
+  have dc : d ≠ c := by
+    intro same
+    have both := onlyXZ (same.symm ▸ wx.2.1) zw.1
+    have reversed := listBefore_transitive zw (same.symm ▸ wx)
+    exact lt_asymm orderXZ.2.2 (both ▸ reversed).2.2
+  have da : d ≠ a := fun same => aNot (onlyUW xu.2.1 (same ▸ zw.2.1))
+  have ca : c ≠ a := fun same => aNot (onlyUW xu.2.1 (same ▸ wx.1))
+  have bd : b ≠ d := fun same => bNot (onlyUW stepZU.2.1 (same.symm ▸ zw.2.1))
+  have bc : b ≠ c := fun same => bNot (onlyUW stepZU.2.1 (same.symm ▸ wx.1))
+  have impossible := halfFour_river_before_final free dc da ca bd bc ab.symm oppXZ.symm oppUW.symm zw wx xu stepZU
+  exact (not_lt_of_ge impossible.le) priority
+
+
+omit [Fintype V] in
+/-- Four distinct vertices with successive opposite links would force a
+half-bridge of size at most four. -/
+theorem halfFour_oppositeLinkGraph_no_square {paths : I → List V} (free : HalfBridgeFree (Before paths) 4)
+    {u x w z : V} (oppUW : u ≠ w) (oppXZ : x ≠ z)
+    (ux : (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).Adj u x)
+    (xw : (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).Adj x w)
+    (wz : (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).Adj w z)
+    (zu : (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).Adj z u) : False := by
+  let three : HalfBridgeFree (Before paths) 3 := fun _ h => free (h.trans (by decide))
+  by_cases supported : ∃ i, u ∈ paths i ∧ x ∈ paths i ∧ w ∈ paths i ∧ z ∈ paths i
+  · obtain ⟨p,atU,atX,atW,atZ⟩ := supported
+    let corners : Finset V := {u,x,w,z}
+    obtain ⟨first,onCorners,least⟩ := Finset.exists_min_image corners (paths p).idxOf ⟨u,by simp [corners]⟩
+    have contains (v : V) (on : v ∈ corners) : v ∈ paths p := by
+      simp only [corners,Finset.mem_insert,Finset.mem_singleton] at on
+      rcases on with rfl | rfl | rfl | rfl <;> assumption
+    have starts {v : V} (on : v ∈ corners) (apart : first ≠ v) : Before paths p first v := by
+      refine ⟨contains first onCorners,contains v on,(least v on).lt_of_ne ?_⟩
+      exact fun same => apart ((List.idxOf_inj (contains first onCorners)).mp same)
+    have fromMinimum {a b c d : V} (ac : a ≠ c) (bd : b ≠ d)
+        (ab : LinkedOpposite three a b) (bc : LinkedOpposite three b c)
+        (cd : LinkedOpposite three c d) (da : LinkedOpposite three d a)
+        (firstB : Before paths p a b) (firstD : Before paths p a d) : False := by
+      rcases listBefore_total firstB.2.1 firstD.2.1 bd with ordered | reversed
+      · exact halfFour_no_square_with_row_min free ac bd ab bc cd da firstB ordered
+      · exact halfFour_no_square_with_row_min free ac bd.symm da.symm cd.symm bc.symm ab.symm firstD reversed
+    simp only [corners,Finset.mem_insert,Finset.mem_singleton] at onCorners
+    rcases onCorners with rfl | rfl | rfl | rfl
+    · exact fromMinimum oppUW oppXZ ux xw wz zu (starts (by simp [corners]) ux.ne)
+        (starts (by simp [corners]) zu.ne.symm)
+    · exact fromMinimum oppXZ oppUW.symm xw wz zu ux (starts (by simp [corners]) xw.ne)
+        (starts (by simp [corners]) ux.ne.symm)
+    · exact fromMinimum oppUW.symm oppXZ.symm wz zu ux xw (starts (by simp [corners]) wz.ne)
+        (starts (by simp [corners]) xw.ne.symm)
+    · exact fromMinimum oppXZ.symm oppUW zu ux xw wz (starts (by simp [corners]) zu.ne)
+        (starts (by simp [corners]) wz.ne.symm)
+  · have noFull (p : I) (atU : u ∈ paths p) (atX : x ∈ paths p) (atW : w ∈ paths p) (atZ : z ∈ paths p) : False :=
+      supported ⟨p,atU,atX,atW,atZ⟩
+    obtain ⟨a,b,xu,stepZU,forward⟩ := halfFour_square_return_order free oppUW oppXZ ux xw wz zu noFull
+    obtain ⟨b',a',stepZU',xu',backward⟩ :=
+      halfFour_square_return_order free oppUW oppXZ.symm zu.symm wz.symm xw.symm ux.symm
+        (fun p atU atZ atW atX => noFull p atU atX atW atZ)
+    have first : a' = a := by
+      by_contra different
+      exact no_parallel_list_steps free (by decide) different xu' xu
+    have second : b' = b := by
+      by_contra different
+      exact no_parallel_list_steps free (by decide) different stepZU' stepZU
+    rw [first,second] at backward
+    exact (not_lt_of_ge backward.le) forward
+
+
+omit [Fintype V] in
+/-- Opposite-link cycles have length at least five under half-bridge
+exclusion through size four. -/
+theorem halfFour_oppositeLinkGraph_cycle_length_gt_four {paths : I → List V}
+    (free : HalfBridgeFree (Before paths) 4) {u : V}
+    (cycle : (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).Walk u u)
+    (simple : cycle.IsCycle) : 4 < cycle.length := by
+  let length := cycle.length
+  let v := cycle.getVert
+  have large : 3 ≤ length := simple.three_le_length
+  by_contra! short
+  change length ≤ 4 at short
+  have separate (i j : ℕ) (before : i < j) (inside : j < length) : v i ≠ v j := by
+    intro equal
+    have same := simple.getVert_injOn'
+      (show i ≤ cycle.length-1 by change i ≤ length-1; omega)
+      (show j ≤ cycle.length-1 by change j ≤ length-1; omega) equal
+    exact before.ne same
+  have closes : v length = v 0 := by simp [length,v,SimpleGraph.Walk.getVert_length]
+  have edge (i : ℕ) (inside : i < length) :
+      (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).Adj (v i) (v (i+1)) :=
+    cycle.adj_getVert_succ inside
+  rcases (show length = 3 ∨ length = 4 by omega) with three | four
+  · have last : v 3 = v 0 := three ▸ closes
+    exact halfThree_oppositeLinkGraph_no_triangle (fun _ h => free (h.trans (by decide)))
+      (edge 0 (by omega)) (edge 1 (by omega)) (last ▸ edge 2 (by omega))
+  · have last : v 4 = v 0 := four ▸ closes
+    exact halfFour_oppositeLinkGraph_no_square free (separate 0 2 (by decide) (by omega))
+      (separate 1 3 (by decide) (by omega))
+      (edge 0 (by omega)) (edge 1 (by omega)) (edge 2 (by omega)) (last ▸ edge 3 (by omega))
+
+
 end OnlineReachabilityPreservers
