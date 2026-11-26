@@ -1295,7 +1295,7 @@ The [early prefix evaluator](OnlineReachabilityPreservers/SteinerBinaryEarlyWork
 uses the combined binary forest call on each reached prefix and reuses the
 original validation, expansion, and fallback. Its bound counts the early
 metric work separately and includes the fractional work, rounding and
-seed reads. The [finite preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L1163)
+seed reads. The [finite preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L1179)
 computes the exact metered hop table, paid and free classes, and trial
 count. With the supplied metered samples it returns the reference early
 graph and bounds the plan and trial-count preparation charge.
@@ -1305,6 +1305,14 @@ The [prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean
 proves the exact reference graph at every feasible prefix and the same
 number of evaluations as the earlier metered replay. On seed exhaustion,
 the shared fallback supplies all prefix graphs.
+The [uniform early allowance](OnlineReachabilityPreservers/SteinerBinaryEarlyBoundWork.lean#L133)
+uses the typed forest dimensions, supplied reader bounds, and demand
+count. It bounds the charged early metric work without evaluating the
+fractional solver. The [full replay tally](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L3087)
+includes the legacy validation and expansion counts, metered setup,
+seed decoding and indexing, and both phases on every reached prefix.
+The bound covers all recorded fields in the mixed model. A native
+execution bound remains open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

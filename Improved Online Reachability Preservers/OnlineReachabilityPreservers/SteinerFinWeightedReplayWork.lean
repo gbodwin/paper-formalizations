@@ -1,7 +1,7 @@
 import OnlineReachabilityPreservers.SteinerWeightedPlanWork
 import OnlineReachabilityPreservers.SteinerForestPairKeysWork
 import OnlineReachabilityPreservers.SteinerSeedDecoderWork
-import OnlineReachabilityPreservers.SteinerBinaryEarlyWork
+import OnlineReachabilityPreservers.SteinerBinaryEarlyBoundWork
 
 /-! Carry the one-pass weighted plan into the fixed-budget prefix evaluator. -/
 
@@ -1109,6 +1109,17 @@ theorem prepareFinSteinerWeightedForSeedWithMetricTrialCountWork_compare {n : �
 local instance finBinaryEarlyNetworkDecidableEq {n height : ℕ} : DecidableEq (ForestNetworkVertex (Fin n) height) :=
   (inferInstance : LinearOrder (ForestNetworkVertex (Fin n) height)).toDecidableEq
 
+/-- Allow for validation, purchase, and expansion using the earlier search
+work model, with the forest sizes bounded by the input size and height. -/
+def finSteinerBinaryEarlySearchWorkBudget (n m h p : ℕ) : ℕ :=
+  let forest := 2*n*(n+1)^h
+  earlySearchWorkBound n m forest (3*forest) p
+
+theorem finSteinerBinaryEarlySearchWorkBudget_mono (n m h : ℕ) :
+    Monotone (finSteinerBinaryEarlySearchWorkBudget n m h) := by
+  intro p q shorter
+  exact earlySearchWorkBound_mono n m le_rfl le_rfl shorter
+
 private theorem binaryEarlyRoundedGraph_cast_refines {n h : ℕ} (G : Arcs (Fin n))
     (links : {es : List (HeightForestVertex (Fin n) h × HeightForestVertex (Fin n) h) // es.Nodup})
     (linksExact : links.val.toFinset = heightForest G h)
@@ -1124,11 +1135,16 @@ private theorem binaryEarlyRoundedGraph_cast_refines {n h : ℕ} (G : Arcs (Fin 
     let sizeEq : (forestScale G h,earlyTrialCount (Fin n) h) = (scale,trials) := Prod.ext scaleEq.symm trialEq.symm
     let typed : ForestTrialArrayWithSeedWork (Fin n) h scale trials :=
       cast (congrArg (fun size : ℕ × ℕ => ForestTrialArrayWithSeedWork (Fin n) h size.1 size.2) sizeEq) samples
-    (binaryEarlyRoundedGraphWithWork G links paid free freeRows read scale trials typed D).1 =
-      earlyRoundedGraph G h D (fun i => forestRoundingSampleValues (forestScale G h) (samples i)) := by
+    let out := binaryEarlyRoundedGraphWithWork G links paid free freeRows read scale trials typed D
+    let sample : EarlyRoundSample G h := fun i => forestRoundingSampleValues (forestScale G h) (samples i)
+    out.1 = earlyRoundedGraph G h D sample ∧ out.2.1 ≤ (earlyRoundedGraphWithSearchWork G h sample D).2 ∧
+      out.2.2 ≤ (D.length+1)^2*binaryEarlyMetricWorkBudgetForLength G paid free freeRows.length readFee seedFee D.length := by
   subst scale trials
-  exact (binaryEarlyRoundedGraphWithWork_refines G links linksExact paid free paidExact freeExact freeRows freeAsSet
-    read readFee readExact readWork samples seedFee seedWork D).1
+  obtain ⟨graph,search,_⟩ := binaryEarlyRoundedGraphWithWork_refines G links linksExact paid free paidExact freeExact
+    freeRows freeAsSet read readFee readExact readWork samples seedFee seedWork D
+  refine ⟨graph,search,?_⟩
+  exact binaryEarlyRoundedGraphWithWork_tally_le G links linksExact paid free paidExact freeExact freeRows freeAsSet
+    read readFee readExact readWork samples seedFee seedWork D
 
 /-- Prepare the exact finite hop reader, priced plan, free rows, and trial
 count for the binary early prefix evaluator. -/
@@ -1158,16 +1174,18 @@ def prepareFinSteinerWeightedForSeedWithBinaryEarlyWork {n : ℕ} (G : Arcs (Fin
     binaryEarlyRoundedGraphWithWork G linkRows plan.1.1 plan.1.2 planned.1.2 read plan.2.1.1 trials.1.val typed
   ((⟨plan.2.1.1,scaleEq⟩,run,inputs.1.2,template.2,plan.2.2),planned.2+trials.2+5)
 
-/-- The graph of the prepared binary early evaluator agrees with the
-reference on every request prefix using the supplied fixed trial samples. -/
-theorem prepareFinSteinerWeightedForSeedWithBinaryEarlyWork_spec {n : ℕ} (G : Arcs (Fin n))
+/-- The prepared binary early evaluator has the reference graph and bounded
+recorded work for every prefix using the supplied fixed trial samples. -/
+theorem prepareFinSteinerWeightedForSeedWithBinaryEarlyWork_tally {n : ℕ} (G : Arcs (Fin n))
     (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (h : ℕ) :
     let out := prepareFinSteinerWeightedForSeedWithBinaryEarlyWork G raw same h
     out.2 ≤ finSteinerWeightPlanWorkPolynomial n h+(7*n+12)+7 ∧
       ∀ (samples : ForestTrialArrayWithSeedWork (Fin n) h (forestScale G h) (earlyTrialCount (Fin n) h))
         (seedFee : ℕ), (∀ i, forestSampleWorkBound (samples i) seedFee) →
-        ∀ D, ((out.1.2.1 samples) D).1 =
-          earlyRoundedGraph G h D (fun i => forestRoundingSampleValues (forestScale G h) (samples i)) := by
+        ∀ D, let result := out.1.2.1 samples D
+          result.1 = earlyRoundedGraph G h D (fun i => forestRoundingSampleValues (forestScale G h) (samples i)) ∧
+          result.2.1 ≤ finSteinerBinaryEarlySearchWorkBudget n G.card h D.length ∧
+          result.2.2 ≤ (D.length+1)^2*finSteinerBinaryEarlyMetricWorkBudget G h seedFee D.length := by
   let inputs := finSteinerTemplateInputsWithWordWork raw h
   let correct := finSteinerTemplateInputsWithWordWork_spec G raw same h
   let linkRows : {es : List (HeightForestVertex (Fin n) h × HeightForestVertex (Fin n) h) // es.Nodup} :=
@@ -1177,7 +1195,7 @@ theorem prepareFinSteinerWeightedForSeedWithBinaryEarlyWork_spec {n : ℕ} (G : 
   let planned := prepareForestWeightsAndFreeRowsFromListWithWordWork linkRows.val linkRows.property read
   let plan := planned.1.1
   let trials := finEarlyTrialCountWithWordWork n h
-  obtain ⟨samePlan,_,sameFree,workEq⟩ := prepareForestWeightsAndFreeRowsFromListWithWordWork_spec
+  obtain ⟨samePlan,freeDistinct,sameFree,workEq⟩ := prepareForestWeightsAndFreeRowsFromListWithWordWork_spec
     linkRows.val linkRows.property read
   obtain ⟨oldPlan,work⟩ := finWeightsFromTemplateInputs_spec G raw same h
   have planEq : plan = prepareForestWeights links (forestWeightWithDistanceWork read) := samePlan.trans oldPlan
@@ -1211,8 +1229,48 @@ theorem prepareFinSteinerWeightedForSeedWithBinaryEarlyWork_spec {n : ℕ} (G : 
   · intro samples seedFee seedWork D
     have scaleEq : plan.2.1.1 = forestScale G h :=
       (prepareFinSteinerWeightedForSeedWithBinaryEarlyWork G raw same h).1.1.property
-    exact binaryEarlyRoundedGraph_cast_refines G linkRows correct.2.1 plan.1.1 plan.1.2 paid free
+    obtain ⟨graph,search,tally⟩ := binaryEarlyRoundedGraph_cast_refines G linkRows correct.2.1 plan.1.1 plan.1.2 paid free
       planned.1.2 freeList read (n^2) values readWork plan.2.1.1 trials.1.val scaleEq trials.1.property
       samples seedFee seedWork D
+    let result := (prepareFinSteinerWeightedForSeedWithBinaryEarlyWork G raw same h).1.2.1 samples D
+    let sample : EarlyRoundSample G h := fun i => forestRoundingSampleValues (forestScale G h) (samples i)
+    have first := (earlyRoundedGraphWithSearchWork_spec G h sample D).2
+    simp only [Fintype.card_fin] at first
+    have nodes := finHeightForestVertex_card_le n h
+    have network : Fintype.card (ForestNetworkVertex (Fin n) h) ≤ 3*(2*n*(n+1)^h) := by
+      simpa [ForestNetworkVertex] using Nat.mul_le_mul_left 3 nodes
+    have freeCount : planned.1.2.length = (forestNetworkZero G h).card := by
+      rw [← List.toFinset_card_of_nodup freeDistinct,freeList,free]
+    change result.2.2 ≤ (D.length+1)^2*binaryEarlyMetricWorkBudgetForLength G plan.1.1 plan.1.2
+      planned.1.2.length (n^2) seedFee D.length at tally
+    rw [paid,free,freeCount] at tally
+    refine ⟨graph,?_,tally⟩
+    exact search.trans (first.trans (earlySearchWorkBound_mono n G.card nodes network le_rfl))
+
+/-- The graph of the prepared binary early evaluator agrees with the
+reference on every request prefix using the supplied fixed trial samples. -/
+theorem prepareFinSteinerWeightedForSeedWithBinaryEarlyWork_spec {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (h : ℕ) :
+    let out := prepareFinSteinerWeightedForSeedWithBinaryEarlyWork G raw same h
+    out.2 ≤ finSteinerWeightPlanWorkPolynomial n h+(7*n+12)+7 ∧
+      ∀ (samples : ForestTrialArrayWithSeedWork (Fin n) h (forestScale G h) (earlyTrialCount (Fin n) h))
+        (seedFee : ℕ), (∀ i, forestSampleWorkBound (samples i) seedFee) →
+        ∀ D, ((out.1.2.1 samples) D).1 =
+          earlyRoundedGraph G h D (fun i => forestRoundingSampleValues (forestScale G h) (samples i)) := by
+  obtain ⟨setup,run⟩ := prepareFinSteinerWeightedForSeedWithBinaryEarlyWork_tally G raw same h
+  exact ⟨setup,fun samples fee work D => (run samples fee work D).1⟩
+
+/-- The two early preparations report the same hop table, template and plan fees. -/
+theorem prepareFinSteinerWeightedForSeedWithBinaryEarlyWork_metadata_eq {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (h : ℕ) :
+    (prepareFinSteinerWeightedForSeedWithBinaryEarlyWork G raw same h).1.2.2 =
+      (prepareFinSteinerWeightedForSeedWithMetricTrialCountWork G raw same h).1.2.2 := by
+  let inputs := finSteinerTemplateInputsWithWordWork raw h
+  let correct := finSteinerTemplateInputsWithWordWork_spec G raw same h
+  let read := readDistanceRow inputs.1.1
+  let plan := prepareForestWeightsAndFreeRowsFromListWithWordWork inputs.2.1 correct.2.2.1 read
+  let old := prepareForestWeightsFromListWithWordWork inputs.2.1 correct.2.2.1 read
+  change (inputs.1.2,inputs.2.2+5,plan.1.1.2.2) = (inputs.1.2,inputs.2.2+5,old.1.2.2)
+  rw [(prepareForestWeightsAndFreeRowsFromListWithWordWork_spec inputs.2.1 correct.2.2.1 read).1]
 
 end OnlineReachabilityPreservers

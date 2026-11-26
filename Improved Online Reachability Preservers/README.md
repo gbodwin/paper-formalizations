@@ -513,7 +513,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   tallies for the supplied typed forest data, hop reader, and trial samples.
   A [single weighted plan pass](OnlineReachabilityPreservers/SteinerWeightedPlanWork.lean#L116)
   keeps the original plan and the typed zero-cost rows. The
-  [prepared early evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L1163)
+  [prepared early evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L1179)
   uses those rows, the finite hop table, and the measured trial count for
   binary forest calls. It returns the reference early prefix graph for the
   supplied trials, including the full-graph fallback on validation failure.
@@ -521,6 +521,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   uses the same decoded sample for the early and late phases. On feasible
   traces it returns the reference fixed-budget graph at each prefix and
   preserves the number of evaluated prefixes, including on seed exhaustion.
+  The [combined work theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L3087)
+  bounds every recorded field of this replay. It includes the shared
+  preparation, seed decoding, prefix dispatch, and both solver phases
+  in the mixed word and binary-list model.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

@@ -2943,4 +2943,179 @@ theorem completeFinSteinerReplayWithBinaryPhasesWork_prefixes {n : ℕ} (G : Arc
   obtain ⟨graphs,calls⟩ := completeFinSteinerReplayWithBinaryLateWork_prefixes G raw same height m hm bits D feasible
   exact ⟨sameGraphs.trans graphs,count.trans calls⟩
 
+private theorem replaySteinerTraceWithPhaseWork_earlyTallies {n : ℕ} (hn : n = Fintype.card V)
+    (early prior : List (V × V) → Arcs V × ℕ × ℕ) (draw : Fin (completeSteinerHubCount V) → V)
+    (late : ℕ → Finset V → List (V × V) → (Arcs V × ℕ) × ℕ)
+    (D : List (V × V)) (join : SteinerPhaseUnion V) (search extra : ℕ)
+    (graphEq : ∀ P, (early P).1 = (prior P).1)
+    (searchFee : ∀ P, P.length ≤ D.length → (early P).2.1 ≤ search)
+    (extraFee : ∀ P, P.length ≤ D.length → (early P).2.2 ≤ extra)
+    (lateSearchZero : ∀ τ hubs P, (late τ hubs P).1.2 = 0) :
+    let out := replaySteinerTraceWithPhaseWork n hn early draw late D join
+    let old := replaySteinerTraceWithPhaseWork n hn prior draw late D join
+    (out.1.map Prod.snd).sum ≤ (D.length+1)*search ∧ out.2.1 ≤ old.2.1+(D.length+1)*extra := by
+  let params := steinerTraceParametersWithWordWork n
+  have correct : params.1.hubCount = completeSteinerHubCount V := by
+    rw [params.1.hubCount_eq,hn]
+    rfl
+  let hubs := collectSteinerHubsWithWordWork correct draw
+  let cutoff := params.1.earlyCutoff
+  let evaluate := fun metric P => evaluateSteinerTraceWithPhaseWork metric cutoff params.1.thinThreshold hubs.1 late P join
+  let next := evaluate early
+  let previous := evaluate prior
+  have earlyLength (P : List (V × V)) (short : P.length ≤ D.length) :
+      (splitSteinerTraceWithWordWork cutoff P).1.1.length ≤ D.length := by
+    rw [(splitSteinerTraceWithWordWork_spec _ _).1]
+    exact (List.length_take_le' _ _).trans short
+  have more (P : List (V × V)) (short : P.length ≤ D.length) : (next P).2 ≤ (previous P).2+extra := by
+    let split := splitSteinerTraceWithWordWork cutoff P
+    let rest := late params.1.thinThreshold hubs.1 split.1.2
+    have fee := extraFee split.1.1 (earlyLength P short)
+    change split.2+8+(early split.1.1).2.2+rest.2+7+(join.combine (early split.1.1).1 rest.1.1).2 ≤
+      split.2+8+(prior split.1.1).2.2+rest.2+7+(join.combine (prior split.1.1).1 rest.1.1).2+extra
+    rw [graphEq]
+    omega
+  let onlyRecords := fun P => ((next P).1,0)
+  have sameRecords := (replayFirstOccurrencesWithWordWork_records_eq next onlyRecords (fun _ => rfl) D).1
+  have only := (replayFirstOccurrencesWithWordWork_spec onlyRecords D 0 (fun _ _ => le_rfl)).1
+  have records := sameRecords.trans only
+  have each (P : List (V × V)) (inside : P ∈ D.inits) : (next (distinctNonselfTrace P)).1.2 ≤ search := by
+    let Q := distinctNonselfTrace P
+    have condensed : Q.length ≤ P.length := by
+      rw [← List.toFinset_card_of_nodup (distinctNonselfTrace_nodup P)]
+      exact (Finset.card_le_card (fun _ present => List.mem_toFinset.mpr (mem_distinctNonselfTrace.mp
+        (List.mem_toFinset.mp present)).1)).trans (List.toFinset_card_le P)
+    have length := ((List.mem_inits _ _).mp inside).length_le
+    let split := splitSteinerTraceWithWordWork cutoff Q
+    change (early split.1.1).2.1+(late params.1.thinThreshold hubs.1 split.1.2).1.2 ≤ search
+    rw [lateSearchZero,Nat.add_zero]
+    exact searchFee split.1.1 (earlyLength Q (condensed.trans length))
+  have dispatch := replayFirstOccurrencesWithWordWork_work_le next previous D extra more
+  constructor
+  · change ((replayFirstOccurrencesWithWordWork next D).1.map Prod.snd).sum ≤ _
+    rw [records,List.map_map]
+    let fees := D.inits.map (fun P => (next (distinctNonselfTrace P)).1.2)
+    have bounded (fee : ℕ) (inside : fee ∈ fees) : fee ≤ search := by
+      obtain ⟨P,mem,value⟩ := List.mem_map.mp inside
+      exact value ▸ each P mem
+    have sum (costs : List ℕ) (bound : ∀ fee ∈ costs, fee ≤ search) : costs.sum ≤ costs.length*search := by
+      induction costs with
+      | nil => simp
+      | cons fee tail ih =>
+        rw [List.sum_cons,List.length_cons,Nat.add_mul,Nat.one_mul,Nat.add_comm (tail.length*search) search]
+        exact Nat.add_le_add (bound fee List.mem_cons_self) (ih fun x hx => bound x (List.mem_cons_of_mem _ hx))
+    change fees.sum ≤ (D.length+1)*search
+    simpa only [fees,List.length_map,List.length_inits] using sum fees bounded
+  · change (replayFirstOccurrencesWithWordWork next D).2.1+params.2+hubs.2+10 ≤
+      (replayFirstOccurrencesWithWordWork previous D).2.1+params.2+hubs.2+10+(D.length+1)*extra
+    omega
+
+private theorem completeFinSteinerReplayWithBinaryPhasesWork_compare_tallies {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
+    let out := completeFinSteinerReplayWithBinaryPhasesWork G raw same height m hm bits D
+    let old := completeFinSteinerReplayWithBinaryLateWork G raw same height m hm bits D
+    let search := finSteinerBinaryEarlySearchWorkBudget n m height D.length
+    let extra := (D.length+1)^2*finSteinerBinaryEarlyMetricWorkBudget G height (earlySeedArrayReadWordBudget height) D.length
+    let base := out.1.1.1
+    let before := old.1.1.1
+    (base.1.1.map Prod.snd).sum ≤ (before.1.1.map Prod.snd).sum+(D.length+1)*search ∧
+      base.1.2 = before.1.2 ∧ base.2 = before.2 ∧ out.1.2 = old.1.2 ∧
+      out.1.1.2 ≤ finSteinerWeightPlanWorkPolynomial n height+(7*n+12)+7 ∧
+      out.2.1 ≤ old.2.1+(D.length+1)*extra := by
+  let prepared := prepareFinSteinerWeightedForSeedWithBinaryEarlyWork G raw same height
+  let old := prepareFinSteinerWeightedForSeedWithMetricTrialCountWork G raw same height
+  let indexes := finSteinerReplaySeedIndexesWithWordWork G height raw same
+  let decoded := decodeSteinerSeedWithArrayViewsFromPreparedScale G height n m (by simp) hm old.1.1 indexes.1 bits
+  let arcs := finArcRowsWithWordWork raw
+  let vertices := finVerticesWithWordWork n
+  let join := meteredPhaseUnion (Fin n)
+  let fee := earlySeedArrayReadWordBudget height
+  let search := finSteinerBinaryEarlySearchWorkBudget n m height D.length
+  let extra := (D.length+1)^2*finSteinerBinaryEarlyMetricWorkBudget G height fee D.length
+  have scale : prepared.1.1 = old.1.1 := Subtype.ext (prepared.1.1.property.trans old.1.1.property.symm)
+  have metadata : prepared.1.2.2 = old.1.2.2 := prepareFinSteinerWeightedForSeedWithBinaryEarlyWork_metadata_eq G raw same height
+  obtain ⟨setup,bound⟩ := prepareFinSteinerWeightedForSeedWithBinaryEarlyWork_tally G raw same height
+  unfold completeFinSteinerReplayWithBinaryPhasesWork completeFinSteinerReplayWithBinaryLateWork
+    completeFinSteinerReplayWithBinaryLateFromPreparation completeFinSteinerReplayWithCachedPhases
+  dsimp only
+  rw [show (prepareFinSteinerWeightedForSeedWithBinaryEarlyWork G raw same height).1.1 =
+    (prepareFinSteinerWeightedForSeedWithMetricTrialCountWork G raw same height).1.1 from scale]
+  unfold replayFromCachedFinSteinerSeed
+  cases state : decoded.1.2 with
+  | none => exact ⟨Nat.le_add_right _ _,metadata,rfl,rfl,setup,Nat.le_add_right _ _⟩
+  | some entry =>
+    rcases entry with ⟨seed,arrays⟩
+    dsimp only
+    let width := decoded.1.1
+    let samples := finEarlySeedTrialsWithRankWork G height width.val width.property arrays.early
+    let next := prepared.1.2.1 samples
+    let prior := old.1.2.1 samples
+    let late := binaryControlsLateEvaluator G arcs.1 m hm vertices.1 indexes.1.arcs arrays.thin
+    have cap : ∀ i, forestSampleWorkBound (samples i) fee :=
+      (finEarlySeedTrialsWithRankWork_spec G height width.val width.property arrays.early).2
+    have sameEarly (P : List (Fin n × Fin n)) : (next P).1 = (prior P).1 :=
+      (bound samples fee cap P).1.trans (measuredEarlyTrialCount_graph G raw same height samples fee cap P).symm
+    have legacy (P : List (Fin n × Fin n)) (short : P.length ≤ D.length) : (next P).2.1 ≤ search := by
+      apply (bound samples fee cap P).2.1.trans
+      simpa only [search,hm] using finSteinerBinaryEarlySearchWorkBudget_mono n m height short
+    have meter (P : List (Fin n × Fin n)) (short : P.length ≤ D.length) : (next P).2.2 ≤ extra := by
+      refine (bound samples fee cap P).2.2.trans (Nat.mul_le_mul ?_ ?_)
+      · exact Nat.pow_le_pow_left (Nat.add_le_add_right short 1) 2
+      · exact finSteinerBinaryEarlyMetricWorkBudget_mono G height fee short
+    obtain ⟨records,work⟩ := replaySteinerTraceWithPhaseWork_earlyTallies (n := n) (by simp) next prior seed.2.1 late D join
+      search extra sameEarly legacy meter (fun _ _ _ => rfl)
+    let report := replaySteinerTraceWithPhaseWork n (by simp) next seed.2.1 late D join
+    let before := replaySteinerTraceWithPhaseWork n (by simp) prior seed.2.1 late D join
+    refine ⟨records.trans (Nat.le_add_left _ _),metadata,rfl,rfl,setup,?_⟩
+    change report.2.1+2+9+8+arcs.2+vertices.2+5 ≤
+      before.2.1+2+9+8+arcs.2+vertices.2+5+(D.length+1)*extra
+    change report.2.1 ≤ before.2.1+(D.length+1)*extra at work
+    omega
+
+/-- The full recorded allowance includes shared preparation, the binary late
+calls, and the validation and binary early work at each evaluated prefix. -/
+def finSteinerBinaryPhasesReplayWorkBudget {n : ℕ} (G : Arcs (Fin n)) (raw height p : ℕ) : ℕ :=
+  let m := G.card
+  finSteinerMeasuredThinReplayWorkBudget n m raw height p+(p+1)*steinerBinaryLateCallWorkBudget n m p+2+
+    finSteinerWeightPlanWorkPolynomial n height+(7*n+12)+7+
+    (p+1)*finSteinerBinaryEarlySearchWorkBudget n m height p+
+    (p+1)^3*finSteinerBinaryEarlyMetricWorkBudget G height (earlySeedArrayReadWordBudget height) p
+
+/-- Bound every work field of the complete seeded run with both binary
+solvers, including the legacy search fields and all replay preparation. -/
+theorem completeFinSteinerReplayWithBinaryPhasesWork_tally_le {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let out := completeFinSteinerReplayWithBinaryPhasesWork G raw same height m hm bits D
+    let base := out.1.1.1
+    (base.1.1.map Prod.snd).sum+base.1.2.1+base.1.2.2.1+base.1.2.2.2+base.2+out.1.1.2+out.1.2+out.2.1 ≤
+      finSteinerBinaryPhasesReplayWorkBudget G raw.length height D.length := by
+  let out := completeFinSteinerReplayWithBinaryPhasesWork G raw same height m hm bits D
+  let prior := completeFinSteinerReplayWithBinaryLateWork G raw same height m hm bits D
+  let base := out.1.1.1
+  let before := prior.1.1.1
+  let search := finSteinerBinaryEarlySearchWorkBudget n m height D.length
+  let B := finSteinerBinaryEarlyMetricWorkBudget G height (earlySeedArrayReadWordBudget height) D.length
+  obtain ⟨legacy,metadata,decoder,index,setup,replay⟩ := completeFinSteinerReplayWithBinaryPhasesWork_compare_tallies
+    G raw same height m hm bits D
+  have total := completeFinSteinerReplayWithBinaryLateWork_tally_le G raw same height m hm bits D feasible
+  change (base.1.1.map Prod.snd).sum ≤ (before.1.1.map Prod.snd).sum+(D.length+1)*search at legacy
+  change base.1.2 = before.1.2 at metadata
+  change base.2 = before.2 at decoder
+  change out.1.2 = prior.1.2 at index
+  change out.1.1.2 ≤ _ at setup
+  change out.2.1 ≤ prior.2.1+(D.length+1)*((D.length+1)^2*B) at replay
+  change (before.1.1.map Prod.snd).sum+before.1.2.1+before.1.2.2.1+before.1.2.2.2+before.2+prior.1.1.2+
+    prior.1.2+prior.2.1 ≤ _ at total
+  change (base.1.1.map Prod.snd).sum+base.1.2.1+base.1.2.2.1+base.1.2.2.2+base.2+out.1.1.2+out.1.2+out.2.1 ≤ _
+  rw [metadata,decoder,index]
+  have cube : (D.length+1)*((D.length+1)^2*B) = (D.length+1)^3*B := by ring
+  rw [cube] at replay
+  unfold finSteinerBinaryPhasesReplayWorkBudget
+  rw [← hm]
+  change _ ≤ _ + (D.length+1)*search+(D.length+1)^3*B
+  omega
+
 end OnlineReachabilityPreservers
