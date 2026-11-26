@@ -1728,6 +1728,17 @@ pruning supplies such a family whenever the opposite-link count is at most
 \(11M/24\).
 [Repaired classes and unique sublists](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L514).
 
+If an eligible family has \(s\) nonempty paths, opposite-intersection
+pruning keeps at least \((M+s)/2\) incidences. It meets the \(13M/24\)
+threshold whenever \(M\le12s\). For the unrestricted extremum at positive
+budgets, replacing an empty row with a singleton would increase the mass
+and leave all bridge steps unchanged, so every row is nonempty. The
+ordered-pair bound gives \(M^2\le p(2n(n-1)+M)\). When
+\(n(n-1)\le66p\) it implies \(M\le12p\), giving both original budgets,
+all four original-average caps, and at least \(M/288\) at half cutoff
+four and full cutoffs four and six.
+[Cleaning at a large path budget](OnlineReachabilityPreservers/FrozenManyRows.lean#L39).
+
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
 and nonempty simple rows. At the prescribed widths \(7\) and \(20\) it

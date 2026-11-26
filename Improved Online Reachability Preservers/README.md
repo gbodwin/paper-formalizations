@@ -741,6 +741,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   original-average caps. Opposite-intersection pruning meets the second
   condition when there are at most \(11M/24\) opposite links.
   [Repair and pruning theorems](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L514).
+- At these cutoffs, the [large path-budget theorem](OnlineReachabilityPreservers/FrozenManyRows.lean#L39)
+  starts from the unrestricted maximum when \(n(n-1)\le66p\).
+  Such a maximizing family has nonempty rows and average length at most
+  twelve. Opposite-intersection pruning then gives a cleaned witness with
+  \(M/288\), both budgets, and all four original-average caps.
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion
