@@ -1207,7 +1207,11 @@ Otherwise it unions the hub arcs and the typed binary graph for the selected
 thin trace. The result agrees with the assembled algorithm at early cutoff
 zero for the supplied hubs, seed index and feasible suffix. The bound adds
 the existing hub word work to the thin work at the supplied widths and
-counts. It is a bound for this mixed cost model.
+counts. The [prepared-control entry](OnlineReachabilityPreservers/SteinerBinaryLateControlsWork.lean#L88)
+computes those sizes and the rounding factor from the graph counts and
+late threshold. Its [control calculation](OnlineReachabilityPreservers/SteinerBinaryLateControlsWork.lean#L35)
+proves the exact binary widths and fuel and adds the setup charge to the
+same mixed work model.
 
 The [binary weighted charge update](OnlineReachabilityPreservers/SteinerBinaryWeightedLoadWork.lean#L44)
 stores the current remainder, doubling factor, and weighted numerator for
