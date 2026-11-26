@@ -1670,6 +1670,27 @@ the width splits at cutoff four in either mode or at full cutoff six,
 with the corresponding input exclusion. A sufficient condition is that
 [at most seven ninths of the original vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L250).
 
+[Half-budget width splits](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L31)
+use a subsystem of simple paths within the original vertex budget and at
+most half the original path budget. When it carries \(K\) between
+\(7M/16\) and \(M\)
+and its splits at the original widths preserve the required exclusion,
+the path pieces already fit the original budget. The path peeling charge
+is at most \(M/8+K/12\). Trimming the vertex dimension and peeling at the
+original averages retain at least \(M/104\) within both budgets and all
+four caps.
+
+If all reversed comparisons between simple paths occur within disjoint
+pairs, keeping the heavier row in each pair makes intersections unique.
+When the paired rows hold at most \(7M/8\), keeping the unpaired rows as well gives at
+least \(9M/16\) for quadratic trimming of both supports. When the paired
+rows hold more than \(7M/8\), their selected rows alone give at least
+\(7M/16\) in at most half the original path budget. This proves
+[frozen cleaning for matched reverse partners](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L95)
+with at least \(M/104\), both original budgets, and all four original caps.
+It preserves the input exclusion at cutoff four in either mode or at full
+cutoff six, for positive budgets and mass at least both counts.
+
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
 and nonempty simple rows. At the prescribed widths \(7\) and \(20\) it
