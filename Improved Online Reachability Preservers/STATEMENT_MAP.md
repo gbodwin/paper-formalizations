@@ -1074,6 +1074,14 @@ and capacity word in order. Repeated path entries count once by membership.
 Both directions contribute opposite updates to the same entry. The tally
 includes bitwise label comparisons and arithmetic. Path selection is supplied.
 
+The [tight-cut lemma](OnlineReachabilityPreservers/SteinerCutFlow.lean#L499)
+puts the residual source side inside every separating cut whose capacity
+equals the flow value. The [canonical source-side theorem](OnlineReachabilityPreservers/SteinerCutFlow.lean#L519)
+shows that two stalled valid flows with the same capacities and terminals
+have equal values and equal residual source sides. The [bounded separator comparison](OnlineReachabilityPreservers/SteinerCutFlow.lean#L567)
+therefore obtains the exact reference response upon reaching the supply or
+stalling below it, even if the underlying valid flows differ.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

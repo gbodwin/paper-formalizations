@@ -423,6 +423,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   capacities and signed flow entries. The tally includes both the arithmetic
   and label comparisons. The [binary unit update](OnlineReachabilityPreservers/SteinerBinaryFlowAugmentWork.lean#L155)
   applies a supplied path to the signed table and keeps each capacity word.
+  The [terminal cut comparison](OnlineReachabilityPreservers/SteinerCutFlow.lean#L567)
+  lets a cut implementation choose any valid augmenting paths. A valid flow
+  that attains the supply or stalls gives the same reference result.
   Initializing the table, selecting paths and cuts, and carrying out the
   remaining phases still need bit or native execution bounds.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)

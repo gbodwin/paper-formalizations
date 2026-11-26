@@ -494,4 +494,86 @@ theorem ValidArcFlow.decompose_capacity {c flow : ArcFlow V} {s t : V} {value : 
   obtain ⟨paths, length, routes, load⟩ := valid.decompose_paths hc
   exact ⟨paths, length, routes, fun e => (load e).trans (max_le (hc e) (valid.upper e))⟩
 
+/-- A separating cut whose capacity equals the flow value contains every
+vertex reachable from the source in the residual graph. -/
+theorem ValidArcFlow.residualReach_subset_of_tight_cut {c f : ArcFlow V} {s t : V} {value : ℕ}
+    (valid : ValidArcFlow c s t value f) {W : Finset V} (start : s ∈ W) (finish : t ∉ W)
+    (tight : cutArcFlow c W = value) : residualReach c f s ⊆ W := by
+  have closed {u v : V} (inside : u ∈ W) (edge : Edge (residualArcs c f) u v) : v ∈ W := by
+    by_contra! outside
+    have crossing : (u,v) ∈ W ×ˢ Wᶜ := mem_product.mpr ⟨inside,mem_compl.mpr outside⟩
+    have strict : (∑ e ∈ W ×ˢ Wᶜ, f e) < ∑ e ∈ W ×ˢ Wᶜ, c e :=
+      sum_lt_sum (fun e _ => valid.upper e) ⟨(u,v),crossing,(mem_filter.mp edge).2⟩
+    rw [sum_product W Wᶜ f,sum_product W Wᶜ c] at strict
+    change cutArcFlow f W < cutArcFlow c W at strict
+    rw [valid.cut_value start finish,tight] at strict
+    exact (lt_irrefl _ strict)
+  have stays {v : V} (path : Reach (residualArcs c f) s v) : v ∈ W := by
+    induction path with
+    | refl => exact start
+    | tail _ edge ih => exact closed ih edge
+  exact fun _ reachable => stays (mem_residualReach.mp reachable)
+
+/-- The source side of a stalled valid flow is the same for every stalled
+valid flow with the same capacities and terminals, and their values agree. -/
+theorem ValidArcFlow.residualReach_canonical {c f g : ArcFlow V} {s t : V} {sent other : ℕ}
+    (first : ValidArcFlow c s t sent f) (second : ValidArcFlow c s t other g)
+    (stalledF : ¬ Reach (residualArcs c f) s t) (stalledG : ¬ Reach (residualArcs c g) s t) :
+    sent = other ∧ residualReach c f s = residualReach c g s := by
+  have startF : s ∈ residualReach c f s := mem_residualReach.mpr .refl
+  have startG : s ∈ residualReach c g s := mem_residualReach.mpr .refl
+  have finishF : t ∉ residualReach c f s := fun h => stalledF (mem_residualReach.mp h)
+  have finishG : t ∉ residualReach c g s := fun h => stalledG (mem_residualReach.mp h)
+  have tightF := first.residualCut_capacity stalledF
+  have tightG := second.residualCut_capacity stalledG
+  have upperF := (first.cut_capacity startG finishG).trans_eq tightG
+  have upperG := (second.cut_capacity startF finishF).trans_eq tightF
+  have equal : sent = other := by omega
+  cases equal
+  exact ⟨rfl,Subset.antisymm (first.residualReach_subset_of_tight_cut startG finishG tightG)
+    (second.residualReach_subset_of_tight_cut startF finishF tightF)⟩
+
+/-- A valid flow attaining the supply or stalling has the same terminal
+value as the reference augmentations, and gives their exact cut when its
+value is below the supply. Its choices of augmenting paths may differ. -/
+theorem unitAugmentations_terminal_compare {c f : ArcFlow V} {s t : V} {supply sent : ℕ}
+    (nonnegative : ∀ e, 0 ≤ c e) (valid : ValidArcFlow c s t sent f)
+    (within : sent ≤ supply) (stalled : sent < supply → ¬ Reach (residualArcs c f) s t) :
+    let ref := unitAugmentations c s t supply (fun _ => 0)
+    sent = ref.2 ∧ (sent < supply → residualReach c f s = residualReach c ref.1 s) := by
+  let ref := unitAugmentations c s t supply (fun _ => 0)
+  obtain ⟨refValid,refWithin,refStalled⟩ := unitAugmentations_zero_spec c s t supply nonnegative
+  change ValidArcFlow c s t ref.2 ref.1 at refValid
+  change ref.2 ≤ supply at refWithin
+  change ref.2 < supply → ¬ Reach (residualArcs c ref.1) s t at refStalled
+  by_cases enough : sent = supply
+  · have refEnough : ref.2 = supply := by
+      by_contra! lower
+      have noRoute := refStalled (lt_of_le_of_ne refWithin lower)
+      have source : s ∈ residualReach c ref.1 s := mem_residualReach.mpr .refl
+      have target : t ∉ residualReach c ref.1 s := fun h => noRoute (mem_residualReach.mp h)
+      have cap := (valid.cut_capacity source target).trans_eq (refValid.residualCut_capacity noRoute)
+      omega
+    exact ⟨enough.trans refEnough.symm,fun small => (small.ne enough).elim⟩
+  · have small := lt_of_le_of_ne within enough
+    have noRoute := stalled small
+    have source : s ∈ residualReach c f s := mem_residualReach.mpr .refl
+    have target : t ∉ residualReach c f s := fun h => noRoute (mem_residualReach.mp h)
+    have cap := (refValid.cut_capacity source target).trans_eq (valid.residualCut_capacity noRoute)
+    obtain ⟨same,side⟩ := valid.residualReach_canonical refValid noRoute (refStalled (by omega))
+    exact ⟨same,fun _ => side⟩
+
+/-- The bounded cut separator depends only on the terminal flow condition. -/
+theorem findLowCapacityCut_eq_terminal {c f : ArcFlow V} {s t : V} {supply sent : ℕ}
+    (nonnegative : ∀ e, 0 ≤ c e) (valid : ValidArcFlow c s t sent f)
+    (within : sent ≤ supply) (stalled : sent < supply → ¬ Reach (residualArcs c f) s t) :
+    findLowCapacityCut c s t supply = if sent = supply then none else some (residualReach c f s) := by
+  obtain ⟨same,side⟩ := unitAugmentations_terminal_compare nonnegative valid within stalled
+  unfold findLowCapacityCut
+  dsimp only
+  rw [← same]
+  by_cases enough : sent = supply
+  · simp [enough]
+  · simp [enough,side (lt_of_le_of_ne within enough)]
+
 end OnlineReachabilityPreservers
