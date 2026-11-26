@@ -1247,8 +1247,14 @@ extends the comparison to the entire chronological weighted network run.
 Each request uses its own supplied free arcs, and the next request starts
 from the preceding updated paid table. The theorem verifies the full cut
 history, final paid charges, and work including the append operations.
-Preparation of the initial encoded tables and integration with early
-rounding remain open at this layer.
+The [binary initializer](OnlineReachabilityPreservers/SteinerBinaryWeightedInitWork.lean#L44)
+uses metered cost and label readers on distinct supplied pair keys. It
+builds the zero-charge table with the same order and accumulates the
+paid cost. When the keys are complete, the [exact total](OnlineReachabilityPreservers/SteinerBinaryWeightedInitWork.lean#L134)
+gives the [reference scale, its binary word, and the fuel](OnlineReachabilityPreservers/SteinerBinaryWeightedInitWork.lean#L170).
+The work includes paid cost encodings, word additions, and the supplied
+reader fees. Wiring the forest readers and the early rounding into this
+binary trace remains open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

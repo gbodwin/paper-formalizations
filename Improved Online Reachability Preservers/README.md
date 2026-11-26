@@ -484,8 +484,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   the represented reference charges and the same chronological cuts.
   The [weighted trace](OnlineReachabilityPreservers/SteinerBinaryWeightedTraceWork.lean#L78)
   carries the updated table through every demand with its own free arcs.
-  Starting from supplied encoded rows and the reference numeric controls,
-  it returns the full reference cut history and final paid charges.
+  It returns the full reference cut history and final paid charges.
+  The [binary initializer](OnlineReachabilityPreservers/SteinerBinaryWeightedInitWork.lean#L44)
+  uses the supplied key and cost readers to build zero-charge rows. It
+  derives the [reference scale and fuel](OnlineReachabilityPreservers/SteinerBinaryWeightedInitWork.lean#L170)
+  from the total paid cost.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
