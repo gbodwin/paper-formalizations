@@ -1759,8 +1759,10 @@ at the vertex. It has at most one later reverse partner. The ordered
 pair count uses both orientations. Capping each vertex's occurrences
 keeps the earliest rows at that vertex and removes exactly the excess
 degree. When \(M>8\max(n,p)\), the original length and degree excesses
-\(T,Y\) obey \(488T\le Mp\) and \(1008Y\le M(p+16)\).
-For \(p\le156\) their combined cost satisfies \(104(T+Y)\le51M\).
+\(T,Y\) obey \(488T\le Mp\) and \(1008Y\le M(p+16)\). In terms
+of the vertex budget they also satisfy \(504T\le Mn\) and
+\(976Y\le M(n+16)\). Either \(n\le157\) or \(p\le156\) gives
+the combined bound \(104(T+Y)\le51M\).
 Clipping both sides and peeling retain at least \(M/104\)
 with both original budgets and all four original-average caps. The
 low-mass witness and size-two case give the rest of the stated range.

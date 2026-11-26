@@ -173,12 +173,14 @@ theorem clipListDegrees_counts {n p : ℕ} (paths : Fin p → List (Fin n)) (D :
 def listDegreeExcess {n p : ℕ} (paths : Fin p → List (Fin n)) (D : ℕ) : ℕ :=
   ∑ v, ((occurrences (fun i => (paths i).toFinset) v).card-D)
 
-private theorem list_clipping_loss_small_path_budget {n p k : ℕ} (paths : Fin p → List (Fin n))
+private theorem length_degree_clipping_loss_bounds {n p k : ℕ} (paths : Fin p → List (Fin n))
     (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) k) (three : 3 ≤ k)
-    (hn : 0 < n) (hp : 0 < p) (count : p ≤ 156)
+    (hn : 0 < n) (hp : 0 < p)
     (dense : 8*n ≤ ∑ i, (paths i).length) (long : 8*p ≤ ∑ i, (paths i).length) :
     let M := ∑ i, (paths i).length
-    104*(listLengthExcess paths (4*M/p)+listDegreeExcess paths (4*M/n)) ≤ 51*M := by
+    let T := listLengthExcess paths (4*M/p)
+    let Y := listDegreeExcess paths (4*M/n)
+    488*T ≤ M*p ∧ 504*T ≤ M*n ∧ 1008*Y ≤ (p+16)*M ∧ 976*Y ≤ (n+16)*M := by
   let M := ∑ i, (paths i).length
   let D := 4*M/n
   let L := 4*M/p
@@ -188,8 +190,13 @@ private theorem list_clipping_loss_small_path_budget {n p k : ℕ} (paths : Fin 
   have mPos : 0 < M := hn.trans_le (by omega)
   have Dpos : 0 < D := (four_average_width hn (show n ≤ M by omega)).1
   have Lpos : 0 < L := (four_average_width hp (show p ≤ M by omega)).1
-  have degreeWidth : 126 ≤ 4*D-2 := (dense_clipping_coefficient hn dense).1
-  have rowWidth : 61*M ≤ 4*(A*p) := (dense_clipping_coefficient hp long).2
+  obtain ⟨degreeWidth, degreeCapacity⟩ := dense_clipping_coefficient hn dense
+  obtain ⟨rowWidth, rowCapacity⟩ := dense_clipping_coefficient hp long
+  let B := 4*D-2
+  change 126 ≤ A at rowWidth
+  change 126 ≤ B at degreeWidth
+  change 61*M ≤ 4*(A*p) at rowCapacity
+  change 61*M ≤ 4*(B*n) at degreeCapacity
   have rowOverflow : A*T ≤ 2*(n*n-n) := listLengthExcess_mul_le_halfTwo paths simple free (by omega) Lpos
   have degreeOverflow : (4*D-2)*Y ≤ p*p-p+2*M := by
     have bound := listDegree_square_sub_sum_le_halfThree paths simple free three
@@ -205,7 +212,7 @@ private theorem list_clipping_loss_small_path_budget {n p k : ℕ} (paths : Fin 
     apply (Nat.mul_le_mul_left_iff (by positivity : 0 < 8*M)).mp
     calc
       _ = 64*(61*M*T) := by ring
-      _ ≤ 64*(4*(A*p)*T) := Nat.mul_le_mul_left _ (Nat.mul_le_mul_right _ rowWidth)
+      _ ≤ 64*(4*(A*p)*T) := Nat.mul_le_mul_left _ (Nat.mul_le_mul_right _ rowCapacity)
       _ = (256*p)*(A*T) := by ring
       _ ≤ (256*p)*(2*(n*n-n)) := Nat.mul_le_mul_left _ rowOverflow
       _ = (8*p)*(64*(n*n-n)) := by ring
@@ -220,12 +227,58 @@ private theorem list_clipping_loss_small_path_budget {n p k : ℕ} (paths : Fin 
       _ = (8*p)*p+16*M := by ring
       _ ≤ (M*p)+16*M := Nat.add_le_add_right (Nat.mul_le_mul_right _ long) _
       _ = _ := by ring
-  have rowLimit := rowCharge.trans (Nat.mul_le_mul_left M count)
-  have degreeLimit := degreeCharge.trans (Nat.mul_le_mul_right M (show p+16 ≤ 172 by omega))
-  have rowTotal := Nat.mul_le_mul_left 1008 rowLimit
-  have degreeTotal := Nat.mul_le_mul_left 488 degreeLimit
+  have rowChargeByVertices : 504*T ≤ M*n := calc
+    _ = 4*(126*T) := by ring
+    _ ≤ 4*(A*T) := Nat.mul_le_mul_left _ (Nat.mul_le_mul_right _ rowWidth)
+    _ ≤ 4*(2*(n*n-n)) := Nat.mul_le_mul_left _ rowOverflow
+    _ ≤ 4*(2*(n*n)) := Nat.mul_le_mul_left _ (Nat.mul_le_mul_left _ (Nat.sub_le _ _))
+    _ = (8*n)*n := by ring
+    _ ≤ _ := Nat.mul_le_mul_right _ dense
+  have pSquares : 64*(p*p) ≤ M^2 := calc
+    _ = (8*p)^2 := by ring
+    _ ≤ _ := Nat.pow_le_pow_left long 2
+  have nCharge : 128*n ≤ 16*M := calc
+    _ = 16*(8*n) := by ring
+    _ ≤ _ := Nat.mul_le_mul_left 16 dense
+  have degreeChargeByVertices : 976*Y ≤ (n+16)*M := by
+    apply (Nat.mul_le_mul_left_iff mPos).mp
+    calc
+      _ = 16*(61*M*Y) := by ring
+      _ ≤ 16*(4*(B*n)*Y) := Nat.mul_le_mul_left _ (Nat.mul_le_mul_right _ degreeCapacity)
+      _ = (64*n)*(B*Y) := by ring
+      _ ≤ (64*n)*(p*p-p+2*M) := Nat.mul_le_mul_left _ degreeOverflow
+      _ ≤ (64*n)*(p*p+2*M) := Nat.mul_le_mul_left _ (Nat.add_le_add_right (Nat.sub_le _ _) _)
+      _ = n*(64*(p*p))+(128*n)*M := by ring
+      _ ≤ n*M^2+(16*M)*M := Nat.add_le_add (Nat.mul_le_mul_left _ pSquares) (Nat.mul_le_mul_right _ nCharge)
+      _ = _ := by ring
+  exact ⟨rowCharge,rowChargeByVertices,degreeCharge,degreeChargeByVertices⟩
+
+private theorem list_clipping_loss_small_budget {n p k : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) k) (three : 3 ≤ k)
+    (hn : 0 < n) (hp : 0 < p) (count : n ≤ 157 ∨ p ≤ 156)
+    (dense : 8*n ≤ ∑ i, (paths i).length) (long : 8*p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    104*(listLengthExcess paths (4*M/p)+listDegreeExcess paths (4*M/n)) ≤ 51*M := by
+  let M := ∑ i, (paths i).length
+  let T := listLengthExcess paths (4*M/p)
+  let Y := listDegreeExcess paths (4*M/n)
+  obtain ⟨rowP,rowN,degreeP,degreeN⟩ := length_degree_clipping_loss_bounds paths simple free three hn hp dense long
+  change 488*T ≤ M*p at rowP
+  change 504*T ≤ M*n at rowN
+  change 1008*Y ≤ (p+16)*M at degreeP
+  change 976*Y ≤ (n+16)*M at degreeN
   change 104*(T+Y) ≤ 51*M
-  omega
+  rcases count with vertex | row
+  · have rowLimit := rowN.trans (Nat.mul_le_mul_left M vertex)
+    have degreeLimit := degreeN.trans (Nat.mul_le_mul_right M (show n+16 ≤ 173 by omega))
+    have rowTotal := Nat.mul_le_mul_left 976 rowLimit
+    have degreeTotal := Nat.mul_le_mul_left 504 degreeLimit
+    omega
+  · have rowLimit := rowP.trans (Nat.mul_le_mul_left M row)
+    have degreeLimit := degreeP.trans (Nat.mul_le_mul_right M (show p+16 ≤ 172 by omega))
+    have rowTotal := Nat.mul_le_mul_left 1008 rowLimit
+    have degreeTotal := Nat.mul_le_mul_left 488 degreeLimit
+    omega
 
 /-- Capping both dimensions by rowwise deletions preserves the chosen
 bridge exclusion at every cutoff. The displayed loss suffices for
@@ -286,13 +339,13 @@ theorem regularization_list_frozen_after_length_degree_clipping {half : Bool} {k
   change 106*M ≤ 208*(∑ i, (kept i).length)
   omega
 
-/-- For at most 156 paths, attain the original caps and budgets at any
+/-- With at most 157 vertices or at most 156 paths, attain the original caps and budgets at any
 full or half cutoff of at least two. In the high-density branch at
 cutoffs of at least three, clipping deletes incidences in the original rows. -/
-theorem regularization_list_frozen_of_small_path_budget_all_cutoffs {half : Bool} {k n p : ℕ}
+theorem regularization_list_frozen_of_small_budget_all_cutoffs {half : Bool} {k n p : ℕ}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (allowed : localOrderAdmissible half k paths) (two : 2 ≤ k) (hn : 0 < n) (hp : 0 < p)
-    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) (count : p ≤ 156) :
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) (count : n ≤ 157 ∨ p ≤ 156) :
     let M := ∑ i, (paths i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
@@ -311,9 +364,42 @@ theorem regularization_list_frozen_of_small_path_budget_all_cutoffs {half : Bool
   · have vDense : 8*n ≤ M := by have sides := le_max_left n p; omega
     have pDense : 8*p ≤ M := by have sides := le_max_right n p; omega
     exact regularization_list_frozen_after_length_degree_clipping paths simple allowed hn hp dense long
-      (list_clipping_loss_small_path_budget paths simple free three hn hp count vDense pDense)
-  · exact regularization_list_frozen_of_clipping_budgets paths simple allowed two (by omega)
-      hn hp dense long (Or.inl (by omega))
+      (list_clipping_loss_small_budget paths simple free three hn hp count vDense pDense)
+  · apply regularization_list_frozen_of_clipping_budgets paths simple allowed two (by omega) hn hp dense long
+    by_cases small : p ≤ 227
+    · exact Or.inl small
+    · right
+      have vertices : n ≤ 157 := count.resolve_right (by omega)
+      have square : n*n ≤ 157*157 := Nat.mul_le_mul vertices vertices
+      omega
+
+/-- For at most 156 paths, attain the original caps and budgets at any
+full or half cutoff of at least two. In the high-density branch at
+cutoffs of at least three, clipping deletes incidences in the original rows. -/
+theorem regularization_list_frozen_of_small_path_budget_all_cutoffs {half : Bool} {k n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k paths) (two : 2 ≤ k) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) (count : p ≤ 156) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 104*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_of_small_budget_all_cutoffs paths simple allowed two hn hp dense long (Or.inr count)
+
+/-- The same budget regime gives original-average caps at the
+unrestricted extremum. -/
+theorem localOrderExtremal_frozen_of_small_budget_all_cutoffs (n p k : ℕ) (half : Bool)
+    (two : 2 ≤ k) (hn : 0 < n) (hp : 0 < p) (count : n ≤ 157 ∨ p ≤ 156) :
+    ∃ paths : Fin p → List (Fin n), (∀ i, (paths i).Nodup) ∧ localOrderAdmissible half k paths ∧
+      (∀ other : Fin p → List (Fin n), (∀ i, (other i).Nodup) → localOrderAdmissible half k other →
+        (∑ i, (other i).length) ≤ ∑ i, (paths i).length) ∧
+      let M := ∑ i, (paths i).length
+      ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+        (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+        M ≤ 104*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  obtain ⟨paths, simple, allowed, maximal, dense, long⟩ := localOrderExtremal_isDense n p k half hn hp
+  exact ⟨paths, simple, allowed, maximal,
+    regularization_list_frozen_of_small_budget_all_cutoffs paths simple allowed two hn hp dense long count⟩
 
 /-- The same path-count regime gives original-average caps at the
 unrestricted extremum. -/
@@ -325,9 +411,7 @@ theorem localOrderExtremal_frozen_of_small_path_budget_all_cutoffs (n p k : ℕ)
       let M := ∑ i, (paths i).length
       ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
         (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
-        M ≤ 104*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
-  obtain ⟨paths, simple, allowed, maximal, dense, long⟩ := localOrderExtremal_isDense n p k half hn hp
-  exact ⟨paths, simple, allowed, maximal,
-    regularization_list_frozen_of_small_path_budget_all_cutoffs paths simple allowed two hn hp dense long count⟩
+        M ≤ 104*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  localOrderExtremal_frozen_of_small_budget_all_cutoffs n p k half two hn hp (Or.inr count)
 
 end OnlineReachabilityPreservers

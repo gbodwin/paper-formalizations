@@ -295,8 +295,8 @@ Degree clipping also keeps the original row and vertex labels. A common
 vertex after the first one in the earlier row determines a later
 reverse partner, which is unique under half exclusion through size
 three. Counting these occurrences bounds the cost of clipping degrees
-and lengths together. For positive budgets and \(p\le156\), a cleaned
-witness retains \(M/104\) of the unrestricted maximum with the original
+and lengths together. For positive budgets with either \(n\le157\) or
+\(p\le156\), a cleaned witness retains \(M/104\) of the unrestricted maximum with the original
 budgets and all four original-average caps at every full and half cutoff
 of at least two. The dense branch at cutoff three or higher uses the two
 rowwise clipping operations. The other branches use the low-mass
