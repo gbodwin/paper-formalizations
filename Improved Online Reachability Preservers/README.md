@@ -568,12 +568,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   length-capped subfamily yields the original budgets and frozen caps
   with mass at least (M/104). The theorem preserves full exclusion at
   any cutoff and half exclusion through size four.
-  [Cleaning the length-capped subfamily](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L71).
+  [Cleaning the length-capped subfamily](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L128).
 - The same bound holds if clipping every row at the cap deletes at most
   (7M/15) incidences. Combining clipping with the sharper charge for
   overlong rows yields a witness of mass at least (M/2000) when those rows
   carry at least (7M/12), through half cutoff four or full cutoff six.
-  [Clipping and the overlong case](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L149).
+  [Clipping and the overlong case](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L206).
 - If either positive budget is at most 29, an unrestricted maximum at any
   cutoff of at least two has a witness with both budgets, all four frozen
   caps, and at least \(M/8\) incidences. The witness excludes full bridges
@@ -585,6 +585,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   separate argument gives an \(M/104\) witness at any full cutoff of
   at least two or half cutoffs two through four.
   [Cleaning by counting triples](OnlineReachabilityPreservers/FrozenPathTriples.lean).
+- A [length-capped subfamily using at most half the path budget](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L98)
+  needs only two fifths of the original mass before trimming and peeling.
+  When a shared vertex partition of the overlong paths fits in that half
+  budget, an ordered-pair bound controls clipping. The
+  [overlong partition theorem](OnlineReachabilityPreservers/FrozenOverlongPartitions.lean#L48)
+  gives both original budgets, all four frozen caps and at least
+  \(M/104\), at every full cutoff and half cutoffs through four.
 - For full-bridge cutoffs three through five, a cleaned maximizing family
   retains at least \(M/119\) and meets both budgets and all four factor-four
   caps measured against the original averages. The path split places matching
@@ -669,7 +676,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   paths divided by \(q(4L-2)\), where \(q\) is the number of parts and
   \(L\) is the path cap. Every bridge stays within one part. With room
   for all path pieces and enough mass after clipping, the
-  [frozen cleaning theorem](OnlineReachabilityPreservers/ClippedVertexPartitions.lean#L198)
+  [frozen cleaning theorem](OnlineReachabilityPreservers/ClippedVertexPartitions.lean#L199)
   attains both budgets and all four caps with at least \(M/16\).
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve

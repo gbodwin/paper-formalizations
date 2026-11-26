@@ -175,7 +175,8 @@ theorem exists_clippedPartitionListPaths {q cap : ℕ} (positive : 0 < q) (capPo
 local notation "Before" => SourceAudit.BeforeIn
 
 omit [Fintype V] [Fintype I] in
-private theorem clipped_partition_allowed {q k cap : ℕ} {half : Bool}
+/-- The clipped pieces within each common part preserve the input bridge exclusion. -/
+theorem clippedPartitionListPaths_admissible {q k cap : ℕ} {half : Bool}
     (paths : I → List V) (part : V → Fin q) (simple : ∀ i, (paths i).Nodup)
     (allowed : localOrderAdmissible half k paths) :
     localOrderAdmissible half k (clippedPartitionListPaths paths part cap) := by
@@ -220,7 +221,7 @@ theorem regularization_list_frozen_by_clipped_vertex_partition {q k n p M lossBu
   have sub (i) : (kept i).Sublist (pieces i) := List.take_sublist width (pieces i)
   have pieceSimple (i) : (pieces i).Nodup := List.filter_sublist.nodup (simple (ofLex i).1)
   have resultSimple (i) : (kept i).Nodup := (sub i).nodup (pieceSimple i)
-  have resultAdmissible : localOrderAdmissible half k kept := clipped_partition_allowed paths part simple allowed
+  have resultAdmissible : localOrderAdmissible half k kept := clippedPartitionListPaths_admissible paths part simple allowed
   have degree : (half = true → k ≤ 4) ∨ (∀ v, (occurrences (fun i => (kept i).toFinset) v).card ≤ 4*M/n) :=
     degreeCondition.imp_right fun bounded v => by
       have subset : occurrences (fun i => (kept i).toFinset) v ⊆ occurrences (fun i => (pieces i).toFinset) v := by

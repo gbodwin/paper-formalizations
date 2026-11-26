@@ -17,18 +17,19 @@ private theorem frozen_length_capped_retention {M K : ℝ} (positive : 0 < M) (l
   have quadratic := mul_nonneg (show 0 ≤ K-8*M/15 by linarith) (show 0 ≤ 12*M-K-8*M/15 by linarith)
   nlinarith
 
-/-- Row splitting is unnecessary for a length-capped subfamily carrying
-at least eight fifteenths of the original mass. Vertex trimming and
-peeling then give both budgets and all four frozen caps. -/
-theorem regularization_list_frozen_of_length_capped_mass {I : Type*} [LinearOrder I] [Fintype I]
-    {half : Bool} {k n p M : ℕ} (paths : I → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+/-- A length-capped subfamily needs only vertex splits. Use its actual
+path count in the peeling charge against the original averages. -/
+theorem regularization_list_frozen_of_length_capped_budget {I : Type*} [LinearOrder I] [Fintype I]
+    {half : Bool} {k n p M retention : ℕ} (paths : I → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (allowed : localOrderAdmissible half k paths) (size : half = true → k ≤ 4)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
     (pathsCap : Fintype.card I ≤ p) (lengthCap : ∀ i, (paths i).length ≤ 4*M/p)
-    (upper : (∑ i, (paths i).length) ≤ M) (lower : 8*M ≤ 15*(∑ i, (paths i).length)) :
+    (upper : (∑ i, (paths i).length) ≤ M) (positive : 0 < retention)
+    (enough : let K := (∑ i, (paths i).length : ℕ)
+      (M:ℝ)/retention ≤ (K:ℝ)-(K:ℝ)^2/(12*(M:ℝ))-(M:ℝ)/4-(M:ℝ)/(4*(p:ℝ))*(Fintype.card I:ℝ)) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
-      M ≤ 104*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let D := 4*M/n
   let K := ∑ i, (paths i).length
   let copied := splitListVertices paths D
@@ -50,9 +51,26 @@ theorem regularization_list_frozen_of_length_capped_mass {I : Type*} [LinearOrde
   obtain ⟨filled,exactFilled,other⟩ := splitListVertices_full_block_profile paths width
   have remainders : (univ \ filled).card ≤ n := by rw [other,Fintype.card_fin]
   refine regularization_list_frozen_trim_vertices_quadratic copied copiedSimple legal hn hp dense long
-    (retention := 104) (by decide) filled exactFilled remainders pathsCap
+    positive filled exactFilled remainders pathsCap
     (fun i => (copyLength i).trans_le (lengthCap i)) degreeCap (mass.trans_le upper) ?_
   rw [mass]
+  exact enough
+
+/-- Row splitting is unnecessary for a length-capped subfamily carrying
+at least eight fifteenths of the original mass. Vertex trimming and
+peeling then give both budgets and all four frozen caps. -/
+theorem regularization_list_frozen_of_length_capped_mass {I : Type*} [LinearOrder I] [Fintype I]
+    {half : Bool} {k n p M : ℕ} (paths : I → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k paths) (size : half = true → k ≤ 4)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (pathsCap : Fintype.card I ≤ p) (lengthCap : ∀ i, (paths i).length ≤ 4*M/p)
+    (upper : (∑ i, (paths i).length) ≤ M) (lower : 8*M ≤ 15*(∑ i, (paths i).length)) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 104*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  refine regularization_list_frozen_of_length_capped_budget paths simple allowed size hn hp dense long
+    pathsCap lengthCap upper (by decide) ?_
+  let K := ∑ i, (paths i).length
   have massPos : (0:ℝ) < M := by exact_mod_cast hn.trans_le dense
   let l : ℝ := (M:ℝ)/(4*(p:ℝ))
   have total : l*(p:ℝ) = (M:ℝ)/4 := by
@@ -64,6 +82,45 @@ theorem regularization_list_frozen_of_length_capped_mass {I : Type*} [LinearOrde
   have retain := frozen_length_capped_retention (M := (M:ℝ)) (K := (K:ℝ)) massPos
     (by exact_mod_cast lower) (by exact_mod_cast upper)
   change (M:ℝ)/104 ≤ (K:ℝ)-(K:ℝ)^2/(12*(M:ℝ))-(M:ℝ)/4-l*(Fintype.card I:ℝ)
+  linarith
+
+private theorem frozen_half_path_budget_retention {M K : ℝ} (positive : 0 < M) (lower : 2*M ≤ 5*K)
+    (upper : K ≤ M) : M/90 ≤ K-K^2/(12*M)-3*M/8 := by
+  rw [show K-K^2/(12*M)-3*M/8 = (24*M*K-2*K^2-9*M^2)/(24*M) from by
+    field_simp [positive.ne']
+    ring]
+  apply (le_div_iff₀ (by positivity)).mpr
+  have quadratic := mul_nonneg (show 0 ≤ K-2*M/5 by linarith) (show 0 ≤ 12*M-K-2*M/5 by linarith)
+  nlinarith [sq_nonneg M]
+
+/-- A subfamily of length-capped paths needs only two fifths of the
+original mass when it uses at most half of the path budget. -/
+theorem regularization_list_frozen_of_length_capped_half_path_budget {I : Type*} [LinearOrder I] [Fintype I]
+    {half : Bool} {k n p M : ℕ} (paths : I → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k paths) (size : half = true → k ≤ 4)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (pathsCap : 2 * Fintype.card I ≤ p) (lengthCap : ∀ i, (paths i).length ≤ 4*M/p)
+    (upper : (∑ i, (paths i).length) ≤ M) (lower : 2*M ≤ 5*(∑ i, (paths i).length)) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 90*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  refine regularization_list_frozen_of_length_capped_budget paths simple allowed size hn hp dense long
+    (by omega) lengthCap upper (by decide) ?_
+  let K := ∑ i, (paths i).length
+  let fee : ℝ := (M:ℝ)/(4*(p:ℝ))
+  have p0 : (p:ℝ) ≠ 0 := by exact_mod_cast hp.ne'
+  have count : (Fintype.card I : ℝ) ≤ (p:ℝ)/2 := by
+    have cap : (2:ℝ)*(Fintype.card I:ℝ) ≤ p := by exact_mod_cast pathsCap
+    linarith
+  have charge : fee*(Fintype.card I:ℝ) ≤ (M:ℝ)/8 := calc
+    _ ≤ fee*((p:ℝ)/2) := mul_le_mul_of_nonneg_left count (by positivity)
+    _ = _ := by
+      dsimp [fee]
+      field_simp [p0]
+      ring
+  have retained := frozen_half_path_budget_retention (M := (M:ℝ)) (K := (K:ℝ))
+    (by exact_mod_cast hn.trans_le dense) (by exact_mod_cast lower) (by exact_mod_cast upper)
+  change (M:ℝ)/90 ≤ (K:ℝ)-(K:ℝ)^2/(12*(M:ℝ))-(M:ℝ)/4-fee*(Fintype.card I:ℝ)
   linarith
 
 /-- In particular, it suffices that at most seven fifteenths of the

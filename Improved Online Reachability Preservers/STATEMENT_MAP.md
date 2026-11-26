@@ -1520,21 +1520,21 @@ block width times the vertex budget. Peeling uses the actual piece count.
 The witness retains at least \(M/216\) and has all four original-average
 caps and both original budgets through half cutoff four or full cutoff six.
 When those overlong rows carry at most \(7M/15\), the
-[length-capped subfamily](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L71)
+[length-capped subfamily](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L128)
 retains at least \(8M/15\) before trimming. It requires only vertex splits,
 so the construction preserves full exclusion at every cutoff and half
 exclusion through size four. It meets both original budgets and all four
 frozen caps and retains at least \(M/104\). The
-[underlying theorem](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L23)
+[underlying theorem](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L62)
 applies to any length-capped subfamily carrying that much mass.
-The [clipped subfamily](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L110)
+The [clipped subfamily](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L167)
 keeps the first \(\lfloor4M/p\rfloor\) entries of every row. It therefore
 works when the excess \(T\) above that width is at most \(7M/15\).
 If the overlong rows carry mass \(S\) and there are \(q\) such rows, the
 [excess identity](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L20)
 gives \(S=T+q\lfloor4M/p\rfloor\). For large \(T\), it sharpens the
 bound on how many path pieces peeling can delete. Combining the cases
-[covers \(S\ge7M/12\)](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L149)
+[covers \(S\ge7M/12\)](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L206)
 with retention at least \(M/2000\) through half cutoff four or full cutoff
 six. With these two arguments, inputs having \(T>7M/15\) and \(S<7M/12\)
 still require a separate criterion.
@@ -1565,6 +1565,22 @@ Combining with the clipping theorem gives at least \(M/104\), with both
 frozen budgets and all four caps, at full cutoffs of at least two and
 half cutoffs two through four.
 
+When the length-capped subfamily uses at most half the available paths,
+the path peeling charge is at most \(M/8\). The
+[half-budget lemma](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L98)
+then needs initial mass at least \(2M/5\) and retains \(M/90\) within
+both original budgets and all four frozen caps. In the
+[common partition application](OnlineReachabilityPreservers/FrozenOverlongPartitions.lean#L48),
+let \(r\) be the positive number of vertex parts and \(q\) the number of
+rows longer than \(L=\lfloor4M/p\rfloor\). Require \(2qr\le p\) and
+an ordered-pair count on those rows at most
+\(r(4L-2)\lfloor M/15\rfloor\). Partitioning and clipping then lose at
+most \(\lfloor M/15\rfloor\) of their mass. When \(T>7M/15\), enough
+mass remains for the half-budget lemma. Combining with ordinary clipping
+gives \(M/104\) at every full cutoff and at half cutoffs through four.
+The construction uses a common partition to preserve bridge exclusion
+when splitting paths.
+
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
 and nonempty simple rows. At the prescribed widths \(7\) and \(20\) it
@@ -1578,7 +1594,7 @@ A piece of length \(x\) supplies \(x(x-1)\) such ordered pairs, enough
 to pay \((4L-2)(x-L)\) when it is clipped at \(L\). With room for
 one piece per selected path and part, retaining three quarters of the
 original mass after this loss is sufficient for the
-[frozen cleaning conclusion](OnlineReachabilityPreservers/ClippedVertexPartitions.lean#L198).
+[frozen cleaning conclusion](OnlineReachabilityPreservers/ClippedVertexPartitions.lean#L199).
 It preserves full exclusion at any cutoff. For half exclusion it uses
 the safe degree split through size four or already capped degrees.
 
