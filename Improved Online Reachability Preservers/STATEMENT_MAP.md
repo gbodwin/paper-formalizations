@@ -1152,6 +1152,14 @@ with the reference fractional cover. With \(m\) arcs, at most
 trace, with zero updates at \(m=0\). The graph and demand encodings, pair
 enumeration, and numeric controls are supplied.
 
+The [binary rounded demand step](OnlineReachabilityPreservers/SteinerBinaryThinDemandWork.lean#L77)
+runs the fractional loop at the paper's fuel bound and returns its updated
+encoded loads and cut count. It then scans the supplied threshold rows once
+and tests reachability in the resulting graph. The returned encoded arc list
+and miss flag agree with the reference rounded trial. The work bound charges
+the interval setup, fractional cuts, final cut probe, threshold scan, and
+rounded reachability test.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

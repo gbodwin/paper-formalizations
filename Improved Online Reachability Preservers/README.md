@@ -448,8 +448,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   represented table for one feasible demand with supplied fuel. The [binary fractional cover](OnlineReachabilityPreservers/SteinerBinaryThinCoverWork.lean#L155)
   initializes the zero table at a sufficient width and carries its state
   across all arrivals. The total number of updates is bounded by the
-  reference load potential. Rounding and the rest of the complete replay
-  still need integration, along with native execution bounds.
+  reference load potential. The [binary rounded demand step](OnlineReachabilityPreservers/SteinerBinaryThinDemandWork.lean#L77)
+  finishes the fractional updates for one arrival before it scans the
+  supplied threshold rows and tests reachability in the resulting graph.
+  The full rounded trace, the remaining replay phases, and native execution
+  bounds remain open at this layer.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
