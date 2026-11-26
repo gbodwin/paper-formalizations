@@ -208,16 +208,22 @@ private theorem roundThinThresholdListLoop_work {E : Type*} (factor : ℕ) (load
     dsimp only at here ⊢
     omega
 
-/-- A meter for the rounding pass on a stored list with one row per arc.
-The load callback accounts for work needed to retrieve each exponent. -/
-def roundThinThresholdListWithWordWork (rows : List ((V × V) × ℕ))
-    (unique : (rows.map Prod.fst).Nodup) (factor : ℕ) (load : (V × V) → ℕ × ℕ) : Arcs V × ℕ :=
+private def selectedThinThresholdRowsWithWordWork (rows : List ((V × V) × ℕ))
+    (unique : (rows.map Prod.fst).Nodup) (factor : ℕ) (load : (V × V) → ℕ × ℕ) :
+    {arcs : List (V × V) // arcs.Nodup} × ℕ :=
   let out := roundThinThresholdListLoop factor load rows [] 2
   have kept : out.1.Nodup := by
     dsimp only [out]
     rw [roundThinThresholdListLoop_values,List.append_nil,List.nodup_reverse]
     exact ((List.filter_sublist (p := thinRoundRowPasses factor load)).map Prod.fst).nodup unique
   (⟨out.1,kept⟩,out.2)
+
+/-- A meter for the rounding pass on a stored list with one row per arc.
+The load callback accounts for work needed to retrieve each exponent. -/
+def roundThinThresholdListWithWordWork (rows : List ((V × V) × ℕ))
+    (unique : (rows.map Prod.fst).Nodup) (factor : ℕ) (load : (V × V) → ℕ × ℕ) : Arcs V × ℕ :=
+  let selected := selectedThinThresholdRowsWithWordWork rows unique factor load
+  (⟨selected.1.val,selected.1.property⟩,selected.2)
 
 omit [Fintype V] in
 theorem roundThinThresholdListWithWordWork_spec (rows : List ((V × V) × ℕ))
@@ -243,6 +249,56 @@ theorem roundThinThresholdListWithWordWork_bound (rows : List ((V × V) × ℕ))
     (roundThinThresholdListWithWordWork rows unique factor load).2 ≤
       4+rows.length*(maxRead+4*maxLoad+12) :=
   roundThinThresholdListLoop_work factor load rows [] 2 maxLoad maxRead bounded
+
+/-- Check the current demand directly on the arcs kept by rounding. The
+last count records the ordinary arc inspections for the reference ledger. -/
+def roundThinServiceWithWordWork (rows : List ((V × V) × ℕ))
+    (unique : (rows.map Prod.fst).Nodup) (factor : ℕ) (load : (V × V) → ℕ × ℕ)
+    (depth : ℕ) (d : V × V) : (Arcs V × Bool × ℕ) × ℕ :=
+  let selected := selectedThinThresholdRowsWithWordWork rows unique factor load
+  let result := reachTestListWithWordWork selected.1.val d.1 d.2 depth
+  let count := selected.1.val.length
+  let graph : Arcs V := ⟨selected.1.val,selected.1.property⟩
+  ((graph,!result.1,depth*count),selected.2+result.2+3*count+14)
+
+/-- Work of the rounded-list reachability test and its reference tally. -/
+def thinRoundedServiceWordBudget (n m : ℕ) : ℕ :=
+  2+n*(5+m*(14+4*n))+2*n+5+3*m+14
+
+theorem roundThinServiceWithWordWork_spec (rows : List ((V × V) × ℕ))
+    (unique : (rows.map Prod.fst).Nodup) (factor : ℕ) (load : (V × V) → ℕ × ℕ)
+    (depth : ℕ) (size : depth = Fintype.card V) (d : V × V) :
+    let out := roundThinServiceWithWordWork rows unique factor load depth d
+    let old := roundThinThresholdListWithWordWork rows unique factor load
+    let reached := reachInWithArcInspections old.1 d.2 depth
+    out.1 = (old.1,decide (d.1 ∉ reached.1),reached.2) ∧
+      out.2 ≤ old.2+thinRoundedServiceWordBudget depth rows.length := by
+  let selected := selectedThinThresholdRowsWithWordWork rows unique factor load
+  let graph := (roundThinThresholdListWithWordWork rows unique factor load).1
+  have asSet : selected.1.val.toFinset = graph := by
+    ext e
+    exact List.mem_toFinset
+  have count : selected.1.val.length = graph.card := by
+    rw [← asSet,List.toFinset_card_of_nodup selected.1.property]
+  have short : selected.1.val.length ≤ rows.length := by
+    change (roundThinThresholdListLoop factor load rows [] 2).1.length ≤ _
+    rw [roundThinThresholdListLoop_values,List.append_nil,List.length_reverse,List.length_map]
+    exact List.length_filter_le _ _
+  let checked := reachTestListWithWordWork selected.1.val d.1 d.2 depth
+  obtain ⟨value,used⟩ := reachTestListWithWordWork_spec selected.1.val d.1 d.2 depth
+  change checked.1 = _ at value
+  have budget : checked.2 ≤ 2+depth*(5+rows.length*(14+4*depth))+2*depth+5 := by
+    rw [← size] at used
+    exact used.trans (by gcongr)
+  refine ⟨?_,?_⟩
+  · change (graph,!checked.1,depth*selected.1.val.length) =
+      (graph,decide (d.1 ∉ (reachInWithArcInspections graph d.2 depth).1),
+        (reachInWithArcInspections graph d.2 depth).2)
+    rw [value,asSet,count,reachInWithArcInspections_spec,decide_not]
+  · change selected.2+checked.2+3*selected.1.val.length+14 ≤ selected.2+thinRoundedServiceWordBudget depth rows.length
+    have lengthWork := Nat.mul_le_mul_left 3 short
+    unfold thinRoundedServiceWordBudget
+    omega
 
 private def thinRoundWorkEntryUsing (G : Arcs V) (m : ℕ) (round : CutLoads V → Arcs V)
     (D : List (V × V)) (i : Fin D.length) : Fin D.length × Bool × ℕ :=
@@ -510,6 +566,65 @@ private def thinRoundArrayFold {n : ℕ} (advance : ThinPrefixAdvance n) (m : �
     (D : List (Fin n × Fin n)) : ThinRoundArrayState n :=
   D.foldl (thinRoundArrayStep advance m rows factor) ⟨FinThinPrefixState.initial n,∅,false,0,0⟩
 
+private def thinRoundArrayStepWithServiceWork {n : ℕ} (advance : ThinPrefixAdvance n) (m : ℕ)
+    (rows : ThinThresholdList (Fin n)) (factor : ℕ)
+    (prior : ThinRoundArrayState n) (d : Fin n × Fin n) : ThinRoundArrayState n :=
+  let fractional := advance prior.fractional d
+  let served := roundThinServiceWithWordWork rows.val rows.property factor
+    (fun e => (fractional.loads.read e,6)) n d
+  ⟨fractional,served.1.1,prior.missed || served.1.2.1,
+    prior.testWork+(fractional.searchWork+m+served.1.2.2),prior.roundWork+served.2+9⟩
+
+private def thinRoundArrayFoldWithServiceWork {n : ℕ} (advance : ThinPrefixAdvance n) (m : ℕ)
+    (rows : ThinThresholdList (Fin n)) (factor : ℕ)
+    (D : List (Fin n × Fin n)) : ThinRoundArrayState n :=
+  D.foldl (thinRoundArrayStepWithServiceWork advance m rows factor)
+    ⟨FinThinPrefixState.initial n,∅,false,0,0⟩
+
+private theorem thinRoundArrayFoldWithServiceWork_spec {n : ℕ} (advance : ThinPrefixAdvance n) (m : ℕ)
+    (rows : ThinThresholdList (Fin n)) (factor : ℕ) (D : List (Fin n × Fin n)) :
+    let old := thinRoundArrayFold advance m rows factor D
+    let out := thinRoundArrayFoldWithServiceWork advance m rows factor D
+    out.fractional = old.fractional ∧ out.rounded = old.rounded ∧
+      out.missed = old.missed ∧ out.testWork = old.testWork ∧
+      out.roundWork ≤ old.roundWork+D.length*thinRoundedServiceWordBudget n rows.val.length := by
+  induction D using List.reverseRecOn with
+  | nil => simp [thinRoundArrayFold,thinRoundArrayFoldWithServiceWork]
+  | append_singleton D d ih =>
+    let old := thinRoundArrayFold advance m rows factor D
+    let out := thinRoundArrayFoldWithServiceWork advance m rows factor D
+    let load (e : Fin n × Fin n) := ((advance old.fractional d).loads.read e,6)
+    have foldOld : thinRoundArrayFold advance m rows factor (D++[d]) =
+        thinRoundArrayStep advance m rows factor old d := by
+      simp [thinRoundArrayFold,List.foldl_append,old]
+    have foldOut : thinRoundArrayFoldWithServiceWork advance m rows factor (D++[d]) =
+        thinRoundArrayStepWithServiceWork advance m rows factor out d := by
+      simp [thinRoundArrayFoldWithServiceWork,List.foldl_append,out]
+    obtain ⟨fraction,_,missed,tests,used⟩ := ih
+    change out.fractional = old.fractional at fraction
+    change out.missed = old.missed at missed
+    change out.testWork = old.testWork at tests
+    change out.roundWork ≤ old.roundWork+D.length*thinRoundedServiceWordBudget n rows.val.length at used
+    have service := roundThinServiceWithWordWork_spec rows.val rows.property factor load n
+      (Fintype.card_fin n).symm d
+    dsimp only at service ⊢
+    rw [foldOut,foldOld]
+    simp only [thinRoundArrayStepWithServiceWork,thinRoundArrayStep,fraction,missed,tests]
+    change let rounded := roundThinThresholdListWithWordWork rows.val rows.property factor load
+      let checked := reachInWithArcInspections rounded.1 d.2 n
+      let served := roundThinServiceWithWordWork rows.val rows.property factor load n d
+      True ∧ served.1.1 = rounded.1 ∧
+        (old.missed || served.1.2.1) = (old.missed || decide (d.1 ∉ checked.1)) ∧
+        old.testWork+((advance old.fractional d).searchWork+m+served.1.2.2) =
+          old.testWork+((advance old.fractional d).searchWork+m+checked.2) ∧
+        out.roundWork+served.2+9 ≤ old.roundWork+rounded.2+9+
+          (D++[d]).length*thinRoundedServiceWordBudget n rows.val.length
+    dsimp only
+    rw [service.1]
+    simp only [true_and,List.length_append,List.length_singleton,Nat.add_mul,Nat.one_mul]
+    have charged := service.2
+    omega
+
 private def ThinPrefixAdvance.Exact {n : ℕ} (advance : ThinPrefixAdvance n) (G : Arcs (Fin n)) : Prop :=
   ∀ prior P d, prior.fractionalRecord = thinCoverRunWithSearchWork G P →
     (advance prior d).fractionalRecord = thinCoverRunWithSearchWork G (P++[d])
@@ -574,14 +689,16 @@ private theorem thinRoundArrayFold_values {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
     simp only [rounded]
     rfl
 
+@[inline] private def thinRoundArrayResult {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
+    (out : ThinRoundArrayState n) : (Arcs (Fin n) × ℕ) × ℕ :=
+  let result := if out.missed then (G,out.testWork) else (out.rounded,out.testWork+out.fractional.searchWork+m)
+  (result,out.fractional.updateWork+out.roundWork+4)
+
 @[inline] private def thinRoundRunFromThresholdListUsing {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
     (advance : ThinPrefixAdvance n) (rows : ThinThresholdList (Fin n)) (factor : ℕ)
     (D : List (Fin n × Fin n)) : (Arcs (Fin n) × ℕ) × ℕ :=
   if D.isEmpty then ((∅,0),2)
-  else
-    let out := thinRoundArrayFold advance m rows factor D
-    let result := if out.missed then (G,out.testWork) else (out.rounded,out.testWork+out.fractional.searchWork+m)
-    (result,out.fractional.updateWork+out.roundWork+4)
+  else thinRoundArrayResult G m (thinRoundArrayFold advance m rows factor D)
 
 private theorem thinRoundRunFromThresholdListUsing_eq {n : ℕ} (G : Arcs (Fin n)) (m : ℕ)
     (advance : ThinPrefixAdvance n) (stepExact : advance.Exact G) (rows : ThinThresholdList (Fin n)) (factor : ℕ)
@@ -931,5 +1048,56 @@ theorem thinRoundRunFromThresholdListWithIntervalWork_bound {n : ℕ} (G : Arcs 
   unfold steinerThinIntervalWorkBound steinerThinResidualRouteWorkBound steinerStreamingThinWorkBound
     thinCoverIntervalWordCap thinPreparedIntervalStepWordBudget steinerThinIntervalExtraWork
   ring
+
+/-- Replay the thin prefixes and charge each service test on its retained arc list. -/
+def thinRoundRunFromThresholdListWithServiceWork {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (m : ℕ)
+    (rows : ThinThresholdList (Fin n)) (factor : ℕ) (D : List (Fin n × Fin n)) : (Arcs (Fin n) × ℕ) × ℕ :=
+  if D.isEmpty then ((∅,0),2)
+  else thinRoundArrayResult G m
+    (thinRoundArrayFoldWithServiceWork (thinRoundPrefixAdvanceWithIntervalWork arcs m) m rows factor D)
+
+/-- The service check keeps the returned graph and ordinary search tally at every input. -/
+theorem thinRoundRunFromThresholdListWithServiceWork_spec {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (m : ℕ)
+    (rows : ThinThresholdList (Fin n)) (factor : ℕ) (D : List (Fin n × Fin n)) :
+    let out := thinRoundRunFromThresholdListWithServiceWork G arcs m rows factor D
+    let old := thinRoundRunFromThresholdListWithIntervalWork G arcs m rows factor D
+    out.1 = old.1 ∧ out.2 ≤ old.2+D.length*thinRoundedServiceWordBudget n rows.val.length := by
+  by_cases empty : D.isEmpty = true
+  · simp [thinRoundRunFromThresholdListWithServiceWork,thinRoundRunFromThresholdListWithIntervalWork,
+      thinRoundRunFromThresholdListUsing,empty]
+  obtain ⟨fraction,rounded,missed,tests,used⟩ := thinRoundArrayFoldWithServiceWork_spec
+    (thinRoundPrefixAdvanceWithIntervalWork arcs m) m rows factor D
+  simp only [thinRoundRunFromThresholdListWithServiceWork,thinRoundRunFromThresholdListWithIntervalWork,
+    thinRoundRunFromThresholdListUsing,empty,Bool.false_eq_true,ite_false,thinRoundArrayResult,
+    fraction,rounded,missed,tests]
+  refine ⟨trivial,?_⟩
+  omega
+
+/-- Work cap for thin interval, rounding and rounded-list service operations. -/
+def steinerThinServiceWorkBound (n m p : ℕ) : ℕ :=
+  steinerThinIntervalWorkBound n m p+p*thinRoundedServiceWordBudget n m
+
+def steinerThinServiceWorkPolynomial (n m p : ℕ) : ℕ :=
+  steinerThinIntervalWorkPolynomial n m p+p*thinRoundedServiceWordBudget n m
+
+theorem steinerThinServiceWorkBound_le (n m p : ℕ) :
+    steinerThinServiceWorkBound n m p ≤ steinerThinServiceWorkPolynomial n m p :=
+  Nat.add_le_add_right (steinerThinIntervalWorkBound_le n m p) _
+
+theorem thinRoundRunFromThresholdListWithServiceWork_bound {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (arcsEq : arcs.val.toFinset = G) (m : ℕ) (hm : m = G.card)
+    (rows : ThinThresholdList (Fin n)) (edges : ∀ r ∈ rows.val, r.1 ∈ G) (count : rows.val.length ≤ m)
+    (factor : ℕ) (D : List (Fin n × Fin n)) (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (thinRoundRunFromThresholdListWithServiceWork G arcs m rows factor D).2 ≤
+      steinerThinServiceWorkBound n m D.length := by
+  have search := (thinRoundRunFromThresholdListWithServiceWork_spec G arcs m rows factor D).2
+  have interval := thinRoundRunFromThresholdListWithIntervalWork_bound G arcs arcsEq m hm
+    rows edges count factor D feasible
+  have service : thinRoundedServiceWordBudget n rows.val.length ≤ thinRoundedServiceWordBudget n m := by
+    unfold thinRoundedServiceWordBudget
+    gcongr
+  exact search.trans (Nat.add_le_add interval (Nat.mul_le_mul_left _ service))
 
 end OnlineReachabilityPreservers

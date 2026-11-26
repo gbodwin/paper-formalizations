@@ -42,7 +42,7 @@ An exact-source replay grants no coverage to a paper statement outside the
   [complete prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L920)
   includes array initialization and the two signed updates per routed arc
   in the combined source-level allowance on feasible traces.
-- The [incremental thin work bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L700)
+- The [incremental thin work bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L869)
   covers one dense load initialization per nonempty thin run, direct
   indexed updates along separating cuts, and threshold scans at the
   successive checks. On a feasible trace, the [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L902)

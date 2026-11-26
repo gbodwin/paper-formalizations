@@ -580,12 +580,12 @@ tally on exhaustion. The cumulative bound for each feasible trace adds \(11m+21\
 to the preparation and early trace polynomials. Other container work
 and bit and native costs remain open.
 
-The [incremental thin evaluator](OnlineReachabilityPreservers/SteinerThinReplay.lean#L631)
+The [incremental thin evaluator](OnlineReachabilityPreservers/SteinerThinReplay.lean#L800)
 initializes one dense load table for a nonempty thin run, carries it
 forward through the thin requests inside each evaluated late prefix, and
 uses the rounded graph already computed for the final check when all checks
 pass. The
-[thin work bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L700)
+[thin work bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L869)
 covers that initialization, indexed updates on separating cuts, and
 indexed rounding with repeated doubling. The [late equality](OnlineReachabilityPreservers/SteinerLateReplay.lean#L284)
 preserves the rounded graph and previous search tally for every trace,
@@ -604,11 +604,20 @@ cut search. Each chosen augmenting arc increments its forward entry and
 decrements its reverse entry. The selected augmenting paths, final flow,
 cut and earlier search tally agree. For supply \(m\), the additional charge
 per thin separator call is bounded by \(4n^2+m(20n+10)+23\). The
-[thin bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L724)
+[thin bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L893)
 uses the feasible trace's bound on the number of calls. The [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L920)
 includes this charge in the fixed-height polynomial and returns the same
 prefix graphs on feasible traces. The [record equality](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L857)
 also holds on exhaustion and infeasible traces.
+
+The [rounded-list service check](OnlineReachabilityPreservers/SteinerThinReplay.lean#L268)
+tests the current request directly on the retained arcs. The graph,
+miss decision, and ordinary arc inspection tally agree with the
+earlier check. The [thin fold](OnlineReachabilityPreservers/SteinerThinReplay.lean#L1061)
+preserves the same graph and inspection tally for every trace,
+including an entire-graph fallback after a miss. The [polynomial cap](OnlineReachabilityPreservers/SteinerThinReplay.lean#L1089)
+adds the service work at each request on feasible traces with valid
+threshold rows. This checkpoint covers the thin run.
 
 The [capacity preparation](OnlineReachabilityPreservers/SeparatorWork.lean#L803)
 initializes one pair table per cut search and evaluates a capacity once

@@ -195,7 +195,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   The [one-pass threshold builder](OnlineReachabilityPreservers/SteinerThinReplay.lean)
   accounts for cache construction in the same word model. Its tally is
   \(11m+4\) for \(m\) arcs, including the indexed reads and list assembly.
-  The [incremental thin evaluator](OnlineReachabilityPreservers/SteinerThinReplay.lean#L631)
+  The [incremental thin evaluator](OnlineReachabilityPreservers/SteinerThinReplay.lean#L800)
   keeps one load table throughout each nonempty thin run within an
   evaluated late prefix. It advances the table for each thin request and
   reuses the rounded graph from the final check when all checks pass.
@@ -217,7 +217,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   shares one duplicate-free arc list across the trace. Each thin request
   in an evaluated thin run prepares its interval once and reuses it for
   the cut searches and updates. The fixed-height bound includes those
-  interval computations. The late replay also uses the arc list for
+  interval computations. A separate [thin replay](OnlineReachabilityPreservers/SteinerThinReplay.lean#L1061)
+  also charges each service test using the arc list retained by rounding.
+  It returns the same graph and ordinary inspection count for every
+  trace, and the [feasible-trace bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L1089)
+  includes the additional list work. The complete late replay still uses
+  the earlier service test. It also uses the arc list for
   arrival classification, both ordered hub-leg lists, and the test for
   a thick miss. Its fixed-height bound charges these scans and trace-list
   operations on feasible traces. The older graph and search records and
