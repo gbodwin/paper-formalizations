@@ -955,10 +955,10 @@ three, a simple cycle of \(r\) links produces a full bridge of size at most
 The existing pruning charges each removed incidence to a distinct link
 using half exclusion through size two. With full exclusion at every size,
 the link graph is a forest and the loss is at most \(n-1\) for \(n>0\).
-[Cycle bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L329)
-· [Finite cutoff](OnlineReachabilityPreservers/OppositeLinkForest.lean#L408)
-· [Charge in half mode](OnlineReachabilityPreservers/OppositeLinkForest.lean#L466)
-· [Pruning bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L526).
+[Cycle bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L331)
+· [Finite cutoff](OnlineReachabilityPreservers/OppositeLinkForest.lean#L410)
+· [Charge in half mode](OnlineReachabilityPreservers/OppositeLinkForest.lean#L468)
+· [Pruning bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L528).
 
 For simple paths with full exclusion through six or half exclusion through
 four, let \(E\) count these links. If \(M\ge8E\) and the mass \(M\) is
@@ -975,14 +975,14 @@ forest bound and the original cap widths.
 [All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L151).
 
 For half-bridge exclusion through size three, the
-[opposite-link graph has no triangles](OnlineReachabilityPreservers/OppositeLinkForest.lean#L574).
+[opposite-link graph has no triangles](OnlineReachabilityPreservers/OppositeLinkForest.lean#L576).
 Each link joins consecutive common vertices of two paths that traverse
-them in opposite orders. The [two-link property](OnlineReachabilityPreservers/OppositeLinkForest.lean#L618)
+them in opposite orders. The [two-link property](OnlineReachabilityPreservers/OppositeLinkForest.lean#L620)
 puts the intermediate vertex on any path that contains both distinct endpoints.
-At cutoff four, the [four-cycle exclusion](OnlineReachabilityPreservers/OppositeLinkForest.lean#L791)
+At cutoff four, the [four-cycle exclusion](OnlineReachabilityPreservers/OppositeLinkForest.lean#L793)
 uses that property to compare the last arcs in competing detours. It
-shows that [every cycle has length at least five](OnlineReachabilityPreservers/OppositeLinkForest.lean#L844).
-The [link count](OnlineReachabilityPreservers/OppositeLinkForest.lean#L875)
+shows that [every cycle has length at least five](OnlineReachabilityPreservers/OppositeLinkForest.lean#L846).
+The [link count](OnlineReachabilityPreservers/OppositeLinkForest.lean#L877)
 uses triangle and four-cycle exclusion to inject ordered two-link walks
 into ordered pairs of distinct vertices. Cauchy–Schwarz gives
 \(4E^2\le n^2(n-1)\). For a simple half-four-free family with positive
@@ -994,6 +994,16 @@ retention of \(M/32\). At the unrestricted half-four maximum, the
 [path-budget condition](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L388)
 \(p^2\ge16n^2(n-1)\) suffices. The unrestricted original-average
 cleaning claim remains open.
+
+For any simple graph, take the two orientations of each edge as paths
+of two vertices. The [dart family](OnlineReachabilityPreservers/OppositeLinkForest.lean#L1041)
+excludes full bridges through a cutoff exactly when the graph's girth
+exceeds that cutoff. Its [opposite-link graph](OnlineReachabilityPreservers/OppositeLinkForest.lean#L1022)
+is the original graph, and its [incidence mass](OnlineReachabilityPreservers/OppositeLinkForest.lean#L1059)
+is four times the number of edges in the finite case. Thus every graph
+of girth greater than four occurs as an opposite-link graph for half
+exclusion through four. With positive budgets and mass at least both
+counts, these two-vertex paths already fall in the low-mass cleaning regime.
 
 | Source | Mathematical obligation |
 | --- | --- |

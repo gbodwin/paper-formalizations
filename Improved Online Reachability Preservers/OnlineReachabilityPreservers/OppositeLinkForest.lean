@@ -1,6 +1,8 @@
 import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
+import Mathlib.Combinatorics.SimpleGraph.Girth
+import Mathlib.Data.List.ChainOfFn
 import OnlineReachabilityPreservers.OppositeIntersectionPruning
 import OnlineReachabilityPreservers.OppositePathChains
 
@@ -945,5 +947,121 @@ theorem halfFour_oppositeLinkGraph_card_edgeSet_sq {paths : I → List V}
     _ ≤ n*(n*(n-1)) := Nat.mul_le_mul_left n squares
     _ = _ := by ring
 
+
+section DartPaths
+
+variable {W : Type*} [DecidableEq W]
+
+/-- The two orientations of each graph edge, each as a two-vertex path. -/
+def dartPaths (G : SimpleGraph W) (a : G.Dart) : List W := [a.fst,a.snd]
+
+omit [DecidableEq W] in
+theorem dartPaths_nodup (G : SimpleGraph W) (a : G.Dart) : (dartPaths G a).Nodup := by
+  simp [dartPaths,a.fst_ne_snd]
+
+private theorem dartPaths_before_iff {G : SimpleGraph W} {a : G.Dart} {u v : W} :
+    Before (dartPaths G) a u v ↔ u = a.fst ∧ v = a.snd := by
+  constructor
+  · rintro ⟨first,last,ordered⟩
+    have uOn : u = a.fst ∨ u = a.snd := by simpa [dartPaths] using first
+    have vOn : v = a.fst ∨ v = a.snd := by simpa [dartPaths] using last
+    rcases uOn with rfl | rfl <;> rcases vOn with rfl | rfl
+    · exact (lt_irrefl _ ordered).elim
+    · exact ⟨rfl,rfl⟩
+    · simp [dartPaths,a.fst_ne_snd] at ordered
+    · exact (lt_irrefl _ ordered).elim
+  · rintro ⟨rfl,rfl⟩
+    simp [SourceAudit.BeforeIn,dartPaths,a.fst_ne_snd,a.snd_ne_fst]
+
+private theorem dartPaths_adj {G : SimpleGraph W} {a : G.Dart} {u v : W}
+    (step : Before (dartPaths G) a u v) : G.Adj u v := by
+  obtain ⟨rfl,rfl⟩ := dartPaths_before_iff.mp step
+  exact a.adj
+
+/-- Every bridge of size at least three on the two orientations of graph
+edges gives a simple graph cycle of the same length. A two-bridge would
+require two darts with the same ordered endpoints. -/
+theorem dartPaths_bridgeFree_of_lt_egirth (G : SimpleGraph W) {cutoff : ℕ}
+    (girth : (cutoff : ℕ∞) < G.egirth) : BridgeFree (Before (dartPaths G)) cutoff := by
+  intro k limit
+  refine ⟨fun b => ?_⟩
+  by_cases short : k = 0
+  · subst k
+    have river := dartPaths_before_iff.mp b.riverStep
+    have arc := dartPaths_before_iff.mp (b.arcStep 0)
+    exact b.river_ne_arc 0 (SimpleGraph.Dart.ext _ _
+      (Prod.ext (river.1.symm.trans arc.1) (river.2.symm.trans arc.2)))
+  let support := List.ofFn b.vertex
+  have nonempty : support ≠ [] := by simp [support]
+  have edgeChain : support.IsChain G.Adj := by
+    apply List.isChain_ofFn.mpr
+    intro i inside
+    exact dartPaths_adj (b.arcStep ⟨i,by omega⟩)
+  have head : support.head nonempty = b.vertex 0 := List.head_ofFn nonempty
+  have last : support.getLast nonempty = b.vertex (Fin.last (k+1)) := List.getLast_ofFn nonempty
+  let walk := (SimpleGraph.Walk.ofSupport support nonempty edgeChain).copy head last
+  have path : walk.IsPath := by
+    rw [SimpleGraph.Walk.isPath_def]
+    simpa only [walk,SimpleGraph.Walk.support_copy,SimpleGraph.Walk.support_ofSupport,support,List.nodup_ofFn]
+      using b.distinctVertices
+  have length : walk.length = k+1 := by
+    simp [walk,support]
+  let round := SimpleGraph.Walk.cons (dartPaths_adj b.riverStep).symm walk
+  have roundLength : round.length = k+2 := by simp [round,length]
+  have cycle : round.IsCycle := by
+    apply SimpleGraph.Walk.isCycle_iff_isPath_tail_and_le_length.mpr
+    refine ⟨?_,by rw [roundLength]; omega⟩
+    dsimp only [round]
+    rw [SimpleGraph.Walk.tail_cons]
+    exact (SimpleGraph.Walk.isPath_copy _ _ _).mpr path
+  have small : (round.length : ℕ∞) ≤ cutoff := ENat.natCast_le_natCast.mpr (roundLength ▸ limit)
+  exact (not_le_of_gt girth) (cycle.egirth_le_length.trans small)
+
+/-- Every graph edge is an opposite-neighbor link in its dart path
+family, and every link of that family comes from a graph edge. -/
+theorem dartPaths_oppositeLinkGraph (G : SimpleGraph W) [LinearOrder G.Dart]
+    (two : HalfBridgeFree (Before (dartPaths G)) 2) :
+    oppositeLinkGraphOfHalfTwo (dartPaths G) two = G := by
+  apply SimpleGraph.ext
+  funext u v
+  apply propext
+  constructor
+  · rintro ⟨_,_,link⟩
+    exact dartPaths_adj link.2.1
+  · intro edge
+    let a : G.Dart := ⟨(u,v),edge⟩
+    refine ⟨a,a.symm,a.symm_ne.symm,dartPaths_before_iff.mpr ⟨rfl,rfl⟩,
+      dartPaths_before_iff.mpr ⟨rfl,rfl⟩,?_⟩
+    rintro ⟨w,left,right,_⟩
+    have atEnd : w = v := (dartPaths_before_iff.mp left).2
+    exact listBefore_ne right atEnd
+
+/-- For two-vertex dart paths, full bridge exclusion is exactly a lower
+bound on the graph's girth, including forests and cutoffs below three. -/
+theorem dartPaths_bridgeFree_iff_lt_egirth (G : SimpleGraph W) [LinearOrder G.Dart] (cutoff : ℕ) :
+    BridgeFree (Before (dartPaths G)) cutoff ↔ (cutoff : ℕ∞) < G.egirth := by
+  refine ⟨fun free => ?_,dartPaths_bridgeFree_of_lt_egirth G⟩
+  have larger : ((cutoff+1 : ℕ) : ℕ∞) ≤ G.egirth := SimpleGraph.le_egirth.mpr (by
+    intro a walk cycle
+    apply ENat.natCast_le_natCast.mpr
+    by_cases enough : 3 ≤ cutoff
+    · let three : BridgeFree (Before (dartPaths G)) 3 := fun _ size => free (size.trans enough)
+      have same : oppositeLinkGraph (dartPaths G) three = G := dartPaths_oppositeLinkGraph G _
+      have long (w : (oppositeLinkGraph (dartPaths G) three).Walk a a) (c : w.IsCycle) :
+          cutoff < w.length := oppositeLinkGraph_cycle_length_gt_cutoff free enough w c
+      rw [same] at long
+      exact long walk cycle
+    · exact (by omega : cutoff+1 ≤ 3).trans cycle.three_le_length)
+  exact (by exact_mod_cast (Nat.lt_succ_self cutoff) : (cutoff : ℕ∞) < ((cutoff+1 : ℕ) : ℕ∞)).trans_le larger
+
+omit [DecidableEq W] in
+/-- The dart construction has exactly four incidences per graph edge. -/
+theorem dartPaths_mass [Fintype W] (G : SimpleGraph W) [DecidableRel G.Adj] :
+    (∑ a : G.Dart, (dartPaths G a).length) = 4*G.edgeFinset.card := by
+  simp only [dartPaths,List.length_cons,List.length_nil,Nat.reduceAdd,sum_const,card_univ,smul_eq_mul,
+    G.dart_card_eq_twice_card_edges]
+  omega
+
+end DartPaths
 
 end OnlineReachabilityPreservers

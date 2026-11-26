@@ -230,10 +230,10 @@ each removed incidence to a distinct link using half exclusion through
 size two. It therefore loses at most \(n-1\) in the full-bridge-free case
 for \(n>0\). At finite full cutoff \(k\ge3\), every cycle of links has
 length greater than \(k\).
-[Cycle-to-bridge proof](OnlineReachabilityPreservers/OppositeLinkForest.lean#L327)
-· [Finite cutoff](OnlineReachabilityPreservers/OppositeLinkForest.lean#L406)
-· [Charge in half mode](OnlineReachabilityPreservers/OppositeLinkForest.lean#L464)
-· [Pruning loss](OnlineReachabilityPreservers/OppositeLinkForest.lean#L524).
+[Cycle-to-bridge proof](OnlineReachabilityPreservers/OppositeLinkForest.lean#L331)
+· [Finite cutoff](OnlineReachabilityPreservers/OppositeLinkForest.lean#L410)
+· [Charge in half mode](OnlineReachabilityPreservers/OppositeLinkForest.lean#L468)
+· [Pruning loss](OnlineReachabilityPreservers/OppositeLinkForest.lean#L528).
 
 For simple inputs at full cutoff six or half cutoff four, mass \(M\ge8E\)
 at least both positive budgets gives a cleaned witness of mass at least
