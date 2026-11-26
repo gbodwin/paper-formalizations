@@ -391,7 +391,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   lists. Its recorded bit-list work is polynomial in the two input
   lengths. The [binary trial-count evaluator](OnlineReachabilityPreservers/SteinerEarlyBitArithmeticWork.lean#L68)
   computes the early trial count with a polynomial bit-list tally as well.
-  Encoding costs and the full replay's bit and native costs remain open.
+  The [binary indexed load access](OnlineReachabilityPreservers/SteinerBinaryIndexedWork.lean#L169)
+  agrees with thin load table reads and replacements. Its bound is polynomial
+  in the address word lengths and the number of supplied cells. Input encoding,
+  table conversion, and the full replay's bit and native costs remain open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

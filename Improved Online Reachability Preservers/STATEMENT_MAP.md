@@ -963,6 +963,17 @@ word permits redundant high zeros. The two bounds apply to setup
 calculations on supplied binary lists. Input encoding and bit and native
 execution costs for the full replay remain open.
 
+The [binary list access](OnlineReachabilityPreservers/SteinerBinaryIndexedWork.lean#L80)
+reads the old cell and optionally replaces it by walking the supplied
+list, with a binary zero test and decrement. The
+[address calculation](OnlineReachabilityPreservers/SteinerBinaryIndexedWork.lean#L135)
+computes the row-major index by binary multiplication and addition.
+The [thin load table comparison](OnlineReachabilityPreservers/SteinerBinaryIndexedWork.lean#L169)
+matches both the indexed read and the replacement in the list representation.
+The bound includes the address arithmetic and list traversal but treats each
+stored payload as one cell. Table conversion and native execution costs remain
+outside this bound.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
