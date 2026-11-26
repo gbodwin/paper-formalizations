@@ -294,22 +294,24 @@ def weightedHistorySeparatorWordBudget (n m scale weight load initial history : 
     n^2 * (weightedCapacityHistoryRowBudget (n^2) m (n^2) weight load initial history + 11) +
     m * (24 * n + 31) + 18
 
-theorem weightedNetworkViolationFromHistoryWithWordWork_spec (keys : List (V × V)) (distinct : keys.Nodup)
+private theorem makeHistoryCapacityTableForRequest_spec (keys : List (V × V)) (distinct : keys.Nodup)
     (complete : ∀ e, e ∈ keys) (paid : Arcs V) (request : WeightedNetworkDemand V)
     (weight initial : V × V → ℕ × ℕ) (scale W I C : ℕ) (history : List (Arcs V))
     (weightWork : ∀ e, (weight e).2 ≤ W) (initialLoad : ∀ e, (initial e).1 ≤ I)
     (initialWork : ∀ e, (initial e).2 ≤ C) :
-    let out := weightedNetworkViolationFromHistoryWithWordWork keys distinct paid request weight initial scale history
-    out.1 = weightedNetworkViolation paid request (fun e => (weight e).1) scale
-      (history.foldr chargeWeightedCut (fun e => (initial e).1)) ∧
-      out.2 ≤ weightedHistorySeparatorWordBudget (Fintype.card V) paid.card scale W I C history.length := by
+    let n := Fintype.card V
+    let cap := weightedNetworkCapacity paid request (fun e => (weight e).1)
+      (history.foldr chargeWeightedCut (fun e => (initial e).1)) scale
+    let table := makeHistoryCapacityTable keys distinct
+      (capacityFromHistoryWithWordWork paid request weight initial scale history)
+    table.1.val = keys.map (fun e => (e,cap e)) ∧
+      table.2 ≤ n^2*(weightedCapacityHistoryRowBudget (n^2) paid.card (n^2) W I C history.length+11)+3 := by
   let n := Fintype.card V
   let q := n^2
   let cap := weightedNetworkCapacity paid request (fun e => (weight e).1)
     (history.foldr chargeWeightedCut (fun e => (initial e).1)) scale
   let read := capacityFromHistoryWithWordWork paid request weight initial scale history
   let table := makeHistoryCapacityTable keys distinct read
-  let build := residualArcsFromCapacityRows table.1
   have cells : keys.length = q := fullCapacityKeys_length keys distinct complete
   have pairBound (A : Arcs V) : A.card ≤ q := by
     simpa only [Fintype.card_prod, pow_two, q, n] using card_le_univ A
@@ -331,6 +333,29 @@ theorem weightedNetworkViolationFromHistoryWithWordWork_spec (keys : List (V × 
   have tableWork : table.2 ≤ tableBudget + 3 := by
     change (capacityRowsWithWordWork read keys).2 ≤ _
     simpa only [cells, tableBudget] using capacityRowsWithWordWork_cost read keys _ (fun e _ => rowBudget e)
+  exact ⟨shape,tableWork⟩
+
+theorem weightedNetworkViolationFromHistoryWithWordWork_spec (keys : List (V × V)) (distinct : keys.Nodup)
+    (complete : ∀ e, e ∈ keys) (paid : Arcs V) (request : WeightedNetworkDemand V)
+    (weight initial : V × V → ℕ × ℕ) (scale W I C : ℕ) (history : List (Arcs V))
+    (weightWork : ∀ e, (weight e).2 ≤ W) (initialLoad : ∀ e, (initial e).1 ≤ I)
+    (initialWork : ∀ e, (initial e).2 ≤ C) :
+    let out := weightedNetworkViolationFromHistoryWithWordWork keys distinct paid request weight initial scale history
+    out.1 = weightedNetworkViolation paid request (fun e => (weight e).1) scale
+      (history.foldr chargeWeightedCut (fun e => (initial e).1)) ∧
+      out.2 ≤ weightedHistorySeparatorWordBudget (Fintype.card V) paid.card scale W I C history.length := by
+  let n := Fintype.card V
+  let q := n^2
+  let cap := weightedNetworkCapacity paid request (fun e => (weight e).1)
+    (history.foldr chargeWeightedCut (fun e => (initial e).1)) scale
+  let read := capacityFromHistoryWithWordWork paid request weight initial scale history
+  let table := makeHistoryCapacityTable keys distinct read
+  let build := residualArcsFromCapacityRows table.1
+  have cells : keys.length = q := fullCapacityKeys_length keys distinct complete
+  obtain ⟨shape,tableWork⟩ := makeHistoryCapacityTableForRequest_spec keys distinct complete paid request
+    weight initial scale W I C history weightWork initialLoad initialWork
+  let tableBudget := q * (weightedCapacityHistoryRowBudget q paid.card q W I C history.length + 11)
+  change table.2 ≤ tableBudget+3 at tableWork
   have residualExact (flow : ArcFlow V) : build flow = (residualArcs cap flow, n^2) := by
     simpa only [cells] using residualArcsFromCapacityRows_eq_of_keys table.1 keys complete cap flow shape
   let old := findLowCapacityCutWithSearchWork cap request.source request.sink scale
@@ -397,53 +422,53 @@ private theorem weightedSeparatorLoop_old_value (paid : Arcs V) (d : WeightedNet
   obtain ⟨out, _⟩ := weightedCoverLoopWithSearchWork_spec search fuel B charges each
   rwa [exactValue] at out
 
-private def weightedNetworkHistoryLoopWithWordWork (keys : List (V × V)) (distinct : keys.Nodup)
-    (paid : Arcs V) (weight initial : V × V → ℕ × ℕ) (scale fuel : ℕ) :
+@[inline] private def weightedNetworkHistoryLoopUsingWithWordWork
+    (separate : WeightedNetworkDemand V → List (Arcs V) → Option (Arcs V) × ℕ) (fuel : ℕ) :
     List (WeightedNetworkDemand V) → List (Arcs V) → List (Arcs V) × ℕ
-  | [], history => (history, 3)
-  | d :: D, history =>
-    let separate := weightedNetworkViolationFromHistoryWithWordWork keys distinct paid d weight initial scale
-    let first := weightedCoverLoopFromHistoryWithWordWork separate fuel history
-    let last := weightedNetworkHistoryLoopWithWordWork keys distinct paid weight initial scale fuel D first.1.1
-    (last.1, first.2 + last.2 + 10)
+  | [], history => (history,3)
+  | d::D, history =>
+    let first := weightedCoverLoopFromHistoryWithWordWork (separate d) fuel history
+    let last := weightedNetworkHistoryLoopUsingWithWordWork separate fuel D first.1.1
+    (last.1,first.2+last.2+10)
 
-private theorem weightedNetworkHistoryLoopWithWordWork_spec (keys : List (V × V)) (distinct : keys.Nodup)
-    (complete : ∀ e, e ∈ keys) (paid : Arcs V) (weight initial : V × V → ℕ × ℕ)
-    (scale fuel W I C H : ℕ) (D : List (WeightedNetworkDemand V)) (history : List (Arcs V))
-    (room : history.length + D.length * fuel ≤ H)
-    (weightWork : ∀ e, (weight e).2 ≤ W) (initialLoad : ∀ e, (initial e).1 ≤ I)
-    (initialWork : ∀ e, (initial e).2 ≤ C) :
+@[inline] private def weightedNetworkHistoryLoopWithWordWork (keys : List (V × V)) (distinct : keys.Nodup)
+    (paid : Arcs V) (weight initial : V × V → ℕ × ℕ) (scale fuel : ℕ) :
+    List (WeightedNetworkDemand V) → List (Arcs V) → List (Arcs V) × ℕ :=
+  weightedNetworkHistoryLoopUsingWithWordWork
+    (fun d past => weightedNetworkViolationFromHistoryWithWordWork keys distinct paid d weight initial scale past) fuel
+
+private theorem weightedNetworkHistoryLoopUsingWithWordWork_spec
+    (select : WeightedNetworkDemand V → List (Arcs V) → Option (Arcs V) × ℕ)
+    (paid : Arcs V) (weight initial : V × V → ℕ × ℕ)
+    (scale fuel H B : ℕ) (D : List (WeightedNetworkDemand V)) (history : List (Arcs V))
+    (room : history.length+D.length*fuel ≤ H)
+    (selectExact : ∀ d past, (select d past).1 = weightedNetworkViolation paid d (fun e => (weight e).1)
+      scale (past.foldr chargeWeightedCut (fun e => (initial e).1)))
+    (selectCap : ∀ d past, past.length ≤ H → (select d past).2 ≤ B) :
     let start := fun e => (initial e).1
-    let out := weightedNetworkHistoryLoopWithWordWork keys distinct paid weight initial scale fuel D history
+    let out := weightedNetworkHistoryLoopUsingWithWordWork select fuel D history
     let old := weightedNetworkRunAtScaleWithSearchWork paid (fun e => (weight e).1) scale fuel D
       (history.foldr chargeWeightedCut start)
-    let B := weightedHistorySeparatorWordBudget (Fintype.card V) paid.card scale W I C H
     out.1.foldr chargeWeightedCut start = old.1.1 ∧
       out.1 = old.1.2.reverse ++ history ∧ out.1.length ≤ H ∧
-      out.2 ≤ D.length * (fuel * (B + 10) + 13) + 3 := by
+      out.2 ≤ D.length*(fuel*(B+10)+13)+3 := by
   let start := fun e => (initial e).1
   let value := fun e => (weight e).1
-  let B := weightedHistorySeparatorWordBudget (Fintype.card V) paid.card scale W I C H
   induction D generalizing history with
-  | nil => simpa [weightedNetworkHistoryLoopWithWordWork, weightedNetworkRunAtScaleWithSearchWork] using room
+  | nil => simpa [weightedNetworkHistoryLoopUsingWithWordWork, weightedNetworkRunAtScaleWithSearchWork] using room
   | cons d D ih =>
-    let separate := weightedNetworkViolationFromHistoryWithWordWork keys distinct paid d weight initial scale
+    let separate := select d
     let first := weightedCoverLoopFromHistoryWithWordWork separate fuel history
     let oldFirst := weightedCoverLoopWithSearchWork (weightedNetworkViolationWithSearchWork paid d value scale)
       fuel (history.foldr chargeWeightedCut start)
-    let tail := weightedNetworkHistoryLoopWithWordWork keys distinct paid weight initial scale fuel D first.1.1
+    let tail := weightedNetworkHistoryLoopUsingWithWordWork select fuel D first.1.1
     let oldTail := weightedNetworkRunAtScaleWithSearchWork paid value scale fuel D oldFirst.1.1
-    have each (past : List (Arcs V)) :=
-      weightedNetworkViolationFromHistoryWithWordWork_spec keys distinct complete paid d weight initial scale W I C past
-        weightWork initialLoad initialWork
     have fits : history.length + fuel + D.length * fuel ≤ H := by
       simp only [List.length_cons, Nat.succ_mul] at room
       omega
     obtain ⟨firstValue, firstHistory, firstLength, _, firstWork⟩ :=
       weightedCoverLoopFromHistoryWithWordWork_spec separate (weightedNetworkViolation paid d value scale)
-        start (fun past => (each past).1) H B fuel history (by omega)
-        (fun past shorter => (each past).2.trans
-          (weightedHistorySeparatorWordBudget_mono _ _ _ _ _ _ shorter))
+        start (selectExact d) H B fuel history (by omega) (selectCap d)
     have firstExact : (first.1.1.foldr chargeWeightedCut start, first.1.2) = oldFirst.1 :=
       firstValue.trans (weightedSeparatorLoop_old_value paid d value _ scale fuel).symm
     have firstCharge : first.1.1.foldr chargeWeightedCut start = oldFirst.1.1 := congrArg Prod.fst firstExact
@@ -467,6 +492,29 @@ private theorem weightedNetworkHistoryLoopWithWordWork_spec (keys : List (V × V
       rw [Nat.add_mul, Nat.one_mul]
       omega
 
+private theorem weightedNetworkHistoryLoopWithWordWork_spec (keys : List (V × V)) (distinct : keys.Nodup)
+    (complete : ∀ e, e ∈ keys) (paid : Arcs V) (weight initial : V × V → ℕ × ℕ)
+    (scale fuel W I C H : ℕ) (D : List (WeightedNetworkDemand V)) (history : List (Arcs V))
+    (room : history.length + D.length * fuel ≤ H)
+    (weightWork : ∀ e, (weight e).2 ≤ W) (initialLoad : ∀ e, (initial e).1 ≤ I)
+    (initialWork : ∀ e, (initial e).2 ≤ C) :
+    let start := fun e => (initial e).1
+    let out := weightedNetworkHistoryLoopWithWordWork keys distinct paid weight initial scale fuel D history
+    let old := weightedNetworkRunAtScaleWithSearchWork paid (fun e => (weight e).1) scale fuel D
+      (history.foldr chargeWeightedCut start)
+    let B := weightedHistorySeparatorWordBudget (Fintype.card V) paid.card scale W I C H
+    out.1.foldr chargeWeightedCut start = old.1.1 ∧
+      out.1 = old.1.2.reverse ++ history ∧ out.1.length ≤ H ∧
+      out.2 ≤ D.length * (fuel * (B + 10) + 13) + 3 := by
+  let n := Fintype.card V
+  let separate d past := weightedNetworkViolationFromHistoryWithWordWork keys distinct paid d weight initial scale past
+  let B := weightedHistorySeparatorWordBudget n paid.card scale W I C H
+  have verified d past := weightedNetworkViolationFromHistoryWithWordWork_spec keys distinct complete paid d
+    weight initial scale W I C past weightWork initialLoad initialWork
+  exact weightedNetworkHistoryLoopUsingWithWordWork_spec separate paid weight initial scale fuel H B D history room
+    (fun d past => (verified d past).1) (fun d past short => (verified d past).2.trans
+      (weightedHistorySeparatorWordBudget_mono _ _ _ _ _ _ short))
+
 private def reverseWeightedCutsWithWordWork {E : Type*} : List E → List E → List E × ℕ
   | [], acc => (acc, 2)
   | key :: tail, acc =>
@@ -481,38 +529,38 @@ private theorem reverseWeightedCutsWithWordWork_spec {E : Type*} (xs acc : List 
     simp only [reverseWeightedCutsWithWordWork, ih, List.reverse_cons, List.length_cons, Nat.mul_succ,
       List.append_assoc, List.singleton_append]
 
-/-- Run the weighted separator on explicit pair keys, starting with no
-accepted cuts. Return exact charge reads, accepted cuts in arrival order,
-and the work of constructing the capacities and choosing the cuts. -/
-def weightedNetworkRunWithHistoryWork (keys : List (V × V)) (distinct : keys.Nodup)
-    (paid : Arcs V) (weight initial : V × V → ℕ × ℕ) (scale fuel : ℕ)
+@[inline] private def weightedNetworkRunFromHistoryUsingWithWordWork
+    (select : WeightedNetworkDemand V → List (Arcs V) → Option (Arcs V) × ℕ)
+    (initial : V × V → ℕ × ℕ) (fuel : ℕ)
     (D : List (WeightedNetworkDemand V)) : (((V × V) → ℕ × ℕ) × List (Arcs V)) × ℕ :=
-  let out := weightedNetworkHistoryLoopWithWordWork keys distinct paid weight initial scale fuel D []
+  let out := weightedNetworkHistoryLoopUsingWithWordWork select fuel D []
   let chronological := reverseWeightedCutsWithWordWork out.1 []
-  ((fun key => weightedChargeHistoryWithWordWork initial key out.1, chronological.1),
-    out.2 + chronological.2 + 7)
+  ((fun key => weightedChargeHistoryWithWordWork initial key out.1,chronological.1),
+    out.2+chronological.2+7)
 
-theorem weightedNetworkRunWithHistoryWork_spec (keys : List (V × V)) (distinct : keys.Nodup)
-    (complete : ∀ e, e ∈ keys) (paid : Arcs V) (weight initial : V × V → ℕ × ℕ)
-    (scale fuel W I C : ℕ) (D : List (WeightedNetworkDemand V))
-    (weightWork : ∀ e, (weight e).2 ≤ W) (initialLoad : ∀ e, (initial e).1 ≤ I)
-    (initialWork : ∀ e, (initial e).2 ≤ C) :
-    let out := weightedNetworkRunWithHistoryWork keys distinct paid weight initial scale fuel D
+private theorem weightedNetworkRunFromHistoryUsingWithWordWork_spec
+    (select : WeightedNetworkDemand V → List (Arcs V) → Option (Arcs V) × ℕ)
+    (paid : Arcs V) (weight initial : V × V → ℕ × ℕ)
+    (scale fuel B I C : ℕ) (D : List (WeightedNetworkDemand V))
+    (selectExact : ∀ d past, (select d past).1 = weightedNetworkViolation paid d (fun e => (weight e).1)
+      scale (past.foldr chargeWeightedCut (fun e => (initial e).1)))
+    (selectCap : ∀ d past, past.length ≤ D.length*fuel → (select d past).2 ≤ B)
+    (initialLoad : ∀ e, (initial e).1 ≤ I) (initialWork : ∀ e, (initial e).2 ≤ C) :
+    let out := weightedNetworkRunFromHistoryUsingWithWordWork select initial fuel D
     let old := weightedNetworkRunAtScaleWithSearchWork paid (fun e => (weight e).1) scale fuel D (fun e => (initial e).1)
-    let H := D.length * fuel
+    let H := D.length*fuel
     let n := Fintype.card V
-    let B := weightedHistorySeparatorWordBudget n paid.card scale W I C H
-    ((fun e => (out.1.1 e).1), out.1.2) = old.1 ∧
-      (∀ e, (out.1.1 e).2 ≤ C + 3 + H * (12 * n^2 + 14)) ∧
-      out.2 ≤ D.length * (fuel * (B + 10) + 13) + 6 * H + 12 := by
-  let run := weightedNetworkHistoryLoopWithWordWork keys distinct paid weight initial scale fuel D []
+    ((fun e => (out.1.1 e).1),out.1.2) = old.1 ∧
+      (∀ e, (out.1.1 e).2 ≤ C+3+H*(12*n^2+14)) ∧
+      out.2 ≤ D.length*(fuel*(B+10)+13)+6*H+12 ∧
+      (∀ e, (out.1.1 e).1 ≤ I+H) := by
+  let run := weightedNetworkHistoryLoopUsingWithWordWork select fuel D []
   let old := weightedNetworkRunAtScaleWithSearchWork paid (fun e => (weight e).1) scale fuel D (fun e => (initial e).1)
   let n := Fintype.card V
   let H := D.length * fuel
-  let B := weightedHistorySeparatorWordBudget n paid.card scale W I C H
   obtain ⟨charges, chronology, length, work⟩ :=
-    weightedNetworkHistoryLoopWithWordWork_spec keys distinct complete paid weight initial scale fuel W I C H D []
-      (by simp [H]) weightWork initialLoad initialWork
+    weightedNetworkHistoryLoopUsingWithWordWork_spec select paid weight initial scale fuel H B D []
+      (by simp [H]) selectExact selectCap
   have exactCharges : run.1.foldr chargeWeightedCut (fun e => (initial e).1) = old.1.1 := charges
   have exactHistory : run.1 = old.1.2.reverse := by
     change run.1 = old.1.2.reverse ++ [] at chronology
@@ -523,7 +571,7 @@ theorem weightedNetworkRunWithHistoryWork_spec (keys : List (V × V)) (distinct 
     (fun cut _ => pairBound cut)
   have lengthCap : run.1.length ≤ H := length
   have reversal := reverseWeightedCutsWithWordWork_spec run.1 []
-  refine ⟨Prod.ext ?_ ?_, ?_, ?_⟩
+  refine ⟨Prod.ext ?_ ?_, ?_, ?_,?_⟩
   · funext e
     exact (lookup e).1.trans (congrFun exactCharges e)
   · change (reverseWeightedCutsWithWordWork run.1 []).1 = old.1.2
@@ -539,6 +587,43 @@ theorem weightedNetworkRunWithHistoryWork_spec (keys : List (V × V)) (distinct 
     change run.2 + (6 * run.1.length + 2) + 7 ≤ _
     change run.2 ≤ D.length * (fuel * (B + 10) + 13) + 3 at work
     omega
+  · intro e
+    exact (lookup e).2.1.trans (Nat.add_le_add (initialLoad e) lengthCap)
+
+/-- Run the weighted separator on explicit pair keys, starting with no
+accepted cuts. Return exact charge reads, accepted cuts in arrival order,
+and the work of constructing the capacities and choosing the cuts. -/
+def weightedNetworkRunWithHistoryWork (keys : List (V × V)) (distinct : keys.Nodup)
+    (paid : Arcs V) (weight initial : V × V → ℕ × ℕ) (scale fuel : ℕ)
+    (D : List (WeightedNetworkDemand V)) : (((V × V) → ℕ × ℕ) × List (Arcs V)) × ℕ :=
+  weightedNetworkRunFromHistoryUsingWithWordWork
+    (fun d past => weightedNetworkViolationFromHistoryWithWordWork keys distinct paid d weight initial scale past)
+    initial fuel D
+
+theorem weightedNetworkRunWithHistoryWork_spec (keys : List (V × V)) (distinct : keys.Nodup)
+    (complete : ∀ e, e ∈ keys) (paid : Arcs V) (weight initial : V × V → ℕ × ℕ)
+    (scale fuel W I C : ℕ) (D : List (WeightedNetworkDemand V))
+    (weightWork : ∀ e, (weight e).2 ≤ W) (initialLoad : ∀ e, (initial e).1 ≤ I)
+    (initialWork : ∀ e, (initial e).2 ≤ C) :
+    let out := weightedNetworkRunWithHistoryWork keys distinct paid weight initial scale fuel D
+    let old := weightedNetworkRunAtScaleWithSearchWork paid (fun e => (weight e).1) scale fuel D (fun e => (initial e).1)
+    let H := D.length * fuel
+    let n := Fintype.card V
+    let B := weightedHistorySeparatorWordBudget n paid.card scale W I C H
+    ((fun e => (out.1.1 e).1), out.1.2) = old.1 ∧
+      (∀ e, (out.1.1 e).2 ≤ C + 3 + H * (12 * n^2 + 14)) ∧
+      out.2 ≤ D.length * (fuel * (B + 10) + 13) + 6 * H + 12 := by
+  let n := Fintype.card V
+  let H := D.length*fuel
+  let separate d past := weightedNetworkViolationFromHistoryWithWordWork keys distinct paid d weight initial scale past
+  let B := weightedHistorySeparatorWordBudget n paid.card scale W I C H
+  have verified d past := weightedNetworkViolationFromHistoryWithWordWork_spec keys distinct complete paid d
+    weight initial scale W I C past weightWork initialLoad initialWork
+  obtain ⟨answer,reads,total,_⟩ := weightedNetworkRunFromHistoryUsingWithWordWork_spec separate
+    paid weight initial scale fuel B I C D (fun d past => (verified d past).1)
+    (fun d past short => (verified d past).2.trans (weightedHistorySeparatorWordBudget_mono _ _ _ _ _ _ short))
+    initialLoad initialWork
+  exact ⟨answer,reads,total⟩
 
 /-- Each accepted cut adds at most one to any requested charge. -/
 theorem weightedNetworkRunWithHistoryWork_charge_le (keys : List (V × V)) (distinct : keys.Nodup)
@@ -840,6 +925,120 @@ theorem findLowCapacityCutFromHistoryRowsWithWordWork_spec (rows : CapacityRows 
           (reachInListWordBudget n (n^2)+7*n^2+6)+10 :=
         Nat.add_le_add_right (Nat.add_le_add (Nat.add_le_add cost resWork) sideCost) 10
       _ = _ := by unfold weightedResidualRowsSearchWordBudget; omega
+
+
+/-- Build the weighted capacity table once, then use the list-backed
+residual search at the supplied depth and retain its paid outgoing cut. -/
+def weightedNetworkViolationFromHistoryRowsWithWordWork (keys : List (V × V)) (distinct : keys.Nodup)
+    (paid : Arcs V) (request : WeightedNetworkDemand V) (weight initial : V × V → ℕ × ℕ) (depth scale : ℕ)
+    (history : List (Arcs V)) : Option (Arcs V) × ℕ :=
+  let table := makeHistoryCapacityTable keys distinct (capacityFromHistoryWithWordWork paid request weight initial scale history)
+  let search := findLowCapacityCutFromHistoryRowsWithWordWork table.1 request.source request.sink depth scale
+  match search.1 with
+  | none => (none,table.2+search.2+8)
+  | some side =>
+    let cut := weightedHistoryOutgoingCutWithWordWork paid side
+    (some cut.1,table.2+search.2+cut.2+12)
+
+/-- Charge capacity setup, list-backed residual search, and paid cut assembly. -/
+def weightedHistoryRowsSeparatorWordBudget (n m scale weight load initial history : ℕ) : ℕ :=
+  weightedHistorySeparatorWordBudget n m scale weight load initial history + weightedResidualRowsSearchWordBudget n scale
+
+theorem weightedNetworkViolationFromHistoryRowsWithWordWork_spec (keys : List (V × V)) (distinct : keys.Nodup)
+    (complete : ∀ e, e ∈ keys) (paid : Arcs V) (request : WeightedNetworkDemand V)
+    (weight initial : V × V → ℕ × ℕ) (depth scale W I C : ℕ) (history : List (Arcs V))
+    (size : depth = Fintype.card V)
+    (weightWork : ∀ e, (weight e).2 ≤ W) (initialLoad : ∀ e, (initial e).1 ≤ I)
+    (initialWork : ∀ e, (initial e).2 ≤ C) :
+    let out := weightedNetworkViolationFromHistoryRowsWithWordWork keys distinct paid request weight initial depth scale history
+    out.1 = weightedNetworkViolation paid request (fun e => (weight e).1) scale
+      (history.foldr chargeWeightedCut (fun e => (initial e).1)) ∧
+      out.2 ≤ weightedHistoryRowsSeparatorWordBudget depth paid.card scale W I C history.length := by
+  subst depth
+  let n := Fintype.card V
+  let q := n^2
+  let cap := weightedNetworkCapacity paid request (fun e => (weight e).1)
+    (history.foldr chargeWeightedCut (fun e => (initial e).1)) scale
+  let table := makeHistoryCapacityTable keys distinct (capacityFromHistoryWithWordWork paid request weight initial scale history)
+  let search := findLowCapacityCutFromHistoryRowsWithWordWork table.1 request.source request.sink n scale
+  obtain ⟨shape,tableCost⟩ := makeHistoryCapacityTableForRequest_spec keys distinct complete paid request
+    weight initial scale W I C history weightWork initialLoad initialWork
+  let tabBudget := q*(weightedCapacityHistoryRowBudget q paid.card q W I C history.length+11)
+  let cutBudget := paid.card*(24*n+31)
+  change table.2 ≤ tabBudget+3 at tableCost
+  obtain ⟨answer,spent⟩ := findLowCapacityCutFromHistoryRowsWithWordWork_spec table.1 keys distinct complete cap shape
+    request.source request.sink n scale rfl
+  change search.1 = _ at answer
+  change search.2 ≤ weightedResidualRowsSearchWordBudget n scale at spent
+  unfold weightedNetworkViolationFromHistoryRowsWithWordWork weightedNetworkViolation
+  dsimp only
+  change (let out := match search.1 with
+    | none => (none,table.2+search.2+8)
+    | some side =>
+      let cut := weightedHistoryOutgoingCutWithWordWork paid side
+      (some cut.1,table.2+search.2+cut.2+12)
+    out.1 = (findLowCapacityCut cap request.source request.sink scale).map (outgoingCut paid) ∧
+      out.2 ≤ weightedHistoryRowsSeparatorWordBudget n paid.card scale W I C history.length)
+  rw [← answer]
+  have budget : tabBudget+cutBudget+18+weightedResidualRowsSearchWordBudget n scale ≤
+      weightedHistoryRowsSeparatorWordBudget n paid.card scale W I C history.length := by
+    unfold weightedHistoryRowsSeparatorWordBudget weightedHistorySeparatorWordBudget
+    change tabBudget+cutBudget+18+weightedResidualRowsSearchWordBudget n scale ≤
+      weightedSeparatorWorkBound n paid.card scale+tabBudget+cutBudget+18+weightedResidualRowsSearchWordBudget n scale
+    omega
+  cases result : search.1 with
+  | none =>
+    refine ⟨rfl,?_⟩
+    change table.2+search.2+8 ≤ _
+    exact (show table.2+search.2+8 ≤ tabBudget+cutBudget+18+weightedResidualRowsSearchWordBudget n scale by omega).trans budget
+  | some side =>
+    obtain ⟨edges,work⟩ := weightedHistoryOutgoingCutWithWordWork_spec paid side
+    have cutWork : (weightedHistoryOutgoingCutWithWordWork paid side).2 ≤ cutBudget+2 := by
+      exact work.trans (by unfold cutBudget; gcongr; exact card_le_univ side)
+    refine ⟨congrArg some edges,?_⟩
+    change table.2+search.2+(weightedHistoryOutgoingCutWithWordWork paid side).2+12 ≤ _
+    exact (show table.2+search.2+(weightedHistoryOutgoingCutWithWordWork paid side).2+12 ≤
+      tabBudget+cutBudget+18+weightedResidualRowsSearchWordBudget n scale by omega).trans budget
+
+
+/-- Run the weighted updates with one supplied vertex count for all
+residual searches. Keep the ordered cuts and charge reader as before. -/
+def weightedNetworkRunWithResidualRowsWork (keys : List (V × V)) (distinct : keys.Nodup)
+    (paid : Arcs V) (weight initial : V × V → ℕ × ℕ) (depth scale fuel : ℕ)
+    (D : List (WeightedNetworkDemand V)) : (((V × V) → ℕ × ℕ) × List (Arcs V)) × ℕ :=
+  weightedNetworkRunFromHistoryUsingWithWordWork
+    (fun d past => weightedNetworkViolationFromHistoryRowsWithWordWork keys distinct paid d weight initial depth scale past)
+    initial fuel D
+
+def weightedNetworkResidualRowsWordBudget (n m scale fuel W I C requests : ℕ) : ℕ :=
+  let H := requests*fuel
+  let B := weightedHistoryRowsSeparatorWordBudget n m scale W I C H
+  requests*(fuel*(B+10)+13)+6*H+12
+
+theorem weightedNetworkRunWithResidualRowsWork_spec (keys : List (V × V)) (distinct : keys.Nodup)
+    (complete : ∀ e, e ∈ keys) (paid : Arcs V) (weight initial : V × V → ℕ × ℕ)
+    (depth scale fuel W I C : ℕ) (D : List (WeightedNetworkDemand V)) (size : depth = Fintype.card V)
+    (weightWork : ∀ e, (weight e).2 ≤ W) (initialLoad : ∀ e, (initial e).1 ≤ I)
+    (initialWork : ∀ e, (initial e).2 ≤ C) :
+    let out := weightedNetworkRunWithResidualRowsWork keys distinct paid weight initial depth scale fuel D
+    let old := weightedNetworkRunAtScaleWithSearchWork paid (fun e => (weight e).1) scale fuel D (fun e => (initial e).1)
+    let H := D.length*fuel
+    ((fun e => (out.1.1 e).1),out.1.2) = old.1 ∧
+      (∀ e, (out.1.1 e).2 ≤ C+3+H*(12*depth^2+14)) ∧
+      out.2 ≤ weightedNetworkResidualRowsWordBudget depth paid.card scale fuel W I C D.length ∧
+      (∀ e, (out.1.1 e).1 ≤ I+H) := by
+  subst depth
+  let n := Fintype.card V
+  let H := D.length*fuel
+  let separate d past := weightedNetworkViolationFromHistoryRowsWithWordWork keys distinct paid d weight initial n scale past
+  let B := weightedHistoryRowsSeparatorWordBudget n paid.card scale W I C H
+  have verified d past := weightedNetworkViolationFromHistoryRowsWithWordWork_spec keys distinct complete paid d
+    weight initial n scale W I C past rfl weightWork initialLoad initialWork
+  exact weightedNetworkRunFromHistoryUsingWithWordWork_spec separate
+    paid weight initial scale fuel B I C D (fun d past => (verified d past).1)
+    (fun d past short => (verified d past).2.trans (Nat.add_le_add_right
+      (weightedHistorySeparatorWordBudget_mono _ _ _ _ _ _ short) _))
+    initialLoad initialWork
 
 
 end Capacity
