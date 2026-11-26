@@ -103,6 +103,68 @@ theorem paths_full_two : BridgeFree (Before paths) 2 := by
       (second.symm.trans second') (first.symm.trans first')))
     exact b.river_ne_arc 0 (river.trans ((congrArg some same).trans arc.symm))
 
+section ColorSupports
+
+variable {W I C : Type*} [LinearOrder W] [LinearOrder C] [Fintype C]
+
+theorem occupiedColorCopy_mem [Fintype I] (paths : I → List W) (color : I → W → C)
+    (r : I) (v : W) (mem : v ∈ paths r) :
+    toLex (v,color r v) ∈ activeListVertices (partitionListIncidencesByColor paths color) :=
+  mem_biUnion.mpr ⟨toLex (r,color r v),mem_univ _,List.mem_toFinset.mpr (List.mem_map.mpr
+    ⟨v,List.mem_filter.mpr ⟨mem,decide_eq_true rfl⟩,rfl⟩)⟩
+
+omit [Fintype C] in
+/-- The original vertices whose copy with a given color is occupied. -/
+def colorClassSupport [Fintype W] (support : Finset (W ×ₗ C)) (c : C) : Finset W :=
+  univ.filter fun v => toLex (v,c) ∈ support
+
+/-- One specified copy per vertex accounts for the base support. Bound
+each color by its base count and the total allowance for extra copies. -/
+theorem colorClassSupport_bounds [Fintype W] (support : Finset (W ×ₗ C)) (baseColor : W → C)
+    {baseCap extras : ℕ} (basePresent : ∀ v, toLex (v,baseColor v) ∈ support)
+    (baseCount : ∀ c, ((univ : Finset W).filter fun v => baseColor v = c).card ≤ baseCap)
+    (total : support.card ≤ Fintype.card W + extras) :
+    (∑ c, (colorClassSupport support c).card) = support.card ∧
+      ∀ c, (colorClassSupport support c).card ≤ baseCap + extras := by
+  let base (c : C) := (univ : Finset W).filter fun v => baseColor v = c
+  let all := colorClassSupport support
+  let tag (w : W ×ₗ C) := (ofLex w).2
+  have includes (c : C) : base c ⊆ all c := by
+    intro v h
+    have tagged := (mem_filter.mp h).2
+    exact mem_filter.mpr ⟨mem_univ _,tagged ▸ basePresent v⟩
+  have exactBase : (∑ c, (base c).card) = Fintype.card W := by
+    unfold base
+    rw [← card_eq_sum_card_fiberwise (f := baseColor) (t := (univ : Finset C)) (by simp),card_univ]
+  have exactAll : (∑ c, (all c).card) = support.card := by
+    rw [card_eq_sum_card_fiberwise (f := tag) (t := (univ : Finset C)) (by simp)]
+    apply sum_congr rfl
+    intro c _
+    let embed : W ↪ (W ×ₗ C) := ⟨fun v => toLex (v,c),fun _ _ eq => congrArg (fun w => (ofLex w).1) eq⟩
+    rw [← card_map embed]
+    congr 1
+    ext w
+    simp only [all, colorClassSupport, mem_map, mem_filter, mem_univ, true_and]
+    constructor
+    · rintro ⟨v,member,rfl⟩
+      exact ⟨member,rfl⟩
+    · rintro ⟨member,selected⟩
+      have equal : embed (ofLex w).1 = w := ofLex.injective (Prod.ext rfl selected.symm)
+      exact ⟨(ofLex w).1, equal ▸ member, equal⟩
+  refine ⟨exactAll, fun c => ?_⟩
+  let extra (c : C) := (all c).card - (base c).card
+  have extraTotal : (∑ c, extra c) + Fintype.card W = support.card := by
+    rw [← exactBase,← sum_add_distrib,← exactAll]
+    exact sum_congr rfl (fun c _ => Nat.sub_add_cancel (card_le_card (includes c)))
+  have h := single_le_sum (f := extra) (fun _ _ => Nat.zero_le _) (mem_univ c)
+  have hc := Nat.sub_add_cancel (card_le_card (includes c))
+  have cap : (base c).card ≤ baseCap := baseCount c
+  change extra c + (base c).card = (all c).card at hc
+  change (all c).card ≤ baseCap + extras
+  omega
+
+end ColorSupports
+
 variable {C : Type*} [LinearOrder C] [Fintype C]
 
 set_option maxRecDepth 30000 in
@@ -115,15 +177,9 @@ theorem colors_exceed_some_budget (color : Row → V → C)
   let pieces := partitionListIncidencesByColor paths color
   let support := activeListVertices pieces
   let base (c : C) := (univ : Finset V).filter fun v => color none v = c
-  let all (c : C) := (univ : Finset V).filter fun v => toLex (v,c) ∈ support
-  let tag (w : V ×ₗ C) := (ofLex w).2
+  let all := colorClassSupport support
   have copyMem (r : Row) (v : V) (mem : v ∈ paths r) : toLex (v,color r v) ∈ support :=
-    mem_biUnion.mpr ⟨toLex (r,color r v),mem_univ _,List.mem_toFinset.mpr (List.mem_map.mpr
-      ⟨v,List.mem_filter.mpr ⟨mem,decide_eq_true rfl⟩,rfl⟩)⟩
-  have includes (c : C) : base c ⊆ all c := by
-    intro v h
-    have tagged := (mem_filter.mp h).2
-    exact mem_filter.mpr ⟨mem_univ _,tagged ▸ copyMem none v (by simp [paths])⟩
+    occupiedColorCopy_mem paths color r v mem
   have baseCount (c : C) : (base c).card ≤ 8 := by
     have exactRow : (base c).card = (pieces (toLex (none,c))).length := by
       change (base c).card = (((List.finRange 64).filter fun v => decide (color none v = c)).map _).length
@@ -132,37 +188,11 @@ theorem colors_exceed_some_budget (color : Row → V → C)
       ext v
       simp [base]
     exact exactRow.trans_le (width (toLex (none,c)))
-  have exactBase : (∑ c, (base c).card) = 64 := by
-    unfold base
-    rw [← card_eq_sum_card_fiberwise (f := color none) (t := (univ : Finset C)) (by simp),card_univ,Fintype.card_fin]
-  have exactAll : (∑ c, (all c).card) = support.card := by
-    rw [card_eq_sum_card_fiberwise (f := tag) (t := (univ : Finset C)) (by simp)]
-    apply sum_congr rfl
-    intro c _
-    let embed : V ↪ (V ×ₗ C) := ⟨fun v => toLex (v,c),fun _ _ eq => congrArg (fun w => (ofLex w).1) eq⟩
-    rw [← card_map embed]
-    congr 1
-    ext w
-    simp only [all, mem_map, mem_filter, mem_univ, true_and]
-    constructor
-    · rintro ⟨v,member,rfl⟩
-      exact ⟨member,rfl⟩
-    · rintro ⟨member,selected⟩
-      have equal : embed (ofLex w).1 = w := ofLex.injective (Prod.ext rfl selected.symm)
-      exact ⟨(ofLex w).1, equal ▸ member, equal⟩
-  let extra (c : C) := (all c).card - (base c).card
-  have extraTotal : (∑ c, extra c) + 64 = support.card := by
-    rw [← exactBase,← sum_add_distrib,← exactAll]
-    exact sum_congr rfl (fun c _ => Nat.sub_add_cancel (card_le_card (includes c)))
   have supportBudget : support.card ≤ 85 := by
     change 3*support.card ≤ 4*64 at vertices
     omega
-  have size (c : C) : (all c).card ≤ 29 := by
-    have h := single_le_sum (f := extra) (fun _ _ => Nat.zero_le _) (mem_univ c)
-    have hc := Nat.sub_add_cancel (card_le_card (includes c))
-    have baseCap := baseCount c
-    change extra c + (base c).card = (all c).card at hc
-    omega
+  obtain ⟨exactAll,size⟩ := colorClassSupport_bounds support (color none) (extras := 21)
+    (fun v => copyMem none v (by simp [paths])) baseCount (by simpa using supportBudget)
   let paint (e : Pair) := color (some e) (lo e)
   let mono := (univ : Finset Pair).filter fun e => paint e = color (some e) (hi e)
   have countMono : mono.card ≤ 1190 := by
@@ -182,7 +212,8 @@ theorem colors_exceed_some_budget (color : Row → V → C)
       rw [card_product_filter_lt] at inject
       have choose := square_choose (all c).card
       rw [pow_two] at choose
-      have square := Nat.mul_le_mul_left (all c).card (size c)
+      have cap : (all c).card ≤ 29 := size c
+      have square := Nat.mul_le_mul_left (all c).card cap
       omega
     rw [card_eq_sum_card_fiberwise (f := paint) (t := (univ : Finset C)) (by simp)]
     have bound : (∑ c, (mono.filter fun e => paint e = c).card) ≤ 14 * support.card := by

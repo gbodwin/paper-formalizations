@@ -1607,11 +1607,28 @@ at most eight of those in a color. At most 21 additional copies leave at
 most 29 vertices in any color. Each color supports at most 14 times its
 number of vertices in unsplit two-vertex rows. Their total is at most
 1190, while the path support bound of 2689 requires at least 1343.
-This gives an [obstruction to coloring all the incidences](OnlineReachabilityPreservers/IncidenceColorBudgetAudit.lean#L218)
+This gives an [obstruction to coloring all the incidences](OnlineReachabilityPreservers/IncidenceColorBudgetAudit.lean#L249)
 under the two support bounds and the original length cap. The
-[independent frozen witness](OnlineReachabilityPreservers/IncidenceColorBudgetAudit.lean#L230)
-retains at least \(M/8\) for these original counts and mass. The general
-cyclic frozen-average statements at the remaining cutoffs stay open.
+[independent frozen witness](OnlineReachabilityPreservers/IncidenceColorBudgetAudit.lean#L261)
+retains at least \(M/8\) for these original counts and mass.
+
+The [two-layer example](OnlineReachabilityPreservers/LayeredIncidenceColorAudit.lean#L91)
+uses two length-64 rows on disjoint vertex layers and all 4096 cross
+rows from the first layer to the second. The cross rows arrive in
+lexicographic order by source and then target, before the two long rows.
+It respects one vertex order and excludes half-bridges at every cutoff.
+The original upper length cap is 8. With at most 170 occupied vertex
+copies, the two long rows force 128 base copies and at most 16 per
+color. The 42 remaining copies allow at most 58 vertices per color. A
+color with \(a,b\) vertices from the two levels supports at most
+\(ab\le15(a+b)\) monochromatic cross rows, so at most 2550 cross rows
+are monochromatic. The path support bound of 5464 requires at least
+2728. This [obstruction](OnlineReachabilityPreservers/LayeredIncidenceColorAudit.lean#L274)
+therefore applies even to common-order half-bridge-free input. The
+[separate frozen witness](OnlineReachabilityPreservers/LayeredIncidenceColorAudit.lean#L287)
+for \(n=128,p=4098,M=8320\) retains at least \(M/8\) and excludes full
+bridges through any requested cutoff. General cyclic frozen-average
+statements at the remaining cutoffs stay open.
 
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
