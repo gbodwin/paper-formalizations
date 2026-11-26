@@ -370,6 +370,19 @@ before the exact row and vertex trims. Peeling gives \(M/5000\) within
 both original budgets and all four original caps.
 [Shared deletion and both trims](OnlineReachabilityPreservers/HalfFiveSharedWidthCleaning.lean).
 
+The shared deletion works up to a union size of \(22M/25\) when the row
+support is selected by its combined retained weight. Each incidence
+outside the union contributes two and each inside contributes one. The
+total weight is \(W=2M-A\), where \(A\) is the union size. A full row
+piece has weight at least the original length width \(L\). Keep the
+full pieces and the highest-weight remainders, so the omitted weight
+\(Y\) satisfies \(4LpY\le W^2\). One color on the retained pieces
+then has at least \(83M/160\) incidences. Choosing the row support before
+the degree split preserves the same color repair and makes the vertex
+trim depend on the retained mass. The result keeps \(M/5000\) and all
+four original-average caps within both original budgets.
+[Weighted row selection](OnlineReachabilityPreservers/HalfFiveWeightedWidthCleaning.lean).
+
 When vertices above the original degree width carry at least 71 percent
 of the mass, the actual copy count gives another half-five witness. Choose
 the deletion color with fewer incidences at those vertices in the retained

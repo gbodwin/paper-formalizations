@@ -1462,6 +1462,10 @@ uses the union of the path-cut conflict incidences and the incidences
 at vertices above the original degree width. Under the same input
 assumptions, a union of size at most \(4M/5\) gives a witness of mass
 at least \(M/5000\) with both budgets and all four original-average caps.
+[Weighted row selection](OnlineReachabilityPreservers/HalfFiveWeightedWidthCleaning.lean)
+extends the same conclusion to \(22M/25\). It selects the row support by
+the sum of the mass retained in both deletion colors and splits vertices
+after retaining those rows.
 [Counting the copies at overfull original vertices](OnlineReachabilityPreservers/HalfFiveHeavyWidthCleaning.lean)
 gives the same conclusion if those vertices carry at least 71 percent of
 the original mass. This condition uses the original degree width

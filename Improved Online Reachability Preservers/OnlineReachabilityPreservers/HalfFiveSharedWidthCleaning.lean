@@ -23,18 +23,22 @@ noncomputable def sharedWidthDeletion {n p : ℕ} (paths : Fin p → List (Fin n
     Finset (ListBlockIndex paths L × Fin n) :=
   (sharedWidthAffected paths D L).filter fun x => reversePartnerColor paths x.2 x.1.fst = c
 
-/-- A single color deletion suffices for both consecutive width splits
-through half cutoff five. -/
-theorem sharedWidthRepair_halfFree {n p : ℕ} (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
-    (free : HalfBridgeFree (Before paths) 5) (D L : ℕ) (c : Bool) :
+/-- Selecting any arrival-ordered subset of the repaired path pieces
+before the degree split still preserves half-five exclusion. -/
+theorem sharedWidthRepair_onRows_halfFree {n p : ℕ} {J' : Type*}
+    [LinearOrder J'] [Fintype J']
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) 5) (D L : ℕ) (c : Bool)
+    (keep : J' → ListBlockIndex paths L) (keepOrder : StrictMono keep) :
     HalfBridgeFree (Before (splitListVertices
-      (erasePieceIncidences (splitListPaths paths L) (sharedWidthDeletion paths D L c)) D)) 5 := by
+      (fun j => erasePieceIncidences (splitListPaths paths L) (sharedWidthDeletion paths D L c) (keep j))
+      D)) 5 := by
   let J := ListBlockIndex paths L
   let raw := splitListPaths paths L
   let parent (j : J) := j.fst
   let marks := fun i => (paths i).toFinset
   let remove := sharedWidthDeletion paths D L c
-  let rows := erasePieceIncidences raw remove
+  let repaired := erasePieceIncidences raw remove
   have rawSimple (j : J) : (raw j).Nodup := List.filter_sublist.nodup (simple j.fst)
   have rawSub (j : J) : (raw j).Sublist (paths j.fst) := List.filter_sublist
   have originalStep {j x y} : Before raw j x y → Before paths (parent j) x y :=
@@ -48,37 +52,53 @@ theorem sharedWidthRepair_halfFree {n p : ℕ} (paths : Fin p → List (Fin n)) 
       obtain ⟨member,color⟩ := mem_filter.mp involved
       exact mem_filter.mpr ⟨mem_union_left _ member,color⟩
     exact (oppositeWidthDeletion_covers free (by decide) (fun {_ _ _} => originalStep) edge c).imp (fun hx => included hx) (fun hx => included hx)
-  have rowFree : HalfBridgeFree (Before rows) 5 :=
+  have repairedFree : HalfBridgeFree (Before repaired) 5 :=
     eraseOppositeWidthConflicts_halfFree free rawSimple monotone (fun {_ _ _} => originalStep)
       (fun {_ _ _} => apart) remove (fun {_ _} => cover)
-  have rowSimple (j : J) : (rows j).Nodup :=
-    (erasePieceIncidences_sublist raw remove j).nodup (rawSimple j)
-  have rawMem {j : J} {x : Fin n} (incidence : x ∈ rows j) : x ∈ raw j :=
+  let rows (j : J') := repaired (keep j)
+  let rowParent (j : J') := parent (keep j)
+  have rowFree : HalfBridgeFree (Before rows) 5 := by
+    intro k cutoff bridge earlier
+    exact repairedFree cutoff (bridge.mapPaths keep keepOrder.injective (fun _ _ _ step => step)) (keepOrder earlier)
+  have rowSimple (j : J') : (rows j).Nodup :=
+    (erasePieceIncidences_sublist raw remove (keep j)).nodup (rawSimple (keep j))
+  have rawMem {j : J'} {x : Fin n} (incidence : x ∈ rows j) : x ∈ raw (keep j) :=
     (mem_erasePieceIncidences.mp incidence).1
+  have rowApart {i j : J'} {x : Fin n} (different : i ≠ j) (same : rowParent i = rowParent j)
+      (left : x ∈ rows i) (right : x ∈ rows j) : False :=
+    apart (keepOrder.injective.ne different) same (rawMem left) (rawMem right)
   have noIncrease (x : Fin n) : (occurrences (fun j => (rows j).toFinset) x).card ≤
       (occurrences marks x).card := by
-    have membership {j : J} (jOn : j ∈ occurrences (fun k => (rows k).toFinset) x) :
-        x ∈ raw j := rawMem (List.mem_toFinset.mp ((mem_occurrences (marks := fun k => (rows k).toFinset)).mp jOn))
-    apply card_le_card_of_injOn parent
+    have membership {j : J'} (jOn : j ∈ occurrences (fun k => (rows k).toFinset) x) : x ∈ rows j :=
+      List.mem_toFinset.mp ((mem_occurrences (marks := fun k => (rows k).toFinset)).mp jOn)
+    apply card_le_card_of_injOn rowParent
     · intro j on
-      exact mem_occurrences.mpr (List.mem_toFinset.mpr ((rawSub j).subset (membership on)))
+      exact mem_occurrences.mpr (List.mem_toFinset.mpr ((rawSub (keep j)).subset (rawMem (membership on))))
     · intro j hj k hk same
       by_contra different
-      exact apart different same (membership hj) (membership hk)
-  have selected {x : Fin n} {i : J} (heavy : D < (occurrences (fun j => (rows j).toFinset) x).card)
-      (onRow : x ∈ rows i) : reversePartnerColor paths x (parent i) = !c := by
+      exact rowApart different same (membership hj) (membership hk)
+  have selected {x : Fin n} {i : J'} (heavy : D < (occurrences (fun j => (rows j).toFinset) x).card)
+      (onRow : x ∈ rows i) : reversePartnerColor paths x (rowParent i) = !c := by
     have high : D < (occurrences marks x).card := heavy.trans_le (noIncrease x)
-    have on : (i,x) ∈ pieceIncidences raw univ := mem_pieceIncidences.mpr ⟨mem_univ _,rawMem onRow⟩
-    have involved : (i,x) ∈ sharedWidthAffected paths D L := mem_union_right _ (mem_filter.mpr ⟨on,high⟩)
-    have different : reversePartnerColor paths x (parent i) ≠ c := by
+    have on : (keep i,x) ∈ pieceIncidences raw univ := mem_pieceIncidences.mpr ⟨mem_univ _,rawMem onRow⟩
+    have involved : (keep i,x) ∈ sharedWidthAffected paths D L := mem_union_right _ (mem_filter.mpr ⟨on,high⟩)
+    have different : reversePartnerColor paths x (rowParent i) ≠ c := by
       intro equal
       exact (mem_erasePieceIncidences.mp onRow).2 (mem_filter.mpr ⟨involved,equal⟩)
-    cases c <;> cases eq : reversePartnerColor paths x (parent i) <;> simp_all
-  refine splitListVertices_halfFive_of_original_colors paths rows parent free rowFree rowSimple monotone
-    ?_ (fun ne eq left right => apart ne eq (rawMem left) (rawMem right)) D (fun _ => !c)
-    (fun {_ _} => selected)
+    cases c <;> cases eq : reversePartnerColor paths x (rowParent i) <;> simp_all
+  refine splitListVertices_halfFive_of_original_colors paths rows rowParent free rowFree rowSimple
+    (monotone.comp keepOrder.monotone) ?_ (fun ne eq left right => rowApart ne eq left right) D
+    (fun _ => !c) (fun {_ _} => selected)
   intro i x y step
-  exact originalStep (listBefore_of_sublist (rawSimple i) (erasePieceIncidences_sublist raw remove i) step)
+  exact originalStep (listBefore_of_sublist (rawSimple (keep i)) (erasePieceIncidences_sublist raw remove (keep i)) step)
+
+/-- A single color deletion suffices for both consecutive width splits
+through half cutoff five. -/
+theorem sharedWidthRepair_halfFree {n p : ℕ} (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) 5) (D L : ℕ) (c : Bool) :
+    HalfBridgeFree (Before (splitListVertices
+      (erasePieceIncidences (splitListPaths paths L) (sharedWidthDeletion paths D L c)) D)) 5 :=
+  sharedWidthRepair_onRows_halfFree paths simple free D L c id strictMono_id
 
 private theorem sharedWidth_final_budget {M K R Y X C : ℕ} (positive : 0 < M)
     (high : 3*M ≤ 5*K) (upper : K ≤ M) (retained : K ≤ R+Y+X)

@@ -616,6 +616,8 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   incidences at vertices above the original degree width. If that union
   contains at most \(4M/5\) incidences, the witness keeps at least
   \(M/5000\) and satisfies both budgets and all four original caps.
+  [Trimming the row pieces by their combined weight](OnlineReachabilityPreservers/HalfFiveWeightedWidthCleaning.lean)
+  gives the same guarantees for a union of size at most \(22M/25\).
 - If vertices above the original degree width carry at least 71 percent
   of the input mass, [counting their actual copies](OnlineReachabilityPreservers/HalfFiveHeavyWidthCleaning.lean)
   gives the same half-five guarantees without a bound on the number of

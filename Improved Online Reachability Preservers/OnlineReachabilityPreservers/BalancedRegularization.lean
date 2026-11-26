@@ -566,14 +566,17 @@ private theorem sum_part_and_remainder {A : Type*} [DecidableEq A] (whole part :
       · exact Or.inr ⟨h,inside⟩
   rw [← sum_union disjoint,join]
 
-/-- Keep the filled blocks and the heaviest remainders. The loss is
-at most the squared total weight divided by four times the budget capacity. -/
-theorem trim_full_weight_blocks_quadratic {A : Type*} [DecidableEq A] [Fintype A] (weight : A → ℕ)
+/-- Keep the designated blocks of weight at least the width, then
+retain the heaviest remainders. The loss is bounded by the square
+of the total weight divided by four times the budget capacity. -/
+theorem trim_full_weight_blocks_quadratic_of_lower_bound {A : Type*}
+    [DecidableEq A] [Fintype A] (weight : A → ℕ)
     (full : Finset A) {cap budget : ℕ} (capPositive : 0 < cap)
-    (filled : ∀ x ∈ full, weight x = cap) (remainder : (univ \ full).card ≤ budget)
+    (filled : ∀ x ∈ full, cap ≤ weight x) (remainder : (univ \ full).card ≤ budget)
     (space : (∑ x, weight x) ≤ cap*budget) :
     let total := ∑ x, weight x
-    ∃ kept : Finset A, kept.card ≤ budget ∧ 4*(cap*budget)*(∑ x ∈ univ \ kept, weight x) ≤ total^2 := by
+    ∃ kept : Finset A, kept.card ≤ budget ∧
+      4*(cap*budget)*(∑ x ∈ univ \ kept, weight x) ≤ total^2 := by
   classical
   by_cases all : (univ : Finset A).card ≤ budget
   · exact ⟨univ,all,by simp⟩
@@ -581,57 +584,64 @@ theorem trim_full_weight_blocks_quadratic {A : Type*} [DecidableEq A] [Fintype A
   let rest := univ \ full
   let R := ∑ x ∈ rest, weight x
   let f := full.card
-  have fullWeight : (∑ x ∈ full, weight x) = f*cap := by
-    calc
-      _ = ∑ _ ∈ full, cap := sum_congr rfl filled
-      _ = _ := by simp [f]
-  have total : f*cap+R = K := by
-    rw [← fullWeight]
-    exact sum_part_and_remainder univ full (subset_univ _) weight
+  have fullWeight : f*cap ≤ (∑ x ∈ full, weight x) := by
+    rw [show f*cap = ∑ _ ∈ full, cap by simp [f]]
+    exact sum_le_sum filled
+  have total : f*cap+R ≤ K := by
+    have eq : R+(∑ x ∈ full, weight x) = K := sum_sdiff (subset_univ full)
+    omega
   have fLe : f ≤ budget := by
     apply Nat.le_of_mul_le_mul_right _ capPositive
     calc
       f*cap ≤ K := by omega
       _ ≤ cap*budget := space
       _ = budget*cap := Nat.mul_comm _ _
-  have feasible : budget-f ≤ rest.card := by
-    have counts := card_sdiff_add_card_eq_card (subset_univ full)
-    change rest.card+f = (univ : Finset A).card at counts
-    omega
-  obtain ⟨selected,selectedSub,selectedCount,selectedWeight⟩ := trim_weights rest weight feasible
+  obtain ⟨selected,selectedSub,selectedCount,chosenBound⟩ :=
+    trim_weights_ratio rest weight (n := budget-f) (a := budget-f) (b := budget)
+      (Nat.sub_le _ _) ((Nat.mul_le_mul_left (budget-f) remainder).trans_eq (Nat.mul_comm _ _))
   let kept := full ∪ selected
   let loss := ∑ x ∈ rest \ selected, weight x
   let chosenWeight := ∑ x ∈ selected, weight x
   have disjoint : Disjoint full selected := disjoint_left.mpr fun x xFull xSelected =>
     (mem_sdiff.mp (selectedSub xSelected)).2 xFull
   have keptCount : kept.card ≤ budget := by
-    rw [show kept = full ∪ selected from rfl,card_union_of_disjoint disjoint,selectedCount]
-    change f+(budget-f) ≤ budget
-    rw [Nat.add_sub_of_le fLe]
+    rw [show kept = full ∪ selected from rfl,card_union_of_disjoint disjoint]
+    change f+selected.card ≤ budget
+    omega
   have removedSet : univ \ kept = rest \ selected := by
     ext x
     simp [kept,rest,not_or]
-  have split : chosenWeight+loss = R := sum_part_and_remainder rest selected selectedSub weight
-  have chosenBound : (budget-f)*R ≤ budget*chosenWeight :=
-    selectedWeight.trans (Nat.mul_le_mul_right _ remainder)
+  have split : loss+chosenWeight = R := sum_sdiff selectedSub
+  change (budget-f)*R ≤ budget*chosenWeight at chosenBound
   have less : budget*loss ≤ f*R := by
-    have whole : budget*chosenWeight+budget*loss = budget*R := by rw [← Nat.mul_add,split]
+    have whole : budget*loss+budget*chosenWeight = budget*R := by rw [← Nat.mul_add,split]
     have available : f*R+(budget-f)*R = budget*R := by rw [← Nat.add_mul,Nat.add_sub_of_le fLe]
     omega
-  have product : 4*(f*cap)*R ≤ K*K := by
-    have sum : (↑(f*cap) : ℤ)+(R:ℤ) = (K:ℤ) := by exact_mod_cast total
-    have bound : (4:ℤ)*(↑(f*cap):ℤ)*(R:ℤ) ≤ (K:ℤ)*(K:ℤ) := by
-      rw [← sum]
-      nlinarith [sq_nonneg ((↑(f*cap):ℤ)-(R:ℤ))]
-    exact_mod_cast bound
+  have product : 4*(f*cap)*R ≤ K^2 := by
+    calc
+      _ ≤ (f*cap+R)^2 := by
+        have sq : 4*((f*cap:ℕ):ℤ)*(R:ℤ) ≤ (((f*cap:ℕ):ℤ)+(R:ℤ))^2 := by
+          nlinarith only [sq_nonneg (((f*cap:ℕ):ℤ)-(R:ℤ))]
+        exact_mod_cast sq
+      _ ≤ _ := Nat.pow_le_pow_left total 2
   refine ⟨kept,keptCount,?_⟩
   rw [removedSet]
   calc
     4*(cap*budget)*loss = 4*cap*(budget*loss) := by ring
     _ ≤ 4*cap*(f*R) := Nat.mul_le_mul_left _ less
     _ = 4*(f*cap)*R := by ring
-    _ ≤ K*K := product
-    _ = K^2 := by ring
+    _ ≤ K^2 := product
+
+/-- Keep the filled blocks and the heaviest remainders. The loss is
+at most the squared total weight divided by four times the budget capacity. -/
+theorem trim_full_weight_blocks_quadratic {A : Type*} [DecidableEq A] [Fintype A] (weight : A → ℕ)
+    (full : Finset A) {cap budget : ℕ} (capPositive : 0 < cap)
+    (filled : ∀ x ∈ full, weight x = cap) (remainder : (univ \ full).card ≤ budget)
+    (space : (∑ x, weight x) ≤ cap*budget) :
+    let total := ∑ x, weight x
+    ∃ kept : Finset A, kept.card ≤ budget ∧ 4*(cap*budget)*(∑ x ∈ univ \ kept, weight x) ≤ total^2 :=
+  trim_full_weight_blocks_quadratic_of_lower_bound weight full capPositive
+    (fun x h => (filled x h).ge) remainder space
 
 /-- If the budget capacity is at least three times the total weight,
 at most one twelfth of the weight is omitted. -/
