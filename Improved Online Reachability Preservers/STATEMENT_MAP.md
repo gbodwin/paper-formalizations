@@ -974,6 +974,19 @@ The bound includes the address arithmetic and list traversal but treats each
 stored payload as one cell. Table conversion and native execution costs remain
 outside this bound.
 
+A [fixed-width increment](OnlineReachabilityPreservers/SteinerThinBitLoadWork.lean#L15)
+charges the carry operations and preserves the width. It gives the decoded
+successor whenever that successor fits. A
+[single binary load update](OnlineReachabilityPreservers/SteinerThinBitLoadWork.lean#L65)
+uses the same computed address for reading and replacement. The
+[cut work bound](OnlineReachabilityPreservers/SteinerThinBitLoadWork.lean#L159)
+includes the supplied list traversal and the payload increment for each cut
+arc. It proves the exact change by multiplicity under a terminal load bound.
+For a duplicate-free cut, the [array comparison](OnlineReachabilityPreservers/SteinerThinBitLoadWork.lean#L207)
+matches every entry of the existing thin load update. The model assumes
+fixed-width cells and supplied binary labels. It does not charge constructing
+those encodings or run the separator or complete replay.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
