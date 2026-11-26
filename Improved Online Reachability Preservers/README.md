@@ -471,7 +471,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   rounds that numerator by the cost and caps the capacity at the supplied
   flow amount. The [weighted separator](OnlineReachabilityPreservers/SteinerBinaryWeightedCutWork.lean#L155)
   builds the capacities from the current pair states and request-local free
-  arcs. It returns the same optional paid cut as the reference.
+  arcs. It returns the same optional paid cut as the reference. The [table update](OnlineReachabilityPreservers/SteinerBinaryWeightedUpdateWork.lean#L138)
+  advances the states selected by a supplied cut and preserves the ordered
+  keys and labels.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

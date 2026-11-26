@@ -1224,7 +1224,11 @@ have full supply, paid arcs use their clipped capacity, and absent pairs
 have zero capacity. On the complete represented pair table, the binary
 separator returns the exact optional reference paid cut. The bound charges
 table preparation and the bounded flow computation. Pair states and free
-rows are supplied. The chronological early cover remains to be integrated.
+rows are supplied. The [paid table advance](OnlineReachabilityPreservers/SteinerBinaryWeightedUpdateWork.lean#L138)
+adds one reference charge to each selected paid state. Membership makes
+repeated cut entries count once. The update keeps the ordered labels and
+proves the new word widths and a work bound for this one cut. Running the
+two operations repeatedly from the changing table remains to be integrated.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
