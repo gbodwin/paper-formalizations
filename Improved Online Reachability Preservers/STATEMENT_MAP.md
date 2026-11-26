@@ -1255,9 +1255,9 @@ builds the zero-charge table with the same order and accumulates the
 paid cost. When the keys are complete, the [exact total](OnlineReachabilityPreservers/SteinerBinaryWeightedInitWork.lean#L134)
 gives the [reference scale, its binary word, and the fuel](OnlineReachabilityPreservers/SteinerBinaryWeightedInitWork.lean#L170).
 The work includes paid cost encodings, word additions, and the supplied
-reader fees. The [weighted run from zero](OnlineReachabilityPreservers/SteinerBinaryWeightedRunWork.lean#L96)
+reader fees. The [weighted run from zero](OnlineReachabilityPreservers/SteinerBinaryWeightedRunWork.lean#L97)
 already combines the initial table, computed controls, and chronological
-trace with the [metered encoding of typed requests](OnlineReachabilityPreservers/SteinerBinaryWeightedRunWork.lean#L51).
+trace with the [metered encoding of typed requests](OnlineReachabilityPreservers/SteinerBinaryWeightedRunWork.lean#L52).
 It returns the reference cut history and paid charges on complete
 distinct keys with the supplied positive-cost and injective label readers.
 The [finite metric forest label reader](OnlineReachabilityPreservers/SteinerBinaryForestLabelsWork.lean#L64)
@@ -1282,6 +1282,13 @@ The [binary forest rounding theorem](OnlineReachabilityPreservers/SteinerBinaryF
 instantiates this with the supplied binary paid states and the forest's
 permanent zero-cost arcs. For fixed trial samples it returns the exact
 reference rounded forest with separate word and seed-access tallies.
+The [composed binary forest run](OnlineReachabilityPreservers/SteinerBinaryForestRunWork.lean#L46)
+applies this evaluator to the final paid states of the binary fractional
+trace. It encodes the supplied permanent free rows once for rounding.
+With exact typed classes, complete forest links, and the metered hop and
+seed readers, the result equals the reference rounded forest for the
+supplied trials. The bound includes the fractional run, the setup and
+rounding fees, and a separate seed-access tally.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

@@ -7,7 +7,8 @@ namespace OnlineReachabilityPreservers
 
 open Finset
 
-private def encodeWeightedArcsWithWork {V : Type*} (readLabel : V → List Bool × ℕ) :
+/-- Read both labels for each typed arc and count the work of the reads. -/
+def encodeWeightedArcsWithWork {V : Type*} (readLabel : V → List Bool × ℕ) :
     List (V × V) → List (List Bool × List Bool) × ℕ
   | [] => ([],2)
   | (a,b) :: rest =>
@@ -16,7 +17,7 @@ private def encodeWeightedArcsWithWork {V : Type*} (readLabel : V → List Bool 
     let tail := encodeWeightedArcsWithWork readLabel rest
     ((left.1,right.1)::tail.1,left.2+right.2+tail.2+6)
 
-private theorem encodeWeightedArcsWithWork_spec {V : Type*} (readLabel : V → List Bool × ℕ)
+theorem encodeWeightedArcsWithWork_spec {V : Type*} (readLabel : V → List Bool × ℕ)
     (budget : ℕ) (reads : ∀ v, (readLabel v).2 ≤ budget) (arcs : List (V × V)) :
     let out := encodeWeightedArcsWithWork readLabel arcs
     out.1 = binaryEncodeArcs (fun v => (readLabel v).1) arcs ∧ out.2 ≤ 2+arcs.length*(2*budget+6) := by

@@ -489,7 +489,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   The [binary initializer](OnlineReachabilityPreservers/SteinerBinaryWeightedInitWork.lean#L44)
   uses the supplied key and cost readers to build zero-charge rows. It
   derives the [reference scale and fuel](OnlineReachabilityPreservers/SteinerBinaryWeightedInitWork.lean#L170)
-  from the total paid cost. The [weighted run from zero](OnlineReachabilityPreservers/SteinerBinaryWeightedRunWork.lean#L96)
+  from the total paid cost. The [weighted run from zero](OnlineReachabilityPreservers/SteinerBinaryWeightedRunWork.lean#L97)
   combines these steps and encodes typed requests with their own free arcs.
   Its work bound includes preparation and the full chronological cover.
   The [metric forest labels](OnlineReachabilityPreservers/SteinerBinaryForestLabelsWork.lean#L64)
@@ -507,6 +507,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   reads the supplied binary paid states and zero-cost forest arcs.
   With fixed trial samples it returns the reference rounded forest and
   counts the row work and seed reads separately.
+  The [combined forest run](OnlineReachabilityPreservers/SteinerBinaryForestRunWork.lean#L46)
+  feeds the final rows of the binary fractional trace into this evaluator.
+  It gives the exact reference rounded forest and bounds both recorded
+  tallies for the supplied typed forest data, hop reader, and trial samples.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
