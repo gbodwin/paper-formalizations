@@ -352,8 +352,22 @@ restriction keeps at least \((9/16)(17/18)M=17M/32\), and peeling loses
 at most \(M/2\). The existence of a suitable cleaning for every cyclic
 input is still open.
 [Half exclusion after a degree split](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1288)
-· [Factor-four cleaning](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1409)
-· [Cleaning after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1437).
+· [Factor-four cleaning](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1479)
+· [Cleaning after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1536).
+
+The width-cut criterion compares the quotients of original row positions
+by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
+those positions, so only pairs in different blocks need the bounded
+return test. Full exclusion follows with this local premise. For half
+exclusion the degree split also needs one of four conditions. These are
+the absence of cycles through \(k-3\), a cutoff at most four, full exclusion
+through \(k-2\), or degrees already within the upper cap. Short cycles
+can remain if they create no bounded return across a cut. The same
+retention and caps hold after rowwise deletions costing at most \(M/18\)
+when the surviving rows satisfy the local condition at the original width.
+[Degree-splitting conditions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1439)
+· [Cleaning with the local return condition](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1464)
+· [Local condition after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1506).
 
 Splitting a vertex can also break the half exclusion, even with unique
 intersections. In arrival order take the paths `(4,2), (0,2), (0,1), (1,2),

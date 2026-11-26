@@ -1352,10 +1352,41 @@ theorem splitListVertices_halfFree_of_noShortPrecedenceCycle {n p k D : ℕ}
   splitListVertices_halfFree_of_noShortPrecedenceCycle_smaller_cutoff paths simple free
     (longCycles.mono (Nat.sub_le _ _))
 
-private theorem width_blocks_admissible_of_noShortPrecedenceCycle {n p k D L : ℕ} {half : Bool}
+/-- A bounded return is forbidden when its endpoints lie across an actual
+width-block cut of an original row. Returns inside one block can remain. -/
+def NoShortReturnAcrossWidthCuts {n p : ℕ} (paths : Fin p → List (Fin n)) (width cutoff : ℕ) : Prop :=
+  ∀ ⦃i x y⦄, Before paths i x y → (paths i).idxOf x / width ≠ (paths i).idxOf y / width →
+    y ∉ reachIn (pathPrecedenceGraph paths) x ((cutoff-2)-1)
+
+theorem NoShortPrecedenceCycle.noShortReturnAcrossWidthCuts {n p k L : ℕ} {paths : Fin p → List (Fin n)}
+    (longCycles : NoShortPrecedenceCycle paths (k-2)) : NoShortReturnAcrossWidthCuts paths L k := by
+  classical
+  intro i x y before _
+  apply longCycles
+  unfold Edge pathPrecedenceGraph
+  exact mem_filter.mpr ⟨mem_univ _,i,before⟩
+
+private theorem splitListVertices_idxOf_project {n p : ℕ} (paths : Fin p → List (Fin n))
+    (D : ℕ) (i : Fin p) (simple : (paths i).Nodup) {v : ListVertexBlockIndex paths D}
+    (member : v ∈ splitListVertices paths D i) :
+    (paths i).idxOf v.fst = (splitListVertices paths D i).idxOf v := by
+  let row := splitListVertices paths D i
+  let index := row.idxOf v
+  let project := fun a : ListVertexBlockIndex paths D => a.fst
+  have on : index < row.length := List.idxOf_lt_length_of_mem member
+  have onMap : index < (row.map project).length := by simpa only [List.length_map] using on
+  have sameRow : row.map project = paths i := splitListVertices_project paths D i
+  have atIndex : (row.map project)[index] = v.fst := by
+    rw [List.getElem_map]
+    exact congrArg project (List.getElem_idxOf on)
+  have mappedSimple : (row.map project).Nodup := sameRow.symm ▸ simple
+  rw [← sameRow,← atIndex]
+  exact mappedSimple.idxOf_getElem index onMap
+
+private theorem width_blocks_admissible_of_noShortReturnAcrossWidthCuts {n p k D L : ℕ} {half : Bool}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (legal : localOrderAdmissible half k (splitListVertices paths D))
-    (longCycles : NoShortPrecedenceCycle paths (k-2)) : localOrderAdmissible half k (listRegularizedPaths paths D L) := by
+    (noReturns : NoShortReturnAcrossWidthCuts paths L k) : localOrderAdmissible half k (listRegularizedPaths paths D L) := by
   classical
   let copies := splitListVertices paths D
   let pieces := splitListPaths copies L
@@ -1369,15 +1400,31 @@ private theorem width_blocks_admissible_of_noShortPrecedenceCycle {n p k D L : �
   have steps {i x y} (step : Before pieces i x y) : Before copies (parent i) x y :=
     listBefore_of_sublist (paths := fun j : ListBlockIndex copies L => copies j.fst)
       (splitListVertices_simple paths D i.fst (simple i.fst)) List.filter_sublist step
+  have separatedIndices {i j : ListBlockIndex copies L} (distinct : i ≠ j) (same : i.fst = j.fst)
+      {x y} (hx : x ∈ pieces i) (hy : y ∈ pieces j) :
+      (paths i.fst).idxOf (copy x) / L ≠ (paths i.fst).idxOf (copy y) / L := by
+    rcases i with ⟨a,ia⟩
+    rcases j with ⟨b,jb⟩
+    change a = b at same
+    subst b
+    obtain ⟨onX,blockX⟩ := mem_localPathBlock.mp hx
+    obtain ⟨onY,blockY⟩ := mem_localPathBlock.mp hy
+    change (paths a).idxOf x.fst / L ≠ (paths a).idxOf y.fst / L
+    rw [splitListVertices_idxOf_project paths D a (simple a) onX,
+      splitListVertices_idxOf_project paths D a (simple a) onY]
+    intro eq
+    exact distinct (congrArg (Sigma.mk a) (Fin.ext (blockX.symm.trans (eq.trans blockY))))
   have separated : ShortReturnSeparated G copy copies pieces parent (k-2) := by
     intro i j distinct same
     rcases contiguousBlocks_separated distinct same with earlier | later
     · left
       intro x hx y hy
-      exact ⟨earlier hx hy,longCycles (projects (earlier hx hy))⟩
+      have step := earlier hx hy
+      exact ⟨step,noReturns (splitListVertices_step (simple _) step) (separatedIndices distinct same hx hy)⟩
     · right
       intro y hy x hx
-      exact ⟨later hx hy,longCycles (projects (later hx hy))⟩
+      have step := later hx hy
+      exact ⟨step,noReturns (splitListVertices_step (simple _) step) (separatedIndices distinct same hx hy).symm⟩
   have arrivals : Monotone parent := by
     intro i j h
     rcases Sigma.Lex.le_def.mp h with earlier | ⟨same, _⟩
@@ -1387,9 +1434,16 @@ private theorem width_blocks_admissible_of_noShortPrecedenceCycle {n p k D L : �
   · exact bridgeFree_of_shortReturnSeparated_smaller_cutoff G copy legal parent steps projects separated
   · exact halfBridgeFree_of_shortReturnSeparated_smaller_cutoff G copy legal parent arrivals steps projects separated
 
-private theorem frozen_cleaning_of_noShortPrecedenceCycle_of_mass {n p k M retention : ℕ} {half : Bool}
+/-- Each of these conditions suffices for the degree split to preserve
+half exclusion at the given cutoff. -/
+def HalfDegreeSplitCondition {n p : ℕ} (paths : Fin p → List (Fin n)) (width cutoff : ℕ) : Prop :=
+  NoShortPrecedenceCycle paths (cutoff-3) ∨ cutoff ≤ 4 ∨ BridgeFree (Before paths) (cutoff-2) ∨
+    ∀ v, (occurrences (fun i => (paths i).toFinset) v).card ≤ width
+
+private theorem frozen_cleaning_of_noShortReturnAcrossWidthCuts_of_mass {n p k M retention : ℕ} {half : Bool}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
-    (free : localOrderAdmissible half k paths) (longCycles : NoShortPrecedenceCycle paths (k-2))
+    (free : localOrderAdmissible half k paths) (returns : NoShortReturnAcrossWidthCuts paths (4*M/p) k)
+    (halfSafe : half = true → HalfDegreeSplitCondition paths (4*M/n) k)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
     (upper : (∑ i, (paths i).length) ≤ M)
     (lower : 8*(retention+2)*M ≤ 9*retention*(∑ i, (paths i).length)) :
@@ -1399,10 +1453,26 @@ private theorem frozen_cleaning_of_noShortPrecedenceCycle_of_mass {n p k M reten
   have copyLegal : localOrderAdmissible half k (splitListVertices paths (4*M/n)) := by
     cases half
     · exact free.split_list_vertices_any (·.fst) (fun {i _ _} => splitListVertices_step (simple i))
-    · exact splitListVertices_halfFree_of_noShortPrecedenceCycle_smaller_cutoff paths simple free
-        (longCycles.mono (by omega))
-  have legal := width_blocks_admissible_of_noShortPrecedenceCycle (L := 4*M/p) paths simple copyLegal longCycles
+    · rcases halfSafe rfl with noCycles | degreeSafe
+      · exact splitListVertices_halfFree_of_noShortPrecedenceCycle_smaller_cutoff paths simple free noCycles
+      · exact split_list_vertices_half_of_degree_condition simple free degreeSafe
+  have legal := width_blocks_admissible_of_noShortReturnAcrossWidthCuts paths simple copyLegal returns
   exact regularization_list_frozen_after_width_blocks_of_mass paths simple legal hn hp dense long upper lower
+
+/-- At cutoff `k`, test short returns only across the actual factor-four
+width cuts. In half mode use one of the sufficient degree-splitting conditions. -/
+theorem regularization_list_frozen_of_noShortReturnAcrossWidthCuts {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : localOrderAdmissible half k paths) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (returns : NoShortReturnAcrossWidthCuts paths (4*(∑ i, (paths i).length)/p) k)
+    (halfSafe : half = true → HalfDegreeSplitCondition paths (4*(∑ i, (paths i).length)/n) k) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  frozen_cleaning_of_noShortReturnAcrossWidthCuts_of_mass paths simple free returns halfSafe
+    hn hp dense long le_rfl (by omega)
 
 /-- At bridge cutoff `k`, the original factor-four width blocks suffice if
 there are no precedence cycles of length at most `k - 2`. -/
@@ -1414,8 +1484,8 @@ theorem regularization_list_frozen_of_noShortPrecedenceCycle_smaller_cutoff {n p
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
-  frozen_cleaning_of_noShortPrecedenceCycle_of_mass paths simple free longCycles
-    hn hp dense long le_rfl (by omega)
+  regularization_list_frozen_of_noShortReturnAcrossWidthCuts paths simple free hn hp dense long
+    longCycles.noShortReturnAcrossWidthCuts (fun _ => Or.inl (longCycles.mono (by omega)))
 
 /-- The original factor-four width cuts suffice when the precedence graph
 has no directed cycle through the bridge cutoff. Longer cycles may remain.
@@ -1431,14 +1501,14 @@ theorem regularization_list_frozen_of_noShortPrecedenceCycle {n p k : ℕ} {half
   regularization_list_frozen_of_noShortPrecedenceCycle_smaller_cutoff paths simple free
     (longCycles.mono (Nat.sub_le _ _)) hn hp dense long
 
-/-- If deleting at most one eighteenth of the incidences removes the
-short precedence cycles, cleaning keeps one thirty-second of the original
-mass and uses the original budgets and averages. -/
-theorem regularization_list_frozen_after_short_cycle_deletions_smaller_cutoff {n p k : ℕ} {half : Bool}
+/-- Rowwise deletions costing at most `M / 18` can be combined with the
+local return condition at the original width to retain `M / 32`. -/
+theorem regularization_list_frozen_after_width_cut_deletions {n p k : ℕ} {half : Bool}
     (paths kept : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (free : localOrderAdmissible half k paths) (sub : ∀ i, (kept i).Sublist (paths i))
-    (longCycles : NoShortPrecedenceCycle kept (k-2))
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (returns : NoShortReturnAcrossWidthCuts kept (4*(∑ i, (paths i).length)/p) k)
+    (halfSafe : half = true → HalfDegreeSplitCondition kept (4*(∑ i, (paths i).length)/n) k)
     (retained : 17*(∑ i, (paths i).length) ≤ 18*(∑ i, (kept i).length)) :
     let M := ∑ i, (paths i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
@@ -1455,10 +1525,26 @@ theorem regularization_list_frozen_after_short_cycle_deletions_smaller_cutoff {n
     · exact monoFull free
     · intro j hj b arrival
       exact free hj (b.mapPaths id Function.injective_id lifts) arrival
-  refine frozen_cleaning_of_noShortPrecedenceCycle_of_mass kept (fun i => (sub i).nodup (simple i))
-    valid longCycles hn hp dense long (sum_le_sum (fun i _ => (sub i).length_le)) ?_
+  refine frozen_cleaning_of_noShortReturnAcrossWidthCuts_of_mass kept (fun i => (sub i).nodup (simple i))
+    valid returns halfSafe hn hp dense long (sum_le_sum (fun i _ => (sub i).length_le)) ?_
   change 17*M ≤ 18*(∑ i, (kept i).length) at retained
   omega
+
+/-- If deleting at most one eighteenth of the incidences removes the
+short precedence cycles, cleaning keeps one thirty-second of the original
+mass and uses the original budgets and averages. -/
+theorem regularization_list_frozen_after_short_cycle_deletions_smaller_cutoff {n p k : ℕ} {half : Bool}
+    (paths kept : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : localOrderAdmissible half k paths) (sub : ∀ i, (kept i).Sublist (paths i))
+    (longCycles : NoShortPrecedenceCycle kept (k-2))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (retained : 17*(∑ i, (paths i).length) ≤ 18*(∑ i, (kept i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 32*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_after_width_cut_deletions paths kept simple free sub hn hp dense long
+    longCycles.noShortReturnAcrossWidthCuts (fun _ => Or.inl (longCycles.mono (by omega))) retained
 
 /-- Removing short cycles through the bridge cutoff also suffices. -/
 theorem regularization_list_frozen_after_short_cycle_deletions {n p k : ℕ} {half : Bool}

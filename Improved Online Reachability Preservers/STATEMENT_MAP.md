@@ -863,16 +863,21 @@ The original caps and both budgets still hold in a witness with at least
 An additional [ordered-cut criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1222)
 excludes returns across each cut within \(\max(0,k-3)\) precedence edges.
 For fixed cutoff \(k\),
-[no precedence cycle of length at most \(k-2\)](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1409)
+[no precedence cycle of length at most \(k-2\)](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1479)
 implies this criterion. Half exclusion in the degree split itself only
 needs the absence of cycles through \(k-3\). In either bridge mode the
 resulting factor-four block cleaning
 retains \(M/16\) for simple paths with mass at least both positive budgets,
 with both budgets and all four original-average caps. The
-[deletion variant](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1437)
+[deletion variant](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1536)
 retains \(M/32\) under the same original budgets and caps when rowwise
 deletions of at most \(M/18\) incidences remove the short cycles. Longer
-cycles may remain in both variants.
+cycles may remain in both variants. The [width-cut condition](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1464)
+requires the bounded-return exclusion only for pairs across the actual
+factor-four cuts. For half bridges, the degree split uses one of the
+[four sufficient conditions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1439).
+The same conditional \(M/16\) and [\(M/32\) after rowwise deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1506)
+keep both budgets and all four original-average caps.
 The unrestricted cyclic result remains open.
 
 For Lemmas 23 and 39, the [common-order extremal theorem](OnlineReachabilityPreservers/CommonOrderExtremal.lean)

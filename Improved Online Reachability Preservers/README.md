@@ -347,8 +347,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   to obtain this property, the construction retains at least \(M/32\).
   Both guarantees use the two positive original budgets and all four caps
   computed from the original averages, for mass at least both budgets.
-  [No short cycles](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1409)
-  · [After deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1437).
+  [No short cycles](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1479)
+  · [After deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1536).
+  The same bounds follow by ruling out short returns only across the
+  actual width cuts. Full mode uses this condition alone. Half mode also
+  uses one of the sufficient conditions for splitting vertices.
+  [Width-cut criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1464)
+  · [Width-cut criterion after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1506).
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)
