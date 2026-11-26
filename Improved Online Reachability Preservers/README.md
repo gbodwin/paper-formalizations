@@ -460,9 +460,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   encodes the graph and requests and generates all ordered pairs from the
   supplied vertex list. The [typed output](OnlineReachabilityPreservers/SteinerBinaryFinOutputWork.lean#L155)
   decodes the selected arcs and assembles the reference thin graph. Its
-  work bound uses the length of the original arc list. The numeric controls
-  and seed index are supplied. The other replay phases and native execution
-  bounds remain to be integrated.
+  work bound uses the length of the original arc list. The [late evaluator](OnlineReachabilityPreservers/SteinerBinaryLateWork.lean#L27)
+  combines that graph with the existing hub routes and preserves the thick
+  full-graph fallback. Its bound adds the hub word work and the binary thin
+  work. Integrating the seeded early phase and proving the complete bit
+  and native execution bounds remain open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

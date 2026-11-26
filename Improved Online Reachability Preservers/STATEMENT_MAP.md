@@ -1200,6 +1200,15 @@ the input arc list length. The result is the exact reference thin graph
 on the same feasible trace and fixed sample, including the empty and
 full-graph fallback cases.
 
+The [late evaluator using binary thin rounds](OnlineReachabilityPreservers/SteinerBinaryLateWork.lean#L27)
+uses the same chronological classification and hub routes as the earlier
+list evaluator. An unhit thick request still selects the original graph.
+Otherwise it unions the hub arcs and the typed binary graph for the selected
+thin trace. The result agrees with the assembled algorithm at early cutoff
+zero for the supplied hubs, seed index and feasible suffix. The bound adds
+the existing hub word work to the thin work at the supplied widths and
+counts. It is a bound for this mixed cost model.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

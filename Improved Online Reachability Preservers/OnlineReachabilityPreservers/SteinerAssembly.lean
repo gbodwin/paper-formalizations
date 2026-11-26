@@ -634,4 +634,18 @@ theorem assembledSteiner_mean_transfer {G Z : Arcs V} (early : EarlySteinerRule 
   assembledSteiner_mean_transfer_of_opt early hp hE hn ht hτ D sub feasible
     (fun S => phaseCutoff_le_opt_of_hits early T S D sub feasible) earlyBound
 
+theorem steinerPhaseTraces_thin_subset {G : Arcs V} (early : EarlySteinerRule G) (T : ℕ) (S : Finset V)
+    (D : List (V × V)) : (steinerPhaseTraces early T S D).thin ⊆ D :=
+  (steinerPhaseTraces_facts early T S D).thin_in
+
+/-- With zero early cutoff, the late phase makes the same full-graph or
+hub-and-thin choice as the assembled rule. -/
+theorem assembledSteiner_zero_cutoff {G : Arcs V} (early : EarlySteinerRule G) (τ : ℕ) (S : Finset V)
+    (sample : ThinSample G) (D : List (V × V)) :
+    let trace := steinerPhaseTraces early 0 S D
+    assembledSteiner early 0 τ S sample D =
+      if trace.thin.any (fun d => decide (τ < (reachInterval G d).card)) then G
+      else hubPreserver G S trace.hits ∪ thinRoundRun G (thinRoundingFactor (Fintype.card V) τ) sample trace.thin := by
+  simp only [assembledSteiner,phaseUnion,steinerPhaseTraces_early_empty_at_zero,early.empty,empty_union]
+
 end OnlineReachabilityPreservers
