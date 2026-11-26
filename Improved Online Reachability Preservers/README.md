@@ -428,8 +428,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   that attains the supply or stalls gives the same reference result.
   The [binary route search](OnlineReachabilityPreservers/SteinerBinaryPathWork.lean#L297)
   finds a shortest simple path in supplied encoded arcs up to a specified depth.
-  It uses the supplied arc order to choose among shortest paths. Initializing
-  the flow table, running the complete cut sequence, and carrying out the
+  It uses the supplied arc order to choose among shortest paths. From a
+  complete supplied capacity table, the [binary separator](OnlineReachabilityPreservers/SteinerBinaryFlowRunWork.lean#L249)
+  starts with zero flow, applies its own augmentations, and agrees with the
+  reference separator on whether it finds a cut and on the cut's arc set.
+  The tally is polynomial in the numeric supply, table size, and word widths.
+  Generating the capacity rows from the replay state and integrating the
   remaining phases still need bit or native execution bounds.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex

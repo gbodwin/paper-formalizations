@@ -1090,6 +1090,17 @@ The tally charges the depth tests, the searches during reconstruction, and
 label comparisons on the input arc list. The source and target use the
 same injective labels as the supplied arcs.
 
+The [binary augmentation run](OnlineReachabilityPreservers/SteinerBinaryFlowRunWork.lean#L87)
+builds residual arcs from the table at each step, selects a simple path,
+and applies the signed update. Lean checks the validity and exact value of
+the terminal flow and the absence of a residual route when supply remains.
+The [zero-flow separator](OnlineReachabilityPreservers/SteinerBinaryFlowRunWork.lean#L249)
+builds the initial flow, runs the augmentations and extracts the outgoing
+arcs of the reference separator's exact cut. It needs a supplied unsigned
+capacity row for every ordered vertex pair and the original arc labels.
+The bound uses the numeric supply and controls how wide the flow magnitudes
+can grow. Graph and capacity preparation and the full replay are separate.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
