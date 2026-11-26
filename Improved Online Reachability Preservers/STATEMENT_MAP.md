@@ -1255,8 +1255,7 @@ builds the zero-charge table with the same order and accumulates the
 paid cost. When the keys are complete, the [exact total](OnlineReachabilityPreservers/SteinerBinaryWeightedInitWork.lean#L134)
 gives the [reference scale, its binary word, and the fuel](OnlineReachabilityPreservers/SteinerBinaryWeightedInitWork.lean#L170).
 The work includes paid cost encodings, word additions, and the supplied
-reader fees. Wiring the forest readers and the early rounding into this
-binary trace remains open. The [weighted run from zero](OnlineReachabilityPreservers/SteinerBinaryWeightedRunWork.lean#L96)
+reader fees. The [weighted run from zero](OnlineReachabilityPreservers/SteinerBinaryWeightedRunWork.lean#L96)
 already combines the initial table, computed controls, and chronological
 trace with the [metered encoding of typed requests](OnlineReachabilityPreservers/SteinerBinaryWeightedRunWork.lean#L51).
 It returns the reference cut history and paid charges on complete
@@ -1266,6 +1265,13 @@ computes its shared history block and binary width once. Each label uses
 the network tag, original root, side, and history rank. The proof gives
 injectivity, the exact vertex count, and the recorded ranking and encoding
 work.
+The [binary fractional forest run](OnlineReachabilityPreservers/SteinerBinaryForestFractionalWork.lean#L154)
+combines these labels with complete typed pair keys. It reads each paid
+cost from the metered hop reader and builds each request's source and sink
+leaf attachments. Given the exact prepared paid and free classes, the
+result agrees with the reference fractional forest run. Its work bound
+includes the measured requests, keys, labels, and weighted trace. The
+binary-to-rounding connection remains open at this entry.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
