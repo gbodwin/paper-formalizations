@@ -1427,16 +1427,25 @@ private abbrev PreparedForestRounding (V : Type*) (height : ℕ) :=
   earlyMetricWithPreparedRequestsRoundingUsing keys links weights priced scale fuel seed requests
     (fun links => roundedForestTrialsFromRowsWithWordWork links rows)
 
+@[inline] private def earlyMetricWithPreparedRequestsResidualRowsWorkAtCount {height : ℕ}
+    (rows : {es : List (HeightForestVertex V height × HeightForestVertex V height) // es.Nodup})
+    (depth trials : ℕ) (keys : ForestPairKeys V height) (links : Arcs (HeightForestVertex V height))
+    (weights : ForestMetricWeights V height) (priced : Arcs (ForestNetworkVertex V height))
+    (scale fuel : ℕ) (seed : ForestTrialArrayWithSeedWork V height scale trials)
+    (requests : ForestRequestRows V height) : Arcs (HeightForestVertex V height) × ℕ × ℕ :=
+  let fractional := weightedNetworkRunWithResidualRowsWork keys.val keys.property priced weights.2
+    (fun _ => (0,1)) depth scale fuel requests.1
+  let rounded := roundedForestTrialsFromRowsWithWordWork links rows weights.1 fractional.1.1 scale trials seed
+  (rounded.1,0,fractional.2+rounded.2.1+rounded.2.2+7+requests.2)
+
 @[inline] private def earlyMetricWithPreparedRequestsResidualRowsWork {height : ℕ}
     (rows : {es : List (HeightForestVertex V height × HeightForestVertex V height) // es.Nodup})
     (depth : ℕ) (keys : ForestPairKeys V height) (links : Arcs (HeightForestVertex V height))
     (weights : ForestMetricWeights V height) (priced : Arcs (ForestNetworkVertex V height))
     (scale fuel : ℕ) (seed : ForestTrialArrayWithSeedWork V height scale (earlyTrialCount V height))
     (requests : ForestRequestRows V height) : Arcs (HeightForestVertex V height) × ℕ × ℕ :=
-  let fractional := weightedNetworkRunWithResidualRowsWork keys.val keys.property priced weights.2
-    (fun _ => (0,1)) depth scale fuel requests.1
-  let rounded := roundedForestTrialsFromRowsWithWordWork links rows weights.1 fractional.1.1 scale (earlyTrialCount V height) seed
-  (rounded.1,0,fractional.2+rounded.2.1+rounded.2.2+7+requests.2)
+  earlyMetricWithPreparedRequestsResidualRowsWorkAtCount rows depth (earlyTrialCount V height)
+    keys links weights priced scale fuel seed requests
 
 
 private theorem earlyMetricWithPreparedRequestsWork_spec {height : ℕ} (keys : ForestPairKeys V height)
@@ -2636,5 +2645,39 @@ theorem prepareEarlyDistanceTableForSeedFromWeightsWithMetricResidualRowsWork_sp
     simpa only [length] using compared
   · intro seed P
     exact roundedForestTrialsFromRowsWithWordWork_sub template.1 ⟨forestRows,forestDistinct⟩ templateRows.le _ _ _ _ seed
+
+/-- Read the same trial array at a count supplied to the prepared evaluator. -/
+def prepareEarlyDistanceTableForSeedFromWeightsWithMetricTrialCountWork (G : Arcs V) (height : ℕ)
+    (arcs : List (V × V)) (n : ℕ) (size : n = Fintype.card V)
+    (forestRows : List (HeightForestVertex V height × HeightForestVertex V height)) (forestDistinct : forestRows.Nodup)
+    (depth trials : ℕ) (exactTrials : trials = earlyTrialCount V height)
+    (keys : ForestPairKeys V height) (vertices : List (HeightForestVertex V height)) (distinct : vertices.Nodup)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
+    (plan : ForestWeightPlan V height)
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1))) :
+    SteinerSeedPreparationWithSeedWork G height :=
+  prepareEarlyDistanceTableForSeedFromWeightsWithPrefixMetric G height arcs n size forestRows keys vertices distinct
+    table rows template exactForest plan matchesPlan (fun k links w priced scale fuel seed requests =>
+      let samples := cast (congrArg (ForestTrialArrayWithSeedWork V height scale) exactTrials.symm) seed
+      earlyMetricWithPreparedRequestsResidualRowsWorkAtCount ⟨forestRows,forestDistinct⟩ depth trials
+        k links w priced scale fuel samples requests)
+
+/-- The measured metric uses identical draws and returns the entire same preparation. -/
+theorem prepareEarlyDistanceTableForSeedFromWeightsWithMetricTrialCountWork_eq (G : Arcs V) (height : ℕ)
+    (arcs : List (V × V)) (n : ℕ) (size : n = Fintype.card V)
+    (forestRows : List (HeightForestVertex V height × HeightForestVertex V height)) (forestDistinct : forestRows.Nodup)
+    (depth trials : ℕ) (exactTrials : trials = earlyTrialCount V height)
+    (keys : ForestPairKeys V height) (vertices : List (HeightForestVertex V height)) (distinct : vertices.Nodup)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
+    (plan : ForestWeightPlan V height)
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1))) :
+    prepareEarlyDistanceTableForSeedFromWeightsWithMetricTrialCountWork G height arcs n size forestRows forestDistinct
+      depth trials exactTrials keys vertices distinct table rows template exactForest plan matchesPlan =
+    prepareEarlyDistanceTableForSeedFromWeightsWithMetricResidualRowsWork G height arcs n size forestRows forestDistinct
+      depth keys vertices distinct table rows template exactForest plan matchesPlan := by
+  subst trials
+  rfl
 
 end OnlineReachabilityPreservers

@@ -1,5 +1,6 @@
 import OnlineReachabilityPreservers.SteinerWeightedPlanWork
 import OnlineReachabilityPreservers.SteinerForestPairKeysWork
+import OnlineReachabilityPreservers.SteinerSeedDecoderWork
 
 /-! Carry the one-pass weighted plan into the fixed-budget prefix evaluator. -/
 
@@ -1058,5 +1059,50 @@ theorem prepareFinSteinerWeightedForSeedWithMetricResidualRowsWork_spec {n : ℕ
     finSteinerEarlyMetricValidationWordPolynomial finSteinerEarlyMetricLabelWordPolynomial
   dsimp only [F]
   ring
+
+/-- Compute the finite trial count from the supplied number of vertices.
+The repeated-halving pass also records the arithmetic work. -/
+def finEarlyTrialCountWithWordWork (n height : ℕ) :
+    {t : ℕ // t = earlyTrialCount (Fin n) height} × ℕ :=
+  let width := bitLengthWithWork n
+  let level := height+1
+  let count := 16*level*level*(max 1 width.1)
+  have exact : count = earlyTrialCount (Fin n) height := by
+    dsimp only [count,level,earlyTrialCount]
+    rw [(bitLengthWithWork_spec n).1,max_size_eq_log2_add_one,Fintype.card_fin,pow_two]
+    ring
+  (⟨count,exact⟩,width.2+9)
+
+theorem finEarlyTrialCountWithWordWork_bound (n height : ℕ) :
+    (finEarlyTrialCountWithWordWork n height).2 ≤ 7*n+12 :=
+  Nat.add_le_add_right (bitLengthWork_le n) 9
+
+/-- Prepare the metric with one measured trial count, reused in every
+reached early metric of the replay. -/
+def prepareFinSteinerWeightedForSeedWithMetricTrialCountWork {n : ℕ} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :
+    SteinerSeedPreparationWithSeedWork G height × ℕ :=
+  let trials := finEarlyTrialCountWithWordWork n height
+  let rows := finForestNetworkRowsWithWordWork n height
+  let valid := finForestNetworkRowsWithWordWork_spec n height
+  let forestSize := rows.vertices.length
+  let depth := 3*forestSize
+  let prepared := prepareFinSteinerWeightedWithPlanAndRows G arcs same height
+    (fun table rowsEq template exact plan consistent forestRows _ forestDistinct =>
+      prepareEarlyDistanceTableForSeedFromWeightsWithMetricTrialCountWork G height arcs n (by simp) forestRows forestDistinct
+        depth trials.1.val trials.1.property ⟨rows.keys,valid.2.2.2.1⟩ rows.vertices valid.1
+        table rowsEq template exact plan consistent)
+  (prepared.1,prepared.2+rows.wordWork+4*forestSize+10+trials.2)
+
+/-- The trial count leaves the metric preparation identical and adds only
+its own setup tally. -/
+theorem prepareFinSteinerWeightedForSeedWithMetricTrialCountWork_compare {n : ℕ} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :
+    let out := prepareFinSteinerWeightedForSeedWithMetricTrialCountWork G arcs same height
+    let old := prepareFinSteinerWeightedForSeedWithMetricResidualRowsWork G arcs same height
+    out.1 = old.1 ∧ out.2 = old.2+(finEarlyTrialCountWithWordWork n height).2 := by
+  simp only [prepareFinSteinerWeightedForSeedWithMetricTrialCountWork,
+    prepareFinSteinerWeightedForSeedWithMetricResidualRowsWork,prepareFinSteinerWeightedWithPlanAndRows,
+    prepareEarlyDistanceTableForSeedFromWeightsWithMetricTrialCountWork_eq,and_self]
 
 end OnlineReachabilityPreservers

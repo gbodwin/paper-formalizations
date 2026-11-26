@@ -705,7 +705,7 @@ shares this list across its weighted calls and preserves each rounded
 early graph and the initial setup tallies. Its old search and weight tally
 does not increase. A separate tally covers the measured weighted run and
 the seed-access costs, with a
-[fixed-height bound](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L285)
+[fixed-height bound](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L286)
 for every prefix and seed with bounded access costs.
 
 The [complete replay with weighted early work](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1635)
@@ -733,7 +733,7 @@ Tier and cutoff arithmetic, threshold comparisons, finite set assembly,
 remaining search and service work, and bit and native costs remain outside
 this bound.
 
-The [finite early evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L396)
+The [finite early evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L397)
 passes the weighted solver's paired charge reader directly into those
 rounding trials. The metric graphs and setup tallies agree with the earlier
 seeded evaluator, and the separate count now includes the rounded
@@ -756,7 +756,7 @@ The [shared enumeration](OnlineReachabilityPreservers/SteinerForestPairKeysWork.
 returns the complete forest rows used on the way to the same ordered
 pair keys. At height \(h\) there are at most \(2n(n+1)^h\) rows, with a
 fixed extra setup allowance to return them. The
-[prepared early evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L444)
+[prepared early evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L445)
 uses these rows and the measured request builder at every evaluated
 metric prefix before running the weighted solver. The
 [complete comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1782)
@@ -768,7 +768,7 @@ The [measured forest query](OnlineReachabilityPreservers/SteinerForestLabelWork.
 reads both terminal labels in one traversal of each history and then reads
 the stored metric. It returns exactly the earlier value and comparison
 count. The initial [weight plan](OnlineReachabilityPreservers/SteinerWeightedPlanWork.lean#L101)
-shares this routine. The [metric prefix evaluator](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L2090)
+shares this routine. The [metric prefix evaluator](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L2099)
 uses the measured values in the weighted separator and forest rounding,
 with one allowance \(10h+8n^2+46\) for either kind of weight query. The
 [complete comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1843)
@@ -792,7 +792,7 @@ The [early replay](OnlineReachabilityPreservers/SteinerEarlyReplay.lean#L629)
 uses that expansion before each nonempty metric prefix check and for the
 union of bought links when all checks succeed. The old reachability
 checks and fallback decision agree, and the old ordinary search tally is
-bounded above by its prior value. The [finite preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L582)
+bounded above by its prior value. The [finite preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L583)
 supplies the original arc list and the already constructed forest template.
 Every bought link belongs to that template. The
 [complete comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1904)
@@ -804,7 +804,7 @@ The [demand check](OnlineReachabilityPreservers/SteinerIntervalWork.lean#L298)
 filters the original arc list for membership in the expanded graph, runs
 reverse reachability on those rows, and tests the source against the
 result. It computes reachability in the intersection of the supplied
-arc set and the expanded graph. The [early preparation](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L2284)
+arc set and the expanded graph. The [early preparation](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L2293)
 proves that each expanded graph is a subgraph of the supplied arcs and
 uses the measured check on every nonempty metric prefix. The
 [complete comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1965)
@@ -818,7 +818,7 @@ builds successive nonempty prefix lists by reversing the extended history,
 uses the new request as the final request, and collects bought links and
 validation records. It merges the bought graphs only if all checks pass.
 Both branches return the same graph and ordinary search tally as the
-prior prefix table. The [prepared evaluator](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L2337)
+prior prefix table. The [prepared evaluator](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L2346)
 shares the same metric, expansion, and validation. The
 [complete comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2026)
 retains all graphs and evaluation counts, and its
@@ -849,11 +849,11 @@ and the parent arcs used as capacity keys. The seed-read bound is separate. The
 [subset property](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L1848)
 keeps every link in the input forest.
 
-The [prepared arithmetic evaluator](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L2465)
+The [prepared arithmetic evaluator](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L2474)
 passes the measured charge reader from the weighted separator to these
 forest trials at every reached early metric. It uses the same prepared
 metric, expansion, validation, and prefix assembly. The
-[finite-index instance](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L804)
+[finite-index instance](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L805)
 bounds the added word work at fixed height. The
 [complete comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2087)
 proves exact agreement of prefix graphs and evaluation counts with the
@@ -870,10 +870,10 @@ list, the graph agrees with the earlier forest trials. Seed reads have
 a separate bound.
 The loop and link assembly have a source-level word bound.
 
-The [prepared metric](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L2528)
+The [prepared metric](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L2537)
 uses the duplicate-free template rows for link selection and expansion.
 Validation continues to scan the supplied original arcs. The
-[finite evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L893)
+[finite evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L894)
 bounds the measured work at fixed height in terms of the vertex count,
 the raw arc-list length, and the demand-prefix length.
 The [complete comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2148)
@@ -899,9 +899,9 @@ each charge read.
 
 The [charge-reader comparison](OnlineReachabilityPreservers/SteinerWeightedChargeWork.lean#L1069)
 shows equality of the full reader and the chronological cut list. The
-[early metric](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L2591)
+[early metric](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L2600)
 uses the measured weighted cover before list-backed rounding. The
-[finite preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L988)
+[finite preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L989)
 counts the existing forest vertex list once and uses three times its
 length as the exact weighted-network depth. The
 [complete comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2209)
@@ -916,13 +916,23 @@ remain outside the bound.
 The [late evaluator with measured thin service](OnlineReachabilityPreservers/SteinerHubRouteWork.lean#L509)
 uses the rounded-list check whenever the late replay runs a thin cover.
 The hub routing and thick fallback agree with the earlier evaluator.
-The [combined whole-replay comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2324)
+The [combined whole-replay comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2330)
 preserves every graph, ordinary search tally, setup field, and evaluation
 count on every trace, including decode exhaustion and unreachable requests.
-The [fixed-height bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2382)
+The [fixed-height bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2389)
 includes the measured weighted search and the additional thin service
 work for feasible traces. The trial-count enumeration and bit and native
 execution costs remain outside this bound.
+
+The [finite trial count](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L1076)
+uses measured halving on the supplied original vertex count. The
+[prepared metric](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L2667)
+uses that same count with the same samples at each reached metric. The
+[complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2421)
+has identical prefix records and evaluation counts, with only the new
+setup tally added to its recorded work. The [feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2437)
+adds at most \(7n+12\). This measures the trial-count calculation for
+the metric, and bit and native execution costs remain outside the ledger.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

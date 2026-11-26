@@ -256,7 +256,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   ordinary search tally is no larger, and a separate fixed-height budget
   bounds the new weighted solver and the seed reads.
   [Forest pair keys](OnlineReachabilityPreservers/SteinerForestPairKeysWork.lean#L284)
-  · [Weighted early evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L285).
+  · [Weighted early evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L286).
   The complete prefix replay uses this early evaluator alongside the
   list-backed late phase and the metered outer union. Every prefix graph
   and the evaluation count agree with the earlier replay. The combined
@@ -291,7 +291,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   phase. Its prefix graphs and evaluation count agree with the earlier
   replay. The measured polynomial includes these reads and the capacity
   rounding.
-  [Early rounding preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L396)
+  [Early rounding preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L397)
   · [Complete replay with charge reads](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1737).
   Given a complete list of distinct forest vertices, a measured attachment
   builder scans the two leaf groups together and counts both unions with
@@ -340,7 +340,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   weighted separator run and preserves the prefix graphs and evaluation
   count on every trace. The feasible-prefix polynomial includes the new
   charges.
-  [Prepared arithmetic](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L804)
+  [Prepared arithmetic](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L805)
   · [Complete replay with measured rounding](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2111).
   A standalone list-backed rounding evaluator builds the trial and tier
   indices once, scans the stored links, and keeps each selected link once.
@@ -372,11 +372,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   service steps, and bit and native costs remain outside the bound.
   [Complete replay with measured weighted search](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2233).
   The [late evaluator](OnlineReachabilityPreservers/SteinerHubRouteWork.lean#L509)
-  also uses the measured thin service tests. The [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2324)
+  also uses the measured thin service tests. The [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2330)
   combines this with the measured weighted search and preserves every
-  previous record and evaluation count. Its [feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2382)
-  includes the added service work. Trial-count enumeration, other
-  arithmetic, and bit and native execution costs remain outside this bound.
+  previous record and evaluation count. Its [feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2389)
+  includes the added service work. The [measured trial-count replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2421)
+  computes the early metric's count once by halving the supplied original
+  vertex count. It retains the same prefix records and adds only the
+  trial-count setup tally, bounded by \(7n+12\). Other arithmetic and
+  bit and native execution costs remain outside this bound.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

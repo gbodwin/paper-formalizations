@@ -2304,17 +2304,23 @@ private theorem replaySteinerTraceWithPhaseWork_changeLate (n : ℕ) (hn : n = F
     let out := lateSteinerWithThinServiceWork G arcs τ m vertices sample rows D
     ((out.1,0),out.2)
 
+@[inline] private def completeFinSteinerReplayWithThinServiceUsing {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (prepared : SteinerSeedPreparationWithSeedWork G height × ℕ) :=
+  let arcs := finArcRowsWithWordWork raw
+  let vertices := finVerticesWithWordWork n
+  let out := completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D
+    (thinServiceLateEvaluator G arcs.1 m vertices.1) (meteredPhaseUnion (Fin n)) prepared
+  (out.1,out.2.1+arcs.2+vertices.2+5,out.2.2)
+
 /-- Replay measured weighted residual search and measured thin service
 tests together, with the same cached arc and threshold rows. -/
 def completeFinSteinerReplayWithThinServiceWork {n : ℕ} (G : Arcs (Fin n))
     (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
     (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
-  let arcs := finArcRowsWithWordWork raw
-  let vertices := finVerticesWithWordWork n
-  let out := completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D
-    (thinServiceLateEvaluator G arcs.1 m vertices.1) (meteredPhaseUnion (Fin n))
+  completeFinSteinerReplayWithThinServiceUsing G raw same height m hm bits D
     (prepareFinSteinerWeightedForSeedWithMetricResidualRowsWork G raw same height)
-  (out.1,out.2.1+arcs.2+vertices.2+5,out.2.2)
 
 def steinerTraceThinServiceExtraPolynomial (n m p : ℕ) : ℕ :=
   (p+1)*(p*thinRoundedServiceWordBudget n m)
@@ -2336,7 +2342,8 @@ theorem completeFinSteinerReplayWithThinServiceWork_compare {n : ℕ} (G : Arcs 
   let join := meteredPhaseUnion (Fin n)
   let extra := D.length*thinRoundedServiceWordBudget n m
   unfold completeFinSteinerReplayWithThinServiceWork completeFinSteinerReplayWithMetricResidualRowsWork
-    completeFinSteinerReplayWithHubRoutingUsing completeFinSteinerReplayWithLateEvaluator
+    completeFinSteinerReplayWithThinServiceUsing completeFinSteinerReplayWithHubRoutingUsing
+    completeFinSteinerReplayWithLateEvaluator
     completeFinSteinerReplayWithCachedPhases replayFromCachedFinSteinerSeed
   dsimp only
   cases state : decoded.1.2 with
@@ -2400,6 +2407,55 @@ theorem completeFinSteinerReplayWithThinServiceWork_prefixes {n : ℕ} (G : Arcs
   obtain ⟨graphs,counts,oldWork⟩ := completeFinSteinerReplayWithMetricResidualRowsWork_prefixes G raw same height m hm bits D feasible
   dsimp only
   rw [records,calls]
+  exact ⟨graphs,counts,by omega⟩
+
+/-- Compute and charge the early trial count once before the combined replay. -/
+def completeFinSteinerReplayWithMeasuredTrialCountWork {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
+  completeFinSteinerReplayWithThinServiceUsing G raw same height m hm bits D
+    (prepareFinSteinerWeightedForSeedWithMetricTrialCountWork G raw same height)
+
+/-- The original prefix records and counts are identical. The measured
+setup has exactly one additional trial-count tally. -/
+theorem completeFinSteinerReplayWithMeasuredTrialCountWork_compare {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
+    let out := completeFinSteinerReplayWithMeasuredTrialCountWork G raw same height m hm bits D
+    let old := completeFinSteinerReplayWithThinServiceWork G raw same height m hm bits D
+    out.1.1.1 = old.1.1.1 ∧ out.1.1.2 = old.1.1.2+(finEarlyTrialCountWithWordWork n height).2 ∧
+      out.1.2 = old.1.2 ∧ out.2 = old.2 := by
+  obtain ⟨samePreparation,cost⟩ := prepareFinSteinerWeightedForSeedWithMetricTrialCountWork_compare G raw same height
+  dsimp only [completeFinSteinerReplayWithMeasuredTrialCountWork,completeFinSteinerReplayWithThinServiceWork,
+    completeFinSteinerReplayWithThinServiceUsing,completeFinSteinerReplayWithLateEvaluator,
+    completeFinSteinerReplayWithCachedPhases]
+  rw [samePreparation,cost]
+  exact ⟨rfl,rfl,rfl,rfl⟩
+
+/-- The trial arithmetic adds a polynomial setup term to the measured
+work and keeps the exact graph at each feasible prefix. -/
+theorem completeFinSteinerReplayWithMeasuredTrialCountWork_prefixes {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let out := completeFinSteinerReplayWithMeasuredTrialCountWork G raw same height m hm bits D
+    let base := out.1.1.1
+    base.1.1.map Prod.fst = D.inits.map (completeSteinerRunWithBitBudget G height bits) ∧
+      out.2.2 = (completeFinSteinerReplayWithThinRowWork G raw same height m hm bits D).2.2 ∧
+      (base.1.1.map Prod.snd).sum+base.1.2.1+base.1.2.2.1+base.1.2.2.2+base.2+out.1.1.2+out.1.2+out.2.1 ≤
+        completeFinSteinerPreparationWorkPolynomial n m raw.length height D.length +
+          finSteinerWeightPlanWorkPolynomial n height + finSteinerReplayIndexWorkPolynomial n raw.length +
+          (steinerTraceEarlySeedRankWorkPolynomial n height D.length+11*m+21) +
+          (steinerTracePhaseUnionWorkPolynomial n m height D.length+11*m+21) +
+          finArcRowsWordBudget n raw.length+8*n+6+finForestNetworkPairKeysWordPolynomial n height+3 +
+          steinerTraceEarlyHistoryExtraPolynomial n height D.length + finSteinerForestDepthWordPolynomial n height +
+          steinerTraceMetricResidualRowsExtraPolynomial n raw.length height D.length +
+          steinerTraceThinServiceExtraPolynomial n m D.length + (7*n+12) := by
+  obtain ⟨records,setup,index,replay⟩ := completeFinSteinerReplayWithMeasuredTrialCountWork_compare G raw same height m hm bits D
+  obtain ⟨graphs,counts,work⟩ := completeFinSteinerReplayWithThinServiceWork_prefixes G raw same height m hm bits D feasible
+  have trial := finEarlyTrialCountWithWordWork_bound n height
+  dsimp only
+  rw [records,setup,index,replay]
   exact ⟨graphs,counts,by omega⟩
 
 end OnlineReachabilityPreservers
