@@ -511,6 +511,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   feeds the final rows of the binary fractional trace into this evaluator.
   It gives the exact reference rounded forest and bounds both recorded
   tallies for the supplied typed forest data, hop reader, and trial samples.
+  A [single weighted plan pass](OnlineReachabilityPreservers/SteinerWeightedPlanWork.lean#L116)
+  keeps the original plan and the typed zero-cost rows. The
+  [prepared early evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L1163)
+  uses those rows, the finite hop table, and the measured trial count for
+  binary forest calls. It returns the reference early prefix graph for the
+  supplied trials, including the full-graph fallback on validation failure.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

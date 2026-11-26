@@ -1289,6 +1289,16 @@ With exact typed classes, complete forest links, and the metered hop and
 seed readers, the result equals the reference rounded forest for the
 supplied trials. The bound includes the fractional run, the setup and
 rounding fees, and a separate seed-access tally.
+The [weighted plan pass](OnlineReachabilityPreservers/SteinerWeightedPlanWork.lean#L116)
+also returns the distinct raw zero-cost rows of the existing classification.
+The [early prefix evaluator](OnlineReachabilityPreservers/SteinerBinaryEarlyWork.lean#L46)
+uses the combined binary forest call on each reached prefix and reuses the
+original validation, expansion, and fallback. Its bound counts the early
+metric work separately and includes the fractional work, rounding and
+seed reads. The [finite preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L1163)
+computes the exact metered hop table, paid and free classes, and trial
+count. With the supplied metered samples it returns the reference early
+graph and bounds the plan and trial-count preparation charge.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

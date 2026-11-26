@@ -1,6 +1,7 @@
 import OnlineReachabilityPreservers.SteinerWeightedPlanWork
 import OnlineReachabilityPreservers.SteinerForestPairKeysWork
 import OnlineReachabilityPreservers.SteinerSeedDecoderWork
+import OnlineReachabilityPreservers.SteinerBinaryEarlyWork
 
 /-! Carry the one-pass weighted plan into the fixed-budget prefix evaluator. -/
 
@@ -1104,5 +1105,114 @@ theorem prepareFinSteinerWeightedForSeedWithMetricTrialCountWork_compare {n : �
   simp only [prepareFinSteinerWeightedForSeedWithMetricTrialCountWork,
     prepareFinSteinerWeightedForSeedWithMetricResidualRowsWork,prepareFinSteinerWeightedWithPlanAndRows,
     prepareEarlyDistanceTableForSeedFromWeightsWithMetricTrialCountWork_eq,and_self]
+
+local instance finBinaryEarlyNetworkDecidableEq {n height : ℕ} : DecidableEq (ForestNetworkVertex (Fin n) height) :=
+  (inferInstance : LinearOrder (ForestNetworkVertex (Fin n) height)).toDecidableEq
+
+private theorem binaryEarlyRoundedGraph_cast_refines {n h : ℕ} (G : Arcs (Fin n))
+    (links : {es : List (HeightForestVertex (Fin n) h × HeightForestVertex (Fin n) h) // es.Nodup})
+    (linksExact : links.val.toFinset = heightForest G h)
+    (paid free : Arcs (ForestNetworkVertex (Fin n) h))
+    (paidExact : paid = forestNetworkPriced G (heightForest G h)) (freeExact : free = forestNetworkZero G h)
+    (freeRows : List (ForestNetworkVertex (Fin n) h × ForestNetworkVertex (Fin n) h))
+    (freeAsSet : freeRows.toFinset = free)
+    (read : Fin n × Fin n → ℕ × ℕ) (readFee : ℕ)
+    (readExact : ∀ e, (read e).1 = hops G e.1 e.2) (readWork : ∀ e, (read e).2 ≤ readFee)
+    (scale trials : ℕ) (scaleEq : scale = forestScale G h) (trialEq : trials = earlyTrialCount (Fin n) h)
+    (samples : ForestTrialArrayWithSeedWork (Fin n) h (forestScale G h) (earlyTrialCount (Fin n) h))
+    (seedFee : ℕ) (seedWork : ∀ i, forestSampleWorkBound (samples i) seedFee) (D : List (Fin n × Fin n)) :
+    let sizeEq : (forestScale G h,earlyTrialCount (Fin n) h) = (scale,trials) := Prod.ext scaleEq.symm trialEq.symm
+    let typed : ForestTrialArrayWithSeedWork (Fin n) h scale trials :=
+      cast (congrArg (fun size : ℕ × ℕ => ForestTrialArrayWithSeedWork (Fin n) h size.1 size.2) sizeEq) samples
+    (binaryEarlyRoundedGraphWithWork G links paid free freeRows read scale trials typed D).1 =
+      earlyRoundedGraph G h D (fun i => forestRoundingSampleValues (forestScale G h) (samples i)) := by
+  subst scale trials
+  exact (binaryEarlyRoundedGraphWithWork_refines G links linksExact paid free paidExact freeExact freeRows freeAsSet
+    read readFee readExact readWork samples seedFee seedWork D).1
+
+/-- Prepare the exact finite hop reader, priced plan, free rows, and trial
+count for the binary early prefix evaluator. -/
+def prepareFinSteinerWeightedForSeedWithBinaryEarlyWork {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (h : ℕ) :
+    SteinerSeedPreparationWithSeedWork G h × ℕ :=
+  let inputs := finSteinerTemplateInputsWithWordWork raw h
+  let correct := finSteinerTemplateInputsWithWordWork_spec G raw same h
+  let linkRows : {es : List (HeightForestVertex (Fin n) h × HeightForestVertex (Fin n) h) // es.Nodup} :=
+    ⟨inputs.2.1,correct.2.2.1⟩
+  let links := arcsFromDistinctList linkRows.val linkRows.property
+  let exactForest := (arcsFromDistinctList_eq linkRows.val linkRows.property).trans correct.2.1
+  let read := readDistanceRow inputs.1.1
+  let planned := prepareForestWeightsAndFreeRowsFromListWithWordWork linkRows.val linkRows.property read
+  let plan := planned.1.1
+  let planEq := (prepareForestWeightsAndFreeRowsFromListWithWordWork_spec linkRows.val linkRows.property read).1.trans
+    (finWeightsFromTemplateInputs_spec G raw same h).1
+  let template := (links,inputs.2.2+5)
+  have scaleEq : plan.2.1.1 = forestScale G h :=
+    (prepareEarlyDistanceTableForSeedFromWeightsWithSeedWork G h inputs.1 correct.1 template exactForest plan planEq).1.property
+  let trials := finEarlyTrialCountWithWordWork n h
+  let run := fun (samples : ForestTrialArrayWithSeedWork (Fin n) h (forestScale G h) (earlyTrialCount (Fin n) h)) =>
+    let sizeEq : (forestScale G h,earlyTrialCount (Fin n) h) = (plan.2.1.1,trials.1.val) :=
+      Prod.ext scaleEq.symm trials.1.property.symm
+    let typed : ForestTrialArrayWithSeedWork (Fin n) h plan.2.1.1 trials.1.val :=
+      cast (congrArg (fun size : ℕ × ℕ => ForestTrialArrayWithSeedWork (Fin n) h size.1 size.2) sizeEq) samples
+    binaryEarlyRoundedGraphWithWork G linkRows plan.1.1 plan.1.2 planned.1.2 read plan.2.1.1 trials.1.val typed
+  ((⟨plan.2.1.1,scaleEq⟩,run,inputs.1.2,template.2,plan.2.2),planned.2+trials.2+5)
+
+/-- The graph of the prepared binary early evaluator agrees with the
+reference on every request prefix using the supplied fixed trial samples. -/
+theorem prepareFinSteinerWeightedForSeedWithBinaryEarlyWork_spec {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (h : ℕ) :
+    let out := prepareFinSteinerWeightedForSeedWithBinaryEarlyWork G raw same h
+    out.2 ≤ finSteinerWeightPlanWorkPolynomial n h+(7*n+12)+7 ∧
+      ∀ (samples : ForestTrialArrayWithSeedWork (Fin n) h (forestScale G h) (earlyTrialCount (Fin n) h))
+        (seedFee : ℕ), (∀ i, forestSampleWorkBound (samples i) seedFee) →
+        ∀ D, ((out.1.2.1 samples) D).1 =
+          earlyRoundedGraph G h D (fun i => forestRoundingSampleValues (forestScale G h) (samples i)) := by
+  let inputs := finSteinerTemplateInputsWithWordWork raw h
+  let correct := finSteinerTemplateInputsWithWordWork_spec G raw same h
+  let linkRows : {es : List (HeightForestVertex (Fin n) h × HeightForestVertex (Fin n) h) // es.Nodup} :=
+    ⟨inputs.2.1,correct.2.2.1⟩
+  let links := arcsFromDistinctList linkRows.val linkRows.property
+  let read := readDistanceRow inputs.1.1
+  let planned := prepareForestWeightsAndFreeRowsFromListWithWordWork linkRows.val linkRows.property read
+  let plan := planned.1.1
+  let trials := finEarlyTrialCountWithWordWork n h
+  obtain ⟨samePlan,_,sameFree,workEq⟩ := prepareForestWeightsAndFreeRowsFromListWithWordWork_spec
+    linkRows.val linkRows.property read
+  obtain ⟨oldPlan,work⟩ := finWeightsFromTemplateInputs_spec G raw same h
+  have planEq : plan = prepareForestWeights links (forestWeightWithDistanceWork read) := samePlan.trans oldPlan
+  have exactForest : links = heightForest G h :=
+    (arcsFromDistinctList_eq linkRows.val linkRows.property).trans correct.2.1
+  have values (e : Fin n × Fin n) : (read e).1 = hops G e.1 e.2 := by
+    dsimp only [read]
+    rw [correct.1]
+    exact (distanceTableReadWithSearchWork_spec G e).1
+  have readWork (e : Fin n × Fin n) : (read e).2 ≤ n^2 := by
+    dsimp only [read]
+    rw [correct.1]
+    simpa only [Fintype.card_fin] using (distanceTableReadWithSearchWork_spec G e).2
+  have weight (e : HeightForestVertex (Fin n) h × HeightForestVertex (Fin n) h) :
+      (forestWeightWithDistanceWork read e).1 = heightForestWeight G e := values _
+  have paid : plan.1.1 = forestNetworkPriced G (heightForest G h) := by
+    rw [planEq,prepareForestWeights_exact,exactForest]
+    simp only [weight,forestNetworkPriced]
+  have free : plan.1.2 = forestNetworkZero G h := by
+    rw [planEq,prepareForestWeights_exact,exactForest]
+    simp only [weight,forestNetworkZero]
+  have freeList : planned.1.2.toFinset = plan.1.2 :=
+    sameFree.trans (congrArg (fun p : ForestWeightPlan (Fin n) h => p.1.2) samePlan).symm
+  have planWork : planned.2 ≤ finSteinerWeightPlanWorkPolynomial n h+2 :=
+    workEq.le.trans (Nat.add_le_add_right work 2)
+  have trialWork := finEarlyTrialCountWithWordWork_bound n h
+  refine ⟨?_,?_⟩
+  · change planned.2+trials.2+5 ≤ _
+    change trials.2 ≤ 7*n+12 at trialWork
+    omega
+  · intro samples seedFee seedWork D
+    have scaleEq : plan.2.1.1 = forestScale G h :=
+      (prepareFinSteinerWeightedForSeedWithBinaryEarlyWork G raw same h).1.1.property
+    exact binaryEarlyRoundedGraph_cast_refines G linkRows correct.2.1 plan.1.1 plan.1.2 paid free
+      planned.1.2 freeList read (n^2) values readWork plan.2.1.1 trials.1.val scaleEq trials.1.property
+      samples seedFee seedWork D
 
 end OnlineReachabilityPreservers

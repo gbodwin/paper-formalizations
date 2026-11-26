@@ -80,12 +80,11 @@ private theorem sum_list_work_le {A : Type*} (rows : List A) (charge : A → ℕ
     simpa only [List.map_cons,List.sum_cons,List.length_cons,Nat.succ_mul,Nat.add_comm] using
       Nat.add_le_add (each e) ih
 
-/-- Price the two arc classes together, using one table read per link.
-Each classified list is already duplicate-free. The second output charges
-that pass and the arithmetic for the exact scale and separator fuel. -/
-def prepareForestWeightsFromListWithWordWork
+@[inline] private def prepareForestWeightsFromListWithWordWorkUsing {Result : Type*}
     (edges : List (HeightForestVertex V height × HeightForestVertex V height))
-    (distinct : edges.Nodup) (read : V × V → ℕ × ℕ) : ForestWeightPlan V height × ℕ :=
+    (distinct : edges.Nodup) (read : V × V → ℕ × ℕ)
+    (finish : ForestWeightPlan V height →
+      List (ForestNetworkVertex V height × ForestNetworkVertex V height) → ℕ → Result) : Result :=
   let lift := copyForestArc (V := V) (height := height)
   let weight := forestDistanceQueryWithWordWork read
   let out := weightedArcListsWithWordWork lift weight edges
@@ -95,8 +94,38 @@ def prepareForestWeightsFromListWithWordWork
   let scale := max 1 out.total
   let bits := bitLengthWithWork scale
   let fuel := max 1 bits.1 * out.total + 1
-  (((arcsFromDistinctList out.paid paid,arcsFromDistinctList out.free free),
-    (scale,fuel),out.comparisons),out.work+bits.2+18)
+  finish ((arcsFromDistinctList out.paid paid,arcsFromDistinctList out.free free),
+    (scale,fuel),out.comparisons) out.free (out.work+bits.2+18)
+
+/-- Price the two arc classes together, using one table read per link.
+Each classified list is already duplicate-free. The second output charges
+that pass and the arithmetic for the exact scale and separator fuel. -/
+def prepareForestWeightsFromListWithWordWork
+    (edges : List (HeightForestVertex V height × HeightForestVertex V height))
+    (distinct : edges.Nodup) (read : V × V → ℕ × ℕ) : ForestWeightPlan V height × ℕ :=
+  prepareForestWeightsFromListWithWordWorkUsing edges distinct read (fun plan _ work => (plan,work))
+
+/-- Keep the classified free list alongside the prepared plan so later
+rounding can encode those same rows. -/
+def prepareForestWeightsAndFreeRowsFromListWithWordWork
+    (edges : List (HeightForestVertex V height × HeightForestVertex V height))
+    (distinct : edges.Nodup) (read : V × V → ℕ × ℕ) :
+    (ForestWeightPlan V height × List (ForestNetworkVertex V height × ForestNetworkVertex V height)) × ℕ :=
+  prepareForestWeightsFromListWithWordWorkUsing edges distinct read (fun plan free work => ((plan,free),work+2))
+
+theorem prepareForestWeightsAndFreeRowsFromListWithWordWork_spec
+    (edges : List (HeightForestVertex V height × HeightForestVertex V height))
+    (distinct : edges.Nodup) (read : V × V → ℕ × ℕ) :
+    let out := prepareForestWeightsAndFreeRowsFromListWithWordWork edges distinct read
+    let old := prepareForestWeightsFromListWithWordWork edges distinct read
+    out.1.1 = old.1 ∧ out.1.2.Nodup ∧ out.1.2.toFinset = old.1.1.2 ∧ out.2 = old.2+2 := by
+  let copy := copyForestArc (V := V) (height := height)
+  let query := forestDistanceQueryWithWordWork (h := height) read
+  let rows := weightedArcListsWithWordWork copy query edges
+  have free := (weightedArcListsWithWordWork_spec copy query edges).2.1
+  have simple : rows.free.Nodup := free.symm ▸ (distinct.filter _).map copy.injective
+  refine ⟨rfl,simple,?_,rfl⟩
+  exact (arcsFromDistinctList_eq rows.free simple).symm
 
 theorem prepareForestWeightsFromListWithWordWork_spec
     (edges : List (HeightForestVertex V height × HeightForestVertex V height)) (distinct : edges.Nodup)
@@ -129,7 +158,7 @@ theorem prepareForestWeightsFromListWithWordWork_spec
       ((max 1 (∑ e ∈ edges.toFinset, (plain e).1)).log2+1)*(∑ e ∈ edges.toFinset, (plain e).1)+1 := by
     rw [(bitLengthWithWork_spec scale).1,max_size_eq_log2_add_one,scaleEq,totalEq]
   constructor
-  · unfold prepareForestWeightsFromListWithWordWork
+  · unfold prepareForestWeightsFromListWithWordWork prepareForestWeightsFromListWithWordWorkUsing
     dsimp only
     rw [prepareForestWeights_exact,arcsFromDistinctList_eq edges distinct]
     refine Prod.ext (Prod.ext ?_ ?_) (Prod.ext (Prod.ext scaleEq fuelEq) comparesEq)
