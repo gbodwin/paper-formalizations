@@ -1598,8 +1598,20 @@ If the upper caps hold in each colored piece and the occupied supports
 are at most four thirds of the original budgets,
 [restriction and peeling](OnlineReachabilityPreservers/IncidenceColorCleaning.lean#L213)
 retain at least \(M/16\) with both original budgets and all four frozen
-caps. A bound guaranteeing those color supports for arbitrary input is
-still needed.
+caps. A [full-cutoff-two family](OnlineReachabilityPreservers/IncidenceColorBudgetAudit.lean#L80)
+on 64 vertices has one increasing row through all vertices and every
+descending two-vertex row. It has \(p=2017\), \(M=4096\), and original
+upper length cap 8. A coloring meeting the vertex support bound uses at
+most 85 occupied copies. Its increasing row forces 64 base copies and
+at most eight of those in a color. At most 21 additional copies leave at
+most 29 vertices in any color. Each color supports at most 14 times its
+number of vertices in unsplit two-vertex rows. Their total is at most
+1190, while the path support bound of 2689 requires at least 1343.
+This gives an [obstruction to coloring all the incidences](OnlineReachabilityPreservers/IncidenceColorBudgetAudit.lean#L218)
+under the two support bounds and the original length cap. The
+[independent frozen witness](OnlineReachabilityPreservers/IncidenceColorBudgetAudit.lean#L230)
+retains at least \(M/8\) for these original counts and mass. The general
+cyclic frozen-average statements at the remaining cutoffs stay open.
 
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size

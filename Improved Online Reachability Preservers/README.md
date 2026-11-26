@@ -685,7 +685,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   occupied supports fit within four thirds of each original budget,
   [the frozen witness](OnlineReachabilityPreservers/IncidenceColorCleaning.lean#L213)
   fits both budgets, meets all four caps and retains at least \(M/16\).
-  The existence of a suitable coloring for arbitrary input remains open.
+  A [64-vertex example](OnlineReachabilityPreservers/IncidenceColorBudgetAudit.lean#L218)
+  excludes full bridges through size two and admits no coloring of all its
+  incidences meeting these support bounds and the original upper length cap.
+  A [separate frozen witness](OnlineReachabilityPreservers/IncidenceColorBudgetAudit.lean#L230)
+  meets both original budgets and all four caps for the same example.
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion
