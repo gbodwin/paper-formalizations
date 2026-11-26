@@ -193,7 +193,8 @@ theorem binaryWordLengthWithWork_spec (word : List Bool) :
 /-- The empty word encodes zero. A nonempty canonical word ends in one. -/
 def CanonicalBinaryWord (word : List Bool) : Prop := word = [] ∨ word.getLast? = some true
 
-private theorem binaryWordValue_lt_pow (word : List Bool) : binaryWordValue word < 2^word.length := by
+/-- The binary value fits in the supplied word, including when it is padded. -/
+theorem binaryWordValue_lt_pow (word : List Bool) : binaryWordValue word < 2^word.length := by
   induction word with
   | nil => decide
   | cons bit tail inside =>

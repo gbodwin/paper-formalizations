@@ -990,7 +990,7 @@ those encodings or run the separator or complete replay.
 The thin rounding test for a sample \(s\), factor \(f\), and load \(\ell\)
 is \(s < f\,2^\ell\). The [binary right shift](OnlineReachabilityPreservers/SteinerThinBitRoundingWork.lean#L27)
 computes \(\lfloor s/2^\ell\rfloor\), stopping when the threshold word is empty
-or the shift count is zero. The [binary comparison](OnlineReachabilityPreservers/SteinerBinaryArithmetic.lean#L331)
+or the shift count is zero. The [binary comparison](OnlineReachabilityPreservers/SteinerBinaryArithmetic.lean#L332)
 uses a subtraction borrow. The [rounding specification](OnlineReachabilityPreservers/SteinerThinBitRoundingWork.lean#L79)
 proves the original inequality and a polynomial tally in the supplied word
 lengths, including when the load represents a much larger value. This is the
@@ -1040,6 +1040,12 @@ The [empty-table entry point](OnlineReachabilityPreservers/SteinerThinBitCutTrac
 also accounts for the initial binary allocation. The work bound sums the
 charges for the supplied cut arcs and trials. Producing cuts from the
 input graph and integrating every phase of the replay are separate.
+
+A [planned number of cut-and-query steps](OnlineReachabilityPreservers/SteinerThinBitCapacityPlanWork.lean#L44)
+is enough to choose the fixed payload width up front. Each arc appears at
+most once per cut. The width is the length of the supplied plan word,
+which suffices for every trace of length at most its value. The evaluator
+charges this setup and agrees with the same indexed reference.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
