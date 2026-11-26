@@ -1479,7 +1479,7 @@ follows.
 The [full-block profiles](OnlineReachabilityPreservers/WidthBlockProfiles.lean#L161)
 show that each original vertex and path contributes at most one remainder.
 Keeping all filled blocks and choosing the heaviest remainders bounds the
-[loss across both budgets](OnlineReachabilityPreservers/BalancedRegularization.lean#L629)
+[loss across both budgets](OnlineReachabilityPreservers/BalancedRegularization.lean#L662)
 by \(M/6\). This leaves enough room for an
 [admissibility repair](OnlineReachabilityPreservers/FrozenBlockTrimming.lean#L74)
 that removes up to \(M/4\) of the original incidences. Peeling then meets both
@@ -1488,6 +1488,16 @@ half-four criterion applies when either the
 [marked count](OnlineReachabilityPreservers/FrozenBlockTrimming.lean#L153)
 or the [later nonterminal count](OnlineReachabilityPreservers/FrozenBlockTrimming.lean#L177)
 is at most \(M/4\).
+
+If rows longer than \(\lfloor 4M/p\rfloor\) carry at least \(2M/3\),
+the [overlong-subfamily theorem](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L41)
+prunes opposing intersections only in that subfamily before splitting.
+Its path pieces already fit in the original path budget, and
+[vertex trimming](OnlineReachabilityPreservers/BalancedRegularization.lean#L644)
+loses at most the squared retained mass divided by four times the vertex
+block width times the vertex budget. Peeling uses the actual piece count.
+The witness retains at least \(M/216\) and has all four original-average
+caps and both original budgets through half cutoff four or full cutoff six.
 
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size

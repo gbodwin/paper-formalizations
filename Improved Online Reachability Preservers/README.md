@@ -548,6 +548,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   It meets both budgets and all four factor-four bounds around its own
   averages. The same conclusion holds at the unrestricted full-bridge
   cutoff six. [Output-average cleaning](OnlineReachabilityPreservers/LocalAverageCleaning.lean).
+- If paths longer than the original upper length cap carry at least two
+  thirds of the incidence mass (M), pruning that subfamily and trimming
+  its vertex blocks retain at least (M/216). The witness meets both
+  original budgets and all four frozen caps through half cutoff four or
+  full cutoff six. [Cleaning the overlong subfamily](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L41).
 - For full-bridge cutoffs three through five, a cleaned maximizing family
   retains at least \(M/119\) and meets both budgets and all four factor-four
   caps measured against the original averages. The path split places matching

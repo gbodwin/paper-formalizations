@@ -224,13 +224,16 @@ variable {V I : Type*} [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
 
 local notation "ListBefore" => SourceAudit.BeforeIn
 
-private theorem frozen_cut_of_caps {k : ℕ} {half : Bool} (pieces : I → List V)
+omit [Fintype V] in
+private theorem finish_frozen_rectangle {k : ℕ} {half : Bool} (pieces : I → List V)
     (pieceSimple : ∀ i, (pieces i).Nodup) (piecesFree : localOrderAdmissible half k pieces)
-    {M n p D L vNum vDen pNum pDen retention : ℕ} (hn : 0 < n) (hp : 0 < p)
-    (vPos : 0 < vDen) (pPos : 0 < pDen) (vRatio : vNum ≤ vDen) (pRatio : pNum ≤ pDen)
-    (vertices : vNum*Fintype.card V ≤ vDen*n) (families : pNum*Fintype.card I ≤ pDen*p)
+    (A : Finset V) (B : Finset I) {M n p D L retention : ℕ} (aCap : A.card ≤ n) (bCap : B.card ≤ p)
+    (retained : M ≤ retention*(∑ i : B, (rectanglePaths (fun j => (pieces j).toFinset) A B i).card))
     (total : (∑ i, (pieces i).toFinset.card) ≤ M)
-    (enough : (vDen*pDen)*(retention+2)*M ≤ 2*(vNum*pNum)*retention*(∑ i, (pieces i).toFinset.card))
+    (minDegree : ∀ v : A, (M:ℝ)/(4*(n:ℝ)) ≤
+      (occurrences (rectanglePaths (fun j => (pieces j).toFinset) A B) v).card)
+    (minLength : ∀ i : B, (M:ℝ)/(4*(p:ℝ)) ≤
+      (rectanglePaths (fun j => (pieces j).toFinset) A B i).card)
     (lengthCap : ∀ i : I, (pieces i).length ≤ L)
     (degreeCap : ∀ v : V, (occurrences (fun i => (pieces i).toFinset) v).card ≤ D)
     (capD : (D:ℝ) ≤ 4*(M:ℝ)/(n:ℝ)) (capL : (L:ℝ) ≤ 4*(M:ℝ)/(p:ℝ)) :
@@ -238,8 +241,6 @@ private theorem frozen_cut_of_caps {k : ℕ} {half : Bool} (pieces : I → List 
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let Z (i : I) := (pieces i).toFinset
-  obtain ⟨A,B,aCap,bCap,retained,minDegree,minLength⟩ :=
-    balancedRectangle_subsystem_of_ratios_frozen Z hn hp vPos pPos vRatio pRatio vertices families enough
   let clean := restrictListPaths pieces A B
   let rectangle := rectanglePaths Z A B
   have same (i : B) : (clean i).toFinset = rectangle i := restrictListPaths_toFinset pieces A B i
@@ -276,6 +277,25 @@ private theorem frozen_cut_of_caps {k : ℕ} {half : Bool} (pieces : I → List 
     exact retained
   · rw [relabeledMass, mass]
     exact (rectanglePaths_mass_le Z A B).trans total
+
+private theorem frozen_cut_of_caps {k : ℕ} {half : Bool} (pieces : I → List V)
+    (pieceSimple : ∀ i, (pieces i).Nodup) (piecesFree : localOrderAdmissible half k pieces)
+    {M n p D L vNum vDen pNum pDen retention : ℕ} (hn : 0 < n) (hp : 0 < p)
+    (vPos : 0 < vDen) (pPos : 0 < pDen) (vRatio : vNum ≤ vDen) (pRatio : pNum ≤ pDen)
+    (vertices : vNum*Fintype.card V ≤ vDen*n) (families : pNum*Fintype.card I ≤ pDen*p)
+    (total : (∑ i, (pieces i).toFinset.card) ≤ M)
+    (enough : (vDen*pDen)*(retention+2)*M ≤ 2*(vNum*pNum)*retention*(∑ i, (pieces i).toFinset.card))
+    (lengthCap : ∀ i : I, (pieces i).length ≤ L)
+    (degreeCap : ∀ v : V, (occurrences (fun i => (pieces i).toFinset) v).card ≤ D)
+    (capD : (D:ℝ) ≤ 4*(M:ℝ)/(n:ℝ)) (capL : (L:ℝ) ≤ 4*(M:ℝ)/(p:ℝ)) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  obtain ⟨A,B,aCap,bCap,retained,minDegree,minLength⟩ :=
+    balancedRectangle_subsystem_of_ratios_frozen (fun i => (pieces i).toFinset) hn hp
+      vPos pPos vRatio pRatio vertices families enough
+  exact finish_frozen_rectangle pieces pieceSimple piecesFree A B aCap bCap retained total minDegree minLength
+    lengthCap degreeCap capD capL
 
 /-- Restrict upper-capped pieces to the original budgets when both expanded
 supports fit within four thirds of those budgets and enough mass survives. -/
@@ -1126,5 +1146,72 @@ theorem regularization_list_frozen_after_caps_with_ratios {half : Bool}
   regularization_list_frozen_after_caps_with_ratios_of_mass paths simple allowed hn hp dense long vPos pPos
     vRatio pRatio vertices families lengthCap degreeCap mass.le
     (by rw [mass]; exact Nat.mul_le_mul_right M enough)
+
+/-- If all pieces fit in the path budget, only the vertex blocks need
+trimming. Peeling pays for the actual number of pieces. -/
+theorem regularization_list_frozen_trim_vertices_quadratic {half : Bool} {k n p M retention : ℕ}
+    (pieces : I → List V) (simple : ∀ i, (pieces i).Nodup) (allowed : localOrderAdmissible half k pieces)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M) (positive : 0 < retention)
+    (full : Finset V) (filled : ∀ v ∈ full, (occurrences (fun i => (pieces i).toFinset) v).card = 4*M/n)
+    (rest : (univ \ full).card ≤ n) (pathsCap : Fintype.card I ≤ p)
+    (lengthCap : ∀ i, (pieces i).length ≤ 4*M/p)
+    (degreeCap : ∀ v, (occurrences (fun i => (pieces i).toFinset) v).card ≤ 4*M/n)
+    (mass : (∑ i, (pieces i).length) ≤ M)
+    (enough : let K : ℝ := ((∑ i, (pieces i).length : ℕ) : ℝ)
+      (M:ℝ)/retention ≤ K-K^2/(12*M)-(M:ℝ)/4-((M:ℝ)/(4*(p:ℝ)))*(Fintype.card I)) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let D := 4*M/n
+  let Z (i : I) := (pieces i).toFinset
+  let K := ∑ i, (pieces i).length
+  let all := (univ : Finset I)
+  obtain ⟨width,_,capD⟩ := four_average_width hn dense
+  obtain ⟨_,_,capL⟩ := four_average_width hp long
+  have capacity : 3*M ≤ D*n := by
+    have bound := Nat.lt_mul_div_succ (4*M) hn
+    change 4*M < n*(D+1) at bound
+    rw [Nat.mul_succ,Nat.mul_comm n D] at bound
+    omega
+  have counted : (∑ i, (Z i).card) = K := sum_congr rfl (fun i _ => List.toFinset_card_of_nodup (simple i))
+  have fits : (∑ i, (Z i).card) ≤ D*n := by rw [counted]; omega
+  obtain ⟨A,capA,loss,trim,crop⟩ := trim_full_vertex_blocks_quadratic Z full width filled rest fits
+  rw [counted] at trim crop
+  have trim' : 12*M*loss ≤ K^2 := calc
+    _ = (4*(3*M))*loss := by ring
+    _ ≤ (4*(D*n))*loss := Nat.mul_le_mul_right _ (Nat.mul_le_mul_left _ capacity)
+    _ ≤ _ := trim
+  have massPos : (0:ℝ) < M := by exact_mod_cast hn.trans_le dense
+  have lossLe : (loss:ℝ) ≤ (K:ℝ)^2/(12*(M:ℝ)) := by
+    apply (le_div_iff₀ (by positivity)).mpr
+    rw [mul_comm]
+    exact_mod_cast trim'
+  let d : ℝ := (M:ℝ)/(4*(n:ℝ))
+  let l : ℝ := (M:ℝ)/(4*(p:ℝ))
+  have d0 : 0 ≤ d := by dsimp [d]; positivity
+  have l0 : 0 ≤ l := by dsimp [l]; positivity
+  have bigD : d*(n:ℝ) = (M:ℝ)/4 := by
+    have n0 : (n:ℝ) ≠ 0 := by exact_mod_cast hn.ne'
+    dsimp [d]
+    field_simp [n0]
+  have vertexLoss : d*(A.card:ℝ) ≤ (M:ℝ)/4 :=
+    (mul_le_mul_of_nonneg_left (Nat.cast_le.mpr capA) d0).trans_eq bigD
+  have realCrop : ((∑ i : all, (rectanglePaths Z A all i).card : ℕ) : ℝ)+(loss:ℝ) = K := by
+    exact_mod_cast crop
+  obtain ⟨C,cSub,B,bSub,lower,minD,minL⟩ := rectanglePaths_prune Z A all d0 l0
+  have lower' : (M:ℝ)/retention ≤ ((∑ i : B, (rectanglePaths Z C B i).card : ℕ) : ℝ) := by
+    refine enough.trans ?_
+    have piecesCount : (all.card:ℝ) = Fintype.card I := by rw [card_univ]
+    rw [piecesCount] at lower
+    change (K:ℝ)-(K:ℝ)^2/(12*(M:ℝ))-(M:ℝ)/4-l*(Fintype.card I:ℝ) ≤ _
+    linarith
+  have retained : M ≤ retention*(∑ i : B, (rectanglePaths Z C B i).card) := by
+    have rPos : (0:ℝ) < retention := by exact_mod_cast positive
+    have scaled := (div_le_iff₀ rPos).mp lower'
+    rw [mul_comm] at scaled
+    exact_mod_cast scaled
+  have bCap : B.card ≤ p := (card_le_card bSub).trans (by simpa [all] using pathsCap)
+  exact finish_frozen_rectangle pieces simple allowed C B ((card_le_card cSub).trans capA) bCap retained
+    (counted.trans_le mass) minD minL lengthCap degreeCap capD capL
 
 end OnlineReachabilityPreservers

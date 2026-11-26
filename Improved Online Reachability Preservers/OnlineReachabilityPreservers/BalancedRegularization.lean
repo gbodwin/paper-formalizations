@@ -554,14 +554,14 @@ private theorem sum_part_and_remainder {A : Type*} [DecidableEq A] (whole part :
       · exact Or.inr ⟨h,inside⟩
   rw [← sum_union disjoint,join]
 
-/-- Keep the filled blocks first and choose the heaviest available
-remainders. If a cap times the budget is at least three times the total
-weight, at most one twelfth of the weight is omitted. -/
-theorem trim_full_weight_blocks {A : Type*} [DecidableEq A] [Fintype A] (weight : A → ℕ)
-    (full : Finset A) {cap budget : ℕ} (capPositive : 0 < cap) (budgetPositive : 0 < budget)
+/-- Keep the filled blocks and the heaviest remainders. The loss is
+at most the squared total weight divided by four times the budget capacity. -/
+theorem trim_full_weight_blocks_quadratic {A : Type*} [DecidableEq A] [Fintype A] (weight : A → ℕ)
+    (full : Finset A) {cap budget : ℕ} (capPositive : 0 < cap)
     (filled : ∀ x ∈ full, weight x = cap) (remainder : (univ \ full).card ≤ budget)
-    (space : 3*(∑ x, weight x) ≤ cap*budget) :
-    ∃ kept : Finset A, kept.card ≤ budget ∧ 12*(∑ x ∈ univ \ kept, weight x) ≤ ∑ x, weight x := by
+    (space : (∑ x, weight x) ≤ cap*budget) :
+    let total := ∑ x, weight x
+    ∃ kept : Finset A, kept.card ≤ budget ∧ 4*(cap*budget)*(∑ x ∈ univ \ kept, weight x) ≤ total^2 := by
   classical
   by_cases all : (univ : Finset A).card ≤ budget
   · exact ⟨univ,all,by simp⟩
@@ -580,7 +580,7 @@ theorem trim_full_weight_blocks {A : Type*} [DecidableEq A] [Fintype A] (weight 
     apply Nat.le_of_mul_le_mul_right _ capPositive
     calc
       f*cap ≤ K := by omega
-      _ ≤ cap*budget := by change 3*K ≤ _ at space; omega
+      _ ≤ cap*budget := space
       _ = budget*cap := Nat.mul_comm _ _
   have feasible : budget-f ≤ rest.card := by
     have counts := card_sdiff_add_card_eq_card (subset_univ full)
@@ -612,16 +612,49 @@ theorem trim_full_weight_blocks {A : Type*} [DecidableEq A] [Fintype A] (weight 
       rw [← sum]
       nlinarith [sq_nonneg ((↑(f*cap):ℤ)-(R:ℤ))]
     exact_mod_cast bound
-  have amount : 12*loss ≤ K := by
-    apply Nat.le_of_mul_le_mul_right _ (Nat.mul_pos capPositive budgetPositive)
-    calc
-      (12*loss)*(cap*budget) = 3*(4*cap*(budget*loss)) := by ring
-      _ ≤ 3*(4*cap*(f*R)) := Nat.mul_le_mul_left _ (Nat.mul_le_mul_left _ less)
-      _ = 3*(4*(f*cap)*R) := by ring
-      _ ≤ 3*(K*K) := Nat.mul_le_mul_left _ product
-      _ = K*(3*K) := by ring
-      _ ≤ K*(cap*budget) := Nat.mul_le_mul_left _ space
-  exact ⟨kept,keptCount,by rw [removedSet]; exact amount⟩
+  refine ⟨kept,keptCount,?_⟩
+  rw [removedSet]
+  calc
+    4*(cap*budget)*loss = 4*cap*(budget*loss) := by ring
+    _ ≤ 4*cap*(f*R) := Nat.mul_le_mul_left _ less
+    _ = 4*(f*cap)*R := by ring
+    _ ≤ K*K := product
+    _ = K^2 := by ring
+
+/-- If the budget capacity is at least three times the total weight,
+at most one twelfth of the weight is omitted. -/
+theorem trim_full_weight_blocks {A : Type*} [DecidableEq A] [Fintype A] (weight : A → ℕ)
+    (full : Finset A) {cap budget : ℕ} (capPositive : 0 < cap) (budgetPositive : 0 < budget)
+    (filled : ∀ x ∈ full, weight x = cap) (remainder : (univ \ full).card ≤ budget)
+    (space : 3*(∑ x, weight x) ≤ cap*budget) :
+    ∃ kept : Finset A, kept.card ≤ budget ∧ 12*(∑ x ∈ univ \ kept, weight x) ≤ ∑ x, weight x := by
+  let K := ∑ x, weight x
+  have room : K ≤ cap*budget := by change 3*K ≤ _ at space; omega
+  obtain ⟨kept,count,lossBound⟩ := trim_full_weight_blocks_quadratic weight full capPositive filled remainder room
+  let loss := ∑ x ∈ univ \ kept, weight x
+  refine ⟨kept,count,Nat.le_of_mul_le_mul_right ?_ (Nat.mul_pos capPositive budgetPositive)⟩
+  calc
+    (12*loss)*(cap*budget) = 3*(4*(cap*budget)*loss) := by ring
+    _ ≤ 3*K^2 := Nat.mul_le_mul_left _ lossBound
+    _ = K*(3*K) := by ring
+    _ ≤ K*(cap*budget) := Nat.mul_le_mul_left _ space
+
+/-- Trim filled vertex blocks before the remainders while retaining all
+path rows. Record the exact lost mass and its quadratic bound. -/
+theorem trim_full_vertex_blocks_quadratic {V I : Type*} [Fintype V] [Fintype I] [LinearOrder V] [DecidableEq I]
+    (paths : I → Finset V) (filled : Finset V) {width budget : ℕ} (positive : 0 < width)
+    (full : ∀ v ∈ filled, (occurrences paths v).card = width) (rest : (univ \ filled).card ≤ budget)
+    (space : (∑ i, (paths i).card) ≤ width*budget) :
+    let K := ∑ i, (paths i).card
+    ∃ A : Finset V, A.card ≤ budget ∧ ∃ loss : ℕ, 4*(width*budget)*loss ≤ K^2 ∧
+      (∑ i : (univ : Finset I), (rectanglePaths paths A univ i).card)+loss = K := by
+  have room : (∑ v, (occurrences paths v).card) ≤ width*budget := by rw [sum_occurrences]; exact space
+  obtain ⟨A,cap,lossBound⟩ := trim_full_weight_blocks_quadratic (fun v => (occurrences paths v).card)
+    filled positive full rest room
+  rw [sum_occurrences] at lossBound
+  refine ⟨A,cap,_,lossBound,?_⟩
+  rw [rectanglePath_mass,← show rectangleMass paths A univ = _ from rfl,rectangleMass_swap,← sum_occurrences]
+  exact sum_part_and_remainder univ A (subset_univ _) _
 
 /-- If each dimension consists of cap-sized blocks and at most one
 remainder per original slot, trimming to both budgets retains at least
