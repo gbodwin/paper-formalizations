@@ -73,15 +73,31 @@ private def networkVertexRow {V : Type*} {h : ℕ} (label : Fin 3) (v : HeightFo
 
 private def pairKeyRow {V : Type*} (a b : V) : (V × V) × ℕ := ((a,b),3)
 
-/-- Enumerate every network key once from root and history rows of the
-metric forest. Pair construction follows the list order. -/
-def forestNetworkPairKeysFromRowsWithWordWork {V : Type*} {h : ℕ} (roots : List V)
-    (histories : List (HeightNode V h)) : List (ForestNetworkVertex V h × ForestNetworkVertex V h) × ℕ :=
+@[inline] private def prepareForestNetworkRows {V Result : Type*} {h : ℕ} (roots : List V)
+    (histories : List (HeightNode V h)) (finish : List (HeightForestVertex V h) →
+      List (ForestNetworkVertex V h × ForestNetworkVertex V h) → ℕ → Result) : Result :=
   let nodes := productRowsWithWordWork sideHistoryRow histories [false,true]
   let forest := productRowsWithWordWork forestVertexRow nodes.1 roots
   let network := productRowsWithWordWork networkVertexRow forest.1 [0,1,2]
   let keys := productRowsWithWordWork pairKeyRow network.1 network.1
-  (keys.1, nodes.2 + forest.2 + network.2 + keys.2 + 11)
+  finish forest.1 keys.1 (nodes.2 + forest.2 + network.2 + keys.2 + 11)
+
+/-- Enumerate every network key once from root and history rows of the
+metric forest. Pair construction follows the list order. -/
+def forestNetworkPairKeysFromRowsWithWordWork {V : Type*} {h : ℕ} (roots : List V)
+    (histories : List (HeightNode V h)) : List (ForestNetworkVertex V h × ForestNetworkVertex V h) × ℕ :=
+  prepareForestNetworkRows roots histories (fun _ keys work => (keys,work))
+
+/-- Reuse the forest rows that precede the weighted-network rows and keys
+in their common enumeration. -/
+structure ForestNetworkRows (V : Type*) (h : ℕ) where
+  vertices : List (HeightForestVertex V h)
+  keys : List (ForestNetworkVertex V h × ForestNetworkVertex V h)
+  wordWork : ℕ
+
+def forestNetworkRowsWithWordWork {V : Type*} {h : ℕ} (roots : List V)
+    (histories : List (HeightNode V h)) : ForestNetworkRows V h :=
+  prepareForestNetworkRows roots histories (fun vertices keys work => ⟨vertices,keys,work+3⟩)
 
 def forestNetworkPairKeysFromRowsWordBudget (r h : ℕ) : ℕ :=
   let a := 2 * h
@@ -90,13 +106,14 @@ def forestNetworkPairKeysFromRowsWordBudget (r h : ℕ) : ℕ :=
   (2 * (10 * h + 8) + 3) + (r * (12 * a + 8) + 3) + (3 * (10 * b + 8) + 3) +
     (c * (10 * c + 8) + 3) + 11
 
-theorem forestNetworkPairKeysFromRowsWithWordWork_spec {V : Type*} {h : ℕ} (roots : List V)
+theorem forestNetworkRowsWithWordWork_spec {V : Type*} {h : ℕ} (roots : List V)
     (histories : List (HeightNode V h)) (simpleRoots : roots.Nodup) (simpleHistories : histories.Nodup)
     (completeRoots : ∀ v, v ∈ roots) (completeHistories : ∀ node, node ∈ histories) :
-    let out := forestNetworkPairKeysFromRowsWithWordWork roots histories
-    out.1.Nodup ∧ (∀ key, key ∈ out.1) ∧
-      out.1.length = (3 * (roots.length * (2 * histories.length)))^2 ∧
-      out.2 ≤ forestNetworkPairKeysFromRowsWordBudget roots.length histories.length := by
+    let out := forestNetworkRowsWithWordWork roots histories
+    out.vertices.Nodup ∧ (∀ v, v ∈ out.vertices) ∧ out.vertices.length = roots.length * (2*histories.length) ∧
+      out.keys.Nodup ∧ (∀ key, key ∈ out.keys) ∧
+      out.keys.length = (3 * (roots.length * (2 * histories.length)))^2 ∧
+      out.wordWork ≤ forestNetworkPairKeysFromRowsWordBudget roots.length histories.length+3 := by
   let sides := [false,true]
   let labels : List (Fin 3) := [0,1,2]
   let nodes := productRowsWithWordWork sideHistoryRow histories sides
@@ -149,7 +166,7 @@ theorem forestNetworkPairKeysFromRowsWithWordWork_spec {V : Type*} {h : ℕ} (ro
   have networkCount : network.1.length = 3 * (roots.length * (2 * histories.length)) := by
     rw [networkRows,List.length_map,List.length_product,forestCount]
     rfl
-  refine ⟨?_, ?_, ?_, ?_⟩
+  refine ⟨forestSimple,forestAll,forestCount,?_,?_,?_,?_⟩
   · change keys.1.Nodup
     rw [keyRows]
     exact (networkSimple.product networkSimple).map (fun _ _ e => e)
@@ -159,7 +176,7 @@ theorem forestNetworkPairKeysFromRowsWithWordWork_spec {V : Type*} {h : ℕ} (ro
     exact List.mem_map.mpr ⟨key,List.mem_product.mpr ⟨networkAll _,networkAll _⟩,rfl⟩
   · change keys.1.length = _
     rw [keyRows,List.length_map,List.length_product,networkCount,pow_two]
-  · change nodes.2 + forest.2 + network.2 + keys.2 + 11 ≤ _
+  · change nodes.2 + forest.2 + network.2 + keys.2 + 11 + 3 ≤ _
     change nodes.2 ≤ _ at nodeWork
     change forest.2 ≤ _ at forestWork
     change network.2 ≤ _ at networkWork
@@ -177,6 +194,18 @@ theorem forestNetworkPairKeysFromRowsWithWordWork_spec {V : Type*} {h : ℕ} (ro
     rw [c] at networkWork keyWork
     omega
 
+theorem forestNetworkPairKeysFromRowsWithWordWork_spec {V : Type*} {h : ℕ} (roots : List V)
+    (histories : List (HeightNode V h)) (simpleRoots : roots.Nodup) (simpleHistories : histories.Nodup)
+    (completeRoots : ∀ v, v ∈ roots) (completeHistories : ∀ node, node ∈ histories) :
+    let out := forestNetworkPairKeysFromRowsWithWordWork roots histories
+    out.1.Nodup ∧ (∀ key, key ∈ out.1) ∧
+      out.1.length = (3 * (roots.length * (2 * histories.length)))^2 ∧
+      out.2 ≤ forestNetworkPairKeysFromRowsWordBudget roots.length histories.length := by
+  obtain ⟨_,_,_,simple,complete,count,work⟩ :=
+    forestNetworkRowsWithWordWork_spec roots histories simpleRoots simpleHistories completeRoots completeHistories
+  change (forestNetworkPairKeysFromRowsWithWordWork roots histories).2 + 3 ≤ _ at work
+  exact ⟨simple,complete,count,Nat.le_of_add_le_add_right work⟩
+
 /-- Prepare the full weighted-network key list directly from a finite
 vertex count and a forest height. -/
 def finForestNetworkPairKeysWithWordWork (n h : ℕ) :
@@ -191,42 +220,73 @@ def finForestNetworkPairKeysWordPolynomial (n h : ℕ) : ℕ :=
   (8*n+1) + ((heightNodeIndexWordBudget h 1+9)*historyBound+5*h+7) +
     forestNetworkPairKeysFromRowsWordBudget n historyBound + 8
 
-theorem finForestNetworkPairKeysWithWordWork_spec (n h : ℕ) :
-    let out := finForestNetworkPairKeysWithWordWork n h
-    out.1.Nodup ∧ (∀ key, key ∈ out.1) ∧
-      out.1.length ≤ (6*n*(n+1)^h)^2 ∧ out.2 ≤ finForestNetworkPairKeysWordPolynomial n h := by
+/-- Prepare the forest vertices and all weighted-network keys with one
+enumeration of the finite roots and histories. -/
+def finForestNetworkRowsWithWordWork (n h : ℕ) : ForestNetworkRows (Fin n) h :=
   let roots := finVerticesWithWordWork n
   let histories := heightNodesWithWordWork n h (fun i => (i,1))
-  let keys := forestNetworkPairKeysFromRowsWithWordWork roots.1 histories.1
+  prepareForestNetworkRows roots.1 histories.1 (fun vertices keys work =>
+    ⟨vertices,keys,roots.2+histories.2+work+8+3⟩)
+
+theorem finForestNetworkRowsWithWordWork_keys (n h : ℕ) :
+    let out := finForestNetworkRowsWithWordWork n h
+    let prior := finForestNetworkPairKeysWithWordWork n h
+    out.keys = prior.1 ∧ out.wordWork = prior.2+3 := ⟨rfl,rfl⟩
+
+theorem finForestNetworkRowsWithWordWork_spec (n h : ℕ) :
+    let out := finForestNetworkRowsWithWordWork n h
+    out.vertices.Nodup ∧ (∀ v, v ∈ out.vertices) ∧ out.vertices.length ≤ 2*n*(n+1)^h ∧
+      out.keys.Nodup ∧ (∀ key, key ∈ out.keys) ∧
+      out.keys.length ≤ (6*n*(n+1)^h)^2 ∧ out.wordWork ≤ finForestNetworkPairKeysWordPolynomial n h+3 := by
+  let roots := finVerticesWithWordWork n
+  let histories := heightNodesWithWordWork n h (fun i => (i,1))
+  let rows := forestNetworkRowsWithWordWork roots.1 histories.1
   obtain ⟨simpleRoots, allRoots, rootWork⟩ := finVerticesWithWordWork_spec n
   obtain ⟨allHistories, simpleHistories, _, historyCount, historyWork⟩ :=
     heightNodesWithWordWork_spec (Equiv.refl (Fin n)) (fun i => (i,1)) 1 (fun _ => rfl) (fun _ => le_rfl) h
-  obtain ⟨simpleKeys, allKeys, keyCount, keyWork⟩ :=
-    forestNetworkPairKeysFromRowsWithWordWork_spec roots.1 histories.1 simpleRoots simpleHistories allRoots allHistories
+  obtain ⟨simpleVertices,allVertices,vertexCount,simpleKeys,allKeys,keyCount,rowWork⟩ :=
+    forestNetworkRowsWithWordWork_spec roots.1 histories.1 simpleRoots simpleHistories allRoots allHistories
   have rootCount : roots.1.length = n := by
     change (finVerticesWithWordWork n).1.length = n
     rw [finVerticesWithWordWork_eq_sort]
     simp
   have many : histories.1.length ≤ (n+1)^h := historyCount.le.trans (heightLexBlockCount_le_pow n h)
-  refine ⟨simpleKeys,allKeys,?_,?_⟩
-  · change keys.1.length ≤ _
+  refine ⟨simpleVertices,allVertices,?_,simpleKeys,allKeys,?_,?_⟩
+  · change rows.vertices.length ≤ _
+    rw [vertexCount,rootCount]
+    refine (Nat.mul_le_mul_left n (Nat.mul_le_mul_left 2 many)).trans_eq ?_
+    ring
+  · change rows.keys.length ≤ _
     rw [keyCount, rootCount]
     have len := Nat.pow_le_pow_left (Nat.mul_le_mul_left 3 (Nat.mul_le_mul_left n (Nat.mul_le_mul_left 2 many))) 2
     refine len.trans_eq ?_
     congr 1
     ring
-  · have work : keys.2 ≤ forestNetworkPairKeysFromRowsWordBudget n ((n+1)^h) := by
-      refine keyWork.trans ?_
+  · have work : rows.wordWork ≤ forestNetworkPairKeysFromRowsWordBudget n ((n+1)^h)+3 := by
+      refine rowWork.trans ?_
       rw [rootCount]
       unfold forestNetworkPairKeysFromRowsWordBudget
       dsimp only
       gcongr
     have hWork : histories.2 ≤ (heightNodeIndexWordBudget h 1+9)*((n+1)^h)+5*h+7 := by
       exact historyWork.trans (by gcongr; exact heightLexBlockCount_le_pow n h)
-    change roots.2 + histories.2 + keys.2 + 8 ≤ _
+    have total : (finForestNetworkRowsWithWordWork n h).wordWork = roots.2 + histories.2 + rows.wordWork + 8 := by
+      change roots.2 + histories.2 + (forestNetworkPairKeysFromRowsWithWordWork roots.1 histories.1).2 + 8 + 3 =
+        roots.2 + histories.2 + ((forestNetworkPairKeysFromRowsWithWordWork roots.1 histories.1).2+3) + 8
+      omega
+    change (finForestNetworkRowsWithWordWork n h).wordWork ≤ _
+    rw [total]
     change roots.2 = _ at rootWork
     rw [rootWork]
     dsimp only [finForestNetworkPairKeysWordPolynomial]
     omega
+
+theorem finForestNetworkPairKeysWithWordWork_spec (n h : ℕ) :
+    let out := finForestNetworkPairKeysWithWordWork n h
+    out.1.Nodup ∧ (∀ key, key ∈ out.1) ∧
+      out.1.length ≤ (6*n*(n+1)^h)^2 ∧ out.2 ≤ finForestNetworkPairKeysWordPolynomial n h := by
+  obtain ⟨_,_,_,simple,complete,count,work⟩ := finForestNetworkRowsWithWordWork_spec n h
+  rw [(finForestNetworkRowsWithWordWork_keys n h).2] at work
+  exact ⟨simple,complete,count,Nat.le_of_add_le_add_right work⟩
 
 end OnlineReachabilityPreservers

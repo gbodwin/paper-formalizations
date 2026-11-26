@@ -251,14 +251,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   setup tallies, and rounded graph agree with the earlier evaluator. The
   ordinary search tally is no larger, and a separate fixed-height budget
   bounds the new weighted solver and the seed reads.
-  [Forest pair keys](OnlineReachabilityPreservers/SteinerForestPairKeysWork.lean#L194)
+  [Forest pair keys](OnlineReachabilityPreservers/SteinerForestPairKeysWork.lean#L284)
   · [Weighted early evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L271).
   The complete prefix replay uses this early evaluator alongside the
   list-backed late phase and the metered outer union. Every prefix graph
   and the evaluation count agree with the earlier replay. The combined
   recorded work has a fixed-height polynomial bound on feasible traces.
-  Returned-charge lookups during rounding, request attachments, other
-  search and container operations, and bit and native costs remain open.
   [Replay comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1635)
   · [Bounded full-prefix replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1667).
   A measured forest-rounding evaluator can consume those charge reads.
@@ -271,15 +269,22 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   The complete replay uses this charge reader in the early rounding
   phase. Its prefix graphs and evaluation count agree with the earlier
   replay. The measured polynomial includes these reads and the capacity
-  rounding. Request attachments, tier and cutoff arithmetic, remaining
-  set assembly and service work, and bit and native costs remain open.
-  [Early rounding preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L331)
+  rounding.
+  [Early rounding preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L366)
   · [Complete replay with charge reads](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1737).
   Given a complete list of distinct forest vertices, a measured attachment
   builder scans the two leaf groups together and counts both unions with
   the free arcs. It returns the same weighted requests in the same order.
-  The complete replay still needs this attachment builder wired in.
   [Metered forest requests](OnlineReachabilityPreservers/SteinerForestAttachmentsWork.lean#L210).
+  The complete replay takes the forest rows from its existing key
+  enumeration and uses them for all evaluated early metric prefixes.
+  Its prefix graphs and evaluation counts agree with the history replay,
+  and the feasible-prefix polynomial includes the attachment work.
+  The remaining scope includes other terminal-label reads, tier and
+  cutoff arithmetic, threshold comparisons, further search and set
+  assembly, service work, and bit and native costs.
+  [Shared forest rows and keys](OnlineReachabilityPreservers/SteinerForestPairKeysWork.lean#L236)
+  · [Complete replay with attachment work](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1806).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
@@ -417,7 +422,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   finite digraphs. Two acyclic updates suffice for the rounded bound.
   A single invariant constant gives the limiting rate
   `O(n + n^(3/4) p^(1/2) + n^(2−sqrt(2)) p^(1/sqrt(2)))`.
-  This gives the limiting exponents with zero slack. Formal runtime remains open.
+  The limiting exponents have zero slack. The exact list evaluator has a
+  polynomial source-level work bound.
+  [List evaluator for general digraphs](OnlineReachabilityPreservers/SccLiftListWork.lean#L1022).
 - [`lemma37_first_term`, `lemma37_third_term`, and `lemma42_third_term`](OnlineReachabilityPreservers/BootstrapArithmetic.lean)
   verify the rearrangements of those individual branching-count terms.
   The third term of Lemma 42 gives vertex exponent `1/(b+1)`, the exponent

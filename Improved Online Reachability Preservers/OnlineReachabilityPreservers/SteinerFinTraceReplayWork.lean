@@ -1758,4 +1758,73 @@ theorem completeFinSteinerReplayWithRoundingChargeWork_prefixes {n : ℕ} (G : A
   rw [setup, decode, index]
   omega
 
+/-- Use one construction of the forest vertices and network keys to meter
+the current demands' attachments at every evaluated early metric. -/
+def completeFinSteinerReplayWithAttachmentWork {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
+  completeFinSteinerReplayWithHubRoutingUsing G raw same height m hm bits D (meteredPhaseUnion (Fin n))
+    (prepareFinSteinerWeightedForSeedWithAttachmentWork G raw same height)
+
+private theorem finSteinerEarlyAttachmentWordPolynomial_mono (n height seed : ℕ) :
+    Monotone (fun p => finSteinerEarlyAttachmentWordPolynomial n height p seed) := by
+  intro p q short
+  unfold finSteinerEarlyAttachmentWordPolynomial
+  dsimp only
+  exact Nat.add_le_add (finSteinerEarlyRoundingChargeWordPolynomial_mono n height seed short)
+    (Nat.mul_le_mul (Nat.add_le_add_right short 1) (earlyAttachmentWordBudget_le le_rfl le_rfl short))
+
+def steinerTraceAttachmentExtraPolynomial (n height p : ℕ) : ℕ :=
+  (p+1)*finSteinerEarlyAttachmentWordPolynomial n height p (earlySeedArrayReadWordBudget height)
+
+/-- The shared vertex rows preserve the replay's exact graphs and number
+of prefix evaluations, including on exhausted or infeasible inputs. -/
+theorem completeFinSteinerReplayWithAttachmentWork_compare {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
+    let out := completeFinSteinerReplayWithAttachmentWork G raw same height m hm bits D
+    let old := completeFinSteinerReplayWithEarlyHistoryWork G raw same height m hm bits D
+    let base := out.1.1.1
+    let prior := old.1.1.1
+    base.1.1.map Prod.fst = prior.1.1.map Prod.fst ∧
+      (base.1.1.map Prod.snd).sum ≤ (prior.1.1.map Prod.snd).sum ∧ out.2.2 = old.2.2 ∧
+      base.1.2 = prior.1.2 ∧ base.2 = prior.2 ∧ out.1.2 = old.1.2 ∧
+      out.1.1.2 ≤ old.1.1.2+3 ∧ out.2.1 ≤ old.2.1 + steinerTraceAttachmentExtraPolynomial n height D.length := by
+  let fresh := prepareFinSteinerWeightedForSeedWithAttachmentWork G raw same height
+  let prior := prepareFinSteinerWeightedForSeedWithHistoryWork G raw same height
+  let extra := finSteinerEarlyAttachmentWordPolynomial n height D.length (earlySeedArrayReadWordBudget height)
+  obtain ⟨scale, setup, work, each⟩ := prepareFinSteinerWeightedForSeedWithAttachmentWork_spec G raw same height
+  have compare := completeFinSteinerReplayWithPreparedEarlyWork_compare G raw same height m hm bits D
+    fresh prior 3 extra scale setup work.le (fun samples reads P => by
+      obtain ⟨graph, search, bound⟩ := each samples (earlySeedArrayReadWordBudget height) reads P
+      exact ⟨graph, search, fun short =>
+        bound.trans (finSteinerEarlyAttachmentWordPolynomial_mono n height _ short)⟩)
+  exact compare
+
+/-- On feasible traces the complete prefix graphs and evaluation count
+agree with the reference replay, with an explicit attachment work bound. -/
+theorem completeFinSteinerReplayWithAttachmentWork_prefixes {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let out := completeFinSteinerReplayWithAttachmentWork G raw same height m hm bits D
+    let base := out.1.1.1
+    base.1.1.map Prod.fst = D.inits.map (completeSteinerRunWithBitBudget G height bits) ∧
+      out.2.2 = (completeFinSteinerReplayWithThinRowWork G raw same height m hm bits D).2.2 ∧
+      (base.1.1.map Prod.snd).sum+base.1.2.1+base.1.2.2.1+base.1.2.2.2+base.2+out.1.1.2+out.1.2+out.2.1 ≤
+        completeFinSteinerPreparationWorkPolynomial n m raw.length height D.length +
+          finSteinerWeightPlanWorkPolynomial n height + finSteinerReplayIndexWorkPolynomial n raw.length +
+          (steinerTraceEarlySeedRankWorkPolynomial n height D.length+11*m+21) +
+          (steinerTracePhaseUnionWorkPolynomial n m height D.length+11*m+21) +
+          finArcRowsWordBudget n raw.length+8*n+6+finForestNetworkPairKeysWordPolynomial n height+3 +
+          steinerTraceEarlyHistoryExtraPolynomial n height D.length + 3 +
+          steinerTraceAttachmentExtraPolynomial n height D.length := by
+  obtain ⟨graphs, search, counts, setup, decode, index, keyWork, replayWork⟩ :=
+    completeFinSteinerReplayWithAttachmentWork_compare G raw same height m hm bits D
+  obtain ⟨exactGraphs, exactCounts, oldWork⟩ :=
+    completeFinSteinerReplayWithEarlyHistoryWork_prefixes G raw same height m hm bits D feasible
+  refine ⟨graphs.trans exactGraphs, counts.trans exactCounts, ?_⟩
+  rw [setup, decode, index]
+  omega
+
 end OnlineReachabilityPreservers
