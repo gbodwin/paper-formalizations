@@ -90,6 +90,60 @@ theorem regularization_list_frozen_after_half_path_width_splits {V I : Type*}
   rw [mass]
   exact math
 
+private theorem frozen_of_unique_row_subset {half : Bool} {k n p : ℕ}
+    (cutoff : k = 4 ∨ (k = 6 ∧ half = false)) (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (A : Finset (Fin p))
+    (unique : ∀ {a b x y}, a ∈ A → b ∈ A → a ≠ b → x ∈ paths a → x ∈ paths b →
+      y ∈ paths a → y ∈ paths b → x = y)
+    (enough : let M := ∑ i, (paths i).length
+      9 * M ≤ 16 * (∑ i ∈ A, (paths i).length) ∨
+        (2 * A.card ≤ p ∧ 7 * M ≤ 16 * (∑ i ∈ A, (paths i).length))) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 104 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let weight (i : Fin p) := (paths i).length
+  let M := ∑ i, weight i
+  let working := restrictListPaths paths (univ : Finset (Fin n)) A
+  have simpleWorking (i : A) : (working i).Nodup := restrictListPath_nodup (simple i.val) _
+  have uniqueWorking {a b : A} {x y : (univ : Finset (Fin n))} (different : a ≠ b)
+      (xa : x ∈ working a) (xb : x ∈ working b) (ya : y ∈ working a) (yb : y ∈ working b) : x = y := by
+    apply Subtype.ext
+    have member (i : A) (v : (univ : Finset (Fin n))) (h : v ∈ working i) : v.val ∈ paths i.val := by
+      exact mem_restrictListPath.mp h
+    exact unique a.property b.property
+      (fun eq => different (Subtype.ext eq)) (member a x xa) (member b x xb) (member a y ya) (member b y yb)
+  have legal : localOrderAdmissible half k working := by
+    cases half
+    · exact restrictListPaths_fullFree simple allowed _ _
+    · exact restrictListPaths_halfFree simple allowed _ _
+  have keeps : (∑ i, (working i).length) = ∑ i ∈ A, weight i := by
+    rw [Finset.sum_subtype A (fun _ => Iff.rfl) weight]
+    apply sum_congr rfl
+    intro i _
+    change (restrictListPath (paths i.val) univ).length = (paths i.val).length
+    rw [restrictListPath_length (simple i.val), inter_univ, List.toFinset_card_of_nodup (simple i.val)]
+  have upper : ∑ i, (working i).length ≤ M := by
+    rw [keeps]
+    exact sum_le_sum_of_subset (subset_univ A)
+  have safe (D L : ℕ) : localOrderAdmissible half k (listRegularizedPaths working D L) := by
+    rcases cutoff with rfl | ⟨rfl, rfl⟩
+    · cases half
+      · exact listRegularizedPaths_fullFree simpleWorking uniqueWorking legal D L
+      · exact listRegularizedPaths_halfFree simpleWorking uniqueWorking legal D L
+    · have four : BridgeFree (Before working) 4 := fun _ h => legal (h.trans (by decide))
+      exact regularizedSix_bridge_free simpleWorking (fun {_ _ _ _} => uniqueWorking) four legal D L
+  have vertices : Fintype.card ↥(univ : Finset (Fin n)) ≤ n := by simp
+  rcases enough with large | ⟨small, large⟩
+  · exact regularization_list_frozen_after_quadratic_width_trim working simpleWorking (safe _ _)
+      hn hp dense long vertices (by simpa only [Fintype.card_coe, Fintype.card_fin] using card_le_univ A)
+      upper (by rw [keeps]; exact large)
+  · exact regularization_list_frozen_after_half_path_width_splits working simpleWorking (safe _ _)
+      hn hp dense long vertices (by simpa only [Fintype.card_coe] using small)
+      upper (by rw [keeps]; exact large)
+
 /-- Frozen caps when all reversed intersections occur within disjoint
 pairs of rows. Choosing one row from each pair makes intersections unique. -/
 theorem regularization_list_frozen_of_matched_reverse_partners {half : Bool} {k n p : ℕ}
@@ -191,56 +245,74 @@ theorem regularization_list_frozen_of_matched_reverse_partners {half : Bool} {k 
     · exact noReverse ha hb different (reversals different ax byy)
     · exact noReverse ha hb different (reversals different ay bx)
     · exact no_parallel_list_steps halfFree two different ay byy
-  have cleanChoice (A : Finset (Fin p)) (included : A ⊆ allKept)
-      (enough : 9 * M ≤ 16 * (∑ i ∈ A, weight i) ∨
-        (2 * A.card ≤ p ∧ 7 * M ≤ 16 * (∑ i ∈ A, weight i))) :
-      ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
-        (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
-        M ≤ 104 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
-    let working := restrictListPaths paths (univ : Finset (Fin n)) A
-    have simpleWorking (i : A) : (working i).Nodup := restrictListPath_nodup (simple i.val) _
-    have uniqueWorking {a b : A} {x y : (univ : Finset (Fin n))} (different : a ≠ b)
-        (xa : x ∈ working a) (xb : x ∈ working b) (ya : y ∈ working a) (yb : y ∈ working b) : x = y := by
-      apply Subtype.ext
-      have member (i : A) (v : (univ : Finset (Fin n))) (h : v ∈ working i) : v.val ∈ paths i.val := by
-        exact mem_restrictListPath.mp h
-      exact originalUnique (included a.property) (included b.property)
-        (fun eq => different (Subtype.ext eq)) (member a x xa) (member b x xb) (member a y ya) (member b y yb)
-    have legal : localOrderAdmissible half k working := by
-      cases half
-      · exact restrictListPaths_fullFree simple allowed _ _
-      · exact restrictListPaths_halfFree simple allowed _ _
-    have keeps : (∑ i, (working i).length) = ∑ i ∈ A, weight i := by
-      rw [Finset.sum_subtype A (fun _ => Iff.rfl) weight]
-      apply sum_congr rfl
-      intro i _
-      change (restrictListPath (paths i.val) univ).length = (paths i.val).length
-      rw [restrictListPath_length (simple i.val), inter_univ, List.toFinset_card_of_nodup (simple i.val)]
-    have upper : ∑ i, (working i).length ≤ M := by
-      rw [keeps]
-      exact sum_le_sum_of_subset (subset_univ A)
-    have safe (D L : ℕ) : localOrderAdmissible half k (listRegularizedPaths working D L) := by
-      rcases cutoff with rfl | ⟨rfl, rfl⟩
-      · cases half
-        · exact listRegularizedPaths_fullFree simpleWorking uniqueWorking legal D L
-        · exact listRegularizedPaths_halfFree simpleWorking uniqueWorking legal D L
-      · have four : BridgeFree (Before working) 4 := fun _ h => legal (h.trans (by decide))
-        exact regularizedSix_bridge_free simpleWorking (fun {_ _ _ _} => uniqueWorking) four legal D L
-    have vertices : Fintype.card ↥(univ : Finset (Fin n)) ≤ n := by simp
-    rcases enough with large | ⟨small, large⟩
-    · exact regularization_list_frozen_after_quadratic_width_trim working simpleWorking (safe _ _)
-        hn hp dense long vertices (by simpa only [Fintype.card_coe, Fintype.card_fin] using card_le_univ A)
-        upper (by rw [keeps]; exact large)
-    · exact regularization_list_frozen_after_half_path_width_splits working simpleWorking (safe _ _)
-        hn hp dense long vertices (by simpa only [Fintype.card_coe] using small)
-        upper (by rw [keeps]; exact large)
   by_cases light : 8 * pairedMass ≤ 7 * M
-  · apply cleanChoice allKept Subset.rfl
+  · apply frozen_of_unique_row_subset cutoff paths simple allowed hn hp dense long allKept
+      (fun {_ _ _ _} ha hb different xa xb ya yb => originalUnique ha hb different xa xb ya yb)
     left
+    change 9 * M ≤ 16 * (∑ i ∈ allKept, weight i)
     rw [retainedAll]
     omega
-  · apply cleanChoice first (subset_union_left : first ⊆ allKept)
+  · apply frozen_of_unique_row_subset cutoff paths simple allowed hn hp dense long first
+      (fun {_ _ _ _} ha hb different xa xb ya yb =>
+        originalUnique (mem_union_left _ ha) (mem_union_left _ hb) different xa xb ya yb)
     right
+    change 2 * first.card ≤ p ∧ 7 * M ≤ 16 * firstMass
     exact ⟨count, by omega⟩
+
+/-- Frozen cleaning for a partition into two classes, each excluding
+reversed pairs. When both carry less than nine sixteenths of the mass,
+the class with fewer rows meets the half-budget condition. -/
+theorem regularization_list_frozen_of_two_reverse_classes {half : Bool} {k n p : ℕ}
+    (cutoff : k = 4 ∨ (k = 6 ∧ half = false)) (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths)
+    (classes : Fin p → Bool)
+    (separated : ∀ {i j x y}, i ≠ j → Before paths i x y → Before paths j y x → classes i ≠ classes j)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 104 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let group (c : Bool) := (univ : Finset (Fin p)).filter (fun i => classes i = c)
+  let mass (c : Bool) := ∑ i ∈ group c, (paths i).length
+  have member {i : Fin p} {c : Bool} (found : i ∈ group c) : classes i = c := (mem_filter.mp found).2
+  have full : group false ∪ group true = univ := by
+    ext i
+    cases seen : classes i <;> simp [group, seen]
+  have disjointGroups : Disjoint (group false) (group true) := by
+    rw [disjoint_left]
+    exact fun i left right => Bool.false_ne_true ((member left).symm.trans (member right))
+  have totalMass : mass false + mass true = M := by
+    change _ = ∑ i ∈ (univ : Finset (Fin p)), (paths i).length
+    rw [← full, sum_union disjointGroups]
+  have totalRows : (group false).card + (group true).card = p := by
+    rw [← card_union_of_disjoint disjointGroups, full, card_univ, Fintype.card_fin]
+  have two : 2 ≤ k := by rcases cutoff with rfl | ⟨rfl, _⟩ <;> decide
+  have halfFree : HalfBridgeFree (Before paths) k := by
+    cases half
+    · exact (show BridgeFree (Before paths) k from allowed).halfFree
+    · exact allowed
+  have unique (c : Bool) {i j x y} (iGroup : i ∈ group c) (jGroup : j ∈ group c) (different : i ≠ j)
+      (xi : x ∈ paths i) (xj : x ∈ paths j) (yi : y ∈ paths i) (yj : y ∈ paths j) : x = y := by
+    by_contra unequal
+    have same : classes i = classes j := (member iGroup).trans (member jGroup).symm
+    rcases listBefore_total xi yi unequal with xy | yx <;> rcases listBefore_total xj yj unequal with xy' | yx'
+    · exact no_parallel_list_steps halfFree two different xy xy'
+    · exact separated different xy yx' same
+    · exact separated different yx xy' same
+    · exact no_parallel_list_steps halfFree two different yx yx'
+  have enough (c : Bool) (bound : 9 * M ≤ 16 * mass c ∨ (2 * (group c).card ≤ p ∧ 7 * M ≤ 16 * mass c)) :
+      ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+        (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+        M ≤ 104 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+    frozen_of_unique_row_subset cutoff paths simple allowed hn hp dense long (group c)
+      (fun {_ _ _ _} => unique c) bound
+  by_cases zeroLarge : 9 * M ≤ 16 * mass false
+  · exact enough false (Or.inl zeroLarge)
+  by_cases oneLarge : 9 * M ≤ 16 * mass true
+  · exact enough true (Or.inl oneLarge)
+  by_cases zeroFew : 2 * (group false).card ≤ p
+  · exact enough false (Or.inr ⟨zeroFew, by omega⟩)
+  · exact enough true (Or.inr ⟨by omega, by omega⟩)
 
 end OnlineReachabilityPreservers

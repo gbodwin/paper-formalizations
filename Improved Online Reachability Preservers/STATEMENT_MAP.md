@@ -1686,10 +1686,19 @@ When the paired rows hold at most \(7M/8\), keeping the unpaired rows as well gi
 least \(9M/16\) for quadratic trimming of both supports. When the paired
 rows hold more than \(7M/8\), their selected rows alone give at least
 \(7M/16\) in at most half the original path budget. This proves
-[frozen cleaning for matched reverse partners](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L95)
+[frozen cleaning for matched reverse partners](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L149)
 with at least \(M/104\), both original budgets, and all four original caps.
 It preserves the input exclusion at cutoff four in either mode or at full
 cutoff six, for positive budgets and mass at least both counts.
+
+The [two-class theorem](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L265)
+gives the same original budgets, caps, retention and cutoff guarantees
+when simple paths can be partitioned into two classes with every reversed
+comparison crossing classes. Each class has unique intersections under
+the matching input bridge exclusion. A class with mass at least
+\(9M/16\) permits trimming both supports. If both are below that mass,
+each carries at least \(7M/16\) and one uses at most half the original
+path budget.
 
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size

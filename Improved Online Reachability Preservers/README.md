@@ -717,7 +717,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [seven ninths of the vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L250).
   This version preserves the matching input exclusion at cutoff four in
   either mode or at full cutoff six.
-- [Cleaning with disjoint reverse partners](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L95)
+- [Cleaning with disjoint reverse partners](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L149)
   covers simple paths whose reversed comparisons are confined to disjoint
   pairs of paths. For positive budgets and mass at least both counts,
   the witness retains at least \(M/104\) within both original budgets and
@@ -725,6 +725,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   in either mode or at full cutoff six. The proof selects the heavier
   path of each pair and, when needed, uses the
   [width splits with half the path budget](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L31).
+  The [two-class theorem](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L265)
+  gives the same guarantee whenever the paths can be partitioned into
+  two classes and every reversed comparison crosses between classes.
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion
