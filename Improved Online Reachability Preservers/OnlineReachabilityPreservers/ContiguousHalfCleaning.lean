@@ -513,25 +513,23 @@ def widthCutActiveNestedStarts (paths : Fin p → List (Fin n)) (D L : ℕ) :
     Set (ListBlockIndex (splitListVertices paths D) L × ListVertexBlockIndex paths D) :=
   activeNestedOppositeStarts (splitListVertices paths D) (listRegularizedPaths paths D L) Sigma.fst
 
-/-- Repairing just the nested reversals that survive the original-width
-blocks gives both budgets and all four frozen caps if at most one twelfth
-of the original incidences are marked. -/
-theorem regularization_list_frozen_half_four_of_few_active_nested_starts (paths : Fin p → List (Fin n))
+/-- Remove the marked river starts for the actual degree and path width blocks. -/
+noncomputable def repairWidthCutNestedStarts (paths : Fin p → List (Fin n)) (D L : ℕ) :=
+  removeActiveNestedOppositeStarts (splitListVertices paths D) (listRegularizedPaths paths D L) Sigma.fst
+
+/-- Each marked start costs exactly one incidence, and the remaining
+subsequences exclude half-bridges through size four. -/
+theorem repairWidthCutNestedStarts_spec (paths : Fin p → List (Fin n))
     (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (ListBefore paths) 4)
-    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
-    (few : let M := ∑ i, (paths i).length
-      12*Nat.card (widthCutActiveNestedStarts paths (4*M/n) (4*M/p)) ≤ M) :
-    let M := ∑ i, (paths i).length
-    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
-      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (ListBefore clean) 4 ∧
-      M ≤ 64*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
-  let M := ∑ i, (paths i).length
-  let D := 4*M/n
-  let L := 4*M/p
+    (D L : ℕ) :
+    let pieces := listRegularizedPaths paths D L
+    let kept := repairWidthCutNestedStarts paths D L
+    (∀ i, List.Sublist (kept i) (pieces i)) ∧ HalfBridgeFree (ListBefore kept) 4 ∧
+      (∑ i, (kept i).length)+Nat.card (widthCutActiveNestedStarts paths D L) = ∑ i, (pieces i).length := by
   let copies := splitListVertices paths D
   let pieces := listRegularizedPaths paths D L
   let parent : ListBlockIndex copies L → Fin p := Sigma.fst
-  let kept := removeActiveNestedOppositeStarts copies pieces parent
+  let kept := repairWidthCutNestedStarts paths D L
   have copyFree : HalfBridgeFree (ListBefore copies) 4 :=
     free.split_list_vertices_short le_rfl (fun v => v.fst) (fun step => splitListVertices_project_step paths simple D step)
   have copySimple (i : Fin p) : (copies i).Nodup := by
@@ -552,6 +550,28 @@ theorem regularization_list_frozen_half_four_of_few_active_nested_starts (paths 
       · exact listBefore_ne (after right left) rfl
     · intro i j different same
       exact listBlocks_ordered copies L different same
+  exact ⟨sub,valid,removeActiveNestedOppositeStarts_mass copies pieces parent pieceSimple⟩
+
+/-- Repairing just the nested reversals that survive the original-width
+blocks gives both budgets and all four frozen caps if at most one twelfth
+of the original incidences are marked. -/
+theorem regularization_list_frozen_half_four_of_few_active_nested_starts (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (ListBefore paths) 4)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (few : let M := ∑ i, (paths i).length
+      12*Nat.card (widthCutActiveNestedStarts paths (4*M/n) (4*M/p)) ≤ M) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (ListBefore clean) 4 ∧
+      M ≤ 64*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let copies := splitListVertices paths D
+  let pieces := listRegularizedPaths paths D L
+  let kept := repairWidthCutNestedStarts paths D L
+  have pieceSimple := listRegularizedPaths_simple paths simple D L
+  obtain ⟨sub,valid,total⟩ := repairWidthCutNestedStarts_spec paths simple free D L
   obtain ⟨dPos,dRoom,_⟩ := four_average_width hn dense
   obtain ⟨lPos,lRoom,_⟩ := four_average_width hp long
   obtain ⟨rawV,rawP⟩ := regularization_list_counts paths simple (D := D) (L := L) dPos lPos
@@ -567,9 +587,8 @@ theorem regularization_list_frozen_half_four_of_few_active_nested_starts (paths 
     omega
   obtain ⟨pieceMass,length,degree⟩ := regularization_list_mass_caps paths simple D L dPos lPos
   change (∑ i, (pieces i).length) = M at pieceMass
-  have total := removeActiveNestedOppositeStarts_mass copies pieces parent pieceSimple
+  change (∑ i, (kept i).length)+Nat.card (widthCutActiveNestedStarts paths D L) = (∑ i, (pieces i).length) at total
   rw [pieceMass] at total
-  change (∑ i, (kept i).length)+Nat.card (widthCutActiveNestedStarts paths D L) = M at total
   change 12*Nat.card (widthCutActiveNestedStarts paths D L) ≤ M at few
   have cap (x : ListVertexBlockIndex paths D) : (occurrences (fun i => (kept i).toFinset) x).card ≤ D := by
     apply le_trans (card_le_card (t := occurrences (fun i => (pieces i).toFinset) x) ?_) (degree x)

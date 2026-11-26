@@ -476,13 +476,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [Cleaning with few nested links](OnlineReachabilityPreservers/NestedOppositeCleaning.lean#L147).
   The [post-split repair](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L442)
   marks the starting incidence of each inner step in a nested reversal
-  that actually survives the width cuts. If at most \(M/12\) incidences are
-  marked, [restriction and peeling](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L519)
-  give both original budgets, all four caps, and retention at least \(M/64\).
+  that survives the width cuts. [Trimming full blocks first](OnlineReachabilityPreservers/FrozenBlockTrimming.lean#L153)
+  gives both original budgets, all four caps, and retention at least \(M/12\)
+  if at most \(M/4\) incidences are marked.
   The [marked count](OnlineReachabilityPreservers/ActiveNestedCutCounting.lean#L58)
   is at most the sum of the lengths minus one, truncated at zero, over
-  the non-first blocks. The [same cleaning guarantee](OnlineReachabilityPreservers/ActiveNestedCutCounting.lean#L135)
-  follows when this sum is at most \(M/12\).
+  the non-first blocks. The [same cleaning guarantee](OnlineReachabilityPreservers/FrozenBlockTrimming.lean#L177)
+  follows when this sum is at most \(M/4\).
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion

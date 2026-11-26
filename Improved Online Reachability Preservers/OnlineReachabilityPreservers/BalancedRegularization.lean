@@ -537,4 +537,126 @@ theorem regularization_balanced_caps (paths : I → Finset V) (hn : 0 < Fintype.
 
 end Ordered
 
+private theorem sum_part_and_remainder {A : Type*} [DecidableEq A] (whole part : Finset A)
+    (sub : part ⊆ whole) (weight : A → ℕ) :
+    (∑ x ∈ part, weight x)+(∑ x ∈ whole \ part, weight x) = ∑ x ∈ whole, weight x := by
+  have disjoint : Disjoint part (whole \ part) := disjoint_left.mpr fun _ hpart hrest => (mem_sdiff.mp hrest).2 hpart
+  have join : part ∪ (whole \ part) = whole := by
+    ext x
+    simp only [mem_union,mem_sdiff]
+    constructor
+    · rintro (h | h)
+      · exact sub h
+      · exact h.1
+    · intro h
+      by_cases inside : x ∈ part
+      · exact Or.inl inside
+      · exact Or.inr ⟨h,inside⟩
+  rw [← sum_union disjoint,join]
+
+/-- Keep the filled blocks first and choose the heaviest available
+remainders. If a cap times the budget is at least three times the total
+weight, at most one twelfth of the weight is omitted. -/
+theorem trim_full_weight_blocks {A : Type*} [DecidableEq A] [Fintype A] (weight : A → ℕ)
+    (full : Finset A) {cap budget : ℕ} (capPositive : 0 < cap) (budgetPositive : 0 < budget)
+    (filled : ∀ x ∈ full, weight x = cap) (remainder : (univ \ full).card ≤ budget)
+    (space : 3*(∑ x, weight x) ≤ cap*budget) :
+    ∃ kept : Finset A, kept.card ≤ budget ∧ 12*(∑ x ∈ univ \ kept, weight x) ≤ ∑ x, weight x := by
+  classical
+  by_cases all : (univ : Finset A).card ≤ budget
+  · exact ⟨univ,all,by simp⟩
+  let K := ∑ x, weight x
+  let rest := univ \ full
+  let R := ∑ x ∈ rest, weight x
+  let f := full.card
+  have fullWeight : (∑ x ∈ full, weight x) = f*cap := by
+    calc
+      _ = ∑ _ ∈ full, cap := sum_congr rfl filled
+      _ = _ := by simp [f]
+  have total : f*cap+R = K := by
+    rw [← fullWeight]
+    exact sum_part_and_remainder univ full (subset_univ _) weight
+  have fLe : f ≤ budget := by
+    apply Nat.le_of_mul_le_mul_right _ capPositive
+    calc
+      f*cap ≤ K := by omega
+      _ ≤ cap*budget := by change 3*K ≤ _ at space; omega
+      _ = budget*cap := Nat.mul_comm _ _
+  have feasible : budget-f ≤ rest.card := by
+    have counts := card_sdiff_add_card_eq_card (subset_univ full)
+    change rest.card+f = (univ : Finset A).card at counts
+    omega
+  obtain ⟨selected,selectedSub,selectedCount,selectedWeight⟩ := trim_weights rest weight feasible
+  let kept := full ∪ selected
+  let loss := ∑ x ∈ rest \ selected, weight x
+  let chosenWeight := ∑ x ∈ selected, weight x
+  have disjoint : Disjoint full selected := disjoint_left.mpr fun x xFull xSelected =>
+    (mem_sdiff.mp (selectedSub xSelected)).2 xFull
+  have keptCount : kept.card ≤ budget := by
+    rw [show kept = full ∪ selected from rfl,card_union_of_disjoint disjoint,selectedCount]
+    change f+(budget-f) ≤ budget
+    rw [Nat.add_sub_of_le fLe]
+  have removedSet : univ \ kept = rest \ selected := by
+    ext x
+    simp [kept,rest,not_or]
+  have split : chosenWeight+loss = R := sum_part_and_remainder rest selected selectedSub weight
+  have chosenBound : (budget-f)*R ≤ budget*chosenWeight :=
+    selectedWeight.trans (Nat.mul_le_mul_right _ remainder)
+  have less : budget*loss ≤ f*R := by
+    have whole : budget*chosenWeight+budget*loss = budget*R := by rw [← Nat.mul_add,split]
+    have available : f*R+(budget-f)*R = budget*R := by rw [← Nat.add_mul,Nat.add_sub_of_le fLe]
+    omega
+  have product : 4*(f*cap)*R ≤ K*K := by
+    have sum : (↑(f*cap) : ℤ)+(R:ℤ) = (K:ℤ) := by exact_mod_cast total
+    have bound : (4:ℤ)*(↑(f*cap):ℤ)*(R:ℤ) ≤ (K:ℤ)*(K:ℤ) := by
+      rw [← sum]
+      nlinarith [sq_nonneg ((↑(f*cap):ℤ)-(R:ℤ))]
+    exact_mod_cast bound
+  have amount : 12*loss ≤ K := by
+    apply Nat.le_of_mul_le_mul_right _ (Nat.mul_pos capPositive budgetPositive)
+    calc
+      (12*loss)*(cap*budget) = 3*(4*cap*(budget*loss)) := by ring
+      _ ≤ 3*(4*cap*(f*R)) := Nat.mul_le_mul_left _ (Nat.mul_le_mul_left _ less)
+      _ = 3*(4*(f*cap)*R) := by ring
+      _ ≤ 3*(K*K) := Nat.mul_le_mul_left _ product
+      _ = K*(3*K) := by ring
+      _ ≤ K*(cap*budget) := Nat.mul_le_mul_left _ space
+  exact ⟨kept,keptCount,by rw [removedSet]; exact amount⟩
+
+/-- If each dimension consists of cap-sized blocks and at most one
+remainder per original slot, trimming to both budgets retains at least
+five sixths of the total incidence mass. -/
+theorem trim_full_block_rectangles {V I : Type*} [Fintype V] [Fintype I] [DecidableEq V] [DecidableEq I]
+    (paths : I → Finset V) (fullV : Finset V) (fullI : Finset I) {D L n p : ℕ}
+    (Dpos : 0 < D) (Lpos : 0 < L) (hn : 0 < n) (hp : 0 < p)
+    (filledV : ∀ v ∈ fullV, (occurrences paths v).card = D) (restV : (univ \ fullV).card ≤ n)
+    (filledI : ∀ i ∈ fullI, (paths i).card = L) (restI : (univ \ fullI).card ≤ p)
+    (spaceV : 3*(∑ i, (paths i).card) ≤ D*n) (spaceI : 3*(∑ i, (paths i).card) ≤ L*p) :
+    ∃ A : Finset V, ∃ B : Finset I, A.card ≤ n ∧ B.card ≤ p ∧
+      5*(∑ i, (paths i).card) ≤ 6*(∑ i ∈ B, (paths i ∩ A).card) := by
+  let K := ∑ i, (paths i).card
+  have spaceColumns : 3*(∑ v, (occurrences paths v).card) ≤ D*n := by rw [sum_occurrences]; exact spaceV
+  obtain ⟨A,capA,lossA⟩ := trim_full_weight_blocks (fun v => (occurrences paths v).card) fullV
+    Dpos hn filledV restV spaceColumns
+  obtain ⟨B,capB,lossB⟩ := trim_full_weight_blocks (fun i => (paths i).card) fullI Lpos hp filledI restI spaceI
+  rw [sum_occurrences] at lossA
+  let lessV := ∑ v ∈ univ \ A, (occurrences paths v).card
+  let lessI := ∑ i ∈ univ \ B, (paths i).card
+  let kept := rectangleMass paths A B
+  have columns : rectangleMass paths A univ+lessV = K := by
+    rw [rectangleMass_swap]
+    change (∑ v ∈ A, (occurrences paths v).card)+lessV = ∑ i, (paths i).card
+    rw [← sum_occurrences paths]
+    exact sum_part_and_remainder univ A (subset_univ _) _
+  have rows : rectangleMass paths A univ ≤ kept+lessI := by
+    have sum := sum_part_and_remainder univ B (subset_univ _) (fun i => (paths i ∩ A).card)
+    change kept+(∑ i ∈ univ \ B, (paths i ∩ A).card) = rectangleMass paths A univ at sum
+    rw [← sum]
+    exact Nat.add_le_add_left (sum_le_sum fun i _ => card_le_card inter_subset_left) _
+  change 12*lessV ≤ K at lossA
+  change 12*lessI ≤ K at lossB
+  refine ⟨A,B,capA,capB,?_⟩
+  change 5*K ≤ 6*kept
+  omega
+
 end OnlineReachabilityPreservers

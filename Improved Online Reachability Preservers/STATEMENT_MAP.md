@@ -1113,7 +1113,7 @@ the starting incidence of its inner step. The
 deletes exactly the [distinct marked incidences](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L472)
 and restores half exclusion through size four. For the original-width
 blocks, at most \(M/12\) such incidences suffice for
-[both budgets and all four original-average caps](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L519),
+[both budgets and all four original-average caps](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L558),
 with retention at least \(M/64\) after restriction and peeling. Each
 mark [charges a distinct incidence](OnlineReachabilityPreservers/ActiveNestedCutCounting.lean#L58)
 with a successor in a non-first central block. Exclusion through size
@@ -1121,7 +1121,20 @@ three prevents two later rows from charging the same incidence. The
 [sum over block lengths](OnlineReachabilityPreservers/ActiveNestedCutCounting.lean#L35)
 counts these available incidences. If the sum is at most \(M/12\), the
 [same cleaning conclusion](OnlineReachabilityPreservers/ActiveNestedCutCounting.lean#L135)
-follows. Whether the marked count is always at most \(M/12\) remains open.
+follows.
+
+The [full-block profiles](OnlineReachabilityPreservers/WidthBlockProfiles.lean#L161)
+show that each original vertex and path contributes at most one remainder.
+Keeping all filled blocks and choosing the heaviest remainders bounds the
+[loss across both budgets](OnlineReachabilityPreservers/BalancedRegularization.lean#L629)
+by \(M/6\). This leaves enough room for an
+[admissibility repair](OnlineReachabilityPreservers/FrozenBlockTrimming.lean#L74)
+that removes up to \(M/4\) of the original incidences. Peeling then meets both
+budgets and all four original-average caps with at least \(M/12\) mass. The
+half-four criterion applies when either the
+[marked count](OnlineReachabilityPreservers/FrozenBlockTrimming.lean#L153)
+or the [later nonterminal count](OnlineReachabilityPreservers/FrozenBlockTrimming.lean#L177)
+is at most \(M/4\).
 
 For any simple graph, take the two orientations of each edge as paths
 of two vertices. The [dart family](OnlineReachabilityPreservers/OppositeLinkForest.lean#L1041)
