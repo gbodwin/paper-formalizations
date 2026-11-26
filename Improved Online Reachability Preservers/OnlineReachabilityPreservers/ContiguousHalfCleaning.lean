@@ -30,14 +30,18 @@ theorem noLaterNestedOpposites_of_unique {paths : I → List V}
 /-- A nested reversal survives the cuts if the four required steps each survive
 in one piece and the two steps on the central path use different pieces.
 The names `early` and `late` refer to their order in the central path. -/
-def CutRetainsNestedOpposites (paths : I → List V) (pieces : J → List V)
-    (parent : J → I) : Prop :=
-  ∃ (early late outer inner : J) (u v w z : V),
+def CutRetainsNestedOppositesAt (paths : I → List V) (pieces : J → List V)
+    (parent : J → I) (inner : J) (w : V) : Prop :=
+  ∃ (early late outer : J) (u v z : V),
     early ≠ late ∧ parent early = parent late ∧
     parent outer ≠ parent early ∧ parent outer ≠ parent inner ∧ parent early < parent inner ∧
     ListBefore paths (parent early) v w ∧
     ListBefore pieces early u v ∧ ListBefore pieces late w z ∧
     ListBefore pieces outer z u ∧ ListBefore pieces inner w v
+
+/-- Some starting incidence lies on an inner step of a retained nested reversal. -/
+def CutRetainsNestedOpposites (paths : I → List V) (pieces : J → List V) (parent : J → I) : Prop :=
+  ∃ (inner : J) (w : V), CutRetainsNestedOppositesAt paths pieces parent inner w
 
 /-- Any retained nested reversal produces an actual half-4-bridge. -/
 theorem CutRetainsNestedOpposites.not_half_free {paths : I → List V} {pieces : J → List V}
@@ -46,7 +50,7 @@ theorem CutRetainsNestedOpposites.not_half_free {paths : I → List V} {pieces :
     (pattern : CutRetainsNestedOpposites paths pieces parent) :
     ¬ HalfBridgeFree (ListBefore pieces) 4 := by
   rintro free
-  obtain ⟨early,late,outer,inner,u,v,w,z,earlyLate,parents,outerEarly,outerInner,earlyInner,
+  obtain ⟨inner,w,early,late,outer,u,v,z,earlyLate,parents,outerEarly,outerInner,earlyInner,
     vw,uv,wz,zu,wv⟩ := pattern
   have oldUV := steps uv
   have oldWZ : ListBefore paths (parent early) w z := parents.symm ▸ steps wz
@@ -138,7 +142,7 @@ theorem HalfBridgeFree.split_ordered_iff_no_retained_nested {paths : I → List 
     intro eq
     rcases ordered (apart (by decide)) eq with before | after
     · exact no_parallel_list_steps free (by decide) adjR0.symm (before step0.1 step2.2.1) (steps river)
-    · exact noNested ⟨b.arc 2,b.arc 0,b.arc 1,b.river,_,_,_,_,
+    · exact noNested ⟨b.river,_,b.arc 2,b.arc 0,b.arc 1,_,_,_,
         apart (by decide),eq.symm,adj12,oppositeR1.symm,earlierParent,
         eq ▸ after step2.2.1 step0.1,step2,step0,step1,river⟩
   have different : Function.Injective (parent ∘ b.arc) := by
@@ -176,7 +180,7 @@ theorem HalfBridgeFree.split_ordered_list_paths {paths : I → List V} {pieces :
     HalfBridgeFree (ListBefore pieces) 4 := by
   apply (free.split_ordered_iff_no_retained_nested parent monotone steps disjoint ordered).mpr
   intro pattern
-  obtain ⟨early,late,outer,inner,u,v,w,z,_,parents,outerEarly,outerInner,earlyInner,
+  obtain ⟨inner,w,early,late,outer,u,v,z,_,parents,outerEarly,outerInner,earlyInner,
     vw,uv,wz,zu,wv⟩ := pattern
   exact noNested outerEarly outerInner earlyInner (steps uv) vw (parents.symm ▸ steps wz)
     (steps zu) (steps wv)
@@ -398,5 +402,182 @@ theorem localOrderExtremal_frozen_half_four_of_large_path_budget (n p : ℕ)
   obtain ⟨paths,simple,free,maximal,dense,long⟩ := localOrderExtremal_isDense n p 4 true hn hp
   exact ⟨paths,simple,free,maximal,regularization_list_frozen_half_four_of_incidence_square
     paths simple free hn hp dense long (square.trans (Nat.pow_le_pow_left long 2))⟩
+
+end OnlineReachabilityPreservers
+
+namespace OnlineReachabilityPreservers
+
+open Finset
+open scoped Sigma.Lex
+
+local notation "ListBefore" => SourceAudit.BeforeIn
+
+variable {V I J : Type*} [LinearOrder V] [LinearOrder I] [LinearOrder J]
+
+/-- The starting incidence on the inner piece of each nested reversal
+that survives the given cuts. Several witnesses can share one incidence. -/
+def activeNestedOppositeStarts (paths : I → List V) (pieces : J → List V) (parent : J → I) : Set (J × V) :=
+  {a | CutRetainsNestedOppositesAt paths pieces parent a.1 a.2}
+
+/-- Remove the marked starts while keeping the original pieces and their order. -/
+noncomputable def removeActiveNestedOppositeStarts (paths : I → List V) (pieces : J → List V)
+    (parent : J → I) (i : J) : List V := by
+  classical
+  exact (pieces i).filter fun w => decide ((i,w) ∉ activeNestedOppositeStarts paths pieces parent)
+
+omit [LinearOrder J] in
+theorem removeActiveNestedOppositeStarts_sublist (paths : I → List V) (pieces : J → List V)
+    (parent : J → I) (i : J) : (removeActiveNestedOppositeStarts paths pieces parent i).Sublist (pieces i) :=
+  List.filter_sublist
+
+omit [LinearOrder J] in
+theorem removeActiveNestedOppositeStarts_mem {paths : I → List V} {pieces : J → List V}
+    {parent : J → I} {i : J} {w : V} :
+    w ∈ removeActiveNestedOppositeStarts paths pieces parent i ↔
+      w ∈ pieces i ∧ (i,w) ∉ activeNestedOppositeStarts paths pieces parent := by
+  simp [removeActiveNestedOppositeStarts]
+
+/-- Deleting exactly those starting incidences repairs the half-four
+exclusion for any ordered disjoint split of a half-four-free input. -/
+theorem removeActiveNestedOppositeStarts_halfFree {paths : I → List V} {pieces : J → List V}
+    (free : HalfBridgeFree (ListBefore paths) 4) (simple : ∀ i, (pieces i).Nodup)
+    (parent : J → I) (monotone : Monotone parent)
+    (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
+    (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
+    (ordered : ∀ {i j}, i ≠ j → parent i = parent j →
+      (∀ ⦃x y⦄, x ∈ pieces i → y ∈ pieces j → ListBefore paths (parent i) x y) ∨
+      (∀ ⦃x y⦄, x ∈ pieces j → y ∈ pieces i → ListBefore paths (parent i) x y)) :
+    HalfBridgeFree (ListBefore (removeActiveNestedOppositeStarts paths pieces parent)) 4 := by
+  let repaired := removeActiveNestedOppositeStarts paths pieces parent
+  have contained {i : J} {w : V} (mem : w ∈ repaired i) : w ∈ pieces i :=
+    (removeActiveNestedOppositeStarts_mem.mp mem).1
+  have lift {i : J} {x y : V} (step : ListBefore repaired i x y) : ListBefore pieces i x y :=
+    listBefore_of_sublist (simple i) (removeActiveNestedOppositeStarts_sublist paths pieces parent i) step
+  apply (free.split_ordered_iff_no_retained_nested parent monotone
+    (fun h => steps (lift h)) (fun ne eq left right => disjoint ne eq (contained left) (contained right)) ?_).mpr
+  · rintro ⟨inner,w,early,late,outer,u,v,z,neq,same,outerEarly,outerInner,earlier,vw,uv,wz,zu,wv⟩
+    exact (removeActiveNestedOppositeStarts_mem.mp wv.1).2
+      ⟨early,late,outer,u,v,z,neq,same,outerEarly,outerInner,earlier,vw,lift uv,lift wz,lift zu,lift wv⟩
+  · intro i j different same
+    rcases ordered different same with before | after
+    · left
+      intro x y left right
+      exact before (contained left) (contained right)
+    · right
+      intro x y left right
+      exact after (contained left) (contained right)
+
+omit [LinearOrder J] in
+/-- The number of removed incidences is exactly the number of marked starts. -/
+theorem removeActiveNestedOppositeStarts_mass [Fintype V] [Fintype J]
+    (paths : I → List V) (pieces : J → List V) (parent : J → I) (simple : ∀ i, (pieces i).Nodup) :
+    (∑ i, (removeActiveNestedOppositeStarts paths pieces parent i).length) +
+      Nat.card (activeNestedOppositeStarts paths pieces parent) = ∑ i, (pieces i).length := by
+  classical
+  let active := activeNestedOppositeStarts paths pieces parent
+  let kept := removeActiveNestedOppositeStarts paths pieces parent
+  let erased := (univ : Finset (J × V)).filter fun a => a ∈ active
+  have asSet : (erased : Set (J × V)) = active := by ext a; simp [erased]
+  have inside (i : J) (w : V) (mark : (i,w) ∈ active) : w ∈ pieces i := by
+    obtain ⟨_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,wv⟩ := mark
+    exact wv.1
+  have erasedSize : erased.card = ∑ i, ((pieces i).toFinset \ (kept i).toFinset).card := by
+    unfold erased
+    rw [card_filter,← univ_product_univ,Finset.sum_product]
+    apply sum_congr rfl
+    intro i _
+    rw [← card_filter]
+    congr 1
+    ext w
+    simp only [mem_filter,mem_univ,true_and,mem_sdiff,List.mem_toFinset,kept,removeActiveNestedOppositeStarts_mem]
+    exact ⟨fun mark => ⟨inside i w mark,fun kept => kept.2 mark⟩,
+      fun absent => Classical.byContradiction (fun notMarked => absent.2 ⟨absent.1,notMarked⟩)⟩
+  have activeSize : Nat.card active = erased.card := by
+    rw [← asSet]
+    change Nat.card (↥erased) = erased.card
+    rw [Nat.card_eq_fintype_card,Fintype.card_coe]
+  change (∑ i, (kept i).length)+Nat.card active = ∑ i, (pieces i).length
+  rw [activeSize,erasedSize,← sum_add_distrib]
+  apply sum_congr rfl
+  intro i _
+  let sub := removeActiveNestedOppositeStarts_sublist paths pieces parent i
+  have subset : (kept i).toFinset ⊆ (pieces i).toFinset := fun _ mem =>
+    List.mem_toFinset.mpr (sub.subset (List.mem_toFinset.mp mem))
+  rw [← List.toFinset_card_of_nodup (sub.nodup (simple i)),← List.toFinset_card_of_nodup (simple i),Nat.add_comm]
+  exact card_sdiff_add_card_eq_card subset
+
+variable {n p : ℕ}
+
+/-- The loss count for the actual degree and path width blocks. -/
+def widthCutActiveNestedStarts (paths : Fin p → List (Fin n)) (D L : ℕ) :
+    Set (ListBlockIndex (splitListVertices paths D) L × ListVertexBlockIndex paths D) :=
+  activeNestedOppositeStarts (splitListVertices paths D) (listRegularizedPaths paths D L) Sigma.fst
+
+/-- Repairing just the nested reversals that survive the original-width
+blocks gives both budgets and all four frozen caps if at most one twelfth
+of the original incidences are marked. -/
+theorem regularization_list_frozen_half_four_of_few_active_nested_starts (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (ListBefore paths) 4)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (few : let M := ∑ i, (paths i).length
+      12*Nat.card (widthCutActiveNestedStarts paths (4*M/n) (4*M/p)) ≤ M) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (ListBefore clean) 4 ∧
+      M ≤ 64*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let copies := splitListVertices paths D
+  let pieces := listRegularizedPaths paths D L
+  let parent : ListBlockIndex copies L → Fin p := Sigma.fst
+  let kept := removeActiveNestedOppositeStarts copies pieces parent
+  have copyFree : HalfBridgeFree (ListBefore copies) 4 :=
+    free.split_list_vertices_short le_rfl (fun v => v.fst) (fun step => splitListVertices_project_step paths simple D step)
+  have copySimple (i : Fin p) : (copies i).Nodup := by
+    apply List.Nodup.of_map (fun v => v.fst)
+    rw [splitListVertices_project]
+    exact simple i
+  have pieceSimple := listRegularizedPaths_simple paths simple D L
+  have sub (i : ListBlockIndex copies L) := removeActiveNestedOppositeStarts_sublist copies pieces parent i
+  have valid : HalfBridgeFree (ListBefore kept) 4 := by
+    apply removeActiveNestedOppositeStarts_halfFree copyFree pieceSimple parent
+      (block_parent_mono (fun i => (copies i).toFinset) L)
+    · intro i x y step
+      exact listBefore_of_sublist (paths := fun j : ListBlockIndex copies L => copies j.fst)
+        (cut := splitListPaths copies L) (copySimple i.fst) List.filter_sublist step
+    · intro i j x different same left right
+      rcases listBlocks_ordered copies L different same with before | after
+      · exact listBefore_ne (before left right) rfl
+      · exact listBefore_ne (after right left) rfl
+    · intro i j different same
+      exact listBlocks_ordered copies L different same
+  obtain ⟨dPos,dRoom,_⟩ := four_average_width hn dense
+  obtain ⟨lPos,lRoom,_⟩ := four_average_width hp long
+  obtain ⟨rawV,rawP⟩ := regularization_list_counts paths simple (D := D) (L := L) dPos lPos
+  have vertices : 3*Fintype.card (ListVertexBlockIndex paths D) ≤ 4*n := by
+    change 3*(M/D) ≤ n at dRoom
+    simp only [Fintype.card_fin] at rawV
+    change Fintype.card (ListVertexBlockIndex paths D) ≤ n+M/D at rawV
+    omega
+  have rows : 3*Fintype.card (ListBlockIndex copies L) ≤ 4*p := by
+    change 3*(M/L) ≤ p at lRoom
+    simp only [Fintype.card_fin] at rawP
+    change Fintype.card (ListBlockIndex copies L) ≤ p+M/L at rawP
+    omega
+  obtain ⟨pieceMass,length,degree⟩ := regularization_list_mass_caps paths simple D L dPos lPos
+  change (∑ i, (pieces i).length) = M at pieceMass
+  have total := removeActiveNestedOppositeStarts_mass copies pieces parent pieceSimple
+  rw [pieceMass] at total
+  change (∑ i, (kept i).length)+Nat.card (widthCutActiveNestedStarts paths D L) = M at total
+  change 12*Nat.card (widthCutActiveNestedStarts paths D L) ≤ M at few
+  have cap (x : ListVertexBlockIndex paths D) : (occurrences (fun i => (kept i).toFinset) x).card ≤ D := by
+    apply le_trans (card_le_card (t := occurrences (fun i => (pieces i).toFinset) x) ?_) (degree x)
+    intro i mem
+    have inside : x ∈ (kept i).toFinset := (mem_occurrences (marks := fun j => (kept j).toFinset)).mp mem
+    exact mem_occurrences.mpr (List.mem_toFinset.mpr ((sub i).subset (List.mem_toFinset.mp inside)))
+  exact regularization_list_frozen_after_caps_with_room_of_mass kept (fun i => (sub i).nodup (pieceSimple i))
+    (half := true) (k := 4) (retention := 64) valid hn hp dense long vertices rows
+    (fun i => (sub i).length_le.trans (length i)) cap (by omega) (by omega)
 
 end OnlineReachabilityPreservers

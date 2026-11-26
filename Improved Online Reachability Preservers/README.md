@@ -421,7 +421,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   full cutoff six or half cutoff four. Each case uses its own bridge
   exclusion on the input and output.
   [Frozen size-six cleaning](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L136)
-  · [Frozen half-four cleaning](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L335).
+  · [Frozen half-four cleaning](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L339).
 - Full bridge exclusion at every size bounds the loss under pruning to
   unique intersections by \(n-1\) for \(n>0\). Combining this bound with
   explicit low-mass witnesses gives the same frozen size-six conclusion
@@ -444,7 +444,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   retains at least \(M/32\). This holds at the unrestricted half-four
   maximum when \(p^2\ge16n^2(n-1)\).
   [Link count](OnlineReachabilityPreservers/OppositeLinkForest.lean#L877)
-  · [Cleaning at large path budgets](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L388).
+  · [Cleaning at large path budgets](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L392).
   Taking both orientations of each edge as two-vertex paths realizes
   every graph of girth greater than four as an opposite-link graph of
   a half-four-free family. The paths have four incidences per graph edge.
@@ -458,6 +458,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   budgets, a subset of at most \(M/8\) nested links gives a cleaned family
   with at least \(M/32\), both budgets, and all four original-average caps.
   [Cleaning with few nested links](OnlineReachabilityPreservers/NestedOppositeCleaning.lean#L147).
+  The [post-split repair](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L442)
+  marks the starting incidence of each inner step in a nested reversal
+  that actually survives the width cuts. If at most \(M/12\) incidences are
+  marked, the [repaired family](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L519)
+  has the same budgets and caps and retains at least \(M/64\).
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion

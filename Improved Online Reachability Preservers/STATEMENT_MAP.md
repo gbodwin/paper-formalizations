@@ -1040,7 +1040,7 @@ at least both positive budgets, there is a cleaned family within both
 budgets with the input's cutoff and bridge mode, all four original-average
 caps, and mass at least \(M/32\).
 [Full cutoff six](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L136)
-· [Half cutoff four](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L335).
+· [Half cutoff four](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L339).
 
 For an input excluding full bridges at every size, the same size-six
 cleaning conclusion holds at every mass at least both positive budgets.
@@ -1061,13 +1061,22 @@ uses triangle and four-cycle exclusion to inject ordered two-link walks
 into ordered pairs of distinct vertices. Cauchy–Schwarz gives
 \(4E^2\le n^2(n-1)\). For a simple half-four-free family with positive
 budgets and \(M\) at least both counts, the
-[incidence condition](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L365)
+[incidence condition](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L369)
 \(M^2\ge16n^2(n-1)\) gives \(8E\le M\) and hence a cleaned family
 with both original budgets, all four original-average caps, and
 retention of \(M/32\). At the unrestricted half-four maximum, the
-[path-budget condition](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L388)
+[path-budget condition](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L392)
 \(p^2\ge16n^2(n-1)\) suffices. The unrestricted original-average
 cleaning claim remains open.
+
+For any fixed ordered disjoint split, each retained nested reversal marks
+the starting incidence of its inner step. The
+[post-split repair](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L442)
+deletes exactly the [distinct marked incidences](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L472)
+and restores half exclusion through size four. For the original-width
+blocks, at most \(M/12\) such incidences suffice for
+[both budgets and all four original-average caps](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L519),
+with retention at least \(M/64\). A uniform bound on the marked count remains open.
 
 For any simple graph, take the two orientations of each edge as paths
 of two vertices. The [dart family](OnlineReachabilityPreservers/OppositeLinkForest.lean#L1041)

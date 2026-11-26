@@ -244,7 +244,7 @@ original widths expand each support by at most \(39/31\). Restriction
 keeps at least \((31/39)^2\) of the pruned mass before removing low
 incidences, which costs at most \(M/2\).
 [Full cutoff six](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L136)
-· [Half cutoff four](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L335).
+· [Half cutoff four](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L339).
 
 An input excluding full bridges at every size already has \(E\le n-1\).
 At higher mass this gives the required pruning bound automatically. The
