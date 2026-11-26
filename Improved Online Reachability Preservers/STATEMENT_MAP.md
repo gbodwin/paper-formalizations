@@ -1367,8 +1367,12 @@ keeps the original graph and history and charges the initialization once.
 The [sampled arrival theorem](OnlineReachabilityPreservers/SteinerBinaryArrivals.lean#L329)
 uses the fair-stream law to recover the same competitive expectation. Its
 fixed-height polynomial includes seed length computation, draws, array
-construction and the earlier mixed word and binary-list tally. A native
-execution bound remains open.
+construction and the earlier mixed word and binary-list tally. The
+[raw arc-list theorem](OnlineReachabilityPreservers/SteinerRawArcRows.lean)
+also constructs the graph from possibly repeated arc rows. It keeps the
+same bit count, prefix inclusion, and competitive expectation, with the
+graph construction included in the polynomial tally. Equality of finite
+vertex labels is a primitive in that tally. A native execution bound remains open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
