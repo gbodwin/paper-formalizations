@@ -1085,7 +1085,14 @@ deletes exactly the [distinct marked incidences](OnlineReachabilityPreservers/Co
 and restores half exclusion through size four. For the original-width
 blocks, at most \(M/12\) such incidences suffice for
 [both budgets and all four original-average caps](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L519),
-with retention at least \(M/64\). A uniform bound on the marked count remains open.
+with retention at least \(M/64\) after restriction and peeling. Each
+mark [charges a distinct incidence](OnlineReachabilityPreservers/ActiveNestedCutCounting.lean#L58)
+with a successor in a non-first central block. Exclusion through size
+three prevents two later rows from charging the same incidence. The
+[sum over block lengths](OnlineReachabilityPreservers/ActiveNestedCutCounting.lean#L35)
+counts these available incidences. If the sum is at most \(M/12\), the
+[same cleaning conclusion](OnlineReachabilityPreservers/ActiveNestedCutCounting.lean#L135)
+follows. Whether the marked count is always at most \(M/12\) remains open.
 
 For any simple graph, take the two orientations of each edge as paths
 of two vertices. The [dart family](OnlineReachabilityPreservers/OppositeLinkForest.lean#L1041)
