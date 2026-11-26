@@ -187,16 +187,47 @@ private theorem halfFiveDegreeRepair_heavy_mass (paths : Fin p → List (Fin n))
     change _ ≤ 2*(∑ v ∈ H, weight true v)
     omega
 
+/-- Clip degrees in a length-capped subsystem while charging the loss
+against the original mass and budgets. -/
+theorem regularization_list_frozen_half_five_after_degree_clipping {M P : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) 5) (hn : 0 < n) (hp : 0 < P)
+    (dense : n ≤ M) (long : P ≤ M) (rowCount : p ≤ P)
+    (lengthCap : ∀ i, (paths i).length ≤ 4*M/P) (upper : (∑ i, (paths i).length) ≤ M)
+    (enough : 5002*M+10000*listDegreeExcess paths (4*M/n) ≤ 10000*(∑ i, (paths i).length)) :
+    ∃ n' ≤ n, ∃ p' ≤ P, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) 5 ∧
+      M ≤ 5000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n P M clean := by
+  let D := 4*M/n
+  let clipped := clipListDegrees paths D
+  obtain ⟨counts,exactLoss⟩ := clipListDegrees_counts paths D simple
+  have mass : (∑ i, (clipped i).length) + listDegreeExcess paths D = ∑ i, (paths i).length :=
+    exactLoss
+  have admissible : localOrderAdmissible true 5 clipped := by
+    intro j small bridge earlier
+    exact free small (bridge.mapPaths id Function.injective_id
+      (fun i _ _ => listBefore_of_sublist (simple i) (clipListDegrees_sublist paths D i))) earlier
+  refine regularization_list_frozen_after_caps_with_ratios_of_mass
+    (vNum := 1) (vDen := 1) (pNum := 1) (pDen := 1)
+    clipped (fun i => (clipListDegrees_sublist paths D i).nodup (simple i))
+    admissible hn hp dense long (by decide) (by decide) le_rfl le_rfl
+    (by simp) (by simpa only [one_mul,Fintype.card_fin] using rowCount)
+    (fun i => (clipListDegrees_sublist paths D i).length_le.trans (lengthCap i))
+    (fun v => (counts v).trans_le (min_le_left _ _)) (by omega) ?_
+  change 5002*M ≤ 10000*(∑ i, (clipped i).length)
+  change 5002*M+10000*listDegreeExcess paths D ≤ 10000*(∑ i, (paths i).length) at enough
+  omega
+
 /-- The degree repair applies with the original length cap and with at
 least 43/50 of the original mass surviving. -/
-theorem regularization_list_frozen_half_five_after_length_cap {M : ℕ} (paths : Fin p → List (Fin n))
+theorem regularization_list_frozen_half_five_after_length_cap_with_path_budget {M P : ℕ} (paths : Fin p → List (Fin n))
     (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5)
-    (hn : 0 < n) (hp : 0 < p) (dense : 8*n ≤ M) (long : p ≤ M)
-    (lengthCap : ∀ i, (paths i).length ≤ 4*M/p)
+    (hn : 0 < n) (hp : 0 < P) (dense : 8*n ≤ M) (long : P ≤ M) (rowCount : p ≤ P)
+    (lengthCap : ∀ i, (paths i).length ≤ 4*M/P)
     (lower : 43*M ≤ 50*(∑ i, (paths i).length)) (upper : (∑ i, (paths i).length) ≤ M) :
-    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+    ∃ n' ≤ n, ∃ p' ≤ P, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) 5 ∧
-      M ≤ 5000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+      M ≤ 5000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n P M clean := by
   let D := 4*M/n
   let K := ∑ i, (paths i).length
   let T := listDegreeExcess paths D
@@ -211,21 +242,9 @@ theorem regularization_list_frozen_half_five_after_length_cap {M : ℕ} (paths :
   change 43*M ≤ 50*K at lower
   change K ≤ M at upper
   by_cases clip : 50*T ≤ 17*M
-  · let clipped := clipListDegrees paths D
-    obtain ⟨counts,exactLoss⟩ := clipListDegrees_counts paths D simple
-    have mass : (∑ i, (clipped i).length) + T = K := exactLoss
-    have admissible : localOrderAdmissible true 5 clipped := by
-      intro j small bridge earlier
-      exact free small (bridge.mapPaths id Function.injective_id
-        (fun i _ _ => listBefore_of_sublist (simple i) (clipListDegrees_sublist paths D i))) earlier
-    refine regularization_list_frozen_after_caps_with_ratios_of_mass
-      (vNum := 1) (vDen := 1) (pNum := 1) (pDen := 1)
-      clipped (fun i => (clipListDegrees_sublist paths D i).nodup (simple i))
-      admissible hn hp vertexBudget long (by decide) (by decide) le_rfl le_rfl
-      (by simp) (by simp)
-      (fun i => (clipListDegrees_sublist paths D i).length_le.trans (lengthCap i))
-      (fun v => (counts v).trans_le (min_le_left _ _)) (by omega) ?_
-    change 5002*M ≤ 10000*(∑ i, (clipped i).length)
+  · apply regularization_list_frozen_half_five_after_degree_clipping paths simple free hn hp vertexBudget
+      long rowCount lengthCap upper
+    change 5002*M+10000*T ≤ 10000*K
     omega
   let heavy := overfullCopies paths D
   let light := lightCopies paths D
@@ -262,22 +281,23 @@ theorem regularization_list_frozen_half_five_after_length_cap {M : ℕ} (paths :
     exact mem_occurrences.mpr (List.mem_toFinset.mpr ((sub i).subset present))
   have repairUpper : (∑ i, (repaired i).length) ≤ M :=
     (sum_le_sum (s := univ) fun i _ => lengthLe i).trans upper
-  have p0 : (p:ℝ) ≠ 0 := by exact_mod_cast hp.ne'
+  have p0 : (P:ℝ) ≠ 0 := by exact_mod_cast hp.ne'
   have n0 : (n:ℝ) ≠ 0 := by exact_mod_cast hn.ne'
-  have rowFee : (M:ℝ)/(4*(p:ℝ))*(Fintype.card (Fin p):ℝ) = (M:ℝ)/4 := by
-    rw [Fintype.card_fin]
-    field_simp [p0]
+  have rowFee : (M:ℝ)/(4*(P:ℝ))*(Fintype.card (Fin p):ℝ) ≤ (M:ℝ)/4 := calc
+    _ ≤ (M:ℝ)/(4*(P:ℝ))*(P:ℝ) := by
+      rw [Fintype.card_fin]
+      exact mul_le_mul_of_nonneg_left (Nat.cast_le.mpr rowCount) (by positivity)
+    _ = _ := by field_simp [p0]
   have finish (A : Finset (ListVertexBlockIndex paths D)) (room : A.card ≤ n)
       (enough : (M:ℝ)/5000 ≤ ((∑ v ∈ A, weight v : ℕ):ℝ)
         -(M:ℝ)/(4*(n:ℝ))*A.card-(M:ℝ)/4) :
-      ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      ∃ n' ≤ n, ∃ p' ≤ P, ∃ clean : Fin p' → List (Fin n'),
         (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) 5 ∧
-        M ≤ 5000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+        M ≤ 5000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n P M clean := by
     refine regularization_list_frozen_after_kept_vertices repaired repairSimple allowed hn hp vertexBudget
-      long (by decide) A room (by simp) (fun i => (lengthLe i).trans (lengthCap i))
-      degreeCap repairUpper ?_
-    rw [rowFee]
-    exact enough
+      long (by decide) A room (by simpa only [Fintype.card_fin] using rowCount)
+      (fun i => (lengthLe i).trans (lengthCap i)) degreeCap repairUpper ?_
+    exact enough.trans (sub_le_sub_left rowFee _)
   by_cases large : 31*M ≤ 50*S
   · apply finish heavy fits
     have realWidth : (D:ℝ)*(Q:ℝ)+(T:ℝ) ≤ 2*(S:ℝ) := by
@@ -316,6 +336,19 @@ theorem regularization_list_frozen_half_five_after_length_cap {M : ℕ} (paths :
     _ = _ := by field_simp [n0]
   have realMass : 251*(M:ℝ) ≤ 500*((∑ v ∈ heavy ∪ kept, weight v : ℕ):ℝ) := by exact_mod_cast mass
   linarith only [fullFee,realMass,show (0:ℝ) ≤ M by positivity]
+
+/-- The degree repair applies with the original length cap and with at
+least 43/50 of the original mass surviving. -/
+theorem regularization_list_frozen_half_five_after_length_cap {M : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5)
+    (hn : 0 < n) (hp : 0 < p) (dense : 8*n ≤ M) (long : p ≤ M)
+    (lengthCap : ∀ i, (paths i).length ≤ 4*M/p)
+    (lower : 43*M ≤ 50*(∑ i, (paths i).length)) (upper : (∑ i, (paths i).length) ≤ M) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) 5 ∧
+      M ≤ 5000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_half_five_after_length_cap_with_path_budget
+    paths simple free hn hp dense long le_rfl lengthCap lower upper
 
 /-- Small total excess at the original length cap suffices for frozen
 half-five cleaning even when two paths can meet more than once. -/

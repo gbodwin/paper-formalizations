@@ -1430,7 +1430,7 @@ half-five-free input with positive budgets and incidence mass \(M\) at
 least both budgets. Its witness preserves half-five exclusion, fits both
 budgets, and meets all four original-average caps. The bounded-excess proof
 uses a two-color deletion on overfull vertices and charges peeling to the
-chosen vertex support. Half-five cleaning for general inputs remains open.
+chosen vertex support.
 
 For half-five-free input with the same budget and mass assumptions,
 [overlong subfamily pruning](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L274)
@@ -1443,6 +1443,15 @@ keeps at least \(13M/24\), [trimming both supports](OnlineReachabilityPreservers
 keeps \(M/288\). The latter threshold follows from at least \(M/12\)
 nonempty paths or at most \(11M/24\) opposite links. All these witnesses
 preserve half-five exclusion within both budgets and all four frozen caps.
+
+[Path-cut repair](OnlineReachabilityPreservers/HalfFivePathCleaning.lean)
+at half cutoff five uses the same input assumptions. Let \(E\) count
+distinct participating piece incidences where one comparison crosses a
+length-width cut and its reverse stays within a piece of the other parent.
+Let \(U\) be the total original degree excess above \(\lfloor4M/n\rfloor\).
+The \(M/5000\) guarantee holds if \(20E\le3M\) or
+\(100U+50E\le43M\). It preserves half-five exclusion and all four caps
+within both original budgets. Half-five cleaning for general inputs remains open.
 
 For Lemmas 23 and 39, the [contiguous six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)
 uses the original relative order of pieces in addition to the mirrored-cut

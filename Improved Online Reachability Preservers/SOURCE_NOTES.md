@@ -312,8 +312,7 @@ partner of the fourth at this corner. The two incidences have different
 colors, and the original degree at the corner exceeds the width. Keeping
 one color on the overfull vertices prevents the new bridge. Bounding
 degree excess and trimming the light copies gives an \(M/5000\) witness
-after clipping at most \(7M/50\) incidences to the length cap. A general
-path-split repair through size five remains open.
+after clipping at most \(7M/50\) incidences to the length cap.
 [Degree repair](OnlineReachabilityPreservers/HalfFiveDegreeRepair.lean)
 · [Length excess and vertex budget](OnlineReachabilityPreservers/HalfFiveCleaning.lean).
 
@@ -330,6 +329,24 @@ and each removed incidence charges a distinct opposite link. These facts
 give the same bound with at least \(M/12\) nonempty rows or at most
 \(11M/24\) opposite links.
 [Pruned family criteria](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L650).
+
+An opposite comparison can cross a length cut in either the earlier or
+the later parent, with the reverse comparison wholly inside a piece of
+the other parent. At the shared corner the two participating piece
+incidences have different reverse-partner colors. Deleting one color
+covers these comparisons, and the disjoint-piece lift preserves half
+exclusion through size five. Let \(E\) count distinct participating
+piece incidences and \(U\) be the total degree excess above
+\(\lfloor4M/n\rfloor\). Trimming the path pieces to the original budget
+loses at most \(2M/31\) in the dense case, and deleting the smaller color
+loses at most \(E/2\). During these path operations, no vertex gains
+degree because pieces from one parent are disjoint.
+When \(20E\le3M\), the degree repair finishes the cleaning. When
+\(100U+50E\le43M\), clipping degrees suffices. Each branch retains
+\(M/5000\) with both budgets and all four original caps. A mass guarantee
+for the path repair outside these and the other checked conditions remains open.
+[Crossed opposite comparisons](OnlineReachabilityPreservers/HalfFivePathRepair.lean)
+· [Path budget and joint clipping criterion](OnlineReachabilityPreservers/HalfFivePathCleaning.lean).
 
 Consecutive common vertices on two oppositely ordered paths define an
 undirected link. If the family excludes full bridges through size three,

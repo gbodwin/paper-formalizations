@@ -597,6 +597,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   pruning retains at least \(13M/24\). This holds when at least \(M/12\) paths
   are nonempty or there are at most \(11M/24\) opposite-neighbor links.
   [Pruning and trimming both supports](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L650).
+- At the original path width, let \(E\) count distinct piece incidences
+  where one comparison crosses its parent's cut and the reverse comparison
+  lies within a piece of the other parent. Let \(U\) count the original
+  degree excess above \(\lfloor4M/n\rfloor\).
+  [Repairing the path cuts](OnlineReachabilityPreservers/HalfFivePathCleaning.lean)
+  keeps \(M/5000\) at half cutoff five when \(20E\le3M\) or
+  \(100U+50E\le43M\). The witness fits both original budgets and
+  meets all four original-average caps.
 - If either positive budget is at most 29, an unrestricted maximum at any
   cutoff of at least two has a witness with both budgets, all four frozen
   caps, and at least \(M/8\) incidences. The witness excludes full bridges

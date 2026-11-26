@@ -230,7 +230,8 @@ private theorem pieceIncidences_erase (pieces : J → List V) (rows : Finset J) 
   simp only [mem_pieceIncidences,mem_erasePieceIncidences,mem_sdiff,and_assoc]
 
 omit [Fintype J] in
-private theorem erased_mass_add_loss {pieces : J → List V} (simple : ∀ i, (pieces i).Nodup)
+/-- On selected rows, count each erased incidence once in the mass loss. -/
+theorem erasePieceIncidences_mass_add_loss {pieces : J → List V} (simple : ∀ i, (pieces i).Nodup)
     (rows : Finset J) (deleted : Finset (J × V)) :
     (∑ i ∈ rows, (erasePieceIncidences pieces deleted i).length) +
       (pieceIncidences pieces rows ∩ deleted).card = ∑ i ∈ rows, (pieces i).length := by
@@ -244,8 +245,8 @@ private theorem erased_two_colors_mass {pieces : J → List V} (simple : ∀ i, 
     (∑ i ∈ rows, (erasePieceIncidences pieces left i).length) +
       (∑ i ∈ rows, (erasePieceIncidences pieces right i).length) +
       (pieceIncidences pieces rows ∩ (left ∪ right)).card = 2*(∑ i ∈ rows, (pieces i).length) := by
-  have leftMass := erased_mass_add_loss simple rows left
-  have rightMass := erased_mass_add_loss simple rows right
+  have leftMass := erasePieceIncidences_mass_add_loss simple rows left
+  have rightMass := erasePieceIncidences_mass_add_loss simple rows right
   rw [inter_union_distrib_left,card_union_of_disjoint]
   · omega
   · exact disjoint.mono inter_subset_right inter_subset_right
@@ -287,7 +288,7 @@ theorem nestedCut_repair_budget {paths : Fin p → List V} {pieces : J → List 
   by_cases enoughHeavy : 3*M+10*B ≤ 10*S
   · refine ⟨targets,heavy,?_,heavyFits,Or.inl ⟨rfl,?_⟩⟩
     · exact fun {a b} edge => Or.inr (mem_filter.mpr ⟨mem_univ _,a,edge⟩)
-    · have mass := erased_mass_add_loss simple heavy targets
+    · have mass := erasePieceIncidences_mass_add_loss simple heavy targets
       rw [inter_comm] at mass
       change (∑ i ∈ heavy, (erasePieceIncidences pieces targets i).length)+B = S at mass
       change 3*M ≤ 10*(∑ i ∈ heavy, (erasePieceIncidences pieces targets i).length)
