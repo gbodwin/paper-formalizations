@@ -465,6 +465,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   full-graph fallback. Its bound adds the hub word work and the binary thin
   work. Integrating the seeded early phase and proving the complete bit
   and native execution bounds remain open.
+  In the early weighted cover, the [binary charge update](OnlineReachabilityPreservers/SteinerBinaryWeightedLoadWork.lean#L44)
+  maintains the remainder, doubling factor, and exact weighted numerator
+  for one paid edge, with a bound in the input word widths.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

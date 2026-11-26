@@ -1209,6 +1209,14 @@ zero for the supplied hubs, seed index and feasible suffix. The bound adds
 the existing hub word work to the thin work at the supplied widths and
 counts. It is a bound for this mixed cost model.
 
+The [binary weighted charge update](OnlineReachabilityPreservers/SteinerBinaryWeightedLoadWork.lean#L44)
+stores the current remainder, doubling factor, and weighted numerator for
+one positive-cost edge. It adds the factor to the numerator and resets the
+remainder and doubles the factor at the cost boundary. The two additions
+and comparison have a bound in their input word widths. Building the
+weighted capacity table and integrating the update into the early cover
+remain separate obligations.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
