@@ -1134,6 +1134,14 @@ also computes the interval. Both entries take the pair keys, count words,
 and current binary load cells as inputs. The tally includes the capacity
 construction and the bounded solver.
 
+The [binary thin loop](OnlineReachabilityPreservers/SteinerBinaryThinLoopWork.lean#L148)
+builds the demand interval once. Every successful separator call updates
+the current loads on exactly the outgoing cut. The final table and update
+count agree with the reference fractional loop at the supplied fuel. The
+fixed payload must fit the reference load cap, and the supplied original
+arc list must be distinct. For one feasible demand, the charge includes
+the interval setup, every update and at most one terminal cut test.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
