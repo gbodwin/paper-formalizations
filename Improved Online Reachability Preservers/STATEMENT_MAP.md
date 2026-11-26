@@ -714,7 +714,7 @@ outside the work bound.
 The [charge magnitude bound](OnlineReachabilityPreservers/SteinerWeightedChargeWork.lean#L544)
 adds at most one unit per accepted cut to any starting charge. At fixed
 separator fuel, the total increase is at most the fuel times the number
-of requests. The [measured rounding evaluator](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L1235)
+of requests. The [measured rounding evaluator](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L1468)
 accepts a charge reader that reports its work. At each paid ancestor
 capacity query it counts the forest membership test, the weight and
 charge reads, and the rounded capacity arithmetic. Under the stated
@@ -834,8 +834,16 @@ length. The [list minimum](OnlineReachabilityPreservers/SteinerRoundingWork.lean
 returns the same capped capacity and charges enumeration, supplied
 reads, and comparisons. The [cutoff from these rows](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L429)
 charges building the parent history and both minima. It gives the
-reference cutoff when supplied the two correct powers. This is a
-standalone evaluation, and the complete rounding integration is open.
+reference cutoff when supplied the two correct powers. The
+[forest trials](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L1503)
+now charge each gate and use these routines for the reached thresholds.
+Each evaluated link and tier shares its two powers across the threshold
+checks. The checked graph agrees with the previous charge-based trials.
+The word bound includes the tier arithmetic, actual ancestor traversal,
+and the parent arcs used as capacity keys. The seed-read bound is separate. The
+[subset property](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L1554)
+keeps every link in the input forest. Trial and tier containers,
+whole-replay integration, and bit costs remain open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
