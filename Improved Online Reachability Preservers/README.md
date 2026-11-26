@@ -486,6 +486,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   is at most the sum of the lengths minus one, truncated at zero, over
   the non-first blocks. The [same cleaning guarantee](OnlineReachabilityPreservers/FrozenBlockTrimming.lean#L177)
   follows when this sum is at most \(M/4\).
+  A [73-incidence example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
+  marks at least 19 starts at the prescribed widths. The same family
+  [has a clean witness](OnlineReachabilityPreservers/AverageSplitAudit.lean#L447)
+  from the low-mass construction.
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion
@@ -704,6 +708,7 @@ The library is included in the repository's module index, declaration audit,
 and kernel replay.
 
 The companion PaperLab includes an interactive trace and a source-linked
-proof map. General cyclic cleaning at a prescribed finite bridge cutoff
-and the end-to-end Steiner running-time bound remain open.
+proof map. Open cases include general cyclic half-four cleaning, full
+cleaning under only a finite cutoff of six or more, and the end-to-end
+Steiner running-time bound.
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).

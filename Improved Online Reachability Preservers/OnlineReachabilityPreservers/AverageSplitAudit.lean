@@ -368,4 +368,90 @@ theorem mutualNestedRows_nonmaximal :
   exact ⟨competitor,by decide,fun k =>
     padSingletonPaths_free _ _ (fun j => oppositeRows_bridge_free 6 (j+2) le_rfl) k,by decide⟩
 
+private def quarterMarkCore : Fin 3 → List (Fin 40) :=
+  ![List.finRange 40, [39,0], (List.finRange 20).reverse.map fun j => ⟨j.val+19,by omega⟩]
+
+/-- A long row, two disjoint reverse intervals, and eleven singleton rows. -/
+def quarterMarkExample : Fin 14 → List (Fin 40) :=
+  padSingletonPaths quarterMarkCore (fun _ => 0)
+
+set_option maxRecDepth 32768 in
+set_option maxHeartbeats 5000000 in
+private theorem quarterMarkCore_free (k : ℕ) : IsEmpty (Bridge (BeforeIn quarterMarkCore) k) := by
+  have intersects : ∀ (a b : Fin 3) (x : Fin 40), a ≠ b →
+      x ∈ quarterMarkCore a → x ∈ quarterMarkCore b → a = 0 ∨ b = 0 := by decide
+  have forward : ∀ x y : Fin 40, BeforeIn quarterMarkCore 0 x y → x < y := by
+    unfold BeforeIn
+    decide
+  have backward : ∀ (a : Fin 3) (x y : Fin 40), a ≠ 0 → BeforeIn quarterMarkCore a x y → y < x := by
+    unfold BeforeIn
+    decide
+  refine star_family_bridge_free quarterMarkCore 0 ?_ intersects k
+  intro a b x y different ha hb
+  rcases intersects a b x different ha.1 hb.1 with rfl | rfl
+  · exact (forward x y ha).asymm (backward b x y different.symm hb)
+  · exact (forward x y hb).asymm (backward a x y different ha)
+
+/-- The input already excludes full bridges at every size and has no empty row. -/
+theorem quarterMarkExample_parameters :
+    (∀ k, IsEmpty (Bridge (BeforeIn quarterMarkExample) k)) ∧
+      (∀ i, (quarterMarkExample i).Nodup ∧ (quarterMarkExample i) ≠ []) ∧
+      (∑ i, (quarterMarkExample i).length) = 73 :=
+  ⟨padSingletonPaths_free _ _ quarterMarkCore_free,by decide,by decide⟩
+
+private abbrev QuarterCopy := ListVertexBlockIndex quarterMarkExample 7
+private abbrev QuarterPiece := ListBlockIndex (splitListVertices quarterMarkExample 7) 20
+
+private def firstQuarterCopy (x : Fin 40) : QuarterCopy := ⟨x,⟨0,Nat.succ_pos _⟩⟩
+private def earlyQuarterPiece : QuarterPiece := ⟨0,⟨0,by decide⟩⟩
+private def lateQuarterPiece : QuarterPiece := ⟨0,⟨1,by decide⟩⟩
+private def outerQuarterPiece : QuarterPiece := ⟨1,⟨0,by decide⟩⟩
+private def innerQuarterPiece : QuarterPiece := ⟨2,⟨0,by decide⟩⟩
+private def quarterMarkedVertex (i : Fin 19) : QuarterCopy := firstQuarterCopy ⟨20+i.val,by omega⟩
+
+set_option maxRecDepth 65536 in
+set_option maxHeartbeats 12000000 in
+private theorem quarterMarkExample_active (i : Fin 19) :
+    (innerQuarterPiece,quarterMarkedVertex i) ∈ widthCutActiveNestedStarts quarterMarkExample 7 20 := by
+  have different : earlyQuarterPiece ≠ lateQuarterPiece := by
+    intro eq
+    have positions := congrArg (fun x : QuarterPiece => x.snd.val) eq
+    change 0 = 1 at positions
+    omega
+  have onlyOuter : outerQuarterPiece.fst ≠ earlyQuarterPiece.fst := by decide
+  have otherInner : outerQuarterPiece.fst ≠ innerQuarterPiece.fst := by decide
+  have arrival : earlyQuarterPiece.fst < innerQuarterPiece.fst := by decide
+  refine ⟨earlyQuarterPiece,lateQuarterPiece,outerQuarterPiece,firstQuarterCopy 0,firstQuarterCopy 19,
+    firstQuarterCopy 39,different,rfl,onlyOuter,otherInner,arrival,?_⟩
+  fin_cases i <;> unfold BeforeIn <;> decide
+
+/-- The marked-start count can exceed one quarter of the original mass
+at the exact original-average widths. -/
+theorem quarterMarkExample_exceeds_quarter :
+    let M := ∑ i, (quarterMarkExample i).length
+    M < 4*Nat.card (widthCutActiveNestedStarts quarterMarkExample (4*M/40) (4*M/14)) := by
+  dsimp only
+  rw [quarterMarkExample_parameters.2.2,show 4*73/40 = 7 by decide,show 4*73/14 = 20 by decide]
+  let marked (i : Fin 19) : widthCutActiveNestedStarts quarterMarkExample 7 20 :=
+    ⟨(innerQuarterPiece,quarterMarkedVertex i),quarterMarkExample_active i⟩
+  have injective : Function.Injective marked := by
+    intro i j equal
+    have values := congrArg (fun x : widthCutActiveNestedStarts quarterMarkExample 7 20 => x.val.2.fst.val) equal
+    change 20+i.val = 20+j.val at values
+    exact Fin.ext (by omega)
+  have count := Nat.card_le_card_of_injective marked injective
+  rw [Nat.card_fin] at count
+  omega
+
+/-- This same family admits a clean witness at the original averages. -/
+theorem quarterMarkExample_cleans :
+    ∃ n' ≤ 40, ∃ p' ≤ 14, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (BeforeIn clean) 4 ∧
+      73 ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ 73 ∧ frozenListCaps 40 14 73 clean := by
+  obtain ⟨free,simple,mass⟩ := quarterMarkExample_parameters
+  have half : HalfBridgeFree (BeforeIn quarterMarkExample) 4 := fun _ _ b _ => (free _).false b
+  have result := regularization_list_frozen_low_mass quarterMarkExample (fun i => (simple i).1)
+    half (by decide) (by decide) (by decide) (by decide) (by decide) (by decide)
+  simpa only [mass] using result
+
 end OnlineReachabilityPreservers.SourceAudit

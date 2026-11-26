@@ -1145,6 +1145,12 @@ half-four criterion applies when either the
 or the [later nonterminal count](OnlineReachabilityPreservers/FrozenBlockTrimming.lean#L177)
 is at most \(M/4\).
 
+The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
+has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
+and nonempty simple rows. At the prescribed widths \(7\) and \(20\) it
+marks at least 19 starts. The [same input has a clean witness](OnlineReachabilityPreservers/AverageSplitAudit.lean#L447)
+at the original averages from the low-mass construction.
+
 For any simple graph, take the two orientations of each edge as paths
 of two vertices. The [dart family](OnlineReachabilityPreservers/OppositeLinkForest.lean#L1041)
 excludes full bridges through a cutoff exactly when the graph's girth
