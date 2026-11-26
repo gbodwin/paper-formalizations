@@ -5,14 +5,14 @@ import OnlineReachabilityPreservers.SteinerCutFlow
 
 namespace OnlineReachabilityPreservers
 
-private def reverseBinaryArcRowsWithWork :
+def reverseBinaryArcRowsWithWork :
     List (List Bool × List Bool) → List (List Bool × List Bool) × ℕ
   | [] => ([],2)
   | e::rest =>
     let tail := reverseBinaryArcRowsWithWork rest
     (e.swap::tail.1,tail.2+5)
 
-private theorem reverseBinaryArcRowsWithWork_spec {V : Type*} (code : V → List Bool)
+theorem reverseBinaryArcRowsWithWork_spec {V : Type*} (code : V → List Bool)
     (arcs : List (V × V)) :
     reverseBinaryArcRowsWithWork (binaryEncodeArcs code arcs) =
       (binaryEncodeArcs code (arcs.map Prod.swap),2+5*arcs.length) := by

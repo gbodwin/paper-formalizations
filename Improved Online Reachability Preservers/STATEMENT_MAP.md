@@ -1109,6 +1109,15 @@ computes the lesser of \(2^\ell\) and the supplied ceiling. It scans at most
 the ceiling's width to build a candidate. Both its output width and the
 polynomial list-and-bit tally are bounded by the supplied input widths.
 
+The [binary interval evaluator](OnlineReachabilityPreservers/SteinerBinaryIntervalWork.lean#L138)
+uses reverse search on the swapped rows to find vertices reachable from the
+source. A reverse search on the original rows finds vertices that can reach
+the target. The evaluator retains each original
+arc whose endpoints pass both tests. At vertex-count depth it agrees exactly
+with ordered filtering by the reference demand interval, including repeated
+rows. The charged work covers both searches and the arc scan on the supplied
+encoded graph.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

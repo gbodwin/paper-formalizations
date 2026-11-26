@@ -437,7 +437,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   preserves the exact reference response when each nonnegative capacity is
   capped at the supply. The [binary clipped power](OnlineReachabilityPreservers/SteinerBinaryClippedPowerWork.lean#L89)
   evaluates a capped power of two within the supplied word widths.
-  Generating the capacity rows from the replay state and integrating the
+  The [binary demand interval](OnlineReachabilityPreservers/SteinerBinaryIntervalWork.lean#L138)
+  obtains the exact ordered interval arcs from the supplied encoded graph.
+  Generating the capacities from the replay state and integrating the
   remaining phases still need bit or native execution bounds.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
