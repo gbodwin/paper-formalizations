@@ -117,4 +117,12 @@ theorem binaryThinCapacityRowsWithWork_spec {n labels width : ℕ} (table : FinT
       rw [Nat.succ_mul rest.length]
       omega
 
+theorem binaryThinCapacityRowsWorkBudget_mono_active (n rows base labels payload ceiling : ℕ) :
+    Monotone (fun active => binaryThinCapacityRowsWorkBudget n active rows base labels payload ceiling) := by
+  intro smaller larger fits
+  change binaryThinCapacityRowsWorkBudget n smaller rows base labels payload ceiling ≤
+    binaryThinCapacityRowsWorkBudget n larger rows base labels payload ceiling
+  unfold binaryThinCapacityRowsWorkBudget binaryThinCapacityRowWorkBudget
+  gcongr
+
 end OnlineReachabilityPreservers

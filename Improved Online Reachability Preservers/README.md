@@ -445,8 +445,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   computes the interval, capacities, and reference outgoing cut from the
   original encoded graph and current binary load cells. The [binary thin loop](OnlineReachabilityPreservers/SteinerBinaryThinLoopWork.lean#L148)
   prepares the interval once and carries out each load update on the same
-  represented table for one feasible demand with supplied fuel. Running
-  the complete replay and accounting for native execution remain open.
+  represented table for one feasible demand with supplied fuel. The [binary fractional cover](OnlineReachabilityPreservers/SteinerBinaryThinCoverWork.lean#L155)
+  initializes the zero table at a sufficient width and carries its state
+  across all arrivals. The total number of updates is bounded by the
+  reference load potential. Rounding and the rest of the complete replay
+  still need integration, along with native execution bounds.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

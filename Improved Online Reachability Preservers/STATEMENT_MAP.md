@@ -1142,6 +1142,16 @@ fixed payload must fit the reference load cap, and the supplied original
 arc list must be distinct. For one feasible demand, the charge includes
 the interval setup, every update and at most one terminal cut test.
 
+The [chronological binary fractional run](OnlineReachabilityPreservers/SteinerBinaryThinCoverWork.lean#L42)
+passes the updated table directly to the next feasible demand and uses the
+reference fuel for each request. The total load increases by at least the
+number of successful updates. Its [entry from zero](OnlineReachabilityPreservers/SteinerBinaryThinCoverWork.lean#L155)
+chooses a payload one bit wider than the supplied ceiling word and agrees
+with the reference fractional cover. With \(m\) arcs, at most
+\(m(1+\lfloor\log_2 m\rfloor)\) successful updates occur across the whole
+trace, with zero updates at \(m=0\). The graph and demand encodings, pair
+enumeration, and numeric controls are supplied.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
