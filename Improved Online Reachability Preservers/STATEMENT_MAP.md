@@ -1217,8 +1217,14 @@ and comparison have a bound in their input word widths. The [capped weighted cap
 reuses the numerator, increments a binary candidate and its stored cost
 multiple, and stops when the multiple reaches the numerator or the flow
 supply is reached. It returns the exact clipped rounded capacity. The
-bound is polynomial in the numeric supply and the input word widths.
-Building the weighted table and integrating the early cover remain open.
+bound is polynomial in the numeric supply and the input word widths. The
+[weighted cut](OnlineReachabilityPreservers/SteinerBinaryWeightedCutWork.lean#L155)
+checks each supplied pair against the free arcs for the request. Free arcs
+have full supply, paid arcs use their clipped capacity, and absent pairs
+have zero capacity. On the complete represented pair table, the binary
+separator returns the exact optional reference paid cut. The bound charges
+table preparation and the bounded flow computation. Pair states and free
+rows are supplied. The chronological early cover remains to be integrated.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
