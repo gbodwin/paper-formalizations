@@ -529,6 +529,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   depends only on the vertex and arc counts, raw arc list length, forest
   height, and demand count. The same theorem checks the reference graph
   at every feasible prefix and the exact evaluation count.
+  The [executable competitive bound](OnlineReachabilityPreservers/SteinerBinaryReplayCompetitive.lean#L56)
+  applies Theorem 21 to the final graph returned by this replay. Uniform
+  fixed-length seeds give the claimed expected edge bound on every fixed
+  feasible trace, against any offline subgraph that serves it.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

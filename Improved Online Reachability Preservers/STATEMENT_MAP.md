@@ -1320,6 +1320,13 @@ original vertex count and forest height. With this allowance, the
 gives the exact feasible prefix graphs and evaluation count together
 with a common bound on all eight work fields. The bound uses only the
 vertex and arc counts, raw arc list length, height, and number of requests.
+The [returned graph](OnlineReachabilityPreservers/SteinerBinaryReplayCompetitive.lean#L22)
+is the last executable record and equals the reference for every seed.
+It [serves all feasible requests](OnlineReachabilityPreservers/SteinerBinaryReplayCompetitive.lean#L36)
+and [keeps every edge bought on an earlier prefix](OnlineReachabilityPreservers/SteinerBinaryReplayCompetitive.lean#L46).
+The [finite-seed expected bound](OnlineReachabilityPreservers/SteinerBinaryReplayCompetitive.lean#L56)
+applies directly to this executable graph. It uses one fixed feasible trace
+and any serving offline subgraph.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
