@@ -426,7 +426,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   The [terminal cut comparison](OnlineReachabilityPreservers/SteinerCutFlow.lean#L567)
   lets a cut implementation choose any valid augmenting paths. A valid flow
   that attains the supply or stalls gives the same reference result.
-  Initializing the table, selecting paths and cuts, and carrying out the
+  The [binary route search](OnlineReachabilityPreservers/SteinerBinaryPathWork.lean#L297)
+  finds a shortest simple path in supplied encoded arcs up to a specified depth.
+  It uses the supplied arc order to choose among shortest paths. Initializing
+  the flow table, running the complete cut sequence, and carrying out the
   remaining phases still need bit or native execution bounds.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex

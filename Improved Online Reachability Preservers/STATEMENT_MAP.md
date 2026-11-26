@@ -1082,6 +1082,14 @@ have equal values and equal residual source sides. The [bounded separator compar
 therefore obtains the exact reference response upon reaching the supply or
 stalling below it, even if the underlying valid flows differ.
 
+The [binary route search](OnlineReachabilityPreservers/SteinerBinaryPathWork.lean#L297)
+tests reverse reachability in increasing depth order, then chooses the first
+arc into the previous layer at each step. A returned route is simple and
+shortest, and failure means the target is unreachable at the supplied depth.
+The tally charges the depth tests, the searches during reconstruction, and
+label comparisons on the input arc list. The source and target use the
+same injective labels as the supplied arcs.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
