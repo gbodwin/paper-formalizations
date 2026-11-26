@@ -492,6 +492,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   marks at least 19 starts at the prescribed widths. The same family
   [has a clean witness](OnlineReachabilityPreservers/AverageSplitAudit.lean#L447)
   from the low-mass construction.
+- A [common vertex partition with clipping](OnlineReachabilityPreservers/ClippedVertexPartitions.lean#L127)
+  bounds the loss by the number of ordered vertex pairs on the selected
+  paths divided by \(q(4L-2)\), where \(q\) is the number of parts and
+  \(L\) is the path cap. Every bridge stays within one part. With room
+  for all path pieces and enough mass after clipping, the
+  [frozen cleaning theorem](OnlineReachabilityPreservers/ClippedVertexPartitions.lean#L198)
+  attains both budgets and all four caps with at least \(M/16\).
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion

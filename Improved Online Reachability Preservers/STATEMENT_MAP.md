@@ -1158,6 +1158,17 @@ and nonempty simple rows. At the prescribed widths \(7\) and \(20\) it
 marks at least 19 starts. The [same input has a clean witness](OnlineReachabilityPreservers/AverageSplitAudit.lean#L447)
 at the original averages from the low-mass construction.
 
+The [clipped partition theorem](OnlineReachabilityPreservers/ClippedVertexPartitions.lean#L127)
+averages over common vertex assignments to \(q\) parts. An ordered pair
+of distinct vertices shares a part in one \(q\)-th of the assignments.
+A piece of length \(x\) supplies \(x(x-1)\) such ordered pairs, enough
+to pay \((4L-2)(x-L)\) when it is clipped at \(L\). With room for
+one piece per selected path and part, retaining three quarters of the
+original mass after this loss is sufficient for the
+[frozen cleaning conclusion](OnlineReachabilityPreservers/ClippedVertexPartitions.lean#L198).
+It preserves full exclusion at any cutoff. For half exclusion it uses
+the safe degree split through size four or already capped degrees.
+
 For any simple graph, take the two orientations of each edge as paths
 of two vertices. The [dart family](OnlineReachabilityPreservers/OppositeLinkForest.lean#L1041)
 excludes full bridges through a cutoff exactly when the graph's girth
