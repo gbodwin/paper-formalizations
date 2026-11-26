@@ -1026,6 +1026,15 @@ of girth greater than four occurs as an opposite-link graph for half
 exclusion through four. With positive budgets and mass at least both
 counts, these two-vertex paths already fall in the low-mass cleaning regime.
 
+The [finite field construction](OnlineReachabilityPreservers/OppositeLinkDensity.lean#L120)
+uses points and nonvertical lines over a prime field of order \(q\).
+This graph has \(2q^2\) vertices and at least \(q^3\) edges. Two
+distinct points lie on at most one common line, which excludes
+four-cycles, and bipartiteness excludes triangles. For every constant
+\(C\), a sufficiently large prime gives a simple indexed half-four
+family with two vertices per path and \(E>Cn\) opposite links. Its
+mass is \(2p\), and it falls in the low-mass cleaning regime.
+
 | Source | Mathematical obligation |
 | --- | --- |
 | Definition 2 | Half-\(k\)-bridge-free means no bridge of size at most \(k\) whose last arc precedes the river. |

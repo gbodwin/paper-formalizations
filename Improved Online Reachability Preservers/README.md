@@ -431,6 +431,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   every graph of girth greater than four as an opposite-link graph of
   a half-four-free family. The paths have four incidences per graph edge.
   [Dart construction](OnlineReachabilityPreservers/OppositeLinkForest.lean#L1041).
+  Point and line incidence over a finite prime field gives such systems
+  with more opposite links than any fixed multiple of the vertex count.
+  [Finite field construction](OnlineReachabilityPreservers/OppositeLinkDensity.lean#L120).
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion
