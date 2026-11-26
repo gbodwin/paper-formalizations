@@ -1271,7 +1271,11 @@ cost from the metered hop reader and builds each request's source and sink
 leaf attachments. Given the exact prepared paid and free classes, the
 result agrees with the reference fractional forest run. Its work bound
 includes the measured requests, keys, labels, and weighted trace. The
-binary-to-rounding connection remains open at this entry.
+[binary capacity reader](OnlineReachabilityPreservers/SteinerBinaryWeightedUnitsWork.lean#L87)
+charges its encoded key scan, clipped capacity calculation, and numeric
+decode. The [clipping lemma for ancestor cutoffs](OnlineReachabilityPreservers/SteinerBinaryWeightedUnitsWork.lean#L130)
+shows that clipping the units at a limit of at least the tier power
+leaves the dyadic tier, ancestor minima, and cutoff unchanged.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
