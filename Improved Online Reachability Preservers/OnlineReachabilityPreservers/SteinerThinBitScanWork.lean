@@ -51,7 +51,46 @@ private theorem thinBinaryRowPassesWithWork_spec {n labelWidth sampleWidth loadW
     gcongr
   exact ⟨tested,Nat.add_le_add_right (Nat.add_le_add readBound testBound) 5⟩
 
-/-- Read and test each supplied threshold row, retaining the arc when it passes. -/
+@[specialize] private def collectPassingThinRowsWithWork {n : ℕ} {A : Type}
+    (select : BinaryThinThresholdRow n → A) (base factor : List Bool) (cells : List (List Bool)) :
+    List (BinaryThinThresholdRow n) → List A × ℕ
+  | [] => ([],3)
+  | row::rows =>
+    let test := thinBinaryRowPassesWithWork base factor cells row
+    let tail := collectPassingThinRowsWithWork select base factor cells rows
+    (if test.1 then select row::tail.1 else tail.1,test.2+tail.2+5)
+
+private theorem collectPassingThinRowsWithWork_spec {n labelWidth sampleWidth loadWidth : ℕ} {A : Type}
+    (select : BinaryThinThresholdRow n → A)
+    (table : FinThinLoadTable n) (base factor : List Bool) (cells : List (List Bool))
+    (rows : List (BinaryThinThresholdRow n)) (encoded : EncodesThinLoadTable table cells loadWidth)
+    (size : binaryWordValue base = n)
+    (bounds : ∀ row ∈ rows, BinaryThinArcMatches labelWidth row.labels row.arc ∧ row.sample.length ≤ sampleWidth) :
+    let out := collectPassingThinRowsWithWork select base factor cells rows
+    out.1 = (rows.filter fun row => decide (binaryWordValue row.sample < binaryWordValue factor*2^(table.read row.arc))).map
+      select ∧
+    out.2 ≤ 3+rows.length*(binaryThinThresholdRowWorkBudget n base.length labelWidth sampleWidth factor.length loadWidth+5) := by
+  induction rows with
+  | nil => simp [collectPassingThinRowsWithWork]
+  | cons row rows ih =>
+    let test := thinBinaryRowPassesWithWork base factor cells row
+    let tail := collectPassingThinRowsWithWork select base factor cells rows
+    let budget := binaryThinThresholdRowWorkBudget n base.length labelWidth sampleWidth factor.length loadWidth
+    obtain ⟨labels,sample⟩ := bounds row List.mem_cons_self
+    obtain ⟨selected,rowWork⟩ := thinBinaryRowPassesWithWork_spec table base factor cells row encoded size labels sample
+    obtain ⟨remaining,tailWork⟩ := ih (fun r inRows => bounds r (List.mem_cons_of_mem _ inRows))
+    change test.1 = _ at selected
+    change test.2 ≤ budget at rowWork
+    change tail.2 ≤ 3+rows.length*(budget+5) at tailWork
+    change (if test.1 then select row::tail.1 else tail.1) = _ ∧
+      test.2+tail.2+5 ≤ 3+(rows.length+1)*(budget+5)
+    refine ⟨?_,?_⟩
+    · rw [selected,remaining,List.filter_cons]
+      split <;> rfl
+    · rw [Nat.add_mul,Nat.one_mul]
+      omega
+
+/-- Read and test each supplied threshold row, retaining the reference arc when it passes. -/
 def roundBinaryThinThresholdRowsWithWork {n : ℕ} (base factor : List Bool) (cells : List (List Bool)) :
     List (BinaryThinThresholdRow n) → List (Fin n × Fin n) × ℕ
   | [] => ([],3)
@@ -59,6 +98,15 @@ def roundBinaryThinThresholdRowsWithWork {n : ℕ} (base factor : List Bool) (ce
     let test := thinBinaryRowPassesWithWork base factor cells row
     let tail := roundBinaryThinThresholdRowsWithWork base factor cells rows
     (if test.1 then row.arc::tail.1 else tail.1,test.2+tail.2+5)
+
+private theorem roundBinaryThinThresholdRowsWithWork_eq_collect {n : ℕ} (base factor : List Bool)
+    (cells : List (List Bool)) (rows : List (BinaryThinThresholdRow n)) :
+    roundBinaryThinThresholdRowsWithWork base factor cells rows =
+      collectPassingThinRowsWithWork BinaryThinThresholdRow.arc base factor cells rows := by
+  induction rows with
+  | nil => rfl
+  | cons row rest ih =>
+    rw [roundBinaryThinThresholdRowsWithWork,collectPassingThinRowsWithWork,ih]
 
 /-- The output has the reference passing rows in their supplied order. -/
 theorem roundBinaryThinThresholdRowsWithWork_spec {n labelWidth sampleWidth loadWidth : ℕ}
@@ -70,25 +118,26 @@ theorem roundBinaryThinThresholdRowsWithWork_spec {n labelWidth sampleWidth load
     out.1 = (rows.filter fun row => decide (binaryWordValue row.sample < binaryWordValue factor*2^(table.read row.arc))).map
       BinaryThinThresholdRow.arc ∧
     out.2 ≤ 3+rows.length*(binaryThinThresholdRowWorkBudget n base.length labelWidth sampleWidth factor.length loadWidth+5) := by
-  induction rows with
-  | nil => simp [roundBinaryThinThresholdRowsWithWork]
-  | cons row rows ih =>
-    let test := thinBinaryRowPassesWithWork base factor cells row
-    let tail := roundBinaryThinThresholdRowsWithWork base factor cells rows
-    let budget := binaryThinThresholdRowWorkBudget n base.length labelWidth sampleWidth factor.length loadWidth
-    obtain ⟨labels,sample⟩ := bounds row List.mem_cons_self
-    obtain ⟨selected,rowWork⟩ := thinBinaryRowPassesWithWork_spec table base factor cells row encoded size labels sample
-    obtain ⟨remaining,tailWork⟩ := ih (fun r inRows => bounds r (List.mem_cons_of_mem _ inRows))
-    change test.1 = _ at selected
-    change test.2 ≤ budget at rowWork
-    change tail.2 ≤ 3+rows.length*(budget+5) at tailWork
-    change (if test.1 then row.arc::tail.1 else tail.1) = _ ∧
-      test.2+tail.2+5 ≤ 3+(rows.length+1)*(budget+5)
-    refine ⟨?_,?_⟩
-    · rw [selected,remaining,List.filter_cons]
-      split <;> rfl
-    · rw [Nat.add_mul,Nat.one_mul]
-      omega
+  dsimp only
+  rw [roundBinaryThinThresholdRowsWithWork_eq_collect]
+  exact collectPassingThinRowsWithWork_spec BinaryThinThresholdRow.arc table base factor cells rows encoded size bounds
+
+/-- The same scan retaining the supplied labels of each passing row. -/
+def roundBinaryThinEncodedRowsWithWork {n : ℕ} (base factor : List Bool) (cells : List (List Bool)) :
+    List (BinaryThinThresholdRow n) → List (List Bool × List Bool) × ℕ :=
+  collectPassingThinRowsWithWork BinaryThinThresholdRow.labels base factor cells
+
+/-- The passing encoded rows keep their labels, order, and multiplicity. -/
+theorem roundBinaryThinEncodedRowsWithWork_spec {n labelWidth sampleWidth loadWidth : ℕ}
+    (table : FinThinLoadTable n) (base factor : List Bool) (cells : List (List Bool))
+    (rows : List (BinaryThinThresholdRow n)) (encoded : EncodesThinLoadTable table cells loadWidth)
+    (size : binaryWordValue base = n)
+    (bounds : ∀ row ∈ rows, BinaryThinArcMatches labelWidth row.labels row.arc ∧ row.sample.length ≤ sampleWidth) :
+    let out := roundBinaryThinEncodedRowsWithWork base factor cells rows
+    out.1 = (rows.filter fun row => decide (binaryWordValue row.sample < binaryWordValue factor*2^(table.read row.arc))).map
+      BinaryThinThresholdRow.labels ∧
+    out.2 ≤ 3+rows.length*(binaryThinThresholdRowWorkBudget n base.length labelWidth sampleWidth factor.length loadWidth+5) :=
+  collectPassingThinRowsWithWork_spec BinaryThinThresholdRow.labels table base factor cells rows encoded size bounds
 
 /-- On supplied encoded rows with distinct arcs, the binary scan returns
 exactly the same rounded arc set as the existing thin list evaluator. -/

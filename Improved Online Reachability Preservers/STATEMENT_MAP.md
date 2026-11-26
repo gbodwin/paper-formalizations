@@ -998,10 +998,10 @@ arithmetic for a single row on supplied encodings.
 
 The [decoded load read](OnlineReachabilityPreservers/SteinerBinaryIndexedWork.lean#L158)
 selects the encoded cell that represents the reference entry. The
-[binary threshold scan](OnlineReachabilityPreservers/SteinerThinBitScanWork.lean#L64)
+[binary threshold scan](OnlineReachabilityPreservers/SteinerThinBitScanWork.lean#L112)
 reads and tests each supplied row, preserving the order and multiplicity
 of passing rows. On duplicate-free arc rows the
-[reference comparison](OnlineReachabilityPreservers/SteinerThinBitScanWork.lean#L95)
+[reference comparison](OnlineReachabilityPreservers/SteinerThinBitScanWork.lean#L144)
 checks exact equality of the rounded arc sets. Its tally includes a list
 walk and a binary comparison per row. The finite table and binary inputs
 are supplied.
@@ -1012,8 +1012,15 @@ is the exact ordered list used by the word-work search, encoded vertex by
 vertex. The [Boolean demand test](OnlineReachabilityPreservers/SteinerBinaryReachWork.lean#L185)
 agrees with its word-work counterpart. Given injective labels of width at
 most \(w\), each sweep costs at most \(1+m(14+2(5w+8)n)\) in the
-list-and-bit tally. Label construction, counter representation, and
-integration with the thin-service replay remain separate.
+list-and-bit tally.
+
+The [binary trial evaluator](OnlineReachabilityPreservers/SteinerThinBitServiceWork.lean#L25)
+tests the demand on the passing labels at any supplied depth. Each vertex
+uses one shared structural encoding, including in the query. With distinct
+arc rows, the [reference comparison](OnlineReachabilityPreservers/SteinerThinBitServiceWork.lean#L79)
+matches the thin replay's miss flag at depth \(n\). The tally covers the
+rounding scan and the reachability check for that trial. Label construction,
+load table conversion, counter representation, and the full replay remain open.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
