@@ -1135,6 +1135,14 @@ a full size-seven bridge in the dense branch on a simple input with unique
 intersections, all-size full exclusion, and zero pruning loss.
 [Dense width-block counterexample](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L558).
 
+At half cutoff four, a [balanced midpoint split with no valid arrival permutation](OnlineReachabilityPreservers/HalfFourSplitOrderAudit.lean#L103)
+starts from a half-free indexed family with uniform degree two and mean
+length \(7/2\). Its sole length-six path splits into two length-three
+pieces. The split system has a 3-bridge and a 4-bridge imposing opposite
+relative arrival constraints on one piece and one unchanged row.
+A [separate witness](OnlineReachabilityPreservers/HalfFourSplitOrderAudit.lean#L118)
+fits the original budgets and caps.
+
 At full cutoff six, [output-average cleaning](OnlineReachabilityPreservers/LocalAverageCleaning.lean)
 starts at the unrestricted maximum over indexed simple paths. It retains
 at least \(M/392\) of the maximizing mass \(M\), keeps both budgets, and

@@ -150,6 +150,20 @@ six-vertex family also admits a larger bridge-free competitor at the same
 budgets.
 [Conditional half-bridge cleaning](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean).
 
+Even reordering individual pieces after the midpoint split can fail.
+The paths `[(1,6,0),(2,5),(0,2,4,6,3,1),(5,3,4)]` exclude half-bridges
+through size four in this order. Every vertex has degree two and the
+original mean path length is \(7/2\). The only path above that mean splits
+into \(A=(0,2,4)\) and \((6,3,1)\). Write \(B=(5,3,4)\) for the unchanged
+last path. The 3-bridge \(2\to5\to4\) has river \(A\) and last arc on \(B\),
+so half exclusion requires \(A\) before \(B\). The 4-bridge
+\(3\to1\to0\to4\) has river \(B\) and last arc on \(A\), requiring the
+opposite order. Both bridges persist after every other printed operation
+has terminated. The two constraints obstruct this split and every arrival
+permutation of its pieces. A separate cleaned witness meets both original
+budgets and all four frozen caps.
+[Checked split and order obstruction](OnlineReachabilityPreservers/HalfFourSplitOrderAudit.lean#L103).
+
 Mirroring cuts between adjacent shared vertices gives another way to keep
 the original caps. Full exclusion through size three makes the reversed
 intervals into chains and pairs a cut with at most one other cut. Projecting
