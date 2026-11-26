@@ -495,4 +495,46 @@ theorem lateSteinerWithListHubWork_graph {n : ℕ} {G : Arcs (Fin n)} (early : E
   have old := lateSteinerWithStoredThinThresholds_graph early τ m sample rows.val.toFinset D feasible
   exact exactGraph.trans (by simpa only [Fintype.card_fin] using old.symm)
 
+/-- Run the same late phase while charging each thin service test on its
+retained rounded arc list. -/
+def lateSteinerWithThinServiceWork {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (τ m : ℕ) (vertices : List (Fin n)) (sample : Finset (Fin n))
+    (rows : ThinThresholdList (Fin n)) (D : List (Fin n × Fin n)) : Arcs (Fin n) × ℕ :=
+  lateSteinerWithListHubWorkUsing arcs n τ vertices sample (fun T =>
+    let thin := thinRoundRunFromThresholdListWithServiceWork G arcs m rows (thinRoundingFactor n τ) T
+    (thin.1.1,thin.2+thin.1.2)) D
+
+/-- Classification, hub routing, and any thick fallback keep their earlier
+result. The thin service work adds at most one rounded-list budget per request. -/
+theorem lateSteinerWithThinServiceWork_compare {n : ℕ} {G : Arcs (Fin n)}
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (arcsEq : arcs.val.toFinset = G) (τ m : ℕ)
+    (vertices : List (Fin n)) (simple : vertices.Nodup) (complete : ∀ v : Fin n, v ∈ vertices)
+    (sample : Finset (Fin n)) (early : EarlySteinerRule G)
+    (rows : ThinThresholdList (Fin n)) (D : List (Fin n × Fin n)) :
+    let out := lateSteinerWithThinServiceWork G arcs τ m vertices sample rows D
+    let old := lateSteinerWithListHubWork G arcs τ m vertices sample rows D
+    out.1 = old.1 ∧ out.2 ≤ old.2+D.length*thinRoundedServiceWordBudget n rows.val.length := by
+  subst G
+  let G := arcs.val.toFinset
+  let traces := lateHubTraceWithWordWorkFrom arcs n vertices sample D ⟨[],[],[]⟩
+  let thin := thinRoundRunFromThresholdListWithServiceWork G arcs m rows (thinRoundingFactor n τ) traces.1.thin
+  let prior := thinRoundRunFromThresholdListWithIntervalWork G arcs m rows (thinRoundingFactor n τ) traces.1.thin
+  have count : traces.1.thin.length ≤ D.length := by
+    simpa only [Fintype.card_fin] using (lateHubTraceWithWordWorkFrom_spec arcs vertices simple complete sample
+      early D ⟨[],[],[]⟩ D.length (by simp) (by simp)).2.2.1
+  obtain ⟨same,cost⟩ := thinRoundRunFromThresholdListWithServiceWork_spec G arcs m rows
+    (thinRoundingFactor n τ) traces.1.thin
+  change thin.1 = prior.1 at same
+  change thin.2 ≤ prior.2+traces.1.thin.length*thinRoundedServiceWordBudget n rows.val.length at cost
+  have bound := cost.trans (Nat.add_le_add_left (Nat.mul_le_mul_right _ count) _)
+  dsimp only [lateSteinerWithThinServiceWork,lateSteinerWithListHubWork,lateSteinerWithListHubWorkUsing]
+  split
+  · exact ⟨rfl,Nat.le_add_right _ _⟩
+  · change (unionRowsWithWordWork _ thin.1.1).1 = (unionRowsWithWordWork _ prior.1.1).1 ∧
+      _ + (thin.2+thin.1.2)+(unionRowsWithWordWork _ thin.1.1).2 ≤
+        _ + (prior.2+prior.1.2)+(unionRowsWithWordWork _ prior.1.1).2 +
+          D.length*thinRoundedServiceWordBudget n rows.val.length
+    rw [same]
+    exact ⟨rfl,by omega⟩
+
 end OnlineReachabilityPreservers

@@ -913,6 +913,17 @@ calculation still enumerates the original vertices at each reached
 metric. This enumeration, later service steps, and bit and native costs
 remain outside the bound.
 
+The [late evaluator with measured thin service](OnlineReachabilityPreservers/SteinerHubRouteWork.lean#L509)
+uses the rounded-list check whenever the late replay runs a thin cover.
+The hub routing and thick fallback agree with the earlier evaluator.
+The [combined whole-replay comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2324)
+preserves every graph, ordinary search tally, setup field, and evaluation
+count on every trace, including decode exhaustion and unreachable requests.
+The [fixed-height bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2382)
+includes the measured weighted search and the additional thin service
+work for feasible traces. The trial-count enumeration and bit and native
+execution costs remain outside this bound.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

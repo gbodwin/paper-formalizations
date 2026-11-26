@@ -221,8 +221,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   also charges each service test using the arc list retained by rounding.
   It returns the same graph and ordinary inspection count for every
   trace, and the [feasible-trace bound](OnlineReachabilityPreservers/SteinerThinReplay.lean#L1089)
-  includes the additional list work. The complete late replay still uses
-  the earlier service test. It also uses the arc list for
+  includes the additional list work. The late replay uses the arc list for
   arrival classification, both ordered hub-leg lists, and the test for
   a thick miss. Its fixed-height bound charges these scans and trace-list
   operations on feasible traces. The older graph and search records and
@@ -372,6 +371,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   original vertices at each reached metric. This enumeration, later
   service steps, and bit and native costs remain outside the bound.
   [Complete replay with measured weighted search](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2233).
+  The [late evaluator](OnlineReachabilityPreservers/SteinerHubRouteWork.lean#L509)
+  also uses the measured thin service tests. The [complete replay](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2324)
+  combines this with the measured weighted search and preserves every
+  previous record and evaluation count. Its [feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2382)
+  includes the added service work. Trial-count enumeration, other
+  arithmetic, and bit and native execution costs remain outside this bound.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

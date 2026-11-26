@@ -2254,4 +2254,152 @@ theorem completeFinSteinerReplayWithMetricResidualRowsWork_prefixes {n : ℕ} (G
   rw [setup, decode, index]
   omega
 
+private theorem replaySteinerTraceWithPhaseWork_changeLate (n : ℕ) (hn : n = Fintype.card V)
+    (early : List (V × V) → Arcs V × ℕ × ℕ) (draw : Fin (completeSteinerHubCount V) → V)
+    (late prior : ℕ → Finset V → List (V × V) → (Arcs V × ℕ) × ℕ)
+    (D : List (V × V)) (join : SteinerPhaseUnion V) (extra : ℕ)
+    (same : ∀ τ hubs P, (late τ hubs P).1 = (prior τ hubs P).1)
+    (bound : ∀ τ hubs P, P.length ≤ D.length → (late τ hubs P).2 ≤ (prior τ hubs P).2+extra) :
+    let out := replaySteinerTraceWithPhaseWork n hn early draw late D join
+    let old := replaySteinerTraceWithPhaseWork n hn early draw prior D join
+    out.1 = old.1 ∧ out.2.2 = old.2.2 ∧ out.2.1 ≤ old.2.1+(D.length+1)*extra := by
+  let eval l T τ hubs P := evaluateSteinerTraceWithPhaseWork early T τ hubs l P join
+  have agree (T τ : ℕ) (hubs : Finset V) (P : List (V × V)) :
+      (eval late T τ hubs P).1 = (eval prior T τ hubs P).1 := by
+    dsimp only [eval,evaluateSteinerTraceWithPhaseWork]
+    rw [same]
+  have more (T τ : ℕ) (hubs : Finset V) (P : List (V × V)) (short : P.length ≤ D.length) :
+      (eval late T τ hubs P).2 ≤ (eval prior T τ hubs P).2+extra := by
+    let split := splitSteinerTraceWithWordWork T P
+    have shorter : split.1.2.length ≤ D.length := by
+      change (splitSteinerTraceWithWordWork T P).1.2.length ≤ D.length
+      rw [(splitSteinerTraceWithWordWork_spec _ _).1]
+      change (P.drop T).length ≤ D.length
+      rw [List.length_drop]
+      exact (Nat.sub_le _ _).trans short
+    have work := bound τ hubs split.1.2 shorter
+    dsimp only [eval,evaluateSteinerTraceWithPhaseWork]
+    rw [same]
+    change _+(late τ hubs split.1.2).2+7+(join.combine (early split.1.1).1 (prior τ hubs split.1.2).1.1).2 ≤
+      _+(prior τ hubs split.1.2).2+7+(join.combine (early split.1.1).1 (prior τ hubs split.1.2).1.1).2+extra
+    omega
+  obtain ⟨records,calls⟩ := replaySteinerTraceWithCallback_records_eq n hn draw D (eval late) (eval prior) agree
+  refine ⟨records,calls,?_⟩
+  let params := steinerTraceParametersWithWordWork n
+  have correct : params.1.hubCount = completeSteinerHubCount V := by
+    rw [params.1.hubCount_eq,hn]
+    rfl
+  let hubs := collectSteinerHubsWithWordWork correct draw
+  let next := eval late params.1.earlyCutoff params.1.thinThreshold hubs.1
+  let previous := eval prior params.1.earlyCutoff params.1.thinThreshold hubs.1
+  have work := replayFirstOccurrencesWithWordWork_work_le next previous D extra
+    (more params.1.earlyCutoff params.1.thinThreshold hubs.1)
+  change (replayFirstOccurrencesWithWordWork next D).2.1+params.2+hubs.2+10 ≤
+    (replayFirstOccurrencesWithWordWork previous D).2.1+params.2+hubs.2+10+(D.length+1)*extra
+  omega
+
+@[inline] private def thinServiceLateEvaluator {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (m : ℕ) (vertices : List (Fin n)) : FinLateReplayEvaluator n :=
+  fun τ sample rows D =>
+    let out := lateSteinerWithThinServiceWork G arcs τ m vertices sample rows D
+    ((out.1,0),out.2)
+
+/-- Replay measured weighted residual search and measured thin service
+tests together, with the same cached arc and threshold rows. -/
+def completeFinSteinerReplayWithThinServiceWork {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
+  let arcs := finArcRowsWithWordWork raw
+  let vertices := finVerticesWithWordWork n
+  let out := completeFinSteinerReplayWithLateEvaluator G raw same height m hm bits D
+    (thinServiceLateEvaluator G arcs.1 m vertices.1) (meteredPhaseUnion (Fin n))
+    (prepareFinSteinerWeightedForSeedWithMetricResidualRowsWork G raw same height)
+  (out.1,out.2.1+arcs.2+vertices.2+5,out.2.2)
+
+def steinerTraceThinServiceExtraPolynomial (n m p : ℕ) : ℕ :=
+  (p+1)*(p*thinRoundedServiceWordBudget n m)
+
+/-- The complete replay leaves every prefix record, setup field and
+evaluation count intact, including exhaustion and infeasible traces. -/
+theorem completeFinSteinerReplayWithThinServiceWork_compare {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
+    let out := completeFinSteinerReplayWithThinServiceWork G raw same height m hm bits D
+    let old := completeFinSteinerReplayWithMetricResidualRowsWork G raw same height m hm bits D
+    out.1 = old.1 ∧ out.2.2 = old.2.2 ∧
+      out.2.1 ≤ old.2.1+steinerTraceThinServiceExtraPolynomial n m D.length := by
+  let prepared := prepareFinSteinerWeightedForSeedWithMetricResidualRowsWork G raw same height
+  let indexes := finSteinerReplaySeedIndexesWithWordWork G height raw same
+  let decoded := decodeSteinerSeedWithArrayViewsFromPreparedScale G height n m (by simp) hm prepared.1.1 indexes.1 bits
+  let arcs := finArcRowsWithWordWork raw
+  let vertices := finVerticesWithWordWork n
+  let join := meteredPhaseUnion (Fin n)
+  let extra := D.length*thinRoundedServiceWordBudget n m
+  unfold completeFinSteinerReplayWithThinServiceWork completeFinSteinerReplayWithMetricResidualRowsWork
+    completeFinSteinerReplayWithHubRoutingUsing completeFinSteinerReplayWithLateEvaluator
+    completeFinSteinerReplayWithCachedPhases replayFromCachedFinSteinerSeed
+  dsimp only
+  cases state : decoded.1.2 with
+  | none => exact ⟨rfl,rfl,Nat.le_add_right _ _⟩
+  | some entry =>
+    rcases entry with ⟨seed,arrays⟩
+    dsimp only
+    let width := decoded.1.1
+    let samples := finEarlySeedTrialsWithRankWork G height width.val width.property arrays.early
+    let early := prepared.1.2.1 samples
+    let rule := earlyRoundedRule G height seed.1
+    let rows := prepareThinThresholdListByIndexWithWordWork G m hm indexes.1.arcs arrays.thin
+    let late := fun τ hubs => thinServiceLateEvaluator G arcs.1 m vertices.1 τ hubs rows.1
+    let prior := fun τ hubs => hubRouteLateEvaluator G arcs.1 m vertices.1 τ hubs rows.1
+    obtain ⟨arcsEq,_⟩ := finArcRowsWithWordWork_spec G raw same
+    obtain ⟨verticesSimple,verticesComplete,_⟩ := finVerticesWithWordWork_spec n
+    obtain ⟨_,rowCount,_,_⟩ := prepareThinThresholdListByIndexWithWordWork_spec G m hm indexes.1.arcs arrays.thin
+    have rowBudget : thinRoundedServiceWordBudget n rows.1.val.length ≤ thinRoundedServiceWordBudget n m := by
+      change rows.1.val.length = m at rowCount
+      rw [rowCount]
+    have compare (τ : ℕ) (hubs : Finset (Fin n)) (P : List (Fin n × Fin n)) :=
+      lateSteinerWithThinServiceWork_compare arcs.1 arcsEq τ m vertices.1 verticesSimple verticesComplete
+        hubs rule rows.1 P
+    have exactLate (τ : ℕ) (hubs : Finset (Fin n)) (P : List (Fin n × Fin n)) :
+        (late τ hubs P).1 = (prior τ hubs P).1 := congrArg (fun H => (H,0)) (compare τ hubs P).1
+    have lateWork (τ : ℕ) (hubs : Finset (Fin n)) (P : List (Fin n × Fin n)) (short : P.length ≤ D.length) :
+        (late τ hubs P).2 ≤ (prior τ hubs P).2+extra :=
+      (compare τ hubs P).2.trans (Nat.add_le_add_left (Nat.mul_le_mul short rowBudget) _)
+    obtain ⟨records,calls,work⟩ := replaySteinerTraceWithPhaseWork_changeLate n (by simp)
+      early seed.2.1 late prior D join extra exactLate lateWork
+    let out := replaySteinerTraceWithPhaseWork n (by simp) early seed.2.1 late D join
+    let old := replaySteinerTraceWithPhaseWork n (by simp) early seed.2.1 prior D join
+    change (((((out.1,prepared.1.2.2),decoded.2),prepared.2),indexes.2)) =
+        (((((old.1,prepared.1.2.2),decoded.2),prepared.2),indexes.2)) ∧ out.2.2 = old.2.2 ∧
+      out.2.1+rows.2+9+8+arcs.2+vertices.2+5 ≤
+        old.2.1+rows.2+9+8+arcs.2+vertices.2+5+(D.length+1)*extra
+    change out.1 = old.1 at records
+    change out.2.1 ≤ old.2.1+(D.length+1)*extra at work
+    exact ⟨by rw [records],calls,by omega⟩
+
+/-- On every feasible trace the complete replay returns the reference
+prefix graphs, with a polynomial bound including the rounded service checks. -/
+theorem completeFinSteinerReplayWithThinServiceWork_prefixes {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let out := completeFinSteinerReplayWithThinServiceWork G raw same height m hm bits D
+    let base := out.1.1.1
+    base.1.1.map Prod.fst = D.inits.map (completeSteinerRunWithBitBudget G height bits) ∧
+      out.2.2 = (completeFinSteinerReplayWithThinRowWork G raw same height m hm bits D).2.2 ∧
+      (base.1.1.map Prod.snd).sum+base.1.2.1+base.1.2.2.1+base.1.2.2.2+base.2+out.1.1.2+out.1.2+out.2.1 ≤
+        completeFinSteinerPreparationWorkPolynomial n m raw.length height D.length +
+          finSteinerWeightPlanWorkPolynomial n height + finSteinerReplayIndexWorkPolynomial n raw.length +
+          (steinerTraceEarlySeedRankWorkPolynomial n height D.length+11*m+21) +
+          (steinerTracePhaseUnionWorkPolynomial n m height D.length+11*m+21) +
+          finArcRowsWordBudget n raw.length+8*n+6+finForestNetworkPairKeysWordPolynomial n height+3 +
+          steinerTraceEarlyHistoryExtraPolynomial n height D.length + finSteinerForestDepthWordPolynomial n height +
+          steinerTraceMetricResidualRowsExtraPolynomial n raw.length height D.length +
+          steinerTraceThinServiceExtraPolynomial n m D.length := by
+  obtain ⟨records,calls,work⟩ := completeFinSteinerReplayWithThinServiceWork_compare G raw same height m hm bits D
+  obtain ⟨graphs,counts,oldWork⟩ := completeFinSteinerReplayWithMetricResidualRowsWork_prefixes G raw same height m hm bits D feasible
+  dsimp only
+  rw [records,calls]
+  exact ⟨graphs,counts,by omega⟩
+
 end OnlineReachabilityPreservers
