@@ -1,3 +1,4 @@
+import OnlineReachabilityPreservers.DistinctPathBudgets
 import OnlineReachabilityPreservers.OverlayLowerAudit
 import OnlineReachabilityPreservers.UniqueSplitAudit
 import OnlineReachabilityPreservers.LocalSourceCounting
@@ -63,27 +64,6 @@ private noncomputable def bridgeWithinRows {V W I J : Type*} [DecidableEq V] [De
     apply project
     rw [← hu,← hu,← ha]
     exact b.arcStep i
-
-private theorem bridgeCorner_twoPaths {V I : Type*} [DecidableEq V] {paths : I → List V} {k : ℕ}
-    (b : Bridge (BeforeIn paths) k) (j : Fin (k+2)) :
-    ∃ a c, a ≠ c ∧ b.vertex j ∈ paths a ∧ b.vertex j ∈ paths c := by
-  refine Fin.cases ?_ ?_ j
-  · exact ⟨b.river,b.arc 0,b.river_ne_arc 0,b.riverStep.1,(b.arcStep 0).1⟩
-  · intro i
-    refine Fin.lastCases (motive := fun i : Fin (k+1) =>
-      ∃ a c, a ≠ c ∧ b.vertex i.succ ∈ paths a ∧ b.vertex i.succ ∈ paths c) ?_ ?_ i
-    · rw [Fin.succ_last]
-      exact ⟨b.river,b.arc (Fin.last k),b.river_ne_arc _,b.riverStep.2.1,(b.arcStep _).2.1⟩
-    · intro h
-      have apart : h.castSucc ≠ h.succ := by
-        intro eq
-        have value := congrArg Fin.val eq
-        simp only [Fin.val_castSucc,Fin.val_succ] at value
-        omega
-      refine ⟨b.arc h.castSucc,b.arc h.succ,fun eq => apart (b.distinctArcs eq),
-        (b.arcStep h.castSucc).2.1,?_⟩
-      rw [Fin.succ_castSucc]
-      exact (b.arcStep h.succ).1
 
 private def gadgetPadding (extra : ℕ) (i : Fin 6) : List (Fin 7 ⊕ Fin extra) :=
   if i = 0 then (List.finRange extra).map Sum.inr else []

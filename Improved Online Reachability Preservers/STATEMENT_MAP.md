@@ -1395,6 +1395,19 @@ either enough mass on the overlong pieces alone or at least \(337M/650\)
 within the whole path budget. The exact vertex width controls the last
 trim. A low-mass construction covers \(M\le8\max(n,p)\).
 
+The [literal simple-path set version](OnlineReachabilityPreservers/FrozenDistinctCleaning.lean)
+uses a separate maximum over distinct nonempty rows whenever those positive exact
+input counts are feasible. Each bridge corner occurs on two distinct
+rows, so an unused vertex could be added to one row without creating a
+bridge. A maximizing set therefore reaches both original budgets.
+At input mean length above four, the lower length cap and half-two
+exclusion force a distinct nonempty output. At smaller means, the
+disjoint-path, singleton, and bipartite constructions give the literal
+witness directly. The half-four result retains \(M/5000\), the full
+result through cutoffs three to five retains \(M/119\), and the all-size
+full family theorem retains \(M/40\). Each guarantee uses both original
+budgets and all four original-average caps.
+
 For Lemmas 23 and 39, the [contiguous six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)
 uses the original relative order of pieces in addition to the mirrored-cut
 condition. It assumes full exclusion through size three. With unique

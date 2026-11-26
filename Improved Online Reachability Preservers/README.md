@@ -790,6 +790,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   most \(M\), fits both original budgets, and meets all four original caps.
   It applies at the unrestricted maximum. The proof handles the
   conflicts left by contiguous path cuts before splitting vertices.
+- The [literal set versions](OnlineReachabilityPreservers/FrozenDistinctCleaning.lean)
+  give distinct nonempty output paths with the same caps. They apply to
+  the literal exact-count maximum when the positive original budgets are feasible.
+  The retention factors are \(5000\) at half cutoff four and \(119\) at
+  full cutoffs three through five. The all-size full family theorem gives
+  the distinct output guarantee with factor \(40\).
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion

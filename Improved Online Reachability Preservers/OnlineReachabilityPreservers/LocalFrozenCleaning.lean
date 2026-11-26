@@ -118,6 +118,47 @@ private theorem singletonFrozenRows_degree (r w : ℕ) (x : Fin r) :
       rw [Equiv.symm_apply_apply]
   rw [allCopies, card_map, card_univ, Fintype.card_fin]
 
+/-- When the vertex budget is larger, the sparse construction uses
+distinct nonempty rows on disjoint vertex sets. -/
+theorem full_frozen_cleaning_sparse_disjoint {n p M k factor : ℕ} (factorCap : factor ≤ 4) (hp : 0 < p)
+    (pl : p ≤ n) (dense : n ≤ M) (small : M ≤ factor*n) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
+      M ≤ (2*factor)*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  obtain ⟨w,r,wPos,rCap,massCap,massEnough,degLow,degHigh,lenLow,lenHigh⟩ :=
+    sparse_cleaning_block_counts hp pl dense small factorCap
+  let clean := disjointFrozenRows r w
+  have simple (i : Fin r) : (clean i).Nodup := List.nodup_ofFn.mpr (fun _ _ eq =>
+    congrArg Prod.snd (finProdFinEquiv.injective eq))
+  have inRow (i : Fin r) : finProdFinEquiv (i,(⟨0,wPos⟩ : Fin w)) ∈ clean i :=
+    List.mem_ofFn.mpr ⟨⟨0,wPos⟩,rfl⟩
+  have injective : Function.Injective clean := by
+    intro i j eq
+    have member : finProdFinEquiv (i,(⟨0,wPos⟩ : Fin w)) ∈ clean j := by
+      rw [← eq]
+      exact inRow i
+    exact (disjointFrozenRows_owner.mp (inRow i)).symm.trans
+      (disjointFrozenRows_owner.mp member)
+  have nonempty (i : Fin r) : clean i ≠ [] := fun empty => by simpa [empty] using inRow i
+  have legal : BridgeFree (ListBefore clean) k := by
+    intro j _
+    refine ⟨fun b => b.river_ne_arc 0 ?_⟩
+    exact (disjointFrozenRows_owner.mp b.riverStep.1).symm.trans
+      (disjointFrozenRows_owner.mp (b.arcStep 0).1)
+  have size : (∑ i, (clean i).length) = r*w := by simp [clean, disjointFrozenRows]
+  refine ⟨r*w,massCap,r,rCap,clean,injective,nonempty,simple,legal,?_,?_,?_⟩
+  · exact size.symm ▸ massEnough
+  · exact size.symm ▸ massCap.trans dense
+  · constructor
+    · intro x
+      rw [disjointFrozenRows_degree]
+      simpa only [Nat.cast_one] using And.intro degLow degHigh
+    · intro i
+      change (M:ℝ)/(4*(p:ℝ)) ≤ ((disjointFrozenRows r w i).length:ℝ) ∧
+        ((disjointFrozenRows r w i).length:ℝ) ≤ 4*(M:ℝ)/(p:ℝ)
+      simpa only [disjointFrozenRows, List.length_ofFn] using And.intro lenLow lenHigh
+
 /-- At low mass in either coordinate, disjoint paths or repeated singletons
 meet the two budgets and the same frozen averages. -/
 private theorem full_frozen_cleaning_sparse_of_factor {n p M k factor : ℕ} (factorCap : factor ≤ 4) (hn : 0 < n) (hp : 0 < p)
@@ -127,28 +168,9 @@ private theorem full_frozen_cleaning_sparse_of_factor {n p M k factor : ℕ} (fa
       M ≤ (2*factor)*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   by_cases pl : p ≤ n
   · rw [max_eq_left pl] at small
-    obtain ⟨w,r,_,rCap,massCap,massEnough,degLow,degHigh,lenLow,lenHigh⟩ :=
-      sparse_cleaning_block_counts hp pl dense small factorCap
-    let clean := disjointFrozenRows r w
-    have simple (i : Fin r) : (clean i).Nodup := List.nodup_ofFn.mpr (fun _ _ eq =>
-      congrArg Prod.snd (finProdFinEquiv.injective eq))
-    have legal : BridgeFree (ListBefore clean) k := by
-      intro j _
-      refine ⟨fun b => b.river_ne_arc 0 ?_⟩
-      exact (disjointFrozenRows_owner.mp b.riverStep.1).symm.trans
-        (disjointFrozenRows_owner.mp (b.arcStep 0).1)
-    have size : (∑ i, (clean i).length) = r*w := by simp [clean, disjointFrozenRows]
-    refine ⟨r*w,massCap,r,rCap,clean,simple,legal,?_,?_,?_⟩
-    · exact size.symm ▸ massEnough
-    · exact size.symm ▸ massCap.trans dense
-    · constructor
-      · intro x
-        rw [disjointFrozenRows_degree]
-        simpa only [Nat.cast_one] using And.intro degLow degHigh
-      · intro i
-        change (M:ℝ)/(4*(p:ℝ)) ≤ ((disjointFrozenRows r w i).length:ℝ) ∧
-          ((disjointFrozenRows r w i).length:ℝ) ≤ 4*(M:ℝ)/(p:ℝ)
-        simpa only [disjointFrozenRows, List.length_ofFn] using And.intro lenLow lenHigh
+    obtain ⟨v,vCap,q,qCap,clean,_,_,simple,free,mass,upper,caps⟩ :=
+      full_frozen_cleaning_sparse_disjoint factorCap hp pl dense small
+    exact ⟨v,vCap,q,qCap,clean,simple,free,mass,upper,caps⟩
   · have np : n ≤ p := le_of_not_ge pl
     rw [max_eq_right np] at small
     obtain ⟨w,r,_,rCap,massCap,massEnough,lenLow,lenHigh,degLow,degHigh⟩ :=

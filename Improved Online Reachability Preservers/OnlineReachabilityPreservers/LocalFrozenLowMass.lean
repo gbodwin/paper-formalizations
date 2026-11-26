@@ -38,11 +38,12 @@ private theorem frozenRectangleVertex_eq {r w : ℕ} {a b : Fin r} {s t : Fin 2}
   have inner := (finProdFinEquiv : Fin 2 × Fin w ≃ Fin (2*w)).injective (congrArg Prod.snd outer)
   exact ⟨congrArg Prod.fst outer, congrArg Prod.fst inner, congrArg Prod.snd inner⟩
 
-private def frozenRectangleRows (r w : ℕ) (i : Fin (r*(w*w))) : List (Fin (r*(2*w))) :=
+/-- All directed edges in disjoint oriented square bipartite blocks. -/
+def frozenRectangleRows (r w : ℕ) (i : Fin (r*(w*w))) : List (Fin (r*(2*w))) :=
   let coords := frozenRectangleCoords i
   [frozenRectangleVertex coords.1 0 coords.2.1, frozenRectangleVertex coords.1 1 coords.2.2]
 
-private theorem frozenRectangleRows_simple {r w : ℕ} (i : Fin (r*(w*w))) :
+theorem frozenRectangleRows_simple {r w : ℕ} (i : Fin (r*(w*w))) :
     (frozenRectangleRows r w i).Nodup := by
   simp only [frozenRectangleRows,List.nodup_cons,List.nodup_nil,List.mem_cons,List.not_mem_nil,
     or_false,not_false_eq_true,and_true]
@@ -68,7 +69,7 @@ private theorem frozenRectangleRows_step {r w : ℕ} {i : Fin (r*(w*w))} {x y : 
   · simp [apart] at order
   · exact (Nat.lt_irrefl _ order).elim
 
-private theorem frozenRectangleRows_free (r w k : ℕ) : BridgeFree (ListBefore (frozenRectangleRows r w)) k := by
+theorem frozenRectangleRows_free (r w k : ℕ) : BridgeFree (ListBefore (frozenRectangleRows r w)) k := by
   intro q _
   refine ⟨fun b => ?_⟩
   cases q with
@@ -89,7 +90,7 @@ private theorem frozenRectangleRows_free (r w k : ℕ) : BridgeFree (ListBefore 
     have right := (frozenRectangleRows_step (b.arcStep 1)).1
     exact (by decide : (1 : Fin 2) ≠ 0) (frozenRectangleVertex_eq (left.symm.trans right)).2.1
 
-private theorem frozenRectangleRows_degree (r w : ℕ) (x : Fin (r*(2*w))) :
+theorem frozenRectangleRows_degree (r w : ℕ) (x : Fin (r*(2*w))) :
     (occurrences (fun i => (frozenRectangleRows r w i).toFinset) x).card = w := by
   let pair : Fin r × Fin (2*w) := finProdFinEquiv.symm x
   let q : Fin 2 × Fin w := finProdFinEquiv.symm pair.2
@@ -216,12 +217,12 @@ theorem floorBlockMass {a width : ℕ} (widthPos : 0 < width) (fits : width ≤ 
 
 /-- Directed complete bipartite blocks realize length two and uniform
 degree width with the original budgets. -/
-theorem frozen_cleaning_bipartite_rows {n p M width k : ℕ} (widthPos : 0 < width)
+theorem frozen_cleaning_bipartite_rows_length_two {n p M width k : ℕ} (widthPos : 0 < width)
     (pPos : 0 < p) (vertexFits : 2*width ≤ n) (pathFits : width*width ≤ p)
     (massLow : p ≤ M) (massHigh : M ≤ 8*p)
     (degreeLow : M ≤ 4*(n*width)) (degreeFits : n*width ≤ M) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
-      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
+      (∀ i, (clean i).Nodup) ∧ (∀ i, (clean i).length = 2) ∧ BridgeFree (ListBefore clean) k ∧
       M ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let vertexBlocks := n/(2*width)
   let edgeBlocks := p/(width*width)
@@ -253,7 +254,7 @@ theorem frozen_cleaning_bipartite_rows {n p M width k : ℕ} (widthPos : 0 < wid
     _ = (r*(2*width))*width := by ring
     _ ≤ n*width := Nat.mul_le_mul_right _ vFits
     _ ≤ _ := degreeFits
-  refine ⟨_,vFits,_,pFits,clean,frozenRectangleRows_simple,frozenRectangleRows_free r width k,?_,?_,?_⟩
+  refine ⟨_,vFits,_,pFits,clean,frozenRectangleRows_simple,(fun _ => by simp [clean,frozenRectangleRows]),frozenRectangleRows_free r width k,?_,?_,?_⟩
   · exact mass.symm ▸ retain
   · exact mass.symm ▸ upper
   · constructor
@@ -274,6 +275,19 @@ theorem frozen_cleaning_bipartite_rows {n p M width k : ℕ} (widthPos : 0 < wid
         exact_mod_cast (show M ≤ 2*(4*p) by omega)
       · apply (le_div_iff₀ (by positivity : 0 < (p:ℝ))).mpr
         exact_mod_cast (show 2*p ≤ 4*M by omega)
+
+/-- Directed complete bipartite blocks realize length two and uniform
+degree width with the original budgets. -/
+theorem frozen_cleaning_bipartite_rows {n p M width k : ℕ} (widthPos : 0 < width)
+    (pPos : 0 < p) (vertexFits : 2*width ≤ n) (pathFits : width*width ≤ p)
+    (massLow : p ≤ M) (massHigh : M ≤ 8*p)
+    (degreeLow : M ≤ 4*(n*width)) (degreeFits : n*width ≤ M) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (ListBefore clean) k ∧
+      M ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  obtain ⟨v,vCap,q,qCap,clean,simple,_,free,retained,upper,caps⟩ :=
+    frozen_cleaning_bipartite_rows_length_two widthPos pPos vertexFits pathFits massLow massHigh degreeLow degreeFits
+  exact ⟨v,vCap,q,qCap,clean,simple,free,retained,upper,caps⟩
 
 private theorem rectangular_degree_bounds {n p M : ℕ} (hn : 0 < n) (order : n ≤ p)
     (large : 4*p < M) (small : M ≤ 8*p) (pairs : M ≤ n*(n-1)+p) :

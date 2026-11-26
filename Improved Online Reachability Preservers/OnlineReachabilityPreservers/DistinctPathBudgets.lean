@@ -14,6 +14,56 @@ private theorem firstTwo_before {n p : ℕ} {paths : Fin p → List (Fin n)} {i 
   refine ⟨List.getElem_mem _,List.getElem_mem _,?_⟩
   simpa only [simple.idxOf_getElem] using (show (0 : ℕ) < 1 by decide)
 
+/-- Half-two exclusion prevents duplicated simple rows of length at least two. -/
+theorem nontrivial_halfFree_paths_injective {n p k : ℕ} {paths : Fin p → List (Fin n)}
+    (simple : ∀ i, (paths i).Nodup) (length : ∀ i, 2 ≤ (paths i).length)
+    (two : 2 ≤ k) (free : HalfBridgeFree (ListBefore paths) k) : Function.Injective paths := by
+  intro i j eq
+  by_contra different
+  have step := firstTwo_before (simple i) (length i)
+  have parallel : ListBefore paths j ((paths i)[0]'(by have := length i; omega))
+      ((paths i)[1]'(by have := length i; omega)) := by
+    unfold SourceAudit.BeforeIn at *
+    rw [← eq]
+    exact step
+  exact no_parallel_list_steps free two different step parallel
+
+/-- Encoding singleton rows on the diagonal and longer rows by their
+first pair gives at most n squared paths in the literal simple-path set model. -/
+theorem distinctPathCount_le_square {n p k : ℕ} (paths : Fin p → List (Fin n))
+    (distinct : Function.Injective paths) (nonempty : ∀ i, paths i ≠ [])
+    (simple : ∀ i, (paths i).Nodup) (two : 2 ≤ k)
+    (free : HalfBridgeFree (ListBefore paths) k) : p ≤ n^2 := by
+  let head (i : Fin p) : Fin n := (paths i)[0]'(List.length_pos_of_ne_nil (nonempty i))
+  let second (i : Fin p) : Fin n :=
+    if h : 2 ≤ (paths i).length then (paths i)[1]'(by omega) else head i
+  let code (i : Fin p) : Fin n × Fin n := (head i,second i)
+  have step (i : Fin p) (long : 2 ≤ (paths i).length) : ListBefore paths i (head i) (second i) := by
+    simpa only [head,second,dite_eq_left long] using firstTwo_before (simple i) long
+  have same (i : Fin p) (short : ¬2 ≤ (paths i).length) : second i = head i := dite_eq_right short
+  have single (i : Fin p) (short : ¬2 ≤ (paths i).length) : paths i = [head i] := by
+    revert short
+    generalize eq : paths i = row at *
+    cases row with
+    | nil => exact (nonempty i eq).elim
+    | cons a rest =>
+      cases rest with
+      | nil => simp [head,eq]
+      | cons b rest => simp
+  have injection : Function.Injective code := by
+    intro i j eq
+    have firstEq : head i = head j := congrArg Prod.fst eq
+    have secondEq : second i = second j := congrArg Prod.snd eq
+    by_cases longI : 2 ≤ (paths i).length <;> by_cases longJ : 2 ≤ (paths j).length
+    · by_contra different
+      exact no_parallel_list_steps free two different (step i longI)
+        (firstEq.symm ▸ secondEq.symm ▸ step j longJ)
+    · exact (listBefore_ne (step i longI) (firstEq.trans ((same j longJ).symm.trans secondEq.symm))).elim
+    · exact (listBefore_ne (step j longJ) (firstEq.symm.trans ((same i longI).symm.trans secondEq))).elim
+    · apply distinct
+      rw [single i longI,single j longJ,firstEq]
+  simpa [pow_two] using Fintype.card_le_of_injective code injection
+
 /-- Any set of distinct nonempty simple paths with no half bridges of size
 at most three has fewer than `n²` paths when `n ≥ 3`. -/
 theorem distinctPathCount_lt_square {n p : ℕ} (hn : 3 ≤ n)
@@ -175,5 +225,160 @@ theorem distinctSequenceMass_unbounded {n p : ℕ} (hn : 0 < n) (hp : 0 < p) (M 
       (fun i _ => Nat.zero_le _) (a := (⟨0,hp⟩ : Fin p)) (mem_univ _)
     simp only [paths, List.length_replicate, Nat.add_zero] at kept ⊢
     omega
+
+/-- Every corner of a bridge occurs on two distinct paths. -/
+theorem bridgeCorner_twoPaths {V I : Type*} [DecidableEq V]
+    {paths : I → List V} {k : ℕ} (b : Bridge (ListBefore paths) k) (j : Fin (k+2)) :
+    ∃ a c, a ≠ c ∧ b.vertex j ∈ paths a ∧ b.vertex j ∈ paths c := by
+  refine Fin.cases ?_ ?_ j
+  · exact ⟨b.river,b.arc 0,b.river_ne_arc 0,b.riverStep.1,(b.arcStep 0).1⟩
+  · intro i
+    refine Fin.lastCases (motive := fun i : Fin (k+1) =>
+      ∃ a c, a ≠ c ∧ b.vertex i.succ ∈ paths a ∧ b.vertex i.succ ∈ paths c) ?_ ?_ i
+    · rw [Fin.succ_last]
+      exact ⟨b.river,b.arc (Fin.last k),b.river_ne_arc _,b.riverStep.2.1,(b.arcStep _).2.1⟩
+    · intro h
+      have apart : h.castSucc ≠ h.succ := by
+        intro eq
+        have value := congrArg Fin.val eq
+        simp only [Fin.val_castSucc,Fin.val_succ] at value
+        omega
+      refine ⟨b.arc h.castSucc,b.arc h.succ,fun eq => apart (b.distinctArcs eq),
+        (b.arcStep h.castSucc).2.1,?_⟩
+      rw [Fin.succ_castSucc]
+      exact (b.arcStep h.succ).1
+
+private def appendUnusedVertex {n p : ℕ} (paths : Fin p → List (Fin n)) (row : Fin p)
+    (v : Fin n) (i : Fin p) : List (Fin n) :=
+  if i = row then paths i ++ [v] else paths i
+
+private theorem appendUnusedVertex_admissible {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (row : Fin p) (v : Fin n) (unused : ∀ i, v ∉ paths i)
+    (free : localOrderAdmissible half k paths) :
+    localOrderAdmissible half k (appendUnusedVertex paths row v) := by
+  let extended := appendUnusedVertex paths row v
+  have unique {i : Fin p} (present : v ∈ extended i) : i = row := by
+    by_contra outside
+    exact unused i (by simpa [extended,appendUnusedVertex,outside] using present)
+  have projectStep {i : Fin p} {x y : Fin n} (differentX : x ≠ v) (differentY : y ≠ v)
+      (step : ListBefore extended i x y) : ListBefore paths i x y := by
+    by_cases changed : i = row
+    · have onX : x ∈ paths i := by
+        have both : x ∈ paths i ∨ x = v := by
+          simpa [extended,appendUnusedVertex,changed] using step.1
+        exact both.resolve_right differentX
+      have onY : y ∈ paths i := by
+        have both : y ∈ paths i ∨ y = v := by
+          simpa [extended,appendUnusedVertex,changed] using step.2.1
+        exact both.resolve_right differentY
+      refine ⟨onX,onY,?_⟩
+      simpa only [extended,appendUnusedVertex,ite_eq_left changed,
+        List.idxOf_append_of_mem onX,List.idxOf_append_of_mem onY] using step.2.2
+    · simpa only [SourceAudit.BeforeIn,extended,appendUnusedVertex,ite_eq_right changed] using step
+  have project {d : ℕ} (b : Bridge (ListBefore extended) d) :
+      ∃ old : Bridge (ListBefore paths) d, old.arc = b.arc ∧ old.river = b.river := by
+    have away (j : Fin (d+2)) : b.vertex j ≠ v := by
+      intro eq
+      obtain ⟨a,c,apart,ma,mc⟩ := bridgeCorner_twoPaths b j
+      exact apart ((unique (eq ▸ ma)).trans (unique (eq ▸ mc)).symm)
+    let old : Bridge (ListBefore paths) d :=
+      ⟨b.vertex,b.arc,b.river,b.distinctVertices,b.distinctArcs,b.river_ne_arc,
+       projectStep (away _) (away _) b.riverStep,
+       fun i => projectStep (away _) (away _) (b.arcStep i)⟩
+    exact ⟨old,rfl,rfl⟩
+  cases half
+  · intro d short
+    exact ⟨fun b => (free short).false (project b).choose⟩
+  · intro d short b arrive
+    obtain ⟨old,arc,river⟩ := project b
+    apply free short old
+    simpa only [arc,river] using arrive
+
+private theorem appendUnusedVertex_distinct {n p : ℕ} (paths : Fin p → List (Fin n))
+    (row : Fin p) (v : Fin n) (unused : ∀ i, v ∉ paths i) (distinct : Function.Injective paths) :
+    Function.Injective (appendUnusedVertex paths row v) := by
+  let extended := appendUnusedVertex paths row v
+  have added : v ∈ extended row := by simp [extended,appendUnusedVertex]
+  have unique {i : Fin p} (present : v ∈ extended i) : i = row := by
+    by_contra outside
+    exact unused i (by simpa [extended,appendUnusedVertex,outside] using present)
+  intro a b same
+  change extended a = extended b at same
+  by_cases aEq : a = row
+  · subst a
+    exact (unique (same ▸ added)).symm
+  · by_cases bEq : b = row
+    · subst b
+      exact unique (same.symm ▸ added)
+    · apply distinct
+      simpa only [extended,appendUnusedVertex,ite_eq_right aEq,ite_eq_right bEq] using same
+
+private theorem appendUnusedVertex_mass {n p : ℕ} (paths : Fin p → List (Fin n))
+    (row : Fin p) (v : Fin n) :
+    (∑ i, (appendUnusedVertex paths row v i).length) = (∑ i, (paths i).length)+1 := by
+  have length (i : Fin p) : (appendUnusedVertex paths row v i).length =
+      (paths i).length + if i = row then 1 else 0 := by
+    by_cases eq : i = row <;> simp [appendUnusedVertex,eq]
+  simp only [length,sum_add_distrib,sum_ite_eq',mem_univ,ite_true]
+
+/-- The literal exact-count extremum exists whenever an eligible family
+exists. Its mass is at least both budgets. -/
+theorem localOrderDistinctExtremal_isDense {n p k : ℕ} (half : Bool) (hp : 0 < p)
+    (feasible : ∃ paths : Fin p → List (Fin n), Function.Injective paths ∧
+      (∀ i, paths i ≠ [] ∧ (paths i).Nodup) ∧ localOrderAdmissible half k paths) :
+    ∃ paths : Fin p → List (Fin n), Function.Injective paths ∧
+      (∀ i, paths i ≠ [] ∧ (paths i).Nodup) ∧ localOrderAdmissible half k paths ∧
+      (∀ other : Fin p → List (Fin n), Function.Injective other →
+        (∀ i, other i ≠ [] ∧ (other i).Nodup) → localOrderAdmissible half k other →
+        (∑ i, (other i).length) ≤ ∑ i, (paths i).length) ∧
+      n ≤ ∑ i, (paths i).length ∧ p ≤ ∑ i, (paths i).length := by
+  classical
+  let Family := Fin p → {path : List (Fin n) // path.Nodup}
+  let : Fintype Family := inferInstanceAs (Fintype (Fin p → {path : List (Fin n) // path.Nodup}))
+  let lists (f : Family) : Fin p → List (Fin n) := fun i => (f i).val
+  let choices := (univ : Finset Family).filter fun f => Function.Injective (lists f) ∧
+    (∀ i, lists f i ≠ []) ∧ localOrderAdmissible half k (lists f)
+  obtain ⟨available,availableDistinct,availableRows,availableFree⟩ := feasible
+  let base : Family := fun i => ⟨available i,(availableRows i).2⟩
+  have inside : base ∈ choices := mem_filter.mpr ⟨mem_univ _,availableDistinct,
+    (fun i => (availableRows i).1),availableFree⟩
+  obtain ⟨best,inChoices,maximal⟩ := exists_max_image choices (fun f => ∑ i, (lists f i).length)
+    ⟨base,inside⟩
+  let paths := lists best
+  obtain ⟨distinct,nonempty,free⟩ := (mem_filter.mp inChoices).2
+  have simple (i : Fin p) : (paths i).Nodup := (best i).property
+  have maximalLists (other : Fin p → List (Fin n)) (injective : Function.Injective other)
+      (rows : ∀ i, other i ≠ [] ∧ (other i).Nodup) (legal : localOrderAdmissible half k other) :
+      (∑ i, (other i).length) ≤ ∑ i, (paths i).length := by
+    let entry : Family := fun i => ⟨other i,(rows i).2⟩
+    exact maximal entry (mem_filter.mpr ⟨mem_univ _,injective,(fun i => (rows i).1),legal⟩)
+  have covers (v : Fin n) : ∃ i, v ∈ paths i := by
+    by_contra! unused
+    let row : Fin p := ⟨0,hp⟩
+    let extended := appendUnusedVertex paths row v
+    have extendedRows (i : Fin p) : extended i ≠ [] ∧ (extended i).Nodup := by
+      by_cases changed : i = row
+      · subst i
+        have away : ∀ a ∈ paths row, a ≠ v := by
+          intro a present eq
+          exact unused row (eq ▸ present)
+        simpa [extended,appendUnusedVertex,List.nodup_append,simple row] using away
+      · simpa only [extended,appendUnusedVertex,ite_eq_right changed] using And.intro (nonempty i) (simple i)
+    have extendBound := maximalLists extended (appendUnusedVertex_distinct paths row v unused distinct)
+      extendedRows (appendUnusedVertex_admissible paths row v unused free)
+    change (∑ i, (appendUnusedVertex paths row v i).length) ≤ ∑ i, (paths i).length at extendBound
+    rw [appendUnusedVertex_mass] at extendBound
+    omega
+  have all : (univ : Finset (Fin p)).biUnion (fun i => (paths i).toFinset) = univ := by
+    ext v
+    simpa only [mem_biUnion,mem_univ,true_and,List.mem_toFinset,iff_true] using covers v
+  refine ⟨paths,distinct,(fun i => ⟨nonempty i,simple i⟩),free,maximalLists,?_,?_⟩
+  · calc
+      n = ((univ : Finset (Fin p)).biUnion (fun i => (paths i).toFinset)).card := by simp [all]
+      _ ≤ ∑ i, (paths i).toFinset.card := card_biUnion_le
+      _ = _ := sum_congr rfl fun i _ => List.toFinset_card_of_nodup (simple i)
+  · calc
+      p = ∑ i : Fin p, (1:ℕ) := by simp
+      _ ≤ _ := sum_le_sum fun i _ => List.length_pos_of_ne_nil (nonempty i)
 
 end OnlineReachabilityPreservers

@@ -36,6 +36,21 @@ exclusion at cutoffs of at least two and loses at most \(p\) incidences.
 Every retained row is distinct and the arrival order is inherited.
 [Exact count obstruction, budget comparison, and unbounded sequence mass](OnlineReachabilityPreservers/DistinctPathBudgets.lean).
 
+When the positive exact counts admit a distinct nonempty simple family, a literal
+maximum exists. An unused vertex could extend one path. A bridge cannot
+use the added vertex, since each bridge corner occurs on two distinct
+paths. Hence the maximum reaches both original counts. At input mean
+length above four, the frozen lower length cap forces each output row
+to have at least two vertices. Half-two exclusion makes these rows
+distinct. At mean length at most four, disjoint paths, distinct
+singletons, and directed bipartite blocks give distinct witnesses.
+In the odd vertex boundary case, one singleton at each block vertex
+supplies the extra unit of degree. This gives the frozen caps relative
+to the original mass, including at the literal exact-count maximum
+for half cutoff four and full cutoffs three through five.
+[Feasible literal maximum](OnlineReachabilityPreservers/DistinctPathBudgets.lean)
+· [Literal cleaning](OnlineReachabilityPreservers/FrozenDistinctCleaning.lean).
+
 ## Lemma 25 has a false denominator
 
 For an upper bound \(m\), mean at least \(a\), and threshold \(t<a\), the printed
