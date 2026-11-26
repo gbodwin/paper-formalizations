@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.OfflineBridgeExtremalUpper
+import OnlineReachabilityPreservers.OfflineComponentOrders
 import OnlineReachabilityPreservers.OfflineConsecutiveEndpoint
 import OnlineReachabilityPreservers.OfflineOrderedBlocks
 
@@ -27,6 +28,11 @@ variable [Fintype I]
 private noncomputable def laterRows (paths : I → List V) (S : Finset V) (x : V) : Finset I := by
   classical
   exact univ.filter fun i => ∃ y ∈ S, ListBefore paths i x y
+
+private theorem mem_laterRows {paths : I → List V} {S : Finset V} {x : V} {i : I} :
+    i ∈ laterRows paths S x ↔ ∃ y ∈ S, ListBefore paths i x y := by
+  classical
+  simp [laterRows]
 
 private theorem exists_laterRows_le_two [Fintype V] (paths : I → List V)
     (simple : ∀ i, (paths i).Nodup) (free : ∀ d, IsEmpty (Bridge (ListBefore paths) d))
@@ -60,7 +66,7 @@ private theorem mem_laterLowerRows {paths : I → List V} {S : Finset V} {rank :
   simp [laterLowerRows]
 
 private theorem exists_rank_with_few_later_lower [Fintype V] (paths : I → List V)
-    (simple : ∀ i, (paths i).Nodup) (free : ∀ d, IsEmpty (Bridge (ListBefore paths) d)) (S : Finset V) :
+    (smallRows : ∀ S : Finset V, S.Nonempty → ∃ x ∈ S, (laterRows paths S x).card ≤ 2) (S : Finset V) :
     ∃ rank : V → ℕ, Set.InjOn rank (S : Set V) ∧ (∀ x ∈ S, rank x < S.card) ∧
       ∀ x ∈ S, (laterLowerRows paths S rank x).card ≤ 2 := by
   classical
@@ -69,7 +75,7 @@ private theorem exists_rank_with_few_later_lower [Fintype V] (paths : I → List
     by_cases empty : S = ∅
     · subst S
       exact ⟨fun _ => 0,by simp [Set.InjOn],by simp,by simp⟩
-    obtain ⟨top,topIn,topRows⟩ := exists_laterRows_le_two paths simple free (Finset.nonempty_iff_ne_empty.mpr empty)
+    obtain ⟨top,topIn,topRows⟩ := smallRows S (Finset.nonempty_iff_ne_empty.mpr empty)
     let rest := S.erase top
     obtain ⟨oldRank,oldInjective,oldRoom,oldLoss⟩ := previous rest (erase_ssubset topIn)
     let rank (x : V) := if x = top then rest.card else oldRank x
@@ -123,17 +129,16 @@ private theorem exists_rank_with_few_later_lower [Fintype V] (paths : I → List
 
 variable {n p : ℕ}
 
-/-- Delete at most two incidences per vertex to give the retained paths
-one common vertex order. Every nonempty row keeps its last vertex. -/
-theorem fullBridgeFree_increasing_subsequences_two (paths : Fin p → List (Fin n))
-    (simple : ∀ i, (paths i).Nodup) (free : ∀ d, IsEmpty (Bridge (ListBefore paths) d)) :
+private theorem increasing_subsequences_of_small_laterRows (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup)
+    (smallRows : ∀ S : Finset (Fin n), S.Nonempty → ∃ x ∈ S, (laterRows paths S x).card ≤ 2) :
     ∃ rank : Fin n ≃ Fin n, ∃ kept : Fin p → List (Fin n),
       (∀ i, (kept i).Sublist (paths i)) ∧ (∀ i, ((kept i).map rank).Pairwise (· < ·)) ∧
       (∀ i (nonempty : paths i ≠ []), (paths i).getLast nonempty ∈ kept i) ∧
       (∀ x, (occurrences (fun i => (paths i).toFinset \ (kept i).toFinset) x).card ≤ 2) ∧
       (∑ i, (paths i).length) ≤ (∑ i, (kept i).length)+2*n := by
   classical
-  obtain ⟨number,distinct,room,loss⟩ := exists_rank_with_few_later_lower paths simple free univ
+  obtain ⟨number,distinct,room,loss⟩ := exists_rank_with_few_later_lower paths smallRows univ
   let rank (x : Fin n) : Fin n := ⟨number x,by simpa using room x (mem_univ _)⟩
   have injective : Function.Injective rank :=
     fun _ _ equal => distinct (mem_univ _) (mem_univ _) (congrArg Fin.val equal)
@@ -198,6 +203,94 @@ theorem fullBridgeFree_increasing_subsequences_two (paths : Fin p → List (Fin 
       rw [← List.toFinset_card_of_nodup (keptSimple i),← List.toFinset_card_of_nodup (simple i)]
       exact card_sdiff_add_card_eq_card subset
     omega
+
+/-- Delete at most two incidences per vertex to give the retained paths
+one common vertex order. Every nonempty row keeps its last vertex. -/
+theorem fullBridgeFree_increasing_subsequences_two (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : ∀ d, IsEmpty (Bridge (ListBefore paths) d)) :
+    ∃ rank : Fin n ≃ Fin n, ∃ kept : Fin p → List (Fin n),
+      (∀ i, (kept i).Sublist (paths i)) ∧ (∀ i, ((kept i).map rank).Pairwise (· < ·)) ∧
+      (∀ i (nonempty : paths i ≠ []), (paths i).getLast nonempty ∈ kept i) ∧
+      (∀ x, (occurrences (fun i => (paths i).toFinset \ (kept i).toFinset) x).card ≤ 2) ∧
+      (∑ i, (paths i).length) ≤ (∑ i, (kept i).length)+2*n :=
+  increasing_subsequences_of_small_laterRows paths simple
+    (fun _ S => exists_laterRows_le_two paths simple free S)
+
+/-- Whole-system bridge exclusion is enough component by component. At
+each elimination, take a maximal remaining condensation component. -/
+theorem fullBridgeFree_increasing_subsequences_two_of_components (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup)
+    (localFree : ∀ c d, IsEmpty (Bridge (ListBefore (pathsInPrecedenceComponent paths c)) d)) :
+    ∃ rank : Fin n ≃ Fin n, ∃ kept : Fin p → List (Fin n),
+      (∀ i, (kept i).Sublist (paths i)) ∧ (∀ i, ((kept i).map rank).Pairwise (· < ·)) ∧
+      (∀ i (nonempty : paths i ≠ []), (paths i).getLast nonempty ∈ kept i) ∧
+      (∀ x, (occurrences (fun i => (paths i).toFinset \ (kept i).toFinset) x).card ≤ 2) ∧
+      (∑ i, (paths i).length) ≤ (∑ i, (kept i).length)+2*n := by
+  classical
+  apply increasing_subsequences_of_small_laterRows paths simple
+  intro S nonempty
+  let G := pathPrecedenceGraph paths
+  let label := componentLabel G
+  let priority (x : Fin n) := (reaches (condensation G) (label x)).card
+  obtain ⟨anchor,inSet,maximum⟩ := exists_max_image S priority nonempty
+  let T := S.filter (fun x => label x = label anchor)
+  let localPaths := pathsInPrecedenceComponent paths (label anchor)
+  have sub (i : Fin p) : (localPaths i).Sublist (paths i) := List.filter_sublist
+  have inside : T.Nonempty := ⟨anchor,mem_filter.mpr ⟨inSet,rfl⟩⟩
+  obtain ⟨x,inT,small⟩ := exists_laterRows_le_two localPaths
+    (fun i => (sub i).nodup (simple i)) (localFree (label anchor)) inside
+  obtain ⟨inS,labelX⟩ := mem_filter.mp inT
+  refine ⟨x,inS,(card_le_card ?_).trans small⟩
+  intro i onRow
+  obtain ⟨y,yIn,step⟩ := mem_laterRows.mp onRow
+  have labelY : label y = label anchor := by
+    by_contra different
+    have edge : Edge G x y := mem_filter.mpr ⟨mem_univ _,i,step⟩
+    have distinct : label x ≠ label y := fun same => different (same.symm.trans labelX)
+    have crosses : Edge (condensation G) (label x) (label y) :=
+      edge_condensation.mpr ⟨distinct,x,y,edge,rfl,rfl⟩
+    have after : priority x < priority y := reaches_card_lt (condensation_dag G) crosses
+    have same : priority x = priority anchor := congrArg (fun c => (reaches (condensation G) c).card) labelX
+    rw [same] at after
+    exact after.not_ge (maximum y yIn)
+  have onX : x ∈ localPaths i := List.mem_filter.mpr ⟨step.1,decide_eq_true labelX⟩
+  have onY : y ∈ localPaths i := List.mem_filter.mpr ⟨step.2.1,decide_eq_true labelY⟩
+  have localStep := (listBefore_sublist_iff (simple i) (sub i) onX onY).mpr step
+  exact mem_laterRows.mpr ⟨y,mem_filter.mpr ⟨yIn,labelY⟩,localStep⟩
+
+/-- Count the original rows supplying at least one strict step inside the component. -/
+noncomputable def precedenceComponentNontrivialRows (paths : Fin p → List (Fin n)) (c : Fin n) : Finset (Fin p) :=
+  univ.filter fun i => 2 ≤ (pathsInPrecedenceComponent paths c i).length
+
+/-- If each component has at most the given cutoff's worth of nontrivial
+rows, the global exclusion at that cutoff excludes every bridge locally. -/
+theorem precedenceComponents_fullFree_of_nontrivialRows_le {k : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : BridgeFree (ListBefore paths) k)
+    (few : ∀ c, (precedenceComponentNontrivialRows paths c).card ≤ k) :
+    ∀ c d, IsEmpty (Bridge (ListBefore (pathsInPrecedenceComponent paths c)) d) := by
+  intro c d
+  refine ⟨fun bridge => ?_⟩
+  let localPaths := pathsInPrecedenceComponent paths c
+  let rows := precedenceComponentNontrivialRows paths c
+  have needed {i x y} (step : ListBefore localPaths i x y) : i ∈ rows := by
+    refine mem_filter.mpr ⟨mem_univ _,?_⟩
+    change 2 ≤ (localPaths i).length
+    have late := List.idxOf_lt_length_of_mem step.2.1
+    have before := step.2.2
+    omega
+  let smaller : Bridge (fun i : rows => ListBefore localPaths i.val) d :=
+    { vertex := bridge.vertex
+      arc := fun i => ⟨bridge.arc i,needed (bridge.arcStep i)⟩
+      river := ⟨bridge.river,needed bridge.riverStep⟩
+      distinctVertices := bridge.distinctVertices
+      distinctArcs := fun _ _ eq => bridge.distinctArcs (congrArg Subtype.val eq)
+      river_ne_arc := fun i eq => bridge.river_ne_arc i (congrArg Subtype.val eq)
+      riverStep := bridge.riverStep
+      arcStep := bridge.arcStep }
+  have bounded : d+2 ≤ rows.card := by simpa only [Fintype.card_coe] using SourceAudit.bridge_path_count_le smaller
+  exact (free (bounded.trans (few c))).false
+    (bridge.mapPaths id Function.injective_id (fun i _ _ step =>
+      listBefore_of_sublist (simple i) List.filter_sublist step))
 
 /-- The three-incidence form of the common-order deletion bound. -/
 theorem fullBridgeFree_increasing_subsequences (paths : Fin p → List (Fin n))

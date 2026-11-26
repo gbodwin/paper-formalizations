@@ -471,8 +471,8 @@ gives a linear lower bound. Together these give a DAG on exactly
 \(n\ge2\) vertices with exactly \(p\le n^2\) distinct demands whose every
 preserver has at least \(M/24\) edges.
 [Consecutive-chain bound](OnlineReachabilityPreservers/OfflineConsecutiveEndpoint.lean#L197)
-· [Common-order subsequences](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L128)
-· [Checked extremal converse](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L215).
+· [Common-order subsequences](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L209)
+· [Checked extremal converse](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L308).
 
 With a common vertex order, a detour that uses the same path twice can be
 shortened to one step along that path. A detour with distinct path indices

@@ -452,11 +452,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   With positive budgets and mass at least both, it keeps at least \(M/32\),
   both budgets, and all four original-average caps when \(M\le 8\max(n,p)\)
   or \(24n\le M\).
-  A [two-incidence deletion bound](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L128)
+  A [two-incidence deletion bound](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L209)
   and trimming at ratios that account for the retained mass give the
-  [all-mass result](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L109).
+  [all-mass result](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L191).
   It keeps at least \(M/40\), both original budgets, the four original-average
   caps, and exclusion of every full bridge when the input has that exclusion.
+  At a finite full-bridge cutoff \(k\), the
+  [component criterion](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L177)
+  keeps the same budgets, caps and \(M/40\) guarantee when every precedence
+  component has at most \(k\) rows with a strict internal step. Longer
+  bridges can exist in the original system.
 - In half-bridge-free systems through size three, there are no triangles
   of opposite links. If two opposite links connect distinct vertices on
   one path, the intermediate vertex belongs to that path. Half-bridge exclusion
@@ -585,11 +590,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   checks the reverse construction in a common vertex order. Any preserver of
   the endpoint demands must retain exactly the total incidence count minus
   the path count in consecutive edges.
-- [`theorem14_offline_extremal_lower`](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L215)
+- [`theorem14_offline_extremal_lower`](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L308)
   proves the unrestricted converse. For every \(n\ge2\) and \(0\le p\le n^2\),
   one DAG on exactly \(n\) vertices with \(p\) distinct demands forces at
   least one twenty-fourth of the maximum fully bridge-free incidence mass.
-  The [common-order construction](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L128)
+  The [common-order construction](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L209)
   removes at most two incidences per vertex and keeps the last vertex
   of each nonempty path. A spanning path supplies the lower bound when
   the maximum mass is below \(6n\).
