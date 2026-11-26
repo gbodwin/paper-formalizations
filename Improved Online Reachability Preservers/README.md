@@ -539,6 +539,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   also charges for counting the input arcs and scanning the retained
   records to return the final graph. Its recorded work and fair-bit supply
   obey a [fixed-height polynomial](OnlineReachabilityPreservers/SteinerBinaryReplayAsymptotics.lean#L194).
+  The [arrival interface](OnlineReachabilityPreservers/SteinerBinaryArrivals.lean#L39)
+  sees only the new request and its stored history, and reuses the same bit
+  word for every prefix solve. Its [exact total](OnlineReachabilityPreservers/SteinerBinaryArrivals.lean#L92)
+  charges every replay and the history reversal at each arrival.
+  One [Theorem 21 statement](OnlineReachabilityPreservers/SteinerBinaryArrivals.lean#L188)
+  gives feasibility, irrevocability, polynomial recorded work including the
+  bit supply, and the expected edge bound on a fixed feasible trace.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

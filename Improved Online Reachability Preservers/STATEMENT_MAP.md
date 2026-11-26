@@ -1340,6 +1340,20 @@ includes both passes. The [expected bound](OnlineReachabilityPreservers/SteinerB
 and the [fixed-height work and bit bound](OnlineReachabilityPreservers/SteinerBinaryReplayAsymptotics.lean#L194)
 apply to this entry point.
 
+The [arrival operation](OnlineReachabilityPreservers/SteinerBinaryArrivals.lean#L39)
+receives the next request and stores the history in reverse order. It
+reconstructs only the seen prefix and reuses the original graph and the
+same sampled bit word. Its [exact total](OnlineReachabilityPreservers/SteinerBinaryArrivals.lean#L92)
+includes empty initialization, every prefix replay, and the history scan.
+The [combined Theorem 21 statement](OnlineReachabilityPreservers/SteinerBinaryArrivals.lean#L188)
+uses one fixed height for each positive \(\varepsilon\). For every feasible
+trace and supplied word, the graph serves the trace, extends all prior
+outputs for that word, and the total recorded work plus the prescribed
+bit count is polynomial. On every fixed feasible trace the final graph
+has the same expected competitive bound under the uniform finite bit law.
+The polynomial uses the mixed word and binary-list accounting. A native
+execution bound remains open.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
