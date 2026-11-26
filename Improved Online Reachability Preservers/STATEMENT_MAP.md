@@ -1532,8 +1532,12 @@ retains at least \(M/523\) with both original budgets and all four caps
 relative to the output averages. At a cutoff of at least three, it applies
 to simple full-bridge-free input through that cutoff with mass at least
 both positive budgets, provided each precedence component excludes full
-bridges at every size. When the cutoff covers the smaller budget, it applies at the
-unrestricted indexed maximum and the output excludes every full bridge.
+bridges at every size. When the cutoff covers the smaller budget, it
+applies at the unrestricted indexed maximum and the output excludes every
+full bridge. The [literal transfer](OnlineReachabilityPreservers/OutputAverageDistinctCleaning.lean)
+gives the corresponding feasible literal maximum with distinct nonempty
+rows and retention \(M/9414\). It also gives a literal witness under the
+finite full component condition at the input cutoff.
 
 An opposite-neighbor link joins consecutive common vertices of two
 oppositely ordered paths. In an input excluding full bridges through size

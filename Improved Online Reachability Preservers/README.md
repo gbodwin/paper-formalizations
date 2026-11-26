@@ -579,6 +579,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   same conclusion at that cutoff holds when every input precedence
   component excludes full bridges at every size.
   [Output-average cleaning of full components](OnlineReachabilityPreservers/IncreasingFullAverageCleaning.lean).
+- In the literal model, the same full-component condition gives a
+  distinct nonempty witness retaining at least \(M/9414\), with both
+  budgets and all four output-average caps. A full cutoff covering the
+  smaller budget gives an all-size witness at the feasible literal
+  maximum.
+  [Literal output-average cleaning at full cutoffs](OnlineReachabilityPreservers/OutputAverageDistinctCleaning.lean).
 - If paths longer than the original upper length cap carry at least two
   thirds of the incidence mass (M), pruning that subfamily and trimming
   its vertex blocks retain at least (M/216). The witness meets both

@@ -322,6 +322,16 @@ covers the smaller original budget rules out every bridge and gives this
 conclusion at the unrestricted indexed maximum.
 [Full exclusion with output-average caps](OnlineReachabilityPreservers/IncreasingFullAverageCleaning.lean).
 
+The transfer to literal rows works for any indexed retention factor
+\(C\). A short row in the indexed witness gives \(M\le4Cp\). The same
+uniform alternatives then give a literal witness of mass at least
+\(M/(18C)\). Applying this with \(C=523\) gives \(M/9414\) for the simple
+distinct nonempty input in the full precedence-component case. At a
+cutoff covering the smaller budget, the feasible literal maximum has
+a distinct nonempty witness excluding full bridges at every size. The
+four caps use the witness's own averages, and both budgets hold.
+[The literal transfer and all-size full witness](OnlineReachabilityPreservers/OutputAverageDistinctCleaning.lean).
+
 The original-average conclusion at full cutoff six has a separate
 proof. A reverse comparison within one width piece gives a conflict
 when its opposite interval crosses two pieces. The conflict is at
