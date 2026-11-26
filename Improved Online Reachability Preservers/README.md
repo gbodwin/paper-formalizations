@@ -388,7 +388,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   explicit low-mass witnesses gives the same frozen size-six conclusion
   for every simple all-size full-bridge-free input of mass at least both
   positive budgets.
-  [Pruning bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L524)
+  [Pruning bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L526)
   · [All-size input](OnlineReachabilityPreservers/ContiguousSixCleaning.lean#L151).
 - In half-bridge-free systems through size three, there are no triangles
   of opposite links. If two opposite links connect distinct vertices on
@@ -396,8 +396,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   through size four also rules out four-cycles of opposite links. These
   restrictions apply to cyclic inputs and leave the general frozen
   cleaning question open.
-  [Two-link property](OnlineReachabilityPreservers/OppositeLinkForest.lean#L616)
-  · [Cycle length bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L842).
+  [Two-link property](OnlineReachabilityPreservers/OppositeLinkForest.lean#L618)
+  · [Cycle length bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L844).
+  For half exclusion through four, the number of opposite links \(E\)
+  satisfies \(4E^2\le n^2(n-1)\). If \(M^2\ge16n^2(n-1)\) and the
+  incidence mass \(M\) is at least both positive budgets, the cleaned
+  family meets all four original-average caps within both budgets and
+  retains at least \(M/32\). This holds at the unrestricted half-four
+  maximum when \(p^2\ge16n^2(n-1)\).
+  [Link count](OnlineReachabilityPreservers/OppositeLinkForest.lean#L875)
+  · [Cleaning at large path budgets](OnlineReachabilityPreservers/ContiguousHalfCleaning.lean#L388).
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion

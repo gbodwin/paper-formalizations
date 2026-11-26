@@ -1,3 +1,5 @@
+import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
 import OnlineReachabilityPreservers.OppositeIntersectionPruning
 import OnlineReachabilityPreservers.OppositePathChains
@@ -866,6 +868,82 @@ theorem halfFour_oppositeLinkGraph_cycle_length_gt_four {paths : I → List V}
     exact halfFour_oppositeLinkGraph_no_square free (separate 0 2 (by decide) (by omega))
       (separate 1 3 (by decide) (by omega))
       (edge 0 (by omega)) (edge 1 (by omega)) (edge 2 (by omega)) (last ▸ edge 3 (by omega))
+
+
+/-- Each ordered pair of distinct vertices accounts for at most one
+ordered two-step walk, with equal endpoints counted by the incident edge. -/
+theorem halfFour_oppositeLinkGraph_card_edgeSet_sq {paths : I → List V}
+    (free : HalfBridgeFree (Before paths) 4) :
+    let G := oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))
+    4*(Nat.card G.edgeSet)^2 ≤ (Fintype.card V)^2*(Fintype.card V-1) := by
+  classical
+  let G := oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))
+  let n := Fintype.card V
+  let walks : Finset (Σ _ : V, V × V) :=
+    Finset.univ.sigma fun v => (G.neighborFinset v).product (G.neighborFinset v)
+  let encode (entry : Σ _ : V, V × V) : V × V :=
+    if entry.2.1 = entry.2.2 then (entry.1,entry.2.1) else entry.2
+  have neighbor (v x y : V) (on : (⟨v,(x,y)⟩ : Σ _ : V, V × V) ∈ walks) : G.Adj v x ∧ G.Adj v y := by
+    have both := (Finset.mem_sigma.mp on).2
+    change (x,y) ∈ (G.neighborFinset v).product (G.neighborFinset v) at both
+    obtain ⟨first,second⟩ := Finset.mem_product.mp both
+    exact ⟨(G.mem_neighborFinset v x).mp first,(G.mem_neighborFinset v y).mp second⟩
+  have into : Set.MapsTo encode walks (Finset.univ : Finset V).offDiag := by
+    rintro ⟨v,x,y⟩ on
+    obtain ⟨vx,vy⟩ := neighbor v x y on
+    by_cases same : x = y
+    · exact Finset.mem_offDiag.mpr ⟨by simp [encode,same],by simp [encode,same],by simpa [encode,same] using vx.ne⟩
+    · exact Finset.mem_offDiag.mpr ⟨by simp [encode,same],by simp [encode,same],by simp [encode,same]⟩
+  have noTriangle {v x y : V} (vx : G.Adj v x) (xy : G.Adj x y) (vy : G.Adj v y) : False :=
+    halfThree_oppositeLinkGraph_no_triangle (fun _ h => free (h.trans (by decide))) vx xy vy.symm
+  have unique : Set.InjOn encode walks := by
+    rintro ⟨v,x,y⟩ onA ⟨w,a,b⟩ onB same
+    obtain ⟨vx,vy⟩ := neighbor v x y onA
+    obtain ⟨wa,wb⟩ := neighbor w a b onB
+    by_cases first : x = y
+    · subst y
+      by_cases second : a = b
+      · subst b
+        obtain ⟨centers,ends⟩ := Prod.mk.inj (show (v,x) = (w,a) by simpa [encode] using same)
+        subst w
+        subst a
+        rfl
+      · obtain ⟨start,finish⟩ := Prod.mk.inj (show (v,x) = (a,b) by simpa [encode,second] using same)
+        subst a
+        subst b
+        exact (noTriangle wa vx wb).elim
+    · by_cases second : a = b
+      · subst b
+        obtain ⟨start,finish⟩ := Prod.mk.inj (show (x,y) = (w,a) by simpa [encode,first] using same)
+        subst w
+        subst a
+        exact (noTriangle vx wa vy).elim
+      · obtain ⟨starts,ends⟩ := Prod.mk.inj (show (x,y) = (a,b) by simpa [encode,first,second] using same)
+        subst a
+        subst b
+        have centers : v = w := by
+          by_contra different
+          exact halfFour_oppositeLinkGraph_no_square free first different vx.symm vy wb.symm wa
+        subst w
+        rfl
+  have size := Finset.card_le_card_of_injOn encode into unique
+  have walkSize : walks.card = ∑ v, G.degree v^2 := by
+    simp [walks,Finset.card_sigma,Finset.card_product,pow_two]
+  have nonloopSize : ((Finset.univ : Finset V).offDiag).card = n*(n-1) := by
+    rw [Finset.offDiag_card,Finset.card_univ,Nat.mul_sub_left_distrib,Nat.mul_one]
+  have squares : (∑ v, G.degree v^2) ≤ n*(n-1) := walkSize.symm.trans_le (size.trans_eq nonloopSize)
+  have cauchy : (∑ v, G.degree v)^2 ≤ n * ∑ v, G.degree v^2 := by
+    have realBound : (∑ v, (G.degree v : ℝ))^2 ≤ (n:ℝ) * ∑ v, (G.degree v : ℝ)^2 := by
+      simpa only [one_mul,one_pow,Finset.sum_const,Finset.card_univ,nsmul_eq_mul,mul_one,n] using
+        Finset.sum_mul_sq_le_sq_mul_sq (Finset.univ : Finset V) (fun _ => (1:ℝ)) (fun v => (G.degree v : ℝ))
+    exact_mod_cast realBound
+  rw [G.sum_degrees_eq_twice_card_edges] at cauchy
+  change 4*(Nat.card G.edgeSet)^2 ≤ n^2*(n-1)
+  calc
+    _ = (2*G.edgeFinset.card)^2 := by rw [Nat.card_eq_fintype_card,G.card_edgeSet]; ring
+    _ ≤ n * ∑ v, G.degree v^2 := cauchy
+    _ ≤ n*(n*(n-1)) := Nat.mul_le_mul_left n squares
+    _ = _ := by ring
 
 
 end OnlineReachabilityPreservers

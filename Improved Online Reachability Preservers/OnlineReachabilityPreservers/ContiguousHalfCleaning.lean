@@ -360,4 +360,43 @@ theorem regularization_list_frozen_half_four_of_eight_links {n p : ℕ} (paths :
   exact regularization_list_frozen_of_seven_eighths_mass paths kept simple keptSimple free (by decide)
     hn hp dense long upper (fun _ => enough) allowed
 
+/-- A numeric density condition supplies the opposite-link budget for
+half-four cleaning with all four original-average caps. -/
+theorem regularization_list_frozen_half_four_of_incidence_square {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (ListBefore paths) 4) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (square : 16*n^2*(n-1) ≤ (∑ i, (paths i).length)^2) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (ListBefore clean) 4 ∧
+      M ≤ 32*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let E := Nat.card (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).edgeSet
+  have edges : 4*E^2 ≤ n^2*(n-1) := by
+    simpa only [Fintype.card_fin,E] using halfFour_oppositeLinkGraph_card_edgeSet_sq free
+  have sufficient : (8*E)^2 ≤ M^2 := calc
+    _ = 16*(4*E^2) := by ring
+    _ ≤ 16*(n^2*(n-1)) := Nat.mul_le_mul_left 16 edges
+    _ = 16*n^2*(n-1) := by ring
+    _ ≤ _ := square
+  exact regularization_list_frozen_half_four_of_eight_links paths simple free hn hp dense long
+    ((Nat.pow_le_pow_iff_left (by decide : 2 ≠ 0)).mp sufficient)
+
+/-- The original-average cleaning conclusion holds at the unrestricted
+half-four maximum when the path budget supplies the numeric density. -/
+theorem localOrderExtremal_frozen_half_four_of_large_path_budget (n p : ℕ)
+    (hn : 0 < n) (hp : 0 < p) (square : 16*n^2*(n-1) ≤ p^2) :
+    ∃ paths : Fin p → List (Fin n), (∀ i, (paths i).Nodup) ∧ HalfBridgeFree (ListBefore paths) 4 ∧
+      (∀ other : Fin p → List (Fin n), (∀ i, (other i).Nodup) → HalfBridgeFree (ListBefore other) 4 →
+        (∑ i, (other i).length) ≤ ∑ i, (paths i).length) ∧
+      ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+        (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (ListBefore clean) 4 ∧
+        (∑ i, (paths i).length) ≤ 32*(∑ i, (clean i).length) ∧
+        (∑ i, (clean i).length) ≤ (∑ i, (paths i).length) ∧
+        frozenListCaps n p (∑ i, (paths i).length) clean := by
+  obtain ⟨paths,simple,free,maximal,dense,long⟩ := localOrderExtremal_isDense n p 4 true hn hp
+  exact ⟨paths,simple,free,maximal,regularization_list_frozen_half_four_of_incidence_square
+    paths simple free hn hp dense long (square.trans (Nat.pow_le_pow_left long 2))⟩
+
 end OnlineReachabilityPreservers
