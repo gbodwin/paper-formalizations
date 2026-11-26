@@ -451,8 +451,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   reference load potential. The [binary rounded demand step](OnlineReachabilityPreservers/SteinerBinaryThinDemandWork.lean#L77)
   finishes the fractional updates for one arrival before it scans the
   supplied threshold rows and tests reachability in the resulting graph.
-  The full rounded trace, the remaining replay phases, and native execution
-  bounds remain open at this layer.
+  With the rows for a fixed sample, the [binary thin run](OnlineReachabilityPreservers/SteinerBinaryThinRoundRunWork.lean#L198)
+  starts at zero and returns the exact thin graph. An empty list gives an
+  empty graph, any missed prefix selects the original graph, and otherwise
+  the last rounded graph is returned. Seed and graph preparation, the other
+  replay phases, and native execution bounds remain to be integrated.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

@@ -1160,6 +1160,17 @@ and miss flag agree with the reference rounded trial. The work bound charges
 the interval setup, fractional cuts, final cut probe, threshold scan, and
 rounded reachability test.
 
+The [rounded trace](OnlineReachabilityPreservers/SteinerBinaryThinRoundRunWork.lean#L47)
+passes the same updated table across arrivals and carries the latest rounded
+list. Its cumulative miss flag is [equivalent to a failed prefix](OnlineReachabilityPreservers/SteinerBinaryThinRoundRunWork.lean#L160).
+When the supplied threshold rows represent a fixed thin sample, the
+[binary entry from zero](OnlineReachabilityPreservers/SteinerBinaryThinRoundRunWork.lean#L198)
+returns the original graph if any prefix misses, the last rounded graph
+if all prefixes succeed, and the empty graph for an empty request list.
+It allocates its own table, and its work bound substitutes the global load
+budget for the total number of successful cuts. The sample rows and other
+binary inputs are supplied.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

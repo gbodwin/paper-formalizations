@@ -22,7 +22,7 @@ def binaryThinCoverTraceWorkBudget (n arcs keys base labels width ceiling supply
   (demands+updates)*binaryPreparedThinLoopStepWorkBudget n arcs keys base labels width ceiling supply+
     demands*(binaryDemandIntervalArcsWorkBudget n arcs labels n+12)+2
 
-private theorem binaryPreparedThinLoopStepWorkBudget_le_arcs
+theorem binaryPreparedThinLoopStepWorkBudget_le_arcs
     (n keys base labels width ceiling supply : ℕ) {smaller larger : ℕ} (fits : smaller ≤ larger) :
     binaryPreparedThinLoopStepWorkBudget n smaller keys base labels width ceiling supply ≤
       binaryPreparedThinLoopStepWorkBudget n larger keys base labels width ceiling supply := by
@@ -110,15 +110,15 @@ theorem binaryThinCoverTraceFromWithWork_refines {n labels width : ℕ}
       simp only [Nat.add_mul,Nat.one_mul] at firstCost lastCost ⊢
       omega
 
-private def reserveBinaryThinPayloadWithWork (ceiling : List Bool) : List Bool × ℕ :=
+def reserveBinaryThinPayloadWithWork (ceiling : List Bool) : List Bool × ℕ :=
   let length := binaryWordLengthWithWork ceiling
   let extra := addBinaryWordsWithWork length.1 [] true
   (extra.1,length.2+extra.2+4)
 
-private def reserveBinaryThinPayloadWorkBudget (ceiling : ℕ) : ℕ :=
+def reserveBinaryThinPayloadWorkBudget (ceiling : ℕ) : ℕ :=
   (3+ceiling*(20*ceiling+9))+(20*ceiling+5)+4
 
-private theorem reserveBinaryThinPayloadWithWork_spec (ceiling : List Bool) :
+theorem reserveBinaryThinPayloadWithWork_spec (ceiling : List Bool) :
     let out := reserveBinaryThinPayloadWithWork ceiling
     binaryWordValue out.1 = ceiling.length+1 ∧ out.1.length ≤ ceiling.length+1 ∧
       out.2 ≤ reserveBinaryThinPayloadWorkBudget ceiling.length := by
@@ -135,6 +135,13 @@ private theorem reserveBinaryThinPayloadWithWork_spec (ceiling : List Bool) :
   change binaryWordValue extra.1 = _ ∧ extra.1.length ≤ _ ∧ length.2+extra.2+4 ≤ _
   unfold reserveBinaryThinPayloadWorkBudget
   refine ⟨by simpa only [decoded,Nat.add_zero] using value,by omega,by omega⟩
+
+theorem reserveBinaryThinPayload_fits (ceiling : List Bool) :
+    (binaryWordValue ceiling).log2+1 < 2^(ceiling.length+1) := by
+  have below := binaryWordValue_lt_pow ceiling
+  have grows : 2^ceiling.length < 2^(ceiling.length+1) :=
+    Nat.pow_lt_pow_right (by decide) (Nat.lt_succ_self _)
+  exact ((Nat.add_le_add_right (Nat.log2_le_self _) 1).trans (Nat.succ_le_of_lt below)).trans_lt grows
 
 /-- Allocate a binary zero table with sufficient payload width, then run
 the chronological fractional updates. -/
@@ -180,11 +187,8 @@ theorem binaryThinCoverFromEmptyWithWork_refines {n labels : ℕ}
   change EncodesThinLoadTable (emptyFinThinLoads n) start.1 (binaryWordValue width.1) at encoded
   change start.2 ≤ _ at startCost
   rw [decoded] at encoded startCost
-  have widthFits : graph.card.log2+1 < 2^(ceiling.length+1) := by
-    have below : graph.card < 2^ceiling.length := supply ▸ binaryWordValue_lt_pow ceiling
-    have grows : 2^ceiling.length < 2^(ceiling.length+1) :=
-      Nat.pow_lt_pow_right (by decide) (Nat.lt_succ_self _)
-    exact (((Nat.add_le_add_right (Nat.log2_le_self graph.card) 1).trans (Nat.succ_le_of_lt below))).trans_lt grows
+  have widthFits : graph.card.log2+1 < 2^(ceiling.length+1) :=
+    supply ▸ reserveBinaryThinPayload_fits ceiling
   have zero : (emptyFinThinLoads n).read = fun _ => 0 := by
     funext e
     simp [FinThinLoadTable.read,emptyFinThinLoads]
