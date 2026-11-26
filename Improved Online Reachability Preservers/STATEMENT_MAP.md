@@ -835,6 +835,17 @@ mass, [deleting the long visits](OnlineReachabilityPreservers/ComponentSplitClea
 preserves the bridge exclusions and leaves all remaining visits within it.
 The original caps and both budgets still hold in a witness with at least
 \(M/108\) mass, with the same degree condition in half mode.
+An additional [ordered-cut criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1188)
+excludes returns across each cut within \(k-1\) precedence edges. For
+fixed cutoff \(k\), [no precedence cycle of length at most \(k\)](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1317)
+implies this criterion and preserves the half exclusion in the degree
+split. In either bridge mode the resulting factor-four block cleaning
+retains \(M/16\) for simple paths with mass at least both positive budgets,
+with both budgets and all four original-average caps. The
+[deletion variant](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1331)
+retains \(M/32\) under the same original budgets and caps when rowwise
+deletions of at most \(M/18\) incidences remove the short cycles. Longer
+cycles may remain in both variants.
 The unrestricted cyclic result remains open.
 
 For Lemmas 23 and 39, the [common-order extremal theorem](OnlineReachabilityPreservers/CommonOrderExtremal.lean)

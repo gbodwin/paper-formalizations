@@ -1087,4 +1087,271 @@ theorem regularization_list_frozen_half_of_few_long_precedence_visits {n p k : �
       dsimp only [kept, M]
       omega)
 
+/-- Different pieces of a parent lie in its strict path order, and the
+projected precedence graph has no short return across any cut in that row. -/
+def ShortReturnSeparated {V W I J : Type*} [DecidableEq V] [DecidableEq W]
+    (G : Arcs V) (project : W → V) (paths : I → List W)
+    (pieces : J → List W) (parent : J → I) (cutoff : ℕ) : Prop :=
+  ∀ ⦃i j⦄, i ≠ j → parent i = parent j →
+    (∀ x ∈ pieces i, ∀ y ∈ pieces j,
+      Before paths (parent i) x y ∧ project y ∉ reachIn G (project x) (cutoff-1)) ∨
+    (∀ y ∈ pieces j, ∀ x ∈ pieces i,
+      Before paths (parent i) y x ∧ project x ∉ reachIn G (project y) (cutoff-1))
+
+private theorem mem_reachIn_of_steps {V : Type*} [DecidableEq V] {G : Arcs V} (v : ℕ → V) (n : ℕ)
+    (arcs : ∀ i < n, Edge G (v i) (v (i+1))) (i j : ℕ) (ordered : i ≤ j) (inside : j ≤ n)
+    (depth : ℕ) (long : j-i ≤ depth) : v i ∈ reachIn G (v j) depth := by
+  have exact (i d : ℕ) (fits : i+d ≤ n) : v i ∈ reachIn G (v (i+d)) d := by
+    induction d generalizing i with
+    | zero => exact target_mem_reachIn G (v i) 0
+    | succ d ih =>
+      have next := ih (i+1) (by omega)
+      have index : i+1+d = i+(d+1) := by omega
+      rw [index] at next
+      exact reachIn_succ.mpr (Or.inr ⟨v (i+1),arcs i (by omega),next⟩)
+  have same : i+(j-i) = j := by omega
+  have step := exact i (j-i) (by omega)
+  rw [same] at step
+  induction depth, long using Nat.le_induction with
+  | base => exact step
+  | succ d h ih => exact reachIn_subset_succ G _ d ih
+
+private theorem bridge_of_shortReturnSeparated_split {V W I J : Type*}
+    [DecidableEq V] [DecidableEq W] [DecidableEq I] {cutoff k : ℕ}
+    {paths : I → List W} {pieces : J → List W} (G : Arcs V) (project : W → V) (parent : J → I)
+    (steps : ∀ {i x y}, Before pieces i x y → Before paths (parent i) x y)
+    (projects : ∀ {i x y}, Before paths i x y → Edge G (project x) (project y))
+    (separated : ShortReturnSeparated G project paths pieces parent cutoff)
+    (b : Bridge (Before pieces) k) (small : k+2 ≤ cutoff) :
+    ∃ j ≤ k, ∃ old : Bridge (Before paths) j,
+      old.river = parent b.river ∧ old.arc (Fin.last j) = parent (b.arc (Fin.last k)) := by
+  let endIndex := k+1
+  let v (i : ℕ) := b.vertex ⟨min i (k+1),Nat.lt_succ_of_le (min_le_right _ _)⟩
+  let owner (i : ℕ) := if atArc : i < endIndex then parent (b.arc ⟨i,atArc⟩) else parent b.river
+  have fromFin (i : Fin (k+2)) : v i.val = b.vertex i := by
+    have fit : i.val ≤ k+1 := Nat.le_of_lt_succ i.isLt
+    exact congrArg b.vertex (Fin.ext (min_eq_left fit))
+  have injective : ∀ i ≤ endIndex, ∀ j ≤ endIndex, v i = v j → i = j := by
+    intro i hi j hj equal
+    have a : v i = b.vertex ⟨i,Nat.lt_succ_of_le hi⟩ := fromFin ⟨i,Nat.lt_succ_of_le hi⟩
+    have c : v j = b.vertex ⟨j,Nat.lt_succ_of_le hj⟩ := fromFin ⟨j,Nat.lt_succ_of_le hj⟩
+    exact congrArg Fin.val (b.distinctVertices (a.symm.trans (equal.trans c)))
+  let arc (i : ℕ) (hi : i < endIndex) := b.arc ⟨i,hi⟩
+  have kind (i : ℕ) (hi : i < endIndex) : owner i = parent (arc i hi) := by simp [owner,arc,hi]
+  have step (i : ℕ) (hi : i < endIndex) : Before pieces (arc i hi) (v i) (v (i+1)) := by
+    let slot : Fin (k+1) := ⟨i,hi⟩
+    have src : v i = b.vertex slot.castSucc := fromFin slot.castSucc
+    have dst : v (i+1) = b.vertex slot.succ := fromFin slot.succ
+    rw [src,dst]
+    exact b.arcStep slot
+  have river : Before pieces b.river (v 0) (v endIndex) := by
+    have src : v 0 = b.vertex 0 := fromFin (0 : Fin (k+2))
+    have dst : v endIndex = b.vertex (Fin.last (k+1)) := fromFin (Fin.last (k+1))
+    rw [src,dst]
+    exact b.riverStep
+  have edge (i : ℕ) (hi : i < endIndex) : Edge G (project (v i)) (project (v (i+1))) :=
+    projects (steps (step i hi))
+  have along (i j : ℕ) (ij : i ≤ j) (inside : j ≤ endIndex) :
+      project (v i) ∈ reachIn G (project (v j)) (cutoff-1) :=
+    mem_reachIn_of_steps (project ∘ v) endIndex edge i j ij inside _ (by dsimp only [endIndex] at inside; omega)
+  have noRiver (i : ℕ) (hi : i < endIndex) : parent b.river ≠ owner i := by
+    rw [kind i hi]
+    intro same
+    rcases separated (b.river_ne_arc ⟨i,hi⟩) same with forward | reverse
+    · exact (forward _ river.2.1 _ (step i hi).1).2 (along i endIndex hi.le le_rfl)
+    · exact (reverse _ (step i hi).2.1 _ river.1).2 (along 0 (i+1) (Nat.zero_le _) (by omega))
+  have shorten (i j : ℕ) (ij : i ≤ j) (jn : j < endIndex) (same : owner i = owner j) :
+      Before paths (owner i) (v i) (v (j+1)) := by
+    by_cases eq : i = j
+    · subst j
+      rw [kind i jn]
+      exact steps (step i jn)
+    have inside := ij.trans_lt jn
+    have parentEq : parent (arc i inside) = parent (arc j jn) := by
+      simpa only [kind i inside,kind j jn] using same
+    have different : arc i inside ≠ arc j jn := fun equal => eq (congrArg Fin.val (b.distinctArcs equal))
+    rcases separated different parentEq with forward | reverse
+    · rw [kind i inside]
+      exact (forward _ (step i inside).1 _ (step j jn).2.1).1
+    · exact ((reverse _ (step j jn).2.1 _ (step i inside).1).2
+        (along i (j+1) (by omega) (by omega))).elim
+  obtain ⟨size', short, original, riverOwner, last⟩ := bridge_from_forward_repetitions
+    (Before paths) v owner (parent b.river) endIndex (by dsimp [endIndex]; omega)
+    injective (steps river) noRiver shorten
+  refine ⟨size',by dsimp only [endIndex] at short; omega,original,riverOwner,last.trans ?_⟩
+  have final : endIndex-1 = k := by simp [endIndex]
+  rw [final,kind k (Nat.lt_succ_self k)]
+  rfl
+
+/-- A split that excludes short returns across cuts preserves every full
+bridge exclusion through the given cutoff. Longer cycles may remain. -/
+theorem bridgeFree_of_shortReturnSeparated_split {V W I J : Type*}
+    [DecidableEq V] [DecidableEq W] [DecidableEq I] {cutoff : ℕ}
+    {paths : I → List W} {pieces : J → List W} (G : Arcs V) (project : W → V)
+    (free : BridgeFree (Before paths) cutoff) (parent : J → I)
+    (steps : ∀ {i x y}, Before pieces i x y → Before paths (parent i) x y)
+    (projects : ∀ {i x y}, Before paths i x y → Edge G (project x) (project y))
+    (separated : ShortReturnSeparated G project paths pieces parent cutoff) : BridgeFree (Before pieces) cutoff := by
+  intro k size
+  refine ⟨fun b => ?_⟩
+  obtain ⟨j,short,old,_,_⟩ := bridge_of_shortReturnSeparated_split G project parent steps projects separated b size
+  exact (free (k := j) (by omega)).false old
+
+/-- A split with no short returns also preserves half exclusion if the
+pieces preserve their parents' arrival order. -/
+theorem halfBridgeFree_of_shortReturnSeparated_split {V W I J : Type*}
+    [DecidableEq V] [DecidableEq W] [LinearOrder I] [LinearOrder J] {cutoff : ℕ}
+    {paths : I → List W} {pieces : J → List W} (G : Arcs V) (project : W → V)
+    (free : HalfBridgeFree (Before paths) cutoff) (parent : J → I) (arrives : Monotone parent)
+    (steps : ∀ {i x y}, Before pieces i x y → Before paths (parent i) x y)
+    (projects : ∀ {i x y}, Before paths i x y → Edge G (project x) (project y))
+    (separated : ShortReturnSeparated G project paths pieces parent cutoff) : HalfBridgeFree (Before pieces) cutoff := by
+  intro k size b earlier
+  obtain ⟨j,short,old,river,last⟩ := bridge_of_shortReturnSeparated_split G project parent steps projects separated b size
+  have ordered := arrives earlier.le
+  rw [← river, ← last] at ordered
+  exact free (k := j) (by omega) old (ordered.lt_of_ne (old.river_ne_arc _).symm)
+
+/-- Every nonempty directed cycle in the precedence graph has length
+greater than `cutoff`. The condition is expressed using a bounded return
+search from each edge's head to its tail. -/
+def NoShortPrecedenceCycle {n p : ℕ} (paths : Fin p → List (Fin n)) (cutoff : ℕ) : Prop :=
+  ∀ ⦃x y⦄, Edge (pathPrecedenceGraph paths) x y →
+    y ∉ reachIn (pathPrecedenceGraph paths) x (cutoff-1)
+
+/-- A collision of projected detour corners would close a short directed
+walk. With no such return, the vertex split keeps the last arc and river. -/
+theorem splitListVertices_halfFree_of_noShortPrecedenceCycle {n p k D : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) k) (longCycles : NoShortPrecedenceCycle paths k) :
+    HalfBridgeFree (Before (splitListVertices paths D)) k := by
+  classical
+  intro j size b earlier
+  let G := pathPrecedenceGraph paths
+  let last := j+1
+  let v (i : ℕ) := (b.vertex ⟨min i (j+1),Nat.lt_succ_of_le (min_le_right _ _)⟩).fst
+  have fromFin (i : Fin (j+2)) : v i.val = (b.vertex i).fst := by
+    have fit : i.val ≤ j+1 := Nat.le_of_lt_succ i.isLt
+    exact congrArg (fun a => (b.vertex a).fst) (Fin.ext (min_eq_left fit))
+  have edge (i : ℕ) (hi : i < last) : Edge G (v i) (v (i+1)) := by
+    let slot : Fin (j+1) := ⟨i,hi⟩
+    have source : v i = (b.vertex slot.castSucc).fst := fromFin slot.castSucc
+    have target : v (i+1) = (b.vertex slot.succ).fst := fromFin slot.succ
+    rw [source,target]
+    unfold G Edge pathPrecedenceGraph
+    exact mem_filter.mpr ⟨mem_univ _,b.arc slot,splitListVertices_step (simple _) (b.arcStep slot)⟩
+  have separate {a c : Fin (j+2)} (forward : a < c) (equal : (b.vertex a).fst = (b.vertex c).fst) : False := by
+    have fits : c.val ≤ last := Nat.le_of_lt_succ c.isLt
+    have before : a.val < c.val := forward
+    have step := edge a.val (by omega)
+    have back := mem_reachIn_of_steps v last edge (a.val+1) c.val (by omega) fits (k-1)
+      (by dsimp only [last] at fits; omega)
+    have same : v a.val = v c.val := (fromFin a).trans (equal.trans (fromFin c).symm)
+    rw [← same] at back
+    exact longCycles step back
+  have injective : Function.Injective (fun i => (b.vertex i).fst) := by
+    intro a c equal
+    by_contra distinct
+    rcases lt_or_gt_of_ne distinct with forward | backward
+    · exact separate forward equal
+    · exact separate backward equal.symm
+  let original : Bridge (Before paths) j :=
+    ⟨fun i => (b.vertex i).fst,b.arc,b.river,injective,b.distinctArcs,b.river_ne_arc,
+      splitListVertices_step (simple _) b.riverStep,fun slot => splitListVertices_step (simple _) (b.arcStep slot)⟩
+  exact free size original earlier
+
+private theorem width_blocks_admissible_of_noShortPrecedenceCycle {n p k D L : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (legal : localOrderAdmissible half k (splitListVertices paths D))
+    (longCycles : NoShortPrecedenceCycle paths k) : localOrderAdmissible half k (listRegularizedPaths paths D L) := by
+  classical
+  let copies := splitListVertices paths D
+  let pieces := splitListPaths copies L
+  let parent (j : ListBlockIndex copies L) := j.fst
+  let G := pathPrecedenceGraph paths
+  let copy := fun v : ListVertexBlockIndex paths D => v.fst
+  have projects {i x y} (step : Before copies i x y) : Edge G (copy x) (copy y) := by
+    have order := splitListVertices_step (simple i) step
+    unfold G Edge pathPrecedenceGraph
+    exact mem_filter.mpr ⟨mem_univ _,i,order⟩
+  have steps {i x y} (step : Before pieces i x y) : Before copies (parent i) x y :=
+    listBefore_of_sublist (paths := fun j : ListBlockIndex copies L => copies j.fst)
+      (splitListVertices_simple paths D i.fst (simple i.fst)) List.filter_sublist step
+  have separated : ShortReturnSeparated G copy copies pieces parent k := by
+    intro i j distinct same
+    rcases contiguousBlocks_separated distinct same with earlier | later
+    · left
+      intro x hx y hy
+      exact ⟨earlier hx hy,longCycles (projects (earlier hx hy))⟩
+    · right
+      intro y hy x hx
+      exact ⟨later hx hy,longCycles (projects (later hx hy))⟩
+  have arrivals : Monotone parent := by
+    intro i j h
+    rcases Sigma.Lex.le_def.mp h with earlier | ⟨same, _⟩
+    · exact earlier.le
+    · exact same.le
+  cases half
+  · exact bridgeFree_of_shortReturnSeparated_split G copy legal parent steps projects separated
+  · exact halfBridgeFree_of_shortReturnSeparated_split G copy legal parent arrivals steps projects separated
+
+private theorem frozen_cleaning_of_noShortPrecedenceCycle_of_mass {n p k M retention : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : localOrderAdmissible half k paths) (longCycles : NoShortPrecedenceCycle paths k)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (upper : (∑ i, (paths i).length) ≤ M)
+    (lower : 8*(retention+2)*M ≤ 9*retention*(∑ i, (paths i).length)) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  have copyLegal : localOrderAdmissible half k (splitListVertices paths (4*M/n)) := by
+    cases half
+    · exact free.split_list_vertices_any (·.fst) (fun {i _ _} => splitListVertices_step (simple i))
+    · exact splitListVertices_halfFree_of_noShortPrecedenceCycle paths simple free longCycles
+  have legal := width_blocks_admissible_of_noShortPrecedenceCycle (L := 4*M/p) paths simple copyLegal longCycles
+  exact regularization_list_frozen_after_width_blocks_of_mass paths simple legal hn hp dense long upper lower
+
+/-- The original factor-four width cuts suffice when the precedence graph
+has no directed cycle through the bridge cutoff. Longer cycles may remain.
+Both vertices and paths can be split in either bridge mode. -/
+theorem regularization_list_frozen_of_noShortPrecedenceCycle {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : localOrderAdmissible half k paths) (longCycles : NoShortPrecedenceCycle paths k)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  frozen_cleaning_of_noShortPrecedenceCycle_of_mass paths simple free longCycles
+    hn hp dense long le_rfl (by omega)
+
+/-- If deleting at most one eighteenth of the incidences removes the
+short precedence cycles, cleaning keeps one thirty-second of the original
+mass and uses the original budgets and averages. -/
+theorem regularization_list_frozen_after_short_cycle_deletions {n p k : ℕ} {half : Bool}
+    (paths kept : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : localOrderAdmissible half k paths) (sub : ∀ i, (kept i).Sublist (paths i))
+    (longCycles : NoShortPrecedenceCycle kept k)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (retained : 17*(∑ i, (paths i).length) ≤ 18*(∑ i, (kept i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 32*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  intro M
+  have lifts (i : Fin p) (x y : Fin n) (step : Before kept i x y) : Before paths i x y :=
+    listBefore_of_sublist (simple i) (sub i) step
+  have monoFull {size : ℕ} (full : BridgeFree (Before paths) size) : BridgeFree (Before kept) size := by
+    intro j hj
+    exact ⟨fun b => (full hj).false (b.mapPaths id Function.injective_id lifts)⟩
+  have valid : localOrderAdmissible half k kept := by
+    cases half
+    · exact monoFull free
+    · intro j hj b arrival
+      exact free hj (b.mapPaths id Function.injective_id lifts) arrival
+  refine frozen_cleaning_of_noShortPrecedenceCycle_of_mass kept (fun i => (sub i).nodup (simple i))
+    valid longCycles hn hp dense long (sum_le_sum (fun i _ => (sub i).length_le)) ?_
+  change 17*M ≤ 18*(∑ i, (kept i).length) at retained
+  omega
+
 end OnlineReachabilityPreservers

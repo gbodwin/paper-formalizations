@@ -484,7 +484,7 @@ section UniqueIntersectionsThroughSix
 variable {V I : Type*} [LinearOrder V] [LinearOrder I] [Fintype I]
 
 omit [LinearOrder I] [Fintype I] in
-private theorem contiguousBlocks_separated {paths : I → List V} {width : ℕ}
+theorem contiguousBlocks_separated {paths : I → List V} {width : ℕ}
     {i j : ListBlockIndex paths width} (different : i ≠ j) (same : i.fst = j.fst) :
     (∀ {x y}, x ∈ splitListPaths paths width i → y ∈ splitListPaths paths width j → ListBefore paths i.fst x y) ∨
     (∀ {x y}, x ∈ splitListPaths paths width i → y ∈ splitListPaths paths width j → ListBefore paths i.fst y x) := by
