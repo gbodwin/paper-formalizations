@@ -783,6 +783,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   gives the all-size witness of mass at least \(M/40\) for positive
   budgets. An empty budget or cutoff below two admits the full \(np\)
   incidence mass in the indexed convention.
+- [Half-four cleaning](OnlineReachabilityPreservers/FrozenHalfFourCleaning.lean)
+  proves the original-average conclusion of Lemma 23 at cutoff four for
+  arbitrary indexed simple paths. With positive budgets and mass \(M\)
+  at least both budgets, the witness retains at least \(M/5000\) and at
+  most \(M\), fits both original budgets, and meets all four original caps.
+  It applies at the unrestricted maximum. The proof handles the
+  conflicts left by contiguous path cuts before splitting vertices.
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion
@@ -1002,7 +1009,7 @@ The library is included in the repository's module index, declaration audit,
 and kernel replay.
 
 The companion PaperLab includes an interactive trace and a source-linked
-proof map. Open cases include general cyclic half-four cleaning at the
-original averages, frozen-average cleaning under only a finite full cutoff
-of six or more, and a native execution-time bound for the Steiner algorithm.
+proof map. Open cases include general cyclic cleaning at half cutoffs of
+five or more, frozen-average cleaning under only a finite full cutoff of
+six or more, and a native execution-time bound for the Steiner algorithm.
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).

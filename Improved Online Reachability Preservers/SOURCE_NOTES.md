@@ -137,9 +137,28 @@ incidences. Its exact block widths are 23 for degrees and four for lengths.
 The padded system uses repeated singleton rows under the indexed convention.
 Both inputs admit larger fully bridge-free systems at their original budgets.
 The examples refute pointwise bridge preservation under the displayed
-operations. General cyclic cleaning with frozen input averages remains open
-in the scopes recorded in the statement map.
+operations. The original-average existence conclusion at half cutoff four
+has a replacement proof for indexed simple paths. Higher half cutoffs and
+the remaining finite full cutoffs are tracked in the statement map.
 [Checked average-width examples](OnlineReachabilityPreservers/AverageSplitAudit.lean).
+
+For Lemma 23 at cutoff four, let \(M\) be the mass of the simple indexed
+input, \(L=\lfloor4M/p\rfloor\), \(S\) the incidence mass on paths longer
+than \(L\), and \(T\) the sum of length excesses above \(L\). Low mass,
+small excess, and \(S\ge29M/50\) with large excess have separate
+constructions. In the remaining case, each surviving nested reversal
+requires two incidences at one vertex. The first is in a late piece of
+an overlong path. It has at most one target by the later reverse-partner
+bound. Either removing the targets leaves enough mass on the overlong
+pieces alone, or one color of a two-color conflict cover leaves enough
+mass after selecting the heaviest shorter pieces within the remaining
+path budget. The final degree split preserves half exclusion through
+four. Quadratic trimming with the exact original vertex width and
+peeling at the original means give both budgets, all four original caps,
+and at least \(M/5000\). The two budgets are positive and \(M\) is at
+least each of them, as at the unrestricted indexed maximum.
+[Nested conflict accounting](OnlineReachabilityPreservers/FrozenHalfFourConflicts.lean)
+· [Checked half-four cleaning](OnlineReachabilityPreservers/FrozenHalfFourCleaning.lean).
 
 For a fixed collection of ordered, disjoint pieces of a half-4-free family,
 half exclusion through size four is equivalent to excluding a retained
@@ -878,9 +897,9 @@ local-order upper bound and recurrence of Theorem 43.
   have paths of length two and all edges point from one side to the other.
   Each witness excludes every full bridge and retains at least one eighth
   of the original mass. This includes every unrestricted maximum in either
-  mode when either positive budget is at most eight. The general frozen
-  half-bridge case at cutoff four and the arbitrary-cutoff cyclic statements
-  remain open.
+  mode when either positive budget is at most eight. The unrestricted
+  cyclic statements at higher half cutoffs and the remaining finite
+  full cutoffs stay open.
   [Checked low-mass construction](OnlineReachabilityPreservers/LocalFrozenLowMass.lean).
 - The opposite-intersection condition alone can fail at size six. One example
   has unique intersections and excludes every full bridge before splitting.

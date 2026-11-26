@@ -206,7 +206,8 @@ theorem mem_localPathBlock {path : List V} {width block : ℕ} {v : V} :
     v ∈ localPathBlock path width block ↔ v ∈ path ∧ path.idxOf v / width = block := by
   simp [localPathBlock]
 
-private theorem localPathBlock_length (path : List V) (simple : path.Nodup) {width : ℕ} (widthPos : 0 < width) (block : ℕ) :
+/-- A contiguous block has at most its target width in incidences. -/
+theorem localPathBlock_length (path : List V) (simple : path.Nodup) {width : ℕ} (widthPos : 0 < width) (block : ℕ) :
     (localPathBlock path width block).length ≤ width := by
   have simpleBlock : (localPathBlock path width block).Nodup := List.filter_sublist.nodup simple
   rw [← List.toFinset_card_of_nodup simpleBlock]
@@ -259,7 +260,8 @@ private theorem splitListPaths_unique {paths : I → List V} {width : ℕ}
   exact unique parent ((mem_localPathBlock.mp xa).1) ((mem_localPathBlock.mp xb).1)
     ((mem_localPathBlock.mp ya).1) ((mem_localPathBlock.mp yb).1)
 
-private theorem localPathBlock_sum (path : List V) (simple : path.Nodup) (width : ℕ) :
+/-- The contiguous blocks partition the incidences of a simple row. -/
+theorem localPathBlock_sum (path : List V) (simple : path.Nodup) (width : ℕ) :
     (∑ q : Fin (blockCount path.toFinset width), (localPathBlock path width q.val).length) = path.length := by
   have count := card_eq_sum_card_fiberwise (s := path.toFinset) (t := range (blockCount path.toFinset width))
     (f := fun v => path.idxOf v / width) (by
@@ -283,7 +285,8 @@ private theorem localPathBlock_sum (path : List V) (simple : path.Nodup) (width 
     _ = _ := List.toFinset_card_of_nodup simple
 
 omit [LinearOrder I] in
-private theorem splitListPaths_size (paths : I → List V) (simple : ∀ i, (paths i).Nodup) (width : ℕ) :
+/-- Splitting simple rows into contiguous blocks preserves total mass. -/
+theorem splitListPaths_size (paths : I → List V) (simple : ∀ i, (paths i).Nodup) (width : ℕ) :
     (∑ j : ListBlockIndex paths width, (splitListPaths paths width j).length) = ∑ i, (paths i).length := by
   change (∑ j : (Σ i : I, Fin (blockCount (paths i).toFinset width)), (localPathBlock (paths j.1) width j.2.val).length) = _
   rw [Fintype.sum_sigma]

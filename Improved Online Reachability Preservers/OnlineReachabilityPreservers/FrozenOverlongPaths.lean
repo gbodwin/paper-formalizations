@@ -56,7 +56,8 @@ private theorem frozen_overlong_retention {M S K : ℝ} (positive : 0 < M) (over
   nlinarith
 
 set_option maxHeartbeats 1300000 in
-private theorem regularization_list_frozen_from_overlong_budget {n p retention : ℕ} (half : Bool)
+/-- Prune opposite intersections in the overlong rows and clean the resulting bounded family. -/
+theorem regularization_list_frozen_from_overlong_budget {n p retention : ℕ} (half : Bool)
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (allowed : localOrderAdmissible half (if half then 4 else 6) paths)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
