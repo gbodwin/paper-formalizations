@@ -1044,6 +1044,21 @@ four-cycles, and bipartiteness excludes triangles. For every constant
 family with two vertices per path and \(E>Cn\) opposite links. Its
 mass is \(2p\), and it falls in the low-mass cleaning regime.
 
+The [nested link set](OnlineReachabilityPreservers/NestedOppositeCleaning.lean#L23)
+contains only links reversed by a later path inside a larger interval
+reversed by a distinct partner of the central path. It is a subset of
+the opposite-link graph's edges and is empty when every path has at
+most three vertices. The [pruning proof](OnlineReachabilityPreservers/NestedOppositeCleaning.lean#L70)
+deletes the later start of each marked link. If a nested reversal
+would survive across multiple original links, its first link still
+marks that start. The [incidence bound](OnlineReachabilityPreservers/NestedOppositeCleaning.lean#L92)
+charges each deleted incidence to a distinct marked link. For simple
+half-four-free input with positive budgets and mass \(M\) at least both
+counts, [frozen cleaning](OnlineReachabilityPreservers/NestedOppositeCleaning.lean#L147)
+now suffices when this subset has at most \(M/8\) links. It retains at
+least \(M/32\), keeps both budgets, and meets the four caps at the
+original averages. The general original-average claim remains open.
+
 | Source | Mathematical obligation |
 | --- | --- |
 | Definition 2 | Half-\(k\)-bridge-free means no bridge of size at most \(k\) whose last arc precedes the river. |

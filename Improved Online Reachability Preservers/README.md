@@ -440,6 +440,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   Point and line incidence over a finite prime field gives such systems
   with more opposite links than any fixed multiple of the vertex count.
   [Finite field construction](OnlineReachabilityPreservers/OppositeLinkDensity.lean#L120).
+  It suffices to count the opposite links inside a later nested reversal.
+  Deleting their starting incidences removes every such reversal. For
+  simple half-four-free paths with mass \(M\) at least both positive
+  budgets, a subset of at most \(M/8\) nested links gives a cleaned family
+  with at least \(M/32\), both budgets, and all four original-average caps.
+  [Cleaning with few nested links](OnlineReachabilityPreservers/NestedOppositeCleaning.lean#L147).
 - If each simple path visits at most one original mean path length of
   vertices inside any one precedence component, component cuts preserve
   full-bridge exclusion at the given cutoff. They also preserve exclusion
