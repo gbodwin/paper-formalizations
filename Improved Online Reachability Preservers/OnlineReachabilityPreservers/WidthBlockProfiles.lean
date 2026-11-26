@@ -122,18 +122,8 @@ theorem nonfinalWidthBlocks_remainders (sets : I → Finset V) (w : ℕ) :
 private theorem splitVertices_full_degree (paths : I → Finset V) {w : ℕ} (positive : 0 < w)
     (v : VertexBlockIndex paths w) (full : v.snd.val < (occurrences paths v.fst).card/w) :
     (occurrences (splitVertices paths w) v).card = w := by
-  have lower : (orderBlock (occurrences paths v.fst) w v.snd.val).card ≤
-      (occurrences (splitVertices paths w) v).card := by
-    apply card_le_card
-    intro i member
-    obtain ⟨on,idx⟩ := mem_filter.mp member
-    let original : paths i := ⟨v.fst,mem_occurrences.mp on⟩
-    have copied : vertexCopy paths w i original = v := by
-      rcases v with ⟨x,j⟩
-      exact congrArg (Sigma.mk x) (Fin.ext idx)
-    exact mem_occurrences.mpr (mem_map.mpr ⟨original,mem_attach _ _,copied⟩)
-  rw [orderBlock_card_of_full _ positive full] at lower
-  exact le_antisymm (splitVertices_degree paths positive v) lower
+  rw [splitVertices_occurrences]
+  exact orderBlock_card_of_full _ positive full
 
 omit [LinearOrder I] in
 private theorem splitListPaths_degree_lower (paths : I → List V) (simple : ∀ i, (paths i).Nodup) {w : ℕ} (v : V) :

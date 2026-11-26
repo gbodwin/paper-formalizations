@@ -42,7 +42,8 @@ private theorem block_index_lt (S : Finset V) (w : ℕ) (v : V) :
     (predecessors S v).card / w < blockCount S w :=
   Nat.lt_succ_of_le (Nat.div_le_div_right (card_filter_le _ _))
 
-private theorem orderBlock_sum (S : Finset V) (w : ℕ) :
+/-- Consecutive blocks account for each member of the ordered set once. -/
+theorem orderBlock_sum (S : Finset V) (w : ℕ) :
     (∑ j : Fin (blockCount S w), (orderBlock S w j.val).card) = S.card := by
   have h := card_eq_sum_card_fiberwise (s := S) (t := range (blockCount S w))
     (f := fun v => (predecessors S v).card / w) (fun v _ => mem_range.mpr (block_index_lt S w v))
@@ -196,15 +197,28 @@ theorem splitVertices_length (paths : I → Finset V) (w : ℕ) (i : I) :
     (splitVertices paths w i).card = (paths i).card := by
   simp [splitVertices]
 
+/-- The incident rows of a copied vertex are its original consecutive arrival block. -/
+theorem splitVertices_occurrences (paths : I → Finset V) (w : ℕ) (v : VertexBlockIndex paths w) :
+    occurrences (splitVertices paths w) v = orderBlock (occurrences paths v.fst) w v.snd.val := by
+  ext i
+  constructor
+  · intro hi
+    have hv := mem_occurrences.mp hi
+    unfold splitVertices at hv
+    obtain ⟨u, _, rfl⟩ := mem_map.mp hv
+    exact mem_filter.mpr ⟨mem_occurrences.mpr u.2, rfl⟩
+  · intro hi
+    obtain ⟨onRow, block⟩ := mem_filter.mp hi
+    let original : paths i := ⟨v.fst, mem_occurrences.mp onRow⟩
+    have copied : vertexCopy paths w i original = v := by
+      rcases v with ⟨x,j⟩
+      exact congrArg (Sigma.mk x) (Fin.ext block)
+    exact mem_occurrences.mpr (mem_map.mpr ⟨original, mem_attach _ _, copied⟩)
+
 theorem splitVertices_degree (paths : I → Finset V) {w : ℕ} (hw : 0 < w) (v : VertexBlockIndex paths w) :
     (occurrences (splitVertices paths w) v).card ≤ w := by
-  refine (card_le_card (t := orderBlock (occurrences paths v.fst) w v.snd.val) ?_).trans
-    (orderBlock_card _ hw _)
-  intro i hi
-  have hv := mem_occurrences.mp hi
-  unfold splitVertices at hv
-  obtain ⟨u, _, rfl⟩ := mem_map.mp hv
-  exact mem_filter.mpr ⟨mem_occurrences.mpr u.2, rfl⟩
+  rw [splitVertices_occurrences]
+  exact orderBlock_card _ hw _
 
 variable [Fintype V]
 

@@ -282,6 +282,18 @@ private theorem rectangleFullFree {paths : I → Finset V} {size : ℕ} (A : Fin
 
 variable [Fintype V] [Fintype I]
 
+omit [Fintype V] in
+/-- When all rows are kept, the mass of a rectangle is the sum of the
+degrees of its retained vertices. -/
+theorem rectanglePaths_univ_rows_mass (paths : I → Finset V) (A : Finset V) :
+    (∑ i : (univ : Finset I), (rectanglePaths paths A univ i).card) =
+      ∑ v ∈ A, (occurrences paths v).card := by
+  rw [← sum_occurrences]
+  calc
+    _ = ∑ v : A, (occurrences paths v.val).card :=
+      sum_congr rfl (fun v _ => rectanglePath_degree paths A univ v)
+    _ = _ := (sum_subtype A (fun _ => Iff.rfl) fun v => (occurrences paths v).card).symm
+
 omit [LinearOrder I] in
 theorem rectanglePaths_univ_mass (paths : I → Finset V) :
     ∑ i : (univ : Finset I), (rectanglePaths paths (univ : Finset V) univ i).card = ∑ i, (paths i).card := by

@@ -1169,6 +1169,43 @@ theorem regularization_list_frozen_after_caps_with_ratios {half : Bool}
     vRatio pRatio vertices families lengthCap degreeCap mass.le
     (by rw [mass]; exact Nat.mul_le_mul_right M enough)
 
+omit [Fintype V] in
+/-- Given a set of retained vertices, charge peeling to its actual size
+and to the actual number of rows. -/
+theorem regularization_list_frozen_after_kept_vertices {half : Bool} {k n p M retention : ℕ}
+    (paths : I → List V) (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M) (positive : 0 < retention)
+    (A : Finset V) (vertices : A.card ≤ n) (families : Fintype.card I ≤ p)
+    (lengthCap : ∀ i, (paths i).length ≤ 4*M/p)
+    (degreeCap : ∀ v, (occurrences (fun i => (paths i).toFinset) v).card ≤ 4*M/n)
+    (mass : (∑ i, (paths i).length) ≤ M)
+    (enough : (M:ℝ)/retention ≤
+      ((∑ v ∈ A, (occurrences (fun i => (paths i).toFinset) v).card : ℕ) : ℝ)
+        - (M:ℝ)/(4*(n:ℝ))*A.card - (M:ℝ)/(4*(p:ℝ))*(Fintype.card I:ℝ)) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let Z (i : I) := (paths i).toFinset
+  let all := (univ : Finset I)
+  let d : ℝ := (M:ℝ)/(4*(n:ℝ))
+  let l : ℝ := (M:ℝ)/(4*(p:ℝ))
+  obtain ⟨_,_,capD⟩ := four_average_width hn dense
+  obtain ⟨_,_,capL⟩ := four_average_width hp long
+  have total : (∑ i, (Z i).card) = ∑ i, (paths i).length :=
+    sum_congr rfl (fun i _ => List.toFinset_card_of_nodup (simple i))
+  have d0 : 0 ≤ d := by dsimp [d]; positivity
+  have l0 : 0 ≤ l := by dsimp [l]; positivity
+  obtain ⟨C,cSub,B,bSub,lower,minD,minL⟩ := rectanglePaths_prune Z A all d0 l0
+  rw [show all = univ from rfl, rectanglePaths_univ_rows_mass, card_univ] at lower
+  have retained : M ≤ retention*(∑ i : B, (rectanglePaths Z C B i).card) := by
+    have rPos : (0:ℝ) < retention := by exact_mod_cast positive
+    have scaled := (div_le_iff₀ rPos).mp (enough.trans lower)
+    rw [mul_comm] at scaled
+    exact_mod_cast scaled
+  have bCap : B.card ≤ p := (card_le_card bSub).trans (by simpa [all] using families)
+  exact finish_frozen_rectangle paths simple allowed C B ((card_le_card cSub).trans vertices) bCap retained
+    (total.trans_le mass) minD minL lengthCap degreeCap capD capL
+
 /-- The product of the original width and its budget loses less than one
 budget to rounding. -/
 theorem four_average_width_product {M q : ℕ} (positive : 0 < q) :

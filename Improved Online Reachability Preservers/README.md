@@ -580,6 +580,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   overlong rows yields a witness of mass at least (M/2000) when those rows
   carry at least (7M/12), through half cutoff four or full cutoff six.
   [Clipping and the overlong case](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L232).
+- At half cutoff five, [the two width splits](OnlineReachabilityPreservers/HalfFiveProjection.lean)
+  preserve exclusion when each pair of paths shares at most one vertex. The
+  resulting cleaning witness retains at least \(M/16\). For arbitrary
+  intersections, [the degree repair](OnlineReachabilityPreservers/HalfFiveCleaning.lean)
+  gives \(M/5000\) when the total path-length excess above
+  \(\lfloor4M/p\rfloor\) is at most \(7M/50\). Both conclusions require
+  positive budgets and input mass \(M\) at least both budgets. Both witnesses
+  keep the original budgets and all four original-average caps.
 - If either positive budget is at most 29, an unrestricted maximum at any
   cutoff of at least two has a witness with both budgets, all four frozen
   caps, and at least \(M/8\) incidences. The witness excludes full bridges
@@ -639,8 +647,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   of opposite links. If two opposite links connect distinct vertices on
   one path, the intermediate vertex belongs to that path. Half-bridge exclusion
   through size four also rules out four-cycles of opposite links. These
-  restrictions apply to cyclic inputs and leave the general frozen
-  cleaning question open.
+  restrictions apply to cyclic inputs.
   [Two-link property](OnlineReachabilityPreservers/OppositeLinkForest.lean#L620)
   · [Cycle length bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L846).
   For half exclusion through four, the number of opposite links \(E\)

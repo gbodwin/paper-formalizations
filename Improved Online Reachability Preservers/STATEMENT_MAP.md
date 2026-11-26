@@ -1421,6 +1421,17 @@ with the half-four proof.
 [Conflict classification](OnlineReachabilityPreservers/FrozenFullSixConflicts.lean)
 · [Path-budget selection](OnlineReachabilityPreservers/FrozenFullSixRepair.lean).
 
+At half cutoff five, [the unique-intersection theorem](OnlineReachabilityPreservers/HalfFiveProjection.lean)
+retains at least \(M/16\). When paths can meet more than once,
+[bounded length excess](OnlineReachabilityPreservers/HalfFiveCleaning.lean)
+retains at least \(M/5000\) if clipping at \(\lfloor4M/p\rfloor\)
+removes at most \(7M/50\) incidences. Each theorem assumes simple
+half-five-free input with positive budgets and incidence mass \(M\) at
+least both budgets. Its witness preserves half-five exclusion, fits both
+budgets, and meets all four original-average caps. The bounded-excess proof
+uses a two-color deletion on overfull vertices and charges peeling to the
+chosen vertex support. Half-five cleaning for general inputs remains open.
+
 For Lemmas 23 and 39, the [contiguous six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)
 uses the original relative order of pieces in addition to the mirrored-cut
 condition. It assumes full exclusion through size three. With unique

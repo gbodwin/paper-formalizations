@@ -296,6 +296,27 @@ keeps at least \(M/5000\), both original budgets, and all four original caps.
 · [Incidence selection](OnlineReachabilityPreservers/FrozenFullSixRepair.lean)
 · [Full-six cleaning](OnlineReachabilityPreservers/FrozenFullSixCleaning.lean).
 
+For half cutoff five, a forbidden five-bridge in the vertex-split family
+projects its third and fifth corners to the same original vertex. The river
+arrives before the second arc. With unique intersections,
+the last two arcs cannot use that same pair of original vertices in opposite
+directions. Uniqueness also rules out a repeated parent among the roles of
+a bridge of size at most five after a path split. This gives a witness of mass at least \(M/16\) with both
+budgets and all four original-average caps.
+[Projection and cleaning with unique intersections](OnlineReachabilityPreservers/HalfFiveProjection.lean).
+
+With repeated intersections, consecutive degree blocks order the two
+copies of the shared corner. In a proposed half-five bridge the river's
+copy precedes the second arc's copy. The third arc is a later reverse
+partner of the fourth at this corner. The two incidences have different
+colors, and the original degree at the corner exceeds the width. Keeping
+one color on the overfull vertices prevents the new bridge. Bounding
+degree excess and trimming the light copies gives an \(M/5000\) witness
+after clipping at most \(7M/50\) incidences to the length cap. A general
+path-split repair through size five remains open.
+[Degree repair](OnlineReachabilityPreservers/HalfFiveDegreeRepair.lean)
+· [Length excess and vertex budget](OnlineReachabilityPreservers/HalfFiveCleaning.lean).
+
 Consecutive common vertices on two oppositely ordered paths define an
 undirected link. If the family excludes full bridges through size three,
 a simple cycle of \(r\) such links yields a full bridge of size at most
