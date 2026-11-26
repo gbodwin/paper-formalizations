@@ -165,4 +165,16 @@ theorem roundBinaryThinThresholdRowsWithWork_refines {n labelWidth sampleWidth l
   · rintro ⟨_,⟨⟨row,member,rfl⟩,passes⟩,equal⟩
     exact ⟨row,⟨member,passes⟩,equal⟩
 
+/-- A threshold row contributes at most one encoded arc to the result. -/
+theorem roundBinaryThinEncodedRowsWithWork_length_le {n : ℕ} (base factor : List Bool) (cells : List (List Bool))
+    (rows : List (BinaryThinThresholdRow n)) : (roundBinaryThinEncodedRowsWithWork base factor cells rows).1.length ≤ rows.length := by
+  unfold roundBinaryThinEncodedRowsWithWork
+  induction rows with
+  | nil => rfl
+  | cons row rest ih =>
+    simp only [collectPassingThinRowsWithWork,List.length_cons]
+    split
+    · exact Nat.succ_le_succ ih
+    · exact ih.trans (Nat.le_succ _)
+
 end OnlineReachabilityPreservers

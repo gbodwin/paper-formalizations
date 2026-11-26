@@ -259,4 +259,33 @@ theorem decodeSteinerSeedWithArrayViewsFromPreparedScale_thin {n : ℕ} (G : Arc
   funext edge
   exact same (entry.1,entry.2.thin) seen.symm edge
 
+private theorem encodeBinaryThinThresholdRowsWithWork_length {n : ℕ} (code : Fin n → List Bool) (width labelRead : ℕ)
+    (source : List ((Fin n × Fin n) × ℕ)) :
+    (encodeBinaryThinThresholdRowsWithWork code width labelRead source).1.length = source.length := by
+  induction source with
+  | nil => rfl
+  | cons first rest ih =>
+    simp [encodeBinaryThinThresholdRowsWithWork,ih]
+
+theorem binaryThinRoundFromIndexedSampleWithWork_length_le {n : ℕ} (G : Arcs (Fin n))
+    (arcs keys : List (List Bool × List Bool)) (base ceiling factor : List Bool) (m fuel labelRead : ℕ)
+    (hm : m = G.card) (index : G ≃ Fin G.card) (sample : Fin G.card → Fin G.card) (code : Fin n → List Bool)
+    (demands : List (List Bool × List Bool)) :
+    (binaryThinRoundFromIndexedSampleWithWork G arcs keys base ceiling factor m fuel labelRead hm index sample code demands).1.length ≤
+      max arcs.length m := by
+  have prepared (width : ℕ) : (prepareBinaryThinSampleRowsWithWork G m width labelRead hm index sample code).1.length = m := by
+    unfold prepareBinaryThinSampleRowsWithWork
+    dsimp only
+    rw [encodeBinaryThinThresholdRowsWithWork_length]
+    exact (prepareThinThresholdListByIndexWithWordWork_spec G m hm index sample).2.1
+  unfold binaryThinRoundFromIndexedSampleWithWork
+  split
+  · exact Nat.zero_le _
+  · dsimp only
+    let width := (readBinaryWidthAsNatWithWork ceiling).1
+    have bound := binaryThinRoundRunWithWork_length_le arcs keys base ceiling factor
+      (prepareBinaryThinSampleRowsWithWork G m width labelRead hm index sample code).1 n m fuel demands
+    rw [prepared width] at bound
+    exact bound
+
 end OnlineReachabilityPreservers

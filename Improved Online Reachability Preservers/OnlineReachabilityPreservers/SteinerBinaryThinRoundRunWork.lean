@@ -299,4 +299,34 @@ theorem binaryThinRoundRunWithWork_refines {n labels sampleWidth : ℕ}
     unfold binaryThinRoundFromEmptyWorkBudget
     exact Nat.add_le_add_right (Nat.add_le_add (Nat.add_le_add widthCost allocation) fullWork) 6
 
+private theorem binaryThinRoundRunFromWithWork_rounded_length_le {n : ℕ} (arcs keys : List (List Bool × List Bool))
+    (base ceiling factor : List Bool) (rows : List (BinaryThinThresholdRow n)) (depth supply fuel : ℕ)
+    (demands : List (List Bool × List Bool)) (cells : List (List Bool)) (prior : List (List Bool × List Bool))
+    (fits : prior.length ≤ rows.length) :
+    (binaryThinRoundRunFromWithWork arcs keys base ceiling factor rows depth supply fuel demands cells prior).1.rounded.length ≤
+      rows.length := by
+  induction demands generalizing cells prior with
+  | nil => exact fits
+  | cons demand rest ih =>
+    let first := binaryThinDemandWithWork arcs keys base ceiling factor cells rows demand.1 demand.2 depth supply fuel
+    have enough : first.1.rounded.length ≤ rows.length :=
+      roundBinaryThinEncodedRowsWithWork_length_le base factor _ rows
+    exact ih first.1.cells first.1.rounded enough
+
+/-- The fallback can return the original arcs. Without it each output
+row comes from the supplied threshold cache. -/
+theorem binaryThinRoundRunWithWork_length_le {n : ℕ} (arcs keys : List (List Bool × List Bool))
+    (base ceiling factor : List Bool) (rows : List (BinaryThinThresholdRow n)) (depth supply fuel : ℕ)
+    (demands : List (List Bool × List Bool)) :
+    (binaryThinRoundRunWithWork arcs keys base ceiling factor rows depth supply fuel demands).1.length ≤
+      max arcs.length rows.length := by
+  unfold binaryThinRoundRunWithWork
+  split
+  · exact Nat.zero_le _
+  · dsimp only
+    split
+    · exact le_max_left _ _
+    · exact (binaryThinRoundRunFromWithWork_rounded_length_le arcs keys base ceiling factor rows depth supply fuel
+        demands _ [] (Nat.zero_le _)).trans (le_max_right _ _)
+
 end OnlineReachabilityPreservers

@@ -1191,6 +1191,15 @@ words, including self-pairs and any repeated vertices. When the vertex
 list is complete, every ordered pair has a key. The refinement retains
 the same thin graph and charges the encodings and generated pair rows.
 
+The [typed thin graph](OnlineReachabilityPreservers/SteinerBinaryFinOutputWork.lean#L155)
+decodes both labels of each selected row and assembles the finite arc set.
+The [structural length bound](OnlineReachabilityPreservers/SteinerBinaryFinOutputWork.lean#L127)
+counts the input arc list and the threshold cache. There is one threshold
+per original arc, so the decoding and insertion costs are bounded using
+the input arc list length. The result is the exact reference thin graph
+on the same feasible trace and fixed sample, including the empty and
+full-graph fallback cases.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
