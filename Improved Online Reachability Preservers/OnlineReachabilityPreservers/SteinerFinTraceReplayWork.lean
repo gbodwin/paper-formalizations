@@ -3,6 +3,7 @@ import OnlineReachabilityPreservers.SteinerFinIndexedReplayWork
 import OnlineReachabilityPreservers.SteinerHubRouteWork
 import OnlineReachabilityPreservers.SteinerTraceDispatchWork
 import OnlineReachabilityPreservers.SteinerTraceInputsWork
+import OnlineReachabilityPreservers.SteinerBinaryLateControlsWork
 
 /-! Share phase parameters, sampled hubs, and normalized request prefixes in replay. -/
 
@@ -2589,5 +2590,114 @@ theorem completeFinSteinerReplayWithMeasuredThinControlsWork_prefixes {n : ℕ} 
   refine ⟨graphs,counts,?_⟩
   unfold steinerTraceThinControlsExtraPolynomial
   omega
+
+@[inline] private def binaryControlsLateEvaluator {n : ℕ} (G : Arcs (Fin n))
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (m : ℕ) (hm : m = G.card)
+    (vertices : List (Fin n)) (index : G ≃ Fin G.card) (sample : Fin G.card → Fin G.card)
+    (τ : ℕ) (hubs : Finset (Fin n)) (D : List (Fin n × Fin n)) : (Arcs (Fin n) × ℕ) × ℕ :=
+  let out := lateSteinerWithPreparedBinaryControls G arcs τ m hm vertices hubs index sample D
+  ((out.1,0),out.2)
+
+private theorem binaryControlsLateEvaluator_graph {n : ℕ} {G : Arcs (Fin n)}
+    (arcs : {r : List (Fin n × Fin n) // r.Nodup}) (arcsEq : arcs.val.toFinset = G)
+    (m : ℕ) (hm : m = G.card) (vertices : List (Fin n)) (simple : vertices.Nodup)
+    (complete : ∀ v, v ∈ vertices) (index : G ≃ Fin G.card) (sample : Fin G.card → Fin G.card)
+    (early : EarlySteinerRule G) (τ : ℕ) (hubs : Finset (Fin n)) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    (binaryControlsLateEvaluator G arcs m hm vertices index sample τ hubs D).1.1 =
+      assembledSteiner early 0 τ hubs (fun e => sample (index e)) D := by
+  subst G m
+  exact (lateSteinerWithPreparedBinaryControls_refines arcs early τ vertices simple complete hubs index sample D feasible).1
+
+/-- Decode the seed once and pass its indexed thin sample into the binary late
+evaluator at each prefix, using the measured early phase and metered union. -/
+def completeFinSteinerReplayWithBinaryLateWork {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
+  let prepared := prepareFinSteinerWeightedForSeedWithMetricTrialCountWork G raw same height
+  let arcs := finArcRowsWithWordWork raw
+  let vertices := finVerticesWithWordWork n
+  let out := completeFinSteinerReplayWithCachedPhases G raw same height m hm bits D
+    (fun index sample => ((index,sample),2))
+    (fun early draw cached => replaySteinerTraceWithPhaseWork n (by simp) early draw
+      (binaryControlsLateEvaluator G arcs.1 m hm vertices.1 cached.1 cached.2) D
+      (meteredPhaseUnion (Fin n))) prepared
+  (out.1,out.2.1+arcs.2+vertices.2+5,out.2.2)
+
+set_option maxHeartbeats 1200000 in
+/-- The binary late replay has the same prefix graphs and evaluation count as
+the measured replay. If decoding exhausts the budget, both take the same fallback. -/
+theorem completeFinSteinerReplayWithBinaryLateWork_compare {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let out := completeFinSteinerReplayWithBinaryLateWork G raw same height m hm bits D
+    let old := completeFinSteinerReplayWithMeasuredThinControlsWork G raw same height m hm bits D
+    out.1.1.1.1.1.map Prod.fst = old.1.1.1.1.1.map Prod.fst ∧ out.2.2 = old.2.2 := by
+  let controls := finThinReplayControlsWithWordWork n m
+  let prepared := prepareFinSteinerWeightedForSeedWithMetricTrialCountWork G raw same height
+  let indexes := finSteinerReplaySeedIndexesWithWordWork G height raw same
+  let decoded := decodeSteinerSeedWithArrayViewsFromPreparedScale G height n m (by simp) hm prepared.1.1 indexes.1 bits
+  let arcs := finArcRowsWithWordWork raw
+  let vertices := finVerticesWithWordWork n
+  let join := meteredPhaseUnion (Fin n)
+  unfold completeFinSteinerReplayWithBinaryLateWork completeFinSteinerReplayWithMeasuredThinControlsWork
+    completeFinSteinerReplayWithLateEvaluator completeFinSteinerReplayWithCachedPhases replayFromCachedFinSteinerSeed
+  dsimp only
+  cases state : decoded.1.2 with
+  | none => exact ⟨rfl,rfl⟩
+  | some entry =>
+    rcases entry with ⟨seed,arrays⟩
+    dsimp only
+    let width := decoded.1.1
+    let samples := finEarlySeedTrialsWithRankWork G height width.val width.property arrays.early
+    let early := prepared.1.2.1 samples
+    let rule := earlyRoundedRule G height seed.1
+    let index := indexes.1.arcs
+    let rows := prepareThinThresholdListByIndexWithWordWork G m hm index arrays.thin
+    let late := binaryControlsLateEvaluator G arcs.1 m hm vertices.1 index arrays.thin
+    let prior := fun τ hubs => thinControlsLateEvaluator G arcs.1 m vertices.1 controls τ hubs rows.1
+    let reference := fun τ hubs => lateSteinerWithStoredThinThresholds G τ m hubs rows.1.val.toFinset
+    have arcsEq : arcs.1.val.toFinset = G := (finArcRowsWithWordWork_spec G raw same).1
+    obtain ⟨simple,complete,_⟩ := finVerticesWithWordWork_spec n
+    obtain ⟨stored,rowCount,rowEdges,_⟩ := prepareThinThresholdListByIndexWithWordWork_spec G m hm index arrays.thin
+    have rowsEq : rows.1.val.toFinset = (prepareThinThresholdRowsWithSeedReads G m (fun e => arrays.thin (index e))).1 :=
+      stored.trans (congrArg Prod.fst (prepareThinThresholdRowsByIndex_eq G m hm index arrays.thin))
+    have binaryCompare (τ : ℕ) (hubs : Finset (Fin n)) (P : List (Fin n × Fin n))
+        (ok : ∀ d ∈ P, Reach G d.1 d.2) : sameGraphAndLessSearch (late τ hubs P).1 (reference τ hubs P) := by
+      have graph := binaryControlsLateEvaluator_graph arcs.1 arcsEq m hm vertices.1 simple complete index arrays.thin rule τ hubs P ok
+      have storedGraph := lateSteinerWithStoredThinThresholds_eq G τ m hm hubs (fun e => arrays.thin (index e)) P
+      have referenceGraph := (lateSteinerWithSearchWork_spec rule τ hubs (fun e => arrays.thin (index e)) P ok).1
+      refine ⟨graph.trans ?_,Nat.zero_le _⟩
+      dsimp only [reference]
+      rw [rowsEq,storedGraph]
+      exact referenceGraph.symm
+    have priorCompare (τ : ℕ) (hubs : Finset (Fin n)) (P : List (Fin n × Fin n))
+        (ok : ∀ d ∈ P, Reach G d.1 d.2) : sameGraphAndLessSearch (prior τ hubs P).1 (reference τ hubs P) := by
+      have controlsEq := (thinControlsLateEvaluator_spec G arcs.1 m vertices.1 controls τ hubs rows.1 P).1
+      have serviceGraph := (lateSteinerWithThinServiceWork_compare arcs.1 arcsEq τ m vertices.1 simple complete
+        hubs rule rows.1 P).1
+      have hubGraph := lateSteinerWithListHubWork_graph rule arcs.1 arcsEq τ m hm vertices.1 simple complete
+        hubs rows.1 rowEdges rowCount.le P ok
+      refine ⟨(congrArg Prod.fst controlsEq).trans (serviceGraph.trans hubGraph),Nat.zero_le _⟩
+    obtain ⟨binaryRecords,binaryCalls⟩ := replaySteinerTraceWithPhaseWork_related n (by simp) early seed.2.1 late reference
+      (fun d => Reach G d.1 d.2) binaryCompare D feasible join
+    obtain ⟨oldRecords,oldCalls⟩ := replaySteinerTraceWithPhaseWork_related n (by simp) early seed.2.1 prior reference
+      (fun d => Reach G d.1 d.2) priorCompare D feasible join
+    exact ⟨(sameGraphAndLessSearch_maps binaryRecords).1.trans (sameGraphAndLessSearch_maps oldRecords).1.symm,
+      binaryCalls.trans oldCalls.symm⟩
+
+/-- On every feasible trace, the program with the binary late evaluator returns
+the exact fixed-budget Steiner graph at every prefix. -/
+theorem completeFinSteinerReplayWithBinaryLateWork_prefixes {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let out := completeFinSteinerReplayWithBinaryLateWork G raw same height m hm bits D
+    out.1.1.1.1.1.map Prod.fst = D.inits.map (completeSteinerRunWithBitBudget G height bits) ∧
+      out.2.2 = (completeFinSteinerReplayWithThinRowWork G raw same height m hm bits D).2.2 := by
+  obtain ⟨graphs,calls⟩ := completeFinSteinerReplayWithBinaryLateWork_compare G raw same height m hm bits D feasible
+  obtain ⟨oldGraphs,oldCalls,_⟩ := completeFinSteinerReplayWithMeasuredThinControlsWork_prefixes G raw same height m hm bits D feasible
+  exact ⟨graphs.trans oldGraphs,calls.trans oldCalls⟩
 
 end OnlineReachabilityPreservers

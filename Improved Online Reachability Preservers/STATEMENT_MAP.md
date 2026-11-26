@@ -1211,7 +1211,14 @@ counts. The [prepared-control entry](OnlineReachabilityPreservers/SteinerBinaryL
 computes those sizes and the rounding factor from the graph counts and
 late threshold. Its [control calculation](OnlineReachabilityPreservers/SteinerBinaryLateControlsWork.lean#L35)
 proves the exact binary widths and fuel and adds the setup charge to the
-same mixed work model.
+same mixed work model. The [full seeded replay with binary late rounds](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2614)
+passes the shared decoded arc index and thin sample directly to this
+evaluator at each evaluated prefix. It keeps the measured early phase and
+returns the [exact fixed-budget prefix graphs](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2692)
+on feasible traces with the reference evaluation count. Decoder exhaustion
+uses the same fallback as the reference. This comparison establishes
+graph and count equality. A whole-run work bound for this combination
+remains open.
 
 The [binary weighted charge update](OnlineReachabilityPreservers/SteinerBinaryWeightedLoadWork.lean#L44)
 stores the current remainder, doubling factor, and weighted numerator for
