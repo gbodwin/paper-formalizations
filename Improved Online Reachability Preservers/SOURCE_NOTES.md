@@ -288,6 +288,17 @@ original-average version remains open at unrestricted half cutoff five.
 [Half-five output-average cleaning](OnlineReachabilityPreservers/HalfFiveAverageCleaning.lean)
 · [Cited Bridge Girth cleaning statement](https://arxiv.org/pdf/2212.11944v4#page=15).
 
+Output-average cleaning at half cutoff five also works for the feasible
+literal maximum over distinct nonempty paths. If every row of the indexed
+witness has length at least two, half-two exclusion already makes the rows
+distinct. Otherwise the output length cap below gives output mass at most
+four times the output row count, so \(M\le1568p\). One spanning path or a
+complete directed bipartite block of length-two paths supplies a distinct
+witness with uniform degrees and lengths within both budgets. This retains
+at least \(M/7056\) with all four caps relative to its own averages. The
+same transfer applies at cutoff four in either mode and full cutoff six.
+[Output-average caps for literal path sets](OnlineReachabilityPreservers/OutputAverageDistinctCleaning.lean).
+
 The original-average conclusion at full cutoff six has a separate
 proof. A reverse comparison within one width piece gives a conflict
 when its opposite interval crosses two pieces. The conflict is at

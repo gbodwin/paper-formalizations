@@ -1511,6 +1511,15 @@ original budgets and meets all four caps relative to its own averages.
 Pruning produces unique intersections, so the two width splits preserve
 half-five exclusion after both supports are restricted.
 
+[Literal output-average cleaning](OnlineReachabilityPreservers/OutputAverageDistinctCleaning.lean)
+covers the feasible distinct nonempty path maximum at cutoff four in
+either mode, half cutoff five, and full cutoff six. It gives both budgets,
+all four caps relative to the output averages, and at least \(M/7056\).
+A short row in the indexed witness bounds its mean length by four. In
+that case a single spanning row or a uniform directed bipartite family
+replaces the indexed witness within both original budgets. When all
+indexed witness rows have length at least two they are already distinct.
+
 An opposite-neighbor link joins consecutive common vertices of two
 oppositely ordered paths. In an input excluding full bridges through size
 three, a simple cycle of \(r\) links produces a full bridge of size at most
