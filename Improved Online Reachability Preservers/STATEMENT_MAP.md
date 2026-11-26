@@ -1498,6 +1498,14 @@ loses at most the squared retained mass divided by four times the vertex
 block width times the vertex budget. Peeling uses the actual piece count.
 The witness retains at least \(M/216\) and has all four original-average
 caps and both original budgets through half cutoff four or full cutoff six.
+When those overlong rows carry at most \(7M/15\), the
+[length-capped subfamily](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L71)
+retains at least \(8M/15\) before trimming. It requires only vertex splits,
+so the construction preserves full exclusion at every cutoff and half
+exclusion through size four. It meets both original budgets and all four
+frozen caps and retains at least \(M/104\). The
+[underlying theorem](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L23)
+applies to any length-capped subfamily carrying that much mass.
 
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size

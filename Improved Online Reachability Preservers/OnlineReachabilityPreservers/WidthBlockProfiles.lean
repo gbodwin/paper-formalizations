@@ -188,4 +188,20 @@ theorem listRegularizedPaths_full_block_profiles (paths : I → List V) (simple 
     rw [List.toFinset_card_of_nodup (copySimple i.fst)] at here
     exact le_antisymm (lengthCap i) (localPathBlock_card_of_full _ (copySimple i.fst) Lpos here)
 
+/-- The degree split alone has one possible remainder for each original
+vertex, and every earlier block has exactly the prescribed degree. -/
+theorem splitListVertices_full_block_profile (paths : I → List V)
+    {D : ℕ} (positive : 0 < D) :
+    ∃ filled : Finset (ListVertexBlockIndex paths D),
+      (∀ v ∈ filled, (occurrences (fun i => (splitListVertices paths D i).toFinset) v).card = D) ∧
+      (univ \ filled).card = Fintype.card V := by
+  let original := fun i => (paths i).toFinset
+  let filled := nonfinalWidthBlocks (occurrences original) D
+  have eq : (fun i => (splitListVertices paths D i).toFinset) = splitVertices original D :=
+    funext (splitListVertices_toFinset paths D)
+  refine ⟨filled,?_,nonfinalWidthBlocks_remainders _ _⟩
+  intro v member
+  rw [eq]
+  exact splitVertices_full_degree original positive v (mem_filter.mp member).2
+
 end OnlineReachabilityPreservers

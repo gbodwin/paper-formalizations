@@ -553,6 +553,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   its vertex blocks retain at least (M/216). The witness meets both
   original budgets and all four frozen caps through half cutoff four or
   full cutoff six. [Cleaning the overlong subfamily](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L41).
+- If such rows carry at most seven fifteenths of the mass, keeping the
+  length-capped subfamily yields the original budgets and frozen caps
+  with mass at least (M/104). The theorem preserves full exclusion at
+  any cutoff and half exclusion through size four.
+  [Cleaning the length-capped subfamily](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L71).
 - For full-bridge cutoffs three through five, a cleaned maximizing family
   retains at least \(M/119\) and meets both budgets and all four factor-four
   caps measured against the original averages. The path split places matching
