@@ -405,7 +405,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   values. The [binary threshold scan](OnlineReachabilityPreservers/SteinerThinBitScanWork.lean#L144)
   combines these tests with exact encoded load reads. It returns the same
   rounded arc set as the word-work evaluator on duplicate-free encoded rows.
-  The [binary-label reachability evaluator](OnlineReachabilityPreservers/SteinerBinaryReachWork.lean#L185)
+  The [binary-label reachability evaluator](OnlineReachabilityPreservers/SteinerBinaryReachWork.lean#L186)
   agrees with the list demand test given injective bounded-width labels.
   It charges comparisons bit by bit and preserves the order of visited
   vertex lists. The [binary trial evaluator](OnlineReachabilityPreservers/SteinerThinBitServiceWork.lean#L79)
@@ -416,8 +416,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   The terminal multiplicity bound keeps all earlier updates within the
   payload width. A [planned step bound](OnlineReachabilityPreservers/SteinerThinBitCapacityPlanWork.lean#L44)
   lets the evaluator reserve a sufficient width before examining the cut trace.
-  The full replay still needs a bit bound for producing the
-  input traces and integrating the remaining phases, as well as native costs.
+  Given the encoded original and residual arcs, [outgoing-cut extraction](OnlineReachabilityPreservers/SteinerBinaryResidualCutWork.lean#L138)
+  finds the residual source side and returns its outgoing original arcs in order.
+  Its tally counts the traversal and bitwise label comparisons. Producing the
+  residual arcs and integrating the remaining replay phases need their own
+  work bounds, along with native execution costs.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

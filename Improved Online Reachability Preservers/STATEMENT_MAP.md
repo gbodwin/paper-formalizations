@@ -1014,10 +1014,10 @@ The measured work is polynomial in the count of cells, the numeric
 payload width, and the lengths of both dimension words. The shared zero
 payload is constructed even when there are no cells.
 
-The [binary-label search](OnlineReachabilityPreservers/SteinerBinaryReachWork.lean#L152)
+The [binary-label search](OnlineReachabilityPreservers/SteinerBinaryReachWork.lean#L153)
 uses bit-by-bit equality on supplied encoded arcs. At any depth the output
 is the exact ordered list used by the word-work search, encoded vertex by
-vertex. The [Boolean demand test](OnlineReachabilityPreservers/SteinerBinaryReachWork.lean#L185)
+vertex. The [Boolean demand test](OnlineReachabilityPreservers/SteinerBinaryReachWork.lean#L186)
 agrees with its word-work counterpart. Given injective labels of width at
 most \(w\), each sweep costs at most \(1+m(14+2(5w+8)n)\) in the
 list-and-bit tally.
@@ -1046,6 +1046,15 @@ is enough to choose the fixed payload width up front. Each arc appears at
 most once per cut. The width is the length of the supplied plan word,
 which suffices for every trace of length at most its value. The evaluator
 charges this setup and agrees with the same indexed reference.
+
+The [binary outgoing-cut evaluator](OnlineReachabilityPreservers/SteinerBinaryResidualCutWork.lean#L98)
+swaps the endpoints of the supplied residual arcs so the reverse search
+finds the vertices reachable from the source. It filters the supplied
+original arc list in order. At vertex-count depth, the [flow refinement](OnlineReachabilityPreservers/SteinerBinaryResidualCutWork.lean#L138)
+gives the exact outgoing cut of the residual source side when the residual
+list represents the signed reference flow. Distinct original arcs give
+distinct cut arcs. The polynomial tally includes traversal and binary label
+comparisons. The residual arc encodings are supplied.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

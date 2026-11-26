@@ -82,7 +82,8 @@ def binaryEncodeArcs {V : Type*} (code : V → List Bool) (arcs : List (V × V))
 variable {V : Type*} [LinearOrder V] [Fintype V]
 
 omit [Fintype V] in
-private theorem encoded_membership (code : V → List Bool) (injective : Function.Injective code)
+/-- Scan the bit encodings of keys using an injective representation. -/
+theorem binaryKeyMemWithWork_encoded_spec (code : V → List Bool) (injective : Function.Injective code)
     (width : ℕ) (bounded : ∀ v, (code v).length ≤ width) (key : V) (keys : List V) :
     let measured := binaryKeyMemWithWork (code key) (keys.map code)
     measured.1 = decide (key ∈ keys) ∧ measured.2 ≤ 1+(5*width+8)*keys.length := by
@@ -114,8 +115,8 @@ private theorem binaryReverseSweepWithWork_spec (code : V → List Bool) (inject
     have seenSize : seen.length ≤ Fintype.card V := by
       rw [← List.toFinset_card_of_nodup simpleSeen]
       exact card_le_univ _
-    obtain ⟨targetFound,targetCost⟩ := encoded_membership code injective width bounded arc.2 reachable
-    obtain ⟨sourceFound,sourceCost⟩ := encoded_membership code injective width bounded arc.1 seen
+    obtain ⟨targetFound,targetCost⟩ := binaryKeyMemWithWork_encoded_spec code injective width bounded arc.2 reachable
+    obtain ⟨sourceFound,sourceCost⟩ := binaryKeyMemWithWork_encoded_spec code injective width bounded arc.1 seen
     have nextValue : (if target.1 && !source.1 then code arc.1::seen.map code else seen.map code) =
         next.map code := by
       change target.1 = _ at targetFound
@@ -195,7 +196,7 @@ theorem binaryReachTestListWithWork_spec (code : V → List Bool) (injective : F
   have size : words.1.length ≤ Fintype.card V := by
     rw [← List.toFinset_card_of_nodup simple]
     exact card_le_univ _
-  obtain ⟨member,scan⟩ := encoded_membership code injective width bounded source words.1
+  obtain ⟨member,scan⟩ := binaryKeyMemWithWork_encoded_spec code injective width bounded source words.1
   obtain ⟨expected,_⟩ := memScanWithWordWork_spec source words.1
   have scanBound : (binaryKeyMemWithWork (code source) (words.1.map code)).2 ≤ 1+(5*width+8)*Fintype.card V :=
     scan.trans (Nat.add_le_add_left (Nat.mul_le_mul_left _ size) _)
