@@ -837,7 +837,7 @@ Each evaluated link and tier shares its two powers across the threshold
 checks. The checked graph agrees with the previous charge-based trials.
 The word bound includes the tier arithmetic, actual ancestor traversal,
 and the parent arcs used as capacity keys. The seed-read bound is separate. The
-[subset property](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L1554)
+[subset property](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L1848)
 keeps every link in the input forest.
 
 The [prepared arithmetic evaluator](OnlineReachabilityPreservers/SteinerDistanceTable.lean#L2241)
@@ -853,6 +853,16 @@ early-history replay for every trace. The
 includes the measured rounding. Remaining work includes trial and tier
 containers, parts of weighted search including its vertex enumeration,
 later service steps, and bit and native execution costs.
+
+In the [standalone list-backed trials](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L1750),
+a counted halving loop gives the exact tier count. The routine constructs
+the trial and tier lists once and scans the supplied duplicate-free
+forest links. It keeps a link if one trial selects it. Free links are
+kept precisely when there is at least one trial. With a complete link
+list, the graph agrees with the earlier forest trials. Seed reads have
+a separate bound.
+The loop and link assembly have a source-level word bound. The complete
+replay still uses the preceding trial containers at this checkpoint.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

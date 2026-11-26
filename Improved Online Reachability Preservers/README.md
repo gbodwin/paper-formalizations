@@ -340,6 +340,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   native execution costs.
   [Prepared arithmetic](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L804)
   · [Complete replay with measured rounding](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2111).
+  A standalone list-backed rounding evaluator builds the trial and tier
+  indices once, scans the stored links, and keeps each selected link once.
+  With the full forest link list, it returns the same graph and bounds
+  the assembly and seed reads.
+  [Measured trial and tier rows](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L1750).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
