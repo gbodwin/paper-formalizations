@@ -1056,6 +1056,16 @@ list represents the signed reference flow. Distinct original arcs give
 distinct cut arcs. The polynomial tally includes traversal and binary label
 comparisons. The residual arc encodings are supplied.
 
+The [signed comparison](OnlineReachabilityPreservers/SteinerBinaryFlowCutWork.lean#L28)
+tests a supplied flow word against an unsigned capacity. It accepts high-zero
+padding and either sign for zero. The [residual row scan](OnlineReachabilityPreservers/SteinerBinaryFlowCutWork.lean#L103)
+retains exactly the encoded rows whose flow is strictly below capacity, in
+input order. If the supplied table describes every ordered vertex pair,
+the [composed binary flow cut](OnlineReachabilityPreservers/SteinerBinaryFlowCutWork.lean#L151)
+returns the exact reference cut and charges both the table scan and the graph
+search. Creating the capacity and flow words and carrying out augmentations
+are separate steps.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

@@ -418,9 +418,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   lets the evaluator reserve a sufficient width before examining the cut trace.
   Given the encoded original and residual arcs, [outgoing-cut extraction](OnlineReachabilityPreservers/SteinerBinaryResidualCutWork.lean#L138)
   finds the residual source side and returns its outgoing original arcs in order.
-  Its tally counts the traversal and bitwise label comparisons. Producing the
-  residual arcs and integrating the remaining replay phases need their own
-  work bounds, along with native execution costs.
+  The [binary flow cut](OnlineReachabilityPreservers/SteinerBinaryFlowCutWork.lean#L151)
+  also produces the residual arcs from a complete supplied table of unsigned
+  capacities and signed flow entries. The tally includes both the arithmetic
+  and label comparisons. Building and updating the table, generating the full
+  cut sequence, and carrying out the remaining phases still need bit or
+  native execution bounds.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
