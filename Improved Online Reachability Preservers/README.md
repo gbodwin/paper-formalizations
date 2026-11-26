@@ -710,8 +710,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
 - [Quadratic trimming](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L89)
   works on a subsystem within the original budgets that carries at least
   nine sixteenths of the original mass and whose original-width splits
-  preserve the chosen bridge exclusion. It retains at least \(M/104\)
-  with both budgets and all four caps. Selecting the heaviest vertex
+  preserve the chosen bridge exclusion. It keeps every nonfinal block
+  and trims among the final blocks in each dimension. It retains at least
+  \(M/104\) with both budgets and all four caps. Selecting the heaviest vertex
   copies before splitting gives this guarantee when at most
   [seven ninths of the vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L250).
   This version preserves the matching input exclusion at cutoff four in

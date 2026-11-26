@@ -1658,9 +1658,10 @@ vertex budget. This includes
 [Quadratic trimming of both supports](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L89)
 starts with a subsystem within the original budgets, with mass \(K\)
 between \(9M/16\) and \(M\). Its splits at the original factor-four
-widths must preserve the chosen bridge exclusion. Trimming the full blocks
-on both sides costs at most \(K^2/(6M)\) because the width times its
-budget is at least \(3M\) in each dimension. At least \(261M/512\)
+widths must preserve the chosen bridge exclusion. All nonfinal blocks
+have full width and are kept. Trimming among the final blocks costs at
+most \(K^2/(6M)\) because the width times its budget is at least \(3M\)
+in each dimension. At least \(261M/512\)
 remains before peeling, so the cleaned mass is at least \(M/104\) with
 both original budgets and all four caps. If the vertex-only split uses
 at most \(16n/9\) copies, the [heaviest original-budget set](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L177)
