@@ -1466,7 +1466,7 @@ at least \(M/5000\) with both budgets and all four original-average caps.
 gives the same conclusion if those vertices carry at least 71 percent of
 the original mass. This condition uses the original degree width
 \(\lfloor4M/n\rfloor\) and places no restriction on the conflict count.
-Half-five cleaning for general inputs remains open.
+Original-average half-five cleaning for general inputs remains open.
 
 For Lemmas 23 and 39, the [contiguous six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)
 uses the original relative order of pieces in addition to the mirrored-cut
@@ -1498,6 +1498,14 @@ meets all four factor-four caps around the cleaned witness's own averages.
 The same construction preserves half exclusion through six for an input
 that also excludes full bridges through four and whose mass is at least
 both positive budgets.
+
+At half cutoff five, [output-average cleaning](OnlineReachabilityPreservers/HalfFiveAverageCleaning.lean)
+holds for arbitrary simple half-five-free input of mass at least both
+positive budgets and for the unrestricted indexed maximum at every pair
+of positive budgets. The witness retains at least \(M/392\) within both
+original budgets and meets all four caps relative to its own averages.
+Pruning produces unique intersections, so the two width splits preserve
+half-five exclusion after both supports are restricted.
 
 An opposite-neighbor link joins consecutive common vertices of two
 oppositely ordered paths. In an input excluding full bridges through size

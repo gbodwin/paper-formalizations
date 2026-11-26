@@ -277,6 +277,17 @@ budgets and at least one 392nd of the maximum. Its four caps are measured
 against its own averages.
 [Output-average theorem](OnlineReachabilityPreservers/LocalAverageCleaning.lean).
 
+At half cutoff five, opposite-intersection pruning also gives unique
+pairwise intersections. The half-five projection lemmas preserve the
+condition under both splits of that family. Restricting to a quarter of
+each support leaves room for the copies. The output has both original
+budgets, at least \(M/392\) of the unrestricted indexed maximum, and all
+four factor-four caps relative to its own averages. This uses the
+averages in the statement of the cited cleaning lemma. The proof's
+original-average version remains open at unrestricted half cutoff five.
+[Half-five output-average cleaning](OnlineReachabilityPreservers/HalfFiveAverageCleaning.lean)
+· [Cited Bridge Girth cleaning statement](https://arxiv.org/pdf/2212.11944v4#page=15).
+
 The original-average conclusion at full cutoff six has a separate
 proof. A reverse comparison within one width piece gives a conflict
 when its opposite interval crosses two pieces. The conflict is at
@@ -362,7 +373,8 @@ both original budgets and all four original caps.
 When vertices above the original degree width carry at least 71 percent
 of the mass, the actual copy count gives another half-five witness. Choose
 the deletion color with fewer incidences at those vertices in the retained
-row pieces. The degree split preserves each retained incidence and its row.
+row pieces and delete it throughout the shared marked union. The degree
+split preserves each retained incidence and its row.
 If those vertices had original mass \(S\), retained mass \(K\) in those
 pieces, and the omitted row pieces had original mass \(Y\), then
 \(S\le2K+Y\). With degree width \(D=\lfloor4M/n\rfloor\), the number \(Q\)

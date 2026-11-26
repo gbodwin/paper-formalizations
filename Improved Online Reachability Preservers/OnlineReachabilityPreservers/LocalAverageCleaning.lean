@@ -296,10 +296,19 @@ private theorem clean_linear_mass {n p M k : ℕ} (half : Bool) (hn : 0 < n) (hp
         rw [List.length_finRange]
         exact ⟨by linarith only [Nat.cast_nonneg (α := ℝ) n], le_rfl⟩
 
-private theorem regularization_list_output_average_supported {n p k : ℕ} (size : k = 4 ∨ k = 6)
+/-- Prune opposite intersections and restrict both supports. A rule
+preserving bridge exclusion under width splits on these rectangles gives
+factor-four caps measured at the output averages. -/
+theorem regularization_list_output_average_of_pruned_rectangle_splits {n p k : ℕ}
     (paths : Fin p → List (Fin n))
     (simple : ∀ i, (paths i).Nodup) (half : Bool) (allowed : localOrderAdmissible half k paths)
-    (fourForHalfSix : k = 6 → half = true → BridgeFree (ListBefore paths) 4)
+    (three : 3 ≤ k)
+    (splits : ∀ (A : Finset (Fin n)) (B : Finset (Fin p)) (D L : ℕ),
+      let quarter := restrictListPaths (removeOppositeIntersections paths) A B
+      (∀ i, (quarter i).Nodup) →
+      (∀ {a b x y}, a ≠ b → x ∈ quarter a → x ∈ quarter b → y ∈ quarter a → y ∈ quarter b → x = y) →
+      localOrderAdmissible half k quarter →
+      localOrderAdmissible half k (listRegularizedPaths quarter D L))
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
@@ -314,7 +323,7 @@ private theorem regularization_list_output_average_supported {n p k : ℕ} (size
     let kept := removeOppositeIntersections paths
     let marks (i : Fin p) := (kept i).toFinset
     have keptSimple (i : Fin p) : (kept i).Nodup := (removeOppositeIntersections_sublist paths i).nodup (simple i)
-    have halfMass : M ≤ 2*(∑ i, (kept i).length) := removeOppositeIntersections_mass simple free (by omega)
+    have halfMass : M ≤ 2*(∑ i, (kept i).length) := removeOppositeIntersections_mass simple free three
     have keptMass : (∑ i, (kept i).length) ≤ M :=
       sum_le_sum (fun i _ => (removeOppositeIntersections_sublist paths i).length_le)
     have lengths (i : Fin p) : (marks i).card = (kept i).length := List.toFinset_card_of_nodup (keptSimple i)
@@ -338,17 +347,8 @@ private theorem regularization_list_output_average_supported {n p k : ℕ} (size
         cases half
         · exact restrictListPaths_fullFree keptSimple (removeOppositeIntersections_fullFree simple allowed) A B
         · exact restrictListPaths_halfFree keptSimple (removeOppositeIntersections_halfFree simple allowed) A B
-      have splitAllowed (D L : ℕ) : localOrderAdmissible half k (listRegularizedPaths quarter D L) := by
-        rcases size with rfl | rfl
-        · cases half
-          · exact listRegularizedPaths_fullFree quarterSimple quarterUnique quarterAllowed D L
-          · exact listRegularizedPaths_halfFree quarterSimple quarterUnique quarterAllowed D L
-        · have four : BridgeFree (ListBefore quarter) 4 := by
-            cases half
-            · exact fun _ hk => (show BridgeFree (ListBefore quarter) 6 from quarterAllowed) (hk.trans (by decide))
-            · exact restrictListPaths_fullFree keptSimple
-                (removeOppositeIntersections_fullFree simple (fourForHalfSix rfl rfl)) A B
-          exact regularizedSix_bridge_free quarterSimple (fun {_ _ _ _} => quarterUnique) four quarterAllowed D L
+      have splitAllowed (D L : ℕ) : localOrderAdmissible half k (listRegularizedPaths quarter D L) :=
+        splits A B D L quarterSimple (fun {_ _ _ _} => quarterUnique) quarterAllowed
       obtain ⟨n',vn,p',ip,clean,cleanSimple,cleanAllowed,cleanMass,cleanUpper,caps⟩ :=
         clean_quarter_support quarter quarterSimple half splitAllowed hn hp
           (by simpa only [Fintype.card_coe, Fintype.card_fin] using vBudget)
@@ -377,6 +377,35 @@ private theorem regularization_list_output_average_supported {n p k : ℕ} (size
     · have bound := total.trans (Nat.mul_le_mul_right n (show p ≤ 4 by omega))
       have leMax : n ≤ max n p := le_max_left _ _
       omega
+
+private theorem regularization_list_output_average_supported {n p k : ℕ} (size : k = 4 ∨ k = 6)
+    (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (half : Bool) (allowed : localOrderAdmissible half k paths)
+    (fourForHalfSix : k = 6 → half = true → BridgeFree (ListBefore paths) 4)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      (∑ i, (paths i).length) ≤ 392*(∑ i, (clean i).length) ∧
+      (∑ i, (clean i).length) ≤ (∑ i, (paths i).length) ∧ listOutputAverageCaps clean := by
+  refine regularization_list_output_average_of_pruned_rectangle_splits paths simple half allowed
+    (by omega) ?_ hn hp dense long
+  intro A B D L
+  dsimp only
+  intro quarterSimple quarterUnique quarterAllowed
+  let kept := removeOppositeIntersections paths
+  let quarter := restrictListPaths kept A B
+  have keptSimple (i : Fin p) : (kept i).Nodup := (removeOppositeIntersections_sublist paths i).nodup (simple i)
+  change localOrderAdmissible half k (listRegularizedPaths quarter D L)
+  rcases size with rfl | rfl
+  · cases half
+    · exact listRegularizedPaths_fullFree quarterSimple quarterUnique quarterAllowed D L
+    · exact listRegularizedPaths_halfFree quarterSimple quarterUnique quarterAllowed D L
+  · have four : BridgeFree (ListBefore quarter) 4 := by
+      cases half
+      · exact fun _ hk => (show BridgeFree (ListBefore quarter) 6 from quarterAllowed) (hk.trans (by decide))
+      · exact restrictListPaths_fullFree keptSimple
+          (removeOppositeIntersections_fullFree simple (fourForHalfSix rfl rfl)) A B
+    exact regularizedSix_bridge_free quarterSimple (fun {_ _ _ _} => quarterUnique) four quarterAllowed D L
 
 /-- Through size four, retain a constant fraction of the mass within both original
 budgets. Each degree and length is within a factor of four of its output average. -/

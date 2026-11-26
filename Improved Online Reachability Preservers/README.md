@@ -567,8 +567,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
 - At cutoff four, a cleaned witness for the unrestricted maximum in either
   bridge mode retains at least \(M/392\) of the maximizing incidence mass \(M\).
   It meets both budgets and all four factor-four bounds around its own
-  averages. The same conclusion holds at the unrestricted full-bridge
-  cutoff six. [Output-average cleaning](OnlineReachabilityPreservers/LocalAverageCleaning.lean).
+  averages. The same conclusion holds at the unrestricted half-five and
+  full-six cutoffs.
+  [Half-five output-average cleaning](OnlineReachabilityPreservers/HalfFiveAverageCleaning.lean)
+  · [Cutoff four and full cutoff six](OnlineReachabilityPreservers/LocalAverageCleaning.lean).
 - If paths longer than the original upper length cap carry at least two
   thirds of the incidence mass (M), pruning that subfamily and trimming
   its vertex blocks retain at least (M/216). The witness meets both
@@ -616,7 +618,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   \(M/5000\) and satisfies both budgets and all four original caps.
 - If vertices above the original degree width carry at least 71 percent
   of the input mass, [counting their actual copies](OnlineReachabilityPreservers/HalfFiveHeavyWidthCleaning.lean)
-  gives the same half-five witness without a bound on the number of
+  gives the same half-five guarantees without a bound on the number of
   path-cut conflicts.
 - If either positive budget is at most 29, an unrestricted maximum at any
   cutoff of at least two has a witness with both budgets, all four frozen
