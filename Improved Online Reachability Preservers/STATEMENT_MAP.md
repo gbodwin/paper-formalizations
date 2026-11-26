@@ -1118,6 +1118,13 @@ with ordered filtering by the reference demand interval, including repeated
 rows. The charged work covers both searches and the arc scan on the supplied
 encoded graph.
 
+The [binary capacity evaluator](OnlineReachabilityPreservers/SteinerBinaryThinCapacityWork.lean#L87)
+scans supplied keys, reads the exact indexed load on each active arc,
+and uses the clipped power of two for its capacity. Inactive keys get
+zero without a load read. The result preserves key order and multiplicity.
+The tally includes binary label membership, the indexed lookup and the
+clipped arithmetic on the supplied load and ceiling words.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

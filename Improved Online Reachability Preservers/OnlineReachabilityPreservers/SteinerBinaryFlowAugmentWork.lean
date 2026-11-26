@@ -81,7 +81,7 @@ def binaryArcMemWithWork (arc : List Bool × List Bool) : List (List Bool × Lis
       let tail := binaryArcMemWithWork arc rest
       (tail.1,u.2+v.2+tail.2+8)
 
-private theorem binaryArcMemWithWork_spec {V : Type*} [DecidableEq V]
+theorem binaryArcMemWithWork_spec {V : Type*} [DecidableEq V]
     (code : V → List Bool) (injective : Function.Injective code)
     (w : ℕ) (bounded : ∀ v, (code v).length ≤ w) (arc : V × V) (path : List (V × V)) :
     let out := binaryArcMemWithWork (code arc.1,code arc.2) (binaryEncodeArcs code path)
