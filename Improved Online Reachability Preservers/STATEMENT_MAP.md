@@ -1211,14 +1211,14 @@ counts. The [prepared-control entry](OnlineReachabilityPreservers/SteinerBinaryL
 computes those sizes and the rounding factor from the graph counts and
 late threshold. Its [control calculation](OnlineReachabilityPreservers/SteinerBinaryLateControlsWork.lean#L35)
 proves the exact binary widths and fuel and adds the setup charge to the
-same mixed work model. The [full seeded replay with binary late rounds](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2674)
+same mixed work model. The [full seeded replay with binary late rounds](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2687)
 passes the shared decoded arc index and thin sample directly to this
 evaluator at each evaluated prefix. It keeps the measured early phase and
-returns the [exact fixed-budget prefix graphs](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2789)
+returns the [exact fixed-budget prefix graphs](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2796)
 on feasible traces with the reference evaluation count. Decoder exhaustion
-uses the same fallback as the reference. The [work comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2696)
+uses the same fallback as the reference. The [work comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2702)
 bounds the added binary late charge at each feasible evaluation. The
-[full tally](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2801)
+[full tally](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2808)
 includes the earlier measured work, all retained setup counters, and
 the binary late allowance within this mixed model.
 
@@ -1299,6 +1299,12 @@ seed reads. The [finite preparation](OnlineReachabilityPreservers/SteinerFinWeig
 computes the exact metered hop table, paid and free classes, and trial
 count. With the supplied metered samples it returns the reference early
 graph and bounds the plan and trial-count preparation charge.
+The [seeded replay with both binary solvers](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2887)
+passes one decoded seed to the early weighted forest and late thin solver.
+The [prefix theorem](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2935)
+proves the exact reference graph at every feasible prefix and the same
+number of evaluations as the earlier metered replay. On seed exhaustion,
+the shared fallback supplies all prefix graphs.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

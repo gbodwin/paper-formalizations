@@ -465,11 +465,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   full-graph fallback. Its bound adds the hub word work and the binary thin
   work. The [prepared late controls](OnlineReachabilityPreservers/SteinerBinaryLateControlsWork.lean#L88)
   compute the count words, rounding factor, and fuel for that evaluator.
-  The [seeded replay with binary late rounds](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2789)
+  The [seeded replay with binary late rounds](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2796)
   runs that evaluator with the decoded thin sample at each prefix and
   keeps the measured early evaluator. It proves the exact reference graph
   at every feasible prefix, including the budget-exhaustion fallback.
-  Its [whole-run tally](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2801)
+  Its [whole-run tally](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2808)
   includes preparation, seed decoding, indexing, and the mixed work
   at every replayed prefix. A native execution bound remains open.
   In the early weighted cover, the [binary charge update](OnlineReachabilityPreservers/SteinerBinaryWeightedLoadWork.lean#L44)
@@ -517,6 +517,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   uses those rows, the finite hop table, and the measured trial count for
   binary forest calls. It returns the reference early prefix graph for the
   supplied trials, including the full-graph fallback on validation failure.
+  The [seeded replay with both binary solvers](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2935)
+  uses the same decoded sample for the early and late phases. On feasible
+  traces it returns the reference fixed-budget graph at each prefix and
+  preserves the number of evaluated prefixes, including on seed exhaustion.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

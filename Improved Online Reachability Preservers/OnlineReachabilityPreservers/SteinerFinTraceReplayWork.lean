@@ -2669,12 +2669,10 @@ private theorem replaySteinerTraceWithPhaseWork_changeLate_of_demand_property (n
     (replayFirstOccurrencesWithWordWork previous D).2.1+params.2+hubs.2+10+(D.length+1)*extra
   omega
 
-/-- Decode the seed once and pass its indexed thin sample into the binary late
-evaluator at each evaluated prefix, using the measured early phase and metered union. -/
-def completeFinSteinerReplayWithBinaryLateWork {n : ℕ} (G : Arcs (Fin n))
+@[inline] private def completeFinSteinerReplayWithBinaryLateFromPreparation {n : ℕ} (G : Arcs (Fin n))
     (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
-    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
-  let prepared := prepareFinSteinerWeightedForSeedWithMetricTrialCountWork G raw same height
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (prepared : SteinerSeedPreparationWithSeedWork G height × ℕ) :=
   let arcs := finArcRowsWithWordWork raw
   let vertices := finVerticesWithWordWork n
   let out := completeFinSteinerReplayWithCachedPhases G raw same height m hm bits D
@@ -2683,6 +2681,14 @@ def completeFinSteinerReplayWithBinaryLateWork {n : ℕ} (G : Arcs (Fin n))
       (binaryControlsLateEvaluator G arcs.1 m hm vertices.1 cached.1 cached.2) D
       (meteredPhaseUnion (Fin n))) prepared
   (out.1,out.2.1+arcs.2+vertices.2+5,out.2.2)
+
+/-- Decode the seed once and pass its indexed thin sample into the binary late
+evaluator at each evaluated prefix, using the measured early phase and metered union. -/
+def completeFinSteinerReplayWithBinaryLateWork {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
+  completeFinSteinerReplayWithBinaryLateFromPreparation G raw same height m hm bits D
+    (prepareFinSteinerWeightedForSeedWithMetricTrialCountWork G raw same height)
 
 /-- A uniform bound for the binary late work on an evaluated prefix. -/
 def steinerBinaryLateCallWorkBudget (n m p : ℕ) : ℕ :=
@@ -2709,7 +2715,8 @@ theorem completeFinSteinerReplayWithBinaryLateWork_compare_work {n : ℕ} (G : A
   let vertices := finVerticesWithWordWork n
   let join := meteredPhaseUnion (Fin n)
   let extra := steinerBinaryLateCallWorkBudget n m D.length
-  unfold completeFinSteinerReplayWithBinaryLateWork completeFinSteinerReplayWithMeasuredThinControlsWork
+  unfold completeFinSteinerReplayWithBinaryLateWork completeFinSteinerReplayWithBinaryLateFromPreparation
+    completeFinSteinerReplayWithMeasuredThinControlsWork
     completeFinSteinerReplayWithLateEvaluator completeFinSteinerReplayWithCachedPhases replayFromCachedFinSteinerSeed
   dsimp only
   cases state : decoded.1.2 with
@@ -2822,5 +2829,118 @@ theorem completeFinSteinerReplayWithBinaryLateWork_tally_le {n : ℕ} (G : Arcs 
   change (base.1.1.map Prod.snd).sum+base.1.2.1+base.1.2.2.1+base.1.2.2.2+base.2+out.1.1.2+out.1.2+out.2.1 ≤ _
   rw [records,index]
   omega
+
+private theorem measuredEarlyTrialCount_graph {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height : ℕ)
+    (samples : ForestTrialArrayWithSeedWork (Fin n) height (forestScale G height) (earlyTrialCount (Fin n) height))
+    (seedFee : ℕ) (seedWork : ∀ i, forestSampleWorkBound (samples i) seedFee) (P : List (Fin n × Fin n)) :
+    let out := prepareFinSteinerWeightedForSeedWithMetricTrialCountWork G raw same height
+    ((out.1.2.1 samples) P).1 =
+      earlyRoundedGraph G height P (fun i => forestRoundingSampleValues (forestScale G height) (samples i)) := by
+  let sample : EarlyRoundSample G height := fun i => forestRoundingSampleValues (forestScale G height) (samples i)
+  have trial := (prepareFinSteinerWeightedForSeedWithMetricTrialCountWork_compare G raw same height).1
+  have residual := (prepareFinSteinerWeightedForSeedWithMetricResidualRowsWork_spec G raw same height).2.2.2
+    samples seedFee seedWork P
+  have histories := (prepareFinSteinerWeightedForSeedWithHistoryWork_spec G raw same height).2.2.2
+    samples seedFee seedWork P
+  have inputs := (prepareFinSteinerWeightedForSeedWithSeedWork_spec G raw same height).2.2.2 samples seedFee seedWork P
+  have weighted := (prepareFinSteinerWeightedForSeedWithWordWork_spec G raw same height).1
+  have prepared := (prepareFinSteinerForSeedWithWordWork_spec G raw same height).1
+  have start : (((prepareFinSteinerWeightedForSeedWithMetricTrialCountWork G raw same height).1.2.1 samples) P).1 =
+      ((prepareEarlyDistanceTableForSeed G height).2.1 sample P).1 := by
+    rw [trial,residual.1,histories.1,congrArg Prod.fst inputs.1,weighted,prepared]
+  change _ = earlyRoundedGraph G height P sample
+  have priced := congrFun (prepareEarlyDistanceTableWithWeightWork_spec G height sample).1 P
+  have capacities := ((prepareEarlyDistanceTableWithCapacityWork_spec G height sample).2 P).1
+  have rounding := ((prepareEarlyDistanceTableWithRoundingWork_spec G height sample).2 P).1
+  have template := congrFun (prepareEarlyDistanceTableWithTemplateWork_spec G height sample).1 P
+  exact start.trans ((congrArg Prod.fst priced).trans (capacities.trans (rounding.trans
+    ((congrArg Prod.fst template).trans (earlyRoundedGraphWithSearchWork_spec G height sample P).1))))
+
+private theorem replaySteinerTraceWithPhaseWork_sameEarlyGraphs (n : ℕ) (hn : n = Fintype.card V)
+    (first second : List (V × V) → Arcs V × ℕ × ℕ)
+    (draw : Fin (completeSteinerHubCount V) → V)
+    (late : ℕ → Finset V → List (V × V) → (Arcs V × ℕ) × ℕ)
+    (D : List (V × V)) (join : SteinerPhaseUnion V) (graphs : ∀ P, (first P).1 = (second P).1) :
+    let out := replaySteinerTraceWithPhaseWork n hn first draw late D join
+    let old := replaySteinerTraceWithPhaseWork n hn second draw late D join
+    out.1.map Prod.fst = old.1.map Prod.fst ∧ out.2.2 = old.2.2 := by
+  let params := steinerTraceParametersWithWordWork n
+  have correct : params.1.hubCount = completeSteinerHubCount V := by rw [params.1.hubCount_eq,hn]; rfl
+  let hubs := collectSteinerHubsWithWordWork correct draw
+  let evaluate := fun early P =>
+    evaluateSteinerTraceWithPhaseWork early params.1.earlyCutoff params.1.thinThreshold hubs.1 late P join
+  have each (P : List (V × V)) : (evaluate first P).1.1 = (evaluate second P).1.1 := by
+    dsimp only [evaluate,evaluateSteinerTraceWithPhaseWork]
+    rw [graphs]
+  obtain ⟨records,count⟩ := replayFirstOccurrencesWithWordWork_rel (evaluate first) (evaluate second)
+    (fun a b => a.1 = b.1) (fun _ => True) (fun P _ => each P) D (by simp)
+  have maps {left right : List (Arcs V × ℕ)} (relation : List.Forall₂ (fun a b => a.1 = b.1) left right) :
+      left.map Prod.fst = right.map Prod.fst := by
+    induction relation with
+    | nil => rfl
+    | cons head _ tails => simp only [List.map_cons,head,tails]
+  exact ⟨maps records,count⟩
+
+/-- Replay the fixed-budget seed with the binary weighted forest in the
+early phase and the binary thin solver in the late phase. -/
+def completeFinSteinerReplayWithBinaryPhasesWork {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :=
+  completeFinSteinerReplayWithBinaryLateFromPreparation G raw same height m hm bits D
+    (prepareFinSteinerWeightedForSeedWithBinaryEarlyWork G raw same height)
+
+/-- Both preparations keep the seed scale, and both early evaluators
+return the same graph for each supplied trial array. -/
+theorem completeFinSteinerReplayWithBinaryPhasesWork_compare {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n)) :
+    let out := completeFinSteinerReplayWithBinaryPhasesWork G raw same height m hm bits D
+    let old := completeFinSteinerReplayWithBinaryLateWork G raw same height m hm bits D
+    out.1.1.1.1.1.map Prod.fst = old.1.1.1.1.1.map Prod.fst ∧ out.2.2 = old.2.2 := by
+  let prepared := prepareFinSteinerWeightedForSeedWithBinaryEarlyWork G raw same height
+  let old := prepareFinSteinerWeightedForSeedWithMetricTrialCountWork G raw same height
+  let indexes := finSteinerReplaySeedIndexesWithWordWork G height raw same
+  let decoded := decodeSteinerSeedWithArrayViewsFromPreparedScale G height n m (by simp) hm old.1.1 indexes.1 bits
+  let arcs := finArcRowsWithWordWork raw
+  let vertices := finVerticesWithWordWork n
+  let join := meteredPhaseUnion (Fin n)
+  have scale : prepared.1.1 = old.1.1 := Subtype.ext (prepared.1.1.property.trans old.1.1.property.symm)
+  unfold completeFinSteinerReplayWithBinaryPhasesWork completeFinSteinerReplayWithBinaryLateWork
+    completeFinSteinerReplayWithBinaryLateFromPreparation completeFinSteinerReplayWithCachedPhases
+  dsimp only
+  rw [show (prepareFinSteinerWeightedForSeedWithBinaryEarlyWork G raw same height).1.1 =
+    (prepareFinSteinerWeightedForSeedWithMetricTrialCountWork G raw same height).1.1 from scale]
+  unfold replayFromCachedFinSteinerSeed
+  cases state : decoded.1.2 with
+  | none => exact ⟨rfl,rfl⟩
+  | some entry =>
+    rcases entry with ⟨seed,arrays⟩
+    dsimp only
+    let width := decoded.1.1
+    let samples := finEarlySeedTrialsWithRankWork G height width.val width.property arrays.early
+    let next := prepared.1.2.1 samples
+    let prior := old.1.2.1 samples
+    let late := binaryControlsLateEvaluator G arcs.1 m hm vertices.1 indexes.1.arcs arrays.thin
+    let fee := earlySeedArrayReadWordBudget height
+    have cap : ∀ i, forestSampleWorkBound (samples i) fee :=
+      (finEarlySeedTrialsWithRankWork_spec G height width.val width.property arrays.early).2
+    have sameEarly (P : List (Fin n × Fin n)) : (next P).1 = (prior P).1 :=
+      ((prepareFinSteinerWeightedForSeedWithBinaryEarlyWork_spec G raw same height).2 samples fee cap P).trans
+        (measuredEarlyTrialCount_graph G raw same height samples fee cap P).symm
+    exact replaySteinerTraceWithPhaseWork_sameEarlyGraphs n (by simp) next prior seed.2.1 late D join sameEarly
+
+/-- Every feasible prefix has the exact reference graph when both binary
+solvers are used with the same fixed-budget seed. -/
+theorem completeFinSteinerReplayWithBinaryPhasesWork_prefixes {n : ℕ} (G : Arcs (Fin n))
+    (raw : List (Fin n × Fin n)) (same : raw.toFinset = G) (height m : ℕ) (hm : m = G.card)
+    (bits : Fin (steinerBitBudget G height) → Bool) (D : List (Fin n × Fin n))
+    (feasible : ∀ d ∈ D, Reach G d.1 d.2) :
+    let out := completeFinSteinerReplayWithBinaryPhasesWork G raw same height m hm bits D
+    out.1.1.1.1.1.map Prod.fst = D.inits.map (completeSteinerRunWithBitBudget G height bits) ∧
+      out.2.2 = (completeFinSteinerReplayWithThinRowWork G raw same height m hm bits D).2.2 := by
+  obtain ⟨sameGraphs,count⟩ := completeFinSteinerReplayWithBinaryPhasesWork_compare G raw same height m hm bits D
+  obtain ⟨graphs,calls⟩ := completeFinSteinerReplayWithBinaryLateWork_prefixes G raw same height m hm bits D feasible
+  exact ⟨sameGraphs.trans graphs,count.trans calls⟩
 
 end OnlineReachabilityPreservers
