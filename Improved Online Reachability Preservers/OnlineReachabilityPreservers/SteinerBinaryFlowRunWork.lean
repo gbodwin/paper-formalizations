@@ -328,4 +328,16 @@ theorem binaryFindLowCapacityOutgoingCutWithWork_refines {capacity : ArcFlow V}
     rw [initCost]
     exact Nat.add_le_add_right (Nat.add_le_add (Nat.add_le_add_left solveCost _) cutCost) _
 
+/-- Enlarge the graph, residual table, widths, and augmentation allowance. -/
+theorem binaryLowCapacityOutgoingCutWorkBudget_le {n n' arcs arcs' rows rows' labels labels' cap cap' supply supply' : ℕ}
+    (vertices : n ≤ n') (edges : arcs ≤ arcs') (table : rows ≤ rows') (width : labels ≤ labels')
+    (capacity : cap ≤ cap') (augmentations : supply ≤ supply') :
+    binaryLowCapacityOutgoingCutWorkBudget n arcs rows labels cap supply ≤
+      binaryLowCapacityOutgoingCutWorkBudget n' arcs' rows' labels' cap' supply' := by
+  have route := binaryShortestPathWorkBudget_le vertices table width vertices
+  unfold binaryLowCapacityOutgoingCutWorkBudget binaryUnitAugmentationsWorkBudget binaryFlowCutWorkBudget
+    binaryResidualRowsWorkBudget binaryResidualCutWorkBudget augmentBinaryFlowRowsWorkBudget
+  dsimp only
+  gcongr
+
 end OnlineReachabilityPreservers

@@ -525,6 +525,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   bounds every recorded field of this replay. It includes the shared
   preparation, seed decoding, prefix dispatch, and both solver phases
   in the mixed word and binary-list model.
+  The [input-size bound](OnlineReachabilityPreservers/SteinerBinaryReplaySizeWork.lean#L26)
+  depends only on the vertex and arc counts, raw arc list length, forest
+  height, and demand count. The same theorem checks the reference graph
+  at every feasible prefix and the exact evaluation count.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

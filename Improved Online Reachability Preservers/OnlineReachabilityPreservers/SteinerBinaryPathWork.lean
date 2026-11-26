@@ -340,4 +340,12 @@ theorem binaryShortestPathWithWork_spec (code : V → List Bool) (injective : Fu
         omega)
       exact Nat.add_le_add_right (Nat.add_le_add earliestWork costFit) _
 
+/-- Enlarge the graph dimensions, encoded label width, and search depth. -/
+theorem binaryShortestPathWorkBudget_le {n n' arcs arcs' width width' depth depth' : ℕ}
+    (vertices : n ≤ n') (edges : arcs ≤ arcs') (labels : width ≤ width') (steps : depth ≤ depth') :
+    binaryShortestPathWorkBudget n arcs width depth ≤ binaryShortestPathWorkBudget n' arcs' width' depth' := by
+  unfold binaryShortestPathWorkBudget layerTestWorkBudget growBinaryShortestPathWorkBudget
+    layerWorkBudget firstBinaryStepWorkBudget
+  gcongr
+
 end OnlineReachabilityPreservers

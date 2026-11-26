@@ -144,4 +144,11 @@ theorem binaryCeilingDivWorkBudget_mono_widths {a a' d d' : ℕ} (numerator : a 
   unfold binaryCeilingDivWorkBudget binaryCeilingDivStepWorkBudget
   gcongr
 
+/-- Enlarge the input widths and the capped quotient search allowance. -/
+theorem binaryCeilingDivWorkBudget_le {a a' d d' c c' w w' f f' : ℕ}
+    (numerator : a ≤ a') (denominator : d ≤ d') (count : c ≤ c') (multiple : w ≤ w') (fuel : f ≤ f') :
+    binaryCeilingDivWorkBudget a d c w f ≤ binaryCeilingDivWorkBudget a' d' c' w' f' := by
+  unfold binaryCeilingDivWorkBudget binaryCeilingDivStepWorkBudget
+  gcongr
+
 end OnlineReachabilityPreservers

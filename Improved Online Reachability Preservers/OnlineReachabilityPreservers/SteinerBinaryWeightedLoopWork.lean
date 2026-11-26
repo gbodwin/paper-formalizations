@@ -209,4 +209,22 @@ theorem binaryWeightedCoverLoopWorkBudget_le (n arcs rows labels cost cap supply
     chargeBinaryWeightedLoadWorkBudget
   gcongr
 
+/-- Enlarge every dimension of the metered weighted cover, including the
+number of allowed updates. -/
+theorem binaryWeightedCoverLoopWorkBudget_le_dimensions
+    {n n' arcs arcs' rows rows' free free' labels labels' cost cost' r r' p p' a a' cap cap' s s' f f' : ℕ}
+    (vertices : n ≤ n') (edges : arcs ≤ arcs') (table : rows ≤ rows') (freeRows : free ≤ free')
+    (width : labels ≤ labels') (costWidth : cost ≤ cost') (remainder : r ≤ r') (power : p ≤ p') (amount : a ≤ a')
+    (ceiling : cap ≤ cap') (supply : s ≤ s') (fuel : f ≤ f') :
+    binaryWeightedCoverLoopWorkBudget n arcs rows free labels cost r p a cap s f ≤
+      binaryWeightedCoverLoopWorkBudget n' arcs' rows' free' labels' cost' r' p' a' cap' s' f' := by
+  have numerator : a+f*(p+f+1) ≤ a'+f'*(p'+f'+1) := by gcongr
+  have division := binaryCeilingDivWorkBudget_le numerator costWidth (le_refl 0) (le_refl 0) supply
+  have cut := binaryLowCapacityOutgoingCutWorkBudget_le vertices edges table width
+    (max_le_max ceiling supply) supply
+  unfold binaryWeightedCoverLoopWorkBudget binaryWeightedCoverStepBudget binaryWeightedCapacityRowsWorkBudget
+    binaryWeightedCapacityAtWorkBudget chargeBinaryWeightedPairRowsWorkBudget chargeBinaryWeightedPairRowWorkBudget
+    chargeBinaryWeightedLoadWorkBudget
+  gcongr
+
 end OnlineReachabilityPreservers

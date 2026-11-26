@@ -1313,6 +1313,13 @@ includes the legacy validation and expansion counts, metered setup,
 seed decoding and indexing, and both phases on every reached prefix.
 The bound covers all recorded fields in the mixed model. A native
 execution bound remains open.
+The [early size allowance](OnlineReachabilityPreservers/SteinerBinaryEarlyPolynomialWork.lean#L87)
+bounds the label and row counts, scale, fuel, and trial count using the
+original vertex count and forest height. With this allowance, the
+[input-size replay theorem](OnlineReachabilityPreservers/SteinerBinaryReplaySizeWork.lean#L26)
+gives the exact feasible prefix graphs and evaluation count together
+with a common bound on all eight work fields. The bound uses only the
+vertex and arc counts, raw arc list length, height, and number of requests.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
