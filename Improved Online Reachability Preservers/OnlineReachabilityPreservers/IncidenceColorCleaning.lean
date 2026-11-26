@@ -39,6 +39,50 @@ private theorem partitionListIncidencesByColor_mem {paths : I → List V} {color
     exact List.mem_map.mpr ⟨(ofLex w).1,List.mem_filter.mpr ⟨onRow,decide_eq_true (selected.trans same)⟩,
       ofLex.injective (Prod.ext rfl same.symm)⟩
 
+/-- If every step stays in one tagged family and projects to its original
+row, bridges stay in a single family and preserve their arrival order. -/
+theorem localOrderAdmissible_of_tagged_steps (paths : C → I → List V)
+    (pieces : I ×ₗ C → List (V ×ₗ C))
+    (tagged : ∀ {i v}, v ∈ pieces i → (ofLex v).2 = (ofLex i).2)
+    (steps : ∀ {i x y}, ListBefore pieces i x y →
+      ListBefore (paths (ofLex i).2) (ofLex i).1 (ofLex x).1 (ofLex y).1)
+    {half : Bool} {k : ℕ} (allowed : ∀ c, localOrderAdmissible half k (paths c)) :
+    localOrderAdmissible half k pieces := by
+  let parent (i : I ×ₗ C) := (ofLex i).1
+  let rowColor (i : I ×ₗ C) := (ofLex i).2
+  let untag (v : V ×ₗ C) := (ofLex v).1
+  let vertexColor (v : V ×ₗ C) := (ofLex v).2
+  have projectBridge {s : ℕ} (b : Bridge (ListBefore pieces) s) :
+      ∃ original : Bridge (ListBefore (paths (rowColor b.river))) s,
+        original.river = parent b.river ∧ ∀ i, original.arc i = parent (b.arc i) := by
+    have sameVertexColor (i : Fin (s+2)) : vertexColor (b.vertex 0) = vertexColor (b.vertex i) := by
+      induction i using Fin.induction with
+      | zero => rfl
+      | succ i ih =>
+        exact ih.trans ((tagged (b.arcStep i).1).trans (tagged (b.arcStep i).2.1).symm)
+    have sameRowColor (i : Fin (s+1)) : rowColor (b.arc i) = rowColor b.river :=
+      (tagged (b.arcStep i).1).symm.trans ((sameVertexColor i.castSucc).symm.trans (tagged b.riverStep.1))
+    have sameRow {i j : I ×ₗ C} (parents : parent i = parent j) (colors : rowColor i = rowColor j) : i = j :=
+      ofLex.injective (Prod.ext parents colors)
+    let original : Bridge (ListBefore (paths (rowColor b.river))) s :=
+      ⟨untag ∘ b.vertex, parent ∘ b.arc, parent b.river,
+        fun i j equal => b.distinctVertices (ofLex.injective
+          (Prod.ext equal ((sameVertexColor i).symm.trans (sameVertexColor j)))),
+        fun i j equal => b.distinctArcs (sameRow equal ((sameRowColor i).trans (sameRowColor j).symm)),
+        fun i equal => b.river_ne_arc i (sameRow equal (sameRowColor i).symm),
+        steps b.riverStep, fun i => sameRowColor i ▸ steps (b.arcStep i)⟩
+    exact ⟨original, rfl, fun _ => rfl⟩
+  cases half
+  · intro s size
+    exact ⟨fun b => (allowed (rowColor b.river) size).false (projectBridge b).choose⟩
+  · intro s size b earlier
+    obtain ⟨original, river, arcs⟩ := projectBridge b
+    apply allowed (rowColor b.river) size original
+    rw [river, arcs]
+    rcases Prod.Lex.lt_iff.mp earlier with older | ⟨same, _⟩
+    · exact older
+    · exact (original.river_ne_arc (Fin.last s) (river.trans (same.symm.trans (arcs _).symm))).elim
+
 /-- Every bridge occupies one color. Projecting its vertices and its row
 pieces within that color is injective, and the original arrival order
 is preserved. Both bridge exclusions survive at every cutoff. -/
@@ -61,36 +105,7 @@ theorem partitionListIncidencesByColor_admissible (paths : I → List V) (color 
       ListBefore paths (parent i) (untag a) (untag b) :=
     listBefore_of_sublist (paths := fun i : I ×ₗ C => paths (parent i)) (cut := projected)
       (simple (parent i)) (sublist i) (listBefore_map untag ((sublist i).nodup (simple (parent i))) before)
-  have projectBridge {s : ℕ} (b : Bridge (ListBefore pieces) s) :
-      ∃ original : Bridge (ListBefore paths) s,
-        original.river = parent b.river ∧ ∀ i, original.arc i = parent (b.arc i) := by
-    have sameVertexColor (i : Fin (s+2)) : vertexColor (b.vertex 0) = vertexColor (b.vertex i) := by
-      induction i using Fin.induction with
-      | zero => rfl
-      | succ i ih =>
-        exact ih.trans ((tagged (b.arcStep i).1).trans (tagged (b.arcStep i).2.1).symm)
-    have sameRowColor (i : Fin (s+1)) : rowColor (b.arc i) = rowColor b.river :=
-      (tagged (b.arcStep i).1).symm.trans ((sameVertexColor i.castSucc).symm.trans (tagged b.riverStep.1))
-    have sameRow {i j : I ×ₗ C} (parents : parent i = parent j) (colors : rowColor i = rowColor j) : i = j :=
-      ofLex.injective (Prod.ext parents colors)
-    let original : Bridge (ListBefore paths) s :=
-      ⟨untag ∘ b.vertex, parent ∘ b.arc, parent b.river,
-        fun i j equal => b.distinctVertices (ofLex.injective
-          (Prod.ext equal ((sameVertexColor i).symm.trans (sameVertexColor j)))),
-        fun i j equal => b.distinctArcs (sameRow equal ((sameRowColor i).trans (sameRowColor j).symm)),
-        fun i equal => b.river_ne_arc i (sameRow equal (sameRowColor i).symm),
-        step b.riverStep, fun i => step (b.arcStep i)⟩
-    exact ⟨original, rfl, fun _ => rfl⟩
-  cases half
-  · intro s size
-    exact ⟨fun b => (allowed size).false (projectBridge b).choose⟩
-  · intro s size b earlier
-    obtain ⟨original, river, arcs⟩ := projectBridge b
-    apply allowed size original
-    rw [river, arcs]
-    rcases Prod.Lex.lt_iff.mp earlier with older | ⟨same, _⟩
-    · exact older
-    · exact (original.river_ne_arc (Fin.last s) (river.trans (same.symm.trans (arcs _).symm))).elim
+  exact localOrderAdmissible_of_tagged_steps (fun _ => paths) pieces tagged step (fun _ => allowed)
 
 variable [Fintype I] [Fintype C]
 

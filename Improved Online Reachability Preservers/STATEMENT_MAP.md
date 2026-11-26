@@ -1782,6 +1782,14 @@ original vertex count, which covers every bridge size because a bridge
 has distinct vertices.
 [Unbalanced budget bounds](OnlineReachabilityPreservers/FrozenUnbalancedBudgets.lean).
 
+The [extremal rectangle bound](OnlineReachabilityPreservers/ExtremalCopyBounds.lean)
+uses the same indexed path convention. If a restriction to \(A,B\) has
+mass \(m\) and \(t|A|\le n,\ t|B|\le p\), then \(tm\le M\) at the
+unrestricted maximum. Disjoint copying and empty padding preserve both
+bridge exclusions at every cutoff. The rectangle of rows and vertices
+above their original upper caps fits four copies, so its mass is at
+most \(M/4\). The two separate clipping losses still require bounds.
+
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
 and nonempty simple rows. At the prescribed widths \(7\) and \(20\) it

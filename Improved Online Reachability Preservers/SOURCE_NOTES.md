@@ -112,6 +112,16 @@ that disjoint consecutive splits preserve the bridge condition at every size
 in the acyclic scope. [Regularization](OnlineReachabilityPreservers/Regularization.lean)
 uses this to prove the upper caps with at most twice the ambient budgets.
 
+Lemma 10 of the cited *Bridge Girth* measures regularity against the
+cleaned witness's own averages. The proof of Lemma 23 here fixes the
+averages of the starting maximizer, and Lemma 39 refers to the same
+argument. Appendix B of *Bridge Girth* also asserts that its path split
+preserves bridge exclusion. The checked example above disproves that
+intermediate assertion for arbitrary local orders. The existence of a
+cleaned witness is a separate claim.
+[Bridge Girth, Lemma 10](https://arxiv.org/pdf/2212.11944v4#page=15)
+· [Bridge Girth, Appendix B](https://arxiv.org/pdf/2212.11944v4#page=62).
+
 The midpoint counterexample can also run to termination under the printed
 averages. Start on eight vertices with the paths
 `[(0,4,5,1,2,6,7,3),(3,0),(2,1),(7,6,5,4)]`. Every vertex has degree two,
@@ -313,6 +323,16 @@ budgets, and all four original-average caps. Its witness excludes full
 bridges of every size. The result applies to the unrestricted maximum
 in either mode with positive budgets.
 [Squared-mass bounds and cleaning](OnlineReachabilityPreservers/FrozenUnbalancedBudgets.lean).
+
+A rectangle with vertex set \(A\) and path set \(B\) in an unrestricted
+maximizer of mass \(M\) has mass at most \(M/t\) whenever \(t>0\),
+\(t|A|\le n\), and \(t|B|\le p\). Each bridge in a disjoint union stays
+in one copy, where the arrival order is the original order. Padding
+with unused vertices and empty paths fits the exact budgets. In
+particular, at most \(M/4\) of the mass lies simultaneously on paths
+above the original upper length cap and vertices above the original
+upper degree cap. The bound holds in both modes at every cutoff.
+[Extremal copy bounds](OnlineReachabilityPreservers/ExtremalCopyBounds.lean).
 
 The same splitting step can fail at larger bridge sizes with unique
 intersections. On seven vertices, take the six paths `[(0,1,2,3), (3,4),
