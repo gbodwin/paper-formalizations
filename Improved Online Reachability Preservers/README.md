@@ -252,7 +252,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   ordinary search tally is no larger, and a separate fixed-height budget
   bounds the new weighted solver and the seed reads.
   [Forest pair keys](OnlineReachabilityPreservers/SteinerForestPairKeysWork.lean#L284)
-  · [Weighted early evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L271).
+  · [Weighted early evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L285).
   The complete prefix replay uses this early evaluator alongside the
   list-backed late phase and the metered outer union. Every prefix graph
   and the evaluation count agree with the earlier replay. The combined
@@ -270,7 +270,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   phase. Its prefix graphs and evaluation count agree with the earlier
   replay. The measured polynomial includes these reads and the capacity
   rounding.
-  [Early rounding preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L382)
+  [Early rounding preparation](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L396)
   · [Complete replay with charge reads](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1737).
   Given a complete list of distinct forest vertices, a measured attachment
   builder scans the two leaf groups together and counts both unions with
@@ -285,19 +285,24 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   The weighted separator and forest rounding also meter both terminal
   labels and the stored-distance lookup when they query a weight. The
   original weight values, prefix graphs, and evaluation count are exact.
-  The feasible-prefix work bound includes these queries. Tier and cutoff
-  arithmetic, threshold comparisons, label reads during route expansion,
-  further search and set assembly, service work, and bit and native costs
-  remain open.
+  The feasible-prefix work bound includes these queries.
   [Measured weight query](OnlineReachabilityPreservers/SteinerForestLabelWork.lean#L73)
   · [Complete replay with measured metric reads](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1867).
   A separate routine expands bought forest links from supplied template
   rows and the original arc list. It meters the membership scans, both
   labels of each expanded link, the exact original route selection, and
   the arc unions. When the supplied rows contain the bought links it
-  returns the full expanded graph. The measured expansion still needs
-  integration into the complete replay.
+  returns the full expanded graph.
   [Measured expansion](OnlineReachabilityPreservers/SteinerForestExpansionWork.lean#L192).
+  The complete replay reuses the original arcs and forest template for
+  all early prefix expansions and the final expansion when validation
+  succeeds. The same checks produce the same fallback decision, graphs,
+  and replay evaluation count. Its feasible-prefix work bound includes
+  the expansion. Tier and cutoff arithmetic, threshold comparisons,
+  parts of validation, search and set assembly, further service work, and
+  bit and native costs remain open.
+  [Early expansion and validation](OnlineReachabilityPreservers/SteinerEarlyReplay.lean#L502)
+  · [Complete replay with measured expansion](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1928).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

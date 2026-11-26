@@ -67,13 +67,15 @@ private theorem finWeightsFromTemplateInputs_spec {n : ℕ} (G : Arcs (Fin n))
   dsimp only [finSteinerWeightPlanWorkPolynomial]
   gcongr
 
-private def prepareFinSteinerWeightedWithPlan {n : ℕ} {Result : Type*} (G : Arcs (Fin n))
+private def prepareFinSteinerWeightedWithPlanAndRows {n : ℕ} {Result : Type*} (G : Arcs (Fin n))
     (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ)
     (assemble : (table : List ((Fin n × Fin n) × ℕ) × ℕ) →
       table.1 = (distanceTableWithSearchWork G).1 →
       (template : Arcs (HeightForestVertex (Fin n) height) × ℕ) → template.1 = heightForest G height →
       (plan : ForestWeightPlan (Fin n) height) →
-      plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1)) → Result) :
+      plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1)) →
+      (forestRows : List (HeightForestVertex (Fin n) height × HeightForestVertex (Fin n) height)) →
+      forestRows.toFinset = template.1 → Result) :
     Result × ℕ :=
   let inputs := finSteinerTemplateInputsWithWordWork arcs height
   let correct := finSteinerTemplateInputsWithWordWork_spec G arcs same height
@@ -82,7 +84,19 @@ private def prepareFinSteinerWeightedWithPlan {n : ℕ} {Result : Type*} (G : Ar
   let exactForest := (arcsFromDistinctList_eq inputs.2.1 correct.2.2.1).trans correct.2.1
   let plan := prepareForestWeightsFromListWithWordWork inputs.2.1 correct.2.2.1 read
   let planEq := (finWeightsFromTemplateInputs_spec G arcs same height).1
-  (assemble inputs.1 correct.1 (links,inputs.2.2+5) exactForest plan.1 planEq,plan.2)
+  let cover := (arcsFromDistinctList_eq inputs.2.1 correct.2.2.1).symm
+  (assemble inputs.1 correct.1 (links,inputs.2.2+5) exactForest plan.1 planEq inputs.2.1 cover,plan.2)
+
+private def prepareFinSteinerWeightedWithPlan {n : ℕ} {Result : Type*} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ)
+    (assemble : (table : List ((Fin n × Fin n) × ℕ) × ℕ) →
+      table.1 = (distanceTableWithSearchWork G).1 →
+      (template : Arcs (HeightForestVertex (Fin n) height) × ℕ) → template.1 = heightForest G height →
+      (plan : ForestWeightPlan (Fin n) height) →
+      plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1)) → Result) :
+    Result × ℕ :=
+  prepareFinSteinerWeightedWithPlanAndRows G arcs same height
+    (fun table rows template exact plan consistent _ _ => assemble table rows template exact plan consistent)
 
 /-- Prepare the exact weighted evaluator from the shared hop and forest
 lists. Return the weight-plan construction work as one additional tally. -/
@@ -216,7 +230,7 @@ theorem prepareFinSteinerWeightedForSeedWithHistoryWork_setup {n : ℕ} (G : Arc
       (prepareFinSteinerWeightedForSeedWithSeedWork G arcs same height).2 +
         (finForestNetworkPairKeysWithWordWork n height).2 + 3 := by
   dsimp only [prepareFinSteinerWeightedForSeedWithHistoryWork, prepareFinSteinerWeightedForSeedWithSeedWork,
-    prepareFinSteinerWeightedWithPlan]
+    prepareFinSteinerWeightedWithPlan,prepareFinSteinerWeightedWithPlanAndRows]
 
 /-- A fixed-height bound for evaluating all the needed early metrics of
 one demand prefix, including their weighted solver and seed reads. -/
@@ -403,7 +417,7 @@ theorem prepareFinSteinerWeightedForSeedWithRoundingChargeWork_spec {n : ℕ} (G
     G height ⟨keys.1, distinct⟩ complete inputs.1 correct.1 (links, inputs.2.2+5) exactForest plan.1 planEq
   refine ⟨scales, setup, ?_, fun samples B cap D => ?_⟩
   · dsimp only [prepareFinSteinerWeightedForSeedWithRoundingChargeWork, prepareFinSteinerWeightedForSeedWithHistoryWork,
-      prepareFinSteinerWeightedWithPlan]
+      prepareFinSteinerWeightedWithPlan,prepareFinSteinerWeightedWithPlanAndRows]
   obtain ⟨graph, search, work⟩ := evaluate samples B cap D
   refine ⟨graph, search, work.trans ?_⟩
   have scale : plan.1.2.1.1 = forestScale G height :=
@@ -452,7 +466,7 @@ theorem prepareFinSteinerWeightedForSeedWithAttachmentWork_spec {n : ℕ} (G : A
     plan.1 planEq
   refine ⟨scales,setup,?_,fun samples B seedCap D => ?_⟩
   · dsimp only [prepareFinSteinerWeightedForSeedWithAttachmentWork,prepareFinSteinerWeightedForSeedWithHistoryWork,
-      prepareFinSteinerWeightedWithPlan]
+      prepareFinSteinerWeightedWithPlan,prepareFinSteinerWeightedWithPlanAndRows]
     rw [(finForestNetworkRowsWithWordWork_keys n height).2]
     omega
   obtain ⟨graph, search, work⟩ := evaluate samples B seedCap D
@@ -523,7 +537,7 @@ theorem prepareFinSteinerWeightedForSeedWithMetricLabelWork_spec {n : ℕ} (G : 
     plan.1 planEq
   refine ⟨scales,setup,?_,fun samples B seedCap D => ?_⟩
   · dsimp only [prepareFinSteinerWeightedForSeedWithMetricLabelWork,prepareFinSteinerWeightedForSeedWithHistoryWork,
-      prepareFinSteinerWeightedWithPlan]
+      prepareFinSteinerWeightedWithPlan,prepareFinSteinerWeightedWithPlanAndRows]
     rw [(finForestNetworkRowsWithWordWork_keys n height).2]
     omega
   obtain ⟨graph, search, work⟩ := evaluate samples B seedCap D
@@ -541,5 +555,77 @@ theorem prepareFinSteinerWeightedForSeedWithMetricLabelWork_spec {n : ℕ} (G : 
     (forestMetricLabelWordBudget height (n^2))
   rw [Nat.mul_add, Fintype.card_fin] at work
   exact ⟨graph,search,work.trans (Nat.add_le_add common (Nat.mul_le_mul_left _ attachments))⟩
+
+/-- Keep the original arc and forest lists from preparation and use them in
+all early prefix expansions. -/
+def prepareFinSteinerWeightedForSeedWithMetricExpansionWork {n : ℕ} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :
+    SteinerSeedPreparationWithSeedWork G height × ℕ :=
+  let rows := finForestNetworkRowsWithWordWork n height
+  let valid := finForestNetworkRowsWithWordWork_spec n height
+  let prepared := prepareFinSteinerWeightedWithPlanAndRows G arcs same height
+    (fun table rowsEq template exact plan consistent forestRows _ =>
+      prepareEarlyDistanceTableForSeedFromWeightsWithMetricExpansionWork G height arcs n (by simp) forestRows
+        ⟨rows.keys,valid.2.2.2.1⟩ rows.vertices valid.1 table rowsEq template exact plan consistent)
+  (prepared.1,prepared.2+rows.wordWork+3)
+
+def finSteinerEarlyMetricExpansionWordPolynomial (n m height p seed : ℕ) : ℕ :=
+  let F := 2*n*(n+1)^height
+  finSteinerEarlyMetricLabelWordPolynomial n height p seed + earlySteinerExpansionWordBudget n m height (F^2) p
+
+theorem finSteinerEarlyMetricExpansionWordPolynomial_mono (n m height seed : ℕ) :
+    Monotone (fun p => finSteinerEarlyMetricExpansionWordPolynomial n m height p seed) := by
+  intro p q short
+  exact Nat.add_le_add (finSteinerEarlyMetricLabelWordPolynomial_mono n height seed short)
+    (earlySteinerExpansionWordBudget_le le_rfl le_rfl short)
+
+theorem prepareFinSteinerWeightedForSeedWithMetricExpansionWork_spec {n : ℕ} (G : Arcs (Fin n))
+    (arcs : List (Fin n × Fin n)) (same : arcs.toFinset = G) (height : ℕ) :
+    let out := prepareFinSteinerWeightedForSeedWithMetricExpansionWork G arcs same height
+    let old := prepareFinSteinerWeightedForSeedWithHistoryWork G arcs same height
+    out.1.1 = old.1.1 ∧ out.1.2.2 = old.1.2.2 ∧ out.2 = old.2+3 ∧
+      ∀ (samples : ForestTrialArrayWithSeedWork (Fin n) height (forestScale G height) (earlyTrialCount (Fin n) height))
+        (B : ℕ), (∀ i, forestSampleWorkBound (samples i) B) → ∀ (D : List (Fin n × Fin n)),
+        let result := out.1.2.1 samples D
+        let prior := old.1.2.1 samples D
+        result.1 = prior.1 ∧ result.2.1 ≤ prior.2.1 ∧
+          result.2.2 ≤ finSteinerEarlyMetricExpansionWordPolynomial n arcs.length height D.length B := by
+  let inputs := finSteinerTemplateInputsWithWordWork arcs height
+  let correct := finSteinerTemplateInputsWithWordWork_spec G arcs same height
+  let links := arcsFromDistinctList inputs.2.1 correct.2.2.1
+  let exactForest := (arcsFromDistinctList_eq inputs.2.1 correct.2.2.1).trans correct.2.1
+  let read := readDistanceRow inputs.1.1
+  let plan := prepareForestWeightsFromListWithWordWork inputs.2.1 correct.2.2.1 read
+  have planEq := (finWeightsFromTemplateInputs_spec G arcs same height).1
+  let rows := finForestNetworkRowsWithWordWork n height
+  obtain ⟨distinct, all, forestSize, uniqueKeys, allKeys, _, _⟩ := finForestNetworkRowsWithWordWork_spec n height
+  have cover : inputs.2.1.toFinset = links := (arcsFromDistinctList_eq inputs.2.1 correct.2.2.1).symm
+  obtain ⟨scales, setup, evaluate⟩ := prepareEarlyDistanceTableForSeedFromWeightsWithMetricExpansionWork_spec G height
+    arcs same n (by simp) inputs.2.1 ⟨rows.keys,uniqueKeys⟩ allKeys rows.vertices distinct all
+    inputs.1 correct.1 (links,inputs.2.2+5) exactForest cover plan.1 planEq
+  refine ⟨scales,setup,?_,fun samples B seedCap D => ?_⟩
+  · dsimp only [prepareFinSteinerWeightedForSeedWithMetricExpansionWork,prepareFinSteinerWeightedForSeedWithHistoryWork,
+      prepareFinSteinerWeightedWithPlan,prepareFinSteinerWeightedWithPlanAndRows]
+    rw [(finForestNetworkRowsWithWordWork_keys n height).2]
+    omega
+  obtain ⟨graph, search, work⟩ := evaluate samples B seedCap D
+  have scale : plan.1.2.1.1 = forestScale G height :=
+    (prepareFinSteinerWeightedForSeedWithHistoryWork G arcs same height).1.1.property
+  let F := 2*n*(n+1)^height
+  have network : Fintype.card (ForestNetworkVertex (Fin n) height) ≤ 3*F :=
+    (finForestPlan_limits G height links read plan.1 planEq scale).1
+  have freeCount : plan.1.1.2.card ≤ (3*F)^2 := by
+    refine (Finset.card_le_univ _).trans ?_
+    rw [Fintype.card_prod,← pow_two]
+    exact Nat.pow_le_pow_left network 2
+  have attachments := earlyAttachmentWordBudget_le (height := height) forestSize freeCount (le_refl D.length)
+  have common := finSteinerEarlyMetricWordPolynomial_bound G height links read plan.1 planEq scale D.length B
+    (forestMetricLabelWordBudget height (n^2))
+  have templateBound := pairedForestList_length_le G inputs.2.1 correct.2.2.1 correct.2.1
+  have expansion := earlySteinerExpansionWordBudget_le (n := n) (m := arcs.length) (h := height) le_rfl templateBound (le_refl D.length)
+  rw [Nat.mul_add] at work
+  simp only [Fintype.card_fin] at work
+  exact ⟨graph,search,work.trans (Nat.add_le_add
+    (Nat.add_le_add common (Nat.mul_le_mul_left _ attachments)) expansion)⟩
 
 end OnlineReachabilityPreservers

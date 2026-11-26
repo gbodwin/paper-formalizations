@@ -5,6 +5,7 @@ import OnlineReachabilityPreservers.SteinerRoundingWork
 import OnlineReachabilityPreservers.SteinerTemplateWork
 import OnlineReachabilityPreservers.SteinerForestAttachmentsWork
 import OnlineReachabilityPreservers.SteinerForestLabelWork
+import OnlineReachabilityPreservers.SteinerForestExpansionWork
 
 /-! Precompute original-graph distances independently of the Steiner height forest. -/
 
@@ -1487,23 +1488,34 @@ private theorem earlyMetricWithPreparedRequestsWork_spec {height : ℕ} (keys : 
     change rounded.2.2 ≤ _ at seeds
     omega
 
-@[inline] private def prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWork (G : Arcs V) (height : ℕ)
+private abbrev EarlyMetricReplay (V : Type*) (height : ℕ) :=
+  (List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ) → List (V × V) → Arcs V × ℕ × ℕ
+
+private theorem earlyMetricWithPreparedRequestsWork_sub {height : ℕ} (keys : ForestPairKeys V height)
+    (links : Arcs (HeightForestVertex V height))
+    (weights : ForestMetricWeights V height) (priced : Arcs (ForestNetworkVertex V height))
+    (scale fuel : ℕ) (seed : ForestTrialArrayWithSeedWork V height scale (earlyTrialCount V height))
+    (requests : ForestRequestRows V height) :
+    (earlyMetricWithPreparedRequestsWork keys links weights priced scale fuel seed requests).1 ⊆ links :=
+  roundedForestTrialsWithChargeWork_sub links weights.1 _ scale _ seed
+
+@[inline] private def prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWorkUsing (G : Arcs V) (height : ℕ)
     (keys : ForestPairKeys V height)
     (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
     (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
     (plan : ForestWeightPlan V height)
     (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1)))
     (readWeights : (V × V → ℕ × ℕ) → ForestMetricWeights V height)
-    (requests : Arcs (ForestNetworkVertex V height) → List (V × V) → ForestRequestRows V height) :
-    SteinerSeedPreparationWithSeedWork G height :=
+    (requests : Arcs (ForestNetworkVertex V height) → List (V × V) → ForestRequestRows V height)
+    (replay : EarlyMetricReplay V height) : SteinerSeedPreparationWithSeedWork G height :=
   prepareEarlyWithPlan (SeedAt := fun s => ForestTrialArrayWithSeedWork V height s (earlyTrialCount V height))
     G height table rows template exactForest plan matchesPlan
     (fun links query priced free scale fuel seed =>
       let weights := readWeights query
-      earlyRoundedGraphWithSeedReadsFromMetric G height
+      replay
         (fun P => earlyMetricWithPreparedRequestsWork keys links weights priced scale fuel seed (requests free P)))
 
-private theorem prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWork_spec (G : Arcs V) (height : ℕ)
+private theorem prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWorkUsing_spec (G : Arcs V) (height : ℕ)
     (keys : ForestPairKeys V height) (complete : ∀ e, e ∈ keys.val)
     (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
     (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
@@ -1514,9 +1526,15 @@ private theorem prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWork_spec
     (requests : Arcs (ForestNetworkVertex V height) → List (V × V) → ForestRequestRows V height)
     (requestBound : ℕ → ℕ) (mono : Monotone requestBound)
     (requestSpec : ∀ P, (requests plan.1.2 P).1 = P.map (requestOnFreeForest plan.1.2) ∧
-      (requests plan.1.2 P).2 ≤ requestBound P.length) :
-    let prepared := prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWork G height keys
-      table rows template exactForest plan matchesPlan readWeights requests
+      (requests plan.1.2 P).2 ≤ requestBound P.length)
+    (replay : EarlyMetricReplay V height) (extra : ℕ → ℕ)
+    (replaySpec : ∀ evaluate D K,
+      (∀ P ∈ D.inits, (evaluate P).1 ⊆ template.1) → (∀ P ∈ D.inits, (evaluate P).2.2 ≤ K) →
+      let out := replay evaluate D
+      let old := earlyRoundedGraphWithSeedReadsFromMetric G height evaluate D
+      out.1 = old.1 ∧ out.2.1 ≤ old.2.1 ∧ out.2.2 ≤ (D.length+1)*K+extra D.length) :
+    let prepared := prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWorkUsing G height keys
+      table rows template exactForest plan matchesPlan readWeights requests replay
     let old := prepareEarlyDistanceTableForSeedFromWeightsWithHistoryWork G height keys
       table rows template exactForest plan matchesPlan
     prepared.1 = old.1 ∧ prepared.2.2 = old.2.2 ∧
@@ -1530,12 +1548,12 @@ private theorem prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWork_spec
       result.1 = prior.1 ∧ result.2.1 ≤ prior.2.1 ∧
       result.2.2 ≤ (D.length+1) * (earlyWeightedHistoryWordBudget n plan.1.1.card scale fuel W D.length +
         earlyRoundingChargeWordBudget n template.1.card scale fuel W height (earlyTrialCount V height) D.length +
-        earlyRoundingSeedReadBound G height * B + requestBound D.length) := by
+        earlyRoundingSeedReadBound G height * B + requestBound D.length) + extra D.length := by
   intro prepared old
   refine ⟨?_, ?_, ?_⟩
-  · dsimp only [prepared, old, prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWork,
+  · dsimp only [prepared, old, prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWorkUsing,
       prepareEarlyDistanceTableForSeedFromWeightsWithHistoryWork, prepareEarlyWithPlan]
-  · dsimp only [prepared, old, prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWork,
+  · dsimp only [prepared, old, prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWorkUsing,
       prepareEarlyDistanceTableForSeedFromWeightsWithHistoryWork, prepareEarlyWithPlan]
   intro samples B cap D
   let net := Fintype.card (ForestNetworkVertex V height)
@@ -1569,15 +1587,65 @@ private theorem prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWork_spec
     unfold seedReads earlyRoundingSeedReadBound
     rw [exactForest, exactScale]
     ring
-  obtain ⟨graph, search, total⟩ := earlyRoundedGraphWithSeedReadsFromMetric_compare G height newMetric oldMetric D
+  obtain ⟨graph,search,_⟩ := earlyRoundedGraphWithSeedReadsFromMetric_compare G height newMetric oldMetric D
     _ (fun P _ => ⟨(metric P).1,(metric P).2.1⟩) work
-  change (earlyRoundedGraphWithSeedReadsFromMetric G height newMetric D).1 =
-      (earlyRoundedGraphWithSeedReadsFromMetric G height oldMetric D).1 ∧
-    (earlyRoundedGraphWithSeedReadsFromMetric G height newMetric D).2.1 ≤
-      (earlyRoundedGraphWithSeedReadsFromMetric G height oldMetric D).2.1 ∧
-    (earlyRoundedGraphWithSeedReadsFromMetric G height newMetric D).2.2 ≤
-      (D.length+1) * (ready+rounding+earlyRoundingSeedReadBound G height*B+requestBound D.length)
-  exact ⟨graph, search, readySeed ▸ total⟩
+  have supported (P : List (V × V)) : (newMetric P).1 ⊆ template.1 :=
+    earlyMetricWithPreparedRequestsWork_sub keys template.1 weights priced scale fuel seed (requests plan.1.2 P)
+  obtain ⟨updated,updatedSearch,total⟩ := replaySpec newMetric D _ (fun P _ => supported P) work
+  change (replay newMetric D).1 = (earlyRoundedGraphWithSeedReadsFromMetric G height oldMetric D).1 ∧
+    (replay newMetric D).2.1 ≤ (earlyRoundedGraphWithSeedReadsFromMetric G height oldMetric D).2.1 ∧
+    (replay newMetric D).2.2 ≤
+      (D.length+1) * (ready+rounding+earlyRoundingSeedReadBound G height*B+requestBound D.length) + extra D.length
+  exact ⟨updated.trans graph,updatedSearch.trans search,readySeed ▸ total⟩
+
+@[inline] private def prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWork (G : Arcs V) (height : ℕ)
+    (keys : ForestPairKeys V height)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
+    (plan : ForestWeightPlan V height)
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1)))
+    (readWeights : (V × V → ℕ × ℕ) → ForestMetricWeights V height)
+    (requests : Arcs (ForestNetworkVertex V height) → List (V × V) → ForestRequestRows V height) :
+    SteinerSeedPreparationWithSeedWork G height :=
+  prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWorkUsing G height keys table rows template exactForest plan
+    matchesPlan readWeights requests (earlyRoundedGraphWithSeedReadsFromMetric G height)
+
+private theorem prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWork_spec (G : Arcs V) (height : ℕ)
+    (keys : ForestPairKeys V height) (complete : ∀ e, e ∈ keys.val)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
+    (plan : ForestWeightPlan V height)
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1)))
+    (readWeights : (V × V → ℕ × ℕ) → ForestMetricWeights V height)
+    (W : ℕ) (weightsMatch : MetricWeightReadsMatch (readDistanceRow table.1) (readWeights (readDistanceRow table.1)) W)
+    (requests : Arcs (ForestNetworkVertex V height) → List (V × V) → ForestRequestRows V height)
+    (requestBound : ℕ → ℕ) (mono : Monotone requestBound)
+    (requestSpec : ∀ P, (requests plan.1.2 P).1 = P.map (requestOnFreeForest plan.1.2) ∧
+      (requests plan.1.2 P).2 ≤ requestBound P.length) :
+    let prepared := prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWork G height keys
+      table rows template exactForest plan matchesPlan readWeights requests
+    let old := prepareEarlyDistanceTableForSeedFromWeightsWithHistoryWork G height keys
+      table rows template exactForest plan matchesPlan
+    prepared.1 = old.1 ∧ prepared.2.2 = old.2.2 ∧
+    ∀ (samples : ForestTrialArrayWithSeedWork V height (forestScale G height) (earlyTrialCount V height))
+      (B : ℕ), (∀ i, forestSampleWorkBound (samples i) B) → ∀ (D : List (V × V)),
+      let result := prepared.2.1 samples D
+      let prior := old.2.1 samples D
+      let n := Fintype.card (ForestNetworkVertex V height)
+      let scale := plan.2.1.1
+      let fuel := plan.2.1.2
+      result.1 = prior.1 ∧ result.2.1 ≤ prior.2.1 ∧
+      result.2.2 ≤ (D.length+1) * (earlyWeightedHistoryWordBudget n plan.1.1.card scale fuel W D.length +
+        earlyRoundingChargeWordBudget n template.1.card scale fuel W height (earlyTrialCount V height) D.length +
+        earlyRoundingSeedReadBound G height * B + requestBound D.length) := by
+  obtain ⟨scale,setup,evaluate⟩ := prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWorkUsing_spec
+    G height keys complete table rows template exactForest plan matchesPlan readWeights W weightsMatch
+    requests requestBound mono requestSpec (earlyRoundedGraphWithSeedReadsFromMetric G height) (fun _ => 0)
+    (fun metric D K _ cap => ⟨rfl,le_rfl,(earlyRoundedGraphWithSeedReadsFromMetric_spec G height metric D K cap).2.trans
+      (Nat.le_add_right _ _)⟩)
+  refine ⟨scale,setup,fun samples B cap D => ?_⟩
+  dsimp only [prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWork]
+  simpa only [Nat.add_zero] using evaluate samples B cap D
 
 /-- Keep the same weighted plan and meter the charge reads during each
 metric prefix's forest rounding. -/
@@ -1730,5 +1798,86 @@ theorem prepareEarlyDistanceTableForSeedFromWeightsWithMetricLabelWork_spec (G :
     labelMetricWeights _ (labelMetricWeights_spec _ _ (readDistanceRow_work_bound G table.1 rows))
     _ _ (fun _ _ le => earlyAttachmentWordBudget_le le_rfl le_rfl le)
     (meteredForestRequests_spec vertices distinct all plan.1.2)
+
+/-- One expansion allowance for each prefix row and one for the final forest. -/
+def earlySteinerExpansionWordBudget (n m h rows p : ℕ) : ℕ :=
+  let E := expandForestLinksFromRowsWordBudget n m h rows rows
+  (p+1)*(E+8)+E+6
+
+theorem earlySteinerExpansionWordBudget_le {n m m' h r r' p p' : ℕ}
+    (arcs : m ≤ m') (rows : r ≤ r') (prefixes : p ≤ p') :
+    earlySteinerExpansionWordBudget n m h r p ≤ earlySteinerExpansionWordBudget n m' h r' p' := by
+  unfold earlySteinerExpansionWordBudget
+  dsimp only
+  have cost := expandForestLinksFromRowsWordBudget_le (n := n) (h := h) arcs rows rows
+  gcongr
+
+/-- Reuse the supplied original arc list and forest template when checking
+and returning the expanded early graph. -/
+def prepareEarlyDistanceTableForSeedFromWeightsWithMetricExpansionWork (G : Arcs V) (height : ℕ)
+    (arcs : List (V × V)) (n : ℕ) (size : n = Fintype.card V)
+    (forestRows : List (HeightForestVertex V height × HeightForestVertex V height))
+    (keys : ForestPairKeys V height) (vertices : List (HeightForestVertex V height)) (distinct : vertices.Nodup)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
+    (plan : ForestWeightPlan V height)
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1))) :
+    SteinerSeedPreparationWithSeedWork G height :=
+  prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWorkUsing G height keys table rows template exactForest plan
+    matchesPlan labelMetricWeights (meteredForestRequests vertices distinct)
+    (fun metric => earlyRoundedGraphWithSeedReadsAndExpansionFromMetric G n height metric
+      (fun bought => expandForestLinksFromRowsWithWordWork arcs n size bought forestRows))
+
+theorem prepareEarlyDistanceTableForSeedFromWeightsWithMetricExpansionWork_spec (G : Arcs V) (height : ℕ)
+    (arcs : List (V × V)) (same : arcs.toFinset = G) (n : ℕ) (size : n = Fintype.card V)
+    (forestRows : List (HeightForestVertex V height × HeightForestVertex V height))
+    (keys : ForestPairKeys V height) (complete : ∀ e, e ∈ keys.val)
+    (vertices : List (HeightForestVertex V height)) (distinct : vertices.Nodup) (all : ∀ v, v ∈ vertices)
+    (table : List ((V × V) × ℕ) × ℕ) (rows : table.1 = (distanceTableWithSearchWork G).1)
+    (template : Arcs (HeightForestVertex V height) × ℕ) (exactForest : template.1 = heightForest G height)
+    (templateRows : forestRows.toFinset = template.1)
+    (plan : ForestWeightPlan V height)
+    (matchesPlan : plan = prepareForestWeights template.1 (forestWeightWithDistanceWork (readDistanceRow table.1))) :
+    let prepared := prepareEarlyDistanceTableForSeedFromWeightsWithMetricExpansionWork G height arcs n size forestRows keys vertices distinct
+      table rows template exactForest plan matchesPlan
+    let old := prepareEarlyDistanceTableForSeedFromWeightsWithHistoryWork G height keys table rows template exactForest
+      plan matchesPlan
+    prepared.1 = old.1 ∧ prepared.2.2 = old.2.2 ∧
+    ∀ (samples : ForestTrialArrayWithSeedWork V height (forestScale G height) (earlyTrialCount V height))
+      (B : ℕ), (∀ i, forestSampleWorkBound (samples i) B) → ∀ (D : List (V × V)),
+      let result := prepared.2.1 samples D
+      let prior := old.2.1 samples D
+      let N := Fintype.card (ForestNetworkVertex V height)
+      let W := forestMetricLabelWordBudget height ((Fintype.card V)^2)
+      let scale := plan.2.1.1
+      let fuel := plan.2.1.2
+      result.1 = prior.1 ∧ result.2.1 ≤ prior.2.1 ∧
+      result.2.2 ≤ (D.length+1) * (earlyWeightedHistoryWordBudget N plan.1.1.card scale fuel W D.length +
+        earlyRoundingChargeWordBudget N template.1.card scale fuel W height (earlyTrialCount V height) D.length +
+        earlyRoundingSeedReadBound G height * B + earlyAttachmentWordBudget height vertices.length plan.1.2.card D.length) +
+          earlySteinerExpansionWordBudget n arcs.length height forestRows.length D.length := by
+  let expand := fun bought => expandForestLinksFromRowsWithWordWork arcs n size bought forestRows
+  let limit := expandForestLinksFromRowsWordBudget n arcs.length height forestRows.length forestRows.length
+  have expansion (H : Arcs (HeightForestVertex V height)) (supports : H ⊆ template.1) :
+      (expand H).1 = (expandLabelledLinksWithSearchWork G heightForestLabel H).1 ∧ (expand H).2 ≤ limit := by
+    have cover : H ⊆ forestRows.toFinset := templateRows.symm ▸ supports
+    obtain ⟨exactGraph,work⟩ := expandForestLinksFromRowsWithWordWork_complete arcs n size H forestRows cover
+    have enough := (Finset.card_le_card cover).trans (List.toFinset_card_le _)
+    change (expand H).1 = _ at exactGraph
+    rw [same] at exactGraph
+    exact ⟨exactGraph.trans (expandLabelledLinksWithSearchWork_spec G heightForestLabel H).1.symm,
+      work.trans (expandForestLinksFromRowsWordBudget_le le_rfl enough le_rfl)⟩
+  apply prepareEarlyDistanceTableForSeedFromWeightsWithRequestsWorkUsing_spec G height keys complete table rows
+    template exactForest plan matchesPlan labelMetricWeights _
+    (labelMetricWeights_spec _ _ (readDistanceRow_work_bound G table.1 rows))
+    _ _ (fun _ _ le => earlyAttachmentWordBudget_le le_rfl le_rfl le)
+    (meteredForestRequests_spec vertices distinct all plan.1.2)
+  intro metric D B supported bounded
+  obtain ⟨graph,search,work⟩ := earlyRoundedGraphWithSeedReadsAndExpansionFromMetric_compare G n height size
+    metric expand template.1 D B limit expansion supported bounded
+  refine ⟨graph,search,work.trans_eq ?_⟩
+  unfold earlySteinerExpansionWordBudget
+  dsimp only [limit]
+  ring
 
 end OnlineReachabilityPreservers

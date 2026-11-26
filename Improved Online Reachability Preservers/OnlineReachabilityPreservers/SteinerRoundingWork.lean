@@ -924,4 +924,20 @@ theorem roundedForestTrialsWithChargeWork_spec (links : Arcs (HeightForestVertex
 
 end Forest
 
+/-- Metered capacity reads and rounding select only links from the input forest. -/
+theorem roundedForestTrialsWithChargeWork_sub {W : Type*} [LinearOrder W] [Fintype W] {h : ℕ}
+    (links : Arcs (HeightForestVertex W h))
+    (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
+    (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ × ℕ) (scale trials : ℕ)
+    (sample : ForestTrialArrayWithSeedWork W h scale trials) :
+    (roundedForestTrialsWithChargeWork links weight charges scale trials sample).1 ⊆ links := by
+  intro e member
+  dsimp only [roundedForestTrialsWithChargeWork,roundedForestTrialsWithSeedTally] at member
+  obtain ⟨row,onRow,onGraph⟩ := mem_biUnion.mp member
+  obtain ⟨i,_,rfl⟩ := mem_map.mp onRow
+  dsimp only [rowWithSeedReads,roundedForestLinksWithSeedTally] at onGraph
+  obtain ⟨choice,onChoice,rfl⟩ := mem_image.mp onGraph
+  obtain ⟨link,onLink,rfl⟩ := mem_map.mp (mem_filter.mp onChoice).1
+  exact onLink
+
 end OnlineReachabilityPreservers
