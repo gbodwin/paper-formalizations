@@ -503,6 +503,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   searches those binary labels and returns the exact clipped capacity.
   The [ancestor cutoff lemma](OnlineReachabilityPreservers/SteinerBinaryWeightedUnitsWork.lean#L130)
   proves that clipping above a tier's cap preserves its rounding tests.
+  The [forest rounding evaluator](OnlineReachabilityPreservers/SteinerBinaryForestRoundingWork.lean#L101)
+  reads the supplied binary paid states and zero-cost forest arcs.
+  With fixed trial samples it returns the reference rounded forest and
+  counts the row work and seed reads separately.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

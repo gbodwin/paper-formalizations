@@ -1276,6 +1276,12 @@ charges its encoded key scan, clipped capacity calculation, and numeric
 decode. The [clipping lemma for ancestor cutoffs](OnlineReachabilityPreservers/SteinerBinaryWeightedUnitsWork.lean#L130)
 shows that clipping the units at a limit of at least the tier power
 leaves the dyadic tier, ancestor minima, and cutoff unchanged.
+The [stored-row rounding evaluator](OnlineReachabilityPreservers/SteinerRoundingWork.lean#L1871)
+can use any metered capacity reader that preserves these cutoffs.
+The [binary forest rounding theorem](OnlineReachabilityPreservers/SteinerBinaryForestRoundingWork.lean#L101)
+instantiates this with the supplied binary paid states and the forest's
+permanent zero-cost arcs. For fixed trial samples it returns the exact
+reference rounded forest with separate word and seed-access tallies.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin

@@ -544,11 +544,9 @@ private def forestUnitsFromWeights (links : Arcs (HeightForestVertex W h))
     else roundedWeightedCapacity cost (charges (forestNetworkCopy.prodMap forestNetworkCopy edge))
   else 0
 
-private def roundedForestLinksFromWeights (links : Arcs (HeightForestVertex W h))
-    (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ)
-    (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ) (scale : ℕ)
+private def roundedForestLinksUsingUnits (links : Arcs (HeightForestVertex W h))
+    (weight units : HeightForestVertex W h × HeightForestVertex W h → ℕ) (scale : ℕ)
     (sample : ForestRoundingSample W h scale) : Arcs (HeightForestVertex W h) :=
-  let units := forestUnitsFromWeights links weight charges scale
   links.filter fun e => weight e = 0 ∨
     ∃ tier : Fin (scale.log2+1),
       let root := heightForestRoot e.1
@@ -558,6 +556,18 @@ private def roundedForestLinksFromWeights (links : Arcs (HeightForestVertex W h)
       seed.1.val < 2^tier.val ∧
         thresholdPath (forestSeedSize scale) (historyCutoff (scale.log2+1) tier.val
           (fun u => units (heightForestLegArc root side u))) (historyAncestors hist) (seed.2 side)
+
+private def roundedForestLinksFromWeights (links : Arcs (HeightForestVertex W h))
+    (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ)
+    (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ) (scale : ℕ)
+    (sample : ForestRoundingSample W h scale) : Arcs (HeightForestVertex W h) :=
+  roundedForestLinksUsingUnits links weight (forestUnitsFromWeights links weight charges scale) scale sample
+
+/-- The trial union for supplied integer capacities at the forest links. -/
+def roundedForestTrialsUsingUnits (links : Arcs (HeightForestVertex W h))
+    (weight units : HeightForestVertex W h × HeightForestVertex W h → ℕ) (scale trials : ℕ)
+    (sample : ForestTrialArray W h scale trials) : Arcs (HeightForestVertex W h) :=
+  univ.biUnion fun i => roundedForestLinksUsingUnits links weight units scale (sample i)
 
 /-- All trials share the stored forest and hop values. -/
 def roundedForestTrialsFromWeights (links : Arcs (HeightForestVertex W h))
@@ -1688,6 +1698,21 @@ private theorem roundedForestLinkAcrossTrialsWithWordWork_spec
       rw [show tierRows.length*(B+10)+2+10 = tierRows.length*(B+10)+12 by omega] at work
       omega
 
+/-- Scan the stored forest links and use the supplied capacity reader in
+each reached ancestor test. -/
+@[inline] def roundedForestTrialsFromUnitRowsWithWordWork
+    (rows : {es : List (HeightForestVertex W h × HeightForestVertex W h) // es.Nodup})
+    (weight units : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ) (scale trials : ℕ)
+    (sample : ForestTrialArrayWithSeedWork W h scale trials) : Arcs (HeightForestVertex W h) × ℕ × ℕ :=
+  let width := forestTierCountWithWordWork scale
+  let widthEq := (forestTierCountWithWordWork_spec scale).1
+  let tiers := tabulateFinRowsWithWordWork width.1 (fun t => t.cast widthEq)
+  let attempts := tabulateFinRowsWithWordWork trials id
+  let test := roundedForestLinkAcrossTrialsWithWordWork weight units scale trials
+    (fun i read => roundedForestTierWithArithmeticWork read scale (sample i)) attempts.1 tiers.1
+  let bought := selectRoundingRowsWithWordWork test rows.val
+  (⟨bought.1.val,bought.1.property.nodup rows.property⟩,width.2+tiers.2+attempts.2+bought.2.1+9,bought.2.2)
+
 /-- Scan the stored forest links once. On each priced link, test the
 explicit trial and tier rows and keep the link once when a test passes. -/
 def roundedForestTrialsFromRowsWithWordWork
@@ -1696,21 +1721,17 @@ def roundedForestTrialsFromRowsWithWordWork
     (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
     (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ × ℕ) (scale trials : ℕ)
     (sample : ForestTrialArrayWithSeedWork W h scale trials) : Arcs (HeightForestVertex W h) × ℕ × ℕ :=
-  let width := forestTierCountWithWordWork scale
-  let widthEq := (forestTierCountWithWordWork_spec scale).1
-  let tiers := tabulateFinRowsWithWordWork width.1 (fun t => t.cast widthEq)
-  let attempts := tabulateFinRowsWithWordWork trials id
-  let units := forestUnitsWithChargeWork links weight charges scale
-  let test := roundedForestLinkAcrossTrialsWithWordWork weight units scale trials
-    (fun i read => roundedForestTierWithArithmeticWork read scale (sample i)) attempts.1 tiers.1
-  let bought := selectRoundingRowsWithWordWork test rows.val
-  (⟨bought.1.val,bought.1.property.nodup rows.property⟩,width.2+tiers.2+attempts.2+bought.2.1+9,bought.2.2)
+  roundedForestTrialsFromUnitRowsWithWordWork rows weight (forestUnitsWithChargeWork links weight charges scale)
+    scale trials sample
+
+/-- Include the supplied unit reader's work in each reached cutoff. -/
+def forestUnitTrialRowsWordBudget (h scale trials links weightWork unitWork : ℕ) : ℕ :=
+  let B := forestTierArithmeticWordBudget h scale unitWork
+  8*scale+7*(scale+1)+7*trials+links*(weightWork+trials*((scale+1)*(B+10)+12)+22)+23
 
 /-- The bound includes tier counting, index enumeration, and link assembly. -/
 def forestTrialRowsWordBudget (h scale trials links weightWork chargeValue chargeWork : ℕ) : ℕ :=
-  let U := 12*links+weightWork+6*chargeValue+chargeWork+36
-  let B := forestTierArithmeticWordBudget h scale U
-  8*scale+7*(scale+1)+7*trials+links*(weightWork+trials*((scale+1)*(B+10)+12)+22)+23
+  forestUnitTrialRowsWordBudget h scale trials links weightWork (12*links+weightWork+6*chargeValue+chargeWork+36)
 
 theorem forestTrialRowsWordBudget_le {h scale scale' trials trials' m m' W W' Q Q' C C' : ℕ}
     (scales : scale ≤ scale') (attempts : trials ≤ trials') (links : m ≤ m')
@@ -1747,28 +1768,26 @@ theorem roundedForestTrialsFromRowsWithWordWork_sub
   exact included (List.mem_toFinset.mpr (bought.1.property.subset used))
 
 set_option maxHeartbeats 500000 in
-theorem roundedForestTrialsFromRowsWithWordWork_spec
+private theorem roundedForestTrialsFromUnitRowsWithWordWork_spec
     (links : Arcs (HeightForestVertex W h))
     (rows : {es : List (HeightForestVertex W h × HeightForestVertex W h) // es.Nodup})
     (exactRows : rows.val.toFinset = links)
-    (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
-    (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ × ℕ) (scale trials : ℕ)
-    (sample : ForestTrialArrayWithSeedWork W h scale trials) (Wt Q C S : ℕ)
-    (weightCap : ∀ e, (weight e).2 ≤ Wt) (chargeCap : ∀ e, (charges e).1 ≤ Q ∧ (charges e).2 ≤ C)
+    (weight units : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ) (scale trials : ℕ)
+    (sample : ForestTrialArrayWithSeedWork W h scale trials) (Wt U S : ℕ)
+    (weightCap : ∀ e, (weight e).2 ≤ Wt) (unitCap : ∀ e, (units e).2 ≤ U)
     (seedCap : ∀ i, forestSampleWorkBound (sample i) S) :
-    let out := roundedForestTrialsFromRowsWithWordWork links rows weight charges scale trials sample
-    let old := roundedForestTrialsWithArithmeticWork links weight charges scale trials sample
-    out.1 = old.1 ∧ out.2.1 ≤ forestTrialRowsWordBudget h scale trials links.card Wt Q C ∧
+    let out := roundedForestTrialsFromUnitRowsWithWordWork rows weight units scale trials sample
+    let old := roundedForestTrialsWithSeedTally links weight units scale trials
+      (fun i read => roundedForestTierWithArithmeticWork read scale (sample i))
+    out.1 = old.1 ∧ out.2.1 ≤ forestUnitTrialRowsWordBudget h scale trials links.card Wt U ∧
       out.2.2 ≤ trials*(links.card*((scale.log2+1)*((h+2)*S))) := by
   let width := forestTierCountWithWordWork scale
   let widthEq := (forestTierCountWithWordWork_spec scale).1
   let tiers := tabulateFinRowsWithWordWork width.1 (fun t => t.cast widthEq)
   let attempts := tabulateFinRowsWithWordWork trials id
-  let units := forestUnitsWithChargeWork links weight charges scale
   let check := fun i read => roundedForestTierWithArithmeticWork read scale (sample i)
   let test := roundedForestLinkAcrossTrialsWithWordWork weight units scale trials check attempts.1 tiers.1
   let bought := selectRoundingRowsWithWordWork test rows.val
-  let U := 12*links.card+Wt+6*Q+C+36
   let B := forestTierArithmeticWordBudget h scale U
   let Y := (h+2)*S
   have widthLe : width.1 ≤ scale+1 := widthEq.trans_le (Nat.add_le_add_right (Nat.log2_le_self scale) 1)
@@ -1786,8 +1805,6 @@ theorem roundedForestTrialsFromRowsWithWordWork_spec
   have tierAll (t : Fin (scale.log2+1)) : t ∈ tiers.1 := by
     rw [show tiers.1 = _ from tierValues]
     exact List.mem_map.mpr ⟨t.cast widthEq.symm,List.mem_finRange _,Fin.ext rfl⟩
-  have unitCap (e) : (units e).2 ≤ U :=
-    (forestUnitsWithChargeWork_spec links weight charges scale Wt Q C weightCap chargeCap e).2
   have each (e) := roundedForestLinkAcrossTrialsWithWordWork_spec weight units scale trials check attempts.1 tiers.1
     trialAll tierAll e Wt B Y (weightCap e)
     (fun i t => (roundedForestTierWithArithmeticWork_spec units scale U S (sample i) unitCap (seedCap i) e t).2)
@@ -1831,6 +1848,91 @@ theorem roundedForestTrialsFromRowsWithWordWork_spec
     rw [rowsCount,trialCount,tierCount] at seedWork
     exact seedWork.trans_eq (by unfold Y; ac_rfl)
 
+theorem roundedForestTrialsFromRowsWithWordWork_spec
+    (links : Arcs (HeightForestVertex W h))
+    (rows : {es : List (HeightForestVertex W h × HeightForestVertex W h) // es.Nodup})
+    (exactRows : rows.val.toFinset = links)
+    (weight : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
+    (charges : ForestNetworkVertex W h × ForestNetworkVertex W h → ℕ × ℕ) (scale trials : ℕ)
+    (sample : ForestTrialArrayWithSeedWork W h scale trials) (Wt Q C S : ℕ)
+    (weightCap : ∀ e, (weight e).2 ≤ Wt) (chargeCap : ∀ e, (charges e).1 ≤ Q ∧ (charges e).2 ≤ C)
+    (seedCap : ∀ i, forestSampleWorkBound (sample i) S) :
+    let out := roundedForestTrialsFromRowsWithWordWork links rows weight charges scale trials sample
+    let old := roundedForestTrialsWithArithmeticWork links weight charges scale trials sample
+    out.1 = old.1 ∧ out.2.1 ≤ forestTrialRowsWordBudget h scale trials links.card Wt Q C ∧
+      out.2.2 ≤ trials*(links.card*((scale.log2+1)*((h+2)*S))) :=
+  roundedForestTrialsFromUnitRowsWithWordWork_spec links rows exactRows weight
+    (forestUnitsWithChargeWork links weight charges scale) scale trials sample Wt _ S weightCap
+    (fun e => (forestUnitsWithChargeWork_spec links weight charges scale Wt Q C weightCap chargeCap e).2) seedCap
+
+/-- A metered capacity reader can replace the reference values when every
+tier sees the same ancestor cutoffs. The two work tallies cover the row
+and reader work and the seed accesses. -/
+theorem roundedForestTrialsFromUnitRowsWithWordWork_refines
+    (links : Arcs (HeightForestVertex W h))
+    (rows : {es : List (HeightForestVertex W h × HeightForestVertex W h) // es.Nodup})
+    (exactRows : rows.val.toFinset = links)
+    (weight units : HeightForestVertex W h × HeightForestVertex W h → ℕ × ℕ)
+    (reference : HeightForestVertex W h × HeightForestVertex W h → ℕ) (scale trials : ℕ)
+    (sample : ForestTrialArrayWithSeedWork W h scale trials) (Wt U S : ℕ)
+    (weightCap : ∀ e, (weight e).2 ≤ Wt) (unitCap : ∀ e, (units e).2 ≤ U)
+    (seedCap : ∀ i, forestSampleWorkBound (sample i) S)
+    (same : ∀ (root : W) side (tier : Fin (scale.log2+1)) node,
+      historyCutoff (scale.log2+1) tier.val (fun a => (units (heightForestLegArc root side a)).1) node =
+        historyCutoff (scale.log2+1) tier.val (fun a => reference (heightForestLegArc root side a)) node) :
+    let out := roundedForestTrialsFromUnitRowsWithWordWork rows weight units scale trials sample
+    let recorded := fun i => forestRoundingSampleValues scale (sample i)
+    out.1 = roundedForestTrialsUsingUnits links (fun e => (weight e).1) reference scale trials recorded ∧
+      out.2.1 ≤ forestUnitTrialRowsWordBudget h scale trials links.card Wt U ∧
+      out.2.2 ≤ trials*(links.card*((scale.log2+1)*((h+2)*S))) := by
+  let check := fun i read => roundedForestTierWithArithmeticWork read scale (sample i)
+  let recorded := fun i => forestRoundingSampleValues scale (sample i)
+  obtain ⟨graph,work,reads⟩ := roundedForestTrialsFromUnitRowsWithWordWork_spec links rows exactRows weight units
+    scale trials sample Wt U S weightCap unitCap seedCap
+  refine ⟨graph.trans ?_,work,reads⟩
+  have accepts (i : Fin trials) (e : HeightForestVertex W h × HeightForestVertex W h)
+      (t : Fin (scale.log2+1)) :
+      let root := heightForestRoot e.1
+      let seed := recorded i root t
+      let side := roundingArcSide e
+      let hist := roundingArcHistory e
+      (check i units e t).1 = true ↔ seed.1.val < 2^t.val ∧
+        thresholdPath (forestSeedSize scale) (historyCutoff (scale.log2+1) t.val
+          (fun a => reference (heightForestLegArc root side a))) (historyAncestors hist) (seed.2 side) := by
+    have arithmetic := (roundedForestTierWithArithmeticWork_spec units scale U S (sample i)
+      unitCap (seedCap i) e t).1
+    have seed := congrArg Prod.fst (roundedForestTierWithSeedWork_spec units scale (sample i) e t S
+      (fun root j => (seedCap i root j).1) (fun root j => (seedCap i root j).2)).1
+    have cutoff := funext (same (heightForestRoot e.1) (roundingArcSide e) t)
+    dsimp only [check]
+    rw [arithmetic,seed,← cutoff]
+    exact (roundedForestTierWithWork_spec units scale U unitCap (recorded i) e t).1
+  have link (i : Fin trials) (e : HeightForestVertex W h × HeightForestVertex W h) :
+      e ∈ (roundedForestLinksWithSeedTally links weight units scale (check i)).1 ↔
+        e ∈ roundedForestLinksUsingUnits links (fun a => (weight a).1) reference scale (recorded i) := by
+    rw [roundedForestLinksWithSeedTally_member]
+    unfold roundedForestLinksUsingUnits
+    rw [mem_filter]
+    apply and_congr_right
+    intro _
+    by_cases free : (weight e).1 = 0
+    · simp [roundedForestLinkWithSeedTally,free]
+    · simp only [roundedForestLinkWithSeedTally,free,ite_false,false_or]
+      rw [finiteAnyWithSeedReads_value]
+      simpa only [mem_univ,true_and] using exists_congr (fun t => accepts i e t)
+  ext e
+  change e ∈ ((univ : Finset (Fin trials)).map
+    (rowWithSeedReads (fun i => roundedForestLinksWithSeedTally links weight units scale (check i)))).biUnion
+      (fun r => r.2.1) ↔ e ∈ (univ : Finset (Fin trials)).biUnion
+        (fun i => roundedForestLinksUsingUnits links (fun a => (weight a).1) reference scale (recorded i))
+  constructor
+  · intro member
+    obtain ⟨row,present,chosen⟩ := mem_biUnion.mp member
+    obtain ⟨i,inside,rfl⟩ := mem_map.mp present
+    exact mem_biUnion.mpr ⟨i,inside,(link i e).mp chosen⟩
+  · intro member
+    obtain ⟨i,inside,chosen⟩ := mem_biUnion.mp member
+    exact mem_biUnion.mpr ⟨_,mem_map_of_mem _ inside,(link i e).mpr chosen⟩
 
 end Forest
 
