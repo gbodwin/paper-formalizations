@@ -399,4 +399,26 @@ theorem earlyRoundedGraphWithSeedReadsFromMetric_spec (G : Arcs V) (height : ℕ
     exact ⟨rfl,reads⟩
 
 
+/-- Compare early metric callbacks whose graphs agree and whose ordinary
+search count can only decrease. Bound the new separate tally on prefixes. -/
+theorem earlyRoundedGraphWithSeedReadsFromMetric_compare (G : Arcs V) (height : ℕ)
+    (next prior : List (V × V) → Arcs (HeightForestVertex V height) × ℕ × ℕ)
+    (D : List (V × V)) (B : ℕ)
+    (compare : ∀ P ∈ D.inits, (next P).1 = (prior P).1 ∧ (next P).2.1 ≤ (prior P).2.1)
+    (bound : ∀ P ∈ D.inits, (next P).2.2 ≤ B) :
+    let out := earlyRoundedGraphWithSeedReadsFromMetric G height next D
+    let old := earlyRoundedGraphWithSeedReadsFromMetric G height prior D
+    out.1 = old.1 ∧ out.2.1 ≤ old.2.1 ∧ out.2.2 ≤ (D.length+1)*B := by
+  let priorCap := ∑ P ∈ D.inits.toFinset, (prior P).2.2
+  have priorBound (P : List (V × V)) (on : P ∈ D.inits) : (prior P).2.2 ≤ priorCap :=
+    single_le_sum (f := fun Q => (prior Q).2.2) (fun _ _ => Nat.zero_le _) (List.mem_toFinset.mpr on)
+  obtain ⟨newMatch, newWork⟩ := earlyRoundedGraphWithSeedReadsFromMetric_spec G height next D B bound
+  obtain ⟨oldMatch, _⟩ := earlyRoundedGraphWithSeedReadsFromMetric_spec G height prior D priorCap priorBound
+  have same := earlyRoundedGraphWithSearchWorkFromMetric_compareOnPrefixes G height
+    (fun P => ((prior P).1,(prior P).2.1)) (fun P => ((next P).1,(next P).2.1)) 0 D
+    (fun P on => ⟨(compare P on).1, by simpa only [Nat.add_zero] using (compare P on).2⟩)
+  refine ⟨(congrArg Prod.fst newMatch).trans (same.1.trans (congrArg Prod.fst oldMatch).symm), ?_, newWork⟩
+  refine (congrArg Prod.snd newMatch).le.trans ((?_ : _ ≤ _).trans (congrArg Prod.snd oldMatch).symm.le)
+  simpa only [Nat.mul_zero, Nat.add_zero] using same.2
+
 end OnlineReachabilityPreservers

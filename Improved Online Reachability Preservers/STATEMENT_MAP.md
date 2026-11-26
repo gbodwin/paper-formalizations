@@ -696,19 +696,20 @@ shares this list across its weighted calls and preserves each rounded
 early graph and the initial setup tallies. Its old search and weight tally
 does not increase. A separate tally covers the measured weighted run and
 the seed-access costs, with a
-[fixed-height bound](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L231)
+[fixed-height bound](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L271)
 for every prefix and seed with bounded access costs.
 
-The [complete replay with weighted early work](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1566)
+The [complete replay with weighted early work](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1635)
 shares the earlier seed decoder, late evaluator, trace normalization, and
 outer union. Its prefix graphs and evaluation count agree for every input,
 including exhausted seeds. The ordinary search total is no larger. The
-[prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1636)
+[prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1667)
 includes the one-time key preparation and the weighted work across the
 evaluated prefixes on feasible traces. It still uses the earlier search
-conventions inside the weighted residual network. Post-solver charge reads
-during rounding, request attachments, remaining service and container
-operations, and bit and native costs remain open.
+conventions inside the weighted residual network. This replay version
+leaves post-solver charge reads during rounding, request attachments,
+remaining service and container operations, and bit and native costs
+outside the work bound.
 
 The [charge magnitude bound](OnlineReachabilityPreservers/SteinerWeightedChargeWork.lean#L543)
 adds at most one unit per accepted cut to any starting charge. At fixed
@@ -719,9 +720,19 @@ capacity query it counts the forest membership test, the weight and
 charge reads, and the rounded capacity arithmetic. Under the stated
 access bounds, the selected forest links agree with the earlier evaluator.
 The two work bounds cover capacity and weight accesses and seed reads.
-The replay still needs this rounding evaluator wired in. Tier and cutoff
-arithmetic, threshold comparisons, finite set assembly, remaining search
-and service work, and bit and native costs remain outside this bound.
+Tier and cutoff arithmetic, threshold comparisons, finite set assembly,
+remaining search and service work, and bit and native costs remain outside
+this bound.
+
+The [finite early evaluator](OnlineReachabilityPreservers/SteinerFinWeightedReplayWork.lean#L331)
+passes the weighted solver's paired charge reader directly into those
+rounding trials. The metric graphs and setup tallies agree with the earlier
+seeded evaluator, and the separate count now includes the rounded
+capacity reads. The [complete replay comparison](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1712)
+keeps all prefix graphs and evaluation counts, including the exhausted
+branch. Its [feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1737)
+includes the new early rounding count. The proof still leaves request
+attachments and the other operations listed above outside the tally.
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
