@@ -943,6 +943,21 @@ preserves every prefix record and evaluation count on all traces. The
 [feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2566)
 adds at most \(7(n+m)+19+4(p+1)\) for the setup and reached calls.
 
+The [binary arithmetic](OnlineReachabilityPreservers/SteinerBinaryArithmetic.lean#L45)
+evaluates addition with a carry on explicit bit lists. The
+[multiplication](OnlineReachabilityPreservers/SteinerBinaryArithmetic.lean#L91)
+uses shifts and additions. The [length counter](OnlineReachabilityPreservers/SteinerBinaryArithmetic.lean#L156)
+increments a binary word for each input bit. All three preserve decoded
+values and bound the output length and recorded work. The
+[thin setup evaluator](OnlineReachabilityPreservers/SteinerThinBitArithmeticWork.lean#L44)
+combines these operations with a polynomial bound in the input lengths.
+On canonical encodings of the two input counts, its
+[refinement theorem](OnlineReachabilityPreservers/SteinerThinBitArithmeticWork.lean#L86)
+matches the update cap and rounding offset used in the complete replay.
+The bound applies to this separate setup calculation on supplied binary
+lists. Input encoding and bit and native execution costs for the full
+replay remain open.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

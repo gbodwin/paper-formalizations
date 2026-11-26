@@ -386,6 +386,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   The [feasible-prefix bound](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L2566)
   includes this setup and per-call work and keeps all prefix records
   and evaluation counts.
+  A [binary setup evaluator](OnlineReachabilityPreservers/SteinerThinBitArithmeticWork.lean#L86)
+  computes the same two thin parameters from canonical binary input
+  lists. Its recorded bit-list work is polynomial in the two input
+  lengths. Encoding costs and the full replay's bit and native costs
+  remain open.
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps
