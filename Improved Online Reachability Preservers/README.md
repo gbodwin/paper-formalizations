@@ -291,6 +291,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   remain open.
   [Measured weight query](OnlineReachabilityPreservers/SteinerForestLabelWork.lean#L73)
   · [Complete replay with measured metric reads](OnlineReachabilityPreservers/SteinerFinTraceReplayWork.lean#L1867).
+  A separate routine expands bought forest links from supplied template
+  rows and the original arc list. It meters the membership scans, both
+  labels of each expanded link, the exact original route selection, and
+  the arc unions. When the supplied rows contain the bought links it
+  returns the full expanded graph. The measured expansion still needs
+  integration into the complete replay.
+  [Measured expansion](OnlineReachabilityPreservers/SteinerForestExpansionWork.lean#L192).
 - [The acyclic cleaning construction](OnlineReachabilityPreservers/BalancedRegularization.lean)
   retains at least a sixteenth of the incidence mass within the original vertex
   and path budgets. In the dense regime it proves the lower and upper caps

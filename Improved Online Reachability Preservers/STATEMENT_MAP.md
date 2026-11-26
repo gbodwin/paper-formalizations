@@ -770,6 +770,18 @@ includes these new query tallies. Tier and cutoff arithmetic, threshold
 comparisons, label reads during route expansion, further search and set
 assembly, service work, and bit and native costs remain open.
 
+The [forest route](OnlineReachabilityPreservers/SteinerForestExpansionWork.lean#L37)
+reads both terminal labels, selects the exact original route using the
+supplied arc list, and forms its arc set from the verified simple route.
+The [standalone expansion](OnlineReachabilityPreservers/SteinerForestExpansionWork.lean#L112)
+scans the supplied template rows for bought links and meters the route
+selection and unions. Its graph is the expansion of the bought links
+present in those rows. With a [complete template for the bought links](OnlineReachabilityPreservers/SteinerForestExpansionWork.lean#L192),
+the evaluator returns the earlier expanded graph, including overlapping
+routes. Its fixed-height bound uses the lengths of both supplied lists
+and the cardinality of the bought graph. Integration into early prefix
+service and final expansion is still open.
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
