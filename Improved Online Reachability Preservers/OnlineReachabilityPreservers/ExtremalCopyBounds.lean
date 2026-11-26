@@ -52,6 +52,32 @@ theorem disjointListFamilies_mass (paths : C → I → List V) :
 
 end Copies
 
+/-- A tagged vertex has exactly the degree it had in its own family. -/
+theorem disjointListFamilies_degree {I V C : Type*} [LinearOrder I] [Fintype I] [LinearOrder V]
+    [LinearOrder C] [Fintype C] (paths : C → I → List V) (v : V ×ₗ C) :
+    (occurrences (fun i => (disjointListFamilies paths i).toFinset) v).card =
+      (occurrences (fun i => (paths (ofLex v).2 i).toFinset) (ofLex v).1).card := by
+  let embed : I ↪ I ×ₗ C := ⟨fun i => toLex (i,(ofLex v).2),fun _ _ eq => congrArg (fun i => (ofLex i).1) eq⟩
+  let localRows := fun i : I => (paths (ofLex v).2 i).toFinset
+  let old := occurrences localRows (ofLex v).1
+  have exactRows : occurrences (fun i => (disjointListFamilies paths i).toFinset) v = old.map embed := by
+    ext i
+    simp only [mem_occurrences,List.mem_toFinset,mem_map]
+    constructor
+    · intro member
+      obtain ⟨u,on,eq⟩ := List.mem_map.mp member
+      have vertex : u = (ofLex v).1 := congrArg (fun z : V ×ₗ C => (ofLex z).1) eq
+      have color : (ofLex i).2 = (ofLex v).2 := congrArg (fun z : V ×ₗ C => (ofLex z).2) eq
+      change u ∈ paths (ofLex i).2 (ofLex i).1 at on
+      rw [vertex,color] at on
+      exact ⟨(ofLex i).1,mem_occurrences.mpr (List.mem_toFinset.mpr on),
+        ofLex.injective (Prod.ext rfl color.symm)⟩
+    · rintro ⟨j,on,rfl⟩
+      have vertex : (ofLex v).1 ∈ paths (ofLex v).2 j :=
+        List.mem_toFinset.mp ((mem_occurrences (marks := localRows)).mp on)
+      exact List.mem_map.mpr ⟨(ofLex v).1,vertex,ofLex.injective rfl⟩
+  rw [exactRows,card_map]
+
 private def padListFamily {n p N P : ℕ} (paths : Fin p → List (Fin n)) (budget : n ≤ N)
     (i : Fin P) : List (Fin N) :=
   if h : i.val < p then (paths ⟨i.val,h⟩).map (Fin.castLE budget) else []

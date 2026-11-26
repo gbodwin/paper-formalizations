@@ -348,6 +348,21 @@ of the counts allowed by the two budgets. The resulting witness
 retains at least \(M/8\) and meets all four original-average caps.
 [Degree-three grids](OnlineReachabilityPreservers/HalfGridCleaning.lean).
 
+In a grid of any positive dimension, all but the last coordinate
+have only forward rows. The two directions of the last coordinate
+arrive after those rows. A chain whose river uses the last coordinate
+has all other coordinates fixed and can only move in the opposite
+direction. For any other river, the last arc must use the last
+coordinate, because another arc in the river's direction on the same
+line would repeat the river. Thus the grid excludes every half-bridge.
+For \(D\) directions and width \(w\), one block has \(w^{D-1}\) vertices,
+\(D w^{D-2}\) paths, and degree \(D\) at every vertex. Set
+\(D=\max(2,\lceil M/(4n)\rceil)\) and \(w=\lceil M/(4p)\rceil\).
+For positive budgets, \(2n\le M\), \(p\le M\), and room for one block
+on each side, disjoint copies meet the four original-average caps
+and retain at least \(M/8\).
+[Arbitrary-dimensional grid witness](OnlineReachabilityPreservers/AxisGridCleaning.lean).
+
 Every bridge of size \(r\) uses \(r\) distinct vertices and \(r\)
 distinct path indices. Thus a full cutoff of at least \(\min(n,p)\)
 already excludes every full bridge. The all-size cleaning theorem

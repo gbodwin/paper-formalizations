@@ -203,7 +203,8 @@ theorem listMass_le_ordered_pairs_add_paths {n p k : ℕ} (paths : Fin p → Lis
     _ = (∑ i, ((paths i).length-1))+p := by simp [sum_add_distrib]
     _ ≤ _ := Nat.add_le_add_right edges _
 
-private theorem floorBlockMass {a width : ℕ} (widthPos : 0 < width) (fits : width ≤ a) :
+/-- Repeating a positive block that fits a budget fills at least half of it. -/
+theorem floorBlockMass {a width : ℕ} (widthPos : 0 < width) (fits : width ≤ a) :
     a ≤ 2*((a/width)*width) := by
   have some : 0 < a/width := Nat.div_pos fits widthPos
   have raw := Nat.lt_mul_div_succ a widthPos

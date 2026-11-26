@@ -1801,6 +1801,18 @@ of the unrestricted maximum. Both this construction and the low-mass
 branch give one witness excluding half-bridges at every size.
 [Half-bridge grid cleaning](OnlineReachabilityPreservers/HalfGridCleaning.lean).
 
+The [grid in arbitrary dimension](OnlineReachabilityPreservers/AxisGridCleaning.lean)
+gives an \(M/8\) witness with the original caps and all-size half
+exclusion under the following explicit budget conditions. For positive
+\(n,p\), \(2n\le M\), and \(p\le M\), write
+\(D=\max(2,\lceil M/(4n)\rceil)\) and \(w=\lceil M/(4p)\rceil\).
+A block fits if \(w^{D-1}\le n\) and \(D w^{D-2}\le p\).
+The proof checks the degree \(D\), length \(w\), the arrival order of
+the two directions along the last coordinate, and the two exact
+rounded block counts. The same witness covers every requested half
+cutoff. The constraints allow the degree and path length to grow
+together.
+
 The [finite-budget cases](OnlineReachabilityPreservers/FrozenBoundaryCases.lean)
 give an exact \(np\) maximizer meeting all four caps with either
 empty budget or a cutoff below two, in the indexed convention. For

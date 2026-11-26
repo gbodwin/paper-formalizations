@@ -769,6 +769,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   and \(p(p-1)\le108n\). A single witness meets both original budgets
   and all four original-average caps and excludes every half-bridge.
   Horizontal paths arrive before the two directions of each column.
+- The [grid in arbitrary dimension](OnlineReachabilityPreservers/AxisGridCleaning.lean)
+  has \(d+1\) paths through each vertex in \(d\) dimensions. For
+  positive budgets and mass \(M\ge\max(2n,p)\), it gives an \(M/8\)
+  witness with both budgets and all four original caps when a block
+  of the prescribed width and dimension fits. One witness excludes
+  half-bridges of every size. The statement map gives the two
+  explicit budget inequalities.
 - The [finite-budget cases](OnlineReachabilityPreservers/FrozenBoundaryCases.lean)
   package the original caps at the unrestricted maximum through cutoff
   three in either mode, with a witness of mass at least \(M/16\).

@@ -177,13 +177,19 @@ theorem halfGridRows_degree {w : ℕ} (v : HalfGridPoint w) :
     rfl
   rw [onRows, card_map, card_univ, Fintype.card_fin]
 
-private theorem halfGrid_floor_covers_half {q block : ℕ} (blockPos : 0 < block) (fits : block ≤ q) :
-    q ≤ 2*((q/block)*block) := by
-  have existsBlock := Nat.div_pos fits blockPos
-  have raw := Nat.lt_mul_div_succ q blockPos
-  have rounded : q/block + 1 ≤ 2*(q/block) := by omega
-  exact raw.le.trans (by
-    simpa only [Nat.mul_assoc, Nat.mul_comm, Nat.mul_left_comm] using Nat.mul_le_mul_left block rounded)
+/-- An integer ceiling for one quarter of the input average. -/
+theorem quarterMean_ceiling {q M : ℕ} (hq : 0 < q) (hM : 0 < M) :
+    let w := (M+4*q-1)/(4*q)
+    0 < w ∧ M ≤ (4*q)*w ∧ (4*q)*w ≤ M+4*q-1 := by
+  let w := (M+4*q-1)/(4*q)
+  have divisor : 0 < 4*q := by positivity
+  have positive : 0 < w := Nat.div_pos (by omega) divisor
+  have covers : M ≤ (4*q)*w := by
+    have raw := Nat.lt_mul_div_succ (M+4*q-1) divisor
+    change M+4*q-1 < (4*q)*(w+1) at raw
+    rw [Nat.mul_succ] at raw
+    omega
+  exact ⟨positive,covers,by simpa only [Nat.mul_comm] using Nat.div_mul_le_self (M+4*q-1) (4*q)⟩
 
 private theorem halfGrid_frozen_dimensions {n p M : ℕ} (hp : 0 < p) (order : p ≤ n)
     (dense : 8*n < M) (upper : M ≤ 12*n) (room : 16*n ≤ p*p) :
@@ -192,17 +198,10 @@ private theorem halfGrid_frozen_dimensions {n p M : ℕ} (hp : 0 < p) (order : p
       M ≤ (4*p)*w ∧ p*w ≤ 4*M := by
   let w := (M+4*p-1)/(4*p)
   let t := min (n/(w*w)) (p/(3*w))
-  have divPos : 0 < 4*p := by positivity
-  have wPos : 0 < w := Nat.div_pos (by omega) divPos
-  have cover : M ≤ (4*p)*w := by
-    have ratio := Nat.lt_mul_div_succ (M+4*p-1) divPos
-    change M+4*p-1 < (4*p)*(w+1) at ratio
-    rw [Nat.mul_succ] at ratio
-    omega
+  obtain ⟨wPos,cover,widthBound⟩ := quarterMean_ceiling hp (Nat.zero_lt_of_lt dense)
   have widthCap : p*w ≤ 4*n := by
-    have ratio := Nat.div_mul_le_self (M+4*p-1) (4*p)
-    change w*(4*p) ≤ M+4*p-1 at ratio
-    rw [show w*(4*p) = 4*(p*w) by ring] at ratio
+    change (4*p)*w ≤ M+4*p-1 at widthBound
+    rw [Nat.mul_assoc] at widthBound
     omega
   have budgetWidth : 4*w ≤ p := by
     apply Nat.le_of_mul_le_mul_right _ hp
@@ -219,11 +218,11 @@ private theorem halfGrid_frozen_dimensions {n p M : ℕ} (hp : 0 < p) (order : p
     (Nat.mul_le_mul_right _ (min_le_right _ _)).trans (Nat.div_mul_le_self _ _)
   have enough : M ≤ 8*(3*(t*(w*w))) := by
     by_cases vertexSide : n/(w*w) ≤ p/(3*w)
-    · have large := halfGrid_floor_covers_half (show 0 < w*w by positivity) budgetSquare
+    · have large := floorBlockMass (show 0 < w*w by positivity) budgetSquare
       have identity : t = n/(w*w) := min_eq_left vertexSide
       rw [← identity] at large
       omega
-    · have large := halfGrid_floor_covers_half (show 0 < 3*w by positivity) budgetLines
+    · have large := floorBlockMass (show 0 < 3*w by positivity) budgetLines
       have identity : t = p/(3*w) := min_eq_right (le_of_not_ge vertexSide)
       rw [← identity] at large
       have scaled := Nat.mul_le_mul_right (4*w) large
@@ -235,27 +234,8 @@ private theorem halfGrid_frozen_dimensions {n p M : ℕ} (hp : 0 < p) (order : p
   exact ⟨w,t,wPos,vertexFit,pathFit,enough,by omega,cover,by omega⟩
 
 private theorem halfGridCopies_degree {w t : ℕ} (v : HalfGridPoint w ×ₗ Fin t) :
-    (occurrences (fun i => (disjointListFamilies (fun _ : Fin t => halfGridRows w) i).toFinset) v).card = 3 := by
-  let embed : HalfGridPath w ↪ HalfGridPath w ×ₗ Fin t :=
-    ⟨fun i => toLex (i,(ofLex v).2), fun _ _ eq => congrArg (fun i => (ofLex i).1) eq⟩
-  let old := occurrences (fun i => (halfGridRows w i).toFinset) (ofLex v).1
-  have exactlyTagged :
-      occurrences (fun i => (disjointListFamilies (fun _ : Fin t => halfGridRows w) i).toFinset) v = old.map embed := by
-    ext i
-    simp only [mem_occurrences, List.mem_toFinset, mem_map]
-    constructor
-    · intro member
-      obtain ⟨u,inside,eq⟩ := List.mem_map.mp member
-      have oldVertex := congrArg (fun x : HalfGridPoint w ×ₗ Fin t => (ofLex x).1) eq
-      have copyTag := congrArg (fun x : HalfGridPoint w ×ₗ Fin t => (ofLex x).2) eq
-      exact ⟨(ofLex i).1,mem_occurrences.mpr (List.mem_toFinset.mpr (oldVertex ▸ inside)),
-        ofLex.injective (Prod.ext rfl copyTag.symm)⟩
-    · rintro ⟨j,onLine,rfl⟩
-      have oldVertex : (ofLex v).1 ∈ halfGridRows w j :=
-        List.mem_toFinset.mp ((mem_occurrences (marks := fun i : HalfGridPath w => (halfGridRows w i).toFinset)).mp onLine)
-      exact List.mem_map.mpr ⟨(ofLex v).1,oldVertex,ofLex.injective rfl⟩
-  rw [exactlyTagged,card_map]
-  exact halfGridRows_degree _
+    (occurrences (fun i => (disjointListFamilies (fun _ : Fin t => halfGridRows w) i).toFinset) v).card = 3 :=
+  (disjointListFamilies_degree (fun _ : Fin t => halfGridRows w) v).trans (halfGridRows_degree _)
 
 /-- For mass between eight and twelve times the larger vertex budget,
 copies of a degree-three grid meet the four original-average caps and
