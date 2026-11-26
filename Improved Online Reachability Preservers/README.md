@@ -579,6 +579,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   caps, and at least \(M/8\) incidences. The witness excludes full bridges
   through the input cutoff in either bridge mode.
   [Counting all ordered pairs](OnlineReachabilityPreservers/FrozenSmallBudgets.lean).
+- If \(\binom p3\le56n\), counting triples of path labels gives the
+  same \(M/8\) witness for any cutoff of at least two. If \(q\) paths
+  exceed the original upper length cap and \(5\binom q3\le16n\), a
+  separate argument gives an \(M/104\) witness at any full cutoff of
+  at least two or half cutoffs two through four.
+  [Cleaning by counting triples](OnlineReachabilityPreservers/FrozenPathTriples.lean).
 - For full-bridge cutoffs three through five, a cleaned maximizing family
   retains at least \(M/119\) and meets both budgets and all four factor-four
   caps measured against the original averages. The path split places matching

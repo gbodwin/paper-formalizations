@@ -1549,6 +1549,22 @@ the input cutoff. The result applies to unrestricted maxima in either mode.
 At \(n=p=30\), the numerical comparison inequality permits \(M=241\).
 Extending beyond 29 uniformly therefore requires another estimate.
 
+The [path-triple count](OnlineReachabilityPreservers/FrozenPathTriples.lean)
+uses the fact that any three paths meet together at at most one vertex.
+If they shared two distinct vertices, two of the paths would order those
+vertices the same way. Thus the sum of \(\binom{d_v}3\) is at most
+\(\binom p3\). Supporting affine bounds for this binomial coefficient
+give \(M\le2n+\binom p3\) and \(21M\le112n+\binom p3\).
+When \(\binom p3\le56n\), the second inequality forces \(M\le8n\)
+and gives a witness with at least \(M/8\), both original budgets and all
+four frozen caps, excluding full bridges through any input cutoff of at
+least two. For the actual subfamily of \(q\) overlong paths, counting
+triples gives \(3S\le8n+\binom q3\). If \(5\binom q3\le16n\)
+and \(T>7M/15\), the inequality \(T\le S\) again forces \(M\le8n\).
+Combining with the clipping theorem gives at least \(M/104\), with both
+frozen budgets and all four caps, at full cutoffs of at least two and
+half cutoffs two through four.
+
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
 and nonempty simple rows. At the prescribed widths \(7\) and \(20\) it
