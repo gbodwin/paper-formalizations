@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.FrozenQuadraticTrimming
+import OnlineReachabilityPreservers.HalfFiveProjection
 import OnlineReachabilityPreservers.LocalFrozenLowMass
 import OnlineReachabilityPreservers.OppositeLinkForest
 
@@ -124,6 +125,24 @@ theorem regularization_list_frozen_after_half_path_width_splits {V I : Type*}
   change (M : ℝ) / 104 ≤ (K : ℝ) - (K : ℝ)^2/(4*((4*M/n*n : ℕ) : ℝ)) - (M : ℝ)/4 - Q
   linarith
 
+private theorem unique_row_width_splits_admissible_extended {V I : Type*}
+    [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] {half : Bool} {k : ℕ}
+    (cutoff : (k = 4 ∨ (k = 6 ∧ half = false)) ∨ (k = 5 ∧ half = true)) (paths : I → List V)
+    (simple : ∀ i, (paths i).Nodup)
+    (unique : ∀ {a b x y}, a ≠ b → x ∈ paths a → x ∈ paths b →
+      y ∈ paths a → y ∈ paths b → x = y)
+    (allowed : localOrderAdmissible half k paths) (D L : ℕ) :
+    localOrderAdmissible half k (listRegularizedPaths paths D L) := by
+  rcases cutoff with (rfl | ⟨rfl, rfl⟩) | ⟨rfl, rfl⟩
+  · cases half
+    · exact listRegularizedPaths_fullFree simple (fun {_ _ _ _} => unique) allowed D L
+    · exact listRegularizedPaths_halfFree simple (fun {_ _ _ _} => unique) allowed D L
+  · have four : BridgeFree (Before paths) 4 := fun _ h => allowed (h.trans (by decide))
+    exact regularizedSix_bridge_free simple (fun {_ _ _ _} => unique) four allowed D L
+
+  · exact listRegularizedPaths_halfFree_five_of_unique_intersections simple allowed
+      (fun {_ _ _ _} => unique) D L
+
 private theorem unique_row_width_splits_admissible {V I : Type*}
     [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] {half : Bool} {k : ℕ}
     (cutoff : k = 4 ∨ (k = 6 ∧ half = false)) (paths : I → List V)
@@ -131,13 +150,9 @@ private theorem unique_row_width_splits_admissible {V I : Type*}
     (unique : ∀ {a b x y}, a ≠ b → x ∈ paths a → x ∈ paths b →
       y ∈ paths a → y ∈ paths b → x = y)
     (allowed : localOrderAdmissible half k paths) (D L : ℕ) :
-    localOrderAdmissible half k (listRegularizedPaths paths D L) := by
-  rcases cutoff with rfl | ⟨rfl, rfl⟩
-  · cases half
-    · exact listRegularizedPaths_fullFree simple (fun {_ _ _ _} => unique) allowed D L
-    · exact listRegularizedPaths_halfFree simple (fun {_ _ _ _} => unique) allowed D L
-  · have four : BridgeFree (Before paths) 4 := fun _ h => allowed (h.trans (by decide))
-    exact regularizedSix_bridge_free simple (fun {_ _ _ _} => unique) four allowed D L
+    localOrderAdmissible half k (listRegularizedPaths paths D L) :=
+  unique_row_width_splits_admissible_extended (Or.inl cutoff) paths simple
+    (fun {_ _ _ _} => unique) allowed D L
 
 private theorem frozen_of_unique_row_subset {half : Bool} {k n p : ℕ}
     (cutoff : k = 4 ∨ (k = 6 ∧ half = false)) (paths : Fin p → List (Fin n))
@@ -415,7 +430,7 @@ private theorem dense_half_support_mass {M K p n r : ℕ} (positive : 0 < M) (hp
   linarith
 
 private theorem frozen_of_two_reverse_classes_of_mass {half : Bool} {k n p : ℕ}
-    (cutoff : k = 4 ∨ (k = 6 ∧ half = false)) (paths kept : Fin p → List (Fin n))
+    (cutoff : (k = 4 ∨ (k = 6 ∧ half = false)) ∨ (k = 5 ∧ half = true)) (paths kept : Fin p → List (Fin n))
     (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths)
     (sub : ∀ i, (kept i).Sublist (paths i)) (classes : Fin p → Bool)
     (separated : ∀ {i j x y}, i ≠ j → Before kept i x y → Before kept j y x → classes i ≠ classes j)
@@ -428,7 +443,7 @@ private theorem frozen_of_two_reverse_classes_of_mass {half : Bool} {k n p : ℕ
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       M ≤ 288*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let M := ∑ i, (paths i).length
-  have two : 2 ≤ k := by rcases cutoff with rfl | ⟨rfl, _⟩ <;> decide
+  have two : 2 ≤ k := by rcases cutoff with (rfl | ⟨rfl, _⟩) | ⟨rfl, _⟩ <;> decide
   have free : HalfBridgeFree (Before paths) k := by
     cases half
     · exact (show BridgeFree (Before paths) k from allowed).halfFree
@@ -477,7 +492,7 @@ private theorem frozen_of_two_reverse_classes_of_mass {half : Bool} {k n p : ℕ
       · exact separated different' xy yx' same
       · exact separated different' yx xy' same
       · exact no_parallel_list_steps free two different' (liftStep i y x yx) (liftStep j y x yx')
-    have safe := unique_row_width_splits_admissible cutoff chosen chosenSimple (fun {_ _ _ _} => unique) chosenAllowed
+    have safe := unique_row_width_splits_admissible_extended cutoff chosen chosenSimple (fun {_ _ _ _} => unique) chosenAllowed
     have counted : (∑ i, (chosen i).length) = mass c :=
       (sum_subtype (group c) (fun _ => Iff.rfl) (fun i => (kept i).length)).symm
     have upper : (∑ i, (chosen i).length) ≤ M := calc
@@ -522,13 +537,11 @@ theorem regularization_list_frozen_of_repaired_reverse_classes {half : Bool} {k 
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       M ≤ 288*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
-  frozen_of_two_reverse_classes_of_mass cutoff paths kept simple allowed sub classes (fun {_ _ _ _} => separated)
+  frozen_of_two_reverse_classes_of_mass (Or.inl cutoff) paths kept simple allowed sub classes (fun {_ _ _ _} => separated)
     hn hp dense long (Or.inr retained)
 
-/-- A rowwise sublist family with unique intersections suffices when its mass
-is at least thirteen twenty-fourths of the original mass. -/
-theorem regularization_list_frozen_of_large_unique_sublists {half : Bool} {k n p : ℕ}
-    (cutoff : k = 4 ∨ (k = 6 ∧ half = false)) (paths kept : Fin p → List (Fin n))
+private theorem frozen_of_large_unique_sublists {half : Bool} {k n p : ℕ}
+    (cutoff : (k = 4 ∨ (k = 6 ∧ half = false)) ∨ (k = 5 ∧ half = true)) (paths kept : Fin p → List (Fin n))
     (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths)
     (sub : ∀ i, (kept i).Sublist (paths i))
     (unique : ∀ {i j x y}, i ≠ j → x ∈ kept i → x ∈ kept j → y ∈ kept i → y ∈ kept j → x = y)
@@ -547,6 +560,22 @@ theorem regularization_list_frozen_of_large_unique_sublists {half : Bool} {k n p
     left
     refine ⟨false, ?_⟩
     simpa using retained
+
+/-- A rowwise sublist family with unique intersections suffices when its mass
+is at least thirteen twenty-fourths of the original mass. -/
+theorem regularization_list_frozen_of_large_unique_sublists {half : Bool} {k n p : ℕ}
+    (cutoff : k = 4 ∨ (k = 6 ∧ half = false)) (paths kept : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths)
+    (sub : ∀ i, (kept i).Sublist (paths i))
+    (unique : ∀ {i j x y}, i ≠ j → x ∈ kept i → x ∈ kept j → y ∈ kept i → y ∈ kept j → x = y)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (retained : 13*(∑ i, (paths i).length) ≤ 24*(∑ i, (kept i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 288*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  frozen_of_large_unique_sublists (Or.inl cutoff) paths kept simple allowed sub
+    (fun {_ _ _ _} => unique) hn hp dense long retained
 
 /-- If the number of opposite links is at most eleven twenty-fourths of
 the input mass, opposite-intersection pruning supplies a large unique family. -/
@@ -615,5 +644,57 @@ theorem regularization_list_frozen_of_sparse_same_class_reverse_ends {half : Boo
     exact sum_congr rfl fun i _ => Nat.sub_add_cancel (sub i).length_le
   exact regularization_list_frozen_of_repaired_reverse_classes cutoff paths kept simple allowed sub classes
     (fun {_ _ _ _} => removeSameClassReverseEnds_separates paths simple classes) hn hp dense long (by omega)
+
+/-- If pruning opposite intersections preserves at least thirteen
+twenty-fourths of the mass, the original caps hold at half cutoff five. -/
+theorem regularization_list_frozen_half_five_after_opposite_pruning {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) 5) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (retained : 13*(∑ i, (paths i).length) ≤ 24*(∑ i, (removeOppositeIntersections paths i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) 5 ∧
+      M ≤ 288*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  exact frozen_of_large_unique_sublists (half := true) (k := 5) (Or.inr ⟨rfl,rfl⟩)
+    paths (removeOppositeIntersections paths) simple free (removeOppositeIntersections_sublist paths)
+    (fun {_ _ _ _} different xa xb ya yb =>
+      removeOppositeIntersections_unique simple free (by decide) different xa xb ya yb)
+    hn hp dense long retained
+
+/-- The last vertex on each nonempty path survives pruning. The added mass
+suffices at half cutoff five if there are at least (M/12) nonempty paths. -/
+theorem regularization_list_frozen_half_five_of_many_nonempty_paths {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) 5) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (many : (∑ i, (paths i).length) ≤ 12*(univ.filter fun i => paths i ≠ []).card) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) 5 ∧
+      M ≤ 288*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  apply regularization_list_frozen_half_five_after_opposite_pruning paths simple free hn hp dense long
+  have gain := removeOppositeIntersections_mass_with_nonempty_paths simple free (by decide)
+  omega
+
+/-- Each pruned incidence charges an opposite link. When the number of
+links is at most eleven twenty-fourths of the mass, half-five cleaning works. -/
+theorem regularization_list_frozen_half_five_of_few_opposite_links {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) 5) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (few : 24*Nat.card (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).edgeSet ≤
+      11*(∑ i, (paths i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) 5 ∧
+      M ≤ 288*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let two : HalfBridgeFree (Before paths) 2 := fun _ h => free (h.trans (by decide))
+  let E := Nat.card (oppositeLinkGraphOfHalfTwo paths two).edgeSet
+  change 24*E ≤ 11*(∑ i, (paths i).length) at few
+  have loss : (∑ i, (paths i).length) ≤ (∑ i, (removeOppositeIntersections paths i).length)+E :=
+    removeOppositeIntersections_mass_with_half_two_link_count two simple
+  apply regularization_list_frozen_half_five_after_opposite_pruning paths simple free hn hp dense long
+  omega
 
 end OnlineReachabilityPreservers

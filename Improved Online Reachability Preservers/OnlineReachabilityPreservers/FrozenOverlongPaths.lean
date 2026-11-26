@@ -1,4 +1,4 @@
-import OnlineReachabilityPreservers.LocalFrozenCleaning
+import OnlineReachabilityPreservers.HalfFiveProjection
 import OnlineReachabilityPreservers.WidthBlockProfiles
 
 /-! Frozen-average cleaning when the overlong rows carry most of the mass. -/
@@ -56,12 +56,17 @@ private theorem frozen_overlong_retention {M S K : ℝ} (positive : 0 < M) (over
   nlinarith
 
 set_option maxHeartbeats 1300000 in
-/-- Prune opposite intersections in the overlong rows and clean the resulting bounded family. -/
-theorem regularization_list_frozen_from_overlong_budget {n p retention : ℕ} (half : Bool)
+/-- Pruning and trimming the overlong subfamily uses any width split
+that preserves admissibility on simple paths with unique intersections. -/
+private theorem regularization_list_frozen_from_overlong_budget_of_split {n p k retention : ℕ} {half : Bool}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
-    (allowed : localOrderAdmissible half (if half then 4 else 6) paths)
+    (allowed : localOrderAdmissible half k paths)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
-    (positive : 0 < retention)
+    (positive : 0 < retention) (cutoff : 3 ≤ k)
+    (split : ∀ {q : ℕ} (rows : Fin q → List (Fin n)), (∀ i, (rows i).Nodup) →
+      localOrderAdmissible half k rows →
+      (∀ {a b x y}, a ≠ b → x ∈ rows a → x ∈ rows b → y ∈ rows a → y ∈ rows b → x = y) →
+      ∀ D L, localOrderAdmissible half k (listRegularizedPaths rows D L))
     (enough : let M := ∑ i, (paths i).length
       let S := listMassAboveWidth paths (4*M/p)
       let T := listLengthExcess paths (4*M/p)
@@ -69,7 +74,7 @@ theorem regularization_list_frozen_from_overlong_budget {n p retention : ℕ} (h
         (K:ℝ)-(K:ℝ)^2/(12*(M:ℝ))-(M:ℝ)/4-(min ((S:ℝ)/16) (((S:ℝ)-(T:ℝ))/12)+(K:ℝ)/12)) :
     let M := ∑ i, (paths i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
-      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half (if half then 4 else 6) clean ∧
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let M := ∑ i, (paths i).length
   let D := 4*M/n
@@ -96,39 +101,34 @@ theorem regularization_list_frozen_from_overlong_budget {n p retention : ℕ} (h
       _ = ∑ _ : Fin q, (L+1) := by rw [sum_const_nat,card_univ,Fintype.card_fin]; simp
       _ ≤ ∑ i : Fin q, (chosen i).length := sum_le_sum (s := univ) (fun i _ => isLong i)
   have chosenSimple (i : Fin q) : (chosen i).Nodup := simple (label i).val
-  have chosenLegal : localOrderAdmissible half (if half then 4 else 6) chosen := by
+  have chosenLegal : localOrderAdmissible half k chosen := by
     cases half
-    · change BridgeFree (ListBefore paths) 6 at allowed
-      change BridgeFree (ListBefore chosen) 6
+    · change BridgeFree (ListBefore paths) k at allowed
+      change BridgeFree (ListBefore chosen) k
       intro k size
       exact ⟨fun b => (allowed size).false (b.mapPaths _ injective (fun _ _ _ step => step))⟩
-    · change HalfBridgeFree (ListBefore paths) 4 at allowed
-      change HalfBridgeFree (ListBefore chosen) 4
+    · change HalfBridgeFree (ListBefore paths) k at allowed
+      change HalfBridgeFree (ListBefore chosen) k
       intro k size b arrival
       exact allowed size (b.mapPaths _ injective (fun _ _ _ step => step)) (label.strictMono arrival)
   have halfThree : HalfBridgeFree (ListBefore chosen) 3 := by
     cases half
-    · change BridgeFree (ListBefore chosen) 6 at chosenLegal
-      exact fun _ size => chosenLegal.halfFree (size.trans (by decide))
-    · change HalfBridgeFree (ListBefore chosen) 4 at chosenLegal
-      exact fun _ size => chosenLegal (size.trans (by decide))
+    · change BridgeFree (ListBefore chosen) k at chosenLegal
+      exact fun _ size => chosenLegal.halfFree (size.trans cutoff)
+    · change HalfBridgeFree (ListBefore chosen) k at chosenLegal
+      exact fun _ size => chosenLegal (size.trans cutoff)
   have lowerMass : S ≤ 2*K := removeOppositeIntersections_mass chosenSimple halfThree le_rfl
   have kUpper : K ≤ M := (sum_le_sum fun i _ => (removeOppositeIntersections_sublist chosen i).length_le).trans sUpper
   have keptSimple (i : Fin q) : (kept i).Nodup := (removeOppositeIntersections_sublist chosen i).nodup (chosenSimple i)
   have unique {a b : Fin q} {x y : Fin n} (ab : a ≠ b) (xa : x ∈ kept a) (xb : x ∈ kept b)
       (ya : y ∈ kept a) (yb : y ∈ kept b) : x = y :=
     removeOppositeIntersections_unique chosenSimple halfThree (by decide) ab xa xb ya yb
-  have piecesLegal : localOrderAdmissible half (if half then 4 else 6) pieces := by
+  have keptLegal : localOrderAdmissible half k kept := by
     cases half
-    · change BridgeFree (ListBefore chosen) 6 at chosenLegal
-      change BridgeFree (ListBefore pieces) 6
-      have free : BridgeFree (ListBefore kept) 6 := removeOppositeIntersections_fullFree chosenSimple chosenLegal
-      exact regularizedSix_bridge_free (half := false) keptSimple (fun {_ _ _ _} => unique)
-        (fun _ size => free (size.trans (by decide))) free D L
-    · change HalfBridgeFree (ListBefore chosen) 4 at chosenLegal
-      change HalfBridgeFree (ListBefore pieces) 4
-      exact listRegularizedPaths_halfFree keptSimple (fun {_ _ _ _} => unique)
-        (removeOppositeIntersections_halfFree chosenSimple chosenLegal) D L
+    · exact removeOppositeIntersections_fullFree chosenSimple chosenLegal
+    · exact removeOppositeIntersections_halfFree chosenSimple chosenLegal
+  have piecesLegal : localOrderAdmissible half k pieces :=
+    split kept keptSimple keptLegal (fun {_ _ _ _} => unique) D L
   obtain ⟨dPos,_,_⟩ := four_average_width hn dense
   obtain ⟨lPos,divL,_⟩ := four_average_width hp long
   let Pieces := ListBlockIndex (splitListVertices kept D) L
@@ -185,6 +185,30 @@ theorem regularization_list_frozen_from_overlong_budget {n p retention : ℕ} (h
   refine massBudget.trans ?_
   exact sub_le_sub_left fee _
 
+/-- Prune opposite intersections in the overlong rows and clean the resulting bounded family. -/
+theorem regularization_list_frozen_from_overlong_budget {n p retention : ℕ} (half : Bool)
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half (if half then 4 else 6) paths)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (positive : 0 < retention)
+    (enough : let M := ∑ i, (paths i).length
+      let S := listMassAboveWidth paths (4*M/p)
+      let T := listLengthExcess paths (4*M/p)
+      ∀ K : ℕ, S ≤ 2*K → K ≤ M → (M:ℝ)/retention ≤
+        (K:ℝ)-(K:ℝ)^2/(12*(M:ℝ))-(M:ℝ)/4-(min ((S:ℝ)/16) (((S:ℝ)-(T:ℝ))/12)+(K:ℝ)/12)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half (if half then 4 else 6) clean ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  refine regularization_list_frozen_from_overlong_budget_of_split paths simple allowed hn hp dense long
+    positive (by cases half <;> decide) ?_ enough
+  intro q rows nodup legal unique D L
+  cases half
+  · change BridgeFree (ListBefore rows) 6 at legal
+    exact regularizedSix_bridge_free (half := false) nodup (fun {_ _ _ _} => unique)
+      (fun _ size => legal (size.trans (by decide))) legal D L
+  · exact listRegularizedPaths_halfFree nodup (fun {_ _ _ _} => unique) legal D L
+
 /-- If the rows above the original upper length cap carry at least two
 thirds of the mass, pruning this subfamily and trimming vertices gives
 all four frozen caps. This holds through half cutoff four or full cutoff six. -/
@@ -239,6 +263,58 @@ theorem regularization_list_frozen_of_overlong_mass_and_excess {n p : ℕ} (half
   have upper : S ≤ M := sum_le_sum_of_subset (subset_univ _)
   refine regularization_list_frozen_from_overlong_budget half paths simple allowed hn hp dense long
     (retention := 2000) (by decide) (fun K lower kept => ?_)
+  have mass := frozen_overlong_retention_with_excess (M := (M:ℝ)) (S := (S:ℝ)) (T := (T:ℝ)) (K := (K:ℝ))
+    (by exact_mod_cast hn.trans_le dense) (by exact_mod_cast overlong) (by exact_mod_cast excess)
+    (by exact_mod_cast upper) (by exact_mod_cast lower) (by exact_mod_cast kept)
+  refine mass.trans ?_
+  exact sub_le_sub_left (add_le_add (min_le_right ((S:ℝ)/16) (((S:ℝ)-(T:ℝ))/12)) le_rfl) _
+
+/-- At half cutoff five, overlong rows carrying two thirds of the mass
+suffice for both budgets and all four original-average caps. -/
+theorem regularization_list_frozen_half_five_of_overlong_mass {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (allowed : HalfBridgeFree (ListBefore paths) 5)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (overlong : let M := ∑ i, (paths i).length; 2*M ≤ 3*listMassAboveWidth paths (4*M/p)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (ListBefore clean) 5 ∧
+      M ≤ 216*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let S := listMassAboveWidth paths (4*M/p)
+  let T := listLengthExcess paths (4*M/p)
+  have upper : S ≤ M := sum_le_sum_of_subset (subset_univ _)
+  refine regularization_list_frozen_from_overlong_budget_of_split (half := true) (k := 5)
+    paths simple allowed hn hp dense long
+    (retention := 216) (by decide) (by decide)
+    (fun rows nodup free unique D L => listRegularizedPaths_halfFree_five_of_unique nodup free
+      (fun {_ _ _ _} => unique) D L) (fun K lower kept => ?_)
+  have mass := frozen_overlong_retention (M := (M:ℝ)) (S := (S:ℝ)) (K := (K:ℝ))
+    (by exact_mod_cast hn.trans_le dense) (by exact_mod_cast overlong) (by exact_mod_cast upper)
+    (by exact_mod_cast lower) (by exact_mod_cast kept)
+  refine mass.trans ?_
+  exact sub_le_sub_left (add_le_add (min_le_left ((S:ℝ)/16) (((S:ℝ)-(T:ℝ))/12)) le_rfl) _
+
+/-- Large length excess lowers the mass needed on overlong rows at half cutoff five. -/
+theorem regularization_list_frozen_half_five_of_overlong_mass_and_excess {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (allowed : HalfBridgeFree (ListBefore paths) 5)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (overlong : let M := ∑ i, (paths i).length; 7*M ≤ 12*listMassAboveWidth paths (4*M/p))
+    (excess : let M := ∑ i, (paths i).length; 7*M ≤ 15*listLengthExcess paths (4*M/p)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (ListBefore clean) 5 ∧
+      M ≤ 2000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let S := listMassAboveWidth paths (4*M/p)
+  let T := listLengthExcess paths (4*M/p)
+  have upper : S ≤ M := sum_le_sum_of_subset (subset_univ _)
+  refine regularization_list_frozen_from_overlong_budget_of_split (half := true) (k := 5)
+    paths simple allowed hn hp dense long
+    (retention := 2000) (by decide) (by decide)
+    (fun rows nodup free unique D L => listRegularizedPaths_halfFree_five_of_unique nodup free
+      (fun {_ _ _ _} => unique) D L) (fun K lower kept => ?_)
   have mass := frozen_overlong_retention_with_excess (M := (M:ℝ)) (S := (S:ℝ)) (T := (T:ℝ)) (K := (K:ℝ))
     (by exact_mod_cast hn.trans_le dense) (by exact_mod_cast overlong) (by exact_mod_cast excess)
     (by exact_mod_cast upper) (by exact_mod_cast lower) (by exact_mod_cast kept)

@@ -1432,6 +1432,18 @@ budgets, and meets all four original-average caps. The bounded-excess proof
 uses a two-color deletion on overfull vertices and charges peeling to the
 chosen vertex support. Half-five cleaning for general inputs remains open.
 
+For half-five-free input with the same budget and mass assumptions,
+[overlong subfamily pruning](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L274)
+gives \(M/216\) if the paths longer than the original length cap carry at
+least \(2M/3\) incidences.
+[The excess variant](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L299)
+gives \(M/2000\) when the overlong paths have mass at least \(7M/12\)
+and total length excess at least \(7M/15\). If opposite-intersection pruning
+keeps at least \(13M/24\), [trimming both supports](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L650)
+keeps \(M/288\). The latter threshold follows from at least \(M/12\)
+nonempty paths or at most \(11M/24\) opposite links. All these witnesses
+preserve half-five exclusion within both budgets and all four frozen caps.
+
 For Lemmas 23 and 39, the [contiguous six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)
 uses the original relative order of pieces in addition to the mirrored-cut
 condition. It assumes full exclusion through size three. With unique

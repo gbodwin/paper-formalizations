@@ -588,6 +588,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   \(\lfloor4M/p\rfloor\) is at most \(7M/50\). Both conclusions require
   positive budgets and input mass \(M\) at least both budgets. Both witnesses
   keep the original budgets and all four original-average caps.
+- Two more half-five cases use only the overlong paths. At least \(2M/3\)
+  incidences on those paths give a witness of mass at least \(M/216\).
+  At least \(7M/12\) suffices for retention \(M/2000\) when the total
+  length excess is at least \(7M/15\).
+  [Pruning and peeling the overlong paths](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L274).
+- Half-five cleaning also keeps at least \(M/288\) if opposite-intersection
+  pruning retains at least \(13M/24\). This holds when at least \(M/12\) paths
+  are nonempty or there are at most \(11M/24\) opposite-neighbor links.
+  [Pruning and trimming both supports](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L650).
 - If either positive budget is at most 29, an unrestricted maximum at any
   cutoff of at least two has a witness with both budgets, all four frozen
   caps, and at least \(M/8\) incidences. The witness excludes full bridges

@@ -131,7 +131,8 @@ open scoped Sigma.Lex
 
 /-- Both consecutive width splits preserve half exclusion through five on
 a simple family with unique pairwise intersections. -/
-theorem listRegularizedPaths_halfFree_five_of_unique {n p : ℕ} {paths : Fin p → List (Fin n)}
+theorem listRegularizedPaths_halfFree_five_of_unique_intersections {I V : Type*}
+    [LinearOrder I] [Fintype I] [LinearOrder V] [Fintype V] {paths : I → List V}
     (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5)
     (unique : ∀ {a b x y}, a ≠ b → x ∈ paths a → x ∈ paths b → y ∈ paths a → y ∈ paths b → x = y)
     (D L : ℕ) : HalfBridgeFree (Before (listRegularizedPaths paths D L)) 5 := by
@@ -140,13 +141,20 @@ theorem listRegularizedPaths_halfFree_five_of_unique {n p : ℕ} {paths : Fin p 
   have freeCopies : HalfBridgeFree (Before copies) 5 :=
     free.split_list_vertices_five_of_unique (·.fst)
       (fun {i _ _} => splitListVertices_step (simple i)) (fun {_ _ _ _} => unique)
-  have nodup (i : Fin p) : (copies i).Nodup := splitListVertices_simple paths D i (simple i)
+  have nodup (i : I) : (copies i).Nodup := splitListVertices_simple paths D i (simple i)
   exact freeCopies.split_list_paths_five_of_unique Sigma.fst
     (block_parent_mono (fun i => (copies i).toFinset) L)
     (fun {i _ _} step => listBefore_of_sublist (paths := fun j : ListBlockIndex copies L => copies j.fst)
       (cut := pieces) (nodup i.fst) List.filter_sublist step)
     (fun {_ _ _} => splitListPaths_disjoint)
     (fun {_ _ _ _} => splitListVertices_unique simple (fun {_ _ _ _} => unique))
+
+/-- The ordered width splits on paths and vertices indexed by finite types. -/
+theorem listRegularizedPaths_halfFree_five_of_unique {n p : ℕ} {paths : Fin p → List (Fin n)}
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5)
+    (unique : ∀ {a b x y}, a ≠ b → x ∈ paths a → x ∈ paths b → y ∈ paths a → y ∈ paths b → x = y)
+    (D L : ℕ) : HalfBridgeFree (Before (listRegularizedPaths paths D L)) 5 :=
+  listRegularizedPaths_halfFree_five_of_unique_intersections simple free (fun {_ _ _ _} => unique) D L
 
 /-- Five-half-bridge exclusion and unique intersections suffice for frozen
 cleaning through the original vertex and path budgets. -/

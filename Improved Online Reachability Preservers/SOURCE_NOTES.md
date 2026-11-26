@@ -317,6 +317,20 @@ path-split repair through size five remains open.
 [Degree repair](OnlineReachabilityPreservers/HalfFiveDegreeRepair.lean)
 · [Length excess and vertex budget](OnlineReachabilityPreservers/HalfFiveCleaning.lean).
 
+The unique-intersection lift through half cutoff five also applies to the
+subfamilies obtained by pruning opposite intersections. The overlong
+subfamily contains few rows, which reduces the path peeling charge.
+It gives \(M/216\) when its original mass is at least \(2M/3\), and
+\(M/2000\) when its mass is at least \(7M/12\) and its total excess at
+the original length cap is at least \(7M/15\).
+[Overlong path criteria](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L274).
+If pruning all paths keeps at least \(13M/24\), the two-support trimming
+bound gives \(M/288\). A nonempty row contributes a surviving last vertex,
+and each removed incidence charges a distinct opposite link. These facts
+give the same bound with at least \(M/12\) nonempty rows or at most
+\(11M/24\) opposite links.
+[Pruned family criteria](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L650).
+
 Consecutive common vertices on two oppositely ordered paths define an
 undirected link. If the family excludes full bridges through size three,
 a simple cycle of \(r\) such links yields a full bridge of size at most
