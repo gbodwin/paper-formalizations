@@ -567,6 +567,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   overlong rows yields a witness of mass at least (M/2000) when those rows
   carry at least (7M/12), through half cutoff four or full cutoff six.
   [Clipping and the overlong case](OnlineReachabilityPreservers/FrozenLengthCappedPaths.lean#L149).
+- If either positive budget is at most 29, an unrestricted maximum at any
+  cutoff of at least two has a witness with both budgets, all four frozen
+  caps, and at least \(M/8\) incidences. The witness excludes full bridges
+  through the input cutoff in either bridge mode.
+  [Counting all ordered pairs](OnlineReachabilityPreservers/FrozenSmallBudgets.lean).
 - For full-bridge cutoffs three through five, a cleaned maximizing family
   retains at least \(M/119\) and meets both budgets and all four factor-four
   caps measured against the original averages. The path split places matching

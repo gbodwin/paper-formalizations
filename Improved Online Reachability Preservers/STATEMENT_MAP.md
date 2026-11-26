@@ -1525,6 +1525,16 @@ with retention at least \(M/2000\) through half cutoff four or full cutoff
 six. With these two arguments, inputs having \(T>7M/15\) and \(S<7M/12\)
 still require a separate criterion.
 
+The [ordered comparison count](OnlineReachabilityPreservers/FrozenSmallBudgets.lean)
+charges each ordered pair of distinct vertices at most once under half-bridge
+exclusion through size two. Cauchy–Schwarz then gives
+\(M^2\le p(2n(n-1)+M)\). For either positive budget at most 29 this forces
+\(M\le8\max(n,p)\), so the low-mass witness gives both budgets and all four
+frozen caps, retains at least \(M/8\), and excludes full bridges through
+the input cutoff. The result applies to unrestricted maxima in either mode.
+At \(n=p=30\), the numerical comparison inequality permits \(M=241\).
+Extending beyond 29 uniformly therefore requires another estimate.
+
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size
 and nonempty simple rows. At the prescribed widths \(7\) and \(20\) it
