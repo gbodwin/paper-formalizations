@@ -2206,6 +2206,18 @@ supplied arc-row count and actual endpoint bit count, including on rejection.
 · [Recorded request work](OnlineReachabilityPreservers/SteinerBinaryCompactWordSession.lean#L169)
 · [Recorded startup work](OnlineReachabilityPreservers/SteinerBinaryCompactWordSession.lean#L210).
 
+The full compact word trace has the same graph and seed position as the
+previous word solver on every accepted feasible trace for each stream.
+It stores first non-self occurrences in reverse arrival order, with
+at most \(n^2\) pairs. At fixed \(\varepsilon\), Theorem 21 preserves
+accepted-prefix inclusion, bounds total recorded work by a polynomial in
+the actual input size, and retains the competitive bound under the fair
+bit stream.
+[Compact variable-word service](OnlineReachabilityPreservers/SteinerBinaryCompactWordOnline.lean#L48)
+· [Exact graph and history](OnlineReachabilityPreservers/SteinerBinaryCompactWordOnline.lean#L78)
+· [Recorded total work](OnlineReachabilityPreservers/SteinerBinaryCompactWordOnline.lean#L239)
+· [Compact variable-word Theorem 21](OnlineReachabilityPreservers/SteinerBinaryCompactWordOnline.lean#L295).
+
 
 
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).

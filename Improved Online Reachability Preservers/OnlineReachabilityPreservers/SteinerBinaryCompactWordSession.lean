@@ -275,7 +275,9 @@ theorem finSteinerBinaryCompactWordStart_polynomial (height : ℕ) :
       have paid := (finArcRowsWithWordWork_spec prepared.1 raw same).2
       have rows := Nat.mul_le_mul (Nat.mul_le_mul (show n ≤ size by omega) (show n ≤ size by omega))
         (show 2*raw.length+30 ≤ 32*size by omega)
-      have quadratic : n*n*(2*raw.length+30) ≤ 32*size^3 := by convert rows using 1 <;> ring
+      have quadratic : n*n*(2*raw.length+30) ≤ 32*size^3 := by
+        convert rows using 1
+        ring
       have cubeSize : size ≤ size^3 := by
         simpa only [pow_one] using Nat.pow_le_pow_right positive (by decide : 1 ≤ 3)
       have canonical : (finArcRowsWithWordWork raw).2+7+5 ≤ 64*size^3 := by

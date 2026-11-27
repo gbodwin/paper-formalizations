@@ -1525,6 +1525,19 @@ execution time remains open.
 · [Recorded startup bound](OnlineReachabilityPreservers/SteinerBinaryCompactWordSession.lean#L210)
 · [Recorded request bound](OnlineReachabilityPreservers/SteinerBinaryCompactWordSession.lean#L169).
 
+On accepted feasible words, the complete compact trace agrees pointwise
+with the previous word solver's graph. The stream stops at the same
+seed offset. The stored distinct non-self history is in reverse arrival
+order and has length at most \(n^2\). One polynomial bounds recorded
+startup and request work in the vertex count, both row counts and the actual bit
+count at fixed height. Theorem 21 keeps accepted-prefix inclusion for
+each fixed stream and the expected rate against any serving offline
+subgraph under the fair bit stream.
+[Whole-trace decoding](OnlineReachabilityPreservers/SteinerBinaryCompactWordOnline.lean#L29)
+· [Seedwise graph refinement](OnlineReachabilityPreservers/SteinerBinaryCompactWordOnline.lean#L78)
+· [Recorded total bound](OnlineReachabilityPreservers/SteinerBinaryCompactWordOnline.lean#L239)
+· [Compact encoded Theorem 21](OnlineReachabilityPreservers/SteinerBinaryCompactWordOnline.lean#L295).
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
