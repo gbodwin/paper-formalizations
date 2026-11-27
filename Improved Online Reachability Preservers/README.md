@@ -2065,6 +2065,18 @@ parameters for unbounded vertex budgets.
 [Pair-capacity mass bound](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L70)
 · [Starting-average obstruction](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L35).
 
+At every full cutoff of at least three, the long-row mass is at most
+\(\varepsilon n\sqrt p+C_\varepsilon n\) for every \(\varepsilon>0\). The
+proof uses three blocks of width \(\lfloor L/3\rfloor\) in each row of
+length \(L\) and counts a packing of edge-disjoint triangles. This gives
+\(o(n\sqrt p)\) uniformly over outputs within both original budgets as
+\(p\) grows. For outputs subject to the starting lower length cap,
+\(M\ge\eta n\sqrt p\) and \(M>8p\) now suffice for the same conditional
+obstruction to constant retention. Whether half inputs achieve this
+mass and mean at unbounded path budgets remains open.
+[Uniform mass bound](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L361)
+· [Obstruction at mass of order \(n\sqrt p\)](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L389).
+
 For last-arc half exclusion through size three, the first three vertices
 of each long row give a positive bipartite matching at each final vertex.
 The matching consists of first-to-middle edges from rows ending at that

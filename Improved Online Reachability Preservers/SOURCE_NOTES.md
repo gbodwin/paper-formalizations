@@ -2584,6 +2584,33 @@ local-order upper bound and recurrence of Theorem 43.
   · [Lower-cap obstruction](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L35)
   · [Pair-capacity sharpness](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L70).
 
+  A second-moment argument gives a bound in terms of both budgets. Split
+  each simple row into three consecutive blocks of width
+  \(s_i=\lfloor L_i/3\rfloor\), discarding its remainder for the graph
+  construction. Add every cross comparison among those blocks on three
+  tagged copies of the vertices. Full-two exclusion gives a unique row
+  for each edge. Full-three exclusion implies every triangle belongs to
+  a single row, so there are \(\sum_i s_i^3\) triangles. The choice
+  \((a,b,a+b\bmod s_i)\) in row \(i\) packs \(\sum_i s_i^2\)
+  edge-disjoint triangles. The first two coordinates give
+  \(\sum_i s_i^2\le n^2\). Triangle removal forces
+  \(\sum_i s_i^2\le\varepsilon n^2\) if all rows' lengths are at most
+  a sufficiently small fixed fraction of \(n\). Separately charge
+  the rows above that fraction by a constant times \(n\) using the
+  square bound. Cauchy–Schwarz on the remaining long rows gives
+  \(\varepsilon n\sqrt p+C_\varepsilon n\) for every \(\varepsilon>0\).
+  This argument complements the \((np)^{2/3}+n+p\) estimate and the
+  induced-matching estimate in Theorems 80 and 81 of Bridge Girth v4.
+  For outputs within both budgets, the linear term is absorbed once the
+  original path budget is large. The conditional starting-average
+  obstruction then applies already at \(M\ge\eta n\sqrt p\) with
+  \(M>8p\). It gives no half-side lower bound.
+  [Bridge Girth v4](https://arxiv.org/pdf/2212.11944v4)
+  · [Squared widths](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L218)
+  · [Long-row mass](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L278)
+  · [Both smaller budgets](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L361)
+  · [Conditional lower-cap obstruction](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L389).
+
   For the half side, first triples have distinct owners for every
   coordinate pair. Fix a final vertex \(c\). The first-to-middle pairs
   of rows ending at \(c\) form a matching. For a mixed first-to-middle

@@ -3792,6 +3792,24 @@ budgets. That existence question remains open.
 · [Conditional obstruction](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L35)
 · [Pair-capacity sharpness](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L70).
 
+The full-three mass of rows of length at least three is also
+\(o(n\sqrt p)\) as \(p\) grows, uniformly in the vertex count and over
+every output budget at most \((n,p)\). On three tagged copies of the
+vertices each row contributes a complete tripartite block of side
+\(\lfloor L/3\rfloor\). All triangles belong to one row, and the cyclic
+addition construction packs a squared side length of edge-disjoint
+triangles per row. Triangle removal controls the squared third widths
+when all rows are at most a sufficiently small fraction of \(n\), and
+thus the squared lengths of the rows of length at least three. Rows
+above the fraction add \(O(n)\) mass. For \(M>8p\) and \(M\ge\eta n\sqrt p\), all full
+witnesses through size three satisfying the original lower length cap
+have mass below \(M/r\) at sufficiently large \(p\), for fixed
+\(\eta>0\) and positive integer \(r\). This extension of the obstruction
+uses both output budgets and is conditional on the starting parameters.
+[Long-row estimate](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L278)
+· [Uniform estimate](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L361)
+· [Stronger lower-cap obstruction](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L389).
+
 For any half cutoff \(k\ge3\), the first triples of long rows give
 edge-disjoint positive matchings in the bipartite first-to-middle graph,
 one matching per last vertex. The three parts each use at most the
