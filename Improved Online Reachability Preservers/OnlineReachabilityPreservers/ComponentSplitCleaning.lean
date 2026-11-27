@@ -2176,15 +2176,26 @@ noncomputable def pruneLongCopiedReturnRuns {n p : ℕ} (paths : Fin p → List 
   (splitListVertices paths D i).filter fun v =>
     decide (copiedShortReturnRunLength paths D cutoff i (copiedReturnCutRank paths D cutoff i v.fst) ≤ width)
 
+
+private theorem copiedShortReturnRunLength_eq_raw {n p D k : ℕ} (paths : Fin p → List (Fin n))
+    (i : Fin p) (r : ℕ) :
+    ((splitListVertices paths D i).filter (fun v => decide (copiedReturnCutRank paths D k i v.fst = r))).length =
+      copiedShortReturnRunLength paths D k i r := by
+  have projected := congrArg (fun l : List (Fin n) =>
+    (l.filter (fun v => decide (copiedReturnCutRank paths D k i v = r))).length)
+    (splitListVertices_project paths D i)
+  rwa [List.filter_map,List.length_map] at projected
+
 set_option maxHeartbeats 1500000 in
-/-- If long runs use at most one fifty-sixth of the original mass, remove
-them from the fixed copies and pack the remaining runs. -/
-theorem regularization_list_frozen_of_few_long_copiedShortReturnRuns {n p k : ℕ} {half : Bool}
+private theorem frozen_cleaning_after_restricting_fixed_copied_runs {n p k : ℕ} {half : Bool}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
     (copyLegal : let M := ∑ i, (paths i).length; localOrderAdmissible half k (splitListVertices paths (4*M/n)))
-    (keep : let M := ∑ i, (paths i).length
-      55*M ≤ 56*(∑ i, (pruneLongCopiedReturnRuns paths (4*M/n) k (4*M/p) i).length)) :
+    (kept : let M := ∑ i, (paths i).length; Fin p → List (ListVertexBlockIndex paths (4*M/n)))
+    (sub : let M := ∑ i, (paths i).length; ∀ i, (kept i).Sublist (splitListVertices paths (4*M/n) i))
+    (fibreCap : let M := ∑ i, (paths i).length
+      ∀ i r, ((kept i).filter (fun v => decide (copiedReturnCutRank paths (4*M/n) k i v.fst = r))).length ≤ 4*M/p)
+    (keep : let M := ∑ i, (paths i).length; 55*M ≤ 56*(∑ i, (kept i).length)) :
     let M := ∑ i, (paths i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
@@ -2195,11 +2206,9 @@ theorem regularization_list_frozen_of_few_long_copiedShortReturnRuns {n p k : �
   let L := 4*M/p
   let V := ListVertexBlockIndex paths D
   let raw := splitListVertices paths D
-  let kept := pruneLongCopiedReturnRuns paths D k L
   let rank (i : Fin p) (v : V) := copiedReturnCutRank paths D k i v.fst
   by_cases substantial : 2*n ≤ M
-  · have sub (i : Fin p) : (kept i).Sublist (raw i) := List.filter_sublist
-    have stillSimple (i : Fin p) : (kept i).Nodup :=
+  · have stillSimple (i : Fin p) : (kept i).Nodup :=
       (sub i).nodup (splitListVertices_simple paths D i (simple i))
     have rowsOrder (i : Fin p) : (kept i).Pairwise (fun x y => rank i x ≤ rank i y) :=
       (splitListVertices_rank_order D i (simple i) (copiedReturnCutRank paths D k i)
@@ -2208,25 +2217,6 @@ theorem regularization_list_frozen_of_few_long_copiedShortReturnRuns {n p k : �
       calc
         _ ≤ ∑ i, (raw i).length := sum_le_sum (fun i _ => (sub i).length_le)
         _ = M := sum_congr rfl (fun i _ => splitListVertices_length paths D i)
-    have rawRun (i : Fin p) (r : ℕ) :
-        ((raw i).filter (fun v => decide (rank i v = r))).length = copiedShortReturnRunLength paths D k i r := by
-      have projected := congrArg (fun l : List (Fin n) =>
-        (l.filter (fun v => decide (copiedReturnCutRank paths D k i v = r))).length)
-        (splitListVertices_project paths D i)
-      rw [List.filter_map,List.length_map] at projected
-      exact projected
-    have fibreCap (i : Fin p) (r : ℕ) : ((kept i).filter (fun v => decide (rank i v = r))).length ≤ L := by
-      by_cases fits : copiedShortReturnRunLength paths D k i r ≤ L
-      · exact (((sub i).filter _).length_le.trans_eq (rawRun i r)).trans fits
-      · have empty : ((kept i).filter (fun v => decide (rank i v = r))) = [] := by
-          apply List.eq_nil_iff_forall_not_mem.mpr
-          intro v present
-          obtain ⟨onRow,onRun⟩ := List.mem_filter.mp present
-          have h : copiedShortReturnRunLength paths D k i (rank i v) ≤ L :=
-            of_decide_eq_true (List.mem_filter.mp onRow).2
-          rw [of_decide_eq_true onRun] at h
-          exact fits h
-        simp [empty]
     have legal : RankedCopiedAssemblyAdmissible kept k half rank := by
       intro sizes pieces subPieces apart
       exact copiedReturnRankAssemblyAdmissible paths simple copyLegal pieces
@@ -2261,5 +2251,206 @@ theorem regularization_list_frozen_of_few_long_copiedShortReturnRuns {n p k : �
       · exact free.halfFree
     exact ⟨v,vRoom,q,pRoom,clean,cleanSimple,allowed,
       mass.trans (Nat.mul_le_mul_right _ (by decide)),bound,caps⟩
+
+
+set_option maxHeartbeats 1500000 in
+/-- If long runs use at most one fifty-sixth of the original mass, remove
+them from the fixed copies and pack the remaining runs. -/
+theorem regularization_list_frozen_of_few_long_copiedShortReturnRuns {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (copyLegal : let M := ∑ i, (paths i).length; localOrderAdmissible half k (splitListVertices paths (4*M/n)))
+    (keep : let M := ∑ i, (paths i).length
+      55*M ≤ 56*(∑ i, (pruneLongCopiedReturnRuns paths (4*M/n) k (4*M/p) i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 108*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  classical
+  let M := ∑ i, (paths i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let V := ListVertexBlockIndex paths D
+  let raw := splitListVertices paths D
+  let kept := pruneLongCopiedReturnRuns paths D k L
+  let rank (i : Fin p) (v : V) := copiedReturnCutRank paths D k i v.fst
+  have sub (i : Fin p) : (kept i).Sublist (raw i) := List.filter_sublist
+  refine frozen_cleaning_after_restricting_fixed_copied_runs paths simple hn hp dense long copyLegal kept sub ?_ keep
+  dsimp only
+  intro i r
+  change ((kept i).filter (fun v => decide (rank i v = r))).length ≤ L
+  by_cases fits : copiedShortReturnRunLength paths D k i r ≤ L
+  · exact (((sub i).filter _).length_le.trans_eq (copiedShortReturnRunLength_eq_raw paths i r)).trans fits
+  · have empty : ((kept i).filter (fun v => decide (rank i v = r))) = [] := by
+      apply List.eq_nil_iff_forall_not_mem.mpr
+      intro v present
+      obtain ⟨onRow,onRun⟩ := List.mem_filter.mp present
+      have h : copiedShortReturnRunLength paths D k i (rank i v) ≤ L :=
+        of_decide_eq_true (List.mem_filter.mp onRow).2
+      rw [of_decide_eq_true onRun] at h
+      exact fits h
+    simp [empty]
+
+
+private theorem filter_idxOf_lt_eq_take {V : Type*} [DecidableEq V] (row : List V)
+    (simple : row.Nodup) (width : ℕ) :
+    row.filter (fun v => decide (row.idxOf v < width)) = row.take width := by
+  induction row generalizing width with
+  | nil => simp
+  | cons first tail inductionHypothesis =>
+    obtain ⟨absent,tailSimple⟩ := List.nodup_cons.mp simple
+    cases width with
+    | zero => simp
+    | succ width =>
+      have filtered : tail.filter (fun v => decide ((first :: tail).idxOf v < width+1)) =
+          tail.filter (fun v => decide (tail.idxOf v < width)) := by
+        apply List.filter_congr
+        intro v on
+        have neq : first ≠ v := fun eq => absent (eq.symm ▸ on)
+        rw [List.idxOf_cons_ne _ neq]
+        simp only [Nat.succ_lt_succ_iff]
+      simp only [List.filter_cons,List.idxOf_cons_self,Nat.zero_lt_succ,decide_true,ite_true,List.take_succ_cons]
+      rw [filtered,inductionHypothesis tailSimple]
+
+/-- Cap each run at the width while keeping its earliest copied
+incidences, original degree-copy labels, and run ranks. -/
+noncomputable def takeCopiedReturnRunPrefixes {n p : ℕ} (paths : Fin p → List (Fin n))
+    (D cutoff width : ℕ) (i : Fin p) : List (ListVertexBlockIndex paths D) :=
+  let row := splitListVertices paths D i
+  let rank (v : ListVertexBlockIndex paths D) := copiedReturnCutRank paths D cutoff i v.fst
+  row.filter fun v => decide ((row.filter (fun w => decide (rank w = rank v))).idxOf v < width)
+
+/-- A clipped run keeps exactly its original length capped at the width. -/
+theorem takeCopiedReturnRunPrefixes_run_length {n p D k : ℕ} (paths : Fin p → List (Fin n))
+    {i : Fin p} (simple : (paths i).Nodup) (width r : ℕ) :
+    ((takeCopiedReturnRunPrefixes paths D k width i).filter
+      (fun v => decide (copiedReturnCutRank paths D k i v.fst = r))).length =
+      min width (copiedShortReturnRunLength paths D k i r) := by
+  let row := splitListVertices paths D i
+  let rank (v : ListVertexBlockIndex paths D) := copiedReturnCutRank paths D k i v.fst
+  let marked (r : ℕ) := row.filter (fun v => decide (rank v = r))
+  have onlyRun : ((takeCopiedReturnRunPrefixes paths D k width i).filter (fun v => decide (rank v = r))) =
+      (marked r).filter (fun v => decide ((marked r).idxOf v < width)) := by
+    change (row.filter (fun v => decide ((marked (rank v)).idxOf v < width))).filter _ =
+      (row.filter (fun v => decide (rank v = r))).filter _
+    simp only [List.filter_filter]
+    apply List.filter_congr
+    intro v _
+    by_cases same : rank v = r <;> simp [same]
+  have runSimple : (marked r).Nodup := List.filter_sublist.nodup (splitListVertices_simple paths D i simple)
+  calc
+    _ = ((marked r).filter (fun v => decide ((marked r).idxOf v < width))).length :=
+      congrArg List.length onlyRun
+    _ = ((marked r).take width).length :=
+      congrArg List.length (filter_idxOf_lt_eq_take (marked r) runSimple width)
+    _ = _ := List.length_take.trans (congrArg (min width) (copiedShortReturnRunLength_eq_raw paths i r))
+
+/-- Clip runs above the original path width with the copies fixed.
+The mass condition pays for the clipped excess in the long runs. -/
+theorem regularization_list_frozen_of_copiedReturnRunPrefixes {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (copyLegal : let M := ∑ i, (paths i).length; localOrderAdmissible half k (splitListVertices paths (4*M/n)))
+    (keep : let M := ∑ i, (paths i).length
+      55*M ≤ 56*(∑ i, (takeCopiedReturnRunPrefixes paths (4*M/n) k (4*M/p) i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 108*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let kept := takeCopiedReturnRunPrefixes paths D k L
+  refine frozen_cleaning_after_restricting_fixed_copied_runs paths simple hn hp dense long copyLegal kept
+    (fun _ => List.filter_sublist) ?_ keep
+  dsimp only
+  intro i r
+  exact (takeCopiedReturnRunPrefixes_run_length paths (D := D) (k := k) (simple i) L r).trans_le
+    (min_le_left _ _)
+
+
+private theorem list_length_eq_sum_rank_lengths {V : Type*} [DecidableEq V]
+    (row : List V) (simple : row.Nodup) (rank : V → ℕ) (ranks : Finset ℕ)
+    (rankIn : ∀ v ∈ row, rank v ∈ ranks) :
+    row.length = ∑ r ∈ ranks, (row.filter (fun v => decide (rank v = r))).length := by
+  calc
+    _ = row.toFinset.card := (List.toFinset_card_of_nodup simple).symm
+    _ = ∑ r ∈ ranks, (row.toFinset.filter (fun v => rank v = r)).card :=
+      card_eq_sum_card_fiberwise (fun v hv => rankIn v (List.mem_toFinset.mp hv))
+    _ = _ := by
+      apply sum_congr rfl
+      intro r _
+      have counted := List.toFinset_card_of_nodup
+        ((List.filter_sublist (p := fun v => decide (rank v = r))).nodup simple)
+      rw [List.toFinset_filter] at counted
+      simpa using counted
+
+private noncomputable def occupiedCopiedReturnRunRanks {n p : ℕ} (paths : Fin p → List (Fin n))
+    (D cutoff : ℕ) (i : Fin p) : Finset ℕ :=
+  ((splitListVertices paths D i).map (fun v => copiedReturnCutRank paths D cutoff i v.fst)).toFinset
+
+/-- The sum of the excesses above the width over all occupied copied runs. -/
+noncomputable def copiedReturnRunExcess {n p : ℕ} (paths : Fin p → List (Fin n)) (D cutoff width : ℕ) : ℕ :=
+  ∑ i : Fin p, ∑ r ∈ occupiedCopiedReturnRunRanks paths D cutoff i,
+    (copiedShortReturnRunLength paths D cutoff i r-width)
+
+/-- The clipped incidences and the discarded excess account for the whole
+starting mass, including empty rows and runs shorter than the width. -/
+theorem takeCopiedReturnRunPrefixes_mass_add_excess {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (D cutoff width : ℕ) :
+    (∑ i, (takeCopiedReturnRunPrefixes paths D cutoff width i).length)+copiedReturnRunExcess paths D cutoff width =
+      ∑ i, (paths i).length := by
+  let raw := splitListVertices paths D
+  let kept := takeCopiedReturnRunPrefixes paths D cutoff width
+  let rank (i : Fin p) (v : ListVertexBlockIndex paths D) := copiedReturnCutRank paths D cutoff i v.fst
+  let ranks := occupiedCopiedReturnRunRanks paths D cutoff
+  let run (i : Fin p) (r : ℕ) := copiedShortReturnRunLength paths D cutoff i r
+  have rawSimple (i : Fin p) : (raw i).Nodup := splitListVertices_simple paths D i (simple i)
+  have subset (i : Fin p) : (kept i).Sublist (raw i) := List.filter_sublist
+  have byRow (i : Fin p) : (kept i).length+(∑ r ∈ ranks i, (run i r-width)) = (paths i).length := by
+    have rankIn {v : ListVertexBlockIndex paths D} (inside : v ∈ raw i) : rank i v ∈ ranks i :=
+      List.mem_toFinset.mpr (List.mem_map.mpr ⟨v,inside,rfl⟩)
+    have keptCount : (kept i).length = ∑ r ∈ ranks i, min width (run i r) := calc
+      _ = ∑ r ∈ ranks i, ((kept i).filter (fun v => decide (rank i v = r))).length :=
+        list_length_eq_sum_rank_lengths (kept i) ((subset i).nodup (rawSimple i))
+          (rank i) (ranks i) (fun _ h => rankIn ((subset i).subset h))
+      _ = _ := sum_congr rfl (fun r _ => takeCopiedReturnRunPrefixes_run_length paths (simple i) width r)
+    have rawCount : (raw i).length = ∑ r ∈ ranks i, run i r := calc
+      _ = ∑ r ∈ ranks i, ((raw i).filter (fun v => decide (rank i v = r))).length :=
+        list_length_eq_sum_rank_lengths (raw i) (rawSimple i) (rank i) (ranks i) (fun _ h => rankIn h)
+      _ = _ := sum_congr rfl (fun r _ => copiedShortReturnRunLength_eq_raw paths i r)
+    rw [keptCount,← sum_add_distrib,← splitListVertices_length paths D i,rawCount]
+    apply sum_congr rfl
+    intro r _
+    omega
+  have split :
+      (∑ i : Fin p, ((kept i).length+(∑ r ∈ ranks i, (run i r-width)))) =
+        (∑ i, (kept i).length)+(∑ i, ∑ r ∈ ranks i, (run i r-width)) :=
+    sum_add_distrib
+  have excessEq : copiedReturnRunExcess paths D cutoff width =
+      ∑ i : Fin p, ∑ r ∈ ranks i, (run i r-width) := rfl
+  rw [excessEq]
+  exact split.symm.trans (sum_congr rfl (fun i _ => byRow i))
+
+/-- If the total excess beyond the original width is at most one
+fifty-sixth of the mass, clip it on the fixed degree copies. -/
+theorem regularization_list_frozen_of_small_copiedReturnRun_excess {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (copyLegal : let M := ∑ i, (paths i).length; localOrderAdmissible half k (splitListVertices paths (4*M/n)))
+    (excess : let M := ∑ i, (paths i).length; 56*copiedReturnRunExcess paths (4*M/n) k (4*M/p) ≤ M) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 108*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  refine regularization_list_frozen_of_copiedReturnRunPrefixes paths simple hn hp dense long copyLegal ?_
+  let M := ∑ i, (paths i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  change 56*copiedReturnRunExcess paths D k L ≤ M at excess
+  change 55*M ≤ 56*(∑ i, (takeCopiedReturnRunPrefixes paths D k L i).length)
+  have exactMass := takeCopiedReturnRunPrefixes_mass_add_excess paths simple D k L
+  change _ = M at exactMass
+  omega
 
 end OnlineReachabilityPreservers

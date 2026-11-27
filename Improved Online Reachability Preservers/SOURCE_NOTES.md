@@ -810,7 +810,7 @@ original-average caps. The twelve-vertex example has an original
 run of length six and only singleton runs after degree copying.
 [Checked run sizes](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean).
 
-[Deleting long runs from fixed copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2182)
+[Deleting long runs from fixed copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2259)
 uses the sparse full-bridge-free witness when \(M<2n\). In the
 dense case it fixes the original degree labels and safe boundaries
 on the copied rows. Remove runs longer than the original factor-four
@@ -819,6 +819,16 @@ family, so the same safe boundaries are valid. If the degree split
 preserved the chosen bridge exclusion and the deleted runs contain
 at most \(M/56\) incidences, the witness keeps at least \(M/108\)
 within both original budgets and all four original-average caps.
+
+[Clipping copied runs at the width](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2437)
+keeps the first \(\min(L,R)\) incidences from a run of length \(R\),
+using the same degree copies and boundaries. The total loss is
+exactly \(\sum_R\max(0,R-L)\), counted separately over the occupied
+runs on each row. If the loss is at most \(M/56\), the same \(M/108\)
+guarantee holds in either mode under the original degree-split
+premise. Both original budgets and all four original-average caps
+hold.
+[Exact excess accounting](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2399).
 
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves

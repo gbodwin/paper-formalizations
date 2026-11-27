@@ -942,7 +942,8 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   the degree split conditions for half bridges.
   [Cutting between short-return runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1792)
   · [Choosing safe boundaries after copying degrees](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2143)
-  · [Deleting long runs from fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2182)
+  · [Deleting long runs from fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2259)
+  · [Clipping only the excess of each copied run](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2437)
   · [After removing long runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1848).
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.

@@ -2098,11 +2098,15 @@ mean path length rounded down, the bound is
 [\(M/16\)](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2158).
 The [same twelve-vertex example](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean)
 has an original run of length six and copied runs of length at most one.
-[Removing long copied runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2182)
+[Removing long copied runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2259)
 keeps the original degree labels and safe boundaries fixed.
 When the removed runs hold at most \(M/56\), it gives \(M/108\)
 with both budgets and all four frozen caps, under the same
 degree-split premise in either mode.
+[Clipping each run to the original width](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2437)
+charges only its excess. The exact excess sum can replace the deleted
+mass in the \(M/56\) condition and yields the same \(M/108\) witness,
+both original budgets, and all four frozen caps.
 The same conditional \(M/16\) and [\(M/32\) after rowwise deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1625)
 keep both budgets and all four original-average caps.
 Alternatively, use each row's last safe boundary as its rank. A cut is

@@ -112,4 +112,11 @@ theorem actualWidthReturnPaths_copied_runs_small (i : Fin 10) (r : ℕ) :
   · exact (increasing forward).ne equal
   · exact (increasing backward).ne equal.symm
 
+/-- With more than one run on a row, the excess is charged separately
+to each run. All runs in the fixture fit width one. -/
+theorem actualWidthReturnPaths_no_run_excess_at_one :
+    copiedReturnRunExcess actualWidthReturnPaths 4 7 1 = 0 := by
+  exact sum_eq_zero (fun i _ => sum_eq_zero (fun r _ =>
+    Nat.sub_eq_zero_of_le (actualWidthReturnPaths_copied_runs_small i r)))
+
 end OnlineReachabilityPreservers.SourceAudit
