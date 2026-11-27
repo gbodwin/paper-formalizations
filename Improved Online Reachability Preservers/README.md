@@ -1057,14 +1057,24 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   arc parent, so the same cutoff holds in full mode and in half
   mode when pieces follow their parents’ arrival order.
   [Return condition](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2639) · [Bridge projection](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2649) · [Full bridge exclusion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2762) · [Half-bridge exclusion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2779).
-- After admissible degree copying, protect the endpoints of each row
-  comparison with a short backward return in the copied precedence
-  graph. If each protected support fits at the original path width,
-  pack it into block zero and keep the row order within each piece.
-  This keeps every incidence before trimming, preserves the chosen
-  full or half cutoff, and gives an indexed witness with both original
-  budgets, all four frozen caps and mass at least \(M/16\).
+- Start with simple rows whose mass \(M\) is at least both positive
+  budgets. If standard degree copying at the original width preserves
+  the cutoff, protect the endpoints of each row comparison with a
+  backward return through \(\max(0,k-3)\) in the copied precedence graph.
+  If each protected support fits the original path width, pack it
+  into block zero and keep the row order within each piece. This
+  keeps every incidence before trimming and yields the indexed
+  \(M/16\) witness with the cutoff, both budgets and all four frozen caps.
   [Protected vertices](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L471) · [Preservation through the cutoff](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L499) · [Frozen witness at both original widths](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L528).
+- The endpoints with short backward returns can also be placed in
+  several groups in the same row. Assume the row admits a disjoint
+  partition within the path width, with both endpoints of every tested
+  comparison in one group. A minimum-cardinality partition has at most
+  one piece of length at most half the width per parent. Filtering each
+  row by its group keeps the original order, every incidence and every
+  vertex degree. It preserves the given full or half cutoff, with the
+  pieces in parent arrival order in half mode.
+  [Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L106) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L88) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L115).
 - An eight-vertex example shows a limit of the disjoint-component rank test.
   Its seven original rows exclude full bridges through three. Standard
   width-two blocks form a directed cycle. Each vertex starts a strict

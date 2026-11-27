@@ -180,6 +180,7 @@ import OnlineReachabilityPreservers.SccListWork
 import OnlineReachabilityPreservers.SearchWork
 import OnlineReachabilityPreservers.SecondMoment
 import OnlineReachabilityPreservers.SeparatorWork
+import OnlineReachabilityPreservers.ShortReturnPiecePacking
 import OnlineReachabilityPreservers.SimplePaths
 import OnlineReachabilityPreservers.SourceAudit
 import OnlineReachabilityPreservers.SplitAudit
