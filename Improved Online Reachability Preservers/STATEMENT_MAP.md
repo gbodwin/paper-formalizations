@@ -1714,6 +1714,23 @@ with half exclusion through five, both budgets and all four caps.
 · [Indexed witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L108)
 · [Literal witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L158).
 
+The loss from opposite-intersection pruning after first-occurrence trimming
+can be bounded before trimming. Use the graph of neighboring common vertices
+that have opposite orders on two rows. Restrict its original links to endpoints
+in different first-occurrence groups and let \(E\) be the number of those links.
+The surviving opposite links all cross groups. Each surviving link's endpoints
+are joined by a chain of original links within its original interval, so that
+chain contains a link across groups. Orient the charge by the two row labels.
+Exclusion of parallel comparisons determines those labels, and different surviving
+intervals on the same pair of rows cannot share a charged link. Hence the
+charges are injective. For a simple family with a positive path budget and
+half exclusion through \(k\ge3\), the combined pruning gives unique
+intersections, keeps that cutoff and loses at most \(n+E\) incidences.
+[Crossing link within an interval](OnlineReachabilityPreservers/CrossGroupOppositeLinks.lean#L23)
+· [Graph of cross-group links](OnlineReachabilityPreservers/CrossGroupOppositeLinks.lean#L76)
+· [Cardinality bound](OnlineReachabilityPreservers/CrossGroupOppositeLinks.lean#L94)
+· [Combined pruning](OnlineReachabilityPreservers/CrossGroupOppositeLinks.lean#L148).
+
 The first-occurrence sublist condition permits a degree-splitting failure.
 On an indexed family with twelve vertices, forty-three rows and mass
 forty-eight, each occupied first-occurrence group has one vertex. The five

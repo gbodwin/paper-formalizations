@@ -1032,6 +1032,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   · [Unique intersections after deletion](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L26)
   · [Indexed witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L108)
   · [Literal witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L158).
+- For simple input excluding half bridges through \(k\ge3\), count the
+  original links between neighboring common vertices that occur in opposite
+  orders and belong to different first-occurrence groups. If that count is
+  \(E\), first-occurrence trimming followed by opposite-intersection pruning
+  loses at most \(n+E\) incidences, gives unique intersections and preserves
+  the original half cutoff. This applies with a positive path budget.
+  [Injection into original links](OnlineReachabilityPreservers/CrossGroupOppositeLinks.lean#L94)
+  · [Sublists with unique intersections](OnlineReachabilityPreservers/CrossGroupOppositeLinks.lean#L148).
 - With twelve vertices, forty-three indexed rows and mass forty-eight,
   each occupied first-occurrence group is a singleton. Opposite comparisons
   cross two groups. The original family excludes every half bridge. Splitting
