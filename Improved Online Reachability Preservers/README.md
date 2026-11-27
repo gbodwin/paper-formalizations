@@ -951,6 +951,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   For feasible distinct nonempty input, the original-row test also
   gives a distinct nonempty witness with at least \(M/8\).
   [Packing at the certified radius](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L116) · [Copied components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L193) · [Original components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L213) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L228).
+- An indexed system on six vertices and nine row labels has mass nine,
+  degree width six and path width four. It excludes every full bridge.
+  The return \(4\to5\to0\) crosses the actual consecutive width cut.
+  The original radius-four component has size five, while all radius-two
+  components fit width four. Packing the latter certifies a full-seven
+  witness of mass at least one quarter, with both budgets and all four caps.
+  [The consecutive test](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L66) · [Radius-two components](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L93) · [Radius-four component](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L101) · [The frozen witness](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L106).
 - The [literal set versions](OnlineReachabilityPreservers/FrozenDistinctCleaning.lean)
   give distinct nonempty output paths with the same caps. They apply to
   the literal exact-count maximum when the positive original budgets are feasible.

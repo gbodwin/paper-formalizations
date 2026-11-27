@@ -1577,6 +1577,16 @@ For feasible literal distinct nonempty input, the witness can
 be distinct and nonempty with retention at least \(M/8\).
 [Packing theorem](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L116) · [Frozen witness on copied components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L193) · [Original component test](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L213) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L228).
 
+In an indexed family on six vertices and nine row labels with
+mass nine, the original widths are six and four. The input
+excludes full bridges at every size. On the standard copied pieces,
+the return \(4\to5\to0\) crosses the consecutive width-four cut of
+the long row. The original radius-four component exceeds width four
+and every original radius-two component fits that width. The grouped
+test gives a full-seven frozen quarter-mass witness with both budgets
+and all four original-average caps.
+[Original widths](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L20) · [Consecutive cut obstruction](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L66) · [Radius-two room](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L93) · [Radius-four size](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L101) · [Frozen witness](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L106).
+
 At half cutoff four, a [balanced midpoint split with no valid arrival permutation](OnlineReachabilityPreservers/HalfFourSplitOrderAudit.lean#L103)
 starts from a half-free indexed family with uniform degree two and mean
 length \(7/2\). Its sole length-six path splits into two length-three

@@ -786,6 +786,16 @@ same test on the original rows suffices by projection. It gives a frozen \(M/8\)
 distinct nonempty witness for feasible literal input.
 [Packing at a certified radius](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L116) · [Frozen cleaning with certified groups](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L264) · [Original component test](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L213) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L228).
 
+For the indexed rows \((0,1,2,3,4),(4,5),(5,0)\) and six empty
+rows, the original budgets are six and nine and the mass is nine.
+The family excludes every full bridge. At degree width six and path
+width four, the copied consecutive pieces still contain the return
+\(4\to5\to0\) across the cut. The original radius-four component
+at zero has five vertices. The radius-two components all fit, so
+their packing gives the frozen full-seven witness of mass at least
+\(M/4\) with both original budgets and all four caps.
+[Original exclusion](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L32) · [Return across the actual cut](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L66) · [Larger component](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L101) · [Frozen witness](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L106).
+
 The factor-four block split from the frozen cleaning argument can also
 create a full size-seven bridge before trimming and peeling in the dense
 branch. Add 161 private vertices before the four-vertex path in the
