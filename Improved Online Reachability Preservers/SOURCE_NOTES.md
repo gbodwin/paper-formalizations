@@ -2800,9 +2800,32 @@ local-order upper bound and recurrence of Theorem 43.
   \(p>n\). This gives both upper caps and mass at least \(vw\)
   at the maximum. One restricted full-three family then has
   \(W=vw\) in \([M/16,M]\) and all four starting caps.
-  [Restricting layers and slopes](OnlineReachabilityPreservers/WengerThreeRows.lean#L356)
+  [Restricting layers and slopes](OnlineReachabilityPreservers/WengerThreeRows.lean#L430)
   · [Half mass estimate](OnlineReachabilityPreservers/ComparableFrozenFullThree.lean#L21)
   · [Starting caps at comparable large budgets](OnlineReachabilityPreservers/ComparableFrozenFullThree.lean#L124).
+
+  For \(a\le2b\) and \(b\ge8192^3\), choose
+  \(q=2^{\lfloor\log_8 a\rfloor}\). If \(4a\le15q^3\), take
+  \(Q=d=q\). Otherwise take \(Q=2q\) and
+  \(d=\lfloor a/Q^2\rfloor\). Keep
+  \(\ell=\min(Q,\lfloor b/Q^2\rfloor)-1\) first-coordinate layers.
+  Then \(d\ge4096\), \(16a\le73d^3\), and the counts
+  \(V=\ell Q^2\), \(R=dQ^2\) satisfy
+  \(V+Q^2\le b\le4V\) and \(R\le a\le4R\).
+  The latest-hit estimate at \(T=63\) uses
+  \(16(np)^2\le146(bd)^3\) and gives \(16M\le63bd\).
+  Rounding the layer width gives \(bd\le a\ell+2a\), and
+  \(128a\le bd\) transfers the bound to \(M\le4a\ell\).
+  For \(p\ge n\), the reserved \(Q^2\) labels support the
+  remaining row count in a disjoint balanced two-layer family.
+  In the other orientation, the padded rows are singletons.
+  Both candidates certify exact literal half feasibility and
+  give \(W=\ell dQ^2\le M\). With \(b\le4V\) and \(a\le4R\),
+  this proves both upper caps. The one restricted full-three
+  family fits the original budgets and retains at least \(M/16\).
+  [Independent widths and transposition](OnlineReachabilityPreservers/WengerThreeRows.lean#L367)
+  · [Half mass estimate](OnlineReachabilityPreservers/FactorTwoFrozenFullThree.lean#L15)
+  · [Starting caps at ratio at most two](OnlineReachabilityPreservers/FactorTwoFrozenFullThree.lean#L220).
 
   A second finite-field construction treats the exact budget pairs
   \((q^4,q^5)\) and \((q^5,q^4)\). The map \(z\mapsto z^2+z\)

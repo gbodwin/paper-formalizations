@@ -351,6 +351,80 @@ theorem comparable_budgets_full_three_witness_controls_half {n p k C : ℕ}
       exact Nat.le_mul_of_pos_left _ BPos
   exact reduced.trans (Nat.mul_le_mul_right _ (Bsquare.trans (Nat.le_mul_of_pos_left _ (by decide))))
 
+private noncomputable def fieldTripleFromWidth {F : Type*} [Fintype F] {width : ℕ}
+    (fits : width ≤ Fintype.card F) (v : Fin width × F × F) : FieldTriple F :=
+  ((Fintype.equivFin F).symm (Fin.castLE fits v.1),v.2)
+
+private theorem fieldTripleFromWidth_injective {F : Type*} [Fintype F] {width : ℕ}
+    (fits : width ≤ Fintype.card F) : Function.Injective (fieldTripleFromWidth (F := F) fits) := by
+  intro a b same
+  exact Prod.ext (Fin.castLE_injective fits ((Fintype.equivFin F).symm.injective
+    (congrArg Prod.fst same))) (congrArg (fun v : FieldTriple F => v.2) same)
+
+/-- Restrict the first-coordinate layers and slope labels independently.
+Both orientations of the resulting regular incidence relation give
+full-three rows with the corresponding vertex and row budgets. -/
+theorem wenger_full_three_rows_on_slopes_and_layers (F : Type*) [Field F] [Fintype F]
+    {layers slopes n p length degree : ℕ}
+    (longLayers : 2 ≤ layers) (longSlopes : 2 ≤ slopes)
+    (layersFit : layers ≤ Fintype.card F) (slopesFit : slopes ≤ Fintype.card F)
+    (shape : let q := Fintype.card F
+      (n = layers*q^2 ∧ p = slopes*q^2 ∧ length = layers ∧ degree = slopes) ∨
+      (n = slopes*q^2 ∧ p = layers*q^2 ∧ length = slopes ∧ degree = layers)) :
+    ∃ rows : Fin p → List (Fin n), Function.Injective rows ∧
+      (∀ i, (rows i).Nodup ∧ (rows i).length = length) ∧ BridgeFree (Before rows) 3 ∧
+      (∑ i, (rows i).length) = p*length ∧
+      (∀ x, (occurrences (fun i => (rows i).toFinset) x).card = degree) ∧ listOutputAverageCaps rows := by
+  classical
+  let X := Fin layers × F × F
+  let I := Fin slopes × F × F
+  let vertex : X → FieldTriple F := fieldTripleFromWidth layersFit
+  let row : I → FieldTriple F := fieldTripleFromWidth slopesFit
+  have vertexInjective : Function.Injective vertex := fieldTripleFromWidth_injective layersFit
+  have rowInjective : Function.Injective row := fieldTripleFromWidth_injective slopesFit
+  let hit (i : I) (v : X) := vertex v ∈ affineRow (row i)
+  have pairUnique : IncidencePairUnique hit := by
+    intro a b x y apart ax ay bx by_
+    exact rowInjective (affineRows_pair_owner (vertexInjective.ne apart) ax ay bx by_)
+  have noTriangle : IncidenceNoTriangle hit := by
+    intro a b r x y z ab ra rb _ _ xz ax ay by_ bz rx rz
+    exact affineRows_no_triangle (rowInjective.ne ab) (rowInjective.ne ra) (rowInjective.ne rb)
+      (vertexInjective.ne xz) ax ay by_ bz rx rz
+  have rowSize (i) : (univ.filter (hit i)).card = layers := by
+    let point (j : Fin layers) : X :=
+      (j,(affinePoint (row i) ((Fintype.equivFin F).symm (Fin.castLE layersFit j))).2)
+    have on (j : Fin layers) : hit i (point j) := mem_affineRow.mpr ⟨rfl,rfl⟩
+    have same : univ.filter (hit i) = univ.image point := by
+      ext x
+      simp only [mem_filter,mem_image,mem_univ,true_and]
+      constructor
+      · intro hx
+        exact ⟨x.1,vertexInjective (affineRow_point_eq_of_first_eq (on x.1) hx rfl)⟩
+      · rintro ⟨j,rfl⟩
+        exact on j
+    rw [same,card_image_of_injective _ (fun _ _ eq => congrArg Prod.fst eq),card_univ,Fintype.card_fin]
+  have vertexSize (x) : (univ.filter (fun i => hit i x)).card = slopes := by
+    let line (j : Fin slopes) : I :=
+      (j,(lineThrough (vertex x) ((Fintype.equivFin F).symm (Fin.castLE slopesFit j))).2)
+    have on (j : Fin slopes) : hit (line j) x :=
+      lineThrough_contains (vertex x) ((Fintype.equivFin F).symm (Fin.castLE slopesFit j))
+    have same : univ.filter (fun i => hit i x) = univ.image line := by
+      ext r
+      simp only [mem_filter,mem_image,mem_univ,true_and]
+      constructor
+      · intro hx
+        exact ⟨r.1,rowInjective (lineThrough_eq hx)⟩
+      · rintro ⟨j,rfl⟩
+        exact on j
+    rw [same,card_image_of_injective _ (fun _ _ eq => congrArg Prod.fst eq),card_univ,Fintype.card_fin]
+  have vCard : Fintype.card X = layers*(Fintype.card F)^2 := by simp [X,pow_two]
+  have iCard : Fintype.card I = slopes*(Fintype.card F)^2 := by simp [I,pow_two]
+  rcases shape with ⟨rfl,rfl,rfl,rfl⟩ | ⟨rfl,rfl,rfl,rfl⟩
+  · exact fullThreeRows_of_finiteIncidence hit pairUnique noTriangle vCard iCard rowSize vertexSize longLayers
+  · exact fullThreeRows_of_finiteIncidence (fun x i => hit i x)
+      (IncidencePairUnique.swap (hit := hit) pairUnique) (IncidenceNoTriangle.swap (hit := hit) noTriangle)
+      iCard vCard vertexSize rowSize longSlopes
+
 /-- Restricting the first-coordinate layers and the slope labels to the
 same width gives a smaller regular full-three family over the field. -/
 theorem wenger_full_three_rows_on_width (F : Type*) [Field F] [Fintype F] {width : ℕ}
@@ -359,48 +433,7 @@ theorem wenger_full_three_rows_on_width (F : Type*) [Field F] [Fintype F] {width
     ∃ rows : Fin v → List (Fin v), Function.Injective rows ∧
       (∀ i, (rows i).Nodup ∧ (rows i).length = width) ∧ BridgeFree (Before rows) 3 ∧
       (∑ i, (rows i).length) = v*width ∧
-      (∀ x, (occurrences (fun i => (rows i).toFinset) x).card = width) ∧ listOutputAverageCaps rows := by
-  classical
-  let X := Fin width × F × F
-  let coordinate (i : Fin width) := (Fintype.equivFin F).symm (Fin.castLE fits i)
-  have coordinateInjective : Function.Injective coordinate :=
-    (Fintype.equivFin F).symm.injective.comp (Fin.castLE_injective _)
-  let embed (u : X) : FieldTriple F := (coordinate u.1,u.2)
-  have embedInjective : Function.Injective embed := fun _ _ same =>
-    Prod.ext (coordinateInjective (congrArg Prod.fst same)) (congrArg (fun v : FieldTriple F => v.2) same)
-  let hit (r x : X) := embed x ∈ affineRow (embed r)
-  have pairUnique : IncidencePairUnique hit := by
-    intro a b x y apart ax ay bx by_
-    exact embedInjective (affineRows_pair_owner (embedInjective.ne apart) ax ay bx by_)
-  have noTriangle : IncidenceNoTriangle hit := by
-    intro a b r x y z ab ra rb _ _ xz ax ay by_ bz rx rz
-    exact affineRows_no_triangle (embedInjective.ne ab) (embedInjective.ne ra) (embedInjective.ne rb)
-      (embedInjective.ne xz) ax ay by_ bz rx rz
-  have rowSize (r) : (univ.filter (hit r)).card = width := by
-    let point (i : Fin width) : X := (i,(affinePoint (embed r) (coordinate i)).2)
-    have on (i : Fin width) : hit r (point i) := mem_affineRow.mpr ⟨rfl,rfl⟩
-    have same : univ.filter (hit r) = univ.image point := by
-      ext x
-      simp only [mem_filter,mem_image,mem_univ,true_and]
-      constructor
-      · intro hx
-        exact ⟨x.1,embedInjective (affineRow_point_eq_of_first_eq (on x.1) hx rfl)⟩
-      · rintro ⟨i,rfl⟩
-        exact on i
-    rw [same,card_image_of_injective _ (fun _ _ eq => congrArg Prod.fst eq),card_univ,Fintype.card_fin]
-  have vertexSize (x) : (univ.filter (fun r => hit r x)).card = width := by
-    let line (i : Fin width) : X := (i,(lineThrough (embed x) (coordinate i)).2)
-    have on (i : Fin width) : hit (line i) x := lineThrough_contains (embed x) (coordinate i)
-    have same : univ.filter (fun r => hit r x) = univ.image line := by
-      ext r
-      simp only [mem_filter,mem_image,mem_univ,true_and]
-      constructor
-      · intro hx
-        exact ⟨r.1,embedInjective (lineThrough_eq hx)⟩
-      · rintro ⟨i,rfl⟩
-        exact on i
-    rw [same,card_image_of_injective _ (fun _ _ eq => congrArg Prod.fst eq),card_univ,Fintype.card_fin]
-  have card : Fintype.card X = width*(Fintype.card F)^2 := by simp [X,pow_two]
-  exact fullThreeRows_of_finiteIncidence hit pairUnique noTriangle card card rowSize vertexSize long
+      (∀ x, (occurrences (fun i => (rows i).toFinset) x).card = width) ∧ listOutputAverageCaps rows :=
+  wenger_full_three_rows_on_slopes_and_layers F long long fits fits (Or.inl ⟨rfl,rfl,rfl,rfl⟩)
 
 end OnlineReachabilityPreservers

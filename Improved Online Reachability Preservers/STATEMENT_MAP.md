@@ -3924,9 +3924,26 @@ padding gives an exact eligible half family with mass at least
 \(bw/2\), supplying the upper caps at both starting averages.
 One restricted field family satisfies all four bounds at the
 literal maximum and fits both budgets.
-[Restricting layers and slopes](OnlineReachabilityPreservers/WengerThreeRows.lean#L356)
+[Restricting layers and slopes](OnlineReachabilityPreservers/WengerThreeRows.lean#L430)
 · [Half mass at ratio at most three halves](OnlineReachabilityPreservers/ComparableFrozenFullThree.lean#L21)
 · [Starting caps at comparable large budgets](OnlineReachabilityPreservers/ComparableFrozenFullThree.lean#L124).
+
+For \(b\ge8192^3\) and \(a\le2b\), use separate layer and slope
+widths \(\ell,d\) in a field of order \(Q\). The regular full-three
+family and its transpose have budgets \((\ell Q^2,dQ^2)\) and the
+reverse pair, with common mass \(\ell dQ^2\).
+Choose \(Q,d\) using the larger budget and leave one layer out
+when selecting \(\ell\). When \(p\ge n\), a balanced two-layer
+family on the reserved labels supplies the remaining short rows.
+Its vertex labels are disjoint from the restricted field family. When
+\(p\le n\), distinct singleton padding suffices. The latest-hit
+estimate bounds the literal half maximum by both \(4bd\) and
+\(4a\ell\). Together with the exact padded family, this gives all
+four starting-average caps. The restricted full family fits both
+budgets and has mass in \([M/16,M]\).
+[Independent layer and slope widths](OnlineReachabilityPreservers/WengerThreeRows.lean#L367)
+· [Half mass at ratio at most two](OnlineReachabilityPreservers/FactorTwoFrozenFullThree.lean#L15)
+· [Starting caps at ratio at most two](OnlineReachabilityPreservers/FactorTwoFrozenFullThree.lean#L220).
 
 For a field of order \(q\), take \(\nu\) outside the image of
 \(z\mapsto z^2+z\) and use slope \((s,t,s^2+st-\nu t^2)\).

@@ -2168,6 +2168,13 @@ Restricting the layers and slopes of the next larger field handles
 sizes between the exact field cubes.
 [Starting-average witness at comparable large budgets](OnlineReachabilityPreservers/ComparableFrozenFullThree.lean#L124).
 
+Independent layer and slope widths extend the starting-average
+conclusion at cutoff three to \(\max(n,p)\le2\min(n,p)\)
+when \(\min(n,p)\ge8192^3\). The full witness meets both budgets
+and all four starting caps, with mass in \([M/16,M]\) at the literal
+half maximum.
+[Starting-average witness at ratio at most two](OnlineReachabilityPreservers/FactorTwoFrozenFullThree.lean#L220).
+
 For a finite field of order \(q\ge5\), cutoff three also admits the
 starting-average conclusion at \((n,p)=(q^4,q^5)\) and \((q^5,q^4)\).
 A quadratic incidence construction and its transpose give exact-budget
