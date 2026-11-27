@@ -2447,6 +2447,13 @@ all four caps. Feasible literal distinct nonempty input also gives a
 distinct nonempty witness at cutoff at least two.
 [Degree class excess](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L106) · [Path class excess](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L119) · [Shared deletion certificate](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L131) · [Indexed frozen witness](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L173) · [Literal frozen witness](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L217).
 
+When differently labelled row families can meet only at one fixed
+common vertex, any bridge stays within its river's family. The first and last
+steps outside that family would require the shared vertex at two
+different corners. Combining such families preserves either bridge
+exclusion through any common cutoff with the original arrival order.
+[Localize a bridge at a one-vertex intersection](OnlineReachabilityPreservers/BridgeAtJoint.lean#L13) · [Preserve both exclusions](OnlineReachabilityPreservers/BridgeAtJoint.lean#L56).
+
 For simple rows, standard degree copying preserves full exclusion
 through any chosen cutoff. For such input that excludes full bridges
 through the cutoff and has mass at least both positive budgets,
