@@ -1251,6 +1251,20 @@ copies gives a frozen \(M/36\) witness with both budgets, all four caps
 and full exclusion through that cutoff.
 [Optimal clipping for fixed components](OnlineReachabilityPreservers/ShortReturnRankedExcess.lean#L12) · [Rank bound on total excess](OnlineReachabilityPreservers/ShortReturnRankedExcess.lean#L51) · [Frozen full-bridge witness from copied ranks](OnlineReachabilityPreservers/ShortReturnRankedExcess.lean#L92).
 
+A second full-mode example uses indexed rows with budgets 51 and 23, two opposing
+length-21 rows, and three singleton incidences for each of seven
+vertices between those rows. Its mass is 63 and its frozen widths are
+four and ten. The two long original path components each have size 21
+at cutoff seven, so their combined excess is at least 22. This exceeds
+one third of the mass. Standard degree copying assigns different
+labels on the two long rows at those seven vertices. A nondecreasing
+rank on the copied rows lets a bounded selection keep 55 incidences,
+so the copied path excess is at most eight at every cutoff. The
+original rows exclude every full bridge and the copied path criterion
+gives a frozen witness at any chosen cutoff within both original
+budgets and all four caps.
+[Original widths](OnlineReachabilityPreservers/ShortReturnCopiedRankExample.lean#L23) · [Full exclusion](OnlineReachabilityPreservers/ShortReturnCopiedRankExample.lean#L54) · [Original path test fails](OnlineReachabilityPreservers/ShortReturnCopiedRankExample.lean#L144) · [Copied path excess bound](OnlineReachabilityPreservers/ShortReturnCopiedRankExample.lean#L248) · [Frozen full witness](OnlineReachabilityPreservers/ShortReturnCopiedRankExample.lean#L260).
+
 The bidirected 23-leaf star has one row per dart, 24 vertices and 46
 rows of mass 92. Every full bridge is excluded. Its original widths
 are 15 for degree and eight for path length. At cutoff seven, the
