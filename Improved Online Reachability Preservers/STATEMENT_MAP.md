@@ -2395,6 +2395,14 @@ two last rows, both of which end a comparison there. The local test
 still gives half-five exclusion on the copied family.
 [Vertex copying by rank](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L144) · [Original exclusion](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L35) · [Rows in the same terminal component](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L65) · [Half-five exclusion after copying](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L77) · [Ranks decreasing in arrival order](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L84).
 
+A four-row family on six vertices excludes all full bridges. Its first
+two rows share vertices 0 and 1 in reverse order. At each of these
+vertices, return edges put both rows in one strongly connected component.
+Every assignment passing the terminal rank test therefore gives these
+two rows two common copied vertices. The test by itself can preserve
+half-five exclusion while leaving repeated intersections.
+[Original full exclusion](OnlineReachabilityPreservers/HalfFiveTerminalRankCoincidence.lean#L28) · [Two terminal cycles](OnlineReachabilityPreservers/HalfFiveTerminalRankCoincidence.lean#L41) · [Forced common copies](OnlineReachabilityPreservers/HalfFiveTerminalRankCoincidence.lean#L55).
+
 The usual nested split example can be padded to six vertices and ten
 indexed rows with mass ten. Two extra vertices belong only to the
 long row and seven labels have empty rows. The original family excludes
