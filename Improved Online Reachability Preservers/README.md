@@ -1928,6 +1928,11 @@ With three layers, four slopes and three starts or more, two three-bridges
 force opposite arrival orders on a pair of lattice lines. Every reordering
 of the complete lattice therefore contains a half-three bridge.
 [Arrival-order obstruction](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L160).
+The comparison also holds at the exact positive-slope dimensions of
+Theorem 29 of Bridge Girth. On \(2\ell^3\) vertices with \(\ell^3\) lines,
+the \(\ell^4\) lattice mass is at least a constant times \(\ell^{1/10}\)
+times the last-arc half-four maximum.
+[Positive-slope comparison](OnlineReachabilityPreservers/PositiveSlopeLattice.lean#L68).
 [LocalOnlineLimit](OnlineReachabilityPreservers/LocalOnlineLimit.lean) proves
 Theorem 38 for arbitrary simple paths with no half-bridge through size four.
 One exponent slack depends only on the vertex count and tends to zero.

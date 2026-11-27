@@ -3249,6 +3249,17 @@ three-bridge whose last arc is the other line. The slope-zero and slope-three
 first arcs give the two conflicting ordering constraints.
 [Obstruction for every arrival order](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L160).
 
+The same polynomial gap holds with Theorem 29's heights and positive slopes
+at \(n=2\ell^3, p=\ell^3\). The code translates each height by its layer
+index. On the actual lines the height is the start plus the layer index
+times the positive slope, within \(2\ell^2\) heights. The bijection preserves
+all comparisons and row labels. Each of the \(\ell^3\) distinct nonempty
+lines has length \(\ell\). There is one constant for the comparison against
+every half-four-free family within both budgets, for every \(\ell\ge1\).
+[Height translation](OnlineReachabilityPreservers/PositiveSlopeLattice.lean#L17)
+· [Line coordinates](OnlineReachabilityPreservers/PositiveSlopeLattice.lean#L31)
+· [Gap at the cited dimensions](OnlineReachabilityPreservers/PositiveSlopeLattice.lean#L68).
+
 Here \(\ell,d\) are average path length and vertex degree and \(H\) is the
 half-bridge-free extremal function. The analogous full bridge-free function is \(\beta\).
 See [source notes](SOURCE_NOTES.md) for explicit discrepancies and the distinction between a

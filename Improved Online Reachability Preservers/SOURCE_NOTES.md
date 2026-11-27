@@ -2263,6 +2263,18 @@ local-order upper bound and recurrence of Theorem 43.
   starting at two and the slope-three line starting at zero as first arcs.
   Every order of the complete family violates one of the two constraints.
   [Arrival obstruction](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L160).
+  At the exact Theorem 29 dimensions \(n=2\ell^3\), the rectangle has
+  \(\ell\) layers and \(2\ell^2\) heights. Take the first \(\ell^2\)
+  starting heights and slopes \(1,\ldots,\ell\). A common height shear
+  sends the zero-based slope labels to these positive slopes. On every
+  line, the added height is within the rectangle. Its inverse pulls back
+  each bridge and keeps all row labels. The resulting \(\ell^3\) rows of
+  length \(\ell\) have mass at least a constant times \(\ell^{1/10}\) times
+  the half-four maximum with the same budgets. This also covers the
+  one-layer rectangle.
+  [Height formula](OnlineReachabilityPreservers/PositiveSlopeLattice.lean#L31)
+  · [Preserved exclusion](OnlineReachabilityPreservers/PositiveSlopeLattice.lean#L50)
+  · [Gap at Theorem 29's dimensions](OnlineReachabilityPreservers/PositiveSlopeLattice.lean#L68).
 - In Lemma 24, the paths `(0,1,2)` and `(2,1,0)` share three vertices without
   a bridge. Lean proves the ordering and fiber bound for arbitrary simple paths
   by choosing one witness for each middle path and using the 2-bridge exclusion
