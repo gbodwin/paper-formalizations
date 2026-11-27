@@ -2780,6 +2780,29 @@ local-order upper bound and recurrence of Theorem 43.
   · [Exact singleton padding](OnlineReachabilityPreservers/ExtremalCopyBounds.lean#L272)
   · [Starting caps at nearby budgets](OnlineReachabilityPreservers/NearBudgetFrozenFullThree.lean#L71).
 
+  A second finite-field construction treats the exact budget pairs
+  \((q^4,q^5)\) and \((q^5,q^4)\). The map \(z\mapsto z^2+z\)
+  takes zero and minus one to the same value. Over every finite field,
+  this leaves a value \(\nu\) outside the image. The quadratic form
+  \(Q(s,t)=s^2+st-\nu t^2\) is nonzero on nonzero slope differences.
+  Use lines \((x,a+sx,b+tx,c+Q(s,t)x)\). A purported incidence
+  triangle supplies increments \(\alpha,\beta,\gamma\) with
+  \(\alpha+\beta+\gamma=0\). Centering slopes at the third line and
+  eliminating the first two slope coordinates gives
+  \(\alpha(\alpha+\beta)Q(\Delta s,\Delta t)=0\), contradicting the
+  distinct vertices and slopes. A pair of points determines at most
+  one line. Both facts survive transposing points and lines. The
+  resulting full-three families have mass \(q^6\) and exact degrees
+  and lengths. When \(q\ge5\), the latest-hit estimate at \(T=3\)
+  bounds all half-three masses by \(4q^6\) at either budget. The
+  full family is eligible for the literal half maximum and its
+  mass is therefore at most that maximum. These bounds give all
+  four starting-average caps and quarter-mass retention at cutoff
+  three, including in characteristic two.
+  [Quadratic construction](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L277)
+  · [Half mass bound](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L304)
+  · [Starting caps at quadratic budgets](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L341).
+
   Below cutoff two, both exclusions are vacuous. On \(n\) vertices the
   count of simple lists, including the empty list, is less than \(3n!\).
   Encode a nonempty list by its head and a shorter list on the remaining

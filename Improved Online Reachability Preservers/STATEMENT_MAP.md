@@ -3913,6 +3913,25 @@ satisfies all four starting-average caps.
 · [Exact singleton padding](OnlineReachabilityPreservers/ExtremalCopyBounds.lean#L272)
 · [Nearby-budget literal frozen case](OnlineReachabilityPreservers/NearBudgetFrozenFullThree.lean#L71).
 
+For a field of order \(q\), take \(\nu\) outside the image of
+\(z\mapsto z^2+z\) and use slope \((s,t,s^2+st-\nu t^2)\).
+The points have four coordinates, and each line is specified by the
+two slope parameters and three translations. Any pair of distinct
+points has at most one common line. If three distinct lines meet
+pairwise at three distinct points, the first-coordinate increments
+give a nonzero quadratic value that must vanish. This rules out
+incidence cycles of lengths four and six, and proves full-three
+exclusion in both incidence orientations regardless of row order.
+The regular lengths and degrees are \(q,q^2\) and \(q^2,q\),
+respectively. At \(q\ge5\) and either exact budget
+\((q^4,q^5)\) or \((q^5,q^4)\), the literal half maximum \(M\)
+at cutoff three lies between \(q^6\) and \(4q^6\). The regular
+family has mass \(q^6\) on the original budgets and meets all four
+starting-average caps.
+[Quadratic construction and its transpose](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L277)
+· [Half mass at quadratic budgets](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L304)
+· [Quadratic-budget literal frozen case](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L341).
+
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.
 Three comparisons leave vertex zero early in the arrival order. The other

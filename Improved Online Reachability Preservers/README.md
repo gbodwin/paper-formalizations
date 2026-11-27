@@ -2161,6 +2161,14 @@ uses \(q^3\) vertices and rows, meets all four starting-average caps,
 and has mass \(q^4\) between \(M/32\) and \(M\).
 [Starting-average witness at nearby budgets](OnlineReachabilityPreservers/NearBudgetFrozenFullThree.lean#L71).
 
+For a finite field of order \(q\ge5\), cutoff three also admits the
+starting-average conclusion at \((n,p)=(q^4,q^5)\) and \((q^5,q^4)\).
+A quadratic incidence construction and its transpose give exact-budget
+full-three witnesses of mass \(q^6\), between a quarter and all of the
+literal half maximum, with all four starting-average caps.
+[Quadratic construction](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L277)
+· [Starting-average witness at quadratic budgets](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L341).
+
 At either cutoff below two and feasible positive literal budgets, use
 \(\min(p,n!)\) distinct spanning permutations. They give at least a
 third of the unrestricted maximum and satisfy the four caps at both
