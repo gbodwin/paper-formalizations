@@ -121,6 +121,37 @@ theorem pruneOversizedShortReturnComponents_room {n p : ℕ} (rows : Fin p → L
 
 open scoped Sigma.Lex
 
+/-- The two fixed original-width trims retain at least five ninths of
+the original mass if their input has at least two thirds of it. -/
+theorem shortReturnTrim_mass_of_two_thirds {n p M K retained lostV lostI : ℕ}
+    (hn : 0 < n) (hp : 0 < p) (mPos : 0 < M) (roomMass : 2*M ≤ 3*K) (upper : K ≤ M)
+    (paid : K ≤ retained + (lostV + lostI))
+    (lossV : 4*(((4*M/n)/2 + 1)*n)*lostV ≤ K^2)
+    (lossI : 4*(((4*M/p)/2 + 1)*p)*lostI ≤ K^2) :
+    20*M ≤ 36*retained := by
+  have charge {q lost : ℕ} (positive : 0 < q)
+      (bound : 4*(((4*M/q)/2 + 1)*q)*lost ≤ K^2) : 8*M*lost ≤ K^2 :=
+    (show 8*M*lost = 4*(2*M)*lost by ring).le.trans
+      ((Nat.mul_le_mul_right _ (Nat.mul_le_mul_left 4 (half_average_width_capacity positive))).trans bound)
+  have both : 8*M*(lostV+lostI) ≤ 2*K^2 := by
+    rw [Nat.mul_add, two_mul (K^2)]
+    exact add_le_add (charge hn lossV) (charge hp lossI)
+  have sumLoss : 4*M*(lostV+lostI) ≤ K^2 := by
+    rw [show 8*M*(lostV+lostI) = 2*(4*M*(lostV+lostI)) by ring] at both
+    omega
+  have paidNat : 4*M*K ≤ 4*M*retained + K^2 := calc
+    _ ≤ 4*M*(retained+(lostV+lostI)) := Nat.mul_le_mul_left _ paid
+    _ = 4*M*retained+4*M*(lostV+lostI) := by ring
+    _ ≤ _ := Nat.add_le_add_left sumLoss _
+  have paidInt : 4*(M:ℤ)*K ≤ 4*(M:ℤ)*retained + (K:ℤ)^2 := by exact_mod_cast paidNat
+  have lo : 2*(M:ℤ) ≤ 3*(K:ℤ) := by exact_mod_cast roomMass
+  have hi : (K:ℤ) ≤ M := by exact_mod_cast upper
+  have factor : 0 ≤ (3*(K:ℤ)-2*M)*(10*(M:ℤ)-3*K) :=
+    mul_nonneg (by omega) (by omega)
+  have sufficient : (20*M)*M ≤ (36*retained)*M := by
+    exact_mod_cast (show (20*(M:ℤ))*M ≤ (36*(retained:ℤ))*M by nlinarith only [factor, paidInt])
+  exact (Nat.mul_le_mul_right_iff mPos).mp sufficient
+
 /-- A simple restriction retaining at least two thirds of the mass
 and meeting both original-width component tests gives a frozen witness
 with the original caps and mass at least one eighteenth. -/
@@ -160,29 +191,8 @@ theorem regularization_list_frozen_of_short_return_restriction {n p k : ℕ} {ha
     hn hp dense long (copyMass.trans_le upper) degree light copiedRoom ?_
   dsimp only
   rw [copyMass]
-  intro retained lostV lostI paid lossV lossI
-  have charge {q lost : ℕ} (positive : 0 < q)
-      (bound : 4*(((4*M/q)/2 + 1)*q)*lost ≤ K^2) : 8*M*lost ≤ K^2 :=
-    (show 8*M*lost = 4*(2*M)*lost by ring).le.trans
-      ((Nat.mul_le_mul_right _ (Nat.mul_le_mul_left 4 (half_average_width_capacity positive))).trans bound)
-  have both : 8*M*(lostV+lostI) ≤ 2*K^2 := by
-    rw [Nat.mul_add, two_mul (K^2)]
-    exact add_le_add (charge hn lossV) (charge hp lossI)
-  have sumLoss : 4*M*(lostV+lostI) ≤ K^2 := by
-    rw [show 8*M*(lostV+lostI) = 2*(4*M*(lostV+lostI)) by ring] at both
-    omega
-  have paidNat : 4*M*K ≤ 4*M*retained + K^2 := calc
-    _ ≤ 4*M*(retained+(lostV+lostI)) := Nat.mul_le_mul_left _ paid
-    _ = 4*M*retained+4*M*(lostV+lostI) := by ring
-    _ ≤ _ := Nat.add_le_add_left sumLoss _
-  have paidInt : 4*(M:ℤ)*K ≤ 4*(M:ℤ)*retained + (K:ℤ)^2 := by exact_mod_cast paidNat
-  have lo : 2*(M:ℤ) ≤ 3*(K:ℤ) := by exact_mod_cast roomMass
-  have hi : (K:ℤ) ≤ M := by exact_mod_cast upper
-  have factor : 0 ≤ (3*(K:ℤ)-2*M)*(10*(M:ℤ)-3*K) :=
-    mul_nonneg (by omega) (by omega)
-  have sufficient : (20*M)*M ≤ (36*retained)*M := by
-    exact_mod_cast (show (20*(M:ℤ))*M ≤ (36*(retained:ℤ))*M by nlinarith only [factor, paidInt])
-  exact (Nat.mul_le_mul_right_iff (hn.trans_le dense)).mp sufficient
+  exact fun _ _ _ paid lossV lossI =>
+    shortReturnTrim_mass_of_two_thirds hn hp (hn.trans_le dense) roomMass upper paid lossV lossI
 
 /-- At the original widths, deleting at most one third of the incidences
 in oversized components still leaves a frozen witness of mass at least

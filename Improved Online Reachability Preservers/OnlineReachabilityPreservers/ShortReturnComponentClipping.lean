@@ -38,7 +38,7 @@ private theorem clipDegree_sublist (rows : I → List V) (width cutoff : ℕ) (i
     (clipShortReturnDegreeComponents rows width cutoff i).Sublist (rows i) := List.filter_sublist
 
 omit [LinearOrder I] in
-private theorem clipPath_sublist (rows : I → List V) (width cutoff : ℕ) (i : I) :
+theorem clipShortReturnPathComponents_sublist (rows : I → List V) (width cutoff : ℕ) (i : I) :
     (clipShortReturnPathComponents rows width cutoff i).Sublist (rows i) := List.filter_sublist
 
 private theorem clipDegree_occurrences (rows : I → List V) (width cutoff : ℕ) (v : V) :
@@ -102,7 +102,7 @@ theorem clipShortReturnPathComponents_mass (rows : I → List V) (simple : ∀ i
       apply sum_congr rfl
       intro i _
       have widthCount : (clipped i).length = (pathComponentSelection rows width cutoff i).card :=
-        (List.toFinset_card_of_nodup ((clipPath_sublist rows width cutoff i).nodup (simple i))).symm.trans
+        (List.toFinset_card_of_nodup ((clipShortReturnPathComponents_sublist rows width cutoff i).nodup (simple i))).symm.trans
           (congrArg card (clipPath_vertices rows width cutoff i))
       rw [widthCount, ← List.toFinset_card_of_nodup (simple i)]
       exact selectLinkedGroups_card_add_excess (rows i).toFinset (shortReturnRowGraph rows cutoff i) width
@@ -124,18 +124,18 @@ private theorem clipDegree_room (rows : I → List V) (simple : ∀ i, (rows i).
   exact (card_le_card chosen).trans (count.trans_le (min_le_left _ _))
 
 omit [LinearOrder I] in
-private theorem clipPath_room (rows : I → List V) (simple : ∀ i, (rows i).Nodup) (width cutoff : ℕ)
+theorem clipShortReturnPathComponents_room (rows : I → List V) (simple : ∀ i, (rows i).Nodup) (width cutoff : ℕ)
     (i : I) (v : V) (on : v ∈ clipShortReturnPathComponents rows width cutoff i) :
     (shortReturnRowComponent (clipShortReturnPathComponents rows width cutoff) cutoff i v).card ≤ width := by
   let clipped := clipShortReturnPathComponents rows width cutoff
-  have original := (clipPath_sublist rows width cutoff i).subset on
+  have original := (clipShortReturnPathComponents_sublist rows width cutoff i).subset on
   have chosen : shortReturnRowComponent clipped cutoff i v ⊆
       pathComponentSelection rows width cutoff i ∩ shortReturnRowComponent rows cutoff i v := by
     intro x member
     have appears : x ∈ (clipped i).toFinset := (mem_filter.mp member).1
     rw [clipPath_vertices rows width cutoff i] at appears
     exact mem_inter.mpr ⟨appears, shortReturnRowComponent_subset_of_sublist simple
-      (clipPath_sublist rows width cutoff) cutoff i v member⟩
+      (clipShortReturnPathComponents_sublist rows width cutoff) cutoff i v member⟩
   have count := selectLinkedGroups_component_card (rows i).toFinset
     (shortReturnRowGraph rows cutoff i) width (List.mem_toFinset.mpr original)
   exact (card_le_card chosen).trans (count.trans_le (min_le_left _ _))
@@ -154,12 +154,12 @@ theorem clipShortReturnComponents_spec (rows : I → List V) (simple : ∀ i, (r
   let degreeKept := clipShortReturnDegreeComponents rows D cutoff
   let kept := clipShortReturnPathComponents degreeKept L cutoff
   have simpleKept (i : I) : (degreeKept i).Nodup := (clipDegree_sublist rows D cutoff i).nodup (simple i)
-  refine ⟨fun i => (clipPath_sublist degreeKept L cutoff i).trans (clipDegree_sublist rows D cutoff i), ?_,
-    clipPath_room degreeKept simpleKept L cutoff, ?_⟩
+  refine ⟨fun i => (clipShortReturnPathComponents_sublist degreeKept L cutoff i).trans (clipDegree_sublist rows D cutoff i), ?_,
+    clipShortReturnPathComponents_room degreeKept simpleKept L cutoff, ?_⟩
   · intro v i on
     exact (card_le_card (shortReturnCopyRowComponent_subset_of_sublist simpleKept
-      (clipPath_sublist degreeKept L cutoff) cutoff v i)).trans
-      (clipDegree_room rows simple D cutoff v i ((clipPath_sublist degreeKept L cutoff i).subset on))
+      (clipShortReturnPathComponents_sublist degreeKept L cutoff) cutoff v i)).trans
+      (clipDegree_room rows simple D cutoff v i ((clipShortReturnPathComponents_sublist degreeKept L cutoff i).subset on))
   · have v := clipShortReturnDegreeComponents_mass rows simple D cutoff
     have i := clipShortReturnPathComponents_mass degreeKept simpleKept L cutoff
     change (∑ i, (degreeKept i).length) + shortReturnDegreeExcessMass rows D cutoff = _ at v

@@ -2401,7 +2401,7 @@ component tests at the original widths yields an indexed witness of
 mass at least \(M/18\) with both budgets, the chosen cutoff and all four
 frozen caps. In particular this applies when the original oversized
 components account for at most \(M/3\) deleted incidences.
-[Grouped width trimming after earlier losses](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L140) · [Frozen witness from a two-thirds restriction](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L127) · [Frozen witness from the overflow bound](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L190).
+[Grouped width trimming after earlier losses](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L140) · [Frozen witness from a two-thirds restriction](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L158) · [Frozen witness from the overflow bound](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L200).
 
 Within a connected component, keep the first elements in the finite
 order up to the prescribed width. Disjointness ensures that a component
@@ -2423,6 +2423,16 @@ has mass at least \(M/18\), both budgets, all four original caps and
 the chosen cutoff. The same guarantee holds for literal distinct
 nonempty input and output at cutoff at least two.
 [Indexed excess criterion](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L174) · [Literal excess criterion](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L202).
+
+Standard degree copying preserves full exclusion at every cutoff.
+For simple full-bridge-free input of mass at least both positive budgets,
+the original path-component bound alone gives the frozen quarter-mass
+witness. A restriction retaining two thirds of the original mass and
+passing the same path test also suffices for a frozen \(M/18\) witness.
+In particular it suffices that original path excess is at most \(M/3\).
+The latter conclusion has a literal distinct nonempty version at
+cutoff at least two, with the same budgets, cutoff and four frozen caps.
+[Full cleaning with the original path bound](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L12) · [Full cleaning after a path-only restriction](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L41) · [Full cleaning from path excess](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L100) · [Literal full-bridge witness](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L121).
 
 The path-partition premise has an exact finite test. Within one row,
 link the endpoints of every comparison with a short backward return.
