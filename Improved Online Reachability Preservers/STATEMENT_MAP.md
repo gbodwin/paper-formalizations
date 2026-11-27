@@ -1589,7 +1589,7 @@ At any full cutoff \(k\ge7\), the shortened return bound is
 \(k-5\). For a bridge of size \(s\ge8\), exclude repeated pairs at
 cyclic distances one through three. Among the remaining pairs with
 the same parent, choose the smallest linear gap with the river last.
-The gap has at most \(s-4\) slots. Its \(s-5\) or fewer interior
+The slot index difference is at most \(s-4\). Its \(s-5\) or fewer interior
 steps are forward comparisons on distinct other parents. The order
 of the two corners in the repeated parent determines either a
 shorter full bridge or a forbidden crossed return. This projects
@@ -1599,6 +1599,16 @@ literal witness of at least \(M/16\) with both original budgets and
 all four frozen caps. The input rows are simple and exclude full
 bridges through \(k\), and the mass reaches both positive budgets.
 [Crossed return predicate](OnlineReachabilityPreservers/CyclicSplits.lean#L876) · [Projection at the original cutoff](OnlineReachabilityPreservers/CyclicSplits.lean#L1003) · [Standard width test](OnlineReachabilityPreservers/FullReturnRadius.lean#L40) · [Indexed witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L67) · [Literal witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L89).
+
+The graph radius is sharp for the disjoint split test at every
+full cutoff \(k\ge7\). A checked indexed family on \(k\) vertices
+and \(k\) labels excludes full bridges at all sizes. The split
+preserves the order of each piece, covers every parent and passes
+the \(k-6\) graph test on the actual pieces. The explicit return
+from 1 to \(k-4\) fails the \(k-5\) test. The split pieces contain
+a full bridge of size \(k\). The witness audits preservation by a
+split, and the general frozen existence question remains open.
+[Condition at radius \(k-6\)](OnlineReachabilityPreservers/FullReturnRadiusSharpness.lean#L381) · [Crossing at radius \(k-5\)](OnlineReachabilityPreservers/FullReturnRadiusSharpness.lean#L437) · [Uniform example](OnlineReachabilityPreservers/FullReturnRadiusSharpness.lean#L452).
 
 The full-seven lift also permits packing the original-width path
 pieces from components of returns of at most two steps in the

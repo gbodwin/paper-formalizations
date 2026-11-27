@@ -963,6 +963,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   and all four caps. The literal version also keeps the rows distinct
   and nonempty.
   [The minimum-gap proof](OnlineReachabilityPreservers/CyclicSplits.lean#L889) · [The graph certificate](OnlineReachabilityPreservers/FullReturnRadius.lean#L28) · [Indexed witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L67) · [Literal witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L89).
+- At every full cutoff \(k\ge7\), a covering disjoint split of an
+  indexed family excluding all full bridges passes the \(k-6\) test.
+  Its first crossed return has length \(k-5\) and the split creates
+  a full \(k\)-bridge.
+  [Original exclusion](OnlineReachabilityPreservers/FullReturnRadiusSharpness.lean#L138) · [Shorter test](OnlineReachabilityPreservers/FullReturnRadiusSharpness.lean#L381) · [Exact return](OnlineReachabilityPreservers/FullReturnRadiusSharpness.lean#L415) · [All cutoffs](OnlineReachabilityPreservers/FullReturnRadiusSharpness.lean#L452).
 - At full cutoff seven, packing the components of returns of at most
   two steps gives a frozen quarter-mass witness if those components fit the
   original path width. Use either the original rows or the standard

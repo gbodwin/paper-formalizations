@@ -800,8 +800,8 @@ For any full cutoff \(k\ge7\), test the actual pieces at radius
 \(k-5\). The one- and two-step conditions already exclude repeated
 parents at cyclic distances one through three. In a putative bridge
 of size \(s\ge8\), choose the repeated pair with the smallest gap
-in the linear order that places the river last. The gap is at most
-\(s-4\). Its interior consists of forward steps on distinct other
+in the linear order that places the river last. The slot index difference
+is at most \(s-4\). Its interior consists of forward steps on distinct other
 parents. The common parent's comparison either gives a shorter full
 bridge in the original rows or crosses the split against a return of
 at most \(s-5\) steps. For simple full-\(k\)-free input of mass \(M\)
@@ -810,6 +810,18 @@ degree and path pieces gives a frozen \(M/16\) witness with both
 budgets and all four caps. Feasible literal input gives the same
 retention with distinct nonempty paths.
 [Minimum-gap lift](OnlineReachabilityPreservers/CyclicSplits.lean#L889) · [Preservation at general cutoff](OnlineReachabilityPreservers/CyclicSplits.lean#L1003) · [Graph test](OnlineReachabilityPreservers/FullReturnRadius.lean#L28) · [Frozen indexed witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L67) · [Literal witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L89).
+
+At every \(k\ge7\), use the vertices \(0,\ldots,k-1\). Merge
+the rows `[0,1]` and `[k-4,k-3]` into `[k-4,k-3,0,1]`, leaving
+one empty label in an indexed family. Keep the other consecutive
+steps and the terminal row `[0,k-1]`. The original family excludes
+full bridges at every size. A detour for the terminal comparison
+would have to use the merged row twice. Undoing the merge gives
+disjoint covering pieces, and now the consecutive steps give a
+full \(k\)-bridge. Any backward return across its cut has at least
+\(k-5\) steps, and the path from 1 to \(k-4\) attains that length.
+The original rows and all comparisons are given explicitly in Lean.
+[The indexed family](OnlineReachabilityPreservers/FullReturnRadiusSharpness.lean#L21) · [Original exclusion](OnlineReachabilityPreservers/FullReturnRadiusSharpness.lean#L138) · [Created bridge](OnlineReachabilityPreservers/FullReturnRadiusSharpness.lean#L320) · [Sharpness at every cutoff](OnlineReachabilityPreservers/FullReturnRadiusSharpness.lean#L452).
 
 One can also pack disjoint pieces by keeping each connected group
 of endpoints of returns of at most two steps together. Suppose
