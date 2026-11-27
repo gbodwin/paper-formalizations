@@ -1507,6 +1507,24 @@ expectation. A native execution-time bound remains open.
 · [Per-arrival recorded work](OnlineReachabilityPreservers/SteinerBinaryCompactArrivals.lean#L160)
 · [Compact-arrival Theorem 21](OnlineReachabilityPreservers/SteinerBinaryCompactArrivals.lean#L245).
 
+The compact variable-length session deduplicates the decoded graph's
+arc list at startup. Graph rejection consumes no bits. Acceptance
+retains the exact graph, seed slice, and stream position of the earlier
+entry. The empty-history graph agrees with compact initialization for
+the new arc list. Each accepted request uses the compact step at its
+decoded endpoint values, including padded representations of a pair
+already seen. With a duplicate-free feasible stored history, at fixed
+height the recorded cost of a reachable decoded pair depends
+polynomially on the vertex count and the lengths of that pair's supplied
+words. The request bound also covers out-of-range words. At fixed height,
+a separate polynomial in the vertex count, supplied arc-row count and
+actual endpoint bit count covers startup, including rejection. Native
+execution time remains open.
+[Startup with the original seed](OnlineReachabilityPreservers/SteinerBinaryCompactWordSession.lean#L103)
+· [Exact variable-length request semantics](OnlineReachabilityPreservers/SteinerBinaryCompactWordSession.lean#L67)
+· [Recorded startup bound](OnlineReachabilityPreservers/SteinerBinaryCompactWordSession.lean#L210)
+· [Recorded request bound](OnlineReachabilityPreservers/SteinerBinaryCompactWordSession.lean#L169).
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

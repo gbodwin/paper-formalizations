@@ -2191,6 +2191,21 @@ retains prefix inclusion and its expectation over the uniform finite seed.
 · [Repeated and self requests](OnlineReachabilityPreservers/SteinerBinaryCompactArrivals.lean#L227)
 · [Compact-arrival Theorem 21](OnlineReachabilityPreservers/SteinerBinaryCompactArrivals.lean#L245).
 
+The compact variable-word session checks the graph before drawing any
+bits, then stores a duplicate-free arc list for the same graph and the
+same seed. On one request it accepts exactly two endpoint values in
+range and advances the compact state at those values. At fixed height,
+with a feasible stored prefix and distinct history, recorded work per
+feasible request is polynomial in the vertex count and the two current
+word lengths. The same bound covers invalid endpoint values. At fixed
+height, the one-time startup bound is polynomial in the vertex count,
+supplied arc-row count and actual endpoint bit count, including on rejection.
+[Graph rejection](OnlineReachabilityPreservers/SteinerBinaryCompactWordSession.lean#L84)
+· [Accepted graph and seed](OnlineReachabilityPreservers/SteinerBinaryCompactWordSession.lean#L103)
+· [Exact request step](OnlineReachabilityPreservers/SteinerBinaryCompactWordSession.lean#L67)
+· [Recorded request work](OnlineReachabilityPreservers/SteinerBinaryCompactWordSession.lean#L169)
+· [Recorded startup work](OnlineReachabilityPreservers/SteinerBinaryCompactWordSession.lean#L210).
+
 
 
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).
