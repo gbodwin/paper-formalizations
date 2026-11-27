@@ -974,7 +974,23 @@ zero, so the obstruction persists for every choice of degree gaps. For
 \(m\ge 10\) the original upper width is at most nine. A separate low-mass
 construction achieves the frozen caps, both budgets, and at least
 \(M/8\) for \(m>0\) and \(k\ge 2\).
-[Forced run after degree packing](OnlineReachabilityPreservers/ForcedPathReturnRuns.lean#L301) · [Separate frozen witness](OnlineReachabilityPreservers/ForcedPathReturnRuns.lean#L351).
+[Forced run after degree packing](OnlineReachabilityPreservers/ForcedPathReturnRuns.lean#L303) · [Separate frozen witness](OnlineReachabilityPreservers/ForcedPathReturnRuns.lean#L353).
+
+A rank test on the actual pieces can handle those returns. The parent
+rows exclude the selected bridges through \(k\). Every strict comparison
+in a piece occurs in its parent. Require rank to increase weakly along
+every surviving comparison and distinct pieces of one parent to have
+disjoint sets of ranks. For a river
+comparison that strictly increases rank, rule out a detour of at most
+\(k-1\) edges in the precedence graph which omits that piece. Any bridge
+through \(k\) would then stay at one rank. Its arc and river labels project
+to distinct parent rows, preserving the cutoff in both modes when the
+pieces retain parent arrival order. The forced-run family preserves both
+exclusions in the standard contiguous blocks at each fixed width of at
+least two. For
+\(m\ge 10\) and \(k\ge 5\), the original-width split passes the rank test
+and still contains the two-edge return across its first width cut.
+[Rank test](OnlineReachabilityPreservers/BridgeRiverRanks.lean#L43) · [The original-width split](OnlineReachabilityPreservers/ForcedPathReturnRuns.lean#L560).
 
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves

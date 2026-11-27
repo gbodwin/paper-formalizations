@@ -1,3 +1,4 @@
+import OnlineReachabilityPreservers.BridgeRiverRanks
 import OnlineReachabilityPreservers.LocalFrozenLowMass
 import OnlineReachabilityPreservers.PackedDegreeGaps
 
@@ -6,6 +7,7 @@ import OnlineReachabilityPreservers.PackedDegreeGaps
 namespace OnlineReachabilityPreservers
 
 open Finset
+open scoped Sigma.Lex
 local notation "Before" => SourceAudit.BeforeIn
 
 private def evenVertex {m : ℕ} (i : Fin m) : Fin (2*m-1) := ⟨2*i.val,by omega⟩
@@ -365,5 +367,208 @@ theorem forcedReturnRows_frozen_witness {m k : ℕ} (positive : 0 < m) (cutoff :
     cutoff nonempty nonempty dense dense ?_
   rw [forcedReturnRows_mass positive,max_self]
   omega
+
+
+private theorem reachIn_source_eq_of_no_outgoing {W : Type*} [DecidableEq W] {G : Arcs W} {x : W}
+    (no : ∀ w, ¬ Edge G x w) {y : W} {radius : ℕ} (found : x ∈ reachIn G y radius) : x = y := by
+  induction radius with
+  | zero => simpa [reachIn] using found
+  | succ r earlier =>
+    rcases reachIn_succ.mp found with smaller | ⟨w,edge,_⟩
+    · exact earlier smaller
+    · exact (no w edge).elim
+
+private theorem reachIn_source_eq_of_no_incoming {W : Type*} [DecidableEq W] {G : Arcs W} {y : W}
+    (no : ∀ w, ¬ Edge G w y) {x : W} {radius : ℕ} (found : x ∈ reachIn G y radius) : x = y := by
+  induction radius generalizing x with
+  | zero => simpa [reachIn] using found
+  | succ r earlier =>
+    rcases reachIn_succ.mp found with smaller | ⟨w,edge,rest⟩
+    · exact earlier smaller
+    · obtain rfl := earlier rest
+      exact (no x edge).elim
+
+private theorem central_position {m : ℕ} {i x : Fin (2*m-1)} (zero : i.val = 0)
+    (on : x ∈ forcedReturnRows i) : (forcedReturnRows i).idxOf x = x.val/2 := by
+  simp only [forcedReturnRows,zero,ite_true] at on ⊢
+  obtain ⟨a,rfl⟩ := List.mem_ofFn.mp on
+  rw [central_index]
+  change a.val = 2*a.val/2
+  omega
+
+/-- A contiguous width split of the forced-run family preserves both
+bridge exclusions. A possible river from a descending row has a unique
+incoming or outgoing step at its odd endpoint. -/
+theorem forcedReturnRows_width_pieces_admissible {m width k : ℕ} {half : Bool} (wide : 2 ≤ width) :
+    localOrderAdmissible half k (splitListPaths (@forcedReturnRows m) width) := by
+  let rows := @forcedReturnRows m
+  let J := ListBlockIndex rows width
+  let pieces := splitListPaths rows width
+  let rank (x : Fin (2*m-1)) := m-x.val/(2*width)
+  have cap (x : Fin (2*m-1)) : x.val/(2*width) ≤ m := by
+    rw [← Nat.div_div_eq_div_mul]
+    have inside := x.isLt
+    exact (Nat.div_le_self _ _).trans (by omega)
+  have parent {j : J} {x y : Fin (2*m-1)} (before : Before pieces j x y) : Before rows j.fst x y :=
+    listBefore_of_sublist (paths := fun i : J => rows i.fst) (forcedReturnRows_simple j.fst)
+      List.filter_sublist before
+  have centralRank {j : J} {x : Fin (2*m-1)} (zero : j.fst.val = 0) (on : x ∈ pieces j) :
+      x.val/(2*width) = j.snd.val := by
+    obtain ⟨old,which⟩ := mem_localPathBlock.mp on
+    change (rows j.fst).idxOf x/width = j.snd.val at which
+    rw [central_position zero old,Nat.div_div_eq_div_mul] at which
+    exact which
+  have descendingRank {j : J} {x : Fin (2*m-1)} (nonzero : j.fst.val ≠ 0) (on : x ∈ pieces j) :
+      j.snd.val = 0 := by
+    obtain ⟨old,which⟩ := mem_localPathBlock.mp on
+    have index := List.idxOf_lt_length_of_mem old
+    change (rows j.fst).idxOf x < (forcedReturnRows j.fst).length at index
+    have length : (forcedReturnRows j.fst).length = 2 := by simp [forcedReturnRows,nonzero]
+    rw [length] at index
+    exact which.symm.trans (Nat.div_eq_of_lt (index.trans_le wide))
+  have rankEq {j : J} {x y : Fin (2*m-1)} (zero : j.fst.val = 0) (before : Before pieces j x y) :
+      rank x = rank y := by
+    change m-x.val/(2*width) = m-y.val/(2*width)
+    rw [centralRank zero before.1,centralRank zero before.2.1]
+  have monotone {j : J} {x y : Fin (2*m-1)} (before : Before pieces j x y) : rank x ≤ rank y := by
+    by_cases zero : j.fst.val = 0
+    · exact (rankEq zero before).le
+    · have adjacent := (descending_step zero (parent before)).2
+      exact Nat.sub_le_sub_left (Nat.div_le_div_right (by omega : y.val ≤ x.val)) _
+  have rankApart {i j : J} {x y : Fin (2*m-1)} (different : i ≠ j) (same : i.fst = j.fst)
+      (inI : x ∈ pieces i) (inJ : y ∈ pieces j) : rank x ≠ rank y := by
+    intro ranks
+    have slot : i.snd.val = j.snd.val := by
+      by_cases zero : i.fst.val = 0
+      · have other := congrArg Fin.val same
+        rw [zero] at other
+        have first := centralRank zero inI
+        have second := centralRank other.symm inJ
+        have leftCap := cap x
+        have rightCap := cap y
+        change m-x.val/(2*width) = m-y.val/(2*width) at ranks
+        omega
+      · have other : j.fst.val ≠ 0 := by simpa only [same] using zero
+        exact (descendingRank zero inI).trans (descendingRank other inJ).symm
+    apply different
+    rcases i with ⟨a,b⟩
+    rcases j with ⟨c,d⟩
+    change a = c at same
+    subst c
+    exact congrArg (Sigma.mk a) (Fin.ext slot)
+  have noDetour : NoCrossRankRiverDetour pieces rank k := by
+    intro i x y step increasing found
+    have nonzero : i.fst.val ≠ 0 := fun zero => increasing.ne (rankEq zero step)
+    obtain ⟨source,adjacent⟩ := descending_step nonzero (parent step)
+    let G := listPiecePrecedenceGraph (fun j : J => if j = i then [] else pieces j)
+    have alternate {a b : Fin (2*m-1)} (edge : Edge G a b) : ∃ j : J, j ≠ i ∧ Before pieces j a b := by
+      obtain ⟨j,here⟩ := listPiecePrecedenceGraph_edge.mp edge
+      by_cases same : j = i
+      · simp [SourceAudit.BeforeIn,same] at here
+      · exact ⟨j,same,by simpa only [SourceAudit.BeforeIn,ite_eq_right same] using here⟩
+    have apart : x ≠ y := listBefore_ne step
+    apply apart
+    by_cases even : x.val%2 = 0
+    · have odd : y.val%2 ≠ 0 := by omega
+      apply reachIn_source_eq_of_no_incoming (G := G) (y := y) ?_ found
+      intro w edge
+      obtain ⟨j,different,other⟩ := alternate edge
+      have noncentral : j.fst.val ≠ 0 := fun zero => odd (central_step zero (parent other)).2.1
+      obtain ⟨starts,neighbors⟩ := descending_step noncentral (parent other)
+      have same : j.fst = i.fst := by
+        rw [starts,source]
+        apply Fin.ext
+        omega
+      exact splitListPaths_disjoint different same other.2.1 step.2.1
+    · apply reachIn_source_eq_of_no_outgoing (G := G) (x := x) ?_ found
+      intro w edge
+      obtain ⟨j,different,other⟩ := alternate edge
+      have noncentral : j.fst.val ≠ 0 := fun zero => even (central_step zero (parent other)).1
+      have same := (descending_step noncentral (parent other)).1.trans source.symm
+      exact splitListPaths_disjoint different same other.1 step.1
+  have original : localOrderAdmissible half k rows := by
+    cases half
+    · exact forcedReturnRows_full_free m k
+    · intro d small b _
+      exact (forcedReturnRows_full_free m k small).false b
+  exact localOrderAdmissible_of_noCrossRankRiverDetour (fun j : J => j.fst)
+    (block_parent_mono (fun i => (rows i).toFinset) width) rank
+    (fun {_ _ _} => parent) (fun {_ _ _} => monotone) (fun {_ _ _ _} => rankApart) noDetour original
+
+
+/-- The two-edge return across the first width cut survives in the
+actual pieces. -/
+theorem forcedReturnRows_width_pieces_keep_return {m width k : ℕ}
+    (wide : 2 ≤ width) (inside : width < m) (cutoff : 5 ≤ k) :
+    ¬ NoShortReturnAcrossWidthCutsInPieces (@forcedReturnRows m) width k := by
+  let a : Fin m := ⟨width-1,by omega⟩
+  let b : Fin m := ⟨width,inside⟩
+  let x := evenVertex a
+  let y := evenVertex b
+  let z := previousVertex y
+  let root := centralRow m (by omega)
+  let rows := @forcedReturnRows m
+  let J := ListBlockIndex rows width
+  let piece := splitListPaths rows width
+  let zeroPiece (i : Fin (2*m-1)) : J := ⟨i,⟨0,Nat.succ_pos _⟩⟩
+  have xOn : x ∈ rows root := by
+    simpa [rows,root,forcedReturnRows,centralRow] using
+      (List.mem_ofFn.mpr ⟨a,rfl⟩ : x ∈ List.ofFn (@evenVertex m))
+  have yOn : y ∈ rows root := by
+    simpa [rows,root,forcedReturnRows,centralRow] using
+      (List.mem_ofFn.mpr ⟨b,rfl⟩ : y ∈ List.ofFn (@evenVertex m))
+  have xIdx : (rows root).idxOf x = width-1 := by
+    rw [central_position rfl xOn]
+    change 2*(width-1)/2 = width-1
+    omega
+  have yIdx : (rows root).idxOf y = width := by
+    rw [central_position rfl yOn]
+    change 2*width/2 = width
+    omega
+  have stay (i : Fin (2*m-1)) (nonzero : i.val ≠ 0) : piece (zeroPiece i) = rows i := by
+    have size : (rows i).length = 2 := by simp [rows,forcedReturnRows,nonzero]
+    change (rows i).filter (fun v => decide ((rows i).idxOf v/width=0)) = rows i
+    apply List.filter_eq_self.mpr
+    intro v on
+    have before := List.idxOf_lt_length_of_mem on
+    rw [size] at before
+    exact decide_eq_true (Nat.div_eq_of_lt (before.trans_le wide))
+  have below : previousVertex z = x := by
+    apply Fin.ext
+    change 2*width-1-1 = 2*(width-1)
+    omega
+  have yPos : y.val ≠ 0 := by change 2*width ≠ 0; omega
+  have zPos : z.val ≠ 0 := by change 2*width-1 ≠ 0; omega
+  have edgeOne : Edge (listPiecePrecedenceGraph piece) y z := by
+    apply listPiecePrecedenceGraph_edge.mpr
+    exact ⟨zeroPiece y,by simpa only [SourceAudit.BeforeIn,stay y yPos] using descending_before y yPos⟩
+  have edgeTwo : Edge (listPiecePrecedenceGraph piece) z x := by
+    apply listPiecePrecedenceGraph_edge.mpr
+    exact ⟨zeroPiece z,by simpa only [SourceAudit.BeforeIn,stay z zPos,below] using descending_before z zPos⟩
+  have reaches : y ∈ reachIn (listPiecePrecedenceGraph piece) x 2 :=
+    reachIn_succ.mpr (Or.inr ⟨z,edgeOne,reachIn_succ.mpr (Or.inr ⟨x,edgeTwo,target_mem_reachIn _ _ 0⟩)⟩)
+  intro safe
+  have xBefore : (rows root).idxOf x < (rows root).idxOf y := by rw [xIdx,yIdx]; omega
+  have blocks : (rows root).idxOf x/width ≠ (rows root).idxOf y/width := by
+    rw [xIdx,yIdx,Nat.div_eq_of_lt (by omega : width-1 < width),Nat.div_self (by omega : 0 < width)]
+    decide
+  apply safe ⟨xOn,yOn,xBefore⟩ blocks
+  exact monotone_nat_of_le_succ (reachIn_subset_succ _ x) (show 2 ≤ (k-2)-1 by omega) reaches
+
+/-- At the original factor-four width the pieces preserve the chosen
+exclusion and contain a return across a split. -/
+theorem forcedReturnRows_at_frozen_width {m k : ℕ} (large : 10 ≤ m) (cutoff : 5 ≤ k) (half : Bool) :
+    let M := ∑ i : Fin (2*m-1), (forcedReturnRows i).length
+    let width := 4*M/(2*m-1)
+    localOrderAdmissible half k (splitListPaths (@forcedReturnRows m) width) ∧
+      ¬ NoShortReturnAcrossWidthCutsInPieces (@forcedReturnRows m) width k := by
+  have positive : 0 < m := by omega
+  have divisor : 0 < 2*m-1 := by omega
+  have wide : 2 ≤ 4*(5*m-4)/(2*m-1) := (Nat.le_div_iff_mul_le divisor).mpr (by omega)
+  have narrow : 4*(5*m-4)/(2*m-1) < 10 := (Nat.div_lt_iff_lt_mul divisor).mpr (by omega)
+  dsimp only
+  rw [forcedReturnRows_mass positive]
+  exact ⟨forcedReturnRows_width_pieces_admissible wide,
+    forcedReturnRows_width_pieces_keep_return wide (narrow.trans_le large) cutoff⟩
 
 end OnlineReachabilityPreservers

@@ -179,8 +179,8 @@ theorem splitListVertices_halfFree_of_noShortBackwardCopyReturn {n p k D : ℕ}
   copied_subrows_halfFree_of_noShortBackwardCopyReturn paths simple (splitListVertices paths D)
     (fun _ => List.Sublist.refl _) free safe
 
-
-private theorem reachIn_of_fin_steps {V : Type*} [DecidableEq V] {G : Arcs V} {d : ℕ}
+/-- A finite chain of steps gives bounded reachability between its endpoints. -/
+theorem reachIn_of_fin_steps {V : Type*} [DecidableEq V] {G : Arcs V} {d : ℕ}
     (vertex : Fin (d+1) → V)
     (steps : ∀ i : Fin d, Edge G (vertex i.castSucc) (vertex i.succ)) :
     vertex 0 ∈ reachIn G (vertex (Fin.last d)) d := by
