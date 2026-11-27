@@ -2470,6 +2470,20 @@ path excess. The successive version gives a literal distinct nonempty
 witness for feasible literal input at cutoff at least two.
 [Exact successive excess expression](OnlineReachabilityPreservers/ShortReturnClippingAfterDeletion.lean#L10) · [Clipping after a restriction](OnlineReachabilityPreservers/ShortReturnClippingAfterDeletion.lean#L19) · [Both excesses before the clips](OnlineReachabilityPreservers/ShortReturnClippingAfterDeletion.lean#L46) · [Literal witness after a restriction](OnlineReachabilityPreservers/ShortReturnClippingAfterDeletion.lean#L75).
 
+A seven-vertex spine with its six adjacent backward darts attaches at
+vertex zero to a ten-leaf bidirected star. With padding for indexed
+rows, the original budgets are 48 and 59, the mass is 59, and both
+frozen widths are four. The rows exclude every full bridge. At cutoff
+seven its center degree class has size 22 and the spine path class has
+size seven. They share at most one incidence, so capping both original
+classes requires at least 20 deletions, exceeding the one-third deletion
+allowance of 19. Delete the incidence of vertex three on the reverse row from
+four to three. The recomputed path excess is zero and the degree
+excess is at most 18. The initial deletion and both clips now fit the
+budget, giving a frozen \(M/18\) witness at any chosen full cutoff
+within both original budgets and all four caps.
+[Original widths](OnlineReachabilityPreservers/ShortReturnRecomputedExample.lean#L24) · [Original full exclusion](OnlineReachabilityPreservers/ShortReturnRecomputedExample.lean#L178) · [Fixed-class lower bound](OnlineReachabilityPreservers/ShortReturnRecomputedExample.lean#L436) · [Path excess after one deletion](OnlineReachabilityPreservers/ShortReturnRecomputedExample.lean#L215) · [Frozen full witness](OnlineReachabilityPreservers/ShortReturnRecomputedExample.lean#L256).
+
 When differently labelled row families can meet only at one fixed
 common vertex, any bridge stays within its river's family. The first and last
 steps outside that family would require the shared vertex at two
