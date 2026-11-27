@@ -378,9 +378,9 @@ of the width pieces to survive the trim. The resulting witness keeps
 \(M/256\) with the same cutoff, both original budgets and all four
 original-average caps. It applies at the indexed and feasible literal
 full maxima.
-[Original-average cleaning](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L236)
-· [Indexed maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L284)
-· [Feasible literal maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L298).
+[Original-average cleaning](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L237)
+· [Indexed maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L285)
+· [Feasible literal maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L299).
 
 The original-average guarantee reaches \(4k\ge3\min(n,p)\) with the
 same \(M/256\) retention. In the larger high-mass case, selecting the
@@ -392,10 +392,10 @@ original widths. Trim the other side. Its width blocks give deletion
 cost at most \(7K/186\), and the actual support sizes give peeling cost
 at most \(11M/25+2K/31\). The same budgets, original caps and input
 cutoff hold for both indexed and feasible literal input.
-[One-side trim](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L414)
-· [Original-average witness](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L510)
-· [Indexed maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L573)
-· [Feasible literal maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L587).
+[One-side trim](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L370)
+· [Original-average witness](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L466)
+· [Indexed maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L529)
+· [Feasible literal maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L543).
 
 The original-average conclusion at full cutoff six has a separate
 proof. A reverse comparison within one width piece gives a conflict
@@ -1070,6 +1070,21 @@ and all four caps. If \(M<2n\), the sparse construction suffices.
 The bridge guarantees and the half degree-splitting conditions stay
 the same.
 [Component split and cleaning proofs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean).
+
+For half exclusion at cutoff \(k\), it suffices to test degree-copy and
+width-piece returns after selecting a rectangle and erasing incidences.
+The degree test uses each copied parent restricted to the vertices that
+survive in its own pieces. The width test uses the actual retained
+comparison graph and the before relation of the original copied parent.
+Both return radii are \(\max(0,k-3)\). If the rectangle pays the deletion
+cost, two original-average peeling charges, and retention \(M/r\), the
+witness preserves exclusion through \(k\) with both budgets and the four
+original-average caps. The feasible literal transfer uses \(k\ge2\) and
+\(r\ge8\). The existence of a paying certificate for every high-mass
+half-free input remains open.
+[Projection on retained pieces](OnlineReachabilityPreservers/HalfWidthRectangleRepair.lean#L39)
+· [Supported erasure](OnlineReachabilityPreservers/HalfWidthRectangleRepair.lean#L94)
+· [Literal witness](OnlineReachabilityPreservers/HalfWidthRectangleRepair.lean#L167).
 
 If visits longer than \(L\) contain at most \(M/56\) incidences, remove
 each such visit as a whole. The test uses the original precedence

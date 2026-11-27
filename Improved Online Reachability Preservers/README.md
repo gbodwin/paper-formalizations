@@ -2053,7 +2053,7 @@ case below \(3\min(n,p)/4\) and the output-average case without a fixed
 positive cutoff fraction remain open. The literal last-arc
 \(H\) comparison with the full extremum \(\beta\) in Lemma 39 and a native
 execution-time bound for the Steiner algorithm remain open.
-[Original-average bound](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L573)
+[Original-average bound](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L529)
 · [Output-average bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L239).
 
 The binary arc preparation encodes both endpoints of each raw row
