@@ -1836,4 +1836,23 @@ theorem listRegularizedPaths_fullFree_of_noShortPrecedenceCycle {n p k : ℕ}
     (free.split_list_vertices_any (·.fst) (fun {i _ _} => splitListVertices_step (simple i)))
     longCycles.noShortReturnAcrossWidthCuts
 
+/-- The half-bridge cleaning only needs to rule out short walks between
+different copies of the same vertex, alongside the width-cut condition. -/
+theorem regularization_list_frozen_half_of_noShortSplitReturn {n p k : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) k) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (degreeSafe : NoShortSplitReturn (splitListVertices paths (4*(∑ i, (paths i).length)/n))
+      (·.fst) (k-3))
+    (returns : NoShortReturnAcrossWidthCuts paths (4*(∑ i, (paths i).length)/p) k) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) k ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  have copyLegal := free.split_list_vertices_of_noShortSplitReturn _
+    (fun {i _ _} => splitListVertices_step (simple i)) degreeSafe
+  have legal := width_blocks_admissible_of_noShortReturnAcrossWidthCuts (half := true)
+    paths simple copyLegal returns
+  exact regularization_list_frozen_after_width_blocks_of_mass paths simple legal hn hp dense long le_rfl (by omega)
+
 end OnlineReachabilityPreservers

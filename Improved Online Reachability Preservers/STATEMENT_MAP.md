@@ -2070,8 +2070,14 @@ retains \(M/32\) under the same original budgets and caps when rowwise
 deletions of at most \(M/18\) incidences remove the short cycles. Longer
 cycles may remain in both variants. The [width-cut condition](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1537)
 requires the bounded-return exclusion only for pairs across the actual
-factor-four cuts. For half bridges, the degree split uses one of the
+factor-four cuts. The earlier half-bridge degree-split result uses one of the
 [four sufficient conditions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1506).
+[A separate degree-split condition](OnlineReachabilityPreservers/BridgeVertexProjection.lean)
+excludes walks of length at most \(\max(0,k-3)\) between distinct copies
+of one vertex in the copied rows. This suffices because erasing closed
+sections preserves the last arc whenever the terminal projected corner
+is unique in the chain. With the width-cut condition it gives the
+same [\(M/16\) guarantee](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1841).
 The same conditional \(M/16\) and [\(M/32\) after rowwise deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1579)
 keep both budgets and all four original-average caps.
 Alternatively, use each row's last safe boundary as its rank. A cut is

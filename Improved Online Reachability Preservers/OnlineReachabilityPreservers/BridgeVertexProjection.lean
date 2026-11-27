@@ -29,16 +29,21 @@ private theorem suffixFrom {u v x : V} {E : List (I × V)} (walk : LabeledWalk b
       exact ⟨F, suffix.trans (List.suffix_cons _ _), subwalk, vertices.trans (List.suffix_cons _ _)⟩
 
 /-- Erase closed sections while keeping a subsequence of the original edges.
-A nontrivial erasure removes at least two edges when steps are strict. -/
+A nontrivial erasure removes at least two edges when steps are strict. If
+the final vertex did not occur earlier, the last edge survives. -/
 private theorem eraseCycles {u v : V} {E : List (I × V)} (walk : LabeledWalk before u v E)
     (strict : ∀ {i x y}, before i x y → x ≠ y) :
     ∃ F, F.Sublist E ∧ LabeledWalk before u v F ∧ (u :: F.map Prod.snd).Nodup ∧
-      (F = E ∨ F.length + 2 ≤ E.length) := by
+      (F = E ∨ F.length + 2 ≤ E.length) ∧
+      (v ∉ (u :: E.map Prod.snd).dropLast → F.getLast? = E.getLast?) := by
   induction walk with
-  | nil a => exact ⟨[], List.Sublist.refl _, .nil _, by simp, Or.inl rfl⟩
+  | nil a => exact ⟨[], List.Sublist.refl _, .nil _, by simp, Or.inl rfl, fun _ => rfl⟩
   | @cons x y z i D edge tail ih =>
     classical
-    obtain ⟨F, sub, short, distinct, loss⟩ := ih
+    obtain ⟨F, sub, short, distinct, loss, lastKept⟩ := ih
+    have separation (terminal : z ∉ (x :: ((i,y) :: D).map Prod.snd).dropLast) :
+        z ≠ x ∧ z ∉ (y :: D.map Prod.snd).dropLast := by
+      simpa only [List.map_cons, List.dropLast_cons_cons, List.mem_cons, not_or] using terminal
     by_cases occurs : x ∈ y :: F.map Prod.snd
     · obtain ⟨Q, suffix, shorterWalk, vertices⟩ := suffixFrom short occurs
       have different : Q.length < F.length := by
@@ -47,12 +52,30 @@ private theorem eraseCycles {u v : V} {E : List (I × V)} (walk : LabeledWalk be
         have equal := vertices.eq_of_length_le (by simpa only [List.length_cons, List.length_map] using Nat.succ_le_succ same)
         exact strict edge (List.cons.inj equal).1
       have bound := sub.length_le
-      exact ⟨Q, suffix.sublist.trans (sub.trans (List.sublist_cons_self _ _)), shorterWalk,
-        vertices.sublist.nodup distinct, Or.inr (by simp only [List.length_cons]; omega)⟩
-    · refine ⟨(i,y)::F, sub.cons_cons _, .cons edge short, List.nodup_cons.mpr ⟨occurs,distinct⟩, ?_⟩
-      rcases loss with rfl | smaller
-      · exact Or.inl rfl
-      · exact Or.inr (by simp only [List.length_cons]; omega)
+      refine ⟨Q, suffix.sublist.trans (sub.trans (List.sublist_cons_self _ _)), shorterWalk,
+        vertices.sublist.nodup distinct, Or.inr (by simp only [List.length_cons]; omega), ?_⟩
+      intro terminal
+      have qNonempty : Q ≠ [] := by
+        intro empty
+        subst Q
+        have equal : x = z := by cases shorterWalk; rfl
+        exact (separation terminal).1 equal.symm
+      have dNonempty : D ≠ [] := by
+        intro empty
+        have fits := (suffix.sublist.trans sub).length_le
+        rw [empty,List.length_nil] at fits
+        exact qNonempty (List.length_eq_zero_iff.mp (Nat.le_zero.mp fits))
+      have sameLast : Q.getLast? = F.getLast? := by
+        obtain ⟨extra,rfl⟩ := suffix
+        exact (List.getLast?_append_of_ne_nil extra qNonempty).symm
+      rw [List.getLast?_cons_of_ne_nil dNonempty]
+      exact sameLast.trans (lastKept (separation terminal).2)
+    · refine ⟨(i,y)::F, sub.cons_cons _, .cons edge short, List.nodup_cons.mpr ⟨occurs,distinct⟩, ?_, ?_⟩
+      · rcases loss with rfl | smaller
+        · exact Or.inl rfl
+        · exact Or.inr (by simp only [List.length_cons]; omega)
+      · intro terminal
+        simp only [List.getLast?_cons,lastKept (separation terminal).2]
 
 private theorem ofIndexed : ∀ {n : ℕ} (v : Fin (n+1) → V) (a : Fin n → I),
     (∀ i, before (a i) (v i.castSucc) (v i.succ)) →
@@ -96,12 +119,26 @@ private theorem Bridge.project_vertices_aux {V W I : Type*} {before : I → V �
     (steps : ∀ {i x y}, before i x y → after i (project x) (project y))
     (strict : ∀ {i x y}, after i x y → x ≠ y) :
     ∃ j ≤ k, ∃ short : Bridge after j, short.river = b.river ∧
-      (Function.Injective (project ∘ b.vertex) ∨ j + 2 ≤ k) := by
+      (Function.Injective (project ∘ b.vertex) ∨ j + 2 ≤ k) ∧
+      ((∀ i : Fin (k+1), project (b.vertex i.castSucc) ≠ project (b.vertex (Fin.last (k+1)))) →
+        short.arc (Fin.last j) = b.arc (Fin.last k)) := by
   let v := project ∘ b.vertex
   let E := List.ofFn fun i => (b.arc i, v i.succ)
   have walk : LabeledWalk after (v 0) (v (Fin.last (k+1))) E :=
     LabeledWalk.ofIndexed v b.arc (fun i => steps (b.arcStep i))
-  obtain ⟨F, sub, short, vertices, loss⟩ := walk.eraseCycles strict
+  obtain ⟨F, sub, short, vertices, loss, lastKept⟩ := walk.eraseCycles strict
+  have vertexList : v 0 :: E.map Prod.snd = List.ofFn v := by
+    rw [List.ofFn_succ]
+    simp only [E,List.map_ofFn,Function.comp_def]
+  have finalNotEarlier (unique : ∀ i : Fin (k+1), v i.castSucc ≠ v (Fin.last (k+1))) :
+      v (Fin.last (k+1)) ∉ (v 0 :: E.map Prod.snd).dropLast := by
+    rw [vertexList,List.ofFn_succ_last]
+    simp only [List.dropLast_append_cons,List.dropLast_singleton,List.append_nil,List.mem_ofFn]
+    exact fun ⟨i,equal⟩ => unique i equal
+  have inputLast : E.getLast? = some (b.arc (Fin.last k),v (Fin.last (k+1))) := by
+    unfold E
+    rw [List.ofFn_succ_last]
+    simp only [List.getLast?_append,List.getLast?_singleton,Option.some_or,Fin.succ_last]
   have shortOrDistinct : Function.Injective v ∨ F.length + 2 ≤ E.length := by
     rcases loss with rfl | fewer
     · left
@@ -139,7 +176,7 @@ private theorem Bridge.project_vertices_aux {V W I : Type*} {before : I → V �
     have riverAbsent (i : Fin (tail.length+1)) : b.river ≠ index i :=
       fresh (List.mem_map_of_mem ((e::tail).get_mem i))
     refine ⟨tail.length,?_,⟨x,index,b.river, LabeledWalk.indexedVertex_inj vertices,injective,riverAbsent,?_,projected⟩,
-      rfl, shortOrDistinct.imp_right ?_⟩
+      rfl, shortOrDistinct.imp_right ?_, ?_⟩
     · have bound := sub.length_le
       simpa [E] using Nat.le_of_succ_le_succ (show tail.length+1 ≤ k+1 by simpa [E] using bound)
     · change after b.river (x 0) (x (Fin.last (tail.length+1)))
@@ -147,6 +184,12 @@ private theorem Bridge.project_vertices_aux {V W I : Type*} {before : I → V �
       exact steps b.riverStep
     · simp only [E, List.length_ofFn, List.length_cons]
       omega
+    · intro unique
+      have equal := lastKept (finalNotEarlier unique)
+      rw [inputLast,List.getLast?_eq_some_getLast (List.cons_ne_nil _ _)] at equal
+      have row := congrArg Prod.fst (Option.some.inj equal)
+      simpa only [index,List.get_eq_getElem,List.getLast_eq_getElem,Fin.val_last,
+        List.length_cons,Nat.add_sub_cancel] using row
 
 /-- Project vertices without requiring global injectivity. Erasing closed sections
 may shorten the bridge and drops some arcs, while keeping its river. -/
@@ -155,7 +198,7 @@ theorem Bridge.project_vertices {V W I : Type*} {before : I → V → V → Prop
     (steps : ∀ {i x y}, before i x y → after i (project x) (project y))
     (strict : ∀ {i x y}, after i x y → x ≠ y) :
     ∃ j ≤ k, ∃ short : Bridge after j, short.river = b.river := by
-  obtain ⟨j, bound, short, river, _⟩ := b.project_vertices_aux project steps strict
+  obtain ⟨j, bound, short, river, _, _⟩ := b.project_vertices_aux project steps strict
   exact ⟨j,bound,short,river⟩
 
 /-- If projected corners collide, removing closed sections leaves a bridge
@@ -165,7 +208,77 @@ theorem Bridge.project_vertices_with_collision {V W I : Type*} {before : I → V
     (steps : ∀ {i x y}, before i x y → after i (project x) (project y))
     (strict : ∀ {i x y}, after i x y → x ≠ y) (collision : ¬ Function.Injective (project ∘ b.vertex)) :
     ∃ j, j + 2 ≤ k ∧ ∃ short : Bridge after j, short.river = b.river := by
-  obtain ⟨j, _, short, river, fewer⟩ := b.project_vertices_aux project steps strict
+  obtain ⟨j, _, short, river, fewer, _⟩ := b.project_vertices_aux project steps strict
   exact ⟨j,fewer.resolve_left collision,short,river⟩
+
+
+/-- Earlier projected corners may collide. If the terminal projected
+corner is new, erasing the closed sections preserves the last arc. -/
+theorem Bridge.project_vertices_preserving_last {V W I : Type*}
+    {before : I → V → V → Prop} {after : I → W → W → Prop} {k : ℕ} (b : Bridge before k)
+    (project : V → W)
+    (steps : ∀ {i x y}, before i x y → after i (project x) (project y))
+    (strict : ∀ {i x y}, after i x y → x ≠ y)
+    (terminal : ∀ i : Fin (k+1), project (b.vertex i.castSucc) ≠ project (b.vertex (Fin.last (k+1)))) :
+    ∃ j ≤ k, ∃ short : Bridge after j, short.river = b.river ∧ short.arc (Fin.last j) = b.arc (Fin.last k) := by
+  obtain ⟨j,size,short,river,_,lastKept⟩ := b.project_vertices_aux project steps strict
+  exact ⟨j,size,short,river,lastKept terminal⟩
+
+/-- In the copied system, a short directed walk between two copies of
+the same original vertex must end where it starts. -/
+def NoShortSplitReturn {I V W : Type*} [DecidableEq W] (copies : I → List W)
+    (project : W → V) (cutoff : ℕ) : Prop :=
+  ∀ {d : ℕ} (vertex : Fin (d+1) → W) (row : Fin d → I), d ≤ cutoff →
+    (∀ j, SourceAudit.BeforeIn copies (row j) (vertex j.castSucc) (vertex j.succ)) →
+    project (vertex 0) = project (vertex (Fin.last d)) → vertex 0 = vertex (Fin.last d)
+
+/-- Only terminal returns could destroy the arrival comparison when a
+half-bridge is projected. A terminal return in a bridge of size at most
+k has length at most k minus three. -/
+theorem HalfBridgeFree.split_list_vertices_of_noShortSplitReturn {I V W : Type*}
+    [LinearOrder I] [DecidableEq V] [DecidableEq W] {paths : I → List V} {copies : I → List W}
+    {k : ℕ} (free : HalfBridgeFree (SourceAudit.BeforeIn paths) k)
+    (project : W → V)
+    (steps : ∀ {i x y}, SourceAudit.BeforeIn copies i x y → SourceAudit.BeforeIn paths i (project x) (project y))
+    (safe : NoShortSplitReturn copies project (k-3)) :
+    HalfBridgeFree (SourceAudit.BeforeIn copies) k := by
+  intro d small b earlier
+  have lastUnique (i : Fin (d+1)) :
+      project (b.vertex i.castSucc) ≠ project (b.vertex (Fin.last (d+1))) := by
+    intro same
+    have afterFirst : 2 ≤ i.val := by
+      by_contra! first
+      have cases : i.val = 0 ∨ i.val = 1 := by omega
+      rcases cases with zero | one
+      · have start : i.castSucc = 0 := Fin.ext zero
+        rw [start] at same
+        exact listBefore_ne (steps b.riverStep) same
+      · have atFirst : i.castSucc = (0 : Fin (d+1)).succ := Fin.ext one
+        have parallel := steps (b.arcStep 0)
+        rw [← atFirst,same] at parallel
+        exact no_parallel_list_steps free (by omega) (b.river_ne_arc 0) (steps b.riverStep) parallel
+    let t := d+1-i.val
+    have tFit : t ≤ k-3 := by unfold t; omega
+    let position (j : Fin (t+1)) : Fin (d+2) := ⟨i.val+j.val,by unfold t at j; omega⟩
+    let vertex (j : Fin (t+1)) := b.vertex (position j)
+    let rowIndex (j : Fin t) : Fin (d+1) := ⟨i.val+j.val,by unfold t at j; omega⟩
+    let row (j : Fin t) := b.arc (rowIndex j)
+    have start : position 0 = i.castSucc := Fin.ext (by simp [position])
+    have finish : position (Fin.last t) = Fin.last (d+1) := Fin.ext (by simp [position,t])
+    have tailSteps (j : Fin t) : SourceAudit.BeforeIn copies (row j) (vertex j.castSucc) (vertex j.succ) := by
+      have left : position j.castSucc = (rowIndex j).castSucc := Fin.ext rfl
+      have right : position j.succ = (rowIndex j).succ := Fin.ext (by simp [position,rowIndex,Nat.add_assoc])
+      simpa only [vertex,row,left,right] using b.arcStep (rowIndex j)
+    have sameProjected : project (vertex 0) = project (vertex (Fin.last t)) := by
+      simpa only [vertex,start,finish] using same
+    have collides : b.vertex i.castSucc = b.vertex (Fin.last (d+1)) := by
+      simpa only [vertex,start,finish] using safe vertex row tFit tailSteps sameProjected
+    have equal := congrArg Fin.val (b.distinctVertices collides)
+    change i.val = d+1 at equal
+    omega
+  obtain ⟨j,size,old,river,lastArc⟩ := b.project_vertices_preserving_last project
+    (fun {_ _ _} => steps) (fun {_ _ _} step => listBefore_ne step) lastUnique
+  apply free (show j+2 ≤ k by omega) old
+  simpa only [river,lastArc] using earlier
 
 end OnlineReachabilityPreservers

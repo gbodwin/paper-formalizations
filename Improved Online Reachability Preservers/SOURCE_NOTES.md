@@ -757,12 +757,24 @@ input is still open.
 · [Factor-four cleaning](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1552)
 · [Cleaning after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1600).
 
+[Last-arc-preserving vertex projection](OnlineReachabilityPreservers/BridgeVertexProjection.lean)
+erases closed sections of the projected chain. If the projected
+terminal corner has no earlier occurrence, both the last arc and
+the river survive. An earlier occurrence of that corner must follow
+at least two arcs, since one exterior arc would give a size-two
+bridge. It therefore yields a walk of length at most \(\max(0,k-3)\)
+between two copies of the same vertex. Excluding just these walks
+between distinct copies preserves half exclusion in the degree split.
+Together with the width-cut condition, this gives \(M/16\) under the
+same original budgets and caps.
+[Cleaning with the copy-return test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1841).
+
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
 those positions, so only pairs in different blocks need the bounded
-return test. Full exclusion follows with this local premise. For half
-exclusion the degree split also needs one of four conditions. These are
-the absence of cycles through \(k-3\), a cutoff at most four, full exclusion
+return test. Full exclusion follows with this local premise. The earlier
+sufficient conditions for the half-bridge degree split are the absence
+of cycles through \(k-3\), a cutoff at most four, full exclusion
 through \(k-2\), or degrees already within the upper cap. Short cycles
 can remain if they create no bounded return across a cut. The same
 retention and caps hold after rowwise deletions costing at most \(M/18\)

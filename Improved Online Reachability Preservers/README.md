@@ -917,6 +917,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   uses one of the sufficient conditions for splitting vertices.
   [Width-cut criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1537)
   · [Width-cut criterion after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1579).
+  For half bridges, the [copy-return test](OnlineReachabilityPreservers/BridgeVertexProjection.lean)
+  uses walks of length at most \(\max(0,k-3)\) between distinct copies of
+  one vertex. With the same width-cut condition, it gives \(M/16\),
+  both original budgets, and all four original-average caps.
+  [Cleaning with the copy-return test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1841).
 - For simple paths with the matching bridge exclusion and incidence mass
   \(M\) at least both positive budgets, the cuts can move around individual
   short returns within a row. Pack whole runs between safe boundaries.
