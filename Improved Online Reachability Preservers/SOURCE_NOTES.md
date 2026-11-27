@@ -1198,7 +1198,18 @@ is within the cap, and projection recovers every original row. For simple
 half-five-free input of mass at least both positive budgets with path
 lengths already within the original cap, the construction gives an indexed
 witness of mass at least \(M/4\) with both budgets and all four frozen caps.
-[Constrained rows](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L17) · [Degree cap](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L99) · [Half-five exclusion](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L133) · [Frozen witness with capped path lengths](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L159).
+[Constrained rows](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L17) · [Degree cap](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L134) · [Half-five exclusion](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L147) · [Frozen witness with capped path lengths](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L173).
+
+To handle long rows after degree packing, protect both endpoints of each
+comparison reversed on another copied row. Put the protected vertices
+first in the packing order, then keep the original order within each piece.
+If the protected vertices of every row fit the path width, the pieces
+preserve half-five exclusion in parent arrival order. When both protected
+supports fit their widths, these two packings keep every incidence before
+restriction and peeling. For simple half-five-free input of mass at least
+both positive budgets, the indexed witness has both original budgets,
+all four frozen caps and mass at least \(M/16\).
+[Protected path vertices](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L209) · [Half-five path splitting](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L267) · [Exact mass](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L308) · [Frozen cleaning with both packings](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L358).
 
 The usual nested split example can be padded to six vertices and ten
 indexed rows with mass ten. Two extra vertices belong only to the
