@@ -3913,6 +3913,21 @@ satisfies all four starting-average caps.
 · [Exact singleton padding](OnlineReachabilityPreservers/ExtremalCopyBounds.lean#L272)
 · [Nearby-budget literal frozen case](OnlineReachabilityPreservers/NearBudgetFrozenFullThree.lean#L71).
 
+For \(b\ge1024^3\) and \(2a\le3b\), the cutoff-three result
+retains at least \(M/16\). In a field of order \(Q\), restrict both
+the layers and slope labels to width \(w\). The regular full-three
+family has \(v=wQ^2\) vertices and paths, and mass \(vw\).
+Choose the power-of-two field so that \(v\le b\le4v\)
+and \(16b\le65w^3\). The latest-hit bound gives \(M\le4bw\).
+Using \(\lfloor b/v\rfloor\) disjoint copies and distinct singleton
+padding gives an exact eligible half family with mass at least
+\(bw/2\), supplying the upper caps at both starting averages.
+One restricted field family satisfies all four bounds at the
+literal maximum and fits both budgets.
+[Restricting layers and slopes](OnlineReachabilityPreservers/WengerThreeRows.lean#L356)
+· [Half mass at ratio at most three halves](OnlineReachabilityPreservers/ComparableFrozenFullThree.lean#L21)
+· [Starting caps at comparable large budgets](OnlineReachabilityPreservers/ComparableFrozenFullThree.lean#L124).
+
 For a field of order \(q\), take \(\nu\) outside the image of
 \(z\mapsto z^2+z\) and use slope \((s,t,s^2+st-\nu t^2)\).
 The points have four coordinates, and each line is specified by the

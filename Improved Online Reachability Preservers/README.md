@@ -2161,6 +2161,13 @@ uses \(q^3\) vertices and rows, meets all four starting-average caps,
 and has mass \(q^4\) between \(M/32\) and \(M\).
 [Starting-average witness at nearby budgets](OnlineReachabilityPreservers/NearBudgetFrozenFullThree.lean#L71).
 
+When \(b=\min(n,p)\ge1024^3\) and \(2\max(n,p)\le3b\), a regular
+full-three witness meets both budgets, satisfies the four starting-average
+caps, and retains at least \(M/16\) at the literal half maximum.
+Restricting the layers and slopes of the next larger field handles
+sizes between the exact field cubes.
+[Starting-average witness at comparable large budgets](OnlineReachabilityPreservers/ComparableFrozenFullThree.lean#L124).
+
 For a finite field of order \(q\ge5\), cutoff three also admits the
 starting-average conclusion at \((n,p)=(q^4,q^5)\) and \((q^5,q^4)\).
 A quadratic incidence construction and its transpose give exact-budget

@@ -2780,6 +2780,30 @@ local-order upper bound and recurrence of Theorem 43.
   · [Exact singleton padding](OnlineReachabilityPreservers/ExtremalCopyBounds.lean#L272)
   · [Starting caps at nearby budgets](OnlineReachabilityPreservers/NearBudgetFrozenFullThree.lean#L71).
 
+  To extend the ratio to three halves, use the same number \(w\)
+  of first-coordinate layers and slopes in a field of order \(Q\).
+  The finite incidence construction preserves both uniqueness of
+  a row through two points and the exclusion of incidence
+  triangles. Its vertex and row budgets are \(v=wQ^2\), and both
+  degrees and lengths equal \(w\). For \(b\ge1024^3\), take
+  \(q=2^{\lfloor\log_8 b\rfloor}\). If \(b\le4q^3\), choose
+  \(Q=w=q\). Otherwise take \(Q=2q\) and
+  \(w=\lfloor b/Q^2\rfloor\). In both cases
+  \(v\le b\le4v\), \(w\ge1024\), and \(16b\le65w^3\).
+  At \(2\max(n,p)\le3b\), the latest-hit estimate at \(T=31\)
+  implies \(M\le4bw\). In fact \(32n+p\le50b\) and
+  \(2np\le3b^2\). If \(M>4bw\), the shifted mass \(S\)
+  satisfies \(16S>61bw\), contradicting the cubic bound.
+  Take \(\lfloor b/v\rfloor\) disjoint copies to certify the
+  literal maximum. They use at least \(b/2\) row labels, so the
+  remaining row count fits distinct singleton padding even when
+  \(p>n\). This gives both upper caps and mass at least \(vw\)
+  at the maximum. One restricted full-three family then has
+  \(W=vw\) in \([M/16,M]\) and all four starting caps.
+  [Restricting layers and slopes](OnlineReachabilityPreservers/WengerThreeRows.lean#L356)
+  · [Half mass estimate](OnlineReachabilityPreservers/ComparableFrozenFullThree.lean#L21)
+  · [Starting caps at comparable large budgets](OnlineReachabilityPreservers/ComparableFrozenFullThree.lean#L124).
+
   A second finite-field construction treats the exact budget pairs
   \((q^4,q^5)\) and \((q^5,q^4)\). The map \(z\mapsto z^2+z\)
   takes zero and minus one to the same value. Over every finite field,
