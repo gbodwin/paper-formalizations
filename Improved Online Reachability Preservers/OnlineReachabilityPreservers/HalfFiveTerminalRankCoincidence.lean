@@ -73,4 +73,12 @@ theorem terminalCoincidenceRankedCopies_share_two
   · exact List.mem_map.mpr ⟨0,by decide +kernel,by simp only [x,zero]⟩
   · exact List.mem_map.mpr ⟨1,by decide +kernel,by simp only [y,one]⟩
 
+/-- The finer collision graph has no constraints on the four-row
+example, since it has no original full three-bridge. -/
+theorem terminalCoincidenceRows_collision_graph_empty (v : Fin 6) :
+    halfFiveCollisionRankGraph terminalCoincidenceRows v = ∅ := by
+  apply halfFiveCollisionRankGraph_empty_of_no_terminal_three
+  intro b _
+  exact ((terminalCoincidenceRows_fullFree 3) (k := 1) (by decide)).false b
+
 end OnlineReachabilityPreservers.SourceAudit

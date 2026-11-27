@@ -25,16 +25,74 @@ theorem halfFiveTerminalRankGraph_edge {I V : Type*} [DecidableEq I] [Fintype I]
   classical
   simp only [Edge,halfFiveTerminalRankGraph,mem_filter,mem_univ,true_and]
 
-/-- The half-five copy test only needs weak rank inequalities along the
-terminal graph at each original vertex. It can allow other incidences
-to change their rank order relative to arrival. -/
-theorem HalfBridgeFree.split_list_vertices_five_of_terminal_rank_graph {I V W : Type*}
+/-- A three-bridge ending at `v`, followed by a two-step return to `v`.
+The projected half-five witness uses five distinct rows and its last
+row arrives before the river. -/
+structure HalfFiveTerminalPattern {I V : Type*} [LinearOrder I] [DecidableEq V]
+    (paths : I → List V) (v : V) where
+  triangle : Bridge (Before paths) 1
+  terminal : triangle.vertex 2 = v
+  outRow : I
+  inRow : I
+  middle : V
+  river_ne_out : triangle.river ≠ outRow
+  river_ne_in : triangle.river ≠ inRow
+  out_ne_arc : ∀ i, outRow ≠ triangle.arc i
+  in_ne_arc : ∀ i, inRow ≠ triangle.arc i
+  out_ne_in : outRow ≠ inRow
+  outStep : Before paths outRow v middle
+  inStep : Before paths inRow middle v
+  earlier : inRow < triangle.river
+
+/-- Keep only terminal comparisons used together in a projected
+half-five pattern. -/
+noncomputable def halfFiveCollisionRankGraph {I V : Type*} [LinearOrder I] [Fintype I] [DecidableEq V]
+    (paths : I → List V) (v : V) : Arcs I := by
+  classical
+  exact univ.filter fun e => ∃ h : HalfFiveTerminalPattern paths v,
+    (h.triangle.river = e.1 ∧ h.triangle.arc 1 = e.2) ∨ (h.outRow = e.1 ∧ h.inRow = e.2)
+
+theorem halfFiveCollisionRankGraph_edge {I V : Type*} [LinearOrder I] [Fintype I] [DecidableEq V]
+    {paths : I → List V} {v : V} {r a : I} :
+    Edge (halfFiveCollisionRankGraph paths v) r a ↔ ∃ h : HalfFiveTerminalPattern paths v,
+      (h.triangle.river = r ∧ h.triangle.arc 1 = a) ∨ (h.outRow = r ∧ h.inRow = a) := by
+  classical
+  simp only [Edge,halfFiveCollisionRankGraph,mem_filter,mem_univ,true_and]
+
+/-- Each constraint is one of the broad terminal rank comparisons. -/
+theorem halfFiveCollisionRankGraph_subset {I V : Type*} [LinearOrder I] [Fintype I] [DecidableEq V]
+    (paths : I → List V) (v : V) : halfFiveCollisionRankGraph paths v ⊆ halfFiveTerminalRankGraph paths v := by
+  rintro ⟨r,a⟩ on
+  obtain ⟨h,⟨river,last⟩ | ⟨outRow,inRow⟩⟩ :=
+    halfFiveCollisionRankGraph_edge.mp (show Edge (halfFiveCollisionRankGraph paths v) r a from on)
+  · exact halfFiveTerminalRankGraph_edge.mpr (Or.inl ⟨h.triangle,river,last,h.terminal⟩)
+  · subst r
+    subst a
+    exact halfFiveTerminalRankGraph_edge.mpr (Or.inr ⟨h.middle,h.outStep,h.inStep⟩)
+
+/-- If no three-bridge ends at a vertex, the collision graph there is empty. -/
+theorem halfFiveCollisionRankGraph_empty_of_no_terminal_three {I V : Type*}
+    [LinearOrder I] [Fintype I] [DecidableEq V] {paths : I → List V} {v : V}
+    (none : ∀ b : Bridge (Before paths) 1, b.vertex 2 ≠ v) :
+    halfFiveCollisionRankGraph paths v = ∅ := by
+  ext edge
+  obtain ⟨r,a⟩ := edge
+  constructor
+  · intro on
+    obtain ⟨h,_⟩ := halfFiveCollisionRankGraph_edge.mp
+      (show Edge (halfFiveCollisionRankGraph paths v) r a from on)
+    exact (none h.triangle h.terminal).elim
+  · simp
+
+/-- The collision graph supplies both rank inequalities at a repeated
+projected terminal of a size-five half-bridge. -/
+theorem HalfBridgeFree.split_list_vertices_five_of_collision_rank_graph {I V W : Type*}
     [LinearOrder I] [Fintype I] [DecidableEq V] [DecidableEq W]
     {paths : I → List V} {copies : I → List W} (free : HalfBridgeFree (Before paths) 5)
     (project : W → V) (rank : W → ℕ) (assigned : I → V → ℕ)
     (identify : ∀ {x y}, project x = project y → rank x = rank y → x = y)
     (localRank : ∀ {i x}, x ∈ copies i → rank x = assigned i (project x))
-    (increases : ∀ v ⦃r a⦄, Edge (halfFiveTerminalRankGraph paths v) r a → assigned r v ≤ assigned a v)
+    (increases : ∀ v ⦃r a⦄, Edge (halfFiveCollisionRankGraph paths v) r a → assigned r v ≤ assigned a v)
     (steps : ∀ {i x y}, Before copies i x y → Before paths i (project x) (project y)) :
     HalfBridgeFree (Before copies) 5 := by
   intro d small b earlier
@@ -53,14 +111,25 @@ theorem HalfBridgeFree.split_list_vertices_five_of_terminal_rank_graph {I V W : 
   let prefixBridge := threeListBridge
     (fun eq => (by decide : (0 : Fin 4) ≠ 1) (b.distinctArcs eq))
     (b.river_ne_arc 0) (b.river_ne_arc 1) (steps (b.arcStep 0)) second (steps b.riverStep)
-  have prefixEdge : Edge (halfFiveTerminalRankGraph paths v) b.river (b.arc 1) :=
-    halfFiveTerminalRankGraph_edge.mpr (Or.inl ⟨prefixBridge,rfl,rfl,rfl⟩)
   have third : Before paths (b.arc 2) v (project (b.vertex 3)) := by
     change Before paths (b.arc 2) (project (b.vertex 4)) (project (b.vertex 3))
     rw [← same]
     exact steps (b.arcStep 2)
-  have returnEdge : Edge (halfFiveTerminalRankGraph paths v) (b.arc 2) (b.arc 3) :=
-    halfFiveTerminalRankGraph_edge.mpr (Or.inr ⟨_,third,steps (b.arcStep 3)⟩)
+  have outApart (i : Fin 2) : b.arc 2 ≠ prefixBridge.arc i := by
+    fin_cases i
+    · exact fun equal => (by decide : (2 : Fin 4) ≠ 0) (b.distinctArcs equal)
+    · exact fun equal => (by decide : (2 : Fin 4) ≠ 1) (b.distinctArcs equal)
+  have inApart (i : Fin 2) : b.arc 3 ≠ prefixBridge.arc i := by
+    fin_cases i
+    · exact fun equal => (by decide : (3 : Fin 4) ≠ 0) (b.distinctArcs equal)
+    · exact fun equal => (by decide : (3 : Fin 4) ≠ 1) (b.distinctArcs equal)
+  let pattern : HalfFiveTerminalPattern paths v := ⟨prefixBridge,rfl,b.arc 2,b.arc 3,project (b.vertex 3),
+    b.river_ne_arc 2,b.river_ne_arc 3,outApart,inApart,
+    fun equal => (by decide : (2 : Fin 4) ≠ 3) (b.distinctArcs equal),third,steps (b.arcStep 3),earlier⟩
+  have prefixEdge : Edge (halfFiveCollisionRankGraph paths v) b.river (b.arc 1) :=
+    halfFiveCollisionRankGraph_edge.mpr ⟨pattern,Or.inl ⟨rfl,rfl⟩⟩
+  have returnEdge : Edge (halfFiveCollisionRankGraph paths v) (b.arc 2) (b.arc 3) :=
+    halfFiveCollisionRankGraph_edge.mpr ⟨pattern,Or.inr ⟨rfl,rfl⟩⟩
   have riverRank : rank (b.vertex 4) = assigned b.river v := localRank b.riverStep.2.1
   have prefixRank : rank (b.vertex 2) = assigned (b.arc 1) v :=
     (localRank (b.arcStep 1).2.1).trans (congrArg (assigned (b.arc 1)) same)
@@ -74,6 +143,23 @@ theorem HalfBridgeFree.split_list_vertices_five_of_terminal_rank_graph {I V W : 
     rw [startRank,finishRank]
     exact increases v returnEdge
   exact (by decide : (2 : Fin 5) ≠ 4) (b.distinctVertices (identify same (le_antisymm secondOrder firstOrder)))
+
+/-- The half-five copy test only needs weak rank inequalities along the
+terminal graph at each original vertex. It can allow other incidences
+to change their rank order relative to arrival. -/
+theorem HalfBridgeFree.split_list_vertices_five_of_terminal_rank_graph {I V W : Type*}
+    [LinearOrder I] [Fintype I] [DecidableEq V] [DecidableEq W]
+    {paths : I → List V} {copies : I → List W} (free : HalfBridgeFree (Before paths) 5)
+    (project : W → V) (rank : W → ℕ) (assigned : I → V → ℕ)
+    (identify : ∀ {x y}, project x = project y → rank x = rank y → x = y)
+    (localRank : ∀ {i x}, x ∈ copies i → rank x = assigned i (project x))
+    (increases : ∀ v ⦃r a⦄, Edge (halfFiveTerminalRankGraph paths v) r a → assigned r v ≤ assigned a v)
+    (steps : ∀ {i x y}, Before copies i x y → Before paths i (project x) (project y)) :
+    HalfBridgeFree (Before copies) 5 := by
+  exact free.split_list_vertices_five_of_collision_rank_graph project rank assigned
+    (fun {_ _} => identify) (fun {_ _} => localRank)
+    (fun v {_ _} on => increases v (halfFiveCollisionRankGraph_subset paths v on))
+    (fun {_ _ _} => steps)
 
 /-- Every assignment increasing weakly on a terminal graph is constant
 on its strongly connected components. -/
@@ -155,11 +241,11 @@ theorem halfFiveRankedVertexCopies_simple {I V : Type*} {paths : I → List V}
     (halfFiveRankedVertexCopies paths assigned i).Nodup :=
   (simple i).map (fun _ _ equal => congrArg (fun x => (ofLex x).1) equal)
 
-/-- Weakly increasing local ranks give explicit half-five-free copied rows. -/
-theorem halfFiveRankedVertexCopies_halfFree {I V : Type*} [LinearOrder I] [Fintype I] [DecidableEq V]
+/-- Ranks satisfying the collision graph give explicit half-five-free copied rows. -/
+theorem halfFiveRankedVertexCopies_halfFree_of_collision_graph {I V : Type*} [LinearOrder I] [Fintype I] [DecidableEq V]
     {paths : I → List V} (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5)
     (assigned : I → V → ℕ)
-    (increases : ∀ v ⦃r a⦄, Edge (halfFiveTerminalRankGraph paths v) r a → assigned r v ≤ assigned a v) :
+    (increases : ∀ v ⦃r a⦄, Edge (halfFiveCollisionRankGraph paths v) r a → assigned r v ≤ assigned a v) :
     HalfBridgeFree (Before (halfFiveRankedVertexCopies paths assigned)) 5 := by
   let project (x : V ×ₗ ℕ) := (ofLex x).1
   let rank (x : V ×ₗ ℕ) := (ofLex x).2
@@ -175,8 +261,17 @@ theorem halfFiveRankedVertexCopies_halfFree {I V : Type*} [LinearOrder I] [Finty
       halfFiveRankedVertexCopies_project paths assigned i
     have found := listBefore_map project ((projected i).symm ▸ simple i) comparison
     simpa only [SourceAudit.BeforeIn,projected] using found
-  exact free.split_list_vertices_five_of_terminal_rank_graph project rank assigned
+  exact free.split_list_vertices_five_of_collision_rank_graph project rank assigned
     (fun {_ _} => identify) (fun {_ _} => assignedHere) (fun v {_ _} edge => increases v edge) (fun {_ _ _} => step)
+
+/-- Weakly increasing local ranks give explicit half-five-free copied rows. -/
+theorem halfFiveRankedVertexCopies_halfFree {I V : Type*} [LinearOrder I] [Fintype I] [DecidableEq V]
+    {paths : I → List V} (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5)
+    (assigned : I → V → ℕ)
+    (increases : ∀ v ⦃r a⦄, Edge (halfFiveTerminalRankGraph paths v) r a → assigned r v ≤ assigned a v) :
+    HalfBridgeFree (Before (halfFiveRankedVertexCopies paths assigned)) 5 := by
+  exact halfFiveRankedVertexCopies_halfFree_of_collision_graph simple free assigned
+    (fun v {_ _} on => increases v (halfFiveCollisionRankGraph_subset paths v on))
 
 local instance prefixComparisonDecidable {I V : Type*} [DecidableEq V] (rows : I → List V) (i : I) (x y : V) :
     Decidable (Before rows i x y) := by

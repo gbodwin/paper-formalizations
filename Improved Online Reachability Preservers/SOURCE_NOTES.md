@@ -1155,7 +1155,7 @@ a two-step return. Weak increase on these edges preserves half-five
 exclusion when a vertex and rank determine its copy. Every assignment
 in this test is constant on each strongly connected component. The
 component ranks distinguish all different components.
-[Terminal constraint graph](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L13) · [Half-five copy preservation](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L31) · [Forced equalities within components](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L80) · [Exact component ranks](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L121).
+[Terminal constraint graph](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L13) · [Half-five copy preservation](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L150) · [Forced equalities within components](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L166) · [Exact component ranks](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L207).
 
 The explicit rank assignment copies each occurrence to its vertex and
 assigned rank. An example on six rows already excludes half-bridges at
@@ -1163,7 +1163,7 @@ every size. A three-bridge and a two-step return force equal ranks for
 two rows at vertex 2. The assigned ranks at that vertex decrease on the
 two last rows, both of which end a comparison there. The local test
 still gives half-five exclusion on the copied family.
-[Vertex copying by rank](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L144) · [Original exclusion](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L35) · [Rows in the same terminal component](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L65) · [Half-five exclusion after copying](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L77) · [Ranks decreasing in arrival order](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L84).
+[Vertex copying by rank](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L230) · [Original exclusion](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L35) · [Rows in the same terminal component](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L65) · [Half-five exclusion after copying](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L77) · [Ranks decreasing in arrival order](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L84).
 
 A four-row family on six vertices excludes all full bridges. Its first
 two rows share vertices 0 and 1 in reverse order. At each of these
@@ -1172,6 +1172,15 @@ Every assignment passing the terminal rank test therefore gives these
 two rows two common copied vertices. The test by itself can preserve
 half-five exclusion while leaving repeated intersections.
 [Original full exclusion](OnlineReachabilityPreservers/HalfFiveTerminalRankCoincidence.lean#L28) · [Two terminal cycles](OnlineReachabilityPreservers/HalfFiveTerminalRankCoincidence.lean#L41) · [Forced common copies](OnlineReachabilityPreservers/HalfFiveTerminalRankCoincidence.lean#L55).
+
+The degree-copy test can use a smaller graph. Keep both rank comparisons
+only for a three-bridge ending at the vertex followed by a two-step
+return to it, with five distinct rows and the returning row earlier
+than the river. Every projected half-five obstruction produces this
+pattern. The same weak-rank inequalities still preserve half-five
+exclusion. The smaller graph is empty at any vertex with no full
+three-bridge ending there, including every vertex of the four-row example.
+[Collision patterns](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L31) · [Subgraph of the broad test](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L63) · [Half-five preservation with the smaller graph](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L245) · [Empty smaller graph in the example](OnlineReachabilityPreservers/HalfFiveTerminalRankCoincidence.lean#L78).
 
 The usual nested split example can be padded to six vertices and ten
 indexed rows with mass ten. Two extra vertices belong only to the
