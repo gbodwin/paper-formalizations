@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.LocalFrozenCleaning
+import OnlineReachabilityPreservers.CommonPartitionCleaning
 import Mathlib.Data.Finset.Sort
 
 /-! Exact arrival-order constraints for the half-bridge notion used in the paper. -/
@@ -94,19 +95,17 @@ theorem halfBridgeArrivalGraph_mono_sublist {I V : Type*}
     (fun i _ _ step => listBefore_of_sublist (simple i) (sub i) step)
   exact halfBridgeArrivalGraph_edge.mpr ⟨d,small,projected,river,last⟩
 
-private theorem frozen_half_of_acyclic_prepared_pieces {I V : Type*}
-    [LinearOrder I] [Fintype I] [LinearOrder V] [Fintype V] {n p M k retention : ℕ}
+private theorem reorder_acyclic_pieces {I V : Type*}
+    [LinearOrder I] [Fintype I] [DecidableEq V] {n p M k : ℕ}
     (pieces : I → List V) (simple : ∀ i, (pieces i).Nodup)
     (acyclic : IsDAG (halfBridgeArrivalGraph pieces k))
-    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
-    (vertexCap : 3*Fintype.card V ≤ 4*n) (pathCap : 3*Fintype.card I ≤ 4*p)
     (length : ∀ i, (pieces i).length ≤ 4*M/p)
-    (degree : ∀ v, (occurrences (fun i => (pieces i).toFinset) v).card ≤ 4*M/n)
-    (massCap : (∑ i, (pieces i).length) ≤ M)
-    (massFloor : 8*(retention+2)*M ≤ 9*retention*(∑ i, (pieces i).length)) :
-    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
-      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) k ∧
-      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+    (degree : ∀ v, (occurrences (fun i => (pieces i).toFinset) v).card ≤ 4*M/n) :
+    ∃ ordered : Fin (Fintype.card I) → List V,
+      (∀ i, (ordered i).Nodup) ∧ HalfBridgeFree (Before ordered) k ∧
+      (∑ i, (ordered i).length) = (∑ i, (pieces i).length) ∧
+      (∀ i, (ordered i).length ≤ 4*M/p) ∧
+      (∀ v, (occurrences (fun i => (ordered i).toFinset) v).card ≤ 4*M/n) := by
   obtain ⟨arrival,free⟩ := (exists_halfBridgeFree_reordering_iff pieces k).mpr acyclic
   let ordered (i : Fin (Fintype.card I)) := pieces (arrival.symm i)
   have orderedMass : (∑ i, (ordered i).length) = ∑ i, (pieces i).length :=
@@ -129,11 +128,63 @@ private theorem frozen_half_of_acyclic_prepared_pieces {I V : Type*}
           (mem_occurrences.mp found)
     rw [same,card_map]
     exact degree v
+  exact ⟨ordered,fun i => simple (arrival.symm i),free,orderedMass,
+    fun i => length (arrival.symm i),orderedDegree⟩
+
+private theorem frozen_half_of_acyclic_prepared_pieces {I V : Type*}
+    [LinearOrder I] [Fintype I] [LinearOrder V] [Fintype V] {n p M k retention : ℕ}
+    (pieces : I → List V) (simple : ∀ i, (pieces i).Nodup)
+    (acyclic : IsDAG (halfBridgeArrivalGraph pieces k))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (vertexCap : 3*Fintype.card V ≤ 4*n) (pathCap : 3*Fintype.card I ≤ 4*p)
+    (length : ∀ i, (pieces i).length ≤ 4*M/p)
+    (degree : ∀ v, (occurrences (fun i => (pieces i).toFinset) v).card ≤ 4*M/n)
+    (massCap : (∑ i, (pieces i).length) ≤ M)
+    (massFloor : 8*(retention+2)*M ≤ 9*retention*(∑ i, (pieces i).length)) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) k ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  obtain ⟨ordered,orderedSimple,free,orderedMass,orderedLength,orderedDegree⟩ :=
+    reorder_acyclic_pieces pieces simple acyclic length degree
   exact regularization_list_frozen_after_caps_with_room_of_mass (half := true) ordered
-    (fun i => simple (arrival.symm i)) free hn hp dense long vertexCap
+    orderedSimple free hn hp dense long vertexCap
     (by simpa only [Fintype.card_fin] using pathCap)
-    (fun i => length (arrival.symm i)) orderedDegree (orderedMass.trans_le massCap)
+    orderedLength orderedDegree (orderedMass.trans_le massCap)
     (by rw [orderedMass]; exact massFloor)
+
+private theorem original_width_sublists_caps {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (kept : let M := ∑ i, (paths i).length
+      ListBlockIndex (splitListVertices paths (4*M/n)) (4*M/p) → List (ListVertexBlockIndex paths (4*M/n)))
+    (sub : let M := ∑ i, (paths i).length
+      ∀ i, (kept i).Sublist (listRegularizedPaths paths (4*M/n) (4*M/p) i))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    (∀ i, (kept i).Nodup) ∧ (∀ i, (kept i).length ≤ 4*M/p) ∧
+      (∀ v, (occurrences (fun i => (kept i).toFinset) v).card ≤ 4*M/n) ∧
+      (∑ i, (kept i).length) ≤ M := by
+  let M := ∑ i, (paths i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let V := ListVertexBlockIndex paths D
+  let I := ListBlockIndex (splitListVertices paths D) L
+  let pieces : I → List V := listRegularizedPaths paths D L
+  obtain ⟨widthD,_,_⟩ := four_average_width hn dense
+  obtain ⟨widthL,_,_⟩ := four_average_width hp long
+  change 0 < D at widthD
+  change 0 < L at widthL
+  obtain ⟨mass,length,degree⟩ := regularization_list_mass_caps paths simple D L widthD widthL
+  have shorter (i : I) : (kept i).length ≤ (pieces i).length := (sub i).length_le
+  have keptDegree (v : V) : (occurrences (fun i => (kept i).toFinset) v).card ≤ D := by
+    apply le_trans (card_le_card ?_) (degree v)
+    intro i on
+    have found : v ∈ kept i := List.mem_toFinset.mp
+      ((mem_occurrences (marks := fun a => (kept a).toFinset)).mp on)
+    exact mem_occurrences.mpr (List.mem_toFinset.mpr ((sub i).subset found))
+  have massCap : (∑ i, (kept i).length) ≤ M :=
+    (sum_le_sum (fun i _ => shorter i)).trans_eq mass
+  exact ⟨fun i => (sub i).nodup (listRegularizedPaths_simple paths simple D L i),
+    fun i => (shorter i).trans (length i),keptDegree,massCap⟩
 
 private theorem frozen_half_of_acyclic_width_sublists {n p k retention : ℕ}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
@@ -153,7 +204,6 @@ private theorem frozen_half_of_acyclic_width_sublists {n p k retention : ℕ}
   let L := 4*M/p
   let V := ListVertexBlockIndex paths D
   let I := ListBlockIndex (splitListVertices paths D) L
-  let pieces : I → List V := listRegularizedPaths paths D L
   obtain ⟨widthD,trimD,_⟩ := four_average_width hn dense
   obtain ⟨widthL,trimL,_⟩ := four_average_width hp long
   change 0 < D at widthD
@@ -169,20 +219,9 @@ private theorem frozen_half_of_acyclic_width_sublists {n p k retention : ℕ}
     change 3*(M/L) ≤ p at trimL
     change Fintype.card I ≤ p+M/L at rawI
     omega
-  obtain ⟨mass,length,degree⟩ := regularization_list_mass_caps paths simple D L widthD widthL
-  have shorter (i : I) : (kept i).length ≤ (pieces i).length := (sub i).length_le
-  have keptDegree (v : V) : (occurrences (fun i => (kept i).toFinset) v).card ≤ D := by
-    apply le_trans (card_le_card ?_) (degree v)
-    intro i on
-    have found : v ∈ kept i := List.mem_toFinset.mp
-      ((mem_occurrences (marks := fun a => (kept a).toFinset)).mp on)
-    exact mem_occurrences.mpr (List.mem_toFinset.mpr ((sub i).subset found))
-  have massCap : (∑ i, (kept i).length) ≤ M :=
-    (sum_le_sum (fun i _ => shorter i)).trans_eq mass
-  exact frozen_half_of_acyclic_prepared_pieces (retention := retention) kept
-    (fun i => (sub i).nodup (listRegularizedPaths_simple paths simple D L i))
-    acyclic hn hp dense long vertexCap pathCap
-    (fun i => (shorter i).trans (length i)) keptDegree massCap massFloor
+  obtain ⟨simpleKept,length,degree,massCap⟩ := original_width_sublists_caps paths simple kept sub hn hp dense long
+  exact frozen_half_of_acyclic_prepared_pieces (retention := retention) kept simpleKept
+    acyclic hn hp dense long vertexCap pathCap length degree massCap massFloor
 
 /-- The original-width pieces can be scheduled in any order satisfying
 their arrival constraints before restricting the supports and peeling. -/
@@ -223,5 +262,104 @@ theorem regularization_list_frozen_half_after_arrival_deletions {n p k : ℕ}
   apply frozen_half_of_acyclic_width_sublists (retention := 32) paths simple kept sub acyclic hn hp dense long
   dsimp only at smallLoss
   omega
+
+/-- Restrict both label sets before choosing an arrival order. A cycle of
+constraints on the restricted rows would give one on the original rows. -/
+theorem halfBridgeArrivalGraph_restrict_acyclic {I V : Type*}
+    [DecidableEq I] [Fintype I] [LinearOrder V] {rows : I → List V} {k : ℕ}
+    (simple : ∀ i, (rows i).Nodup) (acyclic : IsDAG (halfBridgeArrivalGraph rows k))
+    (vertices : Finset V) (labels : Finset I) :
+    IsDAG (halfBridgeArrivalGraph (restrictListPaths rows vertices labels) k) := by
+  let G := halfBridgeArrivalGraph rows k
+  let H := halfBridgeArrivalGraph (restrictListPaths rows vertices labels) k
+  have lift {r a : labels} (edge : Edge H r a) : Edge G r.val a.val := by
+    obtain ⟨d,small,b,river,lastArc⟩ := halfBridgeArrivalGraph_edge.mp edge
+    let old : Bridge (Before rows) d := (b.mapVertices Subtype.val Subtype.val_injective
+      (fun i _ _ step => restrictListPaths_step (simple i.val) step)).mapPaths
+        Subtype.val Subtype.val_injective (fun _ _ _ step => step)
+    exact halfBridgeArrivalGraph_edge.mpr ⟨d,small,old,congrArg Subtype.val river,congrArg Subtype.val lastArc⟩
+  have along {r a : labels} (route : Reach H r a) : Reach G r.val a.val := by
+    induction route with
+    | refl => exact .refl
+    | tail _ edge past => exact past.tail (lift edge)
+  exact fun _ _ edge back => acyclic (lift edge) (along back)
+
+/-- When the occupied supports already fit, peeling charges only their
+sizes. Reordering and removing unused labels keep every occurrence. -/
+theorem regularization_list_frozen_half_of_acyclic_occupied_pieces {I V : Type*}
+    [LinearOrder I] [Fintype I] [LinearOrder V] {n p M k retention : ℕ}
+    (pieces : I → List V) (simple : ∀ i, (pieces i).Nodup)
+    (acyclic : IsDAG (halfBridgeArrivalGraph pieces k))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M) (positive : 0 < retention)
+    (vertices : (activeListVertices pieces).card ≤ n) (families : (activeListIndices pieces).card ≤ p)
+    (length : ∀ i, (pieces i).length ≤ 4*M/p)
+    (degree : ∀ v, (occurrences (fun i => (pieces i).toFinset) v).card ≤ 4*M/n)
+    (massCap : (∑ i, (pieces i).length) ≤ M)
+    (enough : (M:ℝ)/retention ≤ ((∑ i, (pieces i).length : ℕ) : ℝ)
+      - (M:ℝ)/(4*(n:ℝ))*(activeListVertices pieces).card
+      - (M:ℝ)/(4*(p:ℝ))*(activeListIndices pieces).card) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) k ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let A := activeListVertices pieces
+  let B := activeListIndices pieces
+  let active := activeListPaths pieces
+  have activeDAG : IsDAG (halfBridgeArrivalGraph active k) :=
+    halfBridgeArrivalGraph_restrict_acyclic simple acyclic A B
+  have activeLength (i : B) : (active i).length ≤ 4*M/p :=
+    (activeListPaths_length pieces simple i).trans_le (length i.val)
+  have activeDegree (v : A) : (occurrences (fun i => (active i).toFinset) v).card ≤ 4*M/n :=
+    (activeListPaths_degree_le pieces v).trans (degree v.val)
+  obtain ⟨ordered,orderedSimple,free,orderedMass,orderedLength,orderedDegree⟩ :=
+    reorder_acyclic_pieces (p := p) (n := n) (M := M)
+      active (activeListPaths_simple pieces simple) activeDAG activeLength activeDegree
+  have mass : (∑ i, (ordered i).length) = ∑ i, (pieces i).length :=
+    orderedMass.trans (activeListPaths_mass pieces simple)
+  have degreeSum : (∑ v : A, (occurrences (fun i => (ordered i).toFinset) v).card) = ∑ i, (pieces i).length := by
+    rw [sum_occurrences,← mass]
+    exact sum_congr rfl fun i _ => List.toFinset_card_of_nodup (orderedSimple i)
+  apply regularization_list_frozen_after_kept_vertices (half := true) ordered orderedSimple free
+    hn hp dense long positive (univ : Finset A)
+    (by simpa only [card_univ,Fintype.card_coe] using vertices)
+    (by simpa only [Fintype.card_fin,Fintype.card_coe] using families)
+    orderedLength orderedDegree (mass.trans_le massCap)
+  rw [card_univ,Fintype.card_fin]
+  change (M:ℝ)/retention ≤ ((∑ v : A, (occurrences (fun i => (ordered i).toFinset) v).card : ℕ) : ℝ)
+    - (M:ℝ)/(4*(n:ℝ))*Fintype.card A - (M:ℝ)/(4*(p:ℝ))*Fintype.card B
+  rw [degreeSum,Fintype.card_coe,Fintype.card_coe]
+  exact enough
+
+/-- At the original widths, acyclic retained pieces occupying at most
+both original budgets may lose a quarter of the mass and still give a
+frozen witness of at least a quarter of the original mass. -/
+theorem regularization_list_frozen_half_after_arrival_deletions_within_occupied_budgets {n p k : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (kept : let M := ∑ i, (paths i).length
+      ListBlockIndex (splitListVertices paths (4*M/n)) (4*M/p) → List (ListVertexBlockIndex paths (4*M/n)))
+    (sub : let M := ∑ i, (paths i).length
+      ∀ i, (kept i).Sublist (listRegularizedPaths paths (4*M/n) (4*M/p) i))
+    (acyclic : IsDAG (halfBridgeArrivalGraph kept k))
+    (vertices : (activeListVertices kept).card ≤ n) (families : (activeListIndices kept).card ≤ p)
+    (retained : 3*(∑ i, (paths i).length) ≤ 4*(∑ i, (kept i).length))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) k ∧
+      M ≤ 4*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let K := ∑ i, (kept i).length
+  obtain ⟨simpleKept,length,degree,massCap⟩ := original_width_sublists_caps paths simple kept sub hn hp dense long
+  refine regularization_list_frozen_half_of_acyclic_occupied_pieces (retention := 4)
+    kept simpleKept acyclic hn hp dense long (by decide) vertices families length degree massCap ?_
+  have quarter {q s : ℕ} (positive : 0 < q) (fit : s ≤ q) : (M:ℝ)/(4*(q:ℝ))*s ≤ (M:ℝ)/4 := by
+    calc
+      _ ≤ (M:ℝ)/(4*(q:ℝ))*q := mul_le_mul_of_nonneg_left (by exact_mod_cast fit) (by positivity)
+      _ = (M:ℝ)/4 := by field_simp
+  have mass : 3*(M:ℝ) ≤ 4*(K:ℝ) := by exact_mod_cast retained
+  have vCharge := quarter hn vertices
+  have pCharge := quarter hp families
+  change (M:ℝ)/4 ≤ (K:ℝ) - (M:ℝ)/(4*(n:ℝ))*(activeListVertices kept).card
+    - (M:ℝ)/(4*(p:ℝ))*(activeListIndices kept).card
+  linarith only [mass,vCharge,pCharge]
 
 end OnlineReachabilityPreservers

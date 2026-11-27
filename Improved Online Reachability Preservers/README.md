@@ -1094,13 +1094,22 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   without losing incidences. For simple input with mass \(M\) at least both
   positive budgets, the reordered pieces give a half-\(k\)-free witness of
   mass at least \(M/16\) within both original budgets and all four frozen caps.
-  [Exact order constraint](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L55) · [Frozen cleaning after reordering](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L189).
+  [Exact order constraint](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L56) · [Frozen cleaning after reordering](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L228).
 - Taking sublists of simple pieces can only remove arrival constraints.
   Keep the original degree copies and path blocks when deleting incidences.
   If the surviving pieces have acyclic constraints through \(k\) and
   the deletion costs at most \(M/18\), reordering, restriction and peeling
   retain \(M/32\) with both original budgets and all four frozen caps.
-  [Constraint monotonicity](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L86) · [Frozen cleaning after arrival deletions](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L209).
+  [Constraint monotonicity](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L87) · [Frozen cleaning after arrival deletions](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L248).
+- When the occupied vertex and row supports fit the original budgets,
+  discard unused labels before reordering. Restricting the labels preserves
+  acyclicity of the constraints, and the support restriction keeps every
+  retained incidence. For retained mass \(K\), with \(a\) occupied vertices
+  and \(b\) nonempty rows, the available mass after the peeling estimate is
+  \(K-aM/(4n)-bM/(4p)\). At the original widths with acyclic constraints and
+  both occupied supports fitting, losing at most \(M/4\) still gives an
+  indexed witness with at least \(M/4\), both original budgets and all four caps.
+  [Acyclicity under restriction](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L268) · [Peeling with occupied supports](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L289) · [Quarter-loss guarantee at the original widths](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L335).
 - An arrival constraint survives an incidence deletion exactly when some
   pre-deletion bridge on the pieces retains every required corner occurrence.
   Fix any injective ranking of the pieces. It respects the surviving constraints
