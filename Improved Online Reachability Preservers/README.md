@@ -2050,11 +2050,13 @@ At the witness's own averages it holds when
 \(Ck\ge\min(n,p)\), with a loss factor linear in the fixed positive
 integer \(C\). At finite full cutoffs from seven, the general original-average
 case below \(3\min(n,p)/4\) and the output-average case without a fixed
-positive cutoff fraction remain open. The literal last-arc
-\(H\) comparison with the full extremum \(\beta\) in Lemma 39 and a native
-execution-time bound for the Steiner algorithm remain open.
+positive cutoff fraction remain open. At \(k\ge4\), a distinct nonempty
+full witness within both budgets controls the literal last-arc \(H\)
+within \(O(n^{7/50+o(1)})\). The general constant-factor comparison in
+Lemma 39 and a native execution-time bound for Steiner remain open.
 [Original-average bound](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L529)
-· [Output-average bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L239).
+· [Output-average bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L239)
+· [Literal half and full comparison](OnlineReachabilityPreservers/HalfFullLatticeComparison.lean#L213).
 
 The binary arc preparation encodes both endpoints of each raw row
 once at the bit length of the vertex count. The deduplication pass

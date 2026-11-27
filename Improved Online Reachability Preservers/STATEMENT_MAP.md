@@ -3616,6 +3616,22 @@ caps have a separate proof requirement.
 · [Full witness from half feasibility](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L24)
 · [Unbalanced-budget comparison](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L98).
 
+For every positive pair of budgets and \(k\ge4\), Lean proves
+\(H(n,p,k)\le Cn^{7/50+\varepsilon(n)}\beta_\infty(n,p)\) in the indexed
+convention, with one constant \(C\) and nonnegative \(\varepsilon(n)\to0\).
+Here \(\beta_\infty\) excludes full bridges at all sizes. Through the
+independence upper direction, the three lattice lower bounds give full
+mass of order at least the largest of \(n^{2/3}p^{1/2}\),
+\(n^{1/2}p^{2/3}\), and \(n^{2/5}p^{3/4}\) in the range \(n\ge2\),
+\(p\le n^2\). The comparisons with the two powers of Theorem 38 use
+the thresholds \(p=n\) and \(p=n^{6/5}\). The linear mass bound handles
+the other budgets. For literal half input at the same cutoff, a distinct
+nonempty full witness at or below both counts keeps the same power
+comparison and all four caps at its own averages. The constant-factor
+bound in general remains open.
+[Indexed power comparison](OnlineReachabilityPreservers/HalfFullLatticeComparison.lean#L129)
+· [Literal witness and output caps](OnlineReachabilityPreservers/HalfFullLatticeComparison.lean#L213).
+
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.
 Three comparisons leave vertex zero early in the arrival order. The other

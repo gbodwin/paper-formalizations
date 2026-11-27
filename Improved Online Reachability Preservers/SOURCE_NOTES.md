@@ -2413,6 +2413,24 @@ local-order upper bound and recurrence of Theorem 43.
   · [Full witness from half feasibility](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L24)
   · [Unbalanced-budget comparison](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L98).
 
+  At any half cutoff \(k\ge4\), the full all-size maximum controls
+  every indexed half mass within \(Cn^{7/50+\varepsilon(n)}\), for one
+  constant and a single nonnegative slack tending to zero with \(n\).
+  The three lattice lower powers are transferred to the all-size full
+  extremum by the independence upper direction. The first Theorem 38
+  term is within \(n^{2/15+\varepsilon(n)}\) of the first two lattice
+  rates, using \(p=n\) to choose a rate. For its second term, choose
+  between the last two lattice rates at \(p=n^{6/5}\). Their loss exponent
+  is at most \(7/10-4\alpha/5\le7/50\), before the vanishing slack.
+  The literal witness uses only half feasibility for its input counts.
+  It has distinct nonempty rows, all-size full exclusion, both original
+  budgets as upper bounds, and all four caps at its own averages. The
+  comparison has the same power loss with a larger numerical constant.
+  The general constant-factor mass comparison and original-average
+  cleaning claim remain open.
+  [Indexed comparison](OnlineReachabilityPreservers/HalfFullLatticeComparison.lean#L129)
+  · [Literal output-average witness](OnlineReachabilityPreservers/HalfFullLatticeComparison.lean#L213).
+
   The exact literal budgets \(n=4,p=11\) are feasible for half exclusion
   at every cutoff and infeasible for full exclusion at \(k\ge4\). The
   half witness uses four singleton rows, three early arrows from vertex
