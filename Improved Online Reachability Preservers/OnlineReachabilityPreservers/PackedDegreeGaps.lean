@@ -315,4 +315,24 @@ theorem regularization_list_frozen_of_small_degree_and_path_gap_runs {n p k : �
   exact regularization_list_frozen_of_small_path_gap_runs _ rowsSimple rowsFree pathCuts pathSafe pathRuns
     hn hp dense long mass count degree
 
+/-- When each degree is below the packing stride, every incidence keeps
+the zero copy label, regardless of the chosen degree gaps. -/
+theorem packListVerticesAtDegreeGaps_eq_zero_block {n p stride : ℕ}
+    (paths : Fin p → List (Fin n)) (cuts : Fin n → Finset ℕ)
+    (small : ∀ v, (occurrences (fun i => (paths i).toFinset) v).card < stride) (i : Fin p) :
+    packListVerticesAtDegreeGaps paths cuts stride i =
+      (paths i).map (fun v => (⟨v,⟨0,Nat.succ_pos _⟩⟩ : ListVertexBlockIndex paths stride)) := by
+  let embed (v : Fin n) : ListVertexBlockIndex paths stride := ⟨v,⟨0,Nat.succ_pos _⟩⟩
+  change (paths i).attach.map (packedDegreeReturnCopy paths cuts stride i) = (paths i).map embed
+  calc
+    _ = (paths i).attach.map (fun v => embed v.val) := by
+      apply List.map_congr_left
+      intro v _
+      refine vertexBlock_eq_of_same_label (u := packedDegreeReturnCopy paths cuts stride i v)
+        (v := embed v.val) rfl ?_
+      change (degreeGapPrefix (degreeGapArrivals paths v.val) (degreeReturnGapRank cuts v.val i)).card/stride = 0
+      exact Nat.div_eq_of_lt ((card_filter_le _ _).trans_lt (small v.val))
+    _ = ((paths i).attach.map Subtype.val).map embed := by simp only [List.map_map,Function.comp_def]
+    _ = _ := by rw [List.attach_map_subtype_val]
+
 end OnlineReachabilityPreservers

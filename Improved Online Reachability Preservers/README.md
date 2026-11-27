@@ -960,6 +960,18 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   peeling give at least \(M/16\) with both budgets and all four frozen caps.
   The general existence of suitable cuts stays open.
   [Compose the two packings](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L295).
+- The mean-run and factor-four run bounds can both fail. On \(2m-1\)
+  vertices, take one row of increasing even labels and the \(2m-2\) rows
+  \([i,i-1]\) for \(i>0\). The simple paths have unique intersections, mass
+  \(5m-4\), degree at most three, and full bridge exclusion at every cutoff.
+  At cutoff \(k\ge 5\), a two-edge return through an odd vertex crosses
+  each interior gap of the even row. Every safe choice leaves a run of
+  length \(m\). The prescribed degree stride keeps each vertex in copy block
+  zero, so the obstruction persists for every choice of degree gaps. For
+  \(m\ge 10\) the original upper width is at most nine. A separate low-mass
+  construction achieves the frozen caps, both budgets, and at least
+  \(M/8\) for \(m>0\) and \(k\ge 2\).
+  [Forced run after degree packing](OnlineReachabilityPreservers/ForcedPathReturnRuns.lean#L301) · [Separate frozen witness](OnlineReachabilityPreservers/ForcedPathReturnRuns.lean#L351).
 - After [deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2620),
   test for short returns in the pieces of the retained rows. If the
   copied input has the required bridge exclusion, at most \(M/18\)

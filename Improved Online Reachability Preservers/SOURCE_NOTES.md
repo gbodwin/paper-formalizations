@@ -963,6 +963,19 @@ peeling give at least \(M/16\) with both budgets and all four frozen caps.
 The general existence of suitable cuts stays open.
 [Compose the two packings](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L295).
 
+The mean-run and factor-four run bounds can both fail. On \(2m-1\)
+vertices, take one row of increasing even labels and the \(2m-2\) rows
+\([i,i-1]\) for \(i>0\). The simple paths have unique intersections, mass
+\(5m-4\), degree at most three, and full bridge exclusion at every cutoff.
+At cutoff \(k\ge 5\), a two-edge return through an odd vertex crosses
+each interior gap of the even row. Every safe choice leaves a run of
+length \(m\). The prescribed degree stride keeps each vertex in copy block
+zero, so the obstruction persists for every choice of degree gaps. For
+\(m\ge 10\) the original upper width is at most nine. A separate low-mass
+construction achieves the frozen caps, both budgets, and at least
+\(M/8\) for \(m>0\) and \(k\ge 2\).
+[Forced run after degree packing](OnlineReachabilityPreservers/ForcedPathReturnRuns.lean#L301) · [Separate frozen witness](OnlineReachabilityPreservers/ForcedPathReturnRuns.lean#L351).
+
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
 those positions, so only pairs in different blocks need the bounded
