@@ -1094,7 +1094,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   without losing incidences. For simple input with mass \(M\) at least both
   positive budgets, the reordered pieces give a half-\(k\)-free witness of
   mass at least \(M/16\) within both original budgets and all four frozen caps.
-  [Exact order constraint](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L55) · [Frozen cleaning after reordering](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L88).
+  [Exact order constraint](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L55) · [Frozen cleaning after reordering](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L189).
+- Taking sublists of simple pieces can only remove arrival constraints.
+  Keep the original degree copies and path blocks when deleting incidences.
+  If the surviving pieces have acyclic constraints through \(k\) and
+  the deletion costs at most \(M/18\), reordering, restriction and peeling
+  retain \(M/32\) with both original budgets and all four frozen caps.
+  [Constraint monotonicity](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L86) · [Frozen cleaning after arrival deletions](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L209).
 - The usual nested split example can be padded to six vertices and ten
   indexed rows with mass ten. Two extra vertices belong only to the
   long row and seven labels have empty rows. The original family excludes
