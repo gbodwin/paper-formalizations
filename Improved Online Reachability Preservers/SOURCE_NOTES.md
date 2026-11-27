@@ -2259,7 +2259,7 @@ local-order upper bound and recurrence of Theorem 43.
   when both budgets are at most \(m\). Taking \(m=4t^3\) gives a ratio
   of at least a constant times \(t^{1/10}\) between the lattice mass
   and the half-four maximum at the same budgets. The comparison of the
-  literal last-arc \(H\) to the full extremum in Lemma 39 remains unresolved.
+  literal last-arc \(H\) to the full extremum in Lemma 39 remains unresolved in general.
   [Bridge Girth, Definitions 9–10 and Theorem 29](https://arxiv.org/pdf/2212.11944v4)
   · [Generic lattice proof](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L45)
   · [Three-layer example](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L139)
@@ -2286,6 +2286,21 @@ local-order upper bound and recurrence of Theorem 43.
   [Height formula](OnlineReachabilityPreservers/PositiveSlopeLattice.lean#L31)
   · [Preserved exclusion](OnlineReachabilityPreservers/PositiveSlopeLattice.lean#L50)
   · [Gap at Theorem 29's dimensions](OnlineReachabilityPreservers/PositiveSlopeLattice.lean#L68).
+- The last-arc half and full extrema are within a fixed factor in two
+  budget regimes. For positive \(n,p\), cutoff \(k\ge2\), and an integer
+  \(a\ge3\), assume \(2n(n-1)\le a(a-1)p\) or both \(k\ge3\) and
+  \(p(p-1)\le a(a-3)n\). The length and degree moment bounds give
+  \(H(n,p,k)\le a\max(n,p)\). The full maximum is at least both budgets,
+  so \(H(n,p,k)\le a\beta(n,p,k)\). Full exclusion also gives
+  \(\beta(n,p,k)\le H(n,p,k)\). This works for the indexed extrema and,
+  when the full exact counts are feasible, the literal distinct nonempty
+  extrema. A fixed nonnegative integer bound \(C\) on \(n(n-1)/p\)
+  or on \(p(p-1)/n\) in the corresponding regime permits \(a=C+3\).
+  [Budget ratios](OnlineReachabilityPreservers/UnbalancedBridgeExtrema.lean#L19)
+  · [Half mass bound](OnlineReachabilityPreservers/UnbalancedBridgeExtrema.lean#L38)
+  · [Indexed comparison](OnlineReachabilityPreservers/UnbalancedBridgeExtrema.lean#L59)
+  · [Literal exact-count comparison](OnlineReachabilityPreservers/UnbalancedBridgeExtrema.lean#L75).
+
 - In Lemma 24, the paths `(0,1,2)` and `(2,1,0)` share three vertices without
   a bridge. Lean proves the ordering and fiber bound for arbitrary simple paths
   by choosing one witness for each middle path and using the 2-bridge exclusion

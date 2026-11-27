@@ -3448,7 +3448,8 @@ times \(t^{1/10}\) times every half-four-free mass. The comparison holds
 against families at or below each
 budget, including repeated and empty indexed rows. This establishes an
 unbounded gap between the ordered-girth and last-arc conventions. The
-literal full-versus-half comparison from Lemma 39 remains open.
+literal full-versus-half comparison from Lemma 39 remains open in general.
+
 [Diagonal upper bound](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L14)
 · [Distinct lattice rows](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L55)
 · [Polynomial gap](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L70)
@@ -3471,6 +3472,21 @@ every half-four-free family within both budgets, for every \(\ell\ge1\).
 [Height translation](OnlineReachabilityPreservers/PositiveSlopeLattice.lean#L17)
 · [Line coordinates](OnlineReachabilityPreservers/PositiveSlopeLattice.lean#L31)
 · [Gap at the cited dimensions](OnlineReachabilityPreservers/PositiveSlopeLattice.lean#L68).
+
+The last-arc half and full extrema are within a fixed factor in two
+budget regimes. For positive \(n,p\), cutoff \(k\ge2\), and an integer
+\(a\ge3\), assume \(2n(n-1)\le a(a-1)p\) or both \(k\ge3\) and
+\(p(p-1)\le a(a-3)n\). The length and degree moment bounds give
+\(H(n,p,k)\le a\max(n,p)\). The full maximum is at least both budgets,
+so \(H(n,p,k)\le a\beta(n,p,k)\). Full exclusion also gives
+\(\beta(n,p,k)\le H(n,p,k)\). This works for the indexed extrema and,
+when the full exact counts are feasible, the literal distinct nonempty
+extrema. A fixed nonnegative integer bound \(C\) on \(n(n-1)/p\)
+or on \(p(p-1)/n\) in the corresponding regime permits \(a=C+3\).
+[Budget ratios](OnlineReachabilityPreservers/UnbalancedBridgeExtrema.lean#L19)
+· [Half mass bound](OnlineReachabilityPreservers/UnbalancedBridgeExtrema.lean#L38)
+· [Indexed comparison](OnlineReachabilityPreservers/UnbalancedBridgeExtrema.lean#L59)
+· [Literal exact-count comparison](OnlineReachabilityPreservers/UnbalancedBridgeExtrema.lean#L75).
 
 Here \(\ell,d\) are average path length and vertex degree and \(H\) is the
 half-bridge-free extremal function. The analogous full bridge-free function is \(\beta\).
