@@ -1548,7 +1548,7 @@ or supplies a two-step return across the reversed pieces. In the
 existing seven-vertex example the one-step condition holds, and the
 steps \(3\to4\to0\) cross the split of the original row \((0,1,2,3)\)
 against its order.
-[Two-step return test](OnlineReachabilityPreservers/CyclicSplits.lean#L336) · [Seven-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean#L383) · [Preservation through seven](OnlineReachabilityPreservers/CyclicSplits.lean#L506) · [Two-step return in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L140) · [One-step condition in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L149).
+[Two-step return test](OnlineReachabilityPreservers/CyclicSplits.lean#L336) · [Seven-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean#L383) · [Preservation through seven](OnlineReachabilityPreservers/CyclicSplits.lean#L506) · [Two-step return in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L92) · [One-step condition in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L101).
 
 Under the same one-step and two-step conditions, disjoint sublists
 may interleave. Only the order of the two gap corners in a common
@@ -1573,6 +1573,18 @@ in that parent gives a full four-bridge. An opposite comparison gives
 a three-step return across the pieces. Ruling out these returns gives
 full preservation at the same cutoff for any full cutoff through eight.
 [Three-step return condition](OnlineReachabilityPreservers/CyclicSplits.lean#L685) · [Size-eight parent lift](OnlineReachabilityPreservers/CyclicSplits.lean#L716) · [Preservation through eight](OnlineReachabilityPreservers/CyclicSplits.lean#L783).
+
+An eight-vertex audit certifies the need for the larger radius
+on disjoint order-preserving pieces at full cutoff eight. The seven
+original rows are simple with unique intersections and exclude all
+full bridges. The only row longer than the original mean of \(16/7\)
+has length four. Its midpoint split covers the original rows, and the graph
+of the actual pieces passes the radius-two test. The return
+\(1\to2\to3\to4\) crosses the split and the new pieces contain a full
+eight-bridge. A finite search proves original exclusion by ruling out
+every alternative route with distinct rows at the bounded length forced
+by the number of row labels.
+[Simple rows and covering split](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L50) · [Original full exclusion](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L34) · [Radius-two test](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L65) · [New bridge](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L84) · [Finite search certificate](OnlineReachabilityPreservers/RainbowListSearch.lean#L53).
 
 The full-seven lift also permits packing the original-width path
 pieces from components of returns of at most two steps in the

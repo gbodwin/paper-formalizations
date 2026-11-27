@@ -1,4 +1,4 @@
-import OnlineReachabilityPreservers.SplitAudit
+import OnlineReachabilityPreservers.RainbowListSearch
 import OnlineReachabilityPreservers.CyclicSplits
 
 /-! A longer cyclic obstruction to consecutive splitting with unique intersections. -/
@@ -11,43 +11,6 @@ local instance decidableBeforeIn {V I : Type*} [DecidableEq V] (paths : I → Li
     (i : I) (s t : V) : Decidable (BeforeIn paths i s t) := by
   unfold BeforeIn
   infer_instance
-
-private def rainbowSearch {V I : Type*} [DecidableEq V] [DecidableEq I] (paths : I → List V) :
-    ℕ → List I → V → V → Bool
-  | 0, _, s, t => decide (s = t)
-  | k+1, allowed, s, t =>
-    decide (s = t) || allowed.any (fun i =>
-      (paths i).any (fun v => decide (BeforeIn paths i s v) &&
-        rainbowSearch paths k (allowed.filter (fun j => decide (j ≠ i))) v t))
-
-private theorem rainbowSearch_of_chain {V I : Type*} [DecidableEq V] [DecidableEq I]
-    (paths : I → List V) {k : ℕ} (v : Fin (k+1) → V) (a : Fin k → I)
-    (distinct : Function.Injective a) (allowed : List I)
-    (present : ∀ i, a i ∈ allowed) (steps : ∀ i, BeforeIn paths (a i) (v i.castSucc) (v i.succ)) :
-    rainbowSearch paths k allowed (v 0) (v (Fin.last k)) = true := by
-  induction k generalizing allowed with
-  | zero =>
-    have same : (Fin.last 0 : Fin 1) = 0 := by decide
-    simp [rainbowSearch, same]
-  | succ k ih =>
-    rw [rainbowSearch, Bool.or_eq_true]
-    right
-    apply List.any_eq_true.mpr
-    refine ⟨a 0, present 0, List.any_eq_true.mpr ?_⟩
-    have step := steps 0
-    refine ⟨v 1, step.2.1, ?_⟩
-    rw [Bool.and_eq_true]
-    refine ⟨decide_eq_true step, ?_⟩
-    let v' (i : Fin (k+1)) := v i.succ
-    let a' (i : Fin k) := a i.succ
-    have inj : Function.Injective a' := distinct.comp (Fin.succ_injective _)
-    have all (i : Fin k) : a' i ∈ allowed.filter (fun j => decide (j ≠ a 0)) := by
-      apply List.mem_filter.mpr
-      refine ⟨present i.succ, decide_eq_true ?_⟩
-      exact fun eq => Fin.succ_ne_zero i (distinct eq)
-    have follows (i : Fin k) : BeforeIn paths (a' i) (v' i.castSucc) (v' i.succ) := by
-      simpa only [v', a', Fin.succ_castSucc] using steps i.succ
-    simpa only [v', Fin.succ_last, Fin.succ_zero_eq_one] using ih v' a' inj _ all follows
 
 /-- Paths overlaying a directed cycle, its two terminal attachments, and
 a terminal-to-terminal demand. They intersect pairwise at most once. -/
@@ -76,19 +39,8 @@ private theorem uniqueSplitExample_search :
 
 /-- The original family excludes every bridge, in spite of its directed cycle. -/
 theorem uniqueSplitExample_bridge_free (k : ℕ) :
-    IsEmpty (Bridge (BeforeIn uniqueSplitExample) k) := by
-  refine ⟨fun b => ?_⟩
-  have cap := bridge_path_count_le b
-  rw [Fintype.card_fin] at cap
-  let fuel : Fin 6 := ⟨k+1, by omega⟩
-  let allowed := (List.finRange 6).filter (fun i => decide (i ≠ b.river))
-  have all (i : Fin (k+1)) : b.arc i ∈ allowed :=
-    List.mem_filter.mpr ⟨List.mem_finRange _, decide_eq_true (b.river_ne_arc i).symm⟩
-  have found := rainbowSearch_of_chain uniqueSplitExample b.vertex b.arc b.distinctArcs allowed all b.arcStep
-  have absent := uniqueSplitExample_search fuel b.river _ _ b.riverStep
-  change rainbowSearch uniqueSplitExample (k+1) allowed (b.vertex 0) (b.vertex (Fin.last (k+1))) = false at absent
-  rw [absent] at found
-  contradiction
+    IsEmpty (Bridge (BeforeIn uniqueSplitExample) k) :=
+  isEmpty_bridge_of_rainbowSearch uniqueSplitExample uniqueSplitExample_search k
 
 set_option maxHeartbeats 1500000 in
 set_option synthInstance.maxSize 1024 in

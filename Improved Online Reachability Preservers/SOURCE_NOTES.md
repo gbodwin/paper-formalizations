@@ -759,7 +759,7 @@ and such two-step returns through distinct other parents are absent.
 The proof examines repeated parents at cyclic distance three. Each
 such repeat either triggers the two-step test or gives an original
 full bridge of size three or four.
-[One-step condition in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L149) · [Crossed two-step return](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L140) · [Full cutoff seven preservation](OnlineReachabilityPreservers/CyclicSplits.lean#L506).
+[One-step condition in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L101) · [Crossed two-step return](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L92) · [Full cutoff seven preservation](OnlineReachabilityPreservers/CyclicSplits.lean#L506).
 
 The cyclic distance-three argument also applies to disjoint pieces
 that interleave in their parent row. Compare the two boundary corners
@@ -784,6 +784,17 @@ an original full four-bridge or a crossed three-step return. Thus
 checking these extra returns preserves full exclusion through eight
 for disjoint order-preserving pieces, including interleaved pieces.
 [Three-step return condition](OnlineReachabilityPreservers/CyclicSplits.lean#L685) · [Lift at size eight](OnlineReachabilityPreservers/CyclicSplits.lean#L716) · [Full exclusion through eight](OnlineReachabilityPreservers/CyclicSplits.lean#L783).
+
+A simple eight-vertex family excludes full bridges at every
+size and has unique intersections. Its seven rows have mass
+sixteen and each vertex has degree two. In the printed
+procedure, all rows and vertices survive the initial deletion
+test and the degree split leaves the family intact. Split the
+length-four row `[4,5,0,1]` into `[4,5]` and `[0,1]`. The graph
+of the pieces passes the radius-two test. The return
+\(1\to2\to3\to4\) crosses the cut and the new pieces give a full
+eight-bridge against the row `[0,7]`.
+[Original full exclusion](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L34) · [Original means](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L40) · [Pass at radius two](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L65) · [Crossed return](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L73) · [Full eight-bridge](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L84).
 
 One can also pack disjoint pieces by keeping each connected group
 of endpoints of returns of at most two steps together. Suppose

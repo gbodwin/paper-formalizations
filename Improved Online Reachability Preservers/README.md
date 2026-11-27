@@ -935,7 +935,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   distinct other parents crosses two pieces against their common
   parent's order. The existing seven-vertex example passes the first
   test and has the two-step return \(3\to4\to0\) across its split.
-  [Seven-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean#L383) · [Preservation through seven](OnlineReachabilityPreservers/CyclicSplits.lean#L506) · [Two-step return in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L140).
+  [Seven-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean#L383) · [Preservation through seven](OnlineReachabilityPreservers/CyclicSplits.lean#L506) · [Two-step return in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L92).
 - The same two conditions also preserve full exclusion through seven
   for disjoint pieces that interleave. For simple full-seven-free rows
   of mass \(M\) at least both positive budgets, test for returns of at
@@ -948,6 +948,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   For opposite cyclic slots, at least one of the two gaps avoids the
   river slot and therefore has three forward comparisons.
   [Three-step condition](OnlineReachabilityPreservers/CyclicSplits.lean#L685) · [Size-eight lift](OnlineReachabilityPreservers/CyclicSplits.lean#L716) · [Preservation through eight](OnlineReachabilityPreservers/CyclicSplits.lean#L783).
+- An eight-vertex family with unique intersections excludes full
+  bridges at every size. Splitting the four-vertex row at its
+  midpoint passes the radius-two test on the resulting pieces and
+  creates a full eight-bridge. The crossed return has three steps.
+  [Original exclusion](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L34) · [Radius-two test](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L65) · [Crossed return](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L73) · [Created bridge](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L84).
 - At full cutoff seven, packing the components of returns of at most
   two steps gives a frozen quarter-mass witness if those components fit the
   original path width. Use either the original rows or the standard
