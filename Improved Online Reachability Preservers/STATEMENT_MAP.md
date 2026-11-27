@@ -3699,8 +3699,8 @@ on \(n\) available vertex labels exists precisely when
 the same upper bound. The first steps of the longer rows are distinct
 and have no transitive triangle. Balanced bipartite steps in both
 directions and singleton rows attain the capacity at cutoff three.
-[First-step count](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L119)
-· [Exact cutoff-three feasibility](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L285).
+[First-step count](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L178)
+· [Exact cutoff-three feasibility](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L313).
 
 The cutoff-three capacity supplies a literal family of mass \(p\) within
 both budgets with full exclusion at every size. Its ordered pairs all go
@@ -3711,9 +3711,26 @@ family of mass \(p\). The larger mass \(W\) satisfies
 \(\min(k,q)M\le2qW\) and \(W\le M\). When \(p\le n\), keeping whole original
 rows gives \(\min(k,q)M\le qW\). These comparisons preserve both budgets,
 literal nonempty distinct rows, and full exclusion at all sizes.
-[Mass \(p\) construction](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L384)
+[Mass \(p\) construction](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L398)
 · [All-size mass comparison](OnlineReachabilityPreservers/LiteralFullCutoffComparison.lean#L78)
 · [Whole-row comparison](OnlineReachabilityPreservers/LiteralFullCutoffComparison.lean#L13).
+
+At full exclusion of all sizes, the exact domain has
+\(p\le n+\max(2(n-1),\lfloor n^2/4\rfloor)\) for \(n\ge1\), and \(p=0\)
+for \(n=0\). It is also the domain at every full cutoff covering at least
+one whole budget. The selected first arcs have no substitute routes
+within the graph they form. With \(c\)
+strongly connected components, two connector forests account for at most
+\(2(n-c)\) arcs. The condensation is acyclic and has no transitive
+triangle, so its underlying graph contributes at most
+\(\lfloor c^2/4\rfloor\) arcs. The bidirectional star and the one-way
+balanced bipartite construction attain the two alternatives with all
+singletons available. This gives exact feasibility under full exclusion.
+[First-arc representation](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L118)
+· [Detour exclusion](OnlineReachabilityPreservers/AllSizeLiteralFeasibility.lean#L16)
+· [Arc bound](OnlineReachabilityPreservers/EssentialArcCount.lean#L173)
+· [Exact all-size feasibility](OnlineReachabilityPreservers/AllSizeLiteralFeasibility.lean#L112)
+· [Finite cutoff covering a budget](OnlineReachabilityPreservers/AllSizeLiteralFeasibility.lean#L137).
 
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.

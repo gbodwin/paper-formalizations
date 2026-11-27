@@ -1,7 +1,7 @@
 import OnlineReachabilityPreservers.FrozenSmallBudgets
 import OnlineReachabilityPreservers.CyclicIntersections
 
-/-! The exact literal row capacity for full exclusion through size three. -/
+/-! Literal row capacity through full cutoff three and short full-free witnesses. -/
 
 namespace OnlineReachabilityPreservers
 
@@ -113,81 +113,89 @@ private theorem balancedLayer_product {n m : ℕ} (bound : 2*m ≤ n^2) :
   change m ≤ 2*(a*b)
   omega
 
-/-- Full exclusion through size three limits the exact number of
-distinct nonempty rows to the balanced bidirectional bipartite capacity
-plus one singleton for each vertex. -/
-theorem literal_full_path_count_le_balanced_bipartite {n p cutoff : ℕ} (paths : Fin p → List (Fin n))
-    (distinct : Function.Injective paths) (nonempty : ∀ i, paths i ≠ []) (simple : ∀ i, (paths i).Nodup)
-    (free : BridgeFree (Before paths) cutoff) (three : 3 ≤ cutoff) : p ≤ n+2*((n/2)*(n-n/2)) := by
+/-- First comparisons of the longer rows of a literal family can be
+assigned to distinct arcs, leaving at most one singleton per vertex. -/
+theorem literal_first_darts {n p cutoff : ℕ} (paths : Fin p → List (Fin n))
+    (unique : Function.Injective paths) (well : ∀ i, paths i ≠ [] ∧ (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) cutoff) (two : 2 ≤ cutoff) :
+    ∃ arcs : Arcs (Fin n), p ≤ n+arcs.card ∧ ∃ owner : arcs → Fin p,
+      Function.Injective owner ∧ ∀ edge : arcs, Before paths (owner edge) edge.val.1 edge.val.2 := by
   classical
   let long := (univ : Finset (Fin p)).filter fun i => 2 ≤ (paths i).length
-  let short := (univ : Finset (Fin p)).filter fun i => ¬ 2 ≤ (paths i).length
-  let head (i : short) : Fin n := (paths i.val)[0]'(List.length_pos_iff.mpr (nonempty i.val))
+  let short := longᶜ
+  let head (i : short) : Fin n := (paths i.val)[0]'(List.length_pos_iff.mpr (well i.val).1)
   have single (i : short) : paths i.val = [head i] := by
-    have positive := List.length_pos_iff.mpr (nonempty i.val)
-    have small := (mem_filter.mp i.property).2
+    have positive := List.length_pos_iff.mpr (well i.val).1
+    have small : ¬ 2 ≤ (paths i.val).length := fun enough => (mem_compl.mp i.property)
+      (mem_filter.mpr ⟨mem_univ _,enough⟩)
     obtain ⟨x,equal⟩ := List.length_eq_one_iff.mp (by omega : (paths i.val).length = 1)
-    have label : head i = x := by
-      unfold head
-      rw [List.getElem_of_eq equal]
-      rfl
+    have label : head i = x := by unfold head; rw [List.getElem_of_eq equal]; rfl
     rw [label]
     exact equal
   have headInjective : Function.Injective head := by
     intro i j same
-    exact Subtype.ext (distinct ((single i).trans ((congrArg (fun x => [x]) same).trans (single j).symm)))
+    exact Subtype.ext (unique ((single i).trans ((congrArg (fun x => [x]) same).trans (single j).symm)))
   have shortCount : short.card ≤ n := by
     simpa only [Fintype.card_coe,Fintype.card_fin] using Fintype.card_le_of_injective head headInjective
   have counts : long.card+short.card = p := by
-    simpa only [long,short,card_univ,Fintype.card_fin] using
-      card_filter_add_card_filter_not (s := (univ : Finset (Fin p))) (fun i => 2 ≤ (paths i).length)
+    rw [show short = longᶜ from rfl,card_compl,Fintype.card_fin]
+    exact Nat.add_sub_of_le (by simpa using card_le_univ long)
   have length (i : long) : 2 ≤ (paths i.val).length := (mem_filter.mp i.property).2
   let dart (i : long) : Fin n × Fin n :=
     ((paths i.val)[0]'(by have := length i; omega),(paths i.val)[1]'(by have := length i; omega))
   have step (i : long) : Before paths i.val (dart i).1 (dart i).2 := by
     refine ⟨List.getElem_mem _,List.getElem_mem _,?_⟩
     dsimp only [dart]
-    rw [(simple i.val).idxOf_getElem,(simple i.val).idxOf_getElem]
+    rw [(well i.val).2.idxOf_getElem,(well i.val).2.idxOf_getElem]
     decide
   have dartInjective : Function.Injective dart := by
     intro i j equal
     by_contra apart
     have comparison := step j
     rw [← equal] at comparison
-    exact no_parallel_list_steps free.halfFree (by omega) (fun same => apart (Subtype.ext same)) (step i) comparison
+    exact no_parallel_list_steps free two (fun same => apart (Subtype.ext same)) (step i) comparison
   let arcs := (univ : Finset long).image dart
   have countArcs : arcs.card = long.card := by
     rw [show arcs = univ.image dart from rfl,card_image_of_injective _ dartInjective,card_univ,Fintype.card_coe]
-  have gives {x y : Fin n} (on : (x,y) ∈ arcs) : ∃ i : long, dart i = (x,y) := by
-    obtain ⟨i,_,equal⟩ := mem_image.mp on
+  have gives (edge : arcs) : ∃ i : long, dart i = edge.val := by
+    obtain ⟨i,_,equal⟩ := mem_image.mp edge.property
     exact ⟨i,equal⟩
-  have nodesDifferent {x y : Fin n} (on : (x,y) ∈ arcs) : x ≠ y := by
-    obtain ⟨i,equal⟩ := gives on
-    have comparison := step i
-    rw [equal] at comparison
-    exact listBefore_ne comparison
+  let chosen (edge : arcs) := Classical.choose (gives edge)
+  have identifies (edge : arcs) : dart (chosen edge) = edge.val := Classical.choose_spec (gives edge)
+  let owner (edge : arcs) := (chosen edge).val
+  have ownerUnique : Function.Injective owner := by
+    intro e f same
+    exact Subtype.ext ((identifies e).symm.trans ((congrArg dart (Subtype.ext same)).trans (identifies f)))
+  refine ⟨arcs,by omega,owner,ownerUnique,?_⟩
+  intro e
+  have compare := step (chosen e)
+  rw [identifies e] at compare
+  exact compare
+
+/-- Full exclusion through size three limits the exact number of
+nonempty distinct rows to the balanced bidirectional bipartite capacity
+plus one singleton for each vertex. -/
+theorem literal_full_path_count_le_balanced_bipartite {n p cutoff : ℕ} (paths : Fin p → List (Fin n))
+    (distinct : Function.Injective paths) (nonempty : ∀ i, paths i ≠ []) (simple : ∀ i, (paths i).Nodup)
+    (free : BridgeFree (Before paths) cutoff) (three : 3 ≤ cutoff) : p ≤ n+2*((n/2)*(n-n/2)) := by
+  obtain ⟨arcs,count,owner,unique,compares⟩ := literal_first_darts paths distinct
+    (fun i => ⟨nonempty i,simple i⟩) free.halfFree (by omega)
   have noTriangle {x y z : Fin n} (xy : (x,y) ∈ arcs) (yz : (y,z) ∈ arcs) (xz : (x,z) ∈ arcs) : False := by
-    obtain ⟨a,first⟩ := gives xy
-    obtain ⟨b,last⟩ := gives yz
-    obtain ⟨r,river⟩ := gives xz
-    have compareLabels {i j : long} (equal : i.val = j.val) : dart i = dart j := congrArg dart (Subtype.ext equal)
-    have ab : a.val ≠ b.val := fun same => nodesDifferent xy
-      (congrArg Prod.fst (first.symm.trans ((compareLabels same).trans last)))
-    have ra : r.val ≠ a.val := fun same => nodesDifferent yz
-      (congrArg Prod.snd (river.symm.trans ((compareLabels same).trans first))).symm
-    have rb : r.val ≠ b.val := fun same => nodesDifferent xy
-      (congrArg Prod.fst (river.symm.trans ((compareLabels same).trans last)))
-    have startStep := step a
-    have endStep := step b
-    have shortcut := step r
-    rw [first] at startStep
-    rw [last] at endStep
-    rw [river] at shortcut
-    exact (free three).false (threeListBridge ab ra rb startStep endStep shortcut)
+    let a : arcs := ⟨(x,y),xy⟩
+    let b : arcs := ⟨(y,z),yz⟩
+    let r : arcs := ⟨(x,z),xz⟩
+    have xyApart : x ≠ y := listBefore_ne (compares a)
+    have yzApart : y ≠ z := listBefore_ne (compares b)
+    have ab : owner a ≠ owner b := fun same => xyApart
+      (congrArg (fun e : arcs => e.val.1) (unique same))
+    have ra : owner r ≠ owner a := fun same => yzApart
+      (congrArg (fun e : arcs => e.val.2) (unique same)).symm
+    have rb : owner r ≠ owner b := fun same => xyApart
+      (congrArg (fun e : arcs => e.val.1) (unique same))
+    exact (free three).false (threeListBridge ab ra rb (compares a) (compares b) (compares r))
   have budget := directed_arcs_card_le_half_square_of_no_transitive_triangle arcs (fun {_ _ _} => noTriangle)
-  rw [countArcs,Fintype.card_fin] at budget
-  have longCount := balancedLayer_product budget
-  omega
+  rw [Fintype.card_fin] at budget
+  exact count.trans (Nat.add_le_add_left (balancedLayer_product budget) n)
 
 private abbrev TwoLayerRow (a b : ℕ) := (Bool × Fin a × Fin b) ⊕ Fin (a+b)
 
@@ -280,6 +288,26 @@ private theorem twoLayerBidirectionalRows_full_three (a b : ℕ) :
       (twoLayerBidirectionalRows_step bridge.riverStep).2
     tauto
 
+private theorem twoLayer_rows_of_budget {a b p : ℕ} (enough : p ≤ a+b+2*(a*b)) :
+    ∃ paths : Fin p → List (Fin (a+b)), Function.Injective paths ∧
+      (∀ i, paths i ≠ [] ∧ (paths i).Nodup) ∧
+      ∀ cutoff, BridgeFree (Before (@twoLayerBidirectionalRows a b)) cutoff → BridgeFree (Before paths) cutoff := by
+  have count : Fintype.card (TwoLayerRow a b) = a+b+2*(a*b) := by
+    simp only [TwoLayerRow,Fintype.card_sum,Fintype.card_prod,Fintype.card_bool,Fintype.card_fin]
+    ring
+  let labels (i : Fin p) : TwoLayerRow a b := (Fintype.equivFinOfCardEq count).symm (Fin.castLE enough i)
+  have labelsInjective : Function.Injective labels :=
+    (Fintype.equivFinOfCardEq count).symm.injective.comp (Fin.castLE_injective _)
+  let paths (i : Fin p) := twoLayerBidirectionalRows (labels i)
+  have rows (i : Fin p) : paths i ≠ [] ∧ (paths i).Nodup := by
+    unfold paths
+    rcases labels i with ⟨reverse,u,v⟩ | v
+    · cases reverse <;> simp [twoLayerBidirectionalRows,layer_vertices_different u v,(layer_vertices_different u v).symm]
+    · simp [twoLayerBidirectionalRows]
+  exact ⟨paths,twoLayerBidirectionalRows_injective.comp labelsInjective,rows,
+    fun _ free _ bound => ⟨fun bridge => (free bound).false
+      (bridge.mapPaths labels labelsInjective (fun _ _ _ step => step))⟩⟩
+
 /-- Both orientations across the two balanced parts, together with all
 singletons, attain the exact row-count upper bound at full cutoff three. -/
 theorem literal_full_three_feasible_iff {n p : ℕ} :
@@ -293,24 +321,10 @@ theorem literal_full_three_feasible_iff {n p : ℕ} :
     let a := n/2
     let b := n-a
     have vertices : a+b = n := Nat.add_sub_of_le (Nat.div_le_self n 2)
-    have count : Fintype.card (TwoLayerRow a b) = n+2*(a*b) := by
-      simp only [TwoLayerRow,Fintype.card_sum,Fintype.card_prod,Fintype.card_bool,Fintype.card_fin,vertices]
-      ring
-    let labels (i : Fin p) : TwoLayerRow a b := (Fintype.equivFinOfCardEq count).symm (Fin.castLE enough i)
-    have labelsInjective : Function.Injective labels :=
-      (Fintype.equivFinOfCardEq count).symm.injective.comp (Fin.castLE_injective _)
-    let paths (i : Fin p) := twoLayerBidirectionalRows (labels i)
-    have rows (i : Fin p) : paths i ≠ [] ∧ (paths i).Nodup := by
-      unfold paths
-      rcases labels i with ⟨reverse,u,v⟩ | v
-      · cases reverse <;> simp [twoLayerBidirectionalRows,layer_vertices_different u v,(layer_vertices_different u v).symm]
-      · simp [twoLayerBidirectionalRows]
-    have free : BridgeFree (Before paths) 3 := fun d bound =>
-      ⟨fun bridge => (twoLayerBidirectionalRows_full_three a b bound).false
-        (bridge.mapPaths labels labelsInjective (fun _ _ _ step => step))⟩
+    obtain ⟨paths,unique,rows,free⟩ := twoLayer_rows_of_budget (show p ≤ a+b+2*(a*b) by rw [vertices]; exact enough)
     have witness : ∃ paths : Fin p → List (Fin (a+b)), Function.Injective paths ∧
         (∀ i, paths i ≠ [] ∧ (paths i).Nodup) ∧ BridgeFree (Before paths) 3 :=
-      ⟨paths,twoLayerBidirectionalRows_injective.comp labelsInjective,rows,free⟩
+      ⟨paths,unique,rows,free 3 (twoLayerBidirectionalRows_full_three a b)⟩
     exact vertices ▸ witness
 
 /-- One orientation of the balanced bipartite arcs gives any prescribed
@@ -407,5 +421,47 @@ theorem literal_full_all_mass_at_path_budget {n p : ℕ} (enough : p ≤ n+2*((n
   obtain ⟨paths,unique,well,all,total⟩ := literal_full_all_short_rows (n := n) (singles := singles)
     (min_le_left capacity (p/2)) singlesFit
   exact ⟨darts+singles,by dsimp [singles]; omega,paths,unique,well,all,by rw [total]; dsimp [singles]; omega⟩
+
+private theorem twoLayerBidirectionalRows_all_of_one_left (b d : ℕ) :
+    IsEmpty (Bridge (Before (@twoLayerBidirectionalRows 1 b)) d) := by
+  refine ⟨fun bridge => ?_⟩
+  obtain ⟨river,side⟩ := twoLayerBidirectionalRows_step bridge.riverStep
+  by_cases startsLeft : (bridge.vertex 0).val < 1
+  · let i := Fin.last d
+    obtain ⟨lastArc,arcSide⟩ := twoLayerBidirectionalRows_step (bridge.arcStep i)
+    have onRight : ¬ (bridge.vertex i.succ).val < 1 := side.mp startsLeft
+    have fromLeft : (bridge.vertex i.castSucc).val < 1 := arcSide.mpr onRight
+    have same : bridge.vertex 0 = bridge.vertex i.castSucc := Fin.ext (by omega)
+    rw [same] at river
+    exact bridge.river_ne_arc i (twoLayerBidirectionalRows_injective (river.trans lastArc.symm))
+  · obtain ⟨firstArc,arcSide⟩ := twoLayerBidirectionalRows_step (bridge.arcStep 0)
+    have endsLeft : (bridge.vertex (Fin.last (d+1))).val < 1 := by
+      by_contra absent
+      exact startsLeft (side.mpr absent)
+    have toLeft : (bridge.vertex (0 : Fin (d+1)).succ).val < 1 := by
+      by_contra absent
+      exact startsLeft (arcSide.mpr absent)
+    have same : bridge.vertex (Fin.last (d+1)) = bridge.vertex (0 : Fin (d+1)).succ := Fin.ext (by omega)
+    rw [same] at river
+    exact bridge.river_ne_arc 0 (twoLayerBidirectionalRows_injective (river.trans firstArc.symm))
+
+/-- A bidirectional star and singleton rows realize every literal row
+count up to `n + 2*(n-1)`, with full exclusion at all sizes. -/
+theorem literal_full_all_star_rows {n p : ℕ} (budget : p ≤ n+2*(n-1)) :
+    ∃ paths : Fin p → List (Fin n), Function.Injective paths ∧
+      (∀ i, paths i ≠ [] ∧ (paths i).Nodup) ∧ ∀ d, IsEmpty (Bridge (Before paths) d) := by
+  cases n with
+  | zero =>
+    have empty : p = 0 := by omega
+    subst p
+    exact ⟨Fin.elim0,fun i => i.elim0,fun i => i.elim0,fun d => ⟨fun bridge => bridge.river.elim0⟩⟩
+  | succ b =>
+    have nEq : 1+b = b+1 := Nat.add_comm _ _
+    have fits : p ≤ 1+b+2*(1*b) := by rw [nEq,Nat.one_mul]; simpa using budget
+    obtain ⟨paths,unique,rows,free⟩ := twoLayer_rows_of_budget fits
+    have witness : ∃ paths : Fin p → List (Fin (1+b)), Function.Injective paths ∧
+        (∀ i, paths i ≠ [] ∧ (paths i).Nodup) ∧ ∀ d, IsEmpty (Bridge (Before paths) d) :=
+      ⟨paths,unique,rows,fun d => free (d+2) (fun r _ => twoLayerBidirectionalRows_all_of_one_left b r) le_rfl⟩
+    exact nEq ▸ witness
 
 end OnlineReachabilityPreservers

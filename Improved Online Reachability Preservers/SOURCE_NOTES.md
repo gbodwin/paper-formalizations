@@ -2463,8 +2463,8 @@ local-order upper bound and recurrence of Theorem 43.
   the first part, so they cannot replace a single step of a river.
   Restricting the rows obtains each smaller count.
   [Directed arc count](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L13)
-  · [Literal upper bound](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L119)
-  · [Exact cutoff-three domain](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L285).
+  · [Literal upper bound](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L178)
+  · [Exact cutoff-three domain](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L313).
 
   Keeping one orientation of the bipartite arcs rules out chains of two
   strict steps. Any number of these rows up to the side product can be
@@ -2474,8 +2474,8 @@ local-order upper bound and recurrence of Theorem 43.
   \(r=\min(ab,\lfloor p/2\rfloor)\) arcs and \(p-2r\) singletons.
   This gives exactly \(p\) incidences in at most \(p\) rows while excluding
   full bridges at every size.
-  [Short literal rows](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L319)
-  · [Mass equal to the row budget](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L384).
+  [Short literal rows](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L333)
+  · [Mass equal to the row budget](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L398).
 
   The smaller-support restriction retains at least
   \(\min(k,\min(n,p))/\min(n,p)\) of the input mass for positive budgets.
@@ -2488,6 +2488,28 @@ local-order upper bound and recurrence of Theorem 43.
   full exclusion cutoffs and imposes no average-degree or length caps.
   [All-size literal mass bound](OnlineReachabilityPreservers/LiteralFullCutoffComparison.lean#L78)
   · [Whole-row mass bound](OnlineReachabilityPreservers/LiteralFullCutoffComparison.lean#L13).
+
+  At all sizes, each selected first arc is necessary for reachability
+  between its endpoints in the graph of selected first arcs. If there were another route after deleting
+  that arc, a simple route of length at least two would use distinct
+  first arcs, each in its own parent row. These rows and the deleted
+  arc's owner would form a full bridge. For \(c\) strongly connected
+  components, the two connector forests use at most \(2(n-c)\) arcs.
+  Keep only one original crossing arc per condensation arc. The union
+  already preserves every original arc's reachability, so necessity
+  makes it the entire graph. A transitive triangle in the condensation
+  gives a substitute route for one original arc, using internal routes
+  and the two other crossings. The condensation is acyclic, so its
+  underlying undirected graph is triangle-free. Mantel's bound gives at
+  most \(\lfloor c^2/4\rfloor\) crossing arcs. Maximizing the sum yields
+  \(\max(2(n-1),\lfloor n^2/4\rfloor)\) for \(n\ge1\). The singletons add
+  at most \(n\) rows. A bidirectional star and one-way balanced bipartite
+  arcs give the two capacities, with all singleton rows available.
+  [First-arc detour exclusion](OnlineReachabilityPreservers/AllSizeLiteralFeasibility.lean#L16)
+  · [SCC arc bound](OnlineReachabilityPreservers/EssentialArcCount.lean#L156)
+  · [Universal arc bound](OnlineReachabilityPreservers/EssentialArcCount.lean#L173)
+  · [Bidirectional star](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L450)
+  · [Exact all-size domain](OnlineReachabilityPreservers/AllSizeLiteralFeasibility.lean#L112).
 
   The exact literal budgets \(n=4,p=11\) are feasible for half exclusion
   at every cutoff and infeasible for full exclusion at \(k\ge4\). The
