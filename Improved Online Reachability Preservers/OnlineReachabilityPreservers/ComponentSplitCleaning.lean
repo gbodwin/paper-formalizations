@@ -1551,7 +1551,7 @@ def HalfDegreeSplitCondition {n p : ℕ} (paths : Fin p → List (Fin n)) (width
   NoShortPrecedenceCycle paths (cutoff-3) ∨ cutoff ≤ 4 ∨ BridgeFree (Before paths) (cutoff-2) ∨
     ∀ v, (occurrences (fun i => (paths i).toFinset) v).card ≤ width
 
-private theorem splitListVertices_admissible_of_halfDegreeSplitCondition {n p k D : ℕ} {half : Bool}
+theorem splitListVertices_admissible_of_halfDegreeSplitCondition {n p k D : ℕ} {half : Bool}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (free : localOrderAdmissible half k paths)
     (halfSafe : half = true → HalfDegreeSplitCondition paths D k) :

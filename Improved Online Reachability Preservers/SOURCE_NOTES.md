@@ -1195,14 +1195,31 @@ nonempty input and output at cutoff at least two.
 [Indexed excess criterion](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L174) · [Literal excess criterion](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L202).
 
 For simple rows, standard degree copying preserves full exclusion
-through any chosen cutoff. For input of mass at least both positive budgets,
+through any chosen cutoff. For such input that excludes full bridges
+through the cutoff and has mass at least both positive budgets,
 the original path-component bound alone gives the frozen quarter-mass
 witness. A restriction retaining at least two thirds of the original mass and
 passing the same path test also suffices for a frozen \(M/18\) witness.
 In particular it suffices that original path excess is at most \(M/3\).
 The latter conclusion has a literal distinct nonempty version at
 cutoff at least two, with the same budgets, cutoff and four frozen caps.
-[Full cleaning with the original path bound](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L12) · [Full cleaning after a path-only restriction](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L41) · [Full cleaning from path excess](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L100) · [Literal full-bridge witness](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L121).
+[Full cleaning with the original path bound](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L11) · [Full cleaning after a path-only restriction](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L28) · [Full cleaning from path excess](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L47) · [Literal full-bridge witness](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L62).
+
+The path-component criterion also applies in half mode whenever standard
+degree copying preserves half exclusion by the existing sufficient test.
+The degree test holds when the precedence graph has no cycle of length
+at most \(k-3\), when \(k\le4\), when full bridges are excluded
+through \(k-2\), or when every degree is already within the original width.
+For a simple admissible input with positive budgets and mass at least
+both budgets, the original path components fitting the original width
+give a frozen witness of mass at least \(M/4\). Restricting to sublists
+that retain at least \(2M/3\) and pass both the degree-safety and path
+tests gives mass at least \(M/18\). Clipping at most \(M/3\) by path
+excess alone guarantees this bound when the original degree test holds,
+since that test survives taking sublists at the original width. At
+\(k\ge2\), the path-excess result also gives a distinct nonempty
+witness for a feasible literal input.
+[Degree test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1550) · [Degree test after sublists](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L11) · [Original path room](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L52) · [Path room after restriction](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L125) · [Path-excess witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L146) · [Literal path-excess witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L170).
 
 The bidirected 23-leaf star has one row per dart, 24 vertices and 46
 rows of mass 92. Every full bridge is excluded. Its original widths
