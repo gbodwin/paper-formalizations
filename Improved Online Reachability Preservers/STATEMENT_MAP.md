@@ -2121,11 +2121,16 @@ degree-split premise in either mode.
 charges only its excess. The exact excess sum can replace the deleted
 mass in the \(M/56\) condition and yields the same \(M/108\) retention guarantee,
 both original budgets, and all four frozen caps.
-[Targeted deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2478)
+[Targeted deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2545)
 test the width cuts on the surviving paths. If those cuts pass and
 at most \(M/18\) incidences were deleted, the result gives
 \(M/32\) with both original budgets and all four frozen caps under
 the same degree-split premise in either mode.
+The [same two tests on retained degree copies](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L217)
+also work for half exclusion when the unmodified copies fail it.
+Passing the earlier-block test certifies half exclusion on the retained
+copied rows. Passing the width test preserves it on the resulting
+pieces. The frozen guarantee stays \(M/32\) at loss at most \(M/18\).
 The same conditional \(M/16\) and [\(M/32\) after rowwise deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1625)
 keep both budgets and all four original-average caps.
 Alternatively, use each row's last safe boundary as its rank. A cut is

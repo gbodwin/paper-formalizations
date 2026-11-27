@@ -940,12 +940,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   In half mode, [checking only returns to an earlier degree block](OnlineReachabilityPreservers/BackwardCopyReturns.lean)
   suffices for the degree split. Combined with the actual-piece width
   test, this gives the same \(M/16\) and original-average guarantee.
-- After [deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2478),
+- After [deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2545),
   test for short returns in the pieces of the retained rows. If the
   copied input has the required bridge exclusion, at most \(M/18\)
   incidences are deleted, and the surviving pieces pass the test,
   the cleaned witness keeps \(M/32\) with both original budgets and
   all four original-average caps.
+  In half mode, [test earlier-block returns after the same deletions](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L217).
+  The starting input has half exclusion through the cutoff. With retained
+  copied rows passing both return tests, the \(M/32\) guarantee applies
+  even if degree copying introduced a forbidden bridge before deletion.
 - For simple paths with the matching bridge exclusion and incidence mass
   \(M\) at least both positive budgets, the cuts can move around individual
   short returns within a row. Pack whole runs between safe boundaries.

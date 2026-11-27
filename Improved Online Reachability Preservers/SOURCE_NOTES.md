@@ -856,7 +856,7 @@ premise. Both original budgets and all four original-average caps
 hold.
 [Exact excess accounting](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2417).
 
-[Deletions on fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2478)
+[Deletions on fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2545)
 retain the original degree labels and recompute the width pieces on each
 surviving row using the original width \(\lfloor4M/p\rfloor\).
 The [return criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1968)
@@ -867,6 +867,23 @@ all four original-average caps, and mass at least \(M/32\) in either mode.
 In a [five-vertex example](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean#L146)
 with mass 18, the pieces of the full copied rows fail the test at cutoff
 seven. Deleting one incidence on the return row makes the test succeed.
+
+The [row deletion theorem](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2478)
+also accepts the required exclusion proved directly on the surviving
+copied rows. For half bridges, the [earlier-copy test](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L15) suffices
+there. When the projected terminal occurs at an internal corner, take
+the prefix ending at its first occurrence. The shorter projected bridge
+has a last arc after the river. The original
+degree labels of the surviving incidences still obey the original
+arrival order. Thus the [combined half-bridge theorem](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L217)
+tests both kinds of return after up to \(M/18\) deletions, with mass at
+least \(M/32\), both original budgets, and all four original-average caps.
+
+A checked five-vertex, 35-row example has mass 40, degree width 32,
+and path width four. The original rows exclude every half bridge. The
+[actual degree split creates a half-5-bridge](OnlineReachabilityPreservers/VertexSplitAudit.lean#L308). Deleting
+one incidence on the reverse step leaves mass 39 and passes
+[both tests at the original widths](OnlineReachabilityPreservers/VertexSplitAudit.lean#L333).
 
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves

@@ -1,3 +1,4 @@
+import OnlineReachabilityPreservers.BackwardCopyReturns
 import OnlineReachabilityPreservers.LocalRegularization
 import OnlineReachabilityPreservers.HalfFivePathRepair
 
@@ -254,5 +255,93 @@ theorem incomingCutPaths_creates_two_half_bridges :
       first.river = second.river ∧ first.arc (Fin.last 3) ≠ second.arc (Fin.last 3) ∧
         first.arc (Fin.last 3) < first.river ∧ second.arc (Fin.last 3) < second.river :=
   ⟨incomingCut_bridge 0,incomingCut_bridge 1,by decide⟩
+
+/-- Insert singleton incidences so the original factor-four degree
+width realizes the consecutive degree cut. -/
+def frozenDegreeReturnPaths (i : Fin 35) : List (Fin 5) :=
+  if i = 0 then [3,2] else if i = 1 then [0,2] else if i = 32 then [1,2]
+  else if i = 33 then [2,3] else if i = 34 then [0,1] else [2]
+
+private def frozenDegreeReturnCore : Fin 5 → Fin 35 := ![0,1,32,33,34]
+
+/-- All strict comparisons belong to these five rows. -/
+private theorem frozenDegreeReturn_active :
+    ∀ (i : Fin 35) (x y : Fin 5), BeforeIn frozenDegreeReturnPaths i x y →
+      ∃ j, frozenDegreeReturnCore j = i := by
+  decide
+
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 3500000 in
+private theorem frozenDegreeReturn_no_earlier_prefix :
+    ∀ (a r : Fin 5) (s u t : Fin 5), frozenDegreeReturnCore a < frozenDegreeReturnCore r →
+      BeforeIn frozenDegreeReturnPaths (frozenDegreeReturnCore r) s t →
+      BeforeIn frozenDegreeReturnPaths (frozenDegreeReturnCore a) u t →
+      s ∉ reaches (prefixArcs frozenDegreeReturnPaths (frozenDegreeReturnCore r) t) u := by
+  decide
+
+set_option maxHeartbeats 2000000 in
+/-- The unmodified original paths satisfy the half exclusion at all sizes. -/
+theorem frozenDegreeReturnPaths_halfFree (k : ℕ) : HalfBridgeFree (BeforeIn frozenDegreeReturnPaths) k := by
+  intro d _ b earlier
+  obtain ⟨a,arc⟩ := frozenDegreeReturn_active _ _ _ (b.arcStep (Fin.last d))
+  obtain ⟨r,river⟩ := frozenDegreeReturn_active _ _ _ b.riverStep
+  exact frozenDegreeReturn_no_earlier_prefix a r (b.vertex 0) (b.vertex (Fin.last d).castSucc)
+    (b.vertex (Fin.last (d+1))) (by simpa only [arc,river] using earlier)
+    (by simpa only [river] using b.riverStep) (by simpa only [arc,Fin.succ_last] using b.arcStep (Fin.last d))
+    (by simpa only [river] using halfBridge_prefix_membership frozenDegreeReturnPaths b)
+
+private abbrev FrozenDegreeReturnCopy := ListVertexBlockIndex frozenDegreeReturnPaths 32
+
+/-- Keep the fixed degree labels and remove the last incidence of the
+row that supplies the earlier-block return. -/
+def frozenDegreeReturnKept (i : Fin 35) : List FrozenDegreeReturnCopy :=
+  let row := splitListVertices frozenDegreeReturnPaths 32 i
+  if i = 0 then row.take 1 else row
+
+theorem frozenDegreeReturn_widths :
+    let M := ∑ i, (frozenDegreeReturnPaths i).length
+    M = 40 ∧ 4*M/5 = 32 ∧ 4*M/35 = 4 ∧ (∑ i, (frozenDegreeReturnKept i).length) = 39 := by
+  decide
+
+set_option synthInstance.maxSize 1024 in
+/-- The actual original-average degree split creates a half-5-bridge. -/
+theorem frozenDegreeReturn_copy_creates_halfFive :
+    ¬ HalfBridgeFree (BeforeIn (splitListVertices frozenDegreeReturnPaths 32)) 5 := by
+  let vertex : Fin 5 → FrozenDegreeReturnCopy :=
+    ![⟨0,⟨0,by decide⟩⟩,⟨1,⟨0,by decide⟩⟩,⟨2,⟨1,by decide⟩⟩,
+      ⟨3,⟨0,by decide⟩⟩,⟨2,⟨0,by decide⟩⟩]
+  let arc : Fin 4 → Fin 35 := ![34,32,33,0]
+  have distinctVertices : ∀ i j, vertex i = vertex j → i = j := by decide
+  have distinctRows : ∀ i j, arc i = arc j → i = j := by decide
+  have riverApart : ∀ i, (1 : Fin 35) ≠ arc i := by decide
+  have river : BeforeIn (splitListVertices frozenDegreeReturnPaths 32) 1 (vertex 0) (vertex (Fin.last 4)) := by
+    unfold BeforeIn
+    decide
+  have steps : ∀ i, BeforeIn (splitListVertices frozenDegreeReturnPaths 32) (arc i) (vertex i.castSucc) (vertex i.succ) := by
+    unfold BeforeIn
+    decide
+  intro free
+  exact free (k := 3) (by decide)
+    ⟨vertex,arc,1,fun {_ _} => distinctVertices _ _,fun {_ _} => distinctRows _ _,riverApart,river,steps⟩ (by
+      change (0 : Fin 35) < 1
+      decide)
+
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 4000000 in
+/-- Deleting the one copied incidence removes all earlier-block returns
+needed at cutoff five. The retained rows fit the original path width. -/
+theorem frozenDegreeReturn_after_deletion :
+    NoShortBackwardCopyReturnIn frozenDegreeReturnKept 2 ∧
+      NoShortReturnAcrossWidthCutsInPieces frozenDegreeReturnKept 4 5 := by
+  constructor
+  · apply NoShortBackwardCopyReturnIn.of_reachIn
+    change ∀ (x y : FrozenDegreeReturnCopy), x.fst = y.fst → y.snd.val < x.snd.val →
+      x ∉ reachIn (listPiecePrecedenceGraph frozenDegreeReturnKept) y 2
+    decide
+  · intro i x y step different
+    have short : ∀ i, (frozenDegreeReturnKept i).length ≤ 4 := by decide
+    have left := (List.idxOf_lt_length_of_mem step.1).trans_le (short i)
+    have right := (List.idxOf_lt_length_of_mem step.2.1).trans_le (short i)
+    exact (different ((Nat.div_eq_of_lt left).trans (Nat.div_eq_of_lt right).symm)).elim
 
 end OnlineReachabilityPreservers.SourceAudit

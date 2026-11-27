@@ -2472,15 +2472,15 @@ theorem regularization_list_frozen_of_small_copiedReturnRun_excess {n p k : ℕ}
   omega
 
 set_option maxHeartbeats 1200000 in
-/-- Delete incidences from the fixed degree copies before testing the
-width cuts. Up to M/18 deletions still allow both original budgets and
-all four original-average caps. -/
-theorem regularization_list_frozen_after_copied_row_deletions {n p k : ℕ} {half : Bool}
+/-- The degree-side exclusion may be established on the retained
+copied rows. The original degree labels and both original widths
+are fixed. -/
+theorem regularization_list_frozen_of_admissible_copied_row_deletions {n p k : ℕ} {half : Bool}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
-    (copyLegal : let M := ∑ i, (paths i).length; localOrderAdmissible half k (splitListVertices paths (4*M/n)))
     (kept : let M := ∑ i, (paths i).length; Fin p → List (ListVertexBlockIndex paths (4*M/n)))
     (sub : let M := ∑ i, (paths i).length; ∀ i, (kept i).Sublist (splitListVertices paths (4*M/n) i))
+    (keptLegal : localOrderAdmissible half k kept)
     (retained : 17*(∑ i, (paths i).length) ≤ 18*(∑ i, (kept i).length))
     (returns : let M := ∑ i, (paths i).length; NoShortReturnAcrossWidthCutsInPieces kept (4*M/p) k) :
     let M := ∑ i, (paths i).length
@@ -2499,7 +2499,6 @@ theorem regularization_list_frozen_after_copied_row_deletions {n p k : ℕ} {hal
   have keptSimple (i : Fin p) : (kept i).Nodup := (sub i).nodup (copiedSimple i)
   have piecesSimple (i : ListBlockIndex kept L) : (pieces i).Nodup :=
     List.filter_sublist.nodup (keptSimple i.fst)
-  have keptLegal : localOrderAdmissible half k kept := localOrderAdmissible_of_sublist copiedSimple sub copyLegal
   have legal : localOrderAdmissible half k pieces :=
     splitListPaths_admissible_of_noShortReturnAcrossWidthCutsInPieces kept keptSimple keptLegal returns
   have upper : K ≤ M := calc
@@ -2539,5 +2538,24 @@ theorem regularization_list_frozen_after_copied_row_deletions {n p k : ℕ} {hal
   rw [exactMass]
   change 17*M ≤ 18*K at retained
   omega
+
+/-- Delete incidences from the fixed degree copies before testing the
+width cuts. Up to M/18 deletions still allow both original budgets and
+all four original-average caps. -/
+theorem regularization_list_frozen_after_copied_row_deletions {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (copyLegal : let M := ∑ i, (paths i).length; localOrderAdmissible half k (splitListVertices paths (4*M/n)))
+    (kept : let M := ∑ i, (paths i).length; Fin p → List (ListVertexBlockIndex paths (4*M/n)))
+    (sub : let M := ∑ i, (paths i).length; ∀ i, (kept i).Sublist (splitListVertices paths (4*M/n) i))
+    (retained : 17*(∑ i, (paths i).length) ≤ 18*(∑ i, (kept i).length))
+    (returns : let M := ∑ i, (paths i).length; NoShortReturnAcrossWidthCutsInPieces kept (4*M/p) k) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 32*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_of_admissible_copied_row_deletions paths simple hn hp dense long kept sub
+    (localOrderAdmissible_of_sublist (fun i => splitListVertices_simple paths _ i (simple i)) sub copyLegal)
+    retained returns
 
 end OnlineReachabilityPreservers

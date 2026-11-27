@@ -10,15 +10,20 @@ open scoped Sigma.Lex
 
 local notation "Before" => SourceAudit.BeforeIn
 
+/-- A bounded walk in the supplied copied rows cannot return to an
+earlier copy of its starting vertex. -/
+def NoShortBackwardCopyReturnIn {n p D : ℕ} {paths : Fin p → List (Fin n)}
+    (rows : Fin p → List (ListVertexBlockIndex paths D)) (cutoff : ℕ) : Prop :=
+  ∀ {d : ℕ} (vertex : Fin (d+1) → ListVertexBlockIndex paths D) (row : Fin d → Fin p),
+    d ≤ cutoff →
+    (∀ j, Before rows (row j) (vertex j.castSucc) (vertex j.succ)) →
+    (vertex 0).fst = (vertex (Fin.last d)).fst →
+    (vertex (Fin.last d)).snd.val < (vertex 0).snd.val → False
+
 /-- A short copied walk cannot return to an earlier block of its
 original starting vertex. -/
 def NoShortBackwardCopyReturn {n p : ℕ} (paths : Fin p → List (Fin n)) (D cutoff : ℕ) : Prop :=
-  let copies := splitListVertices paths D
-  ∀ {d : ℕ} (vertex : Fin (d+1) → ListVertexBlockIndex paths D) (row : Fin d → Fin p),
-    d ≤ cutoff →
-    (∀ j, Before copies (row j) (vertex j.castSucc) (vertex j.succ)) →
-    (vertex 0).fst = (vertex (Fin.last d)).fst →
-    (vertex (Fin.last d)).snd.val < (vertex 0).snd.val → False
+  NoShortBackwardCopyReturnIn (splitListVertices paths D) cutoff
 
 theorem NoShortSplitReturn.noShortBackwardCopyReturn {n p D cutoff : ℕ}
     {paths : Fin p → List (Fin n)}
@@ -32,17 +37,21 @@ theorem NoShortSplitReturn.noShortBackwardCopyReturn {n p D cutoff : ℕ}
 set_option maxHeartbeats 1200000 in
 /-- If the projected terminal corner occurs earlier in a copied bridge,
 its first occurrence is reached by an arc later than the river. Its
-degree block is therefore later than the terminal block. -/
-theorem splitListVertices_halfFree_of_noShortBackwardCopyReturn {n p k D : ℕ}
+degree block is therefore later than the terminal block on any
+rowwise restriction of the original copied rows. -/
+theorem copied_subrows_halfFree_of_noShortBackwardCopyReturn {n p k D : ℕ}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
-    (free : HalfBridgeFree (Before paths) k) (safe : NoShortBackwardCopyReturn paths D (k-3)) :
-    HalfBridgeFree (Before (splitListVertices paths D)) k := by
+    (kept : Fin p → List (ListVertexBlockIndex paths D))
+    (sub : ∀ i, (kept i).Sublist (splitListVertices paths D i))
+    (free : HalfBridgeFree (Before paths) k) (safe : NoShortBackwardCopyReturnIn kept (k-3)) :
+    HalfBridgeFree (Before kept) k := by
   classical
-  let copies := splitListVertices paths D
+  let copies := kept
   let V := ListVertexBlockIndex paths D
   let project (x : V) := x.fst
   have step {i x y} (found : Before copies i x y) : Before paths i (project x) (project y) :=
-    splitListVertices_step (simple i) found
+    splitListVertices_step (simple i)
+      (listBefore_of_sublist (splitListVertices_simple paths D i (simple i)) (sub i) found)
   intro d small b earlier
   let last := Fin.last (d+1)
   let hits := (univ : Finset (Fin (d+1))).filter
@@ -103,7 +112,8 @@ theorem splitListVertices_halfFree_of_noShortBackwardCopyReturn {n p k D : ℕ}
     have onPrefix : b.vertex i.castSucc ∈ copies (b.arc (arcPos (Fin.last m))) := by
       rw [← target]
       exact (b.arcStep (arcPos (Fin.last m))).2.1
-    have earlierBlock := splitListVertices_block_mono same.symm riverFirst.le b.riverStep.2.1 onPrefix
+    have earlierBlock := splitListVertices_block_mono same.symm riverFirst.le
+      ((sub b.river).subset b.riverStep.2.1) ((sub (b.arc (arcPos (Fin.last m)))).subset onPrefix)
     have distinctBlocks : (b.vertex last).snd.val ≠ (b.vertex i.castSucc).snd.val := by
       intro sameBlock
       have equal := b.distinctVertices (vertexBlock_eq_of_same_label same.symm sameBlock)
@@ -136,6 +146,14 @@ theorem splitListVertices_halfFree_of_noShortBackwardCopyReturn {n p k D : ℕ}
       (fun {_ _ _} => step) (fun {_ _ _} found => listBefore_ne found) (fun _ => noHits)
     exact free (show j+2 ≤ k by omega) old (by simpa only [river,lastArc] using earlier)
 
+/-- The earlier-block return test applies to the full copied rows. -/
+theorem splitListVertices_halfFree_of_noShortBackwardCopyReturn {n p k D : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) k) (safe : NoShortBackwardCopyReturn paths D (k-3)) :
+    HalfBridgeFree (Before (splitListVertices paths D)) k :=
+  copied_subrows_halfFree_of_noShortBackwardCopyReturn paths simple (splitListVertices paths D)
+    (fun _ => List.Sublist.refl _) free safe
+
 
 private theorem reachIn_of_fin_steps {V : Type*} [DecidableEq V] {G : Arcs V} {d : ℕ}
     (vertex : Fin (d+1) → V)
@@ -150,20 +168,29 @@ private theorem reachIn_of_fin_steps {V : Type*} [DecidableEq V] {G : Arcs V} {d
     exact Or.inr ⟨vertex (Fin.succ 0),steps 0,
       shorter (vertex ∘ Fin.succ) (fun i => steps i.succ)⟩
 
-/-- The bounded search in the copied rows certifies the absence of a
-return to an earlier block. -/
-theorem NoShortBackwardCopyReturn.of_reachIn {n p D cutoff : ℕ} {paths : Fin p → List (Fin n)}
+/-- Bounded reachability in the supplied rows certifies the
+earlier-block return test. -/
+theorem NoShortBackwardCopyReturnIn.of_reachIn {n p D cutoff : ℕ} {paths : Fin p → List (Fin n)}
+    (rows : Fin p → List (ListVertexBlockIndex paths D))
     (noBack : ∀ {x y : ListVertexBlockIndex paths D}, x.fst = y.fst → y.snd.val < x.snd.val →
-      x ∉ reachIn (listPiecePrecedenceGraph (splitListVertices paths D)) y cutoff) :
-    NoShortBackwardCopyReturn paths D cutoff := by
-  dsimp only [NoShortBackwardCopyReturn]
+      x ∉ reachIn (listPiecePrecedenceGraph rows) y cutoff) :
+    NoShortBackwardCopyReturnIn rows cutoff := by
+  dsimp only [NoShortBackwardCopyReturnIn]
   intro d vertex row short steps same backwards
-  let graph := listPiecePrecedenceGraph (splitListVertices paths D)
+  let graph := listPiecePrecedenceGraph rows
   have found : vertex 0 ∈ reachIn graph (vertex (Fin.last d)) d :=
     reachIn_of_fin_steps vertex (fun j => listPiecePrecedenceGraph_edge.mpr ⟨row j,steps j⟩)
   have monotone : Monotone (reachIn graph (vertex (Fin.last d))) :=
     monotone_nat_of_le_succ (reachIn_subset_succ graph (vertex (Fin.last d)))
   exact noBack same backwards (monotone short found)
+
+/-- The bounded search in the copied rows certifies the absence of a
+return to an earlier block. -/
+theorem NoShortBackwardCopyReturn.of_reachIn {n p D cutoff : ℕ} {paths : Fin p → List (Fin n)}
+    (noBack : ∀ {x y : ListVertexBlockIndex paths D}, x.fst = y.fst → y.snd.val < x.snd.val →
+      x ∉ reachIn (listPiecePrecedenceGraph (splitListVertices paths D)) y cutoff) :
+    NoShortBackwardCopyReturn paths D cutoff :=
+  NoShortBackwardCopyReturnIn.of_reachIn (splitListVertices paths D) noBack
 
 /-- Test only returns to earlier degree blocks and returns across width
 cuts in the actual pieces. The frozen averages and budgets stay fixed. -/
@@ -183,5 +210,25 @@ theorem regularization_list_frozen_half_of_noShortBackwardCopyReturn {n p k : �
   have admissible := listRegularizedPaths_admissible_of_noShortReturnAcrossCopiedWidthCuts
     (half := true) paths simple safe returns
   exact regularization_list_frozen_after_width_blocks_of_mass paths simple admissible hn hp dense long le_rfl (by omega)
+
+/-- Repair the degree-copy projection by deleting incidences before
+testing the two kinds of short return. Keep the original copy labels and
+both original widths. -/
+theorem regularization_list_frozen_half_after_copied_return_deletions {n p k : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) k)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (kept : let M := ∑ i, (paths i).length; Fin p → List (ListVertexBlockIndex paths (4*M/n)))
+    (sub : let M := ∑ i, (paths i).length; ∀ i, (kept i).Sublist (splitListVertices paths (4*M/n) i))
+    (retained : 17*(∑ i, (paths i).length) ≤ 18*(∑ i, (kept i).length))
+    (degreeSafe : NoShortBackwardCopyReturnIn kept (k-3))
+    (returns : let M := ∑ i, (paths i).length; NoShortReturnAcrossWidthCutsInPieces kept (4*M/p) k) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) k ∧
+      M ≤ 32*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  have keptFree := copied_subrows_halfFree_of_noShortBackwardCopyReturn paths simple kept sub free degreeSafe
+  exact regularization_list_frozen_of_admissible_copied_row_deletions (half := true)
+    paths simple hn hp dense long kept sub keptFree retained returns
 
 end OnlineReachabilityPreservers
