@@ -2464,11 +2464,23 @@ local-order upper bound and recurrence of Theorem 43.
   at least \(\max(n,p)/8\). With either unbalanced-budget inequality above,
   the full witness has mass at least \(H(n,p,k)/(8a)\) at a literal half
   maximum. This comparison uses a full witness with at most the given
-  budgets and needs only half feasibility. The original-average cleaning
-  caps have a separate proof requirement.
+  budgets and needs only half feasibility.
   [Equivalence through two](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L12)
   · [Full witness from half feasibility](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L24)
   · [Unbalanced-budget comparison](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L98).
+
+  In the literal low-mass range \(n\le M\le8\max(n,p)\), one chosen
+  output has mass in \([M/8,M]\), fits both budgets and meets the four
+  original-average caps. If \(M\le4p\), distinctness uses the short-row
+  construction. Otherwise the original lower length cap forces each row
+  to have at least two vertices, and full two-bridge exclusion gives
+  distinctness. The proof starts with full cutoff \(\max(2,n)\). Any
+  bridge in the resulting system has at most \(n\) distinct vertices, so
+  the same witness works at all cutoffs. At a feasible literal half maximum,
+  the low-mass range holds under the small-side test or either unbalanced
+  inequality with \(a=8\).
+  [Low-mass construction](OnlineReachabilityPreservers/LiteralFrozenFullLowMass.lean#L13)
+  · [Literal extremal consequence](OnlineReachabilityPreservers/LiteralFrozenFullLowMass.lean#L51).
 
   For positive budgets and any half cutoff \(k\ge4\), the full all-size maximum controls
   every indexed half mass within \(Cn^{7/50+\varepsilon(n)}\), for one
@@ -2828,8 +2840,8 @@ local-order upper bound and recurrence of Theorem 43.
   implies \(M\le4bw\). In fact \(32n+p\le50b\) and
   \(2np\le3b^2\). If \(M>4bw\), the shifted mass \(S\)
   satisfies \(16S>61bw\), contradicting the cubic bound.
-  Take \(\lfloor b/v\rfloor\) disjoint copies to certify the
-  literal maximum. They use at least \(b/2\) row labels, so the
+  Take \(\lfloor b/v\rfloor\) disjoint copies to show literal half
+  feasibility at the exact budgets. They use at least \(b/2\) row labels, so the
   remaining row count fits distinct singleton padding even when
   \(p>n\). This gives both upper caps and mass at least \(vw\)
   at the maximum. One restricted full-three family then has

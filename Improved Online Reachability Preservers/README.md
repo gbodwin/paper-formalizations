@@ -571,6 +571,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   feasible literal maximum over distinct nonempty paths has a literal
   witness of mass at least \(M/7056\) with the same budgets and caps.
   [Indexed and literal output-average cleaning](OnlineReachabilityPreservers/OutputAverageShortCleaning.lean).
+- A simple, distinct, nonempty half family at cutoff \(k\ge2\) and with
+  \(n\le M\le8\max(n,p)\) has one literal witness excluding full bridges
+  at every size. It has mass between \(M/8\) and \(M\), within both budgets
+  and all four starting-average caps. This applies at the feasible exact
+  half maximum when \(\min(n,p)\le8\), \(n(n-1)\le28p\), or both
+  \(k\ge3\) and \(p(p-1)\le40n\).
+  [Low-mass literal witness](OnlineReachabilityPreservers/LiteralFrozenFullLowMass.lean#L13)
+  · [Unbalanced literal maximum](OnlineReachabilityPreservers/LiteralFrozenFullLowMass.lean#L51).
 - At a full cutoff covering the smaller budget, the unrestricted indexed
   maximum has a witness that excludes full bridges at every size, retains
   at least \(M/523\), and meets both original budgets and all four

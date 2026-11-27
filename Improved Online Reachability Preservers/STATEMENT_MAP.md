@@ -3704,11 +3704,21 @@ least \(p\), and the short-row construction yields a full witness of mass
 at least \(\max(n,p)/8\). With either unbalanced-budget inequality above,
 the full witness has mass at least \(H(n,p,k)/(8a)\) at a literal half
 maximum. This comparison uses a full witness with at most the given
-budgets and needs only half feasibility. The original-average cleaning
-caps have a separate proof requirement.
+budgets and needs only half feasibility.
 [Equivalence through two](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L12)
 · [Full witness from half feasibility](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L24)
 · [Unbalanced-budget comparison](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L98).
+
+With positive budgets and \(k\ge2\), a literal half-free input of mass
+\(n\le M\le8\max(n,p)\) has one literal output that excludes full bridges
+at every size and meets all four original-average caps. The output mass is
+in \([M/8,M]\) and its counts are at most \(n,p\). At the literal half
+maximum, the mass bound follows from \(\min(n,p)\le8\), \(n(n-1)\le28p\),
+or both \(k\ge3\) and \(p(p-1)\le40n\), with only literal half feasibility
+at the exact counts. These cases give Lemma 39 with its printed half
+benchmark and caps at the starting averages.
+[Simultaneous full witness](OnlineReachabilityPreservers/LiteralFrozenFullLowMass.lean#L13)
+· [Literal extremal witness](OnlineReachabilityPreservers/LiteralFrozenFullLowMass.lean#L51).
 
 For every positive pair of budgets and \(k\ge4\), Lean proves
 \(H(n,p,k)\le Cn^{7/50+\varepsilon(n)}\beta_\infty(n,p)\) in the indexed
