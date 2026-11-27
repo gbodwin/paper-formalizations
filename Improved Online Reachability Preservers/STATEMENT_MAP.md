@@ -3776,6 +3776,22 @@ Hence the total incidence mass is at most \(2p+o(n^2)\).
 · [Long-row incidence mass](OnlineReachabilityPreservers/FullThreeLongRows.lean#L173)
 · [Total incidence mass](OnlineReachabilityPreservers/FullThreeLongRows.lean#L198).
 
+At \(p\le\lfloor n^2/4\rfloor\), a one-way bipartite family of exactly
+\(p\) distinct pairs gives mass \(2p\) and excludes full bridges at every
+size. Thus the literal and indexed full extrema are between \(2p\)
+and \(2p+o(n^2)\) for all \(k\ge3\) in this range. The long-mass bound
+extends uniformly over smaller vertex budgets \(v\le n\). If \(M>8p\)
+and \(M\ge\eta n^2\), the original lower cap \(M/(4p)\) requires every
+output row to be long. For each fixed \(\eta>0\) and positive integer
+\(r\), the resulting full incidence mass is below \(M/r\) for large
+enough \(n\), independently of the output row count. A counterexample
+to the original-average interpretation of Lemma 39 from this argument
+would require half-free families achieving these inputs at unbounded
+budgets. That existence question remains open.
+[Uniform bound](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L13)
+· [Conditional obstruction](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L35)
+· [Pair-capacity sharpness](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L70).
+
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.
 Three comparisons leave vertex zero early in the arrival order. The other

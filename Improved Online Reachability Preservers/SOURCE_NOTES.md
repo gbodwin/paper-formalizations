@@ -2566,6 +2566,24 @@ local-order upper bound and recurrence of Theorem 43.
   · [Long-row mass](OnlineReachabilityPreservers/FullThreeLongRows.lean#L173)
   · [Total mass](OnlineReachabilityPreservers/FullThreeLongRows.lean#L198).
 
+  The finite bound on long mass is \(v^2\) for an output on \(v\)
+  vertices. It extends the asymptotic estimate uniformly to every
+  \(v\le n\), including outputs below the triangle-removal threshold.
+  At starting mass \(M>8p\), every row meeting the original lower length
+  cap has length at least three. If \(M\ge\eta n^2\) for fixed \(\eta>0\),
+  use the long-mass estimate with \(\varepsilon=\eta/(2r)\). For any fixed
+  positive integer \(r\), all such full outputs have mass below \(M/r\)
+  once \(n\) is sufficiently large, with any output row count. This is
+  conditional on the starting parameters. Half-free witnesses realizing
+  them at unbounded budgets have not been established. Separately, at
+  \(p\le\lfloor n^2/4\rfloor\) there is an all-size full-free literal family
+  of \(p\) pairs and mass \(2p\), matching the full upper bound up to
+  \(o(n^2)\).
+  [Finite bound](OnlineReachabilityPreservers/FullThreeLongRows.lean#L221)
+  · [Uniform vertex-budget bound](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L13)
+  · [Lower-cap obstruction](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L35)
+  · [Pair-capacity sharpness](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L70).
+
   Below cutoff two, both exclusions are vacuous. On \(n\) vertices the
   count of simple lists, including the empty list, is less than \(3n!\).
   Encode a nonempty list by its head and a shorter list on the remaining

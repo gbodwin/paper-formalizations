@@ -216,4 +216,20 @@ theorem full_three_mass_le_twice_paths_add_subquadratic (ε : ℝ) (positive : 0
   exact (show ((∑ i, (paths i).length : ℕ):ℝ) ≤ 2*(p:ℝ)+(listMassAboveWidth paths 2:ℝ) by exact_mod_cast addition).trans
     (add_le_add_right (small large three paths simple free) _)
 
+/-- Under full-two exclusion, all rows of length at least three have
+total mass at most the square of the vertex budget. -/
+theorem long_mass_le_square_of_full_two {n p k : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : BridgeFree (Before paths) k) (two : 2 ≤ k) :
+    listMassAboveWidth paths 2 ≤ n^2 := by
+  have squares := full_three_long_row_square_sum paths simple free two
+  have lower : 3*listMassAboveWidth paths 2 ≤ ∑ i ∈ longRows paths, (paths i).length^2 := by
+    unfold listMassAboveWidth
+    rw [mul_sum]
+    apply sum_le_sum
+    intro i on
+    have long : 2 < (paths i).length := (mem_filter.mp on).2
+    rw [pow_two]
+    exact Nat.mul_le_mul_right _ (by omega)
+  omega
+
 end OnlineReachabilityPreservers

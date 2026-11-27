@@ -2052,6 +2052,19 @@ mass. The total mass is at most \(2p+o(n^2)\).
 [Long-row mass](OnlineReachabilityPreservers/FullThreeLongRows.lean#L173)
 · [Total mass](OnlineReachabilityPreservers/FullThreeLongRows.lean#L198).
 
+For \(p\le\lfloor n^2/4\rfloor\), one-way bipartite pairs attain mass \(2p\)
+with exactly \(p\) distinct nonempty rows and full exclusion at every
+size. Together with the upper bound, this gives mass \(2p+o(n^2)\) for
+every full cutoff of at least three. If the starting mass satisfies
+\(M>8p\) and \(M\ge\eta n^2\) for fixed \(\eta>0\), the starting lower
+length cap forces every output row to be long. For any fixed positive
+integer \(r\) and sufficiently large \(n\), such full outputs within the
+vertex budget have mass below \(M/r\). Applying this obstruction to the
+literal Lemma 39 would require half-bridge-free inputs with those starting
+parameters for unbounded vertex budgets.
+[Pair-capacity mass bound](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L70)
+· [Starting-average obstruction](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L35).
+
 At either cutoff below two and feasible positive literal budgets, use
 \(\min(p,n!)\) distinct spanning permutations. They give at least a
 third of the unrestricted maximum and satisfy the four caps at both
