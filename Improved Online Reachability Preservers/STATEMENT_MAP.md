@@ -2330,6 +2330,15 @@ the indexed witness has mass at least \(M/4\), both budgets, all four
 caps and the original full or half cutoff.
 [Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L70) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L241).
 
+The path-partition premise has an exact finite test. Within one row,
+link the endpoints of every comparison with a short backward return.
+Each connected component must lie in one group of any valid partition.
+When every component fits the width, the components themselves give a
+valid partition. For admissible standard degree copies at the original
+width, this test at the original path width gives the same indexed
+\(M/4\) witness in either mode.
+[Graph of linked endpoints](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L16) · [Exact component criterion](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L110) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L125).
+
 An eight-vertex example shows a limit of the disjoint-component rank test.
 Its seven original rows exclude full bridges through three. Standard
 width-two blocks form a directed cycle. Each vertex starts a strict
