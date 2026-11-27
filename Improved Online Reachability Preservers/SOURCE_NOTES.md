@@ -1148,11 +1148,20 @@ degree and path components fit their original widths, the on-input
 tests give the frozen indexed quarter-mass witness at the chosen cutoff.
 [Components and bounded partitions](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L17) · [Graph of linked incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L239) · [Exact degree component criterion](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L261) · [Frozen witness from both finite tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L279).
 
-The same tests apply to a literal set of distinct nonempty simple
-paths at every cutoff of at least two. The literal transfer gives
+For distinct nonempty simple inputs with positive budgets and mass
+\(M\) at least the vertex budget, the same tests apply at every
+admissible cutoff of at least two. The literal transfer gives
 a distinct nonempty witness of mass at least \(M/8\), within both original
 budgets and all four original caps, preserving the chosen cutoff.
 [Frozen cleaning for distinct nonempty paths](OnlineReachabilityPreservers/ShortReturnDistinctCleaning.lean#L10).
+
+Restricting simple rows to sublists can only shrink the two component
+graphs and their components. Delete each incidence for which either
+original component exceeds its width. The restricted rows satisfy
+both component bounds at those same widths. Retained mass plus the
+number of deleted incidences equals the original mass. An incidence
+with two oversized components contributes one to the loss.
+[Exact mass of removed incidences](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L92) · [Retained mass plus removed mass](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L99) · [Both component bounds after deletion](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L108).
 
 The path-partition premise has an exact finite test. Within one row,
 link the endpoints of every comparison with a short backward return.
