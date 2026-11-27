@@ -1132,6 +1132,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   · [Copy support premise](OnlineReachabilityPreservers/FullReturnCopyColours.lean#L140)
   · [Indexed witness](OnlineReachabilityPreservers/FullReturnCopyColours.lean#L153)
   · [Literal witness](OnlineReachabilityPreservers/FullReturnCopyColours.lean#L211).
+- With two colours, a copied vertex outside a chosen exception set uses
+  a fixed tag across its occurrences. Each exception adds at most one
+  occupied vertex label. At mean degree at least eight, the standard
+  degree blocks number at most \(39n/31\), so exceptions on at most
+  \(7n/93\) copied vertices fit the \(4n/3\) support allowance. If the
+  binary refinement separates every tested return, it therefore supplies
+  the support premise for the full \(M/16\) cleaning witness.
+  [Width budget](OnlineReachabilityPreservers/LocalFrozenCleaning.lean#L1067)
+  · [Binary copy count](OnlineReachabilityPreservers/FullReturnBinaryCopies.lean#L11)
+  · [Small exception certificate](OnlineReachabilityPreservers/FullReturnBinaryCopies.lean#L44).
 - At full cutoff seven, packing the components of returns of at most
   two steps gives a frozen quarter-mass witness if those components fit the
   original path width. Use either the original rows or the standard
@@ -2015,9 +2025,12 @@ The library is included in the repository's module index, declaration audit,
 and kernel replay.
 
 The companion PaperLab includes an interactive trace and a source-linked
-proof map. Open cases include general cyclic cleaning at half cutoffs of
-five or more, frozen-average cleaning under only a finite full cutoff of
-seven or more, and a native execution-time bound for the Steiner algorithm.
+proof map. Unrestricted half-bridge cleaning at the original averages
+remains open from cutoff five. At the witness's own averages it remains
+open from cutoff six. Full cleaning at a finite cutoff of at least seven
+below both budgets also remains open in general. The literal last-arc
+\(H\) comparison with the full extremum \(\beta\) in Lemma 39 and a native
+execution-time bound for the Steiner algorithm remain open.
 
 The binary arc preparation encodes both endpoints of each raw row
 once at the bit length of the vertex count. The deduplication pass

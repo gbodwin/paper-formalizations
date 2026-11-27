@@ -1064,7 +1064,7 @@ theorem regularization_list_frozen_after_width_blocks_of_mass {half : Bool} {k n
     (listRegularizedPaths_simple paths simple D L) allowed
     hn hp dense long vCap iCap length degree (mass.trans_le upper) (by rw [mass]; exact lower)
 
-private theorem large_average_width_budget {M q : ℕ} (hq : 0 < q) (large : 8*q ≤ M) :
+theorem large_average_width_budget {M q : ℕ} (hq : 0 < q) (large : 8*q ≤ M) :
     31*(M/(4*M/q)) ≤ 8*q := by
   let width := 4*M/q
   obtain ⟨widthPos,_,_⟩ := four_average_width hq (show q ≤ M by omega)

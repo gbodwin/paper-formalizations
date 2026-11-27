@@ -2207,9 +2207,11 @@ local-order upper bound and recurrence of Theorem 43.
   the chains used to pair cuts can branch even when every half-bridge is
   excluded. These examples identify the limits of the splitting proof.
   [Checked splitting examples](OnlineReachabilityPreservers/CyclicSplitLimits.lean).
-- The proof of Lemma 23 writes \(\beta\) for the half-bridge-free extremum
-  \(H\). The statement of Lemma 39 writes \(H\) for the full-bridge-free
-  extremum \(\beta\) it is used to estimate.
+- The proof of Lemma 23 writes \(\beta\) for its starting half-bridge-free
+  family, whose extremum is \(H\). The statement of Lemma 39 displays
+  \(H\), which retains its last-arc half-bridge definition. Appendix B
+  applies the cleaning statement to the full-bridge extremum \(\beta\).
+  That application suggests \(\beta\) as the intended benchmark.
   For every \(k\ge3\), Lean checks \(\beta(4,5,k)=11<12=H(4,5,k)\) under both
   the indexed and feasible distinct nonempty exact-count conventions.
   Both upper bounds cover families with at most four vertices and five
