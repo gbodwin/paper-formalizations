@@ -2680,6 +2680,32 @@ local-order upper bound and recurrence of Theorem 43.
   [Half cutoff three](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L168)
   · [Density consequence](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L218).
 
+  The balanced case of Bridge Girth v4 Theorem 83 uses a bipartite
+  construction of girth at least eight. The Lean witness uses the affine lines
+  \(x\mapsto(x,a+sx,b+s^2x)\) over a finite field of order \(q\).
+  Each point lies on exactly one line per slope. A line is determined
+  by its slope and one point, or by two distinct points. Any incidence
+  triangle would use three distinct slopes. Its three differences in
+  first coordinate must vanish by the first three moment constraints
+  and the Vandermonde theorem. This would identify the river's two
+  endpoints. Each of the \(q^3\) rows is a simple list in an arbitrary
+  fixed enumeration of the field and has length \(q\). Each vertex
+  has degree \(q\), so all four witness-average caps hold. For comparable
+  budgets take \(q=2^m\), with \(m\) the smaller of
+  \(\lfloor\log_8\min(n,p)\rfloor\) and \(\lfloor\log_{16} M\rfloor\)
+  when the smaller budget is at least eight and \(M\ge16\). Its cube
+  fits both budgets and its fourth power is at most \(M\). If the budget
+  sets the exponent, the half-three linear-or-cubic estimate gives the
+  comparison factor \(16(8C)^2\) when each budget is at most \(C\) times
+  the other. If the mass sets it, \(M<16q^4\). In the small cases use one
+  row on \(\min(n,M)\) vertices for positive \(M\). The input can exclude half
+  bridges through any cutoff at least three. The full output excludes
+  bridges through size three, the cutoff of this Lemma 39 case.
+  [Bridge Girth v4](https://arxiv.org/pdf/2212.11944v4)
+  · [Field construction](OnlineReachabilityPreservers/WengerThreeRows.lean#L128)
+  · [Uniform comparison](OnlineReachabilityPreservers/WengerThreeRows.lean#L194)
+  · [Comparable budgets](OnlineReachabilityPreservers/WengerThreeRows.lean#L242).
+
   Below cutoff two, both exclusions are vacuous. On \(n\) vertices the
   count of simple lists, including the empty list, is less than \(3n!\).
   Encode a nonempty list by its head and a shorter list on the remaining

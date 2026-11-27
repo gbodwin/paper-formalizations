@@ -2114,6 +2114,21 @@ still require quadratic path density on the half side.
 [Half-three mass bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L168)
 · [Necessary path density](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L218).
 
+At cutoff three and comparable positive budgets, the witness-average
+form of Lemma 39 holds with its literal half benchmark. For a field of
+size \(q\), the affine lines with directions \((1,s,s^2)\) give \(q^3\)
+distinct simple rows on \(q^3\) vertices, each row and vertex carrying
+\(q\) incidences. Two lines share at most one vertex. Three distinct
+lines cannot meet at three distinct corners, by the first three
+Vandermonde moments. For \(n\le Cp\) and \(p\le Cn\), choose a field of
+power-of-two order whose cube fits the smaller budget and whose fourth
+power fits the input mass \(M\). The full-three output fits both
+budgets and keeps mass between \(M/[16(8C)^2]\) and \(M\), with the four
+caps at its own averages. A single row of length \(\min(n,M)\) suffices
+when the smaller budget is below eight or \(M<16\).
+[Regular full-three construction](OnlineReachabilityPreservers/WengerThreeRows.lean#L128)
+· [Comparable-budget witness](OnlineReachabilityPreservers/WengerThreeRows.lean#L242).
+
 At either cutoff below two and feasible positive literal budgets, use
 \(\min(p,n!)\) distinct spanning permutations. They give at least a
 third of the unrestricted maximum and satisfy the four caps at both

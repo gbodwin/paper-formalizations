@@ -3856,6 +3856,22 @@ path-density regime required by the \(n\sqrt p\)-scale obstruction.
 [Mass estimate](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L168)
 · [Necessary density](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L218).
 
+At positive budgets \(n\le Cp\) and \(p\le Cn\) for a fixed
+\(C\ge1\), Lemma 39 with its literal \(H\) benchmark holds at cutoff
+three with the four caps at the witness's own averages. A finite-field
+line family gives a literal full-three witness with both budgets and
+mass between \(M/[16(8C)^2]\) and \(M\) for any positive-mass simple
+half input excluding through size three. Every line has \(q\) points and each vertex lies on
+exactly \(q\) lines. There are no repeated lines and no size-three
+incidence cycle by Vandermonde independence. The construction uses a
+power of two \(q\) with \(q^3\le\min(n,p)\) and \(q^4\le M\) when the
+smaller budget is at least eight and \(M\ge16\). Either side fixes the
+scale. The remaining positive-mass cases use one row on \(\min(n,M)\)
+vertices. The result applies
+at the literal half maximum on these budgets.
+[Regular field family](OnlineReachabilityPreservers/WengerThreeRows.lean#L128)
+· [Comparable-budget Lemma 39 case](OnlineReachabilityPreservers/WengerThreeRows.lean#L242).
+
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.
 Three comparisons leave vertex zero early in the arrival order. The other
