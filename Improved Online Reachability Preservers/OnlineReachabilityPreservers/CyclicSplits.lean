@@ -554,7 +554,7 @@ private theorem bridgeSlots_forward_or_river {pieces : J → List V} {k : ℕ}
     rw [bridgeSlots, Fin.snoc_castSucc, cycleNext_castSucc]
     exact b.arcStep j
 
-private theorem short_cycle_self_apart {k : ℕ} (lower : 4 ≤ k) (upper : k ≤ 5) :
+private theorem short_cycle_self_apart {k : ℕ} (lower : 4 ≤ k) (upper : k ≤ 6) :
     ∀ i : Fin (k+2), i ≠ (i+1)+1 ∧ i ≠ ((i+1)+1)+1 := by
   interval_cases k <;> decide
 
@@ -565,25 +565,23 @@ private theorem short_cycle_pair_near {k : ℕ} (lower : 4 ≤ k) (upper : k ≤
   revert i j
   interval_cases k <;> decide
 
-/-- One-step and two-step crossed returns control every repeated parent
-in a bridge through size seven, including when the pieces interleave. -/
-def listBridge_after_opposite_and_two_step_safe_split {paths : I → List V} {pieces : J → List V}
+private theorem bridgeSlots_parent_distinct_through_three
+    {paths : I → List V} {pieces : J → List V}
     {k : ℕ} [LinearOrder I] (parent : J → I)
     (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
     (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
     (together : ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
       ListBefore paths (parent i) x y → ListBefore pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
     (noTwo : NoCrossedTwoStepReturn paths pieces parent)
-    (free : BridgeFree (ListBefore paths) 3) (short : k ≤ 5) (b : Bridge (ListBefore pieces) k) :
-    Bridge (ListBefore paths) k := by
+    (free : BridgeFree (ListBefore paths) 3) (lower : 4 ≤ k) (short : k ≤ 6)
+    (b : Bridge (ListBefore pieces) k) :
+    let p := parent ∘ bridgeSlots b
+    (∀ i, p i ≠ p (i+1)) ∧
+      (∀ i, p i ≠ p ((i+1)+1)) ∧
+      (∀ i, p i ≠ p (((i+1)+1)+1)) := by
   have noParallel {a c : I} {x y : V} (different : a ≠ c)
       (first : ListBefore paths a x y) (second : ListBefore paths c x y) : False :=
     no_parallel_list_steps free.halfFree (by decide) different first second
-  by_cases small : k ≤ 3
-  · exact listBridge_after_opposite_safe_split_through_five parent
-      (fun {_ _ _} => steps) (fun {_ _ _} => disjoint) (fun _ {_ _ _ _} => noParallel)
-      (fun _ {_ _ _ _ _} => together) small b
-  have lower : 4 ≤ k := by omega
   let s := bridgeSlots b
   let p (i : Fin (k+2)) := parent (s i)
   let v := b.vertex
@@ -619,12 +617,37 @@ def listBridge_after_opposite_and_two_step_safe_split {paths : I → List V} {pi
     · exact noThree (threeListBridge ij il.symm jl.symm backwards (steps first) (steps second))
     · exact noThree (threeListBridge il.symm jl ij.symm (steps second) backwards (steps first))
     · exact cycleNext_ne j (firstRiver.trans secondRiver.symm)
+  exact ⟨near.1, atTwo, atThree⟩
+
+/-- One-step and two-step crossed returns control every repeated parent
+in a bridge through size seven, including when the pieces interleave. -/
+def listBridge_after_opposite_and_two_step_safe_split {paths : I → List V} {pieces : J → List V}
+    {k : ℕ} [LinearOrder I] (parent : J → I)
+    (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
+    (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
+    (together : ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
+      ListBefore paths (parent i) x y → ListBefore pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
+    (noTwo : NoCrossedTwoStepReturn paths pieces parent)
+    (free : BridgeFree (ListBefore paths) 3) (short : k ≤ 5) (b : Bridge (ListBefore pieces) k) :
+    Bridge (ListBefore paths) k := by
+  have noParallel {a c : I} {x y : V} (different : a ≠ c)
+      (first : ListBefore paths a x y) (second : ListBefore paths c x y) : False :=
+    no_parallel_list_steps free.halfFree (by decide) different first second
+  by_cases small : k ≤ 3
+  · exact listBridge_after_opposite_safe_split_through_five parent
+      (fun {_ _ _} => steps) (fun {_ _ _} => disjoint) (fun _ {_ _ _ _} => noParallel)
+      (fun _ {_ _ _ _ _} => together) small b
+  have lower : 4 ≤ k := by omega
+  let p := parent ∘ bridgeSlots b
+  obtain ⟨atOne, atTwo, atThree⟩ :=
+    bridgeSlots_parent_distinct_through_three parent (fun {_ _ _} => steps)
+      (fun {_ _ _} => disjoint) (fun {_ _ _ _ _} => together) noTwo free lower (by omega) b
   have parentInjective : Function.Injective p := by
     intro i j same
     by_contra different
     rcases short_cycle_pair_near lower short i j different with rfl | rfl | rfl | rfl | rfl | rfl
-    · exact near.1 i same
-    · exact near.1 j same.symm
+    · exact atOne i same
+    · exact atOne j same.symm
     · exact atTwo i same
     · exact atTwo j same.symm
     · exact atThree i same
@@ -654,5 +677,136 @@ theorem fullBridgeFree_of_opposite_and_two_step_safe_split {paths : I → List V
       noTwo three (by omega) b)
 
 end Interleaved
+
+section Eight
+
+/-- Three retained comparisons on distinct other parents cannot return
+across a cut against the common parent's order. -/
+def NoCrossedThreeStepReturn (paths : I → List V) (pieces : J → List V)
+    (parent : J → I) : Prop :=
+  ∀ ⦃i j a c d : J⦄ ⦃x y z w : V⦄, i ≠ j → parent i = parent j →
+    Function.Injective (![parent a, parent c, parent d, parent i] : Fin 4 → I) →
+    x ∈ pieces i → y ∈ pieces j → ListBefore paths (parent i) y x →
+    ListBefore pieces a x z → ListBefore pieces c z w → ListBefore pieces d w y → False
+
+private def oppositeEight (i : Fin 8) : Fin 8 := (((i+1)+1)+1)+1
+
+private theorem oppositeEight_spec : ∀ i : Fin 8,
+    i ≠ oppositeEight i ∧ oppositeEight (oppositeEight i) = i := by
+  unfold oppositeEight
+  decide
+
+private def eightGapAvoidsRiver (i : Fin 8) : Prop :=
+  i+1 ≠ Fin.last 7 ∧ (i+1)+1 ≠ Fin.last 7 ∧ ((i+1)+1)+1 ≠ Fin.last 7
+
+private theorem eight_gap_or_opposite : ∀ i : Fin 8,
+    eightGapAvoidsRiver i ∨ eightGapAvoidsRiver (oppositeEight i) := by
+  unfold eightGapAvoidsRiver oppositeEight
+  decide
+
+private theorem eight_pair_near_or_opposite : ∀ i j : Fin 8, i ≠ j →
+    j = i+1 ∨ i = j+1 ∨ j = (i+1)+1 ∨ i = (j+1)+1 ∨
+      j = ((i+1)+1)+1 ∨ i = ((j+1)+1)+1 ∨ j = oppositeEight i := by
+  unfold oppositeEight
+  decide
+
+/-- Opposite slots of a size-eight bridge have a three-step gap
+with no river. A repeated parent there contradicts full-four
+exclusion or gives a crossed three-step return. -/
+def listBridge_after_opposite_and_three_step_safe_split_eight
+    {paths : I → List V} {pieces : J → List V} [LinearOrder I] (parent : J → I)
+    (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
+    (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
+    (together : ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
+      ListBefore paths (parent i) x y → ListBefore pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
+    (noTwo : NoCrossedTwoStepReturn paths pieces parent)
+    (noThree : NoCrossedThreeStepReturn paths pieces parent)
+    (free : BridgeFree (ListBefore paths) 4) (b : Bridge (ListBefore pieces) 6) :
+    Bridge (ListBefore paths) 6 := by
+  let s := bridgeSlots b
+  let p := parent ∘ s
+  let v := b.vertex
+  have meet := bridgeSlots_corners b (paths := pieces) id (fun {_ _ _} h => h)
+  have oldMeet := bridgeSlots_corners b parent (fun {_ _ _} => steps)
+  have freeThree : BridgeFree (ListBefore paths) 3 := fun _ h => free (h.trans (by decide))
+  obtain ⟨atOne, atTwo, atThree⟩ :=
+    bridgeSlots_parent_distinct_through_three parent (fun {_ _ _} => steps)
+      (fun {_ _ _} => disjoint) (fun {_ _ _ _ _} => together) noTwo freeThree (by decide) le_rfl b
+  have forward {i : Fin 8} (arc : i ≠ Fin.last 7) :
+      ListBefore pieces (s i) (v i) (v (i+1)) :=
+    (bridgeSlots_forward_or_river b i).resolve_right (fun h => arc h.1)
+  have space := short_cycle_self_apart (k := 6) (by decide) le_rfl
+  have avoid (i : Fin 8) (gap : eightGapAvoidsRiver i) : p i ≠ p (oppositeEight i) := by
+    let j := i+1
+    let l := j+1
+    let m := l+1
+    let t := m+1
+    intro same
+    have apart : i ≠ t := (oppositeEight_spec i).1
+    have different : s i ≠ s t := fun equal => apart (bridgeSlots_injective b equal)
+    have distinctRows : Function.Injective (![p j, p l, p m, p i] : Fin 4 → I) :=
+      injective_four_tuple (atOne j) (atTwo j) (atOne i).symm (atOne l) (atTwo i).symm (atThree i).symm
+    have distinctCorners : Function.Injective (![v j, v l, v m, v t] : Fin 4 → V) :=
+      injective_four_tuple
+        (fun eq => cycleNext_ne j (b.distinctVertices eq))
+        (fun eq => (space j).1 (b.distinctVertices eq))
+        (fun eq => (space j).2 (b.distinctVertices eq))
+        (fun eq => cycleNext_ne l (b.distinctVertices eq))
+        (fun eq => (space l).1 (b.distinctVertices eq))
+        (fun eq => cycleNext_ne m (b.distinctVertices eq))
+    have first := forward gap.1
+    have second := forward gap.2.1
+    have last := forward gap.2.2
+    have onParent : v t ∈ paths (p i) := same.symm ▸ (oldMeet t).1
+    rcases listBefore_total (oldMeet i).2 onParent (fun eq => (space j).2 (b.distinctVertices eq)) with old | back
+    · exact forbid_four_steps free _ _ distinctCorners distinctRows (steps first) (steps second) (steps last) old
+    · exact noThree different same distinctRows (meet i).2 (meet t).1 back first second last
+  have atFour (i : Fin 8) : p i ≠ p (oppositeEight i) := by
+    rcases eight_gap_or_opposite i with first | second
+    · exact avoid i first
+    · intro same
+      exact avoid (oppositeEight i) second (same.symm.trans (congrArg p (oppositeEight_spec i).2.symm))
+  refine liftBridgeOfInjectiveSlots parent (fun {_ _ _} => steps) b ?_
+  intro i j same
+  by_contra different
+  rcases eight_pair_near_or_opposite i j different with rfl | rfl | rfl | rfl | rfl | rfl | rfl
+  · exact atOne i same
+  · exact atOne j same.symm
+  · exact atTwo i same
+  · exact atTwo j same.symm
+  · exact atThree i same
+  · exact atThree j same.symm
+  · exact atFour i same
+
+/-- Returns of up to three steps suffice to preserve full exclusion
+through eight on disjoint order-preserving pieces. -/
+theorem fullBridgeFree_of_opposite_and_three_step_safe_split [LinearOrder I]
+    {paths : I → List V} {pieces : J → List V} {cutoff : ℕ} (parent : J → I)
+    (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
+    (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
+    (together : ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
+      ListBefore paths (parent i) x y → ListBefore pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
+    (noTwo : NoCrossedTwoStepReturn paths pieces parent)
+    (noThree : NoCrossedThreeStepReturn paths pieces parent)
+    (free : BridgeFree (ListBefore paths) cutoff) (bound : cutoff ≤ 8) :
+    BridgeFree (ListBefore pieces) cutoff := by
+  by_cases below : cutoff ≤ 7
+  · exact fullBridgeFree_of_opposite_and_two_step_safe_split parent (fun {_ _ _} => steps)
+      (fun {_ _ _} => disjoint) (fun {_ _ _ _ _} => together) noTwo free below
+  have exactCutoff : cutoff = 8 := by omega
+  subst cutoff
+  intro k size
+  by_cases short : k ≤ 5
+  · exact fullBridgeFree_of_opposite_and_two_step_safe_split (cutoff := 7) parent
+      (fun {_ _ _} => steps) (fun {_ _ _} => disjoint) (fun {_ _ _ _ _} => together)
+      noTwo (fun _ h => free (h.trans (by decide))) le_rfl (by omega)
+  have equal : k = 6 := by omega
+  subst k
+  refine ⟨fun bridge => (free size).false ?_⟩
+  exact listBridge_after_opposite_and_three_step_safe_split_eight parent (fun {_ _ _} => steps)
+    (fun {_ _ _} => disjoint) (fun {_ _ _ _ _} => together) noTwo noThree
+    (fun _ h => free (h.trans (by decide))) bridge
+
+end Eight
 
 end OnlineReachabilityPreservers

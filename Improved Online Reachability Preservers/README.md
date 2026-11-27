@@ -942,7 +942,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   most two edges on the actual pieces after the standard degree and
   path splits. If the test passes, the frozen witness retains at least
   \(M/16\) with both original budgets and all four caps.
-  [Lift allowing interleaved pieces](OnlineReachabilityPreservers/CyclicSplits.lean#L570) · [Two-step width test](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L39) · [Full-seven frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
+  [Lift allowing interleaved pieces](OnlineReachabilityPreservers/CyclicSplits.lean#L624) · [Two-step width test](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L39) · [Full-seven frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
+- The same split preserves full exclusion through eight when it also
+  forbids crossed three-step returns on three distinct other parents.
+  For opposite cyclic slots, at least one of the two gaps avoids the
+  river slot and therefore has three forward comparisons.
+  [Three-step condition](OnlineReachabilityPreservers/CyclicSplits.lean#L685) · [Size-eight lift](OnlineReachabilityPreservers/CyclicSplits.lean#L716) · [Preservation through eight](OnlineReachabilityPreservers/CyclicSplits.lean#L783).
 - At full cutoff seven, packing the components of returns of at most
   two steps gives a frozen quarter-mass witness if those components fit the
   original path width. Use either the original rows or the standard

@@ -1562,7 +1562,17 @@ In particular, the test on the actual pieces after the degree and path
 width splits gives an indexed frozen \(M/16\) witness through full cutoff
 seven for simple input of mass \(M\) at least both positive budgets.
 It keeps both budgets and all four original-average caps.
-[Lift with interleaving](OnlineReachabilityPreservers/CyclicSplits.lean#L570) · [Full preservation](OnlineReachabilityPreservers/CyclicSplits.lean#L636) · [Graph certificate](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L11) · [Width-cut application](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L39) · [Frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
+[Lift with interleaving](OnlineReachabilityPreservers/CyclicSplits.lean#L624) · [Full preservation](OnlineReachabilityPreservers/CyclicSplits.lean#L659) · [Graph certificate](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L11) · [Width-cut application](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L39) · [Frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
+
+The full cutoff eight extension adds a three-step condition. After
+the previous tests exclude repeated parents at cyclic distances one,
+two and three, any remaining repeated pair has opposite slots. One
+of the two gaps avoids the river. Its three arc parents are distinct
+from each other and from the repeated parent. A matching comparison
+in that parent gives a full four-bridge. An opposite comparison gives
+a three-step return across the pieces. Ruling out these returns gives
+full preservation at the same cutoff for any full cutoff through eight.
+[Three-step return condition](OnlineReachabilityPreservers/CyclicSplits.lean#L685) · [Size-eight parent lift](OnlineReachabilityPreservers/CyclicSplits.lean#L716) · [Preservation through eight](OnlineReachabilityPreservers/CyclicSplits.lean#L783).
 
 The full-seven lift also permits packing the original-width path
 pieces from components of returns of at most two steps in the
@@ -1628,10 +1638,10 @@ actual crossed two-step return, including with interleaved pieces.
 For disjoint order-preserving covering pieces of full-seven-free
 rows, the one-step condition and a check of only these induced
 returns on the actual pieces suffice at full cutoff seven. A
-separate theorem keeps the endpoints of all such induced returns
-and direct reversals together. In the static width test the
-noninduced returns are implied by one or two direct reversals,
-so the sets of feasible partitions are equal.
+sufficient static condition keeps the endpoints of all such induced
+returns and direct reversals together. Under full-three exclusion,
+the noninduced returns are implied by one or two direct reversals,
+so the sets of feasible static width partitions are equal.
 [Induced return](OnlineReachabilityPreservers/FullSevenInducedReturns.lean#L14) · [Actual piece test](OnlineReachabilityPreservers/FullSevenInducedReturns.lean#L32) · [Endpoint condition](OnlineReachabilityPreservers/FullSevenInducedReturns.lean#L55) · [Decomposition of links](OnlineReachabilityPreservers/FullSevenInducedReturns.lean#L74) · [Equivalent static partitions](OnlineReachabilityPreservers/FullSevenInducedReturns.lean#L101).
 
 The component test can use the row labels of the return steps.

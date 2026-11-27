@@ -773,7 +773,17 @@ direction. Consequently, a radius-two return test in the graph of
 actual standard pieces suffices at full cutoff seven. With simple
 input, positive budgets and original mass \(M\) at least both, the
 resulting frozen witness retains at least \(M/16\).
-[Interleaved lifting](OnlineReachabilityPreservers/CyclicSplits.lean#L570) · [Preservation through seven](OnlineReachabilityPreservers/CyclicSplits.lean#L636) · [Graph radius-two certificate](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L11) · [Frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
+[Interleaved lifting](OnlineReachabilityPreservers/CyclicSplits.lean#L624) · [Preservation through seven](OnlineReachabilityPreservers/CyclicSplits.lean#L659) · [Graph radius-two certificate](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L11) · [Frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
+
+At full cutoff eight, the first two return tests rule out repeated
+parent labels at cyclic distances one through three. If opposite
+slots share a parent, one of their two gaps avoids the river slot.
+That gap consists of three forward steps on three distinct other
+parents. The common parent's order on the gap corners gives either
+an original full four-bridge or a crossed three-step return. Thus
+checking these extra returns preserves full exclusion through eight
+for disjoint order-preserving pieces, including interleaved pieces.
+[Three-step return condition](OnlineReachabilityPreservers/CyclicSplits.lean#L685) · [Lift at size eight](OnlineReachabilityPreservers/CyclicSplits.lean#L716) · [Full exclusion through eight](OnlineReachabilityPreservers/CyclicSplits.lean#L783).
 
 One can also pack disjoint pieces by keeping each connected group
 of endpoints of returns of at most two steps together. Suppose
