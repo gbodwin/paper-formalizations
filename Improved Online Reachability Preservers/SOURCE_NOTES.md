@@ -855,7 +855,18 @@ both support trims gives a frozen \(M/4\) witness at full cutoff
 seven if the groups keeping direct reversals and distinct-parent
 two-step returns fit. The simple original rows must exclude full
 bridges through seven and have mass \(M\) at least both positive budgets.
-[General packing](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L114) · [Support trimming](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L289) · [Full-seven frozen witness](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L32).
+[General packing](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L114) · [Support trimming](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L289) · [Full-seven frozen witness](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L33).
+
+Under exact projection to simple original rows, each protected
+comparison on a copied row projects to a protected comparison
+on its original row. The two-step option keeps both detour row
+labels. Since the vertex projection is injective within a copied
+row, its protected component has size at most that of its original
+image. Thus the width premise may be checked before degree copying.
+The indexed frozen \(M/4\) witness and the feasible literal \(M/8\)
+witness both retain full exclusion through seven, the two original
+budgets and all four caps.
+[General component projection](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L48) · [Protected comparisons under projection](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L57) · [Original component test](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L101) · [Literal witness](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L125).
 
 The factor-four block split from the frozen cleaning argument can also
 create a full size-seven bridge before trimming and peeling in the dense
@@ -1245,7 +1256,7 @@ at least both positive budgets, bounded degree groups at the original
 degree width and original row components within the original path
 width give a frozen \(M/4\) witness outright. Both budgets, all four caps
 and the chosen cutoff hold in either exclusion mode.
-[Component size does not increase under row copying](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L137) · [Frozen cleaning under both original-width tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L282).
+[Component size does not increase under row copying](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L160) · [Frozen cleaning under both original-width tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L282).
 
 The degree grouping premise has a finite component test too. For each
 original vertex, connect any two incident rows that start and end a
@@ -1253,7 +1264,7 @@ tested short return there. A partition respecting those links exists
 at the degree width exactly when each component fits. If both the
 degree and path components fit their original widths, the on-input
 tests give the frozen indexed quarter-mass witness at the chosen cutoff.
-[Components and bounded partitions](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L49) · [Graph of linked incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L308) · [Exact degree component criterion](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L330) · [Frozen witness from both finite tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L348).
+[Components and bounded partitions](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L72) · [Graph of linked incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L308) · [Exact degree component criterion](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L330) · [Frozen witness from both finite tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L348).
 
 For distinct nonempty simple inputs with positive budgets and mass
 \(M\) at least the vertex budget, the same tests apply at every
@@ -1284,7 +1295,7 @@ Within a connected component, keep the first elements in the finite
 order up to the prescribed width. Disjointness ensures that a component
 of size \(s\) keeps exactly \(\min(s,w)\) elements at width \(w\). The loss
 over all distinct components is the sum of their excesses above \(w\).
-[Bounded selection from each component](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L219) · [Exact selection size per component](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L231) · [Mass lost to component excess](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L254).
+[Bounded selection from each component](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L233) · [Exact selection size per component](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L245) · [Mass lost to component excess](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L268).
 
 For simple rows, first clip each degree component to the vertex width
 by keeping a bounded number of its row labels. Compute the path
@@ -1485,7 +1496,7 @@ When every component fits the width, the components themselves give a
 valid partition. For admissible standard degree copies at the original
 width, this test at the original path width gives the same indexed
 \(M/4\) witness in either mode.
-[Graph of linked endpoints](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L102) · [Exact component criterion](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L121) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L184).
+[Graph of linked endpoints](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L125) · [Exact component criterion](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L144) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L198).
 
 A six-vertex family with twelve indexed rows and mass twelve has one
 increasing row, three disjoint backward pairs and eight empty labels.

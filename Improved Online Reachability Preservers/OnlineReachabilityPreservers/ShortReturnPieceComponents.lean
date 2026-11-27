@@ -42,6 +42,29 @@ theorem linkedGroupComponents_apart (members : Finset V) (G : Arcs V) :
   ext v
   simp only [linkedGroupComponent, mem_filter, equal]
 
+
+/-- A graph projection injective on the selected vertices bounds their
+component by the component of the projected center. -/
+theorem linkedGroupComponent_card_le_project {W : Type*} [LinearOrder W] [Fintype W]
+    {source : Finset W} {target : Finset V} {G : Arcs W} {H : Arcs V}
+    (project : W → V) (members : ∀ {x}, x ∈ source → project x ∈ target)
+    (injective : Set.InjOn project (source : Set W))
+    (edges : ∀ {x y}, Edge G x y → Edge H (project x) (project y)) (center : W) :
+    (linkedGroupComponent source G center).card ≤
+      (linkedGroupComponent target H (project center)).card := by
+  have reachable {x y} (path : Reach G x y) : Reach H (project x) (project y) := by
+    induction path with
+    | refl => exact .refl
+    | tail _ edge previous => exact previous.tail (edges edge)
+  apply card_le_card_of_injOn project
+  · intro x on
+    obtain ⟨listed, same⟩ := mem_filter.mp on
+    have connected := componentLabel_eq.mp same
+    exact mem_filter.mpr ⟨members listed, componentLabel_eq.mpr
+      ⟨reachable connected.1, reachable connected.2⟩⟩
+  · intro x left y right same
+    exact injective (mem_filter.mp left).1 (mem_filter.mp right).1 same
+
 end LinkedGroupComponents
 
 /-- For a graph that symmetrizes the required links, a capped partition
@@ -157,23 +180,14 @@ theorem shortReturnRowComponent_card_le_project {W : Type*} [LinearOrder W] [Fin
     rcases shortReturnRowGraph_edge.mp edge with forward | reverse
     · exact shortReturnRowGraph_edge.mpr (Or.inl ⟨step forward.1, returnProjects forward.2⟩)
     · exact shortReturnRowGraph_edge.mpr (Or.inr ⟨step reverse.1, returnProjects reverse.2⟩)
-  have reachable ⦃a b : W⦄ (walk : Reach (shortReturnRowGraph copies cutoff i) a b) :
-      Reach (shortReturnRowGraph rows cutoff i) (project a) (project b) := by
-    induction walk with
-    | refl => exact .refl
-    | tail _ edge ih => exact ih.tail (rowEdge edge)
-  apply card_le_card_of_injOn project
-  · intro y member
-    obtain ⟨listed, equal⟩ := mem_filter.mp member
-    have appears := List.mem_map_of_mem (f := project) (List.mem_toFinset.mp listed)
+  refine linkedGroupComponent_card_le_project project ?_ ?_ (fun {_ _} edge => rowEdge edge) x
+  · intro y on
+    have appears := List.mem_map_of_mem (f := project) (List.mem_toFinset.mp on)
     rw [projects i] at appears
-    have connected := componentLabel_eq.mp equal
-    exact mem_filter.mpr ⟨List.mem_toFinset.mpr appears, componentLabel_eq.mpr
-      ⟨reachable connected.1, reachable connected.2⟩⟩
+    exact List.mem_toFinset.mpr appears
   · intro a onA b onB equal
     by_contra! apart
-    rcases listBefore_total (List.mem_toFinset.mp (mem_filter.mp onA).1)
-        (List.mem_toFinset.mp (mem_filter.mp onB).1) apart with forward | reverse
+    rcases listBefore_total (List.mem_toFinset.mp onA) (List.mem_toFinset.mp onB) apart with forward | reverse
     · exact listBefore_ne (step forward) equal
     · exact listBefore_ne (step reverse) equal.symm
 
