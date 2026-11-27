@@ -416,10 +416,11 @@ private theorem longRankCycleConstraintGraph_step {m k : ℕ} (x : Fin (2*m+16))
     Edge (riverDetourConstraintGraph (longRankCyclePieces m) k) x (longCycleSuccessor x) :=
   riverDetourConstraintGraph_edge.mpr (Or.inl (longRankCyclePiece_successor_step x))
 
-private theorem longRankCycleConstraintGraph_ascending {m k : ℕ} {x y : Fin (2*m+16)} (ordered : x ≤ y) :
-    Reach (riverDetourConstraintGraph (longRankCyclePieces m) k) x y := by
-  let G := riverDetourConstraintGraph (longRankCyclePieces m) k
-  have along (j : ℕ) (lower : x.val ≤ j) : ∀ upper : j < 2*m+16, Reach G x ⟨j,upper⟩ := by
+private theorem longCycle_reach_ascending {m : ℕ} {W : Type*} {G : Arcs W}
+    (embed : Fin (2*m+16) → W) (step : ∀ v, Edge G (embed v) (embed (longCycleSuccessor v)))
+    {x y : Fin (2*m+16)} (ordered : x ≤ y) : Reach G (embed x) (embed y) := by
+  have along (j : ℕ) (lower : x.val ≤ j) :
+      ∀ upper : j < 2*m+16, Reach G (embed x) (embed ⟨j,upper⟩) := by
     induction j, lower using Nat.le_induction with
     | base =>
       intro upper
@@ -427,14 +428,18 @@ private theorem longRankCycleConstraintGraph_ascending {m k : ℕ} {x y : Fin (2
     | succ t lower ih =>
       intro bound
       have tBound : t < 2*m+16 := by omega
-      have step := longRankCycleConstraintGraph_step (k := k) (⟨t,tBound⟩ : Fin (2*m+16))
+      have edge := step ⟨t,tBound⟩
       have next : longCycleSuccessor (⟨t,tBound⟩ : Fin (2*m+16)) = ⟨t+1,bound⟩ := by
         apply Fin.ext
         change (if t+1<2*m+16 then t+1 else 0) = t+1
         exact ite_eq_left bound
-      rw [next] at step
-      exact (ih tBound).tail step
+      rw [next] at edge
+      exact (ih tBound).tail edge
   exact along y.val ordered y.isLt
+
+private theorem longRankCycleConstraintGraph_ascending {m k : ℕ} {x y : Fin (2*m+16)} (ordered : x ≤ y) :
+    Reach (riverDetourConstraintGraph (longRankCyclePieces m) k) x y :=
+  longCycle_reach_ascending id (longRankCycleConstraintGraph_step (k := k)) ordered
 
 /-- The two blocks of the central row meet the same strongly connected
 component, at every cutoff. -/
@@ -497,5 +502,239 @@ theorem longRankCycle_original_path_width_limit {m k : ℕ} (large : 27 ≤ m) (
   rw [longRankCycleRows_frozen_width large]
   exact ⟨longRankCycleRows_full_free (by omega) cutoff,longRankCyclePieces_full_free m,
     longRankCyclePieces_component_test_fails m k⟩
+
+
+/-- A vertex can occur in the center row, in at most one external row
+going out of it, and in at most one external row coming into it. -/
+theorem longRankCycleRows_degree_le_three {m : ℕ} (x : Fin (2*m+16)) :
+    (occurrences (fun i => (longRankCycleRows i).toFinset) x).card ≤ 3 := by
+  let root : Fin (2*m+3) := ⟨0,by omega⟩
+  let outward := (univ : Finset (Fin (2*m+3))).filter fun i => longCycleExternalTail m i = x
+  let inward := (univ : Finset (Fin (2*m+3))).filter fun i => longCycleSuccessor (longCycleExternalTail m i) = x
+  have outCount : outward.card ≤ 1 := card_le_one_iff.mpr fun ha hb =>
+    longCycleExternalTail_injective m ((mem_filter.mp ha).2.trans (mem_filter.mp hb).2.symm)
+  have inCount : inward.card ≤ 1 := card_le_one_iff.mpr fun ha hb =>
+    longCycleExternalTail_injective m (longCycleSuccessor_injective m
+      ((mem_filter.mp ha).2.trans (mem_filter.mp hb).2.symm))
+  have inside : occurrences (fun i => (longRankCycleRows i).toFinset) x ⊆ ({root} ∪ outward) ∪ inward := by
+    intro i on
+    by_cases zero : i.val = 0
+    · exact mem_union.mpr (Or.inl (mem_union.mpr (Or.inl (mem_singleton.mpr (Fin.ext zero)))))
+    · have member := List.mem_toFinset.mp ((mem_occurrences (marks := fun i => (longRankCycleRows i).toFinset)).mp on)
+      simp only [longRankCycleRows,zero,ite_false,List.mem_cons,List.not_mem_nil,or_false] at member
+      rcases member with tail | head
+      · exact mem_union.mpr (Or.inl (mem_union.mpr (Or.inr (mem_filter.mpr ⟨mem_univ _,tail.symm⟩))))
+      · exact mem_union.mpr (Or.inr (mem_filter.mpr ⟨mem_univ _,head.symm⟩))
+  calc
+    _ ≤ (({root} ∪ outward) ∪ inward).card := card_le_card inside
+    _ ≤ ({root} ∪ outward).card+inward.card := card_union_le _ _
+    _ ≤ ({root} : Finset (Fin (2*m+3))).card+outward.card+inward.card :=
+      Nat.add_le_add_right (card_union_le _ _) _
+    _ ≤ _ := by rw [card_singleton]; omega
+
+private def longCycleZeroCopy {m width : ℕ} (v : Fin (2*m+16)) :
+    ListVertexBlockIndex (@longRankCycleRows m) width := ⟨v,⟨0,Nat.succ_pos _⟩⟩
+
+private theorem longCycle_zero_copies {m width : ℕ} (wide : 3 < width) (i : Fin (2*m+3)) :
+    splitListVertices longRankCycleRows width i = (longRankCycleRows i).map longCycleZeroCopy := by
+  let rows := @longRankCycleRows m
+  let marks (j : Fin (2*m+3)) := (rows j).toFinset
+  let lift (u : {u // u ∈ rows i}) := vertexCopy marks width i ⟨u.val,List.mem_toFinset.mpr u.property⟩
+  let copy := @longCycleZeroCopy m width
+  change (rows i).attach.map lift = (rows i).map copy
+  calc
+    _ = (rows i).attach.map (fun u => copy u.val) := by
+      apply List.map_congr_left
+      intro u _
+      refine vertexBlock_eq_of_same_label (u := lift u) (v := copy u.val) rfl ?_
+      change (predecessors (occurrences marks u.val) i).card/width = 0
+      exact Nat.div_eq_of_lt ((card_filter_le _ _).trans_lt ((longRankCycleRows_degree_le_three u.val).trans_lt wide))
+    _ = ((rows i).attach.map Subtype.val).map copy := by simp only [List.map_map,Function.comp_def]
+    _ = _ := by rw [List.attach_map_subtype_val]
+
+private theorem longCycle_copy_projection_injective {m width : ℕ} (wide : 3 < width) :
+    Function.Injective (fun x : ListVertexBlockIndex (@longRankCycleRows m) width => x.fst) := by
+  have blockZero (x : ListVertexBlockIndex (@longRankCycleRows m) width) : x.snd.val = 0 := by
+    have bound := x.snd.isLt
+    change x.snd.val < (occurrences (fun i => (longRankCycleRows i).toFinset) x.fst).card/width+1 at bound
+    have zero := Nat.div_eq_of_lt ((longRankCycleRows_degree_le_three x.fst).trans_lt wide)
+    omega
+  intro a b same
+  exact vertexBlock_eq_of_same_label same ((blockZero a).trans (blockZero b).symm)
+
+/-- The original factor-four degree width is seven for the long cycle
+family once the path width is eight. -/
+theorem longRankCycleRows_frozen_degree_width {m : ℕ} (large : 27 ≤ m) :
+    4*(∑ i : Fin (2*m+3), (longRankCycleRows i).length)/(2*m+16) = 7 := by
+  rw [longRankCycleRows_mass]
+  have positive : 0 < 2*m+16 := by omega
+  have above : 7 ≤ 4*(4*m+20)/(2*m+16) := (Nat.le_div_iff_mul_le positive).mpr (by omega)
+  have below : 4*(4*m+20)/(2*m+16) < 8 := (Nat.div_lt_iff_lt_mul positive).mpr (by omega)
+  omega
+
+private theorem width_block_map {V W : Type*} [LinearOrder V] [LinearOrder W]
+    (row : List V) (simple : row.Nodup) (f : V → W) (injective : Function.Injective f) (width block : ℕ) :
+    localPathBlock (row.map f) width block = (localPathBlock row width block).map f := by
+  unfold localPathBlock
+  rw [List.filter_map]
+  congr 1
+  apply List.filter_congr
+  intro x on
+  have pos := List.idxOf_lt_length_of_mem on
+  have inside : row.idxOf x < (row.map f).length := by simpa only [List.length_map] using pos
+  have same := (simple.map injective).idxOf_getElem (i := row.idxOf x) inside
+  rw [List.getElem_map,List.getElem_idxOf pos] at same
+  change decide ((row.map f).idxOf (f x)/width=block) = decide (row.idxOf x/width=block)
+  rw [same]
+
+
+private theorem longRankCycleCopies_exclusion_and_failure {m width k : ℕ} (wide : 3 < width) :
+    let copies := splitListVertices (@longRankCycleRows m) width
+    let pieces := splitListPaths copies 8
+    (∀ j, BridgeFree (Before pieces) j) ∧
+      ¬ (∀ ⦃i j x y⦄, i ≠ j → i.fst = j.fst → x ∈ pieces i → y ∈ pieces j →
+        ¬ SameComponent (riverDetourConstraintGraph pieces k) x y) := by
+  let rows := @longRankCycleRows m
+  let copies := splitListVertices rows width
+  let pieces := splitListPaths copies 8
+  let W := ListVertexBlockIndex rows width
+  let J := ListBlockIndex copies 8
+  let embed := @longCycleZeroCopy m width
+  let project (x : W) := x.fst
+  have embedInjective : Function.Injective embed := fun _ _ same => congrArg Sigma.fst same
+  have projects : Function.Injective project := longCycle_copy_projection_injective wide
+  have count (i : Fin (2*m+3)) : blockCount (copies i).toFinset 8 = blockCount (rows i).toFinset 8 := by
+    rw [blockCount,blockCount,List.toFinset_card_of_nodup (splitListVertices_simple rows width i (longRankCycleRows_simple i)),
+      List.toFinset_card_of_nodup (longRankCycleRows_simple i),splitListVertices_length]
+  let pieceIndex : LongRankCyclePiece m ≃ J := {
+    toFun := fun i => ⟨i.fst,i.snd.cast (count i.fst).symm⟩
+    invFun := fun i => ⟨i.fst,i.snd.cast (count i.fst)⟩
+    left_inv := by intro i; cases i; rfl
+    right_inv := by intro i; cases i; rfl }
+  have shape (i : LongRankCyclePiece m) : pieces (pieceIndex i) = (longRankCyclePieces m i).map embed := by
+    change localPathBlock (copies i.fst) 8 i.snd.val = (localPathBlock (rows i.fst) 8 i.snd.val).map embed
+    have labels : copies i.fst = (rows i.fst).map embed := longCycle_zero_copies wide i.fst
+    calc
+      _ = localPathBlock ((rows i.fst).map embed) 8 i.snd.val :=
+        congrArg (fun row => localPathBlock row 8 i.snd.val) labels
+      _ = _ := width_block_map _ (longRankCycleRows_simple i.fst) embed embedInjective _ _
+  have pieceProject (i : J) : (pieces i).map project = longRankCyclePieces m (pieceIndex.symm i) := by
+    conv_lhs => rw [← pieceIndex.apply_symm_apply i,shape,List.map_map]
+    change (longRankCyclePieces m (pieceIndex.symm i)).map id = _
+    rw [List.map_id]
+  have forget {i : J} {a b : W} (edge : Before pieces i a b) :
+      Before (longRankCyclePieces m) (pieceIndex.symm i) (project a) (project b) := by
+    have simple : ((pieces i).map project).Nodup :=
+      (pieceProject i).symm ▸ List.filter_sublist.nodup (longRankCycleRows_simple (pieceIndex.symm i).fst)
+    simpa only [SourceAudit.BeforeIn,pieceProject] using listBefore_map project simple edge
+  have built : ∀ j, BridgeFree (Before pieces) j := by
+    intro j d small
+    refine ⟨fun b => ?_⟩
+    let old : Bridge (Before (longRankCyclePieces m)) d := {
+      vertex := project ∘ b.vertex
+      arc := pieceIndex.symm ∘ b.arc
+      river := pieceIndex.symm b.river
+      distinctVertices := projects.comp b.distinctVertices
+      distinctArcs := pieceIndex.symm.injective.comp b.distinctArcs
+      river_ne_arc := fun l equal => b.river_ne_arc l (pieceIndex.symm.injective equal)
+      riverStep := forget b.riverStep
+      arcStep := fun l => forget (b.arcStep l) }
+    exact (longRankCyclePieces_full_free m j small).false old
+  refine ⟨built,?_⟩
+  let G := riverDetourConstraintGraph pieces k
+  have step (x : Fin (2*m+16)) : Edge G (embed x) (embed (longCycleSuccessor x)) := by
+    obtain ⟨i,edge⟩ := longRankCyclePiece_successor_step x
+    have simple : ((longRankCyclePieces m i).map embed).Nodup :=
+      (List.filter_sublist.nodup (longRankCycleRows_simple i.fst)).map embedInjective
+    apply riverDetourConstraintGraph_edge.mpr
+    exact Or.inl ⟨pieceIndex i,by
+      simpa only [SourceAudit.BeforeIn,shape] using listBefore_map embed simple edge⟩
+  let x : Fin (2*m+16) := ⟨0,by omega⟩
+  let y : Fin (2*m+16) := ⟨m+8,by omega⟩
+  let last : Fin (2*m+16) := ⟨2*m+15,by omega⟩
+  have wraps : longCycleSuccessor last = x := by
+    apply Fin.ext
+    change (if 2*m+15+1<2*m+16 then 2*m+15+1 else 0) = 0
+    exact ite_eq_right (by omega)
+  have forward : Reach G (embed x) (embed y) :=
+    longCycle_reach_ascending embed step (by change 0 ≤ m+8; omega)
+  have backward : Reach G (embed y) (embed x) :=
+    (longCycle_reach_ascending embed step (by change m+8 ≤ 2*m+15; omega)).tail (wraps ▸ step last)
+  let center : Fin (2*m+3) := ⟨0,by omega⟩
+  have row : rows center = longCycleCenter m := by simp [rows,longRankCycleRows,center]
+  have centerLength : (rows center).length = 16 := by rw [row]; simp [longCycleCenter]
+  have centerCount : (rows center).toFinset.card = 16 :=
+    (List.toFinset_card_of_nodup (longRankCycleRows_simple center)).trans centerLength
+  let left : LongRankCyclePiece m := ⟨center,⟨0,Nat.succ_pos _⟩⟩
+  have rightBound : 1 < blockCount (rows center).toFinset 8 := by simp [blockCount,centerCount]
+  let right : LongRankCyclePiece m := ⟨center,⟨1,rightBound⟩⟩
+  have xOn : x ∈ longCycleCenter m := longCycleCenter_contains.mpr (Or.inl (by change (0 : ℕ) < 8; decide))
+  have yOn : y ∈ longCycleCenter m := longCycleCenter_contains.mpr (Or.inr ⟨le_rfl,by change m+8<m+16; omega⟩)
+  have onLeft : x ∈ longRankCyclePieces m left := by
+    change x ∈ localPathBlock (rows center) 8 0
+    apply mem_localPathBlock.mpr
+    refine ⟨row.symm ▸ xOn,?_⟩
+    change (rows center).idxOf x/8 = 0
+    rw [row,longCycleCenter_position xOn]
+    simp [x]
+  have onRight : y ∈ longRankCyclePieces m right := by
+    change y ∈ localPathBlock (rows center) 8 1
+    apply mem_localPathBlock.mpr
+    refine ⟨row.symm ▸ yOn,?_⟩
+    change (rows center).idxOf y/8 = 1
+    rw [row,longCycleCenter_position yOn]
+    change (if m+8<8 then m+8 else m+8-m)/8 = 1
+    rw [ite_eq_right (by omega : ¬ m+8<8)]
+    omega
+  have different : pieceIndex left ≠ pieceIndex right := by
+    intro same
+    have slots := congrArg (fun i : J => i.snd.val) same
+    change (0:ℕ) = 1 at slots
+    omega
+  have first : embed x ∈ pieces (pieceIndex left) := by rw [shape]; exact List.mem_map.mpr ⟨x,onLeft,rfl⟩
+  have second : embed y ∈ pieces (pieceIndex right) := by rw [shape]; exact List.mem_map.mpr ⟨y,onRight,rfl⟩
+  intro apart
+  exact apart different rfl first second ⟨forward,backward⟩
+
+/-- Both widths prescribed by the original averages give admissible
+blocks of the long cycle family, and their component test fails. -/
+theorem longRankCycle_original_widths_limit {m k : ℕ} (large : 27 ≤ m) (cutoff : k ≤ m+1) :
+    let M := ∑ i : Fin (2*m+3), (longRankCycleRows i).length
+    let copies := splitListVertices (@longRankCycleRows m) (4*M/(2*m+16))
+    let pieces := splitListPaths copies (4*M/(2*m+3))
+    BridgeFree (Before (@longRankCycleRows m)) k ∧ BridgeFree (Before copies) k ∧
+      (∀ j, BridgeFree (Before pieces) j) ∧
+      ¬ (∀ ⦃i j x y⦄, i ≠ j → i.fst = j.fst → x ∈ pieces i → y ∈ pieces j →
+        ¬ SameComponent (riverDetourConstraintGraph pieces k) x y) := by
+  dsimp only
+  rw [longRankCycleRows_frozen_degree_width large,longRankCycleRows_frozen_width large]
+  have inputFree := longRankCycleRows_full_free (by omega : 0 < m) cutoff
+  refine ⟨inputFree,?_,longRankCycleCopies_exclusion_and_failure (by decide : 3 < 7)⟩
+  intro d small
+  refine ⟨fun b => ?_⟩
+  let copies := splitListVertices (@longRankCycleRows m) 7
+  let project (x : ListVertexBlockIndex (@longRankCycleRows m) 7) := x.fst
+  have same (i) : (copies i).map project = longRankCycleRows i := splitListVertices_project _ _ _
+  have step (i x y) (before : Before copies i x y) : Before (@longRankCycleRows m) i (project x) (project y) := by
+    have simple : ((copies i).map project).Nodup := (same i).symm ▸ longRankCycleRows_simple i
+    simpa only [SourceAudit.BeforeIn,same] using listBefore_map project simple before
+  exact (inputFree small).false (b.mapVertices project (longCycle_copy_projection_injective (by decide : 3 < 7)) step)
+
+/-- The original-width construction gives a frozen witness for this
+family using the already admissible width blocks. -/
+theorem longRankCycle_frozen_at_original_widths {m k : ℕ} (large : 27 ≤ m) :
+    let M := ∑ i : Fin (2*m+3), (longRankCycleRows i).length
+    ∃ n' ≤ 2*m+16, ∃ p' ≤ 2*m+3, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) k ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧
+      frozenListCaps (2*m+16) (2*m+3) M clean := by
+  let M := ∑ i : Fin (2*m+3), (longRankCycleRows i).length
+  have mass : M = 4*m+20 := longRankCycleRows_mass m
+  have allowed : localOrderAdmissible false k
+      (listRegularizedPaths (@longRankCycleRows m) (4*M/(2*m+16)) (4*M/(2*m+3))) :=
+    (longRankCycle_original_widths_limit (k := 0) large (by omega)).2.2.1 k
+  exact regularization_list_frozen_after_width_blocks_of_mass (half := false) (retention := 16)
+    (@longRankCycleRows m) longRankCycleRows_simple allowed
+    (by omega) (by omega) (by omega) (by omega) le_rfl (by norm_num)
 
 end OnlineReachabilityPreservers

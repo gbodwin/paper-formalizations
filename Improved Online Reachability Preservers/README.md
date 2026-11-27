@@ -958,7 +958,6 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   graph of the resulting copied rows.
   Packing preserves the full original mass. Restricting the supports and
   peeling give at least \(M/16\) with both budgets and all four frozen caps.
-  The general existence of suitable cuts stays open.
   [Compose the two packings](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L295).
 - The mean-run and factor-four run bounds can both fail. On \(2m-1\)
   vertices, take one row of increasing even labels and the \(2m-2\) rows
@@ -1015,7 +1014,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   original rows at that width preserves full exclusion at every size.
   The two pieces of the central row share a component of the constraint
   graph at every cutoff.
-  [Original exclusion](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L215) · [Original path width and component test](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L490).
+  [Original exclusion](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L215) · [Original path width and component test](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L495).
+- The original factor-four degree width is seven. Every vertex has degree
+  at most three, so it keeps its block-zero label. At both prescribed
+  widths the copies preserve the original cutoff and the pieces exclude
+  full bridges at every size. The same two pieces still share a component
+  of the constraint graph. Restricting the supports of these original-width
+  pieces and peeling gives a frozen witness of mass at least \(M/16\), with
+  both original budgets and all four caps.
+  [Admissibility and component test at both widths](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L701) · [Frozen witness from the original widths](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L725).
 - After [deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2620),
   test for short returns in the pieces of the retained rows. If the
   copied input has the required bridge exclusion, at most \(M/18\)
