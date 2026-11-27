@@ -2050,9 +2050,9 @@ for one decoded demand per arrival.
 · [Per-arrival input charge](OnlineReachabilityPreservers/SteinerBinaryWordSession.lean#L99).
 
 A binary session reads one demand row at a time and stops at the first
-rejection. On a canonical encoding of any finite trace, its final session
-agrees exactly with the typed arrival fold and stores the same fixed graph
-and seed. The guarded graph decoder preserves order and multiplicity on
+rejection. At a width that can encode every vertex label, the final
+session on a canonically encoded trace agrees exactly with the typed
+arrival fold and stores the same fixed graph and seed. The guarded graph decoder preserves order and multiplicity on
 canonical input. The extra trace input tally is bounded by the total count
 of supplied bits and a per-row allowance at the advertised width, including
 when replay stops early.
@@ -2060,5 +2060,17 @@ when replay stops early.
 · [Exact typed fold](OnlineReachabilityPreservers/SteinerBinaryWordTrace.lean#L23)
 · [Canonical graph decoding](OnlineReachabilityPreservers/SteinerBinaryWordTrace.lean#L42)
 · [Input work for arbitrary traces](OnlineReachabilityPreservers/SteinerBinaryWordTrace.lean#L69).
+
+The guarded word entry validates the fixed graph before drawing a seed,
+then decodes each demand only when that row is served. For all arc and
+demand encodings that pass the width and range checks, the final state
+has exactly the graph and history of the typed solver on the decoded
+inputs, with the same seed-stream position. The result keeps the graph
+preparation charge outside the solver state as part of the input tally.
+[Decoded trace agreement](OnlineReachabilityPreservers/SteinerBinaryWordOnline.lean#L9)
+· [Guarded word entry](OnlineReachabilityPreservers/SteinerBinaryWordOnline.lean#L52)
+· [Graph rejection](OnlineReachabilityPreservers/SteinerBinaryWordOnline.lean#L63)
+· [Accepted result refinement](OnlineReachabilityPreservers/SteinerBinaryWordOnline.lean#L74).
+
 
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).
