@@ -796,6 +796,17 @@ their packing gives the frozen full-seven witness of mass at least
 \(M/4\) with both original budgets and all four caps.
 [Original exclusion](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L32) · [Return across the actual cut](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L66) · [Larger component](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L101) · [Frozen witness](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L106).
 
+The full-exclusion argument behind Lemma 24 also controls two-step
+returns with a fixed parent, first alternative row and common vertex.
+Put the fixed right row first in an auxiliary arrival order and use
+the original full exclusion after injectively relabelling rows.
+Distinct third rows now give distinct corners with the same relative
+order along both fixed rows. Their count is bounded by the number of
+predecessors on the parent and by the number of successors on the
+first alternative row. With unique intersections, choosing the third
+row determines both remaining corners.
+[Full intersection matching](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L30) · [Ordered return corners](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L90) · [Third-row count](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L130) · [Unique intersections and witness count](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L164).
+
 The factor-four block split from the frozen cleaning argument can also
 create a full size-seven bridge before trimming and peeling in the dense
 branch. Add 161 private vertices before the four-vertex path in the

@@ -1587,6 +1587,17 @@ test gives a full-seven frozen quarter-mass witness with both budgets
 and all four original-average caps.
 [Original widths](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L20) · [Consecutive cut obstruction](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L66) · [Radius-two room](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L93) · [Radius-four size](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L101) · [Frozen witness](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L106).
 
+For a two-step return to an earlier vertex of a parent, fix the first
+alternative row and the common start vertex on the parent. Under full
+exclusion through four, distinct third rows give distinct corners
+whose orders agree along the parent and first alternative row.
+Lemma 24 applies in an auxiliary arrival order with the parent first.
+The number of third rows is at most the number of parent predecessors
+and at most the number of first-row successors at the fixed vertex.
+Under unique intersections, each third row has exactly one pair of
+corners, so counting all witnesses gives the same count.
+[Return relation](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L83) · [Order agreement](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L90) · [Both cardinality bounds](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L130) · [Exact witness count with unique intersections](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L164).
+
 At half cutoff four, a [balanced midpoint split with no valid arrival permutation](OnlineReachabilityPreservers/HalfFourSplitOrderAudit.lean#L103)
 starts from a half-free indexed family with uniform degree two and mean
 length \(7/2\). Its sole length-six path splits into two length-three

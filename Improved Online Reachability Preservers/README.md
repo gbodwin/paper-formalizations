@@ -958,6 +958,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   components fit width four. Packing the latter certifies a full-seven
   witness of mass at least one quarter, with both budgets and all four caps.
   [The consecutive test](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L66) · [Radius-two components](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L93) · [Radius-four component](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L101) · [The frozen witness](OnlineReachabilityPreservers/FullSevenGroupedAudit.lean#L106).
+- With full exclusion through four, fix a parent, the first alternative
+  row and their common vertex. Different third rows completing a two-step
+  return give distinct corresponding corners in the same order. The number
+  of such third rows is bounded by both predecessor and successor counts at
+  the common vertex. Unique intersections also make that count equal to the
+  total number of witnesses with this fixed parent, first row and vertex.
+  [Ordered corners](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L90) · [Third-row count](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L130) · [Witness count with unique intersections](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L164).
 - The [literal set versions](OnlineReachabilityPreservers/FrozenDistinctCleaning.lean)
   give distinct nonempty output paths with the same caps. They apply to
   the literal exact-count maximum when the positive original budgets are feasible.
