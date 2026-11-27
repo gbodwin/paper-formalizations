@@ -2072,5 +2072,19 @@ preparation charge outside the solver state as part of the input tally.
 · [Graph rejection](OnlineReachabilityPreservers/SteinerBinaryWordOnline.lean#L63)
 · [Accepted result refinement](OnlineReachabilityPreservers/SteinerBinaryWordOnline.lean#L74).
 
+For accepted binary graph rows and every fixed feasible binary demand
+trace, the sampled word solver reads the prescribed seed, records every
+request in order, preserves reachability and keeps the outputs increasing
+across accepted prefixes. Against every serving offline subgraph it has
+the same expected \(O(n^{3/5+\varepsilon})\) competitive bound. The sum of
+recorded input and solver work is polynomial in the vertex count, row
+counts, declared width and total supplied bit count. The input bound is
+cubic in those dimensions and also covers rejection. A native execution
+bound remains open.
+[Input work bound](OnlineReachabilityPreservers/SteinerBinaryWordGuarantee.lean#L18)
+· [Cubic input allowance](OnlineReachabilityPreservers/SteinerBinaryWordGuarantee.lean#L52)
+· [Guarded binary Theorem 21](OnlineReachabilityPreservers/SteinerBinaryWordGuarantee.lean#L126).
+
+
 
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).
