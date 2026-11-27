@@ -1110,7 +1110,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   path partition at the original path width, each support trim loses at
   most \(M/8\). The later peeling uses the two original lower caps and
   leaves a frozen witness of mass at least \(M/4\) within both budgets.
-  [Separate heavy-group thresholds](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L85) · [Frozen cleaning from both grouped profiles](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L142).
+  [Separate heavy-group thresholds](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L85) · [Frozen cleaning from both grouped profiles](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L198).
 - The path-group bound can be checked on the original rows. Exact row
   projection sends every copied return and its linked component to the
   original graph. Projection is injective on each copied row, so its
@@ -1119,14 +1119,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   degree width and original row components within the original path
   width give a frozen \(M/4\) witness outright. Both budgets, all four caps
   and the chosen cutoff hold in either exclusion mode.
-  [Component size does not increase under row copying](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L120) · [Frozen cleaning under both original-width tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L207).
+  [Component size does not increase under row copying](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L120) · [Frozen cleaning under both original-width tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L260).
 - The degree grouping premise has a finite component test too. For each
   original vertex, connect any two incident rows that start and end a
   tested short return there. A partition respecting those links exists
   at the degree width exactly when each component fits. If both the
   degree and path components fit their original widths, the on-input
   tests give the frozen indexed quarter-mass witness at the chosen cutoff.
-  [Components and bounded partitions](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L17) · [Graph of linked incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L239) · [Exact degree component criterion](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L261) · [Frozen witness from both finite tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L279).
+  [Components and bounded partitions](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L17) · [Graph of linked incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L286) · [Exact degree component criterion](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L308) · [Frozen witness from both finite tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L326).
 - For distinct nonempty simple inputs with positive budgets and mass
   \(M\) at least the vertex budget, the same tests apply at every
   admissible cutoff of at least two. The literal transfer gives
@@ -1140,6 +1140,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   number of deleted incidences equals the original mass. An incidence
   with two oversized components contributes one to the loss.
   [Exact mass of removed incidences](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L92) · [Retained mass plus removed mass](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L99) · [Both component bounds after deletion](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L108).
+- The two support trims can use the smaller retained mass in their
+  quadratic loss bounds while keeping the original widths. For simple
+  admissible input of mass \(M\) at least both positive budgets, a
+  sublist restriction that retains at least \(2M/3\) and satisfies both
+  component tests at the original widths yields an indexed witness of
+  mass at least \(M/18\) with both budgets, the chosen cutoff and all four
+  frozen caps. In particular this applies when the original oversized
+  components account for at most \(M/3\) deleted incidences.
+  [Grouped width trimming after earlier losses](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L140) · [Frozen witness from a two-thirds restriction](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L127) · [Frozen witness from the overflow bound](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L190).
 - The path-partition premise has an exact finite test. Within one row,
   link the endpoints of every comparison with a short backward return.
   Each connected component must lie in one group of any valid partition.

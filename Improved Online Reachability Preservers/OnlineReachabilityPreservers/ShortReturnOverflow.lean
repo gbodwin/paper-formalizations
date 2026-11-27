@@ -119,4 +119,94 @@ theorem pruneOversizedShortReturnComponents_room {n p : ℕ} (rows : Fin p → L
   exact ⟨fun v i on => (card_le_card (shortReturnCopyRowComponent_subset_of_sublist simple sub cutoff v i)).trans (fitting on).1,
     fun i v on => (card_le_card (shortReturnRowComponent_subset_of_sublist simple sub cutoff i v)).trans (fitting on).2⟩
 
+open scoped Sigma.Lex
+
+/-- A simple restriction retaining at least two thirds of the mass
+and meeting both original-width component tests gives a frozen witness
+with the original caps and mass at least one eighteenth. -/
+theorem regularization_list_frozen_of_short_return_restriction {n p k : ℕ} {half : Bool}
+    (rows : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
+    (free : localOrderAdmissible half k rows)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
+    (kept : Fin p → List (Fin n)) (sub : ∀ i, (kept i).Sublist (rows i))
+    (degreeRoom : let M := ∑ i, (rows i).length
+      ∀ v i, v ∈ kept i → (shortReturnCopyRowComponent kept k v i).card ≤ 4*M/n)
+    (pathRoom : let M := ∑ i, (rows i).length
+      ∀ i, ∀ v ∈ kept i, (shortReturnRowComponent kept k i v).card ≤ 4*M/p)
+    (roomMass : 2*(∑ i, (rows i).length) ≤ 3*(∑ i, (kept i).length)) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 18*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧
+      frozenListCaps n p M clean := by
+  let M := ∑ i, (rows i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let K := ∑ i, (kept i).length
+  have upper : K ≤ M := sum_le_sum (fun i _ => (sub i).length_le)
+  have simpleKept (i : Fin p) : (kept i).Nodup := (sub i).nodup (simple i)
+  have freeKept : localOrderAdmissible half k kept := localOrderAdmissible_of_sublist simple sub free
+  have connectedGroups : HasCappedShortReturnCopyPartition kept D k :=
+    (hasCappedShortReturnCopyPartition_iff_component_room _ _ _).mpr degreeRoom
+  obtain ⟨sizes, copies, copiesSimple, copiesFree, projected, degree, light, copiedRoom⟩ :=
+    copies_of_short_return_groups simpleKept freeKept connectedGroups pathRoom
+  let W := Σₗ v : Fin n, Fin (sizes v)
+  have copyMass : (∑ i, (copies i).length) = K := by
+    apply sum_congr rfl
+    intro i _
+    have eq : (copies i).map (fun v : W => v.fst) = kept i := projected i
+    simpa only [List.length_map] using congrArg List.length eq
+  refine regularization_list_frozen_after_grouped_width_splits_of_mass copies copiesSimple copiesFree
+    hn hp dense long (copyMass.trans_le upper) degree light copiedRoom ?_
+  dsimp only
+  rw [copyMass]
+  intro retained lostV lostI paid lossV lossI
+  have charge {q lost : ℕ} (positive : 0 < q)
+      (bound : 4*(((4*M/q)/2 + 1)*q)*lost ≤ K^2) : 8*M*lost ≤ K^2 :=
+    (show 8*M*lost = 4*(2*M)*lost by ring).le.trans
+      ((Nat.mul_le_mul_right _ (Nat.mul_le_mul_left 4 (half_average_width_capacity positive))).trans bound)
+  have both : 8*M*(lostV+lostI) ≤ 2*K^2 := by
+    rw [Nat.mul_add, two_mul (K^2)]
+    exact add_le_add (charge hn lossV) (charge hp lossI)
+  have sumLoss : 4*M*(lostV+lostI) ≤ K^2 := by
+    rw [show 8*M*(lostV+lostI) = 2*(4*M*(lostV+lostI)) by ring] at both
+    omega
+  have paidNat : 4*M*K ≤ 4*M*retained + K^2 := calc
+    _ ≤ 4*M*(retained+(lostV+lostI)) := Nat.mul_le_mul_left _ paid
+    _ = 4*M*retained+4*M*(lostV+lostI) := by ring
+    _ ≤ _ := Nat.add_le_add_left sumLoss _
+  have paidInt : 4*(M:ℤ)*K ≤ 4*(M:ℤ)*retained + (K:ℤ)^2 := by exact_mod_cast paidNat
+  have lo : 2*(M:ℤ) ≤ 3*(K:ℤ) := by exact_mod_cast roomMass
+  have hi : (K:ℤ) ≤ M := by exact_mod_cast upper
+  have factor : 0 ≤ (3*(K:ℤ)-2*M)*(10*(M:ℤ)-3*K) :=
+    mul_nonneg (by omega) (by omega)
+  have sufficient : (20*M)*M ≤ (36*retained)*M := by
+    exact_mod_cast (show (20*(M:ℤ))*M ≤ (36*(retained:ℤ))*M by nlinarith only [factor, paidInt])
+  exact (Nat.mul_le_mul_right_iff (hn.trans_le dense)).mp sufficient
+
+/-- At the original widths, deleting at most one third of the incidences
+in oversized components still leaves a frozen witness of mass at least
+one eighteenth of the original mass. -/
+theorem regularization_list_frozen_of_small_short_return_overflow {n p k : ℕ} {half : Bool}
+    (rows : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
+    (free : localOrderAdmissible half k rows)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
+    (overflow : let M := ∑ i, (rows i).length
+      3*shortReturnComponentOverflowMass rows (4*M/n) (4*M/p) k ≤ M) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 18*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧
+      frozenListCaps n p M clean := by
+  let M := ∑ i, (rows i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let kept := pruneOversizedShortReturnComponents rows D L k
+  have total : (∑ i, (kept i).length) + shortReturnComponentOverflowMass rows D L k = M :=
+    pruneOversizedShortReturnComponents_mass rows D L k
+  have room := pruneOversizedShortReturnComponents_room rows simple D L k
+  change 3*shortReturnComponentOverflowMass rows D L k ≤ M at overflow
+  exact regularization_list_frozen_of_short_return_restriction rows simple free hn hp dense long kept
+    (pruneOversizedShortReturnComponents_sublist rows D L k) room.1 room.2 (by omega)
+
 end OnlineReachabilityPreservers

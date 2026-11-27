@@ -135,23 +135,25 @@ theorem copies_of_cappedShortReturnCopyPartition {n p w cutoff : ℕ} {half : Bo
       omega
     simpa only [card_univ, Fintype.card_fin] using count
 
-/-- With at most one light degree copy per original vertex, the two
-heavy-group profiles can be trimmed at the actual original widths.
-A valid short-return path partition gives at least one quarter of the
-original mass after both support trims and frozen peeling. -/
-theorem regularization_list_frozen_after_grouped_width_splits {V : Type*}
-    [LinearOrder V] [Fintype V] {n p k M : ℕ} {half : Bool}
+/-- Split short-return groups and apply both fixed-width trims when
+the rows carry at most the original incidence mass. -/
+theorem regularization_list_frozen_after_grouped_width_splits_of_mass {V : Type*}
+    [LinearOrder V] [Fintype V] {n p k M retention : ℕ} {half : Bool}
     (copies : Fin p → List V) (simple : ∀ i, (copies i).Nodup)
     (free : localOrderAdmissible half k copies)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
-    (mass : (∑ i, (copies i).length) = M)
+    (upper : (∑ i, (copies i).length) ≤ M)
     (degree : ∀ v, (occurrences (fun i => (copies i).toFinset) v).card ≤ 4*M/n)
     (lightV : ({v ∈ univ | (occurrences (fun i => (copies i).toFinset) v).card ≤ (4*M/n)/2} :
       Finset V).card ≤ n)
-    (pathRoom : HasCappedShortReturnPartition copies (4*M/p) k) :
+    (pathRoom : HasCappedShortReturnPartition copies (4*M/p) k)
+    (enough : let K := ∑ i, (copies i).length
+      ∀ R lostV lostI : ℕ, K ≤ R + (lostV + lostI) →
+        4*(((4*M/n)/2 + 1)*n)*lostV ≤ K^2 →
+        4*(((4*M/p)/2 + 1)*p)*lostI ≤ K^2 → (retention+2)*M ≤ 2*retention*R) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
-      M ≤ 4*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let D := 4*M/n
   let L := 4*M/p
   let dMin := D/2 + 1
@@ -162,7 +164,7 @@ theorem regularization_list_frozen_after_grouped_width_splits {V : Type*}
   let rowSets := fun (i : J) => (pieces i).toFinset
   let fullV := (univ : Finset V).filter fun v => D/2 < (occurrences rowSets v).card
   let fullI := (univ : Finset J).filter fun i => L/2 < (pieces i).length
-  have retained : (∑ i, (pieces i).length) = M := pieceMass.trans mass
+  have upperPieces : (∑ i, (pieces i).length) ≤ M := pieceMass.trans_le upper
   have dRoom : 2*M ≤ dMin*n := half_average_width_capacity hn
   have lRoom : 2*M ≤ lMin*p := half_average_width_capacity hp
   have full_v (v : V) (on : v ∈ fullV) : dMin ≤ (occurrences rowSets v).card := (mem_filter.mp on).2
@@ -180,14 +182,39 @@ theorem regularization_list_frozen_after_grouped_width_splits {V : Type*}
       ext i
       simp [fullI]
     exact which ▸ lightI
-  have mPos : 0 < M := hn.trans_le dense
-  have massRoomV : (∑ i, (pieces i).length) ≤ dMin*n := retained.trans_le ((by omega : M ≤ 2*M).trans dRoom)
-  have massRoomI : (∑ i, (pieces i).length) ≤ lMin*p := retained.trans_le ((by omega : M ≤ 2*M).trans lRoom)
+  have massRoomV : (∑ i, (pieces i).length) ≤ dMin*n := upperPieces.trans ((by omega : M ≤ 2*M).trans dRoom)
+  have massRoomI : (∑ i, (pieces i).length) ≤ lMin*p := upperPieces.trans ((by omega : M ≤ 2*M).trans lRoom)
   refine regularization_list_frozen_after_threshold_profile_trim_of_loss pieces pieceSimple legal
-    hn hp dense long length (fun v => (degrees v).trans_le (degree v)) retained.le fullV fullI
+    hn hp dense long length (fun v => (degrees v).trans_le (degree v)) upperPieces fullV fullI
     (Nat.succ_pos _) (Nat.succ_pos _) full_v vRemainder full_i iRemainder massRoomV massRoomI ?_
   dsimp only
-  rw [retained]
+  rw [pieceMass]
+  exact enough
+
+/-- With at most one light degree copy per original vertex, the two
+heavy-group profiles can be trimmed at the actual original widths.
+A valid short-return path partition gives at least one quarter of the
+original mass after both support trims and frozen peeling. -/
+theorem regularization_list_frozen_after_grouped_width_splits {V : Type*}
+    [LinearOrder V] [Fintype V] {n p k M : ℕ} {half : Bool}
+    (copies : Fin p → List V) (simple : ∀ i, (copies i).Nodup)
+    (free : localOrderAdmissible half k copies)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (mass : (∑ i, (copies i).length) = M)
+    (degree : ∀ v, (occurrences (fun i => (copies i).toFinset) v).card ≤ 4*M/n)
+    (lightV : ({v ∈ univ | (occurrences (fun i => (copies i).toFinset) v).card ≤ (4*M/n)/2} :
+      Finset V).card ≤ n)
+    (pathRoom : HasCappedShortReturnPartition copies (4*M/p) k) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 4*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  have mPos : 0 < M := hn.trans_le dense
+  have dRoom : 2*M ≤ ((4*M/n)/2 + 1)*n := half_average_width_capacity hn
+  have lRoom : 2*M ≤ ((4*M/p)/2 + 1)*p := half_average_width_capacity hp
+  refine regularization_list_frozen_after_grouped_width_splits_of_mass copies simple free
+    hn hp dense long mass.le degree lightV pathRoom ?_
+  dsimp only
+  rw [mass]
   intro kept lostV lostI paid boundV boundI
   have smallLoss {capacity loss : ℕ} (room : 2*M ≤ capacity) (bound : 4*capacity*loss ≤ M^2) :
       8*loss ≤ M := by
@@ -200,6 +227,32 @@ theorem regularization_list_frozen_after_grouped_width_splits {V : Type*}
   have lessV := smallLoss dRoom boundV
   have lessI := smallLoss lRoom boundI
   omega
+
+/-- Choose admissible degree copies and a feasible path partition
+from component-width hypotheses on the original rows. -/
+theorem copies_of_short_return_groups {n p k D L : ℕ} {half : Bool}
+    {rows : Fin p → List (Fin n)} (simple : ∀ i, (rows i).Nodup)
+    (free : localOrderAdmissible half k rows)
+    (degreeRoom : HasCappedShortReturnCopyPartition rows D k)
+    (pathRoom : ∀ i, ∀ x ∈ rows i, (shortReturnRowComponent rows k i x).card ≤ L) :
+    ∃ (sizes : Fin n → ℕ) (copies : Fin p → List (Σₗ v : Fin n, Fin (sizes v))),
+      (∀ i, (copies i).Nodup) ∧ localOrderAdmissible half k copies ∧
+      (∀ i, (copies i).map Sigma.fst = rows i) ∧
+      (∀ v, (occurrences (fun i => (copies i).toFinset) v).card ≤ D) ∧
+      ({v ∈ univ | (occurrences (fun i => (copies i).toFinset) v).card ≤ D/2} :
+        Finset (Σₗ v : Fin n, Fin (sizes v))).card ≤ n ∧
+      HasCappedShortReturnPartition copies L k := by
+  obtain ⟨sizes, copies, copiedSimple, copiedFree, projected, degree, light⟩ :=
+    copies_of_cappedShortReturnCopyPartition simple free degreeRoom
+  let W := Σₗ v : Fin n, Fin (sizes v)
+  let project (x : W) := x.fst
+  have copiedRoom : HasCappedShortReturnPartition copies L k := by
+    apply (hasCappedShortReturnPartition_iff_component_room _ _ _).mpr
+    intro i x on
+    have onOriginal := List.mem_map_of_mem (f := project) on
+    rw [show (copies i).map project = rows i from projected i] at onOriginal
+    exact (shortReturnRowComponent_card_le_project project simple projected k i x).trans (pathRoom i _ onOriginal)
+  exact ⟨sizes, copies, copiedSimple, copiedFree, projected, degree, light, copiedRoom⟩
 
 /-- If the original incident rows admit bounded degree groups and the
 original row components fit the path width, both original-width groupings
@@ -217,8 +270,8 @@ theorem regularization_list_frozen_of_short_return_groups {n p k : ℕ} {half : 
       M ≤ 4*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧
       frozenListCaps n p M clean := by
   let M := ∑ i, (rows i).length
-  obtain ⟨sizes, copies, copiedSimple, copiedFree, projected, degree, light⟩ :=
-    copies_of_cappedShortReturnCopyPartition simple free degreeRoom
+  obtain ⟨sizes, copies, copiedSimple, copiedFree, projected, degree, light, copiedRoom⟩ :=
+    copies_of_short_return_groups simple free degreeRoom pathRoom
   let W := Σₗ v : Fin n, Fin (sizes v)
   let project (x : W) := x.fst
   have mass : (∑ i, (copies i).length) = M := by
@@ -226,12 +279,6 @@ theorem regularization_list_frozen_of_short_return_groups {n p k : ℕ} {half : 
     intro i _
     have eq : (copies i).map project = rows i := projected i
     simpa only [List.length_map] using congrArg List.length eq
-  have copiedRoom : HasCappedShortReturnPartition copies (4*M/p) k := by
-    apply (hasCappedShortReturnPartition_iff_component_room _ _ _).mpr
-    intro i x on
-    have onOriginal := List.mem_map_of_mem (f := project) on
-    rw [show (copies i).map project = rows i from projected i] at onOriginal
-    exact (shortReturnRowComponent_card_le_project project simple projected k i x).trans (pathRoom i _ onOriginal)
   exact regularization_list_frozen_after_grouped_width_splits copies copiedSimple copiedFree
     hn hp dense long mass degree light copiedRoom
 

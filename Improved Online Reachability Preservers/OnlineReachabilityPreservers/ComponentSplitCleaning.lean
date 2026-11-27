@@ -1055,7 +1055,7 @@ private theorem pruneLongPrecedenceVisits_simple {n p limit : ℕ} {paths : Fin 
     (simple : ∀ i, (paths i).Nodup) (i : Fin p) : (pruneLongPrecedenceVisits paths limit i).Nodup :=
   (simple i).filter _
 
-private theorem localOrderAdmissible_of_sublist {V : Type*} [DecidableEq V] {p k : ℕ} {half : Bool}
+theorem localOrderAdmissible_of_sublist {V : Type*} [DecidableEq V] {p k : ℕ} {half : Bool}
     {paths kept : Fin p → List V} (simple : ∀ i, (paths i).Nodup)
     (sub : ∀ i, (kept i).Sublist (paths i))
     (free : localOrderAdmissible half k paths) : localOrderAdmissible half k kept := by
