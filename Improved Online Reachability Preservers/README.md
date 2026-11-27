@@ -2016,12 +2016,20 @@ or paths.
 · [Half witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L372).
 
 At full cutoff three, the exact number of distinct nonempty simple rows
-on \(n\) vertices can be any \(p\le n+2\lfloor n/2\rfloor\lceil n/2\rceil\).
+on \(n\) available vertex labels can be any \(p\le n+2\lfloor n/2\rfloor\lceil n/2\rceil\).
 The longer rows have distinct first steps and these steps contain no
 transitive directed triangle. Both orientations across two balanced
 parts, together with the singletons, attain the bound at cutoff three.
 [Upper bound for every full cutoff from three](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L119)
 · [Exact cutoff-three feasibility](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L285).
+
+Put \(q=\min(n,p)\). A literal full system of mass \(M\) at cutoff
+\(k\ge3\) has a distinct nonempty full witness of mass \(W\) within both
+budgets, with all-size exclusion and \(\min(k,q)M\le2qW\). When \(p\le n\),
+retaining whole rows improves the right side to \(qW\). These inequalities
+concern incidence mass. The witness mass is at most \(M\).
+[All-size mass bound](OnlineReachabilityPreservers/LiteralFullCutoffComparison.lean#L78)
+· [Whole-row restriction](OnlineReachabilityPreservers/LiteralFullCutoffComparison.lean#L13).
 
 At \(2(t+1)t^2\) vertices and \(t^3\) paths, the cited slope-ordered
 lattice satisfies the all-arcs-earlier exclusion at every size. Its

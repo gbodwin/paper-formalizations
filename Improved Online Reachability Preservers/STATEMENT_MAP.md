@@ -3693,14 +3693,27 @@ bound in general remains open.
 [Indexed power comparison](OnlineReachabilityPreservers/HalfFullLatticeComparison.lean#L129)
 · [Literal witness and output caps](OnlineReachabilityPreservers/HalfFullLatticeComparison.lean#L213).
 
-At full cutoff three, a distinct nonempty simple family with exact counts
-\((n,p)\) exists precisely when
+At full cutoff three, a distinct nonempty simple family with exactly \(p\) rows
+on \(n\) available vertex labels exists precisely when
 \(p\le n+2\lfloor n/2\rfloor\lceil n/2\rceil\). Any larger full cutoff has
 the same upper bound. The first steps of the longer rows are distinct
 and have no transitive triangle. Balanced bipartite steps in both
 directions and singleton rows attain the capacity at cutoff three.
 [First-step count](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L119)
 · [Exact cutoff-three feasibility](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L285).
+
+The cutoff-three capacity supplies a literal family of mass \(p\) within
+both budgets with full exclusion at every size. Its ordered pairs all go
+across the balanced parts in one direction, and it also uses singleton
+rows. At full cutoff \(k\ge3\), for \(q=\min(n,p)\) and input mass \(M\),
+restrict one support and keep its distinct longer rows, or use this
+family of mass \(p\). The larger mass \(W\) satisfies
+\(\min(k,q)M\le2qW\) and \(W\le M\). When \(p\le n\), keeping whole original
+rows gives \(\min(k,q)M\le qW\). These comparisons preserve both budgets,
+literal nonempty distinct rows, and full exclusion at all sizes.
+[Mass \(p\) construction](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L384)
+· [All-size mass comparison](OnlineReachabilityPreservers/LiteralFullCutoffComparison.lean#L78)
+· [Whole-row comparison](OnlineReachabilityPreservers/LiteralFullCutoffComparison.lean#L13).
 
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.

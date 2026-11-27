@@ -313,4 +313,99 @@ theorem literal_full_three_feasible_iff {n p : ℕ} :
       ⟨paths,twoLayerBidirectionalRows_injective.comp labelsInjective,rows,free⟩
     exact vertices ▸ witness
 
+/-- One orientation of the balanced bipartite arcs gives any prescribed
+number of two-vertex rows up to the side product. Singleton rows can
+be added independently, with full exclusion at every size. -/
+theorem literal_full_all_short_rows {n darts singles : ℕ}
+    (dartBudget : darts ≤ (n/2)*(n-n/2)) (singletonBudget : singles ≤ n) :
+    ∃ paths : Fin (darts+singles) → List (Fin n), Function.Injective paths ∧
+      (∀ i, paths i ≠ [] ∧ (paths i).Nodup) ∧
+      (∀ d, IsEmpty (Bridge (Before paths) d)) ∧ (∑ i, (paths i).length) = 2*darts+singles := by
+  let a := n/2
+  let b := n-a
+  have vertices : a+b = n := Nat.add_sub_of_le (Nat.div_le_self n 2)
+  let pair (i : Fin darts) : Fin a × Fin b := finProdFinEquiv.symm (Fin.castLE dartBudget i)
+  have pairInjective : Function.Injective pair := finProdFinEquiv.symm.injective.comp (Fin.castLE_injective _)
+  let label : Fin darts ⊕ Fin singles → TwoLayerRow a b
+    | Sum.inl i => Sum.inl (false,(pair i).1,(pair i).2)
+    | Sum.inr j => Sum.inr (Fin.castLE (vertices ▸ singletonBudget) j)
+  have labelInjective : Function.Injective label := by
+    rintro (i | i) (j | j) same
+    · have ends : (pair i).1 = (pair j).1 ∧ (pair i).2 = (pair j).2 := by
+        simpa only [label,Sum.inl.injEq,Prod.mk.injEq,true_and] using same
+      exact congrArg Sum.inl (pairInjective (Prod.ext ends.1 ends.2))
+    · exact (Sum.inl_ne_inr same).elim
+    · exact (Sum.inr_ne_inl same).elim
+    · exact congrArg Sum.inr (Fin.castLE_injective _ (Sum.inr.inj same))
+  let rows (i : Fin darts ⊕ Fin singles) := twoLayerBidirectionalRows (label i)
+  have rowsInjective : Function.Injective rows := twoLayerBidirectionalRows_injective.comp labelInjective
+  have well (i : Fin darts ⊕ Fin singles) : rows i ≠ [] ∧ (rows i).Nodup := by
+    cases i with
+    | inl i => simp [rows,label,twoLayerBidirectionalRows,layer_vertices_different]
+    | inr j => simp [rows,label,twoLayerBidirectionalRows]
+  have forward {i x y} (step : Before rows i x y) : x.val < a ∧ ¬ y.val < a := by
+    cases i with
+    | inl i =>
+      obtain ⟨rfl,rfl⟩ := listBefore_endpoints_of_pair (rfl : rows (Sum.inl i) =
+        [Fin.castAdd b (pair i).1,Fin.natAdd a (pair i).2]) step
+      exact ⟨(pair i).1.isLt,by change ¬ a+(pair i).2.val < a; omega⟩
+    | inr j =>
+      have both : x = Fin.castLE (vertices ▸ singletonBudget) j ∧ y = Fin.castLE (vertices ▸ singletonBudget) j := by
+        simpa [rows,label,twoLayerBidirectionalRows] using And.intro step.1 step.2.1
+      exact (listBefore_ne step (both.1.trans both.2.symm)).elim
+  have all (d : ℕ) : IsEmpty (Bridge (Before rows) d) := by
+    refine ⟨fun bridge => ?_⟩
+    cases d with
+    | zero =>
+      have river := (twoLayerBidirectionalRows_step (i := label bridge.river) bridge.riverStep).1
+      have arc := (twoLayerBidirectionalRows_step (i := label (bridge.arc 0)) (bridge.arcStep 0)).1
+      exact bridge.river_ne_arc 0 (rowsInjective (river.trans arc.symm))
+    | succ d =>
+      exact (forward (bridge.arcStep 0)).2 (forward (bridge.arcStep 1)).1
+  have count : Fintype.card (Fin darts ⊕ Fin singles) = darts+singles := by simp
+  let order := (Fintype.equivFinOfCardEq count).symm
+  let paths (i : Fin (darts+singles)) := rows (order i)
+  have total : (∑ i, (paths i).length) = 2*darts+singles := by
+    calc
+      _ = ∑ i, (rows i).length := Equiv.sum_comp order (fun i => (rows i).length)
+      _ = _ := by
+        rw [Fintype.sum_sum_type]
+        simp [rows,label,twoLayerBidirectionalRows,Nat.mul_comm]
+  have witness : ∃ paths : Fin (darts+singles) → List (Fin (a+b)), Function.Injective paths ∧
+      (∀ i, paths i ≠ [] ∧ (paths i).Nodup) ∧
+      (∀ d, IsEmpty (Bridge (Before paths) d)) ∧ (∑ i, (paths i).length) = 2*darts+singles :=
+    ⟨paths,rowsInjective.comp order.injective,fun i => well (order i),
+      fun d => ⟨fun bridge => (all d).false (bridge.mapPaths order order.injective (fun _ _ _ step => step))⟩,total⟩
+  exact vertices ▸ witness
+
+/-- Whenever the literal full cutoff-three row-count bound holds, there
+is an all-size full-free literal family of mass exactly the original row
+budget, using at most that many rows on the original vertex ground set. -/
+theorem literal_full_all_mass_at_path_budget {n p : ℕ} (enough : p ≤ n+2*((n/2)*(n-n/2))) :
+    ∃ q ≤ p, ∃ paths : Fin q → List (Fin n), Function.Injective paths ∧
+      (∀ i, paths i ≠ [] ∧ (paths i).Nodup) ∧
+      (∀ d, IsEmpty (Bridge (Before paths) d)) ∧ (∑ i, (paths i).length) = p := by
+  let capacity := (n/2)*(n-n/2)
+  let darts := min capacity (p/2)
+  let singles := p-2*darts
+  have fits : 2*darts ≤ p := by
+    have bound : darts ≤ p/2 := min_le_right _ _
+    omega
+  have singlesFit : singles ≤ n := by
+    by_cases budget : capacity ≤ p/2
+    · dsimp [singles,darts]
+      rw [min_eq_left budget]
+      change p ≤ n+2*capacity at enough
+      omega
+    · have hn : 0 < n := by
+        by_contra! empty
+        have zero : n = 0 := by omega
+        simp [capacity,zero] at budget
+      dsimp [singles,darts]
+      rw [min_eq_right (le_of_not_ge budget)]
+      omega
+  obtain ⟨paths,unique,well,all,total⟩ := literal_full_all_short_rows (n := n) (singles := singles)
+    (min_le_left capacity (p/2)) singlesFit
+  exact ⟨darts+singles,by dsimp [singles]; omega,paths,unique,well,all,by rw [total]; dsimp [singles]; omega⟩
+
 end OnlineReachabilityPreservers

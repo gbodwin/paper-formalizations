@@ -2466,6 +2466,29 @@ local-order upper bound and recurrence of Theorem 43.
   · [Literal upper bound](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L119)
   · [Exact cutoff-three domain](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L285).
 
+  Keeping one orientation of the bipartite arcs rules out chains of two
+  strict steps. Any number of these rows up to the side product can be
+  combined with any number of the singletons up to the vertex count.
+  For a feasible literal full input with cutoff at least three, let
+  \(a=\lfloor n/2\rfloor, b=\lceil n/2\rceil\). Take
+  \(r=\min(ab,\lfloor p/2\rfloor)\) arcs and \(p-2r\) singletons.
+  This gives exactly \(p\) incidences in at most \(p\) rows while excluding
+  full bridges at every size.
+  [Short literal rows](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L319)
+  · [Mass equal to the row budget](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L384).
+
+  The smaller-support restriction retains at least
+  \(\min(k,\min(n,p))/\min(n,p)\) of the input mass for positive budgets.
+  Its longer rows stay distinct by full-two exclusion. Deleting the rows
+  of length at most one loses at most \(p\) incidences. Choose the greater
+  mass of the surviving family and the \(p\)-incidence construction. The
+  resulting literal witness preserves at least half the retained fraction
+  under both budgets and excludes every full bridge. Keeping whole rows
+  when \(p\le n\) preserves the full fraction. This comparison concerns two
+  full exclusion cutoffs and imposes no average-degree or length caps.
+  [All-size literal mass bound](OnlineReachabilityPreservers/LiteralFullCutoffComparison.lean#L78)
+  · [Whole-row mass bound](OnlineReachabilityPreservers/LiteralFullCutoffComparison.lean#L13).
+
   The exact literal budgets \(n=4,p=11\) are feasible for half exclusion
   at every cutoff and infeasible for full exclusion at \(k\ge4\). The
   half witness uses four singleton rows, three early arrows from vertex
