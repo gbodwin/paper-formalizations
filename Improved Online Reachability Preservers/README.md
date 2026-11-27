@@ -987,6 +987,17 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   \(m\ge 10\) and \(k\ge 5\), the original-width split passes the rank test
   and still contains the two-edge return across its first width cut.
   [Rank test](OnlineReachabilityPreservers/BridgeRiverRanks.lean#L43) · [The original-width split](OnlineReachabilityPreservers/ForcedPathReturnRuns.lean#L560).
+- The rank condition has a finite component test. Start with the actual
+  piece comparisons. Add the reverse of each possible river comparison
+  whose endpoints have a detour of at most \(k-1\) edges in the graph
+  omitting that piece. A suitable rank exists exactly when different
+  pieces of one parent meet disjoint strongly connected components of
+  this graph. Start with simple paths of mass \(M\) at least both positive
+  budgets. If degree copying preserves the chosen exclusion and its
+  original-width pieces pass the component test, the cleaned witness meets
+  both budgets and all four frozen caps and keeps at least \(M/16\) in either
+  mode.
+  [Rank existence](OnlineReachabilityPreservers/RiverDetourComponents.lean#L99) · [Frozen cleaning from the component test](OnlineReachabilityPreservers/RiverDetourComponents.lean#L148).
 - After [deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2620),
   test for short returns in the pieces of the retained rows. If the
   copied input has the required bridge exclusion, at most \(M/18\)

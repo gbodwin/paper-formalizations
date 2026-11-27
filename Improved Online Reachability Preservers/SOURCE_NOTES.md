@@ -992,6 +992,18 @@ least two. For
 and still contains the two-edge return across its first width cut.
 [Rank test](OnlineReachabilityPreservers/BridgeRiverRanks.lean#L43) · [The original-width split](OnlineReachabilityPreservers/ForcedPathReturnRuns.lean#L560).
 
+The rank condition has a finite component test. Start with the actual
+piece comparisons. Add the reverse of each possible river comparison
+whose endpoints have a detour of at most \(k-1\) edges in the graph
+omitting that piece. A suitable rank exists exactly when different
+pieces of one parent meet disjoint strongly connected components of
+this graph. Start with simple paths of mass \(M\) at least both positive
+budgets. If degree copying preserves the chosen exclusion and its
+original-width pieces pass the component test, the cleaned witness meets
+both budgets and all four frozen caps and keeps at least \(M/16\) in either
+mode.
+[Rank existence](OnlineReachabilityPreservers/RiverDetourComponents.lean#L99) · [Frozen cleaning from the component test](OnlineReachabilityPreservers/RiverDetourComponents.lean#L148).
+
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
 those positions, so only pairs in different blocks need the bounded
