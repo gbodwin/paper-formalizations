@@ -1070,14 +1070,24 @@ arc parent, so the same cutoff holds in full mode and in half
 mode when pieces follow their parents’ arrival order.
 [Return condition](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2639) · [Bridge projection](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2649) · [Full bridge exclusion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2762) · [Half-bridge exclusion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2779).
 
-For the vertex-copy step, a repeated projected corner must be separated
-along the detour and cannot be the two endpoints of the river. The first
-and last arcs of the closed projected part are on distinct rows. Its
-interior has at most \(\max(0,k-4)\) steps. If the copies agree at the ends
+For the vertex-copy step, the two copies of a repeated projected corner
+must be nonconsecutive along the detour and cannot be the two river
+endpoints. The first and last arcs of the closed projected part are on
+distinct rows. The interior return takes at most \(\max(0,k-4)\) steps
+in the original precedence graph. If the copies agree at the ends
 of every such short return and all comparisons project to their original
 rows, each bridge through the cutoff projects with distinct corners and
 the same arc and river labels. This preserves either exclusion.
 [Agreement of vertex copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2798) · [Lift with distinct projected corners](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2807) · [Preservation in either mode](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2871).
+
+At each original vertex, group its incident rows so that the first
+and last rows of each tested short return are together. Assume the groups
+are disjoint and fit the degree width. Choose a valid partition with the
+minimum number of groups and use the groups as copies. Every original
+row is recovered by projection, each degree is within the width, and at
+most one copy of each vertex is at or below half the width. For simple
+input, the copies preserve the chosen full or half exclusion.
+[Short-return pairs of incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L13) · [Bounded degree groups](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L20) · [Admissible capped degree copies](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L28).
 
 Start with simple rows whose mass \(M\) is at least both positive
 budgets. If standard degree copying at the original width preserves
