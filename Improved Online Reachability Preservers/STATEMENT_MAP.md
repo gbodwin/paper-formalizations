@@ -1600,6 +1600,18 @@ all four frozen caps. The input rows are simple and exclude full
 bridges through \(k\), and the mass reaches both positive budgets.
 [Crossed return predicate](OnlineReachabilityPreservers/CyclicSplits.lean#L876) · [Projection at the original cutoff](OnlineReachabilityPreservers/CyclicSplits.lean#L1003) · [Standard width test](OnlineReachabilityPreservers/FullReturnRadius.lean#L40) · [Indexed witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L67) · [Literal witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L89).
 
+For a fixed split into simple pieces, a set of labeled incidences covers
+all short crossed returns by meeting each return's start or end incidence
+on the parent's pieces or either labeled endpoint of a step in the original
+pieces. This is equivalent to the absence of those returns after deleting the
+set. The comparison between the return endpoints in the pre-split
+parent stays fixed. When the split is disjoint and order preserving and
+the original family excludes full bridges through \(k\ge7\), applying
+this test with radius \(k-5\) preserves that exclusion on the retained pieces.
+[Incidence cover](OnlineReachabilityPreservers/FullReturnIncidenceCover.lean#L17)
+· [Exact deletion criterion for crossed returns](OnlineReachabilityPreservers/FullReturnIncidenceCover.lean#L30)
+· [Preservation at the original cutoff](OnlineReachabilityPreservers/FullReturnIncidenceCover.lean#L63).
+
 The same radius \(k-5\) works for grouped path splitting at every
 full cutoff \(k\ge7\). When every group on the standard copies
 fits the original path width, pack whole groups and trim both

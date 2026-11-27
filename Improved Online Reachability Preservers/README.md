@@ -1063,6 +1063,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   Its first crossed return has length \(k-5\) and the split creates
   a full \(k\)-bridge.
   [Original exclusion](OnlineReachabilityPreservers/FullReturnRadiusSharpness.lean#L138) · [Shorter test](OnlineReachabilityPreservers/FullReturnRadiusSharpness.lean#L381) · [Exact return](OnlineReachabilityPreservers/FullReturnRadiusSharpness.lean#L415) · [All cutoffs](OnlineReachabilityPreservers/FullReturnRadiusSharpness.lean#L452).
+- Fix an order-preserving disjoint split of a family excluding full
+  bridges through \(k\ge7\), with simple pieces. Cover each crossed return
+  of at most \(k-5\) steps by an endpoint incidence on the parent pieces or
+  an incidence used by a step. Erasing that cover removes all tested
+  returns and preserves full exclusion through the same cutoff.
+  [Exact deletion test](OnlineReachabilityPreservers/FullReturnIncidenceCover.lean#L30)
+  · [Preservation theorem](OnlineReachabilityPreservers/FullReturnIncidenceCover.lean#L63).
 - At full cutoff seven, packing the components of returns of at most
   two steps gives a frozen quarter-mass witness if those components fit the
   original path width. Use either the original rows or the standard
