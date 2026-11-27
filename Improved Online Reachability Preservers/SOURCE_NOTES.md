@@ -1124,6 +1124,17 @@ give the frozen witness at every cutoff. The earlier midpoint example
 has cyclic constraints at cutoff four and admits no new order.
 [Fixed-order half-four bridge](OnlineReachabilityPreservers/HalfBridgeArrivalOrderAudit.lean#L172) · [Exact single constraint](OnlineReachabilityPreservers/HalfBridgeArrivalOrderAudit.lean#L178) · [Frozen witness at the original widths](OnlineReachabilityPreservers/HalfBridgeArrivalOrderAudit.lean#L212) · [Cyclic midpoint example](OnlineReachabilityPreservers/HalfBridgeArrivalOrderAudit.lean#L230).
 
+The midpoint obstruction also occurs at both prescribed widths in a
+literal family. Add one extra vertex to the split row and 41 distinct
+singleton rows. The input has 49 vertices and 45 distinct nonempty
+rows of mass 56. It excludes half-bridges through four and both
+factor-four widths are four. On the resulting pieces, the size-three
+and size-four bridges impose a directed two-cycle. Every arrival order
+fails at cutoff four and above. Four disjoint two-vertex rows give a
+separate literal witness of mass eight, full exclusion at every size,
+both original budgets and all four frozen caps.
+[Literal input parameters](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L23) · [Original half-four exclusion](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L88) · [Cyclic constraints at both widths](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L177) · [Separate literal witness](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L193).
+
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
 those positions, so only pairs in different blocks need the bounded
