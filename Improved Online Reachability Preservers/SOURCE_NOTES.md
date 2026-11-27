@@ -378,9 +378,9 @@ of the width pieces to survive the trim. The resulting witness keeps
 \(M/256\) with the same cutoff, both original budgets and all four
 original-average caps. It applies at the indexed and feasible literal
 full maxima.
-[Original-average cleaning](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L237)
-· [Indexed maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L285)
-· [Feasible literal maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L299).
+[Original-average cleaning](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L241)
+· [Indexed maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L289)
+· [Feasible literal maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L303).
 
 The original-average guarantee reaches \(4k\ge3\min(n,p)\) with the
 same \(M/256\) retention. In the larger high-mass case, selecting the
@@ -392,10 +392,30 @@ original widths. Trim the other side. Its width blocks give deletion
 cost at most \(7K/186\), and the actual support sizes give peeling cost
 at most \(11M/25+2K/31\). The same budgets, original caps and input
 cutoff hold for both indexed and feasible literal input.
-[One-side trim](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L370)
-· [Original-average witness](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L466)
-· [Indexed maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L529)
-· [Feasible literal maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L543).
+[One-side trim](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L383)
+· [Original-average witness](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L483)
+· [Indexed maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L561)
+· [Feasible literal maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L575).
+
+For simple input excluding full bridges through \(k\) with positive
+budgets, charge the deletion before splitting to the actual vertex support.
+Write \(q=\min(n,p)\), select the heaviest \(s\le k\) labels on that
+smaller side, and put \(t=s/q\) and \(v=s\) if \(n\le p\), \(v=n\)
+otherwise. The common-order deletion leaves at least \(tM-2v\).
+With \(M\ge8\max(n,p)\), \(t\le19/25\) and \(r\ge256\), the inequality
+\(M/r+(1+t)M/4\le(167/186)(tM-2v)\) pays for the trim and peeling. It gives
+an all-size full witness of mass at least \(M/r\) under both budgets and
+all four original-average caps. The minimum path cap forces distinct
+nonempty output even from simple indexed input. Including the small-budget
+and low-mass cases, for \(k\ge2\) and \(M\ge\max(n,p)\), the original
+cutoff and caps hold at retention \(M/512\) when \(n\le p\) and \(5k\ge3n\),
+or when \(M\ge256n\) and \(5k\ge2\min(n,p)\). This applies to indexed
+and feasible literal input. In the literal case, nonempty rows give
+\(M\ge p\).
+[Explicit margin](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L597)
+· [All-size literal witness](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L680)
+· [Indexed cutoff and density conditions](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L702)
+· [Literal cutoff and density conditions](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L773).
 
 The original-average conclusion at full cutoff six has a separate
 proof. A reverse comparison within one width piece gives a conflict
@@ -2413,7 +2433,7 @@ local-order upper bound and recurrence of Theorem 43.
   · [Full witness from half feasibility](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L24)
   · [Unbalanced-budget comparison](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L98).
 
-  At any half cutoff \(k\ge4\), the full all-size maximum controls
+  For positive budgets and any half cutoff \(k\ge4\), the full all-size maximum controls
   every indexed half mass within \(Cn^{7/50+\varepsilon(n)}\), for one
   constant and a single nonnegative slack tending to zero with \(n\).
   The three lattice lower powers are transferred to the all-size full

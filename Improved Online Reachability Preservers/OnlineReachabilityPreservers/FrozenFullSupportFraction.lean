@@ -150,6 +150,7 @@ private theorem choose_full_support {n p cutoff size a b sNum sDen : ℕ} (paths
     (bound : size ≤ cutoff) (saving : sNum*size ≤ sDen*min n p) :
     ∃ A : Finset (Fin n), A.card ≤ n ∧ ∃ B : Finset (Fin p), B.card ≤ p ∧
       (sNum*A.card ≤ sDen*n ∨ sNum*B.card ≤ sDen*p) ∧ min A.card B.card ≤ cutoff ∧
+      A.card ≤ (if n ≤ p then size else n) ∧
       a*(∑ i, (paths i).length) ≤ b*(∑ i ∈ B, ((paths i).toFinset ∩ A).card) := by
   by_cases vertices : n ≤ p
   · let degree (v : Fin n) := (occurrences (fun i => (paths i).toFinset) v).card
@@ -163,7 +164,8 @@ private theorem choose_full_support {n p cutoff size a b sNum sDen : ℕ} (paths
     have reduced : sNum*A.card ≤ sDen*n := (Nat.mul_le_mul_left _ card).trans
       (by simpa only [min_eq_left vertices] using saving)
     have vertexFits : A.card ≤ n := by simpa only [Fintype.card_fin] using card_le_univ A
-    refine ⟨A,vertexFits,univ,by simp,Or.inl reduced,(min_le_left _ _).trans (card.trans bound),?_⟩
+    refine ⟨A,vertexFits,univ,by simp,Or.inl reduced,(min_le_left _ _).trans (card.trans bound),
+      by simpa [vertices] using card,?_⟩
     rw [← degreeSum,column_rectangle_mass]
     exact retained
   · have fits : a*(univ : Finset (Fin p)).card ≤ b*size := by
@@ -172,7 +174,8 @@ private theorem choose_full_support {n p cutoff size a b sNum sDen : ℕ} (paths
     have reduced : sNum*B.card ≤ sDen*p := (Nat.mul_le_mul_left _ card).trans
       (by simpa only [min_eq_right (le_of_not_ge vertices)] using saving)
     have pathFits : B.card ≤ p := by simpa only [Fintype.card_fin] using card_le_univ B
-    refine ⟨univ,by simp,B,pathFits,Or.inr reduced,(min_le_right _ _).trans (card.trans bound),?_⟩
+    refine ⟨univ,by simp,B,pathFits,Or.inr reduced,(min_le_right _ _).trans (card.trans bound),
+      by simp [vertices],?_⟩
     have masses : (∑ i ∈ B, ((paths i).toFinset ∩ (univ : Finset (Fin n))).card) = ∑ i ∈ B, (paths i).length := by
       exact sum_congr rfl fun i _ => by rw [inter_univ,List.toFinset_card_of_nodup (simple i)]
     rw [masses]
@@ -188,7 +191,8 @@ private theorem choose_near_full_support {n p cutoff : ℕ} (paths : Fin p → L
   have keep : 5*q ≤ 6*size := by unfold size; omega
   have bound : size ≤ cutoff := by unfold size; change 5*q ≤ 6*cutoff at near; omega
   have saving : 20*size ≤ 17*q := by unfold size; change 157 ≤ q at large; omega
-  exact choose_full_support paths simple (by decide) keep bound saving
+  obtain ⟨A,va,B,pa,saved,cut,_,mass⟩ := choose_full_support paths simple (by decide) keep bound saving
+  exact ⟨A,va,B,pa,saved,cut,mass⟩
 
 private theorem full_increasing_restriction {n p cutoff : ℕ} (paths : Fin p → List (Fin n))
     (simple : ∀ i, (paths i).Nodup) (free : BridgeFree (Before paths) cutoff)
@@ -196,7 +200,7 @@ private theorem full_increasing_restriction {n p cutoff : ℕ} (paths : Fin p �
     let R := ∑ i ∈ B, ((paths i).toFinset ∩ A).card
     ∃ (rank : Fin (Fintype.card A) → Fin (Fintype.card A))
       (kept : Fin (Fintype.card B) → List (Fin (Fintype.card A))),
-      (∀ i, (kept i).Nodup) ∧ BridgeFree (Before kept) cutoff ∧
+      (∀ i, (kept i).Nodup) ∧ (∀ d, IsEmpty (Bridge (Before kept) d)) ∧
       (∀ i, ((kept i).map rank).Pairwise (· < ·)) ∧
       R ≤ (∑ i, (kept i).length)+2*A.card ∧ (∑ i, (kept i).length) ≤ R := by
   let restricted := restrictListPaths paths A B
@@ -212,8 +216,8 @@ private theorem full_increasing_restriction {n p cutoff : ℕ} (paths : Fin p �
     bridgeFree_all_of_cutoff_ge_min relabelFree (by simpa only [Fintype.card_coe] using smallCut)
   obtain ⟨rank,kept,sub,ordered,_,_,removed⟩ := fullBridgeFree_increasing_subsequences_two_of_components picked
     relabelSimple (precedenceComponent_fullFree relabelSimple all)
-  have keptFree : BridgeFree (Before kept) cutoff := by
-    intro d _
+  have keptFree : ∀ d, IsEmpty (Bridge (Before kept) d) := by
+    intro d
     exact ⟨fun bridge => (all d).false (bridge.mapPaths id Function.injective_id
       (fun i _ _ step => listBefore_of_sublist (relabelSimple i) (sub i) step))⟩
   change (∑ i, (picked i).length) ≤ (∑ i, (kept i).length)+2*Fintype.card A at removed
@@ -262,7 +266,7 @@ theorem regularization_list_frozen_full_of_five_sixths_cutoff {n p cutoff : ℕ}
     full_increasing_restriction paths simple free A B smallCut
   have mass : 7*M ≤ 12*(∑ i, (kept i).length) := by omega
   have upper : (∑ i, (kept i).length) ≤ M := keptUpper.trans (selected_rectangle_mass_le_original paths A B)
-  exact frozen_full_after_trimmed_increasing_rows kept keptSimple keptFree rank ordered hn hp wideV wideP
+  exact frozen_full_after_trimmed_increasing_rows kept keptSimple (fun d _ => keptFree d) rank ordered hn hp wideV wideP
     (by simpa only [Fintype.card_coe] using va) (by simpa only [Fintype.card_coe] using pa)
     (by simpa only [Fintype.card_coe] using smaller) mass upper
 
@@ -314,32 +318,41 @@ theorem localOrderDistinctExtremal_frozen_full_of_five_sixths_cutoff {n p cutoff
   exact ⟨paths,distinct,rows,free,maximal,regularization_list_frozen_full_distinct_of_five_sixths_cutoff paths
     distinct (fun i => (rows i).1) (fun i => (rows i).2) free two hn hp dense near⟩
 
-private theorem smaller_support_peeling_charge {M K q base count : ℕ}
-    (hq : 0 < q) (wide : 8*q ≤ M) (small : 25*base ≤ 19*q) (few : 12*K ≤ 7*M)
+private theorem smaller_support_peeling_charge {M K q base count : ℕ} {share : ℝ}
+    (hq : 0 < q) (wide : 8*q ≤ M) (shareBound : share ≤ 19/25)
+    (small : (base:ℝ) ≤ share*q) (few : 12*K ≤ 7*M)
     (expanded : count ≤ base+K/(4*M/q)) :
-    count ≤ q ∧ (M:ℝ)/(4*(q:ℝ))*count ≤ (19/100)*(M:ℝ)+(2/31)*(K:ℝ) := by
-  have mPos : 0 < M := by omega
-  have mReal : (0:ℝ) < M := by exact_mod_cast mPos
-  have qReal : (0:ℝ) < q := by exact_mod_cast hq
-  have mass : (K:ℝ) ≤ ((K:ℝ)/M)*M := (div_mul_cancel₀ _ mReal.ne').ge
-  have short : (25:ℝ)*base ≤ 19*(q:ℝ) := by exact_mod_cast small
-  have ratio : ((775*M : ℕ):ℝ)*((19/25)+(8/31)*((K:ℝ)/M)) = ((589*M+200*K : ℕ):ℝ) := by
-    push_cast
-    field_simp
-    ring
-  have countBound := width_support_scale hq wide mass expanded (by linarith only [short]) ratio
-  have den : 589*M+200*K ≤ 775*M := by omega
-  have fits : count ≤ q := Nat.le_of_mul_le_mul_left
-    (countBound.trans (Nat.mul_le_mul_right _ den)) (Nat.mul_pos (by decide) mPos)
-  have scaled : (775:ℝ)*M*count ≤ (589*(M:ℝ)+200*(K:ℝ))*q := by exact_mod_cast countBound
-  have unscaled : (M:ℝ)*count ≤ ((19/25)*(M:ℝ)+(8/31)*(K:ℝ))*q := by nlinarith only [scaled]
+    count ≤ q ∧ (M:ℝ)/(4*(q:ℝ))*count ≤ (share/4)*(M:ℝ)+(2/31)*(K:ℝ) := by
+  let width := 4*M/q
+  have floor := four_average_width_product (M := M) hq
+  change 4*M < width*q+q at floor
+  have board : 31*M ≤ 8*(width*q) := by omega
+  have scaled : (31*M)*(K/width) ≤ 8*K*q := calc
+    _ ≤ (8*(width*q))*(K/width) := Nat.mul_le_mul_right _ board
+    _ = 8*((K/width)*width)*q := by ring
+    _ ≤ 8*K*q := Nat.mul_le_mul_right _ (Nat.mul_le_mul_left _ (Nat.div_mul_le_self _ _))
+  have massPos : (0:ℝ) < M := Nat.cast_pos.mpr (by omega)
+  have qPos : (0:ℝ) < q := Nat.cast_pos.mpr hq
+  have bound : (31*(M:ℝ))*((K/width:ℕ):ℝ) ≤ 8*(K:ℝ)*q := by exact_mod_cast scaled
+  have degreePart : (M:ℝ)*((K/width:ℕ):ℝ) ≤ (8/31)*(K:ℝ)*q := by linarith only [bound]
+  have basePart : (M:ℝ)*(base:ℝ) ≤ (M:ℝ)*(share*q) :=
+    mul_le_mul_of_nonneg_left small massPos.le
+  have expR : (count:ℝ) ≤ (base:ℝ)+((K/width:ℕ):ℝ) := by exact_mod_cast expanded
+  have charge : (M:ℝ)*count ≤ ((M:ℝ)*share+(8/31)*(K:ℝ))*q := by
+    nlinarith only [degreePart,basePart,mul_le_mul_of_nonneg_left expR massPos.le]
+  have fitReal : (M:ℝ)*share+(8/31)*(K:ℝ) ≤ M := by
+    have shareMass := mul_le_mul_of_nonneg_left shareBound massPos.le
+    have massCap : 12*(K:ℝ) ≤ 7*(M:ℝ) := by exact_mod_cast few
+    linarith only [shareMass,massCap,massPos]
+  have fitScaled : (M:ℝ)*count ≤ (M:ℝ)*q := charge.trans
+    (mul_le_mul_of_nonneg_right fitReal qPos.le)
+  have fits : count ≤ q := by exact_mod_cast le_of_mul_le_mul_left fitScaled massPos
   refine ⟨fits,?_⟩
   calc
     _ = ((M:ℝ)*count)/(4*(q:ℝ)) := by ring
-    _ ≤ (((19/25)*(M:ℝ)+(8/31)*(K:ℝ))*q)/(4*(q:ℝ)) :=
-      div_le_div_of_nonneg_right unscaled (by positivity)
+    _ ≤ (((M:ℝ)*share+(8/31)*(K:ℝ))*q)/(4*(q:ℝ)) := div_le_div_of_nonneg_right charge (by positivity)
     _ = _ := by
-      field_simp [qReal.ne']
+      field_simp [qPos.ne']
       ring
 
 private theorem one_width_trim_loss {M K q loss : ℕ} (hq : 0 < q) (wide : 8*q ≤ M)
@@ -367,16 +380,19 @@ private theorem quarter_support_charge {M q count : ℕ} (hq : 0 < q) (fits : co
     have positive : (q:ℝ) ≠ 0 := by exact_mod_cast hq.ne'
     field_simp [positive]
 
-private theorem frozen_full_after_one_quadratic_width_trim {n p n₀ p₀ M cutoff : ℕ}
+private theorem frozen_full_after_one_quadratic_width_trim {n p n₀ p₀ M cutoff retention : ℕ} {share : ℝ}
     (rows : Fin p₀ → List (Fin n₀)) (simple : ∀ i, (rows i).Nodup)
     (free : BridgeFree (Before rows) cutoff) (rank : Fin n₀ → Fin n₀)
     (ordered : ∀ i, ((rows i).map rank).Pairwise (· < ·))
     (hn : 0 < n) (hp : 0 < p) (wideV : 8*n ≤ M) (wideP : 8*p ≤ M)
-    (fitsV : n₀ ≤ n) (fitsP : p₀ ≤ p) (smallSide : 25*n₀ ≤ 19*n ∨ 25*p₀ ≤ 19*p)
-    (lower : M ≤ 2*(∑ i, (rows i).length)) (smallMass : 12*(∑ i, (rows i).length) ≤ 7*M) :
+    (fitsV : n₀ ≤ n) (fitsP : p₀ ≤ p) (shareBound : share ≤ 19/25)
+    (smallSide : (n₀:ℝ) ≤ share*n ∨ (p₀:ℝ) ≤ share*p)
+    (retentionPos : 0 < retention)
+    (lower : (M:ℝ)/retention+(1+share)/4*M ≤ (167/186)*(∑ i, ((rows i).length:ℝ)))
+    (smallMass : 12*(∑ i, (rows i).length) ≤ 7*M) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) cutoff ∧
-      M ≤ 256*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let K := ∑ i, (rows i).length
   let D := 4*M/n
   let L := 4*M/p
@@ -387,7 +403,7 @@ private theorem frozen_full_after_one_quadratic_width_trim {n p n₀ p₀ M cuto
   let marks (i : J) := (pieces i).toFinset
   let Conclusion := ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
     (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) cutoff ∧
-    M ≤ 256*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean
+    M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean
   have dense : n ≤ M := by omega
   have long : p ≤ M := by omega
   have upper : K ≤ M := by change 12*K ≤ 7*M at smallMass; omega
@@ -410,19 +426,20 @@ private theorem frozen_full_after_one_quadratic_width_trim {n p n₀ p₀ M cuto
     omega
   have enough (A : Finset W) (B : Finset J) (va : A.card ≤ n) (pa : B.card ≤ p) (loss : ℕ)
       (remaining : K ≤ (∑ i ∈ B, (marks i ∩ A).card)+loss) (paid : 186*loss ≤ 7*K)
-      (peel : (M:ℝ)/(4*(n:ℝ))*A.card+(M:ℝ)/(4*(p:ℝ))*B.card ≤ (11/25)*(M:ℝ)+(2/31)*(K:ℝ)) :
+      (peel : (M:ℝ)/(4*(n:ℝ))*A.card+(M:ℝ)/(4*(p:ℝ))*B.card ≤ ((1+share)/4)*(M:ℝ)+(2/31)*(K:ℝ)) :
       Conclusion := by
     apply regularization_list_frozen_of_capped_rectangle (half := false) pieces pieceSimple piecesFree hn hp dense long
-      (retention := 256) (by decide) length degree (mass.trans_le upper) A B va pa
-    have low : (M:ℝ) ≤ 2*(K:ℝ) := by exact_mod_cast lower
+      retentionPos length degree (mass.trans_le upper) A B va pa
+    have low : (M:ℝ)/retention+(1+share)/4*M ≤ (167/186)*(K:ℝ) := by
+      simpa only [Nat.cast_sum,K] using lower
     have cost : (186:ℝ)*loss ≤ 7*(K:ℝ) := by exact_mod_cast paid
     have kept : (K:ℝ) ≤ ((∑ i ∈ B, (marks i ∩ A).card : ℕ):ℝ)+loss := by exact_mod_cast remaining
-    change (M:ℝ)/256+(M:ℝ)/(4*(n:ℝ))*A.card+(M:ℝ)/(4*(p:ℝ))*B.card ≤
+    change (M:ℝ)/retention+(M:ℝ)/(4*(n:ℝ))*A.card+(M:ℝ)/(4*(p:ℝ))*B.card ≤
       ((∑ i ∈ B, (marks i ∩ A).card : ℕ):ℝ)
     linarith only [low,cost,kept,peel,Nat.cast_nonneg (α := ℝ) M]
   change Conclusion
   rcases smallSide with shortV | shortP
-  · have costV := smaller_support_peeling_charge hn wideV shortV smallMass vCount
+  · have costV := smaller_support_peeling_charge hn wideV shareBound shortV smallMass vCount
     have pathRoom : (∑ i, (pieces i).length) ≤ L*p := mass.trans_le (upper.trans (capacity hp wideP))
     obtain ⟨B,pa,charged⟩ := trim_full_weight_blocks_quadratic (fun (i : J) => (pieces i).length) fullI lPos
       filledI (restI.trans_le fitsP) pathRoom
@@ -439,7 +456,7 @@ private theorem frozen_full_after_one_quadratic_width_trim {n p n₀ p₀ M cuto
     have costP := quarter_support_charge (M := M) hp pa
     simp only [card_univ]
     linarith only [costV.2,costP]
-  · have costP := smaller_support_peeling_charge hp wideP shortP smallMass pCount
+  · have costP := smaller_support_peeling_charge hp wideP shareBound shortP smallMass pCount
     let weights (v : W) := (occurrences marks v).card
     have counted : (∑ v, weights v) = K := by
       unfold weights
@@ -491,7 +508,7 @@ theorem regularization_list_frozen_full_of_three_quarters_cutoff {n p cutoff : �
   have keep : 3*q ≤ 4*size := by unfold size; omega
   have bound : size ≤ cutoff := by unfold size; change 3*q ≤ 4*cutoff at near; omega
   have saving : 25*size ≤ 19*q := by unfold size; omega
-  obtain ⟨A,va,B,pa,smaller,smallCut,retained⟩ :=
+  obtain ⟨A,va,B,pa,smaller,smallCut,_,retained⟩ :=
     choose_full_support paths simple (by decide) keep bound saving
   obtain ⟨rank,kept,keptSimple,keptFree,ordered,removed,keptUpper⟩ :=
     full_increasing_restriction paths simple free A B smallCut
@@ -505,10 +522,25 @@ theorem regularization_list_frozen_full_of_three_quarters_cutoff {n p cutoff : �
       rcases smaller with hV | hP
       · exact Or.inl (by omega)
       · exact Or.inr (by omega)
-    exact frozen_full_after_trimmed_increasing_rows kept keptSimple keptFree rank ordered hn hp wideV wideP
+    exact frozen_full_after_trimmed_increasing_rows kept keptSimple (fun d _ => keptFree d) rank ordered hn hp wideV wideP
       vf pf (by simpa only [Fintype.card_coe] using enough) high upper
-  · exact frozen_full_after_one_quadratic_width_trim kept keptSimple keptFree rank ordered hn hp wideV wideP
-      vf pf (by simpa only [Fintype.card_coe] using smaller) mass (by omega)
+  · have support : (Fintype.card A : ℝ) ≤ (19/25)*n ∨ (Fintype.card B : ℝ) ≤ (19/25)*p := by
+      rcases smaller with hV | hP
+      · left
+        rw [Fintype.card_coe]
+        have smallerV : (25:ℝ)*A.card ≤ 19*(n:ℝ) := by exact_mod_cast hV
+        linarith only [smallerV]
+      · right
+        rw [Fintype.card_coe]
+        have smallerP : (25:ℝ)*B.card ≤ 19*(p:ℝ) := by exact_mod_cast hP
+        linarith only [smallerP]
+    have lower : (M:ℝ)/256+(1+19/25)/4*M ≤ (167/186)*(∑ i, ((kept i).length:ℝ)) := by
+      have massR : (M:ℝ) ≤ 2*(K:ℝ) := by exact_mod_cast mass
+      rw [← Nat.cast_sum]
+      change (M:ℝ)/256+(1+19/25)/4*M ≤ (167/186)*(K:ℝ)
+      linarith only [massR,Nat.cast_nonneg (α := ℝ) M]
+    exact frozen_full_after_one_quadratic_width_trim kept keptSimple (fun d _ => keptFree d) rank ordered hn hp wideV wideP
+      vf pf le_rfl support (by decide) lower (by omega)
 
 /-- Feasible literal inputs have the same three-quarters-cutoff cleaning
 with distinct nonempty output rows. -/
@@ -557,5 +589,199 @@ theorem localOrderDistinctExtremal_frozen_full_of_three_quarters_cutoff {n p cut
   obtain ⟨paths,distinct,rows,free,maximal,dense,_⟩ := localOrderDistinctExtremal_isDense false hp feasible
   exact ⟨paths,distinct,rows,free,maximal,regularization_list_frozen_full_distinct_of_three_quarters_cutoff paths
     distinct (fun i => (rows i).1) (fun i => (rows i).2) free two hn hp dense near⟩
+
+/-- Restrict the smaller support to `size` labels. The explicit margin
+pays for common-order deletion, one quadratic width trim, and peeling at
+the original averages. Here the deletion is charged only for the
+vertices in the restricted system. -/
+theorem regularization_list_frozen_full_of_cutoff_charge {n p cutoff size retention : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : BridgeFree (Before paths) cutoff) (hn : 0 < n) (hp : 0 < p)
+    (wideV : 8*n ≤ ∑ i, (paths i).length) (wideP : 8*p ≤ ∑ i, (paths i).length)
+    (sizeFits : size ≤ cutoff) (saving : 25*size ≤ 19*min n p) (retained : 256 ≤ retention)
+    (margin : let M := (∑ i, ((paths i).length:ℝ)); let share := (size:ℝ)/(min n p:ℕ)
+      M/retention+(1+share)/4*M ≤ (167/186)*(share*M-2*(if n ≤ p then (size:ℝ) else (n:ℝ)))) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ (∀ d, IsEmpty (Bridge (Before clean) d)) ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let q := min n p
+  let share := (size:ℝ)/(q:ℝ)
+  change 25*size ≤ 19*q at saving
+  have qPos : (0:ℝ) < q := Nat.cast_pos.mpr (lt_min hn hp)
+  have shareBound : share ≤ 19/25 := by
+    apply (div_le_iff₀ qPos).mpr
+    have ratio : (25:ℝ)*size ≤ 19*(q:ℝ) := by exact_mod_cast saving
+    linarith only [ratio]
+  have within : size ≤ q := by omega
+  obtain ⟨A,va,B,pa,smaller,smallCut,vertices,keptRect⟩ :=
+    choose_full_support paths simple within (le_of_eq (Nat.mul_comm size q)) sizeFits (le_of_eq (Nat.mul_comm q size))
+  obtain ⟨rank,kept,keptSimple,keptFree,ordered,removed,keptUpper⟩ :=
+    full_increasing_restriction paths simple free A B smallCut
+  let K := ∑ i, (kept i).length
+  let R := ∑ i ∈ B, ((paths i).toFinset ∩ A).card
+  have upper : K ≤ M := keptUpper.trans (selected_rectangle_mass_le_original paths A B)
+  have vf : Fintype.card A ≤ n := by simpa only [Fintype.card_coe] using va
+  have pf : Fintype.card B ≤ p := by simpa only [Fintype.card_coe] using pa
+  have retentionPos : 0 < retention := by omega
+  let fullCutoff := max n p
+  have finiteFree : BridgeFree (Before kept) fullCutoff := fun d _ => keptFree d
+  have scale (count budget : ℕ) (fits : q*count ≤ size*budget) : (count:ℝ) ≤ share*budget := by
+    apply le_of_mul_le_mul_left _ qPos
+    have multiplied : (q:ℝ)*count ≤ (size:ℝ)*budget := by exact_mod_cast fits
+    convert multiplied using 1
+    dsimp [share]
+    field_simp [qPos.ne']
+  have support : (A.card:ℝ) ≤ share*n ∨ (B.card:ℝ) ≤ share*p :=
+    smaller.imp (scale _ _) (scale _ _)
+  by_cases high : 7*M ≤ 12*K
+  · have enough : 20*A.card ≤ 17*n ∨ 20*B.card ≤ 17*p := by
+      have loosen (count budget : ℕ) (h : (count:ℝ) ≤ share*budget) : 20*count ≤ 17*budget := by
+        have tighter : (count:ℝ) ≤ (19/25)*(budget:ℝ) := h.trans
+          (mul_le_mul_of_nonneg_right shareBound (by positivity))
+        have scaled : (20:ℝ)*count ≤ 17*(budget:ℝ) := by
+          linarith only [tighter,Nat.cast_nonneg (α := ℝ) budget]
+        exact_mod_cast scaled
+      exact support.imp (loosen _ _) (loosen _ _)
+    obtain ⟨v,vFits,r,rFits,clean,cleanSimple,cleanFree,keeps,cap,caps⟩ :=
+      frozen_full_after_trimmed_increasing_rows kept keptSimple finiteFree rank ordered hn hp wideV wideP
+        vf pf (by simpa only [Fintype.card_coe] using enough) high upper
+    exact ⟨v,vFits,r,rFits,clean,cleanSimple,
+      bridgeFree_all_of_cutoff_ge_min cleanFree ((min_le_left _ _).trans (vFits.trans (le_max_left _ _))),
+      keeps.trans (Nat.mul_le_mul_right _ retained),cap,caps⟩
+  · have rect : share*(M:ℝ) ≤ (R:ℝ) := by
+      apply le_of_mul_le_mul_left _ qPos
+      have multiplied : (size:ℝ)*M ≤ (q:ℝ)*R := by exact_mod_cast keptRect
+      convert multiplied using 1
+      dsimp [share]
+      field_simp [qPos.ne']
+    have lost : (R:ℝ) ≤ (K:ℝ)+2*(A.card:ℝ) := by exact_mod_cast removed
+    have vCharge : (A.card:ℝ) ≤ (if n ≤ p then (size:ℝ) else (n:ℝ)) := by
+      split_ifs with nSmall
+      · exact_mod_cast (by simpa [nSmall] using vertices : A.card ≤ size)
+      · exact_mod_cast va
+    have bound : share*(M:ℝ)-2*(if n ≤ p then (size:ℝ) else (n:ℝ)) ≤ (K:ℝ) := by
+      linarith only [rect,lost,vCharge]
+    have budget : (M:ℝ)/retention+(1+share)/4*M ≤ (167/186)*(K:ℝ) := by
+      have stated : (M:ℝ)/retention+(1+share)/4*M ≤
+          (167/186)*(share*(M:ℝ)-2*(if n ≤ p then (size:ℝ) else (n:ℝ))) := by
+        simpa only [Nat.cast_sum,M,share,q] using margin
+      exact stated.trans (mul_le_mul_of_nonneg_left bound (by norm_num))
+    obtain ⟨v,vFits,r,rFits,clean,cleanSimple,cleanFree,keeps,cap,caps⟩ :=
+      frozen_full_after_one_quadratic_width_trim kept keptSimple finiteFree rank ordered hn hp wideV wideP
+        vf pf shareBound (by simpa only [Fintype.card_coe] using support) retentionPos
+        (by simpa only [K,M,Nat.cast_sum] using budget) (by omega)
+    exact ⟨v,vFits,r,rFits,clean,cleanSimple,
+      bridgeFree_all_of_cutoff_ge_min cleanFree ((min_le_left _ _).trans (vFits.trans (le_max_left _ _))),keeps,cap,caps⟩
+
+/-- The large path average in the cutoff-charge criterion forces all
+output rows to be distinct and nonempty. -/
+theorem regularization_list_frozen_full_distinct_of_cutoff_charge {n p cutoff size retention : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : BridgeFree (Before paths) cutoff) (hn : 0 < n) (hp : 0 < p)
+    (wideV : 8*n ≤ ∑ i, (paths i).length) (wideP : 8*p ≤ ∑ i, (paths i).length)
+    (sizeFits : size ≤ cutoff) (saving : 25*size ≤ 19*min n p) (retained : 256 ≤ retention)
+    (margin : let M := (∑ i, ((paths i).length:ℝ)); let share := (size:ℝ)/(min n p:ℕ)
+      M/retention+(1+share)/4*M ≤ (167/186)*(share*M-2*(if n ≤ p then (size:ℝ) else (n:ℝ)))) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧ (∀ i, (clean i).Nodup) ∧
+      (∀ d, IsEmpty (Bridge (Before clean) d)) ∧ M ≤ retention*(∑ i, (clean i).length) ∧
+      (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  obtain ⟨v,vFits,r,rFits,clean,cleanSimple,all,keeps,cap,caps⟩ :=
+    regularization_list_frozen_full_of_cutoff_charge paths simple free hn hp wideV wideP sizeFits saving retained margin
+  have twoFree : BridgeFree (Before clean) 2 := fun d _ => all d
+  obtain ⟨distinct,present⟩ := frozen_length_distinct_of_large_mean cleanSimple twoFree.halfFree (by decide) hp
+    (by omega) caps
+  exact ⟨v,vFits,r,rFits,clean,distinct,present,cleanSimple,all,keeps,cap,caps⟩
+
+/-- Keep the original caps through a full cutoff of three fifths of the
+vertex budget when vertices are the smaller support, or two fifths of
+the smaller support when the original mean vertex degree is at least 256. -/
+theorem regularization_list_frozen_full_of_cutoff_density {n p cutoff : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : BridgeFree (Before paths) cutoff) (two : 2 ≤ cutoff)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (range : (n ≤ p ∧ 3*n ≤ 5*cutoff) ∨ (2*min n p ≤ 5*cutoff ∧ 256*n ≤ ∑ i, (paths i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) cutoff ∧
+      M ≤ 512*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  by_cases low : M ≤ 8*max n p
+  · obtain ⟨v,vFits,r,rFits,clean,cleanSimple,legal,keeps,cap,caps⟩ :=
+      regularization_list_frozen_low_mass paths simple free.halfFree two hn hp dense long low
+    exact ⟨v,vFits,r,rFits,clean,cleanSimple,legal,by omega,cap,caps⟩
+  by_cases small : n ≤ 157 ∨ p ≤ 156
+  · obtain ⟨v,vFits,r,rFits,clean,cleanSimple,legal,keeps,cap,caps⟩ :=
+      regularization_list_frozen_of_small_budget_all_cutoffs (half := false) paths simple free two hn hp dense long small
+    exact ⟨v,vFits,r,rFits,clean,cleanSimple,legal,by omega,cap,caps⟩
+  have wideV : 8*n ≤ M := (Nat.mul_le_mul_left _ (le_max_left n p)).trans (Nat.lt_of_not_ge low).le
+  have wideP : 8*p ≤ M := (Nat.mul_le_mul_left _ (le_max_right n p)).trans (Nat.lt_of_not_ge low).le
+  let q := min n p
+  have qPos : (0:ℝ) < q := Nat.cast_pos.mpr (lt_min hn hp)
+  have m0 : (0:ℝ) ≤ M := Nat.cast_nonneg M
+  have large : 157 ≤ q := by
+    push Not at small
+    exact le_min (by omega) (by omega)
+  have allocation : ∃ size : ℕ, size ≤ cutoff ∧ 25*size ≤ 19*q ∧
+      let share := (size:ℝ)/(q:ℝ)
+      (M:ℝ)/512+(1+share)/4*M ≤ (167/186)*(share*M-2*(if n ≤ p then (size:ℝ) else (n:ℝ))) := by
+    rcases range with ⟨order,near⟩ | ⟨near,vertexDensity⟩
+    · have qEq : q = n := min_eq_left order
+      let size := (3*q+4)/5
+      have fits : size ≤ cutoff := by dsimp [size]; omega
+      have saving : 25*size ≤ 19*q := by dsimp [size]; omega
+      refine ⟨size,fits,saving,?_⟩
+      let share := (size:ℝ)/(q:ℝ)
+      have kept : 3*q ≤ 5*size := by dsimp [size]; omega
+      have keptR : (3:ℝ)*q ≤ 5*(size:ℝ) := by exact_mod_cast kept
+      have ratio : (3/5:ℝ) ≤ share := (le_div_iff₀ qPos).mpr (by linarith only [keptR])
+      have scaled := mul_le_mul_of_nonneg_right ratio m0
+      have enough : (8:ℝ)*q ≤ M := by rw [qEq]; exact_mod_cast wideV
+      have paid := mul_le_mul_of_nonneg_left enough (show 0 ≤ share by linarith only [ratio])
+      have product : share*(q:ℝ) = size := div_mul_cancel₀ _ qPos.ne'
+      simp only [order,ite_true]
+      change (M:ℝ)/512+(1+share)/4*M ≤ (167/186)*(share*M-2*(size:ℝ))
+      nlinarith only [scaled,paid,product,m0]
+    · let size := (2*q+4)/5
+      have fits : size ≤ cutoff := by dsimp [size]; change 2*q ≤ 5*cutoff at near; omega
+      have saving : 25*size ≤ 19*q := by dsimp [size]; omega
+      refine ⟨size,fits,saving,?_⟩
+      let share := (size:ℝ)/(q:ℝ)
+      have kept : 2*q ≤ 5*size := by dsimp [size]; omega
+      have keptR : (2:ℝ)*q ≤ 5*(size:ℝ) := by exact_mod_cast kept
+      have ratio : (2/5:ℝ) ≤ share := (le_div_iff₀ qPos).mpr (by linarith only [keptR])
+      have scaled := mul_le_mul_of_nonneg_right ratio m0
+      have enough : (256:ℝ)*n ≤ M := by exact_mod_cast vertexDensity
+      have vCharge : (if n ≤ p then (size:ℝ) else (n:ℝ)) ≤ n := by
+        split_ifs
+        · have sizeFits : size ≤ q := by omega
+          exact_mod_cast sizeFits.trans (min_le_left n p)
+        · rfl
+      change (M:ℝ)/512+(1+share)/4*M ≤ (167/186)*(share*M-2*(if n ≤ p then (size:ℝ) else (n:ℝ)))
+      nlinarith only [scaled,enough,vCharge,m0]
+  obtain ⟨size,fits,saved,margin⟩ := allocation
+  obtain ⟨v,vFits,r,rFits,clean,cleanSimple,all,keeps,cap,caps⟩ :=
+    regularization_list_frozen_full_of_cutoff_charge (retention := 512) paths simple free hn hp wideV wideP
+      fits saved (by decide) (by simpa [Nat.cast_sum,M,q] using margin)
+  exact ⟨v,vFits,r,rFits,clean,cleanSimple,fun d _ => all d,keeps,cap,caps⟩
+
+/-- The cutoff and density conditions also apply to feasible literal
+families of distinct nonempty rows. -/
+theorem regularization_list_frozen_full_distinct_of_cutoff_density {n p cutoff : ℕ}
+    (paths : Fin p → List (Fin n)) (distinct : Function.Injective paths) (nonempty : ∀ i, paths i ≠ [])
+    (simple : ∀ i, (paths i).Nodup) (free : BridgeFree (Before paths) cutoff) (two : 2 ≤ cutoff)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length)
+    (range : (n ≤ p ∧ 3*n ≤ 5*cutoff) ∨ (2*min n p ≤ 5*cutoff ∧ 256*n ≤ ∑ i, (paths i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧ (∀ i, (clean i).Nodup) ∧
+      BridgeFree (Before clean) cutoff ∧ M ≤ 512*(∑ i, (clean i).length) ∧
+      (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_distinct_of_indexed (half := false) (k := cutoff) (retention := 512)
+    paths distinct nonempty simple free two hn hp dense (by decide)
+    (fun long => regularization_list_frozen_full_of_cutoff_density paths simple free two hn hp dense long range)
 
 end OnlineReachabilityPreservers
