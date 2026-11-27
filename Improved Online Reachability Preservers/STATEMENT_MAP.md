@@ -2078,6 +2078,13 @@ of one vertex in the copied rows. This suffices because erasing closed
 sections preserves the last arc whenever the terminal projected corner
 is unique in the chain. With the width-cut condition it gives the
 same [\(M/16\) guarantee](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1841).
+The [actual-piece criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1977)
+tests for returns across the same width cuts using only strict comparisons
+on copied pieces. It retains at least \(M/16\) within both original budgets
+and all four frozen caps in both modes.
+Half mode still requires a sufficient degree-split condition. The
+[checked example](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean)
+passes the copied test at cutoff seven and fails the original test.
 The same conditional \(M/16\) and [\(M/32\) after rowwise deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1579)
 keep both budgets and all four original-average caps.
 Alternatively, use each row's last safe boundary as its rank. A cut is

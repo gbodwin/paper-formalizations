@@ -1205,7 +1205,7 @@ private theorem bridge_of_shortReturnSeparated_split {V W I J : Type*}
     [DecidableEq V] [DecidableEq W] [DecidableEq I] {cutoff k : ℕ}
     {paths : I → List W} {pieces : J → List W} (G : Arcs V) (project : W → V) (parent : J → I)
     (steps : ∀ {i x y}, Before pieces i x y → Before paths (parent i) x y)
-    (projects : ∀ {i x y}, Before paths i x y → Edge G (project x) (project y))
+    (projects : ∀ {i x y}, Before pieces i x y → Edge G (project x) (project y))
     (separated : ShortReturnSeparated G project paths pieces parent (cutoff-2))
     (b : Bridge (Before pieces) k) (small : k+2 ≤ cutoff) :
     ∃ j ≤ k, ∃ old : Bridge (Before paths) j,
@@ -1235,7 +1235,7 @@ private theorem bridge_of_shortReturnSeparated_split {V W I J : Type*}
     rw [src,dst]
     exact b.riverStep
   have edge (i : ℕ) (hi : i < endIndex) : Edge G (project (v i)) (project (v (i+1))) :=
-    projects (steps (step i hi))
+    projects (step i hi)
   have along (i j : ℕ) (ij : i ≤ j) (inside : j ≤ endIndex) (length : j-i ≤ (cutoff-2)-1) :
       project (v i) ∈ reachIn G (project (v j)) ((cutoff-2)-1) :=
     mem_reachIn_of_steps (project ∘ v) endIndex edge i j ij inside _ length
@@ -1295,7 +1295,7 @@ theorem bridgeFree_of_shortReturnSeparated_smaller_cutoff {V W I J : Type*}
     (separated : ShortReturnSeparated G project paths pieces parent (cutoff-2)) : BridgeFree (Before pieces) cutoff := by
   intro k size
   refine ⟨fun b => ?_⟩
-  obtain ⟨j,short,old,_,_⟩ := bridge_of_shortReturnSeparated_split G project parent steps projects separated b size
+  obtain ⟨j,short,old,_,_⟩ := bridge_of_shortReturnSeparated_split G project parent steps  (fun {_ _ _} step => projects (steps step)) separated b size
   exact (free (k := j) (by omega)).false old
 
 /-- The same shorter return radius preserves half exclusion when the
@@ -1308,7 +1308,7 @@ theorem halfBridgeFree_of_shortReturnSeparated_smaller_cutoff {V W I J : Type*}
     (projects : ∀ {i x y}, Before paths i x y → Edge G (project x) (project y))
     (separated : ShortReturnSeparated G project paths pieces parent (cutoff-2)) : HalfBridgeFree (Before pieces) cutoff := by
   intro k size b earlier
-  obtain ⟨j,short,old,river,last⟩ := bridge_of_shortReturnSeparated_split G project parent steps projects separated b size
+  obtain ⟨j,short,old,river,last⟩ := bridge_of_shortReturnSeparated_split G project parent steps  (fun {_ _ _} step => projects (steps step)) separated b size
   have ordered := arrives earlier.le
   rw [← river, ← last] at ordered
   exact free (k := j) (by omega) old (ordered.lt_of_ne (old.river_ne_arc _).symm)
@@ -1853,6 +1853,149 @@ theorem regularization_list_frozen_half_of_noShortSplitReturn {n p k : ℕ}
     (fun {i _ _} => splitListVertices_step (simple i)) degreeSafe
   have legal := width_blocks_admissible_of_noShortReturnAcrossWidthCuts (half := true)
     paths simple copyLegal returns
+  exact regularization_list_frozen_after_width_blocks_of_mass paths simple legal hn hp dense long le_rfl (by omega)
+
+
+/-- Precedence edges that actually occur in the listed pieces. -/
+def listPiecePrecedenceGraph {I V : Type*} [Fintype I] [Fintype V] [DecidableEq V]
+    (pieces : I → List V) : Arcs V := by
+  letI (x y : V) : DecidablePred (fun i => Before pieces i x y) := fun i => by
+    unfold SourceAudit.BeforeIn
+    infer_instance
+  exact univ.filter fun e => ∃ i, Before pieces i e.1 e.2
+
+theorem listPiecePrecedenceGraph_edge {I V : Type*} [Fintype I] [Fintype V] [DecidableEq V]
+    {pieces : I → List V} {x y : V} :
+    Edge (listPiecePrecedenceGraph pieces) x y ↔ ∃ i, Before pieces i x y := by
+  simp only [Edge,listPiecePrecedenceGraph,mem_filter,mem_univ,true_and]
+
+/-- Search for a return across the width cut on the actual copied path
+pieces. Edges lost in either split do not participate in this search. -/
+def NoShortReturnAcrossCopiedWidthCuts {n p : ℕ} (paths : Fin p → List (Fin n))
+    (D L cutoff : ℕ) : Prop :=
+  let copies := splitListVertices paths D
+  let graph := listPiecePrecedenceGraph (listRegularizedPaths paths D L)
+  ∀ ⦃i x y⦄, Before copies i x y → (copies i).idxOf x/L ≠ (copies i).idxOf y/L →
+    y ∉ reachIn graph x ((cutoff-2)-1)
+
+private theorem project_reachIn {V W : Type*} [DecidableEq V] [DecidableEq W]
+    {G : Arcs V} {H : Arcs W} (project : V → W)
+    (edges : ∀ {x y}, Edge G x y → Edge H (project x) (project y)) {t : V} (radius : ℕ) :
+    ∀ {s : V}, s ∈ reachIn G t radius → project s ∈ reachIn H (project t) radius := by
+  induction radius with
+  | zero =>
+    intro s member
+    have equal : s = t := mem_singleton.mp member
+    exact mem_singleton.mpr (congrArg project equal)
+  | succ radius earlier =>
+    intro s member
+    rcases reachIn_succ.mp member with reach | ⟨v,step,reach⟩
+    · exact reachIn_succ.mpr (Or.inl (earlier reach))
+    · exact reachIn_succ.mpr (Or.inr ⟨project v,edges step,earlier reach⟩)
+
+/-- A width-cut certificate on the original graph also certifies the
+actual copied piece graph. -/
+theorem NoShortReturnAcrossWidthCuts.copied {n p D L k : ℕ} {paths : Fin p → List (Fin n)}
+    (simple : ∀ i, (paths i).Nodup) (free : NoShortReturnAcrossWidthCuts paths L k) :
+    NoShortReturnAcrossCopiedWidthCuts paths D L k := by
+  classical
+  let copies := splitListVertices paths D
+  let pieces := listRegularizedPaths paths D L
+  let project (v : ListVertexBlockIndex paths D) := v.fst
+  have lifted {x y} (edge : Edge (listPiecePrecedenceGraph pieces) x y) :
+      Edge (pathPrecedenceGraph paths) (project x) (project y) := by
+    obtain ⟨i,onPiece⟩ := listPiecePrecedenceGraph_edge.mp edge
+    have onCopy : Before copies i.fst x y :=
+      listBefore_of_sublist (paths := fun j : ListBlockIndex copies L => copies j.fst)
+        (splitListVertices_simple paths D i.fst (simple i.fst)) List.filter_sublist onPiece
+    unfold Edge pathPrecedenceGraph
+    exact mem_filter.mpr ⟨mem_univ _,i.fst,splitListVertices_step (simple i.fst) onCopy⟩
+  intro i x y step different back
+  have oldStep := splitListVertices_step (simple i) step
+  have cut : (paths i).idxOf (project x)/L ≠ (paths i).idxOf (project y)/L := by
+    rwa [splitListVertices_idxOf_project paths D i (simple i) step.1,
+      splitListVertices_idxOf_project paths D i (simple i) step.2.1]
+  exact free oldStep cut (project_reachIn project (fun {_ _} => lifted) _ back)
+
+/-- Only the strict comparisons available on actual path pieces can
+witness a backwards return that prevents a bridge projection. -/
+theorem listRegularizedPaths_admissible_of_noShortReturnAcrossCopiedWidthCuts
+    {n p k D L : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (legal : localOrderAdmissible half k (splitListVertices paths D))
+    (noReturns : NoShortReturnAcrossCopiedWidthCuts paths D L k) :
+    localOrderAdmissible half k (listRegularizedPaths paths D L) := by
+  let copies := splitListVertices paths D
+  let pieces := listRegularizedPaths paths D L
+  let J := ListBlockIndex copies L
+  let parent (j : J) := j.fst
+  let G := listPiecePrecedenceGraph pieces
+  have steps {i x y} (step : Before pieces i x y) : Before copies (parent i) x y :=
+    listBefore_of_sublist (paths := fun j : J => copies (parent j))
+      (splitListVertices_simple paths D i.fst (simple i.fst)) List.filter_sublist step
+  have blockDistinct {i j : J} (different : i ≠ j) (same : parent i = parent j)
+      {x y} (hx : x ∈ pieces i) (hy : y ∈ pieces j) :
+      (copies (parent i)).idxOf x/L ≠ (copies (parent i)).idxOf y/L := by
+    rcases i with ⟨a,u⟩
+    rcases j with ⟨b,v⟩
+    change a = b at same
+    subst b
+    have hxBlock := (mem_localPathBlock.mp hx).2
+    have hyBlock := (mem_localPathBlock.mp hy).2
+    intro equal
+    exact different (congrArg (Sigma.mk a) (Fin.ext (hxBlock.symm.trans (equal.trans hyBlock))))
+  have separated : ShortReturnSeparated G id copies pieces parent (k-2) := by
+    intro i j different same
+    rcases contiguousBlocks_separated different same with forward | backward
+    · left
+      intro x hx y hy
+      have step := forward hx hy
+      exact ⟨step,noReturns step (blockDistinct different same hx hy)⟩
+    · right
+      intro y hy x hx
+      have step := backward hx hy
+      exact ⟨step,noReturns step (blockDistinct different same hx hy).symm⟩
+  have edges {i x y} (step : Before pieces i x y) : Edge G x y :=
+    listPiecePrecedenceGraph_edge.mpr ⟨i,step⟩
+  have project {d : ℕ} (b : Bridge (Before pieces) d) (small : d+2 ≤ k) :=
+    bridge_of_shortReturnSeparated_split G id parent (fun {_ _ _} => steps)
+      (fun {_ _ _} => edges) separated b small
+  cases half
+  · intro d small
+    refine ⟨fun b => ?_⟩
+    obtain ⟨j,bound,old,_,_⟩ := project b small
+    exact (legal (k := j) (by omega)).false old
+  · intro d small b earlier
+    have arrives : Monotone parent := block_parent_mono (fun i => (copies i).toFinset) L
+    obtain ⟨j,bound,old,river,last⟩ := project b small
+    have noLater := arrives earlier.le
+    rw [← river,← last] at noLater
+    exact legal (k := j) (by omega) old (noLater.lt_of_ne (old.river_ne_arc _).symm)
+
+/-- Original-average cleaning after testing returns in the actual
+piece graph. In half mode the degree split still needs a certificate. -/
+theorem regularization_list_frozen_of_noShortReturnAcrossCopiedWidthCuts {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : localOrderAdmissible half k paths) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (returns : let M := ∑ i, (paths i).length
+      NoShortReturnAcrossCopiedWidthCuts paths (4*M/n) (4*M/p) k)
+    (halfSafe : let D := 4*(∑ i, (paths i).length)/n
+      half = true → HalfDegreeSplitCondition paths D k ∨
+        NoShortSplitReturn (splitListVertices paths D) (·.fst) (k-3)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let D := 4*(∑ i, (paths i).length)/n
+  have copied : localOrderAdmissible half k (splitListVertices paths D) := by
+    cases half
+    · exact free.split_list_vertices_any (·.fst) (fun {i _ _} => splitListVertices_step (simple i))
+    · rcases halfSafe rfl with old | refined
+      · exact splitListVertices_admissible_of_halfDegreeSplitCondition paths simple free (fun _ => old)
+      · exact free.split_list_vertices_of_noShortSplitReturn (·.fst)
+          (fun {i _ _} => splitListVertices_step (simple i)) refined
+  have legal := listRegularizedPaths_admissible_of_noShortReturnAcrossCopiedWidthCuts paths simple copied returns
   exact regularization_list_frozen_after_width_blocks_of_mass paths simple legal hn hp dense long le_rfl (by omega)
 
 end OnlineReachabilityPreservers

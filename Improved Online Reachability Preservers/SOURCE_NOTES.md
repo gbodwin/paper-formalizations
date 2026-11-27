@@ -769,6 +769,21 @@ Together with the width-cut condition, this gives \(M/16\) under the
 same original budgets and caps.
 [Cleaning with the copy-return test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1841).
 
+[The actual-piece width test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1977)
+searches for short returns among strict comparisons within the copied
+path pieces. A hypothetical bridge in those pieces uses only those
+edges. The original width-cut condition implies this test by projecting
+each edge of the bounded return. The converse fails at the original
+widths on twelve vertices, ten rows, and mass twelve. The long row
+\((0,1,2,3,4,5)\) is cut at width four. Four intervening singleton
+rows \((0)\) put the last nonempty row \((5,0)\) in a different
+copy of vertex 0. Its step from 5 reaches the later copy, and the
+copied pieces contain no short return to the earlier copy across the
+cut at cutoff seven. The new criterion gives \(M/16\) with the
+original budgets and caps, using one of the degree-split conditions
+in half mode.
+[Checked width-test separation](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean).
+
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
 those positions, so only pairs in different blocks need the bounded
