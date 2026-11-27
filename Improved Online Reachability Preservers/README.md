@@ -922,7 +922,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   one vertex. With the same width-cut condition, it gives \(M/16\),
   both original budgets, and all four original-average caps.
   [Cleaning with the copy-return test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1887).
-  The [actual-piece width test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2023)
+  The [actual-piece width test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2041)
   searches only the precedence edges that survive both width cuts.
   It gives the same guarantee in both modes. Half bridges also require
   one of the sufficient degree-split conditions.
@@ -930,6 +930,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   In half mode, [checking only returns to an earlier degree block](OnlineReachabilityPreservers/BackwardCopyReturns.lean)
   suffices for the degree split. Combined with the actual-piece width
   test, this gives the same \(M/16\) and original-average guarantee.
+- After [deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2478),
+  test for short returns in the pieces of the retained rows. If the
+  copied input has the required bridge exclusion and at most \(M/18\)
+  incidences are deleted, the test gives \(M/32\) with both original
+  budgets and all four original-average caps.
 - For simple paths with the matching bridge exclusion and incidence mass
   \(M\) at least both positive budgets, the cuts can move around individual
   short returns within a row. Pack whole runs between safe boundaries.
@@ -941,9 +946,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   caps. They retain the input bridge exclusion through the cutoff, with
   the degree split conditions for half bridges.
   [Cutting between short-return runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1792)
-  · [Choosing safe boundaries after copying degrees](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2143)
-  · [Deleting long runs from fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2259)
-  · [Clipping only the excess of each copied run](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2437)
+  · [Choosing safe boundaries after copying degrees](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2161)
+  · [Deleting long runs from fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2277)
+  · [Clipping only the excess of each copied run](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2455)
   · [After removing long runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1848).
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.

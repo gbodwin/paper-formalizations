@@ -769,7 +769,7 @@ Together with the width-cut condition, this gives \(M/16\) under the
 same original budgets and caps.
 [Cleaning with the copy-return test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1887).
 
-[The actual-piece width test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2023)
+[The actual-piece width test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2041)
 searches for short returns among strict comparisons within the copied
 path pieces. A hypothetical bridge in those pieces uses only those
 edges. The original width-cut condition implies this test by projecting
@@ -798,7 +798,7 @@ test the earlier-block criterion gives \(M/16\) with both original
 budgets and all four original-average caps at the chosen half cutoff.
 [Checked direction of the example](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean).
 
-[Choosing cuts on the copied rows](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2143)
+[Choosing cuts on the copied rows](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2161)
 tests the boundaries before splitting the paths. A run ends only at
 a boundary with no short return across it in the copied-row graph.
 If the degree split preserves the requested bridge exclusion, packing
@@ -810,7 +810,7 @@ original-average caps. The twelve-vertex example has an original
 run of length six and only singleton runs after degree copying.
 [Checked run sizes](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean).
 
-[Deleting long runs from fixed copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2259)
+[Deleting long runs from fixed copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2277)
 uses the sparse full-bridge-free witness when \(M<2n\). In the
 dense case it fixes the original degree labels and safe boundaries
 on the copied rows. Remove runs longer than the original factor-four
@@ -820,7 +820,7 @@ preserved the chosen bridge exclusion and the deleted runs contain
 at most \(M/56\) incidences, the witness keeps at least \(M/108\)
 within both original budgets and all four original-average caps.
 
-[Clipping copied runs at the width](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2437)
+[Clipping copied runs at the width](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2455)
 keeps the first \(\min(L,R)\) incidences from a run of length \(R\),
 using the same degree copies and boundaries. The total loss is
 exactly \(\sum_R\max(0,R-L)\), counted separately over the occupied
@@ -828,7 +828,19 @@ runs on each row. If the loss is at most \(M/56\), the same \(M/108\)
 guarantee holds in either mode under the original degree-split
 premise. Both original budgets and all four original-average caps
 hold.
-[Exact excess accounting](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2399).
+[Exact excess accounting](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2417).
+
+[Deletions on fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2478)
+retain the original degree labels and recompute the width pieces on each
+surviving row using the original width \(\lfloor4M/p\rfloor\).
+The [return criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1968)
+uses only precedence steps on those surviving pieces. If the copied
+input already satisfies the required exclusion, losing at most
+\(M/18\) incidences and passing this test gives both original budgets,
+all four original-average caps, and mass at least \(M/32\) in either mode.
+In a [five-vertex example](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean#L146)
+with mass 18, the pieces of the full copied rows fail the test at cutoff
+seven. Deleting one incidence on the return row makes the test succeed.
 
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves

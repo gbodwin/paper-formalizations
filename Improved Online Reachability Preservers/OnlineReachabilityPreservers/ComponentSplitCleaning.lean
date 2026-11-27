@@ -1057,11 +1057,11 @@ private theorem pruneLongPrecedenceVisits_simple {n p limit : ℕ} {paths : Fin 
     (simple : ∀ i, (paths i).Nodup) (i : Fin p) : (pruneLongPrecedenceVisits paths limit i).Nodup :=
   (simple i).filter _
 
-private theorem localOrderAdmissible_of_sublist {n p k : ℕ} {half : Bool}
-    {paths kept : Fin p → List (Fin n)} (simple : ∀ i, (paths i).Nodup)
+private theorem localOrderAdmissible_of_sublist {V : Type*} [DecidableEq V] {p k : ℕ} {half : Bool}
+    {paths kept : Fin p → List V} (simple : ∀ i, (paths i).Nodup)
     (sub : ∀ i, (kept i).Sublist (paths i))
     (free : localOrderAdmissible half k paths) : localOrderAdmissible half k kept := by
-  have lifts (i : Fin p) (x y : Fin n) (step : Before kept i x y) : Before paths i x y :=
+  have lifts (i : Fin p) (x y : V) (step : Before kept i x y) : Before paths i x y :=
     listBefore_of_sublist (simple i) (sub i) step
   cases half
   · intro j size
@@ -1963,22 +1963,29 @@ theorem NoShortReturnAcrossWidthCuts.copied {n p D L k : ℕ} {paths : Fin p →
       splitListVertices_idxOf_project paths D i (simple i) step.2.1]
   exact free oldStep cut (project_reachIn project (fun {_ _} => lifted) _ back)
 
-/-- Only the strict comparisons available on actual path pieces can
-witness a backwards return that prevents a bridge projection. -/
-theorem listRegularizedPaths_admissible_of_noShortReturnAcrossCopiedWidthCuts
-    {n p k D L : ℕ} {half : Bool}
-    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
-    (legal : localOrderAdmissible half k (splitListVertices paths D))
-    (noReturns : NoShortReturnAcrossCopiedWidthCuts paths D L k) :
-    localOrderAdmissible half k (listRegularizedPaths paths D L) := by
-  let copies := splitListVertices paths D
-  let pieces := listRegularizedPaths paths D L
+/-- Search for a short return using the pieces of these rows at the
+given width. The rows can already have been restricted. -/
+def NoShortReturnAcrossWidthCutsInPieces {p : ℕ} {V : Type*} [LinearOrder V] [Fintype V]
+    (rows : Fin p → List V) (width cutoff : ℕ) : Prop :=
+  let graph := listPiecePrecedenceGraph (splitListPaths rows width)
+  ∀ ⦃i x y⦄, Before rows i x y → (rows i).idxOf x/width ≠ (rows i).idxOf y/width →
+    y ∉ reachIn graph x ((cutoff-2)-1)
+
+/-- Contiguous pieces preserve the requested exclusion when the relevant
+short returns are absent from those pieces. -/
+theorem splitListPaths_admissible_of_noShortReturnAcrossWidthCutsInPieces
+    {p k L : ℕ} {V : Type*} [LinearOrder V] [Fintype V] {half : Bool}
+    (rows : Fin p → List V) (simple : ∀ i, (rows i).Nodup)
+    (legal : localOrderAdmissible half k rows) (noReturns : NoShortReturnAcrossWidthCutsInPieces rows L k) :
+    localOrderAdmissible half k (splitListPaths rows L) := by
+  let copies := rows
+  let pieces := splitListPaths rows L
   let J := ListBlockIndex copies L
   let parent (j : J) := j.fst
   let G := listPiecePrecedenceGraph pieces
   have steps {i x y} (step : Before pieces i x y) : Before copies (parent i) x y :=
     listBefore_of_sublist (paths := fun j : J => copies (parent j))
-      (splitListVertices_simple paths D i.fst (simple i.fst)) List.filter_sublist step
+      (simple i.fst) List.filter_sublist step
   have blockDistinct {i j : J} (different : i ≠ j) (same : parent i = parent j)
       {x y} (hx : x ∈ pieces i) (hy : y ∈ pieces j) :
       (copies (parent i)).idxOf x/L ≠ (copies (parent i)).idxOf y/L := by
@@ -2017,6 +2024,17 @@ theorem listRegularizedPaths_admissible_of_noShortReturnAcrossCopiedWidthCuts
     have noLater := arrives earlier.le
     rw [← river,← last] at noLater
     exact legal (k := j) (by omega) old (noLater.lt_of_ne (old.river_ne_arc _).symm)
+
+/-- Only the strict comparisons available on actual path pieces can
+witness a backwards return that prevents a bridge projection. -/
+theorem listRegularizedPaths_admissible_of_noShortReturnAcrossCopiedWidthCuts
+    {n p k D L : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (legal : localOrderAdmissible half k (splitListVertices paths D))
+    (noReturns : NoShortReturnAcrossCopiedWidthCuts paths D L k) :
+    localOrderAdmissible half k (listRegularizedPaths paths D L) :=
+  splitListPaths_admissible_of_noShortReturnAcrossWidthCutsInPieces (splitListVertices paths D)
+    (fun i => splitListVertices_simple paths D i (simple i)) legal noReturns
 
 /-- Original-average cleaning after testing returns in the actual
 piece graph. In half mode the degree split still needs a certificate. -/
@@ -2451,6 +2469,75 @@ theorem regularization_list_frozen_of_small_copiedReturnRun_excess {n p k : ℕ}
   change 55*M ≤ 56*(∑ i, (takeCopiedReturnRunPrefixes paths D k L i).length)
   have exactMass := takeCopiedReturnRunPrefixes_mass_add_excess paths simple D k L
   change _ = M at exactMass
+  omega
+
+set_option maxHeartbeats 1200000 in
+/-- Delete incidences from the fixed degree copies before testing the
+width cuts. Up to M/18 deletions still allow both original budgets and
+all four original-average caps. -/
+theorem regularization_list_frozen_after_copied_row_deletions {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (copyLegal : let M := ∑ i, (paths i).length; localOrderAdmissible half k (splitListVertices paths (4*M/n)))
+    (kept : let M := ∑ i, (paths i).length; Fin p → List (ListVertexBlockIndex paths (4*M/n)))
+    (sub : let M := ∑ i, (paths i).length; ∀ i, (kept i).Sublist (splitListVertices paths (4*M/n) i))
+    (retained : 17*(∑ i, (paths i).length) ≤ 18*(∑ i, (kept i).length))
+    (returns : let M := ∑ i, (paths i).length; NoShortReturnAcrossWidthCutsInPieces kept (4*M/p) k) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 32*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  classical
+  let M := ∑ i, (paths i).length
+  let K := ∑ i, (kept i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let V := ListVertexBlockIndex paths D
+  let copied := splitListVertices paths D
+  let pieces := splitListPaths kept L
+  have copiedSimple (i : Fin p) : (copied i).Nodup := splitListVertices_simple paths D i (simple i)
+  have keptSimple (i : Fin p) : (kept i).Nodup := (sub i).nodup (copiedSimple i)
+  have piecesSimple (i : ListBlockIndex kept L) : (pieces i).Nodup :=
+    List.filter_sublist.nodup (keptSimple i.fst)
+  have keptLegal : localOrderAdmissible half k kept := localOrderAdmissible_of_sublist copiedSimple sub copyLegal
+  have legal : localOrderAdmissible half k pieces :=
+    splitListPaths_admissible_of_noShortReturnAcrossWidthCutsInPieces kept keptSimple keptLegal returns
+  have upper : K ≤ M := calc
+    _ ≤ ∑ i, (copied i).length := sum_le_sum (fun i _ => (sub i).length_le)
+    _ = M := sum_congr rfl (fun i _ => splitListVertices_length paths D i)
+  have exactMass : (∑ i, (pieces i).length) = K := splitListPaths_size kept keptSimple L
+  obtain ⟨dPos,dRoom,_⟩ := four_average_width hn dense
+  obtain ⟨lPos,lRoom,_⟩ := four_average_width hp long
+  have countV : Fintype.card V ≤ n+M/D := by
+    simpa only [Fintype.card_fin] using (regularization_list_counts paths simple (D := D) dPos lPos).1
+  have countP : Fintype.card (ListBlockIndex kept L) ≤ p+K/L := by
+    have count := blockIndex_card_precise (fun i => (kept i).toFinset) lPos
+    have sizes : (∑ i, (kept i).toFinset.card) = K :=
+      sum_congr rfl (fun i _ => List.toFinset_card_of_nodup (keptSimple i))
+    rw [sizes,Fintype.card_fin] at count
+    exact count
+  have vRoom : 3*Fintype.card V ≤ 4*n := by
+    change 3*(M/D) ≤ n at dRoom
+    omega
+  have pRoom : 3*Fintype.card (ListBlockIndex kept L) ≤ 4*p := by
+    change 3*(M/L) ≤ p at lRoom
+    have trim : K/L ≤ M/L := Nat.div_le_div_right upper
+    omega
+  have length (i : ListBlockIndex kept L) : (pieces i).length ≤ L :=
+    localPathBlock_length (kept i.fst) (keptSimple i.fst) lPos i.snd.val
+  have degree (v : V) : (occurrences (fun i => (pieces i).toFinset) v).card ≤ D := by
+    have copiedDegree : (occurrences (fun i => (copied i).toFinset) v).card ≤ D := by
+      simpa only [copied,splitListVertices_toFinset] using
+        (splitVertices_degree (fun i => (paths i).toFinset) dPos v)
+    refine (splitListPaths_degree kept L v).trans ((card_le_card ?_).trans copiedDegree)
+    intro i member
+    have onRow := List.mem_toFinset.mp ((mem_occurrences (marks := fun i => (kept i).toFinset)).mp member)
+    exact mem_occurrences.mpr (List.mem_toFinset.mpr ((sub i).subset onRow))
+  refine regularization_list_frozen_after_caps_with_ratios_of_mass (half := half) (retention := 32)
+    pieces piecesSimple legal hn hp dense long (vNum := 3) (vDen := 4) (pNum := 3) (pDen := 4)
+    (by decide) (by decide) (by decide) (by decide) vRoom pRoom length degree (exactMass.trans_le upper) ?_
+  rw [exactMass]
+  change 17*M ≤ 18*K at retained
   omega
 
 end OnlineReachabilityPreservers

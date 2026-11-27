@@ -119,4 +119,45 @@ theorem actualWidthReturnPaths_no_run_excess_at_one :
   exact sum_eq_zero (fun i _ => sum_eq_zero (fun r _ =>
     Nat.sub_eq_zero_of_le (actualWidthReturnPaths_copied_runs_small i r)))
 
+/-- The reverse step on row one crosses the width-four cut on row zero. -/
+def repairableWidthReturnPaths (i : Fin 18) : List (Fin 5) :=
+  if i = 0 then [0,1,2,3,4] else if i = 1 then [4,0] else if i.val < 13 then [4] else []
+
+/-- Remove the last incidence on row one without rebuilding the copies. -/
+def repairableWidthReturnKept (i : Fin 18) :
+    List (ListVertexBlockIndex repairableWidthReturnPaths 14) :=
+  let row := splitListVertices repairableWidthReturnPaths 14 i
+  if i = 1 then row.take 1 else row
+
+theorem repairableWidthReturn_sizes :
+    (∑ i, (repairableWidthReturnPaths i).length) = 18 ∧
+      (∑ i, (repairableWidthReturnKept i).length) = 17 := by decide
+
+private def repairableWidthReturnFirst : ListVertexBlockIndex repairableWidthReturnPaths 14 :=
+  ⟨0,⟨0,by decide⟩⟩
+
+private def repairableWidthReturnLast : ListVertexBlockIndex repairableWidthReturnPaths 14 :=
+  ⟨4,⟨0,by decide⟩⟩
+
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 6000000 in
+/-- At the original widths, the unmodified pieces fail the cut test.
+One deletion makes the same test succeed. -/
+theorem repairableWidthReturn_one_deletion :
+    ¬ NoShortReturnAcrossCopiedWidthCuts repairableWidthReturnPaths 14 4 7 ∧
+      NoShortReturnAcrossWidthCutsInPieces repairableWidthReturnKept 4 7 := by
+  constructor
+  · have forward : BeforeIn (splitListVertices repairableWidthReturnPaths 14) 0
+        repairableWidthReturnFirst repairableWidthReturnLast := by decide
+    have returns : repairableWidthReturnLast ∈ reachIn
+        (listPiecePrecedenceGraph (listRegularizedPaths repairableWidthReturnPaths 14 4))
+        repairableWidthReturnFirst 4 := by decide
+    intro safe
+    exact safe forward (by decide) returns
+  · change ∀ (i : Fin 18) (x y : ListVertexBlockIndex repairableWidthReturnPaths 14),
+        BeforeIn repairableWidthReturnKept i x y →
+        (repairableWidthReturnKept i).idxOf x/4 ≠ (repairableWidthReturnKept i).idxOf y/4 →
+        y ∉ reachIn (listPiecePrecedenceGraph (splitListPaths repairableWidthReturnKept 4)) x 4
+    decide
+
 end OnlineReachabilityPreservers.SourceAudit
