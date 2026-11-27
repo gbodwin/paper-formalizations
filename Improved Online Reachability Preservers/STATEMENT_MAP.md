@@ -1612,6 +1612,22 @@ this test with radius \(k-5\) preserves that exclusion on the retained pieces.
 · [Exact deletion criterion for crossed returns](OnlineReachabilityPreservers/FullReturnIncidenceCover.lean#L30)
 · [Preservation at the original cutoff](OnlineReachabilityPreservers/FullReturnIncidenceCover.lean#L63).
 
+Assume simple input excluding full bridges through \(k\ge7\), with mass
+at least both positive budgets. At the original factor-four widths,
+choose vertex and piece labels fitting those budgets. The quadratic
+loss bounds leave at least \(5M/6\) incidences in their rectangle before
+erasure. A cover of all crossed returns of at most \(k-5\) steps in the
+original pieces, of size at most \(5M/16\), leaves at least \(25M/48\)
+incidences in the chosen rectangle. Peeling pays at most \(M/2\) and
+gives full exclusion through the original cutoff, retention of at least
+\(M/48\), both original budgets and all four original-average caps. The
+cover condition is needed when \(M>8\max(n,p)\).
+The literal witness has distinct nonempty rows for feasible literal input.
+[Rectangle mass](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L371)
+· [Cover budget](OnlineReachabilityPreservers/FrozenFullReturnCover.lean#L52)
+· [Indexed frozen witness](OnlineReachabilityPreservers/FrozenFullReturnCover.lean#L64)
+· [Literal frozen witness](OnlineReachabilityPreservers/FrozenFullReturnCover.lean#L144).
+
 The same radius \(k-5\) works for grouped path splitting at every
 full cutoff \(k\ge7\). When every group on the standard copies
 fits the original path width, pack whole groups and trim both

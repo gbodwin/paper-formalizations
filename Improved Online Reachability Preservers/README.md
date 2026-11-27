@@ -1070,6 +1070,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   returns and preserves full exclusion through the same cutoff.
   [Exact deletion test](OnlineReachabilityPreservers/FullReturnIncidenceCover.lean#L30)
   · [Preservation theorem](OnlineReachabilityPreservers/FullReturnIncidenceCover.lean#L63).
+- For simple full-bridge-free input through \(k\ge7\) with mass at least
+  both positive budgets, a rectangle of the original width pieces keeps
+  at least \(5M/6\) within both budgets. When \(M>8\max(n,p)\), a cover of
+  the radius-\(k-5\) returns of size at most \(5M/16\) suffices for a frozen
+  \(M/48\) witness with the same cutoff and all four original-average caps.
+  The feasible literal witness has distinct nonempty rows.
+  [Original-budget rectangle](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L371)
+  · [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnCover.lean#L64)
+  · [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnCover.lean#L144).
 - At full cutoff seven, packing the components of returns of at most
   two steps gives a frozen quarter-mass witness if those components fit the
   original path width. Use either the original rows or the standard

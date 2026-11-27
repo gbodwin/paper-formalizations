@@ -366,4 +366,55 @@ theorem regularization_list_frozen_of_seven_ninths_reverse_vertices {half : Bool
   have copied := splitReverseIntersections_support_le paths
   omega
 
+/-- Before any bridge test or erasure, a rectangle of the original
+size budgets keeps at least five sixths of the standard width-block mass. -/
+theorem listRegularizedPaths_exists_original_budget_rectangle {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    let D := 4*M/n
+    let L := 4*M/p
+    let pieces := listRegularizedPaths paths D L
+    ∃ A : Finset (ListVertexBlockIndex paths D), A.card ≤ n ∧
+      ∃ B : Finset (ListBlockIndex (splitListVertices paths D) L), B.card ≤ p ∧
+        5*M ≤ 6 * ∑ i ∈ B, ((pieces i).toFinset ∩ A).card := by
+  let M := ∑ i, (paths i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let pieces := listRegularizedPaths paths D L
+  let raw := fun i => (pieces i).toFinset
+  have positive : 0 < M := hn.trans_le dense
+  obtain ⟨dPos,_,_⟩ := four_average_width hn dense
+  obtain ⟨lPos,_,_⟩ := four_average_width hp long
+  obtain ⟨mass,_,_⟩ := regularization_list_mass_caps paths simple D L dPos lPos
+  obtain ⟨fullV,fullI,filledV,restV,filledI,restI⟩ :=
+    listRegularizedPaths_full_block_profiles paths simple dPos lPos
+  have counts (i) : (raw i).card = (pieces i).length :=
+    List.toFinset_card_of_nodup (listRegularizedPaths_simple paths simple D L i)
+  have total : (∑ i, (raw i).card) = M := (sum_congr rfl fun i _ => counts i).trans mass
+  have vCapacity : 3*M ≤ D*n := average_width_times_budget hn dense
+  have iCapacity : 3*M ≤ L*p := average_width_times_budget hp long
+  have vRoom : (∑ i, (raw i).card) ≤ D*n := total.trans_le ((by omega : M ≤ 3*M).trans vCapacity)
+  have iRoom : (∑ i, (raw i).card) ≤ L*p := total.trans_le ((by omega : M ≤ 3*M).trans iCapacity)
+  obtain ⟨A,B,lostV,lostI,vertices,rows,kept,vCharge,iCharge⟩ :=
+    trim_width_supports raw fullV fullI dPos lPos (fun v member => (filledV v member).ge)
+      (restV.trans (Fintype.card_fin n)).le
+      (fun i member => (filledI i member).ge.trans_eq (counts i).symm)
+      (restI.trans (Fintype.card_fin p)).le vRoom iRoom
+  rw [total] at kept vCharge iCharge
+  have oneLoss {q w loss : ℕ} (capacity : 3*M ≤ w*q) (charge : 4*(w*q)*loss ≤ M^2) :
+      12*loss ≤ M := by
+    refine Nat.le_of_mul_le_mul_left (c := M) ?_ positive
+    calc
+      M*(12*loss) = 4*(3*M)*loss := by ring
+      _ ≤ 4*(w*q)*loss := Nat.mul_le_mul_right _ (Nat.mul_le_mul_left _ capacity)
+      _ ≤ M^2 := charge
+      _ = M*M := by ring
+  have vLoss := oneLoss vCapacity vCharge
+  have iLoss := oneLoss iCapacity iCharge
+  refine ⟨A,vertices,B,rows,?_⟩
+  change M ≤ (∑ i ∈ B, ((pieces i).toFinset ∩ A).card) + (lostV+lostI) at kept
+  change 5*M ≤ 6 * ∑ i ∈ B, ((pieces i).toFinset ∩ A).card
+  omega
+
 end OnlineReachabilityPreservers
