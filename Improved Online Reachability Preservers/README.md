@@ -2014,6 +2014,15 @@ or paths.
 · [Full witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L316)
 · [Half upper bound](OnlineReachabilityPreservers/HalfSaturatedComparisons.lean#L183)
 · [Half witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L372).
+
+At full cutoff three, the exact number of distinct nonempty simple rows
+on \(n\) vertices can be any \(p\le n+2\lfloor n/2\rfloor\lceil n/2\rceil\).
+The longer rows have distinct first steps and these steps contain no
+transitive directed triangle. Both orientations across two balanced
+parts, together with the singletons, attain the bound at cutoff three.
+[Upper bound for every full cutoff from three](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L119)
+· [Exact cutoff-three feasibility](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L285).
+
 At \(2(t+1)t^2\) vertices and \(t^3\) paths, the cited slope-ordered
 lattice satisfies the all-arcs-earlier exclusion at every size. Its
 \((t+1)t^3\) mass is at least a constant times \(t^{1/10}\) times

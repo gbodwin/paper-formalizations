@@ -2451,6 +2451,21 @@ local-order upper bound and recurrence of Theorem 43.
   [Indexed comparison](OnlineReachabilityPreservers/HalfFullLatticeComparison.lean#L129)
   · [Literal output-average witness](OnlineReachabilityPreservers/HalfFullLatticeComparison.lean#L213).
 
+  For any full cutoff \(k\ge3\), the literal row count is at most
+  \(n+2\lfloor n/2\rfloor\lceil n/2\rceil\). Each longer row supplies
+  a distinct directed first step. A transitive triangle of those steps
+  would have three distinct rows and supply a full three-bridge. At both
+  ends of an arc, the outward neighbor sets are disjoint, and the inward
+  neighbor sets are disjoint. Counting the sum of squares of total
+  degrees bounds the number of arcs by \(\lfloor n^2/2\rfloor\).
+  At cutoff three the row count is exact. Include both directions across
+  balanced parts and all singleton rows. Two successive steps return to
+  the first part, so they cannot replace a single step of a river.
+  Restricting the rows obtains each smaller count.
+  [Directed arc count](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L13)
+  · [Literal upper bound](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L119)
+  · [Exact cutoff-three domain](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L285).
+
   The exact literal budgets \(n=4,p=11\) are feasible for half exclusion
   at every cutoff and infeasible for full exclusion at \(k\ge4\). The
   half witness uses four singleton rows, three early arrows from vertex

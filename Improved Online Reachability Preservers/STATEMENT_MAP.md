@@ -3693,6 +3693,15 @@ bound in general remains open.
 [Indexed power comparison](OnlineReachabilityPreservers/HalfFullLatticeComparison.lean#L129)
 · [Literal witness and output caps](OnlineReachabilityPreservers/HalfFullLatticeComparison.lean#L213).
 
+At full cutoff three, a distinct nonempty simple family with exact counts
+\((n,p)\) exists precisely when
+\(p\le n+2\lfloor n/2\rfloor\lceil n/2\rceil\). Any larger full cutoff has
+the same upper bound. The first steps of the longer rows are distinct
+and have no transitive triangle. Balanced bipartite steps in both
+directions and singleton rows attain the capacity at cutoff three.
+[First-step count](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L119)
+· [Exact cutoff-three feasibility](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L285).
+
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.
 Three comparisons leave vertex zero early in the arrival order. The other
