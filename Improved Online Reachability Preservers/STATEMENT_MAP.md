@@ -2131,11 +2131,17 @@ test the width cuts on the surviving paths. If those cuts pass and
 at most \(M/18\) incidences were deleted, the result gives
 \(M/32\) with both original budgets and all four frozen caps under
 the same degree-split premise in either mode.
-The [same two tests on retained degree copies](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L217)
+The [same two tests on retained degree copies](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L249)
 also work for half exclusion when the unmodified copies fail it.
 Passing the earlier-block test certifies half exclusion on the retained
 copied rows. Passing the width test preserves it on the resulting
 pieces. The frozen guarantee stays \(M/32\) at loss at most \(M/18\).
+Arbitrary monotone ranks at terminal incidences suffice for the
+earlier-block proof. Require the copied rows to project to the original
+vertex lists in order. With at most \(4n/3\) copy labels and original
+degree caps, passing the two
+return tests gives the same frozen \(M/16\) guarantee and both budgets.
+[Ranked degree rows](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L269).
 The same conditional \(M/16\) and [\(M/32\) after rowwise deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1625)
 keep both budgets and all four original-average caps.
 Alternatively, use each row's last safe boundary as its rank. A cut is

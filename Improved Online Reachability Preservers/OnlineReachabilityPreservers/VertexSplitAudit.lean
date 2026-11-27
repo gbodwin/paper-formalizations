@@ -494,4 +494,73 @@ theorem sharedCutWitness_deletion_beats_endpoint_matching :
   · rw [vertices,pieces,size,matching]
     norm_num
 
+/-- Split the witness vertex 3 in addition to the overfull vertex 2.
+Only occupied copies need labels. -/
+private def rankedDegreeExampleRows (i : Fin 35) : List (Fin 6) :=
+  if i = 0 then [3,2] else if i = 1 then [0,2] else if i = 32 then [1,4]
+  else if i = 33 then [4,5] else if i = 34 then [0,1] else [2]
+
+private def rankedDegreeExampleProject : Fin 6 → Fin 5 := ![0,1,2,3,2,3]
+private def rankedDegreeExampleRank (x : Fin 6) : ℕ := if x.val < 4 then 0 else 1
+
+private theorem rankedDegreeExampleProjection :
+    ∀ i, (rankedDegreeExampleRows i).map rankedDegreeExampleProject = frozenDegreeReturnPaths i := by decide
+
+private theorem rankedDegreeExampleRanksMono {i j : Fin 35} {x y : Fin 6}
+    (arrival : i ≤ j) (left : x ∈ rankedDegreeExampleRows i) (right : y ∈ rankedDegreeExampleRows j)
+    (same : rankedDegreeExampleProject x = rankedDegreeExampleProject y) :
+    rankedDegreeExampleRank x ≤ rankedDegreeExampleRank y := by
+  have facts : ∀ x, rankedDegreeExampleRank x ≤ 1 ∧
+      (rankedDegreeExampleRank x = 1 → rankedDegreeExampleProject x ∈ ({2,3} : Finset (Fin 5))) := by decide
+  have later : ∀ (i : Fin 35) (x : Fin 6), x ∈ rankedDegreeExampleRows i →
+      rankedDegreeExampleRank x = 1 → 32 ≤ i.val := by decide
+  have earlier : ∀ (i : Fin 35) (x : Fin 6), x ∈ rankedDegreeExampleRows i →
+      rankedDegreeExampleProject x ∈ ({2,3} : Finset (Fin 5)) →
+      rankedDegreeExampleRank x = 0 → i.val < 32 := by decide
+  by_contra h
+  have high : rankedDegreeExampleRank x = 1 := by have := (facts x).1; omega
+  have low : rankedDegreeExampleRank y = 0 := by have := (facts x).1; omega
+  have xLate := later i x left high
+  have yEarly := earlier j y right (same ▸ (facts x).2 high) low
+  change i.val ≤ j.val at arrival
+  omega
+
+private theorem rankedDegreeExampleDegreeSafe :
+    NoShortBackwardProjection (BeforeIn rankedDegreeExampleRows)
+      rankedDegreeExampleProject rankedDegreeExampleRank 2 := by
+  apply NoShortBackwardProjection.of_bounded_reach (G := listPiecePrecedenceGraph rankedDegreeExampleRows)
+    (fun {i _ _} step => listPiecePrecedenceGraph_edge.mpr ⟨i,step⟩)
+  change ∀ (x y : Fin 6), rankedDegreeExampleProject x = rankedDegreeExampleProject y →
+    rankedDegreeExampleRank y < rankedDegreeExampleRank x →
+    x ∉ reachIn (listPiecePrecedenceGraph rankedDegreeExampleRows) y 2
+  decide
+
+private theorem rankedDegreeExampleWidthSafe :
+    NoShortReturnAcrossWidthCutsInPieces rankedDegreeExampleRows 4 5 := by
+  intro i x y step different
+  have short : ∀ i, (rankedDegreeExampleRows i).length ≤ 4 := by decide
+  have left := (List.idxOf_lt_length_of_mem step.1).trans_le (short i)
+  have right := (List.idxOf_lt_length_of_mem step.2.1).trans_le (short i)
+  exact (different ((Nat.div_eq_of_lt left).trans (Nat.div_eq_of_lt right).symm)).elim
+
+set_option maxHeartbeats 4000000 in
+/-- A different six-label degree split keeps all forty incidences and
+passes both tests at the same width at cutoff five. -/
+theorem rankedDegreeExample_frozen_half_five :
+    ∃ n' ≤ 5, ∃ p' ≤ 35, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (BeforeIn clean) 5 ∧
+      40 ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ 40 ∧
+      frozenListCaps 5 35 40 clean := by
+  have simple : ∀ i, (frozenDegreeReturnPaths i).Nodup := by decide
+  have labels : ∀ (x y : Fin 6), rankedDegreeExampleProject x = rankedDegreeExampleProject y →
+      rankedDegreeExampleRank x = rankedDegreeExampleRank y → x = y := by decide
+  have degrees : ∀ x, (occurrences (fun i => (rankedDegreeExampleRows i).toFinset) x).card ≤ 32 := by decide
+  exact regularization_list_frozen_half_of_ranked_degree_rows (k := 5)
+    frozenDegreeReturnPaths simple (frozenDegreeReturnPaths_halfFree 5)
+    rankedDegreeExampleRows rankedDegreeExampleProject rankedDegreeExampleRank rankedDegreeExampleProjection
+    (fun {x y} => labels x y)
+    (fun {_ _ _ _ _ _} arrives left right same => rankedDegreeExampleRanksMono arrives left.2.1 right.2.1 same)
+    rankedDegreeExampleDegreeSafe rankedDegreeExampleWidthSafe (by decide) (by decide) (by decide) (by decide)
+    (by decide) degrees
+
 end OnlineReachabilityPreservers.SourceAudit

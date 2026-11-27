@@ -25,23 +25,27 @@ theorem listBefore_total {paths : I → List V} {i : I} {x y : V}
   · exact Or.inl ⟨hx, hy, h⟩
   · exact Or.inr ⟨hy, hx, h⟩
 
-theorem no_parallel_list_steps {paths : I → List V} {size : ℕ} (free : HalfBridgeFree (ListBefore paths) size)
-    (large : 2 ≤ size)
-    {a b : I} (ab : a ≠ b) {x y : V} (one : ListBefore paths a x y) (two : ListBefore paths b x y) : False := by
-  have forbid {u v : I} (earlier : u < v) (left : ListBefore paths u x y)
-      (right : ListBefore paths v x y) : False := by
-    let bridge : Bridge (ListBefore paths) 0 :=
-      ⟨![x, y], ![u], v, by
-        intro i j eq
-        have xy := listBefore_ne one
-        fin_cases i <;> fin_cases j <;> simp_all,
+/-- Two distinct rows cannot supply the same strict ordered pair. -/
+theorem HalfBridgeFree.no_parallel_steps {I V : Type*} [LinearOrder I]
+    {before : I → V → V → Prop} {k : ℕ}
+    (free : HalfBridgeFree before k) (large : 2 ≤ k)
+    {a b : I} {x y : V} (different : a ≠ b) (apart : x ≠ y)
+    (one : before a x y) (two : before b x y) : False := by
+  have forbid {u v : I} (earlier : u < v) (left : before u x y) (right : before v x y) : False := by
+    let bridge : Bridge before 0 :=
+      ⟨![x,y],![u],v,by intro i j equal; fin_cases i <;> fin_cases j <;> simp_all,
         by intro i j _; fin_cases i; fin_cases j; rfl,
-        by intro i; fin_cases i; exact earlier.ne', right,
-        by intro i; fin_cases i; exact left⟩
+        by intro i; fin_cases i; exact earlier.ne',
+        right,by intro i; fin_cases i; exact left⟩
     exact free large bridge earlier
-  rcases lt_or_gt_of_ne ab with earlier | later
+  rcases lt_or_gt_of_ne different with earlier | later
   · exact forbid earlier one two
   · exact forbid later two one
+
+theorem no_parallel_list_steps {paths : I → List V} {size : ℕ} (free : HalfBridgeFree (ListBefore paths) size)
+    (large : 2 ≤ size)
+    {a b : I} (ab : a ≠ b) {x y : V} (one : ListBefore paths a x y) (two : ListBefore paths b x y) : False :=
+  free.no_parallel_steps large ab (listBefore_ne one) one two
 
 def threeListBridge {paths : I → List V} {a b r : I}
     (ab : a ≠ b) (ra : r ≠ a) (rb : r ≠ b) {x y z : V}

@@ -882,12 +882,12 @@ seven. Deleting one incidence on the return row makes the test succeed.
 
 The [row deletion theorem](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2478)
 also accepts the required exclusion proved directly on the surviving
-copied rows. For half bridges, the [earlier-copy test](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L15) suffices
+copied rows. For half bridges, the [earlier-copy test](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L132) suffices
 there. When the projected terminal occurs at an internal corner, take
 the prefix ending at its first occurrence. The shorter projected bridge
 has a last arc after the river. The original
 degree labels of the surviving incidences still obey the original
-arrival order. Thus the [combined half-bridge theorem](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L217)
+arrival order. Thus the [combined half-bridge theorem](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L249)
 tests both kinds of return after up to \(M/18\) deletions, with mass at
 least \(M/32\), both original budgets, and all four original-average caps.
 
@@ -896,6 +896,24 @@ and path width four. The original rows exclude every half bridge. The
 [actual degree split creates a half-5-bridge](OnlineReachabilityPreservers/VertexSplitAudit.lean#L309). Deleting
 one incidence on the reverse step leaves mass 39 and passes
 [both tests at the original widths](OnlineReachabilityPreservers/VertexSplitAudit.lean#L334).
+
+The half-bridge projection also works for an arbitrary ranked copy
+alphabet. The copy label is determined by the original vertex and the
+rank, and ranks of terminal incidences are monotone in the original
+row order. For simple input excluding half bridges through the cutoff,
+assume mass \(M\) at least both positive budgets. Require the copied rows
+to project row by row to the original vertex lists in order. When both
+return tests pass, each copied degree fits the original cap, and the
+number of copy labels is at most \(4n/3\), the frozen witness retains at
+least \(M/16\) within both original budgets and all four caps.
+[Ranked projection](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L26) · [Cleaning at the original widths](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L269).
+
+In the same 40-incidence example, split vertex 3 as well as vertex 2 and
+use the six occupied copies as labels. This choice keeps all incidences
+before path splitting and passes both return tests at cutoff five.
+The witnesses use the same degree and path widths. The checked
+\(M/16\) result keeps both original budgets and all four original caps.
+[Alternate degree copies](OnlineReachabilityPreservers/VertexSplitAudit.lean#L549).
 
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves

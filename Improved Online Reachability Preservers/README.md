@@ -946,7 +946,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   incidences are deleted, and the surviving pieces pass the test,
   the cleaned witness keeps \(M/32\) with both original budgets and
   all four original-average caps.
-  In half mode, [test earlier-block returns after the same deletions](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L217).
+  In half mode, [test earlier-block returns after the same deletions](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L249).
   The starting input has half exclusion through the cutoff. With retained
   copied rows passing both return tests, the \(M/32\) guarantee applies
   even if degree copying introduced a forbidden bridge before deletion.
