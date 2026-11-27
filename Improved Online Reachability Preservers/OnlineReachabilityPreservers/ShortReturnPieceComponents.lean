@@ -7,6 +7,75 @@ namespace OnlineReachabilityPreservers
 open Finset
 local notation "Before" => SourceAudit.BeforeIn
 
+/-- The component of a center, restricted to the elements being packed. -/
+def linkedGroupComponent {V : Type*} [LinearOrder V] [Fintype V]
+    (members : Finset V) (G : Arcs V) (center : V) : Finset V :=
+  members.filter fun vertex => componentLabel G vertex = componentLabel G center
+
+/-- For a graph that symmetrizes the required links, a capped partition
+exists exactly when each component of the packed elements fits. -/
+theorem cappedPathPartition_iff_component_room {V : Type*} [LinearOrder V] [Fintype V]
+    (members : Finset V) (linked : V → V → Prop) (G : Arcs V) (width : ℕ)
+    (edges : ∀ ⦃x y⦄, Edge G x y ↔ linked x y ∨ linked y x)
+    (inside : ∀ ⦃x y⦄, linked x y → x ∈ members ∧ y ∈ members) :
+    (∃ groups, CappedPathPartition members linked width groups) ↔
+      ∀ x ∈ members, (linkedGroupComponent members G x).card ≤ width := by
+  let C := linkedGroupComponent members G
+  constructor
+  · rintro ⟨groups, partition⟩ x on
+    have covered : x ∈ groups.biUnion id := partition.cover.symm ▸ on
+    obtain ⟨group, hasGroup, inGroup⟩ := mem_biUnion.mp covered
+    have step ⦃a b⦄ (edge : Edge G a b) (previous : a ∈ group) : b ∈ group := by
+      have together : ∃ h ∈ groups, a ∈ h ∧ b ∈ h := by
+        rcases edges.mp edge with forward | reverse
+        · exact partition.together forward
+        · obtain ⟨h, among, right, left⟩ := partition.together reverse
+          exact ⟨h, among, left, right⟩
+      obtain ⟨h, among, left, right⟩ := together
+      have same : h = group := by
+        by_contra! different
+        exact disjoint_left.mp (partition.apart among hasGroup different) left previous
+      exact same ▸ right
+    have all : C x ⊆ group := by
+      intro y member
+      have reachable := (componentLabel_eq.mp (mem_filter.mp member).2).2
+      clear member
+      induction reachable with
+      | refl => exact inGroup
+      | tail _ edge ih => exact step edge ih
+    exact (card_le_card all).trans (partition.fits group hasGroup)
+  · intro room
+    have present ⦃x⦄ (on : x ∈ members) : x ∈ C x := mem_filter.mpr ⟨on, rfl⟩
+    have same ⦃x y⦄ (eq : componentLabel G x = componentLabel G y) : C x = C y := by
+      ext v
+      simp only [C, linkedGroupComponent, mem_filter, eq]
+    refine ⟨members.image C, ⟨?_, ?_, ?_, ?_, ?_⟩⟩
+    · ext x
+      constructor
+      · intro on
+        obtain ⟨group, among, within⟩ := mem_biUnion.mp on
+        obtain ⟨center, _, rfl⟩ := mem_image.mp among
+        exact (mem_filter.mp within).1
+      · intro on
+        exact mem_biUnion.mpr ⟨C x, mem_image_of_mem C on, present on⟩
+    · intro a onA b onB apart
+      obtain ⟨x, _, rfl⟩ := mem_image.mp onA
+      obtain ⟨y, _, rfl⟩ := mem_image.mp onB
+      exact disjoint_left.mpr fun _ inX inY =>
+        apart (same ((mem_filter.mp inX).2.symm.trans (mem_filter.mp inY).2))
+    · intro group among
+      obtain ⟨x, on, rfl⟩ := mem_image.mp among
+      exact ⟨x, present on⟩
+    · intro group among
+      obtain ⟨x, on, rfl⟩ := mem_image.mp among
+      exact room x on
+    · intro x y relation
+      obtain ⟨onX, onY⟩ := inside relation
+      have connected : SameComponent G y x :=
+        ⟨.single (edges.mpr (Or.inr relation)), .single (edges.mpr (Or.inl relation))⟩
+      exact ⟨C x, mem_image_of_mem C onX, present onX,
+        mem_filter.mpr ⟨onY, componentLabel_eq.mpr connected⟩⟩
+
 section Components
 
 variable {I V : Type*} [Fintype I] [LinearOrder V] [Fintype V]
@@ -28,82 +97,7 @@ theorem shortReturnRowGraph_edge {rows : I → List V} {cutoff : ℕ} {i : I} {x
 
 /-- The connected group of an occurrence, restricted to its own row. -/
 def shortReturnRowComponent (rows : I → List V) (cutoff : ℕ) (i : I) (x : V) : Finset V :=
-  (rows i).toFinset.filter fun y =>
-    componentLabel (shortReturnRowGraph rows cutoff i) y =
-      componentLabel (shortReturnRowGraph rows cutoff i) x
-
-private theorem rowComponent_partition {rows : I → List V} {width cutoff : ℕ} (i : I)
-    (room : ∀ x ∈ rows i, (shortReturnRowComponent rows cutoff i x).card ≤ width) :
-    CappedPathPartition (rows i).toFinset
-      (fun x y => Before rows i x y ∧ y ∈ reachIn (listPiecePrecedenceGraph rows) x (cutoff - 3))
-      width ((rows i).toFinset.image (shortReturnRowComponent rows cutoff i)) := by
-  let C := shortReturnRowComponent rows cutoff i
-  let groups := (rows i).toFinset.image C
-  have present {x : V} (on : x ∈ rows i) : x ∈ C x := by simp [C, shortReturnRowComponent, on]
-  have label {x y : V} (on : y ∈ C x) :
-      componentLabel (shortReturnRowGraph rows cutoff i) y =
-        componentLabel (shortReturnRowGraph rows cutoff i) x := (mem_filter.mp on).2
-  have same {x y : V} (eq : componentLabel (shortReturnRowGraph rows cutoff i) x =
-      componentLabel (shortReturnRowGraph rows cutoff i) y) : C x = C y := by
-    ext v
-    simp only [C, shortReturnRowComponent, mem_filter, List.mem_toFinset, eq]
-  refine ⟨?_, ?_, ?_, ?_, ?_⟩
-  · ext x
-    constructor
-    · intro on
-      obtain ⟨group, among, within⟩ := mem_biUnion.mp on
-      obtain ⟨center, _, rfl⟩ := mem_image.mp among
-      exact (mem_filter.mp within).1
-    · intro on
-      exact mem_biUnion.mpr ⟨C x, mem_image_of_mem C on, present (List.mem_toFinset.mp on)⟩
-  · intro a onA b onB apart
-    obtain ⟨x, _, rfl⟩ := mem_image.mp onA
-    obtain ⟨y, _, rfl⟩ := mem_image.mp onB
-    exact disjoint_left.mpr fun _ inX inY => apart (same ((label inX).symm.trans (label inY)))
-  · intro group among
-    obtain ⟨x, on, rfl⟩ := mem_image.mp among
-    exact ⟨x, present (List.mem_toFinset.mp on)⟩
-  · intro group among
-    obtain ⟨x, on, rfl⟩ := mem_image.mp among
-    exact room x (List.mem_toFinset.mp on)
-  · intro x y linked
-    have xy := shortReturnRowGraph_edge.mpr (Or.inl linked)
-    have yx := shortReturnRowGraph_edge.mpr (Or.inr linked)
-    have sameComponent : SameComponent (shortReturnRowGraph rows cutoff i) y x :=
-      ⟨.single yx, .single xy⟩
-    have xOn : x ∈ rows i := linked.1.1
-    have yOn : y ∈ rows i := linked.1.2.1
-    exact ⟨C x, mem_image_of_mem C (List.mem_toFinset.mpr xOn), present xOn,
-      mem_filter.mpr ⟨List.mem_toFinset.mpr yOn, componentLabel_eq.mpr sameComponent⟩⟩
-
-private theorem rowComponent_fits_of_partition {rows : I → List V} {width cutoff : ℕ}
-    (i : I) {groups : Finset (Finset V)}
-    (partition : CappedPathPartition (rows i).toFinset
-      (fun x y => Before rows i x y ∧ y ∈ reachIn (listPiecePrecedenceGraph rows) x (cutoff - 3))
-      width groups) (x : V) (on : x ∈ rows i) :
-    (shortReturnRowComponent rows cutoff i x).card ≤ width := by
-  have covered : x ∈ groups.biUnion id := partition.cover.symm ▸ List.mem_toFinset.mpr on
-  obtain ⟨group, hasGroup, inGroup⟩ := mem_biUnion.mp covered
-  have step {a b : V} (edge : Edge (shortReturnRowGraph rows cutoff i) a b)
-      (previous : a ∈ group) : b ∈ group := by
-    have together : ∃ h ∈ groups, a ∈ h ∧ b ∈ h := by
-      rcases shortReturnRowGraph_edge.mp edge with forward | reverse
-      · exact partition.together forward
-      · obtain ⟨h, among, right, left⟩ := partition.together reverse
-        exact ⟨h, among, left, right⟩
-    obtain ⟨h, among, left, right⟩ := together
-    have eq : h = group := by
-      by_contra! different
-      exact disjoint_left.mp (partition.apart among hasGroup different) left previous
-    exact eq ▸ right
-  have all : shortReturnRowComponent rows cutoff i x ⊆ group := by
-    intro y member
-    have reachable := (componentLabel_eq.mp (mem_filter.mp member).2).2
-    clear member
-    induction reachable with
-    | refl => exact inGroup
-    | tail _ edge ih => exact step edge ih
-  exact (card_le_card all).trans (partition.fits group hasGroup)
+  linkedGroupComponent (rows i).toFinset (shortReturnRowGraph rows cutoff i) x
 
 /-- There is a partition into width-bounded pieces respecting every
 short-return pair exactly when each connected group fits the width. -/
@@ -111,12 +105,15 @@ theorem hasCappedShortReturnPartition_iff_component_room
     (rows : I → List V) (width cutoff : ℕ) :
     HasCappedShortReturnPartition rows width cutoff ↔
       ∀ i, ∀ x ∈ rows i, (shortReturnRowComponent rows cutoff i x).card ≤ width := by
+  have test (i : I) := cappedPathPartition_iff_component_room
+    (rows i).toFinset (fun x y => Before rows i x y ∧ y ∈ reachIn (listPiecePrecedenceGraph rows) x (cutoff-3))
+    (shortReturnRowGraph rows cutoff i) width (fun {_ _} => shortReturnRowGraph_edge)
+    (fun {_ _} witness => ⟨List.mem_toFinset.mpr witness.1.1, List.mem_toFinset.mpr witness.1.2.1⟩)
   constructor
-  · intro partition i x on
-    obtain ⟨groups, valid⟩ := partition i
-    exact rowComponent_fits_of_partition i valid x on
+  · intro grouped i x on
+    exact (test i).mp (grouped i) x (List.mem_toFinset.mpr on)
   · intro room i
-    exact ⟨_, rowComponent_partition i (room i)⟩
+    exact (test i).mpr (fun x on => room i x (List.mem_toFinset.mp on))
 
 /-- Under an exact row projection to simple paths, every short-return
 component has size at most the component of its projected center. -/

@@ -235,4 +235,61 @@ theorem regularization_list_frozen_of_short_return_groups {n p k : ℕ} {half : 
   exact regularization_list_frozen_after_grouped_width_splits copies copiedSimple copiedFree
     hn hp dense long mass degree light copiedRoom
 
+/-- At a vertex, connect the incident rows that must share a copy. -/
+def shortReturnCopyRowGraph {I V : Type*} [Fintype I] [Fintype V] [DecidableEq V] [DecidableEq I]
+    (rows : I → List V) (cutoff : ℕ) (vertex : V) : Arcs I := by
+  letI (i : I) (x y : V) : Decidable (Before rows i x y) := by unfold SourceAudit.BeforeIn; infer_instance
+  letI (i j : I) : Decidable (ShortReturnCopyRowPair rows cutoff vertex i j) := by
+    unfold ShortReturnCopyRowPair
+    infer_instance
+  exact univ.filter fun e =>
+    ShortReturnCopyRowPair rows cutoff vertex e.1 e.2 ∨ ShortReturnCopyRowPair rows cutoff vertex e.2 e.1
+
+theorem shortReturnCopyRowGraph_edge {I V : Type*} [Fintype I] [Fintype V] [DecidableEq V] [DecidableEq I]
+    {rows : I → List V} {cutoff : ℕ} {v : V} {i j : I} :
+    Edge (shortReturnCopyRowGraph rows cutoff v) i j ↔
+      ShortReturnCopyRowPair rows cutoff v i j ∨ ShortReturnCopyRowPair rows cutoff v j i := by
+  simp only [shortReturnCopyRowGraph, Edge, mem_filter, mem_univ, true_and]
+
+/-- The connected group of a row among the incidences of this vertex. -/
+def shortReturnCopyRowComponent {I V : Type*} [Fintype I] [Fintype V] [DecidableEq V] [LinearOrder I]
+    (rows : I → List V) (cutoff : ℕ) (vertex : V) (i : I) : Finset I :=
+  linkedGroupComponent (occurrences (fun j => (rows j).toFinset) vertex) (shortReturnCopyRowGraph rows cutoff vertex) i
+
+/-- The degree grouping condition is equivalent to a finite component
+size bound on the original incidences. -/
+theorem hasCappedShortReturnCopyPartition_iff_component_room {I V : Type*}
+    [Fintype I] [Fintype V] [DecidableEq V] [LinearOrder I]
+    (rows : I → List V) (width cutoff : ℕ) :
+    HasCappedShortReturnCopyPartition rows width cutoff ↔
+      ∀ v i, v ∈ rows i → (shortReturnCopyRowComponent rows cutoff v i).card ≤ width := by
+  have test (v : V) := cappedPathPartition_iff_component_room
+    (occurrences (fun j => (rows j).toFinset) v) (ShortReturnCopyRowPair rows cutoff v)
+    (shortReturnCopyRowGraph rows cutoff v) width (fun {_ _} => shortReturnCopyRowGraph_edge)
+    (fun {_ _} ⟨_, _, _, left, right, _⟩ =>
+      ⟨mem_occurrences.mpr (List.mem_toFinset.mpr left.1), mem_occurrences.mpr (List.mem_toFinset.mpr right.2.1)⟩)
+  constructor
+  · intro grouped v i seen
+    exact (test v).mp (grouped v) i (mem_occurrences.mpr (List.mem_toFinset.mpr seen))
+  · intro room v
+    exact (test v).mpr (fun i on => room v i (List.mem_toFinset.mp ((mem_occurrences (marks := fun j => (rows j).toFinset)).mp on)))
+
+/-- Two finite component checks on the original rows suffice for the
+frozen quarter-mass witness in either exclusion mode. -/
+theorem regularization_list_frozen_of_short_return_component_rooms {n p k : ℕ} {half : Bool}
+    (rows : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
+    (free : localOrderAdmissible half k rows)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
+    (degreeRoom : let M := ∑ i, (rows i).length
+      ∀ v i, v ∈ rows i → (shortReturnCopyRowComponent rows k v i).card ≤ 4*M/n)
+    (pathRoom : let M := ∑ i, (rows i).length
+      ∀ i, ∀ x ∈ rows i, (shortReturnRowComponent rows k i x).card ≤ 4*M/p) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 4*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧
+      frozenListCaps n p M clean :=
+  regularization_list_frozen_of_short_return_groups rows simple free hn hp dense long
+    ((hasCappedShortReturnCopyPartition_iff_component_room _ _ _).mpr degreeRoom) pathRoom
+
 end OnlineReachabilityPreservers
