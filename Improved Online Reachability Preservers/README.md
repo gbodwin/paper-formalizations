@@ -1167,15 +1167,23 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   the chosen cutoff. The same guarantee holds for literal distinct
   nonempty input and output at cutoff at least two.
   [Indexed excess criterion](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L174) · [Literal excess criterion](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L202).
-- Standard degree copying preserves full exclusion at every cutoff.
-  For simple full-bridge-free input of mass at least both positive budgets,
+- For simple rows, standard degree copying preserves full exclusion
+  through any chosen cutoff. For input of mass at least both positive budgets,
   the original path-component bound alone gives the frozen quarter-mass
-  witness. A restriction retaining two thirds of the original mass and
+  witness. A restriction retaining at least two thirds of the original mass and
   passing the same path test also suffices for a frozen \(M/18\) witness.
   In particular it suffices that original path excess is at most \(M/3\).
   The latter conclusion has a literal distinct nonempty version at
   cutoff at least two, with the same budgets, cutoff and four frozen caps.
   [Full cleaning with the original path bound](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L12) · [Full cleaning after a path-only restriction](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L41) · [Full cleaning from path excess](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L100) · [Literal full-bridge witness](OnlineReachabilityPreservers/ShortReturnFullCleaning.lean#L121).
+- The bidirected 23-leaf star has one row per dart, 24 vertices and 46
+  rows of mass 92. Every full bridge is excluded. Its original widths
+  are 15 for degree and eight for path length. At cutoff seven, the
+  center has a single degree component of size 46. Its excess of 31
+  already exceeds one third of the total mass. The path components
+  fit, so the full-mode path test gives the original-budget quarter-mass
+  witness at cutoff seven.
+  [Full exclusion at every cutoff](OnlineReachabilityPreservers/ShortReturnFullCleaningStar.lean#L68) · [The center component](OnlineReachabilityPreservers/ShortReturnFullCleaningStar.lean#L140) · [Original widths](OnlineReachabilityPreservers/ShortReturnFullCleaningStar.lean#L144) · [Failure of the two-sided excess test](OnlineReachabilityPreservers/ShortReturnFullCleaningStar.lean#L151) · [Full frozen witness at cutoff seven](OnlineReachabilityPreservers/ShortReturnFullCleaningStar.lean#L171).
 - The path-partition premise has an exact finite test. Within one row,
   link the endpoints of every comparison with a short backward return.
   Each connected component must lie in one group of any valid partition.
