@@ -2292,13 +2292,22 @@ all four caps.
 
 A separate projection works for disjoint pieces that may interleave
 within their parent rows. Require each original comparison between
-different pieces to have no projected backward return within
+different pieces of the same parent to have no projected return within
 \(\max(0,k-3)\) edges. The lift takes the detour after its last
 visit to the river parent, then shortcuts other repeated parents
 in their row order. It preserves the river parent and the last
 arc parent, so the same cutoff holds in full mode and in half
 mode when pieces follow their parents’ arrival order.
 [Return condition](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2639) · [Bridge projection](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2649) · [Full bridge exclusion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2762) · [Half-bridge exclusion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2779).
+
+After admissible degree copying, protect the endpoints of each row
+comparison with a short backward return in the copied precedence
+graph. If each protected support fits at the original path width,
+pack it into block zero and keep the row order within each piece.
+This keeps every incidence before trimming, preserves the chosen
+full or half cutoff, and gives an indexed witness with both original
+budgets, all four frozen caps and mass at least \(M/16\).
+[Protected vertices](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L471) · [Preservation through the cutoff](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L499) · [Frozen witness at both original widths](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L528).
 
 An eight-vertex example shows a limit of the disjoint-component rank test.
 Its seven original rows exclude full bridges through three. Standard
@@ -2438,7 +2447,7 @@ is within the cap, and projection recovers every original row. For simple
 half-five-free input of mass at least both positive budgets with path
 lengths already within the original cap, the construction gives an indexed
 witness of mass at least \(M/4\) with both budgets and all four frozen caps.
-[Constrained rows](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L17) · [Degree cap](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L134) · [Half-five exclusion](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L147) · [Frozen witness with capped path lengths](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L173).
+[Constrained rows](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L18) · [Degree cap](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L135) · [Half-five exclusion](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L148) · [Frozen witness with capped path lengths](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L174).
 
 To handle long rows after degree packing, protect both endpoints of each
 comparison reversed on another copied row. Put the protected vertices
@@ -2449,7 +2458,7 @@ supports fit their widths, these two packings keep every incidence before
 restriction and peeling. For simple half-five-free input of mass at least
 both positive budgets, the indexed witness has both original budgets,
 all four frozen caps and mass at least \(M/16\).
-[Protected path vertices](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L209) · [Half-five path splitting](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L267) · [Exact mass](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L308) · [Frozen cleaning with both packings](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L358).
+[Protected path vertices](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L332) · [Half-five path splitting](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L375) · [Exact mass](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L362) · [Frozen cleaning with both packings](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L433).
 
 The usual nested split example can be padded to six vertices and ten
 indexed rows with mass ten. Two extra vertices belong only to the
