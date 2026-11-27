@@ -1600,10 +1600,22 @@ all four frozen caps. The input rows are simple and exclude full
 bridges through \(k\), and the mass reaches both positive budgets.
 [Crossed return predicate](OnlineReachabilityPreservers/CyclicSplits.lean#L876) · [Projection at the original cutoff](OnlineReachabilityPreservers/CyclicSplits.lean#L1003) · [Standard width test](OnlineReachabilityPreservers/FullReturnRadius.lean#L40) · [Indexed witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L67) · [Literal witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L89).
 
+The same radius \(k-5\) works for grouped path splitting at every
+full cutoff \(k\ge7\). When every group on the standard copies
+fits the original path width, pack whole groups and trim both
+supports. For simple input excluding full bridges through \(k\)
+with mass at least both positive budgets, the original-width
+witness then keeps at least \(M/4\). The original rows can also be
+used for the group-size test because the copied comparisons and
+their groups project to the original ones. For feasible literal
+input the original-row test gives a distinct nonempty witness of
+mass at least \(M/8\) with the same cutoff, budgets and four caps.
+[Packing](OnlineReachabilityPreservers/FullReturnGroupedCleaning.lean#L14) · [Copied-group test](OnlineReachabilityPreservers/FullReturnGroupedCleaning.lean#L39) · [Original-group test](OnlineReachabilityPreservers/FullReturnGroupedCleaning.lean#L61) · [Literal witness](OnlineReachabilityPreservers/FullReturnGroupedCleaning.lean#L76).
+
 The graph radius is sharp for the disjoint split test at every
 full cutoff \(k\ge7\). A checked indexed family on \(k\) vertices
 and \(k\) labels excludes full bridges at all sizes. The split
-preserves the order of each piece, covers every parent and passes
+preserves the order of each piece, covers every original incidence and passes
 the \(k-6\) graph test on the actual pieces. The explicit return
 from 1 to \(k-4\) fails the \(k-5\) test. The split pieces contain
 a full bridge of size \(k\). The witness audits preservation by a

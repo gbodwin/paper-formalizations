@@ -34,7 +34,7 @@ theorem HalfDegreeSplitCondition.of_sublist {n p D k : ℕ} {rows kept : Fin p �
 
 /-- The original path-component width also bounds the components
 of every copied row after ordinary degree splitting. -/
-private theorem splitListVertices_short_return_path_room {n p k D L : ℕ}
+theorem splitListVertices_short_return_path_room {n p k D L : ℕ}
     {rows : Fin p → List (Fin n)} (simple : ∀ i, (rows i).Nodup)
     (room : ∀ i, ∀ x ∈ rows i, (shortReturnRowComponent rows k i x).card ≤ L) :
     ∀ i, ∀ v ∈ splitListVertices rows D i,

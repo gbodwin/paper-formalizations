@@ -811,6 +811,18 @@ budgets and all four caps. Feasible literal input gives the same
 retention with distinct nonempty paths.
 [Minimum-gap lift](OnlineReachabilityPreservers/CyclicSplits.lean#L889) · [Preservation at general cutoff](OnlineReachabilityPreservers/CyclicSplits.lean#L1003) · [Graph test](OnlineReachabilityPreservers/FullReturnRadius.lean#L28) · [Frozen indexed witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L67) · [Literal witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L89).
 
+Use radius \(k-5\) to form groups on the whole standard degree
+copies. Keeping each group in one piece certifies the required
+return bound. When the groups fit the original path width,
+the packing preserves the original mass and every copied
+vertex degree. The two support trims give a frozen indexed
+\(M/4\) witness. The copied groups project into original groups,
+so fitting the path width on the original rows also suffices.
+For feasible literal input this test keeps at least \(M/8\)
+with distinct nonempty paths. Both final witnesses preserve the
+original full cutoff and meet both original budgets and all four caps.
+[Packing](OnlineReachabilityPreservers/FullReturnGroupedCleaning.lean#L14) · [Projection to original rows](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L37) · [Indexed witness](OnlineReachabilityPreservers/FullReturnGroupedCleaning.lean#L61) · [Literal witness](OnlineReachabilityPreservers/FullReturnGroupedCleaning.lean#L76).
+
 At every \(k\ge7\), use the vertices \(0,\ldots,k-1\). Merge
 the rows `[0,1]` and `[k-4,k-3]` into `[k-4,k-3,0,1]`, leaving
 one empty label in an indexed family. Keep the other consecutive

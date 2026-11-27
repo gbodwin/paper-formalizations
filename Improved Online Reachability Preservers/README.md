@@ -963,6 +963,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   and all four caps. The literal version also keeps the rows distinct
   and nonempty.
   [The minimum-gap proof](OnlineReachabilityPreservers/CyclicSplits.lean#L889) · [The graph certificate](OnlineReachabilityPreservers/FullReturnRadius.lean#L28) · [Indexed witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L67) · [Literal witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L89).
+- At the same radius \(k-5\), group the endpoints of each comparison
+  with a backward return. Assume simple input excluding full
+  bridges through \(k\ge7\), with mass \(M\) at least both positive
+  budgets. If all groups fit the original path width, packing and
+  trimming give a frozen indexed \(M/4\) witness. The test can use either the
+  original rows or the standard degree copies. Feasible literal
+  input gives \(M/8\) under the original-row test. Both witnesses
+  preserve full exclusion through \(k\), both budgets and all four caps.
+  [Group packing](OnlineReachabilityPreservers/FullReturnGroupedCleaning.lean#L14) · [Copied rows](OnlineReachabilityPreservers/FullReturnGroupedCleaning.lean#L39) · [Original rows](OnlineReachabilityPreservers/FullReturnGroupedCleaning.lean#L61) · [Literal witness](OnlineReachabilityPreservers/FullReturnGroupedCleaning.lean#L76).
 - At every full cutoff \(k\ge7\), a covering disjoint split of an
   indexed family excluding all full bridges passes the \(k-6\) test.
   Its first crossed return has length \(k-5\) and the split creates
