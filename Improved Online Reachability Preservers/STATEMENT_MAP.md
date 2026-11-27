@@ -1626,9 +1626,9 @@ cleaning regime. For positive budgets and mass at least both of them, the
 indexed or feasible literal witness retains at least \(M/8\), with the same
 cutoff, both budgets and all four original-average caps.
 [Restricted excess](OnlineReachabilityPreservers/FullCoveringRow.lean#L142)
-· [Mass with covering rows](OnlineReachabilityPreservers/FullCoveringRow.lean#L228)
-· [Indexed witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L258)
-· [Literal witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L277).
+· [Mass with covering rows](OnlineReachabilityPreservers/FullCoveringRow.lean#L293)
+· [Indexed witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L339)
+· [Literal witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L372).
 
 For simple input excluding half bridges through a cutoff of at least three,
 assign each occurring vertex to the row of its first occurrence. The
@@ -1644,9 +1644,28 @@ and both versions meet the four original-average caps within the original
 budgets.
 [Shared starts with an earlier row](OnlineReachabilityPreservers/FullCoveringRow.lean#L31)
 · [Restricted excess](OnlineReachabilityPreservers/FullCoveringRow.lean#L164)
-· [Mass bound](OnlineReachabilityPreservers/FullCoveringRow.lean#L242)
-· [Indexed full witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L296)
-· [Literal full witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L315).
+· [Mass bound](OnlineReachabilityPreservers/FullCoveringRow.lean#L303)
+· [Indexed full witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L406)
+· [Literal full witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L451).
+
+Both covering-row mass proofs count only nonempty restrictions. Let \(A\)
+be the sum, over input rows, of the numbers of assigned vertex sets they
+meet. The mass estimate becomes \(M\le A+2n\), since the excess in each
+vertex set still contributes at most twice its cardinality. With the same
+positive budgets, density, original cutoff of at least three and either
+corresponding cover premise, \(A+2n\le8\max(n,p)\) supplies the frozen
+\(M/8\) witness. A sufficient condition is that each row meets at most six
+assigned sets. The full-input witness retains the original cutoff. The
+half-input witness can exclude full bridges through any chosen cutoff.
+The literal versions apply to feasible distinct nonempty families.
+[Count nonempty restrictions](OnlineReachabilityPreservers/FullCoveringRow.lean#L187)
+· [Per-row bound](OnlineReachabilityPreservers/FullCoveringRow.lean#L190)
+· [Full mass bound](OnlineReachabilityPreservers/FullCoveringRow.lean#L264)
+· [Half mass bound](OnlineReachabilityPreservers/FullCoveringRow.lean#L277)
+· [Indexed full input](OnlineReachabilityPreservers/FullCoveringRow.lean#L322)
+· [Literal full input](OnlineReachabilityPreservers/FullCoveringRow.lean#L353)
+· [Indexed half input](OnlineReachabilityPreservers/FullCoveringRow.lean#L388)
+· [Literal half input](OnlineReachabilityPreservers/FullCoveringRow.lean#L421).
 
 The graph radius is sharp for the disjoint split test at every
 full cutoff \(k\ge7\). A checked indexed family on \(k\) vertices

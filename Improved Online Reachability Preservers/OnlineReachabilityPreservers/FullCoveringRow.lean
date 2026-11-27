@@ -183,12 +183,27 @@ theorem HalfBridgeFree.excess_le_on_earliest_row_support {rows : I → List V} {
   rw [← List.toFinset_card_of_nodup (keptSimple r), rowSet] at bound
   exact bound
 
+/-- Count the nonempty row restrictions induced by the assigned vertex sets. -/
+def rowSupportVisits {n p t : ℕ} (rows : Fin p → List (Fin n)) (assign : Fin n → Fin t) : ℕ :=
+  ∑ i, ((rows i).toFinset.image assign).card
+
+theorem rowSupportVisits_le_of_each {n p t bound : ℕ} (rows : Fin p → List (Fin n))
+    (assign : Fin n → Fin t) (fits : ∀ i, ((rows i).toFinset.image assign).card ≤ bound) :
+    rowSupportVisits rows assign ≤ bound*p := by
+  calc
+    _ ≤ ∑ _ : Fin p, bound := sum_le_sum fun i _ => fits i
+    _ = bound*p := by simp [Nat.mul_comm]
+
+private theorem rowSupportVisits_le {n p t : ℕ} (rows : Fin p → List (Fin n))
+    (assign : Fin n → Fin t) : rowSupportVisits rows assign ≤ t*p :=
+  rowSupportVisits_le_of_each rows assign (fun i => by simpa using card_le_univ ((rows i).toFinset.image assign))
+
 private theorem mass_le_of_support_groups {n p t : ℕ} {rows : Fin p → List (Fin n)}
     (simple : ∀ i, (rows i).Nodup) (assign : Fin n → Fin t)
     (excessBound : ∀ (b : Fin t) (support : Finset (Fin n)),
       (∀ v ∈ support, assign v = b ∧ ∃ i, v ∈ rows i) →
       (∑ i, (((rows i).filter fun v => decide (v ∈ support)).length - 1)) ≤ 2*(support.card - 1)) :
-    (∑ i, (rows i).length) ≤ t*p+2*n := by
+    (∑ i, (rows i).length) ≤ rowSupportVisits rows assign+2*n := by
   classical
   let used := (univ : Finset (Fin n)).filter fun v => ∃ i, v ∈ rows i
   let part (b : Fin t) := used.filter fun v => assign v = b
@@ -206,30 +221,51 @@ private theorem mass_le_of_support_groups {n p t : ℕ} {rows : Fin p → List (
     apply sum_congr rfl
     intro b _
     rw [← setKept i b, List.toFinset_card_of_nodup ((simple i).filter _)]
-  have partBound (b : Fin t) : (∑ i, (kept b i).length) ≤ p+2*(part b).card := by
+  have hasVisit (b : Fin t) (i : Fin p) : 0 < (kept b i).length ↔ b ∈ (rows i).toFinset.image assign := by
+    have keptSimple : (kept b i).Nodup := (simple i).filter _
+    rw [← List.toFinset_card_of_nodup keptSimple, setKept, card_pos]
+    constructor
+    · rintro ⟨v,on⟩
+      exact mem_image.mpr ⟨v, (mem_filter.mp on).1, (mem_filter.mp on).2⟩
+    · rintro on
+      obtain ⟨v,member,same⟩ := mem_image.mp on
+      exact ⟨v, mem_filter.mpr ⟨member,same⟩⟩
+  let visit (b : Fin t) (i : Fin p) : ℕ := if b ∈ (rows i).toFinset.image assign then 1 else 0
+  have sumVisit : (∑ b, ∑ i, visit b i) = rowSupportVisits rows assign := by
+    rw [sum_comm, rowSupportVisits]
+    apply sum_congr rfl
+    intro i _
+    exact (card_eq_sum_ite (subset_univ ((rows i).toFinset.image assign))).symm
+  have partBound (b : Fin t) : (∑ i, (kept b i).length) ≤ (∑ i, visit b i)+2*(part b).card := by
     have assigned (v : Fin n) (on : v ∈ part b) : assign v = b ∧ ∃ i, v ∈ rows i :=
       ⟨(mem_filter.mp on).2, (mem_filter.mp (mem_filter.mp on).1).2⟩
     have excess : (∑ i, ((kept b i).length - 1)) ≤ 2*((part b).card - 1) := excessBound b (part b) assigned
-    have count : (∑ i, (kept b i).length) ≤ ∑ i, ((kept b i).length - 1 + 1) :=
-      sum_le_sum fun i _ => by omega
-    simp only [sum_add_distrib, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, Nat.cast_id, mul_one] at count
+    have count : (∑ i, (kept b i).length) ≤ ∑ i, ((kept b i).length - 1 + visit b i) := by
+      apply sum_le_sum
+      intro i _
+      by_cases existsVisit : b ∈ (rows i).toFinset.image assign
+      · simp only [visit, ite_eq_left existsVisit]
+        omega
+      · have empty := (hasVisit b i).not.mpr existsVisit
+        simp only [visit, ite_eq_right existsVisit]
+        omega
+    rw [sum_add_distrib] at count
     omega
   calc
     (∑ i, (rows i).length) = ∑ b, ∑ i, (kept b i).length := by
       simp_rw [splitMass]
       exact sum_comm
-    _ ≤ ∑ b, (p+2*(part b).card) := sum_le_sum fun b _ => partBound b
-    _ ≤ t*p+2*n := by
-      simp only [sum_add_distrib, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, Nat.cast_id, ← mul_sum]
+    _ ≤ ∑ b, ((∑ i, visit b i)+2*(part b).card) := sum_le_sum fun b _ => partBound b
+    _ ≤ rowSupportVisits rows assign+2*n := by
+      rw [sum_add_distrib, sumVisit, ← mul_sum]
       omega
 
-/-- A family with `t` covering rows has mass at most `t*p + 2*n`.
-Each used vertex is assigned to a covering row containing it. -/
-theorem BridgeFree.mass_le_of_covering_rows {n p t cutoff : ℕ}
+/-- Count one visit only when a row meets the assigned vertex set. -/
+theorem BridgeFree.mass_le_of_covering_row_visits {n p t cutoff : ℕ}
     {rows : Fin p → List (Fin n)} (free : BridgeFree (Before rows) cutoff) (enough : 3 ≤ cutoff)
     (simple : ∀ i, (rows i).Nodup) (reference : Fin t → Fin p) (assign : Fin n → Fin t)
     (covers : ∀ i, ∀ v ∈ rows i, v ∈ rows (reference (assign v))) :
-    (∑ i, (rows i).length) ≤ t*p+2*n := by
+    (∑ i, (rows i).length) ≤ rowSupportVisits rows assign+2*n := by
   apply mass_le_of_support_groups simple assign
   intro b support assigned
   apply free.excess_le_on_row_support enough simple (reference b) support
@@ -237,13 +273,12 @@ theorem BridgeFree.mass_le_of_covering_rows {n p t cutoff : ℕ}
   obtain ⟨same,i,member⟩ := assigned v on
   exact same ▸ covers i v member
 
-/-- The same mass bound holds in half mode when each used vertex is
-assigned to the row of its first occurrence. -/
-theorem HalfBridgeFree.mass_le_of_earliest_covering_rows {n p t cutoff : ℕ}
+/-- The visit count applies to the first-occurrence groups in half mode. -/
+theorem HalfBridgeFree.mass_le_of_earliest_row_visits {n p t cutoff : ℕ}
     {rows : Fin p → List (Fin n)} (free : HalfBridgeFree (Before rows) cutoff) (enough : 3 ≤ cutoff)
     (simple : ∀ i, (rows i).Nodup) (reference : Fin t → Fin p) (assign : Fin n → Fin t)
     (covers : ∀ i, ∀ v ∈ rows i, v ∈ rows (reference (assign v)) ∧ reference (assign v) ≤ i) :
-    (∑ i, (rows i).length) ≤ t*p+2*n := by
+    (∑ i, (rows i).length) ≤ rowSupportVisits rows assign+2*n := by
   apply mass_le_of_support_groups simple assign
   intro b support assigned
   apply free.excess_le_on_earliest_row_support enough simple (reference b) support
@@ -252,6 +287,52 @@ theorem HalfBridgeFree.mass_le_of_earliest_covering_rows {n p t cutoff : ℕ}
     exact same ▸ (covers i v member).1
   · intro i v on member
     exact (assigned v on).1 ▸ (covers i v member).2
+
+/-- A family with `t` covering rows has mass at most `t*p + 2*n`.
+Each used vertex is assigned to a covering row containing it. -/
+theorem BridgeFree.mass_le_of_covering_rows {n p t cutoff : ℕ}
+    {rows : Fin p → List (Fin n)} (free : BridgeFree (Before rows) cutoff) (enough : 3 ≤ cutoff)
+    (simple : ∀ i, (rows i).Nodup) (reference : Fin t → Fin p) (assign : Fin n → Fin t)
+    (covers : ∀ i, ∀ v ∈ rows i, v ∈ rows (reference (assign v))) :
+    (∑ i, (rows i).length) ≤ t*p+2*n :=
+  (free.mass_le_of_covering_row_visits enough simple reference assign covers).trans
+    (Nat.add_le_add_right (rowSupportVisits_le rows assign) _)
+
+/-- The same mass bound holds in half mode when each used vertex is
+assigned to the row of its first occurrence. -/
+theorem HalfBridgeFree.mass_le_of_earliest_covering_rows {n p t cutoff : ℕ}
+    {rows : Fin p → List (Fin n)} (free : HalfBridgeFree (Before rows) cutoff) (enough : 3 ≤ cutoff)
+    (simple : ∀ i, (rows i).Nodup) (reference : Fin t → Fin p) (assign : Fin n → Fin t)
+    (covers : ∀ i, ∀ v ∈ rows i, v ∈ rows (reference (assign v)) ∧ reference (assign v) ≤ i) :
+    (∑ i, (rows i).length) ≤ t*p+2*n :=
+  (free.mass_le_of_earliest_row_visits enough simple reference assign covers).trans
+    (Nat.add_le_add_right (rowSupportVisits_le rows assign) _)
+
+private theorem rowSupportVisits_add_le_eight_of_le_six {n p t : ℕ}
+    (rows : Fin p → List (Fin n)) (assign : Fin n → Fin t) (few : t ≤ 6) :
+    rowSupportVisits rows assign+2*n ≤ 8*max n p := by
+  have visits := rowSupportVisits_le rows assign
+  have demand := Nat.mul_le_mul_right p few
+  have vertices := le_max_left n p
+  have paths := le_max_right n p
+  omega
+
+/-- A bound on the nonempty row restrictions suffices for frozen
+full-bridge cleaning at any full cutoff of at least three. -/
+theorem regularization_list_frozen_full_of_covering_row_visits {n p t cutoff : ℕ}
+    (rows : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
+    (free : BridgeFree (Before rows) cutoff) (enough : 3 ≤ cutoff)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
+    (reference : Fin t → Fin p) (assign : Fin n → Fin t)
+    (budget : rowSupportVisits rows assign+2*n ≤ 8*max n p)
+    (covers : ∀ i, ∀ v ∈ rows i, v ∈ rows (reference (assign v))) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) cutoff ∧
+      M ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  have mass := free.mass_le_of_covering_row_visits enough simple reference assign covers
+  exact regularization_list_frozen_low_mass_at_cutoff cutoff rows simple free.halfFree (by omega)
+    hn hp dense long (mass.trans budget)
 
 /-- Six covering rows suffice for frozen full-bridge cleaning at any
 full cutoff of at least three. -/
@@ -264,13 +345,27 @@ theorem regularization_list_frozen_full_of_covering_rows {n p t cutoff : ℕ}
     let M := ∑ i, (rows i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) cutoff ∧
-      M ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
-  have mass := free.mass_le_of_covering_rows enough simple reference assign covers
-  have demand := Nat.mul_le_mul_right p few
-  have vertices := le_max_left n p
-  have paths := le_max_right n p
-  exact regularization_list_frozen_low_mass_at_cutoff cutoff rows simple free.halfFree (by omega)
-    hn hp dense long (by omega)
+      M ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_full_of_covering_row_visits rows simple free enough hn hp dense long
+    reference assign (rowSupportVisits_add_le_eight_of_le_six rows assign few) covers
+
+/-- The visit-budget criterion also gives a distinct nonempty witness. -/
+theorem regularization_list_frozen_full_distinct_of_covering_row_visits {n p t cutoff : ℕ}
+    (rows : Fin p → List (Fin n)) (distinct : Function.Injective rows) (nonempty : ∀ i, rows i ≠ [])
+    (simple : ∀ i, (rows i).Nodup) (free : BridgeFree (Before rows) cutoff) (enough : 3 ≤ cutoff)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length)
+    (reference : Fin t → Fin p) (assign : Fin n → Fin t)
+    (budget : rowSupportVisits rows assign+2*n ≤ 8*max n p)
+    (covers : ∀ i, ∀ v ∈ rows i, v ∈ rows (reference (assign v))) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧ (∀ i, (clean i).Nodup) ∧
+      BridgeFree (Before clean) cutoff ∧ M ≤ 8*(∑ i, (clean i).length) ∧
+      (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_distinct_of_indexed (half := false) (k := cutoff) (retention := 8)
+    rows distinct nonempty simple free (by omega) hn hp dense (by decide)
+    (fun long => regularization_list_frozen_full_of_covering_row_visits rows simple free enough hn hp dense long
+      reference assign budget covers)
 
 /-- The same six-row cover gives a distinct nonempty frozen witness
 for feasible literal input. -/
@@ -285,10 +380,25 @@ theorem regularization_list_frozen_full_distinct_of_covering_rows {n p t cutoff 
       Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧ (∀ i, (clean i).Nodup) ∧
       BridgeFree (Before clean) cutoff ∧ M ≤ 8*(∑ i, (clean i).length) ∧
       (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
-  regularization_list_frozen_distinct_of_indexed (half := false) (k := cutoff) (retention := 8)
-    rows distinct nonempty simple free (by omega) hn hp dense (by decide)
-    (fun long => regularization_list_frozen_full_of_covering_rows rows simple free enough hn hp dense long
-      reference assign few covers)
+  regularization_list_frozen_full_distinct_of_covering_row_visits rows distinct nonempty simple free
+    enough hn hp dense reference assign (rowSupportVisits_add_le_eight_of_le_six rows assign few) covers
+
+/-- The visit-budget criterion for first-occurrence groups gives a
+full-bridge-free witness through any chosen output cutoff. -/
+theorem regularization_list_frozen_full_from_half_of_earliest_row_visits {n p t cutoff : ℕ}
+    (outputCutoff : ℕ) (rows : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
+    (free : HalfBridgeFree (Before rows) cutoff) (enough : 3 ≤ cutoff)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
+    (reference : Fin t → Fin p) (assign : Fin n → Fin t)
+    (budget : rowSupportVisits rows assign+2*n ≤ 8*max n p)
+    (covers : ∀ i, ∀ v ∈ rows i, v ∈ rows (reference (assign v)) ∧ reference (assign v) ≤ i) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) outputCutoff ∧
+      M ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  have mass := free.mass_le_of_earliest_row_visits enough simple reference assign covers
+  exact regularization_list_frozen_low_mass_at_cutoff outputCutoff rows simple free (by omega)
+    hn hp dense long (mass.trans budget)
 
 /-- Six first-occurrence rows put a half-three-free family in the
 low-mass regime. The frozen witness can exclude full bridges through
@@ -302,22 +412,19 @@ theorem regularization_list_frozen_full_from_half_of_earliest_covering_rows {n p
     let M := ∑ i, (rows i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) outputCutoff ∧
-      M ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
-  have mass := free.mass_le_of_earliest_covering_rows enough simple reference assign covers
-  have demand := Nat.mul_le_mul_right p few
-  have vertices := le_max_left n p
-  have paths := le_max_right n p
-  exact regularization_list_frozen_low_mass_at_cutoff outputCutoff rows simple free (by omega)
-    hn hp dense long (by omega)
+      M ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_full_from_half_of_earliest_row_visits outputCutoff rows simple free enough
+    hn hp dense long reference assign (rowSupportVisits_add_le_eight_of_le_six rows assign few) covers
 
-/-- For feasible literal half-bridge input, the same first-occurrence
-test gives a distinct nonempty witness excluding full bridges. -/
-theorem regularization_list_frozen_full_distinct_from_half_of_earliest_covering_rows {n p t cutoff : ℕ}
+/-- For feasible literal half-bridge input, the visit-budget criterion gives
+a distinct nonempty witness excluding full bridges. -/
+theorem regularization_list_frozen_full_distinct_from_half_of_earliest_row_visits {n p t cutoff : ℕ}
     (outputCutoff : ℕ) (rows : Fin p → List (Fin n)) (distinct : Function.Injective rows)
     (nonempty : ∀ i, rows i ≠ []) (simple : ∀ i, (rows i).Nodup)
     (free : HalfBridgeFree (Before rows) cutoff) (enough : 3 ≤ cutoff)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length)
-    (reference : Fin t → Fin p) (assign : Fin n → Fin t) (few : t ≤ 6)
+    (reference : Fin t → Fin p) (assign : Fin n → Fin t)
+    (budget : rowSupportVisits rows assign+2*n ≤ 8*max n p)
     (covers : ∀ i, ∀ v ∈ rows i, v ∈ rows (reference (assign v)) ∧ reference (assign v) ≤ i) :
     let M := ∑ i, (rows i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
@@ -332,11 +439,29 @@ theorem regularization_list_frozen_full_distinct_from_half_of_earliest_covering_
   · exact regularization_list_frozen_distinct_of_small_mean outputCutoff rows distinct nonempty simple
       free (by omega) hn hp dense long small
   obtain ⟨n',vertices,p',paths,clean,cleanSimple,cleanFree,lower,upper,caps⟩ :=
-    regularization_list_frozen_full_from_half_of_earliest_covering_rows (max outputCutoff 2)
-      rows simple free enough hn hp dense long reference assign few covers
+    regularization_list_frozen_full_from_half_of_earliest_row_visits (max outputCutoff 2)
+      rows simple free enough hn hp dense long reference assign budget covers
   obtain ⟨cleanDistinct,cleanNonempty⟩ := frozen_length_distinct_of_large_mean cleanSimple
     cleanFree.halfFree (le_max_right _ _) hp (lt_of_not_ge small) caps
   exact ⟨n',vertices,p',paths,clean,cleanDistinct,cleanNonempty,cleanSimple,
     (fun _ size => cleanFree (size.trans (le_max_left _ _))),lower,upper,caps⟩
+
+/-- With at most six first-occurrence rows, the feasible literal input also
+has a distinct nonempty witness excluding full bridges. -/
+theorem regularization_list_frozen_full_distinct_from_half_of_earliest_covering_rows {n p t cutoff : ℕ}
+    (outputCutoff : ℕ) (rows : Fin p → List (Fin n)) (distinct : Function.Injective rows)
+    (nonempty : ∀ i, rows i ≠ []) (simple : ∀ i, (rows i).Nodup)
+    (free : HalfBridgeFree (Before rows) cutoff) (enough : 3 ≤ cutoff)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length)
+    (reference : Fin t → Fin p) (assign : Fin n → Fin t) (few : t ≤ 6)
+    (covers : ∀ i, ∀ v ∈ rows i, v ∈ rows (reference (assign v)) ∧ reference (assign v) ≤ i) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧ (∀ i, (clean i).Nodup) ∧
+      BridgeFree (Before clean) outputCutoff ∧ M ≤ 8*(∑ i, (clean i).length) ∧
+      (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_full_distinct_from_half_of_earliest_row_visits outputCutoff rows distinct
+    nonempty simple free enough hn hp dense reference assign
+    (rowSupportVisits_add_le_eight_of_le_six rows assign few) covers
 
 end OnlineReachabilityPreservers
