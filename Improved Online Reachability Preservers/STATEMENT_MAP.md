@@ -1762,9 +1762,27 @@ witnesses retain at least \(M/27\) with both original budgets, all four
 original caps and the same cutoff.
 [Boundary cost](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L30)
 · [Endpoint test](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L76)
-· [Cover from the span test](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L88)
-· [Indexed witness](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L163)
-· [Literal witness](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L176).
+· [Cover from the span test](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L122)
+· [Indexed witness](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L179)
+· [Literal witness](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L192).
+
+The same width-boundary erasure also repairs half-bridge exclusion.
+In the actual comparison graph of the width pieces, test walks from a
+later position to an earlier position in another block of the same
+parent, within \(\max(0,k-3)\) steps.
+For simple half-free input through \(k\ge2\), assume positive budgets
+and \(M\ge\max(n,p)\). When \(M>8\max(n,p)\), require the standard degree
+copies to exclude half-bridges through \(k\) and all the tested returns
+to span at most \(\lfloor L/8\rfloor\) positions of their copied parent.
+Erasing the boundary marks then costs at most \(M/8\), and the original
+arrival order permits a frozen \(M/32\) witness at the same cutoff.
+Both budgets and all four original caps hold for the indexed and feasible
+literal versions. The low-mass branch needs neither test.
+[Width-walk span test](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L13)
+· [Returns after erasure](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L26)
+· [Half-bridge preservation](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L53)
+· [Indexed witness](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L89)
+· [Literal witness](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L158).
 
 Refine the standard copied vertices by assigning a colour to each
 parent occurrence. A tested crossed return survives exactly when each

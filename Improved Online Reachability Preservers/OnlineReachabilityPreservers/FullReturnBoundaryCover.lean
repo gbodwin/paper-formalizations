@@ -83,17 +83,18 @@ def CrossedWidthReturnSpanLE (rows : I → List V) (width radius margin : ℕ) :
       (∀ t, Before pieces (a t) (v t.castSucc) (v t.succ)) →
       (rows i.fst).idxOf (v 0) ≤ (rows i.fst).idxOf (v (Fin.last d)) + margin
 
-/-- A backward return of parent span at most `margin` across width
-blocks starts in the marked part of the later block. -/
-theorem widthBoundaryIncidences_covers_short_span (rows : I → List V) {width radius margin : ℕ}
-    (positive : 0 < width) (shortSpan : CrossedWidthReturnSpanLE rows width radius margin) :
-    CrossedParentReturnIncidenceCover rows (splitListPaths rows width) Sigma.fst radius
-      (widthBoundaryIncidences rows width margin) := by
+/-- A short backward span across two blocks puts its later endpoint within
+the boundary margin. -/
+theorem mem_widthBoundaryIncidences_of_parent_span (rows : I → List V) {width margin : ℕ}
+    (positive : 0 < width) {i j : ListBlockIndex rows width} {laterVertex earlierVertex : V}
+    (apart : i ≠ j) (same : i.fst = j.fst)
+    (first : laterVertex ∈ splitListPaths rows width i) (last : earlierVertex ∈ splitListPaths rows width j)
+    (backward : Before rows i.fst earlierVertex laterVertex)
+    (bounds : (rows i.fst).idxOf laterVertex ≤ (rows i.fst).idxOf earlierVertex+margin) :
+    (i,laterVertex) ∈ widthBoundaryIncidences rows width margin := by
   classical
-  intro i j d apart same radiusBound v a other injective first last backward along
-  let x := (rows i.fst).idxOf (v 0)
-  let y := (rows i.fst).idxOf (v (Fin.last d))
-  have bounds : x ≤ y+margin := shortSpan apart same radiusBound v a other injective first last backward along
+  let x := (rows i.fst).idxOf laterVertex
+  let y := (rows i.fst).idxOf earlierVertex
   have later : y < x := backward.2.2
   have onX : x/width = i.snd.val := (mem_localPathBlock.mp first).2
   have onY : y/width = j.snd.val := by
@@ -112,25 +113,40 @@ theorem widthBoundaryIncidences_covers_short_span (rows : I → List V) {width r
   rw [onX] at splitX
   have withinY := Nat.mod_lt y positive
   have near : x % width < margin := by omega
-  apply Or.inl
   apply mem_filter.mpr
   refine ⟨mem_pieceIncidences.mpr ⟨mem_univ _,first⟩,?_⟩
   change 0 < i.snd.val ∧ x % width < margin
   exact ⟨by omega,near⟩
 
-/-- A margin of at most one third of the width charges at most a third
-of the input incidences, even when every noninitial block has a mark. -/
-theorem widthBoundaryIncidences_third_mass (rows : I → List V) (simple : ∀ i, (rows i).Nodup)
-    {width margin : ℕ} (narrow : 3*margin ≤ width) :
-    3*(widthBoundaryIncidences rows width margin).card ≤ ∑ i, (rows i).length := by
+/-- Delete the marked boundary to meet every tested short-span return. -/
+theorem widthBoundaryIncidences_covers_short_span (rows : I → List V) {width radius margin : ℕ}
+    (positive : 0 < width) (shortSpan : CrossedWidthReturnSpanLE rows width radius margin) :
+    CrossedParentReturnIncidenceCover rows (splitListPaths rows width) Sigma.fst radius
+      (widthBoundaryIncidences rows width margin) := by
+  intro i j d apart same short v a other injective first last backward along
+  exact Or.inl (mem_widthBoundaryIncidences_of_parent_span rows positive apart same first last backward
+    (shortSpan apart same short v a other injective first last backward along))
+
+/-- Scale the margin to charge the erased incidences against the
+original mass. -/
+theorem widthBoundaryIncidences_scaled_mass (rows : I → List V) (simple : ∀ i, (rows i).Nodup)
+    {width margin scale : ℕ} (narrow : scale*margin ≤ width) :
+    scale*(widthBoundaryIncidences rows width margin).card ≤ ∑ i, (rows i).length := by
   calc
-    _ ≤ 3*((∑ i, (rows i).length / width) * margin) :=
-      Nat.mul_le_mul_left 3 (widthBoundaryIncidences_card_le rows simple width margin)
-    _ = (∑ i, (rows i).length / width) * (3*margin) := by ring
+    _ ≤ scale*((∑ i, (rows i).length / width) * margin) :=
+      Nat.mul_le_mul_left scale (widthBoundaryIncidences_card_le rows simple width margin)
+    _ = (∑ i, (rows i).length / width) * (scale*margin) := by ring
     _ ≤ (∑ i, (rows i).length / width) * width := Nat.mul_le_mul_left _ narrow
     _ ≤ _ := by
       rw [sum_mul]
       exact sum_le_sum (fun i _ => Nat.div_mul_le_self (rows i).length width)
+
+/-- A margin of at most one third of the width charges at most a third
+of the input incidences. -/
+theorem widthBoundaryIncidences_third_mass (rows : I → List V) (simple : ∀ i, (rows i).Nodup)
+    {width margin : ℕ} (narrow : 3*margin ≤ width) :
+    3*(widthBoundaryIncidences rows width margin).card ≤ ∑ i, (rows i).length :=
+  widthBoundaryIncidences_scaled_mass rows simple narrow
 
 /-- The standard copies and width blocks pass the span test when every
 crossed return of length at most `cutoff-5` spans at most `L/3` parent
