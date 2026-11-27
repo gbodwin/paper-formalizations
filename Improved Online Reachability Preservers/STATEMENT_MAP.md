@@ -1564,6 +1564,19 @@ seven for simple input of mass \(M\) at least both positive budgets.
 It keeps both budgets and all four original-average caps.
 [Lift with interleaving](OnlineReachabilityPreservers/CyclicSplits.lean#L570) · [Full preservation](OnlineReachabilityPreservers/CyclicSplits.lean#L636) · [Graph certificate](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L11) · [Width-cut application](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L39) · [Frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
 
+The full-seven lift also permits packing the original-width path
+pieces from components of returns of at most two steps in the
+whole copied rows. Each connected group of endpoints must fit
+the original length width. This retains at least \(M/4\) at full
+cutoff seven with both original budgets and all four original-average
+caps, for simple input excluding full bridges through seven and
+mass \(M\) at least both positive budgets.
+Testing the original row components instead also suffices because
+copied components only project inside original ones.
+For feasible literal distinct nonempty input, the witness can
+be distinct and nonempty with retention at least \(M/8\).
+[Packing theorem](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L116) · [Frozen witness on copied components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L193) · [Original component test](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L213) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L228).
+
 At half cutoff four, a [balanced midpoint split with no valid arrival permutation](OnlineReachabilityPreservers/HalfFourSplitOrderAudit.lean#L103)
 starts from a half-free indexed family with uniform degree two and mean
 length \(7/2\). Its sole length-six path splits into two length-three
@@ -2364,7 +2377,7 @@ one piece of length at most half the width per parent. Filtering each
 row by its group keeps the original order, every incidence and every
 vertex degree. It preserves the given full or half cutoff, with the
 pieces in parent arrival order in half mode.
-[Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L107) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L89) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L116).
+[Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L107) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L89) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L247).
 
 For simple input of mass \(M\) at least both positive budgets, apply
 the grouping to admissible standard degree copies at the original
@@ -2374,7 +2387,7 @@ width give quadratic loss bounds for the two support trims. Their
 individual losses are at most \(M/12\) and \(M/8\). After frozen peeling,
 the indexed witness has mass at least \(M/4\), both budgets, all four
 caps and the original full or half cutoff.
-[Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L241).
+[Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L337).
 
 The two support trims also apply when the degree groups have varying
 sizes. Assume simple admissible copies of mass \(M\) at least both

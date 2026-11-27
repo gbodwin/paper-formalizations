@@ -943,6 +943,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   path splits. If the test passes, the frozen witness retains at least
   \(M/16\) with both original budgets and all four caps.
   [Lift allowing interleaved pieces](OnlineReachabilityPreservers/CyclicSplits.lean#L570) · [Two-step width test](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L39) · [Full-seven frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
+- At full cutoff seven, packing the components of returns of at most
+  two steps gives a frozen quarter-mass witness if those components fit the
+  original path width. Use either the original rows or the standard
+  degree copies for the component test. The simple full-seven-free
+  input must have positive budgets and mass at least both budgets.
+  For feasible distinct nonempty input, the original-row test also
+  gives a distinct nonempty witness with at least \(M/8\).
+  [Packing at the certified radius](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L116) · [Copied components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L193) · [Original components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L213) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L228).
 - The [literal set versions](OnlineReachabilityPreservers/FrozenDistinctCleaning.lean)
   give distinct nonempty output paths with the same caps. They apply to
   the literal exact-count maximum when the positive original budgets are feasible.
@@ -1105,7 +1113,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   row by its group keeps the original order, every incidence and every
   vertex degree. It preserves the given full or half cutoff, with the
   pieces in parent arrival order in half mode.
-  [Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L107) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L89) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L116).
+  [Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L107) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L89) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L247).
 - For simple input of mass \(M\) at least both positive budgets, apply
   the grouping to admissible standard degree copies at the original
   width. If each copied row admits the partition at the original path
@@ -1114,7 +1122,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   individual losses are at most \(M/12\) and \(M/8\). After frozen peeling,
   the indexed witness has mass at least \(M/4\), both budgets, all four
   caps and the original full or half cutoff.
-  [Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L241).
+  [Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L337).
 - The two support trims also apply when the degree groups have varying
   sizes. Assume simple admissible copies of mass \(M\) at least both
   positive budgets, with all degrees within the original width. At most

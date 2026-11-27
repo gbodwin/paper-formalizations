@@ -1,5 +1,5 @@
 import OnlineReachabilityPreservers.FrozenQuadraticTrimming
-import OnlineReachabilityPreservers.ComponentSplitCleaning
+import OnlineReachabilityPreservers.FullSevenWidthCleaning
 import Mathlib.Data.Fintype.Card
 
 /-! Pack whole groups of endpoints linked by short backward returns. -/
@@ -111,12 +111,13 @@ def HasCappedShortReturnPartition {I V : Type*} [Fintype I] [Fintype V] [Decidab
 
 /-- Merge whole protected groups in each row until at most one piece
 per parent has length at most half the width. This retains every
-incidence and every vertex degree, and preserves the original full or
-half bridge exclusion. -/
-theorem split_of_cappedShortReturnPartition {V : Type*} [LinearOrder V] [Fintype V]
-    {p w cutoff : ℕ} {half : Bool} {rows : Fin p → List V}
+incidence and every vertex degree. Use the original return radius, or
+radius two for full cutoffs through seven. -/
+theorem split_of_cappedShortReturnPartition_with_radius {V : Type*} [LinearOrder V] [Fintype V]
+    {p w cutoff groupCutoff : ℕ} {half : Bool} {rows : Fin p → List V}
     (simple : ∀ i, (rows i).Nodup) (free : localOrderAdmissible half cutoff rows)
-    (canGroup : HasCappedShortReturnPartition rows w cutoff) :
+    (canGroup : HasCappedShortReturnPartition rows w groupCutoff)
+    (radius : groupCutoff = cutoff ∨ groupCutoff = 5 ∧ half = false ∧ cutoff ≤ 7) :
     ∃ (sizes : Fin p → ℕ) (pieces : (Σₗ i : Fin p, Fin (sizes i)) → List V),
       (∀ i, (pieces i).Nodup) ∧ localOrderAdmissible half cutoff pieces ∧
       (∀ i, (pieces i).length ≤ w) ∧
@@ -126,7 +127,7 @@ theorem split_of_cappedShortReturnPartition {V : Type*} [LinearOrder V] [Fintype
       ({i ∈ univ | (pieces i).length ≤ w/2} : Finset (Σₗ i : Fin p, Fin (sizes i))).card ≤ p := by
   classical
   let G := listPiecePrecedenceGraph rows
-  let linked (i : Fin p) (x y : V) := Before rows i x y ∧ y ∈ reachIn G x (cutoff - 3)
+  let linked (i : Fin p) (x y : V) := Before rows i x y ∧ y ∈ reachIn G x (groupCutoff - 3)
   have existence (i : Fin p) := cappedPathPartition_of_pairwise_large (rows i).toFinset (linked i) w (canGroup i)
   choose groups partition large using existence
   let sizes (i : Fin p) := (groups i).card
@@ -164,7 +165,7 @@ theorem split_of_cappedShortReturnPartition {V : Type*} [LinearOrder V] [Fintype
     listBefore_of_sublist (paths := fun i : J => rows i.fst) (cut := pieces) (simple j.fst) (remains j) on
   have projects ⦃j : J⦄ ⦃x y : V⦄ (on : Before pieces j x y) : Edge G (id x) (id y) :=
     listPiecePrecedenceGraph_edge.mpr ⟨j.fst, step on⟩
-  have safe : NoShortBackwardReturnAcrossPieces G id rows pieces (fun j : J => j.fst) (cutoff - 3) := by
+  have safe : NoShortBackwardReturnAcrossPieces G id rows pieces (fun j : J => j.fst) (groupCutoff - 3) := by
     intro i j x y apart parent left right forward back
     change i.fst = j.fst at parent
     obtain ⟨g, on, xIn, yIn⟩ := (partition i.fst).together (show linked i.fst x y from ⟨forward, back⟩)
@@ -176,16 +177,24 @@ theorem split_of_cappedShortReturnPartition {V : Type*} [LinearOrder V] [Fintype
       exact disjoint_left.mp ((partition i.fst).apart (parent ▸ onGroup j) on different) ((occurs j y).mp right) yIn
     exact different parent apart (sameI.trans sameJ.symm)
   have legal : localOrderAdmissible half cutoff pieces := by
-    cases half
-    · exact bridgeFree_of_disjoint_split_of_no_backward_returns G id free (fun j : J => j.fst)
-        step projects disjoint safe
-    · have mono : Monotone (fun j : J => j.fst) := by
-        intro a b order
-        rcases Sigma.Lex.le_def.mp order with lt | ⟨eq, _⟩
-        · exact lt.le
-        · exact eq.le
-      exact halfBridgeFree_of_disjoint_split_of_no_backward_returns G id free (fun j : J => j.fst)
-        mono step projects disjoint safe
+    rcases radius with same | ⟨atTwo, mode, short⟩
+    · have sufficient : NoShortBackwardReturnAcrossPieces G id rows pieces (fun j : J => j.fst) (cutoff - 3) :=
+        same ▸ safe
+      cases half
+      · exact bridgeFree_of_disjoint_split_of_no_backward_returns G id free (fun j : J => j.fst)
+          step projects disjoint sufficient
+      · have mono : Monotone (fun j : J => j.fst) := by
+          intro a b order
+          rcases Sigma.Lex.le_def.mp order with lt | ⟨eq, _⟩
+          · exact lt.le
+          · exact eq.le
+        exact halfBridgeFree_of_disjoint_split_of_no_backward_returns G id free (fun j : J => j.fst)
+          mono step projects disjoint sufficient
+    · have sufficient : NoShortBackwardReturnAcrossPieces G id rows pieces (fun j : J => j.fst) 2 := by
+        simpa only [atTwo] using safe
+      cases mode
+      exact bridgeFree_of_disjoint_split_of_no_two_step_backward_returns G id (fun j : J => j.fst)
+        step projects disjoint sufficient free short
   refine ⟨sizes, pieces, pieceSimple, legal, fun j => (length j).trans_le ((partition j.fst).fits _ (onGroup j)),
     ?_, ?_, ?_⟩
   · change (∑ j : (Σ i : Fin p, Fin (sizes i)), (pieces j).length) = _
@@ -234,16 +243,31 @@ theorem split_of_cappedShortReturnPartition {V : Type*} [LinearOrder V] [Fintype
       omega
     simpa only [card_univ, Fintype.card_fin] using count
 
+/-- Packing with the original return radius preserves either bridge exclusion. -/
+theorem split_of_cappedShortReturnPartition {V : Type*} [LinearOrder V] [Fintype V]
+    {p w cutoff : ℕ} {half : Bool} {rows : Fin p → List V}
+    (simple : ∀ i, (rows i).Nodup) (free : localOrderAdmissible half cutoff rows)
+    (canGroup : HasCappedShortReturnPartition rows w cutoff) :
+    ∃ (sizes : Fin p → ℕ) (pieces : (Σₗ i : Fin p, Fin (sizes i)) → List V),
+      (∀ i, (pieces i).Nodup) ∧ localOrderAdmissible half cutoff pieces ∧
+      (∀ i, (pieces i).length ≤ w) ∧
+      (∑ i, (pieces i).length) = ∑ i, (rows i).length ∧
+      (∀ x, (occurrences (fun i => (pieces i).toFinset) x).card =
+        (occurrences (fun i => (rows i).toFinset) x).card) ∧
+      ({i ∈ univ | (pieces i).length ≤ w/2} : Finset (Σₗ i : Fin p, Fin (sizes i))).card ≤ p :=
+  split_of_cappedShortReturnPartition_with_radius simple free canGroup (Or.inl rfl)
+
 /-- An admissible degree split and width-bounded short-return groups
 give a frozen witness of mass at least one quarter of the original
 mass. Trim the full degree blocks and the path pieces longer than half
 the path width before applying the original lower caps. -/
-theorem regularization_list_frozen_of_capped_short_return_partitions {n p k : ℕ} {half : Bool}
+theorem regularization_list_frozen_of_capped_short_return_partitions_with_radius {n p k groupCutoff : ℕ} {half : Bool}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
     (copyLegal : let M := ∑ i, (paths i).length; localOrderAdmissible half k (splitListVertices paths (4*M/n)))
     (canGroup : let M := ∑ i, (paths i).length
-      HasCappedShortReturnPartition (splitListVertices paths (4*M/n)) (4*M/p) k) :
+      HasCappedShortReturnPartition (splitListVertices paths (4*M/n)) (4*M/p) groupCutoff)
+    (radius : groupCutoff = k ∨ groupCutoff = 5 ∧ half = false ∧ k ≤ 7) :
     let M := ∑ i, (paths i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
@@ -265,7 +289,7 @@ theorem regularization_list_frozen_of_capped_short_return_partitions {n p k : �
   have copyMass : (∑ i, (copies i).length) = M :=
     sum_congr rfl (fun i _ => by simp [copies, splitListVertices])
   obtain ⟨sizes, pieces, pieceSimple, legal, length, mass, degrees, light⟩ :=
-    split_of_cappedShortReturnPartition copySimple copyLegal canGroup
+    split_of_cappedShortReturnPartition_with_radius copySimple copyLegal canGroup radius
   let J := Σₗ i : Fin p, Fin (sizes i)
   have fullMass : (∑ i, (pieces i).length) = M := mass.trans copyMass
   obtain ⟨filledV, fullV, restV⟩ := splitListVertices_full_block_profile paths dPos
@@ -308,5 +332,19 @@ theorem regularization_list_frozen_of_capped_short_return_partitions {n p k : �
       _ ≤ M^2 := lossI
       _ = M*M := pow_two _
   omega
+
+/-- The original path return radius gives frozen cleaning after degree copying. -/
+theorem regularization_list_frozen_of_capped_short_return_partitions {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (copyLegal : let M := ∑ i, (paths i).length; localOrderAdmissible half k (splitListVertices paths (4*M/n)))
+    (canGroup : let M := ∑ i, (paths i).length
+      HasCappedShortReturnPartition (splitListVertices paths (4*M/n)) (4*M/p) k) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 4*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_of_capped_short_return_partitions_with_radius paths simple hn hp dense long
+    copyLegal canGroup (Or.inl rfl)
 
 end OnlineReachabilityPreservers

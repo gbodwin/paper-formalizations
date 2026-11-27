@@ -185,4 +185,64 @@ theorem regularization_list_frozen_distinct_of_small_short_return_path_excess {n
   exact fun long => regularization_list_frozen_of_small_short_return_path_excess rows simple free
     hn hp dense long halfSafe excess
 
+
+local notation "Before" => SourceAudit.BeforeIn
+
+/-- The path components on the standard degree copies only need
+to protect returns of at most two steps at full cutoff seven. -/
+theorem regularization_list_frozen_full_seven_of_copied_two_step_components {n p : ℕ}
+    (rows : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
+    (free : BridgeFree (Before rows) 7)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
+    (room : let M := ∑ i, (rows i).length; let copies := splitListVertices rows (4*M/n)
+      ∀ i, ∀ x ∈ copies i, (shortReturnRowComponent copies 5 i x).card ≤ 4*M/p) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) 7 ∧
+      M ≤ 4*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (rows i).length
+  let copies := splitListVertices rows (4*M/n)
+  have legal : localOrderAdmissible false 7 copies :=
+    free.split_list_vertices_any (·.fst) (fun {i _ _} => splitListVertices_step (simple i))
+  have canGroup := (hasCappedShortReturnPartition_iff_component_room copies (4*M/p) 5).mpr room
+  exact regularization_list_frozen_of_capped_short_return_partitions_with_radius rows simple hn hp dense long
+    legal canGroup (Or.inr ⟨rfl, rfl, le_rfl⟩)
+
+/-- A width bound on the original path components for two-step
+returns suffices before the standard degree copies are chosen. -/
+theorem regularization_list_frozen_full_seven_of_two_step_components {n p : ℕ}
+    (rows : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
+    (free : BridgeFree (Before rows) 7)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
+    (room : let M := ∑ i, (rows i).length
+      ∀ i, ∀ x ∈ rows i, (shortReturnRowComponent rows 5 i x).card ≤ 4*M/p) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) 7 ∧
+      M ≤ 4*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_full_seven_of_copied_two_step_components rows simple free hn hp dense long
+    (splitListVertices_short_return_path_room simple room)
+
+/-- For feasible literal input the two-step components also suffice
+for a distinct nonempty full-seven witness. -/
+theorem regularization_list_frozen_full_seven_distinct_of_two_step_components {n p : ℕ}
+    (rows : Fin p → List (Fin n)) (distinct : Function.Injective rows)
+    (nonempty : ∀ i, rows i ≠ []) (simple : ∀ i, (rows i).Nodup)
+    (free : BridgeFree (Before rows) 7)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length)
+    (room : let M := ∑ i, (rows i).length
+      ∀ i, ∀ x ∈ rows i, (shortReturnRowComponent rows 5 i x).card ≤ 4*M/p) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧ (∀ i, (clean i).Nodup) ∧
+      BridgeFree (Before clean) 7 ∧
+      M ≤ 8*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  refine regularization_list_frozen_distinct_of_indexed (half := false) (k := 7) (retention := 8)
+    rows distinct nonempty simple free (by decide) hn hp dense (by decide) ?_
+  dsimp only
+  intro long
+  obtain ⟨n', vertices, p', paths, clean, cleanSimple, allowed, lower, upper, caps⟩ :=
+    regularization_list_frozen_full_seven_of_two_step_components rows simple free hn hp dense long room
+  exact ⟨n', vertices, p', paths, clean, cleanSimple, allowed, by omega, upper, caps⟩
+
 end OnlineReachabilityPreservers
