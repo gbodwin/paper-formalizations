@@ -847,14 +847,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   all four caps for positive budgets and mass at least both counts. A broader
   [support condition](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L233)
   uses the actual number of occupied vertex copies.
-- [Quadratic trimming](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L143)
+- [Quadratic trimming](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L180)
   works on a subsystem within the original budgets that carries at least
   nine sixteenths of the original mass and whose original-width splits
   preserve the chosen bridge exclusion. It keeps every nonfinal block
   and trims among the final blocks in each dimension. It retains at least
   \(M/104\) with both budgets and all four caps. Selecting the heaviest vertex
   copies before splitting gives this guarantee when at most
-  [seven ninths of the vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L271).
+  [seven ninths of the vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L308).
   This version preserves the matching input exclusion at cutoff four in
   either mode or at full cutoff six.
 - [Cleaning with disjoint reverse partners](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L192)
@@ -1066,15 +1066,24 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   keeps every incidence before trimming and yields the indexed
   \(M/16\) witness with the cutoff, both budgets and all four frozen caps.
   [Protected vertices](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L471) · [Preservation through the cutoff](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L499) · [Frozen witness at both original widths](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L528).
-- The endpoints with short backward returns can also be placed in
-  several groups in the same row. Assume the row admits a disjoint
+- For simple rows already admissible at the given cutoff, the protected
+  endpoints can be placed in several groups per row. Assume a disjoint
   partition within the path width, with both endpoints of every tested
   comparison in one group. A minimum-cardinality partition has at most
   one piece of length at most half the width per parent. Filtering each
   row by its group keeps the original order, every incidence and every
   vertex degree. It preserves the given full or half cutoff, with the
   pieces in parent arrival order in half mode.
-  [Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L106) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L88) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L115).
+  [Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L107) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L89) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L116).
+- For simple input of mass \(M\) at least both positive budgets, apply
+  the grouping to admissible standard degree copies at the original
+  width. If each copied row admits the partition at the original path
+  width, the full degree blocks and the pieces above half the path
+  width give quadratic loss bounds for the two support trims. Their
+  individual losses are at most \(M/12\) and \(M/8\). After frozen peeling,
+  the indexed witness has mass at least \(M/4\), both budgets, all four
+  caps and the original full or half cutoff.
+  [Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L70) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L241).
 - An eight-vertex example shows a limit of the disjoint-component rank test.
   Its seven original rows exclude full bridges through three. Standard
   width-two blocks form a directed cycle. Each vertex starts a strict

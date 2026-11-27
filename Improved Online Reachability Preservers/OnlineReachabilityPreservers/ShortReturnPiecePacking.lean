@@ -1,3 +1,4 @@
+import OnlineReachabilityPreservers.FrozenQuadraticTrimming
 import OnlineReachabilityPreservers.ComponentSplitCleaning
 import Mathlib.Data.Fintype.Card
 
@@ -232,5 +233,86 @@ theorem split_of_cappedShortReturnPartition {V : Type*} [LinearOrder V] [Fintype
       rw [length j] at right
       omega
     simpa only [card_univ, Fintype.card_fin] using count
+
+/-- An admissible degree split and width-bounded short-return groups
+give a frozen witness of mass at least one quarter of the original
+mass. Trim the full degree blocks and the path pieces longer than half
+the path width before applying the original lower caps. -/
+theorem regularization_list_frozen_of_capped_short_return_partitions {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (copyLegal : let M := ∑ i, (paths i).length; localOrderAdmissible half k (splitListVertices paths (4*M/n)))
+    (canGroup : let M := ∑ i, (paths i).length
+      HasCappedShortReturnPartition (splitListVertices paths (4*M/n)) (4*M/p) k) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 4*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let copies := splitListVertices paths D
+  let minLength := L/2 + 1
+  have mPos : 0 < M := hn.trans_le dense
+  have dPos : 0 < D := (four_average_width hn dense).1
+  have lPos : 0 < minLength := Nat.succ_pos _
+  have capV : 3*M ≤ D*n := by
+    have upper := four_average_width_product hn (M := M)
+    change 4*M < D*n + n at upper
+    omega
+  have capI : 2*M ≤ minLength*p := by
+    have upper := Nat.lt_mul_div_succ (4*M) hp
+    change 4*M < p*(L+1) at upper
+    have halfWidth : L+1 ≤ 2*minLength := by dsimp only [minLength]; omega
+    have ordered := Nat.mul_le_mul_left p halfWidth
+    have equal : p*(2*minLength) = 2*(minLength*p) := by ring
+    omega
+  have copySimple (i : Fin p) : (copies i).Nodup := splitListVertices_simple paths D i (simple i)
+  have copyMass : (∑ i, (copies i).length) = M :=
+    sum_congr rfl (fun i _ => by simp [copies, splitListVertices])
+  obtain ⟨sizes, pieces, pieceSimple, legal, length, mass, degrees, light⟩ :=
+    split_of_cappedShortReturnPartition copySimple copyLegal canGroup
+  let J := Σₗ i : Fin p, Fin (sizes i)
+  have fullMass : (∑ i, (pieces i).length) = M := mass.trans copyMass
+  obtain ⟨filledV, fullV, restV⟩ := splitListVertices_full_block_profile paths dPos
+  have degree (v : ListVertexBlockIndex paths D) :
+      (occurrences (fun i => (pieces i).toFinset) v).card ≤ D := by
+    have equal : (fun i => (copies i).toFinset) = splitVertices (fun i => (paths i).toFinset) D :=
+      funext (splitListVertices_toFinset paths D)
+    have copied : (occurrences (fun i => (copies i).toFinset) v).card ≤ D := by
+      rw [equal]
+      exact splitVertices_degree (fun i => (paths i).toFinset) dPos v
+    exact (degrees v).trans_le copied
+  let heavy := (univ : Finset J).filter fun i => L/2 < (pieces i).length
+  have fullI (i : J) (on : i ∈ heavy) : minLength ≤ (pieces i).length := (mem_filter.mp on).2
+  have restI : (univ \ heavy).card ≤ p := by
+    have equal : (univ : Finset J) \ heavy = ({i ∈ univ | (pieces i).length ≤ L/2} : Finset J) := by
+      ext i
+      simp [heavy]
+    rw [equal]
+    exact light
+  refine regularization_list_frozen_after_packed_profile_trim_of_loss pieces pieceSimple legal
+    hn hp dense long length degree fullMass.le filledV heavy lPos
+    (fun v on => (degrees v).trans (fullV v on))
+    (restV.le.trans_eq (Fintype.card_fin n)) fullI restI
+    (fullMass.trans_le ((by omega : M ≤ 2*M).trans capI)) ?_
+  dsimp only
+  rw [fullMass]
+  intro retained removedV removedI paid lossV lossI
+  have vertexLoss : 12*removedV ≤ M := by
+    apply (Nat.mul_le_mul_left_iff mPos).mp
+    calc
+      M*(12*removedV) = 4*(3*M)*removedV := by ring
+      _ ≤ 4*(D*n)*removedV := Nat.mul_le_mul_right _ (Nat.mul_le_mul_left _ capV)
+      _ ≤ M^2 := lossV
+      _ = M*M := pow_two _
+  have pathLoss : 8*removedI ≤ M := by
+    apply (Nat.mul_le_mul_left_iff mPos).mp
+    calc
+      M*(8*removedI) = 4*(2*M)*removedI := by ring
+      _ ≤ 4*(minLength*p)*removedI := Nat.mul_le_mul_right _ (Nat.mul_le_mul_left _ capI)
+      _ ≤ M^2 := lossI
+      _ = M*M := pow_two _
+  omega
 
 end OnlineReachabilityPreservers

@@ -1903,7 +1903,7 @@ additional width blocks must fit within four thirds of the original
 vertex budget. This includes
 [inputs with at most \(n/16\) vertices having an outgoing partner](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L299).
 
-[Quadratic trimming of both supports](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L143)
+[Quadratic trimming of both supports](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L180)
 starts with a subsystem within the original budgets, with mass \(K\)
 between \(9M/16\) and \(M\). Its splits at the original factor-four
 widths must preserve the chosen bridge exclusion. All nonfinal blocks
@@ -1912,11 +1912,11 @@ most \(K^2/(6M)\) because the width times its budget is at least \(3M\)
 in each dimension. At least \(261M/512\)
 remains before peeling, so the cleaned mass is at least \(M/104\) with
 both original budgets and all four caps. If the vertex-only split uses
-at most \(16n/9\) copies, the [heaviest original-budget set](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L198)
+at most \(16n/9\) copies, the [heaviest original-budget set](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L235)
 retains the needed nine sixteenths. The unique intersections justify
 the width splits at cutoff four in either mode or at full cutoff six,
 with the corresponding input exclusion. A sufficient condition is that
-[at most seven ninths of the original vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L271).
+[at most seven ninths of the original vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L308).
 
 [Half-budget width splits](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L97)
 use a subsystem of simple paths within the original vertex budget and at
@@ -2310,15 +2310,25 @@ keeps every incidence before trimming and yields the indexed
 \(M/16\) witness with the cutoff, both budgets and all four frozen caps.
 [Protected vertices](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L471) · [Preservation through the cutoff](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L499) · [Frozen witness at both original widths](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L528).
 
-The endpoints with short backward returns can also be placed in
-several groups in the same row. Assume the row admits a disjoint
+For simple rows already admissible at the given cutoff, the protected
+endpoints can be placed in several groups per row. Assume a disjoint
 partition within the path width, with both endpoints of every tested
 comparison in one group. A minimum-cardinality partition has at most
 one piece of length at most half the width per parent. Filtering each
 row by its group keeps the original order, every incidence and every
 vertex degree. It preserves the given full or half cutoff, with the
 pieces in parent arrival order in half mode.
-[Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L106) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L88) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L115).
+[Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L107) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L89) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L116).
+
+For simple input of mass \(M\) at least both positive budgets, apply
+the grouping to admissible standard degree copies at the original
+width. If each copied row admits the partition at the original path
+width, the full degree blocks and the pieces above half the path
+width give quadratic loss bounds for the two support trims. Their
+individual losses are at most \(M/12\) and \(M/8\). After frozen peeling,
+the indexed witness has mass at least \(M/4\), both budgets, all four
+caps and the original full or half cutoff.
+[Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L70) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L241).
 
 An eight-vertex example shows a limit of the disjoint-component rank test.
 Its seven original rows exclude full bridges through three. Standard
