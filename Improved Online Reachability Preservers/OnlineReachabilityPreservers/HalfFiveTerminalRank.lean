@@ -138,4 +138,82 @@ theorem halfFiveTerminalComponentRank_eq_iff {p : ℕ} {V : Type*} [DecidableEq 
     exact Nat.add_left_cancel equal
   · exact (terminalRank_lt_of_count_lt (a := w) (b := u) more).ne equal.symm |>.elim
 
+open scoped Prod.Lex
+
+/-- A copy is identified by its original vertex and its assigned rank. -/
+def halfFiveRankedVertexCopies {I V : Type*} (paths : I → List V)
+    (assigned : I → V → ℕ) (i : I) : List (V ×ₗ ℕ) :=
+  (paths i).map fun v => toLex (v,assigned i v)
+
+theorem halfFiveRankedVertexCopies_project {I V : Type*} (paths : I → List V)
+    (assigned : I → V → ℕ) (i : I) :
+    (halfFiveRankedVertexCopies paths assigned i).map (fun x => (ofLex x).1) = paths i := by
+  simp [halfFiveRankedVertexCopies,List.map_map,Function.comp_def]
+
+theorem halfFiveRankedVertexCopies_simple {I V : Type*} {paths : I → List V}
+    (simple : ∀ i, (paths i).Nodup) (assigned : I → V → ℕ) (i : I) :
+    (halfFiveRankedVertexCopies paths assigned i).Nodup :=
+  (simple i).map (fun _ _ equal => congrArg (fun x => (ofLex x).1) equal)
+
+/-- Weakly increasing local ranks give explicit half-five-free copied rows. -/
+theorem halfFiveRankedVertexCopies_halfFree {I V : Type*} [LinearOrder I] [Fintype I] [DecidableEq V]
+    {paths : I → List V} (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5)
+    (assigned : I → V → ℕ)
+    (increases : ∀ v ⦃r a⦄, Edge (halfFiveTerminalRankGraph paths v) r a → assigned r v ≤ assigned a v) :
+    HalfBridgeFree (Before (halfFiveRankedVertexCopies paths assigned)) 5 := by
+  let project (x : V ×ₗ ℕ) := (ofLex x).1
+  let rank (x : V ×ₗ ℕ) := (ofLex x).2
+  have identify {x y : V ×ₗ ℕ} (same : project x = project y) (equal : rank x = rank y) : x = y :=
+    ofLex.injective (Prod.ext same equal)
+  have assignedHere {i x} (member : x ∈ halfFiveRankedVertexCopies paths assigned i) :
+      rank x = assigned i (project x) := by
+    obtain ⟨v,_,rfl⟩ := List.mem_map.mp member
+    rfl
+  have step {i x y} (comparison : Before (halfFiveRankedVertexCopies paths assigned) i x y) :
+      Before paths i (project x) (project y) := by
+    have projected (i : I) : ((halfFiveRankedVertexCopies paths assigned i).map project) = paths i :=
+      halfFiveRankedVertexCopies_project paths assigned i
+    have found := listBefore_map project ((projected i).symm ▸ simple i) comparison
+    simpa only [SourceAudit.BeforeIn,projected] using found
+  exact free.split_list_vertices_five_of_terminal_rank_graph project rank assigned
+    (fun {_ _} => identify) (fun {_ _} => assignedHere) (fun v {_ _} edge => increases v edge) (fun {_ _ _} => step)
+
+local instance prefixComparisonDecidable {I V : Type*} [DecidableEq V] (rows : I → List V) (i : I) (x y : V) :
+    Decidable (Before rows i x y) := by
+  unfold SourceAudit.BeforeIn
+  infer_instance
+
+/-- Consider all strict path comparisons outside the two specified rows.
+A bridge detour can use this graph until it takes its final arc. -/
+def bridgePrefixGraph {I V : Type*} [DecidableEq I] [Fintype I] [DecidableEq V] [Fintype V]
+    (rows : I → List V) (river final : I) : Arcs V :=
+  univ.filter fun e => ∃ i, i ≠ river ∧ i ≠ final ∧ Before rows i e.1 e.2
+
+/-- The prefix of a bridge detour avoids both its river and final arc. -/
+theorem Bridge.reaches_prefix_excluding_river_and_final {I V : Type*}
+    [DecidableEq I] [Fintype I] [DecidableEq V] [Fintype V]
+    {rows : I → List V} {d : ℕ} (b : Bridge (Before rows) d) :
+    Reach (bridgePrefixGraph rows b.river (b.arc (Fin.last d)))
+      (b.vertex 0) (b.vertex (Fin.last d).castSucc) := by
+  let a := b.arc (Fin.last d)
+  let G := bridgePrefixGraph rows b.river a
+  have reachesPrefix : ∀ (m : ℕ) (room : m < d+1),
+      Reach G (b.vertex 0) (b.vertex (⟨m,room⟩ : Fin (d+1)).castSucc) := by
+    intro m
+    induction m with
+    | zero => intro room; exact .refl
+    | succ m previous =>
+      intro room
+      let i : Fin (d+1) := ⟨m,by omega⟩
+      have notFinal : i ≠ Fin.last d := by
+        intro equal
+        have index := congrArg Fin.val equal
+        change m = d at index
+        omega
+      have edge : Edge G (b.vertex i.castSucc) (b.vertex i.succ) :=
+        mem_filter.mpr ⟨mem_univ _,b.arc i,(b.river_ne_arc i).symm,
+          fun eq => notFinal (b.distinctArcs eq),b.arcStep i⟩
+      exact (previous i.isLt).tail edge
+  exact reachesPrefix d (Nat.lt_succ_self _)
+
 end OnlineReachabilityPreservers

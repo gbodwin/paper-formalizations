@@ -2377,15 +2377,23 @@ is at most \(M/18\), this gives the indexed \(M/32\) guarantee for simple
 input of mass at least both positive budgets, with all four frozen caps.
 [Count of erased incidences](OnlineReachabilityPreservers/HalfBridgeArrivalRepair.lean#L137) · [Surviving constraints](OnlineReachabilityPreservers/HalfBridgeArrivalRepair.lean#L146) · [Frozen cleaning from selected edges](OnlineReachabilityPreservers/HalfBridgeArrivalRepair.lean#L169).
 
-For the degree split at half cutoff five, assign a rank to each copied
-label at each original vertex. The required comparisons at that vertex
-run from the river to the final arc of a full three-bridge ending there,
-and from the starting row to the returning row of a two-step return.
-If copy ranks increase weakly along these edges and a vertex and rank
-determine its copy, the split preserves the half-five exclusion. Every
-weakly increasing assignment is constant on each strongly connected
-component. The component ranks can distinguish all different components.
+Start with simple rows excluding half-bridges through five. Each copied
+comparison projects to a comparison on the same original row. The
+sufficient rank test at each vertex compares the river and final arc
+of a full three-bridge ending there and the start and return rows of
+a two-step return. Weak increase on these edges preserves half-five
+exclusion when a vertex and rank determine its copy. Every assignment
+in this test is constant on each strongly connected component. The
+component ranks distinguish all different components.
 [Terminal constraint graph](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L13) · [Half-five copy preservation](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L31) · [Forced equalities within components](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L80) · [Exact component ranks](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L121).
+
+The explicit rank assignment copies each occurrence to its vertex and
+assigned rank. An example on six rows already excludes half-bridges at
+every size. A three-bridge and a two-step return force equal ranks for
+two rows at vertex 2. The assigned ranks at that vertex decrease on the
+two last rows, both of which end a comparison there. The local test
+still gives half-five exclusion on the copied family.
+[Vertex copying by rank](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L144) · [Original exclusion](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L35) · [Rows in the same terminal component](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L65) · [Half-five exclusion after copying](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L77) · [Ranks decreasing in arrival order](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L84).
 
 The usual nested split example can be padded to six vertices and ten
 indexed rows with mass ten. Two extra vertices belong only to the
