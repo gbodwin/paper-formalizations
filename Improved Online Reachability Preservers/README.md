@@ -715,7 +715,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   keeps the same budgets, caps and \(M/40\) guarantee when every precedence
   component has at most \(k\) rows with a strict internal step. Longer
   bridges can exist in the original system.
-  The [mixed support criterion](OnlineReachabilityPreservers/FullBridgeComponentSupports.lean#L89)
+  The [mixed support criterion](OnlineReachabilityPreservers/FullBridgeComponentSupports.lean#L96)
   also allows a component with at most \(k\) vertices shared by two
   distinct internal rows with strict steps. Each component can use
   whichever bound applies.
@@ -723,6 +723,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   just the surviving precedence graph. Losing at most \(M/28\) and having
   at most \(k\) nontrivial rows per surviving component gives \(M/128\)
   with the original budgets and all four original-average caps.
+  The [visit-excess test](OnlineReachabilityPreservers/FullBridgeComponentSupports.lean#L269) applies when some original
+  components exceed both support bounds. Keep the first incidence of each
+  nonempty row visit to a marked component and the full visits elsewhere.
+  If the excess
+  over one per marked visit is at most \(M/28\), the same \(M/128\)
+  finite-cutoff guarantee holds with the original budgets and caps.
 - In half-bridge-free systems through size three, there are no triangles
   of opposite links. If two opposite links connect distinct vertices on
   one path, the intermediate vertex belongs to that path. Half-bridge exclusion
@@ -1006,7 +1012,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   \(M\le 14C|E(H)|\) for every preserver \(H\). A component-wise linear
   bound suffices for this hypothesis. Applying that condition after
   opposite-intersection pruning gives factor \(28C\).
-  [Component lower bounds](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L240).
+  [Component lower bounds](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L246).
 - The component condition has an [unbounded obstruction](OnlineReachabilityPreservers/OverlayLowerAudit.lean#L509).
   A lattice family with private return paths has \(M/(n+J)\) growing
   with the number of layers. Every path lies within one component and

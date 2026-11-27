@@ -552,6 +552,19 @@ all four original-average caps, and the original finite cutoff. The
 [row-count version](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L250) checks that each surviving component
 uses at most the cutoff's worth of nontrivial rows.
 
+A [visit-deletion rule](OnlineReachabilityPreservers/FullBridgeComponentSupports.lean#L269)
+marks components whose nontrivial row count and meeting-vertex count
+both exceed the cutoff. Keep the first incidence of each nonempty row
+visit to a marked component and all original incidences in unmarked
+components. A surviving
+component lies within one original component. In a marked component
+every surviving row visit has length at most one. In an unmarked
+component either original support bound rules out longer local bridges.
+The [exact mass identity](OnlineReachabilityPreservers/FullBridgeComponentSupports.lean#L177)
+charges the excess over one for each marked visit. When the sum is at
+most \(M/28\), the same \(M/128\) retention holds at the original finite
+cutoff with both budgets and all four original-average caps.
+
 For simple inputs at full cutoff six or half cutoff four, mass \(M\ge8E\)
 at least both positive budgets gives a cleaned witness of mass at least
 \(M/32\) at that cutoff, with both original budgets and all four frozen
@@ -1057,7 +1070,7 @@ opposite intersections retains all three paths as given.
 [Increasing subsequences](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L69)
 · [Component visits](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L184)
 · [Bounded component intersections](OnlineReachabilityPreservers/OfflineOrderedBlocks.lean#L261)
-· [Unbounded loss of selecting one vertex per visit](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L445).
+· [Unbounded loss of selecting one vertex per visit](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L451).
 
 Write \(J\) for the total number of path-component visits. The visit
 construction yields a DAG forcing \(J\le 12|E(H)|\). When
@@ -1069,9 +1082,9 @@ converse \(M\le 14C|E(H)|\) when \(M\le C(n+J)\). It also applies when each
 component's mass is at most \(C\) times its vertex count plus its count of
 visiting paths. When the component condition is verified on the
 opposite-pruned system, the original mass is bounded by \(28C|E(H)|\).
-[Aggregate bound](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L240)
-· [Component-wise bound](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L270)
-· [Bound after pruning](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L308).
+[Aggregate bound](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L246)
+· [Component-wise bound](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L276)
+· [Bound after pruning](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L314).
 
 The component condition can fail by an arbitrarily large factor even after
 pruning. Take a lattice family with \(q=L^6\) original paths and add the
@@ -1091,7 +1104,7 @@ full bridge exclusion. A uniform retention bound for those component
 subproblems would give the same bound for the whole family.
 [Combining the local selections](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L56)
 · [Internal reachability](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L152)
-· [Component reduction](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L208).
+· [Component reduction](OnlineReachabilityPreservers/OfflineComponentOrders.lean#L214).
 
 The base lattice paths alone also give a superlinear offline lower bound
 when the vertex and demand counts are comparable. Ordering vertices by

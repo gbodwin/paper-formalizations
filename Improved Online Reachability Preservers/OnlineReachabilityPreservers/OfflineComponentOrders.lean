@@ -188,20 +188,26 @@ theorem precedenceComponent_fullFree {n p : ℕ} {paths : Fin p → List (Fin n)
   intro i x y before
   exact listBefore_of_sublist (simple i) (pathsInPrecedenceComponent_sublist paths c i) before
 
+/-- Partition a simple list by the component labels of one fixed graph. -/
+theorem precedenceComponent_sum_filtered_lengths {n : ℕ} (G : Arcs (Fin n))
+    (row : List (Fin n)) (simple : row.Nodup) :
+    row.length = ∑ c : Fin n, (row.filter fun x => decide (componentLabel G x = c)).length := by
+  let label := componentLabel G
+  calc
+    _ = row.toFinset.card := (List.toFinset_card_of_nodup simple).symm
+    _ = ∑ c : Fin n, (row.toFinset.filter fun x => label x = c).card :=
+      card_eq_sum_card_fiberwise (t := univ) (fun _ _ => mem_univ _)
+    _ = _ := sum_congr rfl (fun c _ => by
+      have same : row.toFinset.filter (fun x => label x = c) =
+          (row.filter fun x => decide (label x = c)).toFinset := by
+        ext x
+        simp
+      rw [same,List.toFinset_card_of_nodup (simple.filter _)])
+
 private theorem pathsInPrecedenceComponent_sum_length {n p : ℕ} {paths : Fin p → List (Fin n)}
     (simple : ∀ i, (paths i).Nodup) (i : Fin p) :
-    (paths i).length = ∑ c : Fin n, (pathsInPrecedenceComponent paths c i).length := by
-  let label := componentLabel (pathPrecedenceGraph paths)
-  calc
-    (paths i).length = (paths i).toFinset.card := (List.toFinset_card_of_nodup (simple i)).symm
-    _ = ∑ c : Fin n, ((paths i).toFinset.filter fun v => label v = c).card :=
-      card_eq_sum_card_fiberwise (t := univ) (fun _ _ => mem_univ _)
-    _ = _ := sum_congr rfl fun c _ => by
-      have same : ((paths i).toFinset.filter fun v => label v = c) =
-          (pathsInPrecedenceComponent paths c i).toFinset := by
-        ext v
-        simp [mem_pathsInPrecedenceComponent, label]
-      rw [same, List.toFinset_card_of_nodup ((pathsInPrecedenceComponent_sublist paths c i).nodup (simple i))]
+    (paths i).length = ∑ c : Fin n, (pathsInPrecedenceComponent paths c i).length :=
+  precedenceComponent_sum_filtered_lengths (pathPrecedenceGraph paths) (paths i) (simple i)
 
 /-- A uniform mass-retention result on the component restrictions would
 extend with the same loss to all simple full-bridge-free inputs. -/
