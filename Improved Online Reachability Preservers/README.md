@@ -847,14 +847,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   all four caps for positive budgets and mass at least both counts. A broader
   [support condition](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L233)
   uses the actual number of occupied vertex copies.
-- [Quadratic trimming](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L180)
+- [Quadratic trimming](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L225)
   works on a subsystem within the original budgets that carries at least
   nine sixteenths of the original mass and whose original-width splits
   preserve the chosen bridge exclusion. It keeps every nonfinal block
   and trims among the final blocks in each dimension. It retains at least
   \(M/104\) with both budgets and all four caps. Selecting the heaviest vertex
   copies before splitting gives this guarantee when at most
-  [seven ninths of the vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L308).
+  [seven ninths of the vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L353).
   This version preserves the matching input exclusion at cutoff four in
   either mode or at full cutoff six.
 - [Cleaning with disjoint reverse partners](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L192)
@@ -1066,8 +1066,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   rows, each bridge through the cutoff projects with distinct corners and
   the same arc and river labels. This preserves either exclusion.
   [Agreement of vertex copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2798) · [Lift with distinct projected corners](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2807) · [Preservation in either mode](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2871).
-- At each original vertex, group its incident rows so that the first
-  and last rows of each tested short return are together. Assume the groups
+- For simple rows admissible at the chosen cutoff, group the incident rows
+  at each vertex so the first and last rows of each tested short return are
+  together. Assume the groups
   are disjoint and fit the degree width. Choose a valid partition with the
   minimum number of groups and use the groups as copies. Every original
   row is recovered by projection, each degree is within the width, and at
@@ -1100,7 +1101,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   individual losses are at most \(M/12\) and \(M/8\). After frozen peeling,
   the indexed witness has mass at least \(M/4\), both budgets, all four
   caps and the original full or half cutoff.
-  [Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L70) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L241).
+  [Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L241).
+- The two support trims also apply when the degree groups have varying
+  sizes. Assume admissible copies of mass \(M\) at least both positive
+  budgets, with all degrees within the original width and at most \(n\)
+  at or below half that width. If the copied rows admit the short-return
+  path partition at the original path width, each support trim loses at
+  most \(M/8\). The later peeling uses the two original lower caps and
+  leaves a frozen witness of mass at least \(M/4\) within both budgets.
+  [Separate heavy-group thresholds](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L85) · [Frozen cleaning from both grouped profiles](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L141).
 - The path-partition premise has an exact finite test. Within one row,
   link the endpoints of every comparison with a short backward return.
   Each connected component must lie in one group of any valid partition.

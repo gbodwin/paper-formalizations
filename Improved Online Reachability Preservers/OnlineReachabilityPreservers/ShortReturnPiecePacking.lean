@@ -260,13 +260,7 @@ theorem regularization_list_frozen_of_capped_short_return_partitions {n p k : �
     have upper := four_average_width_product hn (M := M)
     change 4*M < D*n + n at upper
     omega
-  have capI : 2*M ≤ minLength*p := by
-    have upper := Nat.lt_mul_div_succ (4*M) hp
-    change 4*M < p*(L+1) at upper
-    have halfWidth : L+1 ≤ 2*minLength := by dsimp only [minLength]; omega
-    have ordered := Nat.mul_le_mul_left p halfWidth
-    have equal : p*(2*minLength) = 2*(minLength*p) := by ring
-    omega
+  have capI : 2*M ≤ minLength*p := half_average_width_capacity hp
   have copySimple (i : Fin p) : (copies i).Nodup := splitListVertices_simple paths D i (simple i)
   have copyMass : (∑ i, (copies i).length) = M :=
     sum_congr rfl (fun i _ => by simp [copies, splitListVertices])

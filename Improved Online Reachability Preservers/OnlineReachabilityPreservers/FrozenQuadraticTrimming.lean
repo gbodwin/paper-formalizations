@@ -14,6 +14,20 @@ private theorem average_width_times_budget {M q : ℕ} (positive : 0 < q) (dense
   have next := four_average_width_product positive (M := M)
   omega
 
+/-- A piece longer than half the rounded factor-four width contributes
+a threshold whose original-budget capacity is at least twice the mass. -/
+theorem half_average_width_capacity {M q : ℕ} (positive : 0 < q) :
+    2*M ≤ ((4*M/q)/2 + 1)*q := by
+  let width := 4*M/q
+  let threshold := width/2 + 1
+  have upper := Nat.lt_mul_div_succ (4*M) positive
+  change 4*M < q*(width+1) at upper
+  have halfWidth : width+1 ≤ 2*threshold := by dsimp only [threshold]; omega
+  have ordered := Nat.mul_le_mul_left q halfWidth
+  have equal : q*(2*threshold) = 2*(threshold*q) := by ring
+  change 2*M ≤ threshold*q
+  omega
+
 private theorem large_cropped_mass {M K R lost : ℕ} (positive : 0 < M) (upper : K ≤ M)
     (enough : 9 * M ≤ 16 * K) (cropped : K ≤ R + lost) (loss : 6 * M * lost ≤ K ^ 2) :
     261 * M ≤ 512 * R := by
@@ -34,14 +48,15 @@ private theorem large_cropped_mass {M K R lost : ℕ} (positive : 0 < M) (upper 
 private theorem trim_width_supports {V I : Type*} [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
     (paths : I → Finset V) (fullV : Finset V) (fullI : Finset I) {n p D L : ℕ}
     (Dpos : 0 < D) (Lpos : 0 < L)
-    (vFilled : ∀ v ∈ fullV, (occurrences paths v).card = D) (vRest : (univ \ fullV).card ≤ n)
+    (vFilled : ∀ v ∈ fullV, D ≤ (occurrences paths v).card) (vRest : (univ \ fullV).card ≤ n)
     (iFilled : ∀ i ∈ fullI, L ≤ (paths i).card) (iRest : (univ \ fullI).card ≤ p)
     (vRoom : ∑ i, (paths i).card ≤ D * n) (iRoom : ∑ i, (paths i).card ≤ L * p) :
     ∃ A : Finset V, ∃ B : Finset I, ∃ lostV lostI : ℕ, A.card ≤ n ∧ B.card ≤ p ∧
       (∑ i, (paths i).card) ≤ (∑ i ∈ B, (paths i ∩ A).card) + (lostV + lostI) ∧
       4 * (D * n) * lostV ≤ (∑ i, (paths i).card) ^ 2 ∧
       4 * (L * p) * lostI ≤ (∑ i, (paths i).card) ^ 2 := by
-  obtain ⟨A, va, lostV, boundV, exactV⟩ := trim_full_vertex_blocks_quadratic paths fullV Dpos vFilled vRest vRoom
+  obtain ⟨A, va, lostV, boundV, exactV⟩ := trim_full_vertex_blocks_quadratic_of_lower_bound
+    paths fullV Dpos vFilled vRest vRoom
   obtain ⟨B, ib, boundI⟩ := trim_full_weight_blocks_quadratic_of_lower_bound
     (fun i => (paths i).card) fullI Lpos iFilled iRest iRoom
   let lostI := ∑ i ∈ univ \ B, (paths i).card
@@ -65,26 +80,28 @@ private theorem trim_width_supports {V I : Type*} [LinearOrder V] [Fintype V] [L
     _ = _ := Nat.add_comm _ _
   exact ⟨A, B, lostV, lostI, va, ib, (by omega), boundV, boundI⟩
 
-/-- Trim capped pieces from the full-degree and minimum-length
-profiles, then enforce both original lower caps. -/
-theorem regularization_list_frozen_after_packed_profile_trim_of_loss {V I : Type*}
+/-- Trim capped pieces using lower thresholds for the heavy degree
+and path blocks, then enforce both original lower caps. -/
+theorem regularization_list_frozen_after_threshold_profile_trim_of_loss {V I : Type*}
     [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] {half : Bool}
-    {k n p M retention pathThreshold : ℕ}
+    {k n p M retention degreeThreshold pathThreshold : ℕ}
     (pieces : I → List V) (pieceSimple : ∀ i, (pieces i).Nodup)
     (allowed : localOrderAdmissible half k pieces)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
     (length : ∀ i, (pieces i).length ≤ 4*M/p)
     (degree : ∀ v, (occurrences (fun i => (pieces i).toFinset) v).card ≤ 4*M/n)
     (upper : ∑ i, (pieces i).length ≤ M)
-    (fullV : Finset V) (fullI : Finset I) (thresholdPositive : 0 < pathThreshold)
-    (filledV : ∀ v ∈ fullV, (occurrences (fun j => (pieces j).toFinset) v).card = 4*M/n)
+    (fullV : Finset V) (fullI : Finset I) (degreePositive : 0 < degreeThreshold)
+    (lengthPositive : 0 < pathThreshold)
+    (filledV : ∀ v ∈ fullV, degreeThreshold ≤ (occurrences (fun j => (pieces j).toFinset) v).card)
     (restV : (univ \ fullV).card ≤ n)
     (filledI : ∀ i ∈ fullI, pathThreshold ≤ (pieces i).length)
     (restI : (univ \ fullI).card ≤ p)
+    (vRoom : (∑ i, (pieces i).length) ≤ degreeThreshold*n)
     (iRoom : (∑ i, (pieces i).length) ≤ pathThreshold*p)
     (enough : let K := ∑ i, (pieces i).length
       ∀ R lostV lostI : ℕ, K ≤ R + (lostV + lostI) →
-        4*((4*M/n)*n)*lostV ≤ K^2 → 4*(pathThreshold*p)*lostI ≤ K^2 →
+        4*(degreeThreshold*n)*lostV ≤ K^2 → 4*(pathThreshold*p)*lostI ≤ K^2 →
         (retention+2)*M ≤ 2*retention*R) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
@@ -93,16 +110,12 @@ theorem regularization_list_frozen_after_packed_profile_trim_of_loss {V I : Type
   let D := 4*M/n
   let L := 4*M/p
   let raw := fun i => (pieces i).toFinset
-  obtain ⟨Dpos, _, _⟩ := four_average_width hn dense
-  change 0 < D at Dpos
   have setMass : (∑ i, (raw i).card) = ∑ i, (pieces i).length :=
     sum_congr rfl fun i _ => List.toFinset_card_of_nodup (pieceSimple i)
-  have vRoom : (∑ i, (raw i).card) ≤ D*n :=
-    ((setMass.trans_le upper).trans (by omega : M ≤ 3*M)).trans (average_width_times_budget hn dense)
   obtain ⟨A, B, lostV, lostI, va, ib, kept, chargeV, chargeI⟩ :=
-    trim_width_supports raw fullV fullI Dpos thresholdPositive filledV restV
+    trim_width_supports raw fullV fullI degreePositive lengthPositive filledV restV
       (fun i active => (filledI i active).trans_eq (List.toFinset_card_of_nodup (pieceSimple i)).symm)
-      restI vRoom (setMass.trans_le iRoom)
+      restI (setMass.trans_le vRoom) (setMass.trans_le iRoom)
   rw [setMass] at kept chargeV chargeI
   let crop := restrictListPaths pieces A B
   have cropSimple (i : B) : (crop i).Nodup := restrictListPath_nodup (pieceSimple i.val) A
@@ -135,6 +148,38 @@ theorem regularization_list_frozen_after_packed_profile_trim_of_loss {V I : Type
   · simpa only [one_mul, Fintype.card_coe] using ib
   · simp only [one_mul, cropMass]
     exact enough _ lostV lostI kept chargeV chargeI
+
+/-- Trim capped pieces from the full-degree and minimum-length
+profiles, then enforce both original lower caps. -/
+theorem regularization_list_frozen_after_packed_profile_trim_of_loss {V I : Type*}
+    [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] {half : Bool}
+    {k n p M retention pathThreshold : ℕ}
+    (pieces : I → List V) (pieceSimple : ∀ i, (pieces i).Nodup)
+    (allowed : localOrderAdmissible half k pieces)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (length : ∀ i, (pieces i).length ≤ 4*M/p)
+    (degree : ∀ v, (occurrences (fun i => (pieces i).toFinset) v).card ≤ 4*M/n)
+    (upper : ∑ i, (pieces i).length ≤ M)
+    (fullV : Finset V) (fullI : Finset I) (thresholdPositive : 0 < pathThreshold)
+    (filledV : ∀ v ∈ fullV, (occurrences (fun j => (pieces j).toFinset) v).card = 4*M/n)
+    (restV : (univ \ fullV).card ≤ n)
+    (filledI : ∀ i ∈ fullI, pathThreshold ≤ (pieces i).length)
+    (restI : (univ \ fullI).card ≤ p)
+    (iRoom : (∑ i, (pieces i).length) ≤ pathThreshold*p)
+    (enough : let K := ∑ i, (pieces i).length
+      ∀ R lostV lostI : ℕ, K ≤ R + (lostV + lostI) →
+        4*((4*M/n)*n)*lostV ≤ K^2 → 4*(pathThreshold*p)*lostI ≤ K^2 →
+        (retention+2)*M ≤ 2*retention*R) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧
+      frozenListCaps n p M clean := by
+  have degreePositive := (four_average_width hn dense).1
+  have vRoom : (∑ i, (pieces i).length) ≤ (4*M/n)*n :=
+    (upper.trans (by omega : M ≤ 3*M)).trans (average_width_times_budget hn dense)
+  exact regularization_list_frozen_after_threshold_profile_trim_of_loss pieces pieceSimple allowed
+    hn hp dense long length degree upper fullV fullI degreePositive thresholdPositive
+    (fun v on => (filledV v on).ge) restV filledI restI vRoom iRoom enough
 
 /-- Trim the two supports at the original widths, with separate quadratic
 loss bounds at their actual rounded capacities. -/

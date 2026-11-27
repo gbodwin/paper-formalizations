@@ -1752,7 +1752,7 @@ follows.
 The [full-block profiles](OnlineReachabilityPreservers/WidthBlockProfiles.lean#L161)
 show that each original vertex and path contributes at most one remainder.
 Keeping all filled blocks and choosing the heaviest remainders bounds the
-[loss across both budgets](OnlineReachabilityPreservers/BalancedRegularization.lean#L662)
+[loss across both budgets](OnlineReachabilityPreservers/BalancedRegularization.lean#L697)
 by \(M/6\). This leaves enough room for an
 [admissibility repair](OnlineReachabilityPreservers/FrozenBlockTrimming.lean#L74)
 that removes up to \(M/4\) of the original incidences. Peeling then meets both
@@ -1766,7 +1766,7 @@ If rows longer than \(\lfloor 4M/p\rfloor\) carry at least \(2M/3\),
 the [overlong-subfamily theorem](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L191)
 prunes opposing intersections only in that subfamily before splitting.
 Its path pieces already fit in the original path budget, and
-[vertex trimming](OnlineReachabilityPreservers/BalancedRegularization.lean#L644)
+[vertex trimming](OnlineReachabilityPreservers/BalancedRegularization.lean#L684)
 loses at most the squared retained mass divided by four times the vertex
 block width times the vertex budget. Peeling uses the actual piece count.
 The witness retains at least \(M/216\) and has all four original-average
@@ -1903,7 +1903,7 @@ additional width blocks must fit within four thirds of the original
 vertex budget. This includes
 [inputs with at most \(n/16\) vertices having an outgoing partner](OnlineReachabilityPreservers/ReverseIntersectionCopies.lean#L299).
 
-[Quadratic trimming of both supports](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L180)
+[Quadratic trimming of both supports](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L225)
 starts with a subsystem within the original budgets, with mass \(K\)
 between \(9M/16\) and \(M\). Its splits at the original factor-four
 widths must preserve the chosen bridge exclusion. All nonfinal blocks
@@ -1912,11 +1912,11 @@ most \(K^2/(6M)\) because the width times its budget is at least \(3M\)
 in each dimension. At least \(261M/512\)
 remains before peeling, so the cleaned mass is at least \(M/104\) with
 both original budgets and all four caps. If the vertex-only split uses
-at most \(16n/9\) copies, the [heaviest original-budget set](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L235)
+at most \(16n/9\) copies, the [heaviest original-budget set](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L280)
 retains the needed nine sixteenths. The unique intersections justify
 the width splits at cutoff four in either mode or at full cutoff six,
 with the corresponding input exclusion. A sufficient condition is that
-[at most seven ninths of the original vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L308).
+[at most seven ninths of the original vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L353).
 
 [Half-budget width splits](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L97)
 use a subsystem of simple paths within the original vertex budget and at
@@ -2310,8 +2310,9 @@ rows, each bridge through the cutoff projects with distinct corners and
 the same arc and river labels. This preserves either exclusion.
 [Agreement of vertex copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2798) · [Lift with distinct projected corners](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2807) · [Preservation in either mode](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2871).
 
-At each original vertex, group its incident rows so that the first
-and last rows of each tested short return are together. Assume the groups
+For simple rows admissible at the chosen cutoff, group the incident rows
+at each vertex so the first and last rows of each tested short return are
+together. Assume the groups
 are disjoint and fit the degree width. Choose a valid partition with the
 minimum number of groups and use the groups as copies. Every original
 row is recovered by projection, each degree is within the width, and at
@@ -2347,7 +2348,16 @@ width give quadratic loss bounds for the two support trims. Their
 individual losses are at most \(M/12\) and \(M/8\). After frozen peeling,
 the indexed witness has mass at least \(M/4\), both budgets, all four
 caps and the original full or half cutoff.
-[Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L70) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L241).
+[Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L241).
+
+The two support trims also apply when the degree groups have varying
+sizes. Assume admissible copies of mass \(M\) at least both positive
+budgets, with all degrees within the original width and at most \(n\)
+at or below half that width. If the copied rows admit the short-return
+path partition at the original path width, each support trim loses at
+most \(M/8\). The later peeling uses the two original lower caps and
+leaves a frozen witness of mass at least \(M/4\) within both budgets.
+[Separate heavy-group thresholds](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L85) · [Frozen cleaning from both grouped profiles](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L141).
 
 The path-partition premise has an exact finite test. Within one row,
 link the endpoints of every comparison with a short backward return.

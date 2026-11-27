@@ -1080,8 +1080,9 @@ rows, each bridge through the cutoff projects with distinct corners and
 the same arc and river labels. This preserves either exclusion.
 [Agreement of vertex copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2798) · [Lift with distinct projected corners](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2807) · [Preservation in either mode](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2871).
 
-At each original vertex, group its incident rows so that the first
-and last rows of each tested short return are together. Assume the groups
+For simple rows admissible at the chosen cutoff, group the incident rows
+at each vertex so the first and last rows of each tested short return are
+together. Assume the groups
 are disjoint and fit the degree width. Choose a valid partition with the
 minimum number of groups and use the groups as copies. Every original
 row is recovered by projection, each degree is within the width, and at
@@ -1117,7 +1118,16 @@ width give quadratic loss bounds for the two support trims. Their
 individual losses are at most \(M/12\) and \(M/8\). After frozen peeling,
 the indexed witness has mass at least \(M/4\), both budgets, all four
 caps and the original full or half cutoff.
-[Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L70) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L241).
+[Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L241).
+
+The two support trims also apply when the degree groups have varying
+sizes. Assume admissible copies of mass \(M\) at least both positive
+budgets, with all degrees within the original width and at most \(n\)
+at or below half that width. If the copied rows admit the short-return
+path partition at the original path width, each support trim loses at
+most \(M/8\). The later peeling uses the two original lower caps and
+leaves a frozen witness of mass at least \(M/4\) within both budgets.
+[Separate heavy-group thresholds](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L85) · [Frozen cleaning from both grouped profiles](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L141).
 
 The path-partition premise has an exact finite test. Within one row,
 link the endpoints of every comparison with a short backward return.

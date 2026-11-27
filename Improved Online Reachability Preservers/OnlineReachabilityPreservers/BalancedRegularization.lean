@@ -661,6 +661,24 @@ theorem trim_full_weight_blocks {A : Type*} [DecidableEq A] [Fintype A] (weight 
     _ = K*(3*K) := by ring
     _ ≤ K*(cap*budget) := Nat.mul_le_mul_left _ space
 
+/-- Trim heavy vertex blocks before the remainders while retaining all
+path rows. Record the exact lost mass and its quadratic bound. -/
+theorem trim_full_vertex_blocks_quadratic_of_lower_bound {V I : Type*} [Fintype V] [Fintype I] [LinearOrder V] [DecidableEq I]
+    (paths : I → Finset V) (filled : Finset V) {width budget : ℕ} (positive : 0 < width)
+    (full : ∀ v ∈ filled, width ≤ (occurrences paths v).card) (rest : (univ \ filled).card ≤ budget)
+    (space : (∑ i, (paths i).card) ≤ width*budget) :
+    let K := ∑ i, (paths i).card
+    ∃ A : Finset V, A.card ≤ budget ∧ ∃ loss : ℕ, 4*(width*budget)*loss ≤ K^2 ∧
+      (∑ i : (univ : Finset I), (rectanglePaths paths A univ i).card)+loss = K := by
+  have room : (∑ v, (occurrences paths v).card) ≤ width*budget := by rw [sum_occurrences]; exact space
+  obtain ⟨A,cap,lossBound⟩ := trim_full_weight_blocks_quadratic_of_lower_bound
+    (fun v => (occurrences paths v).card)
+    filled positive full rest room
+  rw [sum_occurrences] at lossBound
+  refine ⟨A,cap,_,lossBound,?_⟩
+  rw [rectanglePath_mass,← show rectangleMass paths A univ = _ from rfl,rectangleMass_swap,← sum_occurrences]
+  exact sum_part_and_remainder univ A (subset_univ _) _
+
 /-- Trim filled vertex blocks before the remainders while retaining all
 path rows. Record the exact lost mass and its quadratic bound. -/
 theorem trim_full_vertex_blocks_quadratic {V I : Type*} [Fintype V] [Fintype I] [LinearOrder V] [DecidableEq I]
@@ -669,14 +687,9 @@ theorem trim_full_vertex_blocks_quadratic {V I : Type*} [Fintype V] [Fintype I] 
     (space : (∑ i, (paths i).card) ≤ width*budget) :
     let K := ∑ i, (paths i).card
     ∃ A : Finset V, A.card ≤ budget ∧ ∃ loss : ℕ, 4*(width*budget)*loss ≤ K^2 ∧
-      (∑ i : (univ : Finset I), (rectanglePaths paths A univ i).card)+loss = K := by
-  have room : (∑ v, (occurrences paths v).card) ≤ width*budget := by rw [sum_occurrences]; exact space
-  obtain ⟨A,cap,lossBound⟩ := trim_full_weight_blocks_quadratic (fun v => (occurrences paths v).card)
-    filled positive full rest room
-  rw [sum_occurrences] at lossBound
-  refine ⟨A,cap,_,lossBound,?_⟩
-  rw [rectanglePath_mass,← show rectangleMass paths A univ = _ from rfl,rectangleMass_swap,← sum_occurrences]
-  exact sum_part_and_remainder univ A (subset_univ _) _
+      (∑ i : (univ : Finset I), (rectanglePaths paths A univ i).card)+loss = K :=
+  trim_full_vertex_blocks_quadratic_of_lower_bound paths filled positive
+    (fun v on => (full v on).ge) rest space
 
 /-- If each dimension consists of cap-sized blocks and at most one
 remainder per original slot, trimming to both budgets retains at least
