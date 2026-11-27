@@ -2004,4 +2004,13 @@ reads exactly the prescribed number of stream bits. The same expected
 competitive bound holds under the fair-stream measure. The fixed-height
 recorded polynomial includes the bit comparisons at intake.
 [Exact replay](OnlineReachabilityPreservers/SteinerBinaryRawOnline.lean#L39) · [Theorem 21 with binary arc preparation](OnlineReachabilityPreservers/SteinerBinaryRawOnline.lean#L89).
+
+For a list of pairs of binary endpoint words, decoding succeeds exactly
+when every word denotes a finite vertex label. The returned endpoint
+values agree in order and multiplicity, including empty lists and
+repeated pairs. If each word fits the declared width, the decoding tally is at
+most the existing per-row bound at that width, including rejected input.
+[Exact endpoint values](OnlineReachabilityPreservers/SteinerBinaryInputDecoding.lean#L9)
+· [Acceptance condition](OnlineReachabilityPreservers/SteinerBinaryInputDecoding.lean#L60)
+· [Work bound at the supplied width](OnlineReachabilityPreservers/SteinerBinaryInputDecoding.lean#L90).
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).
