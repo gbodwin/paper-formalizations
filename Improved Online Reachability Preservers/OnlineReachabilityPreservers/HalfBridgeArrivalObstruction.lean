@@ -217,4 +217,177 @@ theorem widthObstruction_frozen_literal_witness (k : ℕ) :
       rw [lengths]
       norm_num
 
+/-- Delete the occurrence of vertex five in the second row. -/
+def widthObstructionRepairedPieces (i : WidthObstructionPiece) : List WidthObstructionVertex :=
+  if i = obstructionFirst 1 then (widthObstructionPieces i).erase (obstructionCopy 5)
+  else widthObstructionPieces i
+
+private def repairCore : Fin 5 → List (Fin 9) :=
+  ![[1,6,0],[2],[0,2,7,4],[6,3,1],[5,3,4]]
+
+private def repairLabel : Fin 5 → WidthObstructionPiece :=
+  ![obstructionFirst 0,obstructionFirst 1,obstructionFirst 2,obstructionSecond,obstructionFirst 3]
+
+private def repairVertex (v : WidthObstructionVertex) : Fin 9 :=
+  ⟨min v.fst.val 8,lt_of_le_of_lt (Nat.min_le_right _ _) (by decide)⟩
+
+private def repairCopy (v : Fin 9) : WidthObstructionVertex := obstructionCopy (Fin.castAdd 40 v)
+
+private theorem repairVertex_copy (v : Fin 9) : repairVertex (repairCopy v) = v := by
+  apply Fin.ext
+  change min v.val 8 = v.val
+  exact Nat.min_eq_left (by have bound := v.isLt; omega)
+
+set_option maxRecDepth 16384 in
+private theorem repaired_nonsingleton_labels :
+    ∀ i, (widthObstructionRepairedPieces i).length ≤ 1 ∨ ∃ j, i = repairLabel j := by
+  decide +kernel
+
+private theorem repaired_piece_shape :
+    ∀ j, widthObstructionRepairedPieces (repairLabel j) = (repairCore j).map repairCopy := by
+  decide +kernel
+
+private theorem repaired_comparison_projects {i : WidthObstructionPiece} {u v : WidthObstructionVertex}
+    (step : BeforeIn widthObstructionRepairedPieces i u v) :
+    ∃ j, i = repairLabel j ∧ BeforeIn repairCore j (repairVertex u) (repairVertex v) := by
+  have late : (widthObstructionRepairedPieces i).idxOf v < (widthObstructionRepairedPieces i).length :=
+    List.idxOf_lt_length_of_mem step.2.1
+  have comparison : (widthObstructionRepairedPieces i).idxOf u < (widthObstructionRepairedPieces i).idxOf v :=
+    step.2.2
+  have atLeastTwo : 1 < (widthObstructionRepairedPieces i).length := by omega
+  obtain ⟨j,rfl⟩ := (repaired_nonsingleton_labels i).resolve_left (not_le_of_gt atLeastTwo)
+  have identity : repairVertex ∘ repairCopy = id := funext repairVertex_copy
+  have shape : (widthObstructionRepairedPieces (repairLabel j)).map repairVertex = repairCore j := by
+    rw [repaired_piece_shape,List.map_map,identity,List.map_id]
+  have simple : ∀ j, (repairCore j).Nodup := by decide +kernel
+  have comparison := listBefore_map repairVertex (shape.symm ▸ simple j) step
+  exact ⟨j,rfl,by simpa only [BeforeIn,shape] using comparison⟩
+
+set_option maxRecDepth 16384 in
+private theorem repaired_five_in_one_piece :
+    ∀ i, (5 : Fin 9) ∈ (widthObstructionRepairedPieces i).map repairVertex → i = obstructionFirst 3 := by
+  decide +kernel
+
+set_option maxRecDepth 16384 in
+set_option synthInstance.maxSize 1024 in
+private theorem repaired_possible_boundary :
+    ∀ (r a : Fin 5) (x y z : Fin 9), r ≠ a → z ≠ 5 →
+      BeforeIn repairCore r x y → BeforeIn repairCore a z y →
+      (∃ f, r ≠ f ∧ ∃ w : Fin 9, BeforeIn repairCore f x w) → r = 4 ∧ a = 2 := by
+  unfold BeforeIn
+  decide +kernel
+
+private theorem repaired_bridge_labels {d : ℕ} (b : Bridge (BeforeIn widthObstructionRepairedPieces) d) :
+    b.river = obstructionFirst 3 ∧ b.arc (Fin.last d) = obstructionFirst 2 := by
+  obtain ⟨r,river,riverStep⟩ := repaired_comparison_projects b.riverStep
+  obtain ⟨f,first,firstStep⟩ := repaired_comparison_projects (b.arcStep 0)
+  obtain ⟨a,last,lastStep⟩ := repaired_comparison_projects (b.arcStep (Fin.last d))
+  have firstApart : r ≠ f := fun eq => b.river_ne_arc 0 (river.trans ((congrArg repairLabel eq).trans first.symm))
+  have lastApart : r ≠ a := fun eq => b.river_ne_arc _ (river.trans ((congrArg repairLabel eq).trans last.symm))
+  have notFive : repairVertex (b.vertex (Fin.last d).castSucc) ≠ 5 := by
+    intro eq
+    obtain ⟨i,j,different,onI,onJ⟩ := bridge_corner_shared b (Fin.last d).castSucc
+    have ownerI := repaired_five_in_one_piece i (eq ▸ List.mem_map_of_mem (f := repairVertex) onI)
+    have ownerJ := repaired_five_in_one_piece j (eq ▸ List.mem_map_of_mem (f := repairVertex) onJ)
+    exact different (ownerI.trans ownerJ.symm)
+  obtain ⟨rfl,rfl⟩ := repaired_possible_boundary r a _ _ _ lastApart notFive riverStep lastStep
+    ⟨f,firstApart,_,firstStep⟩
+  exact ⟨river,last⟩
+
+local instance repairedBeforeDecidable (i : WidthObstructionPiece) (x y : WidthObstructionVertex) :
+    Decidable (BeforeIn widthObstructionRepairedPieces i x y) := by
+  unfold BeforeIn
+  infer_instance
+
+private def repairedBridge : Bridge (BeforeIn widthObstructionRepairedPieces) 2 := by
+  let vertex : Fin 4 → WidthObstructionVertex := ![obstructionCopy 3,obstructionCopy 1,obstructionCopy 0,obstructionCopy 4]
+  let arc : Fin 3 → WidthObstructionPiece := ![obstructionSecond,obstructionFirst 0,obstructionFirst 2]
+  have distinct : ∀ i j, vertex i = vertex j → i = j := by decide +kernel
+  have labels : ∀ i j, arc i = arc j → i = j := by decide +kernel
+  have river : ∀ i, obstructionFirst 3 ≠ arc i := by decide +kernel
+  have compared : BeforeIn widthObstructionRepairedPieces (obstructionFirst 3) (vertex 0) (vertex (Fin.last 3)) := by
+    decide +kernel
+  have steps : ∀ i, BeforeIn widthObstructionRepairedPieces (arc i) (vertex i.castSucc) (vertex i.succ) := by
+    decide +kernel
+  exact ⟨vertex,arc,obstructionFirst 3,fun {_ _} => distinct _ _,fun {_ _} => labels _ _,river,compared,steps⟩
+
+private theorem repaired_arrival_edge {k : ℕ} {r a : WidthObstructionPiece}
+    (step : Edge (halfBridgeArrivalGraph widthObstructionRepairedPieces k) r a) :
+    r = obstructionFirst 3 ∧ a = obstructionFirst 2 := by
+  obtain ⟨d,_,b,rfl,rfl⟩ := halfBridgeArrivalGraph_edge.mp step
+  exact repaired_bridge_labels b
+
+/-- The deletion alone leaves a half-four bridge in the original order. -/
+theorem widthObstructionRepaired_not_halfFree_four : ¬ HalfBridgeFree (BeforeIn widthObstructionRepairedPieces) 4 := by
+  intro free
+  have earlier : obstructionFirst 2 < obstructionFirst 3 := by decide +kernel
+  exact free (k := 2) (by decide) repairedBridge earlier
+
+/-- After the deletion, cutoffs of at least four impose exactly one
+arrival comparison. -/
+theorem widthObstructionRepairedArrival_exact {k : ℕ} (coversFour : 4 ≤ k) :
+    halfBridgeArrivalGraph widthObstructionRepairedPieces k = {(obstructionFirst 3,obstructionFirst 2)} := by
+  ext edge
+  obtain ⟨r,a⟩ := edge
+  constructor
+  · intro on
+    obtain ⟨rfl,rfl⟩ := repaired_arrival_edge (show Edge (halfBridgeArrivalGraph widthObstructionRepairedPieces k) r a from on)
+    exact mem_singleton_self _
+  · intro on
+    obtain ⟨rfl,rfl⟩ : r = obstructionFirst 3 ∧ a = obstructionFirst 2 := Prod.mk.inj (mem_singleton.mp on)
+    exact halfBridgeArrivalGraph_edge.mpr ⟨2,coversFour,repairedBridge,rfl,rfl⟩
+
+/-- The one-incidence repair makes the constraints acyclic at every cutoff. -/
+theorem widthObstructionRepairedArrival_acyclic (k : ℕ) :
+    IsDAG (halfBridgeArrivalGraph widthObstructionRepairedPieces k) := by
+  let G := halfBridgeArrivalGraph widthObstructionRepairedPieces k
+  have apart : obstructionFirst 2 ≠ obstructionFirst 3 := by decide +kernel
+  have noLeave {a} (route : Reach G (obstructionFirst 2) a) : a = obstructionFirst 2 := by
+    induction route with
+    | refl => rfl
+    | tail _ edge previous => exact (apart (previous.symm.trans (repaired_arrival_edge edge).1)).elim
+  intro r a edge back
+  obtain ⟨rfl,rfl⟩ := repaired_arrival_edge edge
+  exact apart (noLeave back).symm
+
+set_option maxRecDepth 16384 in
+/-- The retained pieces have mass 55 after the one deletion. -/
+theorem widthObstructionRepaired_mass : (∑ i, (widthObstructionRepairedPieces i).length) = 55 := by
+  decide +kernel
+
+private theorem widthObstructionRepaired_sublist (i : WidthObstructionPiece) :
+    (widthObstructionRepairedPieces i).Sublist (widthObstructionPieces i) := by
+  unfold widthObstructionRepairedPieces
+  split
+  · exact List.erase_sublist
+  · exact List.Sublist.refl _
+
+/-- Deleting one incidence from the prescribed pieces and reordering
+then allows the frozen indexed cleaning conclusion at every cutoff. -/
+theorem widthObstructionRepaired_frozen_witness (k : ℕ) :
+    ∃ n' ≤ 49, ∃ p' ≤ 45, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (BeforeIn clean) k ∧
+      56 ≤ 32*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ 56 ∧ frozenListCaps 49 45 56 clean := by
+  let M := ∑ i, (widthObstructionRows i).length
+  have mass : M = 56 := widthObstructionRows_parameters.2.2
+  have degreeWidth : 4*M/49 = 4 := by rw [mass]
+  have lengthWidth : 4*M/45 = 4 := by rw [mass]
+  have carry {D L : ℕ} (hD : D = 4) (hL : L = 4) :
+      ∃ kept : ListBlockIndex (splitListVertices widthObstructionRows D) L →
+          List (ListVertexBlockIndex widthObstructionRows D),
+        (∀ i, (kept i).Sublist (listRegularizedPaths widthObstructionRows D L i)) ∧
+        IsDAG (halfBridgeArrivalGraph kept k) ∧ 18*(M-(∑ i, (kept i).length)) ≤ M := by
+    subst D
+    subst L
+    refine ⟨widthObstructionRepairedPieces,widthObstructionRepaired_sublist,
+      widthObstructionRepairedArrival_acyclic k,?_⟩
+    rw [mass,widthObstructionRepaired_mass]
+    decide
+  obtain ⟨kept,sub,acyclic,smallLoss⟩ := carry degreeWidth lengthWidth
+  have enough : 49 ≤ M := by rw [mass]; decide
+  have long : 45 ≤ M := by rw [mass]; decide
+  have witness := regularization_list_frozen_half_after_arrival_deletions (k := k) widthObstructionRows
+    (fun i => (widthObstructionRows_parameters.1 i).1) kept sub acyclic smallLoss (by decide) (by decide) enough long
+  simpa only [widthObstructionRows_parameters.2.2] using witness
+
 end OnlineReachabilityPreservers.SourceAudit

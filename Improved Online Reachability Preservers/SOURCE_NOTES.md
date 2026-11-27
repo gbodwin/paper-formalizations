@@ -1142,6 +1142,14 @@ separate literal witness of mass eight, full exclusion at every size,
 both original budgets and all four frozen caps.
 [Literal input parameters](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L23) · [Original half-four exclusion](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L88) · [Cyclic constraints at both widths](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L177) · [Separate literal witness](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L193).
 
+Deleting vertex 5 from the row \([2,5]\) leaves mass 55 and removes the
+size-three constraint. The size-four bridge still violates the original
+arrival order. From cutoff four onward its river-to-final-arc comparison
+is the only constraint. The new order after this deletion gives an
+indexed witness at every cutoff, with mass at least \(56/32\), both
+original budgets and all four frozen caps.
+[Retained mass](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L355) · [Half-four bridge in the retained order](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L321) · [Exact retained constraint](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L328) · [Frozen witness after reordering](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L367).
+
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
 those positions, so only pairs in different blocks need the bounded
