@@ -2378,6 +2378,12 @@ degree and path components fit their original widths, the on-input
 tests give the frozen indexed quarter-mass witness at the chosen cutoff.
 [Components and bounded partitions](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L17) · [Graph of linked incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L239) · [Exact degree component criterion](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L261) · [Frozen witness from both finite tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L279).
 
+The same tests apply to a literal set of distinct nonempty simple
+paths at every cutoff of at least two. The literal transfer gives
+a distinct nonempty witness of mass at least \(M/8\), within both original
+budgets and all four original caps, preserving the chosen cutoff.
+[Frozen cleaning for distinct nonempty paths](OnlineReachabilityPreservers/ShortReturnDistinctCleaning.lean#L10).
+
 The path-partition premise has an exact finite test. Within one row,
 link the endpoints of every comparison with a short backward return.
 Each connected component must lie in one group of any valid partition.
