@@ -758,6 +758,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   number of links by \(11M/24\). The resulting half-five witness retains
   at least \(M/288\) with both original budgets and all four frozen caps.
   [Two-step endpoint count](OnlineReachabilityPreservers/HalfFiveOppositeLinkCount.lean#L34) · [Minimum degree bound](OnlineReachabilityPreservers/HalfFiveOppositeLinkCount.lean#L140) · [Frozen cleaning with regular opposite links](OnlineReachabilityPreservers/HalfFiveOppositeLinkCount.lean#L171)
+  The two-step count also controls arbitrary degrees. Write \(m=2E\) for
+  the number of oriented links. For each oriented link \(xy\), sum the
+  product of its endpoint degrees. Twice that sum is at most
+  \(nm+2n(n-1)\). Summing the rooted bounds gives the degree-product term
+  along with the sum of vertex degree squares. The count of two-step
+  walks with distinct endpoints bounds that square term after removing
+  the walks that immediately return to their start.
+  [Degree products over oriented links](OnlineReachabilityPreservers/HalfFiveOppositeLinkCount.lean#L301).
   For half exclusion through four, the number of opposite links \(E\)
   satisfies \(4E^2\le n^2(n-1)\). If \(M^2\ge16n^2(n-1)\) and the
   incidence mass \(M\) is at least both positive budgets, the cleaned

@@ -220,4 +220,162 @@ theorem regularization_list_frozen_half_five_of_regular_opposite_links {n p : �
     _ = _ := by ring
   omega
 
+
+omit [DecidableEq V] in
+private theorem sum_darts_as_neighbor_sums {R : Type*} [AddCommMonoid R]
+    (G : SimpleGraph V) [DecidableRel G.Adj] (f : V → V → R) :
+    (∑ e : G.Dart, f e.fst e.snd) = ∑ u, ∑ v ∈ G.neighborFinset u, f u v := by
+  let unpack : G.Dart ≃ Σ u : V, G.neighborSet u := {
+    toFun := fun e => ⟨e.fst,⟨e.snd,e.adj⟩⟩
+    invFun := fun uv => ⟨(uv.fst,uv.snd.val),uv.snd.property⟩
+    left_inv := by intro e; cases e; rfl
+    right_inv := by intro p; cases p; rfl }
+  calc
+    _ = ∑ uv : Σ u : V, G.neighborSet u, f uv.fst uv.snd.val :=
+      Fintype.sum_equiv unpack _ _ (fun _ => rfl)
+    _ = _ := by
+      rw [Fintype.sum_sigma]
+      apply sum_congr rfl
+      intro x _
+      exact (sum_subtype (G.neighborFinset x) (fun y => SimpleGraph.mem_neighborFinset G x y) (f x)).symm
+
+omit [DecidableEq V] in
+private theorem sum_across_symmetric_neighbors {R : Type*} [AddCommMonoid R]
+    (G : SimpleGraph V) [DecidableRel G.Adj] (f : V → V → R) :
+    (∑ u, ∑ v ∈ G.neighborFinset u, f u v) = ∑ v, ∑ u ∈ G.neighborFinset v, f u v := by
+  have neighbors (u : V) : G.neighborFinset u = univ.filter (G.Adj u) := by ext v; simp
+  simp_rw [neighbors,sum_filter]
+  rw [sum_comm]
+  apply sum_congr rfl
+  intro v _
+  apply sum_congr rfl
+  intro u _
+  by_cases linked : G.Adj u v
+  · simp [linked,linked.symm]
+  · have reversed : ¬ G.Adj v u := fun back => linked back.symm
+    simp [linked,reversed]
+
+private theorem halfFive_oppositeLinkGraph_two_step_total {paths : I → List V}
+    (free : HalfBridgeFree (Before paths) 5) :
+    let G := oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))
+    letI : DecidableRel G.Adj := Classical.decRel _
+    (∑ x, G.degree x*(G.degree x-1)) ≤ Fintype.card V*(Fintype.card V-1) := by
+  classical
+  let G := oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))
+  let walks := (univ : Finset V).sigma fun u => edgeSideTwoSteps G u u
+  let endpoint (w : Σ _ : V, Σ _ : V, V) : V × V := (w.1,w.2.2)
+  let target := (univ : Finset V).offDiag
+  have map : Set.MapsTo endpoint walks target := by
+    rintro ⟨u,x,z⟩ included
+    have step := mem_edgeSideTwoSteps.mp (mem_sigma.mp included).2
+    exact mem_offDiag.mpr ⟨mem_univ _,mem_univ _,step.2.2.2.symm⟩
+  have injective : Set.InjOn endpoint walks := by
+    rintro ⟨u,x,z⟩ left ⟨v,y,w⟩ right equal
+    have roots : u = v := congrArg Prod.fst equal
+    have ends : z = w := congrArg Prod.snd equal
+    subst v
+    subst w
+    obtain ⟨ux,_,xz,zu⟩ := mem_edgeSideTwoSteps.mp (mem_sigma.mp left).2
+    obtain ⟨uy,_,yz,_⟩ := mem_edgeSideTwoSteps.mp (mem_sigma.mp right).2
+    have middle : x = y := by
+      by_contra apart
+      exact halfFour_oppositeLinkGraph_no_square (fun _ h => free (h.trans (by decide)))
+        zu.symm apart ux xz yz.symm uy.symm
+    subst y
+    rfl
+  have size := card_le_card_of_injOn endpoint map injective
+  have walkCount : walks.card = ∑ x, G.degree x*(G.degree x-1) := by
+    calc
+      _ = ∑ u, ∑ x ∈ G.neighborFinset u, (G.degree x-1) := by
+        simp [walks,card_sigma,edgeSideTwoSteps_card,erase_eq_of_notMem]
+      _ = ∑ x, ∑ _ ∈ G.neighborFinset x, (G.degree x-1) :=
+        sum_across_symmetric_neighbors G (fun _ x => G.degree x-1)
+      _ = _ := by simp
+  have fullCount : target.card = Fintype.card V*(Fintype.card V-1) := by
+    simp only [target,offDiag_card,card_univ,Nat.mul_sub_left_distrib,Nat.mul_one]
+  rw [walkCount,fullCount] at size
+  exact size
+
+/-- Sum the edge-neighborhood bound over both orientations of all
+opposite links. This controls degree products for nonregular graphs. -/
+theorem halfFive_oppositeLinkGraph_degree_product_bound {paths : I → List V}
+    (free : HalfBridgeFree (Before paths) 5) :
+    let G := oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))
+    letI : DecidableRel G.Adj := Classical.decRel _
+    let n := Fintype.card V
+    let m := Fintype.card G.Dart
+    2*(∑ e : G.Dart, G.degree e.fst * G.degree e.snd) ≤ n*m + 2*n*(n-1) := by
+  classical
+  let G := oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))
+  let n := Fintype.card V
+  let m := Fintype.card G.Dart
+  let d (v : V) : ℕ := G.degree v
+  let T (u : V) := ∑ v ∈ G.neighborFinset u, d v
+  let B (u v : V) := ∑ x ∈ (G.neighborFinset u).erase v, (d x-1)
+  have restore {u v : V} (edge : G.Adj u v) : B u v+(d u-1)+d v = T u := by
+    let vertices := (G.neighborFinset u).erase v
+    have on : v ∈ G.neighborFinset u := (SimpleGraph.mem_neighborFinset _ _ _).mpr edge
+    have room : vertices.card = d u-1 := card_erase_of_mem on
+    have plus : B u v+vertices.card = ∑ x ∈ vertices, d x := by
+      change (∑ x ∈ vertices, (d x-1))+vertices.card = _
+      have ones : (∑ _ ∈ vertices, (1 : ℕ)) = vertices.card := by simp
+      rw [← ones,← sum_add_distrib]
+      apply sum_congr rfl
+      intro x inside
+      have adj : G.Adj u x := (SimpleGraph.mem_neighborFinset _ _ _).mp (mem_erase.mp inside).2
+      have positive : 0 < d x := adj.degree_pos_right
+      exact Nat.sub_add_cancel (by omega)
+    rw [← room,plus]
+    exact sum_erase_add (G.neighborFinset u) d on
+  have localBound (e : G.Dart) : T e.fst+T e.snd+2 ≤ n+(d e.fst+d e.snd) := by
+    have uv : B e.fst e.snd+B e.snd e.fst+(d e.fst+d e.snd) ≤ n :=
+      halfFive_oppositeLinkGraph_edge_two_step_bound free e.adj
+    have left := restore e.adj
+    have right := restore e.adj.symm
+    have dp : 0 < d e.fst := e.adj.degree_pos_left
+    have dq : 0 < d e.snd := e.adj.degree_pos_right
+    omega
+  let reversal : G.Dart ≃ G.Dart :=
+    ⟨SimpleGraph.Dart.symm,SimpleGraph.Dart.symm,SimpleGraph.Dart.symm_symm,SimpleGraph.Dart.symm_symm⟩
+  have reverseSum (f : V → ℕ) : (∑ e : G.Dart, f e.snd) = ∑ e : G.Dart, f e.fst :=
+    Equiv.sum_comp reversal (fun e => f e.fst)
+  have rootSum (f : V → ℕ) : (∑ e : G.Dart, f e.fst) = ∑ v, d v*f v := by
+    rw [sum_darts_as_neighbor_sums G (fun u _ => f u)]
+    simp [d]
+  let S := ∑ e : G.Dart, d e.fst*d e.snd
+  let Q := ∑ v, (d v)^2
+  have allT : (∑ e : G.Dart, T e.fst) = S := by
+    rw [rootSum]
+    change (∑ v, d v*T v) = ∑ e : G.Dart, d e.fst*d e.snd
+    rw [sum_darts_as_neighbor_sums G (fun u v => d u*d v)]
+    simp [T,mul_sum]
+  have allD : (∑ e : G.Dart, d e.fst) = Q := by
+    rw [rootSum d]
+    simp [Q,pow_two]
+  have combined : 2*S+2*m ≤ n*m+2*Q := by
+    have total := sum_le_sum (s := (univ : Finset G.Dart)) (fun e _ => localBound e)
+    simp only [sum_add_distrib,Finset.sum_const,card_univ,nsmul_eq_mul,Nat.cast_id] at total
+    rw [reverseSum T,reverseSum d,allT,allD] at total
+    change S+S+m*2 ≤ m*n+(Q+Q) at total
+    rw [mul_comm m n] at total
+    omega
+  have squareSum : Q ≤ n*(n-1)+m := by
+    have walks : (∑ v, d v*(d v-1)) ≤ n*(n-1) := halfFive_oppositeLinkGraph_two_step_total free
+    have degrees : (∑ v, d v) = m := G.dart_card_eq_sum_degrees.symm
+    have splitDegree (t : ℕ) : t^2 = t*(t-1)+t := by
+      cases t with
+      | zero => rfl
+      | succ t =>
+        simp only [Nat.succ_sub_one]
+        ring
+    have exactSquare : Q = (∑ v, d v*(d v-1))+m := by
+      simp only [Q,splitDegree,sum_add_distrib,degrees]
+    rw [exactSquare]
+    exact Nat.add_le_add_right walks _
+  have doubled := Nat.mul_le_mul_left 2 squareSum
+  change 2*S ≤ n*m+2*n*(n-1)
+  have expand : 2*(n*(n-1)+m) = 2*n*(n-1)+2*m := by ring
+  rw [expand] at doubled
+  omega
+
 end OnlineReachabilityPreservers
