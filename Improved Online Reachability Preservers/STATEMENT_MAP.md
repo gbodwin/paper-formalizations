@@ -2457,6 +2457,19 @@ reduces each excess by at least that much and can reduce it further by
 splitting a class.
 [Fixed-label accounting](OnlineReachabilityPreservers/SharedCapacityClipping.lean#L150) · [Excess under refinement](OnlineReachabilityPreservers/SharedCapacityClipping.lean#L167) · [Excess under sublists](OnlineReachabilityPreservers/ShortReturnExcessRefinement.lean#L63) · [Excess saved after recomputation](OnlineReachabilityPreservers/ShortReturnExcessRefinement.lean#L78).
 
+An arbitrary rowwise restriction of simple admissible input can precede
+component clipping. Compute both clips at the original widths after
+the restriction. Charge the original mass lost in the first deletion,
+the degree excess of the restriction and the path excess after degree
+clipping. If the total charge is at most a third of the original mass,
+the frozen witness keeps at least \(M/18\), the chosen exclusion and
+all four caps within both original positive budgets. The original
+mass must be at least both budgets. Using the two recomputed excesses
+before either clip also suffices, since degree clipping cannot increase
+path excess. The successive version gives a literal distinct nonempty
+witness for feasible literal input at cutoff at least two.
+[Exact successive excess expression](OnlineReachabilityPreservers/ShortReturnClippingAfterDeletion.lean#L10) · [Clipping after a restriction](OnlineReachabilityPreservers/ShortReturnClippingAfterDeletion.lean#L19) · [Both excesses before the clips](OnlineReachabilityPreservers/ShortReturnClippingAfterDeletion.lean#L46) · [Literal witness after a restriction](OnlineReachabilityPreservers/ShortReturnClippingAfterDeletion.lean#L75).
+
 When differently labelled row families can meet only at one fixed
 common vertex, any bridge stays within its river's family. The first and last
 steps outside that family would require the shared vertex at two
