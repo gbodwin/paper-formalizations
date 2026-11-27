@@ -39,7 +39,7 @@ private theorem average_caps_of_width {X : Type*} [Fintype X] (values : X → �
   have avgUpper := (div_le_iff₀ positive).mpr upper
   exact ⟨by linarith only [avgUpper, (bounds x).1], by linarith only [avgLower, (bounds x).2]⟩
 
-private theorem listOutputAverageCaps_of_widths {V I : Type*} [DecidableEq V] [Fintype V] [Fintype I]
+theorem listOutputAverageCaps_of_widths {V I : Type*} [DecidableEq V] [Fintype V] [Fintype I]
     (paths : I → List V) (simple : ∀ i, (paths i).Nodup) (D L : ℝ)
     (degree : ∀ v, D/4 ≤ (occurrences (fun i => (paths i).toFinset) v).card ∧
       ((occurrences (fun i => (paths i).toFinset) v).card : ℝ) ≤ D)
@@ -150,7 +150,7 @@ theorem relabelListPathsFin_spec {V I : Type*}
   exact ⟨fun i => (simple (iIso i)).map vIso.symm.injective, noBridge, mass, degrees,
     fun i => by simp only [relabelListPathsFin, List.length_map]⟩
 
-private theorem listOutputAverageCaps_relabel {V I : Type*}
+theorem listOutputAverageCaps_relabel {V I : Type*}
     [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] (paths : I → List V)
     (simple : ∀ i, (paths i).Nodup) (half : Bool) {k : ℕ} (allowed : localOrderAdmissible half k paths)
     (caps : listOutputAverageCaps paths) :

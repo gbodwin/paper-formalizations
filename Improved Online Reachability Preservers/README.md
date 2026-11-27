@@ -2079,16 +2079,23 @@ It also holds when \(n\le p\) and \(5k\ge3n\), or when the original mass
 is at least \(256n\) and \(5k\ge2\min(n,p)\).
 At the witness's own averages it holds when
 \(Ck\ge\min(n,p)\), with a loss factor linear in the fixed positive
-integer \(C\). At finite full cutoffs from seven, the general original-average
-case below \(3\min(n,p)/4\) and the output-average case without a fixed
-positive cutoff fraction remain open in general. At positive feasible
-literal half budgets and \(k\ge4\), a distinct nonempty full witness
+integer \(C\). At positive budgets and every full cutoff, select rows
+of comparable length. Split only vertices in a dense group, and use
+a spanning row in the sparse case. The four output-average caps hold
+within both budgets. The witness retains at least \(M/(32(1+\lfloor\log_2 n\rfloor))\)
+for indexed rows and \(M/(576(1+\lfloor\log_2 n\rfloor))\) for feasible
+literal rows at \(k\ge2\). Both witnesses preserve the input cutoff.
+At finite full cutoffs from seven, the remaining original-average cases
+and a general constant-factor output-average bound are still open.
+At positive feasible literal half budgets and \(k\ge4\), a distinct nonempty full witness
 within both budgets controls the literal last-arc \(H\) within
 \(O(n^{7/50+o(1)})\). The general constant-factor comparison in Lemma 39
 and a native execution-time bound for Steiner remain open.
 [Original-average bound](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L561)
 · [Cutoff and density conditions](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L702)
 · [Output-average bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L239)
+· [Logarithmic indexed bound](OnlineReachabilityPreservers/FullLengthBucketCleaning.lean#L237)
+· [Logarithmic literal bound](OnlineReachabilityPreservers/FullLengthBucketCleaning.lean#L270)
 · [Literal half and full comparison](OnlineReachabilityPreservers/HalfFullLatticeComparison.lean#L213).
 
 The binary arc preparation encodes both endpoints of each raw row

@@ -358,6 +358,26 @@ convention.
 · [Output-average indexed bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L239)
 · [Literal all-size output-average bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L306).
 
+At arbitrary full cutoffs, there is also an output-average witness with
+logarithmic loss and the same cutoff. Partition nonempty rows by dyadic
+length and by whether they are in the lower or upper part of their
+length interval. Some group keeps at least one part in
+\(2(1+\lfloor\log_2 n\rfloor)\) of the original mass. Its common upper
+length \(L\) is at most three halves of each length in that group. If
+its mass \(K\) is at least \(4n\), split only vertices at width
+\(D=\lceil K/n\rceil\). Full exclusion survives this operation at every
+cutoff. Keeping the filled copies before the remainders loses at most
+\(K/4\) when trimming to \(n\) vertices. Peeling at \(D/4\) and \(L/4\)
+costs at most \(5K/16\) and \(3K/8\), leaving \(K/16\). The degree and
+length intervals imply all four caps at the resulting averages.
+When \(K<4n\), a spanning row suffices. This gives the factor
+\(32(1+\lfloor\log_2 n\rfloor)\) at the indexed full maximum, and
+\(576(1+\lfloor\log_2 n\rfloor)\) at the feasible literal maximum at
+\(k\ge2\). The literal transfer preserves nonempty distinct rows.
+[Dense length group](OnlineReachabilityPreservers/FullLengthBucketCleaning.lean#L15)
+· [Indexed maximum](OnlineReachabilityPreservers/FullLengthBucketCleaning.lean#L237)
+· [Literal maximum](OnlineReachabilityPreservers/FullLengthBucketCleaning.lean#L270).
+
 Without average caps, the same restriction compares two indexed full
 maxima at the same positive budgets. Write \(q=\min(n,p)\), with
 \(\beta_k\) the maximum through cutoff \(k\) and \(\beta_\infty\) the
