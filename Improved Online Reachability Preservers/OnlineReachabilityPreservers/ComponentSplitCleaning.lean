@@ -727,6 +727,24 @@ private theorem componentRankAssemblyAdmissible {n p k D : ℕ} {half : Bool}
   · exact bridgeFree_of_rank_separated_split legal (fun i : P => i.fst) rank pieceStep rankMono apart
   · exact halfBridgeFree_of_rank_separated_split legal (fun i : P => i.fst) arrival rank pieceStep rankMono apart
 
+private theorem small_ranked_run_piece_budget (M p q : ℕ) (hp : 0 < p)
+    (count : (4*M/p+1-M/p)*q ≤ M+p*(4*M/p+1-M/p)) : 3*q ≤ 4*p := by
+  let minimum := 4*M/p+1-M/p
+  have fits : M/p ≤ 4*M/p := Nat.div_le_div_right (by omega)
+  have positive : 0 < minimum := by unfold minimum; omega
+  have widthFloor := Nat.lt_mul_div_succ (4*M) hp
+  have smallFloor : p*(M/p) ≤ M := by
+    rw [Nat.mul_comm]
+    exact Nat.div_mul_le_self M p
+  have enough : 3*M ≤ p*minimum := by
+    rw [show p*minimum = p*(4*M/p+1)-p*(M/p) by simp [minimum,Nat.mul_sub_left_distrib]]
+    omega
+  apply Nat.le_of_mul_le_mul_left _ positive
+  calc
+    _ = 3*(minimum*q) := by ring
+    _ ≤ 3*(M+p*minimum) := Nat.mul_le_mul_left _ count
+    _ ≤ _ := by rw [show minimum*(4*p) = 4*(p*minimum) by ring]; omega
+
 private theorem frozen_cleaning_of_small_ranked_runs {n p k : ℕ} {half : Bool}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (hn : 0 < n) (hp : 0 < p)
@@ -740,35 +758,15 @@ private theorem frozen_cleaning_of_small_ranked_runs {n p k : ℕ} {half : Bool}
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       M ≤ 16 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let M := ∑ i, (paths i).length
-  let D := 4 * M / n
-  let L := 4 * M / p
-  let limit := M / p
-  let minimum := L + 1 - limit
-  have fits : limit ≤ L := Nat.div_le_div_right (by omega)
-  have minimumPositive : 0 < minimum := by unfold minimum; omega
   obtain ⟨_, vertexRoom, _⟩ := four_average_width hn dense
-  have vertexBudget : 3 * (n + M / D) ≤ 4 * n := by
-    change 3 * (M / D) ≤ n at vertexRoom
-    omega
-  have widthFloor : 4 * M < p * (L + 1) := Nat.lt_mul_div_succ (4 * M) hp
-  have smallFloor : p * limit ≤ M := by
-    rw [Nat.mul_comm]
-    exact Nat.div_mul_le_self M p
-  have enough : 3 * M ≤ p * minimum := by
-    rw [show p * minimum = p * (L + 1) - p * limit by simp [minimum, Nat.mul_sub_left_distrib]]
-    omega
-  refine frozen_cleaning_of_ranked_runs (half := half) paths simple le_rfl hn hp dense long limit fits
+  change 3*(M/(4*M/n)) ≤ n at vertexRoom
+  have vertexBudget : 3 * (n + M / (4*M/n)) ≤ 4 * n := by omega
+  have fits : M/p ≤ 4*M/p := Nat.div_le_div_right (by omega)
+  exact frozen_cleaning_of_ranked_runs (half := half) paths simple le_rfl hn hp dense long (M/p) fits
     rank monotone small legal
     (vNum := 3) (vDen := 4) (pNum := 3) (pDen := 4)
-    (by decide) (by decide) (by decide) (by decide) vertexBudget ?_ (by omega)
-  dsimp only
-  intro q total _
-  change minimum * q ≤ M + p * minimum at total
-  apply Nat.le_of_mul_le_mul_left _ minimumPositive
-  calc
-    _ = 3 * (minimum * q) := by ring
-    _ ≤ 3 * (M + p * minimum) := Nat.mul_le_mul_left _ total
-    _ ≤ _ := by rw [show minimum * (4 * p) = 4 * (p * minimum) by ring]; omega
+    (by decide) (by decide) (by decide) (by decide) vertexBudget
+    (fun q count _ => small_ranked_run_piece_budget M p q hp count) (by omega)
 
 private theorem frozen_cleaning_of_small_precedence_components {n p k : ℕ} {half : Bool}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
@@ -1963,6 +1961,89 @@ theorem NoShortReturnAcrossWidthCuts.copied {n p D L k : ℕ} {paths : Fin p →
       splitListVertices_idxOf_project paths D i (simple i) step.2.1]
   exact free oldStep cut (project_reachIn project (fun {_ _} => lifted) _ back)
 
+/-- Ordered pieces with separated short-return tests preserve the
+original full or half cutoff. The graph can contain extra comparisons. -/
+theorem localOrderAdmissible_of_shortReturnSeparated {I J W : Type*}
+    [LinearOrder I] [LinearOrder J] [DecidableEq W] {k : ℕ} {half : Bool}
+    {rows : I → List W} {pieces : J → List W} {G : Arcs W}
+    (parent : J → I) (arrives : Monotone parent)
+    (steps : ∀ {i x y}, Before pieces i x y → Before rows (parent i) x y)
+    (edges : ∀ {i x y}, Before pieces i x y → Edge G x y)
+    (separated : ShortReturnSeparated G id rows pieces parent (k-2))
+    (legal : localOrderAdmissible half k rows) :
+    localOrderAdmissible half k pieces := by
+  have project {d : ℕ} (b : Bridge (Before pieces) d) (small : d+2 ≤ k) :=
+    bridge_of_shortReturnSeparated_split G id parent (fun {_ _ _} => steps)
+      (fun {_ _ _} => edges) separated b small
+  cases half
+  · intro d small
+    refine ⟨fun b => ?_⟩
+    obtain ⟨j,bound,old,_,_⟩ := project b small
+    exact (legal (k := j) (by omega)).false old
+  · intro d small b earlier
+    obtain ⟨j,bound,old,river,last⟩ := project b small
+    have noLater := arrives earlier.le
+    rw [← river,← last] at noLater
+    exact legal (k := j) (by omega) old (noLater.lt_of_ne (old.river_ne_arc _).symm)
+
+private theorem rankedCopiedAssemblyAdmissible_of_short_returns {p k : ℕ} {V : Type*}
+    [LinearOrder V] [Fintype V] {half : Bool} (rows : Fin p → List V) (rank : Fin p → V → ℕ)
+    (simple : ∀ i, (rows i).Nodup) (legal : localOrderAdmissible half k rows)
+    (directed : ∀ {i x y}, x ∈ rows i → y ∈ rows i → rank i x < rank i y →
+      Before rows i x y ∧ y ∉ reachIn (listPiecePrecedenceGraph rows) x ((k-2)-1)) :
+    RankedCopiedAssemblyAdmissible rows k half rank := by
+  intro sizes pieces sub apart
+  let P := Σₗ i : Fin p, Fin (sizes i)
+  let G := listPiecePrecedenceGraph rows
+  let parent (i : P) := i.fst
+  have step {i x y} (before : Before pieces i x y) : Before rows (parent i) x y :=
+    listBefore_of_sublist (paths := fun j : P => rows j.fst) (simple i.fst) (sub i) before
+  have separated : ShortReturnSeparated G id rows pieces parent (k-2) := by
+    intro i j different parents
+    rcases apart different parents with left | right
+    · left
+      intro x hx y hy
+      exact directed ((sub i).subset hx) (parents.symm ▸ (sub j).subset hy) (left x hx y hy)
+    · right
+      intro y hy x hx
+      exact directed (parents.symm ▸ (sub j).subset hy) ((sub i).subset hx) (right x hx y hy)
+  have arrives : Monotone parent := by
+    intro i j h
+    rcases Sigma.Lex.le_def.mp h with earlier | ⟨same,_⟩
+    · exact earlier.le
+    · exact same.le
+  exact localOrderAdmissible_of_shortReturnSeparated parent arrives (fun {_ _ _} => step)
+    (fun {i _ _} before => listPiecePrecedenceGraph_edge.mpr ⟨parent i,step before⟩) separated legal
+
+/-- Pack short-return-separated path runs on any already admissible copy
+alphabet. The mean run bound suffices for both original support budgets
+and all four frozen caps. -/
+theorem regularization_list_frozen_of_small_ranked_path_runs {n p k M : ℕ} {V : Type*}
+    [LinearOrder V] [Fintype V] {half : Bool} (rows : Fin p → List V)
+    (simple : ∀ i, (rows i).Nodup) (legal : localOrderAdmissible half k rows)
+    (rank : Fin p → V → ℕ)
+    (directed : ∀ {i x y}, x ∈ rows i → y ∈ rows i → rank i x < rank i y →
+      Before rows i x y ∧ y ∉ reachIn (listPiecePrecedenceGraph rows) x ((k-2)-1))
+    (runs : ∀ i r, ((rows i).filter fun x => decide (rank i x = r)).length ≤ M/p)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M) (mass : (∑ i, (rows i).length) = M)
+    (copyCount : 3*Fintype.card V ≤ 4*n)
+    (degree : ∀ v, (occurrences (fun i => (rows i).toFinset) v).card ≤ 4*M/n) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  have fits : M/p ≤ 4*M/p := Nat.div_le_div_right (by omega)
+  have ordered (i : Fin p) : (rows i).Pairwise (fun x y => rank i x ≤ rank i y) := by
+    apply List.pairwise_iff_getElem.mpr
+    intro a b ha hb before
+    by_contra! backwards
+    have reversal := (directed (List.getElem_mem hb) (List.getElem_mem ha) backwards).1.2.2
+    rw [(simple i).idxOf_getElem, (simple i).idxOf_getElem] at reversal
+    exact (Nat.not_lt_of_ge before.le) reversal
+  exact frozen_cleaning_after_ranked_copied_rows rows simple mass.le hn hp dense long (M/p) fits
+    rank ordered runs (rankedCopiedAssemblyAdmissible_of_short_returns rows rank simple legal directed)
+    (by decide) (by decide) (by decide) (by decide) copyCount degree
+    (fun q count _ => small_ranked_run_piece_budget M p q hp count) (by rw [mass])
+
 /-- Search for a short return using the pieces of these rows at the
 given width. The rows can already have been restricted. -/
 def NoShortReturnAcrossWidthCutsInPieces {p : ℕ} {V : Type*} [LinearOrder V] [Fintype V]
@@ -2010,20 +2091,9 @@ theorem splitListPaths_admissible_of_noShortReturnAcrossWidthCutsInPieces
       exact ⟨step,noReturns step (blockDistinct different same hx hy).symm⟩
   have edges {i x y} (step : Before pieces i x y) : Edge G x y :=
     listPiecePrecedenceGraph_edge.mpr ⟨i,step⟩
-  have project {d : ℕ} (b : Bridge (Before pieces) d) (small : d+2 ≤ k) :=
-    bridge_of_shortReturnSeparated_split G id parent (fun {_ _ _} => steps)
-      (fun {_ _ _} => edges) separated b small
-  cases half
-  · intro d small
-    refine ⟨fun b => ?_⟩
-    obtain ⟨j,bound,old,_,_⟩ := project b small
-    exact (legal (k := j) (by omega)).false old
-  · intro d small b earlier
-    have arrives : Monotone parent := block_parent_mono (fun i => (copies i).toFinset) L
-    obtain ⟨j,bound,old,river,last⟩ := project b small
-    have noLater := arrives earlier.le
-    rw [← river,← last] at noLater
-    exact legal (k := j) (by omega) old (noLater.lt_of_ne (old.river_ne_arc _).symm)
+  exact localOrderAdmissible_of_shortReturnSeparated parent
+    (block_parent_mono (fun i => (copies i).toFinset) L)
+    (fun {_ _ _} => steps) (fun {_ _ _} => edges) separated legal
 
 /-- Only the strict comparisons available on actual path pieces can
 witness a backwards return that prevents a bridge projection. -/
@@ -2116,45 +2186,19 @@ private theorem copiedReturnRankAssemblyAdmissible {n p k D : ℕ} {half : Bool}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (legal : localOrderAdmissible half k (splitListVertices paths D)) :
     RankedRunAssemblyAdmissible paths D k half (copiedReturnCutRank paths D k) := by
-  intro sizes pieces sub apart
-  let P := Σₗ i : Fin p, Fin (sizes i)
-  let rows := splitListVertices paths D
-  let G := listPiecePrecedenceGraph rows
-  let parent (i : P) := i.fst
-  have step {i x y} (before : Before pieces i x y) : Before rows (parent i) x y :=
-    listBefore_of_sublist (paths := fun j : P => rows j.fst)
-      (splitListVertices_simple paths D i.fst (simple i.fst)) (sub i) before
-  have edge {i x y} (before : Before rows i x y) : Edge G x y :=
-    listPiecePrecedenceGraph_edge.mpr ⟨i,before⟩
-  have directed {i x y} (hx : x ∈ rows i) (hy : y ∈ rows i)
-      (ranked : copiedReturnCutRank paths D k i x.fst < copiedReturnCutRank paths D k i y.fst) :
-      Before rows i x y ∧ y ∉ reachIn G x ((k-2)-1) := by
-    have different : x ≠ y := by
-      intro eq
-      exact ranked.ne (congrArg (fun v : ListVertexBlockIndex paths D => copiedReturnCutRank paths D k i v.fst) eq)
-    rcases listBefore_total hx hy different with before | reverse
-    · obtain ⟨b,cut,low,high⟩ := copiedReturnCutRank_lt_iff.mp ranked
-      rw [splitListVertices_idxOf_project paths D i (simple i) hx] at low
-      rw [splitListVertices_idxOf_project paths D i (simple i) hy] at high
-      exact ⟨before,cut before low high⟩
-    · exact (ranked.not_ge (copiedReturnCutRank_mono (splitListVertices_step (simple i) reverse))).elim
-  have separated : ShortReturnSeparated G id rows pieces parent (k-2) := by
-    intro i j different parents
-    rcases apart different parents with left | right
-    · left
-      intro x hx y hy
-      exact directed ((sub i).subset hx) (parents.symm ▸ (sub j).subset hy) (left x hx y hy)
-    · right
-      intro y hy x hx
-      exact directed (parents.symm ▸ (sub j).subset hy) ((sub i).subset hx) (right x hx y hy)
-  have arrives : Monotone parent := by
-    intro i j h
-    rcases Sigma.Lex.le_def.mp h with earlier | ⟨same,_⟩
-    · exact earlier.le
-    · exact same.le
-  cases half
-  · exact bridgeFree_of_shortReturnSeparated_smaller_cutoff G id legal parent step edge separated
-  · exact halfBridgeFree_of_shortReturnSeparated_smaller_cutoff G id legal parent arrives step edge separated
+  apply rankedCopiedAssemblyAdmissible_of_short_returns (splitListVertices paths D)
+    (fun i v => copiedReturnCutRank paths D k i v.fst)
+    (fun i => splitListVertices_simple paths D i (simple i)) legal
+  intro i x y hx hy ranked
+  have different : x ≠ y := by
+    intro eq
+    exact ranked.ne (congrArg (fun v : ListVertexBlockIndex paths D => copiedReturnCutRank paths D k i v.fst) eq)
+  rcases listBefore_total hx hy different with before | reverse
+  · obtain ⟨b,cut,low,high⟩ := copiedReturnCutRank_lt_iff.mp ranked
+    rw [splitListVertices_idxOf_project paths D i (simple i) hx] at low
+    rw [splitListVertices_idxOf_project paths D i (simple i) hy] at high
+    exact ⟨before,cut before low high⟩
+  · exact (ranked.not_ge (copiedReturnCutRank_mono (splitListVertices_step (simple i) reverse))).elim
 
 /-- Pack complete runs between boundaries that are safe on the degree
 copies. Runs fitting the factor-four cap give the frozen conclusion. -/

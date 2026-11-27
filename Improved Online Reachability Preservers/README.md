@@ -913,26 +913,26 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   those whole visits first. The construction then retains at least
   \(M/108\), with both budgets, all four original caps, and the same
   bridge guarantees.
-  [Cleaning with a small mass of long visits](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1127).
+  [Cleaning with a small mass of long visits](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1125).
 - At cutoff \(k\), the factor-four blocks retain at least \(M/16\) in either
   bridge mode when the precedence graph has no directed cycle of length at
   most \(k-2\). If removing at most \(M/18\) incidences from the rows suffices
   to obtain this property, the construction retains at least \(M/32\).
   Both guarantees use the two positive original budgets and all four caps
   computed from the original averages, for mass at least both budgets.
-  [No short cycles](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1598)
-  · [After deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1646).
+  [No short cycles](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1596)
+  · [After deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1644).
   The same bounds follow by ruling out short returns only across the
   actual width cuts. Full mode uses this condition alone. Half mode also
   uses one of the sufficient conditions for splitting vertices.
-  [Width-cut criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1583)
-  · [Width-cut criterion after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1625).
+  [Width-cut criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1581)
+  · [Width-cut criterion after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1623).
   For half bridges, the [copy-return test](OnlineReachabilityPreservers/BridgeVertexProjection.lean)
   uses walks of length at most \(\max(0,k-3)\) between distinct copies of
   one vertex. With the same width-cut condition, it gives \(M/16\),
   both original budgets, and all four original-average caps.
-  [Cleaning with the copy-return test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1887).
-  The [actual-piece width test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2041)
+  [Cleaning with the copy-return test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1885).
+  The [actual-piece width test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2111)
   searches only the precedence edges that survive both width cuts.
   It gives the same guarantee in both modes. Half bridges also require
   one of the sufficient degree-split conditions.
@@ -940,7 +940,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   In half mode, [checking only returns to an earlier degree block](OnlineReachabilityPreservers/BackwardCopyReturns.lean)
   suffices for the degree split. Combined with the actual-piece width
   test, this gives the same \(M/16\) and original-average guarantee.
-- After [deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2545),
+- The path-side result starts with admissible simple copied rows of mass
+  \(M\) at least both positive budgets. The rows have at most \(4n/3\)
+  labels and meet the original degree cap. Choose path gaps with no
+  backward return of at most
+  \(\max(0,k-3)\) edges in the precedence graph of those rows. If every
+  run fits the original mean length rounded down, greedy packing keeps
+  both original budgets, all four frozen caps and at least \(M/16\) of
+  original mass in either bridge mode.
+  [Chosen path gaps](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L239).
+- After [deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2589),
   test for short returns in the pieces of the retained rows. If the
   copied input has the required bridge exclusion, at most \(M/18\)
   incidences are deleted, and the surviving pieces pass the test,
@@ -960,11 +969,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   All three results preserve both budgets and all four original-average
   caps. They retain the input bridge exclusion through the cutoff, with
   the degree split conditions for half bridges.
-  [Cutting between short-return runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1792)
-  · [Choosing safe boundaries after copying degrees](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2161)
-  · [Deleting long runs from fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2277)
-  · [Clipping only the excess of each copied run](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2455)
-  · [After removing long runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1848).
+  [Cutting between short-return runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1790)
+  · [Choosing safe boundaries after copying degrees](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2205)
+  · [Deleting long runs from fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2321)
+  · [Clipping only the excess of each copied run](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2499)
+  · [After removing long runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1846).
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)

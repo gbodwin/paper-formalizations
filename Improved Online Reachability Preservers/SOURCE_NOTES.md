@@ -761,9 +761,9 @@ The resulting \(M/108\) guarantee includes both budgets and all four
 original-average caps. Full exclusion survives at any finite cutoff or at
 all sizes. Half exclusion uses the same three degree-splitting conditions.
 The unrestricted cyclic existence question remains open.
-[Removing long original visits](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1074)
-· [Full exclusion at all sizes](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1151)
-· [Half exclusion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1168).
+[Removing long original visits](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1072)
+· [Full exclusion at all sizes](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1149)
+· [Half exclusion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1166).
 
 At cutoff \(k\), ordered disjoint pieces of one path can be cut wherever
 there is no return from a later piece to an earlier one in at most
@@ -774,8 +774,8 @@ interior arc. When two arc parents recur in reverse piece order, the
 return uses only the steps strictly between those arcs. Forward
 repetitions can be shortened while keeping the river and last arc's
 parents. This preserves half exclusion in parent arrival order.
-[Full bridge criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1335)
-· [Half bridge criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1349).
+[Full bridge criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1333)
+· [Half bridge criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1347).
 
 If the precedence graph has no directed cycle of length at most
 \(k-2\), all contiguous cuts meet this test. In the degree split, the
@@ -791,9 +791,9 @@ cycles, it gives \(M/32\) under the same original caps. The support
 restriction keeps at least \((9/16)(17/18)M=17M/32\), and peeling loses
 at most \(M/2\). The existence of a suitable cleaning for every cyclic
 input is still open.
-[Half exclusion after a degree split](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1401)
-· [Factor-four cleaning](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1598)
-· [Cleaning after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1646).
+[Half exclusion after a degree split](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1399)
+· [Factor-four cleaning](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1596)
+· [Cleaning after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1644).
 
 [Last-arc-preserving vertex projection](OnlineReachabilityPreservers/BridgeVertexProjection.lean)
 erases closed sections of the projected chain. If the projected
@@ -805,9 +805,9 @@ between two copies of the same vertex. Excluding just these walks
 between distinct copies preserves half exclusion in the degree split.
 Together with the width-cut condition, this gives \(M/16\) under the
 same original budgets and caps.
-[Cleaning with the copy-return test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1887).
+[Cleaning with the copy-return test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1885).
 
-[The actual-piece width test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2041)
+[The actual-piece width test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2111)
 searches for short returns among strict comparisons within the copied
 path pieces. A hypothetical bridge in those pieces uses only those
 edges. The original width-cut condition implies this test by projecting
@@ -836,7 +836,7 @@ test the earlier-block criterion gives \(M/16\) with both original
 budgets and all four original-average caps at the chosen half cutoff.
 [Checked direction of the example](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean).
 
-[Choosing cuts on the copied rows](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2161)
+[Choosing cuts on the copied rows](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2205)
 tests the boundaries before splitting the paths. A run ends only at
 a boundary with no short return across it in the copied-row graph.
 If the degree split preserves the requested bridge exclusion, packing
@@ -848,7 +848,7 @@ original-average caps. The twelve-vertex example has an original
 run of length six and only singleton runs after degree copying.
 [Checked run sizes](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean).
 
-[Deleting long runs from fixed copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2277)
+[Deleting long runs from fixed copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2321)
 uses the sparse full-bridge-free witness when \(M<2n\). In the
 dense case it fixes the original degree labels and safe boundaries
 on the copied rows. Remove runs longer than the original factor-four
@@ -858,7 +858,7 @@ preserved the chosen bridge exclusion and the deleted runs contain
 at most \(M/56\) incidences, the witness keeps at least \(M/108\)
 within both original budgets and all four original-average caps.
 
-[Clipping copied runs at the width](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2455)
+[Clipping copied runs at the width](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2499)
 keeps the first \(\min(L,R)\) incidences from a run of length \(R\),
 using the same degree copies and boundaries. The total loss is
 exactly \(\sum_R\max(0,R-L)\), counted separately over the occupied
@@ -866,12 +866,12 @@ runs on each row. If the loss is at most \(M/56\), the same \(M/108\)
 guarantee holds in either mode under the original degree-split
 premise. Both original budgets and all four original-average caps
 hold.
-[Exact excess accounting](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2417).
+[Exact excess accounting](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2461).
 
-[Deletions on fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2545)
+[Deletions on fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2589)
 retain the original degree labels and recompute the width pieces on each
 surviving row using the original width \(\lfloor4M/p\rfloor\).
-The [return criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1968)
+The [return criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2049)
 uses only precedence steps on those surviving pieces. If the copied
 input already satisfies the required exclusion, losing at most
 \(M/18\) incidences and passing this test gives both original budgets,
@@ -880,7 +880,7 @@ In a [five-vertex example](OnlineReachabilityPreservers/ActualPieceReturnAudit.l
 with mass 18, the pieces of the full copied rows fail the test at cutoff
 seven. Deleting one incidence on the return row makes the test succeed.
 
-The [row deletion theorem](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2478)
+The [row deletion theorem](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2522)
 also accepts the required exclusion proved directly on the surviving
 copied rows. For half bridges, the [earlier-copy test](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L132) suffices
 there. When the projected terminal occurs at an internal corner, take
@@ -941,6 +941,16 @@ resulting width pieces gives the same frozen \(M/16\) half-exclusion
 with both original budgets and all four caps.
 [Packing degree runs](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L140).
 
+The path-side result starts with admissible simple copied rows of mass
+\(M\) at least both positive budgets. The rows have at most \(4n/3\)
+labels and meet the original degree cap. Choose path gaps with no
+backward return of at most
+\(\max(0,k-3)\) edges in the precedence graph of those rows. If every
+run fits the original mean length rounded down, greedy packing keeps
+both original budgets, all four frozen caps and at least \(M/16\) of
+original mass in either bridge mode.
+[Chosen path gaps](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L239).
+
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
 those positions, so only pairs in different blocks need the bounded
@@ -951,9 +961,9 @@ through \(k-2\), or degrees already within the upper cap. Short cycles
 can remain if they create no bounded return across a cut. The same
 retention and caps hold after rowwise deletions costing at most \(M/18\)
 when the surviving rows satisfy the local condition at the original width.
-[Degree-splitting conditions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1552)
-· [Cleaning with the local return condition](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1583)
-· [Local condition after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1625).
+[Degree-splitting conditions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1550)
+· [Cleaning with the local return condition](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1581)
+· [Local condition after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1623).
 
 The cuts need not be equally spaced. A boundary in a row is safe if no
 pair of vertices straddles it with a return of at most \(\max(0,k-3)\)
@@ -961,9 +971,9 @@ precedence edges. Consecutive vertices with the same last safe boundary
 form a run. Pack these runs into pieces of the original upper width.
 The rank uses the original positions even if longer runs are removed
 first. The ordered-cut proof preserves the river and last arc's parent.
-[Safe boundary](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1675)
-· [Exact rank comparison](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1712)
-· [Pruning bound](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1848).
+[Safe boundary](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1673)
+· [Exact rank comparison](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1710)
+· [Pruning bound](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1846).
 
 Splitting a vertex can also break the half exclusion, even with unique
 intersections. In arrival order take the paths `(4,2), (0,2), (0,1), (1,2),

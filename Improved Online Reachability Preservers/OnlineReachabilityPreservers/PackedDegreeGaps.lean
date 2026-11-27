@@ -216,4 +216,43 @@ theorem regularization_list_frozen_half_of_small_degree_gap_runs {n p k : ℕ}
   intro a b s t x y arrives left right same
   exact blockMono left.2.1 right.2.1 same (degreeReturnGapRank_mono_arrival cuts (project x) arrives)
 
+/-- A chosen path gap forbids a short return across its cut in the full
+precedence graph of the given rows. -/
+def IsSafePathReturnGap {p : ℕ} {W : Type*} [LinearOrder W] [Fintype W] (rows : Fin p → List W) (i : Fin p) (gap radius : ℕ) : Prop :=
+  ∀ ⦃x y⦄, Before rows i x y → (rows i).idxOf x < gap → gap ≤ (rows i).idxOf y →
+    y ∉ reachIn (listPiecePrecedenceGraph rows) x radius
+
+/-- The most recent chosen gap at this position on the row. -/
+noncomputable def pathReturnGapRank {p : ℕ} {W : Type*} [LinearOrder W] (rows : Fin p → List W) (cuts : Fin p → Finset ℕ)
+    (i : Fin p) (x : W) : ℕ :=
+  degreeReturnGapRank cuts i
+    (⟨(rows i).idxOf x,(List.idxOf_le_length).trans_lt (Nat.lt_succ_self _)⟩ : Fin ((rows i).length+1))
+
+theorem pathReturnGapRank_lt_iff {p : ℕ} {W : Type*} [LinearOrder W] {rows : Fin p → List W} {cuts : Fin p → Finset ℕ}
+    {i : Fin p} {x y : W} :
+    pathReturnGapRank rows cuts i x < pathReturnGapRank rows cuts i y ↔
+      ∃ gap ∈ cuts i, (rows i).idxOf x < gap ∧ gap ≤ (rows i).idxOf y :=
+  degreeReturnGapRank_lt_iff
+
+/-- Whole runs between chosen safe path gaps preserve the two budgets
+and all four frozen caps when each run fits the original mean length. -/
+theorem regularization_list_frozen_of_small_path_gap_runs {p n k M : ℕ} {W : Type*}
+    [LinearOrder W] [Fintype W] {half : Bool}
+    (rows : Fin p → List W) (simple : ∀ i, (rows i).Nodup) (allowed : localOrderAdmissible half k rows)
+    (cuts : Fin p → Finset ℕ)
+    (safe : ∀ i gap, gap ∈ cuts i → IsSafePathReturnGap rows i gap ((k-2)-1))
+    (runs : ∀ i r, ((rows i).filter fun x => decide (pathReturnGapRank rows cuts i x = r)).length ≤ M/p)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M) (mass : (∑ i, (rows i).length) = M)
+    (copyCount : 3*Fintype.card W ≤ 4*n)
+    (degree : ∀ w, (occurrences (fun i => (rows i).toFinset) w).card ≤ 4*M/n) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  refine regularization_list_frozen_of_small_ranked_path_runs rows simple allowed (pathReturnGapRank rows cuts)
+    ?_ runs hn hp dense long mass copyCount degree
+  intro i x y xMem yMem separated
+  obtain ⟨gap,chosen,early,late⟩ := pathReturnGapRank_lt_iff.mp separated
+  have step : Before rows i x y := ⟨xMem,yMem,early.trans_le late⟩
+  exact ⟨step,safe i gap chosen step early late⟩
+
 end OnlineReachabilityPreservers

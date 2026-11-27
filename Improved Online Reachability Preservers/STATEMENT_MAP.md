@@ -2071,33 +2071,33 @@ The same bridge conclusions hold if each visit fits the larger limit
 \(\lfloor4M/p\rfloor\). Counting adjacent pieces permits the larger
 limit with \(M/54\) retention, both original budgets, and all four
 frozen caps. If visits longer than that cap hold at most \(M/56\) of the
-mass, [deleting the long visits](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1074)
+mass, [deleting the long visits](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1072)
 preserves the bridge exclusions and leaves all remaining visits within it.
 The original caps and both budgets still hold in a witness with at least
 \(M/108\) mass, with the same degree condition in half mode.
-An additional [ordered-cut criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1335)
+An additional [ordered-cut criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1333)
 excludes returns across each cut within \(\max(0,k-3)\) precedence edges.
 For fixed cutoff \(k\),
-[no precedence cycle of length at most \(k-2\)](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1598)
+[no precedence cycle of length at most \(k-2\)](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1596)
 implies this criterion. Half exclusion in the degree split itself only
 needs the absence of cycles through \(k-3\). In either bridge mode the
 resulting factor-four block cleaning
 retains \(M/16\) for simple paths with mass at least both positive budgets,
 with both budgets and all four original-average caps. The
-[deletion variant](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1646)
+[deletion variant](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1644)
 retains \(M/32\) under the same original budgets and caps when rowwise
 deletions of at most \(M/18\) incidences remove the short cycles. Longer
-cycles may remain in both variants. The [width-cut condition](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1583)
+cycles may remain in both variants. The [width-cut condition](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1581)
 requires the bounded-return exclusion only for pairs across the actual
 factor-four cuts. The earlier half-bridge degree-split result uses one of the
-[four sufficient conditions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1552).
+[four sufficient conditions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1550).
 [A separate degree-split condition](OnlineReachabilityPreservers/BridgeVertexProjection.lean)
 excludes walks of length at most \(\max(0,k-3)\) between distinct copies
 of one vertex in the copied rows. This suffices because erasing closed
 sections preserves the last arc whenever the terminal projected corner
 is unique in the chain. With the width-cut condition it gives the
-same [\(M/16\) guarantee](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1887).
-The [actual-piece criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2041)
+same [\(M/16\) guarantee](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1885).
+The [actual-piece criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2111)
 tests for returns across the same width cuts using only strict comparisons
 on copied pieces. It retains at least \(M/16\) within both original budgets
 and all four frozen caps in both modes.
@@ -2109,24 +2109,24 @@ rules out only copied returns from later to earlier blocks of one
 vertex within \(\max(0,k-3)\) steps. With the actual-piece width test
 it gives the same \(M/16\) guarantee in half mode. The example has a
 short forward return and passes the earlier-block test.
-[Safe boundaries on the copied rows](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2161)
+[Safe boundaries on the copied rows](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2205)
 give \(M/54\) with both original budgets and all four frozen caps
 when every run fits the factor-four width and the degree split
 preserves the requested exclusion. If each run fits the original
 mean path length rounded down, the bound is
-[\(M/16\)](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2176).
+[\(M/16\)](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2220).
 The [same twelve-vertex example](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean)
 has an original run of length six and copied runs of length at most one.
-[Removing long copied runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2277)
+[Removing long copied runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2321)
 keeps the original degree labels and safe boundaries fixed.
 When the removed runs hold at most \(M/56\), it gives \(M/108\)
 with both budgets and all four frozen caps, under the same
 degree-split premise in either mode.
-[Clipping each run to the original width](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2455)
+[Clipping each run to the original width](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2499)
 charges only its excess. The exact excess sum can replace the deleted
 mass in the \(M/56\) condition and yields the same \(M/108\) retention guarantee,
 both original budgets, and all four frozen caps.
-[Targeted deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2545)
+[Targeted deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2589)
 test the width cuts on the surviving paths. If those cuts pass and
 at most \(M/18\) incidences were deleted, the result gives
 \(M/32\) with both original budgets and all four frozen caps under
@@ -2151,7 +2151,18 @@ When each safe degree run fits the original mean degree rounded down,
 packing by its start count ensures the degree and support bounds without
 additional load or label-count hypotheses. The width-piece test still
 applies to the resulting rows. [Packed degree runs](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L140).
-The same conditional \(M/16\) and [\(M/32\) after rowwise deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1625)
+
+The path-side result starts with admissible simple copied rows of mass
+\(M\) at least both positive budgets. The rows have at most \(4n/3\)
+labels and meet the original degree cap. Choose path gaps with no
+backward return of at most
+\(\max(0,k-3)\) edges in the precedence graph of those rows. If every
+run fits the original mean length rounded down, greedy packing keeps
+both original budgets, all four frozen caps and at least \(M/16\) of
+original mass in either bridge mode.
+[Chosen path gaps](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L239).
+
+The same conditional \(M/16\) and [\(M/32\) after rowwise deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1623)
 keep both budgets and all four original-average caps.
 Alternatively, use each row's last safe boundary as its rank. A cut is
 safe when no return of at most \(\max(0,k-3)\) precedence edges connects a
@@ -2160,10 +2171,10 @@ cuts between runs even when a fixed-width cut crosses a short return.
 Assume simple input with the matching bridge exclusion through \(k\),
 positive budgets, and incidence mass \(M\) at least both budgets. In half
 mode the degree split still uses one of the four sufficient conditions.
-Packing the runs gives [\(M/16\) retention](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1810) when each
-run fits into \(\lfloor M/p\rfloor\) and [\(M/54\) retention](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1792) when each
+Packing the runs gives [\(M/16\) retention](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1808) when each
+run fits into \(\lfloor M/p\rfloor\) and [\(M/54\) retention](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1790) when each
 fits into \(\lfloor 4M/p\rfloor\). If longer runs carry at most \(M/56\) of the
-mass, [pruning the original runs gives \(M/108\)](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1848) with the degree
+mass, [pruning the original runs gives \(M/108\)](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1846) with the degree
 condition on the retained rows in half mode. Each bound uses both original
 budgets and all four original-average caps.
 The unrestricted cyclic results at higher half cutoffs and the remaining
