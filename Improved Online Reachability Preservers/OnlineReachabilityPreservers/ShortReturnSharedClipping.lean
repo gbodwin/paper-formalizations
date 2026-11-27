@@ -166,6 +166,57 @@ private theorem short_return_component_room_of_class_caps
     have earlier := shortReturnRowComponent_subset_of_sublist simple sub cutoff i v on
     exact mem_filter.mpr ⟨(mem_filter.mp on).1, (mem_filter.mp earlier).2⟩
 
+/-- The size of a shared deletion set is bounded by each original
+component excess sum. -/
+theorem ShortReturnSharedDeletion.card_le_excesses
+    {rows : I → List V} {D L k : ℕ} {shared : Finset (I × V)}
+    (fits : ShortReturnSharedDeletion rows D L k shared) :
+    shared.card ≤ shortReturnDegreeExcessMass rows D k ∧
+      shared.card ≤ shortReturnPathExcessMass rows L k := by
+  obtain ⟨_, degree, path⟩ := fits
+  rw [← shortReturnDegreeClass_totalExcess, ← shortReturnPathClass_totalExcess]
+  constructor
+  · let label := shortReturnDegreeClass rows k
+    rw [card_eq_sum_card_fiberwise (f := label) (t := univ) (fun a _ => mem_univ (label a))]
+    exact sum_le_sum (fun c _ => degree c)
+  · let label := shortReturnPathClass rows k
+    rw [card_eq_sum_card_fiberwise (f := label) (t := univ) (fun a _ => mem_univ (label a))]
+    exact sum_le_sum (fun c _ => path c)
+
+/-- A feasible shared set pays for a restriction that fits both prescribed
+widths. The loss budget and widths may come from a larger original family. -/
+theorem ShortReturnSharedDeletion.exists_capped_sublist
+    {rows : I → List V} {D L k budget : ℕ} {shared : Finset (I × V)}
+    (fits : ShortReturnSharedDeletion rows D L k shared) (simple : ∀ i, (rows i).Nodup)
+    (paid : shortReturnDegreeExcessMass rows D k + shortReturnPathExcessMass rows L k ≤ budget + shared.card) :
+    ∃ kept : I → List V, (∀ i, (kept i).Sublist (rows i)) ∧
+      (∀ v i, (shortReturnCopyRowComponent kept k v i).card ≤ D) ∧
+      (∀ i v, (shortReturnRowComponent kept k i v).card ≤ L) ∧
+      (∑ i, (rows i).length) ≤ (∑ i, (kept i).length) + budget := by
+  let vertices := shortReturnDegreeClass rows k
+  let paths := shortReturnPathClass rows k
+  let incidences := pieceIncidences rows univ
+  have payBoth : FiberClipping.totalExcess incidences vertices D +
+      FiberClipping.totalExcess incidences paths L ≤ budget + shared.card := by
+    rw [shortReturnDegreeClass_totalExcess, shortReturnPathClass_totalExcess]
+    exact paid
+  obtain ⟨inside, fitV, fitI⟩ := fits
+  obtain ⟨deleted, subDeleted, cost, capsV, capsI⟩ :=
+    (FiberClipping.exists_capped_deletion_iff incidences vertices paths D L budget).mpr
+      ⟨shared, inside, payBoth, fitV, fitI⟩
+  let kept := erasePieceIncidences rows deleted
+  have sub := erasePieceIncidences_sublist rows deleted
+  have keepSimple (i : I) : (kept i).Nodup := (sub i).nodup (simple i)
+  have keepIncidence : pieceIncidences kept univ = incidences \ deleted :=
+    pieceIncidences_erase rows deleted
+  have total : (∑ i, (kept i).length) + deleted.card = ∑ i, (rows i).length := by
+    rw [← pieceIncidences_card keepSimple univ, keepIncidence,
+      card_sdiff_add_card_eq_card subDeleted]
+    exact pieceIncidences_card simple univ
+  obtain ⟨roomV, roomI⟩ := short_return_component_room_of_class_caps rows kept simple sub D L k
+    (fun c => keepIncidence.symm ▸ capsV c) (fun c => keepIncidence.symm ▸ capsI c)
+  exact ⟨kept, sub, roomV, roomI, total.symm.le.trans (Nat.add_le_add_left cost _)⟩
+
 /-- A shared deletion set reduces the combined cost of fitting the
 original degree and path components. If the resulting budget is at
 most one third of the original mass, frozen cleaning keeps at least
@@ -184,33 +235,10 @@ theorem regularization_list_frozen_of_shared_short_return_deletions {n p k : ℕ
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       M ≤ 18*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧
       frozenListCaps n p M clean := by
-  let M := ∑ i, (rows i).length
-  let D := 4*M/n
-  let L := 4*M/p
-  let vertices := shortReturnDegreeClass rows k
-  let paths := shortReturnPathClass rows k
-  let incidences := pieceIncidences rows univ
-  have payBoth : FiberClipping.totalExcess incidences vertices D +
-      FiberClipping.totalExcess incidences paths L ≤ M/3 + shared.card := by
-    rw [shortReturnDegreeClass_totalExcess, shortReturnPathClass_totalExcess]
-    exact paid
-  obtain ⟨inside, fitV, fitI⟩ := fits
-  obtain ⟨deleted, subDeleted, cost, capsV, capsI⟩ :=
-    (FiberClipping.exists_capped_deletion_iff incidences vertices paths D L (M/3)).mpr
-      ⟨shared, inside, payBoth, fitV, fitI⟩
-  let kept := erasePieceIncidences rows deleted
-  have sub := erasePieceIncidences_sublist rows deleted
-  have keepSimple (i : Fin p) : (kept i).Nodup := (sub i).nodup (simple i)
-  have keepIncidence : pieceIncidences kept univ = incidences \ deleted :=
-    pieceIncidences_erase rows deleted
-  have total : (∑ i, (kept i).length) + deleted.card = M := by
-    rw [← pieceIncidences_card keepSimple univ, keepIncidence,
-      card_sdiff_add_card_eq_card subDeleted]
-    exact pieceIncidences_card simple univ
-  have room := short_return_component_room_of_class_caps rows kept simple sub D L k
-    (fun c => keepIncidence.symm ▸ capsV c) (fun c => keepIncidence.symm ▸ capsI c)
-  exact regularization_list_frozen_of_short_return_restriction rows simple free hn hp dense long kept sub
-    (fun v i _ => room.1 v i) (fun i v _ => room.2 i v) (by omega)
+  obtain ⟨kept, sub, roomV, roomI, loss⟩ := fits.exists_capped_sublist simple paid
+  refine regularization_list_frozen_of_short_return_restriction rows simple free hn hp dense long kept sub
+    (fun v i _ => roomV v i) (fun i v _ => roomI i v) ?_
+  omega
 
 /-- The shared deletion certificate also gives a distinct nonempty
 witness for feasible literal input at cutoff at least two. -/
@@ -234,5 +262,67 @@ theorem regularization_list_frozen_distinct_of_shared_short_return_deletions {n 
   dsimp only
   exact fun long => regularization_list_frozen_of_shared_short_return_deletions
     rows simple free hn hp dense long shared fits paid
+
+/-- After arbitrary rowwise deletion, recompute both sets of components
+at the original widths. Shared deletions on those components can pay
+against the one-third budget left by the first deletion. -/
+theorem regularization_list_frozen_of_small_shared_excess_after_sublist {n p k : ℕ} {half : Bool}
+    (rows kept : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
+    (free : localOrderAdmissible half k rows) (sub : ∀ i, (kept i).Sublist (rows i))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
+    (shared : Finset (Fin p × Fin n))
+    (fits : let M := ∑ i, (rows i).length; ShortReturnSharedDeletion kept (4*M/n) (4*M/p) k shared)
+    (paid : let M := ∑ i, (rows i).length
+      M - (∑ i, (kept i).length) + shortReturnDegreeExcessMass kept (4*M/n) k +
+        shortReturnPathExcessMass kept (4*M/p) k ≤ M/3 + shared.card) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 18*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧
+      frozenListCaps n p M clean := by
+  let M := ∑ i, (rows i).length
+  let K := ∑ i, (kept i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let spent := M-K
+  let budget := M/3-spent
+  have keptSimple (i : Fin p) : (kept i).Nodup := (sub i).nodup (simple i)
+  have keptUpper : K ≤ M := sum_le_sum (fun i _ => (sub i).length_le)
+  have overlap : shared.card ≤ shortReturnDegreeExcessMass kept D k := (fits.card_le_excesses).1
+  change spent + shortReturnDegreeExcessMass kept D k + shortReturnPathExcessMass kept L k ≤
+    M/3+shared.card at paid
+  have limit : spent ≤ M/3 := by omega
+  have enough : shortReturnDegreeExcessMass kept D k + shortReturnPathExcessMass kept L k ≤ budget+shared.card := by
+    dsimp only [budget]
+    omega
+  obtain ⟨clipped, clipSub, roomV, roomI, loss⟩ := fits.exists_capped_sublist keptSimple enough
+  change K ≤ (∑ i, (clipped i).length)+budget at loss
+  refine regularization_list_frozen_of_short_return_restriction rows simple free hn hp dense long clipped
+    (fun i => (clipSub i).trans (sub i)) (fun v i _ => roomV v i) (fun i v _ => roomI i v) ?_
+  dsimp only [budget, spent] at loss
+  omega
+
+/-- The recomputed shared deletion test also applies to feasible
+literal distinct nonempty input at cutoff at least two. -/
+theorem regularization_list_frozen_distinct_of_small_shared_excess_after_sublist {n p k : ℕ} {half : Bool}
+    (rows kept : Fin p → List (Fin n)) (distinct : Function.Injective rows)
+    (nonempty : ∀ i, rows i ≠ []) (simple : ∀ i, (rows i).Nodup)
+    (free : localOrderAdmissible half k rows) (sub : ∀ i, (kept i).Sublist (rows i)) (two : 2 ≤ k)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length)
+    (shared : Finset (Fin p × Fin n))
+    (fits : let M := ∑ i, (rows i).length; ShortReturnSharedDeletion kept (4*M/n) (4*M/p) k shared)
+    (paid : let M := ∑ i, (rows i).length
+      M - (∑ i, (kept i).length) + shortReturnDegreeExcessMass kept (4*M/n) k +
+        shortReturnPathExcessMass kept (4*M/p) k ≤ M/3 + shared.card) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧ (∀ i, (clean i).Nodup) ∧
+      localOrderAdmissible half k clean ∧ M ≤ 18*(∑ i, (clean i).length) ∧
+      (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  refine regularization_list_frozen_distinct_of_indexed (retention := 18) rows distinct nonempty simple
+    free two hn hp dense (by decide) ?_
+  dsimp only
+  exact fun long => regularization_list_frozen_of_small_shared_excess_after_sublist rows kept simple free sub
+    hn hp dense long shared fits paid
 
 end OnlineReachabilityPreservers

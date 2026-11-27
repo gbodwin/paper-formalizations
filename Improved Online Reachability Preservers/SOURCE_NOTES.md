@@ -1215,7 +1215,7 @@ positive budgets and original mass \(M\) at least both budgets, this
 gives a frozen \(M/18\) witness with the same cutoff, both budgets and
 all four caps. Feasible literal distinct nonempty input also gives a
 distinct nonempty witness at cutoff at least two.
-[Degree class excess](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L106) · [Path class excess](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L119) · [Shared deletion certificate](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L131) · [Indexed frozen witness](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L173) · [Literal frozen witness](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L217).
+[Degree class excess](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L106) · [Path class excess](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L119) · [Shared deletion certificate](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L131) · [Indexed frozen witness](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L224) · [Literal frozen witness](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L245).
 
 For simple input rows at a fixed cutoff, each recomputed degree or path
 class after rowwise deletion lies within one original class. Total excess
@@ -1253,6 +1253,18 @@ excess is at most 18. The initial deletion and both clips now fit the
 budget, giving a frozen \(M/18\) witness at any chosen full cutoff
 within both original budgets and all four caps.
 [Original widths](OnlineReachabilityPreservers/ShortReturnRecomputedExample.lean#L24) · [Original full exclusion](OnlineReachabilityPreservers/ShortReturnRecomputedExample.lean#L178) · [Fixed-class lower bound](OnlineReachabilityPreservers/ShortReturnRecomputedExample.lean#L436) · [Path excess after one deletion](OnlineReachabilityPreservers/ShortReturnRecomputedExample.lean#L215) · [Frozen full witness](OnlineReachabilityPreservers/ShortReturnRecomputedExample.lean#L256).
+
+Arbitrary initial sublists can also precede the shared deletion test.
+At the original widths, compute both component excesses on the
+retained rows and choose a feasible shared set there. Add the initial
+mass lost to the two new excesses, then subtract the shared set size.
+If the resulting charge is at most \(\lfloor M/3\rfloor\), the frozen
+witness retains at least \(M/18\) with the chosen exclusion, both
+original positive budgets and all four caps. The simple admissible
+original input must have mass at least both budgets. For feasible
+literal distinct nonempty input, the retained witness can also be
+distinct and nonempty at cutoff at least two.
+[Each excess bounds the shared set](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L171) · [Restriction at prescribed widths](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L188) · [Shared excess after a restriction](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L269) · [Literal recomputed shared witness](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L307).
 
 When differently labelled row families can meet only at one fixed
 common vertex, any bridge stays within its river's family. The first and last
