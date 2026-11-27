@@ -1437,6 +1437,18 @@ for one decoded demand per arrival.
 · [Stored-session step](OnlineReachabilityPreservers/SteinerBinaryWordSession.lean#L85)
 · [Per-arrival input charge](OnlineReachabilityPreservers/SteinerBinaryWordSession.lean#L99).
 
+A binary session reads one demand row at a time and stops at the first
+rejection. On a canonical encoding of any finite trace, its final session
+agrees exactly with the typed arrival fold and stores the same fixed graph
+and seed. The guarded graph decoder preserves order and multiplicity on
+canonical input. The extra trace input tally is bounded by the total count
+of supplied bits and a per-row allowance at the advertised width, including
+when replay stops early.
+[Trace replay](OnlineReachabilityPreservers/SteinerBinaryWordTrace.lean#L9)
+· [Exact typed fold](OnlineReachabilityPreservers/SteinerBinaryWordTrace.lean#L23)
+· [Canonical graph decoding](OnlineReachabilityPreservers/SteinerBinaryWordTrace.lean#L42)
+· [Input work for arbitrary traces](OnlineReachabilityPreservers/SteinerBinaryWordTrace.lean#L69).
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
