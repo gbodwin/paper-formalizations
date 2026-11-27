@@ -2239,11 +2239,22 @@ local-order upper bound and recurrence of Theorem 43.
   vertical coordinate shifts all three slopes by one and puts the
   example’s lines in the Theorem 29 rectangle with \(\ell=3,n=54\).
   Theorem 29 gives a lower bound for the ordered-girth extremum
-  \(\beta^*\). The asymptotic comparison involving \(H\) in the literal
-  Lemma 39 remains unresolved.
+  \(\beta^*\). The distinction persists as the budgets grow. With
+  \(2(t+1)t^2\) vertices and \(t^3\) distinct nonempty lines, the lattice
+  has \((t+1)t^3\) incidences and satisfies the all-arcs-earlier exclusion
+  at every size. Lean indexes the slopes from zero to \(t-1\). Adding the
+  layer to the height gives slopes one through \(t\) within the same
+  \(2t^2\) height bound. Theorem 38 bounds half-four mass by \(K m^{13/10}\)
+  when both budgets are at most \(m\). Taking \(m=4t^3\) gives a ratio
+  of at least a constant times \(t^{1/10}\) between the lattice mass
+  and the half-four maximum at the same budgets. The comparison of the
+  literal last-arc \(H\) to the full extremum in Lemma 39 remains unresolved.
   [Bridge Girth, Definitions 9–10 and Theorem 29](https://arxiv.org/pdf/2212.11944v4)
   · [Generic lattice proof](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L45)
-  · [Checked separation](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L139).
+  · [Three-layer example](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L139)
+  · [Theorem 38 at diagonal budgets](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L14)
+  · [Polynomial separation](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L70)
+  · [Unbounded-factor corollary](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L129).
 - In Lemma 24, the paths `(0,1,2)` and `(2,1,0)` share three vertices without
   a bridge. Lean proves the ordering and fiber bound for arbitrary simple paths
   by choosing one witness for each middle path and using the 2-bridge exclusion

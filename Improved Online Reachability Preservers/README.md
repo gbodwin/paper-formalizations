@@ -1918,6 +1918,12 @@ or paths.
 · [Full witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L316)
 · [Half upper bound](OnlineReachabilityPreservers/HalfSaturatedComparisons.lean#L183)
 · [Half witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L372).
+At \(2(t+1)t^2\) vertices and \(t^3\) paths, the cited slope-ordered
+lattice satisfies the all-arcs-earlier exclusion at every size. Its
+\((t+1)t^3\) mass is at least a constant times \(t^{1/10}\) times
+the last-arc half-four maximum at the same budgets.
+[Polynomial gap](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L70)
+· [Unbounded-factor corollary](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L129).
 [LocalOnlineLimit](OnlineReachabilityPreservers/LocalOnlineLimit.lean) proves
 Theorem 38 for arbitrary simple paths with no half-bridge through size four.
 One exponent slack depends only on the vertex count and tends to zero.

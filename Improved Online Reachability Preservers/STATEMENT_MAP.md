@@ -3224,7 +3224,23 @@ exclusion holds on every rectangular lattice in the construction. The
 three-layer example has a half-3-bridge, so the construction leaves the
 half-bridge-free benchmark in the literal Lemma 39 unresolved.
 [Generic lattice proof](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L45)
-· [Checked separation](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L139).
+· [Three-layer example](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L139).
+
+At diagonal-scale budgets, Theorem 38 gives one constant \(K\) with upper
+bound \(Km^{13/10}\) whenever both budgets are at most \(m\). The cited
+all-arcs-earlier convention allows \(t^3\) distinct nonempty lattice rows
+of length \(t+1\) on \(2(t+1)t^2\) vertices. The lattice uses slopes
+zero through \(t-1\), which shift to one through \(t\) by adding the
+layer to the height. At those budgets its mass is at least a constant
+times \(t^{1/10}\) times every half-four-free mass. The comparison holds
+against families at or below each
+budget, including repeated and empty indexed rows. This establishes an
+unbounded gap between the ordered-girth and last-arc conventions. The
+literal full-versus-half comparison from Lemma 39 remains open.
+[Diagonal upper bound](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L14)
+· [Distinct lattice rows](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L55)
+· [Polynomial gap](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L70)
+· [Unbounded gap](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L129).
 
 Here \(\ell,d\) are average path length and vertex degree and \(H\) is the
 half-bridge-free extremal function. The analogous full bridge-free function is \(\beta\).
