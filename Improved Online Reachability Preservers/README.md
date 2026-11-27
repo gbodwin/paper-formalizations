@@ -2043,6 +2043,12 @@ budget has the same exact feasibility condition.
 [All-size capacity](OnlineReachabilityPreservers/AllSizeLiteralFeasibility.lean#L112)
 · [Finite cutoff covering a budget](OnlineReachabilityPreservers/AllSizeLiteralFeasibility.lean#L137).
 
+At either cutoff below two and feasible positive literal budgets, use
+\(\min(p,n!)\) distinct spanning permutations. They give at least a
+third of the unrestricted maximum and satisfy the four caps at both
+the starting and the witness averages, in both exclusion modes.
+[Literal boundary construction](OnlineReachabilityPreservers/LiteralShortCutoff.lean#L121).
+
 At \(2(t+1)t^2\) vertices and \(t^3\) paths, the cited slope-ordered
 lattice satisfies the all-arcs-earlier exclusion at every size. Its
 \((t+1)t^3\) mass is at least a constant times \(t^{1/10}\) times

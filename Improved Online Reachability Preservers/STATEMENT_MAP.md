@@ -2712,8 +2712,12 @@ together.
 
 The [finite-budget cases](OnlineReachabilityPreservers/FrozenBoundaryCases.lean)
 give an exact \(np\) maximizer meeting all four caps with either
-empty budget or a cutoff below two, in the indexed convention. For
-positive budgets and cutoff at most three, the previously checked
+empty budget or a cutoff below two, in the indexed convention. At a
+cutoff below two with feasible positive literal budgets, \(\min(p,n!)\)
+distinct spanning rows retain at least \(M/3\) with both original budgets
+and the four caps at the starting and witness averages in either mode.
+[Literal short-cutoff construction](OnlineReachabilityPreservers/LiteralShortCutoff.lean#L121).
+With positive budgets and cutoff at most three, the previously checked
 split-and-peel witness is relabeled on finite ordinals with both
 budgets, the four original caps, and \(M/16\) in either mode.
 When \(k\ge\min(n,p)\), both injective labels in a bridge certificate

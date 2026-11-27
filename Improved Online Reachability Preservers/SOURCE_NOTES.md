@@ -2531,6 +2531,19 @@ local-order upper bound and recurrence of Theorem 43.
   · [Bidirectional star](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L450)
   · [Exact all-size domain](OnlineReachabilityPreservers/AllSizeLiteralFeasibility.lean#L112).
 
+  Below cutoff two, both exclusions are vacuous. On \(n\) vertices the
+  count of simple lists, including the empty list, is less than \(3n!\).
+  Encode a nonempty list by its head and a shorter list on the remaining
+  vertices. Choose \(q=\min(p,n!)\) distinct permutations of all \(n\)
+  vertices. Feasibility permits including these rows in an exact
+  \(p\)-row family, so the original maximum \(M\) is at least \(qn\).
+  Every allowed row has length at most \(n\), and \(p\le3q\), giving
+  \(M\le pn\le 3qn\). The spanning witness uses the original vertex
+  ground set, with each degree exactly \(q\) and each length exactly
+  \(n\). It meets the four caps at both sets of averages.
+  [Simple-list count](OnlineReachabilityPreservers/LiteralShortCutoff.lean#L63)
+  · [Literal boundary construction](OnlineReachabilityPreservers/LiteralShortCutoff.lean#L121).
+
   The exact literal budgets \(n=4,p=11\) are feasible for half exclusion
   at every cutoff and infeasible for full exclusion at \(k\ge4\). The
   half witness uses four singleton rows, three early arrows from vertex
