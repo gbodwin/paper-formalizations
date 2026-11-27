@@ -3827,6 +3827,20 @@ open.
 · [Weights from the arrival order](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L195)
 · [All-size half construction](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L138).
 
+The entire long mass admits the same reduction up to a factor of five.
+Splitting into all complete contiguous triples and preserving parent
+order keeps the size-three exclusions. For row lengths \(L_i\), there
+are exactly \(\sum_i\lfloor L_i/3\rfloor\) triples. The half case gives
+disjoint positive matching fibers and the full case gives edge-disjoint
+triangles with no accidental triangle. The latter is the induced
+matching setting of Bridge Girth v4 Theorem 81. If a half family had
+\(M\ge\eta n^2\) and \(M>8p\), its triples would give at least
+\(\eta n/8\) positive matching fibers of size at least \(\eta n/8\).
+This implication leaves existence of the high-mean input open.
+[Half long-mass reduction](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L66)
+· [Full long-mass reduction](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L81)
+· [Linear fiber sizes](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L143).
+
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.
 Three comparisons leave vertex zero early in the arrival order. The other

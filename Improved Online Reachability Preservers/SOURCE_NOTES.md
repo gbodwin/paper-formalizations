@@ -2636,6 +2636,29 @@ local-order upper bound and recurrence of Theorem 43.
   · [Weight proof for tagged rows](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L195)
   · [Construction](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L138).
 
+  For both bridge modes, use all complete contiguous triples in each
+  row. Distinct pieces from one parent have disjoint vertices, while
+  any two participating rows of a size-two or size-three bridge must
+  share a vertex. Thus the bridge would project to distinct parents.
+  Ordering pieces by their parent preserves the half comparison on
+  those distinct parents. There are exactly \(\sum_i\lfloor L_i/3\rfloor\)
+  complete triples, and a row of length \(L_i\ge3\) has
+  \(L_i\le5\lfloor L_i/3\rfloor\). This is a tagged version of the
+  triple reduction in Bridge Girth v4 Theorem 81 for full exclusion,
+  and gives positive matchings controlling the long mass for half
+  exclusion. Under the half-side hypotheses \(M>8p\) and
+  \(M\ge\eta n^2\), each row leaves at most two vertices outside the
+  complete triples. Hence the triple count is at least
+  \((M-2p)/3\ge\eta n^2/4\). A final-vertex fiber has size at most \(n\),
+  so at least \(\eta n/8\) fibers have size at least \(\eta n/8\).
+  Keeping these fibers yields positive matchings meeting
+  both linear thresholds at the original part size. This is a necessary
+  condition on a proposed dense high-mean half example.
+  [Half triples](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L66)
+  · [Full triples](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L81)
+  · [Fiber averaging](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L111)
+  · [High-mean implication](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L143).
+
   Below cutoff two, both exclusions are vacuous. On \(n\) vertices the
   count of simple lists, including the empty list, is less than \(3n!\).
   Encode a nonempty list by its head and a shorter list on the remaining

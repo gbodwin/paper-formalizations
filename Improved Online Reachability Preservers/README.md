@@ -2092,6 +2092,18 @@ obstruction above.
 [Extraction from arbitrary rows](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L308)
 · [Construction from matching weights](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L138).
 
+Splitting each row into complete contiguous triples preserves the
+exclusions through size three. For original lengths \(L_i\), this gives
+exactly \(\sum_i\lfloor L_i/3\rfloor\) triples, at least one fifth of
+the long-row mass. They yield positive matching families in half mode
+and induced matching families in full mode. In particular, a half input
+with \(M\ge\eta n^2\) and \(M>8p\) would give at least \(\eta n/8\)
+positive matchings each of size at least \(\eta n/8\) in a bipartite
+graph with parts of size \(n\). The matchings have disjoint edge sets.
+[Half mass reduction](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L66)
+· [Full mass reduction](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L81)
+· [Necessary matching sizes](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L143).
+
 At either cutoff below two and feasible positive literal budgets, use
 \(\min(p,n!)\) distinct spanning permutations. They give at least a
 third of the unrestricted maximum and satisfy the four caps at both
