@@ -2332,6 +2332,16 @@ starts comparisons in only one piece. The finer graph therefore has
 no edges at any cutoff and the distinct pieces pass its separation test.
 [Bounded detour graph](OnlineReachabilityPreservers/RiverDetourVertices.lean#L43) · [Bridge localization](OnlineReachabilityPreservers/RiverDetourVertices.lean#L92) · [Component refinement](OnlineReachabilityPreservers/RiverDetourVertices.lean#L132) · [Frozen witness](OnlineReachabilityPreservers/RiverDetourVertices.lean#L209) · [Exact long-cycle separation](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L758).
 
+The full bridges through \(k\) give exact constraints on the arrival
+order. Require the river to precede the final arc of each such bridge.
+There is a half-\(k\)-free ordering of all the rows exactly when the
+directed graph of these constraints is acyclic. At the two original
+widths, an acyclic graph on the pieces permits a new arrival order
+without losing incidences. For simple input with mass \(M\) at least both
+positive budgets, the reordered pieces give a half-\(k\)-free witness of
+mass at least \(M/16\) within both original budgets and all four frozen caps.
+[Exact order constraint](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L55) · [Frozen cleaning after reordering](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L88).
+
 The same conditional \(M/16\) and [\(M/32\) after rowwise deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1623)
 keep both budgets and all four original-average caps.
 Alternatively, use each row's last safe boundary as its rank. A cut is
