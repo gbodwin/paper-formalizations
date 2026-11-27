@@ -1550,6 +1550,20 @@ steps \(3\to4\to0\) cross the split of the original row \((0,1,2,3)\)
 against its order.
 [Two-step return test](OnlineReachabilityPreservers/CyclicSplits.lean#L336) · [Seven-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean#L383) · [Preservation through seven](OnlineReachabilityPreservers/CyclicSplits.lean#L506) · [Two-step return in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L140) · [One-step condition in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L149).
 
+Under the same one-step and two-step conditions, disjoint sublists
+may interleave. Only the order of the two gap corners in a common
+parent is needed. If both intervening steps are arcs, that order either
+gives a full three-bridge or a forbidden two-step return. If one is the
+river, either order gives a full three-bridge. The lift assumes full
+three-exclusion of the parents, and it preserves any full cutoff up to
+seven given the corresponding original exclusion. A graph of retained
+comparisons can certify the absence of returns with radius two.
+In particular, the test on the actual pieces after the degree and path
+width splits gives an indexed frozen \(M/16\) witness through full cutoff
+seven for simple input of mass \(M\) at least both positive budgets.
+It keeps both budgets and all four original-average caps.
+[Lift with interleaving](OnlineReachabilityPreservers/CyclicSplits.lean#L570) · [Full preservation](OnlineReachabilityPreservers/CyclicSplits.lean#L636) · [Graph certificate](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L11) · [Width-cut application](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L39) · [Frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
+
 At half cutoff four, a [balanced midpoint split with no valid arrival permutation](OnlineReachabilityPreservers/HalfFourSplitOrderAudit.lean#L103)
 starts from a half-free indexed family with uniform degree two and mean
 length \(7/2\). Its sole length-six path splits into two length-three

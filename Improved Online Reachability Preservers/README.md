@@ -936,6 +936,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   parent's order. The existing seven-vertex example passes the first
   test and has the two-step return \(3\to4\to0\) across its split.
   [Seven-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean#L383) · [Preservation through seven](OnlineReachabilityPreservers/CyclicSplits.lean#L506) · [Two-step return in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L140).
+- The same two conditions also preserve full exclusion through seven
+  for disjoint pieces that interleave. For simple full-seven-free rows
+  of mass \(M\) at least both positive budgets, test for returns of at
+  most two edges on the actual pieces after the standard degree and
+  path splits. If the test passes, the frozen witness retains at least
+  \(M/16\) with both original budgets and all four caps.
+  [Lift allowing interleaved pieces](OnlineReachabilityPreservers/CyclicSplits.lean#L570) · [Two-step width test](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L39) · [Full-seven frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
 - The [literal set versions](OnlineReachabilityPreservers/FrozenDistinctCleaning.lean)
   give distinct nonempty output paths with the same caps. They apply to
   the literal exact-count maximum when the positive original budgets are feasible.

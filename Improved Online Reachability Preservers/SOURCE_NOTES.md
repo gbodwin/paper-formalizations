@@ -761,6 +761,20 @@ such repeat either triggers the two-step test or gives an original
 full bridge of size three or four.
 [One-step condition in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L149) · [Crossed two-step return](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L140) · [Full cutoff seven preservation](OnlineReachabilityPreservers/CyclicSplits.lean#L506).
 
+The cyclic distance-three argument also applies to disjoint pieces
+that interleave in their parent row. Compare the two boundary corners
+of the short gap in that parent's order. Two forward steps with the
+same endpoint order give an original full three-bridge. The other
+endpoint order is a crossed two-step return. If a gap step is the
+river, the steps have a common source or sink, so either endpoint
+order gives an original full three-bridge. At size six or seven all
+pairs of slots are within cyclic distance three in at least one
+direction. Consequently, a radius-two return test in the graph of
+actual standard pieces suffices at full cutoff seven. With simple
+input, positive budgets and original mass \(M\) at least both, the
+resulting frozen witness retains at least \(M/16\).
+[Interleaved lifting](OnlineReachabilityPreservers/CyclicSplits.lean#L570) · [Preservation through seven](OnlineReachabilityPreservers/CyclicSplits.lean#L636) · [Graph radius-two certificate](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L11) · [Frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
+
 The factor-four block split from the frozen cleaning argument can also
 create a full size-seven bridge before trimming and peeling in the dense
 branch. Add 161 private vertices before the four-vertex path in the

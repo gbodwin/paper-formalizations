@@ -535,4 +535,124 @@ theorem fullBridgeFree_of_contiguous_split_seven {paths : I → List V} {pieces 
 
 end Seven
 
+
+section Interleaved
+
+private theorem bridgeSlots_forward_or_river {pieces : J → List V} {k : ℕ}
+    (b : Bridge (ListBefore pieces) k) (i : Fin (k+2)) :
+    ListBefore pieces (bridgeSlots b i) (b.vertex i) (b.vertex (i+1)) ∨
+      i = Fin.last (k+1) ∧ ListBefore pieces (bridgeSlots b i) (b.vertex (i+1)) (b.vertex i) := by
+  refine Fin.lastCases (motive := fun i =>
+    ListBefore pieces (bridgeSlots b i) (b.vertex i) (b.vertex (i+1)) ∨
+      i = Fin.last (k+1) ∧ ListBefore pieces (bridgeSlots b i) (b.vertex (i+1)) (b.vertex i)) ?_ ?_ i
+  · right
+    refine ⟨rfl, ?_⟩
+    rw [bridgeSlots, Fin.snoc_last, cycleNext_last]
+    exact b.riverStep
+  · intro j
+    left
+    rw [bridgeSlots, Fin.snoc_castSucc, cycleNext_castSucc]
+    exact b.arcStep j
+
+private theorem short_cycle_self_apart {k : ℕ} (lower : 4 ≤ k) (upper : k ≤ 5) :
+    ∀ i : Fin (k+2), i ≠ (i+1)+1 ∧ i ≠ ((i+1)+1)+1 := by
+  interval_cases k <;> decide
+
+private theorem short_cycle_pair_near {k : ℕ} (lower : 4 ≤ k) (upper : k ≤ 5)
+    (i j : Fin (k+2)) (different : i ≠ j) :
+    j = i+1 ∨ i = j+1 ∨ j = (i+1)+1 ∨ i = (j+1)+1 ∨
+      j = ((i+1)+1)+1 ∨ i = ((j+1)+1)+1 := by
+  revert i j
+  interval_cases k <;> decide
+
+/-- One-step and two-step crossed returns control every repeated parent
+in a bridge through size seven, including when the pieces interleave. -/
+def listBridge_after_opposite_and_two_step_safe_split {paths : I → List V} {pieces : J → List V}
+    {k : ℕ} [LinearOrder I] (parent : J → I)
+    (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
+    (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
+    (together : ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
+      ListBefore paths (parent i) x y → ListBefore pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
+    (noTwo : NoCrossedTwoStepReturn paths pieces parent)
+    (free : BridgeFree (ListBefore paths) 3) (short : k ≤ 5) (b : Bridge (ListBefore pieces) k) :
+    Bridge (ListBefore paths) k := by
+  have noParallel {a c : I} {x y : V} (different : a ≠ c)
+      (first : ListBefore paths a x y) (second : ListBefore paths c x y) : False :=
+    no_parallel_list_steps free.halfFree (by decide) different first second
+  by_cases small : k ≤ 3
+  · exact listBridge_after_opposite_safe_split_through_five parent
+      (fun {_ _ _} => steps) (fun {_ _ _} => disjoint) (fun _ {_ _ _ _} => noParallel)
+      (fun _ {_ _ _ _ _} => together) small b
+  have lower : 4 ≤ k := by omega
+  let s := bridgeSlots b
+  let p (i : Fin (k+2)) := parent (s i)
+  let v := b.vertex
+  have meet := bridgeSlots_corners b (paths := pieces) id (fun {_ _ _} h => h)
+  have oldMeet := bridgeSlots_corners b parent (fun {_ _ _} => steps)
+  have near := bridgeSlots_parent_near parent (fun {_ _ _} => steps) (fun {_ _ _} => disjoint)
+    (fun _ {_ _ _ _} => noParallel) (fun _ {_ _ _ _ _} => together) b
+  have spacing := short_cycle_self_apart lower short
+  have atTwo (i : Fin (k+2)) : p i ≠ p ((i+1)+1) :=
+    near.2 (by omega) i (spacing i).1
+  have noThree (old : Bridge (ListBefore paths) 1) : False := (free (by decide)).false old
+  have atThree (i : Fin (k+2)) : p i ≠ p (((i+1)+1)+1) := by
+    let j := i+1
+    let l := j+1
+    let m := l+1
+    intro same
+    have separate : s i ≠ s m :=
+      fun eq => (spacing i).2 (bridgeSlots_injective b eq)
+    have cornerApart : v j ≠ v m :=
+      fun eq => (spacing j).1 (b.distinctVertices eq)
+    have toCommon : v m ∈ paths (p i) := same.symm ▸ (oldMeet m).1
+    have ij : p i ≠ p j := near.1 i
+    have il : p i ≠ p l := atTwo i
+    have jl : p j ≠ p l := near.1 j
+    rcases listBefore_total (oldMeet i).2 toCommon cornerApart with agrees | backwards <;>
+      rcases bridgeSlots_forward_or_river b j with first | ⟨firstRiver, first⟩ <;>
+      rcases bridgeSlots_forward_or_river b l with second | ⟨secondRiver, second⟩
+    · exact noThree (threeListBridge jl ij il (steps first) (steps second) agrees)
+    · exact noThree (threeListBridge il ij.symm jl agrees (steps second) (steps first))
+    · exact noThree (threeListBridge ij.symm jl.symm il.symm (steps first) agrees (steps second))
+    · exact cycleNext_ne j (firstRiver.trans secondRiver.symm)
+    · exact noTwo separate same ij il jl (meet i).2 (meet m).1 backwards first second
+    · exact noThree (threeListBridge ij il.symm jl.symm backwards (steps first) (steps second))
+    · exact noThree (threeListBridge il.symm jl ij.symm (steps second) backwards (steps first))
+    · exact cycleNext_ne j (firstRiver.trans secondRiver.symm)
+  have parentInjective : Function.Injective p := by
+    intro i j same
+    by_contra different
+    rcases short_cycle_pair_near lower short i j different with rfl | rfl | rfl | rfl | rfl | rfl
+    · exact near.1 i same
+    · exact near.1 j same.symm
+    · exact atTwo i same
+    · exact atTwo j same.symm
+    · exact atThree i same
+    · exact atThree j same.symm
+  exact liftBridgeOfInjectiveSlots parent (fun {_ _ _} => steps) b parentInjective
+
+/-- Full exclusion through seven survives a disjoint order-preserving
+split with neither kind of crossed return. -/
+theorem fullBridgeFree_of_opposite_and_two_step_safe_split {paths : I → List V} {pieces : J → List V}
+    {cutoff : ℕ} [LinearOrder I] (parent : J → I)
+    (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
+    (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
+    (together : ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
+      ListBefore paths (parent i) x y → ListBefore pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
+    (noTwo : NoCrossedTwoStepReturn paths pieces parent)
+    (free : BridgeFree (ListBefore paths) cutoff) (short : cutoff ≤ 7) :
+    BridgeFree (ListBefore pieces) cutoff := by
+  intro k size
+  refine ⟨fun b => ?_⟩
+  by_cases tiny : cutoff ≤ 2
+  · exact (free size).false (listBridge_after_opposite_safe_split_through_five parent
+      (fun {_ _ _} => steps) (fun {_ _ _} => disjoint) (fun h => by omega)
+      (fun _ {_ _ _ _ _} => together) (by omega) b)
+  · have three : BridgeFree (ListBefore paths) 3 := fun _ h => free (h.trans (by omega))
+    exact (free size).false (listBridge_after_opposite_and_two_step_safe_split parent
+      (fun {_ _ _} => steps) (fun {_ _ _} => disjoint) (fun {_ _ _ _ _} => together)
+      noTwo three (by omega) b)
+
+end Interleaved
+
 end OnlineReachabilityPreservers
