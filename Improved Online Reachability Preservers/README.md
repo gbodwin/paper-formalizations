@@ -1175,6 +1175,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   that budget plus the size of some shared deletion set. This comparison
   uses the original class labels throughout.
   [Exact criterion for two partitions](OnlineReachabilityPreservers/SharedCapacityClipping.lean#L87).
+- For two fixed partitions, enumerate the feasible shared sets and
+  maximize their cardinality. The exact minimum deletion count is the
+  sum of the two total excesses minus this maximum. A deletion set
+  attains that count while meeting both widths, and every feasible
+  deletion set has at least that many incidences.
+  [Maximum shared credit](OnlineReachabilityPreservers/SharedCapacityOptimum.lean#L30) · [Budget equivalence](OnlineReachabilityPreservers/SharedCapacityOptimum.lean#L72) · [Attained minimum](OnlineReachabilityPreservers/SharedCapacityOptimum.lean#L91).
 - Apply the fixed-partition criterion to the degree and path components
   of the original simple admissible rows. An incidence has one class on
   each side. The two class-excess sums are the original short-return

@@ -1203,6 +1203,12 @@ that budget plus the size of some shared deletion set. This comparison
 uses the original class labels throughout.
 [Exact criterion for two partitions](OnlineReachabilityPreservers/SharedCapacityClipping.lean#L87).
 
+Maximizing the size of the shared set over the finite set of candidates
+gives the exact minimum number of deletions for those fixed partitions.
+It is the combined original excess minus the maximum shared size. A
+deletion set attaining this number meets both widths.
+[Maximum shared credit](OnlineReachabilityPreservers/SharedCapacityOptimum.lean#L30) · [Budget equivalence](OnlineReachabilityPreservers/SharedCapacityOptimum.lean#L72) · [Attained minimum](OnlineReachabilityPreservers/SharedCapacityOptimum.lean#L91).
+
 Apply the fixed-partition criterion to the degree and path components
 of the original simple admissible rows. An incidence has one class on
 each side. The two class-excess sums are the original short-return

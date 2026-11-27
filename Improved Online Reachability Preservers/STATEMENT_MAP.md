@@ -2433,6 +2433,13 @@ that budget plus the size of some shared deletion set. This comparison
 uses the original class labels throughout.
 [Exact criterion for two partitions](OnlineReachabilityPreservers/SharedCapacityClipping.lean#L87).
 
+The maximum cardinality of a feasible shared set is attained over the
+finite powerset. Its value is at most each separate excess sum.
+A budget suffices exactly when it is at least the sum of the two
+excesses minus that maximum, and a valid deletion set attains this count.
+The labels and widths are fixed in the optimization.
+[Maximum shared credit](OnlineReachabilityPreservers/SharedCapacityOptimum.lean#L30) · [Bounds on the credit](OnlineReachabilityPreservers/SharedCapacityOptimum.lean#L53) · [Budget equivalence](OnlineReachabilityPreservers/SharedCapacityOptimum.lean#L72) · [Attained minimum](OnlineReachabilityPreservers/SharedCapacityOptimum.lean#L91).
+
 Apply the fixed-partition criterion to the degree and path components
 of the original simple admissible rows. An incidence has one class on
 each side. The two class-excess sums are the original short-return
