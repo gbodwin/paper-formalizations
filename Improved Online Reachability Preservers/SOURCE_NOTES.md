@@ -963,9 +963,18 @@ that opposite-intersection pruning keeps the entire input. The actual
 block widths \(\lfloor 4M/n\rfloor=39\) and
 \(\lfloor 4M/p\rfloor=163\) leave the cyclic part's vertex copies
 together and create the same seven-bridge. This identifies a failure
-of the block-splitting step on a dense input. The extremal cleaning
-existence claim remains open.
-[Checked dense block split](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L538).
+of the block-splitting step on a dense input.
+[Checked dense block split](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L539).
+
+The same dense input passes the short-span repair. Only the padded
+four-vertex row splits. Its 161 private vertices occur on no other row.
+A tested return therefore has both endpoints among the four consecutive
+core positions, so its parent span is at most three. At every requested
+full cutoff \(k\ge7\), the cover and trimming give a witness of at least
+\(M/27\) with both original budgets and all four original caps. The
+unrestricted existential claim remains open.
+[Span bound](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L599)
+· [Checked dense repair](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L651).
 
 Cuts between precedence components give another sufficient hypothesis
 for cleaning cyclic paths. The precedence graph has an arc for each

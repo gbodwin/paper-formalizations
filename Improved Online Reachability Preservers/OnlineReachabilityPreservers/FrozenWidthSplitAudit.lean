@@ -1,3 +1,4 @@
+import OnlineReachabilityPreservers.FullReturnBoundaryCover
 import OnlineReachabilityPreservers.DistinctPathBudgets
 import OnlineReachabilityPreservers.OverlayLowerAudit
 import OnlineReachabilityPreservers.UniqueSplitAudit
@@ -553,5 +554,133 @@ theorem denseFrozenWidthSplit_creates_full_seven :
   dsimp only
   rw [denseWidthPaths_mass,prunes]
   refine ⟨by norm_num,denseWidthPaths_split_bridge⟩
+
+private theorem denseWidthPaths_other_short {i : Fin 4096000006}
+    (different : i ≠ widthCounterGadgetPath 0) : (denseWidthPaths i).length ≤ 163 := by
+  cases id : denseWidthPathIndex.symm i with
+  | inl j => simp [denseWidthPaths,denseWidthUnranked,disjointRows,id,latticePaths]
+  | inr j =>
+    have label : i = widthCounterGadgetPath j := denseWidthPathIndex.symm.injective (by simp [id,widthCounterGadgetPath])
+    subst i
+    have nonzero : j ≠ 0 := fun eq => different (congrArg widthCounterGadgetPath eq)
+    have length : (uniqueSplitExample j).length ≤ 7 := by
+      rw [← List.toFinset_card_of_nodup (uniqueSplitExample_creates_half_seven.1 j)]
+      exact card_le_univ _
+    simpa [denseWidthPaths_gadget,paddedSevenGadget,gadgetPadding,nonzero] using length.trans (by decide : 7 ≤ 163)
+
+private theorem denseWidthPaths_padding_exclusive {i : Fin 4096000006} {z : Fin 161}
+    (on : widthCounterGadgetVertex (.inr z) ∈ denseWidthPaths i) : i = widthCounterGadgetPath 0 := by
+  unfold denseWidthPaths at on
+  obtain ⟨v,inside,equal⟩ := List.mem_map.mp on
+  have shape : v = Sum.inr (Sum.inr z) := denseWidthVertexIndex.injective equal
+  subst v
+  cases id : denseWidthPathIndex.symm i with
+  | inl j => simp [denseWidthUnranked,disjointRows,id] at inside
+  | inr j =>
+    have padding : Sum.inr z ∈ paddedSevenGadget 161 j := by simpa [denseWidthUnranked,disjointRows,id] using inside
+    have first := gadgetMem_inr padding
+    exact denseWidthPathIndex.symm.injective (by simpa [widthCounterGadgetPath,first] using id)
+
+private theorem denseCopiedPaths_shared_core {i : Fin 4096000006} {w : denseWidthCopies}
+    (different : i ≠ widthCounterGadgetPath 0)
+    (onParent : w ∈ denseCopiedPaths (widthCounterGadgetPath 0)) (onOther : w ∈ denseCopiedPaths i) :
+    ∃ v ∈ uniqueSplitExample 0, w = denseGadgetCorner v := by
+  rw [denseGadgetCopies,denseWidthPaths_gadget,List.map_map] at onParent
+  obtain ⟨v,onGadget,rfl⟩ := List.mem_map.mp onParent
+  cases v with
+  | inl x => exact ⟨x,gadgetMem_inl.mp onGadget,rfl⟩
+  | inr pad =>
+    have project := List.mem_map_of_mem (f := fun w : denseWidthCopies => w.fst) onOther
+    rw [denseCopiedPaths,splitListVertices_project] at project
+    exact (different (denseWidthPaths_padding_exclusive project)).elim
+
+/-- In the padded dense fixture, every tested return across the width
+cut has both endpoints in the four original vertices of the split row. -/
+private theorem denseCopiedPaths_short_span (radius : ℕ) :
+    CrossedWidthReturnSpanLE denseCopiedPaths 163 radius 3 := by
+  intro i j d apart same _ v a different _ start finish backward along
+  rcases i with ⟨r,b⟩
+  rcases j with ⟨s,c⟩
+  change r = s at same
+  subst s
+  obtain ⟨inParent,blockX⟩ := mem_localPathBlock.mp start
+  obtain ⟨inParentY,blockY⟩ := mem_localPathBlock.mp finish
+  have only : r = widthCounterGadgetPath 0 := by
+    by_contra wrong
+    have length : (denseCopiedPaths r).length ≤ 163 := by
+      rw [denseCopiedPaths,splitListVertices_length]
+      exact denseWidthPaths_other_short wrong
+    have ix := (List.idxOf_lt_length_of_mem inParent).trans_le length
+    have iy := (List.idxOf_lt_length_of_mem inParentY).trans_le length
+    change @List.idxOf denseWidthCopies instBEqOfDecidableEq (v 0) (denseCopiedPaths r) < 163 at ix
+    change @List.idxOf denseWidthCopies instBEqOfDecidableEq (v (Fin.last d)) (denseCopiedPaths r) < 163 at iy
+    change @List.idxOf denseWidthCopies instBEqOfDecidableEq (v 0) (denseCopiedPaths r)/163 = b.val at blockX
+    change @List.idxOf denseWidthCopies instBEqOfDecidableEq (v (Fin.last d)) (denseCopiedPaths r)/163 = c.val at blockY
+    rw [Nat.div_eq_of_lt ix] at blockX
+    rw [Nat.div_eq_of_lt iy] at blockY
+    exact apart (congrArg (Sigma.mk r) (Fin.ext (blockX.symm.trans blockY)))
+  subst r
+  cases d with
+  | zero =>
+    have same : (Fin.last 0 : Fin 1) = 0 := rfl
+    rw [same] at backward
+    exact (listBefore_ne backward rfl).elim
+  | succ d =>
+    have firstOn : v 0 ∈ splitListPaths denseCopiedPaths 163 (a 0) := by
+      simpa only [Fin.castSucc_zero] using (along 0).1
+    have lastOn : v (Fin.last (d+1)) ∈ splitListPaths denseCopiedPaths 163 (a (Fin.last d)) := by
+      simpa only [Fin.succ_last] using (along (Fin.last d)).2.1
+    obtain ⟨x,xOn,hx⟩ := denseCopiedPaths_shared_core (different 0).symm inParent (mem_localPathBlock.mp firstOn).1
+    obtain ⟨y,yOn,hy⟩ := denseCopiedPaths_shared_core (different (Fin.last d)).symm inParentY
+      (mem_localPathBlock.mp lastOn).1
+    have xRank := denseGadgetCopyPositions xOn
+    have yRank := denseGadgetCopyPositions yOn
+    have xBound := List.idxOf_lt_length_of_mem xOn
+    have rawLength : (uniqueSplitExample (0 : Fin 6)).length = 4 := by decide
+    rw [rawLength] at xBound
+    change @List.idxOf denseWidthCopies instBEqOfDecidableEq (v 0)
+        (denseCopiedPaths (widthCounterGadgetPath 0)) ≤
+      @List.idxOf denseWidthCopies instBEqOfDecidableEq (v (Fin.last (d+1)))
+        (denseCopiedPaths (widthCounterGadgetPath 0)) + 3
+    rw [hx,hy,xRank,yRank]
+    omega
+
+/-- The same dense all-size full-free family that produces a
+seven-bridge at the unmodified widths satisfies the short-span repair at
+every full cutoff of at least seven. -/
+theorem denseFrozenWidthSplit_short_span_repair (cutoff : ℕ) (large : 7 ≤ cutoff) :
+    ∃ paths : Fin 4096000006 → List (Fin 16793600168),
+      (∀ i, (paths i).Nodup) ∧ (∀ k, IsEmpty (Bridge (BeforeIn paths) k)) ∧
+      let M := ∑ i, (paths i).length
+      8*max 16793600168 4096000006 < M ∧
+        Nonempty (Bridge (BeforeIn (listRegularizedPaths paths (4*M/16793600168) (4*M/4096000006))) 5) ∧
+        HasShortSpanCrossedWidthReturns paths cutoff ∧
+        ∃ n' ≤ 16793600168, ∃ p' ≤ 4096000006, ∃ clean : Fin p' → List (Fin n'),
+          (∀ i, (clean i).Nodup) ∧ BridgeFree (BeforeIn clean) cutoff ∧
+          M ≤ 27*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧
+          frozenListCaps 16793600168 4096000006 M clean := by
+  obtain ⟨simpleLattice,fullLattice,_⟩ := layerPaths_simple_full_and_unique 40
+  have simple := denseWidthPaths_simple simpleLattice
+  have full := denseWidthPaths_fullFree simpleLattice fullLattice
+  have free : BridgeFree (BeforeIn denseWidthPaths) cutoff := fun k _ => full k
+  have span : HasShortSpanCrossedWidthReturns denseWidthPaths cutoff := by
+    have atWidths (D L : ℕ) (degreeWidth : D = 39) (pathWidth : L = 163) :
+        CrossedWidthReturnSpanLE (splitListVertices denseWidthPaths D) L (cutoff-5) (L/3) := by
+      subst D
+      subst L
+      intro i j d apart same short v a other injective first last backward along
+      exact (denseCopiedPaths_short_span (cutoff-5) apart same short v a other injective first last backward along).trans
+        (Nat.add_le_add_left (by decide : 3 ≤ 163/3) _)
+    exact atWidths (4*(∑ i, (denseWidthPaths i).length)/16793600168)
+      (4*(∑ i, (denseWidthPaths i).length)/4096000006)
+      (by rw [denseWidthPaths_mass]) (by rw [denseWidthPaths_mass])
+  have witness := regularization_list_frozen_full_of_short_span_width_returns denseWidthPaths simple free large
+    (by norm_num) (by norm_num)
+    (by rw [denseWidthPaths_mass]; norm_num) (by rw [denseWidthPaths_mass]; norm_num) (fun _ => span)
+  refine ⟨denseWidthPaths,simple,full,?_,?_,span,witness⟩
+  · rw [denseWidthPaths_mass]
+    norm_num
+  · rw [denseWidthPaths_mass]
+    exact denseWidthPaths_split_bridge
 
 end OnlineReachabilityPreservers.SourceAudit

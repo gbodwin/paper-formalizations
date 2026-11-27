@@ -1616,7 +1616,16 @@ half cutoff six remains open. The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates
 a full size-seven bridge in the dense branch on a simple input with unique
 intersections, all-size full exclusion, and zero pruning loss.
-[Dense width-block counterexample](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L538).
+[Dense width-block counterexample](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L539).
+
+On that same input, only the padded four-vertex row splits across width
+blocks. A tested return's endpoints lie among its four consecutive
+core positions because no other row contains any padding vertex.
+The parent span is at most three, so the short-span cover gives a
+frozen \(M/27\) witness at every full cutoff \(k\ge7\). The original
+budgets and all four original caps hold.
+[Span bound](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L599)
+· [Dense input repaired](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L651).
 
 Through full cutoff seven, disjoint contiguous pieces preserve the
 exclusion when one-step reversals stay on one piece and there is no
