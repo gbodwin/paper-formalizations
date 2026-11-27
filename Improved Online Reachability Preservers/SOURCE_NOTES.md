@@ -1221,6 +1221,23 @@ since that test survives taking sublists at the original width. At
 witness for a feasible literal input.
 [Degree test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1550) · [Degree test after sublists](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L11) · [Original path room](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L52) · [Path room after restriction](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L125) · [Path-excess witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L146) · [Literal path-excess witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L170).
 
+Another path test keeps the labels of the original degree copies after
+deletion. For positive budgets and original mass \(M\) at least both
+budgets, require a simple copied restriction of mass \(K\ge2M/3\) that
+excludes the selected bridges through the cutoff. Require its path
+components, computed on the surviving copies, to fit the original width.
+The original degree profile supplies a fixed vertex support and loses
+at most \(M/12\).
+The path support loses at most \(K^2/(8M)\). Together they retain at
+least \(19M/36\) before enforcing the lower caps, giving a frozen
+witness of mass at least \(M/36\) within both original budgets and all
+four caps. Initial deletion and subsequent path clipping can share the
+one-third loss budget. Full exclusion on the original rows certifies
+the initial copies. In half mode, start with half exclusion on the
+original rows. The earlier-copy return test on the surviving copies
+then certifies their half exclusion before clipping.
+[Fixed-copy restriction](OnlineReachabilityPreservers/ShortReturnFixedCopyCleaning.lean#L33) · [Shared loss budget](OnlineReachabilityPreservers/ShortReturnFixedCopyCleaning.lean#L174) · [Full test on the copied graph](OnlineReachabilityPreservers/ShortReturnFixedCopyCleaning.lean#L209) · [Half exclusion on retained copies](OnlineReachabilityPreservers/ShortReturnFixedCopyCleaning.lean#L233).
+
 The bidirected 23-leaf star has one row per dart, 24 vertices and 46
 rows of mass 92. Every full bridge is excluded. Its original widths
 are 15 for degree and eight for path length. At cutoff seven, the
