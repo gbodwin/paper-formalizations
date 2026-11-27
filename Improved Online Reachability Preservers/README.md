@@ -927,6 +927,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   It gives the same guarantee in both modes. Half bridges also require
   one of the sufficient degree-split conditions.
   [A strict example with the original widths](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean).
+  In half mode, [checking only returns to an earlier degree block](OnlineReachabilityPreservers/BackwardCopyReturns.lean)
+  suffices for the degree split. Combined with the actual-piece width
+  test, this gives the same \(M/16\) and original-average guarantee.
 - For simple paths with the matching bridge exclusion and incidence mass
   \(M\) at least both positive budgets, the cuts can move around individual
   short returns within a row. Pack whole runs between safe boundaries.

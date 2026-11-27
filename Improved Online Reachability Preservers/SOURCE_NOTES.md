@@ -784,6 +784,20 @@ original budgets and caps, using one of the degree-split conditions
 in half mode.
 [Checked width-test separation](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean).
 
+[The earlier-block test](OnlineReachabilityPreservers/BackwardCopyReturns.lean)
+uses the first occurrence of the projected terminal vertex in the
+copied chain. If that occurrence is before the last corner, the
+prefix projects to a bridge with its last arc preserved. The original
+half-bridge exclusion puts that arc after the river, so the endpoint
+of the prefix lies in a later degree block than the river endpoint.
+Only a copied walk of length at most \(\max(0,k-3)\) returning to an
+earlier block needs to be ruled out. In the twelve-vertex example,
+the copied rows have a two-step return to a later copy of vertex 0,
+and no short return to an earlier copy. With the actual-piece width
+test the earlier-block criterion gives \(M/16\) with both original
+budgets and all four original-average caps at the chosen half cutoff.
+[Checked direction of the example](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean).
+
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
 those positions, so only pairs in different blocks need the bounded

@@ -2085,6 +2085,11 @@ and all four frozen caps in both modes.
 Half mode still requires a sufficient degree-split condition. The
 [checked example](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean)
 passes the copied test at cutoff seven and fails the original test.
+[The earlier-block degree test](OnlineReachabilityPreservers/BackwardCopyReturns.lean)
+rules out only copied returns from later to earlier blocks of one
+vertex within \(\max(0,k-3)\) steps. With the actual-piece width test
+it gives the same \(M/16\) guarantee in half mode. The example has a
+short forward return and passes the earlier-block test.
 The same conditional \(M/16\) and [\(M/32\) after rowwise deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1579)
 keep both budgets and all four original-average caps.
 Alternatively, use each row's last safe boundary as its rank. A cut is
