@@ -1079,6 +1079,17 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [Original-budget rectangle](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L371)
   · [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnCover.lean#L64)
   · [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnCover.lean#L144).
+- For simple full-free input through \(k\ge7\) and mass at least both
+  positive budgets, choose a rectangle with \(|A|\le n\) vertex copies
+  and \(|B|\le p\) pieces at the original widths. Cover only crossed
+  returns of radius \(k-5\) supported in the rectangle. If its mass covers
+  \(M/r+M|A|/(4n)+M|B|/(4p)+|S|\), where \(S\) is the cover and \(r>0\),
+  the witness retains at least \(M/r\) with both original budgets, all four
+  original-average caps and the same cutoff. The feasible literal version
+  gives distinct nonempty rows for \(r\ge8\).
+  [Supported cover](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L31)
+  · [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L48)
+  · [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L149).
 - At full cutoff seven, packing the components of returns of at most
   two steps gives a frozen quarter-mass witness if those components fit the
   original path width. Use either the original rows or the standard

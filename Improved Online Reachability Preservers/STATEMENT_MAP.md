@@ -1628,6 +1628,21 @@ The literal witness has distinct nonempty rows for feasible literal input.
 · [Indexed frozen witness](OnlineReachabilityPreservers/FrozenFullReturnCover.lean#L64)
 · [Literal frozen witness](OnlineReachabilityPreservers/FrozenFullReturnCover.lean#L144).
 
+A cover can be chosen after selecting vertex labels \(A\) and piece labels
+\(B\) within the original budgets. Test returns only on the retained
+rectangle, with parent comparisons on the degree-copied rows before the
+path split. Let \(R\) count its original incidences and let \(S\) cover all
+its crossed returns of at most \(k-5\) steps. If the positive integer \(r\) satisfies
+\(M/r+M|A|/(4n)+M|B|/(4p)+|S|\le R\), the witness keeps at least \(M/r\).
+For simple input excluding full bridges through \(k\ge7\) with mass at
+least both positive budgets, this gives the same cutoff, both budgets and
+all four original-average caps. For feasible literal distinct nonempty
+input, \(r\ge8\) yields a distinct nonempty witness with the same bound.
+[Rectangle restriction](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L12)
+· [Supported cover and cost](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L31)
+· [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L48)
+· [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L149).
+
 The same radius \(k-5\) works for grouped path splitting at every
 full cutoff \(k\ge7\). When every group on the standard copies
 fits the original path width, pack whole groups and trim both
