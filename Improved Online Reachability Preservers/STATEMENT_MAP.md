@@ -1494,6 +1494,9 @@ uses at most \(n\) degree copies and \(p\) path pieces. If every
 matching within its raw incidences fits its incidence count after the
 two actual support charges and \(M/5000\) are set aside, it gives the
 same half-five conclusion.
+[The supported comparison version](OnlineReachabilityPreservers/DegreeFirstSupportedCleaning.lean)
+counts only edges with both witness incidences in that rectangle and
+uses the same inequality and conclusion.
 Original-average half-five cleaning for general inputs remains open.
 
 For Lemmas 23 and 39, the [contiguous six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)

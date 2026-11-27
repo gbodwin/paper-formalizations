@@ -59,6 +59,42 @@ theorem halfFiveDegreeCutDeletion_covers {n p : ℕ} {paths : Fin p → List (Fi
   have hits : colorA = c ∨ colorB = c := choose opposite
   exact hits.imp (fun eq => mem_filter.mpr ⟨markedA,eq⟩) (fun eq => mem_filter.mpr ⟨markedB,eq⟩)
 
+/-- Given the consecutive degree blocks, only an older row ending a
+retained reverse comparison can create a terminal copy collision. -/
+theorem eraseDegreeBlocks_halfFive_of_no_live_return {n p : ℕ} {paths : Fin p → List (Fin n)}
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5) (D : ℕ)
+    (deleted : Finset (Fin p × ListVertexBlockIndex paths D))
+    (safe : let rows := erasePieceIncidences (splitListVertices paths D) deleted
+      ∀ {a b : Fin p} {v w x : ListVertexBlockIndex paths D}, a < b → v.fst = w.fst →
+        Before rows a x v → Before rows b w x → v = w) :
+    HalfBridgeFree (Before (erasePieceIncidences (splitListVertices paths D) deleted)) 5 := by
+  let copies := splitListVertices paths D
+  let rows := erasePieceIncidences copies deleted
+  let project (v : ListVertexBlockIndex paths D) := v.fst
+  have step {i x y} (found : Before rows i x y) : Before paths i (project x) (project y) :=
+    splitListVertices_step (simple i)
+      (listBefore_of_sublist (splitListVertices_simple paths D i (simple i))
+        (erasePieceIncidences_sublist copies deleted i) found)
+  intro d cutoff bridge earlier
+  by_cases short : d ≤ 2
+  · have input : HalfBridgeFree (Before paths) 4 := fun _ bound => free (bound.trans (by decide))
+    exact input.split_list_vertices_short le_rfl project (fun {_ _ _} => step) (by omega) bridge earlier
+  have size : d = 3 := by omega
+  subst d
+  obtain ⟨same,riverBefore⟩ :=
+    free.project_half_five_terminal_collision project (fun {_ _ _} => step) bridge earlier
+  change (bridge.vertex 2).fst = (bridge.vertex 4).fst at same
+  have onReturn := (mem_erasePieceIncidences.mp (bridge.arcStep 2).1).1
+  have atRiver := (mem_erasePieceIncidences.mp bridge.riverStep.2.1).1
+  have atSecond := (mem_erasePieceIncidences.mp (bridge.arcStep 1).2.1).1
+  have vNe : bridge.vertex 4 ≠ bridge.vertex 2 := fun h =>
+    (by decide : (4:Fin 5) ≠ 2) (bridge.distinctVertices h)
+  have blocksLE := splitListVertices_block_mono same.symm riverBefore.le atRiver atSecond
+  have blocksLT := blocksLE.lt_of_ne (fun h => vNe (vertexBlock_eq_of_same_label same.symm h))
+  have riverBeforeReturn : bridge.river < bridge.arc 2 := lt_of_not_ge fun closer =>
+    blocksLT.not_ge (splitListVertices_block_mono same closer onReturn atRiver)
+  exact vNe (safe (earlier.trans riverBeforeReturn) same.symm (bridge.arcStep 3) (bridge.arcStep 2))
+
 /-- In the degree-first order, covering all actual crossed comparisons
 preserves half-five exclusion even with additional deletions. -/
 theorem eraseDegreeCutConflicts_halfFree {n p : ℕ} {paths : Fin p → List (Fin n)}
@@ -66,41 +102,22 @@ theorem eraseDegreeCutConflicts_halfFree {n p : ℕ} {paths : Fin p → List (Fi
     (deleted : Finset (Fin p × ListVertexBlockIndex paths D))
     (cover : ∀ {a b}, OppositeDegreeCutConflict paths D a b → a ∈ deleted ∨ b ∈ deleted) :
     HalfBridgeFree (Before (erasePieceIncidences (splitListVertices paths D) deleted)) 5 := by
+  refine eraseDegreeBlocks_halfFive_of_no_live_return simple free D deleted ?_
+  dsimp only
+  intro a b v w x arrives same forward backward
+  by_contra! distinct
   let copies := splitListVertices paths D
   let rows := erasePieceIncidences copies deleted
-  let project (v : ListVertexBlockIndex paths D) := v.fst
-  have copyStep {i x y} (step : Before rows i x y) : Before copies i x y :=
-    listBefore_of_sublist (splitListVertices_simple paths D i (simple i))
-      (erasePieceIncidences_sublist copies deleted i) step
-  have step {i x y} (found : Before rows i x y) : Before paths i (project x) (project y) :=
-    splitListVertices_step (simple i) (copyStep found)
-  intro r cutoff bridge earlier
-  by_cases short : r ≤ 2
-  · have input : HalfBridgeFree (Before paths) 4 := fun _ bound => free (bound.trans (by decide))
-    exact input.split_list_vertices_short le_rfl project (fun {_ _ _} => step) (by omega) bridge earlier
-  have size : r = 3 := by omega
-  subst r
-  obtain ⟨same,riverBefore⟩ := free.project_half_five_terminal_collision project (fun {_ _ _} => step) bridge earlier
-  change (bridge.vertex 2).fst = (bridge.vertex 4).fst at same
-  have onReturn := mem_erasePieceIncidences.mp (bridge.arcStep 2).1
-  have onLast := mem_erasePieceIncidences.mp (bridge.arcStep 3).2.1
-  have atRiver := (mem_erasePieceIncidences.mp bridge.riverStep.2.1).1
-  have atSecond := (mem_erasePieceIncidences.mp (bridge.arcStep 1).2.1).1
-  have blocksLE := splitListVertices_block_mono same.symm riverBefore.le atRiver atSecond
-  have blocksDifferent : (bridge.vertex 4).snd.val ≠ (bridge.vertex 2).snd.val := by
-    intro eq
-    exact (by decide : (4:Fin 5) ≠ 2) (bridge.distinctVertices (vertexBlock_eq_of_same_label same.symm eq))
-  have blocksLT := blocksLE.lt_of_ne blocksDifferent
-  have riverBeforeReturn : bridge.river < bridge.arc 2 := lt_of_not_ge fun closer =>
-    blocksLT.not_ge (splitListVertices_block_mono same closer onReturn.1 atRiver)
-  have backward : Before paths (bridge.arc 2) (project (bridge.vertex 4)) (project (bridge.vertex 3)) := by
-    change Before paths (bridge.arc 2) (bridge.vertex 4).fst (bridge.vertex 3).fst
-    rw [← same]
-    exact step (bridge.arcStep 2)
-  have edge : OppositeDegreeCutConflict paths D (bridge.arc 3,bridge.vertex 4) (bridge.arc 2,bridge.vertex 2) :=
-    ⟨onLast.1,onReturn.1,same.symm,blocksDifferent,
-      earlier.trans riverBeforeReturn,project (bridge.vertex 3),step (bridge.arcStep 3),backward⟩
-  exact (cover edge).elim onLast.2 onReturn.2
+  have step {i u z} (found : Before rows i u z) : Before paths i u.fst z.fst :=
+    splitListVertices_step (simple i)
+      (listBefore_of_sublist (splitListVertices_simple paths D i (simple i))
+        (erasePieceIncidences_sublist copies deleted i) found)
+  have vOn := mem_erasePieceIncidences.mp forward.2.1
+  have wOn := mem_erasePieceIncidences.mp backward.1
+  have different : v.snd.val ≠ w.snd.val := fun eq => distinct (vertexBlock_eq_of_same_label same eq)
+  have edge : OppositeDegreeCutConflict paths D (a,v) (b,w) :=
+    ⟨vOn.1,wOn.1,same,different,arrives,x.fst,step forward,same.symm ▸ step backward⟩
+  exact (cover edge).elim vOn.2 wOn.2
 
 theorem halfFiveDegreeCutRepair_halfFree {n p : ℕ} (paths : Fin p → List (Fin n))
     (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5) (D : ℕ) (c : Bool) :

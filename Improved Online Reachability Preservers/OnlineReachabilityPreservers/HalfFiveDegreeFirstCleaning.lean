@@ -98,7 +98,8 @@ theorem DegreeFirstCutConflict.out_unique {n p : ℕ} {paths : Fin p → List (F
     exact splitListPaths_disjoint different parent ab.right_mem (copied.symm ▸ ac.right_mem)
   exact Prod.ext piece copied
 
-private theorem piece_of_list_mem {I V : Type*} [LinearOrder V] {paths : I → List V}
+/-- Every original incidence belongs to a width block of its row. -/
+theorem list_mem_has_path_block {I V : Type*} [LinearOrder V] {paths : I → List V}
     {i : I} {v : V} (simple : (paths i).Nodup) (onRow : v ∈ paths i) (L : ℕ) :
     ∃ j : ListBlockIndex paths L, j.fst = i ∧ v ∈ splitListPaths paths L j := by
   let block : ListBlockIndex paths L := ⟨i,⟨(paths i).idxOf v/L,by
@@ -140,8 +141,8 @@ theorem eraseDegreeFirstConflicts_halfFree {n p : ℕ} (paths : Fin p → List (
     listBefore_of_sublist (rawSimple i) (erasePieceIncidences_sublist raw deleted i) step
   have liftDegree {a b : Fin p × V} (edge : OppositeDegreeCutConflict paths D a b) :
       a ∈ degreeDeleted ∨ b ∈ degreeDeleted := by
-    obtain ⟨j,jParent,inA⟩ := piece_of_list_mem (copySimple a.1) edge.1 L
-    obtain ⟨k,kParent,inB⟩ := piece_of_list_mem (copySimple b.1) edge.2.1 L
+    obtain ⟨j,jParent,inA⟩ := list_mem_has_path_block (copySimple a.1) edge.1 L
+    obtain ⟨k,kParent,inB⟩ := list_mem_has_path_block (copySimple b.1) edge.2.1 L
     have aEq : project (j,a.2) = a := Prod.ext jParent rfl
     have bEq : project (k,b.2) = b := Prod.ext kParent rfl
     have lifted : DegreeFirstCutConflict paths D L (j,a.2) (k,b.2) := by

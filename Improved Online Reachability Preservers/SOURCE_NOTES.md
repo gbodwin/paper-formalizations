@@ -501,6 +501,17 @@ exceeds the sum of these charges and the matching number by at least
 original-average caps. This criterion leaves open whether every input
 admits such a rectangle.
 
+[The supported comparison refinement](OnlineReachabilityPreservers/DegreeFirstSupportedCleaning.lean)
+uses the shared witness of the two opposite steps. For a degree cut,
+its two occurrences must use the same degree copy. For a path cut,
+one occurrence is in the other piece of the cut parent and the other
+occurrence is in the comparison piece of the opposite parent. Both
+occurrences must lie in the selected rectangle. Otherwise that
+comparison cannot witness a projection failure in the retained rows.
+The resulting edge relation is a subrelation of the actual cut
+conflicts. Its maximum matching can replace the wider matching in
+the rectangle inequality, with the same budgets, caps, and retention.
+
 The half-five conflict graph can have two incoming conflicts at one
 incidence. Take the paths
 `[(4,1),(5,1),(0,3),(0,6,1,2,4,5),(3,2)]` in this order. They exclude

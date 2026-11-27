@@ -660,6 +660,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   the peeling costs of the selected supports, and \(M/5000\), the witness
   meets both budgets and all four original-average caps at half cutoff
   five.
+- [Counting only supported reverse comparisons](OnlineReachabilityPreservers/DegreeFirstSupportedCleaning.lean)
+  further restricts that matching to conflicts for which the other
+  corner occurs in both rows inside the chosen rectangle. The same
+  peeling inequality gives the same original-average guarantee.
 - If either positive budget is at most 29, an unrestricted maximum at any
   cutoff of at least two has a witness with both budgets, all four frozen
   caps, and at least \(M/8\) incidences. The witness excludes full bridges
