@@ -1739,6 +1739,24 @@ four original-average caps.
 · [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L178)
 · [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L228).
 
+With the standard copied rows and path width \(L=\lfloor4M/p\rfloor\),
+a crossed return whose endpoints have distance at most \(b\) along its
+parent starts within the first \(b\) positions of the later block.
+Erasing those positions in all noninitial blocks costs at most
+\(b\sum_i \lfloor|\pi_i|/L\rfloor\). For simple input excluding full
+bridges through \(k\ge7\), assume positive budgets and \(M\ge\max(n,p)\).
+When \(M>8\max(n,p)\), require every tested return of at most \(k-5\)
+steps to have parent span at most \(\lfloor L/3\rfloor\).
+The boundary erasure then supplies a cover of size at most \(M/3\).
+The low-mass case needs no span premise. The indexed and feasible literal
+witnesses retain at least \(M/27\) with both original budgets, all four
+original caps and the same cutoff.
+[Boundary cost](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L30)
+· [Endpoint test](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L76)
+· [Cover from the span test](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L88)
+· [Indexed witness](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L163)
+· [Literal witness](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L176).
+
 The same radius \(k-5\) works for grouped path splitting at every
 full cutoff \(k\ge7\). When every group on the standard copies
 fits the original path width, pack whole groups and trim both
