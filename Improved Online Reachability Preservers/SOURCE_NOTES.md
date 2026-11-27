@@ -2317,6 +2317,24 @@ local-order upper bound and recurrence of Theorem 43.
   · [Full witness from half feasibility](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L24)
   · [Unbalanced-budget comparison](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L98).
 
+  The exact literal budgets \(n=4,p=11\) are feasible for half exclusion
+  at every cutoff and infeasible for full exclusion at \(k\ge4\). The
+  half witness uses four singleton rows, three early arrows from vertex
+  zero, and four arrows of a bidirectional star on the other vertices.
+  In a putative full witness, each of seven nonsingleton rows would own
+  a distinct directed first step. With only six unordered vertex pairs
+  this gives a reciprocal pair. If the contraction of that pair merges
+  two other steps, the two steps and one direction of the reciprocal
+  pair already give a three-bridge. Otherwise the five remaining steps
+  map to distinct arrows on three vertices. They contain a full
+  transitive triple in one of two opposite orders. Lifting through the
+  reciprocal pair gives a three- or four-bridge in the original rows.
+  This separates the exact feasible domains. The at-most-count comparison
+  in the statement of Lemma 39 can still use a smaller full family.
+  [Half witness](OnlineReachabilityPreservers/FourVertexLiteralFeasibility.lean#L34)
+  · [Full count bound](OnlineReachabilityPreservers/FourVertexLiteralFeasibility.lean#L322)
+  · [Exact feasibility separation](OnlineReachabilityPreservers/FourVertexLiteralFeasibility.lean#L408).
+
 - In Lemma 24, the paths `(0,1,2)` and `(2,1,0)` share three vertices without
   a bridge. Lean proves the ordering and fiber bound for arbitrary simple paths
   by choosing one witness for each middle path and using the 2-bridge exclusion

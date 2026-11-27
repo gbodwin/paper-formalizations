@@ -3504,6 +3504,21 @@ caps have a separate proof requirement.
 · [Full witness from half feasibility](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L24)
 · [Unbalanced-budget comparison](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L98).
 
+The literal exact-count domains differ. At four vertices and eleven rows,
+the half family consists of four singletons and seven directed comparisons.
+Three comparisons leave vertex zero early in the arrival order. The other
+four form a bidirectional star on the remaining vertices. This family
+excludes half-bridges at every size. For full exclusion through at least
+size four, there are at most four singleton and six longer rows. Seven
+longer rows would have seven distinct first steps and a reciprocal pair.
+Contracting that pair exposes a shortcut on three or four original
+vertices, supported by distinct rows. Thus the exact full extremum has
+no eligible family at these counts. Lemma 39 asks for an output within
+the budgets, which allows smaller full families at the same input counts.
+[Half witness](OnlineReachabilityPreservers/FourVertexLiteralFeasibility.lean#L34)
+· [Full count bound](OnlineReachabilityPreservers/FourVertexLiteralFeasibility.lean#L322)
+· [Exact feasibility separation](OnlineReachabilityPreservers/FourVertexLiteralFeasibility.lean#L408).
+
 Here \(\ell,d\) are average path length and vertex degree and \(H\) is the
 half-bridge-free extremal function. The analogous full bridge-free function is \(\beta\).
 See [source notes](SOURCE_NOTES.md) for explicit discrepancies and the distinction between a
