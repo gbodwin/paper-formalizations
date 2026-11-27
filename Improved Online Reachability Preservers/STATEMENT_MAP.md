@@ -2433,6 +2433,20 @@ that budget plus the size of some shared deletion set. This comparison
 uses the original class labels throughout.
 [Exact criterion for two partitions](OnlineReachabilityPreservers/SharedCapacityClipping.lean#L87).
 
+Apply the fixed-partition criterion to the degree and path components
+of the original simple admissible rows. An incidence has one class on
+each side. The two class-excess sums are the original short-return
+excesses at the two widths. If a shared set spends at most each class's
+original excess and the combined excess is at most
+\(\lfloor M/3\rfloor\) plus its size, delete at most
+\(\lfloor M/3\rfloor\) incidences to fit both original component widths.
+The recomputed components on the retained rows fit as well. With
+positive budgets and original mass \(M\) at least both budgets, this
+gives a frozen \(M/18\) witness with the same cutoff, both budgets and
+all four caps. Feasible literal distinct nonempty input also gives a
+distinct nonempty witness at cutoff at least two.
+[Degree class excess](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L106) · [Path class excess](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L119) · [Shared deletion certificate](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L131) · [Indexed frozen witness](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L173) · [Literal frozen witness](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L217).
+
 For simple rows, standard degree copying preserves full exclusion
 through any chosen cutoff. For such input that excludes full bridges
 through the cutoff and has mass at least both positive budgets,
