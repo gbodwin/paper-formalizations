@@ -550,56 +550,44 @@ private theorem packedWidthPieces {V : Type*} (rank : V → ℕ) (limit width : 
     by simpa only [flat', flat] using packedCount _ pieces heavy,
     by simpa only [flat', flat] using packedPairCount width pieces pairs⟩
 
-private def RankedRunAssemblyAdmissible {n p : ℕ} (paths : Fin p → List (Fin n))
-    (D k : ℕ) (half : Bool) (rank : Fin p → Fin n → ℕ) : Prop :=
+private def RankedCopiedAssemblyAdmissible {V : Type*} [LinearOrder V] {p : ℕ}
+    (rows : Fin p → List V) (k : ℕ) (half : Bool) (rank : Fin p → V → ℕ) : Prop :=
   ∀ {sizes : Fin p → ℕ}
-    (pieces : (Σₗ i : Fin p, Fin (sizes i)) → List (ListVertexBlockIndex paths D)),
-    (∀ i, (pieces i).Sublist (splitListVertices paths D i.fst)) →
+    (pieces : (Σₗ i : Fin p, Fin (sizes i)) → List V),
+    (∀ i, (pieces i).Sublist (rows i.fst)) →
     (∀ {i j}, i ≠ j → i.fst = j.fst →
-      (∀ x ∈ pieces i, ∀ y ∈ pieces j, rank i.fst x.fst < rank i.fst y.fst) ∨
-      (∀ x ∈ pieces i, ∀ y ∈ pieces j, rank i.fst y.fst < rank i.fst x.fst)) →
+      (∀ x ∈ pieces i, ∀ y ∈ pieces j, rank i.fst x < rank i.fst y) ∨
+      (∀ x ∈ pieces i, ∀ y ∈ pieces j, rank i.fst y < rank i.fst x)) →
     localOrderAdmissible half k pieces
 
+private abbrev RankedRunAssemblyAdmissible {n p : ℕ} (paths : Fin p → List (Fin n))
+    (D k : ℕ) (half : Bool) (rank : Fin p → Fin n → ℕ) : Prop :=
+  RankedCopiedAssemblyAdmissible (splitListVertices paths D) k half (fun i v => rank i v.fst)
+
 set_option maxHeartbeats 1000000 in
-private theorem frozen_cleaning_of_ranked_runs {n p k M retention vNum vDen pNum pDen : ℕ} {half : Bool}
-    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
-    (mass : (∑ i, (paths i).length) ≤ M) (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
-    (limit : ℕ) (fits : limit ≤ 4 * M / p)
-    (rank : Fin p → Fin n → ℕ)
-    (monotone : ∀ {i x y}, Before paths i x y → rank i x ≤ rank i y)
-    (small : ∀ i r, ((paths i).filter (fun x => decide (rank i x = r))).length ≤ limit)
-    (legal : RankedRunAssemblyAdmissible paths (4 * M / n) k half rank)
+private theorem frozen_cleaning_after_ranked_copied_rows {V : Type*} [LinearOrder V] [Fintype V]
+    {n p k M retention vNum vDen pNum pDen : ℕ} {half : Bool}
+    (rows : Fin p → List V) (simple : ∀ i, (rows i).Nodup)
+    (mass : (∑ i, (rows i).length) ≤ M) (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (limit : ℕ) (fits : limit ≤ 4*M/p)
+    (rowRank : Fin p → V → ℕ) (order : ∀ i, (rows i).Pairwise (fun x y => rowRank i x ≤ rowRank i y))
+    (fibreCap : ∀ i r, ((rows i).filter (fun x => decide (rowRank i x = r))).length ≤ limit)
+    (legal : RankedCopiedAssemblyAdmissible rows k half rowRank)
     (vPos : 0 < vDen) (pPos : 0 < pDen) (vRatio : vNum ≤ vDen) (pRatio : pNum ≤ pDen)
-    (vertexBudget : vNum * (n + M / (4 * M / n)) ≤ vDen * n)
+    (vRoom : vNum*Fintype.card V ≤ vDen*n)
+    (copiedDegree : ∀ v, (occurrences (fun i => (rows i).toFinset) v).card ≤ 4*M/n)
     (pathBudget : ∀ q,
-      let L := 4 * M / p
-      let minimum := L + 1 - limit
-      minimum * q ≤ M + p * minimum → (L + 1) * q ≤ 2 * M + p * (L + 1) → pNum * q ≤ pDen * p)
-    (retained : (vDen * pDen) * (retention + 2) * M ≤
-      2 * (vNum * pNum) * retention * (∑ i, (paths i).length)) :
+      let L := 4*M/p
+      let minimum := L+1-limit
+      minimum*q ≤ M+p*minimum → (L+1)*q ≤ 2*M+p*(L+1) → pNum*q ≤ pDen*p)
+    (retained : (vDen*pDen)*(retention+2)*M ≤ 2*(vNum*pNum)*retention*(∑ i, (rows i).length)) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       M ≤ retention * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   classical
-  let D := 4 * M / n
-  let L := 4 * M / p
-  let minimum := L + 1 - limit
-  obtain ⟨dPos, _, _⟩ := four_average_width hn dense
-  have copied := (regularization_list_counts paths simple (D := D) dPos Nat.one_pos).1
-  rw [Fintype.card_fin] at copied
-  have copiedBound : Fintype.card (ListVertexBlockIndex paths D) ≤ n + M / D :=
-    copied.trans (Nat.add_le_add_left (Nat.div_le_div_right mass) n)
-  have vRoom : vNum * Fintype.card (ListVertexBlockIndex paths D) ≤ vDen * n :=
-    (Nat.mul_le_mul_left vNum copiedBound).trans vertexBudget
-  let rows := splitListVertices paths D
-  let rowRank (i : Fin p) (v : ListVertexBlockIndex paths D) := rank i v.fst
-  have order (i : Fin p) : (rows i).Pairwise (fun x y => rowRank i x ≤ rowRank i y) :=
-    splitListVertices_rank_order D i (simple i) (rank i) monotone
-  have fibreCap (i : Fin p) (r : ℕ) : ((rows i).filter (fun v => decide (rowRank i v = r))).length ≤ limit := by
-    have filtered := congrArg (fun l : List (Fin n) =>
-      (l.filter (fun v => decide (rank i v = r))).length) (splitListVertices_project paths D i)
-    rw [List.filter_map, List.length_map] at filtered
-    exact filtered.trans_le (small i r)
+  let D := 4*M/n
+  let L := 4*M/p
+  let minimum := L+1-limit
   choose packed flatten separated cap count pairs using fun i =>
     packedWidthPieces (rowRank i) limit L fits (rows i) (order i) (fibreCap i)
   let P := Σₗ i : Fin p, Fin (packed i).length
@@ -625,24 +613,19 @@ private theorem frozen_cleaning_of_ranked_runs {n p k M retention vNum vDen pNum
   have qRoom : pNum * Fintype.card P ≤ pDen * p := by
     rw [Fintype.card_lex, Fintype.card_sigma]
     simp only [Fintype.card_fin]
-    have rowMass : (∑ i, (rows i).length) ≤ M := by simpa only [rows, splitListVertices_length] using mass
     apply pathBudget
     · change minimum * (∑ i, (packed i).length) ≤ M + p * minimum
       rw [mul_sum]
       calc
         _ ≤ ∑ i, ((rows i).length + minimum) := Finset.sum_le_sum fun i _ => count i
         _ = (∑ i, (rows i).length) + p * minimum := by simp [sum_add_distrib]
-        _ ≤ _ := Nat.add_le_add_right rowMass _
+        _ ≤ _ := Nat.add_le_add_right mass _
     · rw [mul_sum]
       calc
         _ ≤ ∑ i, (2 * (rows i).length + (L + 1)) := Finset.sum_le_sum fun i _ => pairs i
         _ = 2 * (∑ i, (rows i).length) + p * (L + 1) := by simp [sum_add_distrib, mul_sum]
-        _ ≤ _ := Nat.add_le_add_right (Nat.mul_le_mul_left 2 rowMass) _
-  have copiedDegree (v : ListVertexBlockIndex paths D) :
-      (occurrences (fun i => (rows i).toFinset) v).card ≤ D := by
-    simpa only [rows, splitListVertices_toFinset] using
-      (splitVertices_degree (fun i => (paths i).toFinset) dPos v)
-  have degree (v : ListVertexBlockIndex paths D) : (occurrences (fun i => (pieces i).toFinset) v).card ≤ D := by
+        _ ≤ _ := Nat.add_le_add_right (Nat.mul_le_mul_left 2 mass) _
+  have degree (v : V) : (occurrences (fun i => (pieces i).toFinset) v).card ≤ D := by
     refine le_trans ?_ (copiedDegree v)
     apply card_le_card_of_injOn (fun i : P => i.1)
     · intro i hi
@@ -656,21 +639,71 @@ private theorem frozen_cleaning_of_ranked_runs {n p k M retention vNum vDen pNum
       rcases apart different same with forward | reverse
       · exact (forward v inI v inJ).false
       · exact (reverse v inI v inJ).false
-  have total : (∑ i, (pieces i).length) = ∑ i, (paths i).length := by
+  have total : (∑ i, (pieces i).length) = ∑ i, (rows i).length := by
     change (∑ i : Sigma (fun j => Fin (packed j).length), ((packed i.1).get i.2).length) = _
     rw [Fintype.sum_sigma]
     apply sum_congr rfl
     intro i _
-    rw [← splitListVertices_length paths D i, show splitListVertices paths D i = (packed i).flatten from (flatten i).symm,
-      List.length_flatten]
+    change (∑ q : Fin (packed i).length, ((packed i).get q).length) = (rows i).length
+    have sameLength := congrArg List.length (flatten i)
+    rw [← sameLength,List.length_flatten]
     rw [← List.sum_ofFn]
     have lengthRows := congrArg (List.map List.length) (List.ofFn_get (packed i))
     rw [List.map_ofFn] at lengthRows
     exact congrArg List.sum lengthRows
   exact regularization_list_frozen_after_caps_with_ratios_of_mass (half := half) pieces
-    (fun i => (sub i).nodup (splitListVertices_simple paths D i.1 (simple i.1)))
+    (fun i => (sub i).nodup (simple i.1))
     packedLegal hn hp dense long vPos pPos vRatio pRatio vRoom qRoom
     (fun i => cap i.1 _ (membership i)) degree (total.trans_le mass) (by rw [total]; exact retained)
+
+set_option maxHeartbeats 1000000 in
+private theorem frozen_cleaning_of_ranked_runs {n p k M retention vNum vDen pNum pDen : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (mass : (∑ i, (paths i).length) ≤ M) (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (limit : ℕ) (fits : limit ≤ 4 * M / p)
+    (rank : Fin p → Fin n → ℕ)
+    (monotone : ∀ {i x y}, Before paths i x y → rank i x ≤ rank i y)
+    (small : ∀ i r, ((paths i).filter (fun x => decide (rank i x = r))).length ≤ limit)
+    (legal : RankedRunAssemblyAdmissible paths (4 * M / n) k half rank)
+    (vPos : 0 < vDen) (pPos : 0 < pDen) (vRatio : vNum ≤ vDen) (pRatio : pNum ≤ pDen)
+    (vertexBudget : vNum * (n + M / (4 * M / n)) ≤ vDen * n)
+    (pathBudget : ∀ q,
+      let L := 4 * M / p
+      let minimum := L + 1 - limit
+      minimum * q ≤ M + p * minimum → (L + 1) * q ≤ 2 * M + p * (L + 1) → pNum * q ≤ pDen * p)
+    (retained : (vDen * pDen) * (retention + 2) * M ≤
+      2 * (vNum * pNum) * retention * (∑ i, (paths i).length)) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ retention * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  classical
+  let D := 4 * M / n
+  obtain ⟨dPos, _, _⟩ := four_average_width hn dense
+  have copied := (regularization_list_counts paths simple (D := D) dPos Nat.one_pos).1
+  rw [Fintype.card_fin] at copied
+  have copiedBound : Fintype.card (ListVertexBlockIndex paths D) ≤ n + M / D :=
+    copied.trans (Nat.add_le_add_left (Nat.div_le_div_right mass) n)
+  have vRoom : vNum * Fintype.card (ListVertexBlockIndex paths D) ≤ vDen * n :=
+    (Nat.mul_le_mul_left vNum copiedBound).trans vertexBudget
+  let rows := splitListVertices paths D
+  let rowRank (i : Fin p) (v : ListVertexBlockIndex paths D) := rank i v.fst
+  have order (i : Fin p) : (rows i).Pairwise (fun x y => rowRank i x ≤ rowRank i y) :=
+    splitListVertices_rank_order D i (simple i) (rank i) monotone
+  have fibreCap (i : Fin p) (r : ℕ) : ((rows i).filter (fun v => decide (rowRank i v = r))).length ≤ limit := by
+    have filtered := congrArg (fun l : List (Fin n) =>
+      (l.filter (fun v => decide (rank i v = r))).length) (splitListVertices_project paths D i)
+    rw [List.filter_map, List.length_map] at filtered
+    exact filtered.trans_le (small i r)
+  have copiedDegree (v : ListVertexBlockIndex paths D) :
+      (occurrences (fun i => (rows i).toFinset) v).card ≤ D := by
+    simpa only [rows, splitListVertices_toFinset] using
+      (splitVertices_degree (fun i => (paths i).toFinset) dPos v)
+  have rowMass : (∑ i, (rows i).length) ≤ M := by simpa only [rows,splitListVertices_length] using mass
+  have enough : (vDen*pDen)*(retention+2)*M ≤ 2*(vNum*pNum)*retention*(∑ i, (rows i).length) := by
+    simpa only [rows,splitListVertices_length] using retained
+  exact frozen_cleaning_after_ranked_copied_rows rows (fun i => splitListVertices_simple paths D i (simple i))
+    rowMass hn hp dense long limit fits rowRank order fibreCap legal vPos pPos vRatio pRatio
+    vRoom copiedDegree pathBudget enough
 
 set_option maxHeartbeats 1000000 in
 private theorem componentRankAssemblyAdmissible {n p k D : ℕ} {half : Bool}
@@ -751,6 +784,37 @@ private theorem frozen_cleaning_of_small_precedence_components {n p k : ℕ} {ha
     (fun _ => precedenceRank paths) (fun step => precedenceRank_mono step)
     (small_component_rank_fibre paths _ small) (componentRankAssemblyAdmissible paths simple legal)
 
+private theorem frozen_width_copy_budget {n p M : ℕ}
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (substantial : 2*n ≤ M) :
+    let D := 4*M/n
+    let L := 4*M/p
+    7*(n+M/D) ≤ 9*n ∧
+      (∀ q, (L+1)*q ≤ 2*M+p*(L+1) → 2*q ≤ 3*p) := by
+  let D := 4*M/n
+  let L := 4*M/p
+  obtain ⟨dPos, _, _⟩ := four_average_width hn dense
+  have dFloor : 4 * M < n * (D + 1) := Nat.lt_mul_div_succ (4 * M) hn
+  rw [Nat.mul_succ] at dFloor
+  have reserve : 7 * M ≤ 2 * (n * D) := by omega
+  have trim : 7 * (M / D) ≤ 2 * n := by
+    apply Nat.le_of_mul_le_mul_right _ dPos
+    calc
+      _ = 7 * ((M / D) * D) := by ring
+      _ ≤ 7 * M := Nat.mul_le_mul_left _ (Nat.div_mul_le_self _ _)
+      _ ≤ _ := reserve.trans_eq (by ring)
+  have vertexBudget : 7 * (n + M / D) ≤ 9 * n := by omega
+  refine ⟨vertexBudget,?_⟩
+  intro q pairs
+  change (L + 1) * q ≤ 2 * M + p * (L + 1) at pairs
+  have lFloor : 4 * M < p * (L + 1) := Nat.lt_mul_div_succ (4 * M) hp
+  have positive : 0 < L + 1 := Nat.succ_pos L
+  apply Nat.le_of_mul_le_mul_left _ positive
+  calc
+    _ = 2 * ((L + 1) * q) := by ring
+    _ ≤ 2 * (2 * M + p * (L + 1)) := Nat.mul_le_mul_left _ pairs
+    _ ≤ 3 * (p * (L + 1)) := by omega
+    _ = _ := by ring
+
 private theorem frozen_cleaning_of_width_ranked_runs_of_mass {n p k M retention : ℕ} {half : Bool}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
@@ -767,32 +831,14 @@ private theorem frozen_cleaning_of_width_ranked_runs_of_mass {n p k M retention 
   let D := 4 * M / n
   let L := 4 * M / p
   by_cases substantial : 2 * n ≤ M
-  · obtain ⟨dPos, _, _⟩ := four_average_width hn dense
-    have dFloor : 4 * M < n * (D + 1) := Nat.lt_mul_div_succ (4 * M) hn
-    rw [Nat.mul_succ] at dFloor
-    have reserve : 7 * M ≤ 2 * (n * D) := by omega
-    have trim : 7 * (M / D) ≤ 2 * n := by
-      apply Nat.le_of_mul_le_mul_right _ dPos
-      calc
-        _ = 7 * ((M / D) * D) := by ring
-        _ ≤ 7 * M := Nat.mul_le_mul_left _ (Nat.div_mul_le_self _ _)
-        _ ≤ _ := reserve.trans_eq (by ring)
-    have vertexBudget : 7 * (n + M / D) ≤ 9 * n := by omega
+  · obtain ⟨vertexBudget,pathRoom⟩ := frozen_width_copy_budget hn hp dense substantial
     refine frozen_cleaning_of_ranked_runs (half := half) paths simple mass hn hp dense long L le_rfl
       rank monotone runs legal
       (vNum := 7) (vDen := 9) (pNum := 2) (pDen := 3)
       (by decide) (by decide) (by decide) (by decide) vertexBudget ?_ enough
     dsimp only
     intro q _ pairs
-    change (L + 1) * q ≤ 2 * M + p * (L + 1) at pairs
-    have lFloor : 4 * M < p * (L + 1) := Nat.lt_mul_div_succ (4 * M) hp
-    have positive : 0 < L + 1 := Nat.succ_pos L
-    apply Nat.le_of_mul_le_mul_left _ positive
-    calc
-      _ = 2 * ((L + 1) * q) := by ring
-      _ ≤ 2 * (2 * M + p * (L + 1)) := Nat.mul_le_mul_left _ pairs
-      _ ≤ 3 * (p * (L + 1)) := by omega
-      _ = _ := by ring
+    exact pathRoom q pairs
   · have light : M ≤ 3 * max n p := by have top := le_max_left n p; omega
     obtain ⟨n', fitsV, p', fitsP, clean, simple', free, keep, cap, caps⟩ :=
       full_frozen_cleaning_sparse (k := k) hn hp dense long light
@@ -2121,5 +2167,99 @@ theorem regularization_list_frozen_of_small_copiedShortReturnRuns {n p k : ℕ} 
   frozen_cleaning_of_small_ranked_runs paths simple hn hp dense long
     (copiedReturnCutRank paths (4*(∑ i, (paths i).length)/n) k) (fun before => copiedReturnCutRank_mono before) runs
     (copiedReturnRankAssemblyAdmissible paths simple copyLegal)
+
+
+/-- Remove long runs without rebuilding the degree copies or changing
+which boundaries are safe. -/
+noncomputable def pruneLongCopiedReturnRuns {n p : ℕ} (paths : Fin p → List (Fin n))
+    (D cutoff width : ℕ) (i : Fin p) : List (ListVertexBlockIndex paths D) :=
+  (splitListVertices paths D i).filter fun v =>
+    decide (copiedShortReturnRunLength paths D cutoff i (copiedReturnCutRank paths D cutoff i v.fst) ≤ width)
+
+set_option maxHeartbeats 1500000 in
+/-- If long runs use at most one fifty-sixth of the original mass, remove
+them from the fixed copies and pack the remaining runs. -/
+theorem regularization_list_frozen_of_few_long_copiedShortReturnRuns {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (copyLegal : let M := ∑ i, (paths i).length; localOrderAdmissible half k (splitListVertices paths (4*M/n)))
+    (keep : let M := ∑ i, (paths i).length
+      55*M ≤ 56*(∑ i, (pruneLongCopiedReturnRuns paths (4*M/n) k (4*M/p) i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 108*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  classical
+  let M := ∑ i, (paths i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let V := ListVertexBlockIndex paths D
+  let raw := splitListVertices paths D
+  let kept := pruneLongCopiedReturnRuns paths D k L
+  let rank (i : Fin p) (v : V) := copiedReturnCutRank paths D k i v.fst
+  by_cases substantial : 2*n ≤ M
+  · have sub (i : Fin p) : (kept i).Sublist (raw i) := List.filter_sublist
+    have stillSimple (i : Fin p) : (kept i).Nodup :=
+      (sub i).nodup (splitListVertices_simple paths D i (simple i))
+    have rowsOrder (i : Fin p) : (kept i).Pairwise (fun x y => rank i x ≤ rank i y) :=
+      (splitListVertices_rank_order D i (simple i) (copiedReturnCutRank paths D k i)
+        (fun {_ _} => copiedReturnCutRank_mono)).sublist (sub i)
+    have mass : (∑ i, (kept i).length) ≤ M := by
+      calc
+        _ ≤ ∑ i, (raw i).length := sum_le_sum (fun i _ => (sub i).length_le)
+        _ = M := sum_congr rfl (fun i _ => splitListVertices_length paths D i)
+    have rawRun (i : Fin p) (r : ℕ) :
+        ((raw i).filter (fun v => decide (rank i v = r))).length = copiedShortReturnRunLength paths D k i r := by
+      have projected := congrArg (fun l : List (Fin n) =>
+        (l.filter (fun v => decide (copiedReturnCutRank paths D k i v = r))).length)
+        (splitListVertices_project paths D i)
+      rw [List.filter_map,List.length_map] at projected
+      exact projected
+    have fibreCap (i : Fin p) (r : ℕ) : ((kept i).filter (fun v => decide (rank i v = r))).length ≤ L := by
+      by_cases fits : copiedShortReturnRunLength paths D k i r ≤ L
+      · exact (((sub i).filter _).length_le.trans_eq (rawRun i r)).trans fits
+      · have empty : ((kept i).filter (fun v => decide (rank i v = r))) = [] := by
+          apply List.eq_nil_iff_forall_not_mem.mpr
+          intro v present
+          obtain ⟨onRow,onRun⟩ := List.mem_filter.mp present
+          have h : copiedShortReturnRunLength paths D k i (rank i v) ≤ L :=
+            of_decide_eq_true (List.mem_filter.mp onRow).2
+          rw [of_decide_eq_true onRun] at h
+          exact fits h
+        simp [empty]
+    have legal : RankedCopiedAssemblyAdmissible kept k half rank := by
+      intro sizes pieces subPieces apart
+      exact copiedReturnRankAssemblyAdmissible paths simple copyLegal pieces
+        (fun i => (subPieces i).trans (sub i.fst)) apart
+    have dPos : 0 < D := (four_average_width hn dense).1
+    obtain ⟨vertexBudget,pathRoom⟩ := frozen_width_copy_budget hn hp dense substantial
+    have rawCount := (regularization_list_counts paths simple (D := D) dPos Nat.one_pos).1
+    rw [Fintype.card_fin] at rawCount
+    have vRoom : 7*Fintype.card V ≤ 9*n := (Nat.mul_le_mul_left 7 rawCount).trans vertexBudget
+    have degree (v : V) : (occurrences (fun i => (kept i).toFinset) v).card ≤ D := by
+      have rawDegree : (occurrences (fun i => (raw i).toFinset) v).card ≤ D := by
+        simpa only [raw,splitListVertices_toFinset] using
+          (splitVertices_degree (fun i => (paths i).toFinset) dPos v)
+      apply le_trans (card_le_card ?_) rawDegree
+      intro i member
+      have present := List.mem_toFinset.mp ((mem_occurrences (marks := fun j => (kept j).toFinset)).mp member)
+      exact mem_occurrences.mpr (List.mem_toFinset.mpr ((sub i).subset present))
+    refine frozen_cleaning_after_ranked_copied_rows kept stillSimple mass hn hp dense long L le_rfl
+      rank rowsOrder fibreCap legal (vNum := 7) (vDen := 9) (pNum := 2) (pDen := 3)
+      (by decide) (by decide) (by decide) (by decide) vRoom degree ?_ ?_
+    · dsimp only
+      intro q _ pairs
+      exact pathRoom q pairs
+    · change 55*M ≤ 56*(∑ i, (kept i).length) at keep
+      omega
+  · have sparse : M ≤ 3*max n p := by have bound := le_max_left n p; omega
+    obtain ⟨v,vRoom,q,pRoom,clean,cleanSimple,free,mass,bound,caps⟩ :=
+      full_frozen_cleaning_sparse (k := k) hn hp dense long sparse
+    have allowed : localOrderAdmissible half k clean := by
+      cases half
+      · exact free
+      · exact free.halfFree
+    exact ⟨v,vRoom,q,pRoom,clean,cleanSimple,allowed,
+      mass.trans (Nat.mul_le_mul_right _ (by decide)),bound,caps⟩
 
 end OnlineReachabilityPreservers

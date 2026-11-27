@@ -903,26 +903,26 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   those whole visits first. The construction then retains at least
   \(M/108\), with both budgets, all four original caps, and the same
   bridge guarantees.
-  [Cleaning with a small mass of long visits](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1081).
+  [Cleaning with a small mass of long visits](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1127).
 - At cutoff \(k\), the factor-four blocks retain at least \(M/16\) in either
   bridge mode when the precedence graph has no directed cycle of length at
   most \(k-2\). If removing at most \(M/18\) incidences from the rows suffices
   to obtain this property, the construction retains at least \(M/32\).
   Both guarantees use the two positive original budgets and all four caps
   computed from the original averages, for mass at least both budgets.
-  [No short cycles](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1552)
-  · [After deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1600).
+  [No short cycles](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1598)
+  · [After deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1646).
   The same bounds follow by ruling out short returns only across the
   actual width cuts. Full mode uses this condition alone. Half mode also
   uses one of the sufficient conditions for splitting vertices.
-  [Width-cut criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1537)
-  · [Width-cut criterion after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1579).
+  [Width-cut criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1583)
+  · [Width-cut criterion after deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1625).
   For half bridges, the [copy-return test](OnlineReachabilityPreservers/BridgeVertexProjection.lean)
   uses walks of length at most \(\max(0,k-3)\) between distinct copies of
   one vertex. With the same width-cut condition, it gives \(M/16\),
   both original budgets, and all four original-average caps.
-  [Cleaning with the copy-return test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1841).
-  The [actual-piece width test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1977)
+  [Cleaning with the copy-return test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1887).
+  The [actual-piece width test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2023)
   searches only the precedence edges that survive both width cuts.
   It gives the same guarantee in both modes. Half bridges also require
   one of the sufficient degree-split conditions.
@@ -940,9 +940,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   All three results preserve both budgets and all four original-average
   caps. They retain the input bridge exclusion through the cutoff, with
   the degree split conditions for half bridges.
-  [Cutting between short-return runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1746)
-  · [Choosing safe boundaries after copying degrees](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2097)
-  · [After removing long runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1802).
+  [Cutting between short-return runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1792)
+  · [Choosing safe boundaries after copying degrees](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2143)
+  · [Deleting long runs from fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2182)
+  · [After removing long runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1848).
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
   [`lemma26_chain_lower` and `lemma27_acyclic`](OnlineReachabilityPreservers/PairwiseInitial.lean)
