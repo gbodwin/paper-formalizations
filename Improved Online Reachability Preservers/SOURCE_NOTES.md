@@ -915,6 +915,19 @@ The witnesses use the same degree and path widths. The checked
 \(M/16\) result keeps both original budgets and all four original caps.
 [Alternate degree copies](OnlineReachabilityPreservers/VertexSplitAudit.lean#L549).
 
+One way to assign the ranks is to choose safe gaps in arrival order
+separately for each original vertex. With radius \(r=\max(0,k-3)\), a
+return across a gap would need a first step on a later row and a last
+step on an earlier row, joined by at most \(r-2\) steps in the original
+precedence graph. Every gap is safe when the radius is below two.
+Label each incidence by its vertex and the last chosen gap at its
+arrival, using rank zero if no gap has been reached. Only occupied
+labels count toward the copy budget. If their degrees and label count
+meet the bounds of the ranked-copy theorem and the width pieces pass
+their return test, the frozen witness retains at least \(M/16\) with
+half exclusion through \(k\), both budgets, and all four frozen caps.
+[Safe gap test](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L319) · [Cleaning from chosen gaps](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L465).
+
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
 those positions, so only pairs in different blocks need the bounded

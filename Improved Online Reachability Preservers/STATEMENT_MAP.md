@@ -2142,6 +2142,11 @@ vertex lists in order. With at most \(4n/3\) copy labels and original
 degree caps, passing the two
 return tests gives the same frozen \(M/16\) guarantee and both budgets.
 [Ranked degree rows](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L269).
+Selected safe arrival gaps give one way to produce these ranks. The
+first and last rows of a possible backward return must straddle a
+chosen gap. Counting occupied labels and checking the copy loads and
+actual path pieces gives the same frozen guarantee.
+[Safe degree gaps](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L465).
 The same conditional \(M/16\) and [\(M/32\) after rowwise deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1625)
 keep both budgets and all four original-average caps.
 Alternatively, use each row's last safe boundary as its rank. A cut is

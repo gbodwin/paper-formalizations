@@ -313,4 +313,208 @@ theorem regularization_list_frozen_half_of_ranked_degree_rows {n p k : ℕ} {W :
     (fun w => (splitListPaths_degree rows L w).trans (degree w))
     ((splitListPaths_size rows rowSimple L).trans sameMass) (by decide)
 
+
+/-- A gap in arrival order is safe at a vertex if a short return cannot
+start on a later row and end on an earlier row across that gap. -/
+def IsSafeDegreeReturnGap {n p : ℕ} (paths : Fin p → List (Fin n))
+    (v : Fin n) (gap radius : ℕ) : Prop :=
+  radius < 2 ∨ ∀ ⦃a b : Fin p⦄ ⦃x y : Fin n⦄, b.val < gap → gap ≤ a.val →
+    Before paths a v x → Before paths b y v →
+    x ∉ reachIn (listPiecePrecedenceGraph paths) y (radius-2)
+
+set_option maxHeartbeats 1200000 in
+/-- A copy assignment can use any safe gap separating its different
+ranks. The test uses the original comparisons and the rows supplying
+the first and last steps of a possible return. -/
+theorem NoShortBackwardProjection.of_safe_degree_return_gaps {n p radius : ℕ} {W : Type*} [DecidableEq W]
+    (paths : Fin p → List (Fin n)) (rows : Fin p → List W) (project : W → Fin n) (rank : W → ℕ)
+    (projectStep : ∀ {i x y}, Before rows i x y → Before paths i (project x) (project y))
+    (separates : ∀ {a b x y s t}, Before rows a x s → Before rows b t y →
+      project x = project y → rank y < rank x →
+      ∃ gap, b.val < gap ∧ gap ≤ a.val ∧ IsSafeDegreeReturnGap paths (project x) gap radius) :
+    NoShortBackwardProjection (Before rows) project rank radius := by
+  intro d vertex row short steps same backwards
+  have two : 2 ≤ d := by
+    by_contra! one
+    have choices : d = 0 ∨ d = 1 := by omega
+    rcases choices with rfl | rfl
+    · have eq : Fin.last 0 = (0 : Fin 1) := rfl
+      rw [eq] at backwards
+      exact (lt_irrefl _) backwards
+    · have edge := projectStep (steps 0)
+      have firstEq : (0 : Fin 1).castSucc = 0 := rfl
+      have lastEq : (0 : Fin 1).succ = Fin.last 1 := rfl
+      exact listBefore_ne edge (by simpa only [firstEq,lastEq] using same)
+  obtain ⟨q,rfl⟩ : ∃ q, d = q+2 := ⟨d-2,by omega⟩
+  let first : Fin (q+2) := 0
+  let last := Fin.last (q+1)
+  have firstStep : Before rows (row first) (vertex 0) (vertex first.succ) := steps first
+  have lastStep : Before rows (row last) (vertex last.castSucc) (vertex (Fin.last (q+2))) := by
+    simpa only [last,Fin.succ_last] using steps last
+  obtain ⟨gap,early,late,safe⟩ := separates firstStep lastStep same backwards
+  let place (i : Fin (q+1)) : Fin (q+3) := i.succ.castSucc
+  let middle (i : Fin (q+1)) := project (vertex (place i))
+  have middleSteps (i : Fin q) : Edge (listPiecePrecedenceGraph paths) (middle i.castSucc) (middle i.succ) := by
+    let index : Fin (q+2) := i.succ.castSucc
+    have sourceIndex : place i.castSucc = index.castSucc := Fin.ext rfl
+    have toward : place i.succ = index.succ := Fin.ext rfl
+    exact listPiecePrecedenceGraph_edge.mpr ⟨row index,by
+      simpa only [middle,sourceIndex,toward] using projectStep (steps index)⟩
+  have reached := reachIn_of_fin_steps middle middleSteps
+  have sourceIndex : place 0 = first.succ := Fin.ext rfl
+  have toward : place (Fin.last q) = last.castSucc := Fin.ext rfl
+  change project (vertex (place 0)) ∈ reachIn (listPiecePrecedenceGraph paths)
+    (project (vertex (place (Fin.last q)))) q at reached
+  rw [sourceIndex,toward] at reached
+  have endStep := projectStep lastStep
+  rw [← same] at endStep
+  apply safe.resolve_left (by omega) early late (projectStep firstStep) endStep
+  exact (monotone_nat_of_le_succ (reachIn_subset_succ _ _) (show q ≤ radius-2 by omega)) reached
+
+open scoped Classical in
+/-- The latest chosen cut of one vertex at or before the row arrives. -/
+noncomputable def degreeReturnGapRank {n p : ℕ} (cuts : Fin n → Finset ℕ)
+    (v : Fin n) (i : Fin p) : ℕ :=
+  ((cuts v).filter fun gap => gap ≤ i.val).sup id
+
+/-- Ranks increase only across a chosen gap. -/
+theorem degreeReturnGapRank_lt_iff {n p : ℕ} {cuts : Fin n → Finset ℕ}
+    {v : Fin n} {i j : Fin p} :
+    degreeReturnGapRank cuts v i < degreeReturnGapRank cuts v j ↔
+      ∃ gap ∈ cuts v, i.val < gap ∧ gap ≤ j.val := by
+  constructor
+  · intro increasing
+    by_contra! none
+    have atMost : degreeReturnGapRank cuts v j ≤ degreeReturnGapRank cuts v i := by
+      unfold degreeReturnGapRank
+      apply Finset.sup_le
+      intro gap atJ
+      have chosen := (mem_filter.mp atJ).1
+      have byJ := (mem_filter.mp atJ).2
+      have byI : gap ≤ i.val := by
+        by_contra! afterI
+        exact (none gap chosen afterI).not_ge byJ
+      exact Finset.le_sup (f := id) (mem_filter.mpr ⟨chosen,byI⟩)
+    exact increasing.not_ge atMost
+  · rintro ⟨gap,chosen,byI,byJ⟩
+    have before : degreeReturnGapRank cuts v i ≤ i.val := by
+      unfold degreeReturnGapRank
+      exact Finset.sup_le (fun _ atI => (mem_filter.mp atI).2)
+    have after : gap ≤ degreeReturnGapRank cuts v j :=
+      Finset.le_sup (f := id) (mem_filter.mpr ⟨chosen,byJ⟩)
+    exact (before.trans_lt byI).trans_le after
+
+/-- The degree copy labels are the occupied pairs of vertex and rank. -/
+noncomputable def degreeReturnGapAlphabet {n p : ℕ} (paths : Fin p → List (Fin n))
+    (cuts : Fin n → Finset ℕ) : Finset (Fin n ×ₗ ℕ) :=
+  univ.biUnion fun i : Fin p =>
+    (paths i).toFinset.image (fun v => toLex (v,degreeReturnGapRank cuts v i))
+
+abbrev DegreeReturnGapCopy {n p : ℕ} (paths : Fin p → List (Fin n)) (cuts : Fin n → Finset ℕ) :=
+  ↥(degreeReturnGapAlphabet paths cuts)
+
+private def degreeReturnGapProject {n p : ℕ} {paths : Fin p → List (Fin n)}
+    {cuts : Fin n → Finset ℕ} (x : DegreeReturnGapCopy paths cuts) : Fin n :=
+  (ofLex x.val).1
+
+private def degreeReturnGapBlock {n p : ℕ} {paths : Fin p → List (Fin n)}
+    {cuts : Fin n → Finset ℕ} (x : DegreeReturnGapCopy paths cuts) : ℕ :=
+  (ofLex x.val).2
+
+private noncomputable def degreeReturnGapCopyAt {n p : ℕ} (paths : Fin p → List (Fin n))
+    (cuts : Fin n → Finset ℕ) (i : Fin p) (v : {v // v ∈ paths i}) :
+    DegreeReturnGapCopy paths cuts :=
+  ⟨toLex (v.val,degreeReturnGapRank cuts v.val i),
+    mem_biUnion.mpr ⟨i,mem_univ _,mem_image.mpr ⟨v.val,List.mem_toFinset.mpr v.property,rfl⟩⟩⟩
+
+/-- Apply the chosen degree cuts without changing any row positions. -/
+noncomputable def splitListVerticesAtReturnGaps {n p : ℕ} (paths : Fin p → List (Fin n))
+    (cuts : Fin n → Finset ℕ) (i : Fin p) : List (DegreeReturnGapCopy paths cuts) :=
+  (paths i).attach.map (degreeReturnGapCopyAt paths cuts i)
+
+theorem splitListVerticesAtReturnGaps_project {n p : ℕ} (paths : Fin p → List (Fin n))
+    (cuts : Fin n → Finset ℕ) (i : Fin p) :
+    (splitListVerticesAtReturnGaps paths cuts i).map degreeReturnGapProject = paths i := by
+  unfold splitListVerticesAtReturnGaps
+  rw [List.map_map]
+  exact List.attach_map_subtype_val _
+
+private theorem degreeReturnGap_copy_eq {n p : ℕ} {paths : Fin p → List (Fin n)}
+    {cuts : Fin n → Finset ℕ} {x y : DegreeReturnGapCopy paths cuts}
+    (project : degreeReturnGapProject x = degreeReturnGapProject y)
+    (rank : degreeReturnGapBlock x = degreeReturnGapBlock y) : x = y :=
+  Subtype.ext (ofLex.injective (Prod.ext project rank))
+
+private theorem mem_splitListVerticesAtReturnGaps {n p : ℕ} {paths : Fin p → List (Fin n)}
+    {cuts : Fin n → Finset ℕ} {i : Fin p} {x : DegreeReturnGapCopy paths cuts} :
+    x ∈ splitListVerticesAtReturnGaps paths cuts i ↔
+      degreeReturnGapProject x ∈ paths i ∧
+      degreeReturnGapBlock x = degreeReturnGapRank cuts (degreeReturnGapProject x) i := by
+  constructor
+  · intro on
+    obtain ⟨v,_,rfl⟩ := List.mem_map.mp on
+    exact ⟨v.property,rfl⟩
+  · rintro ⟨present,rank⟩
+    apply List.mem_map.mpr
+    refine ⟨⟨degreeReturnGapProject x,present⟩,by simp,?_⟩
+    exact degreeReturnGap_copy_eq rfl rank.symm
+
+set_option maxHeartbeats 1200000 in
+/-- Use any selected safe degree gaps with the original upper caps. The
+copy budget counts only labels that occur in at least one row. -/
+theorem regularization_list_frozen_half_of_safe_degree_gaps {n p k : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) k)
+    (cuts : Fin n → Finset ℕ)
+    (safe : ∀ v gap, gap ∈ cuts v → IsSafeDegreeReturnGap paths v gap (k-3))
+    (widthSafe : let M := ∑ i, (paths i).length
+      NoShortReturnAcrossWidthCutsInPieces (splitListVerticesAtReturnGaps paths cuts) (4*M/p) k)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (count : 3*(degreeReturnGapAlphabet paths cuts).card ≤ 4*n)
+    (load : let M := ∑ i, (paths i).length
+      ∀ v rank, ((univ : Finset (Fin p)).filter
+        fun i => v ∈ paths i ∧ degreeReturnGapRank cuts v i = rank).card ≤ 4*M/n) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) k ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let rows := splitListVerticesAtReturnGaps paths cuts
+  let W := DegreeReturnGapCopy paths cuts
+  let project (x : W) := degreeReturnGapProject x
+  let block (x : W) := degreeReturnGapBlock x
+  have rowRank {i x} (on : x ∈ rows i) : block x = degreeReturnGapRank cuts (project x) i :=
+    (mem_splitListVerticesAtReturnGaps.mp on).2
+  have rowRanks {a b x y} (left : x ∈ rows a) (right : y ∈ rows b) (same : project x = project y)
+      (different : block y < block x) :
+      ∃ gap ∈ cuts (project x), b.val < gap ∧ gap ≤ a.val := by
+    rw [rowRank right, rowRank left, ← same] at different
+    exact degreeReturnGapRank_lt_iff.mp different
+  have projects {i x y} (edge : Before rows i x y) : Before paths i (project x) (project y) := by
+    have sameRows := splitListVerticesAtReturnGaps_project paths cuts i
+    have nodup : ((rows i).map project).Nodup := sameRows.symm ▸ simple i
+    have step := listBefore_map project nodup edge
+    have eqRows : (fun j => (rows j).map project) = paths :=
+      funext (splitListVerticesAtReturnGaps_project paths cuts)
+    rwa [eqRows] at step
+  have admissible : NoShortBackwardProjection (Before rows) project block (k-3) := by
+    apply NoShortBackwardProjection.of_safe_degree_return_gaps paths rows project block (fun {_ _ _} => projects)
+    intro a b x y s t start finish same different
+    obtain ⟨gap,chosen,early,late⟩ := rowRanks start.1 finish.2.1 same different
+    exact ⟨gap,early,late,safe (project x) gap chosen⟩
+  have capacity (x : W) : (occurrences (fun i => (rows i).toFinset) x).card ≤
+      4*(∑ i, (paths i).length)/n := by
+    have on : occurrences (fun i => (rows i).toFinset) x = (univ : Finset (Fin p)).filter
+        (fun i => project x ∈ paths i ∧ degreeReturnGapRank cuts (project x) i = block x) := by
+      ext i
+      rw [mem_occurrences,List.mem_toFinset,mem_splitListVerticesAtReturnGaps,mem_filter]
+      simp only [mem_univ,true_and,project,block,eq_comm]
+    rw [on]
+    exact load (project x) (block x)
+  refine regularization_list_frozen_half_of_ranked_degree_rows paths simple free rows project block
+    (splitListVerticesAtReturnGaps_project paths cuts) (fun {_ _} => degreeReturnGap_copy_eq)
+    ?_ admissible widthSafe hn hp dense long (by simpa only [W,Fintype.card_coe] using count) capacity
+  intro i j s t x y arrives left right same
+  by_contra! backwards
+  obtain ⟨_,_,early,late⟩ := rowRanks left.2.1 right.2.1 same backwards
+  change i.val ≤ j.val at arrives
+  exact early.not_ge (late.trans arrives)
 end OnlineReachabilityPreservers
