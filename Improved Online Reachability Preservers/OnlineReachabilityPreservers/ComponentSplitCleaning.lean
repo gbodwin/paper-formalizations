@@ -1631,14 +1631,14 @@ def IsSafeShortReturnCut {n p : ℕ} (paths : Fin p → List (Fin n)) (i : Fin p
   ∀ ⦃x y⦄, Before paths i x y → (paths i).idxOf x < boundary → boundary ≤ (paths i).idxOf y →
     y ∉ reachIn (pathPrecedenceGraph paths) x ((cutoff-2)-1)
 
-private noncomputable def shortReturnCutsThrough {n p : ℕ} (paths : Fin p → List (Fin n))
-    (i : Fin p) (cutoff index : ℕ) : Finset ℕ := by
+private noncomputable def shortReturnCutsThrough (safe : ℕ → Prop)
+    (index : ℕ) : Finset ℕ := by
   classical
-  exact (range (index+1)).filter (IsSafeShortReturnCut paths i cutoff)
+  exact (range (index+1)).filter safe
 
-private theorem mem_shortReturnCutsThrough {n p : ℕ} {paths : Fin p → List (Fin n)}
-    {i : Fin p} {cutoff index b : ℕ} :
-    b ∈ shortReturnCutsThrough paths i cutoff index ↔ b ≤ index ∧ IsSafeShortReturnCut paths i cutoff b := by
+private theorem mem_shortReturnCutsThrough {safe : ℕ → Prop}
+    {index b : ℕ} :
+    b ∈ shortReturnCutsThrough safe index ↔ b ≤ index ∧ safe b := by
   classical
   simp only [shortReturnCutsThrough,mem_filter,mem_range,Nat.lt_succ_iff]
 
@@ -1646,12 +1646,12 @@ private theorem mem_shortReturnCutsThrough {n p : ℕ} {paths : Fin p → List (
 is always safe, even in an empty row. Equal ranks form contiguous runs. -/
 noncomputable def shortReturnCutRank {n p : ℕ} (paths : Fin p → List (Fin n))
     (cutoff : ℕ) (i : Fin p) (x : Fin n) : ℕ :=
-  (shortReturnCutsThrough paths i cutoff ((paths i).idxOf x)).max'
+  (shortReturnCutsThrough (IsSafeShortReturnCut paths i cutoff) ((paths i).idxOf x)).max'
     ⟨0,mem_shortReturnCutsThrough.mpr ⟨Nat.zero_le _,fun {_ _} _ h => (Nat.not_lt_zero _ h).elim⟩⟩
 
 private theorem shortReturnCutRank_mem {n p : ℕ} (paths : Fin p → List (Fin n))
     (cutoff : ℕ) (i : Fin p) (x : Fin n) :
-    shortReturnCutRank paths cutoff i x ∈ shortReturnCutsThrough paths i cutoff ((paths i).idxOf x) :=
+    shortReturnCutRank paths cutoff i x ∈ shortReturnCutsThrough (IsSafeShortReturnCut paths i cutoff) ((paths i).idxOf x) :=
   max'_mem _ _
 
 /-- Safe-cut ranks are nondecreasing along a row. -/
@@ -1997,5 +1997,129 @@ theorem regularization_list_frozen_of_noShortReturnAcrossCopiedWidthCuts {n p k 
           (fun {i _ _} => splitListVertices_step (simple i)) refined
   have legal := listRegularizedPaths_admissible_of_noShortReturnAcrossCopiedWidthCuts paths simple copied returns
   exact regularization_list_frozen_after_width_blocks_of_mass paths simple legal hn hp dense long le_rfl (by omega)
+
+
+/-- Determine safe path boundaries in the copied rows before splitting any
+of them. The graph keeps the degree-copy label at every vertex of a return. -/
+def IsSafeCopiedReturnCut {n p : ℕ} (paths : Fin p → List (Fin n))
+    (D : ℕ) (i : Fin p) (cutoff boundary : ℕ) : Prop :=
+  let copies := splitListVertices paths D
+  let graph := listPiecePrecedenceGraph copies
+  ∀ ⦃x y⦄, Before copies i x y →
+    (copies i).idxOf x < boundary → boundary ≤ (copies i).idxOf y →
+    y ∉ reachIn graph x ((cutoff-2)-1)
+
+/-- Index a run by the last safe boundary through its position. -/
+noncomputable def copiedReturnCutRank {n p : ℕ} (paths : Fin p → List (Fin n))
+    (D cutoff : ℕ) (i : Fin p) (x : Fin n) : ℕ :=
+  (shortReturnCutsThrough (IsSafeCopiedReturnCut paths D i cutoff) ((paths i).idxOf x)).max'
+    ⟨0,mem_shortReturnCutsThrough.mpr ⟨Nat.zero_le _,fun {_ _} _ h => (Nat.not_lt_zero _ h).elim⟩⟩
+
+private theorem copiedReturnCutRank_mem {n p : ℕ} (paths : Fin p → List (Fin n)) (D cutoff : ℕ)
+    (i : Fin p) (x : Fin n) :
+    copiedReturnCutRank paths D cutoff i x ∈
+      shortReturnCutsThrough (IsSafeCopiedReturnCut paths D i cutoff) ((paths i).idxOf x) :=
+  max'_mem _ _
+
+theorem copiedReturnCutRank_mono {n p D cutoff : ℕ} {paths : Fin p → List (Fin n)}
+    {i : Fin p} {x y : Fin n} (before : Before paths i x y) :
+    copiedReturnCutRank paths D cutoff i x ≤ copiedReturnCutRank paths D cutoff i y := by
+  obtain ⟨index,safe⟩ := mem_shortReturnCutsThrough.mp (copiedReturnCutRank_mem paths D cutoff i x)
+  exact le_max' _ _ (mem_shortReturnCutsThrough.mpr ⟨index.trans before.2.2.le,safe⟩)
+
+theorem copiedReturnCutRank_lt_iff {n p D cutoff : ℕ} {paths : Fin p → List (Fin n)}
+    {i : Fin p} {x y : Fin n} :
+    copiedReturnCutRank paths D cutoff i x < copiedReturnCutRank paths D cutoff i y ↔
+    ∃ b, IsSafeCopiedReturnCut paths D i cutoff b ∧ (paths i).idxOf x < b ∧ b ≤ (paths i).idxOf y := by
+  constructor
+  · intro increasing
+    obtain ⟨index,safe⟩ := mem_shortReturnCutsThrough.mp (copiedReturnCutRank_mem paths D cutoff i y)
+    refine ⟨copiedReturnCutRank paths D cutoff i y,safe,?_,index⟩
+    by_contra! before
+    exact increasing.not_ge (le_max' _ _ (mem_shortReturnCutsThrough.mpr ⟨before,safe⟩))
+  · rintro ⟨b,safe,after,before⟩
+    obtain ⟨rankIndex,_⟩ := mem_shortReturnCutsThrough.mp (copiedReturnCutRank_mem paths D cutoff i x)
+    exact (rankIndex.trans_lt after).trans_le (le_max' _ _ (mem_shortReturnCutsThrough.mpr ⟨before,safe⟩))
+
+/-- The length of one run when safe boundaries are tested on the degree
+copies. Lengths count the same incidences as the original rows. -/
+noncomputable def copiedShortReturnRunLength {n p : ℕ} (paths : Fin p → List (Fin n))
+    (D cutoff : ℕ) (i : Fin p) (rank : ℕ) : ℕ :=
+  ((paths i).filter (fun x => decide (copiedReturnCutRank paths D cutoff i x = rank))).length
+
+set_option maxHeartbeats 800000 in
+private theorem copiedReturnRankAssemblyAdmissible {n p k D : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (legal : localOrderAdmissible half k (splitListVertices paths D)) :
+    RankedRunAssemblyAdmissible paths D k half (copiedReturnCutRank paths D k) := by
+  intro sizes pieces sub apart
+  let P := Σₗ i : Fin p, Fin (sizes i)
+  let rows := splitListVertices paths D
+  let G := listPiecePrecedenceGraph rows
+  let parent (i : P) := i.fst
+  have step {i x y} (before : Before pieces i x y) : Before rows (parent i) x y :=
+    listBefore_of_sublist (paths := fun j : P => rows j.fst)
+      (splitListVertices_simple paths D i.fst (simple i.fst)) (sub i) before
+  have edge {i x y} (before : Before rows i x y) : Edge G x y :=
+    listPiecePrecedenceGraph_edge.mpr ⟨i,before⟩
+  have directed {i x y} (hx : x ∈ rows i) (hy : y ∈ rows i)
+      (ranked : copiedReturnCutRank paths D k i x.fst < copiedReturnCutRank paths D k i y.fst) :
+      Before rows i x y ∧ y ∉ reachIn G x ((k-2)-1) := by
+    have different : x ≠ y := by
+      intro eq
+      exact ranked.ne (congrArg (fun v : ListVertexBlockIndex paths D => copiedReturnCutRank paths D k i v.fst) eq)
+    rcases listBefore_total hx hy different with before | reverse
+    · obtain ⟨b,cut,low,high⟩ := copiedReturnCutRank_lt_iff.mp ranked
+      rw [splitListVertices_idxOf_project paths D i (simple i) hx] at low
+      rw [splitListVertices_idxOf_project paths D i (simple i) hy] at high
+      exact ⟨before,cut before low high⟩
+    · exact (ranked.not_ge (copiedReturnCutRank_mono (splitListVertices_step (simple i) reverse))).elim
+  have separated : ShortReturnSeparated G id rows pieces parent (k-2) := by
+    intro i j different parents
+    rcases apart different parents with left | right
+    · left
+      intro x hx y hy
+      exact directed ((sub i).subset hx) (parents.symm ▸ (sub j).subset hy) (left x hx y hy)
+    · right
+      intro y hy x hx
+      exact directed (parents.symm ▸ (sub j).subset hy) ((sub i).subset hx) (right x hx y hy)
+  have arrives : Monotone parent := by
+    intro i j h
+    rcases Sigma.Lex.le_def.mp h with earlier | ⟨same,_⟩
+    · exact earlier.le
+    · exact same.le
+  cases half
+  · exact bridgeFree_of_shortReturnSeparated_smaller_cutoff G id legal parent step edge separated
+  · exact halfBridgeFree_of_shortReturnSeparated_smaller_cutoff G id legal parent arrives step edge separated
+
+/-- Pack complete runs between boundaries that are safe on the degree
+copies. Runs fitting the factor-four cap give the frozen conclusion. -/
+theorem regularization_list_frozen_of_copiedShortReturnRuns {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (copyLegal : let M := ∑ i, (paths i).length; localOrderAdmissible half k (splitListVertices paths (4*M/n)))
+    (runs : let M := ∑ i, (paths i).length; ∀ i r, copiedShortReturnRunLength paths (4*M/n) k i r ≤ 4*M/p) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 54*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  frozen_cleaning_of_width_ranked_runs_of_mass paths simple hn hp dense long le_rfl
+    (copiedReturnCutRank paths (4*(∑ i, (paths i).length)/n) k) (fun before => copiedReturnCutRank_mono before) runs
+    (copiedReturnRankAssemblyAdmissible paths simple copyLegal) (by decide) (by norm_num)
+
+/-- When each run fits one original mean path length, safe boundaries on
+the copied rows give the frozen conclusion with mass at least M/16. -/
+theorem regularization_list_frozen_of_small_copiedShortReturnRuns {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (copyLegal : let M := ∑ i, (paths i).length; localOrderAdmissible half k (splitListVertices paths (4*M/n)))
+    (runs : let M := ∑ i, (paths i).length; ∀ i r, copiedShortReturnRunLength paths (4*M/n) k i r ≤ M/p) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  frozen_cleaning_of_small_ranked_runs paths simple hn hp dense long
+    (copiedReturnCutRank paths (4*(∑ i, (paths i).length)/n) k) (fun before => copiedReturnCutRank_mono before) runs
+    (copiedReturnRankAssemblyAdmissible paths simple copyLegal)
 
 end OnlineReachabilityPreservers

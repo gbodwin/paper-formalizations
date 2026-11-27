@@ -941,6 +941,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   caps. They retain the input bridge exclusion through the cutoff, with
   the degree split conditions for half bridges.
   [Cutting between short-return runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1746)
+  · [Choosing safe boundaries after copying degrees](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2097)
   · [After removing long runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1802).
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.

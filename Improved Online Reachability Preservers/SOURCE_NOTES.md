@@ -798,6 +798,18 @@ test the earlier-block criterion gives \(M/16\) with both original
 budgets and all four original-average caps at the chosen half cutoff.
 [Checked direction of the example](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean).
 
+[Choosing cuts on the copied rows](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2097)
+tests the boundaries before splitting the paths. A run ends only at
+a boundary with no short return across it in the copied-row graph.
+If the degree split preserves the requested bridge exclusion, packing
+whole runs preserves that exclusion too. With all runs at most the
+factor-four path width, the witness keeps at least \(M/54\). With
+each run at most the original mean path length rounded down, it keeps
+\(M/16\). Both guarantees use the two original budgets and all four
+original-average caps. The twelve-vertex example has an original
+run of length six and only singleton runs after degree copying.
+[Checked run sizes](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean).
+
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
 those positions, so only pairs in different blocks need the bounded
