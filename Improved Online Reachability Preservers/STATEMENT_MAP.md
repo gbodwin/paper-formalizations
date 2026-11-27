@@ -2290,6 +2290,16 @@ and gives a frozen witness with mass at least \(M/16\), both budgets and
 all four caps.
 [Restriction proof](OnlineReachabilityPreservers/BridgeRiverRanks.lean#L103) · [Component return test](OnlineReachabilityPreservers/RiverDetourComponents.lean#L171) · [Frozen witness](OnlineReachabilityPreservers/RiverDetourComponents.lean#L192).
 
+A separate projection works for disjoint pieces that may interleave
+within their parent rows. Require each original comparison between
+different pieces to have no projected backward return within
+\(\max(0,k-3)\) edges. The lift takes the detour after its last
+visit to the river parent, then shortcuts other repeated parents
+in their row order. It preserves the river parent and the last
+arc parent, so the same cutoff holds in full mode and in half
+mode when pieces follow their parents’ arrival order.
+[Return condition](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2639) · [Bridge projection](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2649) · [Full bridge exclusion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2762) · [Half-bridge exclusion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2779).
+
 An eight-vertex example shows a limit of the disjoint-component rank test.
 Its seven original rows exclude full bridges through three. Standard
 width-two blocks form a directed cycle. Each vertex starts a strict

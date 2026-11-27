@@ -2633,4 +2633,163 @@ theorem regularization_list_frozen_after_copied_row_deletions {n p k : ℕ} {hal
     (localOrderAdmissible_of_sublist (fun i => splitListVertices_simple paths _ i (simple i)) sub copyLegal)
     retained returns
 
+/-- An ordered comparison between different pieces of one parent has
+no projected backward route within the specified radius. The pieces may
+interleave in their parent row. -/
+def NoShortBackwardReturnAcrossPieces {V W I J : Type*} [DecidableEq V] [DecidableEq W]
+    (G : Arcs V) (project : W → V) (paths : I → List W)
+    (pieces : J → List W) (parent : J → I) (radius : ℕ) : Prop :=
+  ∀ ⦃i j : J⦄ ⦃x y : W⦄, i ≠ j → parent i = parent j →
+    x ∈ pieces i → y ∈ pieces j → Before paths (parent i) x y →
+    project y ∉ reachIn G (project x) radius
+
+/-- Project a bridge across a disjoint row split, allowing noncontiguous
+pieces. Take the detour suffix after the last visit to the river parent
+and shortcut other repeated parents in their row order. -/
+theorem bridge_of_disjoint_split_of_no_backward_returns {V W I J : Type*}
+    [DecidableEq V] [DecidableEq W] [DecidableEq I] {cutoff k : ℕ}
+    {paths : I → List W} {pieces : J → List W} (G : Arcs V) (project : W → V) (parent : J → I)
+    (steps : ∀ ⦃i x y⦄, Before pieces i x y → Before paths (parent i) x y)
+    (projects : ∀ ⦃i x y⦄, Before pieces i x y → Edge G (project x) (project y))
+    (disjoint : ∀ ⦃i j x⦄, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
+    (safe : NoShortBackwardReturnAcrossPieces G project paths pieces parent (cutoff - 3))
+    (b : Bridge (Before pieces) k) (small : k + 2 ≤ cutoff) :
+    ∃ j ≤ k, ∃ old : Bridge (Before paths) j,
+      old.river = parent b.river ∧ old.arc (Fin.last j) = parent (b.arc (Fin.last k)) := by
+  let n := k + 1
+  let v (i : ℕ) := b.vertex ⟨min i n, Nat.lt_succ_of_le (min_le_right _ _)⟩
+  let r := parent b.river
+  let arc (i : ℕ) (hi : i < n) := b.arc ⟨i, hi⟩
+  let owner (i : ℕ) := if hi : i < n then parent (arc i hi) else r
+  have fromFin (i : Fin (k + 2)) : v i.val = b.vertex i := by
+    exact congrArg b.vertex (Fin.ext (min_eq_left (Nat.le_of_lt_succ i.isLt)))
+  have injective (i : ℕ) (hi : i ≤ n) (j : ℕ) (hj : j ≤ n) (equal : v i = v j) : i = j := by
+    have a : v i = b.vertex ⟨i, Nat.lt_succ_of_le hi⟩ := fromFin ⟨i, Nat.lt_succ_of_le hi⟩
+    have c : v j = b.vertex ⟨j, Nat.lt_succ_of_le hj⟩ := fromFin ⟨j, Nat.lt_succ_of_le hj⟩
+    exact congrArg Fin.val (b.distinctVertices (a.symm.trans (equal.trans c)))
+  have kind (i : ℕ) (hi : i < n) : owner i = parent (arc i hi) := by simp [owner, hi]
+  have step (i : ℕ) (hi : i < n) : Before pieces (arc i hi) (v i) (v (i + 1)) := by
+    let slot : Fin (k + 1) := ⟨i, hi⟩
+    have src : v i = b.vertex slot.castSucc := fromFin slot.castSucc
+    have dst : v (i + 1) = b.vertex slot.succ := fromFin slot.succ
+    rw [src, dst]
+    exact b.arcStep slot
+  have river : Before pieces b.river (v 0) (v n) := by
+    have src : v 0 = b.vertex 0 := fromFin (0 : Fin (k + 2))
+    have dst : v n = b.vertex (Fin.last (k + 1)) := fromFin (Fin.last (k + 1))
+    rw [src, dst]
+    exact b.riverStep
+  have edge (i : ℕ) (hi : i < n) : Edge G (project (v i)) (project (v (i + 1))) :=
+    projects (step i hi)
+  have along (i j : ℕ) (ij : i ≤ j) (jn : j ≤ n) (length : j - i ≤ cutoff - 3) :
+      project (v i) ∈ reachIn G (project (v j)) (cutoff - 3) :=
+    mem_reachIn_of_steps (project ∘ v) n edge i j ij jn _ length
+  have shorten (i j : ℕ) (ij : i ≤ j) (jn : j < n) (same : owner i = owner j) :
+      Before paths (owner i) (v i) (v (j + 1)) := by
+    by_cases eq : i = j
+    · subst j
+      rw [kind i jn]
+      exact steps (step i jn)
+    have inside := ij.trans_lt jn
+    have parentEq : parent (arc i inside) = parent (arc j jn) := by
+      simpa only [kind i inside, kind j jn] using same
+    have apart : arc i inside ≠ arc j jn := fun equal => eq (congrArg Fin.val (b.distinctArcs equal))
+    have gap : i + 1 < j := by
+      by_contra! adjacent
+      have atJoin : i + 1 = j := by omega
+      exact disjoint apart parentEq (step i inside).2.1 (atJoin.symm ▸ (step j jn).1)
+    have first := steps (step i inside)
+    have last := steps (step j jn)
+    rw [← parentEq] at last
+    have different : v (i + 1) ≠ v j := fun equal =>
+      gap.ne (injective _ (by omega) _ jn.le equal)
+    rcases listBefore_total first.2.1 last.1 different with forward | reverse
+    · rw [kind i inside]
+      exact ⟨first.1, last.2.1, first.2.2.trans (forward.2.2.trans last.2.2)⟩
+    · rw [parentEq] at reverse
+      exact (safe apart.symm parentEq.symm (step j jn).1 (step i inside).2.1 reverse
+        (along (i + 1) j gap.le jn.le (by dsimp only [n] at jn; omega))).elim
+  have suffix : ∃ s < n, Before paths r (v s) (v n) ∧ ∀ i, s ≤ i → i < n → r ≠ owner i := by
+    let visits := (range n).filter (fun i => r = owner i)
+    by_cases visited : visits.Nonempty
+    · let last := visits.max' visited
+      have on : last ∈ visits := max'_mem _ _
+      obtain ⟨inside, sameOwner⟩ := mem_filter.mp on
+      have ln := mem_range.mp inside
+      have same : r = parent (arc last ln) := sameOwner.trans (kind last ln)
+      have apart := b.river_ne_arc ⟨last, ln⟩
+      have pos : 0 < last := by
+        by_contra! first
+        have atStart : last = 0 := by omega
+        exact disjoint apart same river.1 (atStart ▸ (step last ln).1)
+      have internal : last + 1 < n := by
+        by_contra! finish
+        have atEnd : last + 1 = n := by omega
+        exact disjoint apart same river.2.1 (atEnd ▸ (step last ln).2.1)
+      have onParent := (steps (step last ln)).2.1
+      rw [← same] at onParent
+      refine ⟨last + 1, internal, ?_, ?_⟩
+      · have different : v (last + 1) ≠ v n := fun equal =>
+          internal.ne (injective _ internal.le _ le_rfl equal)
+        rcases listBefore_total onParent (steps river).2.1 different with forward | reverse
+        · exact forward
+        · exact (safe apart same river.2.1 (step last ln).2.1 reverse
+            (along (last + 1) n internal.le le_rfl (by dsimp only [n] at internal ⊢; omega))).elim
+      · intro i after inside same
+        have on : i ∈ visits := mem_filter.mpr ⟨mem_range.mpr inside, same⟩
+        have before : i ≤ last := le_max' _ _ on
+        omega
+    · refine ⟨0, Nat.zero_lt_succ k, steps river, ?_⟩
+      intro i _ inside same
+      exact visited ⟨i, mem_filter.mpr ⟨mem_range.mpr inside, same⟩⟩
+  obtain ⟨s, sn, start, noRiver⟩ := suffix
+  have finish : s + (n - s) = n := by omega
+  obtain ⟨j, short, old, riverOwner, lastOwner⟩ := bridge_from_forward_repetitions (Before paths)
+    (fun t => v (s + t)) (fun t => owner (s + t)) r (n - s) (by omega)
+    (fun i hi j hj eq => by have := injective _ (by omega) _ (by omega) eq; omega)
+    (by simpa only [Nat.add_zero, finish] using start)
+    (fun i inside => noRiver _ (by omega) (by omega))
+    (fun i j ij jn same => by
+      simpa only [Nat.add_assoc] using shorten (s + i) (s + j) (by omega) (by omega) same)
+  refine ⟨j, by dsimp only [n] at sn short; omega, old, riverOwner, lastOwner.trans ?_⟩
+  have last : s + (n - s - 1) = k := by dsimp only [n] at sn ⊢; omega
+  rw [last, kind k (Nat.lt_succ_self k)]
+  rfl
+
+/-- Disjoint pieces preserve full exclusion at an arbitrary cutoff when
+no ordered comparison across pieces has a backward return through
+`cutoff - 3` in the projected precedence graph. -/
+theorem bridgeFree_of_disjoint_split_of_no_backward_returns {V W I J : Type*}
+    [DecidableEq V] [DecidableEq W] [DecidableEq I] {cutoff : ℕ}
+    {paths : I → List W} {pieces : J → List W} (G : Arcs V) (project : W → V)
+    (free : BridgeFree (Before paths) cutoff) (parent : J → I)
+    (steps : ∀ ⦃i x y⦄, Before pieces i x y → Before paths (parent i) x y)
+    (projects : ∀ ⦃i x y⦄, Before pieces i x y → Edge G (project x) (project y))
+    (disjoint : ∀ ⦃i j x⦄, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
+    (safe : NoShortBackwardReturnAcrossPieces G project paths pieces parent (cutoff - 3)) :
+    BridgeFree (Before pieces) cutoff := by
+  intro k size
+  refine ⟨fun b => ?_⟩
+  obtain ⟨j, short, old, _, _⟩ :=
+    bridge_of_disjoint_split_of_no_backward_returns G project parent steps projects disjoint safe b size
+  exact (free (k := j) (by omega)).false old
+
+/-- Monotone parent arrival order also preserves half exclusion under
+the same return condition. -/
+theorem halfBridgeFree_of_disjoint_split_of_no_backward_returns {V W I J : Type*}
+    [DecidableEq V] [DecidableEq W] [LinearOrder I] [LinearOrder J] {cutoff : ℕ}
+    {paths : I → List W} {pieces : J → List W} (G : Arcs V) (project : W → V)
+    (free : HalfBridgeFree (Before paths) cutoff) (parent : J → I) (arrives : Monotone parent)
+    (steps : ∀ ⦃i x y⦄, Before pieces i x y → Before paths (parent i) x y)
+    (projects : ∀ ⦃i x y⦄, Before pieces i x y → Edge G (project x) (project y))
+    (disjoint : ∀ ⦃i j x⦄, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
+    (safe : NoShortBackwardReturnAcrossPieces G project paths pieces parent (cutoff - 3)) :
+    HalfBridgeFree (Before pieces) cutoff := by
+  intro k size b earlier
+  obtain ⟨j, short, old, river, last⟩ :=
+    bridge_of_disjoint_split_of_no_backward_returns G project parent steps projects disjoint safe b size
+  have ordered := arrives earlier.le
+  rw [← river, ← last] at ordered
+  exact free (k := j) (by omega) old (ordered.lt_of_ne (old.river_ne_arc _).symm)
+
 end OnlineReachabilityPreservers
