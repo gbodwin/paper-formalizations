@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.BackwardCopyReturns
+import OnlineReachabilityPreservers.DegreeFirstSupportedCleaning
 import OnlineReachabilityPreservers.LocalRegularization
 import OnlineReachabilityPreservers.HalfFivePathRepair
 
@@ -343,5 +344,154 @@ theorem frozenDegreeReturn_after_deletion :
     have left := (List.idxOf_lt_length_of_mem step.1).trans_le (short i)
     have right := (List.idxOf_lt_length_of_mem step.2.1).trans_le (short i)
     exact (different ((Nat.div_eq_of_lt left).trans (Nat.div_eq_of_lt right).symm)).elim
+
+/-- Two crossed comparisons share the first incidence of the long row. -/
+def sharedCutWitnessPaths (i : Fin 18) : List (Fin 6) :=
+  if i = 0 then [0,1,2,3,4,5] else if i = 1 then [4,0] else if i = 2 then [5,0]
+  else if i.val < 11 then [1] else []
+
+private def sharedCutActiveRows (i : Fin 3) : Fin 18 := Fin.castLE (by decide) i
+
+private theorem sharedCutWitness_active :
+    ∀ (i : Fin 18) (x y : Fin 6), BeforeIn sharedCutWitnessPaths i x y →
+      ∃ r, sharedCutActiveRows r = i := by decide
+
+set_option maxHeartbeats 4000000 in
+set_option maxRecDepth 10000 in
+private theorem sharedCutWitness_no_earlier_prefix :
+    ∀ (a r : Fin 3) (s u t : Fin 6), sharedCutActiveRows a < sharedCutActiveRows r →
+      BeforeIn sharedCutWitnessPaths (sharedCutActiveRows r) s t →
+      BeforeIn sharedCutWitnessPaths (sharedCutActiveRows a) u t →
+      s ∉ reaches (prefixArcs sharedCutWitnessPaths (sharedCutActiveRows r) t) u := by decide
+
+theorem sharedCutWitnessPaths_halfFree (k : ℕ) : HalfBridgeFree (BeforeIn sharedCutWitnessPaths) k := by
+  intro d _ b earlier
+  obtain ⟨a,arc⟩ := sharedCutWitness_active _ _ _ (b.arcStep (Fin.last d))
+  obtain ⟨r,river⟩ := sharedCutWitness_active _ _ _ b.riverStep
+  exact sharedCutWitness_no_earlier_prefix a r (b.vertex 0) (b.vertex (Fin.last d).castSucc)
+    (b.vertex (Fin.last (d+1))) (by simpa only [arc,river] using earlier)
+    (by simpa only [river] using b.riverStep) (by simpa only [arc,Fin.succ_last] using b.arcStep (Fin.last d))
+    (by simpa only [river] using halfBridge_prefix_membership sharedCutWitnessPaths b)
+
+private abbrev SharedCutCopies := ListVertexBlockIndex sharedCutWitnessPaths 12
+private abbrev SharedCutPieces := ListBlockIndex (splitListVertices sharedCutWitnessPaths 12) 4
+private abbrev SharedCutIncidence := SharedCutPieces × SharedCutCopies
+
+private def sharedCutVertex0 : SharedCutCopies := ⟨0,⟨0,by decide⟩⟩
+private def sharedCutVertex4 : SharedCutCopies := ⟨4,⟨0,by decide⟩⟩
+private def sharedCutVertex5 : SharedCutCopies := ⟨5,⟨0,by decide⟩⟩
+private def sharedCutPiece0 : SharedCutPieces := ⟨0,⟨0,by decide⟩⟩
+private def sharedCutPieceLast : SharedCutPieces := ⟨0,⟨1,by decide⟩⟩
+private def sharedCutPiece1 : SharedCutPieces := ⟨1,⟨0,by decide⟩⟩
+private def sharedCutPiece2 : SharedCutPieces := ⟨2,⟨0,by decide⟩⟩
+
+private def sharedCutVertices : Finset SharedCutCopies := {sharedCutVertex0,sharedCutVertex4,sharedCutVertex5}
+private def sharedCutPieces : Finset SharedCutPieces :=
+  univ.filter fun j => listRegularizedPaths sharedCutWitnessPaths 12 4 j ≠ []
+
+private def sharedCutWitness : SharedCutIncidence := (sharedCutPiece0,sharedCutVertex0)
+private def sharedCutA4 : SharedCutIncidence := (sharedCutPieceLast,sharedCutVertex4)
+private def sharedCutA5 : SharedCutIncidence := (sharedCutPieceLast,sharedCutVertex5)
+private def sharedCutB4 : SharedCutIncidence := (sharedCutPiece1,sharedCutVertex4)
+private def sharedCutB5 : SharedCutIncidence := (sharedCutPiece2,sharedCutVertex5)
+
+private def sharedCutSupport : Finset SharedCutIncidence :=
+  {sharedCutWitness,sharedCutA4,sharedCutA5,sharedCutB4,sharedCutB5,
+    (sharedCutPiece1,sharedCutVertex0),(sharedCutPiece2,sharedCutVertex0)}
+
+set_option synthInstance.maxSize 4096 in
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 5000000 in
+private theorem sharedCutSupport_eq :
+    degreeFirstRectangleIncidences sharedCutWitnessPaths 12 4 sharedCutVertices sharedCutPieces = sharedCutSupport := by
+  ext ⟨j,v⟩
+  simp only [degreeFirstRectangleIncidences,mem_filter,mem_pieceIncidences,mem_univ,true_and]
+  have test : ∀ (j : SharedCutPieces) (v : SharedCutCopies),
+      ((v ∈ listRegularizedPaths sharedCutWitnessPaths 12 4 j) ∧ j ∈ sharedCutPieces ∧ v ∈ sharedCutVertices) ↔
+        (j,v) ∈ sharedCutSupport := by decide
+  exact test j v
+
+set_option synthInstance.maxSize 4096 in
+private local instance (s : Finset SharedCutIncidence) (a b : SharedCutIncidence) :
+    Decidable (SupportedDegreeFirstConflict sharedCutWitnessPaths 12 4 s a b) := by
+  unfold SupportedDegreeFirstConflict
+  dsimp only
+  infer_instance
+
+set_option synthInstance.maxSize 4096 in
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 5000000 in
+private theorem sharedCutSupportedEdges :
+    SupportedDegreeFirstConflict sharedCutWitnessPaths 12 4 sharedCutSupport sharedCutA4 sharedCutB4 ∧
+      SupportedDegreeFirstConflict sharedCutWitnessPaths 12 4 sharedCutSupport sharedCutA5 sharedCutB5 := by
+  constructor
+  · exact ⟨by decide,by decide,by decide,sharedCutVertex0,sharedCutPiece0,sharedCutPiece1,
+      rfl,rfl,by decide,by decide,by decide,by decide,Or.inr ⟨rfl,Or.inl ⟨by decide,by decide⟩⟩⟩
+  · exact ⟨by decide,by decide,by decide,sharedCutVertex0,sharedCutPiece0,sharedCutPiece2,
+      rfl,rfl,by decide,by decide,by decide,by decide,Or.inr ⟨rfl,Or.inl ⟨by decide,by decide⟩⟩⟩
+
+set_option synthInstance.maxSize 4096 in
+set_option maxRecDepth 20000 in
+set_option maxHeartbeats 16000000 in
+private theorem sharedCutWitness_clear :
+    ∀ ⦃a b⦄, ¬ SupportedDegreeFirstConflict sharedCutWitnessPaths 12 4 (sharedCutSupport \ {sharedCutWitness}) a b := by
+  let kept := sharedCutSupport \ {sharedCutWitness}
+  change ∀ ⦃a b⦄, ¬ SupportedDegreeFirstConflict sharedCutWitnessPaths 12 4 kept a b
+  have finite : ∀ (a b : (sharedCutSupport \ {sharedCutWitness} : Finset SharedCutIncidence)),
+      ¬ SupportedDegreeFirstConflict sharedCutWitnessPaths 12 4 (sharedCutSupport \ {sharedCutWitness}) a.val b.val := by
+    decide
+  intro a b conflict
+  exact finite ⟨a,conflict.1⟩ ⟨b,conflict.2.1⟩ conflict
+
+set_option synthInstance.maxSize 4096 in
+private def sharedCutMatching : Finset (SharedCutIncidence × SharedCutIncidence) :=
+  {(sharedCutA4,sharedCutB4),(sharedCutA5,sharedCutB5)}
+
+set_option synthInstance.maxSize 4096 in
+private theorem sharedCutMatching_valid :
+    CutMatching (SupportedDegreeFirstConflict sharedCutWitnessPaths 12 4 sharedCutSupport)
+      sharedCutSupport sharedCutMatching := by
+  constructor
+  · intro e member
+    rcases mem_insert.mp member with rfl | second
+    · exact ⟨sharedCutSupportedEdges.1.1,sharedCutSupportedEdges.1.2.1,sharedCutSupportedEdges.1⟩
+    · rw [mem_singleton] at second
+      subst e
+      exact ⟨sharedCutSupportedEdges.2.1,sharedCutSupportedEdges.2.2.1,sharedCutSupportedEdges.2⟩
+  · intro e he f hf different
+    have apart : Disjoint (cutEdgeEndpoints (sharedCutA4,sharedCutB4)) (cutEdgeEndpoints (sharedCutA5,sharedCutB5)) := by
+      decide
+    rcases mem_insert.mp he with rfl | second
+    · rcases mem_insert.mp hf with rfl | second
+      · exact (different rfl).elim
+      · rwa [mem_singleton.mp second]
+    · rw [mem_singleton] at second
+      subst e
+      rcases mem_insert.mp hf with rfl | second
+      · exact apart.symm
+      · exact (different (mem_singleton.mp second).symm).elim
+
+/-- One witness deletion fits the peeling budget for this rectangle.
+A matching of its two supported conflicts exceeds the same budget. -/
+theorem sharedCutWitness_deletion_beats_endpoint_matching :
+    let R := degreeFirstRectangleIncidences sharedCutWitnessPaths 12 4 sharedCutVertices sharedCutPieces
+    let fee := (18:ℝ)/5000+(18:ℝ)/(4*6)*sharedCutVertices.card+(18:ℝ)/(4*18)*sharedCutPieces.card
+    (∑ i, (sharedCutWitnessPaths i).length) = 18 ∧
+    (∀ ⦃a b⦄, ¬ SupportedDegreeFirstConflict sharedCutWitnessPaths 12 4 (R \ {sharedCutWitness}) a b) ∧
+    fee+1 ≤ R.card ∧
+    ∃ matching, CutMatching (SupportedDegreeFirstConflict sharedCutWitnessPaths 12 4 R) R matching ∧
+      (R.card:ℝ) < fee+matching.card := by
+  have vertices : sharedCutVertices.card = 3 := by decide
+  have pieces : sharedCutPieces.card = 12 := by decide
+  have size : sharedCutSupport.card = 7 := by decide
+  have matching : sharedCutMatching.card = 2 := by decide
+  dsimp only
+  rw [sharedCutSupport_eq]
+  refine ⟨by decide,fun {a b} => sharedCutWitness_clear (a := a) (b := b),?_,
+    sharedCutMatching,sharedCutMatching_valid,?_⟩
+  · rw [vertices,pieces,size]
+    norm_num
+  · rw [vertices,pieces,size,matching]
+    norm_num
 
 end OnlineReachabilityPreservers.SourceAudit

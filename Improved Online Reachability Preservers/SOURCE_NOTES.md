@@ -512,6 +512,18 @@ The resulting edge relation is a subrelation of the actual cut
 conflicts. Its maximum matching can replace the wider matching in
 the rectangle inequality, with the same budgets, caps, and retention.
 
+Deleting any of a conflict witness’s four incidences destroys that
+witness. The surviving rectangle must have no remaining witness for
+any conflict. Charge the exact
+number of deletions together with the two support sizes. The conditional
+\(M/5000\) guarantee keeps both original budgets and all four frozen caps.
+In the checked example, two conflicts have disjoint endpoints and share
+the first incidence of the long row as a witness. Deleting that incidence
+clears both. The one-deletion charge fits the chosen rectangle, and
+its two-edge endpoint matching exceeds the same budget.
+[Arbitrary incidence deletion](OnlineReachabilityPreservers/DegreeFirstSupportedCleaning.lean#L171)
+· [Exact shared-witness example](OnlineReachabilityPreservers/VertexSplitAudit.lean#L476).
+
 The half-five conflict graph can have two incoming conflicts at one
 incidence. Take the paths
 `[(4,1),(5,1),(0,3),(0,6,1,2,4,5),(3,2)]` in this order. They exclude
@@ -881,9 +893,9 @@ least \(M/32\), both original budgets, and all four original-average caps.
 
 A checked five-vertex, 35-row example has mass 40, degree width 32,
 and path width four. The original rows exclude every half bridge. The
-[actual degree split creates a half-5-bridge](OnlineReachabilityPreservers/VertexSplitAudit.lean#L308). Deleting
+[actual degree split creates a half-5-bridge](OnlineReachabilityPreservers/VertexSplitAudit.lean#L309). Deleting
 one incidence on the reverse step leaves mass 39 and passes
-[both tests at the original widths](OnlineReachabilityPreservers/VertexSplitAudit.lean#L333).
+[both tests at the original widths](OnlineReachabilityPreservers/VertexSplitAudit.lean#L334).
 
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves

@@ -157,6 +157,43 @@ theorem eraseDegreeFirstSupportedConflicts_halfFree (paths : Fin p → List (Fin
     simp [erasePieceIncidences]
   rwa [identity] at halfFree
 
+/-- A supported conflict keeps all four incidences in any larger support. -/
+theorem SupportedDegreeFirstConflict.mono {n p : ℕ} {paths : Fin p → List (Fin n)} {D L : ℕ}
+    {support ambient : Finset (ListBlockIndex (splitListVertices paths D) L × ListVertexBlockIndex paths D)}
+    (includes : support ⊆ ambient) {a b} (edge : SupportedDegreeFirstConflict paths D L support a b) :
+    SupportedDegreeFirstConflict paths D L ambient a b := by
+  obtain ⟨left,right,arrives,x,q,r,qParent,rParent,qIn,rIn,forward,backward,kind⟩ := edge
+  exact ⟨includes left,includes right,arrives,x,q,r,qParent,rParent,includes qIn,includes rIn,
+    forward,backward,kind⟩
+
+/-- Charge deletions at any of the four incidences supporting a cut
+conflict. The surviving rectangle must have no supported conflict. -/
+theorem regularization_list_frozen_half_five_after_supported_rectangle_deletions {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) 5) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (bound : let M := ∑ i, (paths i).length; let D := 4*M/n; let L := 4*M/p
+      ∃ A : Finset (ListVertexBlockIndex paths D), A.card ≤ n ∧
+      ∃ B : Finset (ListBlockIndex (splitListVertices paths D) L), B.card ≤ p ∧
+        let support := degreeFirstRectangleIncidences paths D L A B
+        ∃ removed ⊆ support,
+          (∀ ⦃a b⦄, ¬ SupportedDegreeFirstConflict paths D L (support \ removed) a b) ∧
+          (M:ℝ)/5000+(M:ℝ)/(4*(n:ℝ))*A.card+(M:ℝ)/(4*(p:ℝ))*B.card+removed.card ≤ support.card) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) 5 ∧
+      M ≤ 5000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  classical
+  let M := ∑ i, (paths i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  obtain ⟨A,vertexBudget,B,pathBudget,removed,sub,clear,enough⟩ := bound
+  let support := degreeFirstRectangleIncidences paths D L A B
+  have legal := eraseDegreeFirstSupportedConflicts_halfFree paths simple free D L (support \ removed) ∅
+    (fun {_ _} edge => (clear edge).elim)
+  exact regularization_list_frozen_half_five_after_rectangle_cover paths simple hn hp dense long
+    A vertexBudget B pathBudget removed sub (by simpa only [sdiff_empty] using legal) enough
+
 /-- Only conflicts with both occurrences of their witness in the
 chosen rectangle contribute to the matching bound. -/
 theorem regularization_list_frozen_half_five_of_supported_degree_first_rectangle {n p : ℕ}
@@ -193,10 +230,11 @@ theorem regularization_list_frozen_half_five_of_supported_degree_first_rectangle
   obtain ⟨cover,coverSub,matching,count,covers,matched⟩ :=
     exists_cut_cover_and_matching edge rank (fun {_ _} => ordered) (fun {_ _ _} => outUnique) support
   have valid {a b} (ab : edge a b) : a ∈ cover ∨ b ∈ cover := covers a ab.1 b ab.2.1 ab
-  refine regularization_list_frozen_half_five_after_rectangle_cover paths simple hn hp dense long
-    A vertexBudget B pathBudget cover coverSub
-    (eraseDegreeFirstSupportedConflicts_halfFree paths simple free D L support cover (fun {_ _} => valid)) ?_
-  rw [count]
-  exact matchingBound matching matched
+  apply regularization_list_frozen_half_five_after_supported_rectangle_deletions paths simple free hn hp dense long
+  refine ⟨A,vertexBudget,B,pathBudget,cover,coverSub,?_,?_⟩
+  · intro a b surviving
+    exact (valid (surviving.mono sdiff_subset)).elim (mem_sdiff.mp surviving.1).2 (mem_sdiff.mp surviving.2.1).2
+  · rw [count]
+    exact matchingBound matching matched
 
 end OnlineReachabilityPreservers

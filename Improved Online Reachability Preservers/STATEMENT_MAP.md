@@ -1497,6 +1497,11 @@ same half-five conclusion.
 [The supported comparison version](OnlineReachabilityPreservers/DegreeFirstSupportedCleaning.lean)
 counts only edges with both witness incidences in that rectangle and
 uses the same inequality and conclusion.
+The deletion can hit either endpoint or either witness incidence of
+a supported comparison. The repaired rectangle must have no supported
+conflict. One witness deletion meets the budget on a checked rectangle
+whose endpoint matching has size two and exceeds that budget.
+[Deletion theorem](OnlineReachabilityPreservers/DegreeFirstSupportedCleaning.lean#L171) · [Checked example](OnlineReachabilityPreservers/VertexSplitAudit.lean#L476).
 Original-average half-five cleaning for general inputs remains open.
 
 For Lemmas 23 and 39, the [contiguous six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)
