@@ -3048,6 +3048,16 @@ the literal Lemma 39 remains open.
 · [Full witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L316)
 · [Half witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L372).
 
+At half cutoff three, let \(L\) be the length of the latest nontrivial
+row on \(n\) vertices. For each consecutive comparison of that row and
+each outside vertex, at least one of the two comparisons in the detour
+is absent. The candidates for different consecutive comparisons and outside
+vertices are distinct. For simple rows of lengths \(\ell_i\), this gives
+\(\sum_i \binom{\ell_i}{2}+(L-1)(n-L)\le n(n-1)\).
+[Exact comparison count](OnlineReachabilityPreservers/HalfLatestRowComparisons.lean#L69)
+· [Missing detour](OnlineReachabilityPreservers/HalfLatestRowComparisons.lean#L92)
+· [Latest-row bound](OnlineReachabilityPreservers/HalfLatestRowComparisons.lean#L118).
+
 The cited Bridge Girth construction is ordered by slope. All-arcs-earlier
 exclusion holds on every rectangular lattice in the construction. The
 three-layer example has a half-3-bridge, so the construction leaves the
