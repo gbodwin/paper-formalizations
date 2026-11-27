@@ -1824,6 +1824,13 @@ and corrected tail inequality for Lemma 25 and the recurrence discrepancy in The
 [SplitAudit](OnlineReachabilityPreservers/SplitAudit.lean) checks that the path
 split printed in Lemmas 23 and 39 can introduce a forbidden bridge in a general
 path system.
+For four vertices and five paths at any cutoff of at least three, the full
+extremum equals eleven and the half extremum is at least twelve. Both witnesses
+have distinct nonempty rows. The full upper bound
+also applies with fewer vertices or paths.
+[Full upper bound](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L289)
+· [Full witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L316)
+· [Half witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L372).
 [LocalOnlineLimit](OnlineReachabilityPreservers/LocalOnlineLimit.lean) proves
 Theorem 38 for arbitrary simple paths with no half-bridge through size four.
 One exponent slack depends only on the vertex count and tends to zero.

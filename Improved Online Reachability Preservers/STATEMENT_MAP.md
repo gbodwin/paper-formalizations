@@ -3036,6 +3036,18 @@ uses a finite maximum. For every positive pair of budgets and either
 bridge exclusion it gives one subsystem with both budgets and all four
 caps, retaining at least one sixteenth of the maximum.
 
+For any cutoff \(k\ge3\), the full extremum with four vertices and five paths
+is exactly eleven incidences. The half extremum at those budgets is at least
+twelve. Both examples have distinct nonempty rows and satisfy their respective
+exclusions at every cutoff. The verified upper bound allows empty rows and
+repeated singletons and applies to families at or below both budgets. This
+establishes a finite difference between the half and full extrema underlying
+Lemmas 23 and 39. The constant-factor comparison for unbounded budgets in
+the literal Lemma 39 remains open.
+[Full upper bound](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L289)
+· [Full witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L316)
+· [Half witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L372).
+
 The cited Bridge Girth construction is ordered by slope. All-arcs-earlier
 exclusion holds on every rectangular lattice in the construction. The
 three-layer example has a half-3-bridge, so the construction leaves the

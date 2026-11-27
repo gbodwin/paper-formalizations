@@ -2194,6 +2194,18 @@ local-order upper bound and recurrence of Theorem 43.
 - The proof of Lemma 23 writes \(\beta\) for the half-bridge-free extremum
   \(H\). The statement of Lemma 39 writes \(H\) for the full-bridge-free
   extremum \(\beta\) it is used to estimate.
+  For every \(k\ge3\), Lean checks \(\beta(4,5,k)=11<H(4,5,k)\) under both
+  the indexed and feasible distinct nonempty exact-count conventions.
+  The full upper bound covers families with at most four vertices and five
+  rows. After removing rows of length at most one, the verified search among
+  the sixty simple longer rows rules out total excess \(\sum_i(|\pi_i|-1)\)
+  of at least seven. Empty and singleton rows contribute at most one each
+  to the remaining mass calculation. The two witnesses have eleven and
+  twelve incidences and satisfy their respective exclusions at every cutoff.
+  [Full upper bound](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L289)
+  · [Full witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L316)
+  · [Half witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L372).
+
   Definitions 9–10 in the cited Bridge Girth paper require every arc to
   arrive before the river. Its Theorem 29 orders the rectangular lattice
   lines by slope to exclude that pattern. The three-layer example has a
