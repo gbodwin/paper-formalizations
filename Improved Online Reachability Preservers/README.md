@@ -1057,6 +1057,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   arc parent, so the same cutoff holds in full mode and in half
   mode when pieces follow their parents’ arrival order.
   [Return condition](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2639) · [Bridge projection](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2649) · [Full bridge exclusion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2762) · [Half-bridge exclusion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2779).
+- For the vertex-copy step, a repeated projected corner must be separated
+  along the detour and cannot be the two endpoints of the river. The first
+  and last arcs of the closed projected part are on distinct rows. Its
+  interior has at most \(\max(0,k-4)\) steps. If the copies agree at the ends
+  of every such short return and all comparisons project to their original
+  rows, each bridge through the cutoff projects with distinct corners and
+  the same arc and river labels. This preserves either exclusion.
+  [Agreement of vertex copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2798) · [Lift with distinct projected corners](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2807) · [Preservation in either mode](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2871).
 - Start with simple rows whose mass \(M\) is at least both positive
   budgets. If standard degree copying at the original width preserves
   the cutoff, protect the endpoints of each row comparison with a

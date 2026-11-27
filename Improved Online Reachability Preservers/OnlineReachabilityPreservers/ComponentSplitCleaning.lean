@@ -2792,4 +2792,93 @@ theorem halfBridgeFree_of_disjoint_split_of_no_backward_returns {V W I J : Type*
   rw [← river, ← last] at ordered
   exact free (k := j) (by omega) old (ordered.lt_of_ne (old.river_ne_arc _).symm)
 
+/-- The endpoints of a short projected closed walk agree as copies
+when they are on two different rows. The middle return search uses only
+the steps strictly between the first and last arcs. -/
+def ShortReturnCopyCompatible {I V W : Type*} [DecidableEq V] [DecidableEq W]
+    [Fintype I] [Fintype V] (paths : I → List V) (copies : I → List W)
+    (project : W → V) (cutoff : ℕ) : Prop :=
+  ∀ ⦃i j : I⦄ ⦃u x y v : W⦄, i ≠ j → project u = project v →
+    Before copies i u x → Before copies j y v →
+    project x ∈ reachIn (listPiecePrecedenceGraph paths) (project y) (cutoff - 4) → u = v
+
+/-- A bridge through the cutoff projects with distinct corners when
+the vertex copies agree on the ends of the relevant short returns. -/
+def Bridge.projectShortReturnCopies {I V W : Type*} [DecidableEq V] [DecidableEq W]
+    [Fintype I] [Fintype V] {cutoff k : ℕ}
+    {paths : I → List V} {copies : I → List W} (project : W → V)
+    (steps : ∀ ⦃i x y⦄, Before copies i x y → Before paths i (project x) (project y))
+    (safe : ShortReturnCopyCompatible paths copies project cutoff)
+    (b : Bridge (Before copies) k) (small : k + 2 ≤ cutoff) : Bridge (Before paths) k := by
+  let n := k + 1
+  let v (i : ℕ) := b.vertex ⟨min i n, Nat.lt_succ_of_le (min_le_right _ _)⟩
+  let arc (i : ℕ) (hi : i < n) := b.arc ⟨i, hi⟩
+  have fromFin (i : Fin (k + 2)) : v i.val = b.vertex i :=
+    congrArg b.vertex (Fin.ext (min_eq_left (Nat.le_of_lt_succ i.isLt)))
+  have injective (i : ℕ) (hi : i ≤ n) (j : ℕ) (hj : j ≤ n) (equal : v i = v j) : i = j := by
+    have a : v i = b.vertex ⟨i, Nat.lt_succ_of_le hi⟩ := fromFin ⟨i, Nat.lt_succ_of_le hi⟩
+    have c : v j = b.vertex ⟨j, Nat.lt_succ_of_le hj⟩ := fromFin ⟨j, Nat.lt_succ_of_le hj⟩
+    exact congrArg Fin.val (b.distinctVertices (a.symm.trans (equal.trans c)))
+  have step (i : ℕ) (hi : i < n) : Before copies (arc i hi) (v i) (v (i + 1)) := by
+    let slot : Fin (k + 1) := ⟨i, hi⟩
+    have src : v i = b.vertex slot.castSucc := fromFin slot.castSucc
+    have dst : v (i + 1) = b.vertex slot.succ := fromFin slot.succ
+    rw [src, dst]
+    exact b.arcStep slot
+  have river : Before copies b.river (v 0) (v n) := by
+    have src : v 0 = b.vertex 0 := fromFin (0 : Fin (k + 2))
+    have dst : v n = b.vertex (Fin.last (k + 1)) := fromFin (Fin.last (k + 1))
+    rw [src, dst]
+    exact b.riverStep
+  have edge (i : ℕ) (hi : i < n) :
+      Edge (listPiecePrecedenceGraph paths) (project (v i)) (project (v (i + 1))) :=
+    listPiecePrecedenceGraph_edge.mpr ⟨_, steps (step i hi)⟩
+  have ordered (i j : ℕ) (ij : i < j) (jn : j ≤ n)
+      (collision : project (v i) = project (v j)) : False := by
+    have first := ij.trans_le jn
+    have apart : i + 1 < j := by
+      by_contra! adjacent
+      have atJoin : i + 1 = j := by omega
+      rw [← atJoin] at collision
+      exact listBefore_ne (steps (step i first)) collision
+    have notBothEnds : ¬ (i = 0 ∧ j = n) := by
+      rintro ⟨rfl, rfl⟩
+      exact listBefore_ne (steps river) collision
+    have last : j - 1 < n := by omega
+    have finish : j - 1 + 1 = j := by omega
+    have lastStep : Before copies (arc (j - 1) last) (v (j - 1)) (v j) := by
+      have actual := step (j - 1) last
+      rw [finish] at actual
+      exact actual
+    have different : arc i first ≠ arc (j - 1) last := fun same =>
+      (show i ≠ j - 1 by omega) (congrArg Fin.val (b.distinctArcs same))
+    have long : (j - 1) - (i + 1) ≤ cutoff - 4 := by
+      dsimp only [n] at jn notBothEnds
+      omega
+    have back := mem_reachIn_of_steps (project ∘ v) n edge (i + 1) (j - 1) (by omega) last.le _ long
+    exact ij.ne (injective _ first.le _ jn (safe different collision (step i first) lastStep back))
+  refine ⟨project ∘ b.vertex, b.arc, b.river, ?_, b.distinctArcs, b.river_ne_arc,
+    steps b.riverStep, fun i => steps (b.arcStep i)⟩
+  intro i j collision
+  by_contra! apart
+  have cmp : i.val ≠ j.val := fun e => apart (Fin.ext e)
+  rcases lt_or_gt_of_ne cmp with ij | ji
+  · exact ordered _ _ ij (Nat.le_of_lt_succ j.isLt) (by simpa only [fromFin, Function.comp_apply] using collision)
+  · exact ordered _ _ ji (Nat.le_of_lt_succ i.isLt) (by simpa only [fromFin, Function.comp_apply] using collision.symm)
+
+/-- Short-return agreement among vertex copies preserves the chosen
+full or half cutoff. Path labels stay in the same arrival order. -/
+theorem localOrderAdmissible_of_short_return_compatible_copies {I V W : Type*}
+    [LinearOrder I] [DecidableEq V] [DecidableEq W] [Fintype I] [Fintype V]
+    {cutoff : ℕ} {half : Bool} {paths : I → List V} {copies : I → List W}
+    (project : W → V) (free : localOrderAdmissible half cutoff paths)
+    (steps : ∀ ⦃i x y⦄, Before copies i x y → Before paths i (project x) (project y))
+    (safe : ShortReturnCopyCompatible paths copies project cutoff) :
+    localOrderAdmissible half cutoff copies := by
+  cases half
+  · intro k small
+    exact ⟨fun b => (free small).false (b.projectShortReturnCopies project steps safe small)⟩
+  · intro k small b earlier
+    exact free small (b.projectShortReturnCopies project steps safe small) earlier
+
 end OnlineReachabilityPreservers
