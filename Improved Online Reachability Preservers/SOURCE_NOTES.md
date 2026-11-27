@@ -564,6 +564,17 @@ complementary detour uses at most one spanning-row comparison and
 compressing repeated labels keeps its final arc.
 [Spanning-row reduction](OnlineReachabilityPreservers/HalfFiveOppositeCycles.lean#L161) · [Five-cycle exclusion](OnlineReachabilityPreservers/HalfFiveOppositeCycles.lean#L566) · [All cycle lengths](OnlineReachabilityPreservers/HalfFiveOppositeCycles.lean#L575).
 
+On the two sides of an opposite link, the two-step walks that continue
+away from that link have distinct endpoints. All of these endpoints
+lie outside the two disjoint neighborhoods of the link endpoints.
+If the opposite-link graph has an edge and minimum degree at least
+\(d\), this gives \(2d+2(d-1)^2\le n\). For a regular opposite-link graph
+with simple input, positive budgets and mass \(M\) at least both budgets,
+the inequalities \(12n\le11M\) and \(144n^3\le2(11M-12n)^2\) bound the
+number of links by \(11M/24\). The resulting half-five witness retains
+at least \(M/288\) with both original budgets and all four frozen caps.
+[Two-step endpoint count](OnlineReachabilityPreservers/HalfFiveOppositeLinkCount.lean#L34) · [Minimum degree bound](OnlineReachabilityPreservers/HalfFiveOppositeLinkCount.lean#L140) · [Frozen cleaning with regular opposite links](OnlineReachabilityPreservers/HalfFiveOppositeLinkCount.lean#L171)
+
 
 The [finite-cutoff argument after row deletions](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L218)
 builds a common vertex order for subsequences of the surviving rows
