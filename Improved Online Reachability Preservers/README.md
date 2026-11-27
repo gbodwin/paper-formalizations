@@ -2092,6 +2092,13 @@ obstruction above.
 [Extraction from arbitrary rows](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L308)
 · [Construction from matching weights](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L138).
 
+Quadratic shifts in dimension \(d\) give explicit half-free families
+of distinct length-three rows at every cutoff. The exact counts give
+mass of order at least \(n^{2-2/(d+2)}\) for fixed positive \(d\)
+and growing box size. The rows have mean length three.
+[Quadratic shift witnesses](OnlineReachabilityPreservers/QuadraticShiftHalfRows.lean#L200)
+· [Integer-power mass bound](OnlineReachabilityPreservers/QuadraticShiftHalfRows.lean#L237).
+
 Splitting each row into complete contiguous triples preserves the
 exclusions through size three. For original lengths \(L_i\), this gives
 exactly \(\sum_i\lfloor L_i/3\rfloor\) triples, at least one fifth of

@@ -2636,6 +2636,26 @@ local-order upper bound and recurrence of Theorem 43.
   · [Weight proof for tagged rows](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L195)
   · [Construction](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L138).
 
+  The quadratic shift construction adapts Yoshida's Theorem 4.8
+  by fixing one inner box for all shift vectors and including the
+  zero shift. For \(d\) coordinates, each source coordinate and
+  each shift coordinate lies in \([0,N)\). Source heights lie in
+  \([0,dN^2)\). A shift \(a\) sends \((x,z)\) to
+  \((x+a,z+\sum_i a_i^2)\), using target coordinates in
+  \([0,2N)\) and heights in \([0,2dN^2)\).
+  The doubled endpoint weights plus a unit offset sum to
+  \(1-2\sum_i(a_i-c_i)^2\) for label \(c\). Recovering a source
+  from its target and shift, or a shift from both endpoints, gives
+  disjoint matching fibers and pair uniqueness for all three
+  tagged roles. The vertex budget is
+  \(N^d(dN^2)+(2N)^d(2dN^2)+N^d\), and all
+  \(dN^{2d+2}\) rows have length three. For fixed positive \(d\),
+  the exact power comparison gives the exponent \(2-2/(d+2)\).
+  [Yoshida's construction](https://arxiv.org/abs/2602.15341v3)
+  · [Matching certificates](OnlineReachabilityPreservers/QuadraticShiftHalfRows.lean#L182)
+  · [Half-free rows](OnlineReachabilityPreservers/QuadraticShiftHalfRows.lean#L200)
+  · [Mass and vertex powers](OnlineReachabilityPreservers/QuadraticShiftHalfRows.lean#L237).
+
   For both bridge modes, use all complete contiguous triples in each
   row. Distinct pieces from one parent have disjoint vertices, while
   any two participating rows of a size-two or size-three bridge must

@@ -3827,6 +3827,24 @@ open.
 · [Weights from the arrival order](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L195)
 · [All-size half construction](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L138).
 
+A quadratic shift construction supplies many such matchings. Use all
+\(N^d\) shift vectors with coordinates in \(\{0,\ldots,N-1\}\).
+For the source \((x,z)\) use the inner box of size \(dN^{d+2}\);
+the target for shift \(a\) is \((x+a,z+\|a\|^2)\) in the outer
+box. For a candidate label \(c\), the two endpoint weights on an
+edge of shift \(a\) sum to \(1-2\|a-c\|^2\), positive exactly
+at \(a=c\). Every fiber has the same cardinality and the fibers are
+pairwise edge-disjoint. The tagged half family has
+\(p=dN^{2d+2}\) distinct rows of length three, with half exclusion
+at every cutoff. At fixed positive \(d\), the ambient vertex budget is of
+order \(N^{d+2}\), so its mass is at least a constant times
+\(n^{2-2/(d+2)}\) along this sequence. Here \(M=3p\). The existence
+of half inputs with both \(M>8p\) and the mass scale required for the
+conditional obstruction at unbounded budgets remains open.
+[Positive shift matching fibers](OnlineReachabilityPreservers/QuadraticShiftHalfRows.lean#L182)
+· [Exact half witness](OnlineReachabilityPreservers/QuadraticShiftHalfRows.lean#L200)
+· [Integer-power mass bound](OnlineReachabilityPreservers/QuadraticShiftHalfRows.lean#L237).
+
 The entire long mass admits the same reduction up to a factor of five.
 Splitting into all complete contiguous triples and preserving parent
 order keeps the size-three exclusions. For row lengths \(L_i\), there
