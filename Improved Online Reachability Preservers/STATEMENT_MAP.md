@@ -3853,8 +3853,8 @@ for locally ordered rows. For fixed \(\eta>0\), if a half input at
 large \(p\) has \(M\ge\eta n\sqrt p\), it has \(p\ge\delta n^2\) for a
 constant \(\delta>0\) depending only on \(\eta\). This identifies the
 path-density regime required by the \(n\sqrt p\)-scale obstruction.
-[Mass estimate](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L168)
-· [Necessary density](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L218).
+[Mass estimate](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L325)
+· [Necessary density](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L356).
 
 At positive budgets \(n\le Cp\) and \(p\le Cn\) for a fixed
 \(C\ge1\), Lemma 39 with its literal \(H\) benchmark holds at cutoff
@@ -3867,10 +3867,22 @@ incidence cycle by Vandermonde independence. The construction uses a
 power of two \(q\) with \(q^3\le\min(n,p)\) and \(q^4\le M\) when the
 smaller budget is at least eight and \(M\ge16\). Either side fixes the
 scale. The remaining positive-mass cases use one row on \(\min(n,M)\)
-vertices. The result applies
-at the literal half maximum on these budgets.
+vertices. The result applies at the literal half maximum whenever
+the exact positive literal budgets are feasible.
 [Regular field family](OnlineReachabilityPreservers/WengerThreeRows.lean#L128)
 · [Comparable-budget Lemma 39 case](OnlineReachabilityPreservers/WengerThreeRows.lean#L242).
+
+For positive budgets and any half cutoff at least three, counting all
+thresholds together improves the mass estimate to
+\((M-2(n+p))_+^3\le48(np)^2\). The shifted estimate gives an exact
+starting-average case of the literal Lemma 39 at \(n=p=q^3\), for a
+finite field of order \(q\ge11\), with cutoff three. The literal half
+maximum exists and satisfies \(q^4\le M\le4q^4\). Use the field family
+on the same exact budgets. Its degrees and lengths are all \(q\),
+between a quarter and four times the starting averages \(M/q^3\).
+Its mass is \(q^4\) and lies in \([M/4,M]\).
+[Refined half bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L302)
+· [Literal frozen case at the half maximum](OnlineReachabilityPreservers/FrozenWengerThree.lean#L90).
 
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.

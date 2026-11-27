@@ -2111,8 +2111,8 @@ For each fixed \(\eta>0\), mass \(M\ge\eta n\sqrt p\) therefore forces
 \(p\ge\delta n^2\) for a positive \(\delta\) once \(p\) is sufficiently
 large. In particular, the strengthened lower-cap obstruction would
 still require quadratic path density on the half side.
-[Half-three mass bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L168)
-· [Necessary path density](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L218).
+[Half-three mass bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L325)
+· [Necessary path density](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L356).
 
 At cutoff three and comparable positive budgets, the witness-average
 form of Lemma 39 holds with its literal half benchmark. For a field of
@@ -2128,6 +2128,18 @@ caps at its own averages. A single row of length \(\min(n,M)\) suffices
 when the smaller budget is below eight or \(M<16\).
 [Regular full-three construction](OnlineReachabilityPreservers/WengerThreeRows.lean#L128)
 · [Comparable-budget witness](OnlineReachabilityPreservers/WengerThreeRows.lean#L242).
+
+A simultaneous count of the earlier-row and upstream-vertex choices
+sharpens the half estimate to \((M-2(n+p))_+^3\le48(np)^2\) at positive
+budgets. In particular, for \(n=p=q^3\) with a finite field of order
+\(q\ge11\), the literal half-three maximum lies between \(q^4\) and
+\(4q^4\). The regular line family gives a full-three witness of mass
+exactly \(q^4\) on the exact original budgets. Its degree and length
+\(q\) satisfy all four caps at the starting averages of that half
+maximum. This proves the starting-average case of the literal Lemma 39
+at these budgets and cutoff three.
+[Sharper half mass](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L302)
+· [Starting-average witness at the literal maximum](OnlineReachabilityPreservers/FrozenWengerThree.lean#L90).
 
 At either cutoff below two and feasible positive literal budgets, use
 \(\min(p,n!)\) distinct spanning permutations. They give at least a

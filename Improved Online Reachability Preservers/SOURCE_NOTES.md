@@ -2677,8 +2677,23 @@ local-order upper bound and recurrence of Theorem 43.
   mass is \(M\le8(n+p)\) or \(M^3\le1024(np)^2\), without a cleaning
   hypothesis. The cubic and linear cases both force quadratic path
   density if \(M\ge\eta n\sqrt p\) at sufficiently large \(p\).
-  [Half cutoff three](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L168)
-  · [Density consequence](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L218).
+  [Half cutoff three](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L325)
+  · [Density consequence](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L356).
+
+  Count all choice sizes together for a sharper constant. For pruned
+  mass \(W\), let \(S=(W-n-p)_+\). Encode a three-element subset of
+  \(\{0,\ldots,S+1\}\) by its three nonnegative gaps \(a,b,c\) with
+  \(a+b+c<S\). Put \(D=1+\lfloor a/n\rfloor\) and
+  \(L=1+\lfloor b/p\rfloor\). There are more than \(c\) incidences meeting
+  both thresholds, so pick one at index \(c\). Its earlier-row index
+  \(D-1\) and upstream-vertex index \(L-1\) give one pair. Inverting the
+  upstream injection recovers the incidence and both indices. The
+  remainders of \(a\) modulo \(n\) and \(b\) modulo \(p\) recover the gaps
+  using those indices and the incidence rank. Hence
+  \(S^3/6\le\binom{S+2}{3}\le(np)^2\). Pruning loses at most half the
+  original mass, giving \((M-2(n+p))_+^3\le48(np)^2\). The earlier
+  linear-or-cubic estimate follows from this one.
+  [Shifted cube bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L302).
 
   The balanced case of Bridge Girth v4 Theorem 83 uses a bipartite
   construction of girth at least eight. The Lean witness uses the affine lines
@@ -2705,6 +2720,20 @@ local-order upper bound and recurrence of Theorem 43.
   · [Field construction](OnlineReachabilityPreservers/WengerThreeRows.lean#L128)
   · [Uniform comparison](OnlineReachabilityPreservers/WengerThreeRows.lean#L194)
   · [Comparable budgets](OnlineReachabilityPreservers/WengerThreeRows.lean#L242).
+
+  At \(n=p=q^3\) for a field of order \(q\ge11\), the shifted bound gives
+  \(M\le4q^4\) for every simple half input through size three. If
+  \(M>4q^4\), then \(M-4q^3>4q^3(q-1)\), whose cube is at least
+  \(48q^{12}\) by \(10q\le11(q-1)\). The full-three line family is itself
+  a feasible literal half family of mass \(q^4\). Thus the literal
+  maximum exists and satisfies \(q^4\le M\le4q^4\). Both starting means
+  are \(M/q^3\). Every line and vertex has count \(q\), within the
+  quarter-to-four range for that starting mean. The full output uses
+  both original budgets and retains at least \(M/4\). The proof uses
+  the actual half maximum from the printed Lemma 39 at cutoff three.
+  [Cube-budget mass](OnlineReachabilityPreservers/FrozenWengerThree.lean#L14)
+  · [Starting caps](OnlineReachabilityPreservers/FrozenWengerThree.lean#L45)
+  · [Existence at the literal maximum](OnlineReachabilityPreservers/FrozenWengerThree.lean#L90).
 
   Below cutoff two, both exclusions are vacuous. On \(n\) vertices the
   count of simple lists, including the empty list, is less than \(3n!\).
