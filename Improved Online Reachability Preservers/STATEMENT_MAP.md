@@ -2642,7 +2642,7 @@ vertices or rows of that support rules out every full bridge. If
 If \(Ck\ge\min(n,p)\) for a positive integer \(C\), output-average
 cleaning gives \(M/(523C)\) and all-size full exclusion under the indexed
 convention. The feasible literal transfer at \(k\ge2\) gives
-\(M/(9414C)\) with distinct nonempty rows and the original finite cutoff.
+\(M/(9414C)\) with distinct nonempty rows and all-size full exclusion.
 Both caps conventions respect the original budgets and apply at the
 corresponding full maxima for positive budgets.
 [All-size restriction](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L32)
@@ -2650,7 +2650,15 @@ corresponding full maxima for positive budgets.
 · [Indexed original-average maximum](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L145)
 · [Literal original-average maximum](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L159)
 · [Indexed output-average maximum](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L239)
-· [Literal output-average maximum](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L254).
+· [Literal all-size output-average maximum](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L306).
+
+For the indexed maxima at the same positive budgets, put
+\(q=\min(n,p)\). The finite and all-size full masses satisfy
+\(\min(k,q)\beta_k\le q\beta_\infty\le q\beta_k\). It follows by selecting
+the heaviest \(\min(k,q)\) labels of the smaller support and then using
+maximality in each direction. The result concerns mass without cleaning
+caps.
+[Comparison of the indexed full extrema](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L327).
 
 The [quarter-count example](OnlineReachabilityPreservers/AverageSplitAudit.lean#L430)
 has \(n=40\), \(p=14\), and \(M=73\), with full exclusion at every size

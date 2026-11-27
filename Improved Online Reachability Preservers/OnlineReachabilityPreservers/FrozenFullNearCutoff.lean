@@ -269,4 +269,84 @@ theorem localOrderDistinctExtremal_output_average_full_of_cutoff_ratio {n p cuto
   exact ⟨paths,distinct,rows,free,maximal,regularization_list_output_average_full_distinct_of_cutoff_ratio paths
     distinct (fun i => (rows i).1) (fun i => (rows i).2) free two positive near hn hp dense⟩
 
+/-- A constant cutoff fraction also gives a distinct nonempty
+output-average witness excluding full bridges of every size. -/
+theorem regularization_list_output_average_full_distinct_all_of_cutoff_ratio {n p cutoff C : ℕ}
+    (paths : Fin p → List (Fin n)) (distinct : Function.Injective paths)
+    (nonempty : ∀ i, paths i ≠ []) (simple : ∀ i, (paths i).Nodup)
+    (free : BridgeFree (Before paths) cutoff) (two : 2 ≤ cutoff) (positive : 0 < C) (near : min n p ≤ C*cutoff)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧ (∀ i, (clean i).Nodup) ∧
+      (∀ d, IsEmpty (Bridge (Before clean) d)) ∧ M ≤ (18*(523*C))*(∑ i, (clean i).length) ∧
+      (∑ i, (clean i).length) ≤ M ∧ listOutputAverageCaps clean := by
+  let M := ∑ i, (paths i).length
+  let outputCutoff := max 2 p
+  have long : p ≤ M := by
+    calc
+      _ = ∑ i : Fin p, (1:ℕ) := by simp
+      _ ≤ _ := sum_le_sum fun i _ => List.length_pos_of_ne_nil (nonempty i)
+  have pCap := distinctPathCount_le_square paths distinct nonempty simple two free.halfFree
+  have indexed : ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) outputCutoff ∧
+      M ≤ (523*C)*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ listOutputAverageCaps clean := by
+    obtain ⟨v,vFits,q,qFits,clean,cleanSimple,all,kept,within,caps⟩ :=
+      regularization_list_output_average_full_of_cutoff_ratio paths simple free positive near hn hp dense long
+    exact ⟨v,vFits,q,qFits,clean,cleanSimple,fun d _ => all d,kept,within,caps⟩
+  obtain ⟨v,vFits,q,qFits,clean,injective,present,cleanSimple,cleanFree,keeps,within,caps⟩ :=
+    regularization_list_output_average_distinct_of_indexed_budget (half := false) (k := outputCutoff)
+      (retention := 523*C) (le_max_left _ _) hn hp dense long pCap indexed
+  exact ⟨v,vFits,q,qFits,clean,injective,present,cleanSimple,
+    bridgeFree_all_of_cutoff_ge_min cleanFree ((min_le_right _ _).trans (qFits.trans (le_max_right _ _))),
+    keeps,within,caps⟩
+
+/-- The feasible literal maximum has an all-size full witness under
+its own average caps at every fixed positive cutoff fraction. -/
+theorem localOrderDistinctExtremal_output_average_full_all_of_cutoff_ratio {n p cutoff C : ℕ}
+    (hn : 0 < n) (hp : 0 < p) (two : 2 ≤ cutoff) (positive : 0 < C) (near : min n p ≤ C*cutoff)
+    (feasible : ∃ paths : Fin p → List (Fin n), Function.Injective paths ∧
+      (∀ i, paths i ≠ [] ∧ (paths i).Nodup) ∧ BridgeFree (Before paths) cutoff) :
+    ∃ paths : Fin p → List (Fin n), Function.Injective paths ∧
+      (∀ i, paths i ≠ [] ∧ (paths i).Nodup) ∧ BridgeFree (Before paths) cutoff ∧
+      (∀ other : Fin p → List (Fin n), Function.Injective other →
+        (∀ i, other i ≠ [] ∧ (other i).Nodup) → BridgeFree (Before other) cutoff →
+        (∑ i, (other i).length) ≤ ∑ i, (paths i).length) ∧
+      let M := ∑ i, (paths i).length
+      ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+        Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧ (∀ i, (clean i).Nodup) ∧
+        (∀ d, IsEmpty (Bridge (Before clean) d)) ∧ M ≤ (18*(523*C))*(∑ i, (clean i).length) ∧
+        (∑ i, (clean i).length) ≤ M ∧ listOutputAverageCaps clean := by
+  obtain ⟨paths,distinct,rows,free,maximal,dense,_⟩ := localOrderDistinctExtremal_isDense false hp feasible
+  exact ⟨paths,distinct,rows,free,maximal,regularization_list_output_average_full_distinct_all_of_cutoff_ratio paths
+    distinct (fun i => (rows i).1) (fun i => (rows i).2) free two positive near hn hp dense⟩
+
+/-- With indexed rows, the all-size extremal mass is between the
+finite-cutoff mass and that mass times the fraction of the smaller
+budget covered by the cutoff. -/
+theorem indexed_full_extrema_compare_all_sizes (n p cutoff : ℕ) (hn : 0 < n) (hp : 0 < p) :
+    ∃ finite all : Fin p → List (Fin n),
+      (∀ i, (finite i).Nodup) ∧ BridgeFree (Before finite) cutoff ∧
+      (∀ other : Fin p → List (Fin n), (∀ i, (other i).Nodup) → BridgeFree (Before other) cutoff →
+        (∑ i, (other i).length) ≤ ∑ i, (finite i).length) ∧
+      (∀ i, (all i).Nodup) ∧ (∀ d, IsEmpty (Bridge (Before all) d)) ∧
+      (∀ other : Fin p → List (Fin n), (∀ i, (other i).Nodup) → (∀ d, IsEmpty (Bridge (Before other) d)) →
+        (∑ i, (other i).length) ≤ ∑ i, (all i).length) ∧
+      min cutoff (min n p)*(∑ i, (finite i).length) ≤ min n p*(∑ i, (all i).length) ∧
+      (∑ i, (all i).length) ≤ ∑ i, (finite i).length := by
+  let q := min n p
+  obtain ⟨finite,simple,free,maximal,_,_⟩ := localOrderExtremal_isDense n p cutoff false hn hp
+  obtain ⟨all,allSimple,allFinite,allMax,_,_⟩ := localOrderExtremal_isDense n p q false hn hp
+  have allFree := bridgeFree_all_of_cutoff_ge_min allFinite (le_refl q)
+  have fits : min cutoff q*q ≤ q*cutoff := by
+    rw [Nat.mul_comm (min cutoff q)]
+    exact Nat.mul_le_mul_left _ (min_le_left _ _)
+  obtain ⟨kept,sub,keptAll,weighted⟩ := fullBridgeFree_subrows_mass_of_cutoff_ratio finite simple free
+    (min_le_right cutoff q) fits
+  have below : (∑ i, (kept i).length) ≤ ∑ i, (all i).length :=
+    allMax kept (fun i => (sub i).nodup (simple i)) (fun d _ => keptAll d)
+  exact ⟨finite,all,simple,free,maximal,allSimple,allFree,
+    fun other otherSimple freeEvery => allMax other otherSimple (fun d _ => freeEvery d),
+    weighted.trans (Nat.mul_le_mul_left _ below),maximal all allSimple (fun d _ => allFree d)⟩
+
 end OnlineReachabilityPreservers

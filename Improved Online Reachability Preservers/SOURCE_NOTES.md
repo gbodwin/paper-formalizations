@@ -347,13 +347,23 @@ In the high-mass case the restriction keeps enough to apply all-size
 cleaning, while a uniform witness handles the low-mass case. The indexed
 witness excludes every full bridge and retains \(M/(523C)\). For a feasible
 literal input at \(k\ge2\), the distinct nonempty witness keeps the input
-cutoff and \(M/(9414C)\). Both guarantees start at the maximum under their
-respective full-bridge convention.
+mass within factor \(9414C\) and also excludes every full bridge. The
+transfer uses the input's endpoint-pair bound \(p\le n^2\) and applies
+the indexed witness at a cutoff covering its whole row budget. Both
+guarantees start at the maximum under their respective full-bridge
+convention.
 [Restriction and mass](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L86)
 · [Indexed original-average bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L145)
 · [Literal original-average bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L159)
 · [Output-average indexed bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L239)
-· [Literal output-average bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L254).
+· [Literal all-size output-average bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L306).
+
+Without average caps, the same restriction compares two indexed full
+maxima at the same positive budgets. Write \(q=\min(n,p)\), with
+\(\beta_k\) the maximum through cutoff \(k\) and \(\beta_\infty\) the
+maximum excluding every full bridge. Then
+\(\min(k,q)\beta_k\le q\beta_\infty\le q\beta_k\).
+[Indexed extremal comparison](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L327).
 
 The original-average conclusion at full cutoff six has a separate
 proof. A reverse comparison within one width piece gives a conflict

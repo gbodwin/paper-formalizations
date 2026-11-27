@@ -123,35 +123,24 @@ private theorem outputAverage_distinct_sparse {n p M k retention : ℕ}
   · rw [mass]
     omega
 
-/-- Transfer a factor-four output-average witness to distinct nonempty
-paths. A witness containing a row of length at most one has small enough
-total mass to use a single spanning path or a uniform length-two family. -/
-theorem regularization_list_output_average_distinct_of_indexed_with_retention {n p k retention : ℕ} {half : Bool}
-    (paths : Fin p → List (Fin n)) (distinct : Function.Injective paths)
-    (nonempty : ∀ i, paths i ≠ []) (simple : ∀ i, (paths i).Nodup)
-    (allowed : localOrderAdmissible half k paths) (two : 2 ≤ k) (hn : 0 < n) (hp : 0 < p)
-    (dense : n ≤ ∑ i, (paths i).length)
-    (indexed : p ≤ ∑ i, (paths i).length →
-      ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
-        (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
-        (∑ i, (paths i).length) ≤ retention*(∑ i, (clean i).length) ∧
-        (∑ i, (clean i).length) ≤ (∑ i, (paths i).length) ∧ listOutputAverageCaps clean) :
+/-- Transfer a factor-four indexed output-average witness to literal
+rows using the original mass and the bound on distinct endpoint pairs. -/
+theorem regularization_list_output_average_distinct_of_indexed_budget {n p k retention M : ℕ} {half : Bool}
+    (two : 2 ≤ k) (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M) (pCap : p ≤ n^2)
+    (indexed : ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ listOutputAverageCaps clean) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
-      (∑ i, (paths i).length) ≤ (18*retention)*(∑ i, (clean i).length) ∧
-      (∑ i, (clean i).length) ≤ (∑ i, (paths i).length) ∧ listOutputAverageCaps clean := by
-  let M := ∑ i, (paths i).length
-  have long : p ≤ M := by
-    calc
-      _ = ∑ i : Fin p, (1:ℕ) := by simp
-      _ ≤ _ := sum_le_sum fun i _ => List.length_pos_of_ne_nil (nonempty i)
+      M ≤ (18*retention)*(∑ i, (clean i).length) ∧
+      (∑ i, (clean i).length) ≤ M ∧ listOutputAverageCaps clean := by
   have halfFromAllowed {v q : ℕ} {family : Fin q → List (Fin v)}
       (legal : localOrderAdmissible half k family) : HalfBridgeFree (Before family) k := by
     cases half
     · exact (show BridgeFree (Before family) k from legal).halfFree
     · exact legal
-  obtain ⟨v,vCap,q,qCap,clean,cleanSimple,cleanAllowed,mass,upper,caps⟩ := indexed long
+  obtain ⟨v,vCap,q,qCap,clean,cleanSimple,cleanAllowed,mass,upper,caps⟩ := indexed
   by_cases enough : ∀ i, 2 ≤ (clean i).length
   · have injective := nontrivial_halfFree_paths_injective cleanSimple enough two (halfFromAllowed cleanAllowed)
     have present (i : Fin q) : clean i ≠ [] := fun empty => by
@@ -175,13 +164,42 @@ theorem regularization_list_output_average_distinct_of_indexed_with_retention {n
     _ ≤ retention*(4*q) := Nat.mul_le_mul_left _ kSmall
     _ ≤ retention*(4*p) := Nat.mul_le_mul_left _ (Nat.mul_le_mul_left _ qCap)
     _ = _ := by ring
-  have pCap := distinctPathCount_le_square paths distinct nonempty simple two (halfFromAllowed allowed)
   obtain ⟨v',vFits,q',qFits,witness,witnessDistinct,witnessPresent,witnessSimple,witnessFree,witnessMass,
     witnessUpper,witnessCaps⟩ := outputAverage_distinct_sparse hn hp dense long
       (by simpa only [pow_two] using pCap) mSmall (k := k)
   have witnessAllowed : localOrderAdmissible half k witness := by cases half; exacts [witnessFree,witnessFree.halfFree]
   exact ⟨v',vFits,q',qFits,witness,witnessDistinct,witnessPresent,witnessSimple,witnessAllowed,
     witnessMass,witnessUpper,witnessCaps⟩
+
+/-- Transfer a factor-four output-average witness to distinct nonempty
+paths. A witness containing a row of length at most one has small enough
+total mass to use a single spanning path or a uniform length-two family. -/
+theorem regularization_list_output_average_distinct_of_indexed_with_retention {n p k retention : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (distinct : Function.Injective paths)
+    (nonempty : ∀ i, paths i ≠ []) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k paths) (two : 2 ≤ k) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length)
+    (indexed : p ≤ ∑ i, (paths i).length →
+      ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+        (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+        (∑ i, (paths i).length) ≤ retention*(∑ i, (clean i).length) ∧
+        (∑ i, (clean i).length) ≤ (∑ i, (paths i).length) ∧ listOutputAverageCaps clean) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      (∑ i, (paths i).length) ≤ (18*retention)*(∑ i, (clean i).length) ∧
+      (∑ i, (clean i).length) ≤ (∑ i, (paths i).length) ∧ listOutputAverageCaps clean := by
+  let M := ∑ i, (paths i).length
+  have long : p ≤ M := by
+    calc
+      _ = ∑ i : Fin p, (1:ℕ) := by simp
+      _ ≤ _ := sum_le_sum fun i _ => List.length_pos_of_ne_nil (nonempty i)
+  have inputHalf : HalfBridgeFree (Before paths) k := by
+    cases half
+    · exact (show BridgeFree (Before paths) k from allowed).halfFree
+    · exact allowed
+  have pCap := distinctPathCount_le_square paths distinct nonempty simple two inputHalf
+  exact regularization_list_output_average_distinct_of_indexed_budget two hn hp dense long pCap (indexed long)
 
 /-- A factor-392 indexed witness can be transferred with factor 7056. -/
 theorem regularization_list_output_average_distinct_of_indexed {n p k : ℕ} {half : Bool}
