@@ -2301,6 +2301,22 @@ local-order upper bound and recurrence of Theorem 43.
   · [Indexed comparison](OnlineReachabilityPreservers/UnbalancedBridgeExtrema.lean#L59)
   · [Literal exact-count comparison](OnlineReachabilityPreservers/UnbalancedBridgeExtrema.lean#L75).
 
+  At cutoffs through two the half and full exclusions coincide for every
+  family of simple rows. At any input cutoff of at least two, literal half
+  feasibility supplies distinct nonempty full-free rows within both budgets at
+  every cutoff. A spanning row suffices when \(p\le n\). Otherwise the first
+  two vertices of each nonsingleton row and the original singletons form a
+  distinct half-free family with mean length at most two. Its mass is at
+  least \(p\), and the short-row construction yields a full witness of mass
+  at least \(\max(n,p)/8\). With either unbalanced-budget inequality above,
+  the full witness has mass at least \(H(n,p,k)/(8a)\) at a literal half
+  maximum. This comparison uses a full witness with at most the given
+  budgets and needs only half feasibility. The original-average cleaning
+  caps have a separate proof requirement.
+  [Equivalence through two](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L12)
+  · [Full witness from half feasibility](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L24)
+  · [Unbalanced-budget comparison](OnlineReachabilityPreservers/LiteralFullBridgeBudget.lean#L98).
+
 - In Lemma 24, the paths `(0,1,2)` and `(2,1,0)` share three vertices without
   a bridge. Lean proves the ordering and fiber bound for arbitrary simple paths
   by choosing one witness for each middle path and using the 2-bridge exclusion
