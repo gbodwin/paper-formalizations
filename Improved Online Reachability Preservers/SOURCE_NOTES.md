@@ -928,6 +928,19 @@ their return test, the frozen witness retains at least \(M/16\) with
 half exclusion through \(k\), both budgets, and all four frozen caps.
 [Safe gap test](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L319) · [Cleaning from chosen gaps](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L465).
 
+The degree-side count can follow from a run bound. Assume each run
+between chosen safe gaps contains at most \(\lfloor M/n\rfloor\)
+incidences of its vertex. Choose stride \(W=\lfloor3M/n\rfloor+1\).
+Group runs by the quotient of their starting occurrence count by
+\(W\). Each resulting copy holds at most
+\(W+\lfloor M/n\rfloor-1\le\lfloor4M/n\rfloor\) incidences. The total
+number of possible labels is at most \(n+\lfloor M/W\rfloor\), so it
+fits the four-thirds support bound. A putative backward return between
+distinct copies must cross a chosen safe gap. Passing the return test on the
+resulting width pieces gives the same frozen \(M/16\) half-exclusion
+with both original budgets and all four caps.
+[Packing degree runs](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L140).
+
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
 those positions, so only pairs in different blocks need the bounded

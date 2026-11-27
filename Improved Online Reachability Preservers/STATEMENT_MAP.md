@@ -2147,6 +2147,10 @@ first and last rows of a possible backward return must straddle a
 chosen gap. Counting occupied labels and checking the copy loads and
 actual path pieces gives the same frozen guarantee.
 [Safe degree gaps](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L465).
+When each safe degree run fits the original mean degree rounded down,
+packing by its start count ensures the degree and support bounds without
+additional load or label-count hypotheses. The width-piece test still
+applies to the resulting rows. [Packed degree runs](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L140).
 The same conditional \(M/16\) and [\(M/32\) after rowwise deletions](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1625)
 keep both budgets and all four original-average caps.
 Alternatively, use each row's last safe boundary as its rank. A cut is
