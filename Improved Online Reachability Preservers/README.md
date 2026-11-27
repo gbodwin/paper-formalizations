@@ -2111,8 +2111,8 @@ For each fixed \(\eta>0\), mass \(M\ge\eta n\sqrt p\) therefore forces
 \(p\ge\delta n^2\) for a positive \(\delta\) once \(p\) is sufficiently
 large. In particular, the strengthened lower-cap obstruction would
 still require quadratic path density on the half side.
-[Half-three mass bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L325)
-· [Necessary path density](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L356).
+[Half-three mass bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L347)
+· [Necessary path density](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L378).
 
 At cutoff three and comparable positive budgets, the witness-average
 form of Lemma 39 holds with its literal half benchmark. For a field of
@@ -2138,8 +2138,20 @@ exactly \(q^4\) on the exact original budgets. Its degree and length
 \(q\) satisfy all four caps at the starting averages of that half
 maximum. This proves the starting-average case of the literal Lemma 39
 at these budgets and cutoff three.
-[Sharper half mass](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L302)
+[Sharper half mass](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L324)
 · [Starting-average witness at the literal maximum](OnlineReachabilityPreservers/FrozenWengerThree.lean#L90).
+
+Keeping the latest common vertex in each pair of intersecting rows
+allows the count to use the original incidences. At cutoff three this
+extends the starting-average literal Lemma 39 case to every equal
+budget \(n=p\ge256^3\). With \(q=2^{\lfloor\log_8 n\rfloor}\), the
+literal half maximum satisfies \(q^4\le M\), \(nq\le4M\), and
+\(M\le4nq\). The full-three field witness has mass \(q^4\), fits both
+budgets, and satisfies all four starting-average caps. It retains at
+least \(M/32\). At the exact field cubes above, the factor four still
+applies.
+[Counting the latest common vertices](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L541)
+· [Starting-average witness at large equal budgets](OnlineReachabilityPreservers/EqualBudgetFrozenFullThree.lean#L95).
 
 At either cutoff below two and feasible positive literal budgets, use
 \(\min(p,n!)\) distinct spanning permutations. They give at least a

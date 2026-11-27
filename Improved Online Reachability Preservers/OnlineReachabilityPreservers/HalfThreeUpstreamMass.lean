@@ -109,41 +109,48 @@ private theorem lateIncidences_card_lower {n p : ℕ} (paths : Fin p → List (F
     _ ≤ (good.card+early.card)+front.card := Nat.add_le_add_right (card_union_le _ _) _
     _ ≤ _ := Nat.add_le_add (Nat.add_le_add_left (small_arrival_rank_count paths D) _) (small_row_position_count paths L)
 
-private abbrev UpstreamBooking {n p : ℕ} (paths : Fin p → List (Fin n)) :=
-  Σ a : (rowIncidences paths),
-    Fin (arrivalPredecessors paths a.val.1 a.val.2).card × Fin ((paths a.val.1).idxOf a.val.2)
+private abbrev priorChoiceIncidences {n p : ℕ} (paths : Fin p → List (Fin n))
+    (prior : Fin p × Fin n → Finset (Fin p)) (D L : ℕ) :=
+  (rowIncidences paths).filter (fun v => D ≤ (prior v).card ∧ L ≤ (paths v.1).idxOf v.2)
 
-private noncomputable def bookingEarlier {n p : ℕ} (paths : Fin p → List (Fin n)) (g : UpstreamBooking paths) :
-    arrivalPredecessors paths g.1.val.1 g.1.val.2 :=
+private abbrev UpstreamBooking {n p : ℕ} (paths : Fin p → List (Fin n))
+    (prior : Fin p × Fin n → Finset (Fin p)) :=
+  Σ a : (rowIncidences paths), Fin (prior a.val).card × Fin ((paths a.val.1).idxOf a.val.2)
+
+private noncomputable def bookingEarlier {n p : ℕ} (paths : Fin p → List (Fin n))
+    (prior : Fin p × Fin n → Finset (Fin p)) (g : UpstreamBooking paths prior) : prior g.1.val :=
   (Fintype.equivFinOfCardEq (Fintype.card_coe _)).symm g.2.1
 
-private def bookingVertex {n p : ℕ} (paths : Fin p → List (Fin n)) (g : UpstreamBooking paths) : Fin n :=
+private def bookingVertex {n p : ℕ} (paths : Fin p → List (Fin n))
+    (prior : Fin p × Fin n → Finset (Fin p)) (g : UpstreamBooking paths prior) : Fin n :=
   (paths g.1.val.1)[g.2.2.val]'(g.2.2.isLt.trans (List.idxOf_lt_length_of_mem (mem_filter.mp g.1.property).2))
 
 private noncomputable def upstreamBookingImage {n p : ℕ} (paths : Fin p → List (Fin n))
-    (g : UpstreamBooking paths) : Fin p × Fin n :=
-  ((bookingEarlier paths g).val,bookingVertex paths g)
+    (prior : Fin p × Fin n → Finset (Fin p)) (g : UpstreamBooking paths prior) : Fin p × Fin n :=
+  ((bookingEarlier paths prior g).val,bookingVertex paths prior g)
 
 private theorem upstreamBookingImage_injective {n p k : ℕ} (paths : Fin p → List (Fin n))
     (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) k) (three : 3 ≤ k)
-    (unique : ∀ {i j x y}, i ≠ j → x ∈ paths i → x ∈ paths j → y ∈ paths i → y ∈ paths j → x = y) :
-    Function.Injective (upstreamBookingImage paths) := by
-  have step (g : UpstreamBooking paths) : Before paths g.1.val.1 (bookingVertex paths g) g.1.val.2 := by
+    (prior : Fin p × Fin n → Finset (Fin p))
+    (earlierSpec : ∀ {i j x}, i ∈ prior (j,x) → x ∈ paths i ∧ i < j)
+    (onlyHit : ∀ {i j x y}, x ∈ paths j → y ∈ paths j → i ∈ prior (j,x) → i ∈ prior (j,y) → x = y) :
+    Function.Injective (upstreamBookingImage paths prior) := by
+  have step (g : UpstreamBooking paths prior) : Before paths g.1.val.1 (bookingVertex paths prior g) g.1.val.2 := by
     refine ⟨List.getElem_mem _,(mem_filter.mp g.1.property).2,?_⟩
     dsimp only [bookingVertex]
     rw [(simple g.1.val.1).idxOf_getElem]
     exact g.2.2.isLt
   intro g h equal
-  let earlier := (bookingEarlier paths g).val
-  have sameBase : earlier = (bookingEarlier paths h).val := congrArg Prod.fst equal
-  have sameUp : bookingVertex paths g = bookingVertex paths h := congrArg Prod.snd equal
-  obtain ⟨onG,oldG⟩ := mem_arrivalPredecessors.mp (bookingEarlier paths g).property
-  have old : earlier ∈ arrivalPredecessors paths h.1.val.1 h.1.val.2 :=
-    sameBase.symm ▸ (bookingEarlier paths h).property
-  obtain ⟨onH,oldH⟩ := mem_arrivalPredecessors.mp old
+  let earlier := (bookingEarlier paths prior g).val
+  have sameBase : earlier = (bookingEarlier paths prior h).val := congrArg Prod.fst equal
+  have sameUp : bookingVertex paths prior g = bookingVertex paths prior h := congrArg Prod.snd equal
+  have onG : earlier ∈ prior (g.1.val.1,g.1.val.2) := (bookingEarlier paths prior g).property
+  have onH : earlier ∈ prior (h.1.val.1,h.1.val.2) := sameBase.symm ▸ (bookingEarlier paths prior h).property
+  obtain ⟨hitG,oldG⟩ := earlierSpec onG
+  obtain ⟨hitH,oldH⟩ := earlierSpec onH
   have branch : g.1.val.1 = h.1.val.1 := same_later_branch_of_shared_upstream free three oldG oldH
-    onG onH (step g) (sameUp.symm ▸ step h)
-  have corner : g.1.val.2 = h.1.val.2 := unique oldG.ne onG (step g).2.1 onH (branch.symm ▸ (step h).2.1)
+    hitG hitH (step g) (sameUp.symm ▸ step h)
+  have corner : g.1.val.2 = h.1.val.2 := onlyHit (step g).2.1 (branch.symm ▸ (step h).2.1) onG (branch.symm ▸ onH)
   have source : g.1 = h.1 := Subtype.ext (Prod.ext branch corner)
   rcases g with ⟨g,d,l⟩
   rcases h with ⟨h,e,m⟩
@@ -223,13 +230,15 @@ private theorem mass_cube_le_six_times_choose (S : ℕ) : S^3 ≤ 6*(S+2).choose
     _ = S.ascFactorial 3 := by simp [Nat.ascFactorial_succ,Nat.mul_assoc]
     _ = _ := by rw [Nat.ascFactorial_eq_factorial_mul_choose',show S+3-1 = S+2 by omega]; norm_num [Nat.factorial]
 
-private theorem unique_intersection_half_three_shifted_mass_cube_le {n p k : ℕ}
+private theorem upstream_mass_shift_cube_of_prior_counts {n p k : ℕ}
     (hn : 0 < n) (hp : 0 < p) (paths : Fin p → List (Fin n))
     (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) k) (three : 3 ≤ k)
-    (unique : ∀ {i j x y}, i ≠ j → x ∈ paths i → x ∈ paths j → y ∈ paths i → y ∈ paths j → x = y) :
-    ((∑ i, (paths i).length)-(n+p))^3 ≤ 6*(n*p)^2 := by
+    (prior : Fin p × Fin n → Finset (Fin p))
+    (earlierSpec : ∀ {i j x}, i ∈ prior (j,x) → x ∈ paths i ∧ i < j)
+    (onlyHit : ∀ {i j x y}, x ∈ paths j → y ∈ paths j → i ∈ prior (j,x) → i ∈ prior (j,y) → x = y)
+    (M : ℕ) (coverage : ∀ D L, M ≤ (priorChoiceIncidences paths prior D L).card+n*D+p*L) :
+    (M-(n+p))^3 ≤ 6*(n*p)^2 := by
   classical
-  let M := ∑ i, (paths i).length
   let S := M-(n+p)
   by_cases empty : S = 0
   · change S^3 ≤ _
@@ -240,7 +249,7 @@ private theorem unique_intersection_half_three_shifted_mass_cube_le {n p k : ℕ
   let C (z : tripleSelections S) := (tripleGaps z).2.2
   let D (z : tripleSelections S) := A z/n+1
   let L (z : tripleSelections S) := B z/p+1
-  have validIndex (z : tripleSelections S) : C z < (lateIncidences paths (D z) (L z)).card := by
+  have validIndex (z : tripleSelections S) : C z < (priorChoiceIncidences paths prior (D z) (L z)).card := by
     have small : A z+B z+C z < S := tripleGaps_sum_lt z
     have priceD : n*D z ≤ A z+n := by
       dsimp only [D]
@@ -250,31 +259,32 @@ private theorem unique_intersection_half_three_shifted_mass_cube_le {n p k : ℕ
       dsimp only [L]
       rw [Nat.mul_add,Nat.mul_one]
       exact Nat.add_le_add_right (Nat.mul_div_le _ _) _
-    have cover : M ≤ (lateIncidences paths (D z) (L z)).card+n*D z+p*L z :=
-      lateIncidences_card_lower paths simple (D z) (L z)
+    have cover : M ≤ (priorChoiceIncidences paths prior (D z) (L z)).card+n*D z+p*L z :=
+      coverage (D z) (L z)
     omega
-  let pick (d l : ℕ) : (Fin (lateIncidences paths d l).card) ≃ (↥(lateIncidences paths d l)) :=
+  let pick (d l : ℕ) : (Fin (priorChoiceIncidences paths prior d l).card) ≃ (↥(priorChoiceIncidences paths prior d l)) :=
     (Fintype.equivFinOfCardEq (Fintype.card_coe _)).symm
   let chosen (z : tripleSelections S) := pick (D z) (L z) ⟨C z,validIndex z⟩
   let source (z : tripleSelections S) : rowIncidences paths := ⟨(chosen z).val,(mem_filter.mp (chosen z).property).1⟩
-  let book (z : tripleSelections S) : UpstreamBooking paths :=
+  let book (z : tripleSelections S) : UpstreamBooking paths prior :=
     ⟨source z,⟨A z/n,(mem_filter.mp (chosen z).property).2.1⟩,
       ⟨B z/p,(mem_filter.mp (chosen z).property).2.2⟩⟩
   let Image (z : tripleSelections S) : (Fin p × Fin n) × Fin n × Fin p :=
-    (upstreamBookingImage paths (book z),⟨A z%n,Nat.mod_lt _ hn⟩,⟨B z%p,Nat.mod_lt _ hp⟩)
-  have pickInjective {d₁ l₁ d₂ l₂ : ℕ} {c₁ : Fin (lateIncidences paths d₁ l₁).card}
-      {c₂ : Fin (lateIncidences paths d₂ l₂).card} (hs : d₁ = d₂) (ht : l₁ = l₂)
+    (upstreamBookingImage paths prior (book z),⟨A z%n,Nat.mod_lt _ hn⟩,⟨B z%p,Nat.mod_lt _ hp⟩)
+  have pickInjective {d₁ l₁ d₂ l₂ : ℕ} {c₁ : Fin (priorChoiceIncidences paths prior d₁ l₁).card}
+      {c₂ : Fin (priorChoiceIncidences paths prior d₂ l₂).card} (hs : d₁ = d₂) (ht : l₁ = l₂)
       (same : (pick d₁ l₁ c₁).val = (pick d₂ l₂ c₂).val) : c₁.val = c₂.val := by
     subst d₂
     subst l₂
     exact congrArg Fin.val ((pick d₁ l₁).injective (Subtype.ext same))
   have injective : Function.Injective Image := by
     intro z w equal
-    have distinctBookings := upstreamBookingImage_injective paths simple free three (fun {_ _ _ _} => unique)
+    have distinctBookings := upstreamBookingImage_injective paths simple free three prior (fun {_ _ _} => earlierSpec)
+      (fun {_ _ _ _} => onlyHit)
     have same : book z = book w := distinctBookings (congrArg Prod.fst equal)
-    have sources : (chosen z).val = (chosen w).val := congrArg (fun g : UpstreamBooking paths => g.fst.val) same
-    have quotientA : A z/n = A w/n := congrArg (fun g : UpstreamBooking paths => g.snd.1.val) same
-    have quotientB : B z/p = B w/p := congrArg (fun g : UpstreamBooking paths => g.snd.2.val) same
+    have sources : (chosen z).val = (chosen w).val := congrArg (fun g : UpstreamBooking paths prior => g.fst.val) same
+    have quotientA : A z/n = A w/n := congrArg (fun g : UpstreamBooking paths prior => g.snd.1.val) same
+    have quotientB : B z/p = B w/p := congrArg (fun g : UpstreamBooking paths prior => g.snd.2.val) same
     have remainderA : A z%n = A w%n := congrArg (fun v => v.2.1.val) equal
     have remainderB : B z%p = B w%p := congrArg (fun v => v.2.2.val) equal
     have eqA : A z = A w := calc
@@ -295,6 +305,18 @@ private theorem unique_intersection_half_three_shifted_mass_cube_le {n p k : ℕ
     _ ≤ 6*(S+2).choose 3 := mass_cube_le_six_times_choose S
     _ ≤ 6*((p*n)*(n*p)) := Nat.mul_le_mul_left _ triangleCount
     _ = _ := by ring
+
+private theorem unique_intersection_half_three_shifted_mass_cube_le {n p k : ℕ}
+    (hn : 0 < n) (hp : 0 < p) (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) k) (three : 3 ≤ k)
+    (unique : ∀ {i j x y}, i ≠ j → x ∈ paths i → x ∈ paths j → y ∈ paths i → y ∈ paths j → x = y) :
+    ((∑ i, (paths i).length)-(n+p))^3 ≤ 6*(n*p)^2 := by
+  let prior (g : Fin p × Fin n) := arrivalPredecessors paths g.1 g.2
+  refine upstream_mass_shift_cube_of_prior_counts hn hp paths simple free three prior
+    (fun {_ _ _} on => mem_arrivalPredecessors.mp on) ?_ _ (lateIncidences_card_lower paths simple)
+  intro i j x y xj yj xi yi
+  obtain ⟨onX,earlier⟩ := mem_arrivalPredecessors.mp xi
+  exact unique earlier.ne onX xj (mem_arrivalPredecessors.mp yi).1 yj
 
 /-- A simultaneous count of all earlier-row and upstream-vertex choices
 sharpens the half-three cube bound, with an explicit shift for the two
@@ -398,5 +420,139 @@ theorem half_three_n_sqrt_p_mass_requires_quadratic_path_density (η : ℝ) (pos
     _ = (t*(n:ℝ))^2 := by ring
     _ ≤ y^2 := pow_le_pow_left₀ (by positivity) rootBound 2
     _ = _ := square
+
+private noncomputable def latestPriorRows {n p : ℕ} (paths : Fin p → List (Fin n))
+    (g : Fin p × Fin n) : Finset (Fin p) := by
+  classical
+  exact (arrivalPredecessors paths g.1 g.2).filter (fun i => ∀ y, Before paths g.1 g.2 y → y ∉ paths i)
+
+private theorem mem_latestPriorRows {n p : ℕ} {paths : Fin p → List (Fin n)} {i j : Fin p} {x : Fin n} :
+    i ∈ latestPriorRows paths (j,x) ↔ i ∈ arrivalPredecessors paths j x ∧
+      ∀ y, Before paths j x y → y ∉ paths i := by
+  classical
+  simp [latestPriorRows]
+
+private noncomputable def skippedPriorRows {n p : ℕ} (paths : Fin p → List (Fin n))
+    (g : Fin p × Fin n) : Finset (Fin p) :=
+  arrivalPredecessors paths g.1 g.2 \ latestPriorRows paths g
+
+private theorem skippedPriorRows_witness {n p : ℕ} {paths : Fin p → List (Fin n)} {i j : Fin p} {x : Fin n}
+    (skip : i ∈ skippedPriorRows paths (j,x)) : x ∈ paths i ∧ i < j ∧ ∃ y ∈ paths i, Before paths j x y := by
+  classical
+  obtain ⟨earlier,notLatest⟩ := mem_sdiff.mp skip
+  obtain ⟨shared,position⟩ := mem_arrivalPredecessors.mp earlier
+  refine ⟨shared,position,?_⟩
+  by_contra absent
+  exact notLatest (mem_latestPriorRows.mpr ⟨earlier,fun y later on => absent ⟨y,on,later⟩⟩)
+
+private theorem latestPriorRows_unique_hit {n p : ℕ} {paths : Fin p → List (Fin n)} {i j : Fin p} {x y : Fin n}
+    (xj : x ∈ paths j) (yj : y ∈ paths j) (xLast : i ∈ latestPriorRows paths (j,x))
+    (yLast : i ∈ latestPriorRows paths (j,y)) : x = y := by
+  by_contra different
+  obtain ⟨xEarlier,xLatest⟩ := mem_latestPriorRows.mp xLast
+  obtain ⟨yEarlier,yLatest⟩ := mem_latestPriorRows.mp yLast
+  rcases listBefore_total xj yj different with forward | backward
+  · exact xLatest y forward (mem_arrivalPredecessors.mp yEarlier).1
+  · exact yLatest x backward (mem_arrivalPredecessors.mp xEarlier).1
+
+private theorem skippedPriorRows_total_le_mass {n p k : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) k) (three : 3 ≤ k) :
+    (∑ g ∈ rowIncidences paths, (skippedPriorRows paths g).card) ≤ ∑ i, (paths i).length := by
+  classical
+  let R := rowIncidences paths
+  let Lost := Σ g : ↥R, ↥(skippedPriorRows paths g.val)
+  let charge (a : Lost) : R :=
+    ⟨(a.snd.val,a.fst.val.2),mem_filter.mpr ⟨mem_univ _,(skippedPriorRows_witness a.snd.property).1⟩⟩
+  have injective : Function.Injective charge := by
+    rintro ⟨g,a⟩ ⟨h,b⟩ equal
+    have projected := congrArg (@Subtype.val (Fin p × Fin n) (· ∈ R)) equal
+    change (a.val,g.val.2) = (b.val,h.val.2) at projected
+    obtain ⟨sameBase,sameVertex⟩ := Prod.mk.inj projected
+    obtain ⟨_,ag,x,hitA,upA⟩ := skippedPriorRows_witness a.property
+    obtain ⟨_,bh,y,hitB,upB⟩ := skippedPriorRows_witness b.property
+    have sameBranch : g.val.1 = h.val.1 := same_later_branch_of_shared_upstream free three ag
+      (sameBase.symm ▸ bh) hitA (sameBase.symm ▸ hitB) upA (sameVertex.symm ▸ upB)
+    have same : g = h := Subtype.ext (Prod.ext sameBranch sameVertex)
+    subst h
+    exact congrArg (Sigma.mk g) (Subtype.ext sameBase)
+  have count : Fintype.card Lost = ∑ g ∈ R, (skippedPriorRows paths g).card := by
+    change Fintype.card (Σ g : ↥R, ↥(skippedPriorRows paths g.val)) = _
+    rw [Fintype.card_sigma]
+    simp only [Fintype.card_coe]
+    exact R.sum_coe_sort (fun g : Fin p × Fin n => (skippedPriorRows paths g).card)
+  have slots := Fintype.card_le_of_injective charge injective
+  rwa [count,Fintype.card_coe,rowIncidences_card paths simple] at slots
+
+private theorem latestPriorRows_count_add_skipped {n p : ℕ} (paths : Fin p → List (Fin n)) (g : Fin p × Fin n) :
+    (arrivalPredecessors paths g.1 g.2).card = (latestPriorRows paths g).card+(skippedPriorRows paths g).card := by
+  classical
+  have subset : latestPriorRows paths g ⊆ arrivalPredecessors paths g.1 g.2 := by
+    rcases g with ⟨j,x⟩
+    exact fun _ on => (mem_latestPriorRows.mp on).1
+  have size := card_le_card subset
+  rw [skippedPriorRows,card_sdiff_of_subset subset]
+  omega
+
+private theorem latest_prior_choice_counts {n p k : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) k) (three : 3 ≤ k) (T D L : ℕ) :
+    let M := ∑ i, (paths i).length
+    M-(M/(T+1)+n*T) ≤ (priorChoiceIncidences paths (latestPriorRows paths) D L).card+n*D+p*L := by
+  classical
+  let M := ∑ i, (paths i).length
+  let R := rowIncidences paths
+  let largeLoss := R.filter (fun g => T < (skippedPriorRows paths g).card)
+  let early := R.filter (fun g => (arrivalPredecessors paths g.1 g.2).card < D+T)
+  let front := R.filter (fun g => (paths g.1).idxOf g.2 < L)
+  let good := priorChoiceIncidences paths (latestPriorRows paths) D L
+  have lossBudget : largeLoss.card*(T+1) ≤ M := calc
+    _ = ∑ _ ∈ largeLoss, (T+1) := by simp
+    _ ≤ ∑ g ∈ largeLoss, (skippedPriorRows paths g).card := sum_le_sum fun _ hit => (mem_filter.mp hit).2
+    _ ≤ ∑ g ∈ R, (skippedPriorRows paths g).card := sum_le_sum_of_subset (filter_subset _ _)
+    _ ≤ _ := skippedPriorRows_total_le_mass paths simple free three
+  have lossCount : largeLoss.card ≤ M/(T+1) := (Nat.le_div_iff_mul_le (Nat.succ_pos _)).mpr lossBudget
+  have cover : R ⊆ ((good ∪ early) ∪ front) ∪ largeLoss := by
+    intro g on
+    by_cases worst : T < (skippedPriorRows paths g).card
+    · exact mem_union_right _ (mem_filter.mpr ⟨on,worst⟩ : g ∈ largeLoss)
+    by_cases lowIndex : (paths g.1).idxOf g.2 < L
+    · exact mem_union_left _ (mem_union_right _ (mem_filter.mpr ⟨on,lowIndex⟩ : g ∈ front))
+    by_cases late : (arrivalPredecessors paths g.1 g.2).card < D+T
+    · exact mem_union_left _ (mem_union_left _ (mem_union_right _ (mem_filter.mpr ⟨on,late⟩ : g ∈ early)))
+    have enough : D ≤ (latestPriorRows paths g).card := by
+      have derived := latestPriorRows_count_add_skipped paths g
+      omega
+    exact mem_union_left _ (mem_union_left _ (mem_union_left _
+      (mem_filter.mpr ⟨on,enough,le_of_not_gt lowIndex⟩ : g ∈ good)))
+  have price₁ : (good ∪ early).card ≤ good.card+n*(D+T) := (card_union_le _ _).trans
+    (Nat.add_le_add_left (small_arrival_rank_count paths (D+T)) _)
+  have price₂ : ((good ∪ early) ∪ front).card ≤ good.card+n*(D+T)+p*L := (card_union_le _ _).trans
+    (Nat.add_le_add price₁ (small_row_position_count paths L))
+  have charge : M ≤ good.card+n*(D+T)+p*L+M/(T+1) := calc
+    M = R.card := (rowIncidences_card paths simple).symm
+    _ ≤ (((good ∪ early) ∪ front) ∪ largeLoss).card := card_le_card cover
+    _ ≤ _ := (card_union_le _ _).trans (Nat.add_le_add price₂ lossCount)
+  rw [Nat.mul_add] at charge
+  change M-(M/(T+1)+n*T) ≤ good.card+n*D+p*L
+  omega
+
+/-- Choosing the latest shared vertex for each earlier row removes the
+need to discard whole incidences. At most one skipped earlier-row choice
+is charged to any earlier incidence. `T` sets the allowable local loss. -/
+theorem half_three_latest_intersection_shifted_mass_cube_le {n p k : ℕ} (hn : 0 < n) (hp : 0 < p)
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) k) (three : 3 ≤ k) (T : ℕ) :
+    let M := ∑ i, (paths i).length
+    (M-M/(T+1)-((T+1)*n+p))^3 ≤ 6*(n*p)^2 := by
+  let M := ∑ i, (paths i).length
+  let K := M-(M/(T+1)+n*T)
+  have bound := upstream_mass_shift_cube_of_prior_counts hn hp paths simple free three
+    (latestPriorRows paths) (fun {_ _ _} on => mem_arrivalPredecessors.mp (mem_latestPriorRows.mp on).1)
+    (fun {_ _ _ _} => latestPriorRows_unique_hit) K (latest_prior_choice_counts paths simple free three T)
+  have shifted : K-(n+p) = M-M/(T+1)-((T+1)*n+p) := by
+    dsimp only [K]
+    rw [Nat.add_mul,Nat.one_mul,Nat.mul_comm T n]
+    omega
+  rw [shifted] at bound
+  exact bound
 
 end OnlineReachabilityPreservers

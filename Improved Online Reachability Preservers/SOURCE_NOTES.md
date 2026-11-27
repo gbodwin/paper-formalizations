@@ -2677,8 +2677,8 @@ local-order upper bound and recurrence of Theorem 43.
   mass is \(M\le8(n+p)\) or \(M^3\le1024(np)^2\), without a cleaning
   hypothesis. The cubic and linear cases both force quadratic path
   density if \(M\ge\eta n\sqrt p\) at sufficiently large \(p\).
-  [Half cutoff three](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L325)
-  · [Density consequence](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L356).
+  [Half cutoff three](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L347)
+  · [Density consequence](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L378).
 
   Count all choice sizes together for a sharper constant. For pruned
   mass \(W\), let \(S=(W-n-p)_+\). Encode a three-element subset of
@@ -2693,7 +2693,7 @@ local-order upper bound and recurrence of Theorem 43.
   \(S^3/6\le\binom{S+2}{3}\le(np)^2\). Pruning loses at most half the
   original mass, giving \((M-2(n+p))_+^3\le48(np)^2\). The earlier
   linear-or-cubic estimate follows from this one.
-  [Shifted cube bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L302).
+  [Shifted cube bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L324).
 
   The balanced case of Bridge Girth v4 Theorem 83 uses a bipartite
   construction of girth at least eight. The Lean witness uses the affine lines
@@ -2734,6 +2734,36 @@ local-order upper bound and recurrence of Theorem 43.
   [Cube-budget mass](OnlineReachabilityPreservers/FrozenWengerThree.lean#L14)
   · [Starting caps](OnlineReachabilityPreservers/FrozenWengerThree.lean#L45)
   · [Existence at the literal maximum](OnlineReachabilityPreservers/FrozenWengerThree.lean#L90).
+
+  For an earlier base and a later row, count only their latest common
+  vertex on the later row. A skipped choice at an incidence \((j,x)\)
+  means the earlier base meets row \(j\) again after \(x\). The base
+  and \(x\) determine that later row by the same upstream disjointness
+  argument. Thus the total number of skipped choices is at most \(M\).
+  For a threshold \(T\), at most \(\lfloor M/(T+1)\rfloor\) incidences
+  skip more than \(T\) choices. Among the others, having fewer than
+  \(D\) retained choices implies fewer than \(D+T\) original choices,
+  which occurs at most \(n(D+T)\) times. The same triple-selection
+  count with these rank bounds gives
+  \((M-\lfloor M/(T+1)\rfloor-((T+1)n+p))_+^3\le6(np)^2\).
+  This uses the original rows and holds for every half cutoff at
+  least three and positive budgets.
+
+  At equal budgets \(n=p\ge256^3\), take \(T=15\) and
+  \(q=2^{\lfloor\log_8 n\rfloor}\). Then \(q\ge256\) and
+  \(q^3\le n<8q^3\). The shifted estimate implies \(M\le4nq\).
+  For a lower bound on the literal maximum, use one field copy when
+  \(n\le4q^3\) and two disjoint copies otherwise. Pad the indexed
+  construction to \(n\) rows and replace each empty or singleton row
+  by a different singleton indexed by its row label. These rows
+  supply no strict comparisons, while all longer rows are distinct
+  by full-two exclusion. The resulting exact-count literal family
+  has enough mass to give \(q^4\le M\) and \(nq\le4M\). The output
+  uses one field copy. These inequalities and \(M\le4nq\) give all
+  four starting-average caps and mass between \(M/32\) and \(M\).
+  [Latest-hit mass bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L541)
+  · [Equal-budget upper bound](OnlineReachabilityPreservers/EqualBudgetFrozenFullThree.lean#L64)
+  · [Starting caps at the literal maximum](OnlineReachabilityPreservers/EqualBudgetFrozenFullThree.lean#L95).
 
   Below cutoff two, both exclusions are vacuous. On \(n\) vertices the
   count of simple lists, including the empty list, is less than \(3n!\).

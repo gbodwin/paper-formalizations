@@ -3853,8 +3853,8 @@ for locally ordered rows. For fixed \(\eta>0\), if a half input at
 large \(p\) has \(M\ge\eta n\sqrt p\), it has \(p\ge\delta n^2\) for a
 constant \(\delta>0\) depending only on \(\eta\). This identifies the
 path-density regime required by the \(n\sqrt p\)-scale obstruction.
-[Mass estimate](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L325)
-· [Necessary density](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L356).
+[Mass estimate](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L347)
+· [Necessary density](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L378).
 
 At positive budgets \(n\le Cp\) and \(p\le Cn\) for a fixed
 \(C\ge1\), Lemma 39 with its literal \(H\) benchmark holds at cutoff
@@ -3881,8 +3881,23 @@ maximum exists and satisfies \(q^4\le M\le4q^4\). Use the field family
 on the same exact budgets. Its degrees and lengths are all \(q\),
 between a quarter and four times the starting averages \(M/q^3\).
 Its mass is \(q^4\) and lies in \([M/4,M]\).
-[Refined half bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L302)
+[Refined half bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L324)
 · [Literal frozen case at the half maximum](OnlineReachabilityPreservers/FrozenWengerThree.lean#L90).
+
+The starting-average case of literal Lemma 39 at cutoff three also
+holds for all equal budgets \(n=p\ge256^3\). Count only the latest
+common vertex on the later row for each pair of intersecting rows.
+Every skipped choice is charged to a different earlier incidence.
+At any half cutoff at least three and each \(T\ge0\), the resulting
+bound on the original mass is
+\((M-\lfloor M/(T+1)\rfloor-((T+1)n+p))_+^3\le6(np)^2\).
+Taking \(T=15\) and \(q=2^{\lfloor\log_8 n\rfloor}\) gives
+\(M\le4nq\). The literal maximum exists, and one or two disjoint
+field copies with singleton padding give \(q^4\le M\) and \(nq\le4M\).
+One full-three field copy then fits both budgets, meets the four
+starting-average caps, and has mass \(W=q^4\) in \([M/32,M]\).
+[Latest common vertex bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L541)
+· [Equal-budget literal frozen case](OnlineReachabilityPreservers/EqualBudgetFrozenFullThree.lean#L95).
 
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.
