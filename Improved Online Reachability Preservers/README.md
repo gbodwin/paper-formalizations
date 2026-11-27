@@ -977,7 +977,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   reverse comparison on any parent row before the path split.
   When the pieces cover the parent rows, each of the three corners
   is absent from the opposite row of the return triangle.
-  [Consecutive pieces are order convex](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L18) · [Absence of a direct reverse](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L42) · [The three opposite corners](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L79).
+  [Consecutive pieces are order convex](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L18) · [Absence of a direct reverse](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L78) · [The three opposite corners](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L168).
+- For covering pieces, including interleaved pieces, the one-step
+  condition forces each actual crossed two-step return to have all
+  three corners absent from their opposite parent rows. Checking
+  only these returns suffices for full-seven preservation after a
+  disjoint order-preserving split. Keeping endpoints together by
+  either rule gives the same static width partitions.
+  [Absent corners with coverage](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L191) · [Actual piece test](OnlineReachabilityPreservers/FullSevenInducedReturns.lean#L32) · [Static equivalence](OnlineReachabilityPreservers/FullSevenInducedReturns.lean#L101).
 - To preserve full exclusion through seven under a disjoint
   order-preserving split, keep together the endpoints of a
   comparison with a direct reverse or a two-step return through

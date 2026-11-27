@@ -37,6 +37,42 @@ private theorem comparison_in_piece {rows : I → List V} {pieces : J → List V
 
 variable [LinearOrder I]
 
+private theorem crossed_two_step_return_no_original_reverse_aux
+    {rows : I → List V} {pieces : J → List V} {parent : J → I}
+    (free : BridgeFree (Before rows) 3)
+    (steps : ∀ {i x y}, Before pieces i x y → Before rows (parent i) x y)
+    (mirror : ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
+      Before rows (parent i) x y → Before pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
+    {i j a c : J} {x y z : V}
+    (apart : i ≠ j) (same : parent i = parent j)
+    (aOther : parent i ≠ parent a) (cOther : parent i ≠ parent c)
+    (detoursApart : parent a ≠ parent c)
+    (onX : x ∈ pieces i) (onY : y ∈ pieces j)
+    (old : Before rows (parent i) y x)
+    (first : Before pieces a x z) (last : Before pieces c z y)
+    (keepFirst : Before rows (parent a) x y → Before rows (parent a) y z → y ∈ pieces a)
+    (keepLast : Before rows (parent c) z x → Before rows (parent c) x y → x ∈ pieces c) :
+    ∀ q, ¬ Before rows q x y := by
+  have onParentA := steps first
+  have onParentC := steps last
+  have forbid {q : J} (other : parent i ≠ parent q) (reverse : Before pieces q x y) : False :=
+    apart.symm (mirror same.symm (same ▸ other) (same ▸ old) reverse onY onX)
+  intro q reverse
+  by_cases onFirst : q = parent a
+  · have rev : Before rows (parent a) x y := onFirst ▸ reverse
+    rcases listBefore_total rev.2.1 onParentA.2.1 (listBefore_ne onParentC).symm with yToZ | zToY
+    · have retainedY : y ∈ pieces a := keepFirst rev yToZ
+      exact forbid aOther (comparison_in_piece (fun {_ _ _} => steps) first.1 retainedY rev)
+    · exact no_parallel_list_steps free.halfFree (by decide) detoursApart zToY onParentC
+  by_cases onLast : q = parent c
+  · have rev : Before rows (parent c) x y := onLast ▸ reverse
+    rcases listBefore_total onParentC.1 rev.1 (listBefore_ne onParentA).symm with zToX | xToZ
+    · have retainedX : x ∈ pieces c := keepLast zToX rev
+      exact forbid cOther (comparison_in_piece (fun {_ _ _} => steps) retainedX last.2.1 rev)
+    · exact no_parallel_list_steps free.halfFree (by decide) detoursApart.symm xToZ onParentA
+  exact (free (k := 1) (by decide)).false
+    (threeListBridge detoursApart onFirst onLast onParentA onParentC reverse)
+
 /-- A crossed two-step return on order-convex pieces has no reverse
 comparison on any original row if the one-step condition holds. -/
 theorem crossed_two_step_return_no_original_reverse
@@ -53,34 +89,17 @@ theorem crossed_two_step_return_no_original_reverse
     (onX : x ∈ pieces i) (onY : y ∈ pieces j)
     (old : Before rows (parent i) y x)
     (first : Before pieces a x z) (last : Before pieces c z y) :
-    ∀ q, ¬ Before rows q x y := by
-  have onParentA := steps first
-  have onParentC := steps last
-  have forbid {q : J} (other : parent i ≠ parent q) (reverse : Before pieces q x y) : False :=
-    apart.symm (mirror same.symm (same ▸ other) (same ▸ old) reverse onY onX)
-  intro q reverse
-  by_cases onFirst : q = parent a
-  · have rev : Before rows (parent a) x y := onFirst ▸ reverse
-    rcases listBefore_total rev.2.1 onParentA.2.1 (listBefore_ne onParentC).symm with yToZ | zToY
-    · have retainedY : y ∈ pieces a := convex first.1 first.2.1 rev yToZ
-      exact forbid aOther (comparison_in_piece (fun {_ _ _} => steps) first.1 retainedY rev)
-    · exact no_parallel_list_steps free.halfFree (by decide) detoursApart zToY onParentC
-  by_cases onLast : q = parent c
-  · have rev : Before rows (parent c) x y := onLast ▸ reverse
-    rcases listBefore_total onParentC.1 rev.1 (listBefore_ne onParentA).symm with zToX | xToZ
-    · have retainedX : x ∈ pieces c := convex last.1 last.2.1 zToX rev
-      exact forbid cOther (comparison_in_piece (fun {_ _ _} => steps) retainedX last.2.1 rev)
-    · exact no_parallel_list_steps free.halfFree (by decide) detoursApart.symm xToZ onParentA
-  exact (free (k := 1) (by decide)).false
-    (threeListBridge detoursApart onFirst onLast onParentA onParentC reverse)
+    ∀ q, ¬ Before rows q x y :=
+  crossed_two_step_return_no_original_reverse_aux free (fun {_ _ _} => steps) (fun {_ _ _ _ _} => mirror)
+    apart same aOther cOther detoursApart onX onY old first last
+    (convex first.1 first.2.1) (convex last.1 last.2.1)
 
-/-- A crossed return on convex pieces that cover their parents has each
-of its three corners absent from the opposite row of the triangle. -/
-theorem crossed_two_step_return_missing_opposite_corners
+/-- The one-step condition and coverage also rule out a direct
+reverse, even when the pieces interleave. -/
+theorem crossed_two_step_return_no_original_reverse_of_cover
     {rows : I → List V} {pieces : J → List V} {parent : J → I}
     (free : BridgeFree (Before rows) 3)
     (steps : ∀ {i x y}, Before pieces i x y → Before rows (parent i) x y)
-    (convex : ListPiecesOrderConvex rows pieces parent)
     (cover : ∀ {p x}, x ∈ rows p → ∃ j, parent j = p ∧ x ∈ pieces j)
     (mirror : ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
       Before rows (parent i) x y → Before pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
@@ -91,12 +110,36 @@ theorem crossed_two_step_return_missing_opposite_corners
     (onX : x ∈ pieces i) (onY : y ∈ pieces j)
     (old : Before rows (parent i) y x)
     (first : Before pieces a x z) (last : Before pieces c z y) :
+    ∀ q, ¬ Before rows q x y := by
+  refine crossed_two_step_return_no_original_reverse_aux free (fun {_ _ _} => steps)
+    (fun {_ _ _ _ _} => mirror) apart same aOther cOther detoursApart onX onY old first last ?_ ?_
+  · intro _ yToZ
+    obtain ⟨piece, identifies, present⟩ := cover yToZ.1
+    have equal : piece = a := mirror identifies (identifies.symm ▸ detoursApart)
+      (identifies.symm ▸ yToZ) last present first.2.1
+    exact equal ▸ present
+  · intro zToX _
+    obtain ⟨piece, identifies, present⟩ := cover zToX.2.1
+    have equal : c = piece := mirror identifies.symm detoursApart.symm zToX first last.1 present
+    exact equal.symm ▸ present
+
+private theorem crossed_two_step_return_missing_opposite_corners_aux
+    {rows : I → List V} {pieces : J → List V} {parent : J → I}
+    (free : BridgeFree (Before rows) 3)
+    (steps : ∀ {i x y}, Before pieces i x y → Before rows (parent i) x y)
+    (cover : ∀ {p x}, x ∈ rows p → ∃ j, parent j = p ∧ x ∈ pieces j)
+    (mirror : ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
+      Before rows (parent i) x y → Before pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
+    {i j a c : J} {x y z : V}
+    (apart : i ≠ j) (same : parent i = parent j)
+    (aOther : parent i ≠ parent a) (cOther : parent i ≠ parent c)
+    (onX : x ∈ pieces i) (onY : y ∈ pieces j)
+    (old : Before rows (parent i) y x)
+    (first : Before pieces a x z) (last : Before pieces c z y)
+    (noReturn : ∀ q, ¬ Before rows q x y) :
     y ∉ rows (parent a) ∧ z ∉ rows (parent i) ∧ x ∉ rows (parent c) := by
   have firstOld := steps first
   have lastOld := steps last
-  have noReturn := crossed_two_step_return_no_original_reverse
-    free (fun {_ _ _} => steps) convex (fun {_ _ _ _ _} => mirror)
-    apart same aOther cOther detoursApart onX onY old first last
   refine ⟨?_, ?_, ?_⟩
   · intro inA
     rcases listBefore_total firstOld.1 inA (listBefore_ne old).symm with reverse | parallel
@@ -119,6 +162,51 @@ theorem crossed_two_step_return_missing_opposite_corners
     rcases listBefore_total inC lastOld.2.1 (listBefore_ne old).symm with reverse | parallel
     · exact noReturn (parent c) reverse
     · exact no_parallel_list_steps free.halfFree (by decide) cOther.symm parallel old
+
+/-- A crossed return on convex pieces that cover their parents has each
+of its three corners absent from the opposite row of the triangle. -/
+theorem crossed_two_step_return_missing_opposite_corners
+    {rows : I → List V} {pieces : J → List V} {parent : J → I}
+    (free : BridgeFree (Before rows) 3)
+    (steps : ∀ {i x y}, Before pieces i x y → Before rows (parent i) x y)
+    (convex : ListPiecesOrderConvex rows pieces parent)
+    (cover : ∀ {p x}, x ∈ rows p → ∃ j, parent j = p ∧ x ∈ pieces j)
+    (mirror : ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
+      Before rows (parent i) x y → Before pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
+    {i j a c : J} {x y z : V}
+    (apart : i ≠ j) (same : parent i = parent j)
+    (aOther : parent i ≠ parent a) (cOther : parent i ≠ parent c)
+    (detoursApart : parent a ≠ parent c)
+    (onX : x ∈ pieces i) (onY : y ∈ pieces j)
+    (old : Before rows (parent i) y x)
+    (first : Before pieces a x z) (last : Before pieces c z y) :
+    y ∉ rows (parent a) ∧ z ∉ rows (parent i) ∧ x ∉ rows (parent c) :=
+  crossed_two_step_return_missing_opposite_corners_aux free (fun {_ _ _} => steps) (fun {_ _} => cover)
+    (fun {_ _ _ _ _} => mirror) apart same aOther cOther onX onY old first last
+    (crossed_two_step_return_no_original_reverse free (fun {_ _ _} => steps) convex
+      (fun {_ _ _ _ _} => mirror) apart same aOther cOther detoursApart onX onY old first last)
+
+/-- With coverage and the one-step condition, all three opposite
+corners are absent even for interleaved pieces. -/
+theorem crossed_two_step_return_missing_opposite_corners_of_cover
+    {rows : I → List V} {pieces : J → List V} {parent : J → I}
+    (free : BridgeFree (Before rows) 3)
+    (steps : ∀ {i x y}, Before pieces i x y → Before rows (parent i) x y)
+    (cover : ∀ {p x}, x ∈ rows p → ∃ j, parent j = p ∧ x ∈ pieces j)
+    (mirror : ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
+      Before rows (parent i) x y → Before pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
+    {i j a c : J} {x y z : V}
+    (apart : i ≠ j) (same : parent i = parent j)
+    (aOther : parent i ≠ parent a) (cOther : parent i ≠ parent c)
+    (detoursApart : parent a ≠ parent c)
+    (onX : x ∈ pieces i) (onY : y ∈ pieces j)
+    (old : Before rows (parent i) y x)
+    (first : Before pieces a x z) (last : Before pieces c z y) :
+    y ∉ rows (parent a) ∧ z ∉ rows (parent i) ∧ x ∉ rows (parent c) :=
+  crossed_two_step_return_missing_opposite_corners_aux free (fun {_ _ _} => steps) (fun {_ _} => cover)
+    (fun {_ _ _ _ _} => mirror) apart same aOther cOther onX onY old first last
+    (crossed_two_step_return_no_original_reverse_of_cover free (fun {_ _ _} => steps) (fun {_ _} => cover)
+      (fun {_ _ _ _ _} => mirror) apart same aOther cOther detoursApart onX onY old first last)
 
 /-- The one-step condition suffices on convex pieces if every original
 two-step return on distinct parents has a direct reverse comparison. -/

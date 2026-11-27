@@ -1620,7 +1620,19 @@ return triangle. For full-seven-free parents, disjoint pieces satisfying
 the same one-step and convexity conditions preserve full-seven
 exclusion if every original two-step return through distinct other
 parents has a direct reverse comparison.
-[Convex standard width blocks](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L18) · [No direct reverse](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L42) · [Corner memberships](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L79) · [Preservation theorem](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L125).
+[Convex standard width blocks](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L18) · [No direct reverse](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L78) · [Corner memberships](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L168) · [Preservation theorem](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L213).
+
+When the pieces cover their parents, the one-step condition is
+enough to deduce all three absent-corner memberships for an
+actual crossed two-step return, including with interleaved pieces.
+For disjoint order-preserving covering pieces of full-seven-free
+rows, the one-step condition and a check of only these induced
+returns on the actual pieces suffice at full cutoff seven. A
+separate theorem keeps the endpoints of all such induced returns
+and direct reversals together. In the static width test the
+noninduced returns are implied by one or two direct reversals,
+so the sets of feasible partitions are equal.
+[Induced return](OnlineReachabilityPreservers/FullSevenInducedReturns.lean#L14) · [Actual piece test](OnlineReachabilityPreservers/FullSevenInducedReturns.lean#L32) · [Endpoint condition](OnlineReachabilityPreservers/FullSevenInducedReturns.lean#L55) · [Decomposition of links](OnlineReachabilityPreservers/FullSevenInducedReturns.lean#L74) · [Equivalent static partitions](OnlineReachabilityPreservers/FullSevenInducedReturns.lean#L101).
 
 The component test can use the row labels of the return steps.
 A comparison is protected if it has a direct reverse or a return

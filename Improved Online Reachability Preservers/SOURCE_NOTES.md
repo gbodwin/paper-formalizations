@@ -832,7 +832,19 @@ order-preserving convex pieces of full-seven-free parents, the
 one-step condition preserves full exclusion through seven if every
 original two-step return through two distinct other parents has a
 direct reverse.
-[No original reverse comparison](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L42) · [Absent opposite corners](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L79) · [Full-seven preservation under the reverse-comparison condition](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L125).
+[No original reverse comparison](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L78) · [Absent opposite corners](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L168) · [Full-seven preservation under the reverse-comparison condition](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L213).
+
+Complete coverage gives the same absent-corner condition for
+interleaved pieces. If a corner between two detour vertices
+lies in a different piece, the reverse step on the other detour
+piece triggers the one-step condition. Thus for disjoint
+order-preserving pieces passing the one-step condition, the
+remaining actual crossed returns to test have all three corners
+absent from their opposite rows. These memberships refer to the
+rows immediately before the path split. Any omitted link from a
+noninduced return is implied by one or two direct reversal links,
+so the two static width partition tests are equivalent.
+[No original reverse with coverage](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L99) · [Absent corners with coverage](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L191) · [Actual piece test](OnlineReachabilityPreservers/FullSevenInducedReturns.lean#L32) · [Static partition equivalence](OnlineReachabilityPreservers/FullSevenInducedReturns.lean#L101).
 
 For disjoint order-preserving pieces, protect each comparison
 with a direct reverse in the parent graph or a return through
