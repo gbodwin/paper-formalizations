@@ -885,7 +885,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [Repaired classes](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L529)
   · [Unique sublists](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L566)
   · [Opposite-link bound](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L582).
-- At these cutoffs, the [large path-budget theorem](OnlineReachabilityPreservers/FrozenManyRows.lean#L39)
+- At half cutoff five, a repair can delete up to \(M/7\) incidences
+  if it makes every remaining reversed comparison cross a partition into
+  two row classes. The witness retains at least \(M/288\) and meets both
+  budgets and all four starting-average caps. The same bound applies to
+  the filter that removes the later vertex in the earlier row of a
+  same-class reversal.
+  [Two repaired classes](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L770)
+  · [Direct deletion test](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L903).
+- At half cutoff four and full cutoffs four and six, the
+  [large path-budget theorem](OnlineReachabilityPreservers/FrozenManyRows.lean#L39)
   starts from the unrestricted maximum when \(n(n-1)\le66p\).
   Such a maximizing family has nonempty rows and average length at most
   twelve. Opposite-intersection pruning then gives a cleaned witness with

@@ -2625,6 +2625,17 @@ pruning supplies such a family whenever the opposite-link count is at most
 · [Unique sublists](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L566)
 · [Opposite-link bound](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L582).
 
+At half cutoff five, two row classes after repair suffice when all
+remaining reversed comparisons cross between classes and the combined
+mass is at least \(6M/7\). Width splitting within one class preserves
+half exclusion through size five. Keeping all path pieces in budget before
+peeling, or using a single large class with quadratic trimming on both
+sides, gives mass at least \(M/288\) with both original budgets and all four
+starting-average caps. The criterion also applies when the same-class
+reverse-end filter removes at most \(M/7\) incidences.
+[Two repaired classes at half cutoff five](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L770)
+· [Same-class deletion budget](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L903).
+
 If an eligible family has \(s\) nonempty paths, opposite-intersection
 pruning keeps at least \((M+s)/2\) incidences. It meets the \(13M/24\)
 threshold whenever \(M\le12s\). For the unrestricted extremum at positive

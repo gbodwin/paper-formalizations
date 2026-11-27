@@ -777,6 +777,18 @@ cutoff four in both modes and cutoff six in full mode.
 · [Unique sublists](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L566)
 · [Opposite-link bound](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L582).
 
+At half cutoff five, the two-class repair can leave as little as \(6M/7\)
+total mass. A class with \(r\) rows and mass \(K\) gives at most
+\(r+\lfloor K/L\rfloor\) width pieces, with \(L=\lfloor4M/p\rfloor\).
+When neither class has mass at least \(13M/24\), the proof compares the
+quadratic vertex loss and the path peeling charge for each class. If one
+class has too many pieces, the other has few original rows and at least
+\(53M/168\) mass. At that mass the two charges still leave \(M/288\)
+after peeling, within both budgets and all four starting-average caps.
+The supplied repair may erase at most \(M/7\) incidences.
+[Half-five class selection](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L770)
+· [Reverse-end filter](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L903).
+
 Clipping uses a separate count of ordered comparisons and preserves
 the original row labels. In the indexed simple-path convention, half exclusion
 through size two gives at most \(n(n-1)\) ordered comparisons across all
