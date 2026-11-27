@@ -378,4 +378,163 @@ theorem halfFive_oppositeLinkGraph_degree_product_bound {paths : I → List V}
   rw [expand] at doubled
   omega
 
+
+omit [DecidableEq V] in
+private theorem dart_degree_product_lower (G : SimpleGraph V) [DecidableRel G.Adj] :
+    (Fintype.card G.Dart)^3 ≤ (Fintype.card V)^2 *
+      ∑ e : G.Dart, G.degree e.fst * G.degree e.snd := by
+  classical
+  let n := Fintype.card V
+  let m := Fintype.card G.Dart
+  let d (v : V) : ℝ := G.degree v
+  let h (e : G.Dart) := Real.sqrt (d e.fst*d e.snd)
+  have positiveFirst (e : G.Dart) : 0 < d e.fst := by
+    change 0 < (G.degree e.fst:ℝ)
+    exact_mod_cast (e.adj.degree_pos_left : 0 < G.degree e.fst)
+  have positiveSecond (e : G.Dart) : 0 < d e.snd := by
+    change 0 < (G.degree e.snd:ℝ)
+    exact_mod_cast (e.adj.degree_pos_right : 0 < G.degree e.snd)
+  have positive (e : G.Dart) : 0 < h e :=
+    Real.sqrt_pos.2 (mul_pos (positiveFirst e) (positiveSecond e))
+  have hSquared (e : G.Dart) : (h e)^2 = d e.fst*d e.snd :=
+    Real.sq_sqrt (mul_nonneg (positiveFirst e).le (positiveSecond e).le)
+  have inversePair (e : G.Dart) : 2*(h e)⁻¹ ≤ (d e.fst)⁻¹+(d e.snd)⁻¹ := by
+    have left := positiveFirst e
+    have right := positiveSecond e
+    have average : 2*h e ≤ d e.fst+d e.snd := by
+      change 2*Real.sqrt (d e.fst*d e.snd) ≤ d e.fst+d e.snd
+      rw [Real.sqrt_mul left.le]
+      nlinarith only [sq_nonneg (Real.sqrt (d e.fst)-Real.sqrt (d e.snd)),
+        Real.sq_sqrt left.le,Real.sq_sqrt right.le]
+    apply le_of_mul_le_mul_right _ (mul_pos left right)
+    have first : (2*(h e)⁻¹)*(d e.fst*d e.snd) = 2*h e := by
+      rw [← hSquared e]
+      field_simp [(positive e).ne']
+    have last : ((d e.fst)⁻¹+(d e.snd)⁻¹)*(d e.fst*d e.snd) = d e.fst+d e.snd := by
+      field_simp [left.ne',right.ne']; ring
+    rwa [first,last]
+  have inverseFirst : (∑ e : G.Dart, (d e.fst)⁻¹) ≤ (n:ℝ) := by
+    rw [sum_darts_as_neighbor_sums G (fun u _ => (d u)⁻¹)]
+    calc
+      _ ≤ ∑ _ : V, (1:ℝ) := by
+        apply sum_le_sum
+        intro u _
+        simp only [sum_const,SimpleGraph.card_neighborFinset_eq_degree,nsmul_eq_mul]
+        change d u*(d u)⁻¹ ≤ 1
+        by_cases zero : d u = 0 <;> simp [zero]
+      _ = _ := by simp [n]
+  let reversal : G.Dart ≃ G.Dart :=
+    ⟨SimpleGraph.Dart.symm,SimpleGraph.Dart.symm,SimpleGraph.Dart.symm_symm,SimpleGraph.Dart.symm_symm⟩
+  have inverseSecond : (∑ e : G.Dart, (d e.snd)⁻¹) = ∑ e : G.Dart, (d e.fst)⁻¹ :=
+    Equiv.sum_comp reversal (fun e => (d e.fst)⁻¹)
+  have inverseSum : (∑ e : G.Dart, (h e)⁻¹) ≤ (n:ℝ) := by
+    have total : 2*(∑ e : G.Dart, (h e)⁻¹) ≤
+        (∑ e : G.Dart, (d e.fst)⁻¹)+(∑ e : G.Dart, (d e.snd)⁻¹) := by
+      rw [mul_sum,← sum_add_distrib]
+      exact sum_le_sum (fun e _ => inversePair e)
+    rw [inverseSecond] at total
+    linarith only [inverseFirst,total]
+  have canceled (e : G.Dart) : Real.sqrt (h e)*Real.sqrt ((h e)⁻¹) = 1 := by
+    rw [← Real.sqrt_mul (positive e).le,mul_inv_cancel₀ (positive e).ne',Real.sqrt_one]
+  have rootSquared (e : G.Dart) : (Real.sqrt (h e))^2 = h e := Real.sq_sqrt (positive e).le
+  have inverseSquared (e : G.Dart) : (Real.sqrt ((h e)⁻¹))^2 = (h e)⁻¹ :=
+    Real.sq_sqrt (inv_nonneg.mpr (positive e).le)
+  let A := ∑ e : G.Dart, h e
+  have nonnegative : 0 ≤ A := sum_nonneg (fun e _ => (positive e).le)
+  have harmonic : (m:ℝ)^2 ≤ A*(n:ℝ) := by
+    have cauchy : (m:ℝ)^2 ≤ A*(∑ e : G.Dart, (h e)⁻¹) := by
+      simpa only [canceled,rootSquared,inverseSquared,Finset.sum_const,card_univ,nsmul_eq_mul,mul_one,A,m] using
+        Finset.sum_mul_sq_le_sq_mul_sq (univ : Finset G.Dart)
+          (fun e => Real.sqrt (h e)) (fun e => Real.sqrt ((h e)⁻¹))
+    exact cauchy.trans (mul_le_mul_of_nonneg_left inverseSum nonnegative)
+  let S := ∑ e : G.Dart, G.degree e.fst*G.degree e.snd
+  have squares : (∑ e : G.Dart, (h e)^2) = (S:ℝ) := by
+    simp [S,hSquared,d]
+  have arithmetic : A^2 ≤ (m:ℝ)*(S:ℝ) := by
+    have cauchy : A^2 ≤ (m:ℝ)*(∑ e : G.Dart, (h e)^2) := by
+      simpa only [one_mul,one_pow,Finset.sum_const,card_univ,nsmul_eq_mul,mul_one,A,m] using
+        Finset.sum_mul_sq_le_sq_mul_sq (univ : Finset G.Dart) (fun _ => (1:ℝ)) h
+    rwa [squares] at cauchy
+  by_cases empty : m = 0
+  · change m^3 ≤ n^2*S
+    simp [empty]
+  have positiveCount : 0 < (m:ℝ) := by exact_mod_cast Nat.pos_of_ne_zero empty
+  have result : (m:ℝ)^3 ≤ (n:ℝ)^2*(S:ℝ) := by
+    apply le_of_mul_le_mul_left _ positiveCount
+    calc
+      (m:ℝ)*(m:ℝ)^3 = ((m:ℝ)^2)^2 := by ring
+      _ ≤ (A*(n:ℝ))^2 := pow_le_pow_left₀ (sq_nonneg _) harmonic 2
+      _ = (n:ℝ)^2*A^2 := by ring
+      _ ≤ (n:ℝ)^2*((m:ℝ)*(S:ℝ)) := mul_le_mul_of_nonneg_left arithmetic (sq_nonneg _)
+      _ = _ := by ring
+  exact_mod_cast result
+
+/-- Count opposite links without a regularity assumption. The variable
+`m` counts both orientations of each opposite link. -/
+theorem halfFive_oppositeLinkGraph_card_cubic {paths : I → List V}
+    (free : HalfBridgeFree (Before paths) 5) :
+    let n := Fintype.card V
+    let m := 2*Nat.card (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).edgeSet
+    2*m^3 ≤ n^3*m+2*n^3*(n-1) := by
+  classical
+  let G := oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))
+  let n := Fintype.card V
+  let m := Fintype.card G.Dart
+  let S := ∑ e : G.Dart, G.degree e.fst*G.degree e.snd
+  have lower : m^3 ≤ n^2*S := dart_degree_product_lower G
+  have upper : 2*S ≤ n*m+2*n*(n-1) := halfFive_oppositeLinkGraph_degree_product_bound free
+  have identify : m = 2*Nat.card G.edgeSet := by
+    rw [Nat.card_eq_fintype_card,G.card_edgeSet]
+    exact G.dart_card_eq_twice_card_edges
+  change 2*(2*Nat.card G.edgeSet)^3 ≤ n^3*(2*Nat.card G.edgeSet)+2*n^3*(n-1)
+  rw [← identify]
+  calc
+    2*m^3 ≤ 2*(n^2*S) := Nat.mul_le_mul_left _ lower
+    _ = n^2*(2*S) := by ring
+    _ ≤ n^2*(n*m+2*n*(n-1)) := Nat.mul_le_mul_left _ upper
+    _ = _ := by ring
+
+/-- A mass condition in the original counts suffices for the frozen
+half-five witness, without a degree-regularity premise. -/
+theorem regularization_list_frozen_half_five_of_large_mass {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) 5) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (massLinear : 48*n ≤ 11*(∑ i, (paths i).length))
+    (massSquare : 108*n^3 ≤ (11*(∑ i, (paths i).length))^2) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) 5 ∧
+      M ≤ 288*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let E := Nat.card (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).edgeSet
+  let m := 2*E
+  apply regularization_list_frozen_half_five_of_few_opposite_links paths simple free hn hp dense long
+  change 24*E ≤ 11*M
+  suffices 12*m ≤ 11*M by dsimp only [m] at this; omega
+  by_cases low : m ≤ 4*n
+  · omega
+  have cubic : 2*m^3 ≤ n^3*m+2*n^3*(n-1) := by
+    simpa only [Fintype.card_fin] using halfFive_oppositeLinkGraph_card_cubic free
+  have error : 4*n^3*(n-1) ≤ n^3*m := calc
+    _ = n^3*(4*(n-1)) := by ring
+    _ ≤ _ := Nat.mul_le_mul_left _ (by omega)
+  have four : 4*m^3 ≤ 3*n^3*m := calc
+    _ = 2*(2*m^3) := by ring
+    _ ≤ 2*(n^3*m+2*n^3*(n-1)) := Nat.mul_le_mul_left _ cubic
+    _ = 2*(n^3*m)+4*n^3*(n-1) := by ring
+    _ ≤ 2*(n^3*m)+n^3*m := Nat.add_le_add_left error _
+    _ = _ := by ring
+  have square : 4*m^2 ≤ 3*n^3 := (Nat.mul_le_mul_right_iff (show 0 < m by omega)).mp (by
+    calc
+      _ = 4*m^3 := by ring
+      _ ≤ 3*n^3*m := four)
+  have scaled : (12*m)^2 ≤ (11*M)^2 := calc
+    _ = 36*(4*m^2) := by ring
+    _ ≤ 36*(3*n^3) := Nat.mul_le_mul_left _ square
+    _ = 108*n^3 := by ring
+    _ ≤ _ := massSquare
+  by_contra! violates
+  exact (Nat.pow_lt_pow_left violates (by decide : 2 ≠ 0)).not_ge scaled
+
 end OnlineReachabilityPreservers

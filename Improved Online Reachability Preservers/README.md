@@ -766,6 +766,17 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   walks with distinct endpoints bounds that square term after removing
   the walks that immediately return to their start.
   [Degree products over oriented links](OnlineReachabilityPreservers/HalfFiveOppositeLinkCount.lean#L301).
+  For arbitrary degrees, Cauchy–Schwarz bounds the degree-product sum below
+  by \(m^3/n^2\) when \(n>0\). Each nonisolated vertex contributes exactly one
+  to the sum of reciprocal degrees over oriented links starting at that
+  vertex. Applying the arithmetic–geometric mean inequality to each link
+  and using Cauchy–Schwarz twice gives the lower bound. The resulting
+  integer inequality is \(2m^3\le n^3m+2n^3(n-1)\). For simple input with positive
+  budgets, mass \(M\) at least both budgets and half exclusion through five,
+  the conditions \(48n\le11M\) and \(108n^3\le(11M)^2\) ensure at most \(11M/24\)
+  opposite links. The half-five frozen witness keeps at least \(M/288\)
+  of the original mass with both budgets and all four original-average caps.
+  [Cubic bound on opposite links](OnlineReachabilityPreservers/HalfFiveOppositeLinkCount.lean#L474) · [Half-five cleaning with the mass bound](OnlineReachabilityPreservers/HalfFiveOppositeLinkCount.lean#L499).
   For half exclusion through four, the number of opposite links \(E\)
   satisfies \(4E^2\le n^2(n-1)\). If \(M^2\ge16n^2(n-1)\) and the
   incidence mass \(M\) is at least both positive budgets, the cleaned
