@@ -8,10 +8,10 @@ local notation "Before" => SourceAudit.BeforeIn
 
 variable {I V : Type*} [LinearOrder I] [Fintype I] [LinearOrder V] [Fintype V]
 
-/-- In the actual width-piece graph, every bounded return across two
-blocks of the same parent spans at most the given margin in that parent. -/
-def CrossedWidthWalkSpanLE (rows : I → List V) (width radius margin : ℕ) : Prop :=
-  let pieces := splitListPaths rows width
+/-- A bounded backward walk in the given pieces must have both
+endpoints within the chosen span on its parent. -/
+def CrossedWidthWalkSpanLEOn (rows : I → List V) (width : ℕ)
+    (pieces : ListBlockIndex rows width → List V) (radius margin : ℕ) : Prop :=
   let graph := listPiecePrecedenceGraph pieces
   ∀ ⦃i j : ListBlockIndex rows width⦄ ⦃earlier later : V⦄,
     i ≠ j → i.fst = j.fst →
@@ -19,19 +19,24 @@ def CrossedWidthWalkSpanLE (rows : I → List V) (width radius margin : ℕ) : P
     later ∈ reachIn graph earlier radius →
     (rows j.fst).idxOf later ≤ (rows j.fst).idxOf earlier+margin
 
+/-- In the actual width-piece graph, every bounded return across two
+blocks of the same parent spans at most the given margin in that parent. -/
+def CrossedWidthWalkSpanLE (rows : I → List V) (width radius margin : ℕ) : Prop :=
+  CrossedWidthWalkSpanLEOn rows width (splitListPaths rows width) radius margin
+
 omit [LinearOrder I] in
-/-- A comparison walk remaining after boundary erasure would already
-exist in the original pieces. The span bound forces its later endpoint
-into the erased part of its width block. -/
-theorem noShortBackwardReturnAcrossPieces_erase_width_boundary {width radius margin : ℕ}
-    (rows : I → List V) (simple : ∀ i, (rows i).Nodup)
-    (positive : 0 < width) (span : CrossedWidthWalkSpanLE rows width radius margin) :
-    let kept := erasePieceIncidences (splitListPaths rows width) (widthBoundaryIncidences rows width margin)
+/-- The test can be restricted to sublists of the width pieces. Erasure
+removes the later endpoint of any remaining tested backward walk. -/
+theorem noShortBackwardReturnAcrossPieces_erase_width_boundary_of_sublist {width radius margin : ℕ}
+    (rows : I → List V) (simple : ∀ i, (rows i).Nodup) (pieces : ListBlockIndex rows width → List V)
+    (sub : ∀ j, (pieces j).Sublist (splitListPaths rows width j))
+    (positive : 0 < width) (span : CrossedWidthWalkSpanLEOn rows width pieces radius margin) :
+    let kept := erasePieceIncidences pieces (widthBoundaryIncidences rows width margin)
     NoShortBackwardReturnAcrossPieces (listPiecePrecedenceGraph kept) id rows kept Sigma.fst radius := by
-  let pieces := splitListPaths rows width
   let marked := widthBoundaryIncidences rows width margin
   let kept := erasePieceIncidences pieces marked
-  have pieceSimple (i : ListBlockIndex rows width) : (pieces i).Nodup := List.filter_sublist.nodup (simple i.fst)
+  have pieceSimple (i : ListBlockIndex rows width) : (pieces i).Nodup :=
+    (sub i).nodup (List.filter_sublist.nodup (simple i.fst))
   have steps {x y : V} (step : Edge (listPiecePrecedenceGraph kept) x y) :
       Edge (listPiecePrecedenceGraph pieces) (id x) (id y) := by
     obtain ⟨i,inside⟩ := listPiecePrecedenceGraph_edge.mp step
@@ -44,8 +49,44 @@ theorem noShortBackwardReturnAcrossPieces_erase_width_boundary {width radius mar
   have oldBack := project_reachIn id (fun {_ _} => steps) radius back
   have reversed : Before rows j.fst x y := same ▸ forward
   have markedLast := mem_widthBoundaryIncidences_of_parent_span rows positive apart.symm same.symm
-    oldLast.1 oldFirst.1 reversed (span apart same oldFirst.1 oldLast.1 reversed oldBack)
+    ((sub j).subset oldLast.1) ((sub i).subset oldFirst.1) reversed
+    (span apart same oldFirst.1 oldLast.1 reversed oldBack)
   exact oldLast.2 markedLast
+
+omit [LinearOrder I] in
+/-- A comparison walk remaining after boundary erasure would already
+exist in the original pieces. The span bound forces its later endpoint
+into the erased part of its width block. -/
+theorem noShortBackwardReturnAcrossPieces_erase_width_boundary {width radius margin : ℕ}
+    (rows : I → List V) (simple : ∀ i, (rows i).Nodup)
+    (positive : 0 < width) (span : CrossedWidthWalkSpanLE rows width radius margin) :
+    let kept := erasePieceIncidences (splitListPaths rows width) (widthBoundaryIncidences rows width margin)
+    NoShortBackwardReturnAcrossPieces (listPiecePrecedenceGraph kept) id rows kept Sigma.fst radius :=
+  noShortBackwardReturnAcrossPieces_erase_width_boundary_of_sublist rows simple (splitListPaths rows width)
+    (fun _ => List.Sublist.refl _) positive span
+
+/-- A short-span test on the retained sublists gives half exclusion
+after boundary erasure, with parent arrival order and cutoff fixed. -/
+theorem halfBridgeFree_erase_short_span_width_walks_of_sublist {width cutoff margin : ℕ}
+    (rows : I → List V) (simple : ∀ i, (rows i).Nodup)
+    (pieces : ListBlockIndex rows width → List V)
+    (sub : ∀ j, (pieces j).Sublist (splitListPaths rows width j))
+    (free : HalfBridgeFree (Before rows) cutoff) (positive : 0 < width)
+    (span : CrossedWidthWalkSpanLEOn rows width pieces (cutoff-3) margin) :
+    HalfBridgeFree (Before (erasePieceIncidences pieces (widthBoundaryIncidences rows width margin))) cutoff := by
+  let marked := widthBoundaryIncidences rows width margin
+  let kept := erasePieceIncidences pieces marked
+  have oldSub (i : ListBlockIndex rows width) : (kept i).Sublist (splitListPaths rows width i) :=
+    (erasePieceIncidences_sublist pieces marked i).trans (sub i)
+  have parentSub (i : ListBlockIndex rows width) : (kept i).Sublist (rows i.fst) :=
+    (oldSub i).trans List.filter_sublist
+  refine halfBridgeFree_of_disjoint_split_of_no_backward_returns (listPiecePrecedenceGraph kept) id
+    free Sigma.fst (block_parent_mono _ width) (fun {i _ _} step => listBefore_of_sublist
+      (paths := rows ∘ Sigma.fst) (simple i.fst) (parentSub i) step)
+    (fun {i _ _} step => listPiecePrecedenceGraph_edge.mpr ⟨i,step⟩) ?_ ?_
+  · intro i j x apart same first last
+    exact splitListPaths_disjoint apart same ((oldSub i).subset first) ((oldSub j).subset last)
+  · exact noShortBackwardReturnAcrossPieces_erase_width_boundary_of_sublist rows simple pieces sub positive span
 
 /-- If the parent rows already have half-bridge exclusion, boundary
 erasure preserves it through the input cutoff. The comparison walk
@@ -55,20 +96,9 @@ theorem halfBridgeFree_erase_short_span_width_walks {width cutoff margin : ℕ}
     (free : HalfBridgeFree (Before rows) cutoff) (positive : 0 < width)
     (span : CrossedWidthWalkSpanLE rows width (cutoff-3) margin) :
     HalfBridgeFree (Before (erasePieceIncidences (splitListPaths rows width)
-      (widthBoundaryIncidences rows width margin))) cutoff := by
-  let pieces := splitListPaths rows width
-  let marked := widthBoundaryIncidences rows width margin
-  let kept := erasePieceIncidences pieces marked
-  have sub (i : ListBlockIndex rows width) : (kept i).Sublist (rows i.fst) :=
-    (erasePieceIncidences_sublist pieces marked i).trans List.filter_sublist
-  refine halfBridgeFree_of_disjoint_split_of_no_backward_returns (listPiecePrecedenceGraph kept) id
-    free Sigma.fst (block_parent_mono _ width) (fun {i _ _} step => listBefore_of_sublist
-      (paths := rows ∘ Sigma.fst) (simple i.fst) (sub i) step)
-    (fun {i _ _} step => listPiecePrecedenceGraph_edge.mpr ⟨i,step⟩) ?_ ?_
-  · intro i j x apart same first last
-    exact splitListPaths_disjoint apart same (mem_erasePieceIncidences.mp first).1 (mem_erasePieceIncidences.mp last).1
-  · exact noShortBackwardReturnAcrossPieces_erase_width_boundary rows simple positive span
-
+      (widthBoundaryIncidences rows width margin))) cutoff :=
+  halfBridgeFree_erase_short_span_width_walks_of_sublist rows simple (splitListPaths rows width)
+    (fun _ => List.Sublist.refl _) free positive span
 
 open Finset
 open scoped Sigma.Lex

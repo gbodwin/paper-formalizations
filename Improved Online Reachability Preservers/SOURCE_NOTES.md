@@ -1086,6 +1086,22 @@ half-free input remains open.
 · [Supported erasure](OnlineReachabilityPreservers/HalfWidthRectangleRepair.lean#L94)
 · [Literal witness](OnlineReachabilityPreservers/HalfWidthRectangleRepair.lean#L167).
 
+At \(M>8\max(n,p)\), choose a rectangle carrying at least \(27M/31\)
+within the original budgets. Suppose each tested backward width walk on
+its pieces has span at most \(\lfloor L/3\rfloor\) in its copied parent.
+Mark the first \(\lfloor L/3\rfloor\) entries of every noninitial block
+before restricting to the rectangle. Erase the marked incidences in the
+rectangle. The whole mark set costs at most \(M/3\), and the erasure
+removes all such width returns. The
+degree test only uses the surviving incidences in their reconstructed
+parents. If that test passes, the same arithmetic as for the full
+width-cover bound pays both original peeling charges and gives \(M/27\)
+retention. Simple half-free inputs with positive budgets and
+\(M\ge\max(n,p)\) keep their original cutoff \(k\ge2\), both budgets,
+and the four original caps. The low-mass case needs no rectangle certificate.
+[Shared erasure budget](OnlineReachabilityPreservers/FrozenCappedRectangle.lean#L62)
+· [Supported short-span repair](OnlineReachabilityPreservers/HalfWidthRectangleBoundary.lean#L31).
+
 If visits longer than \(L\) contain at most \(M/56\) incidences, remove
 each such visit as a whole. The test uses the original precedence
 components. The new precedence graph only loses comparisons, so its

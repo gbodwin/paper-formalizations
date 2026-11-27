@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.FrozenFullReturnCover
+import OnlineReachabilityPreservers.FrozenCappedRectangle
 
 /-! Test crossed returns only within the rectangle that will be kept. -/
 
@@ -210,18 +211,7 @@ theorem regularization_list_frozen_full_of_third_mass_width_return_cover {n p cu
   apply regularization_list_frozen_full_of_supported_width_return_cover paths simple free large
     hn hp dense long (by decide)
   refine ⟨A,va,B,pa,deleted,supportCover,?_⟩
-  have raw : 27*(M:ℝ) ≤ 31*((∑ j ∈ B, ((pieces j).toFinset ∩ A).card : ℕ):ℝ) := by
-    exact_mod_cast mass
-  have spent : 3*(deleted.card:ℝ) ≤ M := by exact_mod_cast cost
-  have oneSide {q c : ℕ} (positive : 0 < q) (bounded : c ≤ q) : (M:ℝ)/(4*(q:ℝ))*c ≤ (M:ℝ)/4 := calc
-    _ ≤ (M:ℝ)/(4*(q:ℝ))*q := mul_le_mul_of_nonneg_left (by exact_mod_cast bounded) (by positivity)
-    _ = _ := by
-      have nonzero : (q:ℝ) ≠ 0 := by exact_mod_cast positive.ne'
-      field_simp [nonzero]
-  change (M:ℝ)/27 + (M:ℝ)/(4*(n:ℝ))*A.card + (M:ℝ)/(4*(p:ℝ))*B.card + deleted.card ≤
-    ((∑ j ∈ B, ((pieces j).toFinset ∩ A).card : ℕ):ℝ)
-  have nonneg : (0:ℝ) ≤ M := Nat.cast_nonneg M
-  linarith only [raw,spent,oneSide hn va,oneSide hp pa,nonneg]
+  exact dense_width_rectangle_pays_third_erasure hn hp va pa mass cost
 
 /-- The third-mass return-cover bound also yields the feasible literal
 witness at the original full cutoff. -/

@@ -1746,10 +1746,10 @@ For simple input excluding full bridges through \(k\ge7\) with mass at
 least both positive budgets, this gives the same cutoff, both budgets and
 all four original-average caps. For feasible literal distinct nonempty
 input, \(r\ge8\) yields a distinct nonempty witness with the same bound.
-[Rectangle restriction](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L12)
-· [Supported cover and cost](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L31)
-· [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L48)
-· [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L149).
+[Rectangle restriction](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L13)
+· [Supported cover and cost](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L32)
+· [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L49)
+· [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L150).
 
 When both original averages are at least eight, rounding the widths
 leaves capacity at least \(31M/8\) in each dimension. The two quadratic
@@ -1763,9 +1763,9 @@ through \(k\ge7\) with mass at least both positive budgets, both the
 indexed and feasible literal versions preserve the cutoff, budgets and
 four original-average caps.
 [Dense rectangle bound](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L443)
-· [One-third cover condition](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L166)
-· [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L178)
-· [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L228).
+· [One-third cover condition](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L167)
+· [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L179)
+· [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L218).
 
 With the standard copied rows and path width \(L=\lfloor4M/p\rfloor\),
 a crossed return whose endpoints have distance at most \(b\) along its
@@ -1797,11 +1797,11 @@ Erasing the boundary marks then costs at most \(M/8\), and the original
 arrival order permits a frozen \(M/32\) witness at the same cutoff.
 Both budgets and all four original caps hold for the indexed and feasible
 literal versions. The low-mass branch needs neither test.
-[Width-walk span test](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L13)
-· [Returns after erasure](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L26)
-· [Half-bridge preservation](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L53)
-· [Indexed witness](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L89)
-· [Literal witness](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L158).
+[Width-walk span test](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L24)
+· [Returns after erasure](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L60)
+· [Half-bridge preservation](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L94)
+· [Indexed witness](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L119)
+· [Literal witness](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L188).
 
 For half exclusion, both tests can be confined to the width pieces
 inside a selected rectangle after erasure. Keep the original degree
@@ -1827,6 +1827,22 @@ and \(r\ge8\), the witness has distinct nonempty rows.
 · [Supported erasure and cost](OnlineReachabilityPreservers/HalfWidthRectangleRepair.lean#L75)
 · [Indexed witness](OnlineReachabilityPreservers/HalfWidthRectangleRepair.lean#L94)
 · [Literal witness](OnlineReachabilityPreservers/HalfWidthRectangleRepair.lean#L167).
+
+When \(M>8\max(n,p)\), the original widths admit rectangles of mass at
+least \(27M/31\) within both budgets. For simple half-free input with
+positive budgets, \(M\ge\max(n,p)\), and \(k\ge2\), require such a rectangle whose tested
+width walks span at most \(\lfloor L/3\rfloor\) in their original copied
+parent. Mark that many initial positions of every noninitial original
+block before restricting to the rectangle. Erase the marks in the
+rectangle, charging at most \(M/3\) for the entire mark set. The retained pieces have no crossed return
+within radius \(\max(0,k-3)\). The degree-return test is on the parents
+reconstructed after this erasure, with the same radius. If it passes,
+the supported repair preserves the input cutoff, both original budgets
+and all four original caps with \(M/27\) retention. The low-mass branch
+needs neither test. The feasible literal witness is distinct and nonempty.
+[Dense rectangle certificate](OnlineReachabilityPreservers/HalfWidthRectangleBoundary.lean#L13)
+· [Indexed short-span repair](OnlineReachabilityPreservers/HalfWidthRectangleBoundary.lean#L31)
+· [Literal short-span repair](OnlineReachabilityPreservers/HalfWidthRectangleBoundary.lean#L71).
 
 Refine the standard copied vertices by assigning a colour to each
 parent occurrence. A tested crossed return survives exactly when each

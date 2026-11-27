@@ -1087,9 +1087,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   the witness retains at least \(M/r\) with both original budgets, all four
   original-average caps and the same cutoff. The feasible literal version
   gives distinct nonempty rows for \(r\ge8\).
-  [Supported cover](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L31)
-  · [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L48)
-  · [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L149).
+  [Supported cover](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L32)
+  · [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L49)
+  · [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L150).
 - In the range \(M>8\max(n,p)\), the original-budget rectangle can keep
   at least \(27M/31\) before erasure. With the same simple full-free input
   assumptions through \(k\ge7\), a cover of the original width returns
@@ -1097,8 +1097,8 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   Both budgets, the same cutoff and all four caps hold, including for
   feasible literal distinct nonempty rows. Low mass needs no cover bound.
   [Dense rectangle](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L443)
-  · [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L178)
-  · [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L228).
+  · [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L179)
+  · [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L218).
 - With the standard copied rows and path width \(L=\lfloor4M/p\rfloor\),
   a crossed return whose endpoints have distance at most \(b\) along its
   parent starts within the first \(b\) positions of the later block.
@@ -1128,11 +1128,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   arrival order permits a frozen \(M/32\) witness at the same cutoff.
   Both budgets and all four original caps hold for the indexed and feasible
   literal versions. The low-mass branch needs neither test.
-  [Width-walk span test](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L13)
-  · [Returns after erasure](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L26)
-  · [Half-bridge preservation](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L53)
-  · [Indexed witness](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L89)
-  · [Literal witness](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L158).
+  [Width-walk span test](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L24)
+  · [Returns after erasure](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L60)
+  · [Half-bridge preservation](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L94)
+  · [Indexed witness](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L119)
+  · [Literal witness](OnlineReachabilityPreservers/HalfReturnBoundaryCover.lean#L188).
 - Refine the standard copied vertices by assigning a colour to each
   parent occurrence. A tested crossed return survives exactly when each
   corner has a colour consistent with both occurrences at that corner.
