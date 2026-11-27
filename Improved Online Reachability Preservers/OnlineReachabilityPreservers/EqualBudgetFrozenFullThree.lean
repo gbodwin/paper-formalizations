@@ -8,57 +8,6 @@ namespace OnlineReachabilityPreservers
 open Finset
 local notation "Before" => SourceAudit.BeforeIn
 
-private theorem full_family_replace_short_by_singletons {n p k : ℕ} (budget : p ≤ n) (two : 2 ≤ k)
-    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup) (free : BridgeFree (Before paths) k) :
-    ∃ rows : Fin p → List (Fin n), Function.Injective rows ∧ (∀ i, rows i ≠ [] ∧ (rows i).Nodup) ∧
-      BridgeFree (Before rows) k ∧ (∑ i, (paths i).length) ≤ ∑ i, (rows i).length := by
-  let rows (i : Fin p) := if 2 ≤ (paths i).length then paths i else [Fin.castLE budget i]
-  have longUnique {i j : Fin p} (iLong : 2 ≤ (paths i).length) (same : paths i = paths j) : i = j := by
-    by_contra different
-    let a := (paths i)[0]'(by omega)
-    let b := (paths i)[1]'(by omega)
-    have step : Before paths i a b := by
-      refine ⟨List.getElem_mem _,List.getElem_mem _,?_⟩
-      dsimp only [a,b]
-      rw [(simple i).idxOf_getElem,(simple i).idxOf_getElem]
-      decide
-    have parallel : Before paths j a b := by
-      unfold SourceAudit.BeforeIn at step ⊢
-      rw [← same]
-      exact step
-    exact no_parallel_list_steps free.halfFree two different step parallel
-  refine ⟨rows,?_,?_,?_,?_⟩
-  · intro i j equal
-    by_cases iLong : 2 ≤ (paths i).length <;> by_cases jLong : 2 ≤ (paths j).length
-    · exact longUnique iLong (by simpa [rows,iLong,jLong] using equal)
-    · have values := congrArg List.length equal
-      simp [rows,iLong,jLong] at values
-      omega
-    · have values := congrArg List.length equal
-      simp [rows,iLong,jLong] at values
-      omega
-    · exact Fin.castLE_injective budget (by simpa [rows,iLong,jLong] using equal)
-  · intro i
-    by_cases long : 2 ≤ (paths i).length
-    · rw [show rows i = paths i from ite_eq_left long]
-      exact ⟨List.length_pos_iff.mp (by omega),simple i⟩
-    · simp [rows,long]
-  · have inherits {i x y} (step : Before rows i x y) : Before paths i x y := by
-      by_cases long : 2 ≤ (paths i).length
-      · simpa only [SourceAudit.BeforeIn,rows,ite_eq_left long] using step
-      · have absolute := listBefore_ne step
-        have left : x = Fin.castLE budget i := by simpa [rows,long] using step.1
-        have right : y = Fin.castLE budget i := by simpa [rows,long] using step.2.1
-        exact (absolute (left.trans right.symm)).elim
-    intro d bound
-    exact ⟨fun b => (free bound).false (b.mapPaths id Function.injective_id (fun _ _ _ step => inherits step))⟩
-  · apply sum_le_sum
-    intro i _
-    by_cases long : 2 ≤ (paths i).length
-    · simp [rows,long]
-    · simp [rows,long]
-      omega
-
 /-- At equal budgets and field scale `q` of at least 256, the latest-hit
 bound controls half mass at `4 n q` when `n < 8 q³`. -/
 theorem half_three_mass_le_four_nq_of_equal_large_budget {n q k : ℕ}
@@ -149,21 +98,18 @@ theorem localOrderDistinctExtremal_frozen_full_three_at_equal_large_budgets {n :
     · calc
         _ ≤ (8*q^3)*q := Nat.mul_le_mul_right _ envelope.le
         _ = _ := by ring
-  obtain ⟨padded,paddedSimple,paddedFree,paddedMass⟩ := exists_disjoint_copies_with_budgets
-    (half := false) rows (fun i => (lengths i).1) free copiesFit copiesFit
+  have long (i : Fin (q^3)) : 2 ≤ (rows i).length := by rw [(lengths i).2]; omega
   obtain ⟨candidate,candidateDistinct,candidateRows,candidateFree,candidateMass⟩ :=
-    full_family_replace_short_by_singletons le_rfl (by decide : 2 ≤ 3) padded paddedSimple paddedFree
+    exists_literal_full_disjoint_copies_with_singletons rows (fun i => (lengths i).1) long (by decide) free
+      copiesFit copiesFit (Nat.sub_le _ _)
   obtain ⟨paths,distinct,valid,half,maximal,_,_⟩ := localOrderDistinctExtremal_isDense (k := 3) true hn
     ⟨candidate,candidateDistinct,candidateRows,candidateFree.halfFree⟩
   let M := ∑ i, (paths i).length
-  have candidateLe : (∑ i, (candidate i).length) ≤ M :=
-    maximal candidate candidateDistinct candidateRows candidateFree.halfFree
-  have witnessLe : q^4 ≤ M := calc
-    _ ≤ copies*q^4 := Nat.le_mul_of_pos_left _ (by omega)
-    _ = ∑ i, (padded i).length := by rw [paddedMass,mass]
-    _ ≤ _ := candidateMass.trans candidateLe
-  have volume : n*q ≤ 4*M := copiesMass.trans
-    (Nat.mul_le_mul_left _ (by rw [← mass,← paddedMass]; exact candidateMass.trans candidateLe))
+  have copiesLe : copies*q^4 ≤ M := by
+    rw [← mass]
+    exact candidateMass.trans (maximal candidate candidateDistinct candidateRows candidateFree.halfFree)
+  have witnessLe : q^4 ≤ M := (Nat.le_mul_of_pos_left _ (by omega)).trans copiesLe
+  have volume : n*q ≤ 4*M := copiesMass.trans (Nat.mul_le_mul_left _ copiesLe)
   have upper := half_three_mass_le_four_nq_of_equal_large_budget hn largeQ envelope paths
     (fun i => (valid i).2) half le_rfl
   have retain : M ≤ 32*q^4 := calc

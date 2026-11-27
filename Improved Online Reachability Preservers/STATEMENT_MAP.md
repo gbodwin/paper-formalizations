@@ -3897,7 +3897,21 @@ field copies with singleton padding give \(q^4\le M\) and \(nq\le4M\).
 One full-three field copy then fits both budgets, meets the four
 starting-average caps, and has mass \(W=q^4\) in \([M/32,M]\).
 [Latest common vertex bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L541)
-· [Equal-budget literal frozen case](OnlineReachabilityPreservers/EqualBudgetFrozenFullThree.lean#L95).
+· [Equal-budget literal frozen case](OnlineReachabilityPreservers/EqualBudgetFrozenFullThree.lean#L44).
+
+The same cutoff-three conclusion covers nearby budgets
+\(b=\min(n,p)\ge512^3\) and \(a=max(n,p)\) with \(64a\le65b\).
+With \(q=2^{\lfloor\log_8 b\rfloor}\), the latest-common-vertex
+estimate bounds every half-three-free mass by \(4bq\). Up to three
+disjoint field copies fit the smaller budget, and the remaining path
+labels can be filled by distinct singletons using the original vertex
+budget. This supplies exact half feasibility and bounds
+\(q^4\le M\) and \(aq\le4M\) at the literal maximum. One full-three
+copy then lies within both budgets, has mass in \([M/32,M]\), and
+satisfies all four starting-average caps.
+[Half mass at nearby budgets](OnlineReachabilityPreservers/NearBudgetFrozenFullThree.lean#L13)
+· [Exact singleton padding](OnlineReachabilityPreservers/ExtremalCopyBounds.lean#L272)
+· [Nearby-budget literal frozen case](OnlineReachabilityPreservers/NearBudgetFrozenFullThree.lean#L71).
 
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.

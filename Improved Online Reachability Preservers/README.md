@@ -2151,7 +2151,15 @@ budgets, and satisfies all four starting-average caps. It retains at
 least \(M/32\). At the exact field cubes above, the factor four still
 applies.
 [Counting the latest common vertices](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L541)
-· [Starting-average witness at large equal budgets](OnlineReachabilityPreservers/EqualBudgetFrozenFullThree.lean#L95).
+· [Starting-average witness at large equal budgets](OnlineReachabilityPreservers/EqualBudgetFrozenFullThree.lean#L44).
+
+The starting-average result at cutoff three also holds for unequal
+budgets. Let \(b=\min(n,p)\) and \(a=\max(n,p)\). When \(b\ge512^3\)
+and \(64a\le65b\), the literal half maximum exists at the exact budgets.
+With \(q=2^{\lfloor\log_8 b\rfloor}\), the full-three field witness
+uses \(q^3\) vertices and rows, meets all four starting-average caps,
+and has mass \(q^4\) between \(M/32\) and \(M\).
+[Starting-average witness at nearby budgets](OnlineReachabilityPreservers/NearBudgetFrozenFullThree.lean#L71).
 
 At either cutoff below two and feasible positive literal budgets, use
 \(\min(p,n!)\) distinct spanning permutations. They give at least a

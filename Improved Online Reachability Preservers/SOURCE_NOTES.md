@@ -2753,17 +2753,32 @@ local-order upper bound and recurrence of Theorem 43.
   \(q=2^{\lfloor\log_8 n\rfloor}\). Then \(q\ge256\) and
   \(q^3\le n<8q^3\). The shifted estimate implies \(M\le4nq\).
   For a lower bound on the literal maximum, use one field copy when
-  \(n\le4q^3\) and two disjoint copies otherwise. Pad the indexed
-  construction to \(n\) rows and replace each empty or singleton row
-  by a different singleton indexed by its row label. These rows
-  supply no strict comparisons, while all longer rows are distinct
-  by full-two exclusion. The resulting exact-count literal family
+  \(n\le4q^3\) and two disjoint copies otherwise. Fill the remaining
+  row labels with distinct singleton rows. These rows supply no
+  strict comparisons, while all longer rows are distinct by
+  full-two exclusion. The resulting exact-count literal family
   has enough mass to give \(q^4\le M\) and \(nq\le4M\). The output
   uses one field copy. These inequalities and \(M\le4nq\) give all
   four starting-average caps and mass between \(M/32\) and \(M\).
   [Latest-hit mass bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L541)
-  · [Equal-budget upper bound](OnlineReachabilityPreservers/EqualBudgetFrozenFullThree.lean#L64)
-  · [Starting caps at the literal maximum](OnlineReachabilityPreservers/EqualBudgetFrozenFullThree.lean#L95).
+  · [Equal-budget upper bound](OnlineReachabilityPreservers/EqualBudgetFrozenFullThree.lean#L13)
+  · [Starting caps at the literal maximum](OnlineReachabilityPreservers/EqualBudgetFrozenFullThree.lean#L44).
+
+  For nearby budgets, write \(b=\min(n,p)\) and \(a=max(n,p)\).
+  Assume \(b\ge512^3\) and \(64a\le65b\). With
+  \(q=2^{\lfloor\log_8 b\rfloor}\), the latest-hit estimate at
+  \(T=15\) gives \(M\le4bq\). Choose one, two, or three copies
+  according as \(a\le4q^3\), \(4q^3<a\le8q^3\), or \(8q^3<a\).
+  The ratio and \(b<8q^3\) bound the excess of the row budget over
+  the vertex budget by at most \(q^3\). Each selected family can
+  therefore be padded to the exact row budget with distinct
+  singletons. The resulting half maximum satisfies
+  \(q^4\le M\) and \(aq\le4M\). One full-three field copy of mass
+  \(q^4\) meets both budgets and the four starting-average caps,
+  retaining at least \(M/32\).
+  [Nearby-budget upper bound](OnlineReachabilityPreservers/NearBudgetFrozenFullThree.lean#L13)
+  · [Exact singleton padding](OnlineReachabilityPreservers/ExtremalCopyBounds.lean#L272)
+  · [Starting caps at nearby budgets](OnlineReachabilityPreservers/NearBudgetFrozenFullThree.lean#L71).
 
   Below cutoff two, both exclusions are vacuous. On \(n\) vertices the
   count of simple lists, including the empty list, is less than \(3n!\).

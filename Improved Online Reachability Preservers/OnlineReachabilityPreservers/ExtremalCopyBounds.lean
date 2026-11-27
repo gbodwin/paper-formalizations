@@ -265,4 +265,104 @@ theorem localOrderMaximizer_overloaded_rectangle_mass_le {n p k : ℕ} {half : B
   rw [Fintype.card_fin] at rowCount
   exact localOrderMaximizer_rectangle_mass_mul_le paths simple allowed maximal _ _ vertexCount rowCount
 
+/-- Pad disjoint copies of nontrivial full-free rows to the exact path
+budget with distinct singleton rows. The unused row count must fit among
+the available vertex labels. The original incidence mass is multiplied
+by the copy count, and singleton rows contribute additional incidences. -/
+theorem exists_literal_full_disjoint_copies_with_singletons {n p N P t k : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup) (long : ∀ i, 2 ≤ (paths i).length)
+    (two : 2 ≤ k) (free : BridgeFree (Before paths) k)
+    (nBudget : t*n ≤ N) (pBudget : t*p ≤ P) (spare : P-t*p ≤ N) :
+    ∃ bigger : Fin P → List (Fin N), Function.Injective bigger ∧
+      (∀ i, bigger i ≠ [] ∧ (bigger i).Nodup) ∧ BridgeFree (Before bigger) k ∧
+      t*(∑ i, (paths i).length) ≤ ∑ i, (bigger i).length := by
+  let copies (c : Fin t) := paths
+  let family := disjointListFamilies copies
+  have vCard : Fintype.card (Fin n ×ₗ Fin t) = t*n := by
+    rw [← Fintype.card_congr (toLex : Fin n × Fin t ≃ Fin n ×ₗ Fin t), Fintype.card_prod]
+    simp only [Fintype.card_fin,Nat.mul_comm]
+  have pCard : Fintype.card (Fin p ×ₗ Fin t) = t*p := by
+    rw [← Fintype.card_congr (toLex : Fin p × Fin t ≃ Fin p ×ₗ Fin t), Fintype.card_prod]
+    simp only [Fintype.card_fin,Nat.mul_comm]
+  obtain ⟨simple',allowed',renumberedMass,_,lengths⟩ := relabelListPathsFin_spec (half := false) family
+    (disjointListFamilies_simple copies (fun _ => simple))
+    (disjointListFamilies_admissible copies (fun _ => simple) (fun _ => free))
+  let clean := relabelListPathsFin family
+  let vFit := vCard.trans_le nBudget
+  let pFit := pCard.trans_le pBudget
+  let active := Fintype.card (Fin p ×ₗ Fin t)
+  have longRows (i : Fin active) : 2 ≤ (clean i).length := by
+    rw [lengths i]
+    simpa only [family,disjointListFamilies,copies,List.length_map] using long _
+  have noDuplicates : Function.Injective clean := by
+    intro i j eq
+    by_contra separate
+    let a := (clean i)[0]'(by have := longRows i; omega)
+    let b := (clean i)[1]'(by have := longRows i; omega)
+    have step : Before clean i a b := by
+      refine ⟨List.getElem_mem _,List.getElem_mem _,?_⟩
+      dsimp only [a,b]
+      rw [(simple' i).idxOf_getElem,(simple' i).idxOf_getElem]
+      decide
+    have parallel : Before clean j a b := by unfold SourceAudit.BeforeIn at step ⊢; rw [← eq]; exact step
+    exact no_parallel_list_steps (show BridgeFree (Before clean) k from allowed').halfFree two separate step parallel
+  have spare' : P-active ≤ N := by simpa only [active,pCard] using spare
+  let singleton (i : Fin P) (late : ¬ i.val < active) : Fin N := ⟨i.val-active,by have := i.isLt; omega⟩
+  let rows (i : Fin P) : List (Fin N) :=
+    if hi : i.val < active then (clean ⟨i.val,hi⟩).map (Fin.castLE vFit) else [singleton i hi]
+  have paddedRow (i : Fin P) (first : i.val < active) :
+      padListFamily clean vFit i = (clean ⟨i.val,first⟩).map (Fin.castLE vFit) := by
+    change (if h : i.val < active then (clean ⟨i.val,h⟩).map (Fin.castLE vFit) else []) = _
+    rw [dite_eq_left first]
+  have paddedEmpty (i : Fin P) (late : ¬ i.val < active) : padListFamily clean vFit i = [] := by
+    change (if h : i.val < active then (clean ⟨i.val,h⟩).map (Fin.castLE vFit) else []) = _
+    rw [dite_eq_right late]
+  obtain ⟨_,paddedFree,paddedMass⟩ := padListFamily_spec clean simple' allowed' vFit pFit
+  refine ⟨rows,?_,?_,?_,?_⟩
+  · intro i j eq
+    by_cases first : i.val < active <;> by_cases second : j.val < active
+    · have same : (clean ⟨i.val,first⟩).map (Fin.castLE vFit) = (clean ⟨j.val,second⟩).map (Fin.castLE vFit) := by
+        simpa only [rows,dite_eq_left first,dite_eq_left second] using eq
+      have sameIndex : (⟨i.val,first⟩ : Fin active) = ⟨j.val,second⟩ :=
+        noDuplicates ((List.map_injective_iff.mpr (Fin.castLE_injective _)) same)
+      exact Fin.ext (congrArg (@Fin.val active) sameIndex)
+    · have mismatch := congrArg List.length eq
+      have enough := longRows ⟨i.val,first⟩
+      simp only [rows,dite_eq_left first,dite_eq_right second,List.length_map,List.length_singleton] at mismatch
+      omega
+    · have mismatch := congrArg List.length eq
+      have enough := longRows ⟨j.val,second⟩
+      simp only [rows,dite_eq_right first,dite_eq_left second,List.length_map,List.length_singleton] at mismatch
+      omega
+    · have same : singleton i first = singleton j second := by simpa [rows,first,second] using eq
+      have ranks : i.val-active = j.val-active := congrArg Fin.val same
+      exact Fin.ext (by omega)
+  · intro i
+    by_cases first : i.val < active
+    · simp only [rows,dite_eq_left first]
+      exact ⟨(List.length_pos_iff.mp (by rw [List.length_map]; exact lt_of_lt_of_le (by decide) (longRows _))),
+        (simple' _).map (Fin.castLE_injective _)⟩
+    · simp [rows,first]
+  · have inherits {i x y} (on : Before rows i x y) : Before (padListFamily clean vFit) i x y := by
+      by_cases first : i.val < active
+      · simpa only [SourceAudit.BeforeIn,rows,paddedRow i first,dite_eq_left first] using on
+      · have hx : x = singleton i first := by simpa [rows,first] using on.1
+        have hy : y = singleton i first := by simpa [rows,first] using on.2.1
+        exact ((listBefore_ne on) (hx.trans hy.symm)).elim
+    intro d bound
+    exact ⟨fun b => (paddedFree bound).false (b.mapPaths id Function.injective_id (fun _ _ _ step => inherits step))⟩
+  · have oldMass : (∑ i : Fin P, (padListFamily clean vFit i).length) = t*(∑ i, (paths i).length) := by
+      rw [paddedMass,renumberedMass,disjointListFamilies_mass]
+      simp [copies]
+    rw [← oldMass]
+    apply sum_le_sum
+    intro i _
+    by_cases first : i.val < active
+    · have same : padListFamily clean vFit i = rows i := by
+        simpa only [rows,dite_eq_left first] using paddedRow i first
+      exact le_of_eq (congrArg List.length same)
+    · have empty : padListFamily clean vFit i = ([] : List (Fin N)) := paddedEmpty i first
+      rw [empty,List.length_nil]
+      exact Nat.zero_le _
+
 end OnlineReachabilityPreservers
