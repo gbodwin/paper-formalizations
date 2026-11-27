@@ -789,6 +789,16 @@ The supplied repair may erase at most \(M/7\) incidences.
 [Half-five class selection](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L770)
 · [Reverse-end filter](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L903).
 
+In the literal convention the low-mass branch gives distinct nonempty
+rows from the all-size full construction. In the dense branch the frozen
+lower length cap forces each row to have at least two vertices. Half-two
+exclusion then ensures that the rows are distinct. A two-coloring of the
+graph on rows joined by opposite comparisons gives two compatible classes
+while retaining every incidence. An acyclic graph on these row labels
+has such a coloring.
+[Literal half-five case](OnlineReachabilityPreservers/LiteralFrozenHalfFive.lean#L14)
+· [No-deletion case](OnlineReachabilityPreservers/LiteralFrozenHalfFive.lean#L53).
+
 Clipping uses a separate count of ordered comparisons and preserves
 the original row labels. In the indexed simple-path convention, half exclusion
 through size two gives at most \(n(n-1)\) ordered comparisons across all

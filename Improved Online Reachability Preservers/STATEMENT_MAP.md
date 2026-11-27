@@ -2636,6 +2636,14 @@ reverse-end filter removes at most \(M/7\) incidences.
 [Two repaired classes at half cutoff five](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L770)
 · [Same-class deletion budget](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L903).
 
+The same conditional half-five conclusion holds in the literal convention
+with distinct nonempty input and output rows. A bipartite graph on row
+labels in which adjacency means a reversed comparison supplies the classes
+without any repair. A forest on these row labels is a sufficient case.
+[Literal two-class witness](OnlineReachabilityPreservers/LiteralFrozenHalfFive.lean#L14)
+· [Row reversal graph](OnlineReachabilityPreservers/LiteralFrozenHalfFive.lean#L44)
+· [Bipartite sufficient condition](OnlineReachabilityPreservers/LiteralFrozenHalfFive.lean#L53).
+
 If an eligible family has \(s\) nonempty paths, opposite-intersection
 pruning keeps at least \((M+s)/2\) incidences. It meets the \(13M/24\)
 threshold whenever \(M\le12s\). For the unrestricted extremum at positive

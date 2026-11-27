@@ -893,6 +893,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   same-class reversal.
   [Two repaired classes](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L770)
   · [Direct deletion test](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L903).
+  For distinct nonempty input rows, the witness can also be chosen
+  distinct and nonempty. Bipartiteness of the graph on row labels that
+  joins reversing rows gives the two classes without erasing incidences.
+  This includes forests of row reversals.
+  [Literal two-class witness](OnlineReachabilityPreservers/LiteralFrozenHalfFive.lean#L14)
+  · [Bipartite reversal graph](OnlineReachabilityPreservers/LiteralFrozenHalfFive.lean#L53).
 - At half cutoff four and full cutoffs four and six, the
   [large path-budget theorem](OnlineReachabilityPreservers/FrozenManyRows.lean#L39)
   starts from the unrestricted maximum when \(n(n-1)\le66p\).
