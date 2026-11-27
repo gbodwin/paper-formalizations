@@ -1013,6 +1013,17 @@ detour constraint graph at every cutoff. The example uses a supplied
 width of two. Its original factor-four cap is nine.
 [Original exclusion](OnlineReachabilityPreservers/RiverDetourRankLimits.lean#L27) · [All-size exclusion after the split](OnlineReachabilityPreservers/RiverDetourRankLimits.lean#L64) · [Component test failure](OnlineReachabilityPreservers/RiverDetourRankLimits.lean#L72).
 
+The same limitation occurs at the prescribed path width. Use
+\(2m+16\) vertices and \(2m+3\) rows. Put two portions of eight consecutive
+vertices of a directed cycle in one row. Each step on the two connecting
+chains has its own row. Each chain has \(m+1\) edges, and the original
+system excludes full bridges through \(m+1\). The mass is \(4m+20\) and for
+\(m\ge 27\) the original factor-four path width is eight. Splitting the
+original rows at that width preserves full exclusion at every size.
+The two pieces of the central row share a component of the constraint
+graph at every cutoff.
+[Original exclusion](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L215) · [Original path width and component test](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L490).
+
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
 those positions, so only pairs in different blocks need the bounded

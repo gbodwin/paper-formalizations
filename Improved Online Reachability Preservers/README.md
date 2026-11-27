@@ -1006,6 +1006,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   detour constraint graph at every cutoff. The example uses a supplied
   width of two. Its original factor-four cap is nine.
   [Original exclusion](OnlineReachabilityPreservers/RiverDetourRankLimits.lean#L27) · [All-size exclusion after the split](OnlineReachabilityPreservers/RiverDetourRankLimits.lean#L64) · [Component test failure](OnlineReachabilityPreservers/RiverDetourRankLimits.lean#L72).
+- The same limitation occurs at the prescribed path width. Use
+  \(2m+16\) vertices and \(2m+3\) rows. Put two portions of eight consecutive
+  vertices of a directed cycle in one row. Each step on the two connecting
+  chains has its own row. Each chain has \(m+1\) edges, and the original
+  system excludes full bridges through \(m+1\). The mass is \(4m+20\) and for
+  \(m\ge 27\) the original factor-four path width is eight. Splitting the
+  original rows at that width preserves full exclusion at every size.
+  The two pieces of the central row share a component of the constraint
+  graph at every cutoff.
+  [Original exclusion](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L215) · [Original path width and component test](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L490).
 - After [deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2620),
   test for short returns in the pieces of the retained rows. If the
   copied input has the required bridge exclusion, at most \(M/18\)
