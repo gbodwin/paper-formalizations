@@ -112,7 +112,7 @@ private theorem compressForwardRepeatedLabels {I : Type*} [DecidableEq I] {step 
           simp [more, lastIndex, same]
   exact fun start bound => recur (n - start) start bound le_rfl
 
-private theorem bridge_from_forward_repetitions {I V : Type*} [DecidableEq I]
+theorem bridge_from_forward_repetitions {I V : Type*} [DecidableEq I]
     (before : I → V → V → Prop) (v : ℕ → V) (label : ℕ → I) (river : I) (n : ℕ) (positive : 0 < n)
     (different : ∀ i ≤ n, ∀ j ≤ n, v i = v j → i = j)
     (riverStep : before river (v 0) (v n)) (notRiver : ∀ i < n, river ≠ label i)

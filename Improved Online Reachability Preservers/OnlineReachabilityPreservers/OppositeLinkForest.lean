@@ -689,7 +689,7 @@ private abbrev LinkedOpposite {paths : I → List V} (free : HalfBridgeFree (Bef
   (oppositeLinkGraphOfHalfTwo paths (fun _ h => free (h.trans (by decide)))).Adj x y
 
 omit [Fintype V] in
-private theorem halfThree_middle_on_line {paths : I → List V} (free : HalfBridgeFree (Before paths) 3)
+theorem halfThree_middle_on_line {paths : I → List V} (free : HalfBridgeFree (Before paths) 3)
     {i : I} {x w z : V} (xmem : x ∈ paths i) (zmem : z ∈ paths i) (xz : x ≠ z)
     (left : LinkedOpposite free x w) (right : LinkedOpposite free w z) : w ∈ paths i := by
   rcases listBefore_total xmem zmem xz with straight | reversed

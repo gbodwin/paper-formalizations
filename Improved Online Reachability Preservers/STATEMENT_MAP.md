@@ -1675,6 +1675,17 @@ puts the intermediate vertex on any path that contains both distinct endpoints.
 At cutoff four, the [four-cycle exclusion](OnlineReachabilityPreservers/OppositeLinkForest.lean#L793)
 uses that property to compare the last arcs in competing detours. It
 shows that [every cycle has length at least five](OnlineReachabilityPreservers/OppositeLinkForest.lean#L846).
+
+At half cutoff five, a five-cycle of consecutive opposite links must
+lie in one row. If no row contains all five vertices, no row can
+contain four, by the two-link property. Take the latest path used by
+the links. A gap between two of its vertices gives a detour of at most
+four steps using earlier rows only. Any repeated detour labels are
+consecutive and compress to a single step. The resulting bridge
+violates the half cutoff. The case of a spanning row remains open in
+this step toward the half-five cleaning lemma.
+[Five-cycle spanning-row theorem](OnlineReachabilityPreservers/HalfFiveOppositeCycles.lean#L161).
+
 The [link count](OnlineReachabilityPreservers/OppositeLinkForest.lean#L877)
 uses triangle and four-cycle exclusion to inject ordered two-link walks
 into ordered pairs of distinct vertices. Cauchy–Schwarz gives
