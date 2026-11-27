@@ -2083,6 +2083,13 @@ open from cutoff six. For positive budgets and \(k\ge2\), full cleaning
 with the original averages now holds when \(4k\ge3\min(n,p)\).
 It also holds when \(n\le p\) and \(5k\ge3n\), or when the original mass
 is at least \(256n\) and \(5k\ge2\min(n,p)\).
+At any full cutoff, keep each row’s prefix up to the original cap
+\(\lfloor4M/p\rfloor\). If the resulting mass is at least \(3M/5\),
+starting-average cleaning keeps at least \(M/16\). A truncated mass
+of at least \(8M/15\) suffices for \(M/128\). The indexed witnesses and
+the feasible literal witnesses at \(k\ge2\) preserve the cutoff and both budgets.
+[Truncation and the starting averages](OnlineReachabilityPreservers/FrozenFullLengthCapped.lean#L84)
+· [Literal witness for \(k\ge2\)](OnlineReachabilityPreservers/FrozenFullLengthCapped.lean#L135).
 At the witness's own averages it holds when
 \(Ck\ge\min(n,p)\), with a loss factor linear in the fixed positive
 integer \(C\). At positive budgets and every full cutoff, select rows

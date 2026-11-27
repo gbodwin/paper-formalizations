@@ -2758,6 +2758,20 @@ the literal transfer. The uniform constant-factor claim remains open.
 · [Indexed logarithmic bound](OnlineReachabilityPreservers/FullLengthBucketCleaning.lean#L237)
 · [Literal logarithmic bound](OnlineReachabilityPreservers/FullLengthBucketCleaning.lean#L270).
 
+For simple input excluding full bridges through \(k\) with positive
+budgets and \(M\ge\max(n,p)\), use a restriction of mass \(K\) on \(b\) row
+labels with length at most the original upper cap. Splitting vertices at the
+original width, trimming and peeling give the original-average caps
+whenever \(M/r\le K-K^2/(12M)-M/4-Mb/(4p)\) for a positive integer \(r\).
+With every row truncated
+at the upper cap, retaining \(3M/5\) gives a witness of mass at least
+\(M/16\), and retaining \(8M/15\) gives at least \(M/128\). Both original
+budgets and the original cutoff hold. In the literal case \(k\ge2\),
+feasible distinct nonempty input gives distinct nonempty output.
+[Charge inequality](OnlineReachabilityPreservers/FrozenFullLengthCapped.lean#L14)
+· [Indexed full truncation](OnlineReachabilityPreservers/FrozenFullLengthCapped.lean#L84)
+· [Literal full truncation](OnlineReachabilityPreservers/FrozenFullLengthCapped.lean#L135).
+
 For the indexed maxima at the same positive budgets, put
 \(q=\min(n,p)\). The finite and all-size full masses satisfy
 \(\min(k,q)\beta_k\le q\beta_\infty\le q\beta_k\). It follows by selecting

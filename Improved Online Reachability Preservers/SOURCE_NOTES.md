@@ -378,6 +378,23 @@ When \(K<4n\), a spanning row suffices. This gives the factor
 · [Indexed maximum](OnlineReachabilityPreservers/FullLengthBucketCleaning.lean#L237)
 · [Literal maximum](OnlineReachabilityPreservers/FullLengthBucketCleaning.lean#L270).
 
+A length-capped restriction also gives original-average cleaning for
+simple paths excluding full bridges through \(k\). With positive budgets
+and \(M\ge\max(n,p)\), retain subrows
+on a set of \(b\) original row labels, each with length at most
+\(\lfloor4M/p\rfloor\), and write \(K\) for their mass. Split vertices at
+the original width. The filled-copy trim loses at most \(K^2/(12M)\),
+and the lower caps charge at most \(M/4+(M/(4p))b\). A remaining margin
+of at least \(M/r\) for a positive integer \(r\) certifies all four
+original caps, both budgets and
+exclusion at the same cutoff. In particular, truncate every row at its
+upper cap. If \(K\ge3M/5\) then \(r=16\) suffices, and if
+\(K\ge8M/15\) then \(r=128\) suffices. The literal transfer has the same
+bounds for feasible distinct nonempty input at \(k\ge2\).
+[Length-capped restriction](OnlineReachabilityPreservers/FrozenFullLengthCapped.lean#L14)
+· [Indexed truncation](OnlineReachabilityPreservers/FrozenFullLengthCapped.lean#L84)
+· [Literal truncation](OnlineReachabilityPreservers/FrozenFullLengthCapped.lean#L135).
+
 Without average caps, the same restriction compares two indexed full
 maxima at the same positive budgets. Write \(q=\min(n,p)\), with
 \(\beta_k\) the maximum through cutoff \(k\) and \(\beta_\infty\) the
