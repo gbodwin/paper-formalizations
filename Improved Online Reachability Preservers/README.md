@@ -2155,6 +2155,22 @@ bound remains open.
 · [Cubic input allowance](OnlineReachabilityPreservers/SteinerBinaryWordGuarantee.lean#L52)
 · [Guarded binary Theorem 21](OnlineReachabilityPreservers/SteinerBinaryWordGuarantee.lean#L126).
 
+The variable-length entry computes the graph's decoding allowance from
+its supplied words and sizes each demand from its own pair. Endpoints may
+use different lengths, including leading zero bits and empty words for
+zero. An invalid graph consumes no random bits. Successful traces retain
+the same seed, graph, history and prefix inclusion as the typed solver.
+Theorem 21 has the same expected competitive bound on each fixed feasible
+trace. Recorded input work is cubic in the vertex and row counts and the
+actual supplied bits, including on rejection. Total recorded work is
+polynomial in those dimensions at the height chosen for fixed
+\(\varepsilon\). Native execution time still requires a separate proof.
+[Variable-length entry](OnlineReachabilityPreservers/SteinerBinaryVariableWordInput.lean#L175)
+· [Rejected graph](OnlineReachabilityPreservers/SteinerBinaryVariableWordInput.lean#L186)
+· [Exact refinement](OnlineReachabilityPreservers/SteinerBinaryVariableWordInput.lean#L207)
+· [Cubic input work](OnlineReachabilityPreservers/SteinerBinaryVariableWordInput.lean#L270)
+· [Variable-length Theorem 21](OnlineReachabilityPreservers/SteinerBinaryVariableWordInput.lean#L355).
+
 
 
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).

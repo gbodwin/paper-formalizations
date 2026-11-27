@@ -1473,6 +1473,25 @@ bound remains open.
 · [Cubic input allowance](OnlineReachabilityPreservers/SteinerBinaryWordGuarantee.lean#L52)
 · [Guarded binary Theorem 21](OnlineReachabilityPreservers/SteinerBinaryWordGuarantee.lean#L126).
 
+The variable-length entry derives its allowances from the fixed graph
+and one demand pair at a time. It accepts every encoding whose endpoint
+values belong to the fixed vertex type. An invalid graph keeps the
+initial seed-stream position, and a demand trace stops at its first
+out-of-range value. Accepted traces refine the typed graph, history,
+solver tally and stream position exactly. Polynomial total recorded work
+now depends on vertex and row counts and the actual supplied endpoint
+bits. The separate cubic input bound also applies to rejection. For fixed
+\(\varepsilon\) and feasible decoded traces, accepted-prefix inclusion holds
+for each shared stream. The competitive bound is an expectation under
+the fair bit-stream measure.
+A native execution-time bound remains open.
+[Single demand semantics](OnlineReachabilityPreservers/SteinerBinaryVariableWordInput.lean#L58)
+· [Variable-length entry](OnlineReachabilityPreservers/SteinerBinaryVariableWordInput.lean#L175)
+· [Graph rejection](OnlineReachabilityPreservers/SteinerBinaryVariableWordInput.lean#L186)
+· [Refinement](OnlineReachabilityPreservers/SteinerBinaryVariableWordInput.lean#L207)
+· [Cubic input work](OnlineReachabilityPreservers/SteinerBinaryVariableWordInput.lean#L270)
+· [Variable-length Theorem 21](OnlineReachabilityPreservers/SteinerBinaryVariableWordInput.lean#L355).
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
