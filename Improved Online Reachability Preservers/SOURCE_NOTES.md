@@ -1142,6 +1142,20 @@ and path width four. The original rows exclude every half bridge. The
 one incidence on the reverse step leaves mass 39 and passes
 [both tests at the original widths](OnlineReachabilityPreservers/VertexSplitAudit.lean#L334).
 
+A second example uses twelve vertices, forty-three indexed rows and mass
+forty-eight. It uses all twelve vertices and includes repeated singleton
+rows. Its first-row map is injective, so every row already meets each
+first-occurrence group in at most one vertex. The opposite comparisons
+\(3\to2\) and \(2\to3\) cross groups. The original family excludes half
+bridges at every size. The standard degree split at \(\lfloor4M/n\rfloor=16\)
+creates a half-five bridge using the two different copies of vertex two.
+The path width is four and each row has length at most two.
+[Original exclusion](OnlineReachabilityPreservers/FirstOccurrenceDegreeSplitAudit.lean#L62)
+· [Parameters](OnlineReachabilityPreservers/FirstOccurrenceDegreeSplitAudit.lean#L89)
+· [Original group condition](OnlineReachabilityPreservers/FirstOccurrenceDegreeSplitAudit.lean#L100)
+· [Opposite comparisons across groups](OnlineReachabilityPreservers/FirstOccurrenceDegreeSplitAudit.lean#L107)
+· [Degree-split bridge](OnlineReachabilityPreservers/FirstOccurrenceDegreeSplitAudit.lean#L115).
+
 The half-bridge projection also works for an arbitrary ranked copy
 alphabet. The copy label is determined by the original vertex and the
 rank, and ranks of terminal incidences are monotone in the original

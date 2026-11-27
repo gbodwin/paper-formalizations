@@ -1698,6 +1698,21 @@ budgets and all four original-average caps at half cutoff five.
 · [Indexed witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L63)
 · [Literal witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L91).
 
+The first-occurrence sublist condition permits a degree-splitting failure.
+On an indexed family with twelve vertices, forty-three rows and mass
+forty-eight, each occupied first-occurrence group has one vertex. The five
+active rows retain the order of the earlier half-five example. The added singleton
+rows shift the degree blocks and introduce no comparisons. All half bridges
+are excluded in the original family. The degree width is sixteen and the
+path width is four. The actual degree split contains a half-five bridge.
+The two arcs of its terminal detour project to opposite original
+comparisons across groups. The low-mass construction supplies a separate
+witness at these budgets.
+[Exact widths](OnlineReachabilityPreservers/FirstOccurrenceDegreeSplitAudit.lean#L89)
+· [First-occurrence condition](OnlineReachabilityPreservers/FirstOccurrenceDegreeSplitAudit.lean#L100)
+· [Cross-group opposites](OnlineReachabilityPreservers/FirstOccurrenceDegreeSplitAudit.lean#L107)
+· [Half-five bridge after the degree split](OnlineReachabilityPreservers/FirstOccurrenceDegreeSplitAudit.lean#L115).
+
 The graph radius is sharp for the disjoint split test at every
 full cutoff \(k\ge7\). A checked indexed family on \(k\) vertices
 and \(k\) labels excludes full bridges at all sizes. The split

@@ -1020,6 +1020,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [Unique intersections after trimming](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L18)
   · [Indexed witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L63)
   · [Literal witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L91).
+- With twelve vertices, forty-three indexed rows and mass forty-eight,
+  each occupied first-occurrence group is a singleton. Opposite comparisons
+  cross two groups. The original family excludes every half bridge. Splitting
+  degrees at the original factor-four width of sixteen creates a half-five
+  bridge.
+  [Original exclusion](OnlineReachabilityPreservers/FirstOccurrenceDegreeSplitAudit.lean#L62)
+  · [Widths and first rows](OnlineReachabilityPreservers/FirstOccurrenceDegreeSplitAudit.lean#L89)
+  · [Degree-split bridge](OnlineReachabilityPreservers/FirstOccurrenceDegreeSplitAudit.lean#L115).
 - At every full cutoff \(k\ge7\), a covering disjoint split of an
   indexed family excluding all full bridges passes the \(k-6\) test.
   Its first crossed return has length \(k-5\) and the split creates
