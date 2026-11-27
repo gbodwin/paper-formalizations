@@ -784,7 +784,7 @@ packing preserve full exclusion through seven and yield a frozen
 \(M/4\) witness with both original budgets and all four caps. The
 same test on the original rows suffices by projection. It gives a frozen \(M/8\)
 distinct nonempty witness for feasible literal input.
-[Packing at a certified radius](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L116) · [Frozen cleaning with certified groups](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L264) · [Original component test](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L215) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L230).
+[Packing at a certified radius](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L232) · [Frozen cleaning with certified groups](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L370) · [Original component test](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L215) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L230).
 
 For simple full-seven-free input of mass \(M\) at least both
 positive budgets, first restrict each row to a sublist. Add the
@@ -845,6 +845,17 @@ the test using all returns of at most two steps. Each component
 fitting the width is equivalent to the existence of a bounded
 partition keeping all the protected endpoints together.
 [Protected comparison relation](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L20) · [Full preservation](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L42) · [Width test](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L88) · [Component inclusion](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L105).
+
+The group packing now accepts a prescribed protected comparison
+relation. The packed pieces preserve mass and all vertex degrees.
+They satisfy the prescribed width and have at most as many pieces
+of length at most half that width as there were original rows.
+On standard degree copies, the original lower-cap peeling after
+both support trims gives a frozen \(M/4\) witness at full cutoff
+seven if the groups keeping direct reversals and distinct-parent
+two-step returns fit. The simple original rows must exclude full
+bridges through seven and have mass \(M\) at least both positive budgets.
+[General packing](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L114) · [Support trimming](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L289) · [Full-seven frozen witness](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L32).
 
 The factor-four block split from the frozen cleaning argument can also
 create a full size-seven bridge before trimming and peeling in the dense
@@ -1204,7 +1215,7 @@ one piece of length at most half the width per parent. Filtering each
 row by its group keeps the original order, every incidence and every
 vertex degree. It preserves the given full or half cutoff, with the
 pieces in parent arrival order in half mode.
-[Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L107) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L89) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L247).
+[Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L107) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L89) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L274).
 
 For simple input of mass \(M\) at least both positive budgets, apply
 the grouping to admissible standard degree copies at the original
@@ -1214,7 +1225,7 @@ width give quadratic loss bounds for the two support trims. Their
 individual losses are at most \(M/12\) and \(M/8\). After frozen peeling,
 the indexed witness has mass at least \(M/4\), both budgets, all four
 caps and the original full or half cutoff.
-[Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L337).
+[Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L389).
 
 The two support trims also apply when the degree groups have varying
 sizes. Assume simple admissible copies of mass \(M\) at least both
