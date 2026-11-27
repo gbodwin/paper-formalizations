@@ -73,7 +73,7 @@ private theorem mem_path_class {rows kept : I → List V} {cutoff : ℕ} {i : I}
   · rintro ⟨rfl, on, same⟩
     exact ⟨on, rfl, same⟩
 
-private theorem degree_class_card (rows kept : I → List V) (cutoff : ℕ) (v : V) (c : I) :
+theorem shortReturnDegreeClass_card (rows kept : I → List V) (cutoff : ℕ) (v : V) (c : I) :
     ((pieceIncidences kept univ).filter (fun a => shortReturnDegreeClass rows cutoff a = (v,c))).card =
       ((occurrences (fun i => (kept i).toFinset) v).filter
         fun i => componentLabel (shortReturnCopyRowGraph rows cutoff v) i = c).card := by
@@ -88,7 +88,7 @@ private theorem degree_class_card (rows kept : I → List V) (cutoff : ℕ) (v :
     exact ⟨(i,v), mem_degree_class.mpr
       ⟨rfl, List.mem_toFinset.mp ((mem_occurrences (marks := fun j => (kept j).toFinset)).mp present), same⟩, rfl⟩
 
-private theorem path_class_card (rows kept : I → List V) (cutoff : ℕ) (i : I) (c : V) :
+theorem shortReturnPathClass_card (rows kept : I → List V) (cutoff : ℕ) (i : I) (c : V) :
     ((pieceIncidences kept univ).filter (fun a => shortReturnPathClass rows cutoff a = (i,c))).card =
       ((kept i).toFinset.filter fun v => componentLabel (shortReturnRowGraph rows cutoff i) v = c).card := by
   apply card_bij (fun e _ => e.2)
@@ -110,7 +110,7 @@ theorem shortReturnDegreeClass_totalExcess (rows : I → List V) (width cutoff :
   unfold shortReturnDegreeExcessMass
   apply sum_congr rfl
   intro v _
-  simp only [FiberClipping.excess, degree_class_card]
+  simp only [FiberClipping.excess, shortReturnDegreeClass_card]
   exact component_fiber_excess (occurrences (fun j => (rows j).toFinset) v)
     (shortReturnCopyRowGraph rows cutoff v) width
 
@@ -123,7 +123,7 @@ theorem shortReturnPathClass_totalExcess (rows : I → List V) (width cutoff : �
   unfold shortReturnPathExcessMass
   apply sum_congr rfl
   intro i _
-  simp only [FiberClipping.excess, path_class_card]
+  simp only [FiberClipping.excess, shortReturnPathClass_card]
   exact component_fiber_excess (rows i).toFinset (shortReturnRowGraph rows cutoff i) width
 
 /-- A shared set is drawn from the original incidences and uses at most
@@ -152,7 +152,7 @@ private theorem short_return_component_room_of_class_caps
   · intro v i
     let label := componentLabel (shortReturnCopyRowGraph rows cutoff v)
     have limit := fitsDegree (v, label i)
-    rw [degree_class_card] at limit
+    rw [shortReturnDegreeClass_card] at limit
     refine (card_le_card ?_).trans limit
     intro j on
     have earlier := shortReturnCopyRowComponent_subset_of_sublist simple sub cutoff v i on
@@ -160,7 +160,7 @@ private theorem short_return_component_room_of_class_caps
   · intro i v
     let label := componentLabel (shortReturnRowGraph rows cutoff i)
     have limit := fitsPath (i, label v)
-    rw [path_class_card] at limit
+    rw [shortReturnPathClass_card] at limit
     refine (card_le_card ?_).trans limit
     intro w on
     have earlier := shortReturnRowComponent_subset_of_sublist simple sub cutoff i v on

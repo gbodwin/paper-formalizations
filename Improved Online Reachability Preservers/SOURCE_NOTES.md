@@ -1224,6 +1224,18 @@ different corners. Combining such families preserves either bridge
 exclusion through any common cutoff with the original arrival order.
 [Localize a bridge at a one-vertex intersection](OnlineReachabilityPreservers/BridgeAtJoint.lean#L13) · [Preserve both exclusions](OnlineReachabilityPreservers/BridgeAtJoint.lean#L56).
 
+A checked shared-deletion instance attaches two reversed length-15
+rows and a 10-leaf bidirected star at their common center. The original
+budgets are 57 and 22, the mass is 70, and the two widths are four and
+twelve. It excludes every full bridge. At cutoff seven the sum of the
+original excesses is at least 24, above the deletion budget of 23.
+There is a deletion set of size 22 that leaves all degrees at most four
+and all lengths at most twelve. The fixed-partition equivalence gives
+a shared certificate at every cutoff. This supplies a frozen
+\(M/18\) witness with the chosen full cutoff, both original budgets
+and all four caps.
+[Original full exclusion](OnlineReachabilityPreservers/ShortReturnSharedExample.lean#L194) · [Original widths](OnlineReachabilityPreservers/ShortReturnSharedExample.lean#L202) · [Shared certificate at budget 22](OnlineReachabilityPreservers/ShortReturnSharedExample.lean#L264) · [Frozen full witness](OnlineReachabilityPreservers/ShortReturnSharedExample.lean#L281) · [Failure of separate excess charging](OnlineReachabilityPreservers/ShortReturnSharedExample.lean#L429).
+
 For simple rows, standard degree copying preserves full exclusion
 through any chosen cutoff. For such input that excludes full bridges
 through the cutoff and has mass at least both positive budgets,
