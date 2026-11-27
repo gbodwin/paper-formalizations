@@ -1194,6 +1194,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   give the frozen witness at every cutoff. The earlier midpoint example
   has cyclic constraints at cutoff four and admits no new order.
   [Fixed-order half-four bridge](OnlineReachabilityPreservers/HalfBridgeArrivalOrderAudit.lean#L172) · [Exact single constraint](OnlineReachabilityPreservers/HalfBridgeArrivalOrderAudit.lean#L178) · [Frozen witness at the original widths](OnlineReachabilityPreservers/HalfBridgeArrivalOrderAudit.lean#L212) · [Cyclic midpoint example](OnlineReachabilityPreservers/HalfBridgeArrivalOrderAudit.lean#L230).
+- On this same six-vertex example, packing the reversed corners
+  keeps both prescribed widths and the original arrival order. The
+  packed pieces exclude half-bridges through five and give the frozen
+  witness of mass at least \(10/16\) with both budgets and all four caps.
+  [Prescribed packings](OnlineReachabilityPreservers/HalfFiveTerminalPackingExample.lean#L53) · [Ordinary split and packed pieces](OnlineReachabilityPreservers/HalfFiveTerminalPackingExample.lean#L72) · [Frozen witness](OnlineReachabilityPreservers/HalfFiveTerminalPackingExample.lean#L82).
 - The midpoint obstruction also occurs at both prescribed widths in a
   literal family. Add one extra vertex to the split row and 41 distinct
   singleton rows. The input has 49 vertices and 45 distinct nonempty
