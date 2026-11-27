@@ -2548,6 +2548,24 @@ local-order upper bound and recurrence of Theorem 43.
   · [Bidirectional star](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L450)
   · [Exact all-size domain](OnlineReachabilityPreservers/AllSizeLiteralFeasibility.lean#L112).
 
+  For simple indexed input at full cutoff at least three, the first
+  three vertices of each longer row are a triangle on three copies of
+  the vertex set. Each layered edge encodes an ordered comparison,
+  which can belong to only one row by full-two exclusion.
+  A tripartite triangle from three different rows would be a full
+  three-bridge. If two edges come from the same row, that row already
+  supplies the whole triangle. Thus the triangle count equals the number
+  of long rows. Every triangle-free subgraph removes at least one edge
+  per long row. The triangle removal lemma yields \(o(n^2)\) long rows,
+  with the size threshold independent of \(p\) and \(k\). The
+  squared-length bound after masking shorter rows is at most \(3n^2\).
+  Cauchy–Schwarz gives \(o(n^2)\) long-row mass. Counting at most two
+  incidences per other row gives total mass at most \(2p+o(n^2)\).
+  [Tripartite triangles](OnlineReachabilityPreservers/FullThreeLongRows.lean#L19)
+  · [Long-row count](OnlineReachabilityPreservers/FullThreeLongRows.lean#L89)
+  · [Long-row mass](OnlineReachabilityPreservers/FullThreeLongRows.lean#L173)
+  · [Total mass](OnlineReachabilityPreservers/FullThreeLongRows.lean#L198).
+
   Below cutoff two, both exclusions are vacuous. On \(n\) vertices the
   count of simple lists, including the empty list, is less than \(3n!\).
   Encode a nonempty list by its head and a shorter list on the remaining

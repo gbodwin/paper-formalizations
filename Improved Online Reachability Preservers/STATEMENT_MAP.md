@@ -3765,6 +3765,17 @@ singletons available. This gives exact feasibility under full exclusion.
 · [Exact all-size feasibility](OnlineReachabilityPreservers/AllSizeLiteralFeasibility.lean#L112)
 · [Finite cutoff covering a budget](OnlineReachabilityPreservers/AllSizeLiteralFeasibility.lean#L137).
 
+For every full cutoff at least three, the number and incidence mass of
+simple indexed rows of length at least three are both \(o(n^2)\), uniformly in the row
+budget. The first three vertices define edge-disjoint triangles on
+three copies of the vertex set. Full-two and full-three exclusion give
+exactly those triangles. Triangle removal controls their number,
+and the squared-length bound and Cauchy–Schwarz control their mass.
+Hence the total incidence mass is at most \(2p+o(n^2)\).
+[Long-row count](OnlineReachabilityPreservers/FullThreeLongRows.lean#L89)
+· [Long-row incidence mass](OnlineReachabilityPreservers/FullThreeLongRows.lean#L173)
+· [Total incidence mass](OnlineReachabilityPreservers/FullThreeLongRows.lean#L198).
+
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.
 Three comparisons leave vertex zero early in the arrival order. The other

@@ -2043,6 +2043,15 @@ budget has the same exact feasibility condition.
 [All-size capacity](OnlineReachabilityPreservers/AllSizeLiteralFeasibility.lean#L112)
 · [Finite cutoff covering a budget](OnlineReachabilityPreservers/AllSizeLiteralFeasibility.lean#L137).
 
+At every full cutoff of at least three, simple indexed rows of length
+at least three contribute \(o(n^2)\) incidences uniformly in the row budget. The first
+three vertices give edge-disjoint tripartite triangles. Full-three
+exclusion rules out any additional triangle, so triangle removal bounds
+the number of long rows. The squared-length bound then controls their
+mass. The total mass is at most \(2p+o(n^2)\).
+[Long-row mass](OnlineReachabilityPreservers/FullThreeLongRows.lean#L173)
+· [Total mass](OnlineReachabilityPreservers/FullThreeLongRows.lean#L198).
+
 At either cutoff below two and feasible positive literal budgets, use
 \(\min(p,n!)\) distinct spanning permutations. They give at least a
 third of the unrestricted maximum and satisfy the four caps at both
