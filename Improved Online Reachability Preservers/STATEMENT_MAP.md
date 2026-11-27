@@ -1647,13 +1647,21 @@ full-seven-free, with mass \(M\) at least both positive budgets.
 
 An exact projection of each copied row to a simple original row
 preserves the labels and comparisons of its returns. The projection
-maps the copied component to the original component and is injective
+maps the copied component into the original component and is injective
 on the copied row, so the original component bounds also give the
 same indexed \(M/4\) witness. For feasible distinct nonempty input,
 the same original width test gives a distinct nonempty \(M/8\)
 witness at full cutoff seven with both original budgets and all
 four original-average caps.
 [Linked comparison projection](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L57) · [Component size comparison](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L73) · [Original component test](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L101) · [Literal witness](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L125).
+
+With five vertices and seven indexed rows, the first two rows
+`[0,1,2,3,4]` and `[4,0]` carry all seven incidences. There are no
+full bridges at any size. The path width is four. The protected
+group of vertex 0 in the first row has size two, and the broad
+radius-two group at the same vertex has size five. All the protected
+groups fit and give the indexed frozen witness at full cutoff seven.
+[Input and full exclusion](OnlineReachabilityPreservers/FullSevenPathLinkAudit.lean#L25) · [Exact group sizes](OnlineReachabilityPreservers/FullSevenPathLinkAudit.lean#L77) · [Width test](OnlineReachabilityPreservers/FullSevenPathLinkAudit.lean#L86) · [Frozen witness](OnlineReachabilityPreservers/FullSevenPathLinkAudit.lean#L99).
 
 At half cutoff four, a [balanced midpoint split with no valid arrival permutation](OnlineReachabilityPreservers/HalfFourSplitOrderAudit.lean#L103)
 starts from a half-free indexed family with uniform degree two and mean

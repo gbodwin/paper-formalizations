@@ -861,12 +861,21 @@ Under exact projection to simple original rows, each protected
 comparison on a copied row projects to a protected comparison
 on its original row. The two-step option keeps both detour row
 labels. Since the vertex projection is injective within a copied
-row, its protected component has size at most that of its original
-image. Thus the width premise may be checked before degree copying.
+row, its protected component has size at most the original component
+at the projected vertex. Thus the width premise may be checked before
+degree copying.
 The indexed frozen \(M/4\) witness and the feasible literal \(M/8\)
 witness both retain full exclusion through seven, the two original
 budgets and all four caps.
 [General component projection](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L48) · [Protected comparisons under projection](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L57) · [Original component test](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L101) · [Literal witness](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L125).
+
+The indexed rows `[0,1,2,3,4]`, `[4,0]` and five empty rows exclude
+full bridges at every size. At original path width four, the labelled
+group based at vertex 0 in the first row has size two and every
+labelled group fits. In the unlabelled radius-two graph, returns that
+revisit the first row join all five vertices. The original labelled
+test yields the frozen quarter-mass witness at full cutoff seven.
+[Full exclusion](OnlineReachabilityPreservers/FullSevenPathLinkAudit.lean#L25) · [Exact widths](OnlineReachabilityPreservers/FullSevenPathLinkAudit.lean#L69) · [Component sizes](OnlineReachabilityPreservers/FullSevenPathLinkAudit.lean#L77) · [Frozen witness](OnlineReachabilityPreservers/FullSevenPathLinkAudit.lean#L99).
 
 The factor-four block split from the frozen cleaning argument can also
 create a full size-seven bridge before trimming and peeling in the dense

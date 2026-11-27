@@ -997,6 +997,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   is \(M/4\) for indexed input and \(M/8\) for feasible distinct
   nonempty input, both at full cutoff seven.
   [Projection of the groups](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L73) · [Original width test](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L101) · [Literal witness](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L125).
+- In a checked seven-incidence family excluding full bridges at
+  every size, the original path width is four. Every protected
+  group fits. At vertex 0 of the long row, the protected group has
+  size two and the unlabelled radius-two group has size five. The
+  protected groups give a frozen witness at full cutoff seven.
+  [Exact sizes](OnlineReachabilityPreservers/FullSevenPathLinkAudit.lean#L77) · [Width test](OnlineReachabilityPreservers/FullSevenPathLinkAudit.lean#L86) · [Frozen witness](OnlineReachabilityPreservers/FullSevenPathLinkAudit.lean#L99).
 - The [literal set versions](OnlineReachabilityPreservers/FrozenDistinctCleaning.lean)
   give distinct nonempty output paths with the same caps. They apply to
   the literal exact-count maximum when the positive original budgets are feasible.
