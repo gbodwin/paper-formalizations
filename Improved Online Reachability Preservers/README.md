@@ -1095,6 +1095,17 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   positive budgets, the reordered pieces give a half-\(k\)-free witness of
   mass at least \(M/16\) within both original budgets and all four frozen caps.
   [Exact order constraint](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L55) · [Frozen cleaning after reordering](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L88).
+- The usual nested split example can be padded to six vertices and ten
+  indexed rows with mass ten. Two extra vertices belong only to the
+  long row and seven labels have empty rows. The original family excludes
+  full bridges at every size. Its prescribed widths are six for degree
+  and four for length. The original order of the resulting pieces contains
+  a half-four bridge. At every cutoff at least four, the arrival graph
+  has exactly one constraint, from the river on row \([2,1]\) to the first
+  piece of the long row. Reordering, restricting the supports and peeling
+  give the frozen witness at every cutoff. The earlier midpoint example
+  has cyclic constraints at cutoff four and admits no new order.
+  [Fixed-order half-four bridge](OnlineReachabilityPreservers/HalfBridgeArrivalOrderAudit.lean#L172) · [Exact single constraint](OnlineReachabilityPreservers/HalfBridgeArrivalOrderAudit.lean#L178) · [Frozen witness at the original widths](OnlineReachabilityPreservers/HalfBridgeArrivalOrderAudit.lean#L212) · [Cyclic midpoint example](OnlineReachabilityPreservers/HalfBridgeArrivalOrderAudit.lean#L230).
 - After [deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2620),
   test for short returns in the pieces of the retained rows. If the
   copied input has the required bridge exclusion, at most \(M/18\)
