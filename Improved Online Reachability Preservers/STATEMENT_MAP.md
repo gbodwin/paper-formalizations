@@ -1485,6 +1485,10 @@ original-average caps.
 gives the same guarantee whenever at most \(37M/100\) raw incidences
 cover every actual degree-first conflict edge. An edge increases the
 original arrival label, and each source has at most one later target.
+[Matching and cover equality](OnlineReachabilityPreservers/CutConflictMatching.lean)
+reduces that cover condition to a bound of \(37M/100\) on the size of
+each matching of the actual conflicts. The witness has the same mass
+guarantee, budgets, and original-average caps.
 Original-average half-five cleaning for general inputs remains open.
 
 For Lemmas 23 and 39, the [contiguous six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)

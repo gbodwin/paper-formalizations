@@ -472,10 +472,22 @@ original row and is a reverse-partner edge at its original vertex. Each
 source has at most one later target, since that partner row and the
 original vertex determine its degree copy and its path piece. An
 arbitrary set of raw incidences covering all comparison edges repairs
-the same cuts. If it has size at most \(37M/100\), trim the raw degree
-and path supports at loss at most \(2M/31\) each, then peel. This gives
+the same cuts. In the dense case \(M>8\max(n,p)\), a cover of at most
+\(37M/100\) permits trimming the degree and path supports at loss at
+most \(2M/31\) each, followed by peeling. The sparse witness covers
+the other case. This gives
 at least \(M/5000\), both original budgets, and all four original caps.
 [Actual conflict relation and arbitrary cover](OnlineReachabilityPreservers/HalfFiveDegreeFirstCleaning.lean).
+
+The smallest cover of the actual conflicts has the same size as the
+largest matching. Among the remaining incidences with an outgoing edge,
+choose one at the earliest arrival. It has no incoming edge within the
+remaining set and has exactly one target. Use that edge in the matching,
+take its target in the cover, and remove the two endpoints. The disjoint
+edges force every cover to use at least one incidence per matching edge.
+Thus the half-five cleaning applies when every matching of actual cut
+conflicts has size at most \(37M/100\).
+[Matching and cover formulation](OnlineReachabilityPreservers/CutConflictMatching.lean).
 
 The half-five conflict graph can have two incoming conflicts at one
 incidence. Take the paths

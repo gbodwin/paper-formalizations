@@ -650,6 +650,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   of the original incidences](OnlineReachabilityPreservers/HalfFiveDegreeFirstCleaning.lean)
   as a deletion set. This gives the same half-five mass, budgets, and caps.
   Each incidence has at most one later target among the two cut relations.
+  [A matching of equal size](OnlineReachabilityPreservers/CutConflictMatching.lean)
+  characterizes the smallest cover. The same guarantee follows if every
+  set of pairwise disjoint cut conflicts has at most 37 percent of the
+  original incidence count as edges.
 - If either positive budget is at most 29, an unrestricted maximum at any
   cutoff of at least two has a witness with both budgets, all four frozen
   caps, and at least \(M/8\) incidences. The witness excludes full bridges
