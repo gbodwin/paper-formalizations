@@ -1138,7 +1138,7 @@ at least both positive budgets, bounded degree groups at the original
 degree width and original row components within the original path
 width give a frozen \(M/4\) witness outright. Both budgets, all four caps
 and the chosen cutoff hold in either exclusion mode.
-[Component size does not increase under row copying](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L120) · [Frozen cleaning under both original-width tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L260).
+[Component size does not increase under row copying](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L137) · [Frozen cleaning under both original-width tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L260).
 
 The degree grouping premise has a finite component test too. For each
 original vertex, connect any two incident rows that start and end a
@@ -1146,7 +1146,7 @@ tested short return there. A partition respecting those links exists
 at the degree width exactly when each component fits. If both the
 degree and path components fit their original widths, the on-input
 tests give the frozen indexed quarter-mass witness at the chosen cutoff.
-[Components and bounded partitions](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L17) · [Graph of linked incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L286) · [Exact degree component criterion](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L308) · [Frozen witness from both finite tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L326).
+[Components and bounded partitions](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L49) · [Graph of linked incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L286) · [Exact degree component criterion](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L308) · [Frozen witness from both finite tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L326).
 
 For distinct nonempty simple inputs with positive budgets and mass
 \(M\) at least the vertex budget, the same tests apply at every
@@ -1173,6 +1173,12 @@ frozen caps. In particular this applies when the original oversized
 components account for at most \(M/3\) deleted incidences.
 [Grouped width trimming after earlier losses](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L140) · [Frozen witness from a two-thirds restriction](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L127) · [Frozen witness from the overflow bound](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L190).
 
+Within a connected component, keep the first vertices in the finite
+order up to the prescribed width. Disjointness ensures that a component
+of size \(s\) keeps exactly \(\min(s,w)\) elements at width \(w\). The loss
+over all distinct components is the sum of their excesses above \(w\).
+[Bounded selection from each component](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L219) · [Exact selection size per component](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L231) · [Mass lost to component excess](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L254).
+
 The path-partition premise has an exact finite test. Within one row,
 link the endpoints of every comparison with a short backward return.
 Each connected component must lie in one group of any valid partition.
@@ -1180,7 +1186,7 @@ When every component fits the width, the components themselves give a
 valid partition. For admissible standard degree copies at the original
 width, this test at the original path width gives the same indexed
 \(M/4\) witness in either mode.
-[Graph of linked endpoints](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L85) · [Exact component criterion](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L104) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L167).
+[Graph of linked endpoints](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L102) · [Exact component criterion](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L121) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L184).
 
 A six-vertex family with twelve indexed rows and mass twelve has one
 increasing row, three disjoint backward pairs and eight empty labels.

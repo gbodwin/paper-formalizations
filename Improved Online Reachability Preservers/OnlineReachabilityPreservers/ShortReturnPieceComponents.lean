@@ -12,6 +12,38 @@ def linkedGroupComponent {V : Type*} [LinearOrder V] [Fintype V]
     (members : Finset V) (G : Arcs V) (center : V) : Finset V :=
   members.filter fun vertex => componentLabel G vertex = componentLabel G center
 
+section LinkedGroupComponents
+
+variable {V : Type*} [LinearOrder V] [Fintype V]
+
+/-- The distinct connected components restricted to the packed elements. -/
+def linkedGroupComponents (members : Finset V) (G : Arcs V) : Finset (Finset V) :=
+  members.image (linkedGroupComponent members G)
+
+theorem linkedGroupComponents_cover (members : Finset V) (G : Arcs V) :
+    (linkedGroupComponents members G).biUnion id = members := by
+  ext x
+  constructor
+  · intro on
+    obtain ⟨group, among, within⟩ := mem_biUnion.mp on
+    obtain ⟨center, _, rfl⟩ := mem_image.mp among
+    exact (mem_filter.mp within).1
+  · intro on
+    exact mem_biUnion.mpr ⟨_, mem_image_of_mem _ on, mem_filter.mpr ⟨on, rfl⟩⟩
+
+theorem linkedGroupComponents_apart (members : Finset V) (G : Arcs V) :
+    (↑(linkedGroupComponents members G) : Set (Finset V)).PairwiseDisjoint id := by
+  intro a onA b onB apart
+  obtain ⟨x, _, rfl⟩ := mem_image.mp onA
+  obtain ⟨y, _, rfl⟩ := mem_image.mp onB
+  refine disjoint_left.mpr fun z inX inY => apart ?_
+  have equal : componentLabel G x = componentLabel G y :=
+    (mem_filter.mp inX).2.symm.trans (mem_filter.mp inY).2
+  ext v
+  simp only [linkedGroupComponent, mem_filter, equal]
+
+end LinkedGroupComponents
+
 /-- For a graph that symmetrizes the required links, a capped partition
 exists exactly when each component of the packed elements fits. -/
 theorem cappedPathPartition_iff_component_room {V : Type*} [LinearOrder V] [Fintype V]
@@ -46,23 +78,8 @@ theorem cappedPathPartition_iff_component_room {V : Type*} [LinearOrder V] [Fint
     exact (card_le_card all).trans (partition.fits group hasGroup)
   · intro room
     have present ⦃x⦄ (on : x ∈ members) : x ∈ C x := mem_filter.mpr ⟨on, rfl⟩
-    have same ⦃x y⦄ (eq : componentLabel G x = componentLabel G y) : C x = C y := by
-      ext v
-      simp only [C, linkedGroupComponent, mem_filter, eq]
-    refine ⟨members.image C, ⟨?_, ?_, ?_, ?_, ?_⟩⟩
-    · ext x
-      constructor
-      · intro on
-        obtain ⟨group, among, within⟩ := mem_biUnion.mp on
-        obtain ⟨center, _, rfl⟩ := mem_image.mp among
-        exact (mem_filter.mp within).1
-      · intro on
-        exact mem_biUnion.mpr ⟨C x, mem_image_of_mem C on, present on⟩
-    · intro a onA b onB apart
-      obtain ⟨x, _, rfl⟩ := mem_image.mp onA
-      obtain ⟨y, _, rfl⟩ := mem_image.mp onB
-      exact disjoint_left.mpr fun _ inX inY =>
-        apart (same ((mem_filter.mp inX).2.symm.trans (mem_filter.mp inY).2))
+    refine ⟨linkedGroupComponents members G, ⟨linkedGroupComponents_cover members G,
+      linkedGroupComponents_apart members G, ?_, ?_, ?_⟩⟩
     · intro group among
       obtain ⟨x, on, rfl⟩ := mem_image.mp among
       exact ⟨x, present on⟩
@@ -177,5 +194,87 @@ theorem regularization_list_frozen_of_short_return_component_room {n p k : ℕ} 
       M ≤ 4*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   exact regularization_list_frozen_of_capped_short_return_partitions paths simple hn hp dense long copyLegal
     ((hasCappedShortReturnPartition_iff_component_room _ _ _).mpr room)
+
+section LinkedGroupSelection
+
+variable {V : Type*} [LinearOrder V] [Fintype V]
+
+private def takeGroup (width : ℕ) (items : Finset V) : Finset V :=
+  ((items.sort (· ≤ ·)).take width).toFinset
+
+omit [Fintype V] in
+private theorem takeGroup_subset (width : ℕ) (items : Finset V) : takeGroup width items ⊆ items := by
+  intro v on
+  exact (mem_sort _).mp (List.mem_of_mem_take (List.mem_toFinset.mp on))
+
+omit [Fintype V] in
+private theorem takeGroup_card (width : ℕ) (items : Finset V) :
+    (takeGroup width items).card = min width items.card := by
+  unfold takeGroup
+  have simple : (List.take width (items.sort (· ≤ ·))).Nodup := (sort_nodup _ _).take
+  rw [List.toFinset_card_of_nodup simple, List.length_take, length_sort]
+
+/-- Retain all elements in a component that fits and a width-bounded
+subset in each oversized component. -/
+def selectLinkedGroups (members : Finset V) (G : Arcs V) (width : ℕ) : Finset V :=
+  (linkedGroupComponents members G).biUnion (takeGroup width)
+
+theorem selectLinkedGroups_subset (members : Finset V) (G : Arcs V) (width : ℕ) :
+    selectLinkedGroups members G width ⊆ members := by
+  intro v on
+  obtain ⟨group, among, onGroup⟩ := mem_biUnion.mp on
+  rw [← linkedGroupComponents_cover members G]
+  exact mem_biUnion.mpr ⟨group, among, takeGroup_subset width group onGroup⟩
+
+/-- The intersection with any original component has exactly the
+smaller of its size and the width. -/
+theorem selectLinkedGroups_component_card (members : Finset V) (G : Arcs V) (width : ℕ)
+    {x : V} (on : x ∈ members) :
+    (selectLinkedGroups members G width ∩ linkedGroupComponent members G x).card =
+      min width (linkedGroupComponent members G x).card := by
+  let group := linkedGroupComponent members G x
+  have among : group ∈ linkedGroupComponents members G := mem_image_of_mem _ on
+  have onlyHere : selectLinkedGroups members G width ∩ group = takeGroup width group := by
+    ext v
+    constructor
+    · intro seen
+      obtain ⟨selected, inGroup⟩ := mem_inter.mp seen
+      obtain ⟨candidate, amongCandidates, member⟩ := mem_biUnion.mp selected
+      have equal : candidate = group := by
+        by_contra! different
+        exact disjoint_left.mp (linkedGroupComponents_apart members G amongCandidates among different)
+          (takeGroup_subset width candidate member) inGroup
+      exact equal ▸ member
+    · intro seen
+      exact mem_inter.mpr ⟨mem_biUnion.mpr ⟨group, among, seen⟩, takeGroup_subset width group seen⟩
+  rw [onlyHere, takeGroup_card]
+
+/-- The loss is exactly the sum of the excess sizes of the distinct
+components. -/
+theorem selectLinkedGroups_card_add_excess (members : Finset V) (G : Arcs V) (width : ℕ) :
+    (selectLinkedGroups members G width).card +
+      (∑ part ∈ linkedGroupComponents members G, (part.card - width)) = members.card := by
+  let groups := linkedGroupComponents members G
+  have apart : (↑groups : Set (Finset V)).PairwiseDisjoint (takeGroup width) :=
+    fun a onA b onB different => (linkedGroupComponents_apart members G onA onB different).mono
+      (takeGroup_subset width a) (takeGroup_subset width b)
+  have kept : (selectLinkedGroups members G width).card = ∑ g ∈ groups, (takeGroup width g).card :=
+    card_biUnion apart
+  have total : members.card = ∑ g ∈ groups, g.card :=
+    (congrArg card (linkedGroupComponents_cover members G)).symm.trans
+      (card_biUnion (linkedGroupComponents_apart members G))
+  rw [kept, total]
+  change (∑ g ∈ groups, (takeGroup width g).card) + (∑ g ∈ groups, (g.card - width)) = _
+  calc
+    _ = ∑ g ∈ groups, ((takeGroup width g).card + (g.card - width)) :=
+      (sum_add_distrib (s := groups) (f := fun g => (takeGroup width g).card)
+        (g := fun g => g.card - width)).symm
+    _ = _ := by
+      apply sum_congr rfl
+      intro group _
+      rw [takeGroup_card]
+      omega
+
+end LinkedGroupSelection
 
 end OnlineReachabilityPreservers
