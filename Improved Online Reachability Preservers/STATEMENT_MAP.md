@@ -1612,6 +1612,24 @@ input the original-row test gives a distinct nonempty witness of
 mass at least \(M/8\) with the same cutoff, budgets and four caps.
 [Packing](OnlineReachabilityPreservers/FullReturnGroupedCleaning.lean#L14) · [Copied-group test](OnlineReachabilityPreservers/FullReturnGroupedCleaning.lean#L39) · [Original-group test](OnlineReachabilityPreservers/FullReturnGroupedCleaning.lean#L61) · [Literal witness](OnlineReachabilityPreservers/FullReturnGroupedCleaning.lean#L76).
 
+For simple paths excluding full bridges through a cutoff of at least three,
+restrict to a set of vertices contained in one reference row. Among the other rows, starts of
+consecutive comparisons are distinct. Two comparisons with a shared start
+would be parallel or would form a full 3-bridge using the reference row's
+comparison between their ends. The starts also avoid the reference row's
+first vertex in the restriction, since all other comparisons follow the
+reverse order there. This bounds the total restricted excess by
+\(2\max(0,|S|-1)\). For \(t\) covering rows, assign every occurring vertex to
+one row that contains it. Summing the resulting estimates gives
+\(M\le tp+2n\). At most six covering rows put the input within the low-mass
+cleaning regime. For positive budgets and mass at least both of them, the
+indexed or feasible literal witness retains at least \(M/8\), with the same
+cutoff, both budgets and all four original-average caps.
+[Restricted excess](OnlineReachabilityPreservers/FullCoveringRow.lean#L95)
+· [Mass with covering rows](OnlineReachabilityPreservers/FullCoveringRow.lean#L120)
+· [Indexed witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L164)
+· [Literal witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L183).
+
 The graph radius is sharp for the disjoint split test at every
 full cutoff \(k\ge7\). A checked indexed family on \(k\) vertices
 and \(k\) labels excludes full bridges at all sizes. The split
