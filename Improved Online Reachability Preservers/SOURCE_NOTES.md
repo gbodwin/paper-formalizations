@@ -750,6 +750,17 @@ has unique intersections and excludes every bridge. The arbitrary-size
 cleaning existence lemma for cyclic families needs a different argument.
 [Checked half-7 example](OnlineReachabilityPreservers/UniqueSplitAudit.lean).
 
+The existing seven-vertex example satisfies the one-step condition
+used for contiguous splitting through size six. Its steps \(3\to4\)
+and \(4\to0\) still cross between the pieces of \((0,1,2,3)\) against
+the original comparison \(0\to3\). Contiguous splitting preserves full
+exclusion through size seven when both the one-step condition holds
+and such two-step returns through distinct other parents are absent.
+The proof examines repeated parents at cyclic distance three. Each
+such repeat either triggers the two-step test or gives an original
+full bridge of size three or four.
+[One-step condition in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L149) · [Crossed two-step return](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L140) · [Full cutoff seven preservation](OnlineReachabilityPreservers/CyclicSplits.lean#L506).
+
 The factor-four block split from the frozen cleaning argument can also
 create a full size-seven bridge before trimming and peeling in the dense
 branch. Add 161 private vertices before the four-vertex path in the

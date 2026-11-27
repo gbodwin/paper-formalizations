@@ -930,6 +930,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   reversed comparisons across contiguous pieces using an independent set
   of incidences. Each incidence has at most one incoming and one outgoing
   conflict, and an independent set may have to omit two vertices of a triangle.
+- A contiguous split preserves full exclusion through size seven
+  when opposite steps stay on one piece and no two-step return through
+  distinct other parents crosses two pieces against their common
+  parent's order. The existing seven-vertex example passes the first
+  test and has the two-step return \(3\to4\to0\) across its split.
+  [Seven-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean#L383) · [Preservation through seven](OnlineReachabilityPreservers/CyclicSplits.lean#L506) · [Two-step return in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L140).
 - The [literal set versions](OnlineReachabilityPreservers/FrozenDistinctCleaning.lean)
   give distinct nonempty output paths with the same caps. They apply to
   the literal exact-count maximum when the positive original budgets are feasible.

@@ -1538,6 +1538,18 @@ a full size-seven bridge in the dense branch on a simple input with unique
 intersections, all-size full exclusion, and zero pruning loss.
 [Dense width-block counterexample](OnlineReachabilityPreservers/FrozenWidthSplitAudit.lean#L538).
 
+Through full cutoff seven, disjoint contiguous pieces preserve the
+exclusion when one-step reversals stay on one piece and there is no
+crossed two-step return through two distinct other parents. For a
+seven-bridge, disjointness, original parallel-step exclusion and the
+one-step condition rule out a shared parent at cyclic distance one or
+two. A repeat at distance three either gives an original bridge of size three or four,
+or supplies a two-step return across the reversed pieces. In the
+existing seven-vertex example the one-step condition holds, and the
+steps \(3\to4\to0\) cross the split of the original row \((0,1,2,3)\)
+against its order.
+[Two-step return test](OnlineReachabilityPreservers/CyclicSplits.lean#L336) · [Seven-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean#L383) · [Preservation through seven](OnlineReachabilityPreservers/CyclicSplits.lean#L506) · [Two-step return in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L140) · [One-step condition in the example](OnlineReachabilityPreservers/UniqueSplitAudit.lean#L149).
+
 At half cutoff four, a [balanced midpoint split with no valid arrival permutation](OnlineReachabilityPreservers/HalfFourSplitOrderAudit.lean#L103)
 starts from a half-free indexed family with uniform degree two and mean
 length \(7/2\). Its sole length-six path splits into two length-three

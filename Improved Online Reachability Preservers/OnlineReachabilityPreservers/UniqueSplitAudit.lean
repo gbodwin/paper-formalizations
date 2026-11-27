@@ -1,4 +1,5 @@
 import OnlineReachabilityPreservers.SplitAudit
+import OnlineReachabilityPreservers.CyclicSplits
 
 /-! A longer cyclic obstruction to consecutive splitting with unique intersections. -/
 
@@ -130,5 +131,33 @@ theorem uniqueSplitOverlay_redundant :
   refine ⟨by decide, H, sub, by decide, by decide, ?_⟩
   intro d hd
   exact ⟨reach_mono sub, fun _ => mem_reaches.mp (served d hd)⟩
+
+
+def uniqueSplitExampleParent : Fin 7 → Fin 6 := ![0,0,1,2,3,4,5]
+
+/-- The existing seven-bridge example has two reverse comparisons on
+different rows across the displayed split of the long path. -/
+theorem uniqueSplitExample_crossed_two_step :
+    ¬ NoCrossedTwoStepReturn uniqueSplitExample uniqueSplitExampleAfter uniqueSplitExampleParent := by
+  intro noReturn
+  exact noReturn (i := 1) (j := 0) (a := 2) (c := 3) (x := 3) (z := 4) (y := 0)
+    (by decide) (by decide) (by decide) (by decide) (by decide)
+    (by decide) (by decide) (by decide) (by decide) (by decide)
+
+/-- The same pieces satisfy the one-step condition used through six.
+The simpler opposing step would require two original paths to meet twice. -/
+theorem uniqueSplitExample_opposite_together
+    {i j q : Fin 7} {x y : Fin 7}
+    (_ : uniqueSplitExampleParent i = uniqueSplitExampleParent j)
+    (different : uniqueSplitExampleParent i ≠ uniqueSplitExampleParent q)
+    (old : BeforeIn uniqueSplitExample (uniqueSplitExampleParent i) x y)
+    (reverse : BeforeIn uniqueSplitExampleAfter q y x)
+    (_ : x ∈ uniqueSplitExampleAfter i) (_ : y ∈ uniqueSplitExampleAfter j) : i = j := by
+  have lift : ∀ (q : Fin 7) (y x : Fin 7), BeforeIn uniqueSplitExampleAfter q y x →
+      BeforeIn uniqueSplitExample (uniqueSplitExampleParent q) y x := by decide
+  have projected := lift q y x reverse
+  have same := uniqueSplitExample_creates_half_seven.2.1 _ _ different x y
+    old.1 projected.2.1 old.2.1 projected.1
+  exact (listBefore_ne old same).elim
 
 end OnlineReachabilityPreservers.SourceAudit
