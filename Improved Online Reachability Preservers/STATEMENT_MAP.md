@@ -2154,6 +2154,13 @@ uses a finite maximum. For every positive pair of budgets and either
 bridge exclusion it gives one subsystem with both budgets and all four
 caps, retaining at least one sixteenth of the maximum.
 
+The cited Bridge Girth construction is ordered by slope. All-arcs-earlier
+exclusion holds on every rectangular lattice in the construction. The
+three-layer example has a half-3-bridge, so the construction leaves the
+half-bridge-free benchmark in the literal Lemma 39 unresolved.
+[Generic lattice proof](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L45)
+· [Checked separation](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L139).
+
 Here \(\ell,d\) are average path length and vertex degree and \(H\) is the
 half-bridge-free extremal function. The analogous full bridge-free function is \(\beta\).
 See [source notes](SOURCE_NOTES.md) for explicit discrepancies and the distinction between a

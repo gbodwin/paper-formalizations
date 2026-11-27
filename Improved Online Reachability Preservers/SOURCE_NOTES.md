@@ -1299,6 +1299,20 @@ local-order upper bound and recurrence of Theorem 43.
 - The proof of Lemma 23 writes \(\beta\) for the half-bridge-free extremum
   \(H\). The statement of Lemma 39 writes \(H\) for the full-bridge-free
   extremum \(\beta\) it is used to estimate.
+  Definitions 9–10 in the cited Bridge Girth paper require every arc to
+  arrive before the river. Its Theorem 29 orders the rectangular lattice
+  lines by slope to exclude that pattern. The three-layer example has a
+  slope-one river, a slope-two first arc, and a slope-zero last arc.
+  The last arc arrives before the river, so the example fails
+  half-bridge exclusion through size three. Adding the layer to the
+  vertical coordinate shifts all three slopes by one and puts the
+  example’s lines in the Theorem 29 rectangle with \(\ell=3,n=54\).
+  Theorem 29 gives a lower bound for the ordered-girth extremum
+  \(\beta^*\). The asymptotic comparison involving \(H\) in the literal
+  Lemma 39 remains unresolved.
+  [Bridge Girth, Definitions 9–10 and Theorem 29](https://arxiv.org/pdf/2212.11944v4)
+  · [Generic lattice proof](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L45)
+  · [Checked separation](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L139).
 - In Lemma 24, the paths `(0,1,2)` and `(2,1,0)` share three vertices without
   a bridge. Lean proves the ordering and fiber bound for arbitrary simple paths
   by choosing one witness for each middle path and using the 2-bridge exclusion
