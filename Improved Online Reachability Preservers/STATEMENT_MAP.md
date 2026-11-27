@@ -2403,11 +2403,18 @@ frozen caps. In particular this applies when the original oversized
 components account for at most \(M/3\) deleted incidences.
 [Grouped width trimming after earlier losses](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L140) · [Frozen witness from a two-thirds restriction](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L127) · [Frozen witness from the overflow bound](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L190).
 
-Within a connected component, keep the first vertices in the finite
+Within a connected component, keep the first elements in the finite
 order up to the prescribed width. Disjointness ensures that a component
 of size \(s\) keeps exactly \(\min(s,w)\) elements at width \(w\). The loss
 over all distinct components is the sum of their excesses above \(w\).
 [Bounded selection from each component](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L219) · [Exact selection size per component](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L231) · [Mass lost to component excess](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L254).
+
+First clip each degree component to the vertex width by keeping a
+bounded number of its row labels. On those sublists, compute the path
+components and clip them to the path width. Both component bounds
+hold on the final sublists. The total loss is the degree excess on
+the original rows plus the path excess after the degree restriction.
+[Exact degree-component loss](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L62) · [Exact path-component loss](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L89) · [Successive clipping with both bounds](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L145).
 
 The path-partition premise has an exact finite test. Within one row,
 link the endpoints of every comparison with a short backward return.

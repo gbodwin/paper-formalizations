@@ -16,7 +16,7 @@ section LinkedGroupComponents
 
 variable {V : Type*} [LinearOrder V] [Fintype V]
 
-/-- The distinct connected components restricted to the packed elements. -/
+/-- Distinct strongly connected components restricted to the packed elements. -/
 def linkedGroupComponents (members : Finset V) (G : Arcs V) : Finset (Finset V) :=
   members.image (linkedGroupComponent members G)
 
