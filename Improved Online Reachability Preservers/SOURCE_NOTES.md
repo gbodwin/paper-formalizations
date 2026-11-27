@@ -2799,9 +2799,9 @@ local-order upper bound and recurrence of Theorem 43.
   mass is therefore at most that maximum. These bounds give all
   four starting-average caps and quarter-mass retention at cutoff
   three, including in characteristic two.
-  [Quadratic construction](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L277)
-  · [Half mass bound](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L304)
-  · [Starting caps at quadratic budgets](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L341).
+  [Quadratic construction](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L152)
+  · [Half mass bound](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L179)
+  · [Starting caps at quadratic budgets](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L205).
 
   Retaining \(m\) first-coordinate layers, with \(2\le m\le q\),
   gives regular full-three counts \((mq^3,q^5)\) and their transpose.
@@ -2821,10 +2821,43 @@ local-order upper bound and recurrence of Theorem 43.
   satisfies \(4S>9q^6\), violating the cubic bound. The regular
   restricted witness has mass \(W\), meets both budgets, and fits
   all four starting-average caps at the literal maximum.
-  [Restricted field layers](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L401)
+  [Restricted field layers](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L247)
   · [Full disjoint union](OnlineReachabilityPreservers/FullDisjointUnion.lean#L121)
   · [Half mass near quadratic budgets](OnlineReachabilityPreservers/QuadraticBudgetFrozenFullThree.lean#L15)
   · [Starting caps near quadratic budgets](OnlineReachabilityPreservers/QuadraticBudgetFrozenFullThree.lean#L120).
+
+  The affine Hermitian construction uses the quadratic extension
+  defined by \(\theta^2+\theta=\nu\), for the same missing value
+  \(\nu\) of \(z^2+z\). In coordinates \(u+v\theta\) the
+  trace is \(2u-v\), so every trace fiber has exactly \(q\)
+  elements, including in characteristic two. A point
+  \((x,y,z,w)\) satisfies
+  \(\operatorname{Tr}(w)+\operatorname{Tr}(\bar{x}z)+
+  \operatorname{N}(y)=0\). Choose \(x,y,z\) freely and use one
+  free coordinate of \(w\). On a line parameterized by \(x\),
+  set \(y=b+sx\), \(z=c+tx\), and
+  \(w=d-(\bar c+\bar b s)x\), where
+  \(\operatorname{Tr}(d)=-\operatorname{N}(b)\) and
+  \(\operatorname{Tr}(t)=-\operatorname{N}(s)\).
+  There are \(q^8\) independent line labels and \(q^7\) point
+  labels. Fixing a point leaves the \(q^3\) choices of \(s,t\),
+  and a line has \(q^2\) choices of \(x\).
+  Orthogonality between two directions out of a shared point
+  implies a zero norm for the difference of their first slope
+  coordinates. The second coordinates then agree as well.
+  This excludes incidence triangles and full bridges through three
+  in either orientation. At \(q\ge3\), the two exact budget pairs
+  satisfy \(4n+p\le q^{10}\) and \((np)^2=(q^{10})^3\).
+  The latest-hit estimate at \(T=3\) then gives \(M\le4q^{10}\).
+  The regular full witness is eligible for the literal half
+  maximum, and its degree and length times their respective
+  budgets are both \(q^{10}\). These equalities give the four
+  starting-average caps.
+  [Finite incidence transfer](OnlineReachabilityPreservers/IncidenceFullThree.lean#L54)
+  · [Regular-witness starting caps](OnlineReachabilityPreservers/IncidenceFullThree.lean#L165)
+  · [Hermitian construction](OnlineReachabilityPreservers/HermitianThreeRows.lean#L305)
+  · [Half mass bound](OnlineReachabilityPreservers/HermitianThreeRows.lean#L352)
+  · [Starting caps at Hermitian budgets](OnlineReachabilityPreservers/HermitianThreeRows.lean#L376).
 
   Below cutoff two, both exclusions are vacuous. On \(n\) vertices the
   count of simple lists, including the empty list, is less than \(3n!\).

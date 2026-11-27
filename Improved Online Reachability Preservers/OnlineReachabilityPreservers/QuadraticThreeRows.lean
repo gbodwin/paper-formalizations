@@ -1,8 +1,4 @@
-import Mathlib.FieldTheory.Finite.Basic
-import OnlineReachabilityPreservers.HalfThreeUpstreamMass
-import OnlineReachabilityPreservers.LocalAverageCleaning
-import OnlineReachabilityPreservers.LocalFrozenCleaning
-import OnlineReachabilityPreservers.DistinctPathBudgets
+import OnlineReachabilityPreservers.IncidenceFullThree
 
 /-! Regular full-three-free families with unequal vertex and path counts. -/
 
@@ -10,116 +6,6 @@ namespace OnlineReachabilityPreservers
 
 open Finset
 local notation "Before" => SourceAudit.BeforeIn
-
-private def IncidencePairUnique {I V : Type*} (hit : I → V → Prop) : Prop :=
-  ∀ {a b x y}, x ≠ y → hit a x → hit a y → hit b x → hit b y → a = b
-
-private def IncidenceNoTriangle {I V : Type*} (hit : I → V → Prop) : Prop :=
-  ∀ {a b r x y z}, a ≠ b → r ≠ a → r ≠ b → x ≠ y → y ≠ z → x ≠ z →
-    hit a x → hit a y → hit b y → hit b z → hit r x → hit r z → False
-
-private theorem IncidencePairUnique.swap {I V : Type*} {hit : I → V → Prop}
-    (unique : IncidencePairUnique hit) : IncidencePairUnique (fun v i => hit i v) := by
-  intro a b x y apart ax ay bx by_
-  by_contra different
-  exact apart (unique different ax bx ay by_)
-
-private theorem IncidenceNoTriangle.swap {I V : Type*} {hit : I → V → Prop}
-    (noTriangle : IncidenceNoTriangle hit) : IncidenceNoTriangle (fun v i => hit i v) := by
-  intro a b r x y z ab ra rb xy yz xz ax ay by_ bz rx rz
-  exact noTriangle yz xy xz ab rb.symm ra.symm ay by_ bz rz ax rx
-
-private theorem incidenceRowsFullThree {I V : Type*} [DecidableEq V] {hit : I → V → Prop}
-    (pairUnique : IncidencePairUnique hit) (noTriangle : IncidenceNoTriangle hit)
-    (rows : I → List V) (sound : ∀ i v, v ∈ rows i → hit i v) :
-    BridgeFree (Before rows) 3 := by
-  intro d size
-  refine ⟨fun bridge => ?_⟩
-  obtain rfl | rfl : d = 0 ∨ d = 1 := by omega
-  · exact bridge.river_ne_arc 0 (pairUnique (listBefore_ne bridge.riverStep)
-      (sound _ _ bridge.riverStep.1) (sound _ _ bridge.riverStep.2.1)
-      (sound _ _ (bridge.arcStep 0).1) (sound _ _ (bridge.arcStep 0).2.1))
-  · exact noTriangle (bridge.distinctArcs.ne (by decide : (0:Fin 2) ≠ 1))
-      (bridge.river_ne_arc 0) (bridge.river_ne_arc 1)
-      (bridge.distinctVertices.ne (by decide : (0:Fin 3) ≠ 1))
-      (bridge.distinctVertices.ne (by decide : (1:Fin 3) ≠ 2))
-      (bridge.distinctVertices.ne (by decide : (0:Fin 3) ≠ 2))
-      (sound _ _ (bridge.arcStep 0).1) (sound _ _ (bridge.arcStep 0).2.1)
-      (sound _ _ (bridge.arcStep 1).1) (sound _ _ (bridge.arcStep 1).2.1)
-      (sound _ _ bridge.riverStep.1) (sound _ _ bridge.riverStep.2.1)
-
-private theorem incidenceRows {I V : Type*} [Fintype I] [Fintype V]
-    (hit : I → V → Prop) [DecidableRel hit]
-    (pairUnique : IncidencePairUnique hit) (noTriangle : IncidenceNoTriangle hit)
-    {n p length degree : ℕ} (vCard : Fintype.card V = n) (iCard : Fintype.card I = p)
-    (rowSize : ∀ i, (univ.filter (hit i)).card = length)
-    (vertexSize : ∀ v, (univ.filter (fun i => hit i v)).card = degree)
-    (long : 2 ≤ length) :
-    ∃ rows : Fin p → List (Fin n), Function.Injective rows ∧
-      (∀ i, (rows i).Nodup ∧ (rows i).length = length) ∧ BridgeFree (Before rows) 3 ∧
-      (∑ i, (rows i).length) = p*length ∧
-      (∀ v, (occurrences (fun i => (rows i).toFinset) v).card = degree) ∧
-      listOutputAverageCaps rows := by
-  classical
-  let label := Fintype.equivFinOfCardEq iCard
-  let vertex := Fintype.equivFinOfCardEq vCard
-  let on (i : Fin p) := (univ.filter (hit (label.symm i))).map vertex.toEmbedding
-  let rows (i : Fin p) := (on i).toList
-  have contains (i v) : v ∈ rows i ↔ hit (label.symm i) (vertex.symm v) := by
-    dsimp only [rows,on]
-    simp only [Finset.mem_toList,Finset.mem_map,Finset.mem_filter,mem_univ,true_and]
-    constructor
-    · rintro ⟨x,hx,equal⟩
-      change vertex x = v at equal
-      simpa only [← equal,Equiv.symm_apply_apply] using hx
-    · intro hv
-      exact ⟨vertex.symm v,hv,vertex.apply_symm_apply v⟩
-  have simple (i) : (rows i).Nodup := nodup_toList _
-  have lengths (i) : (rows i).length = length := by simp [rows,on,rowSize]
-  have injective : Function.Injective rows := by
-    intro i j eq
-    have enough : 2 ≤ (rows i).length := (lengths i).symm ▸ long
-    let x := (rows i)[0]'(by omega)
-    let y := (rows i)[1]'(by omega)
-    have different : x ≠ y := fun h => by
-      have := (simple i).getElem_inj_iff.mp h
-      omega
-    have xOn : x ∈ rows i := List.getElem_mem _
-    have yOn : y ∈ rows i := List.getElem_mem _
-    exact label.symm.injective (pairUnique (vertex.symm.injective.ne different)
-      ((contains i x).mp xOn) ((contains i y).mp yOn)
-      ((contains j x).mp (eq ▸ xOn)) ((contains j y).mp (eq ▸ yOn)))
-  have free : BridgeFree (Before rows) 3 := by
-    apply incidenceRowsFullThree (hit := fun i v => hit (label.symm i) (vertex.symm v))
-    · intro a b x y apart ax ay bx by_
-      exact label.symm.injective (pairUnique (vertex.symm.injective.ne apart) ax ay bx by_)
-    · intro a b r x y z ab ra rb xy yz xz ax ay by_ bz rx rz
-      exact noTriangle (label.symm.injective.ne ab) (label.symm.injective.ne ra) (label.symm.injective.ne rb)
-        (vertex.symm.injective.ne xy) (vertex.symm.injective.ne yz) (vertex.symm.injective.ne xz)
-        ax ay by_ bz rx rz
-    · exact fun i v => (contains i v).mp
-  have degrees (v) : (occurrences (fun i => (rows i).toFinset) v).card = degree := by
-    have same : occurrences (fun i => (rows i).toFinset) v =
-        ((univ : Finset I).filter (fun i => hit i (vertex.symm v))).map label.toEmbedding := by
-      ext i
-      rw [mem_occurrences,List.mem_toFinset,contains]
-      simp only [Finset.mem_map,Finset.mem_filter,mem_univ,true_and]
-      constructor
-      · intro h
-        exact ⟨label.symm i,h,label.apply_symm_apply i⟩
-      · rintro ⟨j,h,equal⟩
-        change label j = i at equal
-        simpa only [← equal,Equiv.symm_apply_apply] using h
-    rw [same,card_map,vertexSize]
-  have caps : listOutputAverageCaps rows := by
-    apply listOutputAverageCaps_of_widths rows simple degree length
-    · intro v
-      rw [degrees]
-      exact ⟨div_le_self (by positivity) (by norm_num),le_rfl⟩
-    · intro i
-      rw [lengths]
-      exact ⟨div_le_self (by positivity) (by norm_num),le_rfl⟩
-  exact ⟨rows,injective,fun i => ⟨simple i,lengths i⟩,free,by simp [lengths],degrees,caps⟩
 
 private abbrev QuadraticPoint (F : Type*) := F × F × F × F
 private abbrev QuadraticLine (F : Type*) := (F × F) × F × F × F
@@ -259,17 +145,6 @@ private theorem quadraticHit_card_lines [Fintype F] (ν : F) (v : QuadraticPoint
       exact hits s
   rw [same,card_image_of_injective _ (fun _ _ eq => congrArg Prod.fst eq),card_univ,Fintype.card_prod,pow_two]
 
-private theorem exists_missing_quadratic_value [Finite F] : ∃ ν : F, ∀ z : F, z^2+z ≠ ν := by
-  have notInjective : ¬Function.Injective (fun z : F => z^2+z) := by
-    intro injective
-    have values : (0:F)^2+0 = (-1)^2+(-1) := by ring
-    exact neg_ne_zero.mpr (one_ne_zero : (1:F) ≠ 0) (injective values).symm
-  have notSurjective : ¬Function.Surjective (fun z : F => z^2+z) := by
-    rwa [← Finite.injective_iff_surjective]
-  unfold Function.Surjective at notSurjective
-  push Not at notSurjective
-  exact notSurjective
-
 /-- Over a finite field of order `q`, a quadratic family and
 its transposed incidence relation give regular full-three-free paths at
 budgets `(q⁴,q⁵)` and `(q⁵,q⁴)`. In each orientation the total mass is
@@ -292,9 +167,9 @@ theorem quadratic_full_three_rows (F : Type*) [Field F] [Fintype F]
   have lineCard : Fintype.card (QuadraticLine F) = (Fintype.card F)^5 := by
     simp [QuadraticLine,pow_succ,Nat.mul_assoc]
   rcases shape with ⟨rfl,rfl,rfl,rfl⟩ | ⟨rfl,rfl,rfl,rfl⟩
-  · exact incidenceRows (quadraticHit ν) (quadraticHit_unique ν) (quadraticHit_noTriangle avoids)
+  · exact fullThreeRows_of_finiteIncidence (quadraticHit ν) (quadraticHit_unique ν) (quadraticHit_noTriangle avoids)
       pointCard lineCard (fun line => quadraticHit_card_points ν line) (fun v => quadraticHit_card_lines ν v) qLarge
-  · exact incidenceRows (fun point line => quadraticHit ν line point)
+  · exact fullThreeRows_of_finiteIncidence (fun point line => quadraticHit ν line point)
       (IncidencePairUnique.swap (quadraticHit_unique ν))
       (IncidenceNoTriangle.swap (quadraticHit_noTriangle avoids)) lineCard pointCard
       (fun v => quadraticHit_card_lines ν v) (fun line => quadraticHit_card_points ν line) (by nlinarith)
@@ -320,19 +195,8 @@ theorem half_three_mass_le_four_on_quadratic_budgets {n p q cutoff : ℕ} (large
     _ = 5*q^5 := by ring
     _ ≤ q*q^5 := Nat.mul_le_mul_right _ large
     _ = _ := by ring
-  let M := ∑ i, (paths i).length
-  let S := M-M/4-(4*n+p)
-  have cube : S^3 ≤ 6*(n*p)^2 :=
-    half_three_latest_intersection_shifted_mass_cube_le hn hp paths simple half three 3
-  by_contra! excess
-  have floor : 4*(M/4) ≤ M := Nat.mul_div_le _ _
-  have gap : 2*q^6 < S := by dsimp only [S]; omega
-  have cap : S^3 ≤ (2*q^6)^3 := calc
-    _ ≤ 6*(n*p)^2 := cube
-    _ = 6*q^18 := by rw [volume]; ring
-    _ ≤ 8*q^18 := Nat.mul_le_mul_right _ (by decide)
-    _ = _ := by ring
-  exact (not_lt_of_ge cap) (pow_lt_pow_left₀ gap (Nat.zero_le _) (by decide : 3 ≠ 0))
+  have scale : (n*p)^2 = (q^6)^3 := by rw [volume]; ring
+  exact half_three_mass_le_four_of_volume hn hp charge scale.le paths simple half three
 
 /-- At the exact budgets of the quadratic family or its transpose, the
 literal half-three maximum exists. The same-budget full-three witness
@@ -368,32 +232,14 @@ theorem localOrderDistinctExtremal_frozen_full_three_at_quadratic_budgets (F : T
   obtain ⟨rows,injective,lengths,free,mass,degrees,_⟩ := quadratic_full_three_rows F sized
   have present (i) : rows i ≠ [] ∧ (rows i).Nodup := by
     refine ⟨List.length_pos_iff.mp (by rw [(lengths i).2]; exact positive),(lengths i).1⟩
-  obtain ⟨paths,distinct,valid,half,maximal,_,_⟩ := localOrderDistinctExtremal_isDense (k := 3) true hp
-    ⟨rows,injective,present,free.halfFree⟩
-  let M := ∑ i, (paths i).length
-  have exactMass : (∑ i, (rows i).length) = q^6 := mass.trans balance.1
-  have witnessLe : (∑ i, (rows i).length) ≤ M := maximal rows injective present free.halfFree
-  have lower : q^6 ≤ M := exactMass.symm.trans_le witnessLe
-  have upper : M ≤ 4*q^6 := half_three_mass_le_four_on_quadratic_budgets large shape paths
-    (fun i => (valid i).2) half le_rfl
-  have intervals {budget width : ℕ} (budgetPos : 0 < budget) (same : budget*width = q^6) :
-      (M:ℝ)/(4*(budget:ℝ)) ≤ width ∧ (width:ℝ) ≤ 4*(M:ℝ)/budget := by
-    have exactVolume : (budget:ℝ)*width = (q:ℝ)^6 := by exact_mod_cast same
-    have pos : (0:ℝ) < budget := Nat.cast_pos.mpr budgetPos
-    have lowerR : (q:ℝ)^6 ≤ M := by exact_mod_cast lower
-    have upperR : (M:ℝ) ≤ 4*(q:ℝ)^6 := by exact_mod_cast upper
-    refine ⟨(div_le_iff₀ (by positivity)).mpr ?_,(le_div_iff₀ pos).mpr ?_⟩
-    · calc
-        _ ≤ 4*((budget:ℝ)*width) := by rw [exactVolume]; exact upperR
-        _ = _ := by ring
-    · calc
-        _ = (q:ℝ)^6 := by rw [mul_comm,exactVolume]
-        _ ≤ _ := by linarith only [lowerR,show (0:ℝ) ≤ M by positivity]
-  have caps : frozenListCaps n p M rows := by
-    simp only [frozenListCaps,degrees,fun i => (lengths i).2]
-    exact ⟨fun _ => intervals hn balance.2,fun _ => intervals hp balance.1⟩
-  exact ⟨paths,distinct,valid,half,maximal,rows,injective,present,free,exactMass,witnessLe,
-    by rw [exactMass]; exact upper,caps⟩
+  have upper (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+      (half : HalfBridgeFree (Before paths) 3) : (∑ i, (paths i).length) ≤ 4*(p*length) := by
+    rw [balance.1]
+    exact half_three_mass_le_four_on_quadratic_budgets large shape paths simple half le_rfl
+  obtain ⟨paths,distinct,valid,half,maximal,lower,retain,caps⟩ :=
+    literal_half_maximum_frozen_full_three_of_regular_rows hn hp rows injective present free
+      (fun i => (lengths i).2) degrees (balance.2.trans balance.1.symm) upper
+  exact ⟨paths,distinct,valid,half,maximal,rows,injective,present,free,mass.trans balance.1,lower,retain,caps⟩
 
 /-- Keeping any prescribed number of first-coordinate layers preserves
 full-three exclusion and the incidence degrees on the remaining points.
@@ -443,8 +289,8 @@ theorem quadratic_full_three_rows_on_layers (F : Type*) [Field F] [Fintype F]
   have pointCard : Fintype.card Points = layers*q^3 := by simp [Points,q,pow_succ,Nat.mul_assoc]
   have lineCard : Fintype.card (QuadraticLine F) = q^5 := by simp [QuadraticLine,q,pow_succ,Nat.mul_assoc]
   rcases shape with ⟨rfl,rfl,rfl,rfl⟩ | ⟨rfl,rfl,rfl,rfl⟩
-  · exact incidenceRows hit pairUnique noTriangle pointCard lineCard rowSize vertexSize two
-  · exact incidenceRows (fun v i => hit i v) (IncidencePairUnique.swap (hit := hit) pairUnique)
+  · exact fullThreeRows_of_finiteIncidence hit pairUnique noTriangle pointCard lineCard rowSize vertexSize two
+  · exact fullThreeRows_of_finiteIncidence (fun v i => hit i v) (IncidencePairUnique.swap (hit := hit) pairUnique)
       (IncidenceNoTriangle.swap (hit := hit) noTriangle) lineCard pointCard vertexSize rowSize (by nlinarith [fits, two])
 
 end OnlineReachabilityPreservers

@@ -2166,8 +2166,8 @@ starting-average conclusion at \((n,p)=(q^4,q^5)\) and \((q^5,q^4)\).
 A quadratic incidence construction and its transpose give exact-budget
 full-three witnesses of mass \(q^6\), between a quarter and all of the
 literal half maximum, with all four starting-average caps.
-[Quadratic construction](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L277)
-· [Starting-average witness at quadratic budgets](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L341).
+[Quadratic construction](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L152)
+· [Starting-average witness at quadratic budgets](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L205).
 
 For \(q\ge16\), start from either quadratic budget pair \((N,P)\).
 The same cutoff-three result holds for \(N\le n\le9N/8\) and
@@ -2175,6 +2175,14 @@ The same cutoff-three result holds for \(N\le n\le9N/8\) and
 The full witness fits both budgets, has mass \(q^5(q-1)\) between
 \(M/4\) and \(M\), and meets the four starting-average caps.
 [Starting-average witness near quadratic budgets](OnlineReachabilityPreservers/QuadraticBudgetFrozenFullThree.lean#L120).
+
+An affine Hermitian construction gives the cutoff-three
+starting-average conclusion at \((q^7,q^8)\) and \((q^8,q^7)\)
+for a finite field of order \(q\ge3\). In both orientations the
+full witness uses the exact budgets and has mass \(q^{10}\) between
+\(M/4\) and \(M\) at the literal half maximum.
+[Hermitian construction and its transpose](OnlineReachabilityPreservers/HermitianThreeRows.lean#L305)
+· [Starting-average witness at Hermitian budgets](OnlineReachabilityPreservers/HermitianThreeRows.lean#L376).
 
 At either cutoff below two and feasible positive literal budgets, use
 \(\min(p,n!)\) distinct spanning permutations. They give at least a

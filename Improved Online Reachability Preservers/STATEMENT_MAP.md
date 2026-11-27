@@ -3928,9 +3928,9 @@ respectively. At \(q\ge5\) and either exact budget
 at cutoff three lies between \(q^6\) and \(4q^6\). The regular
 family has mass \(q^6\) on the original budgets and meets all four
 starting-average caps.
-[Quadratic construction and its transpose](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L277)
-· [Half mass at quadratic budgets](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L304)
-· [Quadratic-budget literal frozen case](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L341).
+[Quadratic construction and its transpose](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L152)
+· [Half mass at quadratic budgets](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L179)
+· [Quadratic-budget literal frozen case](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L205).
 
 For \(q\ge16\), the cutoff-three claim extends to the rectangles
 \(N\le n\le9N/8\), \(P\le p\le9P/8\) above either quadratic
@@ -3944,10 +3944,26 @@ at least \(q^5(q-1)\). The latest-hit bound gives
 \(M\le4q^5(q-1)\), where \(M\) is the literal half maximum.
 The restricted full witness meets the four starting-average caps and
 has mass \(q^5(q-1)\) between \(M/4\) and \(M\).
-[Restricted field layers](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L401)
+[Restricted field layers](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L247)
 · [Full disjoint union](OnlineReachabilityPreservers/FullDisjointUnion.lean#L121)
 · [Half mass near quadratic budgets](OnlineReachabilityPreservers/QuadraticBudgetFrozenFullThree.lean#L15)
 · [Literal frozen case near quadratic budgets](OnlineReachabilityPreservers/QuadraticBudgetFrozenFullThree.lean#L120).
+
+Over a field of order \(q\), an affine Hermitian construction in a
+quadratic extension has \(q^7\) point labels and \(q^8\) line labels.
+Each line contains \(q^2\) points and each point lies on \(q^3\)
+lines. Two distinct points determine at most one line. Points on
+the same line are Hermitian orthogonal. A three-line incidence
+triangle would require two orthogonal normalized line directions
+through one point. The resulting norm identity equates their slope
+coordinates, so the lines coincide. Both incidence orientations
+therefore exclude full bridges through three. For \(q\ge3\) the
+exact literal half maximum at either budget is at most \(4q^{10}\),
+and the full witness has mass \(q^{10}\) and all four
+starting-average caps.
+[Hermitian construction and its transpose](OnlineReachabilityPreservers/HermitianThreeRows.lean#L305)
+· [Half mass at Hermitian budgets](OnlineReachabilityPreservers/HermitianThreeRows.lean#L352)
+· [Hermitian-budget literal frozen case](OnlineReachabilityPreservers/HermitianThreeRows.lean#L376).
 
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.
