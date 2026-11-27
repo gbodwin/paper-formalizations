@@ -2468,6 +2468,19 @@ original rows. The earlier-copy return test on the surviving copies
 then certifies their half exclusion before clipping.
 [Fixed-copy restriction](OnlineReachabilityPreservers/ShortReturnFixedCopyCleaning.lean#L33) · [Shared loss budget](OnlineReachabilityPreservers/ShortReturnFixedCopyCleaning.lean#L174) · [Full test on the copied graph](OnlineReachabilityPreservers/ShortReturnFixedCopyCleaning.lean#L209) · [Half exclusion on retained copies](OnlineReachabilityPreservers/ShortReturnFixedCopyCleaning.lean#L233).
 
+The component clipping loss is optimal among subsets with at most the
+given width in each original component. A nondecreasing vertex rank on
+every strict comparison is one way to bound that loss. A comparison
+with a backward return has equal ranks at its endpoints, so each
+short-return component lies within one rank class. If a rowwise selection
+keeps at most the original path width per rank class, component clipping
+keeps at least as much mass. For a simple full-bridge-free input through
+the chosen cutoff with mass at least both positive budgets, a selection
+of at least two thirds of the original mass on the standard degree
+copies gives a frozen \(M/36\) witness with both budgets, all four caps
+and full exclusion through that cutoff.
+[Optimal clipping for fixed components](OnlineReachabilityPreservers/ShortReturnRankedExcess.lean#L12) · [Rank bound on total excess](OnlineReachabilityPreservers/ShortReturnRankedExcess.lean#L51) · [Frozen full-bridge witness from copied ranks](OnlineReachabilityPreservers/ShortReturnRankedExcess.lean#L92).
+
 The bidirected 23-leaf star has one row per dart, 24 vertices and 46
 rows of mass 92. Every full bridge is excluded. Its original widths
 are 15 for degree and eight for path length. At cutoff seven, the
