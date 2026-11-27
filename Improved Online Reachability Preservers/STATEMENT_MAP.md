@@ -1413,6 +1413,16 @@ the supplied width, including for malformed input.
 · [Acceptance condition](OnlineReachabilityPreservers/SteinerBinaryInputGuard.lean#L84)
 · [Combined work bound](OnlineReachabilityPreservers/SteinerBinaryInputGuard.lean#L104).
 
+The binary demand wrapper checks only the current pair of endpoint words.
+A valid pair produces exactly the existing typed solver step for the decoded
+demand, the saved history and the sampled seed. A malformed pair is rejected.
+The input charge is bounded separately by the one-row width and decoding
+budgets, including the actual supplied bit count on rejection.
+[Exact step](OnlineReachabilityPreservers/SteinerBinaryArrivalWordInput.lean#L22)
+· [Acceptance condition](OnlineReachabilityPreservers/SteinerBinaryArrivalWordInput.lean#L63)
+· [Agreement on encoded demands](OnlineReachabilityPreservers/SteinerBinaryArrivalWordInput.lean#L83)
+· [Recorded input charge](OnlineReachabilityPreservers/SteinerBinaryArrivalWordInput.lean#L96).
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
