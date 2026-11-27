@@ -467,6 +467,16 @@ that weight. If \(A\le81M/100\), the final half-five witness retains
 at least \(M/5000\) within both original budgets and all four original caps.
 [Joint repair of the actual cuts](OnlineReachabilityPreservers/HalfFiveDegreeFirstCleaning.lean).
 
+Every actual crossed comparison in degree-first order points to a later
+original row and is a reverse-partner edge at its original vertex. Each
+source has at most one later target, since that partner row and the
+original vertex determine its degree copy and its path piece. An
+arbitrary set of raw incidences covering all comparison edges repairs
+the same cuts. If it has size at most \(37M/100\), trim the raw degree
+and path supports at loss at most \(2M/31\) each, then peel. This gives
+at least \(M/5000\), both original budgets, and all four original caps.
+[Actual conflict relation and arbitrary cover](OnlineReachabilityPreservers/HalfFiveDegreeFirstCleaning.lean).
+
 The half-five conflict graph can have two incoming conflicts at one
 incidence. Take the paths
 `[(4,1),(5,1),(0,3),(0,6,1,2,4,5),(3,2)]` in this order. They exclude

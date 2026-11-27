@@ -646,6 +646,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   caps at half cutoff five. The union of the crossed degree comparisons
   and the crossed path comparisons on copied vertices must mark at most
   81 percent of the incidences.
+- The same actual cut relations admit [any cover of at most 37 percent
+  of the original incidences](OnlineReachabilityPreservers/HalfFiveDegreeFirstCleaning.lean)
+  as a deletion set. This gives the same half-five mass, budgets, and caps.
+  Each incidence has at most one later target among the two cut relations.
 - If either positive budget is at most 29, an unrestricted maximum at any
   cutoff of at least two has a witness with both budgets, all four frozen
   caps, and at least \(M/8\) incidences. The witness excludes full bridges

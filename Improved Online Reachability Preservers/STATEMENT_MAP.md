@@ -1481,6 +1481,10 @@ comparisons are formed on the copied vertices. For the same simple
 half-five-free input with mass at least both positive budgets, union
 size at most \(81M/100\) gives \(M/5000\), both budgets, and all four
 original-average caps.
+[The cover formulation](OnlineReachabilityPreservers/HalfFiveDegreeFirstCleaning.lean)
+gives the same guarantee whenever at most \(37M/100\) raw incidences
+cover every actual degree-first conflict edge. An edge increases the
+original arrival label, and each source has at most one later target.
 Original-average half-five cleaning for general inputs remains open.
 
 For Lemmas 23 and 39, the [contiguous six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)

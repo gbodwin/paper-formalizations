@@ -35,6 +35,69 @@ theorem halfFiveDegreeFirstAffected_subset {n p : ℕ} (paths : Fin p → List (
     · exact mem_pieceIncidences.mpr ⟨mem_univ _,edge.right_mem⟩
   · exact (mem_filter.mp degree).1
 
+/-- An edge records an actual crossed path comparison on copied vertices,
+or an actual crossed degree comparison at two raw piece incidences. -/
+def DegreeFirstCutConflict {n p : ℕ} (paths : Fin p → List (Fin n)) (D L : ℕ)
+    (a b : ListBlockIndex (splitListVertices paths D) L × ListVertexBlockIndex paths D) : Prop :=
+  let raw := listRegularizedPaths paths D L
+  OppositeWidthConflict (splitListVertices paths D) raw Sigma.fst a b ∨
+    (a.2 ∈ raw a.1 ∧ b.2 ∈ raw b.1 ∧
+      OppositeDegreeCutConflict paths D (a.1.fst,a.2) (b.1.fst,b.2))
+
+theorem DegreeFirstCutConflict.left_mem {n p : ℕ} {paths : Fin p → List (Fin n)} {D L : ℕ}
+    {a b} (edge : DegreeFirstCutConflict paths D L a b) : a.2 ∈ listRegularizedPaths paths D L a.1 := by
+  rcases edge with path | degree
+  · exact path.left_mem
+  · exact degree.1
+
+theorem DegreeFirstCutConflict.right_mem {n p : ℕ} {paths : Fin p → List (Fin n)} {D L : ℕ}
+    {a b} (edge : DegreeFirstCutConflict paths D L a b) : b.2 ∈ listRegularizedPaths paths D L b.1 := by
+  rcases edge with path | degree
+  · exact path.right_mem
+  · exact degree.2.1
+
+theorem DegreeFirstCutConflict.original_corner {n p : ℕ} {paths : Fin p → List (Fin n)} {D L : ℕ}
+    {a b} (edge : DegreeFirstCutConflict paths D L a b) : a.2.fst = b.2.fst := by
+  rcases edge with path | degree
+  · exact congrArg Sigma.fst path.1
+  · exact degree.2.2.2.2.1
+
+theorem DegreeFirstCutConflict.partner {n p : ℕ} {paths : Fin p → List (Fin n)} {D L : ℕ}
+    (simple : ∀ i, (paths i).Nodup) {a b} (edge : DegreeFirstCutConflict paths D L a b) :
+    LaterReversePartner paths a.2.fst a.1.fst b.1.fst := by
+  rcases edge with path | degree
+  · let copies := splitListVertices paths D
+    let raw := listRegularizedPaths paths D L
+    let J := ListBlockIndex copies L
+    let parent (j : J) := j.fst
+    have rawSub (i : J) : (raw i).Sublist (copies (parent i)) := List.filter_sublist
+    have steps {i : J} {x y : ListVertexBlockIndex paths D}
+        (h : Before raw i x y) : Before copies (parent i) x y :=
+      listBefore_of_sublist (paths := fun j : J => copies (parent j)) (cut := raw)
+        (splitListVertices_simple paths D (parent i) (simple (parent i))) (rawSub i) h
+    obtain ⟨arrives,x,forward,backward⟩ := path.partner (fun {_ _ _} => steps)
+    exact ⟨arrives,x.fst,splitListVertices_step (simple a.1.fst) forward,
+      splitListVertices_step (simple b.1.fst) backward⟩
+  · exact degree.2.2.2.2.2.2
+
+theorem DegreeFirstCutConflict.out_unique {n p : ℕ} {paths : Fin p → List (Fin n)} {D L : ℕ}
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5)
+    {a b c} (ab : DegreeFirstCutConflict paths D L a b) (ac : DegreeFirstCutConflict paths D L a c) :
+    b = c := by
+  have parent : b.1.fst = c.1.fst :=
+    laterReversePartner_unique free (by decide) (ab.partner simple) (ac.partner simple)
+  have original : b.2.fst = c.2.fst := ab.original_corner.symm.trans ac.original_corner
+  have bOn := (mem_localPathBlock.mp ab.right_mem).1
+  have cOn := (mem_localPathBlock.mp ac.right_mem).1
+  have cOnSame : c.2 ∈ splitListVertices paths D b.1.fst := parent.symm ▸ cOn
+  have copied : b.2 = c.2 := vertexBlock_eq_of_same_label original
+    (le_antisymm (splitListVertices_block_mono original le_rfl bOn cOnSame)
+      (splitListVertices_block_mono original.symm le_rfl cOnSame bOn))
+  have piece : b.1 = c.1 := by
+    by_contra different
+    exact splitListPaths_disjoint different parent ab.right_mem (copied.symm ▸ ac.right_mem)
+  exact Prod.ext piece copied
+
 private theorem piece_of_list_mem {I V : Type*} [LinearOrder V] {paths : I → List V}
     {i : I} {v : V} (simple : (paths i).Nodup) (onRow : v ∈ paths i) (L : ℕ) :
     ∃ j : ListBlockIndex paths L, j.fst = i ∧ v ∈ splitListPaths paths L j := by
@@ -48,12 +111,14 @@ private theorem one_of_opposite_colors {a b c : Bool} (different : a ≠ b) : a 
   cases a <;> cases b <;> cases c <;> simp_all
 
 set_option maxHeartbeats 800000 in
-/-- One original color covers both sets of actual conflicts when the
-degree width split precedes the path width split. -/
-theorem halfFiveDegreeFirstRepair_halfFree {n p : ℕ} (paths : Fin p → List (Fin n))
-    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5) (D L : ℕ) (c : Bool) :
-    HalfBridgeFree (Before (erasePieceIncidences
-      (listRegularizedPaths paths D L) (halfFiveDegreeFirstDeletion paths D L c))) 5 := by
+/-- Any deletion covering the two actual cut relations preserves half-five
+exclusion when degrees are split before paths. -/
+theorem eraseDegreeFirstConflicts_halfFree {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5) (D L : ℕ)
+    (deleted : Finset (ListBlockIndex (splitListVertices paths D) L × ListVertexBlockIndex paths D))
+    (deletedRaw : deleted ⊆ pieceIncidences (listRegularizedPaths paths D L) univ)
+    (cover : ∀ {a b}, DegreeFirstCutConflict paths D L a b → a ∈ deleted ∨ b ∈ deleted) :
+    HalfBridgeFree (Before (erasePieceIncidences (listRegularizedPaths paths D L) deleted)) 5 := by
   classical
   let copies := splitListVertices paths D
   let raw := listRegularizedPaths paths D L
@@ -61,7 +126,6 @@ theorem halfFiveDegreeFirstRepair_halfFree {n p : ℕ} (paths : Fin p → List (
   let V := ListVertexBlockIndex paths D
   let parent (j : J) := j.fst
   let project (a : J × V) := (parent a.1,a.2)
-  let deleted := halfFiveDegreeFirstDeletion paths D L c
   let degreeDeleted := deleted.image project
   let degreeRows := erasePieceIncidences copies degreeDeleted
   let clean := erasePieceIncidences raw deleted
@@ -74,22 +138,20 @@ theorem halfFiveDegreeFirstRepair_halfFree {n p : ℕ} (paths : Fin p → List (
     listBefore_of_sublist (paths := fun j : J => copies (parent j)) (copySimple (parent i)) (rawSub i) step
   have cleanStep {i x y} (step : Before clean i x y) : Before raw i x y :=
     listBefore_of_sublist (rawSimple i) (erasePieceIncidences_sublist raw deleted i) step
-  have copyStep {i x y} (step : Before copies i x y) : Before paths i x.fst y.fst :=
-    splitListVertices_step (simple i) step
-  have deletedRaw : deleted ⊆ pieceIncidences raw univ :=
-    (filter_subset _ _).trans (halfFiveDegreeFirstAffected_subset paths D L)
-  have liftDegree {a : Fin p × V} (hit : a ∈ halfFiveDegreeCutDeletion paths D c) : a ∈ degreeDeleted := by
-    obtain ⟨marked,color⟩ := mem_filter.mp hit
-    have onRow : a.2 ∈ copies a.1 :=
-      (mem_pieceIncidences.mp (halfFiveDegreeCutAffected_subset paths D marked)).2
-    obtain ⟨j,jParent,inPiece⟩ := piece_of_list_mem (copySimple a.1) onRow L
-    have rawMark : (j,a.2) ∈ halfFiveDegreeFirstAffected paths D L :=
-      mem_union_right _ (mem_filter.mpr ⟨mem_pieceIncidences.mpr ⟨mem_univ _,inPiece⟩,jParent.symm ▸ marked⟩)
-    have chosen : (j,a.2) ∈ deleted := mem_filter.mpr ⟨rawMark,jParent.symm ▸ color⟩
-    exact mem_image.mpr ⟨(j,a.2),chosen,Prod.ext jParent rfl⟩
+  have liftDegree {a b : Fin p × V} (edge : OppositeDegreeCutConflict paths D a b) :
+      a ∈ degreeDeleted ∨ b ∈ degreeDeleted := by
+    obtain ⟨j,jParent,inA⟩ := piece_of_list_mem (copySimple a.1) edge.1 L
+    obtain ⟨k,kParent,inB⟩ := piece_of_list_mem (copySimple b.1) edge.2.1 L
+    have aEq : project (j,a.2) = a := Prod.ext jParent rfl
+    have bEq : project (k,b.2) = b := Prod.ext kParent rfl
+    have lifted : DegreeFirstCutConflict paths D L (j,a.2) (k,b.2) := by
+      apply Or.inr
+      refine ⟨inA,inB,?_⟩
+      change OppositeDegreeCutConflict paths D (project (j,a.2)) (project (k,b.2))
+      rwa [aEq,bEq]
+    exact (cover lifted).imp (fun h => mem_image.mpr ⟨_,h,aEq⟩) (fun h => mem_image.mpr ⟨_,h,bEq⟩)
   have rowFree : HalfBridgeFree (Before degreeRows) 5 :=
-    eraseDegreeCutConflicts_halfFree simple free D degreeDeleted
-      (fun {_ _} edge => (halfFiveDegreeCutDeletion_covers free edge c).imp (fun h => liftDegree h) (fun h => liftDegree h))
+    eraseDegreeCutConflicts_halfFree simple free D degreeDeleted (fun {_ _} => liftDegree)
   have keepParent {j : J} {x : V} (present : x ∈ clean j) : x ∈ degreeRows (parent j) := by
     obtain ⟨onRaw,kept⟩ := mem_erasePieceIncidences.mp present
     refine mem_erasePieceIncidences.mpr ⟨(rawSub j).subset onRaw,?_⟩
@@ -110,21 +172,6 @@ theorem halfFiveDegreeFirstRepair_halfFree {n p : ℕ} (paths : Fin p → List (
   have apart {i j : J} {x : V}
       (diff : i ≠ j) (same : parent i = parent j) (left : x ∈ clean i) (right : x ∈ clean j) : False :=
     splitListPaths_disjoint diff same (mem_erasePieceIncidences.mp left).1 (mem_erasePieceIncidences.mp right).1
-  have coverPath {a b : J × V} (edge : OppositeWidthConflict copies raw parent a b) :
-      a ∈ deleted ∨ b ∈ deleted := by
-    have markA : a ∈ halfFiveDegreeFirstAffected paths D L :=
-      mem_union_left _ (mem_filter.mpr ⟨mem_univ _,Or.inl ⟨b,edge⟩⟩)
-    have markB : b ∈ halfFiveDegreeFirstAffected paths D L :=
-      mem_union_left _ (mem_filter.mpr ⟨mem_univ _,Or.inr ⟨a,edge⟩⟩)
-    obtain ⟨arrival,x,forward,backward⟩ := edge.partner (fun {_ _ _} => rawStep)
-    have partner : LaterReversePartner paths a.2.fst (parent a.1) (parent b.1) :=
-      ⟨arrival,x.fst,copyStep forward,copyStep backward⟩
-    have different : reversePartnerColor paths a.2.fst (parent a.1) ≠
-        reversePartnerColor paths b.2.fst (parent b.1) := by
-      rw [← edge.1]
-      exact reversePartnerColor_ne free (by decide) partner
-    exact (one_of_opposite_colors (c := c) different).imp
-      (fun h => mem_filter.mpr ⟨markA,h⟩) (fun h => mem_filter.mpr ⟨markB,h⟩)
   have noConflict {a b : J × V} (edge : OppositeWidthConflict degreeRows clean parent a b) : False := by
     have lift : OppositeWidthConflict copies raw parent a b := by
       rcases edge with ⟨same,older,x,⟨j,diff,pSame,xEarly,on,xy,yx⟩ | ⟨j,diff,pSame,xLate,on,xy,yx⟩⟩
@@ -132,7 +179,7 @@ theorem halfFiveDegreeFirstRepair_halfFree {n p : ℕ} (paths : Fin p → List (
           (mem_erasePieceIncidences.mp on).1,liftRowStep xy,cleanStep yx⟩⟩
       · exact ⟨same,older,x,Or.inr ⟨j,diff,pSame,(mem_erasePieceIncidences.mp xLate).1,
           (mem_erasePieceIncidences.mp on).1,cleanStep xy,liftRowStep yx⟩⟩
-    exact (coverPath lift).elim (mem_erasePieceIncidences.mp edge.left_mem).2 (mem_erasePieceIncidences.mp edge.right_mem).2
+    exact (cover (Or.inl lift)).elim (mem_erasePieceIncidences.mp edge.left_mem).2 (mem_erasePieceIncidences.mp edge.right_mem).2
   have monotone : Monotone parent := block_parent_mono (fun i => (copies i).toFinset) L
   have keptFree := eraseOppositeWidthConflicts_halfFree rowFree cleanSimple monotone
     (fun {_ _ _} => parentStep) (fun {_ _ _} => apart) (∅ : Finset (J × V))
@@ -143,6 +190,36 @@ theorem halfFiveDegreeFirstRepair_halfFree {n p : ℕ} (paths : Fin p → List (
     simp
   rw [noDeletion] at keptFree
   exact keptFree
+
+/-- One original reverse-partner color covers both actual cut sets. -/
+theorem halfFiveDegreeFirstDeletion_covers {n p : ℕ} {paths : Fin p → List (Fin n)}
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5)
+    {D L : ℕ} {a b} (edge : DegreeFirstCutConflict paths D L a b) (c : Bool) :
+    a ∈ halfFiveDegreeFirstDeletion paths D L c ∨ b ∈ halfFiveDegreeFirstDeletion paths D L c := by
+  classical
+  have mark : a ∈ halfFiveDegreeFirstAffected paths D L ∧ b ∈ halfFiveDegreeFirstAffected paths D L := by
+    rcases edge with path | ⟨aOn,bOn,degree⟩
+    · exact ⟨mem_union_left _ (mem_filter.mpr ⟨mem_univ _,Or.inl ⟨b,path⟩⟩),
+        mem_union_left _ (mem_filter.mpr ⟨mem_univ _,Or.inr ⟨a,path⟩⟩)⟩
+    · exact ⟨mem_union_right _ (mem_filter.mpr ⟨mem_pieceIncidences.mpr ⟨mem_univ _,aOn⟩,
+          mem_filter.mpr ⟨mem_univ _,Or.inl ⟨(b.1.fst,b.2),degree⟩⟩⟩),
+        mem_union_right _ (mem_filter.mpr ⟨mem_pieceIncidences.mpr ⟨mem_univ _,bOn⟩,
+          mem_filter.mpr ⟨mem_univ _,Or.inr ⟨(a.1.fst,a.2),degree⟩⟩⟩)⟩
+  have different : reversePartnerColor paths a.2.fst a.1.fst ≠ reversePartnerColor paths b.2.fst b.1.fst := by
+    rw [← edge.original_corner]
+    exact reversePartnerColor_ne free (by decide) (edge.partner simple)
+  exact (one_of_opposite_colors (c := c) different).imp
+    (fun h => mem_filter.mpr ⟨mark.1,h⟩) (fun h => mem_filter.mpr ⟨mark.2,h⟩)
+
+/-- One original color covers both sets of actual conflicts when the
+degree width split precedes the path width split. -/
+theorem halfFiveDegreeFirstRepair_halfFree {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5) (D L : ℕ) (c : Bool) :
+    HalfBridgeFree (Before (erasePieceIncidences
+      (listRegularizedPaths paths D L) (halfFiveDegreeFirstDeletion paths D L c))) 5 :=
+  eraseDegreeFirstConflicts_halfFree paths simple free D L _
+    ((filter_subset _ _).trans (halfFiveDegreeFirstAffected_subset paths D L))
+    (fun {_ _} edge => halfFiveDegreeFirstDeletion_covers simple free edge c)
 
 private theorem mass_le_rectangle_add_losses {I V : Type*} [LinearOrder I] [Fintype I]
     [LinearOrder V] [Fintype V] (rows : I → List V) (simple : ∀ i, (rows i).Nodup)
@@ -221,8 +298,8 @@ private theorem degreeFirst_retained_mass {M W R X Y C D : ℕ}
 
 set_option maxHeartbeats 1200000 in
 /-- If the actual crossed comparisons of the degree-first split mark at
-most 81 percent of the incidences, both original supports can be kept
-with all four frozen caps and at least one 5000th of the original mass. -/
+most 81 percent of the incidences, the witness fits both original
+budgets and all four frozen caps with at least one 5000th of the mass. -/
 theorem regularization_list_frozen_half_five_of_degree_first_cut_budget {n p : ℕ}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (free : HalfBridgeFree (Before paths) 5) (hn : 0 < n) (hp : 0 < p)
@@ -391,5 +468,134 @@ theorem regularization_list_frozen_half_five_of_degree_first_cut_budget {n p : �
     (by simpa only [one_mul,Fintype.card_coe] using pBudget) length keptDegree upper ?_
   change 5002*M ≤ 10000*mass c
   omega
+
+private theorem original_width_trim_loss {M C X : ℕ} (positive : 0 < M)
+    (capacity : 31*M ≤ 8*C) (trim : 4*C*X ≤ M^2) : 31*X ≤ 2*M := by
+  apply (Nat.mul_le_mul_left_iff positive).mp
+  calc
+    _ = (31*M)*X := by ring
+    _ ≤ (8*C)*X := Nat.mul_le_mul_right _ capacity
+    _ = 2*(4*C*X) := by ring
+    _ ≤ 2*M^2 := Nat.mul_le_mul_left _ trim
+    _ = _ := by ring
+
+set_option maxHeartbeats 1200000 in
+/-- A cover of the actual degree-first cut conflicts suffices whenever
+it removes at most 37 percent of the original incidences. -/
+theorem regularization_list_frozen_half_five_of_degree_first_cover {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) 5) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (certificate : let M := ∑ i, (paths i).length
+      let D := 4*M/n
+      let L := 4*M/p
+      ∃ deleted : Finset (ListBlockIndex (splitListVertices paths D) L × ListVertexBlockIndex paths D),
+        deleted ⊆ pieceIncidences (listRegularizedPaths paths D L) univ ∧
+        100*deleted.card ≤ 37*M ∧
+        (∀ {a b}, DegreeFirstCutConflict paths D L a b → a ∈ deleted ∨ b ∈ deleted)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) 5 ∧
+      M ≤ 5000*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  classical
+  let M := ∑ i, (paths i).length
+  by_cases low : M ≤ 8*max n p
+  · obtain ⟨v,vBudget,q,qBudget,clean,cleanSimple,legal,mass,upper,caps⟩ :=
+      regularization_list_frozen_low_mass paths simple free (by decide) hn hp dense long low
+    exact ⟨v,vBudget,q,qBudget,clean,cleanSimple,fun _ small b _ => (legal small).false b,
+      mass.trans (Nat.mul_le_mul_right _ (by decide)),upper,caps⟩
+  let D := 4*M/n
+  let L := 4*M/p
+  let J := ListBlockIndex (splitListVertices paths D) L
+  let V := ListVertexBlockIndex paths D
+  let raw := listRegularizedPaths paths D L
+  obtain ⟨deleted,deletedSub,deletedCount,cover⟩ := certificate
+  let repaired := erasePieceIncidences raw deleted
+  let rawSets (j : J) := (raw j).toFinset
+  let rawWeight (v : V) := (occurrences rawSets v).card
+  have nDense : 8*n ≤ M := by have maxN := le_max_left n p; omega
+  have pDense : 8*p ≤ M := by have maxP := le_max_right n p; omega
+  have dPos : 0 < D := (four_average_width hn dense).1
+  have lPos : 0 < L := (four_average_width hp long).1
+  have vertexCapacity : 31*M ≤ 8*(D*n) := by
+    have floor := four_average_width_product hn (M := M)
+    change 4*M < D*n+n at floor
+    omega
+  have pathCapacity : 31*M ≤ 8*(L*p) := by
+    have floor := four_average_width_product hp (M := M)
+    change 4*M < L*p+p at floor
+    omega
+  obtain ⟨rawMass,rawLength,rawDegree⟩ := regularization_list_mass_caps paths simple D L dPos lPos
+  have rawMass' : (∑ j : J, (raw j).length) = M := rawMass
+  have rawSimple (j : J) : (raw j).Nodup := listRegularizedPaths_simple paths simple D L j
+  have repairedSimple (j : J) : (repaired j).Nodup :=
+    (erasePieceIncidences_sublist raw deleted j).nodup (rawSimple j)
+  have degreeMass : (∑ v : V, rawWeight v) = M := calc
+    _ = ∑ j : J, (rawSets j).card := sum_occurrences rawSets
+    _ = ∑ j : J, (raw j).length := sum_congr rfl (fun j _ => List.toFinset_card_of_nodup (rawSimple j))
+    _ = _ := rawMass
+  obtain ⟨fullV,fullJ,filledV,remainderV,filledJ,remainderJ⟩ :=
+    listRegularizedPaths_full_block_profiles paths simple dPos lPos
+  have remV : (univ \ fullV).card ≤ n := by simpa only [Fintype.card_fin] using remainderV.le
+  have remJ : (univ \ fullJ).card ≤ p := by simpa only [Fintype.card_fin] using remainderJ.le
+  obtain ⟨A,vertexBudget,trimV⟩ := trim_full_weight_blocks_quadratic rawWeight fullV dPos filledV remV
+    (by rw [degreeMass]; omega)
+  obtain ⟨B,pathBudget,trimJ⟩ := trim_full_weight_blocks_quadratic (fun j => (raw j).length) fullJ
+    lPos filledJ remJ (by rw [rawMass']; omega)
+  let X := ∑ v ∈ univ \ A, rawWeight v
+  let Y := ∑ j ∈ univ \ B, (raw j).length
+  let kept := restrictListPaths repaired A B
+  let R := ∑ j : B, (kept j).length
+  have vertexTrim : 4*(D*n)*X ≤ M^2 := by rw [← degreeMass]; exact trimV
+  have pathTrim : 4*(L*p)*Y ≤ M^2 := by rw [← rawMass']; exact trimJ
+  have massPos := hn.trans_le dense
+  have vertexLoss : 31*X ≤ 2*M := original_width_trim_loss massPos vertexCapacity vertexTrim
+  have pathLoss : 31*Y ≤ 2*M := original_width_trim_loss massPos pathCapacity pathTrim
+  have retained : (∑ j : J, (repaired j).length)+deleted.card = M := by
+    have tally := erasePieceIncidences_mass_add_loss rawSimple (univ : Finset J) deleted
+    change (∑ j : J, (repaired j).length)+(pieceIncidences raw univ ∩ deleted).card =
+      (∑ j : J, (raw j).length) at tally
+    rw [inter_eq_right.mpr deletedSub,rawMass'] at tally
+    exact tally
+  let marks (j : J) := (repaired j).toFinset
+  have degreeMonotone (v : V) : (occurrences marks v).card ≤ rawWeight v := by
+    apply card_le_card
+    intro j on
+    have occurrence : v ∈ repaired j := List.mem_toFinset.mp ((mem_occurrences (marks := marks)).mp on)
+    exact mem_occurrences.mpr (List.mem_toFinset.mpr (mem_erasePieceIncidences.mp occurrence).1)
+  have lengthMonotone (j : J) : (repaired j).length ≤ (raw j).length :=
+    (erasePieceIncidences_sublist raw deleted j).length_le
+  have lostV : (∑ v ∈ univ \ A, (occurrences marks v).card) ≤ X := sum_le_sum fun v _ => degreeMonotone v
+  have lostJ : (∑ j ∈ univ \ B, (repaired j).length) ≤ Y := sum_le_sum fun j _ => lengthMonotone j
+  have loss := mass_le_rectangle_add_losses repaired repairedSimple A B
+  change (∑ j : J, (repaired j).length) ≤ R+(∑ j ∈ univ \ B, (repaired j).length)+
+    (∑ v ∈ univ \ A, (occurrences marks v).card) at loss
+  have enough : 5002*M ≤ 10000*R := by
+    change 100*deleted.card ≤ 37*M at deletedCount
+    omega
+  have repairedFree : HalfBridgeFree (Before repaired) 5 :=
+    eraseDegreeFirstConflicts_halfFree paths simple free D L deleted deletedSub (fun {_ _} => cover)
+  have legal : HalfBridgeFree (Before kept) 5 := restrictListPaths_halfFree repairedSimple repairedFree A B
+  have keptSimple (j : B) : (kept j).Nodup := restrictListPath_nodup (repairedSimple j.val) A
+  have length (j : B) : (kept j).length ≤ L := by
+    rw [show (kept j).length = (marks j.val ∩ A).card from restrictListPath_length (repairedSimple j.val) A]
+    exact (card_le_card inter_subset_left).trans ((List.toFinset_card_le _).trans
+      ((lengthMonotone j.val).trans (rawLength j.val)))
+  have degree (v : A) : (occurrences (fun j => (kept j).toFinset) v).card ≤ D := by
+    rw [show (fun j => (kept j).toFinset) = rectanglePaths marks A B from
+      funext (restrictListPaths_toFinset repaired A B)]
+    exact (rectanglePaths_degree_le marks A B v).trans ((degreeMonotone v.val).trans (rawDegree v.val))
+  have upper : R ≤ M := calc
+    _ = ∑ j : B, (rectanglePaths marks A B j).card :=
+      sum_congr rfl (fun j _ => (List.toFinset_card_of_nodup (keptSimple j)).symm.trans
+        (congrArg Finset.card (restrictListPaths_toFinset repaired A B j)))
+    _ ≤ ∑ j : J, (marks j).card := rectanglePaths_mass_le marks A B
+    _ ≤ ∑ j : J, (raw j).length := sum_le_sum fun j _ => (List.toFinset_card_le _).trans (lengthMonotone j)
+    _ = _ := rawMass
+  exact regularization_list_frozen_after_caps_with_ratios_of_mass (half := true) (k := 5)
+    (retention := 5000) (vNum := 1) (vDen := 1) (pNum := 1) (pDen := 1)
+    kept keptSimple legal hn hp dense long (by decide) (by decide) le_rfl le_rfl
+    (by simpa only [one_mul,Fintype.card_coe] using vertexBudget)
+    (by simpa only [one_mul,Fintype.card_coe] using pathBudget) length degree upper enough
 
 end OnlineReachabilityPreservers
