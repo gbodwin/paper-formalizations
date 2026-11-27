@@ -1,4 +1,4 @@
-import OnlineReachabilityPreservers.RiverDetourComponents
+import OnlineReachabilityPreservers.RiverDetourVertices
 
 /-! Two long portions of a cycle in one parent row at the original width. -/
 
@@ -588,12 +588,13 @@ private theorem width_block_map {V W : Type*} [LinearOrder V] [LinearOrder W]
   rw [same]
 
 
-private theorem longRankCycleCopies_exclusion_and_failure {m width k : ℕ} (wide : 3 < width) :
+private theorem longRankCycleCopies_properties {m width k : ℕ} (wide : 3 < width) :
     let copies := splitListVertices (@longRankCycleRows m) width
     let pieces := splitListPaths copies 8
     (∀ j, BridgeFree (Before pieces) j) ∧
-      ¬ (∀ ⦃i j x y⦄, i ≠ j → i.fst = j.fst → x ∈ pieces i → y ∈ pieces j →
-        ¬ SameComponent (riverDetourConstraintGraph pieces k) x y) := by
+      (¬ ∀ ⦃i j x y⦄, i ≠ j → i.fst = j.fst → x ∈ pieces i → y ∈ pieces j →
+        ¬ SameComponent (riverDetourConstraintGraph pieces k) x y) ∧
+      riverDetourVertexGraph pieces k = ∅ := by
   let rows := @longRankCycleRows m
   let copies := splitListVertices rows width
   let pieces := splitListPaths copies 8
@@ -640,7 +641,11 @@ private theorem longRankCycleCopies_exclusion_and_failure {m width k : ℕ} (wid
       riverStep := forget b.riverStep
       arcStep := fun l => forget (b.arcStep l) }
     exact (longRankCyclePieces_full_free m j small).false old
-  refine ⟨built,?_⟩
+  have empty : riverDetourVertexGraph pieces k = ∅ :=
+    riverDetourVertexGraph_eq_empty_of_unique_source_piece
+      (fun {_ _ _ _ _} left right => pieceIndex.symm.injective
+        (longRankCyclePiece_unique_source (forget left) (forget right))) k
+  refine ⟨built,?_,empty⟩
   let G := riverDetourConstraintGraph pieces k
   have step (x : Fin (2*m+16)) : Edge G (embed x) (embed (longCycleSuccessor x)) := by
     obtain ⟨i,edge⟩ := longRankCyclePiece_successor_step x
@@ -709,7 +714,8 @@ theorem longRankCycle_original_widths_limit {m k : ℕ} (large : 27 ≤ m) (cuto
   dsimp only
   rw [longRankCycleRows_frozen_degree_width large,longRankCycleRows_frozen_width large]
   have inputFree := longRankCycleRows_full_free (by omega : 0 < m) cutoff
-  refine ⟨inputFree,?_,longRankCycleCopies_exclusion_and_failure (by decide : 3 < 7)⟩
+  have properties := longRankCycleCopies_properties (m := m) (k := k) (by decide : 3 < 7)
+  refine ⟨inputFree,?_,properties.1,properties.2.1⟩
   intro d small
   refine ⟨fun b => ?_⟩
   let copies := splitListVertices (@longRankCycleRows m) 7
@@ -736,5 +742,36 @@ theorem longRankCycle_frozen_at_original_widths {m k : ℕ} (large : 27 ≤ m) :
   exact regularization_list_frozen_after_width_blocks_of_mass (half := false) (retention := 16)
     (@longRankCycleRows m) longRankCycleRows_simple allowed
     (by omega) (by omega) (by omega) (by omega) le_rfl (by norm_num)
+
+/-- At the original widths the long cycle has no bounded detour outside
+its own river piece. The finer graph has no edges at any cutoff. -/
+theorem longRankCycle_original_widths_detour_vertex_graph_empty {m k : ℕ} (large : 27 ≤ m) :
+    let M := ∑ i : Fin (2*m+3), (longRankCycleRows i).length
+    let pieces := listRegularizedPaths (@longRankCycleRows m) (4*M/(2*m+16)) (4*M/(2*m+3))
+    riverDetourVertexGraph pieces k = ∅ := by
+  dsimp only
+  rw [longRankCycleRows_frozen_degree_width large,longRankCycleRows_frozen_width large]
+  exact (longRankCycleCopies_properties (m := m) (k := k) (by decide : 3 < 7)).2.2
+
+/-- Distinct pieces of the same parent in the long cycle meet disjoint
+components of the finer graph, despite failing the earlier rank test. -/
+theorem longRankCycle_original_widths_detour_vertex_separated {m k : ℕ} (large : 27 ≤ m) :
+    let M := ∑ i : Fin (2*m+3), (longRankCycleRows i).length
+    let pieces := listRegularizedPaths (@longRankCycleRows m) (4*M/(2*m+16)) (4*M/(2*m+3))
+    ∀ ⦃i j x y⦄, i ≠ j → i.fst = j.fst → x ∈ pieces i → y ∈ pieces j →
+      ¬ SameComponent (riverDetourVertexGraph pieces k) x y := by
+  let M := ∑ i : Fin (2*m+3), (longRankCycleRows i).length
+  let V := ListVertexBlockIndex (@longRankCycleRows m) (4*M/(2*m+16))
+  have same_of_empty {x y : V} (route : Reach (∅ : Arcs V) x y) : x = y := by
+    induction route with
+    | refl => rfl
+    | tail _ edge _ => exact (Finset.notMem_empty _ edge).elim
+  dsimp only
+  intro i j x y different parents first second components
+  have empty := longRankCycle_original_widths_detour_vertex_graph_empty (k := k) large
+  have route := components.1
+  rw [empty] at route
+  have equal := same_of_empty route
+  exact splitListPaths_disjoint different parents first (equal.symm ▸ second)
 
 end OnlineReachabilityPreservers

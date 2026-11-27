@@ -1041,7 +1041,20 @@ exclude full bridges at every size and the same two pieces still share a
 component of the constraint graph. Restricting the supports of the pieces
 and peeling gives a frozen witness of mass at least \(M/16\), with
 both original budgets and all four caps.
-[Admissibility and component test at both widths](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L701) · [Frozen witness from the original widths](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L725).
+[Admissibility and component test at both widths](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L706) · [Frozen witness from the original widths](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L731).
+
+A finer finite graph joins each possible river’s start to every vertex on
+a detour walk of at most \(k-1\) steps that omits the river piece. Treat these
+links as undirected. Every bridge through \(k\) lies in one component.
+The components refine those of the earlier graph. Check short returns
+within these smaller components, or require distinct pieces of one
+parent to meet disjoint components. With admissible degree copies and
+the same simple input, mass and budget conditions, the short-return
+test gives the frozen \(M/16\) witness at the original widths in either
+mode. At both prescribed widths in the long-cycle family, each vertex
+starts comparisons in only one piece. The finer graph therefore has
+no edges at any cutoff and the distinct pieces pass its separation test.
+[Bounded detour graph](OnlineReachabilityPreservers/RiverDetourVertices.lean#L43) · [Bridge localization](OnlineReachabilityPreservers/RiverDetourVertices.lean#L92) · [Component refinement](OnlineReachabilityPreservers/RiverDetourVertices.lean#L132) · [Frozen witness](OnlineReachabilityPreservers/RiverDetourVertices.lean#L209) · [Exact long-cycle separation](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L758).
 
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
