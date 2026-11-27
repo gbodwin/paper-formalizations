@@ -1119,14 +1119,13 @@ the deletion costs at most \(M/18\), reordering, restriction and peeling
 retain \(M/32\) with both original budgets and all four frozen caps.
 [Constraint monotonicity](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L87) · [Frozen cleaning after arrival deletions](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L248).
 
-When the occupied vertex and row supports fit the original budgets,
-discard unused labels before reordering. Restricting the labels preserves
-acyclicity of the constraints, and the support restriction keeps every
-retained incidence. For retained mass \(K\), with \(a\) occupied vertices
-and \(b\) nonempty rows, the available mass after the peeling estimate is
+For simple input of mass \(M\) at least both positive budgets, discard
+unused copy and row labels when both occupied supports fit. Restricting
+the labels preserves acyclicity and every retained incidence. For mass
+\(K\) with \(a\) occupied vertices and \(b\) nonempty rows, peeling retains at least
 \(K-aM/(4n)-bM/(4p)\). At the original widths with acyclic constraints and
 both occupied supports fitting, losing at most \(M/4\) still gives an
-indexed witness with at least \(M/4\), both original budgets and all four caps.
+indexed witness with at least \(M/4\), both budgets and all four frozen caps.
 [Acyclicity under restriction](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L268) · [Peeling with occupied supports](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L289) · [Quarter-loss guarantee at the original widths](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L335).
 
 An arrival constraint survives an incidence deletion exactly when some
@@ -1147,6 +1146,16 @@ chosen edges removed. If the sum of the selected intersection sizes
 is at most \(M/18\), this gives the indexed \(M/32\) guarantee for simple
 input of mass at least both positive budgets, with all four frozen caps.
 [Count of erased incidences](OnlineReachabilityPreservers/HalfBridgeArrivalRepair.lean#L137) · [Surviving constraints](OnlineReachabilityPreservers/HalfBridgeArrivalRepair.lean#L146) · [Frozen cleaning from selected edges](OnlineReachabilityPreservers/HalfBridgeArrivalRepair.lean#L169).
+
+For the degree split at half cutoff five, assign a rank to each copied
+label at each original vertex. The required comparisons at that vertex
+run from the river to the final arc of a full three-bridge ending there,
+and from the starting row to the returning row of a two-step return.
+If copy ranks increase weakly along these edges and a vertex and rank
+determine its copy, the split preserves the half-five exclusion. Every
+weakly increasing assignment is constant on each strongly connected
+component. The component ranks can distinguish all different components.
+[Terminal constraint graph](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L13) · [Half-five copy preservation](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L31) · [Forced equalities within components](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L80) · [Exact component ranks](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L121).
 
 The usual nested split example can be padded to six vertices and ten
 indexed rows with mass ten. Two extra vertices belong only to the
