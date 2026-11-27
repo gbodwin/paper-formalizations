@@ -972,6 +972,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   the common vertex. Unique intersections also make that count equal to the
   total number of witnesses with this fixed parent, first row and vertex.
   [Ordered corners](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L90) · [Third-row count](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L130) · [Witness count with unique intersections](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L164).
+- For order-convex pieces of full-three-free parents that satisfy
+  the one-step condition, a crossed two-step return has no direct
+  reverse comparison on any parent row before the path split.
+  When the pieces cover the parent rows, each of the three corners
+  is absent from the opposite row of the return triangle.
+  [Consecutive pieces are order convex](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L18) · [Absence of a direct reverse](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L42) · [The three opposite corners](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L79).
 - The [literal set versions](OnlineReachabilityPreservers/FrozenDistinctCleaning.lean)
   give distinct nonempty output paths with the same caps. They apply to
   the literal exact-count maximum when the positive original budgets are feasible.

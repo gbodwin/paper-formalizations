@@ -1609,6 +1609,19 @@ Under unique intersections, each third row has exactly one pair of
 corners, so counting all witnesses gives the same count.
 [Return relation](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L83) · [Order agreement](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L90) · [Both cardinality bounds](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L130) · [Exact witness count with unique intersections](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L164).
 
+For full-three-free parent rows, assume comparisons lift from the
+pieces, the pieces are order convex, and the one-step condition holds.
+A two-step return crossing two parent pieces has no original direct
+reverse between its two parent corners. The statement refers to the
+parent rows immediately before the path split, including vertex labels
+from a preceding degree split. If those pieces cover their parents,
+each of the three corners is absent from the opposite row of the
+return triangle. For full-seven-free parents, disjoint pieces satisfying
+the same one-step and convexity conditions preserve full-seven
+exclusion if every original two-step return through distinct other
+parents has a direct reverse comparison.
+[Convex standard width blocks](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L18) · [No direct reverse](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L42) · [Corner memberships](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L79) · [Preservation theorem](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L125).
+
 At half cutoff four, a [balanced midpoint split with no valid arrival permutation](OnlineReachabilityPreservers/HalfFourSplitOrderAudit.lean#L103)
 starts from a half-free indexed family with uniform degree two and mean
 length \(7/2\). Its sole length-six path splits into two length-three

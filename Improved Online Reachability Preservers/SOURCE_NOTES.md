@@ -818,6 +818,22 @@ first alternative row. With unique intersections, choosing the third
 row determines both remaining corners.
 [Full intersection matching](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L30) · [Ordered return corners](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L90) · [Third-row count](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L130) · [Unique intersections and witness count](OnlineReachabilityPreservers/TwoStepReturnMatching.lean#L164).
 
+In a full-three-free parent system, consider a crossed return
+\(x\to z\to y\) against the comparison \(y\to x\).
+Suppose the pieces are order convex and satisfy the one-step condition.
+A reverse comparison \(x\to y\) on a parent outside the two
+detour rows would give a full three-bridge. On either detour parent,
+parallel-step exclusion puts the missing corner between the retained
+corners. Convexity retains it and the one-step condition rules out
+the crossing. This argument uses the rows immediately before
+the path split. If the pieces cover those rows, each corner of
+the triangle is absent from its opposite row. For disjoint
+order-preserving convex pieces of full-seven-free parents, the
+one-step condition preserves full exclusion through seven if every
+original two-step return through two distinct other parents has a
+direct reverse.
+[No original reverse comparison](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L42) · [Absent opposite corners](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L79) · [Full-seven preservation under the reverse-comparison condition](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L125).
+
 The factor-four block split from the frozen cleaning argument can also
 create a full size-seven bridge before trimming and peeling in the dense
 branch. Add 161 private vertices before the four-vertex path in the
