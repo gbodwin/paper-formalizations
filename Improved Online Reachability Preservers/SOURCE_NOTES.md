@@ -539,6 +539,19 @@ length greater than \(k\).
 · [Charge in half mode](OnlineReachabilityPreservers/OppositeLinkForest.lean#L468)
 · [Pruning loss](OnlineReachabilityPreservers/OppositeLinkForest.lean#L528).
 
+The [finite-cutoff argument after row deletions](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L218)
+builds a common vertex order for subsequences of the surviving rows
+using their precedence components. If at most
+\(M/28\) incidences were deleted and each surviving component excludes
+every full bridge, the common order costs at most two further incidences
+per vertex. In the dense branch \(M>8\max(n,p)\), the combination keeps at
+least \(5M/7\) before the support restriction and low-incidence deletions.
+Counting each expanded support with the actual retained mass gives a
+cleaned family of mass at least \(M/128\) with both original budgets,
+all four original-average caps, and the original finite cutoff. The
+[row-count version](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L250) checks that each surviving component
+uses at most the cutoff's worth of nontrivial rows.
+
 For simple inputs at full cutoff six or half cutoff four, mass \(M\ge8E\)
 at least both positive budgets gives a cleaned witness of mass at least
 \(M/32\) at that cutoff, with both original budgets and all four frozen

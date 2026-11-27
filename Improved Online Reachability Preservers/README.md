@@ -707,11 +707,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   or \(24n\le M\).
   A [two-incidence deletion bound](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L209)
   and trimming at ratios that account for the retained mass give the
-  [all-mass result](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L191).
+  [all-mass result](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L271).
   It keeps at least \(M/40\), both original budgets, the four original-average
   caps, and exclusion of every full bridge when the input has that exclusion.
   At a finite full-bridge cutoff \(k\), the
-  [component criterion](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L177)
+  [component criterion](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L203)
   keeps the same budgets, caps and \(M/40\) guarantee when every precedence
   component has at most \(k\) rows with a strict internal step. Longer
   bridges can exist in the original system.
@@ -719,6 +719,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   also allows a component with at most \(k\) vertices shared by two
   distinct internal rows with strict steps. Each component can use
   whichever bound applies.
+  After [small rowwise deletions](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L250), the component test can use
+  just the surviving precedence graph. Losing at most \(M/28\) and having
+  at most \(k\) nontrivial rows per surviving component gives \(M/128\)
+  with the original budgets and all four original-average caps.
 - In half-bridge-free systems through size three, there are no triangles
   of opposite links. If two opposite links connect distinct vertices on
   one path, the intermediate vertex belongs to that path. Half-bridge exclusion
@@ -932,9 +936,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   test, this gives the same \(M/16\) and original-average guarantee.
 - After [deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2478),
   test for short returns in the pieces of the retained rows. If the
-  copied input has the required bridge exclusion and at most \(M/18\)
-  incidences are deleted, the test gives \(M/32\) with both original
-  budgets and all four original-average caps.
+  copied input has the required bridge exclusion, at most \(M/18\)
+  incidences are deleted, and the surviving pieces pass the test,
+  the cleaned witness keeps \(M/32\) with both original budgets and
+  all four original-average caps.
 - For simple paths with the matching bridge exclusion and incidence mass
   \(M\) at least both positive budgets, the cuts can move around individual
   short returns within a row. Pack whole runs between safe boundaries.

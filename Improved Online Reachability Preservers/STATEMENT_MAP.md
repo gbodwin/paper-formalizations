@@ -1606,7 +1606,7 @@ The [stronger deletion bound](OnlineReachabilityPreservers/OfflineBridgeConverse
 removes at most two incidences per vertex. If \(M>8\max(n,p)\), the retained
 mass \(K\) is at least \(3M/4\). For either support, the original width cuts
 expand the budget by a factor at most \((31M+8K)/(31M)\). With the sparse
-witness in the other range, the [all-mass theorem](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L191)
+witness in the other range, the [all-mass theorem](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L271)
 gives a cleaned system excluding every full bridge, with at least \(M/40\),
 both original budgets, and all four original-average caps. Its input
 excludes every full bridge and has mass at least both positive budgets.
@@ -1617,9 +1617,17 @@ example, [at most \(k\) rows with strict steps inside a component](OnlineReachab
 give all-size local exclusion, because the river and chain use distinct
 rows. At each elimination, a remaining component of maximal condensation
 rank supplies a [vertex with at most two outgoing rows](OnlineReachabilityPreservers/OfflineBridgeConverse.lean#L221).
-The [finite-cutoff cleaning theorem](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L177)
+The [finite-cutoff cleaning theorem](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L203)
 uses this deletion bound to meet both original budgets and all four
 original-average caps while retaining \(M/40\).
+
+[After rowwise deletions](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L218), the same local all-size premise
+can be checked on the surviving precedence components. If the deletions
+cost at most \(M/28\), a further loss of at most two incidences per
+vertex still permits frozen cleaning at the original finite cutoff,
+retaining at least \(M/128\). The original budgets and all four
+original-average caps hold. The [row-count test](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L250)
+is one sufficient way to certify the surviving components.
 
 Every bridge corner belongs to two distinct original rows with internal
 steps in its component. The [corner count](OnlineReachabilityPreservers/FullBridgeComponentSupports.lean#L39)
