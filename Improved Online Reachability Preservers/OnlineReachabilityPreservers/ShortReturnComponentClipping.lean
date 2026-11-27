@@ -1,3 +1,4 @@
+import OnlineReachabilityPreservers.FrozenDistinctCleaning
 import OnlineReachabilityPreservers.ShortReturnOverflow
 
 /-! Clip degree components and then path components. -/
@@ -166,5 +167,56 @@ theorem clipShortReturnComponents_spec (rows : I → List V) (simple : ∀ i, (r
     change (∑ i, (kept i).length) + (shortReturnDegreeExcessMass rows D cutoff +
       shortReturnPathExcessMass degreeKept L cutoff) = _
     omega
+
+/-- At the original widths, clipping at most one third
+of the mass in successive component excesses gives an indexed frozen
+witness of mass at least one eighteenth. -/
+theorem regularization_list_frozen_of_small_short_return_excess {n p k : ℕ} {half : Bool}
+    (rows : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
+    (free : localOrderAdmissible half k rows)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
+    (excess : let M := ∑ i, (rows i).length
+      let D := 4*M/n
+      let L := 4*M/p
+      3*(shortReturnDegreeExcessMass rows D k +
+        shortReturnPathExcessMass (clipShortReturnDegreeComponents rows D k) L k) ≤ M) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 18*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧
+      frozenListCaps n p M clean := by
+  let M := ∑ i, (rows i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let degreeKept := clipShortReturnDegreeComponents rows D k
+  let kept := clipShortReturnPathComponents degreeKept L k
+  obtain ⟨sub, degree, path, total⟩ := clipShortReturnComponents_spec rows simple D L k
+  change (∑ i, (kept i).length) + (shortReturnDegreeExcessMass rows D k +
+    shortReturnPathExcessMass degreeKept L k) = M at total
+  change 3*(shortReturnDegreeExcessMass rows D k + shortReturnPathExcessMass degreeKept L k) ≤ M at excess
+  exact regularization_list_frozen_of_short_return_restriction rows simple free hn hp dense long kept
+    sub degree path (by omega)
+
+/-- For literal admissible inputs, the same excess test yields a
+distinct nonempty witness at every cutoff of at least two. -/
+theorem regularization_list_frozen_distinct_of_small_short_return_excess {n p k : ℕ} {half : Bool}
+    (rows : Fin p → List (Fin n)) (distinct : Function.Injective rows)
+    (nonempty : ∀ i, rows i ≠ []) (simple : ∀ i, (rows i).Nodup)
+    (free : localOrderAdmissible half k rows) (two : 2 ≤ k)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length)
+    (excess : let M := ∑ i, (rows i).length
+      let D := 4*M/n
+      let L := 4*M/p
+      3*(shortReturnDegreeExcessMass rows D k +
+        shortReturnPathExcessMass (clipShortReturnDegreeComponents rows D k) L k) ≤ M) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧ (∀ i, (clean i).Nodup) ∧
+      localOrderAdmissible half k clean ∧ M ≤ 18*(∑ i, (clean i).length) ∧
+      (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  refine regularization_list_frozen_distinct_of_indexed rows distinct nonempty simple
+    free two hn hp dense (by decide) ?_
+  dsimp only
+  exact fun long => regularization_list_frozen_of_small_short_return_excess rows simple free hn hp dense long excess
 
 end OnlineReachabilityPreservers

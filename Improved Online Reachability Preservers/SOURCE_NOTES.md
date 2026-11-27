@@ -1179,12 +1179,20 @@ of size \(s\) keeps exactly \(\min(s,w)\) elements at width \(w\). The loss
 over all distinct components is the sum of their excesses above \(w\).
 [Bounded selection from each component](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L219) · [Exact selection size per component](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L231) · [Mass lost to component excess](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L254).
 
-First clip each degree component to the vertex width by keeping a
-bounded number of its row labels. On those sublists, compute the path
+For simple rows, first clip each degree component to the vertex width
+by keeping a bounded number of its row labels. Compute the path
 components and clip them to the path width. Both component bounds
 hold on the final sublists. The total loss is the degree excess on
 the original rows plus the path excess after the degree restriction.
-[Exact degree-component loss](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L62) · [Exact path-component loss](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L89) · [Successive clipping with both bounds](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L145).
+[Exact degree-component loss](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L63) · [Exact path-component loss](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L90) · [Successive clipping with both bounds](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L146).
+
+For simple admissible input with mass \(M\) at least both positive
+budgets, compute the successive component excesses at the original
+widths. If their sum is at most \(M/3\), the indexed frozen witness
+has mass at least \(M/18\), both budgets, all four original caps and
+the chosen cutoff. The same guarantee holds for literal distinct
+nonempty input and output at cutoff at least two.
+[Indexed excess criterion](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L174) · [Literal excess criterion](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L202).
 
 The path-partition premise has an exact finite test. Within one row,
 link the endpoints of every comparison with a short backward return.
