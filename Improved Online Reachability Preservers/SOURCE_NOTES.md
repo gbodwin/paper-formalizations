@@ -378,9 +378,24 @@ of the width pieces to survive the trim. The resulting witness keeps
 \(M/256\) with the same cutoff, both original budgets and all four
 original-average caps. It applies at the indexed and feasible literal
 full maxima.
-[Original-average cleaning](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L190)
-· [Indexed maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L263)
-· [Feasible literal maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L277).
+[Original-average cleaning](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L236)
+· [Indexed maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L284)
+· [Feasible literal maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L298).
+
+The original-average guarantee reaches \(4k\ge3\min(n,p)\) with the
+same \(M/256\) retention. In the larger high-mass case, selecting the
+heaviest \(\lceil3\min(n,p)/4\rceil\) labels saves one support and leaves
+at least \(M/2\) after the common-order deletion. When its mass
+\(K\) is at least \(7M/12\), the smaller-support ratio argument applies.
+For \(M/2\le K\le7M/12\), the smaller side fits after splitting at the
+original widths. Trim the other side. Its width blocks give deletion
+cost at most \(7K/186\), and the actual support sizes give peeling cost
+at most \(11M/25+2K/31\). The same budgets, original caps and input
+cutoff hold for both indexed and feasible literal input.
+[One-side trim](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L414)
+· [Original-average witness](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L510)
+· [Indexed maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L573)
+· [Feasible literal maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L587).
 
 The original-average conclusion at full cutoff six has a separate
 proof. A reverse comparison within one width piece gives a conflict
