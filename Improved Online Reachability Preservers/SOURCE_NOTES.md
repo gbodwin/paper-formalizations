@@ -1194,6 +1194,15 @@ the chosen cutoff. The same guarantee holds for literal distinct
 nonempty input and output at cutoff at least two.
 [Indexed excess criterion](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L174) · [Literal excess criterion](OnlineReachabilityPreservers/ShortReturnComponentClipping.lean#L202).
 
+For two fixed partitions of the same finite incidence set, a deleted
+incidence can spend one unit of excess in both of its classes. A shared
+deletion set may use at most the original excess in each class of either
+partition. There is a deletion set meeting both fixed widths within a
+given budget exactly when the total of the two excesses is at most
+that budget plus the size of some shared deletion set. This comparison
+uses the original class labels throughout.
+[Exact criterion for two partitions](OnlineReachabilityPreservers/SharedCapacityClipping.lean#L87).
+
 For simple rows, standard degree copying preserves full exclusion
 through any chosen cutoff. For such input that excludes full bridges
 through the cutoff and has mass at least both positive budgets,
