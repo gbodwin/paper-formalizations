@@ -2233,7 +2233,18 @@ both budgets and all four frozen caps and keeps at least \(M/16\) in either
 mode.
 [Rank existence](OnlineReachabilityPreservers/RiverDetourComponents.lean#L99) · [Frozen cleaning from the component test](OnlineReachabilityPreservers/RiverDetourComponents.lean#L148).
 
-An eight-vertex example establishes the limit of that certificate.
+Each bridge through \(k\) lies in one component of the constraint graph.
+If different pieces of the same parent meet that component, test short
+returns using only the vertices and comparisons in the component.
+The return radius is \(\max(0,k-3)\) and the comparisons between pieces
+use the copied parent rows. Start with simple paths, positive budgets and
+mass \(M\) at least both budgets. With admissible degree copies, passing
+this test at the two original widths preserves either bridge exclusion
+and gives a frozen witness with mass at least \(M/16\), both budgets and
+all four caps.
+[Restriction proof](OnlineReachabilityPreservers/BridgeRiverRanks.lean#L103) · [Component return test](OnlineReachabilityPreservers/RiverDetourComponents.lean#L171) · [Frozen witness](OnlineReachabilityPreservers/RiverDetourComponents.lean#L192).
+
+An eight-vertex example shows a limit of the disjoint-component rank test.
 Its seven original rows exclude full bridges through three. Standard
 width-two blocks form a directed cycle. Each vertex starts a strict
 comparison in only one piece, so the pieces exclude full bridges at
@@ -2254,11 +2265,11 @@ graph at every cutoff.
 [Original exclusion](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L215) · [Original path width and component test](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L495).
 
 The original factor-four degree width is seven. Every vertex has degree
-at most three, so it keeps its block-zero label. At both prescribed
-widths the copies preserve the original cutoff and the pieces exclude
-full bridges at every size. The same two pieces still share a component
-of the constraint graph. Restricting the supports of these original-width
-pieces and peeling gives a frozen witness of mass at least \(M/16\), with
+at most three, so it keeps its block-zero label. The degree copies exclude
+full bridges through \(m+1\). After splitting at width eight, the pieces
+exclude full bridges at every size and the same two pieces still share a
+component of the constraint graph. Restricting the supports of the pieces
+and peeling gives a frozen witness of mass at least \(M/16\), with
 both original budgets and all four caps.
 [Admissibility and component test at both widths](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L701) · [Frozen witness from the original widths](OnlineReachabilityPreservers/LongRankCriterionCycle.lean#L725).
 

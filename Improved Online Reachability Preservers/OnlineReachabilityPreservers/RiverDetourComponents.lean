@@ -165,4 +165,56 @@ theorem regularization_list_frozen_of_river_detour_components {n p k : ℕ} {hal
   exact regularization_list_frozen_after_width_blocks_of_mass (half := half) (retention := 16)
     paths simple allowed hn hp dense long le_rfl (by norm_num)
 
+
+/-- The detour constraint graph localizes every bridge through the cutoff.
+Test short returns after restricting to each of its components. -/
+theorem localOrderAdmissible_of_river_detour_component_returns {I J V : Type*}
+    [LinearOrder I] [LinearOrder J] [LinearOrder V] [Fintype J] [Fintype V]
+    {rows : I → List V} {pieces : J → List V} {k : ℕ} {half : Bool}
+    (simple : ∀ i, (pieces i).Nodup) (parent : J → I) (arrival : Monotone parent)
+    (steps : ∀ {i x y}, Before pieces i x y → Before rows (parent i) x y)
+    (separated : ∀ c, let label := componentLabel (riverDetourConstraintGraph pieces k)
+      let inner := listPiecesWithLabel pieces label c
+      ShortReturnSeparated (listPiecePrecedenceGraph inner) id rows inner parent (k-2))
+    (legal : localOrderAdmissible half k rows) : localOrderAdmissible half k pieces := by
+  let G := riverDetourConstraintGraph pieces k
+  let rank := componentPredecessorRank G
+  obtain ⟨ordered,noDetour⟩ := (rank_conditions_iff_constraint_monotone pieces k rank).mp
+    (fun {_ _} => componentPredecessorRank_mono)
+  refine localOrderAdmissible_of_labelwise_short_returns simple parent arrival (componentLabel G)
+    (fun {_ _ _} => steps) (fun b small i => ?_) separated legal
+  exact componentLabel_eq.mpr
+    (componentPredecessorRank_eq.mp (b.same_rank_of_noCrossRankRiverDetour small
+      (fun {_ _ _} => ordered) noDetour i))
+
+/-- Within-component short-return tests on the original-width pieces give
+a frozen witness when degree copying preserves the input exclusion. -/
+theorem regularization_list_frozen_of_river_detour_component_returns {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (legal : let M := ∑ i, (paths i).length; localOrderAdmissible half k (splitListVertices paths (4*M/n)))
+    (separated : let M := ∑ i, (paths i).length
+      let copies := splitListVertices paths (4*M/n)
+      let pieces := listRegularizedPaths paths (4*M/n) (4*M/p)
+      ∀ c, let label := componentLabel (riverDetourConstraintGraph pieces k)
+        let inner := listPiecesWithLabel pieces label c
+        ShortReturnSeparated (listPiecePrecedenceGraph inner) id copies inner (fun j => j.fst) (k-2))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  let copies := splitListVertices paths (4*M/n)
+  let J := ListBlockIndex copies (4*M/p)
+  let pieces := splitListPaths copies (4*M/p)
+  have copySimple (i) : (copies i).Nodup := splitListVertices_simple paths _ i (simple i)
+  have pieceSimple (i : J) : (pieces i).Nodup := List.filter_sublist.nodup (copySimple i.fst)
+  have step {i : J} {x y} (before : Before pieces i x y) : Before copies i.fst x y :=
+    listBefore_of_sublist (paths := fun j : J => copies j.fst) (copySimple i.fst) List.filter_sublist before
+  have allowed : localOrderAdmissible half k pieces :=
+    localOrderAdmissible_of_river_detour_component_returns pieceSimple (fun i : J => i.fst)
+      (block_parent_mono (fun i => (copies i).toFinset) (4*M/p)) (fun {_ _ _} => step) separated legal
+  exact regularization_list_frozen_after_width_blocks_of_mass (half := half) (retention := 16)
+    paths simple allowed hn hp dense long le_rfl (by norm_num)
+
 end OnlineReachabilityPreservers

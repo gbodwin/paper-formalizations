@@ -13,7 +13,7 @@ def NoCrossRankRiverDetour {J V : Type*} [DecidableEq J] [DecidableEq V] [Fintyp
   ∀ ⦃j x y⦄, Before pieces j x y → rank x < rank y →
     x ∉ reachIn (listPiecePrecedenceGraph (fun i => if i = j then [] else pieces i)) y (cutoff-1)
 
-private theorem Bridge.same_rank_of_noCrossRankRiverDetour {J V : Type*}
+theorem Bridge.same_rank_of_noCrossRankRiverDetour {J V : Type*}
     [DecidableEq J] [DecidableEq V] [Fintype J] [Fintype V]
     {pieces : J → List V} {rank : V → ℕ} {k d : ℕ}
     (b : Bridge (Before pieces) d) (small : d+2 ≤ k)
@@ -78,5 +78,94 @@ theorem localOrderAdmissible_of_noCrossRankRiverDetour {I J V : Type*}
     have order := arrival earlier.le
     rw [← river,← arc] at order
     exact legal small old (order.lt_of_ne (old.river_ne_arc _).symm)
+
+
+/-- Keep each piece's vertices with a given label in their original order. -/
+def listPiecesWithLabel {J V A : Type*} [DecidableEq A]
+    (pieces : J → List V) (label : V → A) (a : A) : J → List V :=
+  fun j => (pieces j).filter fun x => decide (label x = a)
+
+private theorem listPiecesWithLabel_before {J V A : Type*} [DecidableEq V] [DecidableEq A]
+    {pieces : J → List V} {label : V → A} {a : A} {j : J} {x y : V}
+    (simple : (pieces j).Nodup) (step : Before pieces j x y)
+    (hx : label x = a) (hy : label y = a) : Before (listPiecesWithLabel pieces label a) j x y := by
+  have first : x ∈ listPiecesWithLabel pieces label a j := by
+    simp [listPiecesWithLabel,step.1,hx]
+  have second : y ∈ listPiecesWithLabel pieces label a j := by
+    simp [listPiecesWithLabel,step.2.1,hy]
+  rcases listBefore_total first second (listBefore_ne step) with forward | backward
+  · exact forward
+  · have reverse := listBefore_of_sublist simple List.filter_sublist backward
+    exact (lt_asymm step.2.2 reverse.2.2).elim
+
+/-- If every bridge up to the cutoff stays within one label, checking the
+restricted pieces suffices. The restrictions keep the original piece indices. -/
+theorem localOrderAdmissible_of_label_restrictions {J V A : Type*}
+    [LinearOrder J] [DecidableEq V] [DecidableEq A]
+    {pieces : J → List V} {k : ℕ} {half : Bool}
+    (simple : ∀ i, (pieces i).Nodup) (label : V → A)
+    (inside : ∀ {d} (b : Bridge (Before pieces) d), d+2 ≤ k →
+      ∀ i, label (b.vertex i) = label (b.vertex 0))
+    (restrictions : ∀ a, localOrderAdmissible half k (listPiecesWithLabel pieces label a)) :
+    localOrderAdmissible half k pieces := by
+  have restrict {d : ℕ} (b : Bridge (Before pieces) d) (small : d+2 ≤ k) :
+      ∃ b' : Bridge (Before (listPiecesWithLabel pieces label (label (b.vertex 0)))) d,
+        b'.river = b.river ∧ b'.arc = b.arc := by
+    have same := inside b small
+    let b' : Bridge (Before (listPiecesWithLabel pieces label (label (b.vertex 0)))) d := {
+      vertex := b.vertex
+      arc := b.arc
+      river := b.river
+      distinctVertices := b.distinctVertices
+      distinctArcs := b.distinctArcs
+      river_ne_arc := b.river_ne_arc
+      riverStep := listPiecesWithLabel_before (simple b.river) b.riverStep (same _) (same _)
+      arcStep := fun i => listPiecesWithLabel_before (simple (b.arc i)) (b.arcStep i) (same _) (same _) }
+    exact ⟨b',rfl,rfl⟩
+  cases half
+  · intro d small
+    refine ⟨fun b => ?_⟩
+    obtain ⟨b',_,_⟩ := restrict b small
+    exact (restrictions _ small).false b'
+  · intro d small b earlier
+    obtain ⟨b',river,arcs⟩ := restrict b small
+    exact restrictions _ small b' (by simpa only [river,arcs] using earlier)
+
+/-- Test short returns in each separately restricted graph, provided
+that a bridge through the cutoff must lie within a single label. -/
+theorem localOrderAdmissible_of_labelwise_short_returns {I J V A : Type*}
+    [LinearOrder I] [LinearOrder J] [DecidableEq V] [DecidableEq A] [Fintype J] [Fintype V]
+    {rows : I → List V} {pieces : J → List V} {k : ℕ} {half : Bool}
+    (simple : ∀ i, (pieces i).Nodup) (parent : J → I) (arrival : Monotone parent) (label : V → A)
+    (steps : ∀ {i x y}, Before pieces i x y → Before rows (parent i) x y)
+    (inside : ∀ {d} (b : Bridge (Before pieces) d), d+2 ≤ k →
+      ∀ i, label (b.vertex i) = label (b.vertex 0))
+    (separated : ∀ a, let inner := listPiecesWithLabel pieces label a
+      ShortReturnSeparated (listPiecePrecedenceGraph inner) id rows inner parent (k-2))
+    (legal : localOrderAdmissible half k rows) : localOrderAdmissible half k pieces := by
+  apply localOrderAdmissible_of_label_restrictions simple label inside
+  intro a
+  have project {i x y} (step : Before (listPiecesWithLabel pieces label a) i x y) :
+      Before rows (parent i) x y :=
+    steps (listBefore_of_sublist (simple i) List.filter_sublist step)
+  exact localOrderAdmissible_of_shortReturnSeparated parent arrival (fun {_ _ _} => project)
+    (fun {i _ _} step => listPiecePrecedenceGraph_edge.mpr ⟨i,step⟩) (separated a) legal
+
+/-- A monotone rank with no short detour for a rank-increasing river
+permits short-return tests confined to each rank. -/
+theorem localOrderAdmissible_of_rankwise_short_returns {I J V : Type*}
+    [LinearOrder I] [LinearOrder J] [DecidableEq V] [Fintype J] [Fintype V]
+    {rows : I → List V} {pieces : J → List V} {k : ℕ} {half : Bool}
+    (simple : ∀ i, (pieces i).Nodup) (parent : J → I) (arrival : Monotone parent) (rank : V → ℕ)
+    (steps : ∀ {i x y}, Before pieces i x y → Before rows (parent i) x y)
+    (ordered : ∀ {i x y}, Before pieces i x y → rank x ≤ rank y)
+    (noDetour : NoCrossRankRiverDetour pieces rank k)
+    (separated : ∀ r, let inner := listPiecesWithLabel pieces rank r
+      ShortReturnSeparated (listPiecePrecedenceGraph inner) id rows inner parent (k-2))
+    (legal : localOrderAdmissible half k rows) : localOrderAdmissible half k pieces :=
+  localOrderAdmissible_of_labelwise_short_returns simple parent arrival rank
+    (fun {_ _ _} => steps)
+    (fun b small => b.same_rank_of_noCrossRankRiverDetour small (fun {_ _ _} => ordered) noDetour)
+    separated legal
 
 end OnlineReachabilityPreservers
