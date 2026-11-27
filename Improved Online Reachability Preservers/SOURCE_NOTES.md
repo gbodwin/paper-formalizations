@@ -332,6 +332,29 @@ a distinct nonempty witness excluding full bridges at every size. The
 four caps use the witness's own averages, and both budgets hold.
 [The literal transfer and all-size full witness](OnlineReachabilityPreservers/OutputAverageDistinctCleaning.lean).
 
+There is also an unconditional range below the all-size cutoff. Restrict
+the smaller support to at most \(k\) labels, retaining the heaviest vertices
+by incidence degree or the heaviest rows by length. If \(a\min(n,p)\le bk\)
+and \(0\le a\le b\), the surviving mass \(K\) satisfies \(aM\le bK\).
+Any bridge in the restricted rows would use at most \(k\) distinct labels
+of the chosen kind, and so would already be excluded by the input. For
+positive budgets, \(M\ge\max(n,p)\), \(k\ge2\) and \(28k\ge27\min(n,p)\),
+delete at most \(M/28\) this way and apply the original-average cleaning
+proof. It gives \(M/128\) with both original
+budgets and all four original caps at the same cutoff. For the witness's
+own averages, any positive integer \(C\) with \(Ck\ge\min(n,p)\) suffices.
+In the high-mass case the restriction keeps enough to apply all-size
+cleaning, while a uniform witness handles the low-mass case. The indexed
+witness excludes every full bridge and retains \(M/(523C)\). For a feasible
+literal input at \(k\ge2\), the distinct nonempty witness keeps the input
+cutoff and \(M/(9414C)\). Both guarantees start at the maximum under their
+respective full-bridge convention.
+[Restriction and mass](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L86)
+· [Indexed original-average bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L145)
+· [Literal original-average bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L159)
+· [Output-average indexed bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L239)
+· [Literal output-average bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L254).
+
 The original-average conclusion at full cutoff six has a separate
 proof. A reverse comparison within one width piece gives a conflict
 when its opposite interval crosses two pieces. The conflict is at
