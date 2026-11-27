@@ -651,7 +651,9 @@ sufficient condition allows deleting up to \(M/24\) while making all
 remaining reversals cross a partition of the paths into two classes.
 Both conclusions use the original four caps and budgets. They cover
 cutoff four in both modes and cutoff six in full mode.
-[Rounded capacities, repaired classes and pruning](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L514).
+[Repaired classes](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L529)
+· [Unique sublists](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L566)
+· [Opposite-link bound](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L582).
 
 Clipping uses a separate count of ordered comparisons and preserves
 the original row labels. In the indexed simple-path convention, half exclusion

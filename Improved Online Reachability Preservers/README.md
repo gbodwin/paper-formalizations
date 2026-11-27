@@ -857,15 +857,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [seven ninths of the vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L353).
   This version preserves the matching input exclusion at cutoff four in
   either mode or at full cutoff six.
-- [Cleaning with disjoint reverse partners](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L192)
+- [Cleaning with disjoint reverse partners](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L207)
   covers simple paths whose reversed comparisons are confined to disjoint
   pairs of paths. For positive budgets and mass at least both counts,
   the witness retains at least \(M/104\) within both original budgets and
   all four original-average caps, with the same exclusion at cutoff four
   in either mode or at full cutoff six. The proof selects the heavier
   path of each pair and, when needed, uses the
-  [width splits with half the path budget](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L97).
-  The [two-class theorem](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L308)
+  [width splits with half the path budget](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L98).
+  The [two-class theorem](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L323)
   gives the same guarantee whenever the paths can be partitioned into
   two classes and every reversed comparison crosses between classes.
 - At the same cutoffs, a repaired two-class partition may delete up to
@@ -874,7 +874,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   gives a witness with at least \(M/288\), both original budgets and all four
   original-average caps. Opposite-intersection pruning meets the second
   condition when there are at most \(11M/24\) opposite links.
-  [Repair and pruning theorems](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L514).
+  [Repaired classes](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L529)
+  · [Unique sublists](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L566)
+  · [Opposite-link bound](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L582).
 - At these cutoffs, the [large path-budget theorem](OnlineReachabilityPreservers/FrozenManyRows.lean#L39)
   starts from the unrestricted maximum when \(n(n-1)\le66p\).
   Such a maximizing family has nonempty rows and average length at most
@@ -1040,6 +1042,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   the original half cutoff. This applies with a positive path budget.
   [Injection into original links](OnlineReachabilityPreservers/CrossGroupOppositeLinks.lean#L94)
   · [Sublists with unique intersections](OnlineReachabilityPreservers/CrossGroupOppositeLinks.lean#L148).
+- For simple half-five-free input of mass at least both positive budgets,
+  the cross-group link count also gives a frozen witness. For
+  \(M>8\max(n,p)\), require \(24(n+E)\le11M\). The resulting family retains
+  at least \(M/288\), fits both original budgets and meets all four caps at
+  the original averages. The feasible literal witness is distinct and
+  nonempty. The low-mass case needs no link bound.
+  [Indexed witness](OnlineReachabilityPreservers/CrossGroupFrozenCleaning.lean#L14)
+  · [Literal witness](OnlineReachabilityPreservers/CrossGroupFrozenCleaning.lean#L40).
 - With twelve vertices, forty-three indexed rows and mass forty-eight,
   each occupied first-occurrence group is a singleton. Opposite comparisons
   cross two groups. The original family excludes every half bridge. Splitting

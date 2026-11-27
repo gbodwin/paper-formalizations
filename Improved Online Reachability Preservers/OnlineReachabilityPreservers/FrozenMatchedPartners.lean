@@ -697,4 +697,19 @@ theorem regularization_list_frozen_half_five_of_few_opposite_links {n p : ℕ}
   apply regularization_list_frozen_half_five_after_opposite_pruning paths simple free hn hp dense long
   omega
 
+/-- At half cutoff five, a rowwise sublist family with unique intersections
+and at least thirteen twenty-fourths of the mass gives the frozen caps. -/
+theorem regularization_list_frozen_half_five_of_large_unique_sublists {n p : ℕ}
+    (paths kept : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) 5) (sub : ∀ i, (kept i).Sublist (paths i))
+    (unique : ∀ {i j x y}, i ≠ j → x ∈ kept i → x ∈ kept j → y ∈ kept i → y ∈ kept j → x = y)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (retained : 13 * (∑ i, (paths i).length) ≤ 24 * (∑ i, (kept i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) 5 ∧
+      M ≤ 288 * (∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  frozen_of_large_unique_sublists (half := true) (k := 5) (Or.inr ⟨rfl,rfl⟩)
+    paths kept simple free sub (fun {_ _ _ _} => unique) hn hp dense long retained
+
 end OnlineReachabilityPreservers

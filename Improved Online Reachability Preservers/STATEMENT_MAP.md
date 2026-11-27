@@ -1731,6 +1731,18 @@ intersections, keeps that cutoff and loses at most \(n+E\) incidences.
 · [Cardinality bound](OnlineReachabilityPreservers/CrossGroupOppositeLinks.lean#L94)
 · [Combined pruning](OnlineReachabilityPreservers/CrossGroupOppositeLinks.lean#L148).
 
+At half cutoff five, the original cross-group link count \(E\) yields a frozen
+witness if \(24(n+E)\le11M\) in the range \(M>8\max(n,p)\). The loss bound
+leaves at least \(13M/24\) on the unique-intersection sublists before width
+splitting and trimming. For simple input with positive budgets and mass at
+least both budgets, the witness retains \(M/288\) or more, fits both original
+budgets and all four original-average caps, and preserves half-five exclusion.
+The same guarantee applies to feasible literal distinct nonempty input and
+output. The low-mass branch needs no link bound.
+[Unique sublist version](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L702)
+· [Indexed cross-group witness](OnlineReachabilityPreservers/CrossGroupFrozenCleaning.lean#L14)
+· [Literal cross-group witness](OnlineReachabilityPreservers/CrossGroupFrozenCleaning.lean#L40).
+
 The first-occurrence sublist condition permits a degree-splitting failure.
 On an indexed family with twelve vertices, forty-three rows and mass
 forty-eight, each occupied first-occurrence group has one vertex. The five
@@ -2247,7 +2259,7 @@ the width splits at cutoff four in either mode or at full cutoff six,
 with the corresponding input exclusion. A sufficient condition is that
 [at most seven ninths of the original vertices have outgoing reverse partners](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L353).
 
-[Half-budget width splits](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L97)
+[Half-budget width splits](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L98)
 use a subsystem of simple paths within the original vertex budget and at
 most half the original path budget. When it carries \(K\) between
 \(7M/16\) and \(M\)
@@ -2263,12 +2275,12 @@ When the paired rows hold at most \(7M/8\), keeping the unpaired rows as well gi
 least \(9M/16\) for quadratic trimming of both supports. When the paired
 rows hold more than \(7M/8\), their selected rows alone give at least
 \(7M/16\) in at most half the original path budget. This proves
-[frozen cleaning for matched reverse partners](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L192)
+[frozen cleaning for matched reverse partners](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L207)
 with at least \(M/104\), both original budgets, and all four original caps.
 It preserves the input exclusion at cutoff four in either mode or at full
 cutoff six, for positive budgets and mass at least both counts.
 
-The [two-class theorem](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L308)
+The [two-class theorem](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L323)
 gives the same original budgets, caps, retention and cutoff guarantees
 when simple paths can be partitioned into two classes with every reversed
 comparison crossing classes. Each class has unique intersections under
@@ -2291,7 +2303,9 @@ The hypothesis counts removed incidences. Also, a unique sublist family
 of mass at least \(13M/24\) suffices by itself. Opposite-intersection
 pruning supplies such a family whenever the opposite-link count is at most
 \(11M/24\).
-[Repaired classes and unique sublists](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L514).
+[Repaired classes](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L529)
+· [Unique sublists](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L566)
+· [Opposite-link bound](OnlineReachabilityPreservers/FrozenMatchedPartners.lean#L582).
 
 If an eligible family has \(s\) nonempty paths, opposite-intersection
 pruning keeps at least \((M+s)/2\) incidences. It meets the \(13M/24\)
