@@ -654,6 +654,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   characterizes the smallest cover. The same guarantee follows if every
   set of pairwise disjoint cut conflicts has at most 37 percent of the
   original incidence count as edges.
+- [Cleaning inside selected degree copies and path pieces](OnlineReachabilityPreservers/DegreeFirstRectangleCleaning.lean)
+  counts only matching edges whose two endpoints are retained in that
+  rectangle. If its raw incidence count covers the largest such matching,
+  the peeling costs of the selected supports, and \(M/5000\), the witness
+  meets both budgets and all four original-average caps at half cutoff
+  five.
 - If either positive budget is at most 29, an unrestricted maximum at any
   cutoff of at least two has a witness with both budgets, all four frozen
   caps, and at least \(M/8\) incidences. The witness excludes full bridges

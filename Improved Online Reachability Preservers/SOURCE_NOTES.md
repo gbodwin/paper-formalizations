@@ -489,6 +489,18 @@ Thus the half-five cleaning applies when every matching of actual cut
 conflicts has size at most \(37M/100\).
 [Matching and cover formulation](OnlineReachabilityPreservers/CutConflictMatching.lean).
 
+[The retained rectangle criterion](OnlineReachabilityPreservers/DegreeFirstRectangleCleaning.lean)
+chooses at most \(n\) degree copies and \(p\) path pieces before the
+matching is counted. Removing all incidences outside the rectangle
+already covers every conflict with an endpoint outside it. A minimum
+cover of the remaining conflicts costs exactly the matching number.
+The peeling charges are \(M/(4n)\) times the chosen degree-copy count
+and \(M/(4p)\) times the chosen piece count. If the raw rectangle mass
+exceeds the sum of these charges and the matching number by at least
+\(M/5000\), the result has both original budgets and all four
+original-average caps. This criterion leaves open whether every input
+admits such a rectangle.
+
 The half-five conflict graph can have two incoming conflicts at one
 incidence. Take the paths
 `[(4,1),(5,1),(0,3),(0,6,1,2,4,5),(3,2)]` in this order. They exclude

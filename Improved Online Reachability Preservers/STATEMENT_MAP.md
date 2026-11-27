@@ -1489,6 +1489,11 @@ original arrival label, and each source has at most one later target.
 reduces that cover condition to a bound of \(37M/100\) on the size of
 each matching of the actual conflicts. The witness has the same mass
 guarantee, budgets, and original-average caps.
+[A retained rectangle formulation](OnlineReachabilityPreservers/DegreeFirstRectangleCleaning.lean)
+uses at most \(n\) degree copies and \(p\) path pieces. If every
+matching within its raw incidences fits its incidence count after the
+two actual support charges and \(M/5000\) are set aside, it gives the
+same half-five conclusion.
 Original-average half-five cleaning for general inputs remains open.
 
 For Lemmas 23 and 39, the [contiguous six-bridge lift](OnlineReachabilityPreservers/CyclicSplits.lean)
