@@ -1667,6 +1667,20 @@ The literal versions apply to feasible distinct nonempty families.
 · [Indexed half input](OnlineReachabilityPreservers/FullCoveringRow.lean#L388)
 · [Literal half input](OnlineReachabilityPreservers/FullCoveringRow.lean#L421).
 
+For any simple indexed input excluding half or full bridges through a
+cutoff of at least three, with a positive path budget, assign each used
+vertex to its first row. Keep that whole assigned set on its reference
+row. Restrict every other row to at most one representative from that
+set. The loss in each set is exactly the sum of the excesses over one
+on the nonreference rows. The reference row contributes \(|S|-1\) when
+\(S\) is nonempty, so the restricted excess bound gives total loss at most
+\(\max(0,|S|-1)\) there. The sets are disjoint, giving a loss of at most
+\(n\) overall. All first occurrences remain, and sublists preserve the
+same bridge exclusion and original path labels.
+[First-occurrence assignment](OnlineReachabilityPreservers/FirstOccurrenceTrimming.lean#L11)
+· [Half-input trimming](OnlineReachabilityPreservers/FirstOccurrenceTrimming.lean#L45)
+· [Full-input trimming](OnlineReachabilityPreservers/FirstOccurrenceTrimming.lean#L179).
+
 The graph radius is sharp for the disjoint split test at every
 full cutoff \(k\ge7\). A checked indexed family on \(k\) vertices
 and \(k\) labels excludes full bridges at all sizes. The split

@@ -1001,6 +1001,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   · [Half mass bound](OnlineReachabilityPreservers/FullCoveringRow.lean#L277)
   · [Full-input cleaning](OnlineReachabilityPreservers/FullCoveringRow.lean#L322)
   · [Half-input cleaning](OnlineReachabilityPreservers/FullCoveringRow.lean#L388).
+- For simple input excluding half or full bridges through \(k\ge3\) with
+  a positive path budget, keep every first occurrence. On each other row,
+  keep at most one vertex from each group whose first occurrence is on an
+  earlier row. These sublists preserve the chosen exclusion through \(k\) and
+  lose at most \(n\) incidences in total. Every used vertex remains on its
+  original first row.
+  [First occurrences](OnlineReachabilityPreservers/FirstOccurrenceTrimming.lean#L11)
+  · [Half-input trimming](OnlineReachabilityPreservers/FirstOccurrenceTrimming.lean#L45)
+  · [Full-input trimming](OnlineReachabilityPreservers/FirstOccurrenceTrimming.lean#L179).
 - At every full cutoff \(k\ge7\), a covering disjoint split of an
   indexed family excluding all full bridges passes the \(k-6\) test.
   Its first crossed return has length \(k-5\) and the split creates
