@@ -3932,6 +3932,23 @@ starting-average caps.
 · [Half mass at quadratic budgets](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L304)
 · [Quadratic-budget literal frozen case](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L341).
 
+For \(q\ge16\), the cutoff-three claim extends to the rectangles
+\(N\le n\le9N/8\), \(P\le p\le9P/8\) above either quadratic
+budget \((N,P)\). Take \(q-1\) first-coordinate layers in the
+quadratic construction. In the point-to-line count with
+\((N,P)=(q^4,q^5)\), the unused layer frees \(q^3\) vertex labels
+for a disjoint family of short rows, enough to reach the exact row
+count \(p\). In the transposed counts, the unused row labels fit
+distinct singleton padding. Both exact-count candidates have mass
+at least \(q^5(q-1)\). The latest-hit bound gives
+\(M\le4q^5(q-1)\), where \(M\) is the literal half maximum.
+The restricted full witness meets the four starting-average caps and
+has mass \(q^5(q-1)\) between \(M/4\) and \(M\).
+[Restricted field layers](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L401)
+· [Full disjoint union](OnlineReachabilityPreservers/FullDisjointUnion.lean#L121)
+· [Half mass near quadratic budgets](OnlineReachabilityPreservers/QuadraticBudgetFrozenFullThree.lean#L15)
+· [Literal frozen case near quadratic budgets](OnlineReachabilityPreservers/QuadraticBudgetFrozenFullThree.lean#L120).
+
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.
 Three comparisons leave vertex zero early in the arrival order. The other

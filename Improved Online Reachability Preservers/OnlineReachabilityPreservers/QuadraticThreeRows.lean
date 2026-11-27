@@ -395,4 +395,56 @@ theorem localOrderDistinctExtremal_frozen_full_three_at_quadratic_budgets (F : T
   exact ⟨paths,distinct,valid,half,maximal,rows,injective,present,free,exactMass,witnessLe,
     by rw [exactMass]; exact upper,caps⟩
 
+/-- Keeping any prescribed number of first-coordinate layers preserves
+full-three exclusion and the incidence degrees on the remaining points.
+The transposed family has the same total incidence mass. -/
+theorem quadratic_full_three_rows_on_layers (F : Type*) [Field F] [Fintype F]
+    {layers n p length degree : ℕ} (two : 2 ≤ layers) (fits : layers ≤ Fintype.card F)
+    (shape : let q := Fintype.card F
+      (n = layers*q^3 ∧ p = q^5 ∧ length = layers ∧ degree = q^2) ∨
+      (n = q^5 ∧ p = layers*q^3 ∧ length = q^2 ∧ degree = layers)) :
+    ∃ rows : Fin p → List (Fin n), Function.Injective rows ∧
+      (∀ i, (rows i).Nodup ∧ (rows i).length = length) ∧ BridgeFree (Before rows) 3 ∧
+      (∑ i, (rows i).length) = p*length ∧
+      (∀ v, (occurrences (fun i => (rows i).toFinset) v).card = degree) ∧
+      listOutputAverageCaps rows := by
+  classical
+  let q := Fintype.card F
+  let Points := Fin layers × F × F × F
+  let coordinate (i : Fin layers) := (Fintype.equivFin F).symm (Fin.castLE fits i)
+  have coordinateInjective : Function.Injective coordinate :=
+    (Fintype.equivFin F).symm.injective.comp (Fin.castLE_injective _)
+  let project (v : Points) : QuadraticPoint F := (coordinate v.1,v.2)
+  have projectInjective : Function.Injective project := fun _ _ same =>
+    Prod.ext (coordinateInjective (congrArg Prod.fst same)) (congrArg (fun v : QuadraticPoint F => v.2) same)
+  obtain ⟨ν,avoids⟩ := exists_missing_quadratic_value (F := F)
+  let hit (line : QuadraticLine F) (v : Points) := quadraticHit ν line (project v)
+  have pairUnique : IncidencePairUnique hit := by
+    intro a b x y apart ax ay bx by_
+    exact quadraticHit_unique ν (projectInjective.ne apart) ax ay bx by_
+  have noTriangle : IncidenceNoTriangle hit := by
+    intro a b r x y z ab ra rb xy yz xz ax ay by_ bz rx rz
+    exact quadraticHit_noTriangle avoids ab ra rb (projectInjective.ne xy)
+      (projectInjective.ne yz) (projectInjective.ne xz) ax ay by_ bz rx rz
+  have rowSize (line) : (univ.filter (hit line)).card = layers := by
+    let rowAt (i : Fin layers) : Points := (i,(quadraticPointAt ν line (coordinate i)).2)
+    have hits (i : Fin layers) : hit line (rowAt i) := ⟨rfl,rfl,rfl⟩
+    have same : univ.filter (hit line) = univ.image rowAt := by
+      ext v
+      simp only [mem_filter,mem_image,mem_univ,true_and]
+      constructor
+      · intro hv
+        exact ⟨v.1,projectInjective (quadraticHit_point_eq (hits v.1) hv rfl)⟩
+      · rintro ⟨i,rfl⟩
+        exact hits i
+    rw [same,card_image_of_injective _ (fun _ _ eq => congrArg Prod.fst eq),card_univ,Fintype.card_fin]
+  have vertexSize (v) : (univ.filter (fun i => hit i v)).card = q^2 :=
+    quadraticHit_card_lines ν (project v)
+  have pointCard : Fintype.card Points = layers*q^3 := by simp [Points,q,pow_succ,Nat.mul_assoc]
+  have lineCard : Fintype.card (QuadraticLine F) = q^5 := by simp [QuadraticLine,q,pow_succ,Nat.mul_assoc]
+  rcases shape with ⟨rfl,rfl,rfl,rfl⟩ | ⟨rfl,rfl,rfl,rfl⟩
+  · exact incidenceRows hit pairUnique noTriangle pointCard lineCard rowSize vertexSize two
+  · exact incidenceRows (fun v i => hit i v) (IncidencePairUnique.swap (hit := hit) pairUnique)
+      (IncidenceNoTriangle.swap (hit := hit) noTriangle) lineCard pointCard vertexSize rowSize (by nlinarith [fits, two])
+
 end OnlineReachabilityPreservers

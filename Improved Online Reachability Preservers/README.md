@@ -2169,6 +2169,13 @@ literal half maximum, with all four starting-average caps.
 [Quadratic construction](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L277)
 · [Starting-average witness at quadratic budgets](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L341).
 
+For \(q\ge16\), start from either quadratic budget pair \((N,P)\).
+The same cutoff-three result holds for \(N\le n\le9N/8\) and
+\(P\le p\le9P/8\). Restrict the construction to \(q-1\) layers.
+The full witness fits both budgets, has mass \(q^5(q-1)\) between
+\(M/4\) and \(M\), and meets the four starting-average caps.
+[Starting-average witness near quadratic budgets](OnlineReachabilityPreservers/QuadraticBudgetFrozenFullThree.lean#L120).
+
 At either cutoff below two and feasible positive literal budgets, use
 \(\min(p,n!)\) distinct spanning permutations. They give at least a
 third of the unrestricted maximum and satisfy the four caps at both

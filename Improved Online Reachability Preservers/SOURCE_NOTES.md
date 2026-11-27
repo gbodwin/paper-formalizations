@@ -2803,6 +2803,29 @@ local-order upper bound and recurrence of Theorem 43.
   · [Half mass bound](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L304)
   · [Starting caps at quadratic budgets](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L341).
 
+  Retaining \(m\) first-coordinate layers, with \(2\le m\le q\),
+  gives regular full-three counts \((mq^3,q^5)\) and their transpose.
+  Choose \(m=q-1\) when \(q\ge16\). For either base budget
+  \((N,P)\) in \(\{(q^4,q^5),(q^5,q^4)\}\), enlarge the two budgets
+  to \(N\le n\le9N/8\) and \(P\le p\le9P/8\).
+  In the first orientation, the deleted layer reserves at least
+  \(q^3\) vertex labels. The balanced two-layer family on those unused
+  labels can supply the \(p-q^5\) additional distinct rows. The
+  full bridge exclusion survives disjoint union since every bridge
+  stays in its river's component. In the transpose, the remaining
+  row count after the restriction is at most \(n\), so distinct
+  singleton padding suffices. With \(W=q^5(q-1)\), the exact
+  feasible family has mass at least \(W\). The threshold \(T=3\)
+  gives \(M\le4W\). In detail, \(8(4n+p)\le45q^5\) and
+  \(64np\le81q^9\). If \(M>4W\), the shifted mass \(S\)
+  satisfies \(4S>9q^6\), violating the cubic bound. The regular
+  restricted witness has mass \(W\), meets both budgets, and fits
+  all four starting-average caps at the literal maximum.
+  [Restricted field layers](OnlineReachabilityPreservers/QuadraticThreeRows.lean#L401)
+  · [Full disjoint union](OnlineReachabilityPreservers/FullDisjointUnion.lean#L121)
+  · [Half mass near quadratic budgets](OnlineReachabilityPreservers/QuadraticBudgetFrozenFullThree.lean#L15)
+  · [Starting caps near quadratic budgets](OnlineReachabilityPreservers/QuadraticBudgetFrozenFullThree.lean#L120).
+
   Below cutoff two, both exclusions are vacuous. On \(n\) vertices the
   count of simple lists, including the empty list, is less than \(3n!\).
   Encode a nonempty list by its head and a shorter list on the remaining
