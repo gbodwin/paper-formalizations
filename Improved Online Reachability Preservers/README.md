@@ -1092,6 +1092,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   width, this test at the original path width gives the same indexed
   \(M/4\) witness in either mode.
   [Graph of linked endpoints](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L16) · [Exact component criterion](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L110) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L125).
+- A six-vertex family with twelve indexed rows and mass twelve has one
+  increasing row, three disjoint backward pairs and eight empty labels.
+  The original degree and path widths are eight and four. At cutoff
+  four, all six vertices of the long row are protected, so a single
+  protected block would overflow. Each connected group has at most two
+  vertices at every cutoff. With the same widths, the partition method
+  gives the frozen quarter-mass witness at every full cutoff.
+  [Full exclusion before splitting](OnlineReachabilityPreservers/ShortReturnPieceComponentExample.lean#L43) · [Component width bound](OnlineReachabilityPreservers/ShortReturnPieceComponentExample.lean#L96) · [Single-block limit](OnlineReachabilityPreservers/ShortReturnPieceComponentExample.lean#L146) · [Frozen witness at every full cutoff](OnlineReachabilityPreservers/ShortReturnPieceComponentExample.lean#L159).
 - An eight-vertex example shows a limit of the disjoint-component rank test.
   Its seven original rows exclude full bridges through three. Standard
   width-two blocks form a directed cycle. Each vertex starts a strict
