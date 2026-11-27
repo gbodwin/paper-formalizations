@@ -2177,6 +2177,20 @@ polynomial in those dimensions at the height chosen for fixed
 · [Cubic input work](OnlineReachabilityPreservers/SteinerBinaryVariableWordInput.lean#L270)
 · [Variable-length Theorem 21](OnlineReachabilityPreservers/SteinerBinaryVariableWordInput.lean#L355).
 
+The compact typed session keeps the first occurrence of each non-self
+request. With the same seed, its graph agrees pointwise with the complete
+replay on each feasible prefix, including repeated and self requests. Its
+history contains at most \(n^2\) pairs. Self requests and repeats return the
+current graph after at most a membership scan. After a feasible prefix
+with a duplicate-free arc list, recorded work for a feasible arrival is
+polynomial in \(n\) at fixed height, independently of the number of prior arrivals. Theorem 21
+retains prefix inclusion and its expectation over the uniform finite seed.
+[Exact graph refinement](OnlineReachabilityPreservers/SteinerBinaryCompactArrivals.lean#L126)
+· [History bound](OnlineReachabilityPreservers/SteinerBinaryCompactArrivals.lean#L147)
+· [Per-arrival work](OnlineReachabilityPreservers/SteinerBinaryCompactArrivals.lean#L160)
+· [Repeated and self requests](OnlineReachabilityPreservers/SteinerBinaryCompactArrivals.lean#L227)
+· [Compact-arrival Theorem 21](OnlineReachabilityPreservers/SteinerBinaryCompactArrivals.lean#L245).
+
 
 
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).

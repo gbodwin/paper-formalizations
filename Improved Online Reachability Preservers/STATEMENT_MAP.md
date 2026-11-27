@@ -1492,6 +1492,21 @@ A native execution-time bound remains open.
 · [Cubic input work](OnlineReachabilityPreservers/SteinerBinaryVariableWordInput.lean#L270)
 · [Variable-length Theorem 21](OnlineReachabilityPreservers/SteinerBinaryVariableWordInput.lean#L355).
 
+For typed requests, the final graph depends on the fixed graph and seed
+and the first non-self occurrences in arrival order. The compact session
+implements that rule online and agrees with the full-history replay
+on any fixed feasible trace under the same seed. It retains at most one
+entry per possible pair and bypasses replay on self or repeated requests.
+After a feasible prefix with a duplicate-free arc list, recorded work per
+feasible arrival is polynomial in the vertex count at fixed height.
+Theorem 21 keeps exact prefix inclusion and the uniform finite seed
+expectation. A native execution-time bound remains open.
+[Dependence on first occurrences](OnlineReachabilityPreservers/SteinerBinaryCompactArrivals.lean#L53)
+· [Per-prefix refinement](OnlineReachabilityPreservers/SteinerBinaryCompactArrivals.lean#L126)
+· [Bounded history](OnlineReachabilityPreservers/SteinerBinaryCompactArrivals.lean#L147)
+· [Per-arrival recorded work](OnlineReachabilityPreservers/SteinerBinaryCompactArrivals.lean#L160)
+· [Compact-arrival Theorem 21](OnlineReachabilityPreservers/SteinerBinaryCompactArrivals.lean#L245).
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
