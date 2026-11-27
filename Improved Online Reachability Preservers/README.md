@@ -1146,6 +1146,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   indexed witness at every cutoff, with mass at least \(56/32\), both
   original budgets and all four frozen caps.
   [Retained mass](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L355) · [Half-four bridge in the retained order](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L321) · [Exact retained constraint](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L328) · [Frozen witness after reordering](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L367).
+- In the indexed convention, pad the four midpoint rows with eight empty
+  labels. The input has seven vertices, twelve row labels and mass 14.
+  It excludes half-bridges through four. At its original degree and path
+  widths eight and four, two bridges impose opposite arrival orders.
+  The loss bound \(M/18\) allows zero deletions in this example, so
+  every sublist family within that loss bound still has cyclic constraints
+  at cutoff four and above. The unrestricted half-four cleaning result
+  supplies a separate witness at cutoff four.
+  [Input parameters](OnlineReachabilityPreservers/HalfBridgeArrivalBudgetAudit.lean#L14) · [Original half-four exclusion](OnlineReachabilityPreservers/HalfBridgeArrivalBudgetAudit.lean#L19) · [Failure of the small-deletion premise](OnlineReachabilityPreservers/HalfBridgeArrivalBudgetAudit.lean#L86) · [Unrestricted half-four cleaning](OnlineReachabilityPreservers/FrozenHalfFourCleaning.lean#L469).
 - After [deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2620),
   test for short returns in the pieces of the retained rows. If the
   copied input has the required bridge exclusion, at most \(M/18\)

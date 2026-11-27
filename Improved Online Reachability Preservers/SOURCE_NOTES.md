@@ -1169,6 +1169,16 @@ indexed witness at every cutoff, with mass at least \(56/32\), both
 original budgets and all four frozen caps.
 [Retained mass](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L355) · [Half-four bridge in the retained order](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L321) · [Exact retained constraint](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L328) · [Frozen witness after reordering](OnlineReachabilityPreservers/HalfBridgeArrivalObstruction.lean#L367).
 
+In the indexed convention, pad the four midpoint rows with eight empty
+labels. The input has seven vertices, twelve row labels and mass 14.
+It excludes half-bridges through four. At its original degree and path
+widths eight and four, two bridges impose opposite arrival orders.
+The loss bound \(M/18\) allows zero deletions in this example, so
+every sublist family within that loss bound still has cyclic constraints
+at cutoff four and above. The unrestricted half-four cleaning result
+supplies a separate witness at cutoff four.
+[Input parameters](OnlineReachabilityPreservers/HalfBridgeArrivalBudgetAudit.lean#L14) · [Original half-four exclusion](OnlineReachabilityPreservers/HalfBridgeArrivalBudgetAudit.lean#L19) · [Failure of the small-deletion premise](OnlineReachabilityPreservers/HalfBridgeArrivalBudgetAudit.lean#L86) · [Unrestricted half-four cleaning](OnlineReachabilityPreservers/FrozenHalfFourCleaning.lean#L469).
+
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
 those positions, so only pairs in different blocks need the bounded
