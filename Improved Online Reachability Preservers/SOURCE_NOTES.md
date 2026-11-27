@@ -773,7 +773,7 @@ direction. Consequently, a radius-two return test in the graph of
 actual standard pieces suffices at full cutoff seven. With simple
 input, positive budgets and original mass \(M\) at least both, the
 resulting frozen witness retains at least \(M/16\).
-[Interleaved lifting](OnlineReachabilityPreservers/CyclicSplits.lean#L624) · [Preservation through seven](OnlineReachabilityPreservers/CyclicSplits.lean#L659) · [Graph radius-two certificate](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L11) · [Frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
+[Interleaved lifting](OnlineReachabilityPreservers/CyclicSplits.lean#L659) · [Preservation through seven](OnlineReachabilityPreservers/CyclicSplits.lean#L694) · [Graph radius-two certificate](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L11) · [Frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
 
 At full cutoff eight, the first two return tests rule out repeated
 parent labels at cyclic distances one through three. If opposite
@@ -783,7 +783,7 @@ parents. The common parent's order on the gap corners gives either
 an original full four-bridge or a crossed three-step return. Thus
 checking these extra returns preserves full exclusion through eight
 for disjoint order-preserving pieces, including interleaved pieces.
-[Three-step return condition](OnlineReachabilityPreservers/CyclicSplits.lean#L685) · [Lift at size eight](OnlineReachabilityPreservers/CyclicSplits.lean#L716) · [Full exclusion through eight](OnlineReachabilityPreservers/CyclicSplits.lean#L783).
+[Three-step return condition](OnlineReachabilityPreservers/CyclicSplits.lean#L720) · [Lift at size eight](OnlineReachabilityPreservers/CyclicSplits.lean#L751) · [Full exclusion through eight](OnlineReachabilityPreservers/CyclicSplits.lean#L818).
 
 A simple eight-vertex family excludes full bridges at every
 size and has unique intersections. Its seven rows have mass
@@ -795,6 +795,21 @@ of the pieces passes the radius-two test. The return
 \(1\to2\to3\to4\) crosses the cut and the new pieces give a full
 eight-bridge against the row `[0,7]`.
 [Original full exclusion](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L34) · [Original means](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L40) · [Pass at radius two](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L65) · [Crossed return](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L73) · [Full eight-bridge](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L84).
+
+For any full cutoff \(k\ge7\), test the actual pieces at radius
+\(k-5\). The one- and two-step conditions already exclude repeated
+parents at cyclic distances one through three. In a putative bridge
+of size \(s\ge8\), choose the repeated pair with the smallest gap
+in the linear order that places the river last. The gap is at most
+\(s-4\). Its interior consists of forward steps on distinct other
+parents. The common parent's comparison either gives a shorter full
+bridge in the original rows or crosses the split against a return of
+at most \(s-5\) steps. For simple full-\(k\)-free input of mass \(M\)
+at least both positive budgets, a passing test on the standard
+degree and path pieces gives a frozen \(M/16\) witness with both
+budgets and all four caps. Feasible literal input gives the same
+retention with distinct nonempty paths.
+[Minimum-gap lift](OnlineReachabilityPreservers/CyclicSplits.lean#L889) · [Preservation at general cutoff](OnlineReachabilityPreservers/CyclicSplits.lean#L1003) · [Graph test](OnlineReachabilityPreservers/FullReturnRadius.lean#L28) · [Frozen indexed witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L67) · [Literal witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L89).
 
 One can also pack disjoint pieces by keeping each connected group
 of endpoints of returns of at most two steps together. Suppose

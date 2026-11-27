@@ -942,17 +942,27 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   most two edges on the actual pieces after the standard degree and
   path splits. If the test passes, the frozen witness retains at least
   \(M/16\) with both original budgets and all four caps.
-  [Lift allowing interleaved pieces](OnlineReachabilityPreservers/CyclicSplits.lean#L624) · [Two-step width test](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L39) · [Full-seven frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
+  [Lift allowing interleaved pieces](OnlineReachabilityPreservers/CyclicSplits.lean#L659) · [Two-step width test](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L39) · [Full-seven frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
 - The same split preserves full exclusion through eight when it also
   forbids crossed three-step returns on three distinct other parents.
   For opposite cyclic slots, at least one of the two gaps avoids the
   river slot and therefore has three forward comparisons.
-  [Three-step condition](OnlineReachabilityPreservers/CyclicSplits.lean#L685) · [Size-eight lift](OnlineReachabilityPreservers/CyclicSplits.lean#L716) · [Preservation through eight](OnlineReachabilityPreservers/CyclicSplits.lean#L783).
+  [Three-step condition](OnlineReachabilityPreservers/CyclicSplits.lean#L720) · [Size-eight lift](OnlineReachabilityPreservers/CyclicSplits.lean#L751) · [Preservation through eight](OnlineReachabilityPreservers/CyclicSplits.lean#L818).
 - An eight-vertex family with unique intersections excludes full
   bridges at every size. Splitting the four-vertex row at its
   midpoint passes the radius-two test on the resulting pieces and
   creates a full eight-bridge. The crossed return has three steps.
   [Original exclusion](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L34) · [Radius-two test](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L65) · [Crossed return](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L73) · [Created bridge](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L84).
+- For every full cutoff \(k\ge7\), a return radius of \(k-5\)
+  suffices for disjoint order-preserving pieces. The minimum
+  linear gap between slots with a repeated parent uses only
+  forward steps on distinct other parents. For simple input
+  excluding full bridges through \(k\) with mass \(M\) at least
+  both positive budgets, passing the test on the standard degree
+  and path pieces gives a frozen \(M/16\) witness with both budgets
+  and all four caps. The literal version also keeps the rows distinct
+  and nonempty.
+  [The minimum-gap proof](OnlineReachabilityPreservers/CyclicSplits.lean#L889) · [The graph certificate](OnlineReachabilityPreservers/FullReturnRadius.lean#L28) · [Indexed witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L67) · [Literal witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L89).
 - At full cutoff seven, packing the components of returns of at most
   two steps gives a frozen quarter-mass witness if those components fit the
   original path width. Use either the original rows or the standard

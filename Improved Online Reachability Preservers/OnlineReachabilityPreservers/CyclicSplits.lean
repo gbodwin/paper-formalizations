@@ -554,9 +554,44 @@ private theorem bridgeSlots_forward_or_river {pieces : J → List V} {k : ℕ}
     rw [bridgeSlots, Fin.snoc_castSucc, cycleNext_castSucc]
     exact b.arcStep j
 
-private theorem short_cycle_self_apart {k : ℕ} (lower : 4 ≤ k) (upper : k ≤ 6) :
-    ∀ i : Fin (k+2), i ≠ (i+1)+1 ∧ i ≠ ((i+1)+1)+1 := by
-  interval_cases k <;> decide
+private theorem fin_one_add_one {k : ℕ} (lower : 4 ≤ k) :
+    (1 : Fin (k+2)) + 1 = Fin.ofNat (k+2) 2 := by
+  apply Fin.ext
+  change (1 % (k+2) + 1 % (k+2)) % (k+2) = 2 % (k+2)
+  rw [Nat.mod_eq_of_lt (show 1 < k+2 by omega)]
+
+private theorem fin_two_add_one {k : ℕ} (lower : 4 ≤ k) :
+    Fin.ofNat (k+2) 2 + 1 = Fin.ofNat (k+2) 3 := by
+  apply Fin.ext
+  change (2 % (k+2) + 1 % (k+2)) % (k+2) = 3 % (k+2)
+  rw [Nat.mod_eq_of_lt (show 1 < k+2 by omega), Nat.mod_eq_of_lt (show 2 < k+2 by omega)]
+
+private theorem short_cycle_self_apart {k : ℕ} (lower : 4 ≤ k) (i : Fin (k+2)) :
+    i ≠ (i+1)+1 ∧ i ≠ ((i+1)+1)+1 := by
+  constructor
+  · intro same
+    have equal : (0 : Fin (k+2)) = Fin.ofNat (k+2) 2 := add_left_cancel (a := i) (by
+      simpa only [add_zero, add_assoc, fin_one_add_one lower] using same)
+    have vals := congrArg Fin.val equal
+    change 0 = 2 % (k+2) at vals
+    rw [Nat.mod_eq_of_lt (by omega)] at vals
+    omega
+  · intro same
+    have equal : (0 : Fin (k+2)) = Fin.ofNat (k+2) 3 := add_left_cancel (a := i) (by
+      simpa only [add_zero, add_assoc, fin_one_add_one lower, fin_two_add_one lower] using same)
+    have vals := congrArg Fin.val equal
+    change 0 = 3 % (k+2) at vals
+    rw [Nat.mod_eq_of_lt (by omega)] at vals
+    omega
+
+private theorem eq_advance_small {k : ℕ} {a b : Fin (k+2)} {d : ℕ} (fit : d < k+2)
+    (vals : a.val+d = b.val ∨ a.val+d = b.val+(k+2)) :
+    a + Fin.ofNat (k+2) d = b := by
+  apply Fin.ext
+  rw [Fin.val_add, Fin.val_ofNat, Nat.mod_eq_of_lt fit]
+  rcases vals with noWrap | wrap
+  · rw [noWrap, Nat.mod_eq_of_lt b.isLt]
+  · rw [wrap, Nat.add_mod_right, Nat.mod_eq_of_lt b.isLt]
 
 private theorem short_cycle_pair_near {k : ℕ} (lower : 4 ≤ k) (upper : k ≤ 5)
     (i j : Fin (k+2)) (different : i ≠ j) :
@@ -573,7 +608,7 @@ private theorem bridgeSlots_parent_distinct_through_three
     (together : ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
       ListBefore paths (parent i) x y → ListBefore pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
     (noTwo : NoCrossedTwoStepReturn paths pieces parent)
-    (free : BridgeFree (ListBefore paths) 3) (lower : 4 ≤ k) (short : k ≤ 6)
+    (free : BridgeFree (ListBefore paths) 3) (lower : 4 ≤ k)
     (b : Bridge (ListBefore pieces) k) :
     let p := parent ∘ bridgeSlots b
     (∀ i, p i ≠ p (i+1)) ∧
@@ -589,7 +624,7 @@ private theorem bridgeSlots_parent_distinct_through_three
   have oldMeet := bridgeSlots_corners b parent (fun {_ _ _} => steps)
   have near := bridgeSlots_parent_near parent (fun {_ _ _} => steps) (fun {_ _ _} => disjoint)
     (fun _ {_ _ _ _} => noParallel) (fun _ {_ _ _ _ _} => together) b
-  have spacing := short_cycle_self_apart lower short
+  have spacing := short_cycle_self_apart lower
   have atTwo (i : Fin (k+2)) : p i ≠ p ((i+1)+1) :=
     near.2 (by omega) i (spacing i).1
   have noThree (old : Bridge (ListBefore paths) 1) : False := (free (by decide)).false old
@@ -641,7 +676,7 @@ def listBridge_after_opposite_and_two_step_safe_split {paths : I → List V} {pi
   let p := parent ∘ bridgeSlots b
   obtain ⟨atOne, atTwo, atThree⟩ :=
     bridgeSlots_parent_distinct_through_three parent (fun {_ _ _} => steps)
-      (fun {_ _ _} => disjoint) (fun {_ _ _ _ _} => together) noTwo free lower (by omega) b
+      (fun {_ _ _} => disjoint) (fun {_ _ _ _ _} => together) noTwo free lower b
   have parentInjective : Function.Injective p := by
     intro i j same
     by_contra different
@@ -731,11 +766,11 @@ def listBridge_after_opposite_and_three_step_safe_split_eight
   have freeThree : BridgeFree (ListBefore paths) 3 := fun _ h => free (h.trans (by decide))
   obtain ⟨atOne, atTwo, atThree⟩ :=
     bridgeSlots_parent_distinct_through_three parent (fun {_ _ _} => steps)
-      (fun {_ _ _} => disjoint) (fun {_ _ _ _ _} => together) noTwo freeThree (by decide) le_rfl b
+      (fun {_ _ _} => disjoint) (fun {_ _ _ _ _} => together) noTwo freeThree (by decide) b
   have forward {i : Fin 8} (arc : i ≠ Fin.last 7) :
       ListBefore pieces (s i) (v i) (v (i+1)) :=
     (bridgeSlots_forward_or_river b i).resolve_right (fun h => arc h.1)
-  have space := short_cycle_self_apart (k := 6) (by decide) le_rfl
+  have space := short_cycle_self_apart (k := 6) (by decide)
   have avoid (i : Fin 8) (gap : eightGapAvoidsRiver i) : p i ≠ p (oppositeEight i) := by
     let j := i+1
     let l := j+1
@@ -808,5 +843,205 @@ theorem fullBridgeFree_of_opposite_and_three_step_safe_split [LinearOrder I]
     (fun _ h => free (h.trans (by decide))) bridge
 
 end Eight
+
+section Longer
+
+private theorem repeated_parent_gap_bounds {k : ℕ} {T : Type*} (p : Fin (k+2) → T) (large : 6 ≤ k)
+    (one : ∀ i, p i ≠ p (i+1)) (two : ∀ i, p i ≠ p ((i+1)+1))
+    (three : ∀ i, p i ≠ p (((i+1)+1)+1))
+    {a b : Fin (k+2)} (ordered : a < b) (equal : p a = p b) :
+    4 ≤ b.val-a.val ∧ b.val-a.val ≤ k-2 := by
+  have reject {x y : Fin (k+2)} {d : ℕ} (positive : 0 < d) (short : d ≤ 3)
+      (start : p x = p y) (advance : x.val+d = y.val ∨ x.val+d = y.val+(k+2)) : False := by
+    have located := eq_advance_small (show d < k+2 by omega) advance
+    interval_cases d
+    · exact one x (located.symm ▸ start)
+    · have step : (x+1)+1 = y := by simpa only [add_assoc, fin_one_add_one (by omega : 4 ≤ k)] using located
+      exact two x (step.symm ▸ start)
+    · have step : ((x+1)+1)+1 = y := by
+        calc
+          ((x+1)+1)+1 = x + Fin.ofNat (k+2) 3 := by
+            simp only [add_assoc, fin_one_add_one (by omega : 4 ≤ k), fin_two_add_one (by omega : 4 ≤ k)]
+          _ = y := located
+      exact three x (step.symm ▸ start)
+  change a.val < b.val at ordered
+  constructor
+  · by_contra! short
+    exact reject (d := b.val-a.val) (by omega) (by omega) equal (Or.inl (by omega))
+  · by_contra! short
+    exact reject (d := k+2-(b.val-a.val)) (by omega) (by omega) equal.symm (Or.inr (by omega))
+
+/-- The endpoints of a short return on distinct other parents
+stay in one piece of the common parent. -/
+def NoCrossedParentReturnUpTo (paths : I → List V) (pieces : J → List V)
+    (parent : J → I) (radius : ℕ) : Prop :=
+  ∀ ⦃i j : J⦄ {d : ℕ}, i ≠ j → parent i = parent j → d ≤ radius →
+    ∀ (v : Fin (d+1) → V) (a : Fin d → J),
+      (∀ t, parent i ≠ parent (a t)) → Function.Injective (parent ∘ a) →
+      v 0 ∈ pieces i → v (Fin.last d) ∈ pieces j →
+      ListBefore paths (parent i) (v (Fin.last d)) (v 0) →
+      (∀ t, ListBefore pieces (a t) (v t.castSucc) (v t.succ)) → False
+
+set_option maxHeartbeats 800000 in
+/-- A closest repeated pair in the linear order of bridge slots has
+only forward steps between it. The cyclic tests put the two slots
+at least four steps apart in each circular direction. -/
+def listBridge_after_short_parent_returns {paths : I → List V} {pieces : J → List V}
+    {k cutoff : ℕ} [LinearOrder I] (parent : J → I)
+    (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
+    (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
+    (mirror : ∀ {i j q x y}, parent i = parent j → parent i ≠ parent q →
+      ListBefore paths (parent i) x y → ListBefore pieces q y x → x ∈ pieces i → y ∈ pieces j → i = j)
+    (noTwo : NoCrossedTwoStepReturn paths pieces parent)
+    (noGap : NoCrossedParentReturnUpTo paths pieces parent (cutoff-5))
+    (free : BridgeFree (ListBefore paths) cutoff) (large : 6 ≤ k)
+    (bound : k+2 ≤ cutoff) (b : Bridge (ListBefore pieces) k) : Bridge (ListBefore paths) k := by
+  classical
+  refine liftBridgeOfInjectiveSlots parent (fun {_ _ _} => steps) b ?_
+  let s := bridgeSlots b
+  let p := parent ∘ s
+  have freeThree : BridgeFree (ListBefore paths) 3 := fun _ h => free (h.trans (by omega))
+  obtain ⟨one,two,three⟩ := bridgeSlots_parent_distinct_through_three parent
+    (fun {_ _ _} => steps) (fun {_ _ _} => disjoint) (fun {_ _ _ _ _} => mirror)
+    noTwo freeThree (by omega) b
+  by_contra notInjective
+  change ¬ Function.Injective p at notInjective
+  let gap (d : ℕ) : Prop := ∃ i j : Fin (k+2), i < j ∧ j.val-i.val = d ∧ p i = p j
+  have some : ∃ d, gap d := by
+    unfold Function.Injective at notInjective
+    push Not at notInjective
+    obtain ⟨i,j,same,apart⟩ := notInjective
+    rcases lt_or_gt_of_ne apart with left | right
+    · exact ⟨_,i,j,left,rfl,same⟩
+    · exact ⟨_,j,i,right,rfl,same.symm⟩
+  let d := Nat.find some
+  obtain ⟨i,j,ordered,exactDistance,same⟩ := Nat.find_spec some
+  change j.val-i.val = d at exactDistance
+  have limits := repeated_parent_gap_bounds p large one two three ordered same
+  rw [exactDistance] at limits
+  have orderedVals : i.val < j.val := ordered
+  have shorterDistinct (a b : Fin (k+2)) (order : a < b) (short : b.val-a.val < d) : p a ≠ p b := by
+    intro equal
+    exact (Nat.find_min' some ⟨a,b,order,rfl,equal⟩).not_gt short
+  let q := d-2
+  have length : q+2 = d := by dsimp [q]; omega
+  let position (t : Fin (q+2)) : Fin (k+2) := ⟨i.val+1+t.val,by
+    have := t.isLt
+    have := j.isLt
+    omega⟩
+  have posInj : Function.Injective position := by
+    intro a b equal
+    apply Fin.ext
+    have vals := congrArg Fin.val equal
+    change i.val+1+a.val = i.val+1+b.val at vals
+    omega
+  have startPosition : position 0 = i+1 := by
+    symm
+    exact eq_advance_small (d := 1) (by omega) (Or.inl rfl)
+  have endPosition : position (Fin.last (q+1)) = j := by
+    apply Fin.ext
+    change i.val+1+(q+1) = j.val
+    omega
+  let v := b.vertex ∘ position
+  let a (t : Fin (q+1)) := s (position t.castSucc)
+  have along (t : Fin (q+1)) : ListBefore pieces (a t) (v t.castSucc) (v t.succ) := by
+    let arc : Fin (k+1) := ⟨i.val+1+t.val,by
+      have := t.isLt
+      have := j.isLt
+      omega⟩
+    have first : position t.castSucc = arc.castSucc := Fin.ext rfl
+    have last : position t.succ = arc.succ := Fin.ext (by simp only [position, arc, Fin.val_succ, add_assoc])
+    simpa only [a,v,Function.comp_apply,first,last,s,bridgeSlots,Fin.snoc_castSucc] using b.arcStep arc
+  have distinctFromParent (t : Fin (q+1)) : p i ≠ parent (a t) := by
+    apply shorterDistinct
+    · change i.val < i.val+1+t.val
+      omega
+    · change i.val+1+t.val-i.val < d
+      have := t.isLt
+      omega
+  have rowInj : Function.Injective (parent ∘ a) := by
+    intro t w equal
+    by_contra different
+    have separate {t w : Fin (q+1)} (order : t < w) :
+        parent (a t) ≠ parent (a w) := by
+      have earlier : t.val < w.val := order
+      apply shorterDistinct
+      · change i.val+1+t.val < i.val+1+w.val
+        omega
+      · change i.val+1+w.val-(i.val+1+t.val) < d
+        have := w.isLt
+        omega
+    rcases lt_or_gt_of_ne different with h | h
+    · exact separate h equal
+    · exact separate h equal.symm
+  have cornerInj : Function.Injective v := b.distinctVertices.comp posInj
+  have rawCorners := bridgeSlots_corners b (paths := pieces) id (fun {_ _ _} step => step)
+  have oldCorners := bridgeSlots_corners b parent (fun {_ _ _} => steps)
+  have left : v 0 ∈ pieces (s i) := by simpa only [v,Function.comp_apply,startPosition,s,id_eq] using (rawCorners i).2
+  have right : v (Fin.last (q+1)) ∈ pieces (s j) := by
+    simpa only [v,Function.comp_apply,endPosition,s,id_eq] using (rawCorners j).1
+  have oldLeft : v 0 ∈ paths (p i) := by
+    simpa only [v,Function.comp_apply,startPosition,p,s] using (oldCorners i).2
+  have oldRight : v (Fin.last (q+1)) ∈ paths (p i) := by
+    have onJ : b.vertex j ∈ paths (p j) := (oldCorners j).1
+    have onI : b.vertex j ∈ paths (p i) := same.symm ▸ onJ
+    simpa only [v,Function.comp_apply,endPosition] using onI
+  have differentCorners : v 0 ≠ v (Fin.last (q+1)) := by
+    intro equal
+    have vals := congrArg Fin.val (cornerInj equal)
+    simp only [Fin.val_zero,Fin.val_last] at vals
+    omega
+  rcases listBefore_total oldLeft oldRight differentCorners with forward | backward
+  · have smallBridge : Bridge (ListBefore paths) q :=
+      ⟨v,parent ∘ a,p i,cornerInj,rowInj,distinctFromParent,forward,fun t => steps (along t)⟩
+    exact (free (by omega)).false smallBridge
+  · have differentPieces : s i ≠ s j := fun equal => ordered.ne (bridgeSlots_injective b equal)
+    exact noGap differentPieces same (by omega) v a distinctFromParent rowInj left right backward along
+
+/-- At every full cutoff at least seven, the return radius five
+below the cutoff preserves full exclusion under a disjoint split. -/
+theorem fullBridgeFree_of_short_parent_returns [LinearOrder I]
+    {paths : I → List V} {pieces : J → List V} {cutoff : ℕ} (parent : J → I)
+    (steps : ∀ {i x y}, ListBefore pieces i x y → ListBefore paths (parent i) x y)
+    (disjoint : ∀ {i j x}, i ≠ j → parent i = parent j → x ∈ pieces i → x ∈ pieces j → False)
+    (safe : NoCrossedParentReturnUpTo paths pieces parent (cutoff-5))
+    (free : BridgeFree (ListBefore paths) cutoff) (large : 7 ≤ cutoff) :
+    BridgeFree (ListBefore pieces) cutoff := by
+  have mirror {i j q : J} {x y : V} (same : parent i = parent j) (other : parent i ≠ parent q)
+      (forward : ListBefore paths (parent i) x y) (back : ListBefore pieces q y x)
+      (left : x ∈ pieces i) (right : y ∈ pieces j) : i = j := by
+    by_contra apart
+    refine safe (d := 1) (fun equal => apart equal.symm) same.symm (by omega) ![y,x] ![q] ?_ ?_ right left (same ▸ forward) ?_
+    · intro t
+      fin_cases t
+      exact same ▸ other
+    · intro a b _
+      exact Subsingleton.elim _ _
+    · intro t
+      fin_cases t
+      exact back
+  have noTwo : NoCrossedTwoStepReturn paths pieces parent := by
+    intro i j a c x y z apart same otherA otherC different left right back first last
+    refine safe (d := 2) apart same (by omega) ![x,z,y] ![a,c] ?_ ?_ left right back ?_
+    · intro t
+      fin_cases t
+      · exact otherA
+      · exact otherC
+    · intro u v equal
+      fin_cases u <;> fin_cases v <;> simp_all
+    · intro t
+      fin_cases t
+      · exact first
+      · exact last
+  intro k bound
+  refine ⟨fun b => (free bound).false ?_⟩
+  by_cases short : k ≤ 5
+  · exact listBridge_after_opposite_and_two_step_safe_split parent (fun {_ _ _} => steps)
+      (fun {_ _ _} => disjoint) (fun {_ _ _ _ _} => mirror) noTwo
+      (fun _ h => free (h.trans (by omega))) short b
+  exact listBridge_after_short_parent_returns parent (fun {_ _ _} => steps)
+    (fun {_ _ _} => disjoint) (fun {_ _ _ _ _} => mirror) noTwo safe free (by omega) bound b
+
+end Longer
 
 end OnlineReachabilityPreservers

@@ -1562,7 +1562,7 @@ In particular, the test on the actual pieces after the degree and path
 width splits gives an indexed frozen \(M/16\) witness through full cutoff
 seven for simple input of mass \(M\) at least both positive budgets.
 It keeps both budgets and all four original-average caps.
-[Lift with interleaving](OnlineReachabilityPreservers/CyclicSplits.lean#L624) · [Full preservation](OnlineReachabilityPreservers/CyclicSplits.lean#L659) · [Graph certificate](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L11) · [Width-cut application](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L39) · [Frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
+[Lift with interleaving](OnlineReachabilityPreservers/CyclicSplits.lean#L659) · [Full preservation](OnlineReachabilityPreservers/CyclicSplits.lean#L694) · [Graph certificate](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L11) · [Width-cut application](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L39) · [Frozen witness](OnlineReachabilityPreservers/FullSevenWidthCleaning.lean#L66).
 
 The full cutoff eight extension adds a three-step condition. After
 the previous tests exclude repeated parents at cyclic distances one,
@@ -1572,19 +1572,33 @@ from each other and from the repeated parent. A matching comparison
 in that parent gives a full four-bridge. An opposite comparison gives
 a three-step return across the pieces. Ruling out these returns gives
 full preservation at the same cutoff for any full cutoff through eight.
-[Three-step return condition](OnlineReachabilityPreservers/CyclicSplits.lean#L685) · [Size-eight parent lift](OnlineReachabilityPreservers/CyclicSplits.lean#L716) · [Preservation through eight](OnlineReachabilityPreservers/CyclicSplits.lean#L783).
+[Three-step return condition](OnlineReachabilityPreservers/CyclicSplits.lean#L720) · [Size-eight parent lift](OnlineReachabilityPreservers/CyclicSplits.lean#L751) · [Preservation through eight](OnlineReachabilityPreservers/CyclicSplits.lean#L818).
 
-An eight-vertex audit certifies the need for the larger radius
-on disjoint order-preserving pieces at full cutoff eight. The seven
+An eight-vertex audit shows a disjoint order-preserving split
+that passes the radius-two test and creates a full eight-bridge. The seven
 original rows are simple with unique intersections and exclude all
 full bridges. The only row longer than the original mean of \(16/7\)
-has length four. Its midpoint split covers the original rows, and the graph
-of the actual pieces passes the radius-two test. The return
-\(1\to2\to3\to4\) crosses the split and the new pieces contain a full
-eight-bridge. A finite search proves original exclusion by ruling out
+has length four. Its midpoint split covers the original rows. The return
+\(1\to2\to3\to4\) crosses the split. A finite search proves
+original exclusion by ruling out
 every alternative route with distinct rows at the bounded length forced
 by the number of row labels.
 [Simple rows and covering split](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L50) · [Original full exclusion](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L34) · [Radius-two test](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L65) · [New bridge](OnlineReachabilityPreservers/FullEightSplitAudit.lean#L84) · [Finite search certificate](OnlineReachabilityPreservers/RainbowListSearch.lean#L53).
+
+At any full cutoff \(k\ge7\), the shortened return bound is
+\(k-5\). For a bridge of size \(s\ge8\), exclude repeated pairs at
+cyclic distances one through three. Among the remaining pairs with
+the same parent, choose the smallest linear gap with the river last.
+The gap has at most \(s-4\) slots. Its \(s-5\) or fewer interior
+steps are forward comparisons on distinct other parents. The order
+of the two corners in the repeated parent determines either a
+shorter full bridge or a forbidden crossed return. This projects
+every bridge through the chosen cutoff. A passing test on the
+actual standard degree and path pieces gives an indexed or feasible
+literal witness of at least \(M/16\) with both original budgets and
+all four frozen caps. The input rows are simple and exclude full
+bridges through \(k\), and the mass reaches both positive budgets.
+[Crossed return predicate](OnlineReachabilityPreservers/CyclicSplits.lean#L876) · [Projection at the original cutoff](OnlineReachabilityPreservers/CyclicSplits.lean#L1003) · [Standard width test](OnlineReachabilityPreservers/FullReturnRadius.lean#L40) · [Indexed witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L67) · [Literal witness](OnlineReachabilityPreservers/FullReturnRadius.lean#L89).
 
 The full-seven lift also permits packing the original-width path
 pieces from components of returns of at most two steps in the
