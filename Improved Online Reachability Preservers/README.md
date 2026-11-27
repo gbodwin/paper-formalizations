@@ -2013,4 +2013,15 @@ most the existing per-row bound at that width, including rejected input.
 [Exact endpoint values](OnlineReachabilityPreservers/SteinerBinaryInputDecoding.lean#L9)
 · [Acceptance condition](OnlineReachabilityPreservers/SteinerBinaryInputDecoding.lean#L60)
 · [Work bound at the supplied width](OnlineReachabilityPreservers/SteinerBinaryInputDecoding.lean#L90).
+
+The guarded decoder scans both word lengths per row and stops at the first
+over-width row, before numerical decoding. It accepts the lists whose words fit the width
+and whose endpoint values are below the finite vertex count. It preserves
+the input endpoint values, row order and multiplicity. Its recorded-work bound adds
+the scan at the actual raw bit count and the maximum decoding charge at
+the supplied width, including for malformed input.
+[Width check](OnlineReachabilityPreservers/SteinerBinaryInputGuard.lean#L29)
+· [Exact decoded rows](OnlineReachabilityPreservers/SteinerBinaryInputGuard.lean#L63)
+· [Acceptance condition](OnlineReachabilityPreservers/SteinerBinaryInputGuard.lean#L84)
+· [Combined work bound](OnlineReachabilityPreservers/SteinerBinaryInputGuard.lean#L104).
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).
