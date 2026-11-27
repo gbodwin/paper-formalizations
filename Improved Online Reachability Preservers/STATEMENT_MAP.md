@@ -1423,6 +1423,20 @@ budgets, including the actual supplied bit count on rejection.
 · [Agreement on encoded demands](OnlineReachabilityPreservers/SteinerBinaryArrivalWordInput.lean#L83)
 · [Recorded input charge](OnlineReachabilityPreservers/SteinerBinaryArrivalWordInput.lean#L96).
 
+The binary session initializer validates the fixed graph's arc words before
+sampling. A rejected graph preserves the initial stream position. On a
+successful decode, the initializer prepares exactly the decoded graph,
+reads its prescribed seed length and stores the existing empty-prefix
+state. Each subsequent binary arrival reuses that graph and seed. A
+separate tally accounts for decoding and graph preparation at setup and
+for one decoded demand per arrival.
+[Binary initialization](OnlineReachabilityPreservers/SteinerBinaryWordSession.lean#L20)
+· [Rejection and stream position](OnlineReachabilityPreservers/SteinerBinaryWordSession.lean#L33)
+· [Exact accepted initialization](OnlineReachabilityPreservers/SteinerBinaryWordSession.lean#L45)
+· [Exact seed length](OnlineReachabilityPreservers/SteinerBinaryWordSession.lean#L60)
+· [Stored-session step](OnlineReachabilityPreservers/SteinerBinaryWordSession.lean#L85)
+· [Per-arrival input charge](OnlineReachabilityPreservers/SteinerBinaryWordSession.lean#L99).
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
