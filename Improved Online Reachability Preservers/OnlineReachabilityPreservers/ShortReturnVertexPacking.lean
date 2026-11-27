@@ -1,3 +1,4 @@
+import OnlineReachabilityPreservers.ShortReturnPieceComponents
 import OnlineReachabilityPreservers.ShortReturnPiecePacking
 
 /-! Group path occurrences that must share a degree copy to close a short return. -/
@@ -199,5 +200,39 @@ theorem regularization_list_frozen_after_grouped_width_splits {V : Type*}
   have lessV := smallLoss dRoom boundV
   have lessI := smallLoss lRoom boundI
   omega
+
+/-- If the original incident rows admit bounded degree groups and the
+original row components fit the path width, both original-width groupings
+preserve the cutoff and give the frozen quarter-mass witness. -/
+theorem regularization_list_frozen_of_short_return_groups {n p k : ℕ} {half : Bool}
+    (rows : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
+    (free : localOrderAdmissible half k rows)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
+    (degreeRoom : let M := ∑ i, (rows i).length; HasCappedShortReturnCopyPartition rows (4*M/n) k)
+    (pathRoom : let M := ∑ i, (rows i).length
+      ∀ i, ∀ x ∈ rows i, (shortReturnRowComponent rows k i x).card ≤ 4*M/p) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 4*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧
+      frozenListCaps n p M clean := by
+  let M := ∑ i, (rows i).length
+  obtain ⟨sizes, copies, copiedSimple, copiedFree, projected, degree, light⟩ :=
+    copies_of_cappedShortReturnCopyPartition simple free degreeRoom
+  let W := Σₗ v : Fin n, Fin (sizes v)
+  let project (x : W) := x.fst
+  have mass : (∑ i, (copies i).length) = M := by
+    apply sum_congr rfl
+    intro i _
+    have eq : (copies i).map project = rows i := projected i
+    simpa only [List.length_map] using congrArg List.length eq
+  have copiedRoom : HasCappedShortReturnPartition copies (4*M/p) k := by
+    apply (hasCappedShortReturnPartition_iff_component_room _ _ _).mpr
+    intro i x on
+    have onOriginal := List.mem_map_of_mem (f := project) on
+    rw [show (copies i).map project = rows i from projected i] at onOriginal
+    exact (shortReturnRowComponent_card_le_project project simple projected k i x).trans (pathRoom i _ onOriginal)
+  exact regularization_list_frozen_after_grouped_width_splits copies copiedSimple copiedFree
+    hn hp dense long mass degree light copiedRoom
 
 end OnlineReachabilityPreservers

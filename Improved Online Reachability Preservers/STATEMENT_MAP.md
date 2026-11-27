@@ -2318,7 +2318,7 @@ minimum number of groups and use the groups as copies. Every original
 row is recovered by projection, each degree is within the width, and at
 most one copy of each vertex is at or below half the width. For simple
 input, the copies preserve the chosen full or half exclusion.
-[Short-return pairs of incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L13) · [Bounded degree groups](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L20) · [Admissible capped degree copies](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L28).
+[Short-return pairs of incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L14) · [Bounded degree groups](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L21) · [Admissible capped degree copies](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L29).
 
 Start with simple rows whose mass \(M\) is at least both positive
 budgets. If standard degree copying at the original width preserves
@@ -2351,13 +2351,24 @@ caps and the original full or half cutoff.
 [Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L241).
 
 The two support trims also apply when the degree groups have varying
-sizes. Assume admissible copies of mass \(M\) at least both positive
-budgets, with all degrees within the original width and at most \(n\)
-at or below half that width. If the copied rows admit the short-return
+sizes. Assume simple admissible copies of mass \(M\) at least both
+positive budgets, with all degrees within the original width. At most
+\(n\) copy labels may have degree at or below half that width. If the
+copied rows admit the short-return
 path partition at the original path width, each support trim loses at
 most \(M/8\). The later peeling uses the two original lower caps and
 leaves a frozen witness of mass at least \(M/4\) within both budgets.
-[Separate heavy-group thresholds](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L85) · [Frozen cleaning from both grouped profiles](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L141).
+[Separate heavy-group thresholds](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L85) · [Frozen cleaning from both grouped profiles](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L142).
+
+The path-group bound can be checked on the original rows. Exact row
+projection sends every copied return and its linked component to the
+original graph. Projection is injective on each copied row, so its
+component size cannot grow. For simple admissible input of mass \(M\)
+at least both positive budgets, bounded degree groups at the original
+degree width and original row components within the original path
+width give a frozen \(M/4\) witness outright. Both budgets, all four caps
+and the chosen cutoff hold in either exclusion mode.
+[Component size does not increase under row copying](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L123) · [Frozen cleaning under both original-width tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L207).
 
 The path-partition premise has an exact finite test. Within one row,
 link the endpoints of every comparison with a short backward return.
@@ -2366,7 +2377,7 @@ When every component fits the width, the components themselves give a
 valid partition. For admissible standard degree copies at the original
 width, this test at the original path width gives the same indexed
 \(M/4\) witness in either mode.
-[Graph of linked endpoints](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L16) · [Exact component criterion](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L110) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L125).
+[Graph of linked endpoints](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L16) · [Exact component criterion](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L110) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L170).
 
 A six-vertex family with twelve indexed rows and mass twelve has one
 increasing row, three disjoint backward pairs and eight empty labels.

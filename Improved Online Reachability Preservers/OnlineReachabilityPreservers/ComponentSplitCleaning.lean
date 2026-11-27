@@ -1922,7 +1922,7 @@ def NoShortReturnAcrossCopiedWidthCuts {n p : ℕ} (paths : Fin p → List (Fin 
   ∀ ⦃i x y⦄, Before copies i x y → (copies i).idxOf x/L ≠ (copies i).idxOf y/L →
     y ∉ reachIn graph x ((cutoff-2)-1)
 
-private theorem project_reachIn {V W : Type*} [DecidableEq V] [DecidableEq W]
+theorem project_reachIn {V W : Type*} [DecidableEq V] [DecidableEq W]
     {G : Arcs V} {H : Arcs W} (project : V → W)
     (edges : ∀ {x y}, Edge G x y → Edge H (project x) (project y)) {t : V} (radius : ℕ) :
     ∀ {s : V}, s ∈ reachIn G t radius → project s ∈ reachIn H (project t) radius := by

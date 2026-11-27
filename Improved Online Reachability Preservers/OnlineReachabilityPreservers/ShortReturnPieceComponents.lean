@@ -118,6 +118,51 @@ theorem hasCappedShortReturnPartition_iff_component_room
   · intro room i
     exact ⟨_, rowComponent_partition i (room i)⟩
 
+/-- Under an exact row projection to simple paths, every short-return
+component has size at most the component of its projected center. -/
+theorem shortReturnRowComponent_card_le_project {W : Type*} [LinearOrder W] [Fintype W]
+    {rows : I → List V} {copies : I → List W} (project : W → V)
+    (simple : ∀ i, (rows i).Nodup) (projects : ∀ i, (copies i).map project = rows i)
+    (cutoff : ℕ) (i : I) (x : W) :
+    (shortReturnRowComponent copies cutoff i x).card ≤
+      (shortReturnRowComponent rows cutoff i (project x)).card := by
+  have step ⦃j : I⦄ ⦃a b : W⦄ (before : Before copies j a b) :
+      Before rows j (project a) (project b) := by
+    have comparison := listBefore_map project ((projects j).symm ▸ simple j) before
+    have same : (fun j => (copies j).map project) = rows := funext projects
+    rwa [same] at comparison
+  have comparisonEdge ⦃a b : W⦄ (edge : Edge (listPiecePrecedenceGraph copies) a b) :
+      Edge (listPiecePrecedenceGraph rows) (project a) (project b) := by
+    obtain ⟨j, comparison⟩ := listPiecePrecedenceGraph_edge.mp edge
+    exact listPiecePrecedenceGraph_edge.mpr ⟨j, step comparison⟩
+  have rowEdge ⦃a b : W⦄ (edge : Edge (shortReturnRowGraph copies cutoff i) a b) :
+      Edge (shortReturnRowGraph rows cutoff i) (project a) (project b) := by
+    have returnProjects ⦃a b : W⦄ (back : b ∈ reachIn (listPiecePrecedenceGraph copies) a (cutoff - 3)) :
+        project b ∈ reachIn (listPiecePrecedenceGraph rows) (project a) (cutoff - 3) :=
+      project_reachIn project (fun {_ _} edge => comparisonEdge edge) _ back
+    rcases shortReturnRowGraph_edge.mp edge with forward | reverse
+    · exact shortReturnRowGraph_edge.mpr (Or.inl ⟨step forward.1, returnProjects forward.2⟩)
+    · exact shortReturnRowGraph_edge.mpr (Or.inr ⟨step reverse.1, returnProjects reverse.2⟩)
+  have reachable ⦃a b : W⦄ (walk : Reach (shortReturnRowGraph copies cutoff i) a b) :
+      Reach (shortReturnRowGraph rows cutoff i) (project a) (project b) := by
+    induction walk with
+    | refl => exact .refl
+    | tail _ edge ih => exact ih.tail (rowEdge edge)
+  apply card_le_card_of_injOn project
+  · intro y member
+    obtain ⟨listed, equal⟩ := mem_filter.mp member
+    have appears := List.mem_map_of_mem (f := project) (List.mem_toFinset.mp listed)
+    rw [projects i] at appears
+    have connected := componentLabel_eq.mp equal
+    exact mem_filter.mpr ⟨List.mem_toFinset.mpr appears, componentLabel_eq.mpr
+      ⟨reachable connected.1, reachable connected.2⟩⟩
+  · intro a onA b onB equal
+    by_contra! apart
+    rcases listBefore_total (List.mem_toFinset.mp (mem_filter.mp onA).1)
+        (List.mem_toFinset.mp (mem_filter.mp onB).1) apart with forward | reverse
+    · exact listBefore_ne (step forward) equal
+    · exact listBefore_ne (step reverse) equal.symm
+
 end Components
 
 /-- The connected groups give the exact path-partition premise for the
