@@ -998,6 +998,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   both budgets and all four frozen caps and keeps at least \(M/16\) in either
   mode.
   [Rank existence](OnlineReachabilityPreservers/RiverDetourComponents.lean#L99) · [Frozen cleaning from the component test](OnlineReachabilityPreservers/RiverDetourComponents.lean#L148).
+- An eight-vertex example establishes the limit of that certificate.
+  Its seven original rows exclude full bridges through three. Standard
+  width-two blocks form a directed cycle. Each vertex starts a strict
+  comparison in only one piece, so the pieces exclude full bridges at
+  every cutoff. The two pieces of the first parent share an SCC in the
+  detour constraint graph at every cutoff. The example uses a supplied
+  width of two. Its original factor-four cap is nine.
+  [Original exclusion](OnlineReachabilityPreservers/RiverDetourRankLimits.lean#L27) · [All-size exclusion after the split](OnlineReachabilityPreservers/RiverDetourRankLimits.lean#L64) · [Component test failure](OnlineReachabilityPreservers/RiverDetourRankLimits.lean#L72).
 - After [deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2620),
   test for short returns in the pieces of the retained rows. If the
   copied input has the required bridge exclusion, at most \(M/18\)

@@ -1004,6 +1004,15 @@ both budgets and all four frozen caps and keeps at least \(M/16\) in either
 mode.
 [Rank existence](OnlineReachabilityPreservers/RiverDetourComponents.lean#L99) · [Frozen cleaning from the component test](OnlineReachabilityPreservers/RiverDetourComponents.lean#L148).
 
+An eight-vertex example establishes the limit of that certificate.
+Its seven original rows exclude full bridges through three. Standard
+width-two blocks form a directed cycle. Each vertex starts a strict
+comparison in only one piece, so the pieces exclude full bridges at
+every cutoff. The two pieces of the first parent share an SCC in the
+detour constraint graph at every cutoff. The example uses a supplied
+width of two. Its original factor-four cap is nine.
+[Original exclusion](OnlineReachabilityPreservers/RiverDetourRankLimits.lean#L27) · [All-size exclusion after the split](OnlineReachabilityPreservers/RiverDetourRankLimits.lean#L64) · [Component test failure](OnlineReachabilityPreservers/RiverDetourRankLimits.lean#L72).
+
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves
 those positions, so only pairs in different blocks need the bounded
