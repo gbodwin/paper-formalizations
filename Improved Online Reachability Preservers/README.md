@@ -1924,6 +1924,10 @@ lattice satisfies the all-arcs-earlier exclusion at every size. Its
 the last-arc half-four maximum at the same budgets.
 [Polynomial gap](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L70)
 · [Unbounded-factor corollary](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L129).
+With three layers, four slopes and three starts or more, two three-bridges
+force opposite arrival orders on a pair of lattice lines. Every reordering
+of the complete lattice therefore contains a half-three bridge.
+[Arrival-order obstruction](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L160).
 [LocalOnlineLimit](OnlineReachabilityPreservers/LocalOnlineLimit.lean) proves
 Theorem 38 for arbitrary simple paths with no half-bridge through size four.
 One exponent slack depends only on the vertex count and tends to zero.

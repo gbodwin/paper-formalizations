@@ -2255,6 +2255,14 @@ local-order upper bound and recurrence of Theorem 43.
   · [Theorem 38 at diagonal budgets](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L14)
   · [Polynomial separation](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L70)
   · [Unbounded-factor corollary](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L129).
+  The same lattice has an arrival-order obstruction whenever it has at
+  least three layers, four slopes, and three starts. Use the slope-one
+  line starting at height two and the slope-two line starting at zero.
+  They meet at height four on layer two. Each is the river of a three-bridge
+  with the other as its final arc, using respectively the slope-zero line
+  starting at two and the slope-three line starting at zero as first arcs.
+  Every order of the complete family violates one of the two constraints.
+  [Arrival obstruction](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L160).
 - In Lemma 24, the paths `(0,1,2)` and `(2,1,0)` share three vertices without
   a bridge. Lean proves the ordering and fiber bound for arbitrary simple paths
   by choosing one witness for each middle path and using the 2-bridge exclusion

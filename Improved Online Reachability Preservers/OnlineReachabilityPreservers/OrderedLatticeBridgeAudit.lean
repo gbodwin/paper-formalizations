@@ -145,4 +145,66 @@ theorem ordered_lattice_all_earlier_and_half_three_separate :
     orderedLatticeRows_half_three_example⟩
   exact fun _ b => orderedLatticeRows_no_bridge_with_all_arcs_earlier _ b
 
+private theorem orderedLatticeRows_before_layers (fit : LatticeFits steps rows slopes starts)
+    (line : LatticeLine slopes starts) {a b : Fin (steps+1)} (earlier : a < b) :
+    Before (orderedLatticeRows fit) line (latticeVertex fit line a) (latticeVertex fit line b) := by
+  have left : latticeVertex fit line a ∈ orderedLatticeRows fit line := List.mem_ofFn.mpr ⟨a,rfl⟩
+  have right : latticeVertex fit line b ∈ orderedLatticeRows fit line := List.mem_ofFn.mpr ⟨b,rfl⟩
+  refine ⟨left,right,?_⟩
+  rw [orderedLatticeRows_index left,orderedLatticeRows_index right]
+  exact earlier
+
+/-- Four lines on the first three layers impose two opposite arrival
+constraints at half cutoff three. Any arrival order on the complete
+lattice fails once these four lines are present. -/
+theorem orderedLatticeRows_no_half_three_reordering {J : Type*} [LinearOrder J]
+    (fit : LatticeFits steps rows slopes starts) (depth : 2 ≤ steps)
+    (slopeBudget : 4 ≤ slopes) (startBudget : 3 ≤ starts)
+    (arrival : LatticeLine slopes starts ≃ J) :
+    ¬ HalfBridgeFree (Before (fun j => orderedLatticeRows fit (arrival.symm j))) 3 := by
+  let a : LatticeLine slopes starts := toLex (⟨1,by omega⟩,⟨2,by omega⟩)
+  let b : LatticeLine slopes starts := toLex (⟨2,by omega⟩,⟨0,by omega⟩)
+  let c : LatticeLine slopes starts := toLex (⟨0,by omega⟩,⟨2,by omega⟩)
+  let d : LatticeLine slopes starts := toLex (⟨3,by omega⟩,⟨0,by omega⟩)
+  let u : Fin (steps+1) := 0
+  let v : Fin (steps+1) := ⟨1,by omega⟩
+  let w : Fin (steps+1) := ⟨2,by omega⟩
+  have uv : u < v := by change (0:ℕ) < 1; decide
+  have vw : v < w := by change (1:ℕ) < 2; decide
+  let point := latticeVertex fit
+  have stepOn (line : LatticeLine slopes starts) {x y : Fin (steps+1)} (order : x < y) :
+      Before (orderedLatticeRows fit) line (point line x) (point line y) :=
+    orderedLatticeRows_before_layers fit line order
+  have ca : point c u = point a u := Prod.ext rfl (Fin.ext rfl)
+  have cb : point c v = point b v := Prod.ext rfl (Fin.ext rfl)
+  have db : point d u = point b u := Prod.ext rfl (Fin.ext rfl)
+  have da : point d v = point a v := Prod.ext rfl (Fin.ext rfl)
+  have abPoint : point a w = point b w := Prod.ext rfl (Fin.ext rfl)
+  have apart {x y : LatticeLine slopes starts}
+      (different : (ofLex x).1.val ≠ (ofLex y).1.val) : x ≠ y :=
+    fun same => different (congrArg (fun line => (ofLex line).1.val) same)
+  have ab : a ≠ b := apart (by change (1:ℕ) ≠ 2; decide)
+  have arcCA := stepOn c uv
+  have arcDB := stepOn d uv
+  rw [ca,cb] at arcCA
+  rw [db,da] at arcDB
+  have riverA := stepOn a (uv.trans vw)
+  have riverB := stepOn b (uv.trans vw)
+  rw [abPoint] at riverA
+  rw [← abPoint] at riverB
+  let aBridge := threeListBridge (apart (by change (0:ℕ) ≠ 2; decide))
+    (apart (by change (1:ℕ) ≠ 0; decide)) ab arcCA
+    (stepOn b vw) riverA
+  let bBridge := threeListBridge (apart (by change (3:ℕ) ≠ 1; decide))
+    (apart (by change (2:ℕ) ≠ 3; decide)) ab.symm arcDB
+    (stepOn a vw) riverB
+  let map (bridge : Bridge (Before (orderedLatticeRows fit)) 1) :
+      Bridge (Before (fun j => orderedLatticeRows fit (arrival.symm j))) 1 :=
+    bridge.mapPaths arrival arrival.injective (fun _ _ _ step => by
+      simpa only [SourceAudit.BeforeIn,Equiv.symm_apply_apply] using step)
+  intro free
+  rcases lt_or_gt_of_ne (arrival.injective.ne ab) with aEarlier | bEarlier
+  · exact free (k := 1) (by decide) (map bBridge) aEarlier
+  · exact free (k := 1) (by decide) (map aBridge) bEarlier
+
 end OnlineReachabilityPreservers

@@ -3242,6 +3242,13 @@ literal full-versus-half comparison from Lemma 39 remains open.
 · [Polynomial gap](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L70)
 · [Unbounded gap](OnlineReachabilityPreservers/OrderedLatticeAsymptoticGap.lean#L129).
 
+With at least three layers, four slopes and three starts, every reordering
+of the complete slope lattice contains a half-three bridge. The slope-one
+and slope-two lines that meet at layer two are each the river of a full
+three-bridge whose last arc is the other line. The slope-zero and slope-three
+first arcs give the two conflicting ordering constraints.
+[Obstruction for every arrival order](OnlineReachabilityPreservers/OrderedLatticeBridgeAudit.lean#L160).
+
 Here \(\ell,d\) are average path length and vertex degree and \(H\) is the
 half-bridge-free extremal function. The analogous full bridge-free function is \(\beta\).
 See [source notes](SOURCE_NOTES.md) for explicit discrepancies and the distinction between a
