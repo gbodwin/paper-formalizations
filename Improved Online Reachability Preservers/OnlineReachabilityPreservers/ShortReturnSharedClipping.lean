@@ -136,7 +136,7 @@ def ShortReturnSharedDeletion (rows : I → List V) (D L cutoff : ℕ) (shared :
     (∀ c, (shared.filter fun a => degree a = c).card ≤ FiberClipping.excess items degree D c) ∧
     (∀ c, (shared.filter fun a => path a = c).card ≤ FiberClipping.excess items path L c)
 
-private theorem pieceIncidences_erase (rows : I → List V) (deleted : Finset (I × V)) :
+theorem pieceIncidences_erase (rows : I → List V) (deleted : Finset (I × V)) :
     pieceIncidences (erasePieceIncidences rows deleted) univ = pieceIncidences rows univ \ deleted := by
   ext a
   simp [mem_pieceIncidences, mem_erasePieceIncidences]

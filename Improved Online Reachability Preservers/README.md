@@ -1188,6 +1188,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   all four caps. Feasible literal distinct nonempty input also gives a
   distinct nonempty witness at cutoff at least two.
   [Degree class excess](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L106) · [Path class excess](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L119) · [Shared deletion certificate](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L131) · [Indexed frozen witness](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L173) · [Literal frozen witness](OnlineReachabilityPreservers/ShortReturnSharedClipping.lean#L217).
+- For simple input rows at a fixed cutoff, each recomputed degree or path
+  class after rowwise deletion lies within one original class. Total excess
+  on each side therefore cannot
+  increase at a fixed width. When deletions spend at most the original
+  excess in each class of both fixed partitions, the two fixed excess sums
+  decrease by exactly the number of deletions. Recomputing the components
+  reduces each excess by at least that much and can reduce it further by
+  splitting a class.
+  [Fixed-label accounting](OnlineReachabilityPreservers/SharedCapacityClipping.lean#L150) · [Excess under refinement](OnlineReachabilityPreservers/SharedCapacityClipping.lean#L167) · [Excess under sublists](OnlineReachabilityPreservers/ShortReturnExcessRefinement.lean#L63) · [Excess saved after recomputation](OnlineReachabilityPreservers/ShortReturnExcessRefinement.lean#L78).
 - When differently labelled row families can meet only at one fixed
   common vertex, any bridge stays within its river's family. The first and last
   steps outside that family would require the shared vertex at two

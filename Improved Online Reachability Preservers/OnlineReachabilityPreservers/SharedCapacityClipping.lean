@@ -136,4 +136,61 @@ theorem exists_capped_deletion_iff [Fintype B] [Fintype C]
       rw [← rightCounts c]
       exact card_le_card (filter_subset_filter _ subset_union_right)
 
+omit [DecidableEq A] in
+/-- Restricting the underlying set cannot increase excess at a fixed partition. -/
+theorem totalExcess_mono [Fintype B] {small large : Finset A}
+    (sub : small ⊆ large) (label : A → B) (width : ℕ) :
+    totalExcess small label width ≤ totalExcess large label width := by
+  unfold totalExcess excess
+  exact sum_le_sum (fun _ _ => Nat.sub_le_sub_right
+    (card_le_card (filter_subset_filter _ sub)) _)
+
+/-- Deleting at most the original excess in every class reduces the
+excess of the fixed partition by exactly the number of deletions. -/
+theorem totalExcess_sdiff_add_card_of_fits [Fintype B] {items deleted : Finset A}
+    (within : deleted ⊆ items) (label : A → B) (width : ℕ)
+    (fits : ∀ b, (deleted.filter fun a => label a = b).card ≤ excess items label width b) :
+    totalExcess (items \ deleted) label width + deleted.card = totalExcess items label width := by
+  have count : deleted.card = ∑ b, (deleted.filter fun a => label a = b).card :=
+    card_eq_sum_card_fiberwise (t := univ) (fun a _ => mem_univ (label a))
+  rw [totalExcess, totalExcess, count, ← sum_add_distrib]
+  apply sum_congr rfl
+  intro b _
+  have small : (deleted.filter fun a => label a = b) ⊆ (items.filter fun a => label a = b) :=
+    filter_subset_filter _ within
+  have bound := fits b
+  unfold excess at bound ⊢
+  rw [filter_of_sdiff, card_sdiff_of_subset small]
+  omega
+
+/-- Refining a partition cannot increase its total excess at a fixed width. -/
+theorem totalExcess_le_of_refinement [Fintype B] [Fintype C]
+    (items : Finset A) (fine : A → C) (coarse : A → B) (width : ℕ)
+    (refines : ∀ ⦃x y⦄, x ∈ items → y ∈ items → fine x = fine y → coarse x = coarse y) :
+    totalExcess items fine width ≤ totalExcess items coarse width := by
+  obtain ⟨deleted, _, within, quota, exactMass⟩ := exists_fiber_counts (initial := ∅)
+    (empty_subset items) coarse (excess items coarse width) (by simp) (fun b => Nat.sub_le _ _)
+  have coarseCaps (b : B) : ((items \ deleted).filter fun a => coarse a = b).card ≤ width :=
+    (bounded_after_deletion_iff within coarse width b).mpr (quota b).ge
+  have fineCaps (c : C) : ((items \ deleted).filter fun a => fine a = c).card ≤ width := by
+    let fiber := (items \ deleted).filter fun a => fine a = c
+    by_cases empty : fiber = ∅
+    · change fiber.card ≤ width
+      simp [empty]
+    · obtain ⟨sample, selected⟩ := Finset.nonempty_iff_ne_empty.mpr empty
+      have onSample : sample ∈ items := (mem_sdiff.mp (mem_filter.mp selected).1).1
+      have inFiber : fine sample = c := (mem_filter.mp selected).2
+      have subset : fiber ⊆ (items \ deleted).filter (fun a => coarse a = coarse sample) := by
+        intro a on
+        obtain ⟨survives, fineA⟩ := mem_filter.mp on
+        exact mem_filter.mpr ⟨survives, refines (mem_sdiff.mp survives).1 onSample (fineA.trans inFiber.symm)⟩
+      exact (card_le_card subset).trans (coarseCaps (coarse sample))
+  have counted : deleted.card = ∑ c, (deleted.filter fun a => fine a = c).card :=
+    card_eq_sum_card_fiberwise (t := univ) (fun a _ => mem_univ (fine a))
+  calc
+    _ ≤ ∑ c, (deleted.filter fun a => fine a = c).card :=
+      sum_le_sum (fun c _ => (bounded_after_deletion_iff within fine width c).mp (fineCaps c))
+    _ = deleted.card := counted.symm
+    _ = _ := exactMass
+
 end OnlineReachabilityPreservers.FiberClipping
