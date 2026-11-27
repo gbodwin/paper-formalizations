@@ -2095,6 +2095,37 @@ theorem splitListPaths_admissible_of_noShortReturnAcrossWidthCutsInPieces
     (block_parent_mono (fun i => (copies i).toFinset) L)
     (fun {_ _ _} => steps) (fun {_ _ _} => edges) separated legal
 
+/-- The actual-piece width test completes frozen cleaning on an
+already admissible capped vertex alphabet. -/
+theorem regularization_list_frozen_of_safe_width_pieces {n p k M : ℕ} {V : Type*}
+    [LinearOrder V] [Fintype V] {half : Bool} (rows : Fin p → List V)
+    (simple : ∀ i, (rows i).Nodup) (legal : localOrderAdmissible half k rows)
+    (safe : NoShortReturnAcrossWidthCutsInPieces rows (4*M/p) k)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (copyCount : 3*Fintype.card V ≤ 4*n)
+    (degree : ∀ v, (occurrences (fun i => (rows i).toFinset) v).card ≤ 4*M/n)
+    (mass : (∑ i, (rows i).length) = M) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let width := 4*M/p
+  let pieces := splitListPaths rows width
+  have allowed := splitListPaths_admissible_of_noShortReturnAcrossWidthCutsInPieces rows simple legal safe
+  obtain ⟨positive,slots,_⟩ := four_average_width hp long
+  have count : Fintype.card (ListBlockIndex rows width) ≤ p+M/width := by
+    have count := blockIndex_card_precise (fun i => (rows i).toFinset) positive
+    have sizes : (∑ i, (rows i).toFinset.card) = M :=
+      (sum_congr rfl (fun i _ => List.toFinset_card_of_nodup (simple i))).trans mass
+    simpa only [sizes,Fintype.card_fin] using count
+  have room : 3*Fintype.card (ListBlockIndex rows width) ≤ 4*p := by
+    change 3*(M/width) ≤ p at slots
+    omega
+  exact regularization_list_frozen_after_caps_with_room pieces
+    (fun i => List.filter_sublist.nodup (simple i.fst)) allowed hn hp dense long copyCount room
+    (fun i => localPathBlock_length (rows i.fst) (simple i.fst) positive i.snd.val)
+    (fun v => (splitListPaths_degree rows width v).trans (degree v))
+    ((splitListPaths_size rows simple width).trans mass)
+
 /-- Only the strict comparisons available on actual path pieces can
 witness a backwards return that prevents a bridge projection. -/
 theorem listRegularizedPaths_admissible_of_noShortReturnAcrossCopiedWidthCuts

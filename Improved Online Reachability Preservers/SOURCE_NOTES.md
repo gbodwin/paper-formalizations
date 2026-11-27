@@ -807,7 +807,7 @@ Together with the width-cut condition, this gives \(M/16\) under the
 same original budgets and caps.
 [Cleaning with the copy-return test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1885).
 
-[The actual-piece width test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2111)
+[The actual-piece width test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2142)
 searches for short returns among strict comparisons within the copied
 path pieces. A hypothetical bridge in those pieces uses only those
 edges. The original width-cut condition implies this test by projecting
@@ -836,7 +836,7 @@ test the earlier-block criterion gives \(M/16\) with both original
 budgets and all four original-average caps at the chosen half cutoff.
 [Checked direction of the example](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean).
 
-[Choosing cuts on the copied rows](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2205)
+[Choosing cuts on the copied rows](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2236)
 tests the boundaries before splitting the paths. A run ends only at
 a boundary with no short return across it in the copied-row graph.
 If the degree split preserves the requested bridge exclusion, packing
@@ -848,7 +848,7 @@ original-average caps. The twelve-vertex example has an original
 run of length six and only singleton runs after degree copying.
 [Checked run sizes](OnlineReachabilityPreservers/ActualPieceReturnAudit.lean).
 
-[Deleting long runs from fixed copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2321)
+[Deleting long runs from fixed copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2352)
 uses the sparse full-bridge-free witness when \(M<2n\). In the
 dense case it fixes the original degree labels and safe boundaries
 on the copied rows. Remove runs longer than the original factor-four
@@ -858,7 +858,7 @@ preserved the chosen bridge exclusion and the deleted runs contain
 at most \(M/56\) incidences, the witness keeps at least \(M/108\)
 within both original budgets and all four original-average caps.
 
-[Clipping copied runs at the width](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2499)
+[Clipping copied runs at the width](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2530)
 keeps the first \(\min(L,R)\) incidences from a run of length \(R\),
 using the same degree copies and boundaries. The total loss is
 exactly \(\sum_R\max(0,R-L)\), counted separately over the occupied
@@ -866,9 +866,9 @@ runs on each row. If the loss is at most \(M/56\), the same \(M/108\)
 guarantee holds in either mode under the original degree-split
 premise. Both original budgets and all four original-average caps
 hold.
-[Exact excess accounting](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2461).
+[Exact excess accounting](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2492).
 
-[Deletions on fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2589)
+[Deletions on fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2620)
 retain the original degree labels and recompute the width pieces on each
 surviving row using the original width \(\lfloor4M/p\rfloor\).
 The [return criterion](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2049)
@@ -880,7 +880,7 @@ In a [five-vertex example](OnlineReachabilityPreservers/ActualPieceReturnAudit.l
 with mass 18, the pieces of the full copied rows fail the test at cutoff
 seven. Deleting one incidence on the return row makes the test succeed.
 
-The [row deletion theorem](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2522)
+The [row deletion theorem](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2553)
 also accepts the required exclusion proved directly on the surviving
 copied rows. For half bridges, the [earlier-copy test](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L132) suffices
 there. When the projected terminal occurs at an internal corner, take
@@ -926,7 +926,7 @@ labels count toward the copy budget. If their degrees and label count
 meet the bounds of the ranked-copy theorem and the width pieces pass
 their return test, the frozen witness retains at least \(M/16\) with
 half exclusion through \(k\), both budgets, and all four frozen caps.
-[Safe gap test](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L319) · [Cleaning from chosen gaps](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L465).
+[Safe gap test](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L301) · [Cleaning from chosen gaps](OnlineReachabilityPreservers/BackwardCopyReturns.lean#L447).
 
 The degree-side count can follow from a run bound. Assume each run
 between chosen safe gaps contains at most \(\lfloor M/n\rfloor\)
@@ -939,7 +939,7 @@ fits the four-thirds support bound. A putative backward return between
 distinct copies must cross a chosen safe gap. Passing the return test on the
 resulting width pieces gives the same frozen \(M/16\) half-exclusion
 with both original budgets and all four caps.
-[Packing degree runs](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L140).
+[Packing degree runs](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L236).
 
 The path-side result starts with admissible simple copied rows of mass
 \(M\) at least both positive budgets. The rows have at most \(4n/3\)
@@ -949,7 +949,19 @@ backward return of at most
 run fits the original mean length rounded down, greedy packing keeps
 both original budgets, all four frozen caps and at least \(M/16\) of
 original mass in either bridge mode.
-[Chosen path gaps](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L239).
+[Chosen path gaps](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L274).
+
+The two packings compose. The original simple rows exclude the chosen
+bridges through \(k\) and their mass \(M\) is at least both positive budgets.
+Choose degree runs of size at most \(\lfloor M/n\rfloor\) and then path runs of
+size at most \(\lfloor M/p\rfloor\) on the resulting rows. Half mode requires
+each chosen degree gap to pass the earlier-copy return test on the
+original graph. In both modes the path test uses the full precedence
+graph of the resulting copied rows.
+Packing preserves the full original mass. Restricting the supports and
+peeling give at least \(M/16\) with both budgets and all four frozen caps.
+The general existence of suitable cuts stays open.
+[Compose the two packings](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L295).
 
 The width-cut criterion compares the quotients of original row positions
 by the width \(\lfloor4M/p\rfloor\). The degree-copy projection preserves

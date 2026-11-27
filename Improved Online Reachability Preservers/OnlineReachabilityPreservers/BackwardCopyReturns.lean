@@ -283,9 +283,6 @@ theorem regularization_list_frozen_half_of_ranked_degree_rows {n p k : ℕ} {W :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ HalfBridgeFree (Before clean) k ∧
       M ≤ 16*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
-  let M := ∑ i, (paths i).length
-  let L := 4*M/p
-  let pieces := splitListPaths rows L
   have mapSimple (i : Fin p) : ((rows i).map project).Nodup := (sameRows i).symm ▸ simple i
   have rowSimple (i : Fin p) : (rows i).Nodup := List.Nodup.of_map project (mapSimple i)
   have step {i x y} (h : Before rows i x y) : Before paths i (project x) (project y) := by
@@ -293,25 +290,10 @@ theorem regularization_list_frozen_half_of_ranked_degree_rows {n p k : ℕ} {W :
   have copiedFree : HalfBridgeFree (Before rows) k :=
     free.of_noShortBackwardProjection project rank (fun {_ _} => labels)
       (fun {_ _ _} => step) (fun {_ _ _} => listBefore_ne) (fun {_ _ _ _ _ _} => ordered) degreeSafe
-  have allowed : localOrderAdmissible true k pieces :=
-    splitListPaths_admissible_of_noShortReturnAcrossWidthCutsInPieces rows rowSimple copiedFree widthSafe
-  have sameMass : (∑ i, (rows i).length) = M := sum_congr rfl (fun i _ => by
+  have sameMass : (∑ i, (rows i).length) = ∑ i, (paths i).length := sum_congr rfl (fun i _ => by
     rw [← sameRows i, List.length_map])
-  obtain ⟨widthPos,widthRoom,_⟩ := four_average_width hp long
-  have piecesCount : Fintype.card (ListBlockIndex rows L) ≤ p+M/L := by
-    have card := blockIndex_card_precise (fun i => (rows i).toFinset) widthPos
-    have sizes : (∑ i, (rows i).toFinset.card) = M :=
-      (sum_congr rfl (fun i _ => List.toFinset_card_of_nodup (rowSimple i))).trans sameMass
-    simpa only [sizes,Fintype.card_fin] using card
-  have piecesRoom : 3*Fintype.card (ListBlockIndex rows L) ≤ 4*p := by
-    change 3*(M/L) ≤ p at widthRoom
-    omega
-  refine regularization_list_frozen_after_caps_with_ratios (half := true) (retention := 16)
-    pieces (fun i => List.filter_sublist.nodup (rowSimple i.fst)) allowed hn hp dense long
-    (vNum := 3) (vDen := 4) (pNum := 3) (pDen := 4) (by decide) (by decide) (by decide) (by decide)
-    count piecesRoom (fun i => localPathBlock_length (rows i.fst) (rowSimple i.fst) widthPos i.snd.val)
-    (fun w => (splitListPaths_degree rows L w).trans (degree w))
-    ((splitListPaths_size rows rowSimple L).trans sameMass) (by decide)
+  exact regularization_list_frozen_of_safe_width_pieces (half := true) rows rowSimple copiedFree widthSafe
+    hn hp dense long count degree sameMass
 
 
 /-- A gap in arrival order is safe at a vertex if a short return cannot

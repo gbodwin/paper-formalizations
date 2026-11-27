@@ -115,16 +115,20 @@ All 18 modules and the aggregate compile, all 440 declarations pass the allowed-
 
 ## Improved Online Reachability Preservers
 
-The [paper library](<Improved Online Reachability Preservers/>) develops
-Bodwin–Le's online reachability preservers. It proves the deterministic
-path-growth rule, its ordered bridge exclusions, the SCC reduction, and both
-orientations of the restricted size bound on arbitrary directed graphs.
-Every prefix keeps the required reachability and has at most
-`3n + sqrt(2npσ)` edges for `p` demands with `σ` allowed sources or sinks. A
-[statement map](<Improved Online Reachability Preservers/STATEMENT_MAP.md>)
-tracks the main results, dependencies, and remaining work. The
-[source notes](<Improved Online Reachability Preservers/SOURCE_NOTES.md>)
-record discrepancies in the arXiv version.
+The [paper library](<Improved Online Reachability Preservers/>) checks
+Bodwin–Le's online and offline reachability preserver bounds, the lower
+bound for a growing input graph, and the two models for preassigned paths.
+It also checks the expected competitive ratio of the randomized online
+unit-cost directed Steiner forest algorithm on every fixed feasible demand
+trace and a polynomial bound on recorded executable work at each fixed
+forest height.
+
+The [statement map](<Improved Online Reachability Preservers/STATEMENT_MAP.md>)
+links the results, their assumptions, and the open cases. The [source
+notes](<Improved Online Reachability Preservers/SOURCE_NOTES.md>) explain the
+bridge-creating splits in the printed argument and the scope of the replacement
+proofs. Unrestricted higher-cutoff frozen-average cleaning and native Steiner execution
+time bound remain open.
 
 ## Verification
 

@@ -932,7 +932,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   one vertex. With the same width-cut condition, it gives \(M/16\),
   both original budgets, and all four original-average caps.
   [Cleaning with the copy-return test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1885).
-  The [actual-piece width test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2111)
+  The [actual-piece width test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2142)
   searches only the precedence edges that survive both width cuts.
   It gives the same guarantee in both modes. Half bridges also require
   one of the sufficient degree-split conditions.
@@ -948,8 +948,19 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   run fits the original mean length rounded down, greedy packing keeps
   both original budgets, all four frozen caps and at least \(M/16\) of
   original mass in either bridge mode.
-  [Chosen path gaps](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L239).
-- After [deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2589),
+  [Chosen path gaps](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L274).
+- The two packings compose. The original simple rows exclude the chosen
+  bridges through \(k\) and their mass \(M\) is at least both positive budgets.
+  Choose degree runs of size at most \(\lfloor M/n\rfloor\) and then path runs of
+  size at most \(\lfloor M/p\rfloor\) on the resulting rows. Half mode requires
+  each chosen degree gap to pass the earlier-copy return test on the
+  original graph. In both modes the path test uses the full precedence
+  graph of the resulting copied rows.
+  Packing preserves the full original mass. Restricting the supports and
+  peeling give at least \(M/16\) with both budgets and all four frozen caps.
+  The general existence of suitable cuts stays open.
+  [Compose the two packings](OnlineReachabilityPreservers/PackedDegreeGaps.lean#L295).
+- After [deletions from the fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2620),
   test for short returns in the pieces of the retained rows. If the
   copied input has the required bridge exclusion, at most \(M/18\)
   incidences are deleted, and the surviving pieces pass the test,
@@ -970,9 +981,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   caps. They retain the input bridge exclusion through the cutoff, with
   the degree split conditions for half bridges.
   [Cutting between short-return runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1790)
-  · [Choosing safe boundaries after copying degrees](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2205)
-  · [Deleting long runs from fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2321)
-  · [Clipping only the excess of each copied run](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2499)
+  · [Choosing safe boundaries after copying degrees](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2236)
+  · [Deleting long runs from fixed degree copies](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2352)
+  · [Clipping only the excess of each copied run](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L2530)
   · [After removing long runs](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1846).
 - [`lemma24_left_injective`, `lemma24_right_monotone`](OnlineReachabilityPreservers/IntersectionOrder.lean)
   order the intersection chains on each pair of outer paths in Appendix A.
