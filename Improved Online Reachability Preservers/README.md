@@ -1116,6 +1116,22 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   · [Cover from the span test](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L88)
   · [Indexed witness](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L163)
   · [Literal witness](OnlineReachabilityPreservers/FullReturnBoundaryCover.lean#L176).
+- Refine the standard copied vertices by assigning a colour to each
+  parent occurrence. A tested crossed return survives exactly when each
+  corner has a colour consistent with both occurrences at that corner.
+  Separating a corner on every return of at most \(k-5\) steps preserves
+  full exclusion through \(k\ge7\) with the same path pieces and all their
+  incidences. Start from simple input excluding full bridges through
+  \(k\), with positive budgets and \(M\ge\max(n,p)\). When
+  \(M>8\max(n,p)\), require a separating colouring with at most \(4n/3\)
+  occupied vertex copies. The indexed and feasible literal witnesses retain
+  at least \(M/16\) with both original budgets, the same cutoff and all four
+  original caps. Low mass requires no colouring.
+  [Exact return criterion](OnlineReachabilityPreservers/FullReturnCopyColours.lean#L75)
+  · [Full preservation](OnlineReachabilityPreservers/FullReturnCopyColours.lean#L102)
+  · [Copy support premise](OnlineReachabilityPreservers/FullReturnCopyColours.lean#L140)
+  · [Indexed witness](OnlineReachabilityPreservers/FullReturnCopyColours.lean#L153)
+  · [Literal witness](OnlineReachabilityPreservers/FullReturnCopyColours.lean#L211).
 - At full cutoff seven, packing the components of returns of at most
   two steps gives a frozen quarter-mass witness if those components fit the
   original path width. Use either the original rows or the standard
