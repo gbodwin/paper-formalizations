@@ -2350,7 +2350,7 @@ retain \(M/32\) with both original budgets and all four frozen caps.
 [Constraint monotonicity](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L86) · [Frozen cleaning after arrival deletions](OnlineReachabilityPreservers/HalfBridgeArrivalOrder.lean#L209).
 
 An arrival constraint survives an incidence deletion exactly when some
-original bridge for that constraint retains every required corner occurrence.
+pre-deletion bridge on the pieces retains every required corner occurrence.
 Fix any injective ranking of the pieces. It respects the surviving constraints
 exactly when the deletions hit every original bridge whose final arc ranks
 earlier than its river. If the deletions hit every such bridge through \(k\)
@@ -2358,6 +2358,15 @@ and cost at most \(M/18\) actual incidences at the original widths, the
 indexed half-\(k\)-free witness retains at least \(M/32\), both original
 budgets and all four frozen caps.
 [Survival of an arrival constraint](OnlineReachabilityPreservers/HalfBridgeArrivalRepair.lean#L35) · [Exact cover for a ranking](OnlineReachabilityPreservers/HalfBridgeArrivalRepair.lean#L62) · [Frozen cleaning from an incidence cover](OnlineReachabilityPreservers/HalfBridgeArrivalRepair.lean#L83).
+
+Choose a set of arrival edges whose removal makes the graph acyclic.
+For each chosen edge, delete on its final arc piece every vertex shared
+with its river piece. Each bridge giving the edge uses one of those
+occurrences. The surviving graph is a subgraph of the graph with the
+chosen edges removed. If the sum of the selected intersection sizes
+is at most \(M/18\), this gives the indexed \(M/32\) guarantee for simple
+input of mass at least both positive budgets, with all four frozen caps.
+[Count of erased incidences](OnlineReachabilityPreservers/HalfBridgeArrivalRepair.lean#L137) · [Surviving constraints](OnlineReachabilityPreservers/HalfBridgeArrivalRepair.lean#L146) · [Frozen cleaning from selected edges](OnlineReachabilityPreservers/HalfBridgeArrivalRepair.lean#L169).
 
 The usual nested split example can be padded to six vertices and ten
 indexed rows with mass ten. Two extra vertices belong only to the
