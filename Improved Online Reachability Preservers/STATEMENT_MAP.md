@@ -3884,6 +3884,16 @@ Its mass is \(q^4\) and lies in \([M/4,M]\).
 [Refined half bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L324)
 · [Literal frozen case at the half maximum](OnlineReachabilityPreservers/FrozenWengerThree.lean#L90).
 
+The same exact-budget witness covers all finite field orders \(q\).
+For \(q\ge5\), the latest-hit estimate uses \(4n+p\le q^4\) and
+\((np)^2=(q^4)^3\) at \(n=p=q^3\). For \(q=2,3,4\), the
+pair-count quadratic and \(2q^3\le4q(4q-1)\) give
+\(M\le4q^4\). This proves the cutoff-three starting-average
+case at every equal field cube, with mass \(q^4\) between
+\(M/4\) and \(M\).
+[Half mass at every field cube](OnlineReachabilityPreservers/AllFieldCubeFrozenFullThree.lean#L14)
+· [Literal witness at every field cube](OnlineReachabilityPreservers/AllFieldCubeFrozenFullThree.lean#L48).
+
 The starting-average case of literal Lemma 39 at cutoff three also
 holds for all equal budgets \(n=p\ge256^3\). Count only the latest
 common vertex on the later row for each pair of intersecting rows.

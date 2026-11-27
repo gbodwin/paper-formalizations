@@ -2764,6 +2764,20 @@ local-order upper bound and recurrence of Theorem 43.
   · [Equal-budget upper bound](OnlineReachabilityPreservers/EqualBudgetFrozenFullThree.lean#L13)
   · [Starting caps at the literal maximum](OnlineReachabilityPreservers/EqualBudgetFrozenFullThree.lean#L44).
 
+  At the exact equal budgets \(n=p=q^3\), all field orders
+  are covered. If \(q\ge5\), the linear charge \(4n+p\)
+  is at most the witness mass \(q^4\), and
+  \((np)^2=(q^4)^3\). For \(q=2,3,4\), the directed
+  comparison count and Cauchy–Schwarz give
+  \(M^2\le n(2(n^2-n)+M)\). Since \(2n\le4q(4q-1)\)
+  in these three cases, the quadratic bound again gives
+  \(M\le4q^4\). The exact regular field family is eligible
+  for the literal half maximum, so \(q^4\le M\).
+  Its length and degree are both \(q\), yielding the four
+  starting-average caps and mass in \([M/4,M]\).
+  [Half upper bound at all field cubes](OnlineReachabilityPreservers/AllFieldCubeFrozenFullThree.lean#L14)
+  · [Starting caps at all field cubes](OnlineReachabilityPreservers/AllFieldCubeFrozenFullThree.lean#L48).
+
   For nearby budgets, write \(b=\min(n,p)\) and \(a=max(n,p)\).
   Assume \(b\ge512^3\) and \(64a\le65b\). With
   \(q=2^{\lfloor\log_8 b\rfloor}\), the latest-hit estimate at

@@ -2141,6 +2141,14 @@ at these budgets and cutoff three.
 [Sharper half mass](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L324)
 · [Starting-average witness at the literal maximum](OnlineReachabilityPreservers/FrozenWengerThree.lean#L90).
 
+The equal field-cube conclusion holds for every finite field. At
+orders two through four the ordered-pair count bounds the half
+mass by \(4q^4\). At orders of at least five the latest-common-vertex
+bound gives the same estimate. The full-three witness uses the exact
+budgets and has mass \(q^4\) in \([M/4,M]\), with all four
+starting-average caps.
+[Starting-average witness at any field cube](OnlineReachabilityPreservers/AllFieldCubeFrozenFullThree.lean#L48).
+
 Keeping the latest common vertex in each pair of intersecting rows
 allows the count to use the original incidences. At cutoff three this
 extends the starting-average literal Lemma 39 case to every equal
