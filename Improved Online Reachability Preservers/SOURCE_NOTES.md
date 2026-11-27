@@ -551,15 +551,18 @@ length greater than \(k\).
 · [Charge in half mode](OnlineReachabilityPreservers/OppositeLinkForest.lean#L468)
 · [Pruning loss](OnlineReachabilityPreservers/OppositeLinkForest.lean#L528).
 
-At half cutoff five, a five-cycle of consecutive opposite links must
-lie in one row. If no row contains all five vertices, no row can
-contain four, by the two-link property. Take the latest path used by
-the links. A gap between two of its vertices gives a detour of at most
-four steps using earlier rows only. Any repeated detour labels are
-consecutive and compress to a single step. The resulting bridge
-violates the half cutoff. The case of a spanning row remains open in
-this step toward the half-five cleaning lemma.
-[Five-cycle spanning-row theorem](OnlineReachabilityPreservers/HalfFiveOppositeCycles.lean#L161).
+Under half-bridge exclusion through five, every cycle of consecutive
+opposite links has length at least six. If no row contains all five
+vertices of a putative five-cycle, no row can contain four, by the
+two-link property. A gap in the latest row used by the links yields
+a detour of at most four steps using earlier rows only. Consecutive
+repeated labels can be compressed to a single step. If one row contains
+all five vertices, choose a sink whose two neighbors are higher in that
+row. A comparison in the spanning row and the complementary detour
+give two bridges requiring opposite arrival orders at the sink. The
+complementary detour uses at most one spanning-row comparison and
+compressing repeated labels keeps its final arc.
+[Spanning-row reduction](OnlineReachabilityPreservers/HalfFiveOppositeCycles.lean#L161) · [Five-cycle exclusion](OnlineReachabilityPreservers/HalfFiveOppositeCycles.lean#L566) · [All cycle lengths](OnlineReachabilityPreservers/HalfFiveOppositeCycles.lean#L575).
 
 
 The [finite-cutoff argument after row deletions](OnlineReachabilityPreservers/FullBridgeCleaning.lean#L218)

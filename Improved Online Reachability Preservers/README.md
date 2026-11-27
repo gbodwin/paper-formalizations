@@ -736,15 +736,18 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   restrictions apply to cyclic inputs.
   [Two-link property](OnlineReachabilityPreservers/OppositeLinkForest.lean#L620)
   · [Cycle length bound](OnlineReachabilityPreservers/OppositeLinkForest.lean#L846).
-  At half cutoff five, a five-cycle of consecutive opposite links must
-  lie in one row. If no row contains all five vertices, no row can
-  contain four, by the two-link property. Take the latest path used by
-  the links. A gap between two of its vertices gives a detour of at most
-  four steps using earlier rows only. Any repeated detour labels are
-  consecutive and compress to a single step. The resulting bridge
-  violates the half cutoff. The case of a spanning row remains open in
-  this step toward the half-five cleaning lemma.
-  [Five-cycle spanning-row theorem](OnlineReachabilityPreservers/HalfFiveOppositeCycles.lean#L161).
+  Under half-bridge exclusion through five, every cycle of consecutive
+  opposite links has length at least six. If no row contains all five
+  vertices of a putative five-cycle, no row can contain four, by the
+  two-link property. A gap in the latest row used by the links yields
+  a detour of at most four steps using earlier rows only. Consecutive
+  repeated labels can be compressed to a single step. If one row contains
+  all five vertices, choose a sink whose two neighbors are higher in that
+  row. A comparison in the spanning row and the complementary detour
+  give two bridges requiring opposite arrival orders at the sink. The
+  complementary detour uses at most one spanning-row comparison and
+  compressing repeated labels keeps its final arc.
+  [Spanning-row reduction](OnlineReachabilityPreservers/HalfFiveOppositeCycles.lean#L161) · [Five-cycle exclusion](OnlineReachabilityPreservers/HalfFiveOppositeCycles.lean#L566) · [All cycle lengths](OnlineReachabilityPreservers/HalfFiveOppositeCycles.lean#L575).
   For half exclusion through four, the number of opposite links \(E\)
   satisfies \(4E^2\le n^2(n-1)\). If \(M^2\ge16n^2(n-1)\) and the
   incidence mass \(M\) is at least both positive budgets, the cleaned
