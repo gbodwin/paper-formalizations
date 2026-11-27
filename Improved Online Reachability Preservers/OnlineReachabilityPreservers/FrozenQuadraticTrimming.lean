@@ -366,18 +366,18 @@ theorem regularization_list_frozen_of_seven_ninths_reverse_vertices {half : Bool
   have copied := splitReverseIntersections_support_le paths
   omega
 
-/-- Before any bridge test or erasure, a rectangle of the original
-size budgets keeps at least five sixths of the standard width-block mass. -/
-theorem listRegularizedPaths_exists_original_budget_rectangle {n p : ℕ}
+private theorem original_budget_width_rectangle_of_capacities {n p a b : ℕ}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup) (hn : 0 < n) (hp : 0 < p)
-    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (vCapacity : let M := ∑ i, (paths i).length; a*M ≤ b*((4*M/n)*n))
+    (pCapacity : let M := ∑ i, (paths i).length; a*M ≤ b*((4*M/p)*p)) :
     let M := ∑ i, (paths i).length
     let D := 4*M/n
     let L := 4*M/p
     let pieces := listRegularizedPaths paths D L
     ∃ A : Finset (ListVertexBlockIndex paths D), A.card ≤ n ∧
       ∃ B : Finset (ListBlockIndex (splitListVertices paths D) L), B.card ≤ p ∧
-        5*M ≤ 6 * ∑ i ∈ B, ((pieces i).toFinset ∩ A).card := by
+        4*a*M ≤ 4*a*(∑ i ∈ B, ((pieces i).toFinset ∩ A).card) + 2*b*M := by
   let M := ∑ i, (paths i).length
   let D := 4*M/n
   let L := 4*M/p
@@ -392,29 +392,70 @@ theorem listRegularizedPaths_exists_original_budget_rectangle {n p : ℕ}
   have counts (i) : (raw i).card = (pieces i).length :=
     List.toFinset_card_of_nodup (listRegularizedPaths_simple paths simple D L i)
   have total : (∑ i, (raw i).card) = M := (sum_congr rfl fun i _ => counts i).trans mass
-  have vCapacity : 3*M ≤ D*n := average_width_times_budget hn dense
-  have iCapacity : 3*M ≤ L*p := average_width_times_budget hp long
-  have vRoom : (∑ i, (raw i).card) ≤ D*n := total.trans_le ((by omega : M ≤ 3*M).trans vCapacity)
-  have iRoom : (∑ i, (raw i).card) ≤ L*p := total.trans_le ((by omega : M ≤ 3*M).trans iCapacity)
+  have vRoom : (∑ i, (raw i).card) ≤ D*n :=
+    total.trans_le ((by omega : M ≤ 3*M).trans (average_width_times_budget hn dense))
+  have iRoom : (∑ i, (raw i).card) ≤ L*p :=
+    total.trans_le ((by omega : M ≤ 3*M).trans (average_width_times_budget hp long))
   obtain ⟨A,B,lostV,lostI,vertices,rows,kept,vCharge,iCharge⟩ :=
     trim_width_supports raw fullV fullI dPos lPos (fun v member => (filledV v member).ge)
       (restV.trans (Fintype.card_fin n)).le
       (fun i member => (filledI i member).ge.trans_eq (counts i).symm)
       (restI.trans (Fintype.card_fin p)).le vRoom iRoom
   rw [total] at kept vCharge iCharge
-  have oneLoss {q w loss : ℕ} (capacity : 3*M ≤ w*q) (charge : 4*(w*q)*loss ≤ M^2) :
-      12*loss ≤ M := by
+  have oneLoss {q w loss : ℕ} (capacity : a*M ≤ b*(w*q)) (charge : 4*(w*q)*loss ≤ M^2) :
+      4*a*loss ≤ b*M := by
     refine Nat.le_of_mul_le_mul_left (c := M) ?_ positive
     calc
-      M*(12*loss) = 4*(3*M)*loss := by ring
-      _ ≤ 4*(w*q)*loss := Nat.mul_le_mul_right _ (Nat.mul_le_mul_left _ capacity)
-      _ ≤ M^2 := charge
-      _ = M*M := by ring
+      M*(4*a*loss) = 4*(a*M)*loss := by ring
+      _ ≤ 4*(b*(w*q))*loss := Nat.mul_le_mul_right _ (Nat.mul_le_mul_left _ capacity)
+      _ = b*(4*(w*q)*loss) := by ring
+      _ ≤ b*M^2 := Nat.mul_le_mul_left _ charge
+      _ = M*(b*M) := by ring
   have vLoss := oneLoss vCapacity vCharge
-  have iLoss := oneLoss iCapacity iCharge
+  have iLoss := oneLoss pCapacity iCharge
   refine ⟨A,vertices,B,rows,?_⟩
-  change M ≤ (∑ i ∈ B, ((pieces i).toFinset ∩ A).card) + (lostV+lostI) at kept
-  change 5*M ≤ 6 * ∑ i ∈ B, ((pieces i).toFinset ∩ A).card
-  omega
+  let R := ∑ i ∈ B, ((pieces i).toFinset ∩ A).card
+  change M ≤ R + (lostV+lostI) at kept
+  change 4*a*M ≤ 4*a*R + 2*b*M
+  have expanded := Nat.mul_le_mul_left (4*a) kept
+  rw [Nat.mul_add,Nat.mul_add] at expanded
+  exact expanded.trans ((Nat.add_le_add_left (Nat.add_le_add vLoss iLoss) _).trans_eq (by ring))
+
+/-- Before any bridge test or erasure, a rectangle of the original
+size budgets keeps at least five sixths of the standard width-block mass. -/
+theorem listRegularizedPaths_exists_original_budget_rectangle {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    let D := 4*M/n
+    let L := 4*M/p
+    let pieces := listRegularizedPaths paths D L
+    ∃ A : Finset (ListVertexBlockIndex paths D), A.card ≤ n ∧
+      ∃ B : Finset (ListBlockIndex (splitListVertices paths D) L), B.card ≤ p ∧
+        5*M ≤ 6 * ∑ i ∈ B, ((pieces i).toFinset ∩ A).card := by
+  obtain ⟨A,vertices,B,rows,mass⟩ := original_budget_width_rectangle_of_capacities (a := 3) (b := 1)
+    paths simple hn hp dense long (by simpa only [one_mul] using average_width_times_budget hn dense)
+    (by simpa only [one_mul] using average_width_times_budget hp long)
+  exact ⟨A,vertices,B,rows,by omega⟩
+
+/-- With both original averages at least eight, the same rectangle
+retains at least twenty-seven thirty-firsts of the original mass. -/
+theorem listRegularizedPaths_exists_dense_original_budget_rectangle {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup) (hn : 0 < n) (hp : 0 < p)
+    (dense : 8*n ≤ ∑ i, (paths i).length) (long : 8*p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    let D := 4*M/n
+    let L := 4*M/p
+    let pieces := listRegularizedPaths paths D L
+    ∃ A : Finset (ListVertexBlockIndex paths D), A.card ≤ n ∧
+      ∃ B : Finset (ListBlockIndex (splitListVertices paths D) L), B.card ≤ p ∧
+        27*M ≤ 31 * ∑ i ∈ B, ((pieces i).toFinset ∩ A).card := by
+  let M := ∑ i, (paths i).length
+  have capacity {q : ℕ} (positive : 0 < q) (high : 8*q ≤ M) : 31*M ≤ 8*((4*M/q)*q) := by
+    have rounding := four_average_width_product (M := M) positive
+    omega
+  obtain ⟨A,vertices,B,rows,mass⟩ := original_budget_width_rectangle_of_capacities (a := 31) (b := 8)
+    paths simple hn hp (by omega) (by omega) (capacity hn dense) (capacity hp long)
+  exact ⟨A,vertices,B,rows,by omega⟩
 
 end OnlineReachabilityPreservers

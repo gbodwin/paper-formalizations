@@ -161,4 +161,83 @@ theorem regularization_list_frozen_full_distinct_of_supported_width_return_cover
     (fun long => regularization_list_frozen_full_of_supported_width_return_cover
       paths simple free large hn hp dense long (by omega) certificate)
 
+/-- A cover of the original-width crossed returns costing at most a
+third of the input incidences. -/
+def HasThirdMassCrossedReturnWidthCover {n p : ℕ} (paths : Fin p → List (Fin n)) (cutoff : ℕ) : Prop :=
+  let M := ∑ i, (paths i).length
+  let D := 4*M/n
+  let L := 4*M/p
+  let copies := splitListVertices paths D
+  ∃ deleted : Finset (ListBlockIndex copies L × ListVertexBlockIndex paths D),
+    CrossedParentReturnIncidenceCover copies (splitListPaths copies L) Sigma.fst (cutoff-5) deleted ∧
+      3*deleted.card ≤ M
+
+/-- In the dense case the rounded capacities leave at least 27/31 of
+mass in an original-budget rectangle. A crossed-return cover of size
+at most M/3 therefore suffices for the original caps and M/27 retention. -/
+theorem regularization_list_frozen_full_of_third_mass_width_return_cover {n p cutoff : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : BridgeFree (Before paths) cutoff) (large : 7 ≤ cutoff) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (budget : 8*max n p < (∑ i, (paths i).length) → HasThirdMassCrossedReturnWidthCover paths cutoff) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) cutoff ∧
+      M ≤ 27*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (paths i).length
+  by_cases low : M ≤ 8*max n p
+  · obtain ⟨n',vertices,p',rows,clean,cleanSimple,cleanFree,keeps,within,caps⟩ :=
+      regularization_list_frozen_low_mass paths simple free.halfFree (by omega) hn hp dense long low
+    exact ⟨n',vertices,p',rows,clean,cleanSimple,cleanFree,by omega,within,caps⟩
+  have high := lt_of_not_ge low
+  have wideV : 8*n ≤ M := (Nat.mul_le_mul_left _ (le_max_left n p)).trans high.le
+  have wideP : 8*p ≤ M := (Nat.mul_le_mul_left _ (le_max_right n p)).trans high.le
+  let D := 4*M/n
+  let L := 4*M/p
+  let copies := splitListVertices paths D
+  let Vertex := ListVertexBlockIndex paths D
+  let Piece := ListBlockIndex copies L
+  let pieces : Piece → List Vertex := listRegularizedPaths paths D L
+  obtain ⟨deleted,cover,cost⟩ := budget high
+  obtain ⟨A,va,B,pa,mass⟩ :=
+    listRegularizedPaths_exists_dense_original_budget_rectangle paths simple hn hp wideV wideP
+  have supportCover : CrossedParentReturnIncidenceCover copies (listPiecesInRectangle pieces A B)
+      Sigma.fst (cutoff-5) deleted := by
+    have sub := listPiecesInRectangle_sublist pieces A B
+    intro i j d apart same short v a other injective first last backward along
+    exact cover apart same short v a other injective ((sub i).subset first) ((sub j).subset last) backward
+      (fun t => listBefore_of_sublist (listRegularizedPaths_simple paths simple D L (a t)) (sub (a t)) (along t))
+  apply regularization_list_frozen_full_of_supported_width_return_cover paths simple free large
+    hn hp dense long (by decide)
+  refine ⟨A,va,B,pa,deleted,supportCover,?_⟩
+  have raw : 27*(M:ℝ) ≤ 31*((∑ j ∈ B, ((pieces j).toFinset ∩ A).card : ℕ):ℝ) := by
+    exact_mod_cast mass
+  have spent : 3*(deleted.card:ℝ) ≤ M := by exact_mod_cast cost
+  have oneSide {q c : ℕ} (positive : 0 < q) (bounded : c ≤ q) : (M:ℝ)/(4*(q:ℝ))*c ≤ (M:ℝ)/4 := calc
+    _ ≤ (M:ℝ)/(4*(q:ℝ))*q := mul_le_mul_of_nonneg_left (by exact_mod_cast bounded) (by positivity)
+    _ = _ := by
+      have nonzero : (q:ℝ) ≠ 0 := by exact_mod_cast positive.ne'
+      field_simp [nonzero]
+  change (M:ℝ)/27 + (M:ℝ)/(4*(n:ℝ))*A.card + (M:ℝ)/(4*(p:ℝ))*B.card + deleted.card ≤
+    ((∑ j ∈ B, ((pieces j).toFinset ∩ A).card : ℕ):ℝ)
+  have nonneg : (0:ℝ) ≤ M := Nat.cast_nonneg M
+  linarith only [raw,spent,oneSide hn va,oneSide hp pa,nonneg]
+
+/-- The third-mass return-cover bound also yields the feasible literal
+witness at the original full cutoff. -/
+theorem regularization_list_frozen_full_distinct_of_third_mass_width_return_cover {n p cutoff : ℕ}
+    (paths : Fin p → List (Fin n)) (distinct : Function.Injective paths) (nonempty : ∀ i, paths i ≠ [])
+    (simple : ∀ i, (paths i).Nodup) (free : BridgeFree (Before paths) cutoff)
+    (large : 7 ≤ cutoff) (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length)
+    (budget : 8*max n p < (∑ i, (paths i).length) → HasThirdMassCrossedReturnWidthCover paths cutoff) :
+    let M := ∑ i, (paths i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧ (∀ i, (clean i).Nodup) ∧
+      BridgeFree (Before clean) cutoff ∧ M ≤ 27*(∑ i, (clean i).length) ∧
+      (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_distinct_of_indexed (half := false) (k := cutoff) (retention := 27)
+    paths distinct nonempty simple free (by omega) hn hp dense (by decide)
+    (fun long => regularization_list_frozen_full_of_third_mass_width_return_cover
+      paths simple free large hn hp dense long budget)
+
 end OnlineReachabilityPreservers

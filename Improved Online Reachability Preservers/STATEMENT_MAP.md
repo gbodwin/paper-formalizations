@@ -1623,7 +1623,7 @@ gives full exclusion through the original cutoff, retention of at least
 \(M/48\), both original budgets and all four original-average caps. The
 cover condition is needed when \(M>8\max(n,p)\).
 The literal witness has distinct nonempty rows for feasible literal input.
-[Rectangle mass](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L371)
+[Rectangle mass](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L426)
 · [Cover budget](OnlineReachabilityPreservers/FrozenFullReturnCover.lean#L52)
 · [Indexed frozen witness](OnlineReachabilityPreservers/FrozenFullReturnCover.lean#L64)
 · [Literal frozen witness](OnlineReachabilityPreservers/FrozenFullReturnCover.lean#L144).
@@ -1642,6 +1642,22 @@ input, \(r\ge8\) yields a distinct nonempty witness with the same bound.
 · [Supported cover and cost](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L31)
 · [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L48)
 · [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L149).
+
+When both original averages are at least eight, rounding the widths
+leaves capacity at least \(31M/8\) in each dimension. The two quadratic
+charges then give a rectangle of at least \(27M/31\) incidences within
+both original budgets. For \(M>8\max(n,p)\), a cover of all crossed
+returns of at most \(k-5\) steps in the original pieces can cost up to
+\(M/3\). The retained rectangle pays at most \(M/2\) for peeling and
+still gives a frozen witness of mass at least \(M/27\). The low-mass
+branch needs no cover bound. For simple input excluding full bridges
+through \(k\ge7\) with mass at least both positive budgets, both the
+indexed and feasible literal versions preserve the cutoff, budgets and
+four original-average caps.
+[Dense rectangle bound](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L443)
+· [One-third cover condition](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L166)
+· [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L178)
+· [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L228).
 
 The same radius \(k-5\) works for grouped path splitting at every
 full cutoff \(k\ge7\). When every group on the standard copies

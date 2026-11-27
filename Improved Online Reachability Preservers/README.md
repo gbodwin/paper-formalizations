@@ -1076,7 +1076,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   the radius-\(k-5\) returns of size at most \(5M/16\) suffices for a frozen
   \(M/48\) witness with the same cutoff and all four original-average caps.
   The feasible literal witness has distinct nonempty rows.
-  [Original-budget rectangle](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L371)
+  [Original-budget rectangle](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L426)
   · [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnCover.lean#L64)
   · [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnCover.lean#L144).
 - For simple full-free input through \(k\ge7\) and mass at least both
@@ -1090,6 +1090,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [Supported cover](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L31)
   · [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L48)
   · [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L149).
+- In the range \(M>8\max(n,p)\), the original-budget rectangle can keep
+  at least \(27M/31\) before erasure. With the same simple full-free input
+  assumptions through \(k\ge7\), a cover of the original width returns
+  of radius \(k-5\) costing at most \(M/3\) gives a frozen \(M/27\) witness.
+  Both budgets, the same cutoff and all four caps hold, including for
+  feasible literal distinct nonempty rows. Low mass needs no cover bound.
+  [Dense rectangle](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L443)
+  · [Indexed witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L178)
+  · [Literal witness](OnlineReachabilityPreservers/FrozenFullReturnSupportedCover.lean#L228).
 - At full cutoff seven, packing the components of returns of at most
   two steps gives a frozen quarter-mass witness if those components fit the
   original path width. Use either the original rows or the standard
