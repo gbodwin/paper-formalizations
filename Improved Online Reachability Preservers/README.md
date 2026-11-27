@@ -2198,6 +2198,12 @@ full witness uses the exact budgets and has mass \(q^{10}\) between
 [Hermitian construction and its transpose](OnlineReachabilityPreservers/HermitianThreeRows.lean#L305)
 · [Starting-average witness at Hermitian budgets](OnlineReachabilityPreservers/HermitianThreeRows.lean#L376).
 
+For prime \(q\) and any \(k\ge2\), a moment-curve construction gives
+\(q^k\) distinct simple rows on \(q^k\) vertices. Each row has length \(q\),
+and each vertex has degree \(q\). The mass is \(q^{k+1}\), and the rows exclude full
+bridges through \(k\). If \(q\le k\), they exclude every full bridge.
+[Regular rows at a prescribed cutoff](OnlineReachabilityPreservers/PrimeMomentFullRows.lean#L238).
+
 At either cutoff below two and feasible positive literal budgets, use
 \(\min(p,n!)\) distinct spanning permutations. They give at least a
 third of the unrestricted maximum and satisfy the four caps at both

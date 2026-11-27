@@ -3997,6 +3997,22 @@ starting-average caps.
 · [Half mass at Hermitian budgets](OnlineReachabilityPreservers/HermitianThreeRows.lean#L352)
 · [Hermitian-budget literal frozen case](OnlineReachabilityPreservers/HermitianThreeRows.lean#L376).
 
+At every cutoff \(k\ge2\) and prime field order \(q\), the first
+\(k-1\) slope moments give regular distinct nonempty rows on the
+exact budgets \((q^k,q^k)\). Order each row by its first
+coordinate in \(\{0,\ldots,q-1\}\). In a putative bridge, group
+the signed first-coordinate differences by slope. There are at
+most \(k\) distinct slopes, so the first \(k\) moment equations
+force every grouped coefficient to vanish. The first arc has
+a different slope from the river. The sum of the positive
+increments of its slope is strictly between zero and \(q\),
+giving a contradiction in the prime field. The mass is \(q^{k+1}\)
+and all degrees and lengths equal \(q\). The exact statement
+excludes every cutoff \(c\) with \(\min(c,q)\le k\), including
+all cutoffs when \(q\le k\). This supplies regular full witnesses
+and a lower bound on the full extremum at those budgets.
+[Regular full witnesses at prescribed cutoffs](OnlineReachabilityPreservers/PrimeMomentFullRows.lean#L238).
+
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.
 Three comparisons leave vertex zero early in the arrival order. The other

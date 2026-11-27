@@ -2906,6 +2906,28 @@ local-order upper bound and recurrence of Theorem 43.
   · [Half mass bound](OnlineReachabilityPreservers/HermitianThreeRows.lean#L352)
   · [Starting caps at Hermitian budgets](OnlineReachabilityPreservers/HermitianThreeRows.lean#L376).
 
+  For arbitrary \(k\ge2\) and prime \(q\), use coordinates
+  \((x,a_1+xs,\ldots,a_{k-1}+xs^{k-1})\) over the prime field,
+  with \(x\) in the natural order of its \(q\) integer representatives.
+  Each slope and translation vector defines a distinct row. Given
+  a point and slope, the translation vector is unique, so the
+  degree and length are both \(q\). The \(q^k\) exact rows and
+  \(q^k\) vertices give mass \(q^{k+1}\) and the four caps at
+  their own averages. For a bridge through cutoff \(k\), take the
+  first-coordinate increments along its arcs and the negative
+  endpoint increment along its river. Their moments of orders
+  zero through \(k-1\) vanish by telescoping all coordinates.
+  Group equal slopes and apply Vandermonde to the distinct slopes.
+  At the slope of the first arc, the river makes no contribution
+  because distinct rows through the initial point have different
+  slopes. The coefficient is an integer sum of positive increments
+  at most the total endpoint increment, which is less than \(q\).
+  This contradicts its vanishing in the prime field. In addition,
+  an arc chain uses distinct first-coordinate layers, so a bridge
+  has size at most \(q\) and the full exclusion holds at all sizes
+  when \(q\le k\).
+  [Prime-field moment rows](OnlineReachabilityPreservers/PrimeMomentFullRows.lean#L238).
+
   Below cutoff two, both exclusions are vacuous. On \(n\) vertices the
   count of simple lists, including the empty list, is less than \(3n!\).
   Encode a nonempty list by its head and a shorter list on the remaining
