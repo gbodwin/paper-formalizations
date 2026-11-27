@@ -834,6 +834,18 @@ original two-step return through two distinct other parents has a
 direct reverse.
 [No original reverse comparison](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L42) · [Absent opposite corners](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L79) · [Full-seven preservation under the reverse-comparison condition](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L125).
 
+For disjoint order-preserving pieces, protect each comparison
+with a direct reverse in the parent graph or a return through
+two distinct rows other than the comparison's parent. Keeping
+the endpoints of every such comparison together gives the
+one-step and two-step conditions for full exclusion through
+seven. Symmetrize these comparisons on each row to obtain a
+finite component test. Its components lie inside those from
+the test using all returns of at most two steps. Each component
+fitting the width is equivalent to the existence of a bounded
+partition keeping all the protected endpoints together.
+[Protected comparison relation](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L20) · [Full preservation](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L42) · [Width test](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L88) · [Component inclusion](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L105).
+
 The factor-four block split from the frozen cleaning argument can also
 create a full size-seven bridge before trimming and peeling in the dense
 branch. Add 161 private vertices before the four-vertex path in the

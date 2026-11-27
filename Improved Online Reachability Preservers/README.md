@@ -978,6 +978,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   When the pieces cover the parent rows, each of the three corners
   is absent from the opposite row of the return triangle.
   [Consecutive pieces are order convex](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L18) · [Absence of a direct reverse](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L42) · [The three opposite corners](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L79).
+- To preserve full exclusion through seven under a disjoint
+  order-preserving split, keep together the endpoints of a
+  comparison with a direct reverse or a two-step return through
+  two distinct other rows. The connected groups for this rule
+  lie inside the earlier radius-two groups. A bounded partition
+  respecting the rule exists exactly when each group fits.
+  [Protected comparisons](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L20) · [Split preservation](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L42) · [Exact component test](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L88) · [Component inclusion](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L105).
 - The [literal set versions](OnlineReachabilityPreservers/FrozenDistinctCleaning.lean)
   give distinct nonempty output paths with the same caps. They apply to
   the literal exact-count maximum when the positive original budgets are feasible.

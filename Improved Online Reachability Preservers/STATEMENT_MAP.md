@@ -1622,6 +1622,18 @@ exclusion if every original two-step return through distinct other
 parents has a direct reverse comparison.
 [Convex standard width blocks](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L18) · [No direct reverse](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L42) · [Corner memberships](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L79) · [Preservation theorem](OnlineReachabilityPreservers/FullSevenReverseComparison.lean#L125).
 
+The component test can use the row labels of the return steps.
+A comparison is protected if it has a direct reverse or a return
+through two distinct other rows. Put its endpoints in the same
+part. This rule suffices for full exclusion through any cutoff
+up to seven on disjoint order-preserving pieces of parents
+with the corresponding full exclusion. At a prescribed width,
+a partition respecting these comparisons exists exactly when
+the symmetric graph's components on each row fit that width.
+These components refine the components from the radius-two
+precedence graph.
+[Protected comparisons](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L20) · [Full exclusion through seven](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L42) · [Width-bounded partition equivalence](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L88) · [Refinement](OnlineReachabilityPreservers/FullSevenPathLinks.lean#L105).
+
 At half cutoff four, a [balanced midpoint split with no valid arrival permutation](OnlineReachabilityPreservers/HalfFourSplitOrderAudit.lean#L103)
 starts from a half-free indexed family with uniform degree two and mean
 length \(7/2\). Its sole length-six path splits into two length-three
