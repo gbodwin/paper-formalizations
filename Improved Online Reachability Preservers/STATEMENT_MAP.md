@@ -1644,6 +1644,17 @@ intersection carries at least \(57M/320\).
 [Rectangle with actual support charges](OnlineReachabilityPreservers/HalfFiveDenseRectangle.lean#L42)
 · [Overfull support intersection](OnlineReachabilityPreservers/HalfFiveDenseRectangle.lean#L213).
 
+For each choice of \(a,b\in[0,1/4]\) with \(a+b\le7/15\), every simple
+half-five input with positive budgets and \(M\ge\max(n,p)\) has a witness
+within both budgets of mass in \([M/930,M]\). It satisfies the upper caps
+\(4M/n\) and \(4M/p\) and the lower caps \(aM/n\) and \(bM/p\).
+Equal coefficients \(7/30\) and the
+asymmetric pairs \((1/4,13/60)\) and \((13/60,1/4)\) are included. For
+literal input the witness is distinct and nonempty. The printed pair of
+lower coefficients \((1/4,1/4)\) remains open without further hypotheses.
+[Indexed lower-cap tradeoff](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L40)
+· [Literal lower-cap tradeoff](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L187).
+
 [Actual degree-cut cleaning after clipping](OnlineReachabilityPreservers/HalfFiveDegreeCutCleaning.lean)
 gives \(M/5000\) and all four original caps within both original
 budgets if \(A+2(M-K)\le23M/25\), where \(K\) is the clipped mass and

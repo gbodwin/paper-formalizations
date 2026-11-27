@@ -44,8 +44,8 @@ private theorem large_cropped_mass {M K R lost : ℕ} (positive : 0 < M) (upper 
     nlinarith only [mul_nonneg lower extent, paidReal]
   apply (Nat.mul_le_mul_right_iff positive).mp
   exact_mod_cast clipped
-
-private theorem trim_width_supports {V I : Type*} [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
+/-- Crop both supports and charge each omitted block to the corresponding quadratic loss. -/
+theorem trim_width_supports {V I : Type*} [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
     (paths : I → Finset V) (fullV : Finset V) (fullI : Finset I) {n p D L : ℕ}
     (Dpos : 0 < D) (Lpos : 0 < L)
     (vFilled : ∀ v ∈ fullV, D ≤ (occurrences paths v).card) (vRest : (univ \ fullV).card ≤ n)

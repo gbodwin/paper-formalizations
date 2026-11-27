@@ -628,6 +628,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   chosen rectangle.
   [Rectangle charge](OnlineReachabilityPreservers/HalfFiveDenseRectangle.lean#L42)
   · [Overfull support intersection](OnlineReachabilityPreservers/HalfFiveDenseRectangle.lean#L213).
+- Fix lower coefficients \(a,b\in[0,1/4]\) with \(a+b\le7/15\).
+  For every simple half-five input of mass \(M\) at least both positive
+  budgets, a witness retains at least \(M/930\) within both budgets. It
+  satisfies the two factor-four starting-average upper caps and the
+  lower caps \(aM/n\) and \(bM/p\).
+  This allows two coefficients \(7/30\), or \(1/4\) and \(13/60\).
+  Both indexed and literal versions hold. The unrestricted exact lower
+  coefficients \(a=b=1/4\) remain open at half cutoff five.
+  [Indexed witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L40)
+  · [Literal witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L187).
 - Half-five cleaning also keeps at least \(M/288\) if opposite-intersection
   pruning retains at least \(13M/24\). This holds when at least \(M/12\) paths
   are nonempty or there are at most \(11M/24\) opposite-neighbor links.

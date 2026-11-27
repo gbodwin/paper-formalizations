@@ -575,6 +575,20 @@ within both budgets and all four starting-average caps.
 [Rectangle cleaning](OnlineReachabilityPreservers/HalfFiveDenseRectangle.lean#L42)
 · [Intersection criterion](OnlineReachabilityPreservers/HalfFiveDenseRectangle.lean#L213).
 
+The lower coefficients can trade off over all simple half-five inputs
+of mass at least both positive budgets. Above \(8\max(n,p)\), opposite pruning and the width
+splits leave mass \(K\ge M/2\) before fitting both budgets. The two quadratic
+loss bounds give a total crop loss at most \(4K^2/(31M)\). The resulting
+rectangle retains at least \(29M/62\). Peeling at \(aM/n\) and \(bM/p\)
+costs at most \((a+b)M\). If \(a,b\in[0,1/4]\) and \(a+b\le7/15\), the
+remaining mass is at least \(M/930\). The original factor-four upper caps
+and both budgets hold. In the dense literal case, raising the length
+coefficient to at least \(1/8\) leaves room in the sum bound and forces
+length at least two. Half-two exclusion then ensures distinct rows. The
+low-mass case uses the full witnesses with the four original caps.
+[Indexed minimum coefficients](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L40)
+· [Distinct nonempty witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L187).
+
 After clipping at the original length width, degree blocks can be fixed
 before deleting anything at a vertex. In a proposed half-five bridge,
 the terminal collision crosses two different arrival blocks. The third
