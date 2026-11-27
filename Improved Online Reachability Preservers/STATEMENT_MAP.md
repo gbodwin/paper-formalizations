@@ -3841,6 +3841,21 @@ This implication leaves existence of the high-mean input open.
 · [Full long-mass reduction](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L81)
 · [Linear fiber sizes](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L143).
 
+At every half cutoff \(k\ge3\), simple indexed families have
+\(M\le8(n+p)\) or \(M^3\le1024(np)^2\), hence mass
+\(O((np)^{2/3}+n+p)\). Later branches cannot share an upstream vertex
+before their respective intersections with the base row. After
+pruning to unique intersections, count incidences with both large
+arrival rank at the vertex and large position in the row. Each such
+incidence specifies several earlier bases and upstream vertices, and
+each resulting pair has a unique source. This gives the bound directly
+for locally ordered rows. For fixed \(\eta>0\), if a half input at
+large \(p\) has \(M\ge\eta n\sqrt p\), it has \(p\ge\delta n^2\) for a
+constant \(\delta>0\) depending only on \(\eta\). This identifies the
+path-density regime required by the \(n\sqrt p\)-scale obstruction.
+[Mass estimate](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L168)
+· [Necessary density](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L218).
+
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.
 Three comparisons leave vertex zero early in the arrival order. The other

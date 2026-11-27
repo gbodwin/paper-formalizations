@@ -2104,6 +2104,16 @@ graph with parts of size \(n\). The matchings have disjoint edge sets.
 · [Full mass reduction](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L81)
 · [Necessary matching sizes](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L143).
 
+For every half cutoff of at least three, arbitrary simple indexed rows
+have \(M\le8(n+p)\) or \(M^3\le1024(np)^2\). The count uses upstream
+vertices on later-arriving branches, with no regularity assumption.
+For each fixed \(\eta>0\), mass \(M\ge\eta n\sqrt p\) therefore forces
+\(p\ge\delta n^2\) for a positive \(\delta\) once \(p\) is sufficiently
+large. In particular, the strengthened lower-cap obstruction would
+still require quadratic path density on the half side.
+[Half-three mass bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L168)
+· [Necessary path density](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L218).
+
 At either cutoff below two and feasible positive literal budgets, use
 \(\min(p,n!)\) distinct spanning permutations. They give at least a
 third of the unrestricted maximum and satisfy the four caps at both

@@ -2659,6 +2659,27 @@ local-order upper bound and recurrence of Theorem 43.
   · [Fiber averaging](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L111)
   · [High-mean implication](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L143).
 
+  The upstream part of the Bridge Girth v4 Theorem 80 argument also
+  yields a half-bridge bound when branches arrive after the base row.
+  If two such branches have a common upstream vertex and hit the base
+  at the same vertex, they repeat an ordered pair. If they hit at
+  different vertices, order those vertices along the base. The base is
+  the last arc of a three-bridge, and the river arrives later. Prune
+  opposite intersections, keeping at least half the mass, to ensure
+  each branch hits the base at most once. For pruned mass \(W\), choose
+  \(D=\lfloor W/(4n)\rfloor\) and \(L=\lfloor W/(4p)\rfloor\).
+  At most \(nD\) incidences have fewer than \(D\) earlier rows through
+  their vertex, and at most \(pL\) have fewer than \(L\) predecessors in
+  their row. Each remaining incidence gives \(DL\) distinct choices
+  of base row and upstream vertex. Different incidences have disjoint
+  choices by the upstream argument and the unique intersections.
+  The total fits in \(np\) choices. The resulting bound on the original
+  mass is \(M\le8(n+p)\) or \(M^3\le1024(np)^2\), without a cleaning
+  hypothesis. The cubic and linear cases both force quadratic path
+  density if \(M\ge\eta n\sqrt p\) at sufficiently large \(p\).
+  [Half cutoff three](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L168)
+  · [Density consequence](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L218).
+
   Below cutoff two, both exclusions are vacuous. On \(n\) vertices the
   count of simple lists, including the empty list, is less than \(3n!\).
   Encode a nonempty list by its head and a shorter list on the remaining
