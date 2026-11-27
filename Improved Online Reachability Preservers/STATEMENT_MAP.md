@@ -3037,15 +3037,16 @@ bridge exclusion it gives one subsystem with both budgets and all four
 caps, retaining at least one sixteenth of the maximum.
 
 For any cutoff \(k\ge3\), the full extremum with four vertices and five paths
-is exactly eleven incidences. The half extremum at those budgets is at least
-twelve. Both examples have distinct nonempty rows and satisfy their respective
-exclusions at every cutoff. The verified upper bound allows empty rows and
-repeated singletons and applies to families at or below both budgets. This
+is exactly eleven incidences and the half extremum is exactly twelve. Both
+witnesses have distinct nonempty rows and satisfy their respective exclusions
+at every cutoff. The verified upper bounds allow empty rows and repeated
+singletons and apply to families at or below both budgets. This
 establishes a finite difference between the half and full extrema underlying
 Lemmas 23 and 39. The constant-factor comparison for unbounded budgets in
 the literal Lemma 39 remains open.
 [Full upper bound](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L289)
 · [Full witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L316)
+· [Half upper bound](OnlineReachabilityPreservers/HalfSaturatedComparisons.lean#L183)
 · [Half witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L372).
 
 At half cutoff three, let \(L\) be the length of the latest nontrivial
@@ -3057,6 +3058,18 @@ vertices are distinct. For simple rows of lengths \(\ell_i\), this gives
 [Exact comparison count](OnlineReachabilityPreservers/HalfLatestRowComparisons.lean#L69)
 · [Missing detour](OnlineReachabilityPreservers/HalfLatestRowComparisons.lean#L92)
 · [Latest-row bound](OnlineReachabilityPreservers/HalfLatestRowComparisons.lean#L118).
+
+For the remaining case of the half upper bound, suppose a row spans the
+vertices and every directed comparison occurs. For three vertices in the
+spanning row's order, the reverse comparisons must share one row. With
+three distinct reverse rows, the last-arc rule gives opposite arrival
+requirements on two of them. The reverse comparison of the spanning row's
+endpoints therefore belongs to a second spanning row. Every other row has
+length at most one, since the two spanning rows supply both directions of
+every comparison.
+[Reverse triangle](OnlineReachabilityPreservers/HalfSaturatedComparisons.lean#L16)
+· [Second spanning row](OnlineReachabilityPreservers/HalfSaturatedComparisons.lean#L69)
+· [Other rows are short](OnlineReachabilityPreservers/HalfSaturatedComparisons.lean#L47).
 
 The cited Bridge Girth construction is ordered by slope. All-arcs-earlier
 exclusion holds on every rectangular lattice in the construction. The

@@ -1825,11 +1825,12 @@ and corrected tail inequality for Lemma 25 and the recurrence discrepancy in The
 split printed in Lemmas 23 and 39 can introduce a forbidden bridge in a general
 path system.
 For four vertices and five paths at any cutoff of at least three, the full
-extremum equals eleven and the half extremum is at least twelve. Both witnesses
-have distinct nonempty rows. The full upper bound
-also applies with fewer vertices or paths.
+extremum equals eleven and the half extremum equals twelve. Both witnesses
+have distinct nonempty rows. Both upper bounds also apply with fewer vertices
+or paths.
 [Full upper bound](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L289)
 · [Full witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L316)
+· [Half upper bound](OnlineReachabilityPreservers/HalfSaturatedComparisons.lean#L183)
 · [Half witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L372).
 [LocalOnlineLimit](OnlineReachabilityPreservers/LocalOnlineLimit.lean) proves
 Theorem 38 for arbitrary simple paths with no half-bridge through size four.

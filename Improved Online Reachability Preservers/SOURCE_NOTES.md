@@ -2194,16 +2194,24 @@ local-order upper bound and recurrence of Theorem 43.
 - The proof of Lemma 23 writes \(\beta\) for the half-bridge-free extremum
   \(H\). The statement of Lemma 39 writes \(H\) for the full-bridge-free
   extremum \(\beta\) it is used to estimate.
-  For every \(k\ge3\), Lean checks \(\beta(4,5,k)=11<H(4,5,k)\) under both
+  For every \(k\ge3\), Lean checks \(\beta(4,5,k)=11<12=H(4,5,k)\) under both
   the indexed and feasible distinct nonempty exact-count conventions.
-  The full upper bound covers families with at most four vertices and five
-  rows. After removing rows of length at most one, the verified search among
-  the sixty simple longer rows rules out total excess \(\sum_i(|\pi_i|-1)\)
+  Both upper bounds cover families with at most four vertices and five
+  rows. For the full bound, after removing rows of length at most one,
+  the verified search among the sixty simple longer rows rules out total
+  excess \(\sum_i(|\pi_i|-1)\)
   of at least seven. Empty and singleton rows contribute at most one each
-  to the remaining mass calculation. The two witnesses have eleven and
-  twelve incidences and satisfy their respective exclusions at every cutoff.
+  to the remaining mass calculation. For the half bound, mass thirteen
+  would require at least eleven directed comparisons. In the absence of a
+  spanning row, the latest nontrivial row has length two or three and forces
+  at least two of the twelve comparisons to be missing. A length-four row
+  instead requires all twelve comparisons at that mass. This forces a
+  second spanning row and at most one incidence
+  on each of the three other rows. The eleven- and twelve-incidence witnesses
+  satisfy their respective exclusions at every cutoff.
   [Full upper bound](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L289)
   · [Full witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L316)
+  · [Half upper bound](OnlineReachabilityPreservers/HalfSaturatedComparisons.lean#L183)
   · [Half witness](OnlineReachabilityPreservers/FourVertexBridgeExtrema.lean#L372).
 
   Definitions 9–10 in the cited Bridge Girth paper require every arc to
