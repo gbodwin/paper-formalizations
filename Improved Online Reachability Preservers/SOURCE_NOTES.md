@@ -562,6 +562,19 @@ The actual copy count and the row budget leave at least \(M/5000\) after
 peeling, with both budgets and all four original-average caps.
 [Cleaning by the overfull vertex mass](OnlineReachabilityPreservers/HalfFiveHeavyWidthCleaning.lean).
 
+An alternative restricts to a vertex and row rectangle of mass \(S\).
+Opposite pruning keeps at least \(S/2\) while imposing unique intersections.
+If the retained mass is \(K\), the two original-width splits use at most
+\(|A|+K/D\) vertex copies and \(|B|+K/L\) row pieces. In the dense case
+the width-budget products are at least \(31M/8\). The resulting peeling
+charges use the actual support prices \(D|A|\) and \(L|B|\). For the sets
+that exceed their upper caps, the sum of these prices is at most \(M+S\),
+by counting the union of their incidences and then adding their intersection.
+An intersection of mass at least \(57M/320\) leaves at least \(M/640\)
+within both budgets and all four starting-average caps.
+[Rectangle cleaning](OnlineReachabilityPreservers/HalfFiveDenseRectangle.lean#L42)
+· [Intersection criterion](OnlineReachabilityPreservers/HalfFiveDenseRectangle.lean#L213).
+
 After clipping at the original length width, degree blocks can be fixed
 before deleting anything at a vertex. In a proposed half-five bridge,
 the terminal collision crosses two different arrival blocks. The third

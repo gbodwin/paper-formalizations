@@ -1634,8 +1634,18 @@ after retaining those rows.
 gives the same conclusion if those vertices carry at least 71 percent of
 the original mass. This condition uses the original degree width
 \(\lfloor4M/n\rfloor\) and places no restriction on the conflict count.
+Two small supports can also suffice together. Write \(D=\lfloor4M/n\rfloor\)
+and \(L=\lfloor4M/p\rfloor\). A rectangle on vertices \(A\) and rows \(B\)
+of mass \(S\) gives a starting-average witness if \(D|A|\le M\),
+\(L|B|\le M\), and \(31M+1280(D|A|+L|B|)\le8640S\).
+The witness keeps at least \(M/640\) and both original budgets. For the
+sets of overdegree vertices and overlength rows it suffices that their
+intersection carries at least \(57M/320\).
+[Rectangle with actual support charges](OnlineReachabilityPreservers/HalfFiveDenseRectangle.lean#L42)
+· [Overfull support intersection](OnlineReachabilityPreservers/HalfFiveDenseRectangle.lean#L213).
+
 [Actual degree-cut cleaning after clipping](OnlineReachabilityPreservers/HalfFiveDegreeCutCleaning.lean)
-gives the same \(M/5000\) and all four original caps within both original
+gives \(M/5000\) and all four original caps within both original
 budgets if \(A+2(M-K)\le23M/25\), where \(K\) is the clipped mass and
 \(A\) is the number of distinct copied incidences in a reversed comparison
 across an actual degree cut of the clipped rows.

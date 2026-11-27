@@ -621,6 +621,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   At least \(7M/12\) suffices for retention \(M/2000\) when the total
   length excess is at least \(7M/15\).
   [Pruning and peeling the overlong paths](OnlineReachabilityPreservers/FrozenOverlongPaths.lean#L274).
+- At half cutoff five, a witness retains at least \(M/640\) within both
+  budgets and all four starting-average caps if at least \(57M/320\)
+  incidences belong to both an overlength row and an overdegree vertex.
+  A general version charges only for the row and vertex supports of the
+  chosen rectangle.
+  [Rectangle charge](OnlineReachabilityPreservers/HalfFiveDenseRectangle.lean#L42)
+  · [Overfull support intersection](OnlineReachabilityPreservers/HalfFiveDenseRectangle.lean#L213).
 - Half-five cleaning also keeps at least \(M/288\) if opposite-intersection
   pruning retains at least \(13M/24\). This holds when at least \(M/12\) paths
   are nonempty or there are at most \(11M/24\) opposite-neighbor links.
