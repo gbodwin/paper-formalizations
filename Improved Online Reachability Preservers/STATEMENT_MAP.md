@@ -1374,6 +1374,14 @@ same bit count, prefix inclusion, and competitive expectation, with the
 graph construction included in the polynomial tally. Equality of finite
 vertex labels is a primitive in that tally. A native execution bound remains open.
 
+The binary arc preparation encodes both endpoints of each raw row
+once at the bit length of the vertex count. The deduplication pass
+compares stored bit lists and returns the raw list's finite edge set,
+including for empty lists and repeated arcs. The tally counts width
+computation, encoding, bit comparisons, and extraction of retained
+rows. Its cubic bound uses the vertex and raw-row counts.
+[Exact graph preparation](OnlineReachabilityPreservers/SteinerRawArcRows.lean#L354) · [Cubic bound](OnlineReachabilityPreservers/SteinerRawArcRows.lean#L397).
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

@@ -1201,4 +1201,12 @@ The companion PaperLab includes an interactive trace and a source-linked
 proof map. Open cases include general cyclic cleaning at half cutoffs of
 five or more, frozen-average cleaning under only a finite full cutoff of
 seven or more, and a native execution-time bound for the Steiner algorithm.
+
+The binary arc preparation encodes both endpoints of each raw row
+once at the bit length of the vertex count. The deduplication pass
+compares stored bit lists and returns the raw list's finite edge set,
+including for empty lists and repeated arcs. The tally counts width
+computation, encoding, bit comparisons, and extraction of retained
+rows. Its cubic bound uses the vertex and raw-row counts.
+[Exact graph preparation](OnlineReachabilityPreservers/SteinerRawArcRows.lean#L354) · [Cubic bound](OnlineReachabilityPreservers/SteinerRawArcRows.lean#L397).
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).
