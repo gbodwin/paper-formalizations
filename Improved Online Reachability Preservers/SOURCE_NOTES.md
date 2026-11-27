@@ -1191,6 +1191,15 @@ realized pattern to a half-five bridge and recovers a realized pattern
 from each forbidden bridge among the copies.
 [Realized joins](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L325) · [Lift to a forbidden half-five](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L370) · [Exact copy criterion](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L449).
 
+At each vertex, put the rows involved in any projected collision constraint
+first in its degree packing order. If those rows fit into one block of
+the original width, all collision rank inequalities hold. Each copy degree
+is within the cap, and projection recovers every original row. For simple
+half-five-free input of mass at least both positive budgets with path
+lengths already within the original cap, the construction gives an indexed
+witness of mass at least \(M/4\) with both budgets and all four frozen caps.
+[Constrained rows](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L17) · [Degree cap](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L99) · [Half-five exclusion](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L133) · [Frozen witness with capped path lengths](OnlineReachabilityPreservers/HalfFiveTerminalPacking.lean#L159).
+
 The usual nested split example can be padded to six vertices and ten
 indexed rows with mass ten. Two extra vertices belong only to the
 long row and seven labels have empty rows. The original family excludes
