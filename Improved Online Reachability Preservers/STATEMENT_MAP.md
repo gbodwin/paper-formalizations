@@ -1681,6 +1681,23 @@ same bridge exclusion and original path labels.
 · [Half-input trimming](OnlineReachabilityPreservers/FirstOccurrenceTrimming.lean#L45)
 · [Full-input trimming](OnlineReachabilityPreservers/FirstOccurrenceTrimming.lean#L179).
 
+For simple input excluding half bridges through five, suppose two vertices
+have the same first row whenever their comparisons occur in both directions
+on different rows.
+The preceding trimming deletes at least one comparison in each pair. Parallel
+comparisons are already forbidden, so the surviving rows have pairwise
+intersections of size at most one. For positive budgets and mass \(M\) at
+least both budgets, the low-mass construction applies
+when \(M\le8\max(n,p)\). Above that threshold the trimmed rows retain
+at least \(7M/8\). Their unique intersections protect both splits at
+the original widths. Restriction and peeling give an indexed or feasible
+literal frozen witness of mass at least \(M/32\), using both original
+budgets and all four original-average caps at half cutoff five.
+[First-occurrence premise](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L12)
+· [Unique intersections](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L18)
+· [Indexed witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L63)
+· [Literal witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L91).
+
 The graph radius is sharp for the disjoint split test at every
 full cutoff \(k\ge7\). A checked indexed family on \(k\) vertices
 and \(k\) labels excludes full bridges at all sizes. The split

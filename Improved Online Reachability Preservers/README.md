@@ -1010,6 +1010,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [First occurrences](OnlineReachabilityPreservers/FirstOccurrenceTrimming.lean#L11)
   · [Half-input trimming](OnlineReachabilityPreservers/FirstOccurrenceTrimming.lean#L45)
   · [Full-input trimming](OnlineReachabilityPreservers/FirstOccurrenceTrimming.lean#L179).
+- Suppose simple half-five-free input has positive budgets and mass at least
+  both budgets. If every comparison that occurs in reverse on another row
+  has endpoints in the same first-occurrence group, the trimming leaves
+  pairwise intersections of size at most one. Applying the original degree
+  and path widths then gives a frozen \(M/32\) witness through half cutoff
+  five within both budgets and all four caps. Feasible literal input has
+  a distinct nonempty witness with the same bounds.
+  [Unique intersections after trimming](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L18)
+  · [Indexed witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L63)
+  · [Literal witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L91).
 - At every full cutoff \(k\ge7\), a covering disjoint split of an
   indexed family excluding all full bridges passes the \(k-6\) test.
   Its first crossed return has length \(k-5\) and the split creates
