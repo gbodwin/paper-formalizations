@@ -365,6 +365,23 @@ maximum excluding every full bridge. Then
 \(\min(k,q)\beta_k\le q\beta_\infty\le q\beta_k\).
 [Indexed extremal comparison](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L327).
 
+The original-average range can be extended to \(6k\ge5\min(n,p)\).
+For positive budgets, \(k\ge2\) and \(M\ge\max(n,p)\), use the existing
+low-mass or small-budget witnesses when applicable. In the other case,
+keep the heaviest \(\lceil5\min(n,p)/6\rceil\) labels of the smaller
+support. This keeps at least \(5M/6\) and brings that support to at most
+seventeen twentieths of its original size. Every surviving bridge would
+be inside the original cutoff. The common-order deletion costs at most
+two incidences per vertex, leaving mass \(K\ge7M/12\). The original
+widths still use \(M,n,p\). The reduced support allows a larger fraction
+of the width pieces to survive the trim. The resulting witness keeps
+\(M/256\) with the same cutoff, both original budgets and all four
+original-average caps. It applies at the indexed and feasible literal
+full maxima.
+[Original-average cleaning](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L190)
+· [Indexed maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L263)
+· [Feasible literal maximum](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L277).
+
 The original-average conclusion at full cutoff six has a separate
 proof. A reverse comparison within one width piece gives a conflict
 when its opposite interval crosses two pieces. The conflict is at

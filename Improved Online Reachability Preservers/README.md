@@ -2045,15 +2045,15 @@ The companion PaperLab includes an interactive trace and a source-linked
 proof map. Unrestricted half-bridge cleaning at the original averages
 remains open from cutoff five. At the witness's own averages it remains
 open from cutoff six. For positive budgets and \(k\ge2\), full cleaning
-with the original averages now holds when \(28k\ge27\min(n,p)\).
+with the original averages now holds when \(6k\ge5\min(n,p)\).
 At the witness's own averages it holds when
 \(Ck\ge\min(n,p)\), with a loss factor linear in the fixed positive
 integer \(C\). At finite full cutoffs from seven, the general original-average
-case below \(27\min(n,p)/28\) and the output-average case without a fixed
+case below \(5\min(n,p)/6\) and the output-average case without a fixed
 positive cutoff fraction remain open. The literal last-arc
 \(H\) comparison with the full extremum \(\beta\) in Lemma 39 and a native
 execution-time bound for the Steiner algorithm remain open.
-[Original-average bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L145)
+[Original-average bound](OnlineReachabilityPreservers/FrozenFullSupportFraction.lean#L263)
 · [Output-average bound](OnlineReachabilityPreservers/FrozenFullNearCutoff.lean#L239).
 
 The binary arc preparation encodes both endpoints of each raw row
