@@ -979,9 +979,18 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   budgets, a frozen witness retains at least \(M/8\) at the original cutoff
   within both budgets and all four original-average caps. The literal witness
   has distinct nonempty rows for feasible distinct nonempty input.
-  [Mass bound](OnlineReachabilityPreservers/FullCoveringRow.lean#L120)
-  · [Indexed witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L164)
-  · [Literal witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L183).
+  [Mass bound](OnlineReachabilityPreservers/FullCoveringRow.lean#L228)
+  · [Indexed witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L258)
+  · [Literal witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L277).
+- A simple family excluding half bridges through \(k\ge3\) has the same
+  mass bound \(tp+2n\) if its vertices have their first occurrences on
+  \(t\) rows. With at most six such rows and mass at least both positive
+  budgets, a frozen witness retains \(M/8\) or more with full exclusion
+  through any chosen output cutoff. The indexed and feasible literal
+  witnesses fit both budgets and all four original-average caps.
+  [First-occurrence mass bound](OnlineReachabilityPreservers/FullCoveringRow.lean#L242)
+  · [Indexed witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L296)
+  · [Literal witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L315).
 - At every full cutoff \(k\ge7\), a covering disjoint split of an
   indexed family excluding all full bridges passes the \(k-6\) test.
   Its first crossed return has length \(k-5\) and the split creates

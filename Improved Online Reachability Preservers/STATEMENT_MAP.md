@@ -1625,10 +1625,28 @@ one row that contains it. Summing the resulting estimates gives
 cleaning regime. For positive budgets and mass at least both of them, the
 indexed or feasible literal witness retains at least \(M/8\), with the same
 cutoff, both budgets and all four original-average caps.
-[Restricted excess](OnlineReachabilityPreservers/FullCoveringRow.lean#L95)
-· [Mass with covering rows](OnlineReachabilityPreservers/FullCoveringRow.lean#L120)
-· [Indexed witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L164)
-· [Literal witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L183).
+[Restricted excess](OnlineReachabilityPreservers/FullCoveringRow.lean#L142)
+· [Mass with covering rows](OnlineReachabilityPreservers/FullCoveringRow.lean#L228)
+· [Indexed witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L258)
+· [Literal witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L277).
+
+For simple input excluding half bridges through a cutoff of at least three,
+assign each occurring vertex to the row of its first occurrence. The
+reference comparison between the ends of two other comparisons would be
+the final arc on an earlier row, so the same shared-start argument applies
+within each assigned vertex set. If there are \(t\) first-occurrence rows,
+the mass bound is again \(M\le tp+2n\). With \(t\le6\) and mass reaching
+both positive budgets, the witness retains at least \(M/8\) and can exclude
+full bridges through any chosen cutoff. This gives a conditional instance
+of the comparison in the literal Lemma 39 when a half-bridge maximizer
+has such a cover. The feasible literal witness is distinct and nonempty,
+and both versions meet the four original-average caps within the original
+budgets.
+[Shared starts with an earlier row](OnlineReachabilityPreservers/FullCoveringRow.lean#L31)
+· [Restricted excess](OnlineReachabilityPreservers/FullCoveringRow.lean#L164)
+· [Mass bound](OnlineReachabilityPreservers/FullCoveringRow.lean#L242)
+· [Indexed full witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L296)
+· [Literal full witness](OnlineReachabilityPreservers/FullCoveringRow.lean#L315).
 
 The graph radius is sharp for the disjoint split test at every
 full cutoff \(k\ge7\). A checked indexed family on \(k\) vertices
