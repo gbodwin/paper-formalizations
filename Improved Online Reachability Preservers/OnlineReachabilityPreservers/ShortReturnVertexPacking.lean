@@ -137,8 +137,8 @@ theorem copies_of_cappedShortReturnCopyPartition {n p w cutoff : ℕ} {half : Bo
 
 /-- Split short-return groups and apply both fixed-width trims when
 the rows carry at most the original incidence mass. -/
-theorem regularization_list_frozen_after_grouped_width_splits_of_mass {V : Type*}
-    [LinearOrder V] [Fintype V] {n p k M retention : ℕ} {half : Bool}
+theorem regularization_list_frozen_after_grouped_width_splits_of_mass_with_radius {V : Type*}
+    [LinearOrder V] [Fintype V] {n p k M retention groupCutoff : ℕ} {half : Bool}
     (copies : Fin p → List V) (simple : ∀ i, (copies i).Nodup)
     (free : localOrderAdmissible half k copies)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
@@ -146,7 +146,8 @@ theorem regularization_list_frozen_after_grouped_width_splits_of_mass {V : Type*
     (degree : ∀ v, (occurrences (fun i => (copies i).toFinset) v).card ≤ 4*M/n)
     (lightV : ({v ∈ univ | (occurrences (fun i => (copies i).toFinset) v).card ≤ (4*M/n)/2} :
       Finset V).card ≤ n)
-    (pathRoom : HasCappedShortReturnPartition copies (4*M/p) k)
+    (pathRoom : HasCappedShortReturnPartition copies (4*M/p) groupCutoff)
+    (radius : groupCutoff = k ∨ groupCutoff = 5 ∧ half = false ∧ k ≤ 7)
     (enough : let K := ∑ i, (copies i).length
       ∀ R lostV lostI : ℕ, K ≤ R + (lostV + lostI) →
         4*(((4*M/n)/2 + 1)*n)*lostV ≤ K^2 →
@@ -159,7 +160,7 @@ theorem regularization_list_frozen_after_grouped_width_splits_of_mass {V : Type*
   let dMin := D/2 + 1
   let lMin := L/2 + 1
   obtain ⟨sizes, pieces, pieceSimple, legal, length, pieceMass, degrees, lightI⟩ :=
-    split_of_cappedShortReturnPartition simple free pathRoom
+    split_of_cappedShortReturnPartition_with_radius simple free pathRoom radius
   let J := Σₗ i : Fin p, Fin (sizes i)
   let rowSets := fun (i : J) => (pieces i).toFinset
   let fullV := (univ : Finset V).filter fun v => D/2 < (occurrences rowSets v).card
@@ -190,6 +191,27 @@ theorem regularization_list_frozen_after_grouped_width_splits_of_mass {V : Type*
   dsimp only
   rw [pieceMass]
   exact enough
+
+/-- The original return radius gives frozen cleaning on the grouped pieces. -/
+theorem regularization_list_frozen_after_grouped_width_splits_of_mass {V : Type*}
+    [LinearOrder V] [Fintype V] {n p k M retention : ℕ} {half : Bool}
+    (copies : Fin p → List V) (simple : ∀ i, (copies i).Nodup)
+    (free : localOrderAdmissible half k copies)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (upper : (∑ i, (copies i).length) ≤ M)
+    (degree : ∀ v, (occurrences (fun i => (copies i).toFinset) v).card ≤ 4*M/n)
+    (lightV : ({v ∈ univ | (occurrences (fun i => (copies i).toFinset) v).card ≤ (4*M/n)/2} :
+      Finset V).card ≤ n)
+    (pathRoom : HasCappedShortReturnPartition copies (4*M/p) k)
+    (enough : let K := ∑ i, (copies i).length
+      ∀ R lostV lostI : ℕ, K ≤ R + (lostV + lostI) →
+        4*(((4*M/n)/2 + 1)*n)*lostV ≤ K^2 →
+        4*(((4*M/p)/2 + 1)*p)*lostI ≤ K^2 → (retention+2)*M ≤ 2*retention*R) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_after_grouped_width_splits_of_mass_with_radius copies simple free
+    hn hp dense long upper degree lightV pathRoom (Or.inl rfl) enough
 
 /-- With at most one light degree copy per original vertex, the two
 heavy-group profiles can be trimmed at the actual original widths.

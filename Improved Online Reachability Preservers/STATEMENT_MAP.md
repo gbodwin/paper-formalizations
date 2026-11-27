@@ -1575,7 +1575,18 @@ Testing the original row components instead also suffices because
 copied components only project inside original ones.
 For feasible literal distinct nonempty input, the witness can
 be distinct and nonempty with retention at least \(M/8\).
-[Packing theorem](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L116) · [Frozen witness on copied components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L193) · [Original component test](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L213) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L228).
+[Packing theorem](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L116) · [Frozen witness on copied components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L195) · [Original component test](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L215) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L230).
+
+The radius-two group condition also works after initial rowwise
+deletions. Keep the two original widths and charge the initial
+loss together with the radius-two path excess on the restricted
+rows. At most \(\lfloor M/3\rfloor\) combined loss gives a
+full-seven frozen witness of mass at least \(M/18\) with both
+original budgets and all four caps. The simple original input
+excludes full bridges through seven, and its mass \(M\) is at
+least both positive budgets. The transfer to feasible literal
+input gives the same guarantee with distinct nonempty output rows.
+[Mass threshold after grouping](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L140) · [Two-thirds restriction](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L252) · [Recomputed excess test](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L275) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L316).
 
 In an indexed family on six vertices and nine row labels with
 mass nine, the original widths are six and four. The input
@@ -2418,7 +2429,7 @@ copied rows admit the short-return
 path partition at the original path width, each support trim loses at
 most \(M/8\). The later peeling uses the two original lower caps and
 leaves a frozen witness of mass at least \(M/4\) within both budgets.
-[Separate heavy-group thresholds](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L85) · [Frozen cleaning from both grouped profiles](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L198).
+[Separate heavy-group thresholds](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L85) · [Frozen cleaning from both grouped profiles](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L220).
 
 The path-group bound can be checked on the original rows. Exact row
 projection sends every copied return and its linked component to the
@@ -2428,7 +2439,7 @@ at least both positive budgets, bounded degree groups at the original
 degree width and original row components within the original path
 width give a frozen \(M/4\) witness outright. Both budgets, all four caps
 and the chosen cutoff hold in either exclusion mode.
-[Component size does not increase under row copying](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L137) · [Frozen cleaning under both original-width tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L260).
+[Component size does not increase under row copying](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L137) · [Frozen cleaning under both original-width tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L282).
 
 The degree grouping premise has a finite component test too. For each
 original vertex, connect any two incident rows that start and end a
@@ -2436,7 +2447,7 @@ tested short return there. A partition respecting those links exists
 at the degree width exactly when each component fits. If both the
 degree and path components fit their original widths, the on-input
 tests give the frozen indexed quarter-mass witness at the chosen cutoff.
-[Components and bounded partitions](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L49) · [Graph of linked incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L286) · [Exact degree component criterion](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L308) · [Frozen witness from both finite tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L326).
+[Components and bounded partitions](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L49) · [Graph of linked incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L308) · [Exact degree component criterion](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L330) · [Frozen witness from both finite tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L348).
 
 For distinct nonempty simple inputs with positive budgets and mass
 \(M\) at least the vertex budget, the same tests apply at every
@@ -2461,7 +2472,7 @@ component tests at the original widths yields an indexed witness of
 mass at least \(M/18\) with both budgets, the chosen cutoff and all four
 frozen caps. In particular this applies when the original oversized
 components account for at most \(M/3\) deleted incidences.
-[Grouped width trimming after earlier losses](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L140) · [Frozen witness from a two-thirds restriction](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L158) · [Frozen witness from the overflow bound](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L200).
+[Grouped width trimming after earlier losses](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L196) · [Frozen witness from a two-thirds restriction](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L158) · [Frozen witness from the overflow bound](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L200).
 
 Within a connected component, keep the first elements in the finite
 order up to the prescribed width. Disjointness ensures that a component
@@ -2607,7 +2618,7 @@ excess alone guarantees this bound when the original degree test holds,
 since that test survives taking sublists at the original width. At
 \(k\ge2\), the path-excess result also gives a distinct nonempty
 witness for a feasible literal input.
-[Degree test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1550) · [Degree test after sublists](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L11) · [Original path room](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L52) · [Path room after restriction](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L125) · [Path-excess witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L146) · [Literal path-excess witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L170).
+[Degree test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1550) · [Degree test after sublists](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L11) · [Original path room](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L52) · [Path room after restriction](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L126) · [Path-excess witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L148) · [Literal path-excess witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L172).
 
 Another path test keeps the labels of the original degree copies after
 deletion. For positive budgets and original mass \(M\) at least both

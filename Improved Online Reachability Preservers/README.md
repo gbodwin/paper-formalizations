@@ -950,7 +950,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   input must have positive budgets and mass at least both budgets.
   For feasible distinct nonempty input, the original-row test also
   gives a distinct nonempty witness with at least \(M/8\).
-  [Packing at the certified radius](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L116) · [Copied components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L193) · [Original components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L213) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L228).
+  [Packing at the certified radius](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L116) · [Copied components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L195) · [Original components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L215) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L230).
+- For the same full cutoff, retain rowwise sublists and compute their
+  radius-two path excess at the original length width. When the initial
+  loss plus this excess is at most \(\lfloor M/3\rfloor\), clipping
+  and packing yield a frozen \(M/18\) witness with both original budgets
+  and all four caps. This also applies to a feasible literal family,
+  yielding distinct nonempty rows.
+  [Two-thirds restriction](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L252) · [Clipping after a restriction](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L275) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L316).
 - An indexed system on six vertices and nine row labels has mass nine,
   degree width six and path width four. It excludes every full bridge.
   The return \(4\to5\to0\) crosses the actual consecutive width cut.
@@ -1145,7 +1152,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   path partition at the original path width, each support trim loses at
   most \(M/8\). The later peeling uses the two original lower caps and
   leaves a frozen witness of mass at least \(M/4\) within both budgets.
-  [Separate heavy-group thresholds](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L85) · [Frozen cleaning from both grouped profiles](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L198).
+  [Separate heavy-group thresholds](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L85) · [Frozen cleaning from both grouped profiles](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L220).
 - The path-group bound can be checked on the original rows. Exact row
   projection sends every copied return and its linked component to the
   original graph. Projection is injective on each copied row, so its
@@ -1154,14 +1161,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   degree width and original row components within the original path
   width give a frozen \(M/4\) witness outright. Both budgets, all four caps
   and the chosen cutoff hold in either exclusion mode.
-  [Component size does not increase under row copying](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L137) · [Frozen cleaning under both original-width tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L260).
+  [Component size does not increase under row copying](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L137) · [Frozen cleaning under both original-width tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L282).
 - The degree grouping premise has a finite component test too. For each
   original vertex, connect any two incident rows that start and end a
   tested short return there. A partition respecting those links exists
   at the degree width exactly when each component fits. If both the
   degree and path components fit their original widths, the on-input
   tests give the frozen indexed quarter-mass witness at the chosen cutoff.
-  [Components and bounded partitions](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L49) · [Graph of linked incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L286) · [Exact degree component criterion](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L308) · [Frozen witness from both finite tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L326).
+  [Components and bounded partitions](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L49) · [Graph of linked incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L308) · [Exact degree component criterion](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L330) · [Frozen witness from both finite tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L348).
 - For distinct nonempty simple inputs with positive budgets and mass
   \(M\) at least the vertex budget, the same tests apply at every
   admissible cutoff of at least two. The literal transfer gives
@@ -1183,7 +1190,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   mass at least \(M/18\) with both budgets, the chosen cutoff and all four
   frozen caps. In particular this applies when the original oversized
   components account for at most \(M/3\) deleted incidences.
-  [Grouped width trimming after earlier losses](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L140) · [Frozen witness from a two-thirds restriction](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L158) · [Frozen witness from the overflow bound](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L200).
+  [Grouped width trimming after earlier losses](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L196) · [Frozen witness from a two-thirds restriction](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L158) · [Frozen witness from the overflow bound](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L200).
 - Within a connected component, keep the first elements in the finite
   order up to the prescribed width. Disjointness ensures that a component
   of size \(s\) keeps exactly \(\min(s,w)\) elements at width \(w\). The loss
@@ -1315,7 +1322,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   since that test survives taking sublists at the original width. At
   \(k\ge2\), the path-excess result also gives a distinct nonempty
   witness for a feasible literal input.
-  [Degree test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1550) · [Degree test after sublists](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L11) · [Original path room](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L52) · [Path room after restriction](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L125) · [Path-excess witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L146) · [Literal path-excess witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L170).
+  [Degree test](OnlineReachabilityPreservers/ComponentSplitCleaning.lean#L1550) · [Degree test after sublists](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L11) · [Original path room](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L52) · [Path room after restriction](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L126) · [Path-excess witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L148) · [Literal path-excess witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L172).
 - Another path test keeps the labels of the original degree copies after
   deletion. For positive budgets and original mass \(M\) at least both
   budgets, require a simple copied restriction of mass \(K\ge2M/3\) that

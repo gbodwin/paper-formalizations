@@ -69,14 +69,15 @@ theorem regularization_list_frozen_of_original_path_component_room {n p k : ℕ}
 /-- Standard degree copies with the chosen exclusion give a frozen
 witness when the retained sublists pass the original path-width test
 and keep at least two thirds of the original mass. -/
-private theorem frozen_of_standard_copy_restriction {n p k : ℕ} {half : Bool}
+private theorem frozen_of_standard_copy_restriction {n p k groupCutoff : ℕ} {half : Bool}
     (rows : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
     (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
     (kept : Fin p → List (Fin n)) (sub : ∀ i, (kept i).Sublist (rows i))
     (copyLegal : let M := ∑ i, (rows i).length
       localOrderAdmissible half k (splitListVertices kept (4*M/n)))
     (pathRoom : let M := ∑ i, (rows i).length
-      ∀ i, ∀ v ∈ kept i, (shortReturnRowComponent kept k i v).card ≤ 4*M/p)
+      ∀ i, ∀ v ∈ kept i, (shortReturnRowComponent kept groupCutoff i v).card ≤ 4*M/p)
+    (radius : groupCutoff = k ∨ groupCutoff = 5 ∧ half = false ∧ k ≤ 7)
     (roomMass : 2*(∑ i, (rows i).length) ≤ 3*(∑ i, (kept i).length)) :
     let M := ∑ i, (rows i).length
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
@@ -91,7 +92,7 @@ private theorem frozen_of_standard_copy_restriction {n p k : ℕ} {half : Bool}
   let V := ListVertexBlockIndex kept D
   have dPos : 0 < D := (four_average_width hn dense).1
   have keptSimple (i : Fin p) : (kept i).Nodup := (sub i).nodup (simple i)
-  have room : HasCappedShortReturnPartition copies L k :=
+  have room : HasCappedShortReturnPartition copies L groupCutoff :=
     (hasCappedShortReturnPartition_iff_component_room _ _ _).mpr
       (splitListVertices_short_return_path_room keptSimple pathRoom)
   have upper : K ≤ M := sum_le_sum (fun i _ => (sub i).length_le)
@@ -111,9 +112,9 @@ private theorem frozen_of_standard_copy_restriction {n p k : ℕ} {half : Bool}
     have exactDegree : (occurrences marks v).card = D := filled v onFull
     rw [exactDegree] at small
     exact (Nat.div_lt_self dPos (by decide : 1 < 2)).not_ge small
-  refine regularization_list_frozen_after_grouped_width_splits_of_mass copies
+  refine regularization_list_frozen_after_grouped_width_splits_of_mass_with_radius copies
     (fun i => splitListVertices_simple kept D i (keptSimple i)) copyLegal hn hp dense long
-    (copyMass.trans_le upper) degree light room ?_
+    (copyMass.trans_le upper) degree light room radius ?_
   dsimp only
   rw [copyMass]
   exact fun _ _ _ paid lossV lossI =>
@@ -139,7 +140,8 @@ theorem regularization_list_frozen_of_short_return_path_restriction {n p k : ℕ
   have keptSimple (i : Fin p) : (kept i).Nodup := (sub i).nodup (simple i)
   have retained := localOrderAdmissible_of_sublist simple sub free
   exact frozen_of_standard_copy_restriction rows simple hn hp dense long kept sub
-    (splitListVertices_admissible_of_halfDegreeSplitCondition kept keptSimple retained halfSafe) pathRoom roomMass
+    (splitListVertices_admissible_of_halfDegreeSplitCondition kept keptSimple retained halfSafe) pathRoom
+    (Or.inl rfl) roomMass
 
 /-- Path-component excess alone supplies a two-thirds restriction under
 the stated condition for safe standard degree copying. -/
@@ -244,5 +246,89 @@ theorem regularization_list_frozen_full_seven_distinct_of_two_step_components {n
   obtain ⟨n', vertices, p', paths, clean, cleanSimple, allowed, lower, upper, caps⟩ :=
     regularization_list_frozen_full_seven_of_two_step_components rows simple free hn hp dense long room
   exact ⟨n', vertices, p', paths, clean, cleanSimple, allowed, by omega, upper, caps⟩
+
+/-- At full cutoff seven, a two-thirds restriction only needs to keep
+its radius-two path components within the original width. -/
+theorem regularization_list_frozen_full_seven_of_two_step_path_restriction {n p : ℕ}
+    (rows : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
+    (free : BridgeFree (Before rows) 7)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
+    (kept : Fin p → List (Fin n)) (sub : ∀ i, (kept i).Sublist (rows i))
+    (room : let M := ∑ i, (rows i).length
+      ∀ i, ∀ v ∈ kept i, (shortReturnRowComponent kept 5 i v).card ≤ 4*M/p)
+    (mass : 2*(∑ i, (rows i).length) ≤ 3*(∑ i, (kept i).length)) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) 7 ∧
+      M ≤ 18*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  have keptSimple (i : Fin p) : (kept i).Nodup := (sub i).nodup (simple i)
+  have retained : BridgeFree (Before kept) 7 :=
+    localOrderAdmissible_of_sublist (half := false) simple sub free
+  have legal : let M := ∑ i, (rows i).length
+      localOrderAdmissible false 7 (splitListVertices kept (4*M/n)) :=
+    retained.split_list_vertices_any (·.fst) (fun {i _ _} => splitListVertices_step (keptSimple i))
+  exact frozen_of_standard_copy_restriction rows simple hn hp dense long kept sub legal room
+    (Or.inr ⟨rfl, rfl, le_rfl⟩) mass
+
+/-- Clip the radius-two path components after arbitrary rowwise
+deletions. The initial and clipping losses share the one-third budget. -/
+theorem regularization_list_frozen_full_seven_of_two_step_path_excess_after_sublist {n p : ℕ}
+    (rows kept : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
+    (free : BridgeFree (Before rows) 7) (sub : ∀ i, (kept i).Sublist (rows i))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
+    (paid : let M := ∑ i, (rows i).length
+      M - (∑ i, (kept i).length) + shortReturnPathExcessMass kept (4*M/p) 5 ≤ M/3) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) 7 ∧
+      M ≤ 18*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (rows i).length
+  let K := ∑ i, (kept i).length
+  let L := 4*M/p
+  let E := shortReturnPathExcessMass kept L 5
+  let clipped := clipShortReturnPathComponents kept L 5
+  have keptSimple (i : Fin p) : (kept i).Nodup := (sub i).nodup (simple i)
+  have upper : K ≤ M := sum_le_sum (fun i _ => (sub i).length_le)
+  have accounting : (∑ i, (clipped i).length) + E = K :=
+    clipShortReturnPathComponents_mass kept keptSimple L 5
+  have clipping := clipShortReturnPathComponents_sublist kept L 5
+  have room := clipShortReturnPathComponents_room kept keptSimple L 5
+  change M - K + E ≤ M/3 at paid
+  exact regularization_list_frozen_full_seven_of_two_step_path_restriction rows simple free
+    hn hp dense long clipped (fun i => (clipping i).trans (sub i)) room (by omega)
+
+/-- A small original radius-two path excess suffices at full cutoff
+seven with both budgets and all four original-average caps. -/
+theorem regularization_list_frozen_full_seven_of_small_two_step_path_excess {n p : ℕ}
+    (rows : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
+    (free : BridgeFree (Before rows) 7)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
+    (paid : let M := ∑ i, (rows i).length; shortReturnPathExcessMass rows (4*M/p) 5 ≤ M/3) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ BridgeFree (Before clean) 7 ∧
+      M ≤ 18*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean :=
+  regularization_list_frozen_full_seven_of_two_step_path_excess_after_sublist rows rows simple free
+    (fun i => List.Sublist.refl _) hn hp dense long (by simpa only [Nat.sub_self, zero_add] using paid)
+
+/-- With feasible literal input, the recomputed radius-two path test
+also certifies a distinct nonempty frozen witness. -/
+theorem regularization_list_frozen_full_seven_distinct_of_two_step_path_excess_after_sublist {n p : ℕ}
+    (rows kept : Fin p → List (Fin n)) (distinct : Function.Injective rows)
+    (nonempty : ∀ i, rows i ≠ []) (simple : ∀ i, (rows i).Nodup)
+    (free : BridgeFree (Before rows) 7) (sub : ∀ i, (kept i).Sublist (rows i))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length)
+    (paid : let M := ∑ i, (rows i).length
+      M - (∑ i, (kept i).length) + shortReturnPathExcessMass kept (4*M/p) 5 ≤ M/3) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      Function.Injective clean ∧ (∀ i, clean i ≠ []) ∧ (∀ i, (clean i).Nodup) ∧
+      BridgeFree (Before clean) 7 ∧
+      M ≤ 18*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  refine regularization_list_frozen_distinct_of_indexed (half := false) (k := 7) (retention := 18)
+    rows distinct nonempty simple free (by decide) hn hp dense (by decide) ?_
+  dsimp only
+  exact fun long => regularization_list_frozen_full_seven_of_two_step_path_excess_after_sublist
+    rows kept simple free sub hn hp dense long paid
 
 end OnlineReachabilityPreservers
