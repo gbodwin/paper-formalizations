@@ -2065,6 +2065,21 @@ parameters for unbounded vertex budgets.
 [Pair-capacity mass bound](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L70)
 · [Starting-average obstruction](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L35).
 
+For last-arc half exclusion through size three, the first three vertices
+of each long row give a positive bipartite matching at each final vertex.
+The matching consists of first-to-middle edges from rows ending at that
+vertex.
+The original arrival ranks give endpoint weights whose sum is positive
+exactly on the matching edges in the graph of all first-to-middle edges.
+Conversely, such matchings with pairwise disjoint edge sets give one
+distinct three-vertex row per edge on three tagged vertex parts, with
+half-bridge exclusion at every size. This characterizes the possible
+long-row count up to a factor of three in the vertex budget. It leaves
+open the quadratic-mass, high-mean inputs needed by the starting-average
+obstruction above.
+[Extraction from arbitrary rows](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L308)
+· [Construction from matching weights](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L138).
+
 At either cutoff below two and feasible positive literal budgets, use
 \(\min(p,n!)\) distinct spanning permutations. They give at least a
 third of the unrestricted maximum and satisfy the four caps at both

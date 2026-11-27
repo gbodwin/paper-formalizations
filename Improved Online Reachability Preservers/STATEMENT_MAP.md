@@ -3792,6 +3792,23 @@ budgets. That existence question remains open.
 · [Conditional obstruction](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L35)
 · [Pair-capacity sharpness](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L70).
 
+For any half cutoff \(k\ge3\), the first triples of long rows give
+edge-disjoint positive matchings in the bipartite first-to-middle graph,
+one matching per last vertex. The three parts each use at most the
+original vertex budget. Conversely, a family of positive matchings with
+disjoint edges gives distinct simple length-three rows with all-size
+half exclusion on the disjoint union of the parts. For fixed final
+vertex, an unmatched edge between two matched endpoints forces the
+left endpoint's row to precede the right endpoint's row. Existence of
+an order meeting the constraints is equivalent to existence of the
+positive weights.
+The result concerns the count of rows of length at least three. The
+higher-mean half examples for a possible Lemma 39 obstruction remain
+open.
+[Arbitrary half input](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L308)
+· [Weights from the arrival order](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L195)
+· [All-size half construction](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L138).
+
 The literal exact-count domains differ. At four vertices and eleven rows,
 the half family consists of four singletons and seven directed comparisons.
 Three comparisons leave vertex zero early in the arrival order. The other

@@ -2584,6 +2584,31 @@ local-order upper bound and recurrence of Theorem 43.
   · [Lower-cap obstruction](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L35)
   · [Pair-capacity sharpness](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L70).
 
+  For the half side, first triples have distinct owners for every
+  coordinate pair. Fix a final vertex \(c\). The first-to-middle pairs
+  of rows ending at \(c\) form a matching. For a mixed first-to-middle
+  edge in the graph, the river through its first vertex must arrive
+  strictly before the final arc through its middle vertex. Otherwise
+  the three rows form a forbidden half-bridge. Give a matched left
+  endpoint the rank of its row plus one and give a matched right
+  endpoint one half minus that quantity. Endpoints outside the matching
+  get weights small enough to make the corresponding sum nonpositive.
+  This certifies positivity precisely for matching edges. Conversely,
+  positive matchings with disjoint edge sets specify the triples. Sorting
+  rows by the left weight ensures every mixed triangle's river arrives
+  before its final arc. The three layers allow no larger bridge, and
+  coordinate-pair uniqueness excludes size two. The result is a reduction
+  for long-row counts. Length-three witnesses alone do not meet the
+  obstruction's threshold \(M>8p\).
+  Positive matching families are defined in Yoshida's later work,
+  Definition 4.3, with balanced vertex parts and a uniform minimum
+  matching size. The reductions use only positivity in the union graph
+  and disjoint edge sets, and concern the last-arc notion from Bodwin and Le.
+  [Yoshida v3](https://arxiv.org/pdf/2602.15341v3)
+  · [Extraction](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L308)
+  · [Weight proof for tagged rows](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L195)
+  · [Construction](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L138).
+
   Below cutoff two, both exclusions are vacuous. On \(n\) vertices the
   count of simple lists, including the empty list, is less than \(3n!\).
   Encode a nonempty list by its head and a shorter list on the remaining
