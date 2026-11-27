@@ -1209,4 +1209,15 @@ including for empty lists and repeated arcs. The tally counts width
 computation, encoding, bit comparisons, and extraction of retained
 rows. Its cubic bound uses the vertex and raw-row counts.
 [Exact graph preparation](OnlineReachabilityPreservers/SteinerRawArcRows.lean#L354) · [Cubic bound](OnlineReachabilityPreservers/SteinerRawArcRows.lean#L397).
+
+The sampled binary-arc entry uses this preparation before drawing its
+single word. For each supplied stream and trace it returns the exact
+same graph, history, and stream position as the certified raw-arc
+solver. Its recorded work exchanges the preparation charges. On every
+fixed feasible trace, each supplied stream yields preserved reachability
+and an increasing sequence of edge sets as requests arrive. The solver
+reads exactly the prescribed number of stream bits. The same expected
+competitive bound holds under the fair-stream measure. The fixed-height
+recorded polynomial includes the bit comparisons at intake.
+[Exact replay](OnlineReachabilityPreservers/SteinerBinaryRawOnline.lean#L39) · [Theorem 21 with binary arc preparation](OnlineReachabilityPreservers/SteinerBinaryRawOnline.lean#L89).
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).
