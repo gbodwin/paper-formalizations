@@ -84,25 +84,11 @@ theorem halfFiveCollisionRankGraph_empty_of_no_terminal_three {I V : Type*}
     exact (none h.triangle h.terminal).elim
   · simp
 
-/-- The collision graph supplies both rank inequalities at a repeated
-projected terminal of a size-five half-bridge. -/
-theorem HalfBridgeFree.split_list_vertices_five_of_collision_rank_graph {I V W : Type*}
-    [LinearOrder I] [Fintype I] [DecidableEq V] [DecidableEq W]
-    {paths : I → List V} {copies : I → List W} (free : HalfBridgeFree (Before paths) 5)
-    (project : W → V) (rank : W → ℕ) (assigned : I → V → ℕ)
-    (identify : ∀ {x y}, project x = project y → rank x = rank y → x = y)
-    (localRank : ∀ {i x}, x ∈ copies i → rank x = assigned i (project x))
-    (increases : ∀ v ⦃r a⦄, Edge (halfFiveCollisionRankGraph paths v) r a → assigned r v ≤ assigned a v)
-    (steps : ∀ {i x y}, Before copies i x y → Before paths i (project x) (project y)) :
-    HalfBridgeFree (Before copies) 5 := by
-  intro d small b earlier
-  by_cases short : d ≤ 2
-  · have input : HalfBridgeFree (Before paths) 4 := fun _ bound => free (bound.trans (by decide))
-    have safe := input.split_list_vertices_short le_rfl project (fun {_ _ _} => steps)
-    exact safe (by omega) b earlier
-  have size : d = 3 := by omega
-  subst d
-  have same := (free.project_half_five_terminal_collision project (fun {_ _ _} => steps) b earlier).1
+private def HalfFiveTerminalPattern.ofBridge {I V W : Type*} [LinearOrder I] [DecidableEq V] [DecidableEq W]
+    {paths : I → List V} {copies : I → List W} (b : Bridge (Before copies) 3) (project : W → V)
+    (steps : ∀ {i x y}, Before copies i x y → Before paths i (project x) (project y))
+    (same : project (b.vertex 2) = project (b.vertex 4)) (earlier : b.arc (Fin.last 3) < b.river) :
+    HalfFiveTerminalPattern paths (project (b.vertex 4)) := by
   let v := project (b.vertex 4)
   have second : Before paths (b.arc 1) (project (b.vertex 1)) v := by
     change Before paths (b.arc 1) (project (b.vertex 1)) (project (b.vertex 4))
@@ -123,9 +109,31 @@ theorem HalfBridgeFree.split_list_vertices_five_of_collision_rank_graph {I V W :
     fin_cases i
     · exact fun equal => (by decide : (3 : Fin 4) ≠ 0) (b.distinctArcs equal)
     · exact fun equal => (by decide : (3 : Fin 4) ≠ 1) (b.distinctArcs equal)
-  let pattern : HalfFiveTerminalPattern paths v := ⟨prefixBridge,rfl,b.arc 2,b.arc 3,project (b.vertex 3),
+  exact ⟨prefixBridge,rfl,b.arc 2,b.arc 3,project (b.vertex 3),
     b.river_ne_arc 2,b.river_ne_arc 3,outApart,inApart,
     fun equal => (by decide : (2 : Fin 4) ≠ 3) (b.distinctArcs equal),third,steps (b.arcStep 3),earlier⟩
+
+/-- The collision graph supplies both rank inequalities at a repeated
+projected terminal of a size-five half-bridge. -/
+theorem HalfBridgeFree.split_list_vertices_five_of_collision_rank_graph {I V W : Type*}
+    [LinearOrder I] [Fintype I] [DecidableEq V] [DecidableEq W]
+    {paths : I → List V} {copies : I → List W} (free : HalfBridgeFree (Before paths) 5)
+    (project : W → V) (rank : W → ℕ) (assigned : I → V → ℕ)
+    (identify : ∀ {x y}, project x = project y → rank x = rank y → x = y)
+    (localRank : ∀ {i x}, x ∈ copies i → rank x = assigned i (project x))
+    (increases : ∀ v ⦃r a⦄, Edge (halfFiveCollisionRankGraph paths v) r a → assigned r v ≤ assigned a v)
+    (steps : ∀ {i x y}, Before copies i x y → Before paths i (project x) (project y)) :
+    HalfBridgeFree (Before copies) 5 := by
+  intro d small b earlier
+  by_cases short : d ≤ 2
+  · have input : HalfBridgeFree (Before paths) 4 := fun _ bound => free (bound.trans (by decide))
+    have safe := input.split_list_vertices_short le_rfl project (fun {_ _ _} => steps)
+    exact safe (by omega) b earlier
+  have size : d = 3 := by omega
+  subst d
+  have same := (free.project_half_five_terminal_collision project (fun {_ _ _} => steps) b earlier).1
+  let v := project (b.vertex 4)
+  let pattern := HalfFiveTerminalPattern.ofBridge b project (fun {_ _ _} => steps) same earlier
   have prefixEdge : Edge (halfFiveCollisionRankGraph paths v) b.river (b.arc 1) :=
     halfFiveCollisionRankGraph_edge.mpr ⟨pattern,Or.inl ⟨rfl,rfl⟩⟩
   have returnEdge : Edge (halfFiveCollisionRankGraph paths v) (b.arc 2) (b.arc 3) :=
@@ -310,5 +318,174 @@ theorem Bridge.reaches_prefix_excluding_river_and_final {I V : Type*}
           fun eq => notFinal (b.distinctArcs eq),b.arcStep i⟩
       exact (previous i.isLt).tail edge
   exact reachesPrefix d (Nat.lt_succ_self _)
+
+/-- The copied endpoints of consecutive comparisons agree, including
+those shared with the river. The two copies of the projected terminal
+stay distinct. -/
+structure HalfFiveTerminalPattern.Realized {I V : Type*} [LinearOrder I] [DecidableEq V]
+    {paths : I → List V} {v : V} (h : HalfFiveTerminalPattern paths v) (assigned : I → V → ℕ) : Prop where
+  source : assigned h.triangle.river (h.triangle.vertex 0) = assigned (h.triangle.arc 0) (h.triangle.vertex 0)
+  firstJoin : assigned (h.triangle.arc 0) (h.triangle.vertex 1) = assigned (h.triangle.arc 1) (h.triangle.vertex 1)
+  terminalJoin : assigned (h.triangle.arc 1) v = assigned h.outRow v
+  returnJoin : assigned h.outRow h.middle = assigned h.inRow h.middle
+  riverEnd : assigned h.inRow v = assigned h.triangle.river v
+  copiesApart : assigned (h.triangle.arc 1) v ≠ assigned h.triangle.river v
+
+private theorem halfFiveRankedVertexCopies_rank_of_mem {I V : Type*} {paths : I → List V}
+    {assigned : I → V → ℕ} {i : I} {w : V ×ₗ ℕ}
+    (member : w ∈ halfFiveRankedVertexCopies paths assigned i) :
+    (ofLex w).2 = assigned i (ofLex w).1 := by
+  obtain ⟨v,_,rfl⟩ := List.mem_map.mp member
+  rfl
+
+private theorem halfFiveRankedVertexCopies_lift_step {I V : Type*} [DecidableEq V]
+    {paths : I → List V} {assigned : I → V → ℕ}
+    (simple : ∀ i, (paths i).Nodup) {i : I} {x y : V} (step : Before paths i x y) :
+    Before (halfFiveRankedVertexCopies paths assigned) i
+      (toLex (x,assigned i x)) (toLex (y,assigned i y)) := by
+  let _ : BEq (V ×ₗ ℕ) := instBEqOfDecidableEq
+  let f (v : V) : V ×ₗ ℕ := toLex (v,assigned i v)
+  have index (v : V) (member : v ∈ paths i) :
+      (halfFiveRankedVertexCopies paths assigned i).idxOf (f v) = (paths i).idxOf v := by
+    let pos := (paths i).idxOf v
+    have bounded : pos < (paths i).length := List.idxOf_lt_length_of_mem member
+    have room : pos < (halfFiveRankedVertexCopies paths assigned i).length := by
+      simpa only [halfFiveRankedVertexCopies,List.length_map] using bounded
+    have roomMap : pos < ((paths i).map f).length := by
+      simpa only [List.length_map] using bounded
+    have mappedItem : ((paths i).map f)[pos]'roomMap = f v := by
+      rw [List.getElem_map,List.getElem_idxOf bounded]
+    have item : (halfFiveRankedVertexCopies paths assigned i)[pos]'room = f v := mappedItem
+    rw [← item]
+    exact (halfFiveRankedVertexCopies_simple simple assigned i).idxOf_getElem pos room
+  refine ⟨List.mem_map_of_mem step.1,List.mem_map_of_mem step.2.1,?_⟩
+  change (halfFiveRankedVertexCopies paths assigned i).idxOf (f x) <
+    (halfFiveRankedVertexCopies paths assigned i).idxOf (f y)
+  rw [index x step.1,index y step.2.1]
+  exact step.2.2
+
+/-- Any projected pattern with matching joins and distinct copies of its
+terminal gives a forbidden copied half-five, under half-five exclusion
+in the original rows. -/
+theorem HalfFiveTerminalPattern.realized_forbids_halfFive {I V : Type*} [LinearOrder I] [DecidableEq V]
+    {paths : I → List V} {v : V} (h : HalfFiveTerminalPattern paths v) (assigned : I → V → ℕ)
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5)
+    (realized : h.Realized assigned) : ¬ HalfBridgeFree (Before (halfFiveRankedVertexCopies paths assigned)) 5 := by
+  let r := h.triangle.river
+  let a := h.triangle.arc 0
+  let b := h.triangle.arc 1
+  let c := h.outRow
+  let e := h.inRow
+  let s := h.triangle.vertex 0
+  let t := h.triangle.vertex 1
+  let w := h.middle
+  let copy (i : I) (x : V) : V ×ₗ ℕ := toLex (x,assigned i x)
+  have riverStep : Before paths r s v := by
+    rw [← h.terminal]
+    exact h.triangle.riverStep
+  have firstStep : Before paths a s t := h.triangle.arcStep 0
+  have secondStep : Before paths b t v := by
+    rw [← h.terminal]
+    exact h.triangle.arcStep 1
+  have st : s ≠ t := listBefore_ne firstStep
+  have sv : s ≠ v := listBefore_ne riverStep
+  have tv : t ≠ v := listBefore_ne secondStep
+  have vw : v ≠ w := listBefore_ne h.outStep
+  have sw : s ≠ w := by
+    intro same
+    have parallel : Before paths e s v := same.symm ▸ h.inStep
+    exact no_parallel_list_steps free (by decide) h.river_ne_in riverStep parallel
+  have tw : t ≠ w := by
+    intro same
+    have returnStep : Before paths e t v := same.symm ▸ h.inStep
+    let alternate := threeListBridge (h.in_ne_arc 0).symm (h.triangle.river_ne_arc 0) h.river_ne_in
+      firstStep returnStep riverStep
+    exact free (by decide : 1+2 ≤ 5) alternate h.earlier
+  let vtx : Fin 5 → V ×ₗ ℕ := ![copy r s,copy a t,copy b v,copy c w,copy r v]
+  have different : Function.Injective vtx := by
+    intro i j same
+    have projected := congrArg (fun x => (ofLex x).1) same
+    have ranked := congrArg (fun x => (ofLex x).2) same
+    have ranksApart : assigned b v ≠ assigned r v := realized.copiesApart
+    fin_cases i <;> fin_cases j <;> simp_all [vtx,copy]
+  let arc : Fin 4 → I := ![a,b,c,e]
+  have arcApart : Function.Injective arc := by
+    intro i j equal
+    have ab : a ≠ b := fun eq => (by decide : (0 : Fin 2) ≠ 1) (h.triangle.distinctArcs eq)
+    have ca : c ≠ a := h.out_ne_arc 0
+    have cb : c ≠ b := h.out_ne_arc 1
+    have ea : e ≠ a := h.in_ne_arc 0
+    have eb : e ≠ b := h.in_ne_arc 1
+    have ce : c ≠ e := h.out_ne_in
+    fin_cases i <;> fin_cases j <;> simp_all [arc]
+  have riverApart (i : Fin 4) : r ≠ arc i := by
+    fin_cases i
+    · exact h.triangle.river_ne_arc 0
+    · exact h.triangle.river_ne_arc 1
+    · exact h.river_ne_out
+    · exact h.river_ne_in
+  have liftedArcs (i : Fin 4) :
+      Before (halfFiveRankedVertexCopies paths assigned) (arc i) (vtx i.castSucc) (vtx i.succ) := by
+    fin_cases i
+    · change Before (halfFiveRankedVertexCopies paths assigned) a (copy r s) (copy a t)
+      rw [show copy r s = copy a s from congrArg (fun q => toLex (s,q)) realized.source]
+      exact halfFiveRankedVertexCopies_lift_step simple firstStep
+    · change Before (halfFiveRankedVertexCopies paths assigned) b (copy a t) (copy b v)
+      rw [show copy a t = copy b t from congrArg (fun q => toLex (t,q)) realized.firstJoin]
+      exact halfFiveRankedVertexCopies_lift_step simple secondStep
+    · change Before (halfFiveRankedVertexCopies paths assigned) c (copy b v) (copy c w)
+      rw [show copy b v = copy c v from congrArg (fun q => toLex (v,q)) realized.terminalJoin]
+      exact halfFiveRankedVertexCopies_lift_step simple h.outStep
+    · change Before (halfFiveRankedVertexCopies paths assigned) e (copy c w) (copy r v)
+      rw [show copy c w = copy e w from congrArg (fun q => toLex (w,q)) realized.returnJoin,
+        show copy r v = copy e v from congrArg (fun q => toLex (v,q)) realized.riverEnd.symm]
+      exact halfFiveRankedVertexCopies_lift_step simple h.inStep
+  let lifted : Bridge (Before (halfFiveRankedVertexCopies paths assigned)) 3 :=
+    ⟨vtx,arc,r,different,arcApart,riverApart,halfFiveRankedVertexCopies_lift_step simple riverStep,liftedArcs⟩
+  exact fun legal => legal (by decide : 3+2 ≤ 5) lifted h.earlier
+
+/-- Half-five exclusion of an explicit rank assignment is equivalent to
+absence of a projected terminal pattern with every join realized. -/
+theorem halfFiveRankedVertexCopies_halfFree_iff_no_realized_terminal_pattern {I V : Type*}
+    [LinearOrder I] [DecidableEq V] {paths : I → List V}
+    (simple : ∀ i, (paths i).Nodup) (free : HalfBridgeFree (Before paths) 5) (assigned : I → V → ℕ) :
+    HalfBridgeFree (Before (halfFiveRankedVertexCopies paths assigned)) 5 ↔
+      ∀ v (h : HalfFiveTerminalPattern paths v), ¬ h.Realized assigned := by
+  constructor
+  · exact fun legal _ h realized => h.realized_forbids_halfFive assigned simple free realized legal
+  · intro none d small copied earlier
+    let project (x : V ×ₗ ℕ) := (ofLex x).1
+    let rank (x : V ×ₗ ℕ) := (ofLex x).2
+    have step {i x y} (found : Before (halfFiveRankedVertexCopies paths assigned) i x y) :
+        Before paths i (project x) (project y) := by
+      have shape (i : I) : ((halfFiveRankedVertexCopies paths assigned i).map project) = paths i :=
+        halfFiveRankedVertexCopies_project paths assigned i
+      have old := listBefore_map project ((shape i).symm ▸ simple i) found
+      simpa only [SourceAudit.BeforeIn,shape] using old
+    by_cases short : d ≤ 2
+    · have input : HalfBridgeFree (Before paths) 4 := fun _ bound => free (bound.trans (by decide))
+      have safe := input.split_list_vertices_short le_rfl project (fun {_ _ _} => step)
+      exact safe (by omega) copied earlier
+    have size : d = 3 := by omega
+    subst d
+    have same := (free.project_half_five_terminal_collision project (fun {_ _ _} => step) copied earlier).1
+    let v := project (copied.vertex 4)
+    let pattern := HalfFiveTerminalPattern.ofBridge copied project (fun {_ _ _} => step) same earlier
+    apply none v pattern
+    have seen {i x} (member : x ∈ halfFiveRankedVertexCopies paths assigned i) :
+        rank x = assigned i (project x) := halfFiveRankedVertexCopies_rank_of_mem member
+    have atRiver : rank (copied.vertex 4) = assigned copied.river v := seen copied.riverStep.2.1
+    have atPrefix : rank (copied.vertex 2) = assigned (copied.arc 1) v :=
+      (seen (copied.arcStep 1).2.1).trans (congrArg (assigned (copied.arc 1)) same)
+    have atOut : rank (copied.vertex 2) = assigned (copied.arc 2) v :=
+      (seen (copied.arcStep 2).1).trans (congrArg (assigned (copied.arc 2)) same)
+    refine ⟨(seen copied.riverStep.1).symm.trans (seen (copied.arcStep 0).1),
+      (seen (copied.arcStep 0).2.1).symm.trans (seen (copied.arcStep 1).1),atPrefix.symm.trans atOut,
+      (seen (copied.arcStep 2).2.1).symm.trans (seen (copied.arcStep 3).1),
+      (seen (copied.arcStep 3).2.1).symm.trans atRiver,?_⟩
+    intro equal
+    have sameRank := atPrefix.trans (equal.trans atRiver.symm)
+    have eqCopies : copied.vertex 2 = copied.vertex 4 := ofLex.injective (Prod.ext same sameRank)
+    exact (by decide : (2 : Fin 5) ≠ 4) (copied.distinctVertices eqCopies)
 
 end OnlineReachabilityPreservers

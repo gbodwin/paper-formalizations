@@ -2385,7 +2385,7 @@ a two-step return. Weak increase on these edges preserves half-five
 exclusion when a vertex and rank determine its copy. Every assignment
 in this test is constant on each strongly connected component. The
 component ranks distinguish all different components.
-[Terminal constraint graph](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L13) · [Half-five copy preservation](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L150) · [Forced equalities within components](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L166) · [Exact component ranks](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L207).
+[Terminal constraint graph](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L13) · [Half-five copy preservation](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L158) · [Forced equalities within components](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L174) · [Exact component ranks](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L215).
 
 The explicit rank assignment copies each occurrence to its vertex and
 assigned rank. An example on six rows already excludes half-bridges at
@@ -2393,7 +2393,7 @@ every size. A three-bridge and a two-step return force equal ranks for
 two rows at vertex 2. The assigned ranks at that vertex decrease on the
 two last rows, both of which end a comparison there. The local test
 still gives half-five exclusion on the copied family.
-[Vertex copying by rank](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L230) · [Original exclusion](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L35) · [Rows in the same terminal component](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L65) · [Half-five exclusion after copying](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L77) · [Ranks decreasing in arrival order](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L84).
+[Vertex copying by rank](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L238) · [Original exclusion](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L35) · [Rows in the same terminal component](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L65) · [Half-five exclusion after copying](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L77) · [Ranks decreasing in arrival order](OnlineReachabilityPreservers/HalfFiveTerminalRankExample.lean#L84).
 
 A four-row family on six vertices excludes all full bridges. Its first
 two rows share vertices 0 and 1 in reverse order. At each of these
@@ -2410,7 +2410,16 @@ than the river. Every projected half-five obstruction produces this
 pattern. The same weak-rank inequalities still preserve half-five
 exclusion. The smaller graph is empty at any vertex with no full
 three-bridge ending there, including every vertex of the four-row example.
-[Collision patterns](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L31) · [Subgraph of the broad test](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L63) · [Half-five preservation with the smaller graph](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L245) · [Empty smaller graph in the example](OnlineReachabilityPreservers/HalfFiveTerminalRankCoincidence.lean#L78).
+[Collision patterns](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L31) · [Subgraph of the broad test](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L63) · [Half-five preservation with the smaller graph](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L253) · [Empty smaller graph in the example](OnlineReachabilityPreservers/HalfFiveTerminalRankCoincidence.lean#L78).
+
+For simple half-five-free input, an explicit degree-copy assignment
+preserves half-five exclusion exactly when it realizes none of the
+projected terminal patterns. A pattern is realized when ranks match
+at all five joins, including the two joins with the river, and the
+two projected terminal copies have distinct ranks. Lean lifts each
+realized pattern to a half-five bridge and recovers a realized pattern
+from each forbidden bridge among the copies.
+[Realized joins](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L325) · [Lift to a forbidden half-five](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L370) · [Exact copy criterion](OnlineReachabilityPreservers/HalfFiveTerminalRank.lean#L449).
 
 The usual nested split example can be padded to six vertices and ten
 indexed rows with mass ten. Two extra vertices belong only to the
