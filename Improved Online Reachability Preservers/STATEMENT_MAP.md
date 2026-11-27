@@ -1693,10 +1693,26 @@ at least \(7M/8\). Their unique intersections protect both splits at
 the original widths. Restriction and peeling give an indexed or feasible
 literal frozen witness of mass at least \(M/32\), using both original
 budgets and all four original-average caps at half cutoff five.
-[First-occurrence premise](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L12)
-· [Unique intersections](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L18)
-· [Indexed witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L63)
-· [Literal witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L91).
+[First-occurrence premise](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L13)
+· [Unique intersections](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L89)
+· [Indexed witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L139)
+· [Literal witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L177).
+
+Allow opposite comparisons to cross first-occurrence groups. Let \(S\)
+be a set of original incidences containing one of the four endpoints,
+with its row label, of each such pair. Use first-occurrence trimming
+for the pairs within a group and erase \(S\) for the cross-group pairs.
+The resulting rows have unique intersections and total loss at most
+\(n+|S|\). For simple input excluding half bridges through five, with
+positive budgets and mass at least both of them, the low-mass construction
+handles \(M\le8\max(n,p)\). Otherwise require \(8(n+|S|)\le M\) to
+retain at least \(7M/8\) before the original-width splits. The resulting
+indexed or feasible literal frozen witness retains at least \(M/32\)
+with half exclusion through five, both budgets and all four caps.
+[Cross-group cover](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L19)
+· [Erasure and incidence loss](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L26)
+· [Indexed witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L108)
+· [Literal witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L158).
 
 The first-occurrence sublist condition permits a degree-splitting failure.
 On an indexed family with twelve vertices, forty-three rows and mass

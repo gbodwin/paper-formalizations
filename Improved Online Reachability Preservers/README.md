@@ -1017,9 +1017,21 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   and path widths then gives a frozen \(M/32\) witness through half cutoff
   five within both budgets and all four caps. Feasible literal input has
   a distinct nonempty witness with the same bounds.
-  [Unique intersections after trimming](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L18)
-  · [Indexed witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L63)
-  · [Literal witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L91).
+  [Unique intersections after trimming](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L89)
+  · [Indexed witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L139)
+  · [Literal witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L177).
+- For simple half-five-free input with positive budgets and mass at least
+  both budgets, designate a set \(S\) of incidences meeting every opposite
+  pair across first-occurrence groups. Trimming and deleting
+  \(S\) give unique intersections and lose at most \(n+|S|\) incidences.
+  Above the low-mass range \(M\le8\max(n,p)\), the budget \(8(n+|S|)\le M\)
+  gives the frozen \(M/32\) witness at half cutoff five, within both original
+  budgets and all four original-average caps. The feasible literal witness
+  also has distinct nonempty rows.
+  [Cover condition](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L19)
+  · [Unique intersections after deletion](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L26)
+  · [Indexed witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L108)
+  · [Literal witness](OnlineReachabilityPreservers/FirstOccurrenceHalfFive.lean#L158).
 - With twelve vertices, forty-three indexed rows and mass forty-eight,
   each occupied first-occurrence group is a singleton. Opposite comparisons
   cross two groups. The original family excludes every half bridge. Splitting
