@@ -4264,6 +4264,22 @@ the literal Lemma 39 remains open.
 · [Large vertex budgets](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L288)
 · [Large path budgets](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L301).
 
+For any fixed positive density threshold \(\delta\) and error
+\(\varepsilon\), \(p\ge\delta n^2\) gives half mass at most
+\((2+\varepsilon)p\) for simple indexed input and sufficiently large \(n\), uniformly over
+half cutoffs at least three. With \(p\le\lfloor n^2/4\rfloor\), the
+all-size full-free system of \(p\) distinct two-vertex rows has exact
+mass \(2p\). Every simple indexed half input has mass at most
+\((1+\varepsilon)2p\), using the error \(2\varepsilon\) in the half bound. For the
+original-average version of the literal Lemma 39, positive quadratic
+path density alone gives \(M\le3p\) at any feasible exact-count half
+maximum and sufficiently large \(n\). The low-mass construction yields
+distinct nonempty simple rows within both budgets, with mass in
+\([M/8,M]\), the four original caps, and full exclusion at every size.
+[Relative mass bound](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L14)
+· [Pair-capacity comparison](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L29)
+· [Literal frozen comparison](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L51).
+
 At every half cutoff \(k\ge3\), simple indexed families have
 \(M\le8(n+p)\) or \(M^3\le1024(np)^2\), hence mass
 \(O((np)^{2/3}+n+p)\). Later branches cannot share an upstream vertex

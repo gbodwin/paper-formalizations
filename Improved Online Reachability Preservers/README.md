@@ -2395,6 +2395,20 @@ The general comparison with the literal \(H\) benchmark remains open.
 · [High mean and large vertex budgets](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L288)
 · [High mean and large row budgets](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L301).
 
+For each fixed \(\delta>0\), when \(p\ge\delta n^2\) and \(n\) is
+sufficiently large, simple indexed half families have mass at most \((2+\varepsilon)p\) for
+any fixed \(\varepsilon>0\). Within the one-way pair capacity, an all-size
+full-free witness of exactly \(p\) distinct pairs comes within a factor
+\(1+\varepsilon\) of the half maximum. For large \(n\), the
+positive-density result also chooses an exact literal half maximizer
+from any feasible half family and gives a distinct nonempty full-free
+witness within both budgets.
+It keeps at least \(M/8\) and all four starting-average caps, with full
+exclusion at every size. These results use half cutoff at least three.
+[Relative mass bound](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L14)
+· [Near-sharp pair witness](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L29)
+· [Original-average caps at the maximum](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L51).
+
 At cutoff three and comparable positive budgets, the witness-average
 form of Lemma 39 holds with its literal half benchmark. For a field of
 size \(q\), the affine lines with directions \((1,s,s^2)\) give \(q^3\)

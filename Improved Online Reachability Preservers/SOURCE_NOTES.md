@@ -3079,6 +3079,22 @@ local-order upper bound and recurrence of Theorem 43.
   · [High mean and large vertex budgets](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L288)
   · [High mean and large path budgets](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L301).
 
+  In the positive quadratic path-density regime \(\delta n^2\le p\),
+  choose the half long-mass error to be \(\varepsilon\delta\). This gives
+  mass at most \((2+\varepsilon)p\) for simple indexed half input when
+  \(n\) is sufficiently large, uniformly at cutoffs of at least three.
+  When \(p\le\lfloor n^2/4\rfloor\), the all-size full-free pair
+  construction on the exact budgets has mass \(2p\), so it approaches
+  the half maximum multiplicatively. For sufficiently large \(n\) with
+  \(\delta n^2\le p\) and \(k\ge3\), choose the exact-count maximum from
+  any feasible literal half family, take \(\varepsilon=1\), and use the
+  low-mass witness. This gives the original-average conclusion
+  of the literal Lemma 39 in this regime, within the paper's two budgets,
+  with mass at least \(M/8\) and full exclusion at every size.
+  [Relative mass bound](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L14)
+  · [Exact-budget pair comparison](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L29)
+  · [Starting-average witness](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L51).
+
   Count all choice sizes together for a sharper constant. For pruned
   mass \(W\), let \(S=(W-n-p)_+\). Encode a three-element subset of
   \(\{0,\ldots,S+1\}\) by its three nonnegative gaps \(a,b,c\) with
