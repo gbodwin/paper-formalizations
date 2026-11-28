@@ -9,23 +9,25 @@ namespace OnlineReachabilityPreservers
 open Finset
 local notation "Before" => SourceAudit.BeforeIn
 
-private def arcShadow {V : Type*} [DecidableEq V] (arcs : Finset (V × V))
+/-- The simple graph joining vertices if either orientation is present. -/
+def arcShadow {V : Type*} [DecidableEq V] (arcs : Finset (V × V))
     (loopless : ∀ x, (x,x) ∉ arcs) : SimpleGraph V where
   Adj x y := (x,y) ∈ arcs ∨ (y,x) ∈ arcs
   symm := ⟨fun _ _ => Or.symm⟩
   loopless := ⟨fun x h => loopless x (h.elim id id)⟩
 
-private def reciprocalGraph {V : Type*} [DecidableEq V] (arcs : Finset (V × V))
+/-- The simple graph joining vertices if both orientations are present. -/
+def reciprocalGraph {V : Type*} [DecidableEq V] (arcs : Finset (V × V))
     (loopless : ∀ x, (x,x) ∉ arcs) : SimpleGraph V where
   Adj x y := (x,y) ∈ arcs ∧ (y,x) ∈ arcs
   symm := ⟨fun _ _ => And.symm⟩
   loopless := ⟨fun x h => loopless x h.1⟩
 
-private instance {V : Type*} [DecidableEq V] {arcs : Finset (V × V)}
+instance {V : Type*} [DecidableEq V] {arcs : Finset (V × V)}
     {loopless : ∀ x, (x,x) ∉ arcs} : DecidableRel (arcShadow arcs loopless).Adj :=
   fun x y => inferInstanceAs (Decidable ((x,y) ∈ arcs ∨ (y,x) ∈ arcs))
 
-private instance {V : Type*} [DecidableEq V] {arcs : Finset (V × V)}
+instance {V : Type*} [DecidableEq V] {arcs : Finset (V × V)}
     {loopless : ∀ x, (x,x) ∉ arcs} : DecidableRel (reciprocalGraph arcs loopless).Adj :=
   fun x y => inferInstanceAs (Decidable ((x,y) ∈ arcs ∧ (y,x) ∈ arcs))
 
@@ -63,7 +65,8 @@ private theorem arcShadow_cliqueFree_four {V : Type*} [DecidableEq V]
     · exact twoIn (by decide : (1 : Fin 4) ≠ 3) one three
   · exact twoIn (by decide : (1 : Fin 4) ≠ 2) one two
 
-private theorem arcs_card_le_shadow_add_reciprocal {V : Type*} [Fintype V] [LinearOrder V]
+/-- In addition to one arc per shadow edge, an edge with both orientations contributes one more arc. -/
+theorem arcs_card_le_shadow_add_reciprocal {V : Type*} [Fintype V] [LinearOrder V]
     (arcs : Finset (V × V)) (loopless : ∀ x, (x,x) ∉ arcs) :
     arcs.card ≤ (arcShadow arcs loopless).edgeFinset.card+(reciprocalGraph arcs loopless).edgeFinset.card := by
   classical
@@ -150,7 +153,8 @@ private theorem graph_edge_square_le_of_unique_common_neighbor {V : Type*}
     _ ≤ n*(2*(n*n)) := Nat.mul_le_mul_left n sumSquares
     _ = _ := by change n*(2*(n*n)) = 2*n^3; ring
 
-private theorem no_detour_of_distinct_arc_owners {V I : Type*} [DecidableEq V]
+/-- A detour and shortcut with distinct vertices and injective arc owners give a full bridge. -/
+theorem no_detour_of_distinct_arc_owners {V I : Type*} [DecidableEq V]
     {rows : I → List V} {cutoff s : ℕ} (full : BridgeFree (Before rows) cutoff)
     (fits : s+2 ≤ cutoff) (multiple : 0 < s) {arcs : Finset (V × V)}
     (owner : arcs → I) (unique : Function.Injective owner)
@@ -186,6 +190,51 @@ private theorem no_detour_of_distinct_arc_owners {V I : Type*} [DecidableEq V]
   change s+1 = i.val+1 at last
   omega
 
+/-- A strict comparison on each arc excludes loops. -/
+theorem arc_owners_loopless {V I : Type*} [DecidableEq V] {rows : I → List V}
+    {arcs : Finset (V × V)} {owner : arcs → I}
+    (compares : ∀ e : arcs, Before rows (owner e) e.val.1 e.val.2) (x : V) :
+    (x,x) ∉ arcs :=
+  fun loop => listBefore_ne (compares ⟨(x,x),loop⟩) rfl
+
+/-- In a full-three-free system, injectively owned arcs exclude transitive triangles. -/
+theorem arc_owners_no_transitive_triangle {V I : Type*} [DecidableEq V] {rows : I → List V}
+    {arcs : Finset (V × V)} {owner : arcs → I} (unique : Function.Injective owner)
+    (compares : ∀ e : arcs, Before rows (owner e) e.val.1 e.val.2)
+    {k : ℕ} (full : BridgeFree (Before rows) k) (three : 3 ≤ k) {x y z : V}
+    (xy : (x,y) ∈ arcs) (yz : (y,z) ∈ arcs) (xz : (x,z) ∈ arcs) : False := by
+  have xyApart := listBefore_ne (compares ⟨(x,y),xy⟩)
+  have yzApart := listBefore_ne (compares ⟨(y,z),yz⟩)
+  have xzApart := listBefore_ne (compares ⟨(x,z),xz⟩)
+  have vertices : Function.Injective (![x,y,z] : Fin 3 → V) := by
+    intro i j eq
+    fin_cases i <;> fin_cases j <;> simp_all
+  exact no_detour_of_distinct_arc_owners full three (by decide : 0 < 1)
+    owner unique compares ![x,y,z] vertices (by intro i; fin_cases i; exacts [xy,yz]) xz
+
+/-- Two common neighbors in the reciprocal graph give a full four-bridge.
+The sum of squared degrees bounds the square of its edge count. -/
+theorem reciprocal_edge_square_le_of_distinct_arc_owners {V I : Type*} [Fintype V] [DecidableEq V]
+    {rows : I → List V} {arcs : Finset (V × V)} {owner : arcs → I}
+    (loopless : ∀ x, (x,x) ∉ arcs) (unique : Function.Injective owner)
+    (compares : ∀ e : arcs, Before rows (owner e) e.val.1 e.val.2)
+    {k : ℕ} (full : BridgeFree (Before rows) k) (four : 4 ≤ k) :
+    (2*(reciprocalGraph arcs loopless).edgeFinset.card)^2 ≤ 2*(Fintype.card V)^3 := by
+  let reciprocal := reciprocalGraph arcs loopless
+  have oneCommon {x z a b : V} (xz : x ≠ z) (ax : reciprocal.Adj a x)
+      (az : reciprocal.Adj a z) (bx : reciprocal.Adj b x) (bz : reciprocal.Adj b z) : a = b := by
+    by_contra ab
+    have axApart := reciprocal.ne_of_adj ax
+    have azApart := reciprocal.ne_of_adj az
+    have bxApart := reciprocal.ne_of_adj bx
+    have bzApart := reciprocal.ne_of_adj bz
+    have vertices : Function.Injective (![x,a,z,b] : Fin 4 → V) := by
+      intro i j eq
+      fin_cases i <;> fin_cases j <;> simp_all
+    exact no_detour_of_distinct_arc_owners full four (by decide : 0 < 2) owner unique compares
+      ![x,a,z,b] vertices (by intro i; fin_cases i; exacts [ax.2,az.1,bz.2]) bx.2
+  exact graph_edge_square_le_of_unique_common_neighbor reciprocal (fun {_ _ _ _} => oneCommon)
+
 /-- First darts of a literal full-four-free system decompose into a
 (K_4)-free undirected shadow and a subquadratic reciprocal part. The
 singletons use at most one additional row per vertex. -/
@@ -194,44 +243,36 @@ theorem literal_full_four_path_count_bound {v q k : ℕ} (paths : Fin q → List
     (full : BridgeFree (Before paths) k) (four : 4 ≤ k) :
     ∃ edges reciprocal : ℕ, q ≤ v+edges+reciprocal ∧ 3*edges ≤ v^2 ∧ (2*reciprocal)^2 ≤ 2*v^3 := by
   obtain ⟨arcs,count,owner,unique,compares⟩ := literal_first_darts paths distinct valid full.halfFree (by omega)
-  have loopless (x : Fin v) (loop : (x,x) ∈ arcs) : False :=
-    listBefore_ne (compares ⟨(x,x),loop⟩) rfl
-  have excludesTriangle {x y z : Fin v} (xy : (x,y) ∈ arcs) (yz : (y,z) ∈ arcs) (xz : (x,z) ∈ arcs) : False := by
-    have xyApart := listBefore_ne (compares ⟨(x,y),xy⟩)
-    have yzApart := listBefore_ne (compares ⟨(y,z),yz⟩)
-    have xzApart := listBefore_ne (compares ⟨(x,z),xz⟩)
-    have vertices : Function.Injective (![x,y,z] : Fin 3 → Fin v) := by
-      intro i j eq
-      fin_cases i <;> fin_cases j <;> simp_all
-    exact no_detour_of_distinct_arc_owners full (by omega : 1+2 ≤ k) (by decide)
-      owner unique compares ![x,y,z] vertices (by intro i; fin_cases i; exacts [xy,yz]) xz
+  let loopless := arc_owners_loopless compares
   let shadow := arcShadow arcs loopless
   let reciprocal := reciprocalGraph arcs loopless
-  have oneCommon {x z a b : Fin v} (xz : x ≠ z) (ax : reciprocal.Adj a x)
-      (az : reciprocal.Adj a z) (bx : reciprocal.Adj b x) (bz : reciprocal.Adj b z) : a = b := by
-    by_contra ab
-    have axApart := reciprocal.ne_of_adj ax
-    have azApart := reciprocal.ne_of_adj az
-    have bxApart := reciprocal.ne_of_adj bx
-    have bzApart := reciprocal.ne_of_adj bz
-    have vertices : Function.Injective (![x,a,z,b] : Fin 4 → Fin v) := by
-      intro i j eq
-      fin_cases i <;> fin_cases j <;> simp_all
-    exact no_detour_of_distinct_arc_owners full four (by decide : 0 < 2) owner unique compares
-      ![x,a,z,b] vertices (by intro i; fin_cases i; exacts [ax.2,az.1,bz.2]) bx.2
   have freeShadow : shadow.CliqueFree (3+1) :=
-    arcShadow_cliqueFree_four arcs loopless (fun {_ _ _} => excludesTriangle)
+    arcShadow_cliqueFree_four arcs loopless
+      (fun {_ _ _} => arc_owners_no_transitive_triangle unique compares full (by omega))
   have edgeCount := freeShadow.card_edgeFinset_le
   rw [Fintype.card_fin,SimpleGraph.turanNumber_three] at edgeCount
   have limit : 3*shadow.edgeFinset.card ≤ v^2 := by
     rw [Nat.mul_comm]
     exact (Nat.mul_le_mul_right 3 edgeCount).trans (Nat.div_mul_le_self _ _)
-  have reciprocalBound := graph_edge_square_le_of_unique_common_neighbor reciprocal (fun {_ _ _ _} => oneCommon)
+  have reciprocalBound := reciprocal_edge_square_le_of_distinct_arc_owners loopless unique compares full four
   rw [Fintype.card_fin] at reciprocalBound
   have firstCount := arcs_card_le_shadow_add_reciprocal arcs loopless
   exact ⟨shadow.edgeFinset.card,reciprocal.edgeFinset.card,by
     dsimp [shadow,reciprocal]
     omega,limit,reciprocalBound⟩
+
+/-- Every row contributes at most two visits apart from the long-row mass. -/
+theorem list_mass_le_twice_rows_add_long {v q : ℕ} (rows : Fin q → List (Fin v)) :
+    (∑ i, (rows i).length) ≤ 2*q+listMassAboveWidth rows 2 := calc
+  _ ≤ ∑ i, (2+(if 2 < (rows i).length then (rows i).length else 0)) := by
+    apply sum_le_sum
+    intro i _
+    by_cases longRow : 2 < (rows i).length
+    · simp [longRow]
+    · simpa [longRow] using (le_of_not_gt longRow)
+  _ = _ := by
+    rw [sum_add_distrib, show (∑ _ : Fin q, (2:ℕ)) = 2*q by simp [Nat.mul_comm]]
+    simp [listMassAboveWidth,sum_filter]
 
 /-- At any full cutoff of at least four, the literal mass is at most
 two thirds of the vertex square plus an arbitrarily small quadratic error,
@@ -268,16 +309,7 @@ theorem literal_full_mass_le_two_thirds_square_of_cutoff_four (ε : ℝ) (positi
     exact reciprocal'.trans (by nlinarith only [scaled])
   have long := small ((le_max_left N _).trans large) fits (by omega : 3 ≤ k) rows
     (fun i => (valid i).2) full
-  have mass : (∑ i, (rows i).length) ≤ 2*q+listMassAboveWidth rows 2 := calc
-    _ ≤ ∑ i, (2+(if 2 < (rows i).length then (rows i).length else 0)) := by
-      apply sum_le_sum
-      intro i _
-      by_cases longRow : 2 < (rows i).length
-      · simp [longRow]
-      · simpa [longRow] using (le_of_not_gt longRow)
-    _ = _ := by
-      rw [sum_add_distrib, show (∑ _ : Fin q, (2:ℕ)) = 2*q by simp [Nat.mul_comm]]
-      simp [listMassAboveWidth,sum_filter]
+  have mass := list_mass_le_twice_rows_add_long rows
   have mass' : ((∑ i, (rows i).length : ℕ):ℝ) ≤ 2*(q:ℝ)+(listMassAboveWidth rows 2:ℝ) := by
     exact_mod_cast mass
   nlinarith only [count',shadow',linearError,reciprocalError,long,mass']

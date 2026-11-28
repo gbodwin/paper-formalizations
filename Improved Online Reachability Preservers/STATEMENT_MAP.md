@@ -4332,9 +4332,24 @@ edges give at most \((1/3+o(1))n^2\) rows. Rows of length at least three contrib
 \(o(n^2)\) mass. With the cyclic construction, this proves that at full
 cutoff four the best literal full mass is asymptotically two thirds of
 the exact saturated half mass \(M=n^2+2\).
-[Row-count bound](OnlineReachabilityPreservers/SaturatedLiteralFullFour.lean#L192)
-· [Uniform full mass upper bound](OnlineReachabilityPreservers/SaturatedLiteralFullFour.lean#L239)
-· [Sharp comparison to the exact half mass](OnlineReachabilityPreservers/SaturatedLiteralFullFour.lean#L289).
+[Row-count bound](OnlineReachabilityPreservers/SaturatedLiteralFullFour.lean#L241)
+· [Uniform full mass upper bound](OnlineReachabilityPreservers/SaturatedLiteralFullFour.lean#L280)
+· [Sharp comparison to the exact half mass](OnlineReachabilityPreservers/SaturatedLiteralFullFour.lean#L321).
+
+At every full cutoff of at least five, the first-comparison shadow
+omits the complete tripartite graph with two vertices per part. An
+orientation of one edge fixes the directions in its cross triangles
+because a transitive triangle is forbidden. Two vertices in each of
+the first two parts and one in the third then give a four-step chain
+and a shortcut on five distinct row labels. Erdős–Stone and deletion
+of minimum-degree vertices bound the shadow by \((1/4+o(1))n^2\)
+edges. The reciprocal edges and the mass of rows of length at least
+three contribute lower-order terms. The one-way bipartite witness
+works at all cutoffs, so the optimal ratio to the exact saturated
+half mass tends to one half as the budgets grow, uniformly over full cutoffs of at least five.
+[Quarter-square row bound](OnlineReachabilityPreservers/SaturatedLiteralFullFive.lean#L155)
+· [Uniform full mass upper bound](OnlineReachabilityPreservers/SaturatedLiteralFullFive.lean#L200)
+· [Sharp comparison from cutoff five](OnlineReachabilityPreservers/SaturatedLiteralFullFive.lean#L218).
 
 
 
