@@ -689,8 +689,8 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   at least \(M/4\). The literal form takes and gives distinct nonempty
   simple paths at cutoff at least two and retains at least \(M/8\).
   [Grouped vertex copies](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L42)
-  · [Indexed witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L111)
-  · [Literal witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L187).
+  · [Indexed witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L177)
+  · [Literal witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L211).
 - The example where standard degree copying creates a half-six bridge
   has all deleted-label neighbor groups of size at most two. At the
   original degree width four, grouped copies preserve all incidence
@@ -700,6 +700,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [Group-size certificate](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L59)
   · [Grouped degree copies](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L82)
   · [Frozen half witness](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L95).
+- The component tests can use a restriction that keeps at least two
+  thirds of the incidence mass. Test the restricted groups at the
+  original widths. For admissible simple input with mass at least both
+  positive budgets, this gives a witness at the selected cutoff with
+  the original budgets, all four starting-average caps, and retention
+  at least \(M/18\). The literal version takes and gives distinct
+  nonempty simple paths at cutoff at least two.
+  [Fixed-mass grouping](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L110)
+  · [Indexed restriction](OnlineReachabilityPreservers/IncidenceComponentRestriction.lean#L13)
+  · [Literal restriction](OnlineReachabilityPreservers/IncidenceComponentRestriction.lean#L39).
 - At half cutoff six with full-three exclusion and arbitrary
   intersections, fix lower coefficients \(a,b\in[0,1/4]\) with
   \(a+b\le7/15\). A witness meets these lower caps, both original upper

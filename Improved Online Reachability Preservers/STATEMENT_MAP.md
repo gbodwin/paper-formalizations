@@ -1914,8 +1914,8 @@ the indexed witness retains at least \(M/4\) with both budgets, all four
 starting-average caps, and the original cutoff in either mode. At
 cutoff at least two, the literal theorem takes and gives distinct
 nonempty simple rows and retains at least \(M/8\).
-[Indexed frozen witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L111)
-· [Literal frozen witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L187).
+[Indexed frozen witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L177)
+· [Literal frozen witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L211).
 
 In the twenty-incidence mixed-cycle example, every original row has
 length two. The only vertex of degree above two is the terminal of the
@@ -1932,6 +1932,20 @@ every half cutoff.
 · [Group-size certificate](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L59)
 · [Grouped degree copies](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L82)
 · [Frozen half witness](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L95).
+
+The group-size conditions can be certified after deleting incidences.
+Keep sublists of total mass \(K\ge2M/3\), where \(M\) is the original
+mass of the simple admissible family. Keep both original widths and
+test the neighbor group sizes in the retained incidence graph. The
+quadratic bounds on the two trims, each at most \(K^2/(8M)\), guarantee
+at least \(5M/9\) before enforcing the lower caps. Thus the cleaner
+keeps \(M/18\) or more, the selected cutoff, both original budgets and
+all four starting-average caps. In the literal theorem with cutoff at
+least two, the original and output rows are distinct, nonempty and simple.
+[Fixed-mass group trims](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L110)
+· [Trim bound at two thirds](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L126)
+· [Indexed restriction](OnlineReachabilityPreservers/IncidenceComponentRestriction.lean#L13)
+· [Literal restriction](OnlineReachabilityPreservers/IncidenceComponentRestriction.lean#L39).
 
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates

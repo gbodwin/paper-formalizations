@@ -105,22 +105,22 @@ theorem copies_of_incidence_vertex_deletion_group_room {n p width k : ℕ} {half
             ⟨mem_incidenceTranspose.mpr (members edgeX),mem_incidenceTranspose.mpr right,connected⟩
           exact congrArg Sum.inr (together same edgeX edgeY link)
 
-/-- Trim width-bounded vertex groups and row groups. Each profile has at
-most one light group per original label, so the two support restrictions
-and original lower caps leave at least a quarter of the original mass. -/
-theorem regularization_list_frozen_of_incidence_deletion_group_rooms {n p k : ℕ} {half : Bool}
+/-- Keep the two width tests and lower caps fixed at a supplied starting
+mass. The trim reports its two quadratic deletion bounds to the caller. -/
+theorem regularization_list_frozen_of_incidence_deletion_group_rooms_of_mass {n p k M retention : ℕ} {half : Bool}
     (rows : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
     (legal : localOrderAdmissible half k rows)
-    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
-    (degreeRoom : let M := ∑ i, (rows i).length
-      ∀ x i, x ∈ rows i → (incidenceVertexDeletionGroup rows x i).card ≤ 4*M/n)
-    (rowRoom : let M := ∑ i, (rows i).length
-      ∀ i, ∀ x ∈ rows i, (incidenceRowDeletionGroup rows i x).card ≤ 4*M/p) :
-    let M := ∑ i, (rows i).length
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (upper : (∑ i, (rows i).length) ≤ M)
+    (degreeRoom : ∀ x i, x ∈ rows i → (incidenceVertexDeletionGroup rows x i).card ≤ 4*M/n)
+    (rowRoom : ∀ i, ∀ x ∈ rows i, (incidenceRowDeletionGroup rows i x).card ≤ 4*M/p)
+    (enough : let K := ∑ i, (rows i).length
+      ∀ R lostV lostI : ℕ, K ≤ R + (lostV + lostI) →
+        4*(((4*M/n)/2 + 1)*n)*lostV ≤ K^2 →
+        4*(((4*M/p)/2 + 1)*p)*lostI ≤ K^2 → (retention+2)*M ≤ 2*retention*R) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
-      M ≤ 4*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
-  let M := ∑ i, (rows i).length
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let D := 4*M/n
   let L := 4*M/p
   let dMin := D/2+1
@@ -141,8 +141,9 @@ theorem regularization_list_frozen_of_incidence_deletion_group_rooms {n p k : �
   let marks (i : I) := (pieces i).toFinset
   let heavyV := (univ : Finset V).filter fun v => D/2 < (occurrences marks v).card
   let heavyI := (univ : Finset I).filter fun i => L/2 < (pieces i).length
-  have massEqual : (∑ i, (pieces i).length) = M := pieceMass.trans (sum_congr rfl fun i _ => by
+  have massEqual : (∑ i, (pieces i).length) = ∑ i, (rows i).length := pieceMass.trans (sum_congr rfl fun i _ => by
     exact (List.length_map (as := copies i) (fun v => v.fst)).symm.trans (congrArg List.length (projects i)))
+  have pieceUpper := massEqual.trans_le upper
   have dRoom : 2*M ≤ dMin*n := half_average_width_capacity hn
   have lRoom : 2*M ≤ lMin*p := half_average_width_capacity hp
   have restV : (univ \ heavyV).card ≤ n := by
@@ -159,15 +160,38 @@ theorem regularization_list_frozen_of_incidence_deletion_group_rooms {n p k : �
       simp [heavyI]
     rw [rest]
     exact lightI
-  refine regularization_list_frozen_after_threshold_profile_trim_of_loss (retention := 4)
+  refine regularization_list_frozen_after_threshold_profile_trim_of_loss (retention := retention)
     (degreeThreshold := dMin) (pathThreshold := lMin)
     pieces pieceSimple pieceLegal hn hp dense long length (fun v => (degrees v).trans_le (degree v))
-    massEqual.le heavyV heavyI (Nat.succ_pos _) (Nat.succ_pos _)
+    pieceUpper heavyV heavyI (Nat.succ_pos _) (Nat.succ_pos _)
     (fun v on => (mem_filter.mp on).2) restV (fun i on => (mem_filter.mp on).2) restI
-    (massEqual.trans_le ((by omega : M ≤ 2*M).trans dRoom))
-    (massEqual.trans_le ((by omega : M ≤ 2*M).trans lRoom)) ?_
+    (pieceUpper.trans ((by omega : M ≤ 2*M).trans dRoom))
+    (pieceUpper.trans ((by omega : M ≤ 2*M).trans lRoom)) ?_
   dsimp only
   rw [massEqual]
+  exact enough
+
+/-- Trim width-bounded vertex groups and row groups. Each profile has at
+most one light group per original label, so the two support restrictions
+and original lower caps leave at least a quarter of the original mass. -/
+theorem regularization_list_frozen_of_incidence_deletion_group_rooms {n p k : ℕ} {half : Bool}
+    (rows : Fin p → List (Fin n)) (simple : ∀ i, (rows i).Nodup)
+    (legal : localOrderAdmissible half k rows)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (rows i).length) (long : p ≤ ∑ i, (rows i).length)
+    (degreeRoom : let M := ∑ i, (rows i).length
+      ∀ x i, x ∈ rows i → (incidenceVertexDeletionGroup rows x i).card ≤ 4*M/n)
+    (rowRoom : let M := ∑ i, (rows i).length
+      ∀ i, ∀ x ∈ rows i, (incidenceRowDeletionGroup rows i x).card ≤ 4*M/p) :
+    let M := ∑ i, (rows i).length
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 4*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let M := ∑ i, (rows i).length
+  have dRoom : 2*M ≤ ((4*M/n)/2 + 1)*n := half_average_width_capacity hn
+  have lRoom : 2*M ≤ ((4*M/p)/2 + 1)*p := half_average_width_capacity hp
+  refine regularization_list_frozen_of_incidence_deletion_group_rooms_of_mass rows simple legal hn hp dense long
+    le_rfl degreeRoom rowRoom ?_
+  dsimp only
   intro kept lostV lostI paid boundV boundI
   have mPos : 0 < M := hn.trans_le dense
   have lossBound {capacity loss : ℕ} (room : 2*M ≤ capacity) (bound : 4*capacity*loss ≤ M^2) :

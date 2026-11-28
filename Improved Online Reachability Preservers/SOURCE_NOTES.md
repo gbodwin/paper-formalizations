@@ -436,8 +436,8 @@ and takes and gives distinct nonempty simple rows at cutoff at least
 two. These guarantees include both original budgets and all four
 starting-average caps.
 [Grouped degree copies](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L42)
-· [Indexed cleaning](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L111)
-· [Literal cleaning](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L187).
+· [Indexed cleaning](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L177)
+· [Literal cleaning](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L211).
 
 The mixed-cycle half-six example meets both group-size bounds at its
 original widths four and eight. In the graph with the bridge terminal
@@ -450,6 +450,18 @@ both budgets, four starting caps and at least one quarter of the mass.
 [Group-size bound](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L59)
 · [Degree copies](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L82)
 · [Frozen witness](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L95).
+
+The two-sided component test also permits prior incidence deletion.
+For a restriction retaining at least two thirds of the original
+mass, check its groups against the original widths. Its bridges
+already occur in the original family, and the grouped copies and
+pieces preserve the selected exclusion. The original lower caps still
+leave at least one eighteenth of the original mass after the two
+quadratic trims. The indexed and literal outputs use both original
+budgets and all four starting-average caps. The literal theorem uses
+distinct nonempty simple input and output at cutoff at least two.
+[Indexed restriction](OnlineReachabilityPreservers/IncidenceComponentRestriction.lean#L13)
+· [Literal restriction](OnlineReachabilityPreservers/IncidenceComponentRestriction.lean#L39).
 
 At full cutoff six, opposite-intersection pruning followed by restricting
 to a quarter of each support permits the contiguous construction on an
