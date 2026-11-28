@@ -2373,6 +2373,20 @@ saturated half budgets and all four original-average caps.
 · [Exact mass](OnlineReachabilityPreservers/SaturatedLiteralFullFourLower.lean#L142)
 · [Cyclic pair witness with original caps](OnlineReachabilityPreservers/SaturatedLiteralFullFourLower.lean#L149).
 
+In a literal full-four-free family, take the first comparison of each
+row of length at least two. Their undirected shadow has no four-clique. Four
+mutually adjacent vertices would force a transitive triangle. The
+reciprocal arcs give a graph in which any two vertices have at most one
+common neighbor, since two common neighbors give a full four-bridge.
+Turán's bound on the shadow and the subquadratic bound on the reciprocal
+edges give at most \((1/3+o(1))n^2\) rows. Rows of length at least three contribute
+\(o(n^2)\) mass. With the cyclic construction, this proves that at full
+cutoff four the best literal full mass is asymptotically two thirds of
+the exact saturated half mass \(M=n^2+2\).
+[Row-count bound](OnlineReachabilityPreservers/SaturatedLiteralFullFour.lean#L192)
+· [Uniform full mass upper bound](OnlineReachabilityPreservers/SaturatedLiteralFullFour.lean#L239)
+· [Sharp comparison to the exact half mass](OnlineReachabilityPreservers/SaturatedLiteralFullFour.lean#L289).
+
 
 
 
