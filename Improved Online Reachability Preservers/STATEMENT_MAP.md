@@ -1691,6 +1691,20 @@ total number of endpoint bits.
 · [Graph frame length](OnlineReachabilityPreservers/SteinerRawRangeBatchMachine.lean#L348)
 · [Guarded decoder flag](OnlineReachabilityPreservers/SteinerRawRangeBatchMachine.lean#L362).
 
+The raw startup machine combines the framed comparisons with the seed
+splitter. The tag on each symbol identifies the range frame or the
+seed frame. The range check leaves the full seed frame on a passive
+tape. Graph rejection returns that frame behind a marker. Acceptance
+runs the finite sampler and returns the tagged seed and suffix, or
+the empty output on exhaustion. For \(N\) range symbols and a
+supplied seed count \(B\), the bound is \(7N+3B+7\) transitions.
+Graph rejection takes at most \(7N+4\) transitions.
+[Raw startup machine](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L108)
+· [Exact run](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L443)
+· [Linear input polynomial](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L452)
+· [Guarded decoder and finite sampler](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L476)
+· [Rejection preserves the seed frame](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L493).
+
 
 
 
