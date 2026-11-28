@@ -1964,6 +1964,25 @@ bridge exclusion through the selected cutoff.
 · [First-return bound](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L29)
 · [Projection in either mode](OnlineReachabilityPreservers/ShortIncidenceProjection.lean#L56).
 
+Within a row, join each pair of its neighbors that connects by a walk
+of at most \(k-2\) edges after deleting the row. The connected groups of
+this graph fit inside the corresponding deletion components. Each
+group must fit in the original path width. Packing whole groups
+preserves all incidences, degrees and the chosen cutoff. Each original
+row gives at most one piece of half width or less.
+For simple inputs of mass at least both positive budgets and admissible
+degree copies, the resulting indexed frozen witness retains \(M/4\)
+or more with both budgets and all four starting-average caps. The
+literal theorem also uses original admissibility with distinct nonempty
+simple input and output at cutoff at least two, retaining \(M/8\) or more.
+In full mode, checking the groups before degree copying also suffices.
+[Short-link group inclusion](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L49)
+· [Size under copying](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L73)
+· [Packing](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L109)
+· [Indexed witness](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L166)
+· [Original-group full witness](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L198)
+· [Literal witness](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L220).
+
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates
 a full size-seven bridge in the dense branch on a simple input with unique

@@ -719,6 +719,19 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [First-return bound](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L29)
   · [Half-length connection](OnlineReachabilityPreservers/ShortIncidenceProjection.lean#L13)
   · [Cutoff-preserving projection](OnlineReachabilityPreservers/ShortIncidenceProjection.lean#L56).
+- Pack a copied row's neighbors by connected groups of these short
+  links. Each group must fit the original path width. With simple input
+  of mass at least both positive budgets and admissible degree copies,
+  this gives both budgets and all four starting-average caps through
+  the original cutoff. Retention is at least \(M/4\) indexed or \(M/8\)
+  literal. The literal test also uses original admissibility and takes
+  and gives distinct nonempty simple rows at cutoff at least two.
+  For full exclusion the group sizes can be checked before degree copying.
+  [Short-link groups](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L36)
+  · [Packing](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L109)
+  · [Indexed witness](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L166)
+  · [Original groups in full mode](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L198)
+  · [Literal witness](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L220).
 - At half cutoff six with full-three exclusion and arbitrary
   intersections, fix lower coefficients \(a,b\in[0,1/4]\) with
   \(a+b\le7/15\). A witness meets these lower caps, both original upper

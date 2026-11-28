@@ -475,6 +475,21 @@ comparisons with monotone parent order preserves the bridge cutoff.
 · [Bounded first-return proof](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L29)
 · [Projection theorem](OnlineReachabilityPreservers/ShortIncidenceProjection.lean#L56).
 
+Connected groups of these short links can be used for path packing.
+Each group is contained in a deletion component of the graph being
+tested. For simple input of mass at least both positive budgets and
+with admissible degree copies, the original path-width test on all
+such groups yields the indexed \(M/4\) frozen witness and the literal
+\(M/8\) witness in either mode. The literal version uses original
+admissibility, distinct nonempty simple input and output, and cutoff
+at least two. Both budgets
+and all four starting-average caps hold. Full exclusion also permits
+checking the short-link group sizes before degree copying.
+[Bounded group packing](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L109)
+· [Indexed cleaning](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L166)
+· [Original group check](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L198)
+· [Literal cleaning](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L220).
+
 At full cutoff six, opposite-intersection pruning followed by restricting
 to a quarter of each support permits the contiguous construction on an
 unrestricted maximizing family of indexed simple paths. If the quarter
