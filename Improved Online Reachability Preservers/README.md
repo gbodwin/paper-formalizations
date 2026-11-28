@@ -3483,6 +3483,19 @@ used in seed decoding. The ordinary output also agrees with the
 · [Linear width bound](OnlineReachabilityPreservers/SteinerUnaryBitWidthMachine.lean#L231)
 · [Linear index-width bound](OnlineReachabilityPreservers/SteinerUnaryBitWidthMachine.lean#L242).
 
+The forest scale can be computed using one recurrence for each
+orientation. Start with zero at every root. For the next height, sum
+over vertices that reach the root, including the root itself. Add each
+transfer weight and the previous total rooted at that vertex. The recurrence gives the exact
+weight of the corresponding inward template. For the reversed graph,
+use the original distance in the direction of the outward transfer.
+Summing both rooted totals and taking the maximum with one gives the
+exact priced forest scale.
+[Rooted weight recurrence](OnlineReachabilityPreservers/SteinerForestScaleRecurrence.lean#L13)
+· [Exact inward template weight](OnlineReachabilityPreservers/SteinerForestScaleRecurrence.lean#L110)
+· [Scale in both orientations](OnlineReachabilityPreservers/SteinerForestScaleRecurrence.lean#L165)
+· [Agreement with the priced forest](OnlineReachabilityPreservers/SteinerForestScaleRecurrence.lean#L172).
+
 
 
 

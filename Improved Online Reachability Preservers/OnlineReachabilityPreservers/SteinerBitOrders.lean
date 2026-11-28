@@ -37,8 +37,8 @@ private def heightNodeZero (V : Type*) : HeightNode V 0 ≃ Fin 1 where
   invFun _ := ⟨[], by simp⟩
   left_inv x := Subtype.ext (List.length_eq_zero_iff.mp (Nat.eq_zero_of_le_zero x.property)).symm
   right_inv _ := Subsingleton.elim _ _
-
-private def heightNodeFirst (V : Type*) (height : ℕ) :
+/-- Split a bounded history at its first label, with a slot for the empty history. -/
+def heightNodeFirst (V : Type*) (height : ℕ) :
     HeightNode V (height + 1) ≃ Option (V × HeightNode V height) where
   toFun node := match node with
     | ⟨[], _⟩ => none
