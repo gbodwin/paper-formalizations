@@ -276,6 +276,18 @@ respectively. The input still excludes half-six and full-three bridges.
 · [Both splits](OnlineReachabilityPreservers/HalfSixProjection.lean#L62)
 · [Starting-average witnesses](OnlineReachabilityPreservers/HalfSixProjection.lean#L113)
 · [Output-average witnesses](OnlineReachabilityPreservers/HalfSixProjection.lean#L130).
+For half cutoff six with full-three exclusion and arbitrary
+intersections, the same two-support crop used at half cutoff five
+leaves at least \(K-4K^2/(31M)\) incidences before peeling in the dense
+case, where \(K\) is the mass after opposite pruning. At \(K\ge M/2\)
+this pays for lower coefficients with sum at most \(7/15\) and
+retention \(M/930\). At \(K\ge13M/24\) it pays for both exact
+one-quarter lower coefficients and retention \(M/288\). Both choices
+keep the original factor-four upper caps and both budgets. There
+are indexed and distinct nonempty literal versions.
+[Crop score](OnlineReachabilityPreservers/StartingLowerCaps.lean#L20)
+· [Prescribed fractions](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L29)
+· [Exact starting caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L70).
 The earlier packing that can reorder positions need not make contiguous
 pieces in the original order. The six-vertex noncontiguous example
 remains a counterexample to using only the opposite-cut constraints.
@@ -601,8 +613,8 @@ and both budgets hold. In the dense literal case, raising the length
 coefficient to at least \(1/8\) leaves room in the sum bound and forces
 length at least two. Half-two exclusion then ensures distinct rows. The
 low-mass case uses the full witnesses with the four original caps.
-[Indexed minimum coefficients](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L40)
-· [Distinct nonempty witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L187).
+[Indexed minimum coefficients](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L29)
+· [Distinct nonempty witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L48).
 
 For an integer count \(x\), the original lower cap at budget \(q\) is
 \(M/(4q)\le x\) exactly when \(x>\lfloor(M-1)/(4q)\rfloor\).

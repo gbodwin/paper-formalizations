@@ -1652,8 +1652,8 @@ Equal coefficients \(7/30\) and the
 asymmetric pairs \((1/4,13/60)\) and \((13/60,1/4)\) are included. For
 literal input the witness is distinct and nonempty. The printed pair of
 lower coefficients \((1/4,1/4)\) remains open without further hypotheses.
-[Indexed lower-cap tradeoff](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L40)
-· [Literal lower-cap tradeoff](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L187).
+[Indexed lower-cap tradeoff](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L29)
+· [Literal lower-cap tradeoff](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L48).
 
 Let \(t_q=\lfloor(M-1)/(4q)\rfloor\) for \(q=n,p\). An integer meets the
 exact quarter-average lower cap at budget \(q\) precisely when it exceeds
@@ -1723,6 +1723,17 @@ on the original family.
 · [Indexed output caps](OnlineReachabilityPreservers/HalfSixProjection.lean#L130)
 · [Literal output caps](OnlineReachabilityPreservers/HalfSixProjection.lean#L154)
 · [Literal starting caps](OnlineReachabilityPreservers/HalfSixProjection.lean#L173).
+For arbitrary intersections and the same two input exclusions, both
+starting-average upper caps hold with either exact lower cap, provided
+the other lower coefficient is at most \(13/60\). More generally the
+coefficients can be in \([0,1/4]\) with sum at most \(7/15\).
+Both conventions meet the original budgets and retain at least
+\(M/930\). If the opposite-pruned mass is at least \(13M/24\), the
+same crop and peel give all four exact caps and at least \(M/288\).
+[Indexed lower fractions](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L29)
+· [Literal lower fractions](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L48)
+· [Indexed exact caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L70)
+· [Literal exact caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L97).
 The general cyclic existence claim at half cutoff six remains open.
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates

@@ -580,6 +580,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   · [Literal output averages](OnlineReachabilityPreservers/HalfSixProjection.lean#L154)
   · [Indexed starting averages](OnlineReachabilityPreservers/HalfSixProjection.lean#L113)
   · [Literal starting averages](OnlineReachabilityPreservers/HalfSixProjection.lean#L173).
+- At half cutoff six with full-three exclusion and arbitrary
+  intersections, fix lower coefficients \(a,b\in[0,1/4]\) with
+  \(a+b\le7/15\). A witness meets these lower caps, both original upper
+  caps and both budgets, and retains at least \(M/930\). If opposite
+  pruning retains at least \(13M/24\), both lower coefficients can be
+  \(1/4\), with retention \(M/288\).
+  [Indexed lower fractions](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L29)
+  · [Literal lower fractions](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L48)
+  · [Indexed exact caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L70)
+  · [Literal exact caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L97).
 - A simple, distinct, nonempty half family at cutoff \(k\ge2\) and with
   \(n\le M\le8\max(n,p)\) has one literal witness excluding full bridges
   at every size. It has mass between \(M/8\) and \(M\), within both budgets
@@ -645,8 +655,8 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   This allows two coefficients \(7/30\), or \(1/4\) and \(13/60\).
   Both indexed and literal versions hold. The unrestricted exact lower
   coefficients \(a=b=1/4\) remain open at half cutoff five.
-  [Indexed witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L40)
-  · [Literal witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L187).
+  [Indexed witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L29)
+  · [Literal witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L48).
 - Integer degrees and lengths recover all four exact starting caps for
   simple half-five input with the same positive budgets and mass assumptions
   whenever
