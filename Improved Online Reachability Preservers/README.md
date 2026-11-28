@@ -3528,6 +3528,23 @@ rooted-weight bound at depth \(h\).
 · [Prepared frame size](OnlineReachabilityPreservers/SteinerUnaryRowSumsMachine.lean#L299)
 · [Machine round on supplied operands](OnlineReachabilityPreservers/SteinerUnaryRowSumsMachine.lean#L312).
 
+The capped transfer machine receives the unary cap \(n\), distance
+\(d\) and earlier rooted weight \(s\). It compares two all-one words
+of lengths \(d\) and \(n+1\) using the verified binary comparator.
+The first flag accepts exactly when \(d\le n\). The machine then
+emits \(d+s\) tallies, or zero tallies for a distance above the cap.
+The transition bound is \(5X+1\) in the unary frame length \(X\).
+For a supplied entry of the exact hop table and its previous rooted
+weight, the frame length is at most \(2n+B+3\), where \(B\) bounds
+the preceding vector entries.
+[Capped transfer machine](OnlineReachabilityPreservers/SteinerUnaryCappedSumMachine.lean#L89)
+· [Three unary operands](OnlineReachabilityPreservers/SteinerUnaryCappedSumMachine.lean#L384)
+· [Exact accepted contribution](OnlineReachabilityPreservers/SteinerUnaryCappedSumMachine.lean#L405)
+· [Exact zero contribution](OnlineReachabilityPreservers/SteinerUnaryCappedSumMachine.lean#L424)
+· [Linear transition polynomial](OnlineReachabilityPreservers/SteinerUnaryCappedSumMachine.lean#L474)
+· [Exact supplied table entry](OnlineReachabilityPreservers/SteinerUnaryCappedSumMachine.lean#L492)
+· [Prepared frame bound](OnlineReachabilityPreservers/SteinerUnaryCappedSumMachine.lean#L516).
+
 
 
 
