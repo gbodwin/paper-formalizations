@@ -2185,9 +2185,20 @@ Trim the full block profiles before deleting the marked incidences, then
 apply the cut deletions in that rectangle. The rectangle keeps at
 least \(587M/1116\) before peeling. The literal theorem gives
 distinct nonempty rows for distinct nonempty input.
-[Rectangle mass bound](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L47)
-· [Indexed witness at \(E\le M\)](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L92)
-· [Distinct nonempty witness at \(E\le M\)](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L203).
+[Rectangle mass bound](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L98)
+· [Indexed witness at \(E\le M\)](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L268)
+· [Distinct nonempty witness at \(E\le M\)](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L366).
+
+For simple half-five-free input with the same positive budgets
+and mass assumptions, the four caps hold at \(10E\le11M\) with
+at least \(M/512\) retained. If both original averages are at least
+64, at \(3E\le4M\) the cleanup retains at least \(M/128\).
+The dense distinct-output theorem takes nonempty simple input rows,
+which may include repeated singleton rows.
+[Indexed eleven-tenths bound](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L292)
+· [Distinct nonempty eleven-tenths bound](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L380)
+· [Indexed four-thirds bound](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L315)
+· [Distinct nonempty four-thirds bound](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L396).
 
 With actual opposite-pruned mass \(K\), a sharper test is
 \(C+\lfloor(M-1)/r\rfloor<K-4K^2/(31M)\) for \(r\ge8\) and
