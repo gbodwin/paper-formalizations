@@ -248,4 +248,96 @@ theorem localOrderDistinctExtremal_frozen_full_three_of_square_budget {n p : ℕ
   have enough := half_three_dense_mass_requires_path_square hn le_rfl paths simple legal (lt_of_not_ge low)
   exact frozen_cleaning_full_three_signed_square hp order (lt_of_not_ge low) upper enough
 
+
+private def squareWidenPoint {w W : ℕ} (fits : w ≤ W) (v : SignedSquarePoint w) :
+    SignedSquarePoint W :=
+  toLex (Fin.castLE fits (squareX v), Fin.castLE fits (squareY v))
+
+private theorem squareWidenPoint_injective {w W : ℕ} (fits : w ≤ W) :
+    Function.Injective (squareWidenPoint fits) := by
+  intro a b eq
+  apply ofLex.injective
+  exact Prod.ext (Fin.castLE_injective fits (congrArg squareX eq))
+    (Fin.castLE_injective fits (congrArg squareY eq))
+
+private def squareWidenRow {w W : ℕ} (fits : w ≤ W) (i : SignedSquarePath w) :
+    SignedSquarePath W :=
+  toLex (squareVertical i, toLex (squareForward i, Fin.castLE fits (squareLine i)))
+
+private theorem squareWidenRow_injective {w W : ℕ} (fits : w ≤ W) :
+    Function.Injective (squareWidenRow fits) := by
+  intro a b eq
+  have axis : squareVertical a = squareVertical b := congrArg (@squareVertical W) eq
+  have orientation : squareForward a = squareForward b := congrArg (@squareForward W) eq
+  exact squareRow_eq axis orientation (Fin.castLE_injective fits (congrArg squareLine eq))
+
+private def squareWidenIndex {w W : ℕ} (fits : w ≤ W) (i : SignedSquarePath w) (j : Fin w) :
+    Fin W :=
+  if squareForward i then Fin.castLE fits j else (Fin.castLE fits j.rev).rev
+
+private theorem squareWidenIndex_strict {w W : ℕ} (fits : w ≤ W) (i : SignedSquarePath w) :
+    StrictMono (squareWidenIndex fits i) := by
+  intro j k lt
+  unfold squareWidenIndex
+  split
+  · exact lt
+  · exact Fin.rev_lt_rev.mpr (show (Fin.castLE fits k.rev) < Fin.castLE fits j.rev from
+      Fin.rev_lt_rev.mpr lt)
+
+private theorem squareAt_widen {w W : ℕ} (fits : w ≤ W) (i : SignedSquarePath w) (j : Fin w) :
+    squareAt (squareWidenRow fits i) (squareWidenIndex fits i j) =
+      squareWidenPoint fits (squareAt i j) := by
+  unfold squareAt squareWidenIndex squareWidenPoint
+  have axisEq : squareVertical (squareWidenRow fits i) = squareVertical i := rfl
+  have forwardEq : squareForward (squareWidenRow fits i) = squareForward i := rfl
+  have lineEq : squareLine (squareWidenRow fits i) = Fin.castLE fits (squareLine i) := rfl
+  rw [axisEq,forwardEq,lineEq]
+  cases a : squareVertical i <;> cases f : squareForward i <;>
+    simp [squareX,squareY]
+
+private theorem signedSquareRows_widen_step {w W : ℕ} (fits : w ≤ W)
+    {i : SignedSquarePath w} {a b : SignedSquarePoint w}
+    (step : Before (signedSquareRows w) i a b) :
+    Before (signedSquareRows W) (squareWidenRow fits i) (squareWidenPoint fits a)
+      (squareWidenPoint fits b) := by
+  obtain ⟨j,rfl⟩ := List.mem_ofFn.mp step.1
+  obtain ⟨k,rfl⟩ := List.mem_ofFn.mp step.2.1
+  have earlier := step.2.2
+  rw [squareRows_index,squareRows_index] at earlier
+  unfold SourceAudit.BeforeIn
+  rw [← squareAt_widen fits i j,← squareAt_widen fits i k]
+  refine ⟨List.mem_ofFn.mpr ⟨_,rfl⟩,List.mem_ofFn.mpr ⟨_,rfl⟩,?_⟩
+  rw [squareRows_index,squareRows_index]
+  exact squareWidenIndex_strict fits i earlier
+
+/-- Every ordering of a signed square of width at least two contains a
+half-four bridge. Only the eight rows through the first two coordinates
+are needed. -/
+theorem signedSquareRows_any_order_has_half_four {w : ℕ} (wide : 2 ≤ w)
+    {I : Type*} [LinearOrder I] (arrival : I ≃ SignedSquarePath w) :
+    ¬ HalfBridgeFree (Before (fun i => signedSquareRows w (arrival i))) 4 := by
+  let position := arrival.symm ∘ squareWidenRow wide
+  let used := (univ : Finset (SignedSquarePath 2)).image position
+  have present (r : SignedSquarePath 2) : position r ∈ used :=
+    mem_image.mpr ⟨r,mem_univ r,rfl⟩
+  have nonempty : used.Nonempty := ⟨_,present (toLex (false,toLex (false,0)))⟩
+  obtain ⟨latest,_,asMax⟩ := mem_image.mp (max'_mem used nonempty)
+  let b := signedSquareFourBridge (squareVertical latest) (squareForward latest) (squareLine latest)
+  have asRiver : b.river = latest := squareRow_eq rfl rfl rfl
+  let lifted : Bridge (Before (fun i => signedSquareRows w (arrival i))) 2 :=
+    (b.mapVertices (squareWidenPoint wide) (squareWidenPoint_injective wide)
+      (fun _ _ _ step => signedSquareRows_widen_step wide step)).mapPaths
+      position (arrival.symm.injective.comp (squareWidenRow_injective wide))
+      (fun i _ _ step => by
+        simpa only [position,Function.comp_apply,SourceAudit.BeforeIn,Equiv.apply_symm_apply] using step)
+  have riverMax : lifted.river = used.max' nonempty := by
+    change position b.river = _
+    rwa [asRiver]
+  intro free
+  apply free (by decide : 2+2 ≤ 4) lifted
+  apply lt_of_le_of_ne
+  · rw [riverMax]
+    exact le_max' used _ (present _)
+  · exact (lifted.river_ne_arc _).symm
+
 end OnlineReachabilityPreservers

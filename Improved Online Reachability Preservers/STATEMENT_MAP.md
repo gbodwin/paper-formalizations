@@ -4350,10 +4350,12 @@ have to stay on the river's axis, since one perpendicular step cannot
 cancel and two perpendicular steps cannot change the river coordinate.
 All three rows would then lie on the same line, which has only two
 orientations. Thus the \(4w\) indexed rows are full-three-free, have
-length \(w\), and give degree four at each of \(w^2\) vertices. At the
-two-by-two square, every direction on every side has a three-step detour
-through the other three sides. With the latest side as river, this is
-a half-four bridge for every arrival permutation.
+length \(w\), and give degree four at each of \(w^2\) vertices. If
+\(w\ge2\), take the first two values of each coordinate. Each of the
+eight oriented sides has a three-step detour through the other three
+sides. Their relative vertex orders agree with the wider rows. With
+the latest of these eight rows as river, this is a half-four bridge
+for every arrival permutation.
 
 For \(0<p\le n\) and \(p(p-1)\le208n\), a feasible exact literal
 half-three maximum has mass \(M\le16n\) by the half degree moment.
@@ -4363,7 +4365,8 @@ both budgets. Its disjoint copies, or the low-mass witness when
 \(M\le8n\), give distinct nonempty simple rows through full cutoff
 three with mass in \([M/8,M]\) and the four original-average caps.
 [Full-three proof](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L86)
-· [Half-four at every arrival order](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L132)
+· [Half-four at width two](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L132)
+· [Half-four in every arrival order at widths at least two](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L316)
 · [Degree four](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L165)
 · [Witness at prescribed mass](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L188)
 · [Literal comparison at the maximum](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L222).

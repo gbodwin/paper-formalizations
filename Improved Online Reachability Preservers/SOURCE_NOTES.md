@@ -3149,10 +3149,11 @@ local-order upper bound and recurrence of Theorem 43.
   or its displacement along the river axis is zero. Both steps then lie
   on the river's line, which has just two row labels. One-step detours
   would reuse the river's label. This supplies degree four with width
-  \(w\), vertex count \(w^2\), and indexed path count \(4w\). On width
-  two the three other sides give a four-bridge for any river direction.
-  Choosing the latest of all eight rows makes a half-four bridge in
-  an arbitrary arrival order.
+  \(w\), vertex count \(w^2\), and indexed path count \(4w\). At width
+  at least two, embed the first two values of each coordinate. The
+  smaller rows have the same relative order inside their wider rows,
+  including the reversed orientations. The latest of these eight
+  labels is the river of a half-four bridge in any arrival order.
 
   If \(0<p\le n\) and \(p(p-1)\le208n\), the degree moment bounds the
   feasible literal half-three maximum by \(16n\). Above \(8n\), use
@@ -3162,7 +3163,7 @@ local-order upper bound and recurrence of Theorem 43.
   construction handles \(M\le8n\). Both branches exclude full bridges
   through size three.
   [Grid proof](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L86)
-  · [Arrival obstruction](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L132)
+  · [Arrival obstruction at every width](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L316)
   · [Square witness](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L188)
   · [Literal comparison](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L222).
 
