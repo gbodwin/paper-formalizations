@@ -1641,6 +1641,19 @@ three times the supplied count plus four.
 · [Guarded graph and sampler agreement](OnlineReachabilityPreservers/SteinerRangeSeedMachine.lean#L275)
 · [Rejection preserves the seed frame](OnlineReachabilityPreservers/SteinerRangeSeedMachine.lean#L303).
 
+The alignment machine produces the padded pairs from two separately
+framed low-bit-first words. The input uses one divider. The machine
+moves the left word to a work stack, reads the two words in order,
+and supplies false bits after either word ends. It returns exactly
+`alignBinaryDigits`, whose width is the longer word's length. With
+left width \(L\) and output width \(D\), the machine takes at most
+\(2L+2D+4\) transitions. Its polynomial bound is four times the
+framed input length.
+[Alignment machine](OnlineReachabilityPreservers/SteinerBinaryAlignmentMachine.lean#L50)
+· [Exact output width](OnlineReachabilityPreservers/SteinerBinaryAlignmentMachine.lean#L77)
+· [Exact output and transition bound](OnlineReachabilityPreservers/SteinerBinaryAlignmentMachine.lean#L261)
+· [Linear input polynomial](OnlineReachabilityPreservers/SteinerBinaryAlignmentMachine.lean#L293).
+
 
 
 
