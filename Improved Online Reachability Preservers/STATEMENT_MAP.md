@@ -2057,6 +2057,20 @@ local graph at any positive width.
 · [Local graph on vertices](OnlineReachabilityPreservers/HalfFiveSparseOppositeIncidences.lean#L98)
 · [Retained mass and local degrees](OnlineReachabilityPreservers/HalfFiveSparseOppositeIncidences.lean#L184).
 
+Choose the order of incident rows at each vertex and the packing
+order of vertices on each row independently. Use those orders to
+assign width blocks, then keep the original comparison order inside
+each piece. On simple input, every original incidence has exactly
+one piece incidence. With positive widths, both upper caps hold.
+The proof uses the full nonfinal blocks on each side and allows
+one remainder slot per original label, empty at exact multiples.
+[Local packing orders](OnlineReachabilityPreservers/IncidenceWidthOrders.lean#L13)
+· [Incidence placement](OnlineReachabilityPreservers/IncidenceWidthOrders.lean#L108)
+· [Unique placement](OnlineReachabilityPreservers/IncidenceWidthOrders.lean#L117)
+· [Exact mass](OnlineReachabilityPreservers/IncidenceWidthOrders.lean#L207)
+· [Width caps](OnlineReachabilityPreservers/IncidenceWidthOrders.lean#L225)
+· [Full blocks and remainders](OnlineReachabilityPreservers/IncidenceWidthOrders.lean#L238).
+
 With actual opposite-pruned mass \(K\), a sharper test is
 \(C+\lfloor(M-1)/r\rfloor<K-4K^2/(31M)\) for \(r\ge8\) and
 \(C\) the integer removal charge above. It yields both budgets,

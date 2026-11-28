@@ -899,6 +899,20 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   · [Local graph on rows](OnlineReachabilityPreservers/HalfFiveSparseOppositeIncidences.lean#L88)
   · [Local graph on vertices](OnlineReachabilityPreservers/HalfFiveSparseOppositeIncidences.lean#L98)
   · [Retained mass and local degrees](OnlineReachabilityPreservers/HalfFiveSparseOppositeIncidences.lean#L184).
+
+  Choose the order of incident rows at each vertex and the packing
+  order of vertices on each row independently. Use those orders to
+  assign width blocks, then keep the original comparison order inside
+  each piece. On simple input, every original incidence has exactly
+  one piece incidence. With positive widths, both upper caps hold.
+  The proof uses the full nonfinal blocks on each side and allows
+  one remainder slot per original label, empty at exact multiples.
+  [Local packing orders](OnlineReachabilityPreservers/IncidenceWidthOrders.lean#L13)
+  · [Incidence placement](OnlineReachabilityPreservers/IncidenceWidthOrders.lean#L108)
+  · [Unique placement](OnlineReachabilityPreservers/IncidenceWidthOrders.lean#L117)
+  · [Exact mass](OnlineReachabilityPreservers/IncidenceWidthOrders.lean#L207)
+  · [Width caps](OnlineReachabilityPreservers/IncidenceWidthOrders.lean#L225)
+  · [Full blocks and remainders](OnlineReachabilityPreservers/IncidenceWidthOrders.lean#L238).
 - At half cutoff five, or at half cutoff six with full-three
   exclusion, the integer charge can use the actual mass \(K\) after
   opposite pruning. Write \(C=n\lfloor(M-1)/(4n)\rfloor+
