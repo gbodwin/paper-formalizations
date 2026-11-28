@@ -640,6 +640,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   · [Literal copied-row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L959)
   · [Indexed original-row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L980)
   · [Literal original-row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L997).
+- For caps at the witness's own averages, the cycle-pair test applies
+  to original rows of length above sixteen and, in half mode, original
+  vertices of degree above sixteen. For simple input excluding the
+  selected bridges, with mass at least both positive budgets, the
+  witness keeps the cutoff and both budgets. The indexed version
+  retains at least \(M/392\). The literal version takes and gives
+  distinct nonempty paths for \(k\ge2\) and retains \(M/7056\).
+  [Dense rectangle rule](OnlineReachabilityPreservers/LocalAverageCleaning.lean#L305)
+  · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1017)
+  · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1077).
 - At half cutoff six with full-three exclusion and arbitrary
   intersections, fix lower coefficients \(a,b\in[0,1/4]\) with
   \(a+b\le7/15\). A witness meets these lower caps, both original upper

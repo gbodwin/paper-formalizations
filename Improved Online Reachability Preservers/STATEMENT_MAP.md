@@ -1826,6 +1826,21 @@ Both tests give indexed and distinct nonempty literal witnesses.
 · [Indexed original-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L980)
 · [Literal original-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L997).
 
+For output-average caps, the linear-mass construction covers input
+of mass at most \(392\max(n,p)\). Otherwise select a rectangle with
+at least \(M/49\) incidences in at most one quarter of each support.
+Both widths computed from its mass are at least sixteen. Thus only
+original rows of length above sixteen need the cycle-pair test in
+either mode. In half mode the test also applies to vertices of degree
+above sixteen. With simple input and both positive budgets and density
+assumptions, the indexed and literal witnesses have the same cutoff,
+both budgets, and all four own-average caps, retaining \(M/392\) or
+\(M/7056\), respectively. Literal input and output are distinct and
+nonempty, with cutoff at least two.
+[Rectangle rule](OnlineReachabilityPreservers/LocalAverageCleaning.lean#L305)
+· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1017)
+· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1077).
+
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates
 a full size-seven bridge in the dense branch on a simple input with unique

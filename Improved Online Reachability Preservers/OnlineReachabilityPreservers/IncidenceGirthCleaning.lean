@@ -1011,4 +1011,86 @@ theorem regularization_literal_frozen_full_of_row_cycle_pairs {n p k : ℕ}
       (regularization_list_frozen_full_of_row_cycle_pairs paths (fun i => (valid i).2) free overlong hn hp dense)
   exact ⟨v,vFit,q,qFit,rows,oneToOne,fun i => ⟨nonempty i,simple i⟩,legal,keep,upper,caps⟩
 
+/-- For output-average cleaning, check rows of length above sixteen
+and, in half mode, vertices of degree above sixteen. Rectangles needing
+splits have both splitting widths at least sixteen. -/
+theorem regularization_list_output_average_of_large_label_cycle_pairs {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k paths)
+    (longRows : ∀ i, 16 < (paths i).length → NoShortCyclePairAt (pathIncidenceGraph paths) k (.inl i))
+    (highVertices : half = true → ∀ x, 16 < (occurrences (fun i => (paths i).toFinset) x).card →
+      NoShortCyclePairAt (pathIncidenceGraph paths) k (.inr x))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v),
+      (∀ i, (rows i).Nodup) ∧ localOrderAdmissible half k rows ∧
+      M ≤ 392*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ listOutputAverageCaps rows := by
+  refine regularization_list_output_average_of_dense_rectangle_splits (k := k) paths simple half ?_
+    hn hp dense long (by omega) le_rfl
+  intro A B
+  dsimp only
+  intro retained high
+  let rectangle := restrictListPaths paths A B
+  let m := ∑ i : B, (rectangle i).length
+  let D := 2*m/n
+  let L := 2*m/p
+  have width {b : ℕ} (positive : 0 < b) (fit : b ≤ max n p) : 16 ≤ 2*m/b :=
+    (Nat.le_div_iff_mul_le positive).mpr (by change (∑ i, (paths i).length) ≤ 49*m at retained; omega)
+  have vWidth : 16 ≤ D := width hn (le_max_left _ _)
+  have rWidth : 16 ≤ L := width hp (le_max_right _ _)
+  have rectangleSimple (i : B) : (rectangle i).Nodup := restrictListPath_nodup (simple i.val) A
+  have restricted : localOrderAdmissible half k rectangle := by
+    cases half
+    · exact restrictListPaths_fullFree simple allowed A B
+    · exact restrictListPaths_halfFree simple allowed A B
+  let hom : pathIncidenceGraph rectangle →g pathIncidenceGraph paths :=
+    pathIncidenceGraph_hom Subtype.val Subtype.val (fun {_ _} on => mem_restrictListPath.mp on)
+  have vertexMap : Function.Injective hom :=
+    Sum.map_injective.mpr ⟨Subtype.val_injective,Subtype.val_injective⟩
+  have edgeMap : Set.InjOn (Sym2.map hom) (pathIncidenceGraph rectangle).edgeSet :=
+    fun {_ _} _ _ same => Sym2.map.injective vertexMap same
+  have rowLength (i : B) : (rectangle i).length ≤ (paths i.val).length := calc
+    _ = ((paths i.val).toFinset ∩ A).card := restrictListPath_length (simple i.val) A
+    _ ≤ _ := (card_le_card inter_subset_left).trans (List.toFinset_card_le _)
+  have vertexDegree (x : A) : (occurrences (fun i : B => (rectangle i).toFinset) x).card ≤
+      (occurrences (fun i => (paths i).toFinset) x.val).card := by
+    apply card_le_card_of_injOn Subtype.val
+    · intro i on
+      have kept : x ∈ rectangle i := List.mem_toFinset.mp
+        ((mem_occurrences (marks := fun j : B => (rectangle j).toFinset)).mp on)
+      exact mem_occurrences.mpr (List.mem_toFinset.mpr (mem_restrictListPath.mp kept))
+    · exact Subtype.val_injective.injOn
+  have rows (i : B) (wide : L < (rectangle i).length) :
+      NoShortCyclePairAt (pathIncidenceGraph rectangle) k (.inl i) := by
+    have original := longRows i.val ((rWidth.trans_lt wide).trans_le (rowLength i))
+    exact original.of_edge_injective_hom hom edgeMap
+  cases half
+  · exact listRegularizedPaths_fullFree_of_row_cycle_pairs rectangleSimple restricted D L rows
+  · have vertices (x : A) (wide : D < (occurrences (fun i : B => (rectangle i).toFinset) x).card) :
+        NoShortCyclePairAt (pathIncidenceGraph rectangle) k (.inr x) := by
+      have original := highVertices rfl x.val ((vWidth.trans_lt wide).trans_le (vertexDegree x))
+      exact original.of_edge_injective_hom hom edgeMap
+    exact listRegularizedPaths_admissible_of_local_cycle_pairs rectangleSimple restricted D L rows vertices
+
+/-- The same original-label tests certify a literal output-average
+witness at cutoffs of at least two. -/
+theorem regularization_literal_output_average_of_large_label_cycle_pairs {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (distinct : Function.Injective paths)
+    (valid : ∀ i, paths i ≠ [] ∧ (paths i).Nodup)
+    (allowed : localOrderAdmissible half k paths)
+    (longRows : ∀ i, 16 < (paths i).length → NoShortCyclePairAt (pathIncidenceGraph paths) k (.inl i))
+    (highVertices : half = true → ∀ x, 16 < (occurrences (fun i => (paths i).toFinset) x).card →
+      NoShortCyclePairAt (pathIncidenceGraph paths) k (.inr x))
+    (two : 2 ≤ k) (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v),
+      Function.Injective rows ∧ (∀ i, rows i ≠ [] ∧ (rows i).Nodup) ∧ localOrderAdmissible half k rows ∧
+      M ≤ 7056*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ listOutputAverageCaps rows := by
+  obtain ⟨v,vFit,q,qFit,rows,oneToOne,nonempty,simple,legal,keep,upper,caps⟩ :=
+    regularization_list_output_average_distinct_of_indexed paths distinct (fun i => (valid i).1)
+      (fun i => (valid i).2) allowed two hn hp dense
+      (regularization_list_output_average_of_large_label_cycle_pairs paths (fun i => (valid i).2)
+        allowed longRows highVertices hn hp dense)
+  exact ⟨v,vFit,q,qFit,rows,oneToOne,fun i => ⟨nonempty i,simple i⟩,legal,keep,upper,caps⟩
+
 end OnlineReachabilityPreservers

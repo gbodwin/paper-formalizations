@@ -178,9 +178,10 @@ private theorem restrictListPaths_mass_eq {V I : Type*} [LinearOrder V]
 private theorem clean_quarter_support {V I : Type*}
     [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I]
     (paths : I → List V) (simple : ∀ i, (paths i).Nodup)
-    (half : Bool) {k : ℕ}
-    (splitAllowed : ∀ D L, localOrderAdmissible half k (listRegularizedPaths paths D L))
-    {n p : ℕ} (hn : 0 < n) (hp : 0 < p)
+    (half : Bool) {k n p : ℕ}
+    (splitAllowed : let M := ∑ i, (paths i).length
+      localOrderAdmissible half k (listRegularizedPaths paths (2*M/n) (2*M/p)))
+    (hn : 0 < n) (hp : 0 < p)
     (vertices : Fintype.card V ≤ n/4) (indices : Fintype.card I ≤ p/4)
     (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
@@ -238,7 +239,7 @@ private theorem clean_quarter_support {V I : Type*}
         exact (card_le_card inter_subset_left).trans ((List.toFinset_card_le _).trans (length i.val))
       exact ⟨by rw [rowLength]; exact minLength i, Nat.cast_le.mpr bound⟩
   have legal : localOrderAdmissible half k restricted := by
-    have legalAfter := splitAllowed D L
+    have legalAfter : localOrderAdmissible half k after := splitAllowed
     cases half
     · exact restrictListPaths_fullFree afterSimple legalAfter A B
     · exact restrictListPaths_halfFree afterSimple legalAfter A B
@@ -298,6 +299,62 @@ theorem regularization_list_output_average_of_linear_mass {n p M k : ℕ} (half 
         rw [List.length_finRange]
         exact ⟨by linarith only [Nat.cast_nonneg (α := ℝ) n], le_rfl⟩
 
+/-- In the dense case, the selected rectangle retains at least one
+forty-ninth of the supplied rows' mass. Only its actual widths need
+to preserve the bridge condition. -/
+theorem regularization_list_output_average_of_dense_rectangle_splits {n p k M : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup) (half : Bool)
+    (splits : ∀ (A : Finset (Fin n)) (B : Finset (Fin p)),
+      let quarter := restrictListPaths paths A B
+      let m := ∑ i : B, (quarter i).length
+      (∑ i, (paths i).length) ≤ 49*m → 392*max n p < M →
+      localOrderAdmissible half k (listRegularizedPaths quarter (2*m/n) (2*m/p)))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (retained : M ≤ 2*(∑ i, (paths i).length)) (upper : (∑ i, (paths i).length) ≤ M) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ 392*(∑ i, (clean i).length) ∧
+      (∑ i, (clean i).length) ≤ M ∧ listOutputAverageCaps clean := by
+  by_cases low : M ≤ 392*max n p
+  · exact regularization_list_output_average_of_linear_mass half hn hp dense long low
+  have count (i : Fin p) : (paths i).length ≤ n := by
+    rw [← List.toFinset_card_of_nodup (simple i)]
+    simpa only [Fintype.card_fin] using card_le_univ (paths i).toFinset
+  have total : (∑ i, (paths i).length) ≤ p*n := (sum_le_sum (fun i _ => count i)).trans_eq (by simp)
+  have doubled : M ≤ 2*(p*n) := retained.trans (Nat.mul_le_mul_left _ total)
+  have vMax := le_max_left n p
+  have iMax := le_max_right n p
+  have vEnough : 4 ≤ n := by
+    by_contra! few
+    have bound := doubled.trans (Nat.mul_le_mul_left 2 (Nat.mul_le_mul_left p (show n ≤ 4 by omega)))
+    omega
+  have iEnough : 4 ≤ p := by
+    by_contra! few
+    have bound := doubled.trans (Nat.mul_le_mul_left 2 (Nat.mul_le_mul_right n (show p ≤ 4 by omega)))
+    omega
+  let marks (i : Fin p) := (paths i).toFinset
+  have lengths (i : Fin p) : (marks i).card = (paths i).length := List.toFinset_card_of_nodup (simple i)
+  obtain ⟨A,B,vBudget,iBudget,kept⟩ := rectanglePaths_quarter marks
+    (by simpa only [Fintype.card_fin] using vEnough) (by simpa only [Fintype.card_fin] using iEnough)
+  let quarter := restrictListPaths paths A B
+  let m := ∑ i : B, (quarter i).length
+  have mass : m = ∑ i : B, (rectanglePaths marks A B i).card :=
+    restrictListPaths_mass_eq paths simple A B
+  simp only [lengths, ← mass] at kept
+  have large : M ≤ 98*m := by omega
+  have upperQuarter : m ≤ M := by
+    rw [mass]
+    exact (rectanglePaths_mass_le marks A B).trans (by simpa only [lengths] using upper)
+  have quarterSimple (i : B) : (quarter i).Nodup := restrictListPath_nodup (simple i.val) A
+  obtain ⟨n',vn,p',ip,clean,cleanSimple,cleanAllowed,cleanMass,cleanUpper,caps⟩ :=
+    clean_quarter_support quarter quarterSimple half (splits A B kept (lt_of_not_ge low)) hn hp
+      (by simpa only [Fintype.card_coe, Fintype.card_fin] using vBudget)
+      (by simpa only [Fintype.card_coe, Fintype.card_fin] using iBudget)
+      (by omega) (by omega)
+  refine ⟨n',vn,p',ip,clean,cleanSimple,cleanAllowed,?_,cleanUpper.trans upperQuarter,caps⟩
+  change m ≤ 4*(∑ i, (clean i).length) at cleanMass
+  omega
+
 /-- A compatible width split on every rectangle gives output-average
 caps with both starting budgets. The starting mass may be up to twice
 the surviving mass of the rows provided to the rule. -/
@@ -310,49 +367,9 @@ theorem regularization_list_output_average_of_rectangle_splits {n p k M : ℕ}
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       M ≤ 392*(∑ i, (clean i).length) ∧
-      (∑ i, (clean i).length) ≤ M ∧ listOutputAverageCaps clean := by
-  by_cases budgets : 4 ≤ n ∧ 4 ≤ p
-  · let marks (i : Fin p) := (paths i).toFinset
-    have lengths (i : Fin p) : (marks i).card = (paths i).length := List.toFinset_card_of_nodup (simple i)
-    obtain ⟨A,B,vBudget,iBudget,kept⟩ := rectanglePaths_quarter marks
-      (by simpa only [Fintype.card_fin] using budgets.1) (by simpa only [Fintype.card_fin] using budgets.2)
-    let quarter := restrictListPaths paths A B
-    let m := ∑ i : B, (quarter i).length
-    have mass : m = ∑ i : B, (rectanglePaths marks A B i).card :=
-      restrictListPaths_mass_eq paths simple A B
-    simp only [lengths, ← mass] at kept
-    have large : M ≤ 98*m := by omega
-    have upperQuarter : m ≤ M := by
-      rw [mass]
-      exact (rectanglePaths_mass_le marks A B).trans (by simpa only [lengths] using upper)
-    by_cases enough : n ≤ m ∧ p ≤ m
-    · have quarterSimple (i : B) : (quarter i).Nodup := restrictListPath_nodup (simple i.val) A
-      obtain ⟨n',vn,p',ip,clean,cleanSimple,cleanAllowed,cleanMass,cleanUpper,caps⟩ :=
-        clean_quarter_support quarter quarterSimple half (splits A B) hn hp
-          (by simpa only [Fintype.card_coe, Fintype.card_fin] using vBudget)
-          (by simpa only [Fintype.card_coe, Fintype.card_fin] using iBudget) enough.1 enough.2
-      refine ⟨n',vn,p',ip,clean,cleanSimple,cleanAllowed,?_,cleanUpper.trans upperQuarter,caps⟩
-      change m ≤ 4*(∑ i, (clean i).length) at cleanMass
-      omega
-    · apply regularization_list_output_average_of_linear_mass half hn hp dense long
-      have bound : m ≤ max n p := by
-        rcases not_and_or.mp enough with tooFew | tooShort
-        · exact (Nat.le_of_lt (Nat.lt_of_not_ge tooFew)).trans (le_max_left _ _)
-        · exact (Nat.le_of_lt (Nat.lt_of_not_ge tooShort)).trans (le_max_right _ _)
-      omega
-  · apply regularization_list_output_average_of_linear_mass half hn hp dense long
-    have count (i : Fin p) : (paths i).length ≤ n := by
-      rw [← List.toFinset_card_of_nodup (simple i)]
-      simpa only [Fintype.card_fin] using card_le_univ (paths i).toFinset
-    have total : (∑ i, (paths i).length) ≤ p*n := (sum_le_sum (fun i _ => count i)).trans_eq (by simp)
-    have doubled : M ≤ 2*(p*n) := retained.trans (Nat.mul_le_mul_left _ total)
-    rcases not_and_or.mp budgets with small | small
-    · have bound := doubled.trans (Nat.mul_le_mul_left 2 (Nat.mul_le_mul_left p (show n ≤ 4 by omega)))
-      have leMax : p ≤ max n p := le_max_right _ _
-      omega
-    · have bound := doubled.trans (Nat.mul_le_mul_left 2 (Nat.mul_le_mul_right n (show p ≤ 4 by omega)))
-      have leMax : n ≤ max n p := le_max_left _ _
-      omega
+      (∑ i, (clean i).length) ≤ M ∧ listOutputAverageCaps clean :=
+  regularization_list_output_average_of_dense_rectangle_splits paths simple half
+    (fun A B _ _ => splits A B _ _) hn hp dense long retained upper
 
 /-- Prune opposite intersections and restrict both supports. A rule
 preserving bridge exclusion under width splits on these rectangles gives

@@ -377,6 +377,19 @@ starting caps within the original budgets.
 · [Original row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L912)
 · [Frozen cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L941).
 
+The same localized tests apply to output averages. Use a linear-mass
+witness for \(M\le392\max(n,p)\). Otherwise the selected rectangle
+has mass \(m\ge M/49\), so both rounded widths \(2m/n\) and \(2m/p\)
+are at least sixteen. Its lengths and degrees are bounded by the
+original ones, and its incidence graph embeds in the original graph.
+It suffices to test original rows longer than sixteen and, in half
+mode, original vertices of degree greater than sixteen. The full
+mode uses the unrestricted degree projection and the row-only test
+after the rectangle is chosen.
+[Dense rectangle rule](OnlineReachabilityPreservers/LocalAverageCleaning.lean#L305)
+· [Indexed witness](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1017)
+· [Literal witness](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1077).
+
 At full cutoff six, opposite-intersection pruning followed by restricting
 to a quarter of each support permits the contiguous construction on an
 unrestricted maximizing family of indexed simple paths. If the quarter
