@@ -589,6 +589,18 @@ low-mass case uses the full witnesses with the four original caps.
 [Indexed minimum coefficients](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L40)
 · [Distinct nonempty witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L187).
 
+For an integer count \(x\), the original lower cap at budget \(q\) is
+\(M/(4q)\le x\) exactly when \(x>\lfloor(M-1)/(4q)\rfloor\).
+The two normalized integer thresholds are strictly below \(1/4\).
+When the sum of the two integer peeling charges is strictly below
+\(7M/15\), choose coefficients just above both normalized thresholds.
+The lower-coefficient proof then forces both exact lower caps while
+keeping the original upper caps, both budgets and at least \(M/930\).
+The strict charge is a sufficient condition for this proof.
+[Integer charge](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L12)
+· [Indexed exact starting caps](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L84)
+· [Literal exact starting caps](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L103).
+
 After clipping at the original length width, degree blocks can be fixed
 before deleting anything at a vertex. In a proposed half-five bridge,
 the terminal collision crosses two different arrival blocks. The third

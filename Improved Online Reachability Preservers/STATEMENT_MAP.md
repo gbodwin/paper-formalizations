@@ -1655,6 +1655,17 @@ lower coefficients \((1/4,1/4)\) remains open without further hypotheses.
 [Indexed lower-cap tradeoff](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L40)
 · [Literal lower-cap tradeoff](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L187).
 
+Let \(t_q=\lfloor(M-1)/(4q)\rfloor\) for \(q=n,p\). An integer meets the
+exact quarter-average lower cap at budget \(q\) precisely when it exceeds
+\(t_q\). If \(15(nt_n+pt_p)<7M\), the lower coefficient choice can force
+both integer thresholds. Thus, under the same positive-budget and density
+assumptions, simple half-five input has a witness of mass in \([M/930,M]\)
+with the exact four starting-average caps and both budgets. The literal
+version gives distinct nonempty rows.
+[Integer removal charge](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L12)
+· [Indexed criterion](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L84)
+· [Literal criterion](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L103).
+
 [Actual degree-cut cleaning after clipping](OnlineReachabilityPreservers/HalfFiveDegreeCutCleaning.lean)
 gives \(M/5000\) and all four original caps within both original
 budgets if \(A+2(M-K)\le23M/25\), where \(K\) is the clipped mass and

@@ -638,6 +638,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   coefficients \(a=b=1/4\) remain open at half cutoff five.
   [Indexed witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L40)
   · [Literal witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L187).
+- Integer degrees and lengths recover all four exact starting caps for
+  simple half-five input with the same positive budgets and mass assumptions
+  whenever
+  \(15[n\lfloor(M-1)/(4n)\rfloor+p\lfloor(M-1)/(4p)\rfloor]<7M\).
+  This includes equal starting averages of 16. The indexed and literal
+  witnesses retain at least \(M/930\) within both budgets.
+  [Indexed exact caps](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L84)
+  · [Literal exact caps](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L103).
 - Half-five cleaning also keeps at least \(M/288\) if opposite-intersection
   pruning retains at least \(13M/24\). This holds when at least \(M/12\) paths
   are nonempty or there are at most \(11M/24\) opposite-neighbor links.
