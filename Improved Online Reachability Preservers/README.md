@@ -3770,6 +3770,18 @@ and the loop takes at most \(12Y+2\) transitions.
 · [Exact run and time](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowsMachine.lean#L401)
 · [Linear native transition polynomial](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowsMachine.lean#L420).
 
+The native column machine composes the prior pairing, shared-cap
+expansion, and row minima with both handoffs on the same live stack.
+For a supplied transfer-code matrix and the previous hop column at a
+fixed target, it emits the exact next column. If \(X\) is the compact
+input length and \(C=X^2+X\), the transition bound is
+\(15C^2+45C+4X^2+7X+11\).
+[Native hop round](OnlineReachabilityPreservers/SteinerUnaryHopRoundMachine.lean#L87)
+· [Exact composed run](OnlineReachabilityPreservers/SteinerUnaryHopRoundMachine.lean#L221)
+· [Transition polynomial](OnlineReachabilityPreservers/SteinerUnaryHopRoundMachine.lean#L271)
+· [Exact next-column answer](OnlineReachabilityPreservers/SteinerUnaryHopRoundMachine.lean#L285)
+· [Exact next-column run](OnlineReachabilityPreservers/SteinerUnaryHopRoundMachine.lean#L297).
+
 
 
 
