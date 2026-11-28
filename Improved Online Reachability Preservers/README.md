@@ -590,12 +590,12 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   with caps at their own averages retain \(M/392\) indexed or
   \(M/7056\) literal. Both budgets hold in all four results. The
   literal versions take distinct nonempty simple paths and \(k\ge2\).
-  [Projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L441)
-  · [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L616)
-  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L684)
-  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L731)
-  · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L770)
-  · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L797).
+  [Projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L466)
+  · [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L645)
+  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L713)
+  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L760)
+  · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L799)
+  · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L826).
 - The same four incidence-graph results allow short cycles. They
   require that no two edge-disjoint cycles through a common row or
   vertex label have combined length at most \(2k\). This condition
@@ -603,11 +603,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   trail of length at most \(2k\).
   [Cycle-pair condition](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L27)
   · [Trail equivalence](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L124)
-  · [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L607)
-  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L670)
-  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L717)
-  · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L744)
-  · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L781).
+  · [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L636)
+  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L699)
+  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L746)
+  · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L773)
+  · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L810).
   The combined length is needed. A simple input with no half-bridges
   has edge-disjoint incidence cycles of lengths four and eight. Any two
   cycles individually of length at most six share an edge, yet the
@@ -624,10 +624,22 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   \(k\), the witness retains \(M/16\) with both positive budgets and
   all four starting caps when \(M\) is at least both budgets. The
   literal version takes and gives distinct nonempty rows for \(k\ge2\).
-  [Projection on occupied labels](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L397)
-  · [Width tests](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L541)
-  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L649)
-  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L695).
+  [Projection on occupied labels](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L422)
+  · [Width tests](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L574)
+  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L678)
+  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L724).
+- For full bridges, perform degree copying first. It preserves the
+  input cutoff without a cycle-pair test. Test only the overlong rows
+  in the resulting incidence graph. Simple full-free input through
+  cutoff \(k\), with \(M\) at least both positive budgets, then gives
+  both budgets, the four original caps, and at least \(M/16\).
+  A test at the overlong original rows also suffices. The literal
+  versions use distinct nonempty paths and \(k\ge2\).
+  [Copied width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L899)
+  · [Indexed copied-row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L941)
+  · [Literal copied-row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L959)
+  · [Indexed original-row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L980)
+  · [Literal original-row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L997).
 - At half cutoff six with full-three exclusion and arbitrary
   intersections, fix lower coefficients \(a,b\in[0,1/4]\) with
   \(a+b\le7/15\). A witness meets these lower caps, both original upper

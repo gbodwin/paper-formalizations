@@ -1762,12 +1762,12 @@ budgets, all four original caps and \(M/16\). With caps at the witness's
 own averages they give \(M/392\) indexed or \(M/7056\) literal.
 The literal results use cutoff at least two and distinct nonempty
 simple paths.
-[Incidence projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L441)
-· [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L616)
-· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L684)
-· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L731)
-· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L770)
-· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L797).
+[Incidence projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L466)
+· [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L645)
+· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L713)
+· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L760)
+· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L799)
+· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L826).
 
 The same guarantees follow when two edge-disjoint incidence cycles
 through any one label always have combined length greater than \(2k\).
@@ -1780,11 +1780,11 @@ cutoff and the same four types of witnesses hold even when some cycles
 are short. A graph with one cycle, for example, satisfies the condition
 at every cutoff.
 [Trail equivalence](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L124)
-· [Widths](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L607)
-· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L670)
-· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L717)
-· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L744)
-· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L781).
+· [Widths](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L636)
+· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L699)
+· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L746)
+· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L773)
+· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L810).
 
 The combined bound \(2k\) includes imbalanced lengths. A simple
 ten-row example on twenty vertex labels excludes every half-bridge.
@@ -1807,10 +1807,24 @@ same exclusion, all four starting caps, both positive budgets, and
 at least \(M/16\) of the mass when \(M\) is at least both budgets.
 The distinct nonempty literal version uses \(k\ge2\).
 [Pointwise condition](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L16)
-· [Occupied-label projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L397)
-· [Width tests](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L541)
-· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L649)
-· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L695).
+· [Occupied-label projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L422)
+· [Width tests](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L574)
+· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L678)
+· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L724).
+
+In full mode the degree split already preserves every input bridge
+cutoff. The subsequent split needs the pointwise condition only at
+overlong rows of the actual degree-copied incidence graph. When the
+test holds there, both original budgets, all four starting caps,
+and retention \(M/16\) follow. Testing the overlong rows in the original
+graph also suffices, because the copied graph projects injectively
+on its edges. The pointwise test transfers under this projection.
+Both tests give indexed and distinct nonempty literal witnesses.
+[Copied-row width theorem](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L899)
+· [Indexed copied-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L941)
+· [Literal copied-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L959)
+· [Indexed original-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L980)
+· [Literal original-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L997).
 
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates

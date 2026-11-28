@@ -141,17 +141,42 @@ theorem noShortCyclePair_iff_short_trails {A : Type*} {G : SimpleGraph A} {k : �
     have equal := injective a (x.append y) trail fit zero between revisit
     omega
 
+/-- An edge-injective homomorphism pulls a pointwise cycle-pair
+condition back to a vertex. Projected closed trails contain cycles
+through the same projected vertex. -/
+theorem NoShortCyclePairAt.of_edge_injective_hom {A B : Type*} {G : SimpleGraph A} {H : SimpleGraph B}
+    {k : ℕ} (f : G →g H) {a : A} (free : NoShortCyclePairAt H k (f a))
+    (injective : Set.InjOn (Sym2.map f) G.edgeSet) : NoShortCyclePairAt G k a := by
+  classical
+  intro x y xc yc disjoint
+  have mapped (w : G.Walk a a) (cycle : w.IsCycle) : (w.map f).IsCircuit := by
+    refine ⟨?_,?_⟩
+    · rw [Walk.isTrail_def,Walk.edges_map]
+      exact cycle.edges_nodup.map_on (fun _ left _ right eq =>
+        injective (w.edges_subset_edgeSet left) (w.edges_subset_edgeSet right) eq)
+    · intro nil
+      have length := cycle.three_le_length
+      rw [← Walk.length_map (f := f),nil,Walk.length_nil] at length
+      omega
+  have separate : Disjoint (x.map f).edgeSet (y.map f).edgeSet := by
+    rw [Walk.edgeSet_map,Walk.edgeSet_map,Set.disjoint_left]
+    rintro e ⟨left,insideX,eX⟩ ⟨right,insideY,eY⟩
+    have same := injective (x.edges_subset_edgeSet insideX) (y.edges_subset_edgeSet insideY)
+      (eX.trans eY.symm)
+    exact Set.disjoint_left.mp disjoint insideX (same.symm ▸ insideY)
+  have cycles : Disjoint (x.map f).cycleBypass.edgeSet (y.map f).cycleBypass.edgeSet :=
+    separate.mono (x.map f).edges_cycleBypass_subset_edges (y.map f).edges_cycleBypass_subset_edges
+  have long := free _ _ (mapped x xc).isCycle_cycleBypass (mapped y yc).isCycle_cycleBypass cycles
+  have reduced := Nat.add_le_add (x.map f).length_cycleBypass_le_length (y.map f).length_cycleBypass_le_length
+  rw [Walk.length_map,Walk.length_map] at reduced
+  exact long.trans_le reduced
+
 /-- An injective graph homomorphism preserves the absence of short pairs
 on the smaller graph. -/
 theorem NoShortCyclePair.of_injective_hom {A B : Type*} {G : SimpleGraph A} {H : SimpleGraph B} {k : ℕ}
     (free : NoShortCyclePair H k) (f : G →g H) (injective : Function.Injective f) :
-    NoShortCyclePair G k := by
-  intro a x y xc yc disjoint
-  have separate : Disjoint (x.map f).edgeSet (y.map f).edgeSet := by
-    rw [Walk.edgeSet_map,Walk.edgeSet_map]
-    exact Set.disjoint_image_of_injective (Sym2.map.injective injective) disjoint
-  simpa only [Walk.length_map] using free (f a) (x.map f) (y.map f)
-    (xc.map injective) (yc.map injective) separate
+    NoShortCyclePair G k := fun a =>
+  (free (f a)).of_edge_injective_hom f (fun {_ _} _ _ eq => Sym2.map.injective injective eq)
 
 /-- The bipartite graph on row labels and vertex labels, with an edge for
 each incidence. The directed order inside a row plays no role here. -/
@@ -519,6 +544,14 @@ private theorem same_incidence_block {A : Type*} {n : A → ℕ} {x y : Σ a, Fi
   obtain rfl := Fin.ext same
   rfl
 
+private theorem occupied_row_index_zero {I V : Type*} [LinearOrder I] [Fintype I] [LinearOrder V]
+    {paths : I → List V} {L : ℕ} {i : ListBlockIndex paths L}
+    (short : (paths i.fst).length ≤ L) (occupied : splitListPaths paths L i ≠ []) : i.snd.val = 0 := by
+  obtain ⟨x,on⟩ := List.exists_mem_of_ne_nil (splitListPaths paths L i) occupied
+  obtain ⟨before,position⟩ := mem_localPathBlock.mp on
+  rw [← position]
+  exact Nat.div_eq_of_lt ((List.idxOf_lt_length_of_mem before).trans_le short)
+
 private theorem occupied_copy_index_zero {I V : Type*} [LinearOrder I] [Fintype I] [LinearOrder V]
     {paths : I → List V} {D : ℕ} {x : ListVertexBlockIndex paths D} {i : I}
     (short : (occurrences (fun j => (paths j).toFinset) x.fst).card ≤ D)
@@ -570,12 +603,8 @@ theorem listRegularizedPaths_admissible_of_local_cycle_pairs {I V : Type*}
       listBefore_of_sublist (copiedSimple (parent i)) (sub i) step
     exact splitListVertices_step (simple (parent i)) lifted
   have rowZero {i : ListBlockIndex copies L} (short : (paths (parent i)).length ≤ L)
-      (occupied : pieces i ≠ []) : i.snd.val = 0 := by
-    obtain ⟨x,on⟩ := List.exists_mem_of_ne_nil (pieces i) occupied
-    obtain ⟨before,position⟩ := mem_localPathBlock.mp on
-    rw [← position]
-    exact Nat.div_eq_of_lt ((List.idxOf_lt_length_of_mem before).trans_le
-      ((splitListVertices_length paths D (parent i)).trans_le short))
+      (occupied : pieces i ≠ []) : i.snd.val = 0 :=
+    occupied_row_index_zero ((splitListVertices_length paths D (parent i)).trans_le short) occupied
   have rowTest {i j : ListBlockIndex copies L} (different : i ≠ j) (equal : parent i = parent j)
       (occupiedI : pieces i ≠ []) (occupiedJ : pieces j ≠ []) :
       NoShortCyclePairAt (pathIncidenceGraph paths) k (.inl (parent i)) := by
@@ -805,5 +834,181 @@ theorem regularization_literal_output_average_of_incidence_girth {n p k : ℕ} {
       M ≤ 7056*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ listOutputAverageCaps rows :=
   regularization_literal_output_average_of_no_short_cycle_pair paths distinct valid allowed (.of_egirth girth)
     two hn hp dense
+
+private theorem pathIncidenceGraph_edge_shape {I V : Type*} {paths : I → List V}
+    {e : Sym2 (I ⊕ V)} (inside : e ∈ (pathIncidenceGraph paths).edgeSet) :
+    ∃ i x, x ∈ paths i ∧ e = s(Sum.inl i,Sum.inr x) := by
+  revert inside
+  refine Sym2.inductionOn e (fun a b inside => ?_)
+  have linked := (pathIncidenceGraph paths).mem_edgeSet.mp inside
+  cases a <;> cases b
+  · exact linked.elim
+  · exact ⟨_,_,linked,rfl⟩
+  · exact ⟨_,_,linked,Sym2.eq_swap⟩
+  · exact linked.elim
+
+private theorem pathIncidenceGraph_hom_edge_injective {I J V W : Type*}
+    {paths : I → List V} {pieces : J → List W} (parent : J → I) (project : W → V)
+    (members : ∀ {i x}, x ∈ pieces i → project x ∈ paths (parent i))
+    (unique : ∀ {i j x y}, x ∈ pieces i → y ∈ pieces j → parent i = parent j →
+      project x = project y → i = j ∧ x = y) :
+    Set.InjOn (Sym2.map (pathIncidenceGraph_hom parent project (fun {_ _} => members)))
+      (pathIncidenceGraph pieces).edgeSet := by
+  intro e one f two same
+  obtain ⟨i,x,xi,rfl⟩ := pathIncidenceGraph_edge_shape one
+  obtain ⟨j,y,yj,rfl⟩ := pathIncidenceGraph_edge_shape two
+  change s(Sum.inl (parent i),Sum.inr (project x)) =
+    s(Sum.inl (parent j),Sum.inr (project y)) at same
+  rcases Sym2.eq_iff.mp same with ⟨row,vertex⟩ | ⟨impossible,_⟩
+  · obtain ⟨rfl,rfl⟩ := unique xi yj (Sum.inl.inj row) (Sum.inr.inj vertex)
+    rfl
+  · cases impossible
+
+/-- Consecutive path splits need the cycle-pair test only on overlong
+rows of their input. -/
+theorem splitListPaths_admissible_of_row_cycle_pairs {I V : Type*}
+    [LinearOrder I] [Fintype I] [LinearOrder V] {paths : I → List V} {k : ℕ} {half : Bool}
+    (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths) (L : ℕ)
+    (overlong : ∀ i, L < (paths i).length → NoShortCyclePairAt (pathIncidenceGraph paths) k (.inl i)) :
+    localOrderAdmissible half k (splitListPaths paths L) := by
+  let pieces := splitListPaths paths L
+  let parent : ListBlockIndex paths L → I := Sigma.fst
+  have sub (i : ListBlockIndex paths L) : (pieces i).Sublist (paths (parent i)) := List.filter_sublist
+  have incidences {i j x y} (one : x ∈ pieces i) (two : y ∈ pieces j)
+      (row : parent i = parent j) (vertex : x = y) : i = j ∧ x = y := by
+    refine ⟨?_,vertex⟩
+    by_contra different
+    exact splitListPaths_disjoint different row one (vertex.symm ▸ two)
+  have rowTest {i j} (different : i ≠ j) (equal : parent i = parent j)
+      (first : pieces i ≠ []) (last : pieces j ≠ []) :
+      NoShortCyclePairAt (pathIncidenceGraph paths) k (.inl (parent i)) := by
+    apply overlong
+    by_contra! short
+    have other : (paths (parent j)).length ≤ L := equal ▸ short
+    exact different (same_incidence_block equal
+      ((occupied_row_index_zero short first).trans (occupied_row_index_zero other last).symm))
+  exact localOrderAdmissible_of_local_cycle_pairs_projection allowed parent id
+    (block_parent_mono (fun i => (paths i).toFinset) L)
+    (fun {i _} on => (sub i).subset on) (fun {_ _ _ _} => incidences)
+    (fun {i _ _} step => listBefore_of_sublist
+      (paths := fun j : ListBlockIndex paths L => paths (parent j)) (simple (parent i)) (sub i) step)
+    (fun {_ _} => rowTest) (fun different equal _ _ => (different equal).elim)
+
+/-- Full bridge exclusion survives degree copying. The path split
+then needs the test only at overlong rows of the actual copied graph. -/
+theorem listRegularizedPaths_fullFree_of_copied_row_cycle_pairs {I V : Type*}
+    [LinearOrder I] [Fintype I] [LinearOrder V] [Fintype V] {paths : I → List V} {k : ℕ}
+    (simple : ∀ i, (paths i).Nodup) (free : BridgeFree (Before paths) k) (D L : ℕ)
+    (overlong : let copies := splitListVertices paths D
+      ∀ i, L < (copies i).length → NoShortCyclePairAt (pathIncidenceGraph copies) k (.inl i)) :
+    BridgeFree (Before (listRegularizedPaths paths D L)) k :=
+  splitListPaths_admissible_of_row_cycle_pairs (half := false)
+    (fun i => splitListVertices_simple paths D i (simple i))
+    (free.split_list_vertices_any (·.fst) (fun {i _ _} step => splitListVertices_step (simple i) step))
+    L overlong
+
+/-- A test at the overlong rows of the original incidence graph
+also suffices, since the degree projection is injective on edges. -/
+theorem listRegularizedPaths_fullFree_of_row_cycle_pairs {I V : Type*}
+    [LinearOrder I] [Fintype I] [LinearOrder V] [Fintype V] {paths : I → List V} {k : ℕ}
+    (simple : ∀ i, (paths i).Nodup) (free : BridgeFree (Before paths) k) (D L : ℕ)
+    (overlong : ∀ i, L < (paths i).length → NoShortCyclePairAt (pathIncidenceGraph paths) k (.inl i)) :
+    BridgeFree (Before (listRegularizedPaths paths D L)) k := by
+  let copies := splitListVertices paths D
+  let project : ListVertexBlockIndex paths D → V := Sigma.fst
+  have members {i x} (on : x ∈ copies i) : project x ∈ paths i := by
+    rw [← splitListVertices_project paths D i]
+    exact List.mem_map_of_mem on
+  let hom : pathIncidenceGraph copies →g pathIncidenceGraph paths :=
+    pathIncidenceGraph_hom id project (fun {_ _} => members)
+  have injective : Set.InjOn (Sym2.map hom) (pathIncidenceGraph copies).edgeSet := by
+    refine pathIncidenceGraph_hom_edge_injective id project (fun {_ _} => members) ?_
+    intro i j x y one two row vertex
+    change i = j at row
+    subst j
+    have mapped : ((copies i).map project).Nodup :=
+      (splitListVertices_project paths D i).symm ▸ simple i
+    exact ⟨rfl,List.inj_on_of_nodup_map mapped one two vertex⟩
+  have copiedPairs (i) (long : L < (copies i).length) :
+      NoShortCyclePairAt (pathIncidenceGraph copies) k (.inl i) := by
+    change L < (splitListVertices paths D i).length at long
+    rw [splitListVertices_length] at long
+    exact (overlong i long).of_edge_injective_hom hom injective
+  exact listRegularizedPaths_fullFree_of_copied_row_cycle_pairs simple free D L copiedPairs
+
+/-- A test after degree copying gives a starting-average witness at
+any finite full cutoff, with both original budgets and M/16 retention. -/
+theorem regularization_list_frozen_full_of_copied_row_cycle_pairs {n p k : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : BridgeFree (Before paths) k)
+    (overlong : let M := ∑ i, (paths i).length
+      let copies := splitListVertices paths (4*M/n)
+      ∀ i, 4*M/p < (copies i).length → NoShortCyclePairAt (pathIncidenceGraph copies) k (.inl i))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v),
+      (∀ i, (rows i).Nodup) ∧ BridgeFree (Before rows) k ∧
+      M ≤ 16*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows := by
+  let M := ∑ i, (paths i).length
+  exact regularization_list_frozen_after_width_blocks_of_mass (half := false) paths simple
+    (listRegularizedPaths_fullFree_of_copied_row_cycle_pairs simple free (4*M/n) (4*M/p) overlong)
+    hn hp dense long le_rfl (by ring_nf; omega)
+
+/-- The copied-graph test gives the same starting caps at cutoffs of at
+least two for distinct nonempty input and output rows. -/
+theorem regularization_literal_frozen_full_of_copied_row_cycle_pairs {n p k : ℕ}
+    (paths : Fin p → List (Fin n)) (distinct : Function.Injective paths)
+    (valid : ∀ i, paths i ≠ [] ∧ (paths i).Nodup)
+    (free : BridgeFree (Before paths) k)
+    (overlong : let M := ∑ i, (paths i).length
+      let copies := splitListVertices paths (4*M/n)
+      ∀ i, 4*M/p < (copies i).length → NoShortCyclePairAt (pathIncidenceGraph copies) k (.inl i))
+    (two : 2 ≤ k) (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v),
+      Function.Injective rows ∧ (∀ i, rows i ≠ [] ∧ (rows i).Nodup) ∧ BridgeFree (Before rows) k ∧
+      M ≤ 16*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows := by
+  obtain ⟨v,vFit,q,qFit,rows,oneToOne,nonempty,simple,legal,keep,upper,caps⟩ :=
+    regularization_list_frozen_distinct_of_indexed (half := false) paths distinct (fun i => (valid i).1)
+      (fun i => (valid i).2) free two hn hp dense (by decide)
+      (regularization_list_frozen_full_of_copied_row_cycle_pairs paths (fun i => (valid i).2)
+        free overlong hn hp dense)
+  exact ⟨v,vFit,q,qFit,rows,oneToOne,fun i => ⟨nonempty i,simple i⟩,legal,keep,upper,caps⟩
+
+/-- For full exclusion, testing the overlong rows at the original width
+suffices for all four original-average caps and both budgets. -/
+theorem regularization_list_frozen_full_of_row_cycle_pairs {n p k : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : BridgeFree (Before paths) k)
+    (overlong : let M := ∑ i, (paths i).length
+      ∀ i, 4*M/p < (paths i).length → NoShortCyclePairAt (pathIncidenceGraph paths) k (.inl i))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v),
+      (∀ i, (rows i).Nodup) ∧ BridgeFree (Before rows) k ∧
+      M ≤ 16*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows := by
+  let M := ∑ i, (paths i).length
+  exact regularization_list_frozen_after_width_blocks_of_mass (half := false) paths simple
+    (listRegularizedPaths_fullFree_of_row_cycle_pairs simple free (4*M/n) (4*M/p) overlong)
+    hn hp dense long le_rfl (by ring_nf; omega)
+
+/-- The overlong-row test also gives the literal full-bridge witness
+with the same starting-average guarantee. -/
+theorem regularization_literal_frozen_full_of_row_cycle_pairs {n p k : ℕ}
+    (paths : Fin p → List (Fin n)) (distinct : Function.Injective paths)
+    (valid : ∀ i, paths i ≠ [] ∧ (paths i).Nodup)
+    (free : BridgeFree (Before paths) k)
+    (overlong : let M := ∑ i, (paths i).length
+      ∀ i, 4*M/p < (paths i).length → NoShortCyclePairAt (pathIncidenceGraph paths) k (.inl i))
+    (two : 2 ≤ k) (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v),
+      Function.Injective rows ∧ (∀ i, rows i ≠ [] ∧ (rows i).Nodup) ∧ BridgeFree (Before rows) k ∧
+      M ≤ 16*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows := by
+  obtain ⟨v,vFit,q,qFit,rows,oneToOne,nonempty,simple,legal,keep,upper,caps⟩ :=
+    regularization_list_frozen_distinct_of_indexed (half := false) paths distinct (fun i => (valid i).1)
+      (fun i => (valid i).2) free two hn hp dense (by decide)
+      (regularization_list_frozen_full_of_row_cycle_pairs paths (fun i => (valid i).2) free overlong hn hp dense)
+  exact ⟨v,vFit,q,qFit,rows,oneToOne,fun i => ⟨nonempty i,simple i⟩,legal,keep,upper,caps⟩
 
 end OnlineReachabilityPreservers
