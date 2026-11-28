@@ -1931,10 +1931,27 @@ For a simple half-five input with positive vertex and row budgets and
 \(M/288\) within both budgets and all four original-average caps. In
 the distinct nonempty convention, nonemptiness ensures the row budget
 bound on \(M\).
-[Four-incidence deletion bound](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L13)
-· [Unique intersections and retained mass](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L97)
-· [Indexed witness](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L183)
-· [Distinct nonempty witness](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L198).
+[Four-incidence deletion bound](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L14)
+· [Unique intersections and retained mass](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L191)
+· [Indexed witness](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L224)
+· [Distinct nonempty witness](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L267).
+
+A stronger deletion bound uses a maximum matching of intersecting
+four-incidence sets. When a point belongs to at least three sets,
+deleting it removes all those constraints. Otherwise a matched pair
+meets the unpaired sets in at most four distinct points. Connections
+from its two endpoints to distinct unpaired sets would increase the matching.
+The same deletion size \(S\) satisfies \(6S\le M+2E\) and
+\(15S\le3M+4E\). The second bound gives retained mass \(K\) with
+\(12M\le15K+4E\). At half cutoff five, \(32E\le31M\) gives
+\(K\ge13M/24\). For simple input with positive budgets and \(M\) at
+least both budgets, cleaning keeps at least \(M/288\) with all four
+original-average caps. In the distinct nonempty convention,
+nonemptiness supplies the row budget bound.
+[Four-incidence pairing bound](OnlineReachabilityPreservers/FourPointHittingBound.lean#L416)
+· [Unique intersections and retained mass](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L207)
+· [Indexed witness at 31/32](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L283)
+· [Distinct nonempty witness at 31/32](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L298).
 With actual opposite-pruned mass \(K\), a sharper test is
 \(C+\lfloor(M-1)/r\rfloor<K-4K^2/(31M)\) for \(r\ge8\) and
 \(C\) the integer removal charge above. It yields both budgets,

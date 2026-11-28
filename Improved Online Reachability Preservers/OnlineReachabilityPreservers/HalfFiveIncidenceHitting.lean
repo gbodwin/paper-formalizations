@@ -1,5 +1,6 @@
-import OnlineReachabilityPreservers.LiteralFrozenHalfFive
+import OnlineReachabilityPreservers.FourPointHittingBound
 import OnlineReachabilityPreservers.FrozenHalfFourConflicts
+import OnlineReachabilityPreservers.LiteralFrozenHalfFive
 
 /-! Four-incidence hitting sets for two-vertex intersections. -/
 
@@ -91,17 +92,18 @@ private def commonPairIncidences {n p : ℕ} (pair : Fin p × Fin p) (vertices :
     Finset (Fin p × Fin n) :=
   ({pair.1,pair.2} : Finset (Fin p)).product vertices
 
-/-- Remove enough incidences to leave at most one vertex in each pairwise
-intersection. With starting mass M and common vertex pair count E, the
-remaining mass K satisfies 6M ≤ 7K + 3E. -/
-theorem common_vertex_pairs_unique_sublists {n p : ℕ} (paths : Fin p → List (Fin n))
-    (simple : ∀ i, (paths i).Nodup) :
+private theorem common_vertex_pairs_unique_sublists_by_hitting_bound {n p loss weight pointWeight : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (hit : ∀ (ground : Finset (Fin p × Fin n)) (family : Finset (Finset (Fin p × Fin n))),
+      (∀ edge ∈ family, edge ⊆ ground) → (∀ edge ∈ family, edge.card = 4) →
+      ∃ chosen ⊆ ground, (∀ edge ∈ family, (edge ∩ chosen).Nonempty) ∧
+        loss*chosen.card ≤ weight*family.card+pointWeight*ground.card) :
     let M := ∑ i, (paths i).length
     let E := commonVertexPairCount paths
     ∃ kept : Fin p → List (Fin n),
       (∀ i, (kept i).Sublist (paths i)) ∧
       (∀ {i j x y}, i ≠ j → x ∈ kept i → x ∈ kept j → y ∈ kept i → y ∈ kept j → x = y) ∧
-      6*M ≤ 7*(∑ i, (kept i).length)+3*E := by
+      loss*M ≤ loss*(∑ i, (kept i).length)+weight*E+pointWeight*M := by
   classical
   let ground := pieceIncidences paths univ
   let byRows (pair : Fin p × Fin p) :=
@@ -135,7 +137,7 @@ theorem common_vertex_pairs_unique_sublists {n p : ℕ} (paths : Fin p → List 
     _ ≤ _ := sum_le_sum fun pair _ => by
       rw [← card_powersetCard]
       exact card_image_le
-  obtain ⟨removed,support,cover,paid⟩ := four_point_hitting_set_card ground constraints within sizes
+  obtain ⟨removed,support,cover,paid⟩ := hit ground constraints within sizes
   let kept := erasePieceIncidences paths removed
   have sub (i : Fin p) : (kept i).Sublist (paths i) := erasePieceIncidences_sublist paths removed i
   have mass := erasePieceIncidences_mass_add_loss simple univ removed
@@ -176,7 +178,46 @@ theorem common_vertex_pairs_unique_sublists {n p : ℕ} (paths : Fin p → List 
     · exact orderedUnique order xi xj yi yj
     · exact orderedUnique order xj xi yj yi
   · change (∑ i, (kept i).length)+removed.card = ∑ i, (paths i).length at mass
-    omega
+    have enlarged := paid.trans (Nat.add_le_add_right (Nat.mul_le_mul_left weight constraintCount) (pointWeight*ground.card))
+    rw [groundCard] at enlarged
+    have split := congrArg (loss * ·) mass
+    rw [Nat.mul_add] at split
+    rw [← split,Nat.add_assoc]
+    exact Nat.add_le_add_left enlarged _
+
+/-- Remove enough incidences to leave at most one vertex in each pairwise
+intersection. With starting mass M and common vertex pair count E, the
+remaining mass K satisfies 6M ≤ 7K + 3E. -/
+theorem common_vertex_pairs_unique_sublists {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) :
+    let M := ∑ i, (paths i).length
+    let E := commonVertexPairCount paths
+    ∃ kept : Fin p → List (Fin n),
+      (∀ i, (kept i).Sublist (paths i)) ∧
+      (∀ {i j x y}, i ≠ j → x ∈ kept i → x ∈ kept j → y ∈ kept i → y ∈ kept j → x = y) ∧
+      6*M ≤ 7*(∑ i, (kept i).length)+3*E := by
+  obtain ⟨kept,sub,unique,mass⟩ := common_vertex_pairs_unique_sublists_by_hitting_bound
+    (loss := 7) (weight := 3) (pointWeight := 1)
+    paths simple (fun ground family within sizes => by
+      simpa only [one_mul] using four_point_hitting_set_card ground family within sizes)
+  exact ⟨kept,sub,fun {_ _ _ _} => unique,by omega⟩
+
+/-- The maximum-pairing bound on four incidences gives the alternative
+retained-mass inequality 12M ≤ 15K + 4E. -/
+theorem common_vertex_pairs_unique_sublists_paired {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) :
+    let M := ∑ i, (paths i).length
+    let E := commonVertexPairCount paths
+    ∃ kept : Fin p → List (Fin n),
+      (∀ i, (kept i).Sublist (paths i)) ∧
+      (∀ {i j x y}, i ≠ j → x ∈ kept i → x ∈ kept j → y ∈ kept i → y ∈ kept j → x = y) ∧
+      12*M ≤ 15*(∑ i, (kept i).length)+4*E := by
+  obtain ⟨kept,sub,unique,mass⟩ := common_vertex_pairs_unique_sublists_by_hitting_bound
+    (loss := 15) (weight := 4) (pointWeight := 3) paths simple
+      (fun ground family within sizes => by
+        obtain ⟨chosen,inside,hits,_,paid⟩ := four_point_hitting_set_card_paired ground family within sizes
+        exact ⟨chosen,inside,hits,paid⟩)
+  exact ⟨kept,sub,fun {_ _ _ _} => unique,by omega⟩
 
 /-- The exact factor-four starting caps at half cutoff five follow
 if the common vertex pair count is at most 53/72 of the starting mass. -/
@@ -193,14 +234,15 @@ theorem regularization_list_frozen_half_five_of_common_vertex_pair_count {n p : 
   exact regularization_list_frozen_half_five_of_large_unique_sublists paths kept simple free sub
     (fun {_ _ _ _} => unique) hn hp dense long (by omega)
 
-/-- The same common vertex pair bound gives a witness with distinct
-nonempty rows at the exact starting caps. -/
-theorem regularization_literal_frozen_half_five_of_common_vertex_pair_count {n p : ℕ}
+private theorem literal_frozen_half_five_of_indexed {n p : ℕ}
     (paths : Fin p → List (Fin n)) (distinct : Function.Injective paths)
     (valid : ∀ i, paths i ≠ [] ∧ (paths i).Nodup)
     (free : HalfBridgeFree (Before paths) 5) (hn : 0 < n) (hp : 0 < p)
     (dense : n ≤ ∑ i, (paths i).length)
-    (few : 72*commonVertexPairCount paths ≤ 53*(∑ i, (paths i).length)) :
+    (indexed : let M := ∑ i, (paths i).length
+      p ≤ M → ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v),
+      (∀ i, (rows i).Nodup) ∧ HalfBridgeFree (Before rows) 5 ∧
+      M ≤ 288*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows) :
     let M := ∑ i, (paths i).length
     ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v), Function.Injective rows ∧
       (∀ i, rows i ≠ [] ∧ (rows i).Nodup) ∧ HalfBridgeFree (Before rows) 5 ∧
@@ -214,11 +256,57 @@ theorem regularization_literal_frozen_half_five_of_common_vertex_pair_count {n p
     _ = ∑ _ : Fin p, (1:ℕ) := by simp
     _ ≤ _ := sum_le_sum (fun i _ => List.length_pos_iff.mpr (valid i).1)
   obtain ⟨v,vFit,q,qFit,rows,rowsSimple,rowsFree,retain,upper,caps⟩ :=
-    regularization_list_frozen_half_five_of_common_vertex_pair_count paths (fun i => (valid i).2)
-      free hn hp dense long few
+    indexed long
   have highMean : 4*p < M := by have width := le_max_right n p; omega
   obtain ⟨oneToOne,nonempty⟩ :=
     frozen_length_distinct_of_large_mean rowsSimple rowsFree (by decide) hp highMean caps
   exact ⟨v,vFit,q,qFit,rows,oneToOne,fun i => ⟨nonempty i,rowsSimple i⟩,rowsFree,retain,upper,caps⟩
+
+/-- The same common vertex pair bound gives a witness with distinct
+nonempty rows at the exact starting caps. -/
+theorem regularization_literal_frozen_half_five_of_common_vertex_pair_count {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (distinct : Function.Injective paths)
+    (valid : ∀ i, paths i ≠ [] ∧ (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) 5) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length)
+    (few : 72*commonVertexPairCount paths ≤ 53*(∑ i, (paths i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v), Function.Injective rows ∧
+      (∀ i, rows i ≠ [] ∧ (rows i).Nodup) ∧ HalfBridgeFree (Before rows) 5 ∧
+      M ≤ 288*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows := by
+  exact literal_frozen_half_five_of_indexed paths distinct valid free hn hp dense (fun long =>
+    regularization_list_frozen_half_five_of_common_vertex_pair_count paths (fun i => (valid i).2)
+      free hn hp dense long few)
+
+/-- All four starting caps at half cutoff five follow when the common
+vertex pair count is at most 31/32 of the starting mass. -/
+theorem regularization_list_frozen_half_five_of_paired_incidence_bound {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) 5) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (few : 32*commonVertexPairCount paths ≤ 31*(∑ i, (paths i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v),
+      (∀ i, (rows i).Nodup) ∧ HalfBridgeFree (Before rows) 5 ∧
+      M ≤ 288*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows := by
+  obtain ⟨kept,sub,unique,retain⟩ := common_vertex_pairs_unique_sublists_paired paths simple
+  exact regularization_list_frozen_half_five_of_large_unique_sublists paths kept simple free sub
+    (fun {_ _ _ _} => unique) hn hp dense long (by omega)
+
+/-- The same 31/32 condition gives distinct nonempty output
+rows at the original starting caps. -/
+theorem regularization_literal_frozen_half_five_of_paired_incidence_bound {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (distinct : Function.Injective paths)
+    (valid : ∀ i, paths i ≠ [] ∧ (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) 5) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length)
+    (few : 32*commonVertexPairCount paths ≤ 31*(∑ i, (paths i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v), Function.Injective rows ∧
+      (∀ i, rows i ≠ [] ∧ (rows i).Nodup) ∧ HalfBridgeFree (Before rows) 5 ∧
+      M ≤ 288*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows := by
+  exact literal_frozen_half_five_of_indexed paths distinct valid free hn hp dense (fun long =>
+    regularization_list_frozen_half_five_of_paired_incidence_bound paths (fun i => (valid i).2)
+      free hn hp dense long few)
 
 end OnlineReachabilityPreservers
