@@ -2343,6 +2343,24 @@ every feasible family has mass \(n+2(\binom n2+1)\).
 · [All-size feasibility](OnlineReachabilityPreservers/HalfAllLiteralCapacity.lean#L272)
 · [Saturated mass](OnlineReachabilityPreservers/HalfAllLiteralCapacity.lean#L283).
 
+At the saturated half budget \(p=n+\binom n2+1\), the literal half mass
+is exactly \(n^2+2\) for \(n\ge2\) at half cutoffs of at least four.
+A literal witness with \(v\) vertices and \(q\) rows excludes full bridges
+of every size if its full cutoff is at least \(\min(v,q)\). Its row
+capacity is at most \(n+\lfloor n^2/4\rfloor\)
+for large \(n\). Adding the uniform subquadratic mass of long rows
+bounds the full mass by \((1/2+\varepsilon)n^2\) for large enough
+\(n\). The one-way square bipartite witness on \(2\lfloor n/2\rfloor\)
+vertices has degree \(\lfloor n/2\rfloor\), row length two, and
+mass at least \((1/2-\varepsilon)n^2\). It fits both original budgets
+and meets all four original-average caps. In particular, at full
+cutoffs covering \(n\), the best literal full mass is asymptotically
+one half of the saturated half mass.
+[Full mass upper bound](OnlineReachabilityPreservers/SaturatedLiteralHalfFull.lean#L16)
+· [Original-average pair witness](OnlineReachabilityPreservers/SaturatedLiteralHalfFull.lean#L66)
+· [Joint comparison](OnlineReachabilityPreservers/SaturatedLiteralHalfFull.lean#L150).
+
+
 
 
 Put \(q=\min(n,p)\). A literal full system of mass \(M\) at cutoff
