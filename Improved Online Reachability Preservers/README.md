@@ -3622,13 +3622,23 @@ vector, restores the cap and matrix after loading each round, and
 archives the exact resulting vector for the next depth. It returns
 the final vector in row order and clears the working stacks, including
 at height zero. The actual transition bound is a polynomial in the
-encoded input length for each fixed height. Its intermediate vector
-bound is \(X(X^{h+1}+1)\) at input length \(X\) and height \(h\).
+encoded input length for each fixed height. Each intermediate prior
+vector uses at most \(X(X^{h+1}+1)\) symbols at input length \(X\) and height \(h\).
 [Repeated distance rounds](OnlineReachabilityPreservers/SteinerUnaryDistanceHeightMachine.lean#L137)
 · [Height and distance input](OnlineReachabilityPreservers/SteinerUnaryDistanceHeightMachine.lean#L676)
 · [Transition bound](OnlineReachabilityPreservers/SteinerUnaryDistanceHeightMachine.lean#L806)
 · [Exact final vector](OnlineReachabilityPreservers/SteinerUnaryDistanceHeightMachine.lean#L811)
 · [Fixed-height transition polynomial](OnlineReachabilityPreservers/SteinerUnaryDistanceHeightMachine.lean#L834).
+
+The total machine reads an ordered vector of unary row totals and
+accumulates every tally on a live stack. The final call can add one
+tally when the combined count is zero. Each call uses one transition
+per input symbol plus the final transition. Summing the vectors for
+the two distance orders and taking the maximum with one gives the
+distance-table scale. On exact hop counts it gives the priced forest scale.
+[Unary total accumulator](OnlineReachabilityPreservers/SteinerUnaryRoundTotalMachine.lean#L37)
+· [Exact run with a previous total](OnlineReachabilityPreservers/SteinerUnaryRoundTotalMachine.lean#L118)
+· [Scale from both vector sums](OnlineReachabilityPreservers/SteinerUnaryRoundTotalMachine.lean#L136).
 
 
 
