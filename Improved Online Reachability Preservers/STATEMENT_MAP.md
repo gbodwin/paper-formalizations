@@ -1561,12 +1561,25 @@ input-output stack. The suffix stays in place. With enough bits, at
 most \(3B+3\) transitions produce the same seed and suffix as the
 sequential sampler for a budget of \(B\) bits. Mathlib verifies polynomial
 time in the supplied encoding and a transition bound at the algorithm's
-chosen budget. The full solver's machine implementation remains open.
-[Machine](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L35)
-· [Transition certificate](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L182)
-· [Stack-machine polynomial time](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L231)
-· [Sampler agreement](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L255)
-· [Chosen seed budget](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L267).
+chosen budget at fixed height.
+[Machine](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L47)
+· [Transition certificate](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L206)
+· [Stack-machine polynomial time](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L259)
+· [Sampler agreement](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L283)
+· [Chosen seed budget](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L295).
+
+If the tape ends before the requested count, the machine clears the
+two auxiliary stacks and emits the empty list. Every accepted result
+contains the separator, even if the seed or suffix is empty. The same
+\(3B+3\)-transition bound holds on every finite bit tape in the supplied
+encoding. Lean checks both outcomes against the sequential sampler,
+and the chosen seed-budget bound holds at fixed height in both cases.
+The full solver's machine implementation remains open.
+[Short-tape transitions](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L350)
+· [Total stack-machine polynomial time](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L412)
+· [All-tape sampler agreement](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L431)
+· [All-tape bound at the chosen budget](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L457).
+
 
 
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
