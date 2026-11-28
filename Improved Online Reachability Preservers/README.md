@@ -2318,9 +2318,8 @@ every full cutoff of at least three. If the starting mass satisfies
 \(M>8p\) and \(M\ge\eta n^2\) for fixed \(\eta>0\), the starting lower
 length cap forces every output row to be long. For any fixed positive
 integer \(r\) and sufficiently large \(n\), such full outputs within the
-vertex budget have mass below \(M/r\). Applying this obstruction to the
-literal Lemma 39 would require half-bridge-free inputs with those starting
-parameters for unbounded vertex budgets.
+vertex budget have mass below \(M/r\). The half-side density bound below
+excludes those starting parameters at unbounded vertex budgets.
 [Pair-capacity mass bound](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L70)
 · [Starting-average obstruction](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L35).
 
@@ -2331,8 +2330,8 @@ length \(L\) and counts a packing of edge-disjoint triangles. This gives
 \(o(n\sqrt p)\) uniformly over outputs within both original budgets as
 \(p\) grows. For outputs subject to the starting lower length cap,
 \(M\ge\eta n\sqrt p\) and \(M>8p\) now suffice for the same conditional
-obstruction to constant retention. Whether half inputs achieve this
-mass and mean at unbounded path budgets remains open.
+obstruction to constant retention. The half-side bound below also
+excludes these starting parameters at unbounded path budgets.
 [Uniform mass bound](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L361)
 · [Obstruction at mass of order \(n\sqrt p\)](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L389).
 
@@ -2345,9 +2344,7 @@ exactly on the matching edges in the graph of all first-to-middle edges.
 Conversely, such matchings with pairwise disjoint edge sets give one
 distinct three-vertex row per edge on three tagged vertex parts, with
 half-bridge exclusion at every size. This characterizes the possible
-long-row count up to a factor of three in the vertex budget. It leaves
-open the quadratic-mass, high-mean inputs needed by the starting-average
-obstruction above.
+long-row count up to a factor of three in the vertex budget.
 [Extraction from arbitrary rows](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L308)
 · [Construction from matching weights](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L138).
 
@@ -2379,6 +2376,24 @@ large. In particular, the strengthened lower-cap obstruction would
 still require quadratic path density on the half side.
 [Half-three mass bound](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L347)
 · [Necessary path density](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L378).
+
+Positive matching fibers on two \(n\)-vertex sides with at most \(n\)
+colors have \(o(n^2)\) edges. Sort each matching by its left weights.
+A later left endpoint and an earlier right endpoint have no edge
+between them. In a dense regular pair of parts, this forces each
+retained matching edge near the end of the order on its left part or
+near the beginning on its right part. Counting those extremes once
+per part gives the bound. For simple indexed input, the contiguous
+triple reduction gives \(o(n^2)\) long-row mass and total mass at most
+\(2p+o(n^2)\) for every half cutoff of at least three. When \(M>8p\), mass is \(o(n^2)\) as \(n\)
+grows and \(o(n\sqrt p)\) as \(p\) grows. This rules out both stated
+density regimes for counterexamples to the original-average Lemma 39.
+The general comparison with the literal \(H\) benchmark remains open.
+[Positive matching density](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L174)
+· [Half long-row mass](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L249)
+· [Total mass](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L275)
+· [High mean and large vertex budgets](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L288)
+· [High mean and large row budgets](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L301).
 
 At cutoff three and comparable positive budgets, the witness-average
 form of Lemma 39 holds with its literal half benchmark. For a field of

@@ -4168,10 +4168,8 @@ extends uniformly over smaller vertex budgets \(v\le n\). If \(M>8p\)
 and \(M\ge\eta n^2\), the original lower cap \(M/(4p)\) requires every
 output row to be long. For each fixed \(\eta>0\) and positive integer
 \(r\), the resulting full incidence mass is below \(M/r\) for large
-enough \(n\), independently of the output row count. A counterexample
-to the original-average interpretation of Lemma 39 from this argument
-would require half-free families achieving these inputs at unbounded
-budgets. That existence question remains open.
+enough \(n\), independently of the output row count. The half-side
+density bound below rules out these inputs at unbounded vertex budgets.
 [Uniform bound](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L13)
 · [Conditional obstruction](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L35)
 · [Pair-capacity sharpness](OnlineReachabilityPreservers/FullThreeFrozenMassAudit.lean#L70).
@@ -4190,6 +4188,8 @@ witnesses through size three satisfying the original lower length cap
 have mass below \(M/r\) at sufficiently large \(p\), for fixed
 \(\eta>0\) and positive integer \(r\). This extension of the obstruction
 uses both output budgets and is conditional on the starting parameters.
+The half-side density bound below also rules out these inputs at
+unbounded path budgets.
 [Long-row estimate](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L278)
 · [Uniform estimate](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L361)
 · [Stronger lower-cap obstruction](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L389).
@@ -4204,9 +4204,7 @@ vertex, an unmatched edge between two matched endpoints forces the
 left endpoint's row to precede the right endpoint's row. Existence of
 an order meeting the constraints is equivalent to existence of the
 positive weights.
-The result concerns the count of rows of length at least three. The
-higher-mean half examples for a possible Lemma 39 obstruction remain
-open.
+The result concerns the count of rows of length at least three.
 [Arbitrary half input](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L308)
 · [Weights from the arrival order](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L195)
 · [All-size half construction](OnlineReachabilityPreservers/PositiveMatchingHalfRows.lean#L138).
@@ -4222,9 +4220,7 @@ pairwise edge-disjoint. The tagged half family has
 \(p=dN^{2d+2}\) distinct rows of length three, with half exclusion
 at every cutoff. At fixed positive \(d\), the ambient vertex budget is of
 order \(N^{d+2}\), so its mass is at least a constant times
-\(n^{2-2/(d+2)}\) along this sequence. Here \(M=3p\). The existence
-of half inputs with both \(M>8p\) and the mass scale required for the
-conditional obstruction at unbounded budgets remains open.
+\(n^{2-2/(d+2)}\) along this sequence. Here \(M=3p\).
 [Positive shift matching fibers](OnlineReachabilityPreservers/QuadraticShiftHalfRows.lean#L182)
 · [Exact half witness](OnlineReachabilityPreservers/QuadraticShiftHalfRows.lean#L200)
 · [Integer-power mass bound](OnlineReachabilityPreservers/QuadraticShiftHalfRows.lean#L237).
@@ -4238,10 +4234,35 @@ triangles with no accidental triangle. The latter is the induced
 matching setting of Bridge Girth v4 Theorem 81. If a half family had
 \(M\ge\eta n^2\) and \(M>8p\), its triples would give at least
 \(\eta n/8\) positive matching fibers of size at least \(\eta n/8\).
-This implication leaves existence of the high-mean input open.
+The regularity argument below bounds the total mass of such fibers.
 [Half long-mass reduction](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L66)
 · [Full long-mass reduction](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L81)
 · [Linear fiber sizes](OnlineReachabilityPreservers/ThreeBlockMatchingReduction.lean#L143).
+
+For any \(\varepsilon>0\) and sufficiently large \(n\), positive matching
+families on two \(n\)-vertex sides with at most \(n\) colors have at most
+\(\varepsilon n^2\) edges. Sort each color by left weight with distinct
+tie-breaking indices. A backwards cross edge between distinct matches
+would have positive weight for that color and violate its matching
+property. Apply Szemerédi regularity to the underlying bipartite graph.
+An edge in a retained dense regular pair must have either fewer than
+\(\lceil\delta|U|\rceil\) later matching edges on its left part \(U\) or
+fewer than \(\lceil\delta|W|\rceil\) earlier matching edges on its right
+part \(W\). Otherwise the two endpoint subsets form a forbidden empty
+rectangle. The count charges each extreme set once per part.
+For arbitrary simple half input at cutoffs of at least three, the
+entire long-row incidence mass is therefore \(o(n^2)\), with the
+threshold uniform in the row budget. If \(M>8p\), then \(M=o(n^2)\) as
+\(n\) grows, and \(M=o(n\sqrt p)\) as \(p\) grows, uniformly in \(n\).
+The second assertion uses the necessary path density below and
+\(p\le n^2\) from the pair bound. Both conditional counterexample regimes
+above are now excluded. The general constant-factor comparison in
+the literal Lemma 39 remains open.
+[Matching density](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L174)
+· [Long-row mass](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L249)
+· [Total mass](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L275)
+· [Large vertex budgets](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L288)
+· [Large path budgets](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L301).
 
 At every half cutoff \(k\ge3\), simple indexed families have
 \(M\le8(n+p)\) or \(M^3\le1024(np)^2\), hence mass

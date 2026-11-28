@@ -2922,9 +2922,9 @@ local-order upper bound and recurrence of Theorem 43.
   cap has length at least three. If \(M\ge\eta n^2\) for fixed \(\eta>0\),
   use the long-mass estimate with \(\varepsilon=\eta/(2r)\). For any fixed
   positive integer \(r\), all such full outputs have mass below \(M/r\)
-  once \(n\) is sufficiently large, with any output row count. This is
-  conditional on the starting parameters. Half-free witnesses realizing
-  them at unbounded budgets have not been established. Separately, at
+  once \(n\) is sufficiently large, with any output row count. The
+  half-side regularity bound below excludes these starting parameters
+  at unbounded vertex budgets. At
   \(p\le\lfloor n^2/4\rfloor\) there is an all-size full-free literal family
   of \(p\) pairs and mass \(2p\), matching the full upper bound up to
   \(o(n^2)\).
@@ -2953,7 +2953,8 @@ local-order upper bound and recurrence of Theorem 43.
   For outputs within both budgets, the linear term is absorbed once the
   original path budget is large. The conditional starting-average
   obstruction then applies already at \(M\ge\eta n\sqrt p\) with
-  \(M>8p\). It gives no half-side lower bound.
+  \(M>8p\). The half-side regularity bound and the upstream count below
+  exclude these starting parameters at unbounded path budgets.
   [Bridge Girth v4](https://arxiv.org/pdf/2212.11944v4)
   · [Squared widths](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L218)
   · [Long-row mass](OnlineReachabilityPreservers/FullThreeBlockMass.lean#L278)
@@ -3048,6 +3049,35 @@ local-order upper bound and recurrence of Theorem 43.
   density if \(M\ge\eta n\sqrt p\) at sufficiently large \(p\).
   [Half cutoff three](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L347)
   · [Density consequence](OnlineReachabilityPreservers/HalfThreeUpstreamMass.lean#L378).
+
+  Positive matching fibers of a bipartite graph can be ordered by their
+  left weights. If a later left endpoint were adjacent to an earlier
+  right endpoint, its weight sum would be positive for the same color,
+  contrary to uniqueness of the right endpoint's match. Reduce the
+  graph by the Szemerédi partition with uniformity \(\delta\) and
+  density threshold \(2\delta\). A retained edge with enough matches
+  strictly after it on its left part and strictly before it on its right
+  part would give an empty rectangle with both sides of relative size
+  at least \(\delta\). The regularity inequality forbids that rectangle.
+  Count the final and initial \(\lceil\delta|U|\rceil\) positions for each
+  part \(U\). The cost per color is at most \(2(\delta\cdot 2n+|P|)\)
+  for partition \(P\). Choose \(\delta\) small and the minimum part count
+  large so that the regularity reduction removes an arbitrarily small
+  fraction of \(n^2\) edges. The partition size is bounded independently
+  of \(n\). Summing over at most \(n\) colors and including the removed
+  edges gives \(o(n^2)\) total edges. For simple indexed half input,
+  contiguous triples transfer this to the long-row mass and give
+  total mass at most \(2p+o(n^2)\).
+  For \(M>8p\), this implies \(M=o(n^2)\). Combining the upstream path
+  density condition with \(p\le n^2\) gives \(M=o(n\sqrt p)\) as \(p\)
+  grows under the same mean condition. The two candidate density regimes
+  for the starting-average Lemma 39 obstruction cannot occur. The
+  general \(H\)-versus-\(\beta\) comparison remains open.
+  [Matching density](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L174)
+  · [Half long-row mass](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L249)
+  · [Total half mass](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L275)
+  · [High mean and large vertex budgets](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L288)
+  · [High mean and large path budgets](OnlineReachabilityPreservers/PositiveMatchingDensity.lean#L301).
 
   Count all choice sizes together for a sharper constant. For pruned
   mass \(W\), let \(S=(W-n-p)_+\). Encode a three-element subset of
