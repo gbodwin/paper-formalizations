@@ -1884,6 +1884,19 @@ all-pairs candidate list enumerates source and target indices in order.
 · [All candidate arcs](OnlineReachabilityPreservers/SteinerUnaryArcCountMachine.lean#L299)
 · [All-pairs cardinality run](OnlineReachabilityPreservers/SteinerUnaryArcCountMachine.lean#L315).
 
+The unary arc enumerator takes the vertex count \(n\) as \(n\)
+true tallies. It generates one candidate for each ordered source
+and target pair, in increasing source and then target order. Its output
+matches the framed all-pairs list used by the arc count. The frame has
+\(n^3+n^2\) symbols. The machine takes at most
+\(2n^3+5n^2+6n+3\) transitions, including the case \(n=0\).
+[All-pairs enumerator](OnlineReachabilityPreservers/SteinerUnaryArcEnumerationMachine.lean#L81)
+· [Unary vertex count](OnlineReachabilityPreservers/SteinerUnaryArcEnumerationMachine.lean#L416)
+· [Exact all-pairs frame](OnlineReachabilityPreservers/SteinerUnaryArcEnumerationMachine.lean#L420)
+· [Transition bound](OnlineReachabilityPreservers/SteinerUnaryArcEnumerationMachine.lean#L437)
+· [Cubic time polynomial](OnlineReachabilityPreservers/SteinerUnaryArcEnumerationMachine.lean#L452)
+· [Frame length](OnlineReachabilityPreservers/SteinerUnaryArcEnumerationMachine.lean#L493).
+
 
 
 
