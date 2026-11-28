@@ -55,8 +55,8 @@ theorem literal_full_mass_le_half_square_of_cutoff_covers_support (ε : ℝ) (po
   have epsN : (4:ℝ) ≤ (n:ℝ)*ε := (div_le_iff₀ positive).mp enough
   have absorb := mul_le_mul_of_nonneg_right epsN (show 0 ≤ (n:ℝ) by positivity)
   nlinarith only [qCap,long,realMass,absorb]
-
-private theorem twice_choose_two_add_self (n : ℕ) : 2*n.choose 2+n = n^2 := by
+/-- Twice the number of unordered distinct pairs plus the singletons is the vertex square. -/
+theorem twice_choose_two_add_self (n : ℕ) : 2*n.choose 2+n = n^2 := by
   rw [Nat.choose_two_right,Nat.mul_div_cancel' n.even_mul_pred_self.two_dvd,Nat.mul_sub_left_distrib,mul_one,pow_two]
   exact Nat.sub_add_cancel (Nat.le_mul_self _)
 

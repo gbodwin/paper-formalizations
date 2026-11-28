@@ -239,8 +239,8 @@ private theorem twoLayerBidirectionalRows_injective {a b : ℕ} :
     cases s <;> simp [twoLayerBidirectionalRows] at lengths
   · have vertex : v = w := by simpa [twoLayerBidirectionalRows] using equal
     rw [vertex]
-
-private theorem listBefore_endpoints_of_pair {I V : Type*} [DecidableEq V]
+/-- A strict comparison in an exact pair row has its two listed endpoints. -/
+theorem listBefore_endpoints_of_pair {I V : Type*} [DecidableEq V]
     {paths : I → List V} {i : I} {u v x y : V} (row : paths i = [u,v])
     (step : Before paths i x y) : x = u ∧ y = v := by
   have start : x = u ∨ x = v := by simpa [row] using step.1

@@ -2360,6 +2360,19 @@ one half of the saturated half mass.
 · [Original-average pair witness](OnlineReachabilityPreservers/SaturatedLiteralHalfFull.lean#L66)
 · [Joint comparison](OnlineReachabilityPreservers/SaturatedLiteralHalfFull.lean#L150).
 
+At full cutoff four, arrange \(3\lfloor n/3\rfloor\) vertices in three
+equal layers and take one ordered pair from each vertex to each vertex
+in the next layer, cyclically. A one-step row advances one layer. A
+two- or three-step detour reaches a layer different from the river's
+target layer. Every point has
+degree \(2\lfloor n/3\rfloor\) and every row has length two. For large \(n\)
+the resulting mass is at least \((2/3-\varepsilon)n^2\), within both
+saturated half budgets and all four original-average caps.
+[Bridge exclusion](OnlineReachabilityPreservers/SaturatedLiteralFullFourLower.lean#L70)
+· [Vertex degree](OnlineReachabilityPreservers/SaturatedLiteralFullFourLower.lean#L96)
+· [Exact mass](OnlineReachabilityPreservers/SaturatedLiteralFullFourLower.lean#L142)
+· [Cyclic pair witness with original caps](OnlineReachabilityPreservers/SaturatedLiteralFullFourLower.lean#L149).
+
 
 
 
