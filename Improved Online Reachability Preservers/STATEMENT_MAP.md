@@ -1786,6 +1786,17 @@ at every cutoff.
 · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L532)
 · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L569).
 
+The combined bound \(2k\) includes imbalanced lengths. A simple
+ten-row example on twenty vertex labels excludes every half-bridge.
+The original widths are four and eight. Splitting creates a half-six
+bridge at the common terminal of two incidence cycles of lengths
+four and eight. Every incidence cycle of length at most six uses
+one specified edge, so two edge-disjoint cycles each of length at
+most six are absent even though the split fails.
+[Input and bridge](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L76)
+· [Combined length](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L134)
+· [Separate length check](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L206).
+
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates
 a full size-seven bridge in the dense branch on a simple input with unique

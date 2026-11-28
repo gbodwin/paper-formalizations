@@ -608,6 +608,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L502)
   · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L532)
   · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L569).
+  The combined length is needed. A simple input with no half-bridges
+  has edge-disjoint incidence cycles of lengths four and eight. Any two
+  cycles individually of length at most six share an edge, yet the
+  original-width split creates a half-six bridge.
+  [Original exclusion](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L37)
+  · [Split bridge](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L76)
+  · [Cycle pair](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L134)
+  · [Separate length check](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L206).
 - At half cutoff six with full-three exclusion and arbitrary
   intersections, fix lower coefficients \(a,b\in[0,1/4]\) with
   \(a+b\le7/15\). A witness meets these lower caps, both original upper

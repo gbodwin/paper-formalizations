@@ -328,6 +328,25 @@ therefore keep the same constants and scopes as in the girth argument.
 · [Starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L474)
 · [Output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L532).
 
+Checking each incidence cycle against the cutoff separately fails.
+Use the river \(0\to3\), the path \(0\to1\to2\to3\) built from three
+other rows, and rows \(3\to4\) and \(4\to3\). Add four outgoing
+rows from \(3\) to private leaves. The mass and the ambient vertex
+budget are both twenty, with nine vertices used, so the degree width
+is four.
+The original row order places the three-step detour's final row after
+the river. Lean checks all original half exclusions. The copies of
+\(3\) make the two-step return usable at the end of a new half-six
+detour. In the incidence graph, the short and long cycles share only
+the terminal and have lengths four and eight. The finite search also
+checks that all cycles of length at most six use one edge of the
+four-cycle.
+[Rows](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L17)
+· [Original widths](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L65)
+· [New half bridge](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L76)
+· [Combined length](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L134)
+· [Separate length check](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L206).
+
 At full cutoff six, opposite-intersection pruning followed by restricting
 to a quarter of each support permits the contiguous construction on an
 unrestricted maximizing family of indexed simple paths. If the quarter
