@@ -337,4 +337,26 @@ def steinerBinaryToUnaryMachine_checkedEndpoint {n : ℕ} (word bound : List Boo
     exact of_decide_eq_true checked
   exact steinerBinaryToUnaryMachine_endpoint word valid
 
+/-- Enter the converter after the input word has already been reversed
+onto the digit stack. -/
+def steinerBinaryToUnaryPrepared (word : List Bool) : steinerBinaryToUnaryMachine.Cfg :=
+  binaryUnaryCfg (some .digit) [] word.reverse 0 0
+
+/-- The prepared loop has the same value and charging identity, with
+no input reversal left to perform. -/
+def steinerBinaryToUnaryMachine_finishPrepared (word : List Bool) :
+    EvalsToInTime steinerBinaryToUnaryMachine.step (steinerBinaryToUnaryPrepared word)
+      (some (haltList steinerBinaryToUnaryMachine (encodeSteinerUnaryProductCount (binaryWordValue word))))
+      (3*word.length+3*binaryWordValue word+1) where
+  steps := binaryUnaryLoopSteps 0 word.reverse
+  evals_in_steps := by
+    change BinaryUnaryRun (steinerBinaryToUnaryPrepared word)
+      (haltList steinerBinaryToUnaryMachine (unaryTallies (binaryWordValue word))) _
+    rw [binaryUnary_halt,← binaryUnaryValue_reverse]
+    exact binaryUnary_loop word.reverse 0
+  steps_le_m := by
+    have work := binaryUnaryLoop_cost 0 word.reverse
+    rw [binaryUnaryValue_reverse,List.length_reverse] at work
+    omega
+
 end OnlineReachabilityPreservers

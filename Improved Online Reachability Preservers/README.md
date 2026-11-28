@@ -3238,6 +3238,25 @@ verified finite sampler at the exact graph bit budget.
 · [Cubic input polynomial](OnlineReachabilityPreservers/SteinerComputedSeedMachine.lean#L445)
 · [Verified graph finite sampler](OnlineReachabilityPreservers/SteinerComputedSeedMachine.lean#L481).
 
+A batch of binary endpoints uses one delimiter per word. The machine
+reverses each word onto the digit stack and starts the prepared unary
+converter there. Both the later endpoints and the completed unary
+frames stay on passive stacks during conversion. It returns one unary
+frame per input word, with a delimiter for each zero value. Empty and
+padded words are valid. With \(X\) framed input symbols and total
+endpoint value \(S\), the transition bound is \(4X+5S+2\).
+For graph rows already accepted by the guarded decoder, the output
+encodes the exact pairs of finite endpoint indices in row order. With
+\(r\) rows on \(n\) vertices and \(E\) endpoint bits, the conversion uses
+at most \(4E+8r+10rn+2\) transitions.
+[Framed endpoint conversion machine](OnlineReachabilityPreservers/SteinerEndpointUnaryBatchMachine.lean#L78)
+· [Prepared digit loop](OnlineReachabilityPreservers/SteinerBinaryToUnaryMachine.lean#L347)
+· [Raw endpoint frames](OnlineReachabilityPreservers/SteinerEndpointUnaryBatchMachine.lean#L290)
+· [Output unary frames](OnlineReachabilityPreservers/SteinerEndpointUnaryBatchMachine.lean#L294)
+· [Exact output and transition bound](OnlineReachabilityPreservers/SteinerEndpointUnaryBatchMachine.lean#L370)
+· [Bound for valid indices](OnlineReachabilityPreservers/SteinerEndpointUnaryBatchMachine.lean#L400)
+· [Agreement with the guarded graph decoder](OnlineReachabilityPreservers/SteinerEndpointUnaryBatchMachine.lean#L441).
+
 
 
 
