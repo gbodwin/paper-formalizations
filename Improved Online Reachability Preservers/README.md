@@ -913,6 +913,21 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   · [Exact mass](OnlineReachabilityPreservers/IncidenceWidthOrders.lean#L207)
   · [Width caps](OnlineReachabilityPreservers/IncidenceWidthOrders.lean#L225)
   · [Full blocks and remainders](OnlineReachabilityPreservers/IncidenceWidthOrders.lean#L238).
+
+  For simple input excluding half bridges through five, the two
+  local orders can preserve that exclusion through both width splits.
+  Delete high-multiplicity incidences first. With original mass \(M\)
+  and common-vertex-pair count \(E\), the intermediate rows have mass
+  \(K\) with \(3M\le3K+E\). Discard at most
+  \(2\lfloor K/D\rfloor+2\lfloor K/L\rfloor\) more incidences at positive
+  widths \(D\) and \(L\). When all four incidences of an opposite pair
+  survive, the two copies of each endpoint agree and both endpoints lie
+  in one piece on each participating row. The result consists of sublists
+  of the pieces packed from the intermediate rows and excludes half bridges through five.
+  [Preservation through degree copies](OnlineReachabilityPreservers/HalfFiveSparseWidthPacking.lean#L179)
+  · [Preservation through path pieces](OnlineReachabilityPreservers/HalfFiveSparseWidthPacking.lean#L250)
+  · [Width packing with local degree two](OnlineReachabilityPreservers/HalfFiveSparseWidthPacking.lean#L299)
+  · [Width packing after incidence deletion](OnlineReachabilityPreservers/HalfFiveSparseWidthPacking.lean#L317).
 - At half cutoff five, or at half cutoff six with full-three
   exclusion, the integer charge can use the actual mass \(K\) after
   opposite pruning. Write \(C=n\lfloor(M-1)/(4n)\rfloor+
