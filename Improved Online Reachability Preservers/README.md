@@ -3017,6 +3017,16 @@ framed input length.
 · [Exact output and transition bound](OnlineReachabilityPreservers/SteinerBinaryAlignmentMachine.lean#L261)
 · [Linear input polynomial](OnlineReachabilityPreservers/SteinerBinaryAlignmentMachine.lean#L293).
 
+The machine composition proofs also cover subroutines that hand control
+back to a caller and computations that use only some of the caller's
+tape stacks. Redirecting a subroutine halt takes the caller to the
+chosen live label in the same number of transitions. Embedding the
+tape indices preserves those transitions and the contents of every
+passive stack.
+[Subroutine return](OnlineReachabilityPreservers/SteinerStackReturn.lean#L102)
+· [Timed tape embedding](OnlineReachabilityPreservers/SteinerStackFrame.lean#L102)
+· [Passive tape contents](OnlineReachabilityPreservers/SteinerStackFrame.lean#L39).
+
 
 
 
