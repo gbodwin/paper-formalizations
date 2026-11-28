@@ -1958,6 +1958,23 @@ intermediate frame of length at most \(T=X(n+1)\). With
 · [Both output cases](OnlineReachabilityPreservers/SteinerGuardedGraphDimensionsMachine.lean#L555)
 · [Full machine run](OnlineReachabilityPreservers/SteinerGuardedGraphDimensionsMachine.lean#L563).
 
+The unary bit-width machine scans alternating stacks. Each nonempty
+pass writes one output tally and keeps every second input tally for
+the next pass. For a unary value \(n\), the result is \(\mathrm{Nat.size}(n)\)
+in at most \(3n+1\) transitions. The index-width entry skips the first
+input tally and returns \(\mathrm{Nat.size}(n-1)\) in at most \(3n+2\)
+transitions. Natural subtraction at zero gives width zero for both an
+empty label set and a one-label set in the index-width entry. Its
+output width agrees with the [proposal width](OnlineReachabilityPreservers/SteinerSamplingWork.lean#L31)
+used in seed decoding. The ordinary output also agrees with the
+[bit-length calculation](OnlineReachabilityPreservers/SteinerSeedDecoderWork.lean#L16).
+[Bit-width machine](OnlineReachabilityPreservers/SteinerUnaryBitWidthMachine.lean#L53)
+· [Index-width machine](OnlineReachabilityPreservers/SteinerUnaryBitWidthMachine.lean#L57)
+· [Exact width](OnlineReachabilityPreservers/SteinerUnaryBitWidthMachine.lean#L194)
+· [Exact index width](OnlineReachabilityPreservers/SteinerUnaryBitWidthMachine.lean#L219)
+· [Linear width bound](OnlineReachabilityPreservers/SteinerUnaryBitWidthMachine.lean#L231)
+· [Linear index-width bound](OnlineReachabilityPreservers/SteinerUnaryBitWidthMachine.lean#L242).
+
 
 
 
