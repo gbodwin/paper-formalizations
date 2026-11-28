@@ -4648,6 +4648,25 @@ distinct nonempty simple rows within both budgets, with mass in
 · [Pair-capacity comparison](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L29)
 · [Literal frozen comparison](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L51).
 
+At any fixed positive quadratic row density, every distinct nonempty
+simple family excluding half bridges through at least size three has
+mass within \(\varepsilon n^2\) of \(2p\) for sufficiently large \(n\).
+Within the same budgets, the optimal literal full mass at every cutoff
+of at least five is within \(\varepsilon n^2\) of
+\(2\min(p,n^2/4)\). Use a union of cyclic perfect matchings between two
+layers of width \(\lfloor n/2\rfloor\), all directed from the first
+layer to the second. Keep only whole matchings to make every retained
+vertex degree equal. The resulting distinct nonempty witness excludes
+all full bridges, has mass at most the starting mass, and meets all four
+original-average caps. The matching upper bound holds at any row budget.
+[Cyclic pair rows](OnlineReachabilityPreservers/QuadraticPathBudgetFullFive.lean#L24)
+· [Full exclusion at every cutoff](OnlineReachabilityPreservers/QuadraticPathBudgetFullFive.lean#L54)
+· [Exact degrees](OnlineReachabilityPreservers/QuadraticPathBudgetFullFive.lean#L74)
+· [Exact incidence mass](OnlineReachabilityPreservers/QuadraticPathBudgetFullFive.lean#L123)
+· [Finite witness with original caps](OnlineReachabilityPreservers/QuadraticPathBudgetFullFive.lean#L131)
+· [Upper bound at any row budget](OnlineReachabilityPreservers/QuadraticPathBudgetFullFive.lean#L232)
+· [Sharp comparison at positive quadratic density](OnlineReachabilityPreservers/QuadraticPathBudgetFullFive.lean#L293).
+
 In simple indexed half input at any cutoff at least three, the mass of
 rows of length at least three is \(o(n\sqrt p)\) as the path budget grows.
 The threshold is uniform in \(n\) and in the cutoff. Restrict to just
