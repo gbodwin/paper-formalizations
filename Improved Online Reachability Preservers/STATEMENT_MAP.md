@@ -2240,6 +2240,17 @@ most \(8X+3\) transitions on an input frame of length \(X\).
 · [Linear native transition polynomial](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowMachine.lean#L178)
 · [Exact next hop from a supplied source row](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowMachine.lean#L195).
 
+The shared-cap adapter reads the compact stream of code and prior
+pairs. It copies the cap into each row header and cell frame and keeps
+one marker after every row, including an empty row. For compact input
+length \(X\) and cap \(c\), the expanded output has length at most
+\((c+3)X\) and the machine uses at most \(3X^2+9X+4\) transitions.
+[Shared-cap row-frame machine](OnlineReachabilityPreservers/SteinerUnaryHopSharedCapRowFramesMachine.lean#L61)
+· [Expanded row stream](OnlineReachabilityPreservers/SteinerUnaryHopSharedCapRowFramesMachine.lean#L488)
+· [Output length](OnlineReachabilityPreservers/SteinerUnaryHopSharedCapRowFramesMachine.lean#L533)
+· [Exact run and bound](OnlineReachabilityPreservers/SteinerUnaryHopSharedCapRowFramesMachine.lean#L560)
+· [Quadratic native transition polynomial](OnlineReachabilityPreservers/SteinerUnaryHopSharedCapRowFramesMachine.lean#L597).
+
 
 
 
