@@ -2069,6 +2069,21 @@ exact next vector from the supplied pairs in one orientation.
 · [Quadratic transition polynomial](OnlineReachabilityPreservers/SteinerUnarySharedCapRowsMachine.lean#L600)
 · [Exact supplied-pair forest round](OnlineReachabilityPreservers/SteinerUnarySharedCapRowsMachine.lean#L624).
 
+The distance-round adapter takes the cap, the previous rooted-weight
+vector and the rectangular matrix of distance rows. It matches each
+distance to the prior weight in the same column and restores the
+stored vector after every row. The result is the exact frame expected
+by the shared-cap evaluator, including empty rows and zero fields.
+From an input of \(X\) symbols it prepares at most \(X^2+X\) symbols
+in at most \(4X^2+7X+5\) transitions. The forest instance supplies
+the matrix in root order and uses the cached vector for one orientation.
+[Distance-round adapter](OnlineReachabilityPreservers/SteinerUnaryDistanceRoundFrameMachine.lean#L83)
+· [Rectangular request](OnlineReachabilityPreservers/SteinerUnaryDistanceRoundFrameMachine.lean#L477)
+· [Compact input encoding](OnlineReachabilityPreservers/SteinerUnaryDistanceRoundFrameMachine.lean#L494)
+· [Paired frame size](OnlineReachabilityPreservers/SteinerUnaryDistanceRoundFrameMachine.lean#L598)
+· [Exact frame and transition bound](OnlineReachabilityPreservers/SteinerUnaryDistanceRoundFrameMachine.lean#L627)
+· [Exact frame for one forest orientation](OnlineReachabilityPreservers/SteinerUnaryDistanceRoundFrameMachine.lean#L680).
+
 
 
 
