@@ -688,9 +688,9 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   witness meets all four starting-average caps and both budgets with
   at least \(M/4\). The literal form takes and gives distinct nonempty
   simple paths at cutoff at least two and retains at least \(M/8\).
-  [Grouped vertex copies](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L42)
-  · [Indexed witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L177)
-  · [Literal witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L211).
+  [Grouped vertex copies](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L43)
+  · [Indexed witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L225)
+  · [Literal witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L243).
 - The example where standard degree copying creates a half-six bridge
   has all deleted-label neighbor groups of size at most two. At the
   original degree width four, grouped copies preserve all incidence
@@ -707,7 +707,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   the original budgets, all four starting-average caps, and retention
   at least \(M/18\). The literal version takes and gives distinct
   nonempty simple paths at cutoff at least two.
-  [Fixed-mass grouping](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L110)
+  [Fixed-mass grouping](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L176)
   · [Indexed restriction](OnlineReachabilityPreservers/IncidenceComponentRestriction.lean#L13)
   · [Literal restriction](OnlineReachabilityPreservers/IncidenceComponentRestriction.lean#L39).
 - The finite-cutoff projection can test shorter connections. For
@@ -732,6 +732,16 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   · [Indexed witness](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L166)
   · [Original groups in full mode](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L198)
   · [Literal witness](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L220).
+- The same radius-\(k-2\) grouping can construct the degree copies.
+  Check both group-size bounds on the original incidence graph, using
+  the original degree and path widths. For simple admissible input with
+  mass at least both positive budgets, this gives both budgets and all
+  four starting-average caps through the selected cutoff in either mode.
+  Retention is at least \(M/4\) indexed or \(M/8\) with distinct nonempty
+  simple input and output at cutoff at least two.
+  [Grouped degree copies](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L21)
+  · [Indexed witness](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L139)
+  · [Literal witness](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L157).
 - At half cutoff six with full-three exclusion and arbitrary
   intersections, fix lower coefficients \(a,b\in[0,1/4]\) with
   \(a+b\le7/15\). A witness meets these lower caps, both original upper

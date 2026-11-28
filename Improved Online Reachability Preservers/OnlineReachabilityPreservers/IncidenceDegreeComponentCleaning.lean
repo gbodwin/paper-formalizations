@@ -19,7 +19,8 @@ theorem mem_incidenceTranspose {I V : Type*} [LinearOrder I] [Fintype I] [Decida
     {rows : I → List V} {i : I} {x : V} : i ∈ incidenceTranspose rows x ↔ x ∈ rows i := by
   rw [incidenceTranspose,mem_sort,mem_occurrences,List.mem_toFinset]
 
-private def incidenceTransposeHom {I V : Type*} [LinearOrder I] [Fintype I] [DecidableEq V]
+/-- Swap row and vertex labels on the incidence graph. -/
+def incidenceTransposeHom {I V : Type*} [LinearOrder I] [Fintype I] [DecidableEq V]
     (rows : I → List V) : pathIncidenceGraph rows →g pathIncidenceGraph (incidenceTranspose rows) where
   toFun := Sum.swap
   map_rel' := by
@@ -105,6 +106,71 @@ theorem copies_of_incidence_vertex_deletion_group_room {n p width k : ℕ} {half
             ⟨mem_incidenceTranspose.mpr (members edgeX),mem_incidenceTranspose.mpr right,connected⟩
           exact congrArg Sum.inr (together same edgeX edgeY link)
 
+/-- Trim any pair of width-bounded profiles with at most the original
+budget of light groups on each side. -/
+theorem regularization_list_frozen_of_half_width_profiles_of_mass {V I : Type*}
+    [LinearOrder V] [Fintype V] [LinearOrder I] [Fintype I] {half : Bool} {k n p M retention : ℕ}
+    (pieces : I → List V) (simple : ∀ i, (pieces i).Nodup) (legal : localOrderAdmissible half k pieces)
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ M) (long : p ≤ M)
+    (upper : (∑ i, (pieces i).length) ≤ M)
+    (length : ∀ i, (pieces i).length ≤ 4*M/p)
+    (degree : ∀ v, (occurrences (fun i => (pieces i).toFinset) v).card ≤ 4*M/n)
+    (lightV : ({v ∈ univ | (occurrences (fun i => (pieces i).toFinset) v).card ≤ (4*M/n)/2} : Finset V).card ≤ n)
+    (lightI : ({i ∈ univ | (pieces i).length ≤ (4*M/p)/2} : Finset I).card ≤ p)
+    (enough : let K := ∑ i, (pieces i).length
+      ∀ R lostV lostI : ℕ, K ≤ R + (lostV + lostI) →
+        4*(((4*M/n)/2 + 1)*n)*lostV ≤ K^2 →
+        4*(((4*M/p)/2 + 1)*p)*lostI ≤ K^2 → (retention+2)*M ≤ 2*retention*R) :
+    ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
+      (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
+      M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
+  let D := 4*M/n
+  let L := 4*M/p
+  let dMin := D/2+1
+  let lMin := L/2+1
+  let marks (i : I) := (pieces i).toFinset
+  let heavyV := (univ : Finset V).filter fun v => D/2 < (occurrences marks v).card
+  let heavyI := (univ : Finset I).filter fun i => L/2 < (pieces i).length
+  have dRoom : 2*M ≤ dMin*n := half_average_width_capacity hn
+  have lRoom : 2*M ≤ lMin*p := half_average_width_capacity hp
+  have restV : (univ \ heavyV).card ≤ n := by
+    have rest : (univ : Finset V) \ heavyV = (univ.filter fun v => (occurrences marks v).card ≤ D/2) := by
+      ext v
+      simp [heavyV]
+    rw [rest]
+    exact lightV
+  have restI : (univ \ heavyI).card ≤ p := by
+    have rest : (univ : Finset I) \ heavyI = (univ.filter fun i => (pieces i).length ≤ L/2) := by
+      ext i
+      simp [heavyI]
+    rw [rest]
+    exact lightI
+  exact regularization_list_frozen_after_threshold_profile_trim_of_loss (retention := retention)
+    (degreeThreshold := dMin) (pathThreshold := lMin) pieces simple legal hn hp dense long length degree
+    upper heavyV heavyI (Nat.succ_pos _) (Nat.succ_pos _)
+    (fun v on => (mem_filter.mp on).2) restV (fun i on => (mem_filter.mp on).2) restI
+    (upper.trans ((by omega : M ≤ 2*M).trans dRoom))
+    (upper.trans ((by omega : M ≤ 2*M).trans lRoom)) enough
+
+/-- At full starting mass, the two half-width profiles pay for at most
+one eighth of the mass each. -/
+theorem half_width_trim_mass_of_full {n p M R lostV lostI : ℕ}
+    (hn : 0 < n) (hp : 0 < p) (mPos : 0 < M)
+    (paid : M ≤ R + (lostV + lostI))
+    (boundV : 4*(((4*M/n)/2 + 1)*n)*lostV ≤ M^2)
+    (boundI : 4*(((4*M/p)/2 + 1)*p)*lostI ≤ M^2) : 6*M ≤ 8*R := by
+  have lossBound {capacity loss : ℕ} (room : 2*M ≤ capacity) (bound : 4*capacity*loss ≤ M^2) :
+      8*loss ≤ M := by
+    apply (Nat.mul_le_mul_left_iff mPos).mp
+    calc
+      M*(8*loss) = 4*(2*M)*loss := by ring
+      _ ≤ 4*capacity*loss := Nat.mul_le_mul_right _ (Nat.mul_le_mul_left _ room)
+      _ ≤ M^2 := bound
+      _ = M*M := pow_two _
+  have lessV := lossBound (half_average_width_capacity hn) boundV
+  have lessI := lossBound (half_average_width_capacity hp) boundI
+  omega
+
 /-- Keep the two width tests and lower caps fixed at a supplied starting
 mass. The trim reports its two quadratic deletion bounds to the caller. -/
 theorem regularization_list_frozen_of_incidence_deletion_group_rooms_of_mass {n p k M retention : ℕ} {half : Bool}
@@ -123,8 +189,6 @@ theorem regularization_list_frozen_of_incidence_deletion_group_rooms_of_mass {n 
       M ≤ retention*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
   let D := 4*M/n
   let L := 4*M/p
-  let dMin := D/2+1
-  let lMin := L/2+1
   obtain ⟨vSizes,copies,copySimple,copyLegal,projects,degree,lightV⟩ :=
     copies_of_incidence_vertex_deletion_group_room simple legal degreeRoom
   have copyRoom (i : Fin p) (x : Σₗ v : Fin n, Fin (vSizes v)) (on : x ∈ copies i) :
@@ -137,36 +201,20 @@ theorem regularization_list_frozen_of_incidence_deletion_group_rooms_of_mass {n 
   obtain ⟨iSizes,pieces,pieceSimple,pieceLegal,length,pieceMass,degrees,lightI⟩ :=
     split_of_incidence_row_deletion_group_room copySimple copyLegal copyRoom
   let V := Σₗ v : Fin n, Fin (vSizes v)
-  let I := Σₗ i : Fin p, Fin (iSizes i)
-  let marks (i : I) := (pieces i).toFinset
-  let heavyV := (univ : Finset V).filter fun v => D/2 < (occurrences marks v).card
-  let heavyI := (univ : Finset I).filter fun i => L/2 < (pieces i).length
-  have massEqual : (∑ i, (pieces i).length) = ∑ i, (rows i).length := pieceMass.trans (sum_congr rfl fun i _ => by
-    exact (List.length_map (as := copies i) (fun v => v.fst)).symm.trans (congrArg List.length (projects i)))
-  have pieceUpper := massEqual.trans_le upper
-  have dRoom : 2*M ≤ dMin*n := half_average_width_capacity hn
-  have lRoom : 2*M ≤ lMin*p := half_average_width_capacity hp
-  have restV : (univ \ heavyV).card ≤ n := by
-    have rest : (univ : Finset V) \ heavyV =
-        (univ.filter fun v => (occurrences (fun i => (copies i).toFinset) v).card ≤ D/2) := by
+  have massEqual : (∑ i, (pieces i).length) = ∑ i, (rows i).length := pieceMass.trans
+    (sum_congr rfl fun i _ =>
+      (List.length_map (as := copies i) (fun v => v.fst)).symm.trans (congrArg List.length (projects i)))
+  have lightOutput : ({v ∈ univ | (occurrences (fun i => (pieces i).toFinset) v).card ≤ D/2} :
+      Finset V).card ≤ n := by
+    have present : ({v ∈ univ | (occurrences (fun i => (pieces i).toFinset) v).card ≤ D/2} : Finset V) =
+        ({v ∈ univ | (occurrences (fun i => (copies i).toFinset) v).card ≤ D/2} : Finset V) := by
       ext v
-      simp only [heavyV,mem_sdiff,mem_univ,mem_filter,true_and,not_lt,marks]
+      simp only [mem_filter,mem_univ,true_and]
       exact (congrArg (fun d : ℕ => d ≤ D/2) (degrees v)).to_iff
-    rw [rest]
+    rw [present]
     exact lightV
-  have restI : (univ \ heavyI).card ≤ p := by
-    have rest : (univ : Finset I) \ heavyI = (univ.filter fun i => (pieces i).length ≤ L/2) := by
-      ext i
-      simp [heavyI]
-    rw [rest]
-    exact lightI
-  refine regularization_list_frozen_after_threshold_profile_trim_of_loss (retention := retention)
-    (degreeThreshold := dMin) (pathThreshold := lMin)
-    pieces pieceSimple pieceLegal hn hp dense long length (fun v => (degrees v).trans_le (degree v))
-    pieceUpper heavyV heavyI (Nat.succ_pos _) (Nat.succ_pos _)
-    (fun v on => (mem_filter.mp on).2) restV (fun i on => (mem_filter.mp on).2) restI
-    (pieceUpper.trans ((by omega : M ≤ 2*M).trans dRoom))
-    (pieceUpper.trans ((by omega : M ≤ 2*M).trans lRoom)) ?_
+  refine regularization_list_frozen_of_half_width_profiles_of_mass pieces pieceSimple pieceLegal hn hp dense long
+    (massEqual.trans_le upper) length (fun v => (degrees v).trans_le (degree v)) lightOutput lightI ?_
   dsimp only
   rw [massEqual]
   exact enough
@@ -186,25 +234,9 @@ theorem regularization_list_frozen_of_incidence_deletion_group_rooms {n p k : �
     ∃ n' ≤ n, ∃ p' ≤ p, ∃ clean : Fin p' → List (Fin n'),
       (∀ i, (clean i).Nodup) ∧ localOrderAdmissible half k clean ∧
       M ≤ 4*(∑ i, (clean i).length) ∧ (∑ i, (clean i).length) ≤ M ∧ frozenListCaps n p M clean := by
-  let M := ∑ i, (rows i).length
-  have dRoom : 2*M ≤ ((4*M/n)/2 + 1)*n := half_average_width_capacity hn
-  have lRoom : 2*M ≤ ((4*M/p)/2 + 1)*p := half_average_width_capacity hp
   refine regularization_list_frozen_of_incidence_deletion_group_rooms_of_mass rows simple legal hn hp dense long
     le_rfl degreeRoom rowRoom ?_
-  dsimp only
-  intro kept lostV lostI paid boundV boundI
-  have mPos : 0 < M := hn.trans_le dense
-  have lossBound {capacity loss : ℕ} (room : 2*M ≤ capacity) (bound : 4*capacity*loss ≤ M^2) :
-      8*loss ≤ M := by
-    apply (Nat.mul_le_mul_left_iff mPos).mp
-    calc
-      M*(8*loss) = 4*(2*M)*loss := by ring
-      _ ≤ 4*capacity*loss := Nat.mul_le_mul_right _ (Nat.mul_le_mul_left _ room)
-      _ ≤ M^2 := bound
-      _ = M*M := pow_two _
-  have lessV := lossBound dRoom boundV
-  have lessI := lossBound lRoom boundI
-  omega
+  exact fun _ _ _ paid boundV boundI => half_width_trim_mass_of_full hn hp (hn.trans_le dense) paid boundV boundI
 
 /-- Both deletion-component bounds give the literal frozen witness with
 distinct nonempty simple paths and at least one eighth of the mass. -/

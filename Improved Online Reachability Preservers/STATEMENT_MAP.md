@@ -1900,8 +1900,8 @@ most one copy whose degree is at most half the width. The projection
 recovers every original row in order and the grouping preserves both
 bridge exclusions through the selected cutoff.
 [Incidence membership](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L18)
-· [Deleted-vertex group](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L34)
-· [Grouped degree copies](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L42).
+· [Deleted-vertex group](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L35)
+· [Grouped degree copies](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L43).
 
 Check both kinds of groups in the original incidence graph, using
 \(\lfloor 4M/n\rfloor\) on the vertex side and \(\lfloor 4M/p\rfloor\)
@@ -1914,8 +1914,8 @@ the indexed witness retains at least \(M/4\) with both budgets, all four
 starting-average caps, and the original cutoff in either mode. At
 cutoff at least two, the literal theorem takes and gives distinct
 nonempty simple rows and retains at least \(M/8\).
-[Indexed frozen witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L177)
-· [Literal frozen witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L211).
+[Indexed frozen witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L225)
+· [Literal frozen witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L243).
 
 In the twenty-incidence mixed-cycle example, every original row has
 length two. The only vertex of degree above two is the terminal of the
@@ -1942,7 +1942,7 @@ at least \(5M/9\) before enforcing the lower caps. Thus the cleaner
 keeps \(M/18\) or more, the selected cutoff, both original budgets and
 all four starting-average caps. In the literal theorem with cutoff at
 least two, the original and output rows are distinct, nonempty and simple.
-[Fixed-mass group trims](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L110)
+[Fixed-mass group trims](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L176)
 · [Trim bound at two thirds](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L126)
 · [Indexed restriction](OnlineReachabilityPreservers/IncidenceComponentRestriction.lean#L13)
 · [Literal restriction](OnlineReachabilityPreservers/IncidenceComponentRestriction.lean#L39).
@@ -1982,6 +1982,25 @@ In full mode, checking the groups before degree copying also suffices.
 · [Indexed witness](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L166)
 · [Original-group full witness](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L198)
 · [Literal witness](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L220).
+
+The transpose carries a short connection through the graph with a
+vertex deleted to a connection of the same length with that transposed
+row deleted. Use these links to group incident rows for each vertex
+copy. The two group-size tests use the original graph, since the
+path-side group sizes cannot grow under copying. After packing, each
+original label has at most one copy or piece at most half its original
+width. The same two quadratic trims and original lower
+caps give an indexed \(M/4\) witness or a literal \(M/8\) witness,
+under the original admissibility, width and density conditions.
+Both budgets, all four starting-average caps and the selected cutoff
+hold in either mode. The literal theorem takes and gives distinct
+nonempty simple rows at cutoff at least two.
+[Transposed groups](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L13)
+· [Grouped degree copies](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L21)
+· [Fixed starting mass](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L89)
+· [Profile trim](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L111)
+· [Indexed witness](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L139)
+· [Literal witness](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L157).
 
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates

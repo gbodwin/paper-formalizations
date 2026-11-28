@@ -435,9 +435,9 @@ cutoff in either mode. The literal version retains at least \(M/8\)
 and takes and gives distinct nonempty simple rows at cutoff at least
 two. These guarantees include both original budgets and all four
 starting-average caps.
-[Grouped degree copies](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L42)
-· [Indexed cleaning](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L177)
-· [Literal cleaning](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L211).
+[Grouped degree copies](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L43)
+· [Indexed cleaning](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L225)
+· [Literal cleaning](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L243).
 
 The mixed-cycle half-six example meets both group-size bounds at its
 original widths four and eight. In the graph with the bridge terminal
@@ -489,6 +489,20 @@ checking the short-link group sizes before degree copying.
 · [Indexed cleaning](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L166)
 · [Original group check](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L198)
 · [Literal cleaning](OnlineReachabilityPreservers/ShortIncidenceRowPacking.lean#L220).
+
+Bounded links also apply to the degree split. Swap the sides of the
+incidence graph to group the incident rows at each original vertex.
+Their short connections keep their lengths under the swap. If the
+vertex groups fit the original degree width and the original row
+groups fit the original path width, both splits preserve the chosen
+exclusion. For admissible simple input with mass at least both positive
+budgets, the indexed and literal frozen witnesses keep both budgets
+and all four caps, with retention at least \(M/4\) and \(M/8\),
+respectively. The literal theorem uses distinct nonempty simple input
+and output at cutoff at least two.
+[Degree grouping](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L21)
+· [Indexed cleaning](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L139)
+· [Literal cleaning](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L157).
 
 At full cutoff six, opposite-intersection pruning followed by restricting
 to a quarter of each support permits the contiguous construction on an
