@@ -1553,6 +1553,22 @@ polynomial recorded work bounds transfer, independent of the suffix.
 · [Exact run](OnlineReachabilityPreservers/SteinerBinarySeedTape.lean#L153)
 · [Polynomial recorded work](OnlineReachabilityPreservers/SteinerBinarySeedTape.lean#L187).
 
+The accepted seed split also has a finite stack machine in Mathlib's
+`FinTM2` model. Encode the requested count by unary markers followed by
+the input bits. The machine loads the markers, transfers the requested
+bits to a work stack, and restores them above a separator on the
+input-output stack. The suffix stays in place. With enough bits, at
+most \(3B+3\) transitions produce the same seed and suffix as the
+sequential sampler for a budget of \(B\) bits. Mathlib verifies polynomial
+time in the supplied encoding and a transition bound at the algorithm's
+chosen budget. The full solver's machine implementation remains open.
+[Machine](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L35)
+· [Transition certificate](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L182)
+· [Stack-machine polynomial time](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L231)
+· [Sampler agreement](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L255)
+· [Chosen seed budget](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L267).
+
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by
