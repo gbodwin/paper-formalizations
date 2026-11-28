@@ -2054,6 +2054,21 @@ vector at depth \(h\).
 · [Exact-hop frame bound](OnlineReachabilityPreservers/SteinerUnaryCappedRowsMachine.lean#L559)
 · [Machine round on supplied cells](OnlineReachabilityPreservers/SteinerUnaryCappedRowsMachine.lean#L579).
 
+The shared-cap machine reads one unary cap followed by rows of
+distance and prior-weight pairs. It copies the cap into each cell,
+clears the saved copy and starts the capped row machine on the
+expanded frame. Empty rows and the original row order are preserved.
+For cap \(n\) and input length \(X\), the expanded frame has at most
+\((n+2)X\) symbols, and the whole run takes at most
+\(12X^2+26X+6\) transitions. The forest-round instance gives the
+exact next vector from the supplied pairs in one orientation.
+[Shared-cap row machine](OnlineReachabilityPreservers/SteinerUnarySharedCapRowsMachine.lean#L97)
+· [Single-cap input frame](OnlineReachabilityPreservers/SteinerUnarySharedCapRowsMachine.lean#L337)
+· [Expanded size bound](OnlineReachabilityPreservers/SteinerUnarySharedCapRowsMachine.lean#L507)
+· [Composed transition bound](OnlineReachabilityPreservers/SteinerUnarySharedCapRowsMachine.lean#L571)
+· [Quadratic transition polynomial](OnlineReachabilityPreservers/SteinerUnarySharedCapRowsMachine.lean#L600)
+· [Exact supplied-pair forest round](OnlineReachabilityPreservers/SteinerUnarySharedCapRowsMachine.lean#L624).
+
 
 
 
