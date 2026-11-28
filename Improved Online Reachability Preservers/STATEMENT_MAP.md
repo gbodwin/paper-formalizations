@@ -2015,9 +2015,9 @@ For a simple half-five input with positive vertex and row budgets and
 the distinct nonempty convention, nonemptiness ensures the row budget
 bound on \(M\).
 [Four-incidence deletion bound](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L14)
-· [Unique intersections and retained mass](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L191)
-· [Indexed witness](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L224)
-· [Distinct nonempty witness](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L267).
+· [Unique intersections and retained mass](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L204)
+· [Indexed witness](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L237)
+· [Distinct nonempty witness](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L280).
 
 A stronger deletion bound uses a maximum matching of intersecting
 four-incidence sets. When a point belongs to at least three sets,
@@ -2032,9 +2032,9 @@ least both budgets, cleaning keeps at least \(M/288\) with all four
 original-average caps. In the distinct nonempty convention,
 nonemptiness supplies the row budget bound.
 [Four-incidence pairing bound](OnlineReachabilityPreservers/FourPointHittingBound.lean#L416)
-· [Unique intersections and retained mass](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L207)
-· [Indexed witness at 31/32](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L283)
-· [Distinct nonempty witness at 31/32](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L298).
+· [Unique intersections and retained mass](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L220)
+· [Indexed witness at 31/32](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L296)
+· [Distinct nonempty witness at 31/32](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L311).
 
 For local split constraints of maximum degree two, order each connected
 component along a spanning simple path. Its edges join consecutive path
@@ -2043,6 +2043,19 @@ discarding at most \(2\lfloor\max(0,|V|-1)/w\rfloor\) vertices leaves
 every surviving edge within one of the original blocks of width \(w>0\).
 [Component path](OnlineReachabilityPreservers/DegreeTwoBlockOrder.lean#L70)
 · [Block cuts](OnlineReachabilityPreservers/DegreeTwoBlockOrder.lean#L159).
+
+For a simple indexed row family, stop deleting as soon as each remaining
+incidence is in at most two surviving rectangles. Each deletion removes at least three
+rectangles. With initial mass \(M\) and common-vertex-pair count \(E\),
+the retained mass \(K\) satisfies \(3M\le3K+E\). At each vertex, link
+its incident rows that share one more vertex. In each row, link
+two vertices when they share a second row. Both local graphs have
+maximum degree two. The block-cut lemma applies separately to each
+local graph at any positive width.
+[Incidence rectangles](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L100)
+· [Local graph on rows](OnlineReachabilityPreservers/HalfFiveSparseOppositeIncidences.lean#L88)
+· [Local graph on vertices](OnlineReachabilityPreservers/HalfFiveSparseOppositeIncidences.lean#L98)
+· [Retained mass and local degrees](OnlineReachabilityPreservers/HalfFiveSparseOppositeIncidences.lean#L184).
 
 With actual opposite-pruned mass \(K\), a sharper test is
 \(C+\lfloor(M-1)/r\rfloor<K-4K^2/(31M)\) for \(r\ge8\) and

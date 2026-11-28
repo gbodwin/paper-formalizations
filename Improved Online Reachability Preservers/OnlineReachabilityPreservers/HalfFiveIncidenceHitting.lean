@@ -92,6 +92,59 @@ private def commonPairIncidences {n p : ℕ} (pair : Fin p × Fin p) (vertices :
     Finset (Fin p × Fin n) :=
   ({pair.1,pair.2} : Finset (Fin p)).product vertices
 
+/-- The product of two row labels and two vertex labels. -/
+def commonVertexPairRectangle {n p : ℕ} (i j : Fin p) (x y : Fin n) : Finset (Fin p × Fin n) :=
+  ({i,j} : Finset (Fin p)).product {x,y}
+
+/-- The incidence rectangles of all pairs counted by `commonVertexPairCount`. -/
+def commonVertexPairRectangles {n p : ℕ} (paths : Fin p → List (Fin n)) :
+    Finset (Finset (Fin p × Fin n)) :=
+  (increasingRowPairs p).biUnion fun pair =>
+    ((commonRowPoints paths pair).powersetCard 2).image (commonPairIncidences pair)
+
+theorem commonVertexPairRectangles_card_le {n p : ℕ} (paths : Fin p → List (Fin n)) :
+    (commonVertexPairRectangles paths).card ≤ commonVertexPairCount paths := by
+  unfold commonVertexPairRectangles
+  refine card_biUnion_le.trans (sum_le_sum fun pair _ => ?_)
+  rw [← card_powersetCard]
+  exact card_image_le
+
+theorem commonVertexPairRectangles_support {n p : ℕ} (paths : Fin p → List (Fin n)) :
+    ∀ edge ∈ commonVertexPairRectangles paths, edge ⊆ pieceIncidences paths univ := by
+  intro edge on cell atEdge
+  obtain ⟨pair,_,placement⟩ := mem_biUnion.mp on
+  obtain ⟨points,pointsOn,rfl⟩ := mem_image.mp placement
+  obtain ⟨row,col⟩ := mem_product.mp atEdge
+  have entry := mem_inter.mp ((mem_powersetCard.mp pointsOn).1 col)
+  rcases mem_insert.mp row with first | last
+  · exact mem_pieceIncidences.mpr ⟨mem_univ _,first.symm ▸ List.mem_toFinset.mp entry.1⟩
+  · have last := mem_singleton.mp last
+    exact mem_pieceIncidences.mpr ⟨mem_univ _,last.symm ▸ List.mem_toFinset.mp entry.2⟩
+
+theorem commonVertexPairRectangle_mem {n p : ℕ} {paths : Fin p → List (Fin n)}
+    {i j : Fin p} {x y : Fin n} (rows : i ≠ j) (cols : x ≠ y)
+    (xi : x ∈ paths i) (yi : y ∈ paths i) (xj : x ∈ paths j) (yj : y ∈ paths j) :
+    commonVertexPairRectangle i j x y ∈ commonVertexPairRectangles paths := by
+  have inOrder {a b : Fin p} (ordered : a < b)
+      (xa : x ∈ paths a) (ya : y ∈ paths a) (xb : x ∈ paths b) (yb : y ∈ paths b) :
+      commonVertexPairRectangle a b x y ∈ commonVertexPairRectangles paths := by
+    have among : ({x,y} : Finset (Fin n)) ⊆ (paths a).toFinset ∩ (paths b).toFinset := by
+      intro v on
+      rcases mem_insert.mp on with rfl | last
+      · exact mem_inter.mpr ⟨List.mem_toFinset.mpr xa,List.mem_toFinset.mpr xb⟩
+      · obtain rfl := mem_singleton.mp last
+        exact mem_inter.mpr ⟨List.mem_toFinset.mpr ya,List.mem_toFinset.mpr yb⟩
+    apply mem_biUnion.mpr
+    refine ⟨(a,b),mem_filter.mpr ⟨mem_univ _,ordered⟩,?_⟩
+    exact mem_image.mpr ⟨{x,y},mem_powersetCard.mpr ⟨among,card_pair cols⟩,rfl⟩
+  rcases lt_or_gt_of_ne rows with earlier | later
+  · exact inOrder earlier xi yi xj yj
+  · have same : commonVertexPairRectangle j i x y = commonVertexPairRectangle i j x y := by
+      unfold commonVertexPairRectangle
+      rw [pair_comm]
+    rw [← same]
+    exact inOrder later xj yj xi yi
+
 private theorem common_vertex_pairs_unique_sublists_by_hitting_bound {n p loss weight pointWeight : ℕ}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (hit : ∀ (ground : Finset (Fin p × Fin n)) (family : Finset (Finset (Fin p × Fin n))),
@@ -106,77 +159,37 @@ private theorem common_vertex_pairs_unique_sublists_by_hitting_bound {n p loss w
       loss*M ≤ loss*(∑ i, (kept i).length)+weight*E+pointWeight*M := by
   classical
   let ground := pieceIncidences paths univ
-  let byRows (pair : Fin p × Fin p) :=
-    ((commonRowPoints paths pair).powersetCard 2).image (commonPairIncidences pair)
-  let constraints := (increasingRowPairs p).biUnion byRows
-  have edgeData (edge : Finset (Fin p × Fin n)) (edgeIn : edge ∈ constraints) :
-      ∃ pair ∈ increasingRowPairs p, ∃ vertices ∈ (commonRowPoints paths pair).powersetCard 2,
-        commonPairIncidences pair vertices = edge := by
-    obtain ⟨pair,present,withinPair⟩ := mem_biUnion.mp edgeIn
-    obtain ⟨vertices,vertexPair,equal⟩ := mem_image.mp withinPair
-    exact ⟨pair,present,vertices,vertexPair,equal⟩
-  have within : ∀ edge ∈ constraints, edge ⊆ ground := by
-    intro edge edgeIn incidence on
-    obtain ⟨pair,_,vertices,vertexPair,rfl⟩ := edgeData edge edgeIn
-    obtain ⟨slot,vertex⟩ := mem_product.mp on
-    obtain ⟨left,right⟩ := mem_inter.mp ((mem_powersetCard.mp vertexPair).1 vertex)
-    refine mem_pieceIncidences.mpr ⟨mem_univ _,?_⟩
-    rcases mem_insert.mp slot with first | second
-    · rw [first]
-      exact List.mem_toFinset.mp left
-    · rw [mem_singleton.mp second]
-      exact List.mem_toFinset.mp right
+  let constraints := commonVertexPairRectangles paths
+  have within : ∀ edge ∈ constraints, edge ⊆ ground := commonVertexPairRectangles_support paths
   have sizes : ∀ edge ∈ constraints, edge.card = 4 := by
     intro edge edgeIn
-    obtain ⟨pair,present,vertices,vertexPair,rfl⟩ := edgeData edge edgeIn
+    obtain ⟨pair,present,placement⟩ := mem_biUnion.mp edgeIn
+    obtain ⟨vertices,vertexPair,rfl⟩ := mem_image.mp placement
     have ordered := (mem_filter.mp present).2
     change (({pair.1,pair.2} : Finset (Fin p)) ×ˢ vertices).card = 4
     rw [card_product,(mem_powersetCard.mp vertexPair).2,card_pair ordered.ne]
-  have constraintCount : constraints.card ≤ commonVertexPairCount paths := calc
-    _ ≤ ∑ pair ∈ increasingRowPairs p, (byRows pair).card := card_biUnion_le
-    _ ≤ _ := sum_le_sum fun pair _ => by
-      rw [← card_powersetCard]
-      exact card_image_le
+  have constraintCount : constraints.card ≤ commonVertexPairCount paths := commonVertexPairRectangles_card_le paths
   obtain ⟨removed,support,cover,paid⟩ := hit ground constraints within sizes
   let kept := erasePieceIncidences paths removed
   have sub (i : Fin p) : (kept i).Sublist (paths i) := erasePieceIncidences_sublist paths removed i
   have mass := erasePieceIncidences_mass_add_loss simple univ removed
   rw [inter_eq_right.mpr support] at mass
   have groundCard : ground.card = ∑ i, (paths i).length := pieceIncidences_card simple univ
-  have orderedUnique {i j : Fin p} {x y : Fin n} (ordered : i < j)
-      (xi : x ∈ kept i) (xj : x ∈ kept j) (yi : y ∈ kept i) (yj : y ∈ kept j) : x = y := by
+  refine ⟨kept,sub,?_,?_⟩
+  · intro i j x y different xi xj yi yj
     by_contra apart
-    let pair : Fin p × Fin p := (i,j)
-    let vertices : Finset (Fin n) := {x,y}
-    have subset : vertices ⊆ commonRowPoints paths pair := by
-      intro v vIn
-      rcases mem_insert.mp vIn with same | other
-      · subst v
-        exact mem_inter.mpr ⟨List.mem_toFinset.mpr ((sub i).subset xi),
-          List.mem_toFinset.mpr ((sub j).subset xj)⟩
-      · obtain rfl := mem_singleton.mp other
-        exact mem_inter.mpr ⟨List.mem_toFinset.mpr ((sub i).subset yi),
-          List.mem_toFinset.mpr ((sub j).subset yj)⟩
-    have pairOn : pair ∈ increasingRowPairs p := mem_filter.mpr ⟨mem_univ _,ordered⟩
-    have vertexPair : vertices ∈ (commonRowPoints paths pair).powersetCard 2 :=
-      mem_powersetCard.mpr ⟨subset,card_pair apart⟩
-    have edgeOn : commonPairIncidences pair vertices ∈ constraints :=
-      mem_biUnion.mpr ⟨pair,pairOn,mem_image_of_mem (commonPairIncidences pair) vertexPair⟩
-    obtain ⟨⟨row,vertex⟩,includes⟩ := cover (commonPairIncidences pair vertices) edgeOn
+    have edgeOn : commonVertexPairRectangle i j x y ∈ constraints :=
+      commonVertexPairRectangle_mem different apart ((sub i).subset xi) ((sub i).subset yi)
+        ((sub j).subset xj) ((sub j).subset yj)
+    obtain ⟨⟨row,vertex⟩,includes⟩ := cover _ edgeOn
     have deleted := (mem_inter.mp includes).2
-    have products := mem_product.mp (mem_inter.mp includes).1
-    have rowCases : row = i ∨ row = j := by simpa [pair] using products.1
-    have vertexCases : vertex = x ∨ vertex = y := by simpa [vertices] using products.2
+    obtain ⟨rowCases,vertexCases⟩ := mem_product.mp (mem_inter.mp includes).1
+    simp only [mem_insert,mem_singleton] at rowCases vertexCases
     rcases rowCases with rfl | rfl <;> rcases vertexCases with rfl | rfl
     · exact (mem_erasePieceIncidences.mp xi).2 deleted
     · exact (mem_erasePieceIncidences.mp yi).2 deleted
     · exact (mem_erasePieceIncidences.mp xj).2 deleted
     · exact (mem_erasePieceIncidences.mp yj).2 deleted
-  refine ⟨kept,sub,?_,?_⟩
-  · intro i j x y different xi xj yi yj
-    rcases lt_or_gt_of_ne different with order | order
-    · exact orderedUnique order xi xj yi yj
-    · exact orderedUnique order xj xi yj yi
   · change (∑ i, (kept i).length)+removed.card = ∑ i, (paths i).length at mass
     have enlarged := paid.trans (Nat.add_le_add_right (Nat.mul_le_mul_left weight constraintCount) (pointWeight*ground.card))
     rw [groundCard] at enlarged
