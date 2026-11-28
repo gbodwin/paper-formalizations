@@ -4153,6 +4153,20 @@ proves the converse for half cutoff three.
 · [Literal row bound from cutoff three](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L271)
 · [Exact half-three feasibility](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L306).
 
+At half cutoff at least four, a three-step detour of consecutive
+comparisons gives a river-before-final-row constraint when the reverse
+middle step or the specified cross step is also present. The latter
+edges rule out a shared first and last row by requiring a comparison
+to be consecutive across a gap. Adjacent repeated rows can be
+contracted while preserving the final label. The constraints rule out
+opposite three-step detours and a directed cross cycle with the two
+specified pair edges. Two disjoint reciprocal pairs consequently
+have at most three consecutive comparisons between them.
+[Three-step arrival order](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L26)
+· [Opposite detours](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L102)
+· [Cross cycle](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L125)
+· [At most three cross edges](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L222).
+
 The cutoff-three capacity supplies a literal family of mass \(p\) within
 both budgets with full exclusion at every size. Its ordered pairs all go
 across the balanced parts in one direction, and it also uses singleton

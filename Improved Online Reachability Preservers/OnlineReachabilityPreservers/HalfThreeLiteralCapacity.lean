@@ -8,7 +8,7 @@ namespace OnlineReachabilityPreservers
 open Finset
 local notation "Before" => SourceAudit.BeforeIn
 
-private theorem card_filter_pair_le_one_of_missing {A : Type*} [DecidableEq A]
+theorem card_filter_pair_le_one_of_missing {A : Type*} [DecidableEq A]
     (s : Finset A) (a b : A) (missing : a ∈ s → b ∉ s) :
     (({a,b} : Finset A).filter (· ∈ s)).card ≤ 1 := by
   by_cases aOn : a ∈ s

@@ -3459,6 +3459,20 @@ local-order upper bound and recurrence of Theorem 43.
   · [Consecutive comparisons](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L238)
   · [Exact half-three feasibility](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L306).
 
+  For half cutoff at least four, two disjoint reciprocal pairs
+  have at most three consecutive comparisons between them. Each
+  vertex can receive at most one from the opposite pair. If all
+  four receive one, a reciprocal cross pair forces a bidirected
+  square. With only one-way cross arcs, the four arcs make a directed
+  cycle. In both configurations, two detours to the same target
+  force opposite arrival orders. A three-step detour may share
+  a row consecutively, in which case contract those steps and keep
+  its final row. The reverse middle or specified cross comparison
+  excludes a shared first and last row even in arbitrary path
+  orders.
+  [Detour arrival constraint](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L26)
+  · [Cross-arc bound](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L222).
+
   The exact literal budgets \(n=4,p=11\) are feasible for half exclusion
   at every cutoff and infeasible for full exclusion at \(k\ge4\). The
   half witness uses four singleton rows, three early arrows from vertex
