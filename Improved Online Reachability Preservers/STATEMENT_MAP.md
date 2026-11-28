@@ -2002,6 +2002,21 @@ nonempty simple rows at cutoff at least two.
 · [Indexed witness](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L139)
 · [Literal witness](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L157).
 
+Enumerate each incidence in both directions from the input lists and
+remove arcs touching a given label. Backward search of depth \(r\)
+then decides whether a walk of length at most \(r\) avoids the
+removed label, given a starting label distinct from it.
+The neighbor graph built from these searches computes the same
+short-link groups as the walk definition. For whole deletion
+groups, a simple path has fewer edges than the total number of
+incidence labels, which gives a sufficient search depth. The search
+collects only the neighbors of the deleted label. Degree grouping uses
+the transpose.
+[Incidence arc enumeration](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L19)
+· [Exact bounded search](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L60)
+· [Short-link groups](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L117)
+· [Whole deletion groups](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L129).
+
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates
 a full size-seven bridge in the dense branch on a simple input with unique

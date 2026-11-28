@@ -504,6 +504,17 @@ and output at cutoff at least two.
 · [Indexed cleaning](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L139)
 · [Literal cleaning](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L157).
 
+The grouping premises admit finite checks. Searching backward in the
+incidence graph with a label deleted decides existence of the bounded
+walks used in the projection lemmas. Computing the connected groups
+from these searches gives the original short-link groups exactly. A
+search up to the total number of labels also gives the tested row's
+neighbors in each whole deletion component. The degree test works in
+the transposed incidence graph.
+[Bounded walks](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L60)
+· [Short-link computation](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L117)
+· [Whole-component computation](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L129).
+
 At full cutoff six, opposite-intersection pruning followed by restricting
 to a quarter of each support permits the contiguous construction on an
 unrestricted maximizing family of indexed simple paths. If the quarter

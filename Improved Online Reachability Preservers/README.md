@@ -742,6 +742,13 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [Grouped degree copies](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L21)
   · [Indexed witness](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L139)
   · [Literal witness](OnlineReachabilityPreservers/ShortIncidenceDegreePacking.lean#L157).
+- The component tests can be evaluated from the input lists. Enumerate
+  both directions of each incidence and remove arcs touching the deleted
+  label. The finite searches compute the exact groups for both the
+  bounded-link and whole-component criteria.
+  [Search and walk equivalence](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L60)
+  · [Short-link groups](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L117)
+  · [Whole components](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L129).
 - At half cutoff six with full-three exclusion and arbitrary
   intersections, fix lower coefficients \(a,b\in[0,1/4]\) with
   \(a+b\le7/15\). A witness meets these lower caps, both original upper
