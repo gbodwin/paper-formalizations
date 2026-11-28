@@ -2086,6 +2086,20 @@ of the pieces packed from the intermediate rows and excludes half bridges throug
 · [Width packing with local degree two](OnlineReachabilityPreservers/HalfFiveSparseWidthPacking.lean#L299)
 · [Width packing after incidence deletion](OnlineReachabilityPreservers/HalfFiveSparseWidthPacking.lean#L317).
 
+At half cutoff five, \(E\le M\) now suffices for all four
+original-average caps. For simple indexed input excluding half bridges
+through five with both positive budgets at most \(M\), the witness fits
+both budgets and retains at
+least \(M/40\). In the dense branch the intermediate mass is at least
+\(2M/3\). The two width cuts lose at most one eighth of that mass.
+Trim the full block profiles before deleting the marked incidences, then
+apply the cut deletions in that rectangle. The rectangle keeps at
+least \(587M/1116\) before peeling. The literal theorem gives
+distinct nonempty rows for distinct nonempty input.
+[Rectangle mass bound](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L47)
+· [Indexed witness at \(E\le M\)](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L92)
+· [Distinct nonempty witness at \(E\le M\)](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L203).
+
 With actual opposite-pruned mass \(K\), a sharper test is
 \(C+\lfloor(M-1)/r\rfloor<K-4K^2/(31M)\) for \(r\ge8\) and
 \(C\) the integer removal charge above. It yields both budgets,

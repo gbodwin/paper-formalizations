@@ -928,6 +928,20 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   · [Preservation through path pieces](OnlineReachabilityPreservers/HalfFiveSparseWidthPacking.lean#L250)
   · [Width packing with local degree two](OnlineReachabilityPreservers/HalfFiveSparseWidthPacking.lean#L299)
   · [Width packing after incidence deletion](OnlineReachabilityPreservers/HalfFiveSparseWidthPacking.lean#L317).
+
+  At half cutoff five, \(E\le M\) now suffices for all four
+  original-average caps. For simple indexed input excluding half bridges
+  through five with both positive budgets at most \(M\), the witness fits
+  both budgets and retains at
+  least \(M/40\). In the dense branch the intermediate mass is at least
+  \(2M/3\). The two width cuts lose at most one eighth of that mass.
+  Trim the full block profiles before deleting the marked incidences, then
+  apply the cut deletions in that rectangle. The rectangle keeps at
+  least \(587M/1116\) before peeling. The literal theorem gives
+  distinct nonempty rows for distinct nonempty input.
+  [Rectangle mass bound](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L47)
+  · [Indexed witness at \(E\le M\)](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L92)
+  · [Distinct nonempty witness at \(E\le M\)](OnlineReachabilityPreservers/HalfFiveOverlapCleaning.lean#L203).
 - At half cutoff five, or at half cutoff six with full-three
   exclusion, the integer charge can use the actual mass \(K\) after
   opposite pruning. Write \(C=n\lfloor(M-1)/(4n)\rfloor+
