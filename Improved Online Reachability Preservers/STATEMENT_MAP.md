@@ -2195,6 +2195,19 @@ length of the supplied unary graph frame.
 · [Native transition polynomial](OnlineReachabilityPreservers/SteinerUnaryGraphArcFlagsMachine.lean#L246)
 · [Exact flag count](OnlineReachabilityPreservers/SteinerUnaryGraphArcFlagsMachine.lean#L260).
 
+For a fixed target, the hop recurrence updates one distance column
+using rectangular rows of transfer codes. The diagonal code keeps
+the old value, an off-diagonal arc adds one, and a missing arc gives
+the sentinel \(n+1\). Taking each row's minimum gives exactly the
+next distance column. The existing native adapter pairs the matrix
+codes with one stored earlier column in source and successor order.
+The supplied compact frame has at most \(4n^2+4n+3\) symbols.
+[Diagonal, arc and missing codes](OnlineReachabilityPreservers/SteinerDistanceHopTransferRows.lean#L12)
+· [Exact next hop column](OnlineReachabilityPreservers/SteinerDistanceHopTransferRows.lean#L71)
+· [Exact cell pairing](OnlineReachabilityPreservers/SteinerDistanceHopTransferRows.lean#L113)
+· [Compact frame length](OnlineReachabilityPreservers/SteinerDistanceHopTransferRows.lean#L132)
+· [Native frame preparation on a supplied table](OnlineReachabilityPreservers/SteinerDistanceHopTransferRows.lean#L167).
+
 
 
 
