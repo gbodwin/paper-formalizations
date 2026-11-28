@@ -3220,6 +3220,24 @@ numeric endpoint index and uses at most \(4W+3n+2\) transitions.
 · [Finite endpoint index](OnlineReachabilityPreservers/SteinerBinaryToUnaryMachine.lean#L319)
 · [Accepted range flag](OnlineReachabilityPreservers/SteinerBinaryToUnaryMachine.lean#L328).
 
+The computed-count sampler keeps the bit tape on a passive stack
+while the arithmetic on prepared dimensions produces the count. It
+places the resulting unary markers before the bits and then runs
+the seed splitter. On success it returns the requested prefix and
+the remaining tape. The output is empty exactly when the computed
+count exceeds the number of supplied bits. With arithmetic frame
+length \(Y\), arithmetic transitions \(T\), and count \(C\), the whole run
+uses at most \(2Y+T+4C+6\) transitions. For the full framed input
+length \(X\), the bound is \(3X^3+21X^2+59X+42\). With the prepared
+dimensions and correct forest width, the result is the graph's
+verified finite sampler at the exact graph bit budget.
+[Computed-count seed machine](OnlineReachabilityPreservers/SteinerComputedSeedMachine.lean#L113)
+· [Prepared dimensions and raw tape](OnlineReachabilityPreservers/SteinerComputedSeedMachine.lean#L392)
+· [Exact output and transition bound](OnlineReachabilityPreservers/SteinerComputedSeedMachine.lean#L428)
+· [Exact exhaustion condition](OnlineReachabilityPreservers/SteinerComputedSeedMachine.lean#L439)
+· [Cubic input polynomial](OnlineReachabilityPreservers/SteinerComputedSeedMachine.lean#L445)
+· [Verified graph finite sampler](OnlineReachabilityPreservers/SteinerComputedSeedMachine.lean#L481).
+
 
 
 
