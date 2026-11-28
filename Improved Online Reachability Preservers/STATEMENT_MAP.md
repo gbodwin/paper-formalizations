@@ -2182,6 +2182,19 @@ next hop entry.
 · [Prepared hop cell length](OnlineReachabilityPreservers/SteinerUnaryMinimumMachine.lean#L361)
 · [Exact next hop entry](OnlineReachabilityPreservers/SteinerUnaryMinimumMachine.lean#L391).
 
+Given the unary vertex count and the original arc rows, the native
+graph table machine generates all ordered-pair queries and returns
+one membership bit for each pair in source and target order. The
+query generator returns directly to the table evaluator. The
+\(n^2\) flags agree with the finite graph even for duplicate input
+rows and diagonal arcs. The transition bound is polynomial in the
+length of the supplied unary graph frame.
+[Graph adjacency machine](OnlineReachabilityPreservers/SteinerUnaryGraphArcFlagsMachine.lean#L67)
+· [Actual graph-to-flag run](OnlineReachabilityPreservers/SteinerUnaryGraphArcFlagsMachine.lean#L223)
+· [Exact finite graph membership](OnlineReachabilityPreservers/SteinerUnaryGraphArcFlagsMachine.lean#L234)
+· [Native transition polynomial](OnlineReachabilityPreservers/SteinerUnaryGraphArcFlagsMachine.lean#L246)
+· [Exact flag count](OnlineReachabilityPreservers/SteinerUnaryGraphArcFlagsMachine.lean#L260).
+
 
 
 
