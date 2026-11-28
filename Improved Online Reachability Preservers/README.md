@@ -3640,6 +3640,19 @@ distance-table scale. On exact hop counts it gives the priced forest scale.
 · [Exact run with a previous total](OnlineReachabilityPreservers/SteinerUnaryRoundTotalMachine.lean#L118)
 · [Scale from both vector sums](OnlineReachabilityPreservers/SteinerUnaryRoundTotalMachine.lean#L136).
 
+The composed scale machine receives a distance table encoded in both
+transfer orders. It reuses the round tapes and preserves the pending
+second request and the running total between stages. The two runs
+accumulate exactly the rooted weights in the two orientations, and
+the last total takes the maximum with one. For exact graph hop data
+the result is the priced forest scale. The transition bound is a
+polynomial in the supplied frame length for each fixed height.
+[Two-orientation scale machine](OnlineReachabilityPreservers/SteinerUnaryForestScaleMachine.lean#L107)
+· [Input in both transfer orders](OnlineReachabilityPreservers/SteinerUnaryForestScaleMachine.lean#L421)
+· [Exact native scale](OnlineReachabilityPreservers/SteinerUnaryForestScaleMachine.lean#L483)
+· [Fixed-height transition polynomial](OnlineReachabilityPreservers/SteinerUnaryForestScaleMachine.lean#L541)
+· [Exact scale from graph hops](OnlineReachabilityPreservers/SteinerUnaryForestScaleMachine.lean#L553).
+
 
 
 
