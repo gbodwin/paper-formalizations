@@ -1897,6 +1897,20 @@ matches the framed all-pairs list used by the arc count. The frame has
 · [Cubic time polynomial](OnlineReachabilityPreservers/SteinerUnaryArcEnumerationMachine.lean#L452)
 · [Frame length](OnlineReachabilityPreservers/SteinerUnaryArcEnumerationMachine.lean#L493).
 
+The query-frame machine reads one delimited unary vertex count
+and the unary graph rows. It archives the graph during enumeration,
+then restores those rows in order before a separator and the
+generated all-pairs frame. For encoded graph length \(G\) in symbols
+and vertex count \(n\), the transition bound is \(2n^3+5n^2+7n+2G+7\).
+The result has \(G+1+n^3+n^2\) symbols and is the exact input of the
+ordered arc table.
+[Graph query-frame machine](OnlineReachabilityPreservers/SteinerUnaryGraphQueryFrameMachine.lean#L73)
+· [Input encoding](OnlineReachabilityPreservers/SteinerUnaryGraphQueryFrameMachine.lean#L276)
+· [Exact query-frame output](OnlineReachabilityPreservers/SteinerUnaryGraphQueryFrameMachine.lean#L280)
+· [Transition bound](OnlineReachabilityPreservers/SteinerUnaryGraphQueryFrameMachine.lean#L298)
+· [Exact result length](OnlineReachabilityPreservers/SteinerUnaryGraphQueryFrameMachine.lean#L333)
+· [Cubic time polynomial](OnlineReachabilityPreservers/SteinerUnaryGraphQueryFrameMachine.lean#L359).
+
 
 
 
