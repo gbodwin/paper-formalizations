@@ -273,7 +273,7 @@ noncomputable def steinerSeedTapeMachine_polytime :
       (show TM2OutputsInTime steinerSeedTapeMachine (encodeSteinerSeedTapeInput input)
         (some (splitSteinerSeedTape input)) _ from ⟨result.toEvalsTo,result.steps_le_m.trans enlarge⟩)
 
-private def encodeSavedSteinerSeed {size : ℕ} (saved : (Vector Bool size × ℕ) × List Bool) :
+def encodeSavedSteinerSeed {size : ℕ} (saved : (Vector Bool size × ℕ) × List Bool) :
     List (Option Bool) :=
   saved.1.1.toList.map some ++ none::saved.2.map some
 

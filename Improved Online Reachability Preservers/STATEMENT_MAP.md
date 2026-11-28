@@ -1624,6 +1624,23 @@ plus four.
 · [Bound in the two word lengths](OnlineReachabilityPreservers/SteinerBinaryAdditionMachine.lean#L234)
 · [Linear input polynomial](OnlineReachabilityPreservers/SteinerBinaryAdditionMachine.lean#L247).
 
+A composed machine reads the supplied padded endpoint checks followed
+by the supplied unary seed count and bit tape. Separate symbol tags mark
+the boundary between these frames. If the graph check rejects, the
+machine returns a rejection marker followed by the untouched seed
+request in at most one transition per range symbol plus one. Otherwise
+it runs the seed splitter and returns the tagged seed and suffix, or the
+empty output on exhaustion. On graph rows, the machine agrees with the
+guarded decoder and finite sampler at the actual variable-word entry
+width. The full transition bound is the number of range symbols plus
+three times the supplied count plus four.
+[Composed machine](OnlineReachabilityPreservers/SteinerRangeSeedMachine.lean#L70)
+· [Embedded subroutine evaluation](OnlineReachabilityPreservers/SteinerStackTagging.lean#L103)
+· [Exact run](OnlineReachabilityPreservers/SteinerRangeSeedMachine.lean#L237)
+· [Linear input polynomial](OnlineReachabilityPreservers/SteinerRangeSeedMachine.lean#L250)
+· [Guarded graph and sampler agreement](OnlineReachabilityPreservers/SteinerRangeSeedMachine.lean#L275)
+· [Rejection preserves the seed frame](OnlineReachabilityPreservers/SteinerRangeSeedMachine.lean#L303).
+
 
 
 

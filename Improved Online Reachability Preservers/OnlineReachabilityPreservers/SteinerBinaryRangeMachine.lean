@@ -10,7 +10,7 @@ open StateTransition Turing Turing.TM2.Stmt
 def alignBinaryDigits (left right : List Bool) : List (Bool × Bool) :=
   List.zipWithAll (fun a b => (a.getD false,b.getD false)) left right
 
-private def foldedBorrow (digits : List (Bool × Bool)) (borrow : Bool) : Bool :=
+def foldedBorrow (digits : List (Bool × Bool)) (borrow : Bool) : Bool :=
   digits.foldl (fun borrow pair => nextBinaryBorrow pair.1 pair.2 borrow) borrow
 
 theorem alignBinaryDigits_cons {left right : List Bool} (nonempty : ¬ (left = [] ∧ right = [])) :
@@ -20,7 +20,7 @@ theorem alignBinaryDigits_cons {left right : List Bool} (nonempty : ¬ (left = [
   · exact (nonempty ⟨rfl,rfl⟩).elim
   all_goals simp [alignBinaryDigits]
 
-private theorem alignedBorrow_eq_binaryLess (left right : List Bool) (borrow : Bool) :
+theorem alignedBorrow_eq_binaryLess (left right : List Bool) (borrow : Bool) :
     foldedBorrow (alignBinaryDigits left right) borrow = (binaryLessWithWork left right borrow).1 := by
   induction total : left.length+right.length using Nat.strong_induction_on generalizing left right borrow with
   | h size smaller =>
