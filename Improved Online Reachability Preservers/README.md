@@ -3367,6 +3367,21 @@ The bound in the whole framed input length \(X\) is \(5X^2+14X+4\).
 · [Polynomial-time machine](OnlineReachabilityPreservers/SteinerUnaryArcTableMachine.lean#L635)
 · [Finite graph membership table](OnlineReachabilityPreservers/SteinerUnaryArcTableMachine.lean#L647).
 
+The unary arc count machine runs the table and emits one true
+tally for each true result. With \(q\) queries and \(C\) matching
+query occurrences, the tally adds at most \(q+C+2\) transitions.
+The bound is \(5X^2+16X+6\) in the supplied unary graph-and-query
+frame of length \(X\). With a
+duplicate-free candidate list covering the graph, the output length
+is the number of distinct arcs in the decoded rows. The supplied
+all-pairs candidate list enumerates source and target indices in order.
+[Arc count machine](OnlineReachabilityPreservers/SteinerUnaryArcCountMachine.lean#L55)
+· [Tally and transition bound](OnlineReachabilityPreservers/SteinerUnaryArcCountMachine.lean#L219)
+· [Quadratic machine](OnlineReachabilityPreservers/SteinerUnaryArcCountMachine.lean#L254)
+· [Exact finite cardinality](OnlineReachabilityPreservers/SteinerUnaryArcCountMachine.lean#L279)
+· [All candidate arcs](OnlineReachabilityPreservers/SteinerUnaryArcCountMachine.lean#L299)
+· [All-pairs cardinality run](OnlineReachabilityPreservers/SteinerUnaryArcCountMachine.lean#L315).
+
 
 
 

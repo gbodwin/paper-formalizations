@@ -601,7 +601,7 @@ def steinerUnaryArcTableMachine_run (request : SteinerUnaryArcTable) :
   simp only [Nat.add_mul]
   omega
 
-private theorem arcTable_frameLength_le (rows : List (ℕ × ℕ)) : rows.length ≤ (encodeSteinerUnaryArcRows rows).length := by
+theorem steinerUnaryArcRows_count_le_frame (rows : List (ℕ × ℕ)) : rows.length ≤ (encodeSteinerUnaryArcRows rows).length := by
   induction rows with
   | nil => exact Nat.zero_le _
   | cons arc rows ih =>
@@ -621,7 +621,7 @@ def steinerUnaryArcTableMachine_quadratic (request : SteinerUnaryArcTable) :
   let X := (encodeSteinerUnaryArcTable request).length
   let q := request.2.length
   have layout : X = G+1+Q := by simp [X,G,Q,encodeSteinerUnaryArcTable]; omega
-  have count : q ≤ Q := arcTable_frameLength_le request.2
+  have count : q ≤ Q := steinerUnaryArcRows_count_le_frame request.2
   have scans : G*q ≤ X^2 := by
     rw [pow_two]
     exact Nat.mul_le_mul (by omega) (by omega)
