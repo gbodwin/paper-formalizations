@@ -2197,8 +2197,8 @@ length of the supplied unary graph frame.
 
 For a fixed target, the hop recurrence updates one distance column
 using rectangular rows of transfer codes. The diagonal code keeps
-the old value, an off-diagonal arc adds one, and a missing arc gives
-the sentinel \(n+1\). Taking each row's minimum gives exactly the
+the old value. Off the diagonal, an arc adds one and an absent arc
+gives the sentinel \(n+1\). Taking each row's minimum gives exactly the
 next distance column. The existing native adapter pairs the matrix
 codes with one stored earlier column in source and successor order.
 The supplied compact frame has at most \(4n^2+4n+3\) symbols.
@@ -2207,6 +2207,16 @@ The supplied compact frame has at most \(4n^2+4n+3\) symbols.
 · [Exact cell pairing](OnlineReachabilityPreservers/SteinerDistanceHopTransferRows.lean#L113)
 · [Compact frame length](OnlineReachabilityPreservers/SteinerDistanceHopTransferRows.lean#L132)
 · [Native frame preparation on a supplied table](OnlineReachabilityPreservers/SteinerDistanceHopTransferRows.lean#L167).
+
+The native transfer machine reads the cap, the code and the previous
+value as three unary fields. Code zero keeps the value, code one adds
+a tally, and a larger code emits the stored cap. The machine takes at
+most \(2X\) transitions for encoded length \(X\). A supplied graph cell
+gives the exact candidate of the rectangular hop recurrence.
+[Unary transfer machine](OnlineReachabilityPreservers/SteinerUnaryHopTransferCandidateMachine.lean#L82)
+· [Exact field length](OnlineReachabilityPreservers/SteinerUnaryHopTransferCandidateMachine.lean#L268)
+· [Exact candidate and transition bound](OnlineReachabilityPreservers/SteinerUnaryHopTransferCandidateMachine.lean#L290)
+· [Exact supplied graph transfer](OnlineReachabilityPreservers/SteinerUnaryHopTransferCandidateMachine.lean#L332).
 
 
 
