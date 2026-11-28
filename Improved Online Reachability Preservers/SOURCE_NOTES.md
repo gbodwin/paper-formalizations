@@ -259,8 +259,23 @@ This applies to the actual consecutive width blocks under unique
 intersections, where opposite-cut constraints are vacuous. For positive
 budgets and mass at least both counts, the cleaned witness meets both
 budgets and all four frozen caps and retains at least one sixteenth of
-the input mass. The half-bridge version through size six assumes full
-exclusion through size four to justify the vertex-copy projection.
+the input mass. In the half-six argument with unique intersections,
+full exclusion through size three suffices for the vertex-copy
+projection. A repeated projected terminal at position two would make
+a full three-bridge with the river and the first two steps. A repeat
+at position three would make a projected two-step return, which
+unique intersections preclude. The other positions are excluded by
+strictness or by the absence of parallel comparisons. The last arc
+keeps its label during projection. The indexed and literal witnesses
+retain at least \(M/16\) and keep both budgets and the four original
+caps. If arbitrary intersections are allowed, pruning before the
+rectangle construction and these width splits gives the four
+output-average caps with retention \(M/392\) or \(M/7056\),
+respectively. The input still excludes half-six and full-three bridges.
+[Vertex projection](OnlineReachabilityPreservers/HalfSixProjection.lean#L21)
+· [Both splits](OnlineReachabilityPreservers/HalfSixProjection.lean#L62)
+· [Starting-average witnesses](OnlineReachabilityPreservers/HalfSixProjection.lean#L113)
+· [Output-average witnesses](OnlineReachabilityPreservers/HalfSixProjection.lean#L130).
 The earlier packing that can reorder positions need not make contiguous
 pieces in the original order. The six-vertex noncontiguous example
 remains a counterexample to using only the opposite-cut constraints.

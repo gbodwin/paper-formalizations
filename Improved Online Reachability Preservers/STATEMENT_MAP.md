@@ -1707,9 +1707,24 @@ intersections and mass at least both positive input counts, the
 [checked width-block cleaning](OnlineReachabilityPreservers/ContiguousSixCleaning.lean)
 preserves full exclusion through size six with both original budgets and
 all four frozen caps, retaining at least one sixteenth of the input mass.
-The half-bridge version at size six requires full exclusion through size
-four for the vertex-copy step. The general cyclic existence claim at
-half cutoff six remains open. The size-seven counterexample below
+With unique intersections, full exclusion through size three also
+suffices for both width splits at half cutoff six. If the first two
+projected steps end at the river's terminal, they form a full
+three-bridge with the river.
+The indexed and literal starting-average witnesses keep both budgets
+and at least \(M/16\). For arbitrary intersections, pruning before
+rectangle selection yields output-average witnesses retaining at least
+\(M/392\) in the indexed convention and \(M/7056\) in the literal
+convention. These still assume both half-six and full-three exclusion
+on the original family.
+[Projection](OnlineReachabilityPreservers/HalfSixProjection.lean#L21)
+· [Both splits](OnlineReachabilityPreservers/HalfSixProjection.lean#L62)
+· [Indexed starting caps](OnlineReachabilityPreservers/HalfSixProjection.lean#L113)
+· [Indexed output caps](OnlineReachabilityPreservers/HalfSixProjection.lean#L130)
+· [Literal output caps](OnlineReachabilityPreservers/HalfSixProjection.lean#L154)
+· [Literal starting caps](OnlineReachabilityPreservers/HalfSixProjection.lean#L173).
+The general cyclic existence claim at half cutoff six remains open.
+The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates
 a full size-seven bridge in the dense branch on a simple input with unique
 intersections, all-size full exclusion, and zero pruning loss.
