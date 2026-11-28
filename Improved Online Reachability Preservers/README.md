@@ -3665,6 +3665,18 @@ the forest scale \(S\) used in seed decoding.
 · [Fixed-height transition polynomial](OnlineReachabilityPreservers/SteinerUnaryForestProposalWidthMachine.lean#L230)
 · [Exact graph proposal width](OnlineReachabilityPreservers/SteinerUnaryForestProposalWidthMachine.lean#L242).
 
+The graph-to-distance recurrence starts at zero on the diagonal and
+at the sentinel \(n+1\) elsewhere. A simultaneous round takes the
+minimum of each old value and the unit-cost relaxations along its
+outgoing arcs, using the preceding table for every entry. An entry
+at depth \(r\) is at most \(q\le n\) exactly when reverse search
+finds its source by depth \(\min(r,q)\). After \(n\) rounds all
+entries equal the exact hop counts, including unreachable pairs.
+[One entry update](OnlineReachabilityPreservers/SteinerDistanceHopRounds.lean#L22)
+· [Simultaneous recurrence](OnlineReachabilityPreservers/SteinerDistanceHopRounds.lean#L27)
+· [Exact threshold characterization](OnlineReachabilityPreservers/SteinerDistanceHopRounds.lean#L71)
+· [Exact hop counts after one pass per vertex](OnlineReachabilityPreservers/SteinerDistanceHopRounds.lean#L150).
+
 
 
 
