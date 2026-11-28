@@ -1538,6 +1538,21 @@ subgraph under the fair bit stream.
 · [Recorded total bound](OnlineReachabilityPreservers/SteinerBinaryCompactWordOnline.lean#L239)
 · [Compact encoded Theorem 21](OnlineReachabilityPreservers/SteinerBinaryCompactWordOnline.lean#L295).
 
+Instantiate the same compact solver with a finite sequential bit tape.
+Each draw reads one list cell. The sampler keeps the exact seed tally
+and reports exhaustion for a tape shorter than the seed budget.
+Invalid graph words give the ordinary graph rejection and leave the tape
+intact. With valid graph words and sufficient bits, the finite run agrees
+with the stream run whose prefix is on the tape, including entry and
+service tallies. The unused bits remain available. This holds for any
+demand words. For accepted feasible traces the compact history and
+polynomial recorded work bounds transfer, independent of the suffix.
+[Tape source](OnlineReachabilityPreservers/SteinerBinarySeedTape.lean#L9)
+· [Sampler](OnlineReachabilityPreservers/SteinerBinarySeedTape.lean#L46)
+· [Tape exhaustion](OnlineReachabilityPreservers/SteinerBinarySeedTape.lean#L135)
+· [Exact run](OnlineReachabilityPreservers/SteinerBinarySeedTape.lean#L153)
+· [Polynomial recorded work](OnlineReachabilityPreservers/SteinerBinarySeedTape.lean#L187).
+
 The [integer magnitude bounds](OnlineReachabilityPreservers/SteinerIntegerBounds.lean)
 control the signed flow entries by the augmentation supply, the thin
 capacities by twice the number of arcs, and the weighted capacities by

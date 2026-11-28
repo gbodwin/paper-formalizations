@@ -2731,6 +2731,19 @@ bit stream.
 · [Recorded total work](OnlineReachabilityPreservers/SteinerBinaryCompactWordOnline.lean#L239)
 · [Compact variable-word Theorem 21](OnlineReachabilityPreservers/SteinerBinaryCompactWordOnline.lean#L295).
 
+The compact solver can draw its seed from a finite list of bits. Each
+draw takes the next bit. An invalid graph leaves the tape intact. With
+valid graph words, initialization succeeds exactly when the tape covers
+the seed budget. It uses precisely that prefix and leaves the suffix
+untouched, even if service later rejects a demand. The result and
+recorded tally equal those of the stream solver on the same prefix.
+On accepted feasible traces, the polynomial recorded bound is
+independent of the unused suffix length.
+[Exact finite-tape sampler](OnlineReachabilityPreservers/SteinerBinarySeedTape.lean#L46)
+· [Graph rejection](OnlineReachabilityPreservers/SteinerBinarySeedTape.lean#L113)
+· [Exact tape result](OnlineReachabilityPreservers/SteinerBinarySeedTape.lean#L153)
+· [Recorded work](OnlineReachabilityPreservers/SteinerBinarySeedTape.lean#L187).
+
 
 
 [Companion PaperLab](https://paperlab-online-reachability-preservers.greg-bodwin.chatgpt.site).
