@@ -197,16 +197,16 @@ theorem literal_full_path_count_le_balanced_bipartite {n p cutoff : ℕ} (paths 
   rw [Fintype.card_fin] at budget
   exact count.trans (Nat.add_le_add_left (balancedLayer_product budget) n)
 
-private abbrev TwoLayerRow (a b : ℕ) := (Bool × Fin a × Fin b) ⊕ Fin (a+b)
+abbrev TwoLayerRow (a b : ℕ) := (Bool × Fin a × Fin b) ⊕ Fin (a+b)
 
-private def twoLayerBidirectionalRows {a b : ℕ} : TwoLayerRow a b → List (Fin (a+b))
+def twoLayerBidirectionalRows {a b : ℕ} : TwoLayerRow a b → List (Fin (a+b))
   | Sum.inl (reverse,i,j) =>
     let left := Fin.castAdd b i
     let right := Fin.natAdd a j
     if reverse then [right,left] else [left,right]
   | Sum.inr v => [v]
 
-private theorem layer_vertices_different {a b : ℕ} (i : Fin a) (j : Fin b) : Fin.castAdd b i ≠ Fin.natAdd a j := by
+theorem layer_vertices_different {a b : ℕ} (i : Fin a) (j : Fin b) : Fin.castAdd b i ≠ Fin.natAdd a j := by
   intro equal
   have number := congrArg Fin.val equal
   change i.val = a+j.val at number
@@ -269,7 +269,7 @@ private theorem twoLayerBidirectionalRows_step {a b : ℕ} {i : TwoLayerRow a b}
   · have same : x = v ∧ y = v := by simpa [twoLayerBidirectionalRows] using And.intro step.1 step.2.1
     exact (listBefore_ne step (same.1.trans same.2.symm)).elim
 
-private theorem twoLayerBidirectionalRows_full_three (a b : ℕ) :
+theorem twoLayerBidirectionalRows_full_three (a b : ℕ) :
     BridgeFree (Before (@twoLayerBidirectionalRows a b)) 3 := by
   intro s size
   refine ⟨fun bridge => ?_⟩

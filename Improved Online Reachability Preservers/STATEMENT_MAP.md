@@ -4386,6 +4386,23 @@ half mass tends to one half as the budgets grow, uniformly over full cutoffs of 
 · [Uniform full mass upper bound](OnlineReachabilityPreservers/SaturatedLiteralFullFive.lean#L200)
 · [Sharp comparison from cutoff five](OnlineReachabilityPreservers/SaturatedLiteralFullFive.lean#L218).
 
+At full cutoff three, both orientations of every pair between two equal
+layers give a witness on \(2\lfloor n/2\rfloor\) vertices. A two-step
+detour returns to its starting layer. Each row goes to the other
+layer. Every vertex has degree \(2\lfloor n/2\rfloor\) and every row
+has length two. The mass is \(4\lfloor n/2\rfloor^2\). The witness
+meets both original budgets and all four starting-average caps. The
+full-three row bound and the subquadratic mass of rows of length at
+least three give the matching upper bound. At the saturated literal
+half budget, the optimal full-three mass divided by \(M=n^2+2\) tends
+to one.
+[Opposite pair exclusion](OnlineReachabilityPreservers/SaturatedLiteralFullThree.lean#L39)
+· [Exact degree](OnlineReachabilityPreservers/SaturatedLiteralFullThree.lean#L58)
+· [Exact mass](OnlineReachabilityPreservers/SaturatedLiteralFullThree.lean#L101)
+· [Witness with original caps](OnlineReachabilityPreservers/SaturatedLiteralFullThree.lean#L109)
+· [Uniform full mass upper bound](OnlineReachabilityPreservers/SaturatedLiteralFullThree.lean#L195)
+· [Sharp comparison at cutoff three](OnlineReachabilityPreservers/SaturatedLiteralFullThree.lean#L230).
+
 
 
 
