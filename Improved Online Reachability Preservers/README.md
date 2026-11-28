@@ -3437,6 +3437,25 @@ depends only on the original length.
 · [Both output cases](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphCountFrameMachine.lean#L645)
 · [General transition bound](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphCountFrameMachine.lean#L654).
 
+The guarded dimension machine runs on the original single-bound binary
+graph. It keeps a copy of the unary vertex count while counting the
+distinct in-range arcs. On acceptance it returns the exact vertex count
+and the cardinality of the decoded finite arc set, in two right-tagged
+unary fields with one delimiter. A rejected graph returns the left-tagged
+marker in at most \(8X^2+19X+18\) transitions for original frame length
+\(X\). For vertex count \(n\), the accepted calculation fits an
+intermediate frame of length at most \(T=X(n+1)\). With
+\(C=T^3+T^2+T\), the full bound is
+\(8X^2+28X+10Xn+9n+5C^2+16C+2T^3+5T^2+9T+48\).
+[Guarded graph dimensions machine](OnlineReachabilityPreservers/SteinerGuardedGraphDimensionsMachine.lean#L118)
+· [Output encoding](OnlineReachabilityPreservers/SteinerGuardedGraphDimensionsMachine.lean#L424)
+· [Intermediate length bound](OnlineReachabilityPreservers/SteinerGuardedGraphDimensionsMachine.lean#L488)
+· [Transition polynomial in two parameters](OnlineReachabilityPreservers/SteinerGuardedGraphDimensionsMachine.lean#L502)
+· [Exact accepted dimensions](OnlineReachabilityPreservers/SteinerGuardedGraphDimensionsMachine.lean#L526)
+· [Quadratic rejection](OnlineReachabilityPreservers/SteinerGuardedGraphDimensionsMachine.lean#L539)
+· [Both output cases](OnlineReachabilityPreservers/SteinerGuardedGraphDimensionsMachine.lean#L555)
+· [Full machine run](OnlineReachabilityPreservers/SteinerGuardedGraphDimensionsMachine.lean#L563).
+
 
 
 
