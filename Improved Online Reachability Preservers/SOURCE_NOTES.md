@@ -3455,9 +3455,9 @@ local-order upper bound and recurrence of Theorem 43.
   are disjoint. This proves the balanced bidirectional bound on
   consecutive comparisons and hence on the number of nonsingletons.
   It bounds the incidence mass above the nonempty row count as well.
-  [Triangle order](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L190)
-  · [Consecutive comparisons](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L238)
-  · [Exact half-three feasibility](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L306).
+  [Triangle order](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L225)
+  · [Consecutive comparisons](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L302)
+  · [Exact half-three feasibility](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L374).
 
   For half cutoff at least four, two disjoint reciprocal pairs
   have at most three consecutive comparisons between them. Each
@@ -3471,7 +3471,21 @@ local-order upper bound and recurrence of Theorem 43.
   excludes a shared first and last row even in arbitrary path
   orders.
   [Detour arrival constraint](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L26)
-  · [Cross-arc bound](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L222).
+  · [Cross-arc bound](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L207).
+
+  The cross bound sharpens the global count. Delete the endpoints of a
+  reciprocal pair. With no reciprocal pair left, the remaining directed
+  edges inject into the unordered pairs. The two vertices of a second
+  reciprocal pair contribute at most three cross links, saving one from
+  their allowance of four. Induction gives at most \(\binom n2+1\) consecutive
+  steps at every half cutoff of at least four. The literal row count is
+  at most \(n+\binom n2+1\), and the mass above the nonempty row count
+  is at most \(\binom n2+1\).
+  [Directed count](OnlineReachabilityPreservers/HalfFourLiteralCapacity.lean#L32)
+  · [Consecutive-step count](OnlineReachabilityPreservers/HalfFourLiteralCapacity.lean#L101)
+  · [Mass bound](OnlineReachabilityPreservers/HalfFourLiteralCapacity.lean#L118)
+  · [Literal count at cutoffs at least four](OnlineReachabilityPreservers/HalfFourLiteralCapacity.lean#L129).
+
 
   The exact literal budgets \(n=4,p=11\) are feasible for half exclusion
   at every cutoff and infeasible for full exclusion at \(k\ge4\). The

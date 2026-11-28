@@ -17,12 +17,31 @@ theorem card_filter_pair_le_one_of_missing {A : Type*} [DecidableEq A]
   · rw [filter_insert,ite_eq_right aOn]
     exact (card_filter_le _ _).trans (by simp)
 
-private theorem at_most_two_links_to_bidirectional_pair {V : Type*} [DecidableEq V]
+/-- Restrict a directed edge set to a set of vertices. -/
+def arcsOnVertices {V : Type*} [DecidableEq V] (arcs : Finset (V × V)) (s : Finset V) :
+    Finset (V × V) := (s ×ˢ s).filter (· ∈ arcs)
+
+theorem mem_arcsOnVertices {V : Type*} [DecidableEq V]
+    {arcs : Finset (V × V)} {s : Finset V} {x y : V} :
+    (x,y) ∈ arcsOnVertices arcs s ↔ x ∈ s ∧ y ∈ s ∧ (x,y) ∈ arcs := by
+  simp only [arcsOnVertices,mem_filter,mem_product,and_assoc]
+
+theorem arcsOnVertices_univ {V : Type*} [Fintype V] [DecidableEq V] (arcs : Finset (V × V)) :
+    arcsOnVertices arcs univ = arcs := by
+  ext ⟨x,y⟩
+  simp only [mem_arcsOnVertices,mem_univ,true_and]
+
+/-- Edges between one vertex and the two indicated endpoints. -/
+def arcsLinkingVertexToPair {V : Type*} [DecidableEq V] (arcs : Finset (V × V)) (x y z : V) :
+    Finset (V × V) :=
+  ({(x,z),(z,x)} ∪ {(y,z),(z,y)} : Finset (V × V)).filter (· ∈ arcs)
+
+theorem at_most_two_links_to_bidirectional_pair {V : Type*} [DecidableEq V]
     {arcs : Finset (V × V)}
     (apart : ∀ {x y z : V}, (x,y) ∈ arcs → (y,x) ∈ arcs → (x,z) ∈ arcs → (y,z) ∉ arcs)
     {x y : V} (xy : (x,y) ∈ arcs) (yx : (y,x) ∈ arcs) (z : V) :
-    (({(x,z),(z,x)} ∪ {(y,z),(z,y)} : Finset (V × V)).filter (· ∈ arcs)).card ≤ 2 := by
-  rw [filter_union]
+    (arcsLinkingVertexToPair arcs x y z).card ≤ 2 := by
+  rw [arcsLinkingVertexToPair,filter_union]
   by_cases xBoth : (x,z) ∈ arcs ∧ (z,x) ∈ arcs
   · have yz : (y,z) ∉ arcs := apart xy yx xBoth.1
     have zy : (z,y) ∉ arcs := apart xBoth.1 xBoth.2 xy
@@ -49,6 +68,78 @@ private theorem at_most_two_links_to_bidirectional_pair {V : Type*} [DecidableEq
     (card_filter_pair_le_one_of_missing _ _ _ fun a b => xBoth ⟨a,b⟩)
     (card_filter_pair_le_one_of_missing _ _ _ fun a b => yBoth ⟨a,b⟩))
 
+/-- Removing two vertices loses their two internal arcs and the links
+to the remaining vertices. -/
+theorem arcsOnVertices_card_le_erase_pair {V : Type*} [DecidableEq V]
+    (arcs : Finset (V × V)) (loopless : ∀ v, (v,v) ∉ arcs) (s : Finset V) (x y : V) :
+    let r := (s.erase x).erase y
+    (arcsOnVertices arcs s).card ≤ (arcsOnVertices arcs r).card+2+
+      (r.biUnion (arcsLinkingVertexToPair arcs x y)).card := by
+  let r := (s.erase x).erase y
+  let middle : Finset (V × V) := {(x,y),(y,x)}
+  have contained : arcsOnVertices arcs s ⊆
+      (arcsOnVertices arcs r ∪ middle) ∪ r.biUnion (arcsLinkingVertexToPair arcs x y) := by
+    rintro ⟨u,v⟩ on
+    obtain ⟨uOn,vOn,uvArc⟩ := mem_arcsOnVertices.mp on
+    have into (a : V) (h : a ∈ s) : a ∈ r ∨ a = x ∨ a = y := by
+      by_cases ax : a = x
+      · exact Or.inr (Or.inl ax)
+      by_cases ay : a = y
+      · exact Or.inr (Or.inr ay)
+      exact Or.inl (mem_erase.mpr ⟨ay,mem_erase.mpr ⟨ax,h⟩⟩)
+    rcases into u uOn with ur | rfl | rfl <;> rcases into v vOn with vr | rfl | rfl
+    · exact mem_union_left _ (mem_union_left _ (mem_arcsOnVertices.mpr ⟨ur,vr,uvArc⟩))
+    · exact mem_union_right _ (mem_biUnion.mpr ⟨u,ur,by simp [arcsLinkingVertexToPair,uvArc]⟩)
+    · exact mem_union_right _ (mem_biUnion.mpr ⟨u,ur,by simp [arcsLinkingVertexToPair,uvArc]⟩)
+    · exact mem_union_right _ (mem_biUnion.mpr ⟨v,vr,by simp [arcsLinkingVertexToPair,uvArc]⟩)
+    · exact (loopless _ uvArc).elim
+    · exact mem_union_left _ (mem_union_right _ (by simp [middle]))
+    · exact mem_union_right _ (mem_biUnion.mpr ⟨v,vr,by simp [arcsLinkingVertexToPair,uvArc]⟩)
+    · exact mem_union_left _ (mem_union_right _ (by simp [middle]))
+    · exact (loopless _ uvArc).elim
+  exact (card_le_card contained).trans ((card_union_le ..).trans
+    (Nat.add_le_add_right ((card_union_le ..).trans (Nat.add_le_add_left card_le_two _)) _))
+
+theorem arcsOnVertices_card_le_of_no_reciprocal {V : Type*} [DecidableEq V]
+    (arcs : Finset (V × V)) (loopless : ∀ v, (v,v) ∉ arcs) (s : Finset V)
+    (noPair : ¬ ∃ x y, (x,y) ∈ arcsOnVertices arcs s ∧ (y,x) ∈ arcsOnVertices arcs s) :
+    2*(arcsOnVertices arcs s).card ≤ s.card*(s.card-1) := by
+  let inside := arcsOnVertices arcs s
+  let swapped := inside.map (Equiv.prodComm V V).toEmbedding
+  have disjoint : Disjoint inside swapped := by
+    apply disjoint_left.mpr
+    rintro ⟨x,y⟩ on rev
+    obtain ⟨⟨v,u⟩,back,eq⟩ := mem_map.mp rev
+    have same : (u,v) = (x,y) := eq
+    obtain ⟨rfl,rfl⟩ := Prod.mk.inj same
+    exact noPair ⟨_,_,on,back⟩
+  have insideOff : inside ⊆ s.offDiag := by
+    rintro ⟨x,y⟩ on
+    obtain ⟨xOn,yOn,edge⟩ := mem_arcsOnVertices.mp on
+    refine mem_offDiag.mpr ⟨xOn,yOn,?_⟩
+    change x ≠ y
+    rintro rfl
+    exact loopless _ edge
+  have stays : inside ∪ swapped ⊆ s.offDiag := by
+    rintro ⟨x,y⟩ on
+    rcases mem_union.mp on with on | rev
+    · exact insideOff on
+    · obtain ⟨⟨v,u⟩,back,eq⟩ := mem_map.mp rev
+      have same : (u,v) = (x,y) := eq
+      obtain ⟨rfl,rfl⟩ := Prod.mk.inj same
+      obtain ⟨a,b,ne⟩ := mem_offDiag.mp (insideOff back)
+      exact mem_offDiag.mpr ⟨b,a,ne.symm⟩
+  have count := card_le_card stays
+  rw [card_union_of_disjoint disjoint,show swapped.card = inside.card from card_map _,
+    offDiag_card] at count
+  simpa only [inside,Nat.mul_sub_left_distrib,mul_one,two_mul] using count
+
+theorem erase_pair_card_add_two {V : Type*} [DecidableEq V] {s : Finset V} {x y : V}
+    (xOn : x ∈ s) (yOn : y ∈ s) (different : x ≠ y) : ((s.erase x).erase y).card+2 = s.card := by
+  have first := card_erase_add_one xOn
+  have second := card_erase_add_one (mem_erase.mpr ⟨different.symm,yOn⟩)
+  omega
+
 /-- In a loopless directed graph where the endpoints of every doubled
 edge have disjoint out-neighborhoods, at most half of the ordered pairs
 are arcs. Remove both endpoints of a doubled edge and count at most
@@ -58,86 +149,30 @@ theorem directed_arcs_card_le_half_square_of_bidirectional_out_disjoint {V : Typ
     (loopless : ∀ v, (v,v) ∉ arcs)
     (apart : ∀ {x y z : V}, (x,y) ∈ arcs → (y,x) ∈ arcs → (x,z) ∈ arcs → (y,z) ∉ arcs) :
     2*arcs.card ≤ (Fintype.card V)^2 := by
-  let inside (s : Finset V) := (s ×ˢ s).filter (· ∈ arcs)
-  have within {s : Finset V} {x y : V} :
-      (x,y) ∈ inside s ↔ x ∈ s ∧ y ∈ s ∧ (x,y) ∈ arcs := by
-    simp only [inside,mem_filter,mem_product,← and_assoc]
-  have bound (s : Finset V) : 2*(inside s).card ≤ s.card^2 := by
-    refine Finset.strongInductionOn (p := fun t => 2*(inside t).card ≤ t.card^2) s ?_
+  have bound (s : Finset V) : 2*(arcsOnVertices arcs s).card ≤ s.card^2 := by
+    refine Finset.strongInductionOn (p := fun t => 2*(arcsOnVertices arcs t).card ≤ t.card^2) s ?_
     intro s ih
-    by_cases double : ∃ x y, (x,y) ∈ inside s ∧ (y,x) ∈ inside s
+    by_cases double : ∃ x y, (x,y) ∈ arcsOnVertices arcs s ∧ (y,x) ∈ arcsOnVertices arcs s
     · obtain ⟨x,y,xy,yx⟩ := double
-      obtain ⟨xOn,yOn,xyArc⟩ := within.mp xy
-      have yxArc := (within.mp yx).2.2
+      obtain ⟨xOn,yOn,xyArc⟩ := mem_arcsOnVertices.mp xy
+      have yxArc := (mem_arcsOnVertices.mp yx).2.2
       have different : x ≠ y := by rintro rfl; exact loopless _ xyArc
       let r := (s.erase x).erase y
-      have count : r.card+2 = s.card := by
-        have first := card_erase_add_one xOn
-        have second := card_erase_add_one (mem_erase.mpr ⟨different.symm,yOn⟩)
-        change r.card+1 = (s.erase x).card at second
-        omega
-      have sub : r ⊂ s := by
-        apply ssubset_iff_subset_ne.mpr
-        refine ⟨(erase_subset _ _).trans (erase_subset _ _),?_⟩
-        intro eq
-        have lost : x ∉ r := fun on => (mem_erase.mp (mem_erase.mp on).2).1 rfl
-        exact lost (eq ▸ xOn)
-      let link (z : V) :=
-        ({(x,z),(z,x)} ∪ {(y,z),(z,y)} : Finset (V × V)).filter (· ∈ arcs)
-      let middle : Finset (V × V) := {(x,y),(y,x)}
-      have links : (r.biUnion link).card ≤ r.card*2 :=
-        card_biUnion_le_card_mul r link 2
+      have count : r.card+2 = s.card := erase_pair_card_add_two xOn yOn different
+      have sub : r ⊂ s := Finset.ssubset_iff_subset_ne.mpr
+        ⟨(erase_subset _ _).trans (erase_subset _ _),fun same => by rw [same] at count; omega⟩
+      have links : (r.biUnion (arcsLinkingVertexToPair arcs x y)).card ≤ r.card*2 :=
+        card_biUnion_le_card_mul r _ 2
           (fun z _ => at_most_two_links_to_bidirectional_pair @apart xyArc yxArc z)
-      have contained : inside s ⊆ (inside r ∪ middle) ∪ r.biUnion link := by
-        rintro ⟨u,v⟩ on
-        obtain ⟨uOn,vOn,uvArc⟩ := within.mp on
-        have into (a : V) (h : a ∈ s) : a ∈ r ∨ a = x ∨ a = y := by
-          by_cases ax : a = x
-          · exact Or.inr (Or.inl ax)
-          by_cases ay : a = y
-          · exact Or.inr (Or.inr ay)
-          exact Or.inl (mem_erase.mpr ⟨ay,mem_erase.mpr ⟨ax,h⟩⟩)
-        rcases into u uOn with ur | rfl | rfl <;> rcases into v vOn with vr | rfl | rfl
-        · exact mem_union_left _ (mem_union_left _ (within.mpr ⟨ur,vr,uvArc⟩))
-        · exact mem_union_right _ (mem_biUnion.mpr ⟨u,ur,by simp [link,uvArc]⟩)
-        · exact mem_union_right _ (mem_biUnion.mpr ⟨u,ur,by simp [link,uvArc]⟩)
-        · exact mem_union_right _ (mem_biUnion.mpr ⟨v,vr,by simp [link,uvArc]⟩)
-        · exact (loopless _ uvArc).elim
-        · exact mem_union_left _ (mem_union_right _ (by simp [middle]))
-        · exact mem_union_right _ (mem_biUnion.mpr ⟨v,vr,by simp [link,uvArc]⟩)
-        · exact mem_union_left _ (mem_union_right _ (by simp [middle]))
-        · exact (loopless _ uvArc).elim
-      have remove : (inside s).card ≤ (inside r).card+2+r.card*2 :=
-        (card_le_card contained).trans ((card_union_le ..).trans
-          (Nat.add_le_add ((card_union_le ..).trans (Nat.add_le_add_left card_le_two _)) links))
+      have remove := arcsOnVertices_card_le_erase_pair arcs loopless s x y
+      change (arcsOnVertices arcs s).card ≤ (arcsOnVertices arcs r).card+2+
+        (r.biUnion (arcsLinkingVertexToPair arcs x y)).card at remove
       have prior := ih r sub
       have computed : s.card^2 = r.card^2+4*r.card+4 := by rw [← count]; ring
       omega
-    · let swapped := (inside s).map (Equiv.prodComm V V).toEmbedding
-      have disjoint : Disjoint (inside s) swapped := by
-        apply disjoint_left.mpr
-        rintro ⟨x,y⟩ on rev
-        obtain ⟨⟨v,u⟩,back,eq⟩ := mem_map.mp rev
-        have same : (u,v) = (x,y) := eq
-        obtain ⟨rfl,rfl⟩ := Prod.mk.inj same
-        exact double ⟨_,_,on,back⟩
-      have stays : inside s ∪ swapped ⊆ s ×ˢ s := by
-        rintro ⟨x,y⟩ on
-        rcases mem_union.mp on with on | rev
-        · exact mem_product.mpr ⟨(within.mp on).1,(within.mp on).2.1⟩
-        · obtain ⟨⟨v,u⟩,back,eq⟩ := mem_map.mp rev
-          have same : (u,v) = (x,y) := eq
-          obtain ⟨rfl,rfl⟩ := Prod.mk.inj same
-          exact mem_product.mpr ⟨(within.mp back).2.1,(within.mp back).1⟩
-      have count := card_le_card stays
-      rw [card_union_of_disjoint disjoint,show swapped.card = (inside s).card from card_map _,
-        card_product] at count
-      simpa only [pow_two,two_mul] using count
-  have exactArcs : inside (univ : Finset V) = arcs := by
-    ext e
-    rcases e with ⟨x,y⟩
-    simp only [within,mem_univ,true_and]
-  simpa only [exactArcs,card_univ] using bound (univ : Finset V)
+    · exact (arcsOnVertices_card_le_of_no_reciprocal arcs loopless s double).trans
+        (by rw [pow_two]; exact Nat.mul_le_mul_left _ (Nat.sub_le _ _))
+  simpa only [arcsOnVertices_univ,card_univ] using bound (univ : Finset V)
 
 /-- Keep only the directed comparisons at consecutive positions. -/
 def rowAdjacentComparisons {I V : Type*} [Fintype V] [DecidableEq V]
@@ -211,26 +246,55 @@ theorem halfThree_adjacent_triangle_order {I V : Type*} [LinearOrder I] [Fintype
   have excluded : ¬ b < r := free three (threeListBridge ab ra rb firstStep lastStep riverStep)
   exact lt_of_le_of_ne (le_of_not_gt excluded) rb
 
+theorem mem_familyAdjacentComparisons {I V : Type*} [Fintype I] [Fintype V] [DecidableEq V]
+    {rows : I → List V} {x y : V} :
+    (x,y) ∈ univ.biUnion (rowAdjacentComparisons rows) ↔ ∃ i, (x,y) ∈ rowAdjacentComparisons rows i := by
+  simp
+
+/-- Reciprocal adjacent comparisons prevent a common out-neighbor,
+since two triangles would force opposite orders into that target. -/
+theorem halfThree_adjacent_no_common_out {I V : Type*}
+    [LinearOrder I] [Fintype I] [Fintype V] [DecidableEq V]
+    {rows : I → List V} {k : ℕ} (free : HalfBridgeFree (Before rows) k) (three : 3 ≤ k)
+    {x y z : V} (xy : (x,y) ∈ univ.biUnion (rowAdjacentComparisons rows))
+    (yx : (y,x) ∈ univ.biUnion (rowAdjacentComparisons rows))
+    (xz : (x,z) ∈ univ.biUnion (rowAdjacentComparisons rows)) :
+    (y,z) ∉ univ.biUnion (rowAdjacentComparisons rows) := by
+  intro yz
+  obtain ⟨_,xy⟩ := mem_familyAdjacentComparisons.mp xy
+  obtain ⟨_,yx⟩ := mem_familyAdjacentComparisons.mp yx
+  obtain ⟨_,xz⟩ := mem_familyAdjacentComparisons.mp xz
+  obtain ⟨_,yz⟩ := mem_familyAdjacentComparisons.mp yz
+  exact (halfThree_adjacent_triangle_order free three xy yz xz).asymm
+    (halfThree_adjacent_triangle_order free three yx xz yz)
+
 /-- Shortcuts to the same terminal give opposing arrival constraints
 if the two starting vertices also have both adjacent directions. -/
 theorem halfThree_adjacent_comparisons_card_le_half_square {I V : Type*}
     [LinearOrder I] [Fintype I] [Fintype V] [DecidableEq V]
     {rows : I → List V} {k : ℕ} (free : HalfBridgeFree (Before rows) k) (three : 3 ≤ k) :
     2*(univ.biUnion (rowAdjacentComparisons rows)).card ≤ (Fintype.card V)^2 := by
-  let arcs := univ.biUnion (rowAdjacentComparisons rows)
-  have belongs {x y : V} : (x,y) ∈ arcs ↔ ∃ i, (x,y) ∈ rowAdjacentComparisons rows i := by
-    simp [arcs]
-  apply directed_arcs_card_le_half_square_of_bidirectional_out_disjoint arcs
+  apply directed_arcs_card_le_half_square_of_bidirectional_out_disjoint (univ.biUnion (rowAdjacentComparisons rows))
   · intro v on
-    obtain ⟨_,on⟩ := belongs.mp on
+    obtain ⟨_,on⟩ := mem_familyAdjacentComparisons.mp on
     exact listBefore_ne (mem_rowAdjacentComparisons.mp on).1 rfl
-  · intro x y z xy yx xz yz
-    obtain ⟨_,xy⟩ := belongs.mp xy
-    obtain ⟨_,yx⟩ := belongs.mp yx
-    obtain ⟨_,xz⟩ := belongs.mp xz
-    obtain ⟨_,yz⟩ := belongs.mp yz
-    exact (halfThree_adjacent_triangle_order free three xy yz xz).asymm
-      (halfThree_adjacent_triangle_order free three yx xz yz)
+  · intro x y z
+    exact halfThree_adjacent_no_common_out free three
+
+/-- Adjacent steps from different rows have distinct directed pairs. -/
+theorem familyAdjacentComparisons_card {I V : Type*}
+    [LinearOrder I] [Fintype I] [Fintype V] [DecidableEq V]
+    {rows : I → List V} {k : ℕ} (simple : ∀ i, (rows i).Nodup)
+    (free : HalfBridgeFree (Before rows) k) (two : 2 ≤ k) :
+    (univ.biUnion (rowAdjacentComparisons rows)).card = ∑ i, ((rows i).length-1) := by
+  have unique : ((univ : Finset I) : Set I).PairwiseDisjoint (rowAdjacentComparisons rows) := by
+    intro i _ j _ different
+    refine disjoint_left.mpr ?_
+    rintro ⟨x,y⟩ one other
+    exact no_parallel_list_steps free two different (mem_rowAdjacentComparisons.mp one).1
+      (mem_rowAdjacentComparisons.mp other).1
+  rw [card_biUnion unique]
+  exact sum_congr rfl fun i _ => rowAdjacentComparisons_card (simple i)
 
 /-- The total number of consecutive steps counts each occupied ordered
 pair once. Half-three exclusion bounds that total by half the square of
@@ -240,16 +304,14 @@ theorem halfThree_row_gaps_le_half_square {I V : Type*}
     {rows : I → List V} {k : ℕ} (simple : ∀ i, (rows i).Nodup)
     (free : HalfBridgeFree (Before rows) k) (three : 3 ≤ k) :
     2*(∑ i, ((rows i).length-1)) ≤ (Fintype.card V)^2 := by
-  have unique : ((univ : Finset I) : Set I).PairwiseDisjoint (rowAdjacentComparisons rows) := by
-    intro i _ j _ different
-    refine disjoint_left.mpr ?_
-    rintro ⟨x,y⟩ one two
-    exact no_parallel_list_steps free (by omega) different (mem_rowAdjacentComparisons.mp one).1
-      (mem_rowAdjacentComparisons.mp two).1
-  have exactCount : (univ.biUnion (rowAdjacentComparisons rows)).card = ∑ i, ((rows i).length-1) := by
-    rw [card_biUnion unique]
-    exact sum_congr rfl fun i _ => rowAdjacentComparisons_card (simple i)
-  simpa only [exactCount] using halfThree_adjacent_comparisons_card_le_half_square free three
+  rw [← familyAdjacentComparisons_card simple free (by omega)]
+  exact halfThree_adjacent_comparisons_card_le_half_square free three
+
+theorem rowMass_eq_gaps_add_count {I V : Type*} [Fintype I] {rows : I → List V}
+    (nonempty : ∀ i, rows i ≠ []) : (∑ i, (rows i).length) = (∑ i, ((rows i).length-1))+Fintype.card I := calc
+    _ = ∑ i, (((rows i).length-1)+1) :=
+      sum_congr rfl fun i _ => (Nat.sub_add_cancel (List.length_pos_iff.mpr (nonempty i))).symm
+    _ = _ := by rw [sum_add_distrib]; simp
 
 /-- Relative to the number of nonempty rows, the incidence mass exceeds
 that count by at most the balanced bidirectional pair capacity. -/
@@ -260,20 +322,17 @@ theorem halfThree_mass_le_paths_add_balanced_pairs {n p k : ℕ} {rows : Fin p �
   have raw := halfThree_row_gaps_le_half_square (fun i => (valid i).2) free three
   rw [Fintype.card_fin] at raw
   have bound := balancedLayer_product raw
-  have mass : (∑ i, (rows i).length) = (∑ i, ((rows i).length-1))+p := calc
-    _ = ∑ i, (((rows i).length-1)+1) :=
-      sum_congr rfl fun i _ => (Nat.sub_add_cancel (List.length_pos_iff.mpr (valid i).1)).symm
-    _ = _ := by rw [sum_add_distrib]; simp
+  have mass := rowMass_eq_gaps_add_count (fun i => (valid i).1)
+  rw [Fintype.card_fin] at mass
   omega
 
-/-- Distinct literal half-three rows fit the balanced bidirectional
-pair capacity plus at most one singleton per vertex. -/
-theorem literal_half_path_count_le_balanced_bipartite {n p k : ℕ} {rows : Fin p → List (Fin n)}
-    (distinct : Function.Injective rows) (valid : ∀ i, rows i ≠ [] ∧ (rows i).Nodup)
-    (free : HalfBridgeFree (Before rows) k) (three : 3 ≤ k) :
-    p ≤ n+2*((n/2)*(n-n/2)) := by
+/-- In a distinct nonempty family, each singleton uses a different
+vertex and each longer row supplies a consecutive step. -/
+theorem literal_path_count_le_vertices_add_gaps {n p : ℕ} {rows : Fin p → List (Fin n)}
+    (distinct : Function.Injective rows) (nonempty : ∀ i, rows i ≠ []) :
+    p ≤ n+∑ i, ((rows i).length-1) := by
   let singles := (univ : Finset (Fin p)).filter fun i => (rows i).length = 1
-  let label (i : singles) := (rows i.val)[0]'(List.length_pos_iff.mpr (valid i.val).1)
+  let label (i : singles) := (rows i.val)[0]'(List.length_pos_iff.mpr (nonempty i.val))
   have single (i : singles) : rows i.val = [label i] := by
     obtain ⟨v,asList⟩ := List.length_eq_one_iff.mp (mem_filter.mp i.property).2
     have vertex : label i = v := by unfold label; rw [List.getElem_of_eq asList]; rfl
@@ -290,16 +349,25 @@ theorem literal_half_path_count_le_balanced_bipartite {n p k : ℕ} {rows : Fin 
   have pays (i : Fin p) : 1 ≤ (if i ∈ singles then 1 else 0)+((rows i).length-1) := by
     by_cases singleton : i ∈ singles
     · simp [singleton]
-    · have nonempty := List.length_pos_iff.mpr (valid i).1
+    · have positive := List.length_pos_iff.mpr (nonempty i)
       have notOne : (rows i).length ≠ 1 := by simpa [singles] using singleton
       simp only [ite_eq_right singleton,zero_add]
       omega
   have count : p ≤ singles.card+∑ i, ((rows i).length-1) := by
     simpa only [sum_add_distrib,counted,sum_const,card_univ,Fintype.card_fin,nsmul_eq_mul,Nat.cast_id,mul_one] using
       (sum_le_sum (s := (univ : Finset (Fin p))) (fun i _ => pays i))
+  omega
+
+/-- Distinct literal half-three rows fit the balanced bidirectional
+pair capacity plus at most one singleton per vertex. -/
+theorem literal_half_path_count_le_balanced_bipartite {n p k : ℕ} {rows : Fin p → List (Fin n)}
+    (distinct : Function.Injective rows) (valid : ∀ i, rows i ≠ [] ∧ (rows i).Nodup)
+    (free : HalfBridgeFree (Before rows) k) (three : 3 ≤ k) :
+    p ≤ n+2*((n/2)*(n-n/2)) := by
   have raw := halfThree_row_gaps_le_half_square (fun i => (valid i).2) free three
   rw [Fintype.card_fin] at raw
-  exact count.trans (Nat.add_le_add singleBound (balancedLayer_product raw))
+  exact (literal_path_count_le_vertices_add_gaps distinct (fun i => (valid i).1)).trans
+    (Nat.add_le_add_left (balancedLayer_product raw) n)
 
 /-- The exact literal half-three and full-three feasibility regions
 coincide. The balanced bidirectional construction gives the converse. -/

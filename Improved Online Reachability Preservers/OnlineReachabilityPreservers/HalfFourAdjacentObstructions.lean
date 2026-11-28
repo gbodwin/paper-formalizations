@@ -92,10 +92,6 @@ theorem halfFour_adjacent_detour_order (free : HalfBridgeFree (Before rows) k) (
 
 variable [Fintype I]
 
-omit [LinearOrder I] in
-private theorem mem_family_adjacent {x y : V} :
-    (x,y) ∈ univ.biUnion (Adjacent rows) ↔ ∃ i, (x,y) ∈ Adjacent rows i := by simp
-
 /-- Two opposite three-step detours into one target give contradictory
 arrival constraints. In particular a bidirected square cannot occur
 among the consecutive comparisons. -/
@@ -104,12 +100,12 @@ theorem halfFour_no_adjacent_opposite_detours (free : HalfBridgeFree (Before row
     (xy : (x,y) ∈ univ.biUnion (Adjacent rows)) (yx : (y,x) ∈ univ.biUnion (Adjacent rows))
     (yz : (y,z) ∈ univ.biUnion (Adjacent rows)) (zy : (z,y) ∈ univ.biUnion (Adjacent rows))
     (xt : (x,t) ∈ univ.biUnion (Adjacent rows)) (zt : (z,t) ∈ univ.biUnion (Adjacent rows)) : False := by
-  obtain ⟨a,xy⟩ := mem_family_adjacent.mp xy
-  obtain ⟨b,yx⟩ := mem_family_adjacent.mp yx
-  obtain ⟨c,yz⟩ := mem_family_adjacent.mp yz
-  obtain ⟨d,zy⟩ := mem_family_adjacent.mp zy
-  obtain ⟨r,xt⟩ := mem_family_adjacent.mp xt
-  obtain ⟨s,zt⟩ := mem_family_adjacent.mp zt
+  obtain ⟨a,xy⟩ := mem_familyAdjacentComparisons.mp xy
+  obtain ⟨b,yx⟩ := mem_familyAdjacentComparisons.mp yx
+  obtain ⟨c,yz⟩ := mem_familyAdjacentComparisons.mp yz
+  obtain ⟨d,zy⟩ := mem_familyAdjacentComparisons.mp zy
+  obtain ⟨r,xt⟩ := mem_familyAdjacentComparisons.mp xt
+  obtain ⟨s,zt⟩ := mem_familyAdjacentComparisons.mp zt
   have rotated : Function.Injective (![z,y,x,t] : Fin 4 → V) := by
     have swaps : (![z,y,x,t] : Fin 4 → V) = ![x,y,z,t] ∘ Equiv.swap (0 : Fin 4) 2 := by
       funext i
@@ -127,12 +123,12 @@ theorem halfFour_no_adjacent_cycle_with_chords (free : HalfBridgeFree (Before ro
     (xy : (x,y) ∈ univ.biUnion (Adjacent rows)) (yz : (y,z) ∈ univ.biUnion (Adjacent rows))
     (zt : (z,t) ∈ univ.biUnion (Adjacent rows)) (xt : (x,t) ∈ univ.biUnion (Adjacent rows))
     (ty : (t,y) ∈ univ.biUnion (Adjacent rows)) (zx : (z,x) ∈ univ.biUnion (Adjacent rows)) : False := by
-  obtain ⟨_,xy⟩ := mem_family_adjacent.mp xy
-  obtain ⟨_,yz⟩ := mem_family_adjacent.mp yz
-  obtain ⟨_,zt⟩ := mem_family_adjacent.mp zt
-  obtain ⟨_,ty⟩ := mem_family_adjacent.mp ty
-  obtain ⟨_,xt⟩ := mem_family_adjacent.mp xt
-  obtain ⟨_,zx⟩ := mem_family_adjacent.mp zx
+  obtain ⟨_,xy⟩ := mem_familyAdjacentComparisons.mp xy
+  obtain ⟨_,yz⟩ := mem_familyAdjacentComparisons.mp yz
+  obtain ⟨_,zt⟩ := mem_familyAdjacentComparisons.mp zt
+  obtain ⟨_,ty⟩ := mem_familyAdjacentComparisons.mp ty
+  obtain ⟨_,xt⟩ := mem_familyAdjacentComparisons.mp xt
+  obtain ⟨_,zx⟩ := mem_familyAdjacentComparisons.mp zx
   exact (halfFour_adjacent_detour_order free four distinct xy yz zt xt ⟨_,Or.inr ty⟩).asymm
     (halfThree_adjacent_triangle_order free (by omega) zx xt zt)
 
@@ -157,17 +153,6 @@ private theorem swap_first_vertices {x y z t : V}
   exact distinct.comp (Equiv.swap _ _).injective
 
 local notation "arcs" => (univ.biUnion (Adjacent rows))
-
-private theorem halfThree_adjacent_no_common_out
-    (free : HalfBridgeFree (Before rows) k) (three : 3 ≤ k) {x y z : V}
-    (xy : (x,y) ∈ arcs) (yx : (y,x) ∈ arcs) (xz : (x,z) ∈ arcs) : (y,z) ∉ arcs := by
-  intro yz
-  obtain ⟨_,xy⟩ := mem_family_adjacent.mp xy
-  obtain ⟨_,yx⟩ := mem_family_adjacent.mp yx
-  obtain ⟨_,xz⟩ := mem_family_adjacent.mp xz
-  obtain ⟨_,yz⟩ := mem_family_adjacent.mp yz
-  exact (halfThree_adjacent_triangle_order free three xy yz xz).asymm
-    (halfThree_adjacent_triangle_order free three yx xz yz)
 
 private theorem halfFour_adjacent_no_full_cross_indegree (free : HalfBridgeFree (Before rows) k) (four : 4 ≤ k)
     {x y z t : V} (distinct : Function.Injective (![x,y,z,t] : Fin 4 → V))

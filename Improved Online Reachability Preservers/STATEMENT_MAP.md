@@ -4147,11 +4147,11 @@ comparisons. For nonempty indexed rows, this is a bound on \(M-p\).
 For distinct literal rows it also bounds the number of nonsingletons.
 The full-three construction attains the same exact row capacity and
 proves the converse for half cutoff three.
-[Directed bound](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L56)
-· [Triangle arrival order](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L190)
-· [Mass bound](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L256)
-· [Literal row bound from cutoff three](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L271)
-· [Exact half-three feasibility](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L306).
+[Directed bound](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L147)
+· [Triangle arrival order](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L225)
+· [Mass bound](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L318)
+· [Literal row bound from cutoff three](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L363)
+· [Exact half-three feasibility](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L374).
 
 At half cutoff at least four, a three-step detour of consecutive
 comparisons gives a river-before-final-row constraint when the reverse
@@ -4163,9 +4163,23 @@ opposite three-step detours and a directed cross cycle with the two
 specified pair edges. Two disjoint reciprocal pairs consequently
 have at most three consecutive comparisons between them.
 [Three-step arrival order](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L26)
-· [Opposite detours](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L102)
-· [Cross cycle](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L125)
-· [At most three cross edges](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L222).
+· [Opposite detours](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L98)
+· [Cross cycle](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L121)
+· [At most three cross edges](OnlineReachabilityPreservers/HalfFourAdjacentObstructions.lean#L207).
+
+The cross bound sharpens the global count. Delete the endpoints of a
+reciprocal pair. With no reciprocal pair left, the remaining directed
+edges inject into the unordered pairs. The two vertices of a second
+reciprocal pair contribute at most three cross links, saving one from
+their allowance of four. Induction gives at most \(\binom n2+1\) consecutive
+steps at every half cutoff of at least four. The literal row count is
+at most \(n+\binom n2+1\), and the mass above the nonempty row count
+is at most \(\binom n2+1\).
+[Directed count](OnlineReachabilityPreservers/HalfFourLiteralCapacity.lean#L32)
+· [Consecutive-step count](OnlineReachabilityPreservers/HalfFourLiteralCapacity.lean#L101)
+· [Mass bound](OnlineReachabilityPreservers/HalfFourLiteralCapacity.lean#L118)
+· [Literal count at cutoffs at least four](OnlineReachabilityPreservers/HalfFourLiteralCapacity.lean#L129).
+
 
 The cutoff-three capacity supplies a literal family of mass \(p\) within
 both budgets with full exclusion at every size. Its ordered pairs all go
