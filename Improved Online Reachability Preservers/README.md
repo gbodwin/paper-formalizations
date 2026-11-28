@@ -2445,6 +2445,19 @@ moment gives \(M\le12n\) and \(p^2>40n\). A hexagonal grid of width
 · [Hexagonal grid witness](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L173)
 · [Literal maximum at large vertex budgets](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L186).
 
+Listing both directions of each horizontal and vertical line gives a
+degree-four square grid with \(4w\) indexed rows of length \(w\) on
+\(w^2\) vertices. It excludes full bridges through size three. For a
+feasible exact-count literal half-three maximum, \(0<p\le n\) and
+\(p(p-1)\le208n\) suffice for a literal full-three witness retaining
+at least \(M/8\), with both budgets and all four original-average caps.
+At width two, every arrival permutation of the eight directed sides
+contains a half-four bridge. The latest directed side is the river and
+the other three sides give the detour.
+[Full-three square](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L86)
+· [Half-four obstruction in every order](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L132)
+· [Literal comparison through size three](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L222).
+
 At cutoff three and comparable positive budgets, the witness-average
 form of Lemma 39 holds with its literal half benchmark. For a field of
 size \(q\), the affine lines with directions \((1,s,s^2)\) give \(q^3\)

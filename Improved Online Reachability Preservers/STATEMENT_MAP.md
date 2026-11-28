@@ -4343,6 +4343,31 @@ and original-mass inequalities.
 · [Hexagonal witness](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L173)
 · [Literal Lemma 39 in this range](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L186).
 
+The square grid lists every horizontal and vertical line of \([w]^2\)
+in both directions. One step with the same endpoints as a river
+determines the same axis, line and direction. A two-step detour would
+have to stay on the river's axis, since one perpendicular step cannot
+cancel and two perpendicular steps cannot change the river coordinate.
+All three rows would then lie on the same line, which has only two
+orientations. Thus the \(4w\) indexed rows are full-three-free, have
+length \(w\), and give degree four at each of \(w^2\) vertices. At the
+two-by-two square, every direction on every side has a three-step detour
+through the other three sides. With the latest side as river, this is
+a half-four bridge for every arrival permutation.
+
+For \(0<p\le n\) and \(p(p-1)\le208n\), a feasible exact literal
+half-three maximum has mass \(M\le16n\) by the half degree moment.
+When \(M>8n\), it also has \(p^2>40n\). The ceiling width
+\(w=\lceil M/(4p)\rceil\) obeys \(pw\le5n\), so one square fits
+both budgets. Its disjoint copies, or the low-mass witness when
+\(M\le8n\), give distinct nonempty simple rows through full cutoff
+three with mass in \([M/8,M]\) and the four original-average caps.
+[Full-three proof](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L86)
+· [Half-four at every arrival order](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L132)
+· [Degree four](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L165)
+· [Witness at prescribed mass](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L188)
+· [Literal comparison at the maximum](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L222).
+
 At every half cutoff \(k\ge3\), simple indexed families have
 \(M\le8(n+p)\) or \(M^3\le1024(np)^2\), hence mass
 \(O((np)^{2/3}+n+p)\). Later branches cannot share an upstream vertex

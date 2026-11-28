@@ -3143,6 +3143,29 @@ local-order upper bound and recurrence of Theorem 43.
   · [Finite copy argument](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L69)
   · [Exact-count maximum and frozen witness](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L186).
 
+  A square grid with both orientations of each axis line improves this
+  cutoff-three comparison. Any proposed two-step detour must use the
+  river axis twice. Otherwise its perpendicular displacement is nonzero
+  or its displacement along the river axis is zero. Both steps then lie
+  on the river's line, which has just two row labels. One-step detours
+  would reuse the river's label. This supplies degree four with width
+  \(w\), vertex count \(w^2\), and indexed path count \(4w\). On width
+  two the three other sides give a four-bridge for any river direction.
+  Choosing the latest of all eight rows makes a half-four bridge in
+  an arbitrary arrival order.
+
+  If \(0<p\le n\) and \(p(p-1)\le208n\), the degree moment bounds the
+  feasible literal half-three maximum by \(16n\). Above \(8n\), use
+  \(p^2>40n\) and \(pw\le5n\) at width \(w=\lceil M/(4p)\rceil\)
+  to fit a seed square. The regular-copy result supplies all four
+  original caps, both budgets, and at least \(M/8\) mass. The low-mass
+  construction handles \(M\le8n\). Both branches exclude full bridges
+  through size three.
+  [Grid proof](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L86)
+  · [Arrival obstruction](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L132)
+  · [Square witness](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L188)
+  · [Literal comparison](OnlineReachabilityPreservers/FullThreeSquareGrid.lean#L222).
+
   Count all choice sizes together for a sharper constant. For pruned
   mass \(W\), let \(S=(W-n-p)_+\). Encode a three-element subset of
   \(\{0,\ldots,S+1\}\) by its three nonnegative gaps \(a,b,c\) with
