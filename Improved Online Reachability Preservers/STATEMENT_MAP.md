@@ -2231,6 +2231,15 @@ supplied expanded row length. An empty row supplies the cap alone.
 · [Exact prepared frame and time](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowFrameMachine.lean#L454)
 · [Linear transition polynomial](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowFrameMachine.lean#L500).
 
+The completed source-row run passes the prepared operand stream
+directly to the minimum machine on the same input stack. It returns
+the exact next hop entry for a supplied expanded graph row, with at
+most \(8X+3\) transitions on an input frame of length \(X\).
+[Composed hop-row machine](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowMachine.lean#L65)
+· [Exact row computation](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowMachine.lean#L154)
+· [Linear native transition polynomial](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowMachine.lean#L178)
+· [Exact next hop from a supplied source row](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowMachine.lean#L195).
+
 
 
 
