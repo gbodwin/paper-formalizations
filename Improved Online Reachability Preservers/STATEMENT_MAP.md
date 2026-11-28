@@ -2098,7 +2098,7 @@ transition bound is \(12C^2+26C+4X^2+7X+11\).
 
 The round output can be archived as the next previous-weight vector.
 A finite-stack machine preserves each unary total, changes its row
-marker to a field delimiter, and stacks the fields in reverse order
+marker to a field delimiter, and reverses the resulting symbol stream
 in one transition per input symbol plus the halt. The exact compact
 request separates into one cap, the previous vector, and the ordered
 distance rows. An entry bound of \(B\) gives at most \(n(B+1)\) symbols
@@ -2107,6 +2107,20 @@ for the previous vector of length \(n\).
 · [Vector length bound](OnlineReachabilityPreservers/SteinerUnaryRoundPriorArchiveMachine.lean#L120)
 · [Exact archive transition bound](OnlineReachabilityPreservers/SteinerUnaryRoundPriorArchiveMachine.lean#L169)
 · [Exact compact request components](OnlineReachabilityPreservers/SteinerUnaryRoundPriorArchiveMachine.lean#L197).
+
+The repeated-round machine reads a unary height, one cap, and one
+distance matrix for the chosen orientation. It starts with the zero
+vector, restores the cap and matrix after loading each round, and
+archives the exact resulting vector for the next depth. It returns
+the final vector in row order and clears the working stacks, including
+at height zero. The actual transition bound is a polynomial in the
+encoded input length for each fixed height. Its intermediate vector
+bound is \(X(X^{h+1}+1)\) at input length \(X\) and height \(h\).
+[Repeated distance rounds](OnlineReachabilityPreservers/SteinerUnaryDistanceHeightMachine.lean#L137)
+· [Height and distance input](OnlineReachabilityPreservers/SteinerUnaryDistanceHeightMachine.lean#L676)
+· [Transition bound](OnlineReachabilityPreservers/SteinerUnaryDistanceHeightMachine.lean#L806)
+· [Exact final vector](OnlineReachabilityPreservers/SteinerUnaryDistanceHeightMachine.lean#L811)
+· [Fixed-height transition polynomial](OnlineReachabilityPreservers/SteinerUnaryDistanceHeightMachine.lean#L834).
 
 
 
