@@ -17,15 +17,25 @@ def RespectsDeletionComponentsAt {A B : Type*} {G : SimpleGraph A} {H : SimpleGr
   ∀ {x y u v : A}, f x = a → f y = a → G.Adj x u → G.Adj y v →
     ∀ w : H.Walk (f u) (f v), a ∉ w.support → x = y
 
-/-- A projection that respects the components at a deleted label has
-at most one copy of that label in any connected component. -/
-theorem RespectsDeletionComponentsAt.eq_of_reachable {A B : Type*}
-    {G : SimpleGraph A} {H : SimpleGraph B} {f : G →g H} {a : B}
-    (coherent : RespectsDeletionComponentsAt f a) {x y : A}
-    (left : f x = a) (right : f y = a) (joined : G.Reachable x y) : x = y := by
+/-- At each projected label, neighbors joined by a walk of bounded
+length after deleting that label must belong to the same copy. -/
+def RespectsShortDeletionLinksAt {A B : Type*} {G : SimpleGraph A} {H : SimpleGraph B}
+    (f : G →g H) (a : B) (radius : ℕ) : Prop :=
+  ∀ {x y u v : A}, f x = a → f y = a → G.Adj x u → G.Adj y v →
+    ∀ w : H.Walk (f u) (f v), w.length ≤ radius → a ∉ w.support → x = y
+
+/-- A short connecting walk between two copies would project to a
+forbidden short return to their common label. -/
+theorem RespectsShortDeletionLinksAt.eq_of_walk {A B : Type*}
+    {G : SimpleGraph A} {H : SimpleGraph B} {f : G →g H} {a : B} {radius : ℕ}
+    (coherent : RespectsShortDeletionLinksAt f a radius) {x y : A}
+    (left : f x = a) (right : f y = a) (walk : G.Walk x y)
+    (short : walk.length ≤ radius+2) : x = y := by
   classical
   by_contra different
-  obtain ⟨w, simple⟩ := joined.exists_isPath
+  let w := walk.bypass
+  have simple := walk.bypass_isPath
+  have bound : w.length ≤ radius+2 := walk.length_bypass_le_length.trans short
   have positive : 0 < w.length := by
     by_contra! zero
     exact different (Walk.eq_of_length_eq_zero (Nat.eq_zero_of_le_zero zero))
@@ -63,10 +73,24 @@ theorem RespectsDeletionComponentsAt.eq_of_reachable {A B : Type*}
       simp only [between,Walk.getVert_copy,Walk.take_getVert,Walk.drop_getVert,inf_eq_right.mpr within]
     rw [fromWalk] at h
     exact avoids (by omega) (by omega) (congrArg f h |>.trans atRoot)
-  have same := coherent left jAt first last (between.map f) mappedAvoids
+  have betweenShort : (between.map f).length ≤ radius := by
+    rw [Walk.length_map,Walk.length_copy,Walk.take_length]
+    exact (min_le_left _ _).trans (by omega)
+  have same := coherent left jAt first last (between.map f) betweenShort mappedAvoids
   have zero := simple.getVert_injOn (x₁ := 0) (x₂ := j) (by simp) jFits
     (by rwa [Walk.getVert_zero])
   omega
+
+/-- A projection that respects the components at a deleted label has
+at most one copy of that label in any connected component. -/
+theorem RespectsDeletionComponentsAt.eq_of_reachable {A B : Type*}
+    {G : SimpleGraph A} {H : SimpleGraph B} {f : G →g H} {a : B}
+    (coherent : RespectsDeletionComponentsAt f a) {x y : A}
+    (left : f x = a) (right : f y = a) (joined : G.Reachable x y) : x = y := by
+  obtain ⟨w⟩ := joined
+  apply RespectsShortDeletionLinksAt.eq_of_walk (radius := w.length) (f := f) (a := a) _ left right w (by omega)
+  intro x y u v first last edgeA edgeB route _ avoids
+  exact coherent first last edgeA edgeB route avoids
 
 private theorem Bridge.incidence_reaches {J W : Type*} [DecidableEq W]
     {pieces : J → List W} {d : ℕ} (b : Bridge (Before pieces) d) :

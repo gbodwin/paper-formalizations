@@ -264,6 +264,73 @@ private theorem incidence_cycle_closes {d : ℕ} (corners : Fin (d+2) → V) (sl
   simp [incidenceCycleVertex,show 2*(d+2)/2 = d+2 by omega,show (2*(d+2))%2 = 0 by omega]
 
 omit [DecidableEq V] in
+private theorem incidence_cycle_walk {paths : I → List V} {d : ℕ}
+    (corners : Fin (d+2) → V) (slots : Fin (d+2) → I)
+    (stops : ∀ i, corners i ∈ paths (slots i) ∧ corners (i+1) ∈ paths (slots i)) :
+    ∃ w : (pathIncidenceGraph paths).Walk (incidenceCycleVertex corners slots 0)
+        (incidenceCycleVertex corners slots 0),
+      w.length = 2*(d+2) ∧
+        ∀ t, t ≤ w.length → w.getVert t = incidenceCycleVertex corners slots t := by
+  let node := incidenceCycleVertex corners slots
+  have even (i : Fin (d+2)) : node (2*i.val) = Sum.inr (corners i) := incidence_cycle_even corners slots i
+  have odd (i : Fin (d+2)) : node (2*i.val+1) = Sum.inl (slots i) := incidence_cycle_odd corners slots i
+  have next (i : Fin (d+2)) : node (2*i.val+2) = Sum.inr (corners (i+1)) := incidence_cycle_next corners slots i
+  let support := List.ofFn (fun i : Fin (2*(d+2)+1) => node i.val)
+  have nonempty : support ≠ [] := by simp [support]
+  have chain : support.IsChain (pathIncidenceGraph paths).Adj := by
+    refine List.isChain_ofFn.mpr ?_
+    intro t ht
+    change (pathIncidenceGraph paths).Adj (node t) (node (t+1))
+    let i : Fin (d+2) := ⟨t/2,by omega⟩
+    by_cases parity : t%2 = 0
+    · have h : t = 2*i.val := by dsimp only [i]; omega
+      rw [h,even,odd]
+      exact (stops i).1
+    · have h : t = 2*i.val+1 := by dsimp only [i]; omega
+      rw [h,odd,show 2*i.val+1+1 = 2*i.val+2 by omega,next]
+      exact (stops i).2
+  have first : support.head nonempty = node 0 := List.head_ofFn nonempty
+  have last : support.getLast nonempty = node 0 := by
+    rw [List.getLast_ofFn]
+    change node (2*(d+2)+1-1) = node 0
+    rw [Nat.add_sub_cancel]
+    exact incidence_cycle_closes corners slots
+  let walk := (Walk.ofSupport support nonempty chain).copy first last
+  have length : walk.length = 2*(d+2) := by
+    simp only [walk,Walk.length_copy,Walk.length_ofSupport,support,List.length_ofFn]
+    omega
+  have atIndex {t : ℕ} (fit : t ≤ walk.length) : walk.getVert t = node t := by
+    rw [walk.getVert_eq_support_getElem fit]
+    simp only [walk,Walk.support_copy,Walk.support_ofSupport,support,List.getElem_ofFn]
+  exact ⟨walk,length,fun _ h => atIndex h⟩
+
+/-- A bridge traces a closed alternating incidence walk containing every
+corner, every arc label and the river label. Its length is twice the
+bridge size. -/
+theorem Bridge.exists_incidence_closed_walk {pieces : J → List W} {d : ℕ}
+    (b : Bridge (Before pieces) d) :
+    ∃ w : (pathIncidenceGraph pieces).Walk (.inr (b.vertex 0)) (.inr (b.vertex 0)),
+      w.length = 2*(d+2) ∧
+      (∀ i, Sum.inr (b.vertex i) ∈ w.support) ∧
+      (∀ i, Sum.inl (b.arc i) ∈ w.support) ∧ Sum.inl b.river ∈ w.support := by
+  obtain ⟨w,length,indexed⟩ := incidence_cycle_walk b.vertex (incidenceSlots b) (incidence_slot_corners b)
+  have first : incidenceCycleVertex b.vertex (incidenceSlots b) 0 = Sum.inr (b.vertex 0) := by
+    simpa only [Fin.val_zero,Nat.mul_zero] using incidence_cycle_even b.vertex (incidenceSlots b) (0 : Fin (d+2))
+  let walk := w.copy first first
+  have supports : walk.support = w.support := Walk.support_copy _ _ _
+  have vertices (i : Fin (d+2)) : Sum.inr (b.vertex i) ∈ walk.support := by
+    rw [supports]
+    have fit : 2*i.val ≤ w.length := by rw [length]; have := i.isLt; omega
+    exact Walk.mem_support_iff_exists_getVert.mpr ⟨_,(indexed _ fit).trans (incidence_cycle_even _ _ i),fit⟩
+  have paths (i : Fin (d+2)) : Sum.inl (incidenceSlots b i) ∈ walk.support := by
+    rw [supports]
+    have fit : 2*i.val+1 ≤ w.length := by rw [length]; have := i.isLt; omega
+    exact Walk.mem_support_iff_exists_getVert.mpr ⟨_,(indexed _ fit).trans (incidence_cycle_odd _ _ i),fit⟩
+  exact ⟨walk,(Walk.length_copy _ _ _).trans length,vertices,
+    fun i => by simpa only [incidenceSlots,Fin.snoc_castSucc] using paths i.castSucc,
+    by simpa only [incidenceSlots,Fin.snoc_last] using paths (Fin.last (d+1))⟩
+
+omit [DecidableEq V] in
 private theorem projected_bridge_incidence_injective {paths : I → List V} {pieces : J → List W} {d : ℕ}
     (b : Bridge (Before pieces) d) (parent : J → I) (project : W → V)
     (members : ∀ {i x}, x ∈ pieces i → project x ∈ paths (parent i))
@@ -281,33 +348,9 @@ private theorem projected_bridge_incidence_injective {paths : I → List V} {pie
   have even (i : Fin (d+2)) : node (2*i.val) = Sum.inr (corners i) := incidence_cycle_even corners slots i
   have odd (i : Fin (d+2)) : node (2*i.val+1) = Sum.inl (slots i) := incidence_cycle_odd corners slots i
   have next (i : Fin (d+2)) : node (2*i.val+2) = Sum.inr (corners (i+1)) := incidence_cycle_next corners slots i
-  let support := List.ofFn (fun i : Fin (2*(d+2)+1) => node i.val)
-  have nonempty : support ≠ [] := by simp [support]
-  have chain : support.IsChain (pathIncidenceGraph paths).Adj := by
-    refine List.isChain_ofFn.mpr ?_
-    intro t ht
-    change (pathIncidenceGraph paths).Adj (node t) (node (t+1))
-    let i : Fin (d+2) := ⟨t/2,by omega⟩
-    by_cases parity : t%2 = 0
-    · have h : t = 2*i.val := by dsimp only [i]; omega
-      rw [h,even,odd]
-      exact members (incidence_slot_corners b i).1
-    · have h : t = 2*i.val+1 := by dsimp only [i]; omega
-      rw [h,odd,show 2*i.val+1+1 = 2*i.val+2 by omega,next]
-      exact members (incidence_slot_corners b i).2
-  have first : support.head nonempty = node 0 := List.head_ofFn nonempty
-  have last : support.getLast nonempty = node 0 := by
-    rw [List.getLast_ofFn]
-    change node (2*(d+2)+1-1) = node 0
-    rw [Nat.add_sub_cancel]
-    exact incidence_cycle_closes corners slots
-  let walk := (Walk.ofSupport support nonempty chain).copy first last
-  have length : walk.length = 2*(d+2) := by
-    simp only [walk,Walk.length_copy,Walk.length_ofSupport,support,List.length_ofFn]
-    omega
-  have atIndex {t : ℕ} (fit : t ≤ walk.length) : walk.getVert t = node t := by
-    rw [walk.getVert_eq_support_getElem fit]
-    simp only [walk,Walk.support_copy,Walk.support_ofSupport,support,List.getElem_ofFn]
+  obtain ⟨walk,length,indexed⟩ := incidence_cycle_walk (paths := paths) corners slots (fun i =>
+    ⟨members (incidence_slot_corners b i).1,members (incidence_slot_corners b i).2⟩)
+  have atIndex {t : ℕ} (fit : t ≤ walk.length) : walk.getVert t = node t := indexed t fit
   let edgeRow (t : Fin (2*(d+2))) : Fin (d+2) := ⟨t.val/2,by omega⟩
   let edgeCorner (t : Fin (2*(d+2))) : Fin (d+2) :=
     if t.val%2 = 0 then edgeRow t else edgeRow t+1

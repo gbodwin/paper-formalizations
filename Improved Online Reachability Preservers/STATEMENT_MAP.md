@@ -1762,12 +1762,12 @@ budgets, all four original caps and \(M/16\). With caps at the witness's
 own averages they give \(M/392\) indexed or \(M/7056\) literal.
 The literal results use cutoff at least two and distinct nonempty
 simple paths.
-[Incidence projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L466)
-· [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L645)
-· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L714)
-· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L761)
-· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L800)
-· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L827).
+[Incidence projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L509)
+· [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L688)
+· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L757)
+· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L804)
+· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L843)
+· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L870).
 
 The same guarantees follow when two edge-disjoint incidence cycles
 through any one label always have combined length greater than \(2k\).
@@ -1780,11 +1780,11 @@ cutoff and the same four types of witnesses hold even when some cycles
 are short. A graph with one cycle, for example, satisfies the condition
 at every cutoff.
 [Trail equivalence](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L124)
-· [Widths](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L636)
-· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L700)
-· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L747)
-· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L774)
-· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L811).
+· [Widths](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L679)
+· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L743)
+· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L790)
+· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L817)
+· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L854).
 
 The combined bound \(2k\) includes imbalanced lengths. A simple
 ten-row example on twenty vertex labels excludes every half-bridge.
@@ -1807,10 +1807,10 @@ same exclusion, all four starting caps, both positive budgets, and
 at least \(M/16\) of the mass when \(M\) is at least both budgets.
 The distinct nonempty literal version uses \(k\ge2\).
 [Pointwise condition](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L16)
-· [Occupied-label projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L422)
-· [Width tests](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L574)
-· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L679)
-· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L725).
+· [Occupied-label projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L465)
+· [Width tests](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L617)
+· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L722)
+· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L768).
 
 In full mode the degree split already preserves every input bridge
 cutoff. The subsequent split needs the pointwise condition only at
@@ -1820,11 +1820,11 @@ and retention \(M/16\) follow. Testing the overlong rows in the original
 graph also suffices, because the copied graph projects injectively
 on its edges. The pointwise test transfers under this projection.
 Both tests give indexed and distinct nonempty literal witnesses.
-[Copied-row width theorem](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L900)
-· [Indexed copied-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L942)
-· [Literal copied-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L960)
-· [Indexed original-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L981)
-· [Literal original-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L998).
+[Copied-row width theorem](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L943)
+· [Indexed copied-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L985)
+· [Literal copied-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1003)
+· [Indexed original-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1024)
+· [Literal original-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1041).
 
 For output-average caps, the linear-mass construction covers input
 of mass at most \(392\max(n,p)\). Otherwise select a rectangle with
@@ -1838,8 +1838,8 @@ both budgets, and all four own-average caps, retaining \(M/392\) or
 \(M/7056\), respectively. Literal input and output are distinct and
 nonempty, with cutoff at least two.
 [Rectangle rule](OnlineReachabilityPreservers/LocalAverageCleaning.lean#L305)
-· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1018)
-· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1078).
+· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1061)
+· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1121).
 
 The splitting rule can instead group neighbors by component after
 deleting their common incidence label. Two copies of that label in one
@@ -1850,8 +1850,8 @@ the return to be to the first copy, violating simplicity. All the labels
 of a bridge lie in a single incidence component, so the projected
 bridge preserves all distinct labels. A monotone parent order preserves
 the last-arc comparison in half mode.
-[Injectivity in a component](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L22)
-· [Bridge exclusion](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L89).
+[Injectivity in a component](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L86)
+· [Bridge exclusion](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L113).
 
 After the original-width degree split, check that the neighbors of
 each copied row in any one component after deleting that row fit its
@@ -1866,12 +1866,12 @@ Its output has distinct nonempty simple rows and retains \(M/8\).
 In full mode the standard degree split is admissible, and the component
 sizes can also be bounded in the original graph because copying cannot
 increase them.
-[Packing](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L229)
-· [Indexed witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L286)
-· [Full witness after copying](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L304)
-· [Size under projection](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L158)
-· [Full witness from original groups](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L318)
-· [Literal witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L339).
+[Packing](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L253)
+· [Indexed witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L310)
+· [Full witness after copying](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L328)
+· [Size under projection](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L182)
+· [Full witness from original groups](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L342)
+· [Literal witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L363).
 
 The nine-vertex, nine-row example has three nonempty rows
 \([0,1,2,3,4,5]\), \([5,0]\), and \([4,1]\). It excludes every full
@@ -1946,6 +1946,23 @@ least two, the original and output rows are distinct, nonempty and simple.
 · [Trim bound at two thirds](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L126)
 · [Indexed restriction](OnlineReachabilityPreservers/IncidenceComponentRestriction.lean#L13)
 · [Literal restriction](OnlineReachabilityPreservers/IncidenceComponentRestriction.lean#L39).
+
+A bridge of size at most \(k\) traces a closed incidence walk of length
+at most \(2k\) through all its labels. Any two visited labels are joined
+by a walk of length at most \(k\), using the shorter portion of the
+closed walk. If they are distinct copies of one original label, take a
+simple path of that length or shorter and stop at the first positive
+return to the original label. Removing its first and last edges leaves
+a projected walk of length at most \(k-2\) that avoids the common label.
+Forcing its original neighbor incidences into one copy excludes this
+collision. All corners, arc labels and the river label then project
+injectively. Preserving incidences makes the projected walks valid.
+Preserving comparisons and parent arrival order transports the chosen
+bridge exclusion through the selected cutoff.
+[Bridge's closed walk](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L310)
+· [Half-length walk](OnlineReachabilityPreservers/ShortIncidenceProjection.lean#L13)
+· [First-return bound](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L29)
+· [Projection in either mode](OnlineReachabilityPreservers/ShortIncidenceProjection.lean#L56).
 
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates

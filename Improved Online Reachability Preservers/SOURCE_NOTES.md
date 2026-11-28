@@ -309,9 +309,9 @@ Forests satisfy the girth bound at every finite cutoff. With both
 positive budgets and enough mass, the same proof supplies indexed and
 literal witnesses at the original or the output averages.
 [Incidence graph](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L183)
-· [Bridge projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L466)
-· [Starting-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L714)
-· [Output-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L800).
+· [Bridge projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L509)
+· [Starting-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L757)
+· [Output-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L843).
 
 For the more general incidence condition, consider two edge-disjoint
 simple cycles based at any one row or vertex label. Require the sum of
@@ -325,8 +325,8 @@ injective graph homomorphisms. The starting- and output-average witnesses
 therefore keep the same constants and scopes as in the girth argument.
 [Cycle-pair condition](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L27)
 · [Trail equivalence](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L124)
-· [Starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L700)
-· [Output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L774).
+· [Starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L743)
+· [Output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L817).
 
 Checking each incidence cycle against the cutoff separately fails.
 Use the river \(0\to3\), the path \(0\to1\to2\to3\) built from three
@@ -358,9 +358,9 @@ and overdegree vertices. At the original factor-four widths these
 tests give the same starting-average witnesses in both modes and
 both path conventions.
 [Pointwise condition](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L16)
-· [Occupied labels](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L422)
-· [Original widths](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L574)
-· [Starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L679).
+· [Occupied labels](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L465)
+· [Original widths](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L617)
+· [Starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L722).
 
 For the full mode, apply the unrestricted degree projection first.
 After copying, the path-piece projection has the identity map on
@@ -373,9 +373,9 @@ the projected row. Thus the pointwise bound on combined length
 transfers to the copies. Both tests give the same complete four
 starting caps within the original budgets.
 [Edge-injective transport](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L147)
-· [Copied row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L900)
-· [Original row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L913)
-· [Frozen cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L942).
+· [Copied row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L943)
+· [Original row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L956)
+· [Frozen cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L985).
 
 The same localized tests apply to output averages. Use a linear-mass
 witness for \(M\le392\max(n,p)\). Otherwise the selected rectangle
@@ -387,8 +387,8 @@ mode, original vertices of degree greater than sixteen. The full
 mode uses the unrestricted degree projection and the row-only test
 after the rectangle is chosen.
 [Dense rectangle rule](OnlineReachabilityPreservers/LocalAverageCleaning.lean#L305)
-· [Indexed witness](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1018)
-· [Literal witness](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1078).
+· [Indexed witness](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1061)
+· [Literal witness](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1121).
 
 Grouping by connected components of the incidence graph after a label
 is deleted gives a different sufficient condition for splitting. A
@@ -403,10 +403,10 @@ least one eighth at cutoff at least two, with distinct nonempty simple
 paths and exclusion on the original rows as well as the degree copies.
 Both have the original budgets and four starting caps. An argument for
 constant retention when a group exceeds the width remains open in general.
-[Projection](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L89)
-· [Packed rows](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L229)
-· [Indexed witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L286)
-· [Literal witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L339).
+[Projection](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L113)
+· [Packed rows](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L253)
+· [Indexed witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L310)
+· [Literal witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L363).
 
 For example, at \(n=p=9\) and \(M=10\), take the rows
 \([0,1,2,3,4,5]\), \([5,0]\), and \([4,1]\), plus six empty indexed
@@ -462,6 +462,18 @@ budgets and all four starting-average caps. The literal theorem uses
 distinct nonempty simple input and output at cutoff at least two.
 [Indexed restriction](OnlineReachabilityPreservers/IncidenceComponentRestriction.lean#L13)
 · [Literal restriction](OnlineReachabilityPreservers/IncidenceComponentRestriction.lean#L39).
+
+At a finite cutoff \(k\), the projection only needs incidences to stay
+together when their original neighbors connect within \(k-2\) edges
+after deleting the common label. Any two labels on the bridge's closed
+incidence walk are joined within \(k\) edges. At a repeated projected
+label, take the first return on a simple such path and remove its outer
+two edges. The interior meets the shorter connection test, so the
+supposed two copies coincide. A projection preserving incidences and
+comparisons with monotone parent order preserves the bridge cutoff.
+[Closed walk](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L310)
+· [Bounded first-return proof](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L29)
+· [Projection theorem](OnlineReachabilityPreservers/ShortIncidenceProjection.lean#L56).
 
 At full cutoff six, opposite-intersection pruning followed by restricting
 to a quarter of each support permits the contiguous construction on an
