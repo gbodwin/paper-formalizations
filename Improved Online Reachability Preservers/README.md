@@ -3759,6 +3759,17 @@ length \(X\) and cap \(c\), the expanded output has length at most
 · [Exact run and bound](OnlineReachabilityPreservers/SteinerUnaryHopSharedCapRowFramesMachine.lean#L560)
 · [Quadratic native transition polynomial](OnlineReachabilityPreservers/SteinerUnaryHopSharedCapRowFramesMachine.lean#L597).
 
+The row loop consumes the expanded stream, runs the exact minimum
+machine once per marked row and emits the unary minima in row order.
+It retains a marker for each result, including zero, and clears all
+other stacks. The output fits in the expanded input length \(Y\),
+and the loop takes at most \(12Y+2\) transitions.
+[Native minimum loop](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowsMachine.lean#L65)
+· [Ordered answer frame](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowsMachine.lean#L321)
+· [Answer length bound](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowsMachine.lean#L375)
+· [Exact run and time](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowsMachine.lean#L401)
+· [Linear native transition polynomial](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowsMachine.lean#L420).
+
 
 
 
