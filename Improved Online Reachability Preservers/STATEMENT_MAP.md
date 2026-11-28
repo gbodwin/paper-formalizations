@@ -2145,6 +2145,18 @@ polynomial in the supplied frame length for each fixed height.
 · [Fixed-height transition polynomial](OnlineReachabilityPreservers/SteinerUnaryForestScaleMachine.lean#L541)
 · [Exact scale from graph hops](OnlineReachabilityPreservers/SteinerUnaryForestScaleMachine.lean#L553).
 
+For the forest proposal width, the scale machine returns directly
+to unary halving with the scale tally on the halving input stack.
+The result is the exact bit width of the positive scale. The native
+transition polynomial adds \(6X^{h+2}+4\) to the scale bound, at
+encoded frame length \(X\) and fixed height \(h\). With exact graph
+hop data, the result is \(\log_2 S+1\), with integer logarithm, for
+the forest scale \(S\) used in seed decoding.
+[Composed proposal-width machine](OnlineReachabilityPreservers/SteinerUnaryForestProposalWidthMachine.lean#L70)
+· [Exact width run](OnlineReachabilityPreservers/SteinerUnaryForestProposalWidthMachine.lean#L196)
+· [Fixed-height transition polynomial](OnlineReachabilityPreservers/SteinerUnaryForestProposalWidthMachine.lean#L230)
+· [Exact graph proposal width](OnlineReachabilityPreservers/SteinerUnaryForestProposalWidthMachine.lean#L242).
+
 
 
 
