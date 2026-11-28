@@ -3592,6 +3592,18 @@ the matrix in root order and uses the cached vector for one orientation.
 · [Exact frame and transition bound](OnlineReachabilityPreservers/SteinerUnaryDistanceRoundFrameMachine.lean#L627)
 · [Exact frame for one forest orientation](OnlineReachabilityPreservers/SteinerUnaryDistanceRoundFrameMachine.lean#L680).
 
+The composed distance-round machine accepts one cap, one previous
+weight vector and the distance matrix. The frame adapter returns
+directly to the shared-cap evaluator with the prepared input already
+on its input stack. It computes the exact next vector for one forest
+orientation. For compact input length \(X\) and \(C=X^2+X\), the
+transition bound is \(12C^2+26C+4X^2+7X+11\).
+[Composed distance round](OnlineReachabilityPreservers/SteinerUnaryDistanceRoundMachine.lean#L72)
+· [Exact answer encoding](OnlineReachabilityPreservers/SteinerUnaryDistanceRoundMachine.lean#L171)
+· [Composed transition bound](OnlineReachabilityPreservers/SteinerUnaryDistanceRoundMachine.lean#L176)
+· [Actual transition polynomial](OnlineReachabilityPreservers/SteinerUnaryDistanceRoundMachine.lean#L212)
+· [Exact next forest vector](OnlineReachabilityPreservers/SteinerUnaryDistanceRoundMachine.lean#L227).
+
 
 
 
