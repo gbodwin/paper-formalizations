@@ -260,7 +260,7 @@ theorem half_three_long_mass_subquadratic (ε : ℝ) (εPos : 0 < ε) :
     _ ≤ 5*((ε/5)*(n:ℝ)^2) := by gcongr; exact small large t left right positive
     _ = _ := by ring
 
-private theorem mass_le_twice_paths_add_long_mass {V : Type*} {p : ℕ} (paths : Fin p → List V) :
+theorem mass_le_twice_paths_add_long_mass {V : Type*} {p : ℕ} (paths : Fin p → List V) :
     (∑ i, (paths i).length) ≤ 2*p+listMassAboveWidth paths 2 := calc
   _ ≤ ∑ i, (2+(if 2 < (paths i).length then (paths i).length else 0)) := by
     apply sum_le_sum

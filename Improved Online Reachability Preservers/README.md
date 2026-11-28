@@ -2409,6 +2409,20 @@ exclusion at every size. These results use half cutoff at least three.
 · [Near-sharp pair witness](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L29)
 · [Original-average caps at the maximum](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L51).
 
+The half long-row mass is also \(o(n\sqrt p)\) as \(p\) grows, uniformly
+in the vertex budget and for all half cutoffs of at least three. This
+applies to every simple indexed family. Keep the rows of length at least
+three in arrival order, and call their count \(p'\). If their mass is a
+fixed positive fraction of \(n\sqrt p\), then \(p'\) grows and the
+upstream bound gives \(p'\ge\delta n^2\) for some \(\delta>0\). Their mass
+is at least \(3p'\), which contradicts the quadratic path-density bound
+with a sufficiently small error. Consequently total mass is at most
+\(2p+o(n\sqrt p)\). The long-row estimate also holds uniformly within
+both smaller output budgets.
+[Long rows at the \(n\sqrt p\) scale](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L13)
+· [Smaller budgets](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L107)
+· [Total mass](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L132).
+
 At cutoff three and comparable positive budgets, the witness-average
 form of Lemma 39 holds with its literal half benchmark. For a field of
 size \(q\), the affine lines with directions \((1,s,s^2)\) give \(q^3\)

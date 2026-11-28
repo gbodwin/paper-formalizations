@@ -3095,6 +3095,21 @@ local-order upper bound and recurrence of Theorem 43.
   · [Exact-budget pair comparison](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L29)
   · [Starting-average witness](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L51).
 
+  To bound all half long-row mass at the \(n\sqrt p\) scale, restrict to
+  the rows of length at least three with their parent arrival order.
+  If they have mass more than \(\eta n\sqrt p\), their count \(p'\)
+  is at least \(\eta\sqrt p\) by the maximum possible length \(n\), and
+  their mass is at least \(\eta n\sqrt{p'}\). The upstream theorem forces
+  \(p'\ge\delta n^2\) when \(p'\) is large. The pair bound also gives
+  \(p'\le n^2\), ensuring the regularity bound applies. The mass is
+  at most \(2p'+\delta n^2/2\) by regularity and at least \(3p'\)
+  by the restriction, a contradiction. For bounded path budgets the
+  simple length limit gives the additional term linear in \(n\).
+  [Preserved restriction and mass estimate](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L13)
+  · [Bound at every budget](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L87)
+  · [Uniform bound on smaller outputs](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L107)
+  · [Total half mass](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L132).
+
   Count all choice sizes together for a sharper constant. For pruned
   mass \(W\), let \(S=(W-n-p)_+\). Encode a three-element subset of
   \(\{0,\ldots,S+1\}\) by its three nonnegative gaps \(a,b,c\) with

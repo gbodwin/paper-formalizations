@@ -4295,6 +4295,22 @@ distinct nonempty simple rows within both budgets, with mass in
 · [Pair-capacity comparison](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L29)
 · [Literal frozen comparison](OnlineReachabilityPreservers/DensePathBudgetFrozenFull.lean#L51).
 
+In simple indexed half input at any cutoff at least three, the mass of
+rows of length at least three is \(o(n\sqrt p)\) as the path budget grows.
+The threshold is uniform in \(n\) and in the cutoff. Restrict to just
+those rows with the original order. Their count \(p'\) is at most \(n^2\)
+by comparison uniqueness, and is at least \(\eta\sqrt p\) if they carry
+mass \(\eta n\sqrt p\). The upstream bound then gives \(p'\ge\delta n^2\)
+for a positive \(\delta\) depending on \(\eta\). The regularity estimate bounds their mass by \(2p'+o(n^2)\),
+while each retained row has length at least three. The result gives
+an \(\eta n\sqrt p+C_\eta n\) bound at all budgets and an
+\(\eta n\sqrt p\) bound within all smaller budgets for sufficiently large
+outer \(p\). Adding the short rows yields total \(2p+o(n\sqrt p)\).
+[Large path budget](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L13)
+· [Uniform bound with a linear term](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L87)
+· [Both smaller budgets](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L107)
+· [Total half mass](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L132).
+
 At every half cutoff \(k\ge3\), simple indexed families have
 \(M\le8(n+p)\) or \(M^3\le1024(np)^2\), hence mass
 \(O((np)^{2/3}+n+p)\). Later branches cannot share an upstream vertex
