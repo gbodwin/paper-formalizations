@@ -3677,6 +3677,19 @@ entries equal the exact hop counts, including unreachable pairs.
 · [Exact threshold characterization](OnlineReachabilityPreservers/SteinerDistanceHopRounds.lean#L71)
 · [Exact hop counts after one pass per vertex](OnlineReachabilityPreservers/SteinerDistanceHopRounds.lean#L150).
 
+The native minimum machine matches the unary tallies of each
+candidate against the current minimum. It moves the matched tallies
+to the other buffer and discards the unmatched part of the old
+minimum. The output is the minimum of the initial value and every
+supplied candidate, in at most \(2X+1\) transitions for frame length
+\(X\). A supplied relaxation cell has \(n+1\) fields and at most
+\((n+1)(n+3)\) symbols. The machine evaluates that cell to the exact
+next hop entry.
+[Unary minimum machine](OnlineReachabilityPreservers/SteinerUnaryMinimumMachine.lean#L59)
+· [Exact minimum and time bound](OnlineReachabilityPreservers/SteinerUnaryMinimumMachine.lean#L322)
+· [Prepared hop cell length](OnlineReachabilityPreservers/SteinerUnaryMinimumMachine.lean#L361)
+· [Exact next hop entry](OnlineReachabilityPreservers/SteinerUnaryMinimumMachine.lean#L391).
+
 
 
 
