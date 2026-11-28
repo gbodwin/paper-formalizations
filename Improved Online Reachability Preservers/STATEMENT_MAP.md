@@ -1764,10 +1764,10 @@ The literal results use cutoff at least two and distinct nonempty
 simple paths.
 [Incidence projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L466)
 · [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L645)
-· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L713)
-· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L760)
-· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L799)
-· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L826).
+· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L714)
+· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L761)
+· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L800)
+· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L827).
 
 The same guarantees follow when two edge-disjoint incidence cycles
 through any one label always have combined length greater than \(2k\).
@@ -1781,10 +1781,10 @@ are short. A graph with one cycle, for example, satisfies the condition
 at every cutoff.
 [Trail equivalence](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L124)
 · [Widths](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L636)
-· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L699)
-· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L746)
-· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L773)
-· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L810).
+· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L700)
+· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L747)
+· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L774)
+· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L811).
 
 The combined bound \(2k\) includes imbalanced lengths. A simple
 ten-row example on twenty vertex labels excludes every half-bridge.
@@ -1809,8 +1809,8 @@ The distinct nonempty literal version uses \(k\ge2\).
 [Pointwise condition](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L16)
 · [Occupied-label projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L422)
 · [Width tests](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L574)
-· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L678)
-· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L724).
+· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L679)
+· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L725).
 
 In full mode the degree split already preserves every input bridge
 cutoff. The subsequent split needs the pointwise condition only at
@@ -1820,11 +1820,11 @@ and retention \(M/16\) follow. Testing the overlong rows in the original
 graph also suffices, because the copied graph projects injectively
 on its edges. The pointwise test transfers under this projection.
 Both tests give indexed and distinct nonempty literal witnesses.
-[Copied-row width theorem](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L899)
-· [Indexed copied-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L941)
-· [Literal copied-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L959)
-· [Indexed original-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L980)
-· [Literal original-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L997).
+[Copied-row width theorem](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L900)
+· [Indexed copied-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L942)
+· [Literal copied-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L960)
+· [Indexed original-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L981)
+· [Literal original-row criterion](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L998).
 
 For output-average caps, the linear-mass construction covers input
 of mass at most \(392\max(n,p)\). Otherwise select a rectangle with
@@ -1838,8 +1838,40 @@ both budgets, and all four own-average caps, retaining \(M/392\) or
 \(M/7056\), respectively. Literal input and output are distinct and
 nonempty, with cutoff at least two.
 [Rectangle rule](OnlineReachabilityPreservers/LocalAverageCleaning.lean#L305)
-· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1017)
-· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1077).
+· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1018)
+· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1078).
+
+The splitting rule can instead group neighbors by component after
+deleting their common incidence label. Two copies of that label in one
+component of the split graph would admit a simple connecting path. The
+portion between the first exit and the first return to the original
+label projects to a walk in the deleted graph. The grouping rule forces
+the return to be to the first copy, violating simplicity. All the labels
+of a bridge lie in a single incidence component, so the projected
+bridge preserves all distinct labels. A monotone parent order preserves
+the last-arc comparison in half mode.
+[Injectivity in a component](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L22)
+· [Bridge exclusion](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L89).
+
+After the original-width degree split, check that the neighbors of
+each copied row in any one component after deleting that row fit its
+original path width \(\lfloor4M/p\rfloor\). Pack the groups whole, with
+at most one piece of half width or less per row. The packing keeps all
+degrees and incidences. With admissible degree copies, simple input and
+mass at least both positive budgets, the cleaned witness keeps the
+original cutoff, both budgets and four starting-average caps. The indexed
+mass is at least \(M/4\). For cutoff at least two the literal theorem
+also assumes exclusion on the original distinct nonempty simple rows.
+Its output has distinct nonempty simple rows and retains \(M/8\).
+In full mode the standard degree split is admissible, and the component
+sizes can also be bounded in the original graph because copying cannot
+increase them.
+[Packing](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L227)
+· [Indexed witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L284)
+· [Full witness after copying](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L302)
+· [Size under projection](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L158)
+· [Full witness from original groups](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L316)
+· [Literal witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L337).
 
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates
@@ -2261,7 +2293,7 @@ Testing the original row components instead also suffices because
 copied components only project inside original ones.
 For feasible literal distinct nonempty input, the witness can
 be distinct and nonempty with retention at least \(M/8\).
-[Packing theorem](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L232) · [Frozen witness on copied components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L195) · [Original component test](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L215) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L230).
+[Packing theorem](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L253) · [Frozen witness on copied components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L195) · [Original component test](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L215) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L230).
 
 The radius-two group condition also works after initial rowwise
 deletions. Keep the two original widths and charge the initial
@@ -3282,7 +3314,7 @@ one piece of length at most half the width per parent. Filtering each
 row by its group keeps the original order, every incidence and every
 vertex degree. It preserves the given full or half cutoff, with the
 pieces in parent arrival order in half mode.
-[Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L107) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L89) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L274).
+[Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L107) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L89) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L295).
 
 For simple input of mass \(M\) at least both positive budgets, apply
 the grouping to admissible standard degree copies at the original
@@ -3292,7 +3324,7 @@ width give quadratic loss bounds for the two support trims. Their
 individual losses are at most \(M/12\) and \(M/8\). After frozen peeling,
 the indexed witness has mass at least \(M/4\), both budgets, all four
 caps and the original full or half cutoff.
-[Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L389).
+[Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L410).
 
 The two support trims also apply when the degree groups have varying
 sizes. Assume simple admissible copies of mass \(M\) at least both

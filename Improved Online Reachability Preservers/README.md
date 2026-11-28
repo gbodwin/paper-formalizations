@@ -592,10 +592,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   literal versions take distinct nonempty simple paths and \(k\ge2\).
   [Projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L466)
   · [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L645)
-  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L713)
-  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L760)
-  · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L799)
-  · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L826).
+  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L714)
+  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L761)
+  · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L800)
+  · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L827).
 - The same four incidence-graph results allow short cycles. They
   require that no two edge-disjoint cycles through a common row or
   vertex label have combined length at most \(2k\). This condition
@@ -604,10 +604,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [Cycle-pair condition](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L27)
   · [Trail equivalence](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L124)
   · [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L636)
-  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L699)
-  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L746)
-  · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L773)
-  · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L810).
+  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L700)
+  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L747)
+  · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L774)
+  · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L811).
   The combined length is needed. A simple input with no half-bridges
   has edge-disjoint incidence cycles of lengths four and eight. Any two
   cycles individually of length at most six share an edge, yet the
@@ -626,8 +626,8 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   literal version takes and gives distinct nonempty rows for \(k\ge2\).
   [Projection on occupied labels](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L422)
   · [Width tests](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L574)
-  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L678)
-  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L724).
+  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L679)
+  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L725).
 - For full bridges, perform degree copying first. It preserves the
   input cutoff without a cycle-pair test. Test only the overlong rows
   in the resulting incidence graph. Simple full-free input through
@@ -635,11 +635,11 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   both budgets, the four original caps, and at least \(M/16\).
   A test at the overlong original rows also suffices. The literal
   versions use distinct nonempty paths and \(k\ge2\).
-  [Copied width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L899)
-  · [Indexed copied-row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L941)
-  · [Literal copied-row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L959)
-  · [Indexed original-row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L980)
-  · [Literal original-row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L997).
+  [Copied width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L900)
+  · [Indexed copied-row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L942)
+  · [Literal copied-row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L960)
+  · [Indexed original-row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L981)
+  · [Literal original-row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L998).
 - For caps at the witness's own averages, the cycle-pair test applies
   to original rows of length above sixteen and, in half mode, original
   vertices of degree above sixteen. For simple input excluding the
@@ -648,8 +648,24 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   retains at least \(M/392\). The literal version takes and gives
   distinct nonempty paths for \(k\ge2\) and retains \(M/7056\).
   [Dense rectangle rule](OnlineReachabilityPreservers/LocalAverageCleaning.lean#L305)
-  · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1017)
-  · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1077).
+  · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1018)
+  · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1078).
+- Delete each copied row label from the incidence graph in turn and
+  group its neighbors by connected component in the remaining graph.
+  If each group fits the original path width, pack whole groups into
+  subpaths of that width. With admissible degree copies and mass at least
+  both positive budgets, this preserves the chosen bridge cutoff and
+  gives both budgets and all four starting-average caps. Retention is
+  at least \(M/4\) indexed or \(M/8\) for the literal version at \(k\ge2\).
+  The literal theorem also assumes exclusion in the original distinct
+  nonempty simple family.
+  Full bridge exclusion makes degree copying admissible automatically.
+  A bound on the component sizes before copying also suffices.
+  [Component projection](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L89)
+  · [Whole-group packing](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L227)
+  · [Indexed witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L284)
+  · [Original component sizes in full mode](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L316)
+  · [Literal witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L337).
 - At half cutoff six with full-three exclusion and arbitrary
   intersections, fix lower coefficients \(a,b\in[0,1/4]\) with
   \(a+b\le7/15\). A witness meets these lower caps, both original upper
@@ -1317,7 +1333,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   input must have positive budgets and mass at least both budgets.
   For feasible distinct nonempty input, the original-row test also
   gives a distinct nonempty witness with at least \(M/8\).
-  [Packing at the certified radius](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L232) · [Copied components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L195) · [Original components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L215) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L230).
+  [Packing at the certified radius](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L253) · [Copied components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L195) · [Original components](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L215) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L230).
 - For the same full cutoff, retain rowwise sublists and compute their
   radius-two path excess at the original length width. When the initial
   loss plus this excess is at most \(\lfloor M/3\rfloor\), clipping
@@ -1539,7 +1555,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   row by its group keeps the original order, every incidence and every
   vertex degree. It preserves the given full or half cutoff, with the
   pieces in parent arrival order in half mode.
-  [Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L107) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L89) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L274).
+  [Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L107) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L89) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L295).
 - For simple input of mass \(M\) at least both positive budgets, apply
   the grouping to admissible standard degree copies at the original
   width. If each copied row admits the partition at the original path
@@ -1548,7 +1564,7 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   individual losses are at most \(M/12\) and \(M/8\). After frozen peeling,
   the indexed witness has mass at least \(M/4\), both budgets, all four
   caps and the original full or half cutoff.
-  [Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L389).
+  [Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L410).
 - The two support trims also apply when the degree groups have varying
   sizes. Assume simple admissible copies of mass \(M\) at least both
   positive budgets, with all degrees within the original width. At most

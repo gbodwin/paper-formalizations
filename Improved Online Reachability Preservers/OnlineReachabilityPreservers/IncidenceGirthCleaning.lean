@@ -649,7 +649,8 @@ theorem listRegularizedPaths_admissible_of_incidence_girth {I V : Type*}
     localOrderAdmissible half k (listRegularizedPaths paths D L) :=
   listRegularizedPaths_admissible_of_no_short_cycle_pair simple allowed (.of_egirth girth) D L
 
-private def pathIncidenceGraph_hom {I J V W : Type*}
+/-- Project each incidence to the edge between its original labels. -/
+def pathIncidenceGraph_hom {I J V W : Type*}
     {paths : I → List V} {pieces : J → List W} (parent : J → I) (project : W → V)
     (members : ∀ {i x}, x ∈ pieces i → project x ∈ paths (parent i)) :
     pathIncidenceGraph pieces →g pathIncidenceGraph paths :=

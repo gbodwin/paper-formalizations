@@ -310,8 +310,8 @@ positive budgets and enough mass, the same proof supplies indexed and
 literal witnesses at the original or the output averages.
 [Incidence graph](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L183)
 · [Bridge projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L466)
-· [Starting-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L713)
-· [Output-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L799).
+· [Starting-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L714)
+· [Output-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L800).
 
 For the more general incidence condition, consider two edge-disjoint
 simple cycles based at any one row or vertex label. Require the sum of
@@ -325,8 +325,8 @@ injective graph homomorphisms. The starting- and output-average witnesses
 therefore keep the same constants and scopes as in the girth argument.
 [Cycle-pair condition](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L27)
 · [Trail equivalence](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L124)
-· [Starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L699)
-· [Output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L773).
+· [Starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L700)
+· [Output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L774).
 
 Checking each incidence cycle against the cutoff separately fails.
 Use the river \(0\to3\), the path \(0\to1\to2\to3\) built from three
@@ -360,7 +360,7 @@ both path conventions.
 [Pointwise condition](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L16)
 · [Occupied labels](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L422)
 · [Original widths](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L574)
-· [Starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L678).
+· [Starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L679).
 
 For the full mode, apply the unrestricted degree projection first.
 After copying, the path-piece projection has the identity map on
@@ -373,9 +373,9 @@ the projected row. Thus the pointwise bound on combined length
 transfers to the copies. Both tests give the same complete four
 starting caps within the original budgets.
 [Edge-injective transport](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L147)
-· [Copied row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L899)
-· [Original row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L912)
-· [Frozen cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L941).
+· [Copied row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L900)
+· [Original row test](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L913)
+· [Frozen cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L942).
 
 The same localized tests apply to output averages. Use a linear-mass
 witness for \(M\le392\max(n,p)\). Otherwise the selected rectangle
@@ -387,8 +387,26 @@ mode, original vertices of degree greater than sixteen. The full
 mode uses the unrestricted degree projection and the row-only test
 after the rectangle is chosen.
 [Dense rectangle rule](OnlineReachabilityPreservers/LocalAverageCleaning.lean#L305)
-· [Indexed witness](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1017)
-· [Literal witness](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1077).
+· [Indexed witness](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1018)
+· [Literal witness](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L1078).
+
+Grouping by connected components of the incidence graph after a label
+is deleted gives a different sufficient condition for splitting. A
+bridge connects all its row and vertex labels in the incidence graph.
+When incidences from the same deleted component stay together, the
+projection is injective on each of these connected components. With the
+original degree copies, this yields a frozen witness whenever each
+copied row's groups fit the original width and the degree copies are
+admissible in the chosen bridge mode. The indexed witness keeps at
+least one quarter of the original mass. The literal witness keeps at
+least one eighth at cutoff at least two, with distinct nonempty simple
+paths and exclusion on the original rows as well as the degree copies.
+Both have the original budgets and four starting caps. An argument for
+constant retention when a group exceeds the width remains open in general.
+[Projection](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L89)
+· [Packed rows](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L227)
+· [Indexed witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L284)
+· [Literal witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L337).
 
 At full cutoff six, opposite-intersection pruning followed by restricting
 to a quarter of each support permits the contiguous construction on an
@@ -1168,7 +1186,7 @@ packing preserve full exclusion through seven and yield a frozen
 \(M/4\) witness with both original budgets and all four caps. The
 same test on the original rows suffices by projection. It gives a frozen \(M/8\)
 distinct nonempty witness for feasible literal input.
-[Packing at a certified radius](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L232) · [Frozen cleaning with certified groups](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L370) · [Original component test](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L215) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L230).
+[Packing at a certified radius](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L253) · [Frozen cleaning with certified groups](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L391) · [Original component test](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L215) · [Literal witness](OnlineReachabilityPreservers/ShortReturnStandardCleaning.lean#L230).
 
 For simple full-seven-free input of mass \(M\) at least both
 positive budgets, first restrict each row to a sublist. Add the
@@ -1251,7 +1269,7 @@ both support trims gives a frozen \(M/4\) witness at full cutoff
 seven if the groups keeping direct reversals and distinct-parent
 two-step returns fit. The simple original rows must exclude full
 bridges through seven and have mass \(M\) at least both positive budgets.
-[General packing](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L114) · [Support trimming](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L289) · [Full-seven frozen witness](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L33).
+[General packing](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L231) · [Support trimming](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L310) · [Full-seven frozen witness](OnlineReachabilityPreservers/FullSevenLinkedCleaning.lean#L33).
 
 Under exact projection to simple original rows, each protected
 comparison on a copied row projects to a protected comparison
@@ -1685,7 +1703,7 @@ one piece of length at most half the width per parent. Filtering each
 row by its group keeps the original order, every incidence and every
 vertex degree. It preserves the given full or half cutoff, with the
 pieces in parent arrival order in half mode.
-[Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L107) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L89) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L274).
+[Partition constraints](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L107) · [Minimum-size partition](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L89) · [Degree-preserving pieces](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L295).
 
 For simple input of mass \(M\) at least both positive budgets, apply
 the grouping to admissible standard degree copies at the original
@@ -1695,7 +1713,7 @@ width give quadratic loss bounds for the two support trims. Their
 individual losses are at most \(M/12\) and \(M/8\). After frozen peeling,
 the indexed witness has mass at least \(M/4\), both budgets, all four
 caps and the original full or half cutoff.
-[Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L389).
+[Two support trims](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L154) · [Frozen quarter-mass witness](OnlineReachabilityPreservers/ShortReturnPiecePacking.lean#L410).
 
 The two support trims also apply when the degree groups have varying
 sizes. Assume simple admissible copies of mass \(M\) at least both

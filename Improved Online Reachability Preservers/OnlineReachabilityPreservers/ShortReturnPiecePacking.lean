@@ -109,13 +109,14 @@ def HasCappedShortReturnPartition {I V : Type*} [Fintype I] [Fintype V] [Decidab
   ∀ i, ∃ groups, CappedPathPartition (rows i).toFinset
     (fun x y => Before rows i x y ∧ y ∈ reachIn (listPiecePrecedenceGraph rows) x (cutoff - 3)) width groups
 
-/-- Pack width-bounded groups without separating the endpoints of a
-protected comparison. The preservation proof uses the actual pieces. -/
-theorem split_of_capped_path_partitions {V : Type*} [LinearOrder V] [Fintype V]
+/-- Pack width-bounded groups without separating linked endpoints. The
+preservation proof can use the original membership of every incidence. -/
+theorem split_of_capped_path_partitions_with_membership {V : Type*} [LinearOrder V] [Fintype V]
     {p w cutoff : ℕ} {half : Bool} {rows : Fin p → List V}
     (simple : ∀ i, (rows i).Nodup) (linked : Fin p → V → V → Prop)
     (canGroup : ∀ i, ∃ groups, CappedPathPartition (rows i).toFinset (linked i) w groups)
     (preserve : ∀ (sizes : Fin p → ℕ) (pieces : (Σₗ i : Fin p, Fin (sizes i)) → List V),
+      (∀ {i x}, x ∈ pieces i → x ∈ rows i.fst) →
       (∀ {i x y}, Before pieces i x y → Before rows i.fst x y) →
       (∀ {i j x}, i ≠ j → i.fst = j.fst → x ∈ pieces i → x ∈ pieces j → False) →
       (∀ {i j x y}, i.fst = j.fst → x ∈ pieces i → y ∈ pieces j → linked i.fst x y → i = j) →
@@ -174,7 +175,7 @@ theorem split_of_capped_path_partitions {V : Type*} [LinearOrder V] [Fintype V]
       by_contra! different
       exact disjoint_left.mp ((partition i.fst).apart (parent ▸ onGroup j) on different) ((occurs j y).mp right) yIn
     exact different parent apart (sameI.trans sameJ.symm)
-  have legal := preserve sizes pieces (fun {_ _ _} h => step h)
+  have legal := preserve sizes pieces (fun {_ _} on => (remains _).subset on) (fun {_ _ _} h => step h)
     (fun {_ _ _} apart parent left right => disjoint apart parent left right)
     (fun {_ _ _ _} parent left right link => together parent left right link)
   refine ⟨sizes, pieces, pieceSimple, legal, fun j => (length j).trans_le ((partition j.fst).fits _ (onGroup j)),
@@ -224,6 +225,26 @@ theorem split_of_capped_path_partitions {V : Type*} [LinearOrder V] [Fintype V]
       rw [length j] at right
       omega
     simpa only [card_univ, Fintype.card_fin] using count
+
+/-- Pack width-bounded groups without separating the endpoints of a
+protected comparison. The preservation proof uses the actual pieces. -/
+theorem split_of_capped_path_partitions {V : Type*} [LinearOrder V] [Fintype V]
+    {p w cutoff : ℕ} {half : Bool} {rows : Fin p → List V}
+    (simple : ∀ i, (rows i).Nodup) (linked : Fin p → V → V → Prop)
+    (canGroup : ∀ i, ∃ groups, CappedPathPartition (rows i).toFinset (linked i) w groups)
+    (preserve : ∀ (sizes : Fin p → ℕ) (pieces : (Σₗ i : Fin p, Fin (sizes i)) → List V),
+      (∀ {i x y}, Before pieces i x y → Before rows i.fst x y) →
+      (∀ {i j x}, i ≠ j → i.fst = j.fst → x ∈ pieces i → x ∈ pieces j → False) →
+      (∀ {i j x y}, i.fst = j.fst → x ∈ pieces i → y ∈ pieces j → linked i.fst x y → i = j) →
+      localOrderAdmissible half cutoff pieces) :
+    ∃ (sizes : Fin p → ℕ) (pieces : (Σₗ i : Fin p, Fin (sizes i)) → List V),
+      (∀ i, (pieces i).Nodup) ∧ localOrderAdmissible half cutoff pieces ∧
+      (∀ i, (pieces i).length ≤ w) ∧
+      (∑ i, (pieces i).length) = ∑ i, (rows i).length ∧
+      (∀ x, (occurrences (fun i => (pieces i).toFinset) x).card =
+        (occurrences (fun i => (rows i).toFinset) x).card) ∧
+      ({i ∈ univ | (pieces i).length ≤ w/2} : Finset (Σₗ i : Fin p, Fin (sizes i))).card ≤ p :=
+  split_of_capped_path_partitions_with_membership simple linked canGroup (fun sizes pieces _ => preserve sizes pieces)
 
 /-- Merge whole protected groups in each row until at most one piece
 per parent has length at most half the width. This retains every
