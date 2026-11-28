@@ -691,6 +691,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [Grouped vertex copies](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L42)
   · [Indexed witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L111)
   · [Literal witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L187).
+- The example where standard degree copying creates a half-six bridge
+  has all deleted-label neighbor groups of size at most two. At the
+  original degree width four, grouped copies preserve all incidence
+  mass and admissibility at any chosen half cutoff. The indexed frozen
+  cleaner also uses the original path width eight and keeps both budgets
+  and all four starting-average caps with retention at least \(M/4\).
+  [Group-size certificate](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L59)
+  · [Grouped degree copies](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L82)
+  · [Frozen half witness](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L95).
 - At half cutoff six with full-three exclusion and arbitrary
   intersections, fix lower coefficients \(a,b\in[0,1/4]\) with
   \(a+b\le7/15\). A witness meets these lower caps, both original upper

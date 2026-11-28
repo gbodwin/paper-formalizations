@@ -439,6 +439,18 @@ starting-average caps.
 · [Indexed cleaning](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L111)
 · [Literal cleaning](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L187).
 
+The mixed-cycle half-six example meets both group-size bounds at its
+original widths four and eight. In the graph with the bridge terminal
+deleted, a coloring constant across each edge bounds each group of its
+incident rows by two. The remaining vertices already have degree at
+most two, and the rows have length two. Whole-component copies of
+degree at most four preserve the input row projections and exclusion
+at any chosen half cutoff. They give the indexed frozen witness with
+both budgets, four starting caps and at least one quarter of the mass.
+[Group-size bound](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L59)
+· [Degree copies](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L82)
+· [Frozen witness](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L95).
+
 At full cutoff six, opposite-intersection pruning followed by restricting
 to a quarter of each support permits the contiguous construction on an
 unrestricted maximizing family of indexed simple paths. If the quarter

@@ -1917,6 +1917,22 @@ nonempty simple rows and retains at least \(M/8\).
 [Indexed frozen witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L111)
 · [Literal frozen witness](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L187).
 
+In the twenty-incidence mixed-cycle example, every original row has
+length two. The only vertex of degree above two is the terminal of the
+new half-six bridge under standard degree copying. Delete this vertex
+and color the remaining graph by a function constant on each edge. At
+most two of the terminal's incident rows have any one color. This
+bounds every deleted-vertex or deleted-row neighbor group by two.
+The group-based degree copies have width four and preserve the original
+rows and admissibility at any chosen half cutoff. Using the original
+path width eight, the same input gives an indexed frozen witness with
+both budgets, all four starting-average caps and at least \(M/4\) at
+every half cutoff.
+[Standard split obstruction](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L76)
+· [Group-size certificate](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L59)
+· [Grouped degree copies](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L82)
+· [Frozen half witness](OnlineReachabilityPreservers/IncidenceDegreeComponentAudit.lean#L95).
+
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates
 a full size-seven bridge in the dense branch on a simple input with unique
