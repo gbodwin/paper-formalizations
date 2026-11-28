@@ -20,7 +20,8 @@ private theorem frozen_lower_cap_iff_floor_lt {M q x : ℕ} (positive : 0 < M) (
   have equivalent : M ≤ x*(4*q) ↔ M-1 < x*(4*q) := by omega
   exact (by exact_mod_cast equivalent)
 
-private theorem frozen_lower_fraction_interval {M q : ℕ} (positive : 0 < M) (budget : 0 < q) :
+/-- Fractions just above the integer removal threshold force the exact cap. -/
+theorem frozen_lower_fraction_interval {M q : ℕ} (positive : 0 < M) (budget : 0 < q) :
     let t := (M-1)/(4*q)
     let bound := (q:ℝ)*(t:ℝ)/(M:ℝ)
     0 ≤ bound ∧ bound < 1/4 ∧

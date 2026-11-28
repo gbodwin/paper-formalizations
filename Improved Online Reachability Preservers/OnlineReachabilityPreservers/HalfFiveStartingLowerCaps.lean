@@ -8,7 +8,8 @@ namespace OnlineReachabilityPreservers
 open Finset
 local notation "Before" => SourceAudit.BeforeIn
 
-private theorem half_five_opposite_pruned_widths {n p : ℕ}
+/-- Both original-width splits preserve half-five exclusion after pruning. -/
+theorem listRegularizedPaths_halfFree_five_after_opposite_pruning {n p : ℕ}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (free : HalfBridgeFree (Before paths) 5) :
     let M := ∑ i, (paths i).length
@@ -40,7 +41,7 @@ theorem regularization_list_half_five_of_starting_lower_caps {n p : ℕ}
         ((occurrences (fun i => (rows i).toFinset) x).card:ℝ) ≤ 4*(M:ℝ)/n) ∧
       (∀ i, b*(M:ℝ)/p ≤ (rows i).length ∧ ((rows i).length:ℝ) ≤ 4*(M:ℝ)/p) := by
   exact regularization_list_half_of_starting_lower_caps (r := 930) paths simple free (by decide)
-    (half_five_opposite_pruned_widths paths simple free) hn hp dense long a0 b0 aMax bMax (by decide)
+    (listRegularizedPaths_halfFree_five_after_opposite_pruning paths simple free) hn hp dense long a0 b0 aMax bMax (by decide)
     (half_pruned_crop_score_of_lower_fractions paths simple free (by decide) (hn.trans_le dense) scale)
 
 /-- The same starting-average bounds hold for distinct nonempty input
@@ -61,7 +62,7 @@ theorem regularization_literal_half_five_of_starting_lower_caps {n p : ℕ}
       (∀ i, b*(M:ℝ)/p ≤ (rows i).length ∧ ((rows i).length:ℝ) ≤ 4*(M:ℝ)/p) := by
   have simple (i : Fin p) := (valid i).2
   exact regularization_literal_half_of_starting_lower_caps (r := 930) paths distinct valid free (by decide)
-    (half_five_opposite_pruned_widths paths simple free) hn hp dense a0 b0 aMax bMax (by decide)
+    (listRegularizedPaths_halfFree_five_after_opposite_pruning paths simple free) hn hp dense a0 b0 aMax bMax (by decide)
     (half_pruned_crop_score_of_lower_fractions paths simple free (by decide) (hn.trans_le dense) scale)
 
 end OnlineReachabilityPreservers

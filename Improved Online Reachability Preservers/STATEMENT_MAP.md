@@ -1652,8 +1652,8 @@ Equal coefficients \(7/30\) and the
 asymmetric pairs \((1/4,13/60)\) and \((13/60,1/4)\) are included. For
 literal input the witness is distinct and nonempty. The printed pair of
 lower coefficients \((1/4,1/4)\) remains open without further hypotheses.
-[Indexed lower-cap tradeoff](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L29)
-· [Literal lower-cap tradeoff](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L48).
+[Indexed lower-cap tradeoff](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L30)
+· [Literal lower-cap tradeoff](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L49).
 
 Let \(t_q=\lfloor(M-1)/(4q)\rfloor\) for \(q=n,p\). An integer meets the
 exact quarter-average lower cap at budget \(q\) precisely when it exceeds
@@ -1663,8 +1663,21 @@ assumptions, simple half-five input has a witness of mass in \([M/930,M]\)
 with the exact four starting-average caps and both budgets. The literal
 version gives distinct nonempty rows.
 [Integer removal charge](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L12)
-· [Indexed criterion](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L84)
-· [Literal criterion](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L103).
+· [Indexed criterion](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L85)
+· [Literal criterion](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L104).
+With actual opposite-pruned mass \(K\), a sharper test is
+\(C+\lfloor(M-1)/r\rfloor<K-4K^2/(31M)\) for \(r\ge8\) and
+\(C\) the integer removal charge above. It yields both budgets,
+all four exact starting caps, and retention \(M/r\) at half
+cutoff five. The same indexed and literal results hold at half
+cutoff six with full-three exclusion. For \(r=930\), the coarser
+criterion permits equality in \(15C\le7M\) since \(M/930\) strictly
+exceeds \(\lfloor(M-1)/930\rfloor\).
+[Coarse charge](OnlineReachabilityPreservers/RoundedCropCaps.lean#L18)
+· [Indexed half-five](OnlineReachabilityPreservers/RoundedCropCaps.lean#L155)
+· [Literal half-five](OnlineReachabilityPreservers/RoundedCropCaps.lean#L171)
+· [Indexed half-six](OnlineReachabilityPreservers/RoundedCropCaps.lean#L190)
+· [Literal half-six](OnlineReachabilityPreservers/RoundedCropCaps.lean#L207).
 
 [Actual degree-cut cleaning after clipping](OnlineReachabilityPreservers/HalfFiveDegreeCutCleaning.lean)
 gives \(M/5000\) and all four original caps within both original
@@ -1730,10 +1743,10 @@ coefficients can be in \([0,1/4]\) with sum at most \(7/15\).
 Both conventions meet the original budgets and retain at least
 \(M/930\). If the opposite-pruned mass is at least \(13M/24\), the
 same crop and peel give all four exact caps and at least \(M/288\).
-[Indexed lower fractions](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L29)
-· [Literal lower fractions](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L48)
-· [Indexed exact caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L70)
-· [Literal exact caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L97).
+[Indexed lower fractions](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L30)
+· [Literal lower fractions](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L49)
+· [Indexed exact caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L71)
+· [Literal exact caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L98).
 The general cyclic existence claim at half cutoff six remains open.
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates

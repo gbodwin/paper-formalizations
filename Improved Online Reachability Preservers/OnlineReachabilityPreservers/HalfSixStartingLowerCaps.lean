@@ -8,7 +8,8 @@ namespace OnlineReachabilityPreservers
 open Finset
 local notation "Before" => SourceAudit.BeforeIn
 
-private theorem half_six_opposite_pruned_widths {n p : ℕ}
+/-- Both original-width splits preserve half-six exclusion after pruning under full-three exclusion. -/
+theorem listRegularizedPaths_halfFree_six_after_opposite_pruning {n p : ℕ}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (free : HalfBridgeFree (Before paths) 6) (three : BridgeFree (Before paths) 3) :
     let M := ∑ i, (paths i).length
@@ -40,7 +41,7 @@ theorem regularization_list_half_six_of_starting_lower_caps {n p : ℕ}
         ((occurrences (fun i => (rows i).toFinset) x).card:ℝ) ≤ 4*(M:ℝ)/n) ∧
       (∀ i, b*(M:ℝ)/p ≤ (rows i).length ∧ ((rows i).length:ℝ) ≤ 4*(M:ℝ)/p) := by
   exact regularization_list_half_of_starting_lower_caps (r := 930) paths simple free (by decide)
-    (half_six_opposite_pruned_widths paths simple free three) hn hp dense long a0 b0 aMax bMax (by decide)
+    (listRegularizedPaths_halfFree_six_after_opposite_pruning paths simple free three) hn hp dense long a0 b0 aMax bMax (by decide)
     (half_pruned_crop_score_of_lower_fractions paths simple free (by decide) (hn.trans_le dense) scale)
 
 /-- The starting lower fractions at half cutoff six also give a
@@ -61,7 +62,7 @@ theorem regularization_literal_half_six_of_starting_lower_caps {n p : ℕ}
       (∀ i, b*(M:ℝ)/p ≤ (rows i).length ∧ ((rows i).length:ℝ) ≤ 4*(M:ℝ)/p) := by
   have simple (i : Fin p) := (valid i).2
   exact regularization_literal_half_of_starting_lower_caps (r := 930) paths distinct valid free (by decide)
-    (half_six_opposite_pruned_widths paths simple free three) hn hp dense a0 b0 aMax bMax (by decide)
+    (listRegularizedPaths_halfFree_six_after_opposite_pruning paths simple free three) hn hp dense a0 b0 aMax bMax (by decide)
     (half_pruned_crop_score_of_lower_fractions paths simple free (by decide) (hn.trans_le dense) scale)
 
 /-- At half cutoff six with full-three exclusion, retaining thirteen
@@ -84,7 +85,7 @@ theorem regularization_list_frozen_half_six_after_opposite_pruning {n p : ℕ}
     exact half_pruned_crop_score_of_large_mass (M := M) (K := K) (hn.trans_le dense) retained upper
   obtain ⟨v,vFit,q,qFit,rows,rowsSimple,rowsFree,retention,within,degree,length⟩ :=
     regularization_list_half_of_starting_lower_caps paths simple free (by decide)
-      (half_six_opposite_pruned_widths paths simple free three) hn hp dense long
+      (listRegularizedPaths_halfFree_six_after_opposite_pruning paths simple free three) hn hp dense long
       (by norm_num) (by norm_num) le_rfl le_rfl (by decide) room
   refine ⟨v,vFit,q,qFit,rows,rowsSimple,rowsFree,retention,within,?_,?_⟩
   · intro x

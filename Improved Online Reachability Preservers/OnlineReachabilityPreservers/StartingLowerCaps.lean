@@ -53,7 +53,7 @@ private theorem half_pruned_crop_score_ge {M K : ℕ} {u : ℝ} (positive : 0 < 
 
 /-- With half the mass after opposite pruning, the width-crop score is
 at least twenty-nine sixty-seconds of the input. -/
-private theorem half_pruned_crop_score_of_half_mass {M K : ℕ} (positive : 0 < M)
+theorem half_pruned_crop_score_of_half_mass {M K : ℕ} (positive : 0 < M)
     (pruned : M ≤ 2*K) (upper : K ≤ M) : (29/62)*(M:ℝ) ≤ halfPrunedCropScore M K := by
   have half : (M:ℝ) ≤ 2*(K:ℝ) := by exact_mod_cast pruned
   have realPos : (0:ℝ) < M := by exact_mod_cast positive
@@ -96,8 +96,9 @@ theorem half_pruned_crop_score_of_large_mass {M K : ℕ} (positive : 0 < M)
   nlinarith only [sq_nonneg (M:ℝ)]
 
 /-- After pruning opposite intersections, use safe width splits and crop
-both supports. The score bounds the mass before peeling. -/
-theorem regularization_list_half_of_starting_lower_caps {n p k r : ℕ}
+both supports. The crop score pays for the lower caps and the requested
+incidence mass. -/
+theorem regularization_list_half_of_starting_lower_caps_and_mass {n p k : ℕ}
     (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
     (free : HalfBridgeFree (Before paths) k) (cutoff : 3 ≤ k)
     (splitSafe : let M := ∑ i, (paths i).length
@@ -105,14 +106,14 @@ theorem regularization_list_half_of_starting_lower_caps {n p k r : ℕ}
     (hn : 0 < n) (hp : 0 < p)
     (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
     {a b : ℝ} (a0 : 0 ≤ a) (b0 : 0 ≤ b) (aMax : a ≤ 1/4) (bMax : b ≤ 1/4)
-    (retention : 16 ≤ r)
+    {target : ℝ} (targetFit : target ≤ (∑ i, (paths i).length : ℕ)/(8:ℝ))
     (score : let M := ∑ i, (paths i).length
       let K := ∑ i, (removeOppositeIntersections paths i).length
-      (a+b+1/(r:ℝ))*(M:ℝ) ≤ halfPrunedCropScore M K) :
+      (a+b)*(M:ℝ)+target ≤ halfPrunedCropScore M K) :
     let M := ∑ i, (paths i).length
     ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v),
       (∀ i, (rows i).Nodup) ∧ HalfBridgeFree (Before rows) k ∧
-      M ≤ r*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧
+      target ≤ (∑ i, (rows i).length : ℕ) ∧ (∑ i, (rows i).length) ≤ M ∧
       (∀ x, a*(M:ℝ)/n ≤ (occurrences (fun i => (rows i).toFinset) x).card ∧
         ((occurrences (fun i => (rows i).toFinset) x).card:ℝ) ≤ 4*(M:ℝ)/n) ∧
       (∀ i, b*(M:ℝ)/p ≤ (rows i).length ∧ ((rows i).length:ℝ) ≤ 4*(M:ℝ)/p) := by
@@ -123,12 +124,12 @@ theorem regularization_list_half_of_starting_lower_caps {n p k r : ℕ}
   have realPos : (0:ℝ) < M := by exact_mod_cast mPos
   have rn : (0:ℝ) < n := by exact_mod_cast hn
   have rp : (0:ℝ) < p := by exact_mod_cast hp
-  have rPos : (0:ℝ) < r := by exact_mod_cast (show 0 < r by omega)
   by_cases low : M ≤ 8*max n p
   · obtain ⟨v,vFit,q,qFit,rows,rowsSimple,rowsFree,retain,upper,caps⟩ :=
       regularization_list_frozen_low_mass paths simple free (by omega) hn hp dense long low
+    have castRetain : (M:ℝ) ≤ 8*((∑ i, (rows i).length : ℕ):ℝ) := by exact_mod_cast retain
     exact ⟨v,vFit,q,qFit,rows,rowsSimple,rowsFree.halfFree,
-      retain.trans (Nat.mul_le_mul_right _ (by omega)),upper,
+      targetFit.trans (by linarith only [castRetain]),upper,
       fun x => ⟨(lower_le_quarter realPos.le aMax rn).trans (caps.1 x).1,(caps.1 x).2⟩,
       fun i => ⟨(lower_le_quarter realPos.le bMax rp).trans (caps.2 i).1,(caps.2 i).2⟩⟩
   let D := 4*M/n
@@ -201,12 +202,9 @@ theorem regularization_list_half_of_starting_lower_caps {n p k r : ℕ}
   have sumFee : d*(A.card:ℝ)+l*(B.card:ℝ) ≤ (a+b)*(M:ℝ) := calc
     _ ≤ a*(M:ℝ)+b*(M:ℝ) := add_le_add vertexFee pathFee
     _ = (a+b)*(M:ℝ) := by ring
-  have enough : (M:ℝ)/r ≤ ((∑ i : E, (rectanglePaths Z C E i).card : ℕ):ℝ) := by
-    have room : (a+b)*(M:ℝ)+(M:ℝ)/r ≤ halfPrunedCropScore M K := by
-      have prior : (a+b+1/(r:ℝ))*(M:ℝ) ≤ halfPrunedCropScore M K := score
-      convert prior using 1
-      ring
-    linarith only [retained,afterPeel,sumFee,room]
+  have enough : target ≤ ((∑ i : E, (rectanglePaths Z C E i).card : ℕ):ℝ) := by
+    change (a+b)*(M:ℝ)+target ≤ halfPrunedCropScore M K at score
+    linarith only [retained,afterPeel,sumFee,score]
   let witness := restrictListPaths pieces C E
   have witnessSimple (i : E) : (witness i).Nodup := restrictListPath_nodup (pieceSimple i.val) C
   have witnessFree := restrictListPaths_halfFree pieceSimple pieceFree C E
@@ -219,11 +217,7 @@ theorem regularization_list_half_of_starting_lower_caps {n p k r : ℕ}
   let clean := relabelListPathsFin witness
   obtain ⟨cleanSimple,cleanFree,cleanMass,cleanDeg,cleanLen⟩ :=
     relabelListPathsFin_spec witness witnessSimple (half := true) (k := k) witnessFree
-  have cleanRetain : M ≤ r*(∑ i, (clean i).length) := by
-    rw [cleanMass,witnessMass]
-    have real := (div_le_iff₀ rPos).mp enough
-    rw [mul_comm] at real
-    exact_mod_cast real
+  have cleanRetain : target ≤ (∑ i, (clean i).length : ℕ) := by rwa [cleanMass,witnessMass]
   have cleanUpper : (∑ i, (clean i).length) ≤ M := by
     rw [cleanMass,witnessMass]
     exact (rectanglePaths_mass_le Z C E).trans (series.trans_le upper)
@@ -248,6 +242,45 @@ theorem regularization_list_half_of_starting_lower_caps {n p k r : ℕ}
       _ ≤ (pieces i.val).length := (card_le_card inter_subset_left).trans (List.toFinset_card_le _)
       _ ≤ L := lengthCap _
     exact (Nat.cast_le.mpr cardBound).trans lUpper
+
+/-- The same score gives multiplicative retention at the requested factor. -/
+theorem regularization_list_half_of_starting_lower_caps {n p k r : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) k) (cutoff : 3 ≤ k)
+    (splitSafe : let M := ∑ i, (paths i).length
+      HalfBridgeFree (Before (listRegularizedPaths (removeOppositeIntersections paths) (4*M/n) (4*M/p))) k)
+    (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    {a b : ℝ} (a0 : 0 ≤ a) (b0 : 0 ≤ b) (aMax : a ≤ 1/4) (bMax : b ≤ 1/4)
+    (retention : 16 ≤ r)
+    (score : let M := ∑ i, (paths i).length
+      let K := ∑ i, (removeOppositeIntersections paths i).length
+      (a+b+1/(r:ℝ))*(M:ℝ) ≤ halfPrunedCropScore M K) :
+    let M := ∑ i, (paths i).length
+    ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v),
+      (∀ i, (rows i).Nodup) ∧ HalfBridgeFree (Before rows) k ∧
+      M ≤ r*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧
+      (∀ x, a*(M:ℝ)/n ≤ (occurrences (fun i => (rows i).toFinset) x).card ∧
+        ((occurrences (fun i => (rows i).toFinset) x).card:ℝ) ≤ 4*(M:ℝ)/n) ∧
+      (∀ i, b*(M:ℝ)/p ≤ (rows i).length ∧ ((rows i).length:ℝ) ≤ 4*(M:ℝ)/p) := by
+  let M := ∑ i, (paths i).length
+  let K := ∑ i, (removeOppositeIntersections paths i).length
+  have rLarge : (8:ℝ) ≤ r := by exact_mod_cast (show 8 ≤ r by omega)
+  have rPos : (0:ℝ) < r := (by norm_num : (0:ℝ) < 8).trans_le rLarge
+  have targetFit : (M:ℝ)/r ≤ (M:ℝ)/8 :=
+    div_le_div_of_nonneg_left (Nat.cast_nonneg _) (by norm_num) rLarge
+  have reserve : (a+b)*(M:ℝ)+(M:ℝ)/r ≤ halfPrunedCropScore M K := by
+    have prior : (a+b+1/(r:ℝ))*(M:ℝ) ≤ halfPrunedCropScore M K := score
+    convert prior using 1
+    ring
+  obtain ⟨v,vFit,q,qFit,rows,rowsSimple,rowsFree,keep,upper,degree,length⟩ :=
+    regularization_list_half_of_starting_lower_caps_and_mass paths simple free cutoff splitSafe hn hp dense long
+      a0 b0 aMax bMax targetFit reserve
+  have retain : M ≤ r*(∑ i, (rows i).length) := by
+    have real := (div_le_iff₀ rPos).mp keep
+    rw [mul_comm] at real
+    exact_mod_cast real
+  exact ⟨v,vFit,q,qFit,rows,rowsSimple,rowsFree,retain,upper,degree,length⟩
 
 /-- The same score suffices for distinct nonempty input and output rows. -/
 theorem regularization_literal_half_of_starting_lower_caps {n p k r : ℕ}

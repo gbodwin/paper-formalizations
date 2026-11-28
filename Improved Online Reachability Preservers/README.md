@@ -586,10 +586,10 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   caps and both budgets, and retains at least \(M/930\). If opposite
   pruning retains at least \(13M/24\), both lower coefficients can be
   \(1/4\), with retention \(M/288\).
-  [Indexed lower fractions](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L29)
-  · [Literal lower fractions](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L48)
-  · [Indexed exact caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L70)
-  · [Literal exact caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L97).
+  [Indexed lower fractions](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L30)
+  · [Literal lower fractions](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L49)
+  · [Indexed exact caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L71)
+  · [Literal exact caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L98).
 - A simple, distinct, nonempty half family at cutoff \(k\ge2\) and with
   \(n\le M\le8\max(n,p)\) has one literal witness excluding full bridges
   at every size. It has mass between \(M/8\) and \(M\), within both budgets
@@ -655,16 +655,30 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   This allows two coefficients \(7/30\), or \(1/4\) and \(13/60\).
   Both indexed and literal versions hold. The unrestricted exact lower
   coefficients \(a=b=1/4\) remain open at half cutoff five.
-  [Indexed witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L29)
-  · [Literal witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L48).
+  [Indexed witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L30)
+  · [Literal witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L49).
 - Integer degrees and lengths recover all four exact starting caps for
   simple half-five input with the same positive budgets and mass assumptions
   whenever
   \(15[n\lfloor(M-1)/(4n)\rfloor+p\lfloor(M-1)/(4p)\rfloor]<7M\).
   This includes equal starting averages of 16. The indexed and literal
   witnesses retain at least \(M/930\) within both budgets.
-  [Indexed exact caps](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L84)
-  · [Literal exact caps](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L103).
+  [Indexed exact caps](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L85)
+  · [Literal exact caps](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L104).
+- At half cutoff five, or at half cutoff six with full-three
+  exclusion, the integer charge can use the actual mass \(K\) after
+  opposite pruning. Write \(C=n\lfloor(M-1)/(4n)\rfloor+
+  p\lfloor(M-1)/(4p)\rfloor\). For \(r\ge8\), the test
+  \(C+\lfloor(M-1)/r\rfloor<K-4K^2/(31M)\) gives retention
+  \(M/r\), both original budgets and all four exact starting caps
+  under either path convention. The coarser bound \(15C\le7M\)
+  suffices at \(r=930\), including equality when both starting
+  averages are 60.
+  [Coarse charge](OnlineReachabilityPreservers/RoundedCropCaps.lean#L18)
+  · [Indexed half-five](OnlineReachabilityPreservers/RoundedCropCaps.lean#L155)
+  · [Literal half-five](OnlineReachabilityPreservers/RoundedCropCaps.lean#L171)
+  · [Indexed half-six](OnlineReachabilityPreservers/RoundedCropCaps.lean#L190)
+  · [Literal half-six](OnlineReachabilityPreservers/RoundedCropCaps.lean#L207).
 - Half-five cleaning also keeps at least \(M/288\) if opposite-intersection
   pruning retains at least \(13M/24\). This holds when at least \(M/12\) paths
   are nonempty or there are at most \(11M/24\) opposite-neighbor links.

@@ -286,8 +286,8 @@ one-quarter lower coefficients and retention \(M/288\). Both choices
 keep the original factor-four upper caps and both budgets. There
 are indexed and distinct nonempty literal versions.
 [Crop score](OnlineReachabilityPreservers/StartingLowerCaps.lean#L20)
-· [Prescribed fractions](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L29)
-· [Exact starting caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L70).
+· [Prescribed fractions](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L30)
+· [Exact starting caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L71).
 The earlier packing that can reorder positions need not make contiguous
 pieces in the original order. The six-vertex noncontiguous example
 remains a counterexample to using only the opposite-cut constraints.
@@ -613,8 +613,8 @@ and both budgets hold. In the dense literal case, raising the length
 coefficient to at least \(1/8\) leaves room in the sum bound and forces
 length at least two. Half-two exclusion then ensures distinct rows. The
 low-mass case uses the full witnesses with the four original caps.
-[Indexed minimum coefficients](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L29)
-· [Distinct nonempty witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L48).
+[Indexed minimum coefficients](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L30)
+· [Distinct nonempty witness](OnlineReachabilityPreservers/HalfFiveStartingLowerCaps.lean#L49).
 
 For an integer count \(x\), the original lower cap at budget \(q\) is
 \(M/(4q)\le x\) exactly when \(x>\lfloor(M-1)/(4q)\rfloor\).
@@ -625,8 +625,25 @@ The lower-coefficient proof then forces both exact lower caps while
 keeping the original upper caps, both budgets and at least \(M/930\).
 The strict charge is a sufficient condition for this proof.
 [Integer charge](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L12)
-· [Indexed exact starting caps](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L84)
-· [Literal exact starting caps](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L103).
+· [Indexed exact starting caps](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L85)
+· [Literal exact starting caps](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L104).
+
+If the pruned mass is \(K\), the crop leaves at least
+\(K-4K^2/(31M)\) incidences before peeling in the dense case.
+For \(r\ge8\), let \(z=\lfloor(M-1)/r\rfloor\) and use the
+integer removal charge \(C\) above. When \(C+z\) is strictly
+below that crop bound, a positive increment \(\varepsilon\) fits
+both budgets' threshold charges and the mass target. The proof
+increases each lower coefficient by \(\varepsilon/M\) and asks for
+mass \(z+\varepsilon\), adding a total charge \(3\varepsilon\).
+Integer degrees and lengths then satisfy the exact one-quarter
+lower caps. Integer mass above \(z\) gives \(rW\ge M\). In particular,
+\(15C\le7M\) suffices at \(r=930\), as the crop score is at least
+\(29M/62\) and \(z<M/930\). This applies at half cutoff five and at
+half cutoff six with full-three exclusion.
+[Integer crop test](OnlineReachabilityPreservers/RoundedCropCaps.lean#L13)
+· [Coarse criterion](OnlineReachabilityPreservers/RoundedCropCaps.lean#L18)
+· [Starting-cap proof](OnlineReachabilityPreservers/RoundedCropCaps.lean#L32).
 
 After clipping at the original length width, degree blocks can be fixed
 before deleting anything at a vertex. In a proposed half-five bridge,
