@@ -2423,6 +2423,17 @@ both smaller output budgets.
 · [Smaller budgets](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L107)
 · [Total mass](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L132).
 
+For large vertex budgets relative to the path budget, a hexagonal grid
+gives degree three on at most \((2w-1)^2\) vertices. Its \(3(2w-1)\)
+indexed rows have length between \(w\) and \(2w-1\) for \(w\ge1\). Orient the
+three line families down, right, and up-left. A two-step detour along
+the other two directions cannot follow the river's direction. This
+gives full exclusion through size three and mass three times the
+number of vertices.
+[Full-three exclusion](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L117)
+· [Degree and length](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L137)
+· [Budgets and incidence mass](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L252).
+
 At cutoff three and comparable positive budgets, the witness-average
 form of Lemma 39 holds with its literal half benchmark. For a field of
 size \(q\), the affine lines with directions \((1,s,s^2)\) give \(q^3\)

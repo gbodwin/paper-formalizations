@@ -3110,6 +3110,21 @@ local-order upper bound and recurrence of Theorem 43.
   · [Uniform bound on smaller outputs](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L107)
   · [Total half mass](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L132).
 
+  A hexagonal grid supplies a full-three witness of degree three with
+  a linear indexed row count in its width parameter and quadratic vertex budget.
+  The rows are the lines of constant \(x\), \(y\), and \(x+y\) in the
+  grid. Their respective directions \((0,-1),(1,0),(-1,1)\) give the
+  comparison equations used to exclude a river and a two-step detour.
+  A parallel row with a common endpoint is the same line. On a row,
+  an interval of \(w\) consecutive coordinates gives the length lower
+  bound, and projection into the ambient \((2w-1)\)-coordinate interval
+  gives the upper bound. The sum of the degrees gives the exact mass.
+  [Bridge argument](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L117)
+  · [Point degrees](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L137)
+  · [Line lengths](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L177)
+  · [Vertex count](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L252)
+  · [Path count](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L258).
+
   Count all choice sizes together for a sharper constant. For pruned
   mass \(W\), let \(S=(W-n-p)_+\). Encode a three-element subset of
   \(\{0,\ldots,S+1\}\) by its three nonnegative gaps \(a,b,c\) with

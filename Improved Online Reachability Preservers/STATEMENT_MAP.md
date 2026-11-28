@@ -4311,6 +4311,21 @@ outer \(p\). Adding the short rows yields total \(2p+o(n\sqrt p)\).
 · [Both smaller budgets](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L107)
 · [Total half mass](OnlineReachabilityPreservers/HalfThreeLongMassScale.lean#L132).
 
+The hexagonal grid uses integer points with \(0\le x,y\le2w-2\) and
+\(w-1\le x+y\le3(w-1)\), for \(w\ge1\). Lines keep \(x\), \(y\), or \(x+y\)
+fixed and are oriented respectively down, right, and up-left. Distinct
+rows sharing a corner have different orientations. An arc with both
+river endpoints must have its direction, and the other two directions
+cannot form a two-step detour in the river direction. Every vertex lies
+on one line from each family. This gives exactly \(3(2w-1)\) indexed rows,
+length in \([w,2w-1]\), vertex budget at most \((2w-1)^2\), and mass
+three times the vertex count. Full exclusion holds through size three.
+[Grid definition](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L29)
+· [Full-three proof](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L117)
+· [Degree three](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L137)
+· [Line lengths](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L177)
+· [Exact mass](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L261).
+
 At every half cutoff \(k\ge3\), simple indexed families have
 \(M\le8(n+p)\) or \(M^3\le1024(np)^2\), hence mass
 \(O((np)^{2/3}+n+p)\). Later branches cannot share an upstream vertex
