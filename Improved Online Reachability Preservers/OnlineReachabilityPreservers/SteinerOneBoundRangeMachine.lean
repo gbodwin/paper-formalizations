@@ -396,6 +396,36 @@ theorem encodeSteinerSingleBound_expanded_length (bound : List Bool) (endpoints 
       List.map_cons,List.sum_cons,Nat.succ_mul]
     omega
 
+/-- The input consists of the bound, all endpoint bits, and one divider
+per word. -/
+theorem encodeSteinerSingleBound_length (bound : List Bool) (endpoints : List (List Bool)) :
+    (encodeSteinerSingleBound (bound,endpoints)).length =
+      bound.length+1+((endpoints.map List.length).sum+endpoints.length) := by
+  change (encodeSteinerSingleBoundWord bound ++ endpoints.flatMap encodeSteinerSingleBoundWord).length = _
+  rw [List.length_append,oneBound_endpointFrames_length]
+  simp [encodeSteinerSingleBoundWord,oneBoundBits]
+
+/-- Copying the bound at every endpoint is quadratic in the single-bound
+input size. -/
+theorem encodeSteinerSingleBound_expanded_le (request : SteinerSingleBoundInput) :
+    (encodeSteinerRawRangeBatch (expandSteinerSingleBound request)).length ≤
+      (encodeSteinerSingleBound request).length+(encodeSteinerSingleBound request).length^2 := by
+  rcases request with ⟨bound,endpoints⟩
+  let x := (encodeSteinerSingleBound (bound,endpoints)).length
+  let mass := (endpoints.map List.length).sum
+  let output := (encodeSteinerRawRangeBatch (expandSteinerSingleBound (bound,endpoints))).length
+  have inputEq : x = bound.length+1+(mass+endpoints.length) :=
+    encodeSteinerSingleBound_length bound endpoints
+  have countFits : endpoints.length ≤ x := by omega
+  have widthFits : bound.length+1 ≤ x := by omega
+  have product := Nat.mul_le_mul countFits widthFits
+  have decomposes : output = (mass+endpoints.length)+endpoints.length*(bound.length+1) := by
+    rw [show output = _ from encodeSteinerSingleBound_expanded_length bound endpoints]
+    ring
+  change output ≤ x+x^2
+  rw [pow_two]
+  omega
+
 /-- Supplying the bound once still gives a polynomial in the original
 framed input size, including empty bounds and endpoint words. -/
 noncomputable def steinerOneBoundRangeMachine_polytime :
@@ -407,21 +437,10 @@ noncomputable def steinerOneBoundRangeMachine_polytime :
   outputsFun request := by
     rcases request with ⟨bound,endpoints⟩
     let x := (encodeSteinerSingleBound (bound,endpoints)).length
-    let mass := (endpoints.map List.length).sum
     let output := (encodeSteinerRawRangeBatch (expandSteinerSingleBound (bound,endpoints))).length
-    have inputEq : x = bound.length+1+(mass+endpoints.length) := by
-      change (encodeSteinerSingleBoundWord bound ++ endpoints.flatMap encodeSteinerSingleBoundWord).length = _
-      rw [List.length_append,oneBound_endpointFrames_length]
-      simp [encodeSteinerSingleBoundWord,oneBoundBits,mass]
-    have outputEq : output = mass+endpoints.length*(bound.length+2) :=
-      encodeSteinerSingleBound_expanded_length bound endpoints
-    have countFits : endpoints.length ≤ x := by omega
-    have widthFits : bound.length+1 ≤ x := by omega
-    have product := Nat.mul_le_mul countFits widthFits
-    have decomposes : output = (mass+endpoints.length)+endpoints.length*(bound.length+1) := by
-      rw [outputEq]
-      ring
-    have outputFits : output ≤ x+x^2 := by rw [pow_two]; omega
+    have inputEq : x = bound.length+1+((endpoints.map List.length).sum+endpoints.length) :=
+      encodeSteinerSingleBound_length bound endpoints
+    have outputFits : output ≤ x+x^2 := encodeSteinerSingleBound_expanded_le (bound,endpoints)
     have overhead : 3*output+3*bound.length+5 ≤ 3*x^2+6*x+5 := by omega
     have run := steinerOneBoundRangeMachine_run (bound,endpoints)
     change TM2OutputsInTime steinerOneBoundRangeMachine ((encodeSteinerSingleBound (bound,endpoints)).map id)

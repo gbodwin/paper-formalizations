@@ -3098,10 +3098,10 @@ the empty output on exhaustion. For \(N\) range symbols and a
 supplied seed count \(B\), the bound is \(7N+3B+7\) transitions.
 Graph rejection takes at most \(7N+4\) transitions.
 [Raw startup machine](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L108)
-· [Exact run](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L443)
-· [Linear input polynomial](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L452)
-· [Guarded decoder and finite sampler](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L476)
-· [Rejection preserves the seed frame](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L493).
+· [Exact run](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L464)
+· [Linear input polynomial](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L473)
+· [Guarded decoder and finite sampler](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L497)
+· [Rejection preserves the seed frame](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L514).
 
 The range-frame encoder takes one binary bound followed by the
 endpoint words. It retains the bound on a work stack, copies it
@@ -3114,8 +3114,28 @@ framed input length \(X\), the polynomial bound is \(3X^2+6X+5\).
 [Single-bound encoder](OnlineReachabilityPreservers/SteinerOneBoundRangeMachine.lean#L63)
 · [Exact frame encoding and transitions](OnlineReachabilityPreservers/SteinerOneBoundRangeMachine.lean#L342)
 · [Output length](OnlineReachabilityPreservers/SteinerOneBoundRangeMachine.lean#L384)
-· [Input polynomial](OnlineReachabilityPreservers/SteinerOneBoundRangeMachine.lean#L401)
-· [Graph request correspondence](OnlineReachabilityPreservers/SteinerOneBoundRangeMachine.lean#L437).
+· [Input polynomial](OnlineReachabilityPreservers/SteinerOneBoundRangeMachine.lean#L431)
+· [Graph request correspondence](OnlineReachabilityPreservers/SteinerOneBoundRangeMachine.lean#L456).
+
+The single-bound startup machine reads one bound, all framed endpoint
+words, and a seed frame with a supplied unary count. It restores the
+graph prefix on the encoder's stack. The encoder returns its output
+directly on the range checker's stack, with the seed frame still on the
+input stack. If \(G\) is the graph prefix length, \(Y\) the expanded
+range length, \(B\) the bound word length, and \(C\) the seed count,
+the transition bound is \(2G+8Y+3B+3C+12\). The polynomial in the
+complete original input length \(X\) is \(8X^2+13X+12\).
+An out-of-range endpoint returns the full seed frame behind the marker
+within \(2G+8Y+3B+9\) transitions. With bound value \(n\), the result
+agrees with the guarded decoder's flag at \(n\) plus the endpoint bit
+count, followed by the finite sampler on acceptance. Exhaustion
+returns the empty output.
+[Single-bound startup machine](OnlineReachabilityPreservers/SteinerSingleBoundStartupMachine.lean#L92)
+· [Actual framed input](OnlineReachabilityPreservers/SteinerSingleBoundStartupMachine.lean#L326)
+· [Exact run](OnlineReachabilityPreservers/SteinerSingleBoundStartupMachine.lean#L334)
+· [Quadratic input polynomial](OnlineReachabilityPreservers/SteinerSingleBoundStartupMachine.lean#L348)
+· [Guarded decoder and finite sampler](OnlineReachabilityPreservers/SteinerSingleBoundStartupMachine.lean#L379)
+· [Rejection with its seed frame](OnlineReachabilityPreservers/SteinerSingleBoundStartupMachine.lean#L406).
 
 
 

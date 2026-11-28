@@ -421,22 +421,43 @@ def steinerRawRangeSeedAnswer (request : SteinerRangeSeedRequest) : List Steiner
   encodeSteinerRawRangeSeedAnswer (steinerRangeChecks request.1)
     (encodeSteinerSeedTapeRequest request.2) (splitSteinerSeedTapeOrReject request.2)
 
+private def rawSetup_finishRejected (seed : List (Option Bool)) {start : steinerRawRangeSeedMachine.Cfg}
+    {checkTime : ℕ} (checked : EvalsToInTime steinerRawRangeSeedMachine.step start
+      (some (rawSetupCfg (some .chooseSeed) [] ((encodeSteinerRawRangeAnswer false).map Sum.inl) (seed.map Sum.inr)))
+      checkTime) :
+    EvalsToInTime steinerRawRangeSeedMachine.step start
+      (some (haltList steinerRawRangeSeedMachine (Sum.inl none::seed.map Sum.inr))) (checkTime+1) := by
+  rw [rawSetup_halt]
+  have all := EvalsToInTime.trans _ _ _ _ _ _ checked (rawSetupOne (rawSetup_choose false seed))
+  exact ⟨all.toEvalsTo,by have spent := all.steps_le_m; omega⟩
+
+private def rawSetup_finishChecked (accepted : Bool) (seed out : List (Option Bool))
+    {start : steinerRawRangeSeedMachine.Cfg} {checkTime seedTime : ℕ}
+    (checked : EvalsToInTime steinerRawRangeSeedMachine.step start
+      (some (rawSetupCfg (some .chooseSeed) []
+        ((encodeSteinerRawRangeAnswer accepted).map Sum.inl) (seed.map Sum.inr))) checkTime)
+    (seedRun : TM2OutputsInTime steinerSeedTapeMachine seed (some out) seedTime) :
+    EvalsToInTime steinerRawRangeSeedMachine.step start
+      (some (haltList steinerRawRangeSeedMachine (encodeSteinerRawRangeSeedAnswer accepted seed out)))
+      (checkTime+seedTime+1) := by
+  cases accepted
+  · have all := rawSetup_finishRejected seed checked
+    exact ⟨all.toEvalsTo,by have spent := all.steps_le_m; omega⟩
+  · rw [rawSetup_halt]
+    have choose := rawSetupOne (rawSetup_choose true seed)
+    have prepared := EvalsToInTime.trans _ _ _ _ _ _ checked choose
+    have all := EvalsToInTime.trans _ _ _ _ _ _ prepared (rawSetup_seedEval seed out seedRun)
+    exact ⟨all.toEvalsTo,by have spent := all.steps_le_m; omega⟩
+
 private def rawSetup_execute (checks : List SteinerRangeWordPair) (seed out : List (Option Bool)) {bound : ℕ}
     (seedRun : TM2OutputsInTime steinerSeedTapeMachine seed (some out) bound) :
     TM2OutputsInTime steinerRawRangeSeedMachine ((encodeSteinerRawRangeBatch checks).map Sum.inl ++ seed.map Sum.inr)
       (some (encodeSteinerRawRangeSeedAnswer (steinerRangeChecks checks) seed out))
       (7*(encodeSteinerRawRangeBatch checks).length+bound+4) := by
-  have checked := rawSetup_checkEvaluates checks seed
   change EvalsToInTime steinerRawRangeSeedMachine.step _ (some (haltList steinerRawRangeSeedMachine _)) _
-  rw [rawSetup_init,rawSetup_halt]
-  cases accepted : steinerRangeChecks checks <;> rw [accepted] at checked
-  · have finish := rawSetupOne (rawSetup_choose false seed)
-    have all := EvalsToInTime.trans _ _ _ _ _ _ checked finish
-    exact ⟨all.toEvalsTo,by have spent := all.steps_le_m; omega⟩
-  · have choose := rawSetupOne (rawSetup_choose true seed)
-    have prepared := EvalsToInTime.trans _ _ _ _ _ _ checked choose
-    have all := EvalsToInTime.trans _ _ _ _ _ _ prepared (rawSetup_seedEval seed out seedRun)
-    exact ⟨all.toEvalsTo,by have spent := all.steps_le_m; omega⟩
+  rw [rawSetup_init]
+  have all := rawSetup_finishChecked (steinerRangeChecks checks) seed out (rawSetup_checkEvaluates checks seed) seedRun
+  exact ⟨all.toEvalsTo,by have spent := all.steps_le_m; omega⟩
 
 /-- The composed machine implements graph rejection, accepted seed
 prefixes, and seed exhaustion on the supplied raw frames. -/
@@ -498,9 +519,37 @@ def steinerRawRangeSeedMachine_rejectedGraph (request : SteinerRangeSeedRequest)
   let seed := encodeSteinerSeedTapeRequest request.2
   have checked := rawSetup_checkEvaluates request.1 seed
   rw [rejected] at checked
-  have all := EvalsToInTime.trans _ _ _ _ _ _ checked (rawSetupOne (rawSetup_choose false seed))
   change EvalsToInTime steinerRawRangeSeedMachine.step _ (some (haltList steinerRawRangeSeedMachine _)) _
-  rw [rawSetup_init,rawSetup_halt]
+  rw [rawSetup_init]
+  exact rawSetup_finishRejected seed checked
+
+/-- Enter the range check with its raw frame on the graph stack and the
+complete seed frame on the input stack. -/
+def steinerRawRangeSeedPrepared (frame : List SteinerRawRangeSymbol) (seed : List (Option Bool)) :
+    steinerRawRangeSeedMachine.Cfg :=
+  rawSetupCfg (some (.range steinerRawRangeBatchMachine.main)) [] (frame.map Sum.inl) (seed.map Sum.inr)
+
+/-- Start the check directly on the placed frames. The seed evaluation
+is used only when all range comparisons succeed. -/
+def steinerRawRangeSeedMachine_finishPrepared (checks : List SteinerRangeWordPair) (seed out : List (Option Bool))
+    {bound : ℕ} (seedRun : TM2OutputsInTime steinerSeedTapeMachine seed (some out) bound) :
+    EvalsToInTime steinerRawRangeSeedMachine.step
+      (steinerRawRangeSeedPrepared (encodeSteinerRawRangeBatch checks) seed)
+      (some (haltList steinerRawRangeSeedMachine (encodeSteinerRawRangeSeedAnswer (steinerRangeChecks checks) seed out)))
+      (5*(encodeSteinerRawRangeBatch checks).length+bound+2) := by
+  have all := rawSetup_finishChecked (steinerRangeChecks checks) seed out (rawSetup_rangeEval checks seed) seedRun
   exact ⟨all.toEvalsTo,by have spent := all.steps_le_m; omega⟩
+
+/-- A prepared graph rejection has a bound independent of the seed
+frame and preserves that frame behind the rejection marker. -/
+def steinerRawRangeSeedMachine_finishRejected (checks : List SteinerRangeWordPair) (seed : List (Option Bool))
+    (rejected : steinerRangeChecks checks = false) :
+    EvalsToInTime steinerRawRangeSeedMachine.step
+      (steinerRawRangeSeedPrepared (encodeSteinerRawRangeBatch checks) seed)
+      (some (haltList steinerRawRangeSeedMachine (Sum.inl none::seed.map Sum.inr)))
+      (5*(encodeSteinerRawRangeBatch checks).length+2) := by
+  have checked := rawSetup_rangeEval checks seed
+  rw [rejected] at checked
+  exact rawSetup_finishRejected seed checked
 
 end OnlineReachabilityPreservers
