@@ -97,7 +97,7 @@ theorem directed_arcs_card_le_half_square_of_no_transitive_triangle {V : Type*} 
     _ = _ := by ring
   exact Nat.le_of_mul_le_mul_left compare (by omega)
 
-private theorem balancedLayer_product {n m : ℕ} (bound : 2*m ≤ n^2) :
+theorem balancedLayer_product {n m : ℕ} (bound : 2*m ≤ n^2) :
     m ≤ 2*((n/2)*(n-n/2)) := by
   let a := n/2
   let b := n-a

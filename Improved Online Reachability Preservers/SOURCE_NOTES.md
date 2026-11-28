@@ -3442,6 +3442,23 @@ local-order upper bound and recurrence of Theorem 43.
   [Simple-list count](OnlineReachabilityPreservers/LiteralShortCutoff.lean#L63)
   · [Literal boundary construction](OnlineReachabilityPreservers/LiteralShortCutoff.lean#L121).
 
+  The literal feasibility regions at half and full cutoff three
+  coincide. Count consecutive comparisons from each simple row. In a
+  transitive triangle of these comparisons the two detour steps cannot
+  belong to the same row, since they would give a parallel comparison
+  to the shortcut. A shortcut cannot share the first or last detour
+  row, since the positions are consecutive. Its arrival is therefore
+  earlier than the final step. A reciprocal pair with a common
+  out-neighbor would give opposite arrival requirements. Deleting
+  the pair loses its two directed edges and at most two links per
+  other vertex. With no reciprocal pair, the edges and their reversals
+  are disjoint. This proves the balanced bidirectional bound on
+  consecutive comparisons and hence on the number of nonsingletons.
+  It bounds the incidence mass above the nonempty row count as well.
+  [Triangle order](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L190)
+  · [Consecutive comparisons](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L238)
+  · [Exact half-three feasibility](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L306).
+
   The exact literal budgets \(n=4,p=11\) are feasible for half exclusion
   at every cutoff and infeasible for full exclusion at \(k\ge4\). The
   half witness uses four singleton rows, three early arrows from vertex

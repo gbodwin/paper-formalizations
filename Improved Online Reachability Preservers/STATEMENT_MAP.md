@@ -4134,6 +4134,25 @@ directions and singleton rows attain the capacity at cutoff three.
 [First-step count](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L178)
 · [Exact cutoff-three feasibility](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L313).
 
+At half cutoff at least three, the same upper bound applies to the
+exact row count. Use every consecutive pair of vertices in each simple
+row. No comparison can occur in two rows. In a transitive triangle of
+adjacent comparisons the shortcut and the two detour steps belong
+to distinct rows. Half exclusion forces the shortcut to arrive before
+the last step. Thus the two endpoints of a reciprocal pair cannot have
+a common out-neighbor. In the reciprocal-pair deletion, each other vertex
+has at most two directed links to the deleted pair. Induction gives
+the balanced bidirectional bound on the count of all consecutive
+comparisons. For nonempty indexed rows, this is a bound on \(M-p\).
+For distinct literal rows it also bounds the number of nonsingletons.
+The full-three construction attains the same exact row capacity and
+proves the converse for half cutoff three.
+[Directed bound](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L56)
+· [Triangle arrival order](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L190)
+· [Mass bound](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L256)
+· [Literal row bound from cutoff three](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L271)
+· [Exact half-three feasibility](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L306).
+
 The cutoff-three capacity supplies a literal family of mass \(p\) within
 both budgets with full exclusion at every size. Its ordered pairs all go
 across the balanced parts in one direction, and it also uses singleton

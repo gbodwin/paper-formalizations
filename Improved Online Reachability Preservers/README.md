@@ -2282,6 +2282,20 @@ parts, together with the singletons, attain the bound at cutoff three.
 [Upper bound for every full cutoff from three](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L178)
 · [Exact cutoff-three feasibility](OnlineReachabilityPreservers/FullThreeLiteralFeasibility.lean#L313).
 
+The same row capacity holds at half cutoff three, and bounds every
+higher half cutoff. For consecutive comparisons, a transitive triangle
+puts its shortcut before the final step. Opposite arrows between two
+starting vertices with a common target would force both orders of the
+same two rows. A doubled edge therefore has disjoint out-neighborhoods.
+Deleting its endpoints removes at most two links per other vertex.
+The total number of consecutive comparisons is at most
+\(2\lfloor n/2\rfloor\lceil n/2\rceil\). This also bounds mass above
+the nonempty row count. Exact half-three feasibility follows by using
+the existing full-three construction.
+[Consecutive-step count](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L238)
+· [Mass bound](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L256)
+· [Exact half-three feasibility](OnlineReachabilityPreservers/HalfThreeLiteralCapacity.lean#L306).
+
 Put \(q=\min(n,p)\). A literal full system of mass \(M\) at cutoff
 \(k\ge3\) has a distinct nonempty full witness of mass \(W\) within both
 budgets, with all-size exclusion and \(\min(k,q)M\le2qW\). When \(p\le n\),
