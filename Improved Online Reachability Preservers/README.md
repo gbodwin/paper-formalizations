@@ -3409,6 +3409,19 @@ ordered arc table.
 · [Exact result length](OnlineReachabilityPreservers/SteinerUnaryGraphQueryFrameMachine.lean#L333)
 · [Cubic time polynomial](OnlineReachabilityPreservers/SteinerUnaryGraphQueryFrameMachine.lean#L359).
 
+The unary graph count machine composes query-frame generation and arc
+counting. The prepared frame is already on the counter's input stack
+when it starts. For ordered rows whose endpoints lie below the unary
+vertex count, the output has one tally per distinct arc, including loops
+and regardless of repeated rows. With unary input length \(X\) and
+\(C=X^3+X^2+X\), the transition bound is
+\(5C^2+16C+2X^3+5X^2+9X+13\).
+[Unary graph count machine](OnlineReachabilityPreservers/SteinerUnaryGraphArcCountMachine.lean#L67)
+· [Tally definition](OnlineReachabilityPreservers/SteinerUnaryGraphArcCountMachine.lean#L219)
+· [Composed transition bound](OnlineReachabilityPreservers/SteinerUnaryGraphArcCountMachine.lean#L223)
+· [Exact finite arc cardinality](OnlineReachabilityPreservers/SteinerUnaryGraphArcCountMachine.lean#L234)
+· [Polynomial-time machine](OnlineReachabilityPreservers/SteinerUnaryGraphArcCountMachine.lean#L245).
+
 
 
 
