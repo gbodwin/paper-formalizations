@@ -590,12 +590,24 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   with caps at their own averages retain \(M/392\) indexed or
   \(M/7056\) literal. Both budgets hold in all four results. The
   literal versions take distinct nonempty simple paths and \(k\ge2\).
-  [Projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L253)
-  · [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L305)
-  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L359)
-  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L374)
-  · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L391)
-  · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L414).
+  [Projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L354)
+  · [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L441)
+  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L490)
+  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L519)
+  · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L558)
+  · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L585).
+- The same four incidence-graph results allow short cycles. They
+  require that no two edge-disjoint cycles through a common row or
+  vertex label have combined length at most \(2k\). This condition
+  is equivalent to distinct vertices before closure on every closed
+  trail of length at most \(2k\).
+  [Cycle-pair condition](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L16)
+  · [Trail equivalence](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L106)
+  · [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L407)
+  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L474)
+  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L502)
+  · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L532)
+  · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L569).
 - At half cutoff six with full-three exclusion and arbitrary
   intersections, fix lower coefficients \(a,b\in[0,1/4]\) with
   \(a+b\le7/15\). A witness meets these lower caps, both original upper

@@ -308,10 +308,25 @@ half-mode arrival therefore transport with the projected labels.
 Forests satisfy the girth bound at every finite cutoff. With both
 positive budgets and enough mass, the same proof supplies indexed and
 literal witnesses at the original or the output averages.
-[Incidence graph](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L65)
-· [Bridge projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L253)
-· [Starting-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L359)
-· [Output-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L391).
+[Incidence graph](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L140)
+· [Bridge projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L354)
+· [Starting-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L490)
+· [Output-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L558).
+
+For the more general incidence condition, consider two edge-disjoint
+simple cycles based at any one row or vertex label. Require the sum of
+their lengths to exceed \(2k\). Taking the segment between two visits
+to a repeated label and the complementary segment gives edge-disjoint
+closed trails at that label. Each can be shortened to a cycle there,
+preserving the edge disjointness. The converse appends the two cycles,
+so the condition is equivalent to injectivity before closure on short
+closed trails. Restrictions to rectangles preserve the condition by
+injective graph homomorphisms. The starting- and output-average witnesses
+therefore keep the same constants and scopes as in the girth argument.
+[Cycle-pair condition](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L16)
+· [Trail equivalence](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L106)
+· [Starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L474)
+· [Output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L532).
 
 At full cutoff six, opposite-intersection pruning followed by restricting
 to a quarter of each support permits the contiguous construction on an
