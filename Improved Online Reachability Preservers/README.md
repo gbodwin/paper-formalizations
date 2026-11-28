@@ -3496,6 +3496,21 @@ exact priced forest scale.
 · [Scale in both orientations](OnlineReachabilityPreservers/SteinerForestScaleRecurrence.lean#L165)
 · [Agreement with the priced forest](OnlineReachabilityPreservers/SteinerForestScaleRecurrence.lean#L172).
 
+The distance-table evaluator keeps one vector of rooted weights at
+each depth. For an \(n\)-vertex graph, every depth uses \(n\) potential
+transfers per root and reads the preceding vector. An entry greater
+than \(n\) is treated as unreachable. With the graph's exact hop
+table, both orientations give the exact priced forest scale. The
+scale is bounded by \(1+2n(n+1)^{h+1}\) at height \(h\), even for
+arbitrary supplied distance entries. For the exact hop table, the
+width machine reads the supplied unary scale tally and returns the
+forest's bit width for seed decoding.
+[Rooted weight vectors](OnlineReachabilityPreservers/SteinerForestScaleDistanceRounds.lean#L14)
+· [Exact entry at each depth](OnlineReachabilityPreservers/SteinerForestScaleDistanceRounds.lean#L22)
+· [Exact graph scale](OnlineReachabilityPreservers/SteinerForestScaleDistanceRounds.lean#L46)
+· [Magnitude bound](OnlineReachabilityPreservers/SteinerForestScaleDistanceRounds.lean#L102)
+· [Width from the supplied unary scale](OnlineReachabilityPreservers/SteinerForestScaleDistanceRounds.lean#L120).
+
 
 
 
