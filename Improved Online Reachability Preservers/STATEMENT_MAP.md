@@ -1754,6 +1754,24 @@ including zero.
 · [Exact total transitions](OnlineReachabilityPreservers/SteinerUnaryProductMachine.lean#L382)
 · [Quadratic input polynomial](OnlineReachabilityPreservers/SteinerUnaryProductMachine.lean#L424).
 
+The scaled arithmetic machine keeps the leading unary factor on a
+passive stack while the first subroutine sums the operand products.
+It frames the factor and the subtotal and runs the verified product
+routine a second time. For the factor \(F\), subtotal \(S\), and first
+run length \(T\), the transition count is exactly
+\(T+2FS+6F+3S+9\). For \(X\) framed unary input symbols, the bound
+is \(X^3+7X^2+19X+12\). Framing the prepared decoder dimensions as these
+operands and supplying the correct forest width gives exactly the
+graph's fixed bit budget as unary tallies. The dimensions, including
+the forest width, are inputs to this certificate.
+[Scaled product machine](OnlineReachabilityPreservers/SteinerScaledProductMachine.lean#L76)
+· [Framed factor and pairs](OnlineReachabilityPreservers/SteinerScaledProductMachine.lean#L397)
+· [Exact output](OnlineReachabilityPreservers/SteinerScaledProductMachine.lean#L412)
+· [Exact transition count](OnlineReachabilityPreservers/SteinerScaledProductMachine.lean#L436)
+· [Cubic input polynomial](OnlineReachabilityPreservers/SteinerScaledProductMachine.lean#L467)
+· [Decoder dimensions and arithmetic](OnlineReachabilityPreservers/SteinerScaledProductMachine.lean#L494)
+· [Exact graph-dependent count](OnlineReachabilityPreservers/SteinerScaledProductMachine.lean#L502).
+
 
 
 
