@@ -878,6 +878,14 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   · [Unique intersections and retained mass](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L207)
   · [Indexed witness at 31/32](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L283)
   · [Distinct nonempty witness at 31/32](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L298).
+
+  For local split constraints of maximum degree two, order each connected
+  component along a spanning simple path. Its edges join consecutive path
+  positions or the two endpoints. Concatenating the component orders and
+  discarding at most \(2\lfloor\max(0,|V|-1)/w\rfloor\) vertices leaves
+  every surviving edge within one of the original blocks of width \(w>0\).
+  [Component path](OnlineReachabilityPreservers/DegreeTwoBlockOrder.lean#L70)
+  · [Block cuts](OnlineReachabilityPreservers/DegreeTwoBlockOrder.lean#L159).
 - At half cutoff five, or at half cutoff six with full-three
   exclusion, the integer charge can use the actual mass \(K\) after
   opposite pruning. Write \(C=n\lfloor(M-1)/(4n)\rfloor+

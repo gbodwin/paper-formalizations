@@ -2035,6 +2035,15 @@ nonemptiness supplies the row budget bound.
 · [Unique intersections and retained mass](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L207)
 · [Indexed witness at 31/32](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L283)
 · [Distinct nonempty witness at 31/32](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L298).
+
+For local split constraints of maximum degree two, order each connected
+component along a spanning simple path. Its edges join consecutive path
+positions or the two endpoints. Concatenating the component orders and
+discarding at most \(2\lfloor\max(0,|V|-1)/w\rfloor\) vertices leaves
+every surviving edge within one of the original blocks of width \(w>0\).
+[Component path](OnlineReachabilityPreservers/DegreeTwoBlockOrder.lean#L70)
+· [Block cuts](OnlineReachabilityPreservers/DegreeTwoBlockOrder.lean#L159).
+
 With actual opposite-pruned mass \(K\), a sharper test is
 \(C+\lfloor(M-1)/r\rfloor<K-4K^2/(31M)\) for \(r\ge8\) and
 \(C\) the integer removal charge above. It yields both budgets,
