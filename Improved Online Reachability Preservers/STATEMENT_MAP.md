@@ -1855,6 +1855,20 @@ query and all graph rows, the machine takes at most \(3X+1\) transitions.
 · [Transition bound](OnlineReachabilityPreservers/SteinerUnaryArcQueryMachine.lean#L429)
 · [Polynomial-time machine](OnlineReachabilityPreservers/SteinerUnaryArcQueryMachine.lean#L453).
 
+The unary arc table stores the graph in reverse order and restores
+that archive before each membership run. The run leaves the archive,
+unread queries, and previous answers in place. The output has one
+Boolean per query in the same order, including repeated queries.
+For graph frame length \(G\), query frame length \(Q\), and \(q\)
+queries, the machine takes at most \(2G+5Q+(5G+7)q+4\) transitions.
+The bound in the whole framed input length \(X\) is \(5X^2+14X+4\).
+[Unary arc table machine](OnlineReachabilityPreservers/SteinerUnaryArcTableMachine.lean#L98)
+· [Graph and query encoding](OnlineReachabilityPreservers/SteinerUnaryArcTableMachine.lean#L523)
+· [Ordered answer and transition bound](OnlineReachabilityPreservers/SteinerUnaryArcTableMachine.lean#L573)
+· [Quadratic bound](OnlineReachabilityPreservers/SteinerUnaryArcTableMachine.lean#L614)
+· [Polynomial-time machine](OnlineReachabilityPreservers/SteinerUnaryArcTableMachine.lean#L635)
+· [Finite graph membership table](OnlineReachabilityPreservers/SteinerUnaryArcTableMachine.lean#L647).
+
 
 
 
