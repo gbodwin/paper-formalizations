@@ -2017,6 +2017,21 @@ the transpose.
 · [Short-link groups](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L117)
 · [Whole deletion groups](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L129).
 
+In a family with nine vertices and eighteen indexed rows, the long row
+has vertices \(0,\ldots,5\). Two rows reverse its first and last triples.
+A corridor between the ends of those rows joins all six of the long
+row's neighbors after the long row is deleted. Its original path width
+is four. The kernel checks that every radius-two group has size at most
+three and that the original family excludes full bridges through four.
+The original degree width is eight and the degree groups fit there.
+The indexed full witness at cutoff four has both budgets, all four
+starting-average caps and at least a quarter of the starting mass.
+[Widths](OnlineReachabilityPreservers/ShortIncidenceRowAudit.lean#L16)
+· [Full-four exclusion](OnlineReachabilityPreservers/ShortIncidenceRowAudit.lean#L31)
+· [Whole deletion group](OnlineReachabilityPreservers/ShortIncidenceRowAudit.lean#L50)
+· [Radius-two groups](OnlineReachabilityPreservers/ShortIncidenceRowAudit.lean#L61)
+· [Frozen witness](OnlineReachabilityPreservers/ShortIncidenceRowAudit.lean#L88).
+
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates
 a full size-seven bridge in the dense branch on a simple input with unique

@@ -515,6 +515,18 @@ the transposed incidence graph.
 · [Short-link computation](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L117)
 · [Whole-component computation](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L129).
 
+The short-link test applies at the original widths to an indexed
+full-four-free family with \(n=9\), \(p=M=18\). Its first row has length
+six and all six of its vertices form one deletion group. Every
+radius-two group has at most three vertices. The original degree and
+path widths are eight and four, respectively, and both bounded size
+tests fit. The resulting indexed witness retains at least one quarter
+of the mass at cutoff four, with both original budgets and all four
+starting-average caps.
+[Whole deletion group](OnlineReachabilityPreservers/ShortIncidenceRowAudit.lean#L50)
+· [Short-link groups](OnlineReachabilityPreservers/ShortIncidenceRowAudit.lean#L61)
+· [Frozen witness](OnlineReachabilityPreservers/ShortIncidenceRowAudit.lean#L88).
+
 At full cutoff six, opposite-intersection pruning followed by restricting
 to a quarter of each support permits the contiguous construction on an
 unrestricted maximizing family of indexed simple paths. If the quarter

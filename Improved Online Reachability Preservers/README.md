@@ -749,6 +749,15 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   [Search and walk equivalence](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L60)
   · [Short-link groups](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L117)
   · [Whole components](OnlineReachabilityPreservers/IncidenceConnectionSearch.lean#L129).
+- In the nine-vertex, eighteen-row example, the long row has a whole
+  deletion group of size six at original path width four. Each
+  radius-two group has size at most three. The original rows exclude
+  full bridges through four, and both bounded tests fit at the
+  original widths. The indexed frozen witness retains at least \(M/4\)
+  with both budgets and all four starting-average caps.
+  [Whole group](OnlineReachabilityPreservers/ShortIncidenceRowAudit.lean#L50)
+  · [Short groups](OnlineReachabilityPreservers/ShortIncidenceRowAudit.lean#L61)
+  · [Frozen witness](OnlineReachabilityPreservers/ShortIncidenceRowAudit.lean#L88).
 - At half cutoff six with full-three exclusion and arbitrary
   intersections, fix lower coefficients \(a,b\in[0,1/4]\) with
   \(a+b\le7/15\). A witness meets these lower caps, both original upper
