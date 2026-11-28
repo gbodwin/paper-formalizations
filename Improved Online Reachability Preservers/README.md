@@ -3027,6 +3027,18 @@ passive stack.
 · [Timed tape embedding](OnlineReachabilityPreservers/SteinerStackFrame.lean#L102)
 · [Passive tape contents](OnlineReachabilityPreservers/SteinerStackFrame.lean#L39).
 
+The raw-word adder reads one carry bit followed by two divider-framed
+low-bit-first words. The alignment subroutine returns control with the
+padded pairs. The caller restores the saved carry as the paired adder’s
+header and invokes that adder on two of its three stacks. The output is the exact sum
+word, including the carry-in. With left length \(L\) and larger length
+\(D\), the machine takes at most \(2L+4D+10\) transitions, within six
+times the total framed input length.
+[Raw-word addition machine](OnlineReachabilityPreservers/SteinerRawBinaryAdditionMachine.lean#L79)
+· [Exact output and transition bound](OnlineReachabilityPreservers/SteinerRawBinaryAdditionMachine.lean#L248)
+· [Linear polynomial](OnlineReachabilityPreservers/SteinerRawBinaryAdditionMachine.lean#L276)
+· [Decoded sum](OnlineReachabilityPreservers/SteinerBinaryAdditionMachine.lean#L228).
+
 
 
 
