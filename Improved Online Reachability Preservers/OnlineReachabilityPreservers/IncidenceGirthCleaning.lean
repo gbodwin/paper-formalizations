@@ -11,11 +11,21 @@ open SimpleGraph Finset
 open scoped Sigma.Lex
 local notation "Before" => SourceAudit.BeforeIn
 
+/-- Two edge-disjoint cycles through the given vertex have combined
+length greater than twice the cutoff. -/
+def NoShortCyclePairAt {A : Type*} (G : SimpleGraph A) (k : ℕ) (a : A) : Prop :=
+  ∀ (x y : G.Walk a a), x.IsCycle → y.IsCycle → Disjoint x.edgeSet y.edgeSet →
+    2*k < x.length+y.length
+
+theorem NoShortCyclePairAt.mono {A : Type*} {G : SimpleGraph A} {j k : ℕ} {a : A}
+    (free : NoShortCyclePairAt G k a) (small : j ≤ k) : NoShortCyclePairAt G j a := by
+  intro x y xc yc separate
+  exact (Nat.mul_le_mul_left 2 small).trans_lt (free x y xc yc separate)
+
 /-- Any two edge-disjoint cycles based at the same vertex have combined
 length greater than twice the cutoff. -/
 def NoShortCyclePair {A : Type*} (G : SimpleGraph A) (k : ℕ) : Prop :=
-  ∀ a (x y : G.Walk a a), x.IsCycle → y.IsCycle → Disjoint x.edgeSet y.edgeSet →
-    2*k < x.length+y.length
+  ∀ a, NoShortCyclePairAt G k a
 
 theorem NoShortCyclePair.mono {A : Type*} {G : SimpleGraph A} {j k : ℕ}
     (free : NoShortCyclePair G k) (small : j ≤ k) : NoShortCyclePair G j := by
@@ -30,12 +40,11 @@ theorem NoShortCyclePair.of_egirth {A : Type*} {G : SimpleGraph A} {k : ℕ}
   have second := ENat.natCast_lt_natCast.mp (girth.trans_le yc.egirth_le_length)
   omega
 
-/-- A short trail cannot repeat a vertex before it closes. Such a repeat
-would give two edge-disjoint circuits based at that vertex, and hence a
-pair of shorter simple cycles there. -/
-theorem NoShortCyclePair.getVert_injective {A : Type*} {G : SimpleGraph A}
+private theorem short_circuit_injective_at_revisits {A : Type*} {G : SimpleGraph A}
     {v : A} {w : G.Walk v v} (trail : w.IsTrail) {k : ℕ}
-    (free : NoShortCyclePair G k) (short : w.length ≤ 2*k) :
+    (free : ∀ {i j}, i < j → j < w.length → w.getVert i = w.getVert j →
+      NoShortCyclePairAt G k (w.getVert i))
+    (short : w.length ≤ 2*k) :
     Set.InjOn w.getVert {i | i < w.length} := by
   classical
   have cannot {i j : ℕ} (earlier : i < j) (inside : j < w.length)
@@ -89,7 +98,7 @@ theorem NoShortCyclePair.getVert_injective {A : Type*} {G : SimpleGraph A}
       apply Disjoint.mono _ _ supports
       · exact a.edges_cycleBypass_subset_edges
       · exact b.edges_cycleBypass_subset_edges
-    have long := free _ _ _ aCycle.isCycle_cycleBypass bCycle.isCycle_cycleBypass cycles
+    have long := free earlier inside same _ _ aCycle.isCycle_cycleBypass bCycle.isCycle_cycleBypass cycles
     have aShort := a.length_cycleBypass_le_length
     have bShort := b.length_cycleBypass_le_length
     omega
@@ -100,6 +109,15 @@ theorem NoShortCyclePair.getVert_injective {A : Type*} {G : SimpleGraph A}
   · exact (cannot ij hj same).elim
   · exact eq
   · exact (cannot ji hi same.symm).elim
+
+/-- A short trail cannot repeat a vertex before it closes. Such a repeat
+would give two edge-disjoint circuits based at that vertex, and hence a
+pair of shorter simple cycles there. -/
+theorem NoShortCyclePair.getVert_injective {A : Type*} {G : SimpleGraph A}
+    {v : A} {w : G.Walk v v} (trail : w.IsTrail) {k : ℕ}
+    (free : NoShortCyclePair G k) (short : w.length ≤ 2*k) :
+    Set.InjOn w.getVert {i | i < w.length} :=
+  short_circuit_injective_at_revisits trail (fun {_ _} _ _ _ => free _) short
 
 /-- The cycle-pair condition is equivalent to vertex injectivity before
 closure on every closed trail of length at most twice the cutoff. -/
@@ -226,7 +244,11 @@ private theorem projected_bridge_incidence_injective {paths : I → List V} {pie
     (members : ∀ {i x}, x ∈ pieces i → project x ∈ paths (parent i))
     (incidences : ∀ {i j x y}, x ∈ pieces i → y ∈ pieces j → parent i = parent j →
       project x = project y → i = j ∧ x = y)
-    (free : NoShortCyclePair (pathIncidenceGraph paths) (d+2)) :
+    (rowSafe : ∀ {i j}, i ≠ j → parent i = parent j → pieces i ≠ [] → pieces j ≠ [] →
+      NoShortCyclePairAt (pathIncidenceGraph paths) (d+2) (.inl (parent i)))
+    (vertexSafe : ∀ {x y}, x ≠ y → project x = project y →
+      (∃ i, x ∈ pieces i) → (∃ j, y ∈ pieces j) →
+      NoShortCyclePairAt (pathIncidenceGraph paths) (d+2) (.inr (project x))) :
     Function.Injective (project ∘ b.vertex) ∧ Function.Injective (parent ∘ incidenceSlots b) := by
   let slots := parent ∘ incidenceSlots b
   let corners := project ∘ b.vertex
@@ -308,7 +330,54 @@ private theorem projected_bridge_incidence_injective {paths : I → List V} {pie
         change t.val%2 ≠ 0 at tEven
         omega
     · cases bad
-  have injective := free.getVert_injective trail length.le
+  have revisit {s t : ℕ} (before : s < t) (fit : t < walk.length)
+      (same : walk.getVert s = walk.getVert t) :
+      NoShortCyclePairAt (pathIncidenceGraph paths) (d+2) (walk.getVert s) := by
+    have sFit := before.trans fit
+    have sShort : s < 2*(d+2) := length ▸ sFit
+    have tShort : t < 2*(d+2) := length ▸ fit
+    let i : Fin (d+2) := ⟨s/2,by omega⟩
+    let j : Fin (d+2) := ⟨t/2,by omega⟩
+    have evenS (parity : s%2 = 0) : walk.getVert s = Sum.inr (corners i) := calc
+      _ = node s := atIndex sFit.le
+      _ = node (2*i.val) := congrArg node (by dsimp only [i]; omega)
+      _ = _ := even i
+    have evenT (parity : t%2 = 0) : walk.getVert t = Sum.inr (corners j) := calc
+      _ = node t := atIndex fit.le
+      _ = node (2*j.val) := congrArg node (by dsimp only [j]; omega)
+      _ = _ := even j
+    have oddS (parity : s%2 ≠ 0) : walk.getVert s = Sum.inl (slots i) := calc
+      _ = node s := atIndex sFit.le
+      _ = node (2*i.val+1) := congrArg node (by dsimp only [i]; omega)
+      _ = _ := odd i
+    have oddT (parity : t%2 ≠ 0) : walk.getVert t = Sum.inl (slots j) := calc
+      _ = node t := atIndex fit.le
+      _ = node (2*j.val+1) := congrArg node (by dsimp only [j]; omega)
+      _ = _ := odd j
+    have indicesApart (parity : s%2 = t%2) : i ≠ j := by
+      intro eq
+      have shared := congrArg Fin.val eq
+      change s/2 = t/2 at shared
+      omega
+    by_cases left : s%2 = 0 <;> by_cases right : t%2 = 0
+    · rw [evenS left,evenT right] at same
+      rw [evenS left]
+      have apart : b.vertex i ≠ b.vertex j :=
+        fun eq => indicesApart (left.trans right.symm) (b.distinctVertices eq)
+      exact vertexSafe apart (Sum.inr.inj same)
+        ⟨incidenceSlots b i,(incidence_slot_corners b i).1⟩
+        ⟨incidenceSlots b j,(incidence_slot_corners b j).1⟩
+    · rw [evenS left,oddT right] at same
+      cases same
+    · rw [oddS left,evenT right] at same
+      cases same
+    · rw [oddS left,oddT right] at same
+      rw [oddS left]
+      have apart : incidenceSlots b i ≠ incidenceSlots b j :=
+        fun eq => indicesApart (by omega) (incidenceSlots_injective b eq)
+      exact rowSafe apart (Sum.inl.inj same)
+        (List.ne_nil_of_mem (incidence_slot_corners b i).1) (List.ne_nil_of_mem (incidence_slot_corners b j).1)
+  have injective := short_circuit_injective_at_revisits trail (fun {_ _} => revisit) length.le
   constructor
   · intro i j same
     have iFit : 2*i.val < walk.length := by rw [length]; omega
@@ -323,18 +392,23 @@ private theorem projected_bridge_incidence_injective {paths : I → List V} {pie
     apply Fin.ext
     omega
 
-/-- Two edge-disjoint cycles through a repeated projected label would
-fit within the doubled bridge size. If none fit, transport the bridge. -/
-def Bridge.project_of_no_short_cycle_pair {paths : I → List V} {pieces : J → List W} {d : ℕ}
+/-- The cycle-pair test is needed only where two distinct occupied
+labels of the expanded family project to the same original label. -/
+def Bridge.project_of_local_cycle_pairs {paths : I → List V} {pieces : J → List W} {d : ℕ}
     (b : Bridge (Before pieces) d) (parent : J → I) (project : W → V)
     (members : ∀ {i x}, x ∈ pieces i → project x ∈ paths (parent i))
     (incidences : ∀ {i j x y}, x ∈ pieces i → y ∈ pieces j → parent i = parent j →
       project x = project y → i = j ∧ x = y)
     (steps : ∀ {i x y}, Before pieces i x y → Before paths (parent i) (project x) (project y))
-    (free : NoShortCyclePair (pathIncidenceGraph paths) (d+2)) :
+    (rowSafe : ∀ {i j}, i ≠ j → parent i = parent j → pieces i ≠ [] → pieces j ≠ [] →
+      NoShortCyclePairAt (pathIncidenceGraph paths) (d+2) (.inl (parent i)))
+    (vertexSafe : ∀ {x y}, x ≠ y → project x = project y →
+      (∃ i, x ∈ pieces i) → (∃ j, y ∈ pieces j) →
+      NoShortCyclePairAt (pathIncidenceGraph paths) (d+2) (.inr (project x))) :
     Bridge (Before paths) d := by
   have projected := projected_bridge_incidence_injective b parent project
-    (fun {_ _} => members) (fun {_ _ _ _} => incidences) free
+    (fun {_ _} => members) (fun {_ _ _ _} => incidences)
+    (fun {_ _} => rowSafe) (fun {_ _} => vertexSafe)
   refine ⟨project ∘ b.vertex,parent ∘ b.arc,parent b.river,projected.1,?_,?_,steps b.riverStep,
     fun i => steps (b.arcStep i)⟩
   · intro i j same
@@ -349,6 +423,19 @@ def Bridge.project_of_no_short_cycle_pair {paths : I → List V} {pieces : J →
     have small := i.isLt
     omega
 
+/-- Two edge-disjoint cycles through a repeated projected label would
+fit within the doubled bridge size. If none fit, transport the bridge. -/
+def Bridge.project_of_no_short_cycle_pair {paths : I → List V} {pieces : J → List W} {d : ℕ}
+    (b : Bridge (Before pieces) d) (parent : J → I) (project : W → V)
+    (members : ∀ {i x}, x ∈ pieces i → project x ∈ paths (parent i))
+    (incidences : ∀ {i j x y}, x ∈ pieces i → y ∈ pieces j → parent i = parent j →
+      project x = project y → i = j ∧ x = y)
+    (steps : ∀ {i x y}, Before pieces i x y → Before paths (parent i) (project x) (project y))
+    (free : NoShortCyclePair (pathIncidenceGraph paths) (d+2)) :
+    Bridge (Before paths) d :=
+  b.project_of_local_cycle_pairs parent project (fun {_ _} => members)
+    (fun {_ _ _ _} => incidences) (fun {_ _ _} => steps) (fun _ _ _ _ => free _) (fun _ _ _ _ => free _)
+
 /-- When the original incidence girth exceeds the size of the bridge,
 a projection injective on incidences keeps its distinct labels. -/
 def Bridge.project_of_incidence_girth {paths : I → List V} {pieces : J → List W} {d : ℕ}
@@ -362,6 +449,35 @@ def Bridge.project_of_incidence_girth {paths : I → List V} {pieces : J → Lis
   b.project_of_no_short_cycle_pair parent project (fun {_ _} => members)
     (fun {_ _ _ _} => incidences) (fun {_ _ _} => steps) (.of_egirth girth)
 
+/-- Test only the original labels with distinct occupied copies.
+Comparisons and the parent order then transport the bridge cutoff. -/
+theorem localOrderAdmissible_of_local_cycle_pairs_projection [LinearOrder I] [LinearOrder J]
+    {paths : I → List V} {pieces : J → List W} {k : ℕ} {half : Bool}
+    (allowed : localOrderAdmissible half k paths)
+    (parent : J → I) (project : W → V) (ordered : Monotone parent)
+    (members : ∀ {i x}, x ∈ pieces i → project x ∈ paths (parent i))
+    (incidences : ∀ {i j x y}, x ∈ pieces i → y ∈ pieces j → parent i = parent j →
+      project x = project y → i = j ∧ x = y)
+    (steps : ∀ {i x y}, Before pieces i x y → Before paths (parent i) (project x) (project y))
+    (rowSafe : ∀ {i j}, i ≠ j → parent i = parent j → pieces i ≠ [] → pieces j ≠ [] →
+      NoShortCyclePairAt (pathIncidenceGraph paths) k (.inl (parent i)))
+    (vertexSafe : ∀ {x y}, x ≠ y → project x = project y →
+      (∃ i, x ∈ pieces i) → (∃ j, y ∈ pieces j) →
+      NoShortCyclePairAt (pathIncidenceGraph paths) k (.inr (project x))) :
+    localOrderAdmissible half k pieces := by
+  let lift {d : ℕ} (size : d+2 ≤ k) (b : Bridge (Before pieces) d) : Bridge (Before paths) d :=
+    b.project_of_local_cycle_pairs parent project (fun {_ _} => members) (fun {_ _ _ _} => incidences)
+      (fun {_ _ _} => steps) (fun {_ _} diff eq first second => (rowSafe diff eq first second).mono size)
+      (fun {_ _} diff eq first second => (vertexSafe diff eq first second).mono size)
+  cases half
+  · intro d fit
+    exact ⟨fun b => (allowed fit).false (lift fit b)⟩
+  · intro d fit b earlier
+    let original := lift fit b
+    have strict : original.arc (Fin.last d) < original.river :=
+      lt_of_le_of_ne (ordered earlier.le) (original.river_ne_arc _).symm
+    exact allowed fit original strict
+
 /-- Preserve the selected cutoff under comparison-preserving projection
 with distinct incidence images and no short pair of cycles. -/
 theorem localOrderAdmissible_of_no_short_cycle_pair_projection [LinearOrder I] [LinearOrder J]
@@ -372,18 +488,10 @@ theorem localOrderAdmissible_of_no_short_cycle_pair_projection [LinearOrder I] [
     (incidences : ∀ {i j x y}, x ∈ pieces i → y ∈ pieces j → parent i = parent j →
       project x = project y → i = j ∧ x = y)
     (steps : ∀ {i x y}, Before pieces i x y → Before paths (parent i) (project x) (project y)) :
-    localOrderAdmissible half k pieces := by
-  let lift {d : ℕ} (size : d+2 ≤ k) (b : Bridge (Before pieces) d) : Bridge (Before paths) d :=
-    b.project_of_no_short_cycle_pair parent project (fun {_ _} => members) (fun {_ _ _ _} => incidences)
-      (fun {_ _ _} => steps) (free.mono size)
-  cases half
-  · intro d fit
-    exact ⟨fun b => (allowed fit).false (lift fit b)⟩
-  · intro d fit b earlier
-    let original := lift fit b
-    have strict : original.arc (Fin.last d) < original.river :=
-      lt_of_le_of_ne (ordered earlier.le) (original.river_ne_arc _).symm
-    exact allowed fit original strict
+    localOrderAdmissible half k pieces :=
+  localOrderAdmissible_of_local_cycle_pairs_projection allowed parent project ordered
+    (fun {_ _} => members) (fun {_ _ _ _} => incidences) (fun {_ _ _} => steps)
+    (fun _ _ _ _ => free _) (fun _ _ _ _ => free _)
 
 /-- Every projection that preserves comparisons and identifies no distinct
 incidences preserves the bridge cutoff below the incidence girth. In half
@@ -402,12 +510,41 @@ theorem localOrderAdmissible_of_incidence_girth_projection [LinearOrder I] [Line
 
 end Projection
 
-/-- When no two edge-disjoint cycles through one label fit within twice
-the cutoff, both standard width splits preserve the chosen exclusion. -/
-theorem listRegularizedPaths_admissible_of_no_short_cycle_pair {I V : Type*}
+private theorem same_incidence_block {A : Type*} {n : A → ℕ} {x y : Σ a, Fin (n a)}
+    (parent : x.fst = y.fst) (same : x.snd.val = y.snd.val) : x = y := by
+  rcases x with ⟨a,i⟩
+  rcases y with ⟨b,j⟩
+  change a = b at parent
+  subst b
+  obtain rfl := Fin.ext same
+  rfl
+
+private theorem occupied_copy_index_zero {I V : Type*} [LinearOrder I] [Fintype I] [LinearOrder V]
+    {paths : I → List V} {D : ℕ} {x : ListVertexBlockIndex paths D} {i : I}
+    (short : (occurrences (fun j => (paths j).toFinset) x.fst).card ≤ D)
+    (on : x ∈ splitListVertices paths D i) : x.snd.val = 0 := by
+  change x ∈ (paths i).attach.map _ at on
+  obtain ⟨u,_,rfl⟩ := List.mem_map.mp on
+  let supported := occurrences (fun j => (paths j).toFinset) u.val
+  have present : i ∈ supported := mem_occurrences.mpr (List.mem_toFinset.mpr u.property)
+  have rank : (predecessors supported i).card < supported.card := by
+    apply card_lt_card
+    refine Finset.ssubset_iff_subset_ne.mpr ⟨filter_subset _ _,?_⟩
+    intro equal
+    have earlier : i ∈ predecessors supported i := by rw [equal]; exact present
+    exact (lt_irrefl i) (mem_filter.mp earlier).2
+  change (predecessors supported i).card/D = 0
+  exact Nat.div_eq_of_lt (rank.trans_le short)
+
+/-- For the standard splits, only original rows longer than the path width
+and vertices above the degree width need the cycle-pair test. -/
+theorem listRegularizedPaths_admissible_of_local_cycle_pairs {I V : Type*}
     [LinearOrder I] [Fintype I] [LinearOrder V] [Fintype V] {paths : I → List V} {k : ℕ} {half : Bool}
     (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths)
-    (free : NoShortCyclePair (pathIncidenceGraph paths) k) (D L : ℕ) :
+    (D L : ℕ)
+    (overlong : ∀ i, L < (paths i).length → NoShortCyclePairAt (pathIncidenceGraph paths) k (.inl i))
+    (overdegree : ∀ x, D < (occurrences (fun i => (paths i).toFinset) x).card →
+      NoShortCyclePairAt (pathIncidenceGraph paths) k (.inr x)) :
     localOrderAdmissible half k (listRegularizedPaths paths D L) := by
   let copies := splitListVertices paths D
   let pieces := splitListPaths copies L
@@ -432,9 +569,47 @@ theorem listRegularizedPaths_admissible_of_no_short_cycle_pair {I V : Type*}
     have lifted : Before (fun j : ListBlockIndex copies L => copies (parent j)) i x y :=
       listBefore_of_sublist (copiedSimple (parent i)) (sub i) step
     exact splitListVertices_step (simple (parent i)) lifted
-  exact localOrderAdmissible_of_no_short_cycle_pair_projection allowed free parent project
+  have rowZero {i : ListBlockIndex copies L} (short : (paths (parent i)).length ≤ L)
+      (occupied : pieces i ≠ []) : i.snd.val = 0 := by
+    obtain ⟨x,on⟩ := List.exists_mem_of_ne_nil (pieces i) occupied
+    obtain ⟨before,position⟩ := mem_localPathBlock.mp on
+    rw [← position]
+    exact Nat.div_eq_of_lt ((List.idxOf_lt_length_of_mem before).trans_le
+      ((splitListVertices_length paths D (parent i)).trans_le short))
+  have rowTest {i j : ListBlockIndex copies L} (different : i ≠ j) (equal : parent i = parent j)
+      (occupiedI : pieces i ≠ []) (occupiedJ : pieces j ≠ []) :
+      NoShortCyclePairAt (pathIncidenceGraph paths) k (.inl (parent i)) := by
+    apply overlong
+    by_contra! short
+    have second : (paths (parent j)).length ≤ L := equal ▸ short
+    exact different (same_incidence_block equal ((rowZero short occupiedI).trans
+      (rowZero second occupiedJ).symm))
+  have vertexZero {x : ListVertexBlockIndex paths D} {i : ListBlockIndex copies L}
+      (short : (occurrences (fun i => (paths i).toFinset) (project x)).card ≤ D)
+      (on : x ∈ pieces i) : x.snd.val = 0 :=
+    occupied_copy_index_zero short ((sub i).subset on)
+  have vertexTest {x y : ListVertexBlockIndex paths D} (different : x ≠ y) (equal : project x = project y)
+      (occupiedX : ∃ i, x ∈ pieces i) (occupiedY : ∃ j, y ∈ pieces j) :
+      NoShortCyclePairAt (pathIncidenceGraph paths) k (.inr (project x)) := by
+    apply overdegree
+    by_contra! short
+    obtain ⟨i,inside⟩ := occupiedX
+    obtain ⟨j,other⟩ := occupiedY
+    have second : (occurrences (fun i => (paths i).toFinset) (project y)).card ≤ D := equal ▸ short
+    exact different (same_incidence_block equal ((vertexZero short inside).trans
+      (vertexZero second other).symm))
+  exact localOrderAdmissible_of_local_cycle_pairs_projection allowed parent project
     (block_parent_mono (fun i => (copies i).toFinset) L) (fun {_ _} => members)
-    (fun {_ _ _ _} => incidences) (fun {_ _ _} => steps)
+    (fun {_ _ _ _} => incidences) (fun {_ _ _} => steps) (fun {_ _} => rowTest) (fun {_ _} => vertexTest)
+
+/-- When no two edge-disjoint cycles through one label fit within twice
+the cutoff, both standard width splits preserve the chosen exclusion. -/
+theorem listRegularizedPaths_admissible_of_no_short_cycle_pair {I V : Type*}
+    [LinearOrder I] [Fintype I] [LinearOrder V] [Fintype V] {paths : I → List V} {k : ℕ} {half : Bool}
+    (simple : ∀ i, (paths i).Nodup) (allowed : localOrderAdmissible half k paths)
+    (free : NoShortCyclePair (pathIncidenceGraph paths) k) (D L : ℕ) :
+    localOrderAdmissible half k (listRegularizedPaths paths D L) :=
+  listRegularizedPaths_admissible_of_local_cycle_pairs simple allowed D L (fun _ _ => free _) (fun _ _ => free _)
 
 /-- Both ordinary width splits project injectively on the incidences. Thus
 they preserve either bridge cutoff strictly below the incidence girth. -/
@@ -469,6 +644,27 @@ theorem pathIncidenceGraph_egirth_le_of_embedding {I J V W : Type*}
   refine SimpleGraph.le_egirth.mpr (fun a w cycle => ?_)
   simpa only [Walk.length_map] using (cycle.map injective).egirth_le_length
 
+/-- Test for short pairs only on rows and vertices above their original
+widths. Frozen cleaning then keeps both budgets, all four caps, and M/16. -/
+theorem regularization_list_frozen_of_local_cycle_pairs {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (allowed : localOrderAdmissible half k paths)
+    (overlong : let M := ∑ i, (paths i).length
+      ∀ i, 4*M/p < (paths i).length → NoShortCyclePairAt (pathIncidenceGraph paths) k (.inl i))
+    (overdegree : let M := ∑ i, (paths i).length
+      ∀ x, 4*M/n < (occurrences (fun i => (paths i).toFinset) x).card →
+        NoShortCyclePairAt (pathIncidenceGraph paths) k (.inr x))
+    (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v),
+      (∀ i, (rows i).Nodup) ∧ localOrderAdmissible half k rows ∧
+      M ≤ 16*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows := by
+  let M := ∑ i, (paths i).length
+  exact regularization_list_frozen_after_width_blocks_of_mass paths simple
+    (listRegularizedPaths_admissible_of_local_cycle_pairs simple allowed (4*M/n) (4*M/p)
+      overlong overdegree)
+    hn hp dense long le_rfl (by ring_nf; omega)
+
 /-- At any cutoff satisfying the incidence cycle-pair condition, retain
 both budgets, all four starting-average caps, and at least M/16. -/
 theorem regularization_list_frozen_of_no_short_cycle_pair {n p k : ℕ} {half : Bool}
@@ -478,11 +674,9 @@ theorem regularization_list_frozen_of_no_short_cycle_pair {n p k : ℕ} {half : 
     let M := ∑ i, (paths i).length
     ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v),
       (∀ i, (rows i).Nodup) ∧ localOrderAdmissible half k rows ∧
-      M ≤ 16*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows := by
-  let M := ∑ i, (paths i).length
-  exact regularization_list_frozen_after_width_blocks_of_mass paths simple
-    (listRegularizedPaths_admissible_of_no_short_cycle_pair simple allowed free (4*M/n) (4*M/p))
-    hn hp dense long le_rfl (by ring_nf; omega)
+      M ≤ 16*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows :=
+  regularization_list_frozen_of_local_cycle_pairs paths simple allowed
+    (fun _ _ => free _) (fun _ _ => free _) hn hp dense long
 
 /-- At a cutoff smaller than the incidence girth, both original budgets,
 all four starting-average caps, and at least one sixteenth of the input
@@ -497,6 +691,27 @@ theorem regularization_list_frozen_of_incidence_girth {n p k : ℕ} {half : Bool
       M ≤ 16*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows :=
   regularization_list_frozen_of_no_short_cycle_pair paths simple allowed (.of_egirth girth) hn hp dense long
 
+/-- The original-width tests also suffice for the literal starting-average witness. -/
+theorem regularization_literal_frozen_of_local_cycle_pairs {n p k : ℕ} {half : Bool}
+    (paths : Fin p → List (Fin n)) (distinct : Function.Injective paths)
+    (valid : ∀ i, paths i ≠ [] ∧ (paths i).Nodup)
+    (allowed : localOrderAdmissible half k paths)
+    (overlong : let M := ∑ i, (paths i).length
+      ∀ i, 4*M/p < (paths i).length → NoShortCyclePairAt (pathIncidenceGraph paths) k (.inl i))
+    (overdegree : let M := ∑ i, (paths i).length
+      ∀ x, 4*M/n < (occurrences (fun i => (paths i).toFinset) x).card →
+        NoShortCyclePairAt (pathIncidenceGraph paths) k (.inr x))
+    (two : 2 ≤ k) (hn : 0 < n) (hp : 0 < p) (dense : n ≤ ∑ i, (paths i).length) :
+    let M := ∑ i, (paths i).length
+    ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v),
+      Function.Injective rows ∧ (∀ i, rows i ≠ [] ∧ (rows i).Nodup) ∧ localOrderAdmissible half k rows ∧
+      M ≤ 16*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows := by
+  obtain ⟨v,vFit,q,qFit,rows,oneToOne,nonempty,simple,legal,keep,upper,caps⟩ :=
+    regularization_list_frozen_distinct_of_indexed paths distinct (fun i => (valid i).1) (fun i => (valid i).2)
+      allowed two hn hp dense (by decide)
+      (regularization_list_frozen_of_local_cycle_pairs paths (fun i => (valid i).2) allowed overlong overdegree hn hp dense)
+  exact ⟨v,vFit,q,qFit,rows,oneToOne,fun i => ⟨nonempty i,simple i⟩,legal,keep,upper,caps⟩
+
 /-- The cycle-pair criterion gives the same starting-average guarantee
 for distinct nonempty literal rows. -/
 theorem regularization_literal_frozen_of_no_short_cycle_pair {n p k : ℕ} {half : Bool}
@@ -507,12 +722,9 @@ theorem regularization_literal_frozen_of_no_short_cycle_pair {n p k : ℕ} {half
     let M := ∑ i, (paths i).length
     ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v),
       Function.Injective rows ∧ (∀ i, rows i ≠ [] ∧ (rows i).Nodup) ∧ localOrderAdmissible half k rows ∧
-      M ≤ 16*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows := by
-  obtain ⟨v,vFit,q,qFit,rows,oneToOne,nonempty,simple,legal,keep,upper,caps⟩ :=
-    regularization_list_frozen_distinct_of_indexed paths distinct (fun i => (valid i).1) (fun i => (valid i).2)
-      allowed two hn hp dense (by decide)
-      (regularization_list_frozen_of_no_short_cycle_pair paths (fun i => (valid i).2) allowed free hn hp dense)
-  exact ⟨v,vFit,q,qFit,rows,oneToOne,fun i => ⟨nonempty i,simple i⟩,legal,keep,upper,caps⟩
+      M ≤ 16*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows :=
+  regularization_literal_frozen_of_local_cycle_pairs paths distinct valid allowed
+    (fun _ _ => free _) (fun _ _ => free _) two hn hp dense
 
 /-- The same incidence-girth criterion gives exact starting caps in the
 literal convention for cutoffs at least two. -/

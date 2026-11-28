@@ -1762,12 +1762,12 @@ budgets, all four original caps and \(M/16\). With caps at the witness's
 own averages they give \(M/392\) indexed or \(M/7056\) literal.
 The literal results use cutoff at least two and distinct nonempty
 simple paths.
-[Incidence projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L354)
-· [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L441)
-· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L490)
-· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L519)
-· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L558)
-· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L585).
+[Incidence projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L441)
+· [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L616)
+· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L684)
+· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L731)
+· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L770)
+· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L797).
 
 The same guarantees follow when two edge-disjoint incidence cycles
 through any one label always have combined length greater than \(2k\).
@@ -1779,12 +1779,12 @@ interior label. Under this condition both original budgets, the bridge
 cutoff and the same four types of witnesses hold even when some cycles
 are short. A graph with one cycle, for example, satisfies the condition
 at every cutoff.
-[Trail equivalence](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L106)
-· [Widths](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L407)
-· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L474)
-· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L502)
-· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L532)
-· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L569).
+[Trail equivalence](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L124)
+· [Widths](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L607)
+· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L670)
+· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L717)
+· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L744)
+· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L781).
 
 The combined bound \(2k\) includes imbalanced lengths. A simple
 ten-row example on twenty vertex labels excludes every half-bridge.
@@ -1796,6 +1796,21 @@ most six are absent even though the split fails.
 [Input and bridge](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L76)
 · [Combined length](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L134)
 · [Separate length check](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L206).
+
+Only duplicated occupied labels need the cycle-pair test for the
+projection. In the standard consecutive splits, distinct occupied
+pieces from one row imply its length exceeds the path width. Distinct
+occupied copies of one vertex imply its degree exceeds the degree
+width. Impose the test at those original labels. Simple input with
+either bridge exclusion at cutoff \(k\) then has a witness with the
+same exclusion, all four starting caps, both positive budgets, and
+at least \(M/16\) of the mass when \(M\) is at least both budgets.
+The distinct nonempty literal version uses \(k\ge2\).
+[Pointwise condition](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L16)
+· [Occupied-label projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L397)
+· [Width tests](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L541)
+· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L649)
+· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L695).
 
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates

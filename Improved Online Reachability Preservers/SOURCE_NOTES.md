@@ -308,10 +308,10 @@ half-mode arrival therefore transport with the projected labels.
 Forests satisfy the girth bound at every finite cutoff. With both
 positive budgets and enough mass, the same proof supplies indexed and
 literal witnesses at the original or the output averages.
-[Incidence graph](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L140)
-· [Bridge projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L354)
-· [Starting-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L490)
-· [Output-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L558).
+[Incidence graph](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L158)
+· [Bridge projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L441)
+· [Starting-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L684)
+· [Output-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L770).
 
 For the more general incidence condition, consider two edge-disjoint
 simple cycles based at any one row or vertex label. Require the sum of
@@ -323,10 +323,10 @@ so the condition is equivalent to injectivity before closure on short
 closed trails. Restrictions to rectangles preserve the condition by
 injective graph homomorphisms. The starting- and output-average witnesses
 therefore keep the same constants and scopes as in the girth argument.
-[Cycle-pair condition](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L16)
-· [Trail equivalence](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L106)
-· [Starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L474)
-· [Output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L532).
+[Cycle-pair condition](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L27)
+· [Trail equivalence](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L124)
+· [Starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L670)
+· [Output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L744).
 
 Checking each incidence cycle against the cutoff separately fails.
 Use the river \(0\to3\), the path \(0\to1\to2\to3\) built from three
@@ -346,6 +346,21 @@ four-cycle.
 · [New half bridge](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L76)
 · [Combined length](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L134)
 · [Separate length check](OnlineReachabilityPreservers/IncidenceCyclePairAudit.lean#L206).
+
+The projection uses the cycle-pair condition only at a repeated
+original label. Its two occurrences come from distinct occupied
+expanded labels, since the bridge uses distinct rows and vertices.
+In a consecutive block of a row of length at most the width, every
+occupied position has block index zero. Likewise, every occurrence
+of a vertex of degree at most the width has incident-row rank below
+that width. The pointwise tests therefore use only overlength rows
+and overdegree vertices. At the original factor-four widths these
+tests give the same starting-average witnesses in both modes and
+both path conventions.
+[Pointwise condition](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L16)
+· [Occupied labels](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L397)
+· [Original widths](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L541)
+· [Starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L649).
 
 At full cutoff six, opposite-intersection pruning followed by restricting
 to a quarter of each support permits the contiguous construction on an
