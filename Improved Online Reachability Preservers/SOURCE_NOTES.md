@@ -408,6 +408,21 @@ constant retention when a group exceeds the width remains open in general.
 · [Indexed witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L284)
 · [Literal witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L337).
 
+For example, at \(n=p=9\) and \(M=10\), take the rows
+\([0,1,2,3,4,5]\), \([5,0]\), and \([4,1]\), plus six empty indexed
+rows. Both original widths are four. The original family excludes
+all full bridges. Its width-four consecutive split creates a full
+four-bridge with river \(4\to1\). The copied incidence graph has two
+edge-disjoint four-cycles at the overlong row. The pieces
+\([0,1,4,5]\) and \([2,3]\) retain whole neighbor groups there.
+They preserve both bridge exclusions at every cutoff. The group-size
+bound also meets the frozen cleaner's hypothesis at the actual
+original width and gives an indexed full witness at every cutoff.
+[Split failure](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L159)
+· [Cycle-pair test failure](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L189)
+· [Grouped exclusion](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L114)
+· [Frozen witness](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L223).
+
 At full cutoff six, opposite-intersection pruning followed by restricting
 to a quarter of each support permits the contiguous construction on an
 unrestricted maximizing family of indexed simple paths. If the quarter

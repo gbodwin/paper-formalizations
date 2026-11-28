@@ -666,6 +666,19 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   · [Indexed witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L284)
   · [Original component sizes in full mode](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L316)
   · [Literal witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L337).
+- At starting budgets \(n=p=9\), a ten-incidence family excludes all
+  full bridges. Its overlong six-vertex row has two edge-disjoint
+  four-cycles in the degree-copied incidence graph. The actual
+  width-four consecutive split creates a full four-bridge. Packing the
+  two reverse-pair groups together and the two other vertices in a
+  separate piece preserves either exclusion at every cutoff. The component
+  bound also gives both original budgets and all four starting-average
+  caps with at least \(M/4\) at every full cutoff.
+  [Original exclusion](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L107)
+  · [Consecutive split](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L159)
+  · [Cycles after degree copying](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L189)
+  · [Grouped exclusion](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L114)
+  · [Frozen witness](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L223).
 - At half cutoff six with full-three exclusion and arbitrary
   intersections, fix lower coefficients \(a,b\in[0,1/4]\) with
   \(a+b\le7/15\). A witness meets these lower caps, both original upper

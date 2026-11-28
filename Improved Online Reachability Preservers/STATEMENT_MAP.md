@@ -1873,6 +1873,25 @@ increase them.
 · [Full witness from original groups](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L316)
 · [Literal witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L337).
 
+The nine-vertex, nine-row example has three nonempty rows
+\([0,1,2,3,4,5]\), \([5,0]\), and \([4,1]\). It excludes every full
+bridge and has mass ten, giving both original widths equal to four.
+After degree copying, two edge-disjoint incidence four-cycles share
+the overlong first row. The consecutive pieces allow the river
+\(4\to1\) and the detour \(4\to5\to0\to1\), a full four-bridge.
+Grouping the neighbors after deleting the first row allows the pieces
+\([0,1,4,5]\) and \([2,3]\). They preserve both bridge exclusions at
+every cutoff. All neighbor groups fit, so the indexed full cleaner
+has the original budgets and all four starting-average caps, and
+retains at least \(M/4\) at every cutoff.
+[Original exclusion](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L107)
+· [Widths](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L118)
+· [Copied graph's cycles](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L189)
+· [New bridge](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L159)
+· [Grouped exclusion](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L114)
+· [Group-size bound](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L208)
+· [Frozen witness](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L223).
+
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates
 a full size-seven bridge in the dense branch on a simple input with unique
