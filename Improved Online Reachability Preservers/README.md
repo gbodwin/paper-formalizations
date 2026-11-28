@@ -2323,6 +2323,27 @@ is at most \(\binom n2+1\).
 · [Mass bound](OnlineReachabilityPreservers/HalfFourLiteralCapacity.lean#L118)
 · [Literal count at cutoffs at least four](OnlineReachabilityPreservers/HalfFourLiteralCapacity.lean#L129).
 
+For \(n\ge2\), one family attains the cutoff-four bound and excludes
+half bridges of every size. Take every increasing pair and every
+singleton, and add the reverse of the pair of highest
+vertices. Order the rows lexicographically by their endpoint labels.
+Identify the two highest vertices with the same rank. Every step
+weakly increases rank, and the first step from any lower vertex
+strictly increases it. A detour with at least two steps from a lower
+vertex therefore has a later final row. A detour of at least two
+steps from either highest vertex would have to repeat a vertex.
+Keeping an initial segment
+gives every smaller row count. Thus for \(n\ge2\) the exact literal
+capacity is \(n+\binom n2+1\) at every half cutoff at least four, and
+for \(n\le1\) it is \(n\). At the saturated count with \(n\ge2\),
+every feasible family has mass \(n+2(\binom n2+1)\).
+[Rank proof](OnlineReachabilityPreservers/HalfAllLiteralCapacity.lean#L105)
+· [Row count of the construction](OnlineReachabilityPreservers/HalfAllLiteralCapacity.lean#L167)
+· [Exact feasibility from cutoff four](OnlineReachabilityPreservers/HalfAllLiteralCapacity.lean#L252)
+· [All-size feasibility](OnlineReachabilityPreservers/HalfAllLiteralCapacity.lean#L272)
+· [Saturated mass](OnlineReachabilityPreservers/HalfAllLiteralCapacity.lean#L283).
+
+
 
 Put \(q=\min(n,p)\). A literal full system of mass \(M\) at cutoff
 \(k\ge3\) has a distinct nonempty full witness of mass \(W\) within both
