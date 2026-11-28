@@ -273,4 +273,17 @@ def steinerRangeMachine_variableGraphCheck {n : ℕ} (bound : List Bool) (number
   rw [checked]
   exact steinerRangeMachine_graphDecoder bound number rows 0
 
+/-- The conjunction of numeric range checks is the guarded decoder's flag. -/
+theorem steinerRangeRequests_guarded_flag {n : ℕ} (bound : List Bool) (number : binaryWordValue bound = n)
+    (rows : List SteinerRangeWordPair) :
+    steinerRangeChecks (steinerRangeRequests bound rows) =
+      (decodeCheckedBinaryFinArcRowsWithWork (n := n) (n+binaryEndpointBits rows) rows).1.isSome := by
+  have checked : (decodeCheckedBinaryFinArcRowsWithWork (n := n) (n+binaryEndpointBits rows) rows).1 =
+      (decodeBinaryFinArcRowsWithWork (n := n) 0 rows).1 := by
+    ext decoded
+    exact decodeCheckedBinaryFinArcRowsWithWork_of_actual_bits rows decoded
+  rw [checked]
+  apply Bool.eq_iff_iff.mpr
+  exact (steinerRangeRequests_accepts_iff bound number rows 0).trans Option.isSome_iff_exists.symm
+
 end OnlineReachabilityPreservers

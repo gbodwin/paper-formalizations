@@ -1676,6 +1676,21 @@ times the total framed input length.
 · [Linear polynomial](OnlineReachabilityPreservers/SteinerRawBinaryAdditionMachine.lean#L276)
 · [Decoded sum](OnlineReachabilityPreservers/SteinerBinaryAdditionMachine.lean#L228).
 
+The raw range batch machine reads comparison requests with an inner
+divider between each pair of words and an outer divider after each
+request. It keeps later requests on a passive tape while the verified
+raw-word comparator handles the current request. The machine reports
+the conjunction of numeric checks in at most five transitions per
+framed input symbol plus one. For graph rows it uses the supplied
+bound word of value \(n\) in both endpoint requests. Its output agrees
+with the guarded decoder at allowance \(n+E\), where \(E\) is the
+total number of endpoint bits.
+[Raw range batch machine](OnlineReachabilityPreservers/SteinerRawRangeBatchMachine.lean#L75)
+· [Exact conjunction and transition bound](OnlineReachabilityPreservers/SteinerRawRangeBatchMachine.lean#L323)
+· [Linear input polynomial](OnlineReachabilityPreservers/SteinerRawRangeBatchMachine.lean#L334)
+· [Graph frame length](OnlineReachabilityPreservers/SteinerRawRangeBatchMachine.lean#L348)
+· [Guarded decoder flag](OnlineReachabilityPreservers/SteinerRawRangeBatchMachine.lean#L362).
+
 
 
 

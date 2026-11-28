@@ -33,8 +33,8 @@ private theorem stepAux_redirect {K L S : Type} {Γ : K → Type} [DecidableEq K
     cases choice : f r <;> simp [Turing.TM2.stepAux,redirectHalt,choice,left,right]
   | goto f => rfl
   | halt => rfl
-
-private theorem iterate_map_some {S T : Type} (map : S → T) {base : S → Option S}
+/-- Lift a successful finite iteration from a simulation on successful steps. -/
+theorem iterate_map_some {S T : Type} (map : S → T) {base : S → Option S}
     {host : T → Option T} (move : ∀ {a b}, base a = some b → host (map a) = some (map b))
     (steps : ℕ) {a b : S} (run : (flip bind base)^[steps] (some a) = some b) :
     (flip bind host)^[steps] (some (map a)) = some (map b) := by
