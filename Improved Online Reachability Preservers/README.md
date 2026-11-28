@@ -843,6 +843,24 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   witnesses retain at least \(M/930\) within both budgets.
   [Indexed exact caps](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L85)
   · [Literal exact caps](OnlineReachabilityPreservers/HalfFiveRoundedLowerCaps.lean#L104).
+
+- For each unordered row pair, count every unordered pair of common
+  vertices. Let \(E\) be the total and \(M\) the starting mass. Each
+  shared vertex pair gives four incidences. If two such sets meet,
+  deleting their common incidence resolves both constraints. For
+  disjoint sets, delete one incidence per set. A selected deletion set
+  of size \(S\) satisfies \(7S\le3E+M\), so the remaining rows have
+  unique intersections and mass \(K\) with \(6M\le7K+3E\). At
+  half cutoff five, \(72E\le53M\) gives \(K\ge13M/24\).
+  For a simple half-five input with positive vertex and row budgets and
+  \(M\) at least both budgets, width splitting and trimming give at least
+  \(M/288\) within both budgets and all four original-average caps. In
+  the distinct nonempty convention, nonemptiness ensures the row budget
+  bound on \(M\).
+  [Four-incidence deletion bound](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L13)
+  · [Unique intersections and retained mass](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L97)
+  · [Indexed witness](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L183)
+  · [Distinct nonempty witness](OnlineReachabilityPreservers/HalfFiveIncidenceHitting.lean#L198).
 - At half cutoff five, or at half cutoff six with full-three
   exclusion, the integer charge can use the actual mass \(K\) after
   opposite pruning. Write \(C=n\lfloor(M-1)/(4n)\rfloor+

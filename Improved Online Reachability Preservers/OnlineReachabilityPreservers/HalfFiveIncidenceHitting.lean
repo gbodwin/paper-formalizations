@@ -1,0 +1,224 @@
+import OnlineReachabilityPreservers.LiteralFrozenHalfFive
+import OnlineReachabilityPreservers.FrozenHalfFourConflicts
+
+/-! Four-incidence hitting sets for two-vertex intersections. -/
+
+namespace OnlineReachabilityPreservers
+
+open Finset
+local notation "Before" => SourceAudit.BeforeIn
+
+/-- A family of four-point subsets has a hitting set of size at most
+three sevenths of the number of sets plus one seventh of the ground set. -/
+theorem four_point_hitting_set_card {A : Type*} [DecidableEq A] (ground : Finset A)
+    (family : Finset (Finset A)) (within : ∀ edge ∈ family, edge ⊆ ground)
+    (sizes : ∀ edge ∈ family, edge.card = 4) :
+    ∃ chosen ⊆ ground, (∀ edge ∈ family, (edge ∩ chosen).Nonempty) ∧
+      7*chosen.card ≤ 3*family.card+ground.card := by
+  classical
+  induction size : family.card using Nat.strong_induction_on generalizing family ground with
+  | h size ih =>
+    by_cases overlap : ∃ a ∈ family, ∃ b ∈ family, a ≠ b ∧ ¬ Disjoint a b
+    · obtain ⟨a,aIn,b,bIn,apart,common⟩ := overlap
+      obtain ⟨x,ax,bx⟩ := not_disjoint_iff.mp common
+      have xIn := within a aIn ax
+      let rest := family.filter fun edge => x ∉ edge
+      have fitted : rest ⊆ (family.erase a).erase b := by
+        intro edge member
+        obtain ⟨edgeIn,avoids⟩ := mem_filter.mp member
+        have neA : edge ≠ a := by rintro rfl; exact avoids ax
+        have neB : edge ≠ b := by rintro rfl; exact avoids bx
+        exact mem_erase.mpr ⟨neB,mem_erase.mpr ⟨neA,edgeIn⟩⟩
+      have smaller := card_le_card fitted
+      have bStill : b ∈ family.erase a := mem_erase.mpr ⟨apart.symm,bIn⟩
+      have nA := card_erase_add_one aIn
+      have nB := card_erase_add_one bStill
+      have nX := card_erase_add_one xIn
+      obtain ⟨chosen,supported,hits,count⟩ := ih rest.card (by omega) (ground.erase x) rest
+        (fun edge member z zIn => mem_erase.mpr ⟨fun same => (mem_filter.mp member).2 (same ▸ zIn),
+          within edge (mem_filter.mp member).1 zIn⟩)
+        (fun edge member => sizes edge (mem_filter.mp member).1) rfl
+      have fresh : x ∉ chosen := fun xChosen => (mem_erase.mp (supported xChosen)).1 rfl
+      refine ⟨insert x chosen,insert_subset_iff.mpr ⟨xIn,supported.trans (erase_subset _ _)⟩,?_,?_⟩
+      · intro edge edgeIn
+        by_cases carries : x ∈ edge
+        · exact ⟨x,mem_inter.mpr ⟨carries,mem_insert_self _ _⟩⟩
+        · obtain ⟨y,member⟩ := hits edge (mem_filter.mpr ⟨edgeIn,carries⟩)
+          exact ⟨y,mem_inter.mpr ⟨(mem_inter.mp member).1,mem_insert_of_mem (mem_inter.mp member).2⟩⟩
+      · rw [card_insert_of_notMem fresh]
+        omega
+    · have apart : (family : Set (Finset A)).PairwiseDisjoint id := by
+        intro a aIn b bIn ne
+        by_contra bad
+        exact overlap ⟨a,aIn,b,bIn,ne,bad⟩
+      have packed : family.biUnion id ⊆ ground := by
+        intro x member
+        obtain ⟨edge,edgeIn,point⟩ := mem_biUnion.mp member
+        exact within edge edgeIn point
+      have bound := card_le_card packed
+      rw [card_biUnion apart] at bound
+      have cardinal : (∑ edge ∈ family, (id edge).card) = 4*family.card := calc
+        _ = ∑ _ ∈ family, (4:ℕ) := sum_congr rfl sizes
+        _ = _ := by simp [Nat.mul_comm]
+      rw [cardinal] at bound
+      have nonempty (edge : family) : edge.val.Nonempty := card_pos.mp (by rw [sizes _ edge.property]; decide)
+      let select (edge : family) := (nonempty edge).choose
+      let chosen := (univ : Finset family).image select
+      have membership (edge : family) : select edge ∈ edge.val := (nonempty edge).choose_spec
+      have chosenSize : chosen.card ≤ family.card := by
+        simpa only [card_univ,Fintype.card_coe] using
+          (card_image_le : ((univ : Finset family).image select).card ≤ (univ : Finset family).card)
+      refine ⟨chosen,?_,?_,by omega⟩
+      · intro x contained
+        obtain ⟨edge,_,rfl⟩ := mem_image.mp contained
+        exact within _ edge.property (membership edge)
+      · intro edge edgeIn
+        let label : family := ⟨edge,edgeIn⟩
+        exact ⟨select label,mem_inter.mpr ⟨membership label,mem_image.mpr ⟨label,mem_univ _,rfl⟩⟩⟩
+
+private def increasingRowPairs (p : ℕ) : Finset (Fin p × Fin p) :=
+  univ.filter fun pair => pair.1 < pair.2
+
+private def commonRowPoints {n p : ℕ} (paths : Fin p → List (Fin n))
+    (pair : Fin p × Fin p) : Finset (Fin n) :=
+  (paths pair.1).toFinset ∩ (paths pair.2).toFinset
+
+/-- For each unordered row pair count all unordered pairs of common vertices. -/
+def commonVertexPairCount {n p : ℕ} (paths : Fin p → List (Fin n)) : ℕ :=
+  ∑ pair ∈ increasingRowPairs p, (commonRowPoints paths pair).card.choose 2
+
+private def commonPairIncidences {n p : ℕ} (pair : Fin p × Fin p) (vertices : Finset (Fin n)) :
+    Finset (Fin p × Fin n) :=
+  ({pair.1,pair.2} : Finset (Fin p)).product vertices
+
+/-- Remove enough incidences to leave at most one vertex in each pairwise
+intersection. With starting mass M and common vertex pair count E, the
+remaining mass K satisfies 6M ≤ 7K + 3E. -/
+theorem common_vertex_pairs_unique_sublists {n p : ℕ} (paths : Fin p → List (Fin n))
+    (simple : ∀ i, (paths i).Nodup) :
+    let M := ∑ i, (paths i).length
+    let E := commonVertexPairCount paths
+    ∃ kept : Fin p → List (Fin n),
+      (∀ i, (kept i).Sublist (paths i)) ∧
+      (∀ {i j x y}, i ≠ j → x ∈ kept i → x ∈ kept j → y ∈ kept i → y ∈ kept j → x = y) ∧
+      6*M ≤ 7*(∑ i, (kept i).length)+3*E := by
+  classical
+  let ground := pieceIncidences paths univ
+  let byRows (pair : Fin p × Fin p) :=
+    ((commonRowPoints paths pair).powersetCard 2).image (commonPairIncidences pair)
+  let constraints := (increasingRowPairs p).biUnion byRows
+  have edgeData (edge : Finset (Fin p × Fin n)) (edgeIn : edge ∈ constraints) :
+      ∃ pair ∈ increasingRowPairs p, ∃ vertices ∈ (commonRowPoints paths pair).powersetCard 2,
+        commonPairIncidences pair vertices = edge := by
+    obtain ⟨pair,present,withinPair⟩ := mem_biUnion.mp edgeIn
+    obtain ⟨vertices,vertexPair,equal⟩ := mem_image.mp withinPair
+    exact ⟨pair,present,vertices,vertexPair,equal⟩
+  have within : ∀ edge ∈ constraints, edge ⊆ ground := by
+    intro edge edgeIn incidence on
+    obtain ⟨pair,_,vertices,vertexPair,rfl⟩ := edgeData edge edgeIn
+    obtain ⟨slot,vertex⟩ := mem_product.mp on
+    obtain ⟨left,right⟩ := mem_inter.mp ((mem_powersetCard.mp vertexPair).1 vertex)
+    refine mem_pieceIncidences.mpr ⟨mem_univ _,?_⟩
+    rcases mem_insert.mp slot with first | second
+    · rw [first]
+      exact List.mem_toFinset.mp left
+    · rw [mem_singleton.mp second]
+      exact List.mem_toFinset.mp right
+  have sizes : ∀ edge ∈ constraints, edge.card = 4 := by
+    intro edge edgeIn
+    obtain ⟨pair,present,vertices,vertexPair,rfl⟩ := edgeData edge edgeIn
+    have ordered := (mem_filter.mp present).2
+    change (({pair.1,pair.2} : Finset (Fin p)) ×ˢ vertices).card = 4
+    rw [card_product,(mem_powersetCard.mp vertexPair).2,card_pair ordered.ne]
+  have constraintCount : constraints.card ≤ commonVertexPairCount paths := calc
+    _ ≤ ∑ pair ∈ increasingRowPairs p, (byRows pair).card := card_biUnion_le
+    _ ≤ _ := sum_le_sum fun pair _ => by
+      rw [← card_powersetCard]
+      exact card_image_le
+  obtain ⟨removed,support,cover,paid⟩ := four_point_hitting_set_card ground constraints within sizes
+  let kept := erasePieceIncidences paths removed
+  have sub (i : Fin p) : (kept i).Sublist (paths i) := erasePieceIncidences_sublist paths removed i
+  have mass := erasePieceIncidences_mass_add_loss simple univ removed
+  rw [inter_eq_right.mpr support] at mass
+  have groundCard : ground.card = ∑ i, (paths i).length := pieceIncidences_card simple univ
+  have orderedUnique {i j : Fin p} {x y : Fin n} (ordered : i < j)
+      (xi : x ∈ kept i) (xj : x ∈ kept j) (yi : y ∈ kept i) (yj : y ∈ kept j) : x = y := by
+    by_contra apart
+    let pair : Fin p × Fin p := (i,j)
+    let vertices : Finset (Fin n) := {x,y}
+    have subset : vertices ⊆ commonRowPoints paths pair := by
+      intro v vIn
+      rcases mem_insert.mp vIn with same | other
+      · subst v
+        exact mem_inter.mpr ⟨List.mem_toFinset.mpr ((sub i).subset xi),
+          List.mem_toFinset.mpr ((sub j).subset xj)⟩
+      · obtain rfl := mem_singleton.mp other
+        exact mem_inter.mpr ⟨List.mem_toFinset.mpr ((sub i).subset yi),
+          List.mem_toFinset.mpr ((sub j).subset yj)⟩
+    have pairOn : pair ∈ increasingRowPairs p := mem_filter.mpr ⟨mem_univ _,ordered⟩
+    have vertexPair : vertices ∈ (commonRowPoints paths pair).powersetCard 2 :=
+      mem_powersetCard.mpr ⟨subset,card_pair apart⟩
+    have edgeOn : commonPairIncidences pair vertices ∈ constraints :=
+      mem_biUnion.mpr ⟨pair,pairOn,mem_image_of_mem (commonPairIncidences pair) vertexPair⟩
+    obtain ⟨⟨row,vertex⟩,includes⟩ := cover (commonPairIncidences pair vertices) edgeOn
+    have deleted := (mem_inter.mp includes).2
+    have products := mem_product.mp (mem_inter.mp includes).1
+    have rowCases : row = i ∨ row = j := by simpa [pair] using products.1
+    have vertexCases : vertex = x ∨ vertex = y := by simpa [vertices] using products.2
+    rcases rowCases with rfl | rfl <;> rcases vertexCases with rfl | rfl
+    · exact (mem_erasePieceIncidences.mp xi).2 deleted
+    · exact (mem_erasePieceIncidences.mp yi).2 deleted
+    · exact (mem_erasePieceIncidences.mp xj).2 deleted
+    · exact (mem_erasePieceIncidences.mp yj).2 deleted
+  refine ⟨kept,sub,?_,?_⟩
+  · intro i j x y different xi xj yi yj
+    rcases lt_or_gt_of_ne different with order | order
+    · exact orderedUnique order xi xj yi yj
+    · exact orderedUnique order xj xi yj yi
+  · change (∑ i, (kept i).length)+removed.card = ∑ i, (paths i).length at mass
+    omega
+
+/-- The exact factor-four starting caps at half cutoff five follow
+if the common vertex pair count is at most 53/72 of the starting mass. -/
+theorem regularization_list_frozen_half_five_of_common_vertex_pair_count {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (simple : ∀ i, (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) 5) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length) (long : p ≤ ∑ i, (paths i).length)
+    (few : 72*commonVertexPairCount paths ≤ 53*(∑ i, (paths i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v),
+      (∀ i, (rows i).Nodup) ∧ HalfBridgeFree (Before rows) 5 ∧
+      M ≤ 288*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows := by
+  obtain ⟨kept,sub,unique,retain⟩ := common_vertex_pairs_unique_sublists paths simple
+  exact regularization_list_frozen_half_five_of_large_unique_sublists paths kept simple free sub
+    (fun {_ _ _ _} => unique) hn hp dense long (by omega)
+
+/-- The same common vertex pair bound gives a witness with distinct
+nonempty rows at the exact starting caps. -/
+theorem regularization_literal_frozen_half_five_of_common_vertex_pair_count {n p : ℕ}
+    (paths : Fin p → List (Fin n)) (distinct : Function.Injective paths)
+    (valid : ∀ i, paths i ≠ [] ∧ (paths i).Nodup)
+    (free : HalfBridgeFree (Before paths) 5) (hn : 0 < n) (hp : 0 < p)
+    (dense : n ≤ ∑ i, (paths i).length)
+    (few : 72*commonVertexPairCount paths ≤ 53*(∑ i, (paths i).length)) :
+    let M := ∑ i, (paths i).length
+    ∃ v ≤ n, ∃ q ≤ p, ∃ rows : Fin q → List (Fin v), Function.Injective rows ∧
+      (∀ i, rows i ≠ [] ∧ (rows i).Nodup) ∧ HalfBridgeFree (Before rows) 5 ∧
+      M ≤ 288*(∑ i, (rows i).length) ∧ (∑ i, (rows i).length) ≤ M ∧ frozenListCaps n p M rows := by
+  let M := ∑ i, (paths i).length
+  by_cases low : M ≤ 8*max n p
+  · obtain ⟨v,vFit,q,qFit,rows,oneToOne,rowsValid,all,retain,upper,caps⟩ :=
+      regularization_literal_half_full_all_of_low_mass paths distinct valid free (by decide) hn hp dense low
+    exact ⟨v,vFit,q,qFit,rows,oneToOne,rowsValid,(all 5).halfFree,by omega,upper,caps⟩
+  have long : p ≤ M := calc
+    _ = ∑ _ : Fin p, (1:ℕ) := by simp
+    _ ≤ _ := sum_le_sum (fun i _ => List.length_pos_iff.mpr (valid i).1)
+  obtain ⟨v,vFit,q,qFit,rows,rowsSimple,rowsFree,retain,upper,caps⟩ :=
+    regularization_list_frozen_half_five_of_common_vertex_pair_count paths (fun i => (valid i).2)
+      free hn hp dense long few
+  have highMean : 4*p < M := by have width := le_max_right n p; omega
+  obtain ⟨oneToOne,nonempty⟩ :=
+    frozen_length_distinct_of_large_mean rowsSimple rowsFree (by decide) hp highMean caps
+  exact ⟨v,vFit,q,qFit,rows,oneToOne,fun i => ⟨nonempty i,rowsSimple i⟩,rowsFree,retain,upper,caps⟩
+
+end OnlineReachabilityPreservers
