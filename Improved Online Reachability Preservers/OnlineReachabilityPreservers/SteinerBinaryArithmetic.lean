@@ -313,7 +313,7 @@ theorem binaryDecrementWithWork_spec (bits : List Bool) :
       change binaryWordValue out.1+1 = binaryWordValue tail at lower
       omega
 
-private def nextBinaryBorrow (left right borrow : Bool) : Bool :=
+def nextBinaryBorrow (left right borrow : Bool) : Bool :=
   if left == right then borrow else !left
 
 private theorem binaryBorrow_digit (left right borrow : Bool) :

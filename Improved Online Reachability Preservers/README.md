@@ -2901,6 +2901,23 @@ The full solver's machine implementation remains open.
 · [All-tape sampler agreement](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L431)
 · [All-tape bound at the chosen budget](OnlineReachabilityPreservers/SteinerSeedTapeMachine.lean#L457).
 
+A second finite stack machine compares two binary words separated on
+the input stack. It transfers the first word through two stacks to
+restore its low-bit-first order. It then scans both words and records
+the subtraction borrow and exact bit-list equality. The numeric flag
+allows unequal lengths and high zero bits. The equality flag compares
+the original lists. The two flags agree with the outputs of the metered
+comparison functions. The machine uses at most \(3L+R+3\) transitions
+for word lengths \(L,R\).
+A corollary checks an endpoint against a supplied binary word for the
+vertex budget.
+[Machine](OnlineReachabilityPreservers/SteinerBinaryComparisonMachine.lean#L54)
+· [Comparison transitions](OnlineReachabilityPreservers/SteinerBinaryComparisonMachine.lean#L217)
+· [Exact flags](OnlineReachabilityPreservers/SteinerBinaryComparisonMachine.lean#L238)
+· [Stack-machine linear time](OnlineReachabilityPreservers/SteinerBinaryComparisonMachine.lean#L245)
+· [Endpoint range check](OnlineReachabilityPreservers/SteinerBinaryComparisonMachine.lean#L265).
+
+
 
 
 

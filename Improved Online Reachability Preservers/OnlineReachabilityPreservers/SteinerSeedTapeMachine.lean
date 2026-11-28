@@ -61,17 +61,17 @@ private def tapeMachineConfig (label : Option (Fin 4))
   var := none
   stk := ![input,markers,work]
 
-private theorem tapeStack_update_input (input markers work next : List SeedTapeSymbol) :
+theorem tapeStack_update_input (input markers work next : List SeedTapeSymbol) :
     Function.update (![input,markers,work] : Fin 3 → List SeedTapeSymbol) 0 next = ![next,markers,work] := by
   funext i
   fin_cases i <;> simp [Function.update]
 
-private theorem tapeStack_update_markers (input markers work next : List SeedTapeSymbol) :
+theorem tapeStack_update_markers (input markers work next : List SeedTapeSymbol) :
     Function.update (![input,markers,work] : Fin 3 → List SeedTapeSymbol) 1 next = ![input,next,work] := by
   funext i
   fin_cases i <;> simp [Function.update]
 
-private theorem tapeStack_update_work (input markers work next : List SeedTapeSymbol) :
+theorem tapeStack_update_work (input markers work next : List SeedTapeSymbol) :
     Function.update (![input,markers,work] : Fin 3 → List SeedTapeSymbol) 2 next = ![input,markers,next] := by
   funext i
   fin_cases i <;> simp [Function.update]
