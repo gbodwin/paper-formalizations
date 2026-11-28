@@ -23,13 +23,18 @@ def HasCappedShortReturnCopyPartition {I V : Type*} [Fintype I] [Fintype V] [Dec
   ∀ v, ∃ groups, CappedPathPartition (occurrences (fun i => (rows i).toFinset) v)
     (ShortReturnCopyRowPair rows cutoff v) width groups
 
-/-- Use such groups as vertex copies and merge groups whose total
-size fits. The projection is exactly the original rows, every degree
-meets the width, and the light copies inject into original vertices. -/
-theorem copies_of_cappedShortReturnCopyPartition {n p w cutoff : ℕ} {half : Bool}
+/-- Use width-bounded groups of incident rows as vertex copies. The
+preservation proof can use every incidence, comparison, and linked pair. -/
+theorem copies_of_capped_vertex_partitions {n p w cutoff : ℕ} {half : Bool}
     {rows : Fin p → List (Fin n)} (simple : ∀ i, (rows i).Nodup)
-    (free : localOrderAdmissible half cutoff rows)
-    (canGroup : HasCappedShortReturnCopyPartition rows w cutoff) :
+    (linked : Fin n → Fin p → Fin p → Prop)
+    (canGroup : ∀ v, ∃ groups, CappedPathPartition (occurrences (fun i => (rows i).toFinset) v)
+      (linked v) w groups)
+    (preserve : ∀ (sizes : Fin n → ℕ) (copies : Fin p → List (Σₗ v : Fin n, Fin (sizes v))),
+      (∀ i, (copies i).map Sigma.fst = rows i) →
+      (∀ {i u v}, Before copies i u v → Before rows i u.fst v.fst) →
+      (∀ {i j u v}, u.fst = v.fst → u ∈ copies i → v ∈ copies j → linked u.fst i j → u = v) →
+      localOrderAdmissible half cutoff copies) :
     ∃ (sizes : Fin n → ℕ) (copies : Fin p → List (Σₗ v : Fin n, Fin (sizes v))),
       (∀ i, (copies i).Nodup) ∧ localOrderAdmissible half cutoff copies ∧
       (∀ i, (copies i).map Sigma.fst = rows i) ∧
@@ -39,7 +44,6 @@ theorem copies_of_cappedShortReturnCopyPartition {n p w cutoff : ℕ} {half : Bo
   classical
   let marks (i : Fin p) := (rows i).toFinset
   let incidence (v : Fin n) := occurrences marks v
-  let linked (v : Fin n) := ShortReturnCopyRowPair rows cutoff v
   have existence (v : Fin n) := cappedPathPartition_of_pairwise_large (incidence v) (linked v) w (canGroup v)
   choose groups partition large using existence
   let sizes (v : Fin n) := (groups v).card
@@ -103,20 +107,15 @@ theorem copies_of_cappedShortReturnCopyPartition {n p w cutoff : ℕ} {half : Bo
     have step := listBefore_map (fun v : W => v.fst) ((projects i).symm ▸ simple i) s
     have pathsEq : (fun i => (copies i).map (fun v => v.fst)) = rows := funext projects
     rwa [pathsEq] at step
-  have safe : ShortReturnCopyCompatible rows copies (fun u : W => u.fst) cutoff := by
-    intro i j u x y v apart same start finish back
-    change u.fst = v.fst at same
-    have last : Before rows j y.fst u.fst := by
-      have comparison := steps finish
-      rwa [← same] at comparison
-    have connected : linked u.fst i j := ⟨apart, x.fst, y.fst, steps start, last, back⟩
+  have together {i j : Fin p} {u v : W} (same : u.fst = v.fst)
+      (left : u ∈ copies i) (right : v ∈ copies j) (connected : linked u.fst i j) : u = v := by
     obtain ⟨g, among, firstOn, lastOn⟩ := (partition u.fst).together connected
-    have firstEq := unique (present u) among ((mem_copy i u).mp start.1) firstOn
+    have firstEq := unique (present u) among ((mem_copy i u).mp left) firstOn
     have vPresent : group v ∈ groups u.fst := by rw [same]; exact present v
-    have lastEq := unique vPresent among ((mem_copy j v).mp finish.2.1) lastOn
+    have lastEq := unique vPresent among ((mem_copy j v).mp right) lastOn
     exact same_label same (firstEq.trans lastEq.symm)
-  have legal : localOrderAdmissible half cutoff copies :=
-    localOrderAdmissible_of_short_return_compatible_copies (fun u : W => u.fst) free steps safe
+  have legal := preserve sizes copies projects (fun {_ _ _} s => steps s)
+    (fun {_ _ _ _} same left right link => together same left right link)
   refine ⟨sizes, copies, rowSimple, legal, projects, ?_, ?_⟩
   · intro u
     exact (congrArg card (piece_degree u)).trans_le ((partition u.fst).fits _ (present u))
@@ -134,6 +133,33 @@ theorem copies_of_cappedShortReturnCopyPartition {n p w cutoff : ℕ} {half : Bo
       rw [piece_degree v] at right
       omega
     simpa only [card_univ, Fintype.card_fin] using count
+
+/-- Use such groups as vertex copies and merge groups whose total
+size fits. The projection is exactly the original rows, every degree
+meets the width, and the light copies inject into original vertices. -/
+theorem copies_of_cappedShortReturnCopyPartition {n p w cutoff : ℕ} {half : Bool}
+    {rows : Fin p → List (Fin n)} (simple : ∀ i, (rows i).Nodup)
+    (free : localOrderAdmissible half cutoff rows)
+    (canGroup : HasCappedShortReturnCopyPartition rows w cutoff) :
+    ∃ (sizes : Fin n → ℕ) (copies : Fin p → List (Σₗ v : Fin n, Fin (sizes v))),
+      (∀ i, (copies i).Nodup) ∧ localOrderAdmissible half cutoff copies ∧
+      (∀ i, (copies i).map Sigma.fst = rows i) ∧
+      (∀ v, (occurrences (fun i => (copies i).toFinset) v).card ≤ w) ∧
+      ({v ∈ univ | (occurrences (fun i => (copies i).toFinset) v).card ≤ w/2} :
+        Finset (Σₗ v : Fin n, Fin (sizes v))).card ≤ n := by
+  refine copies_of_capped_vertex_partitions (half := half) (cutoff := cutoff) simple
+    (ShortReturnCopyRowPair rows cutoff) canGroup ?_
+  intro sizes copies _ steps together
+  let W := Σₗ v : Fin n, Fin (sizes v)
+  have safe : ShortReturnCopyCompatible rows copies (fun u : W => u.fst) cutoff := by
+    intro i j u x y v apart same start finish back
+    change u.fst = v.fst at same
+    have last : Before rows j y.fst u.fst := by
+      have comparison := steps finish
+      rwa [← same] at comparison
+    exact together same start.1 finish.2.1 ⟨apart,x.fst,y.fst,steps start,last,back⟩
+  exact localOrderAdmissible_of_short_return_compatible_copies (fun u : W => u.fst)
+    free (fun {_ _ _} s => steps s) safe
 
 /-- Split short-return groups and apply both fixed-width trims when
 the rows carry at most the original incidence mass. -/

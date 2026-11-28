@@ -404,9 +404,9 @@ paths and exclusion on the original rows as well as the degree copies.
 Both have the original budgets and four starting caps. An argument for
 constant retention when a group exceeds the width remains open in general.
 [Projection](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L89)
-· [Packed rows](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L227)
-· [Indexed witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L284)
-· [Literal witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L337).
+· [Packed rows](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L229)
+· [Indexed witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L286)
+· [Literal witness](OnlineReachabilityPreservers/IncidenceComponentCleaning.lean#L339).
 
 For example, at \(n=p=9\) and \(M=10\), take the rows
 \([0,1,2,3,4,5]\), \([5,0]\), and \([4,1]\), plus six empty indexed
@@ -422,6 +422,22 @@ original width and gives an indexed full witness at every cutoff.
 · [Cycle-pair test failure](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L189)
 · [Grouped exclusion](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L114)
 · [Frozen witness](OnlineReachabilityPreservers/IncidenceComponentAudit.lean#L223).
+
+The deleted-label construction also makes the degree split itself
+admissible when each group of incident rows at a deleted vertex fits
+the original degree width. Its incidence transpose exchanges the labels
+while the resulting degree copies retain each original row's vertex
+sequence under projection. Both width tests can use the original
+graph, since copying vertices cannot enlarge the deleted-row groups.
+For admissible simple input of mass at least both positive budgets,
+the resulting indexed frozen witness retains at least \(M/4\) at the same
+cutoff in either mode. The literal version retains at least \(M/8\)
+and takes and gives distinct nonempty simple rows at cutoff at least
+two. These guarantees include both original budgets and all four
+starting-average caps.
+[Grouped degree copies](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L42)
+· [Indexed cleaning](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L111)
+· [Literal cleaning](OnlineReachabilityPreservers/IncidenceDegreeComponentCleaning.lean#L187).
 
 At full cutoff six, opposite-intersection pruning followed by restricting
 to a quarter of each support permits the contiguous construction on an
@@ -1698,7 +1714,7 @@ minimum number of groups and use the groups as copies. Every original
 row is recovered by projection, each degree is within the width, and at
 most one copy of each vertex is at or below half the width. For simple
 input, the copies preserve the chosen full or half exclusion.
-[Short-return pairs of incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L14) · [Bounded degree groups](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L21) · [Admissible capped degree copies](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L29).
+[Short-return pairs of incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L14) · [Bounded degree groups](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L21) · [Admissible capped degree copies](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L140).
 
 Start with simple rows whose mass \(M\) is at least both positive
 budgets. If standard degree copying at the original width preserves
@@ -1738,7 +1754,7 @@ copied rows admit the short-return
 path partition at the original path width, each support trim loses at
 most \(M/8\). The later peeling uses the two original lower caps and
 leaves a frozen witness of mass at least \(M/4\) within both budgets.
-[Separate heavy-group thresholds](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L85) · [Frozen cleaning from both grouped profiles](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L220).
+[Separate heavy-group thresholds](OnlineReachabilityPreservers/FrozenQuadraticTrimming.lean#L85) · [Frozen cleaning from both grouped profiles](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L246).
 
 The path-group bound can be checked on the original rows. Exact row
 projection sends every copied return and its linked component to the
@@ -1748,7 +1764,7 @@ at least both positive budgets, bounded degree groups at the original
 degree width and original row components within the original path
 width give a frozen \(M/4\) witness outright. Both budgets, all four caps
 and the chosen cutoff hold in either exclusion mode.
-[Component size does not increase under row copying](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L160) · [Frozen cleaning under both original-width tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L282).
+[Component size does not increase under row copying](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L160) · [Frozen cleaning under both original-width tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L308).
 
 The degree grouping premise has a finite component test too. For each
 original vertex, connect any two incident rows that start and end a
@@ -1756,7 +1772,7 @@ tested short return there. A partition respecting those links exists
 at the degree width exactly when each component fits. If both the
 degree and path components fit their original widths, the on-input
 tests give the frozen indexed quarter-mass witness at the chosen cutoff.
-[Components and bounded partitions](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L72) · [Graph of linked incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L308) · [Exact degree component criterion](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L330) · [Frozen witness from both finite tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L348).
+[Components and bounded partitions](OnlineReachabilityPreservers/ShortReturnPieceComponents.lean#L72) · [Graph of linked incident rows](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L334) · [Exact degree component criterion](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L356) · [Frozen witness from both finite tests](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L374).
 
 For distinct nonempty simple inputs with positive budgets and mass
 \(M\) at least the vertex budget, the same tests apply at every
@@ -1781,7 +1797,7 @@ component tests at the original widths yields an indexed witness of
 mass at least \(M/18\) with both budgets, the chosen cutoff and all four
 frozen caps. In particular this applies when the original oversized
 components account for at most \(M/3\) deleted incidences.
-[Grouped width trimming after earlier losses](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L196) · [Frozen witness from a two-thirds restriction](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L158) · [Frozen witness from the overflow bound](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L200).
+[Grouped width trimming after earlier losses](OnlineReachabilityPreservers/ShortReturnVertexPacking.lean#L222) · [Frozen witness from a two-thirds restriction](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L158) · [Frozen witness from the overflow bound](OnlineReachabilityPreservers/ShortReturnOverflow.lean#L200).
 
 Within a connected component, keep the first elements in the finite
 order up to the prescribed width. Disjointness ensures that a component

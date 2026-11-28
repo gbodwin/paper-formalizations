@@ -181,7 +181,9 @@ theorem incidenceRowDeletionGroup_card_le_project {W : Type*} [DecidableEq W]
     have nodup : ((copies i).map project).Nodup := projects i ▸ simple i
     exact List.inj_on_of_nodup_map nodup left right same
 
-private theorem row_deletion_partition (rows : I → List V) (i : I) (width : ℕ)
+/-- The deleted-row groups partition its neighbors and keep linked pairs
+together whenever each group fits the width. -/
+theorem incidence_row_deletion_partition (rows : I → List V) (i : I) (width : ℕ)
     (fits : ∀ x ∈ rows i, (incidenceRowDeletionGroup rows i x).card ≤ width) :
     ∃ groups, CappedPathPartition (rows i).toFinset
       (fun x y => x ∈ rows i ∧ y ∈ rows i ∧ RowDeletionConnected rows i x y) width groups := by
@@ -237,7 +239,7 @@ theorem split_of_incidence_row_deletion_group_room {V : Type*} [LinearOrder V] [
       ({i ∈ univ | (pieces i).length ≤ width/2} : Finset (Σₗ i : Fin p, Fin (sizes i))).card ≤ p := by
   let linked (i : Fin p) (x y : V) := x ∈ rows i ∧ y ∈ rows i ∧ RowDeletionConnected rows i x y
   refine split_of_capped_path_partitions_with_membership (half := half) (cutoff := k)
-    simple linked (fun i => row_deletion_partition rows i width (fits i)) ?_
+    simple linked (fun i => incidence_row_deletion_partition rows i width (fits i)) ?_
   intro sizes pieces members steps _ together
   let J := Σₗ i : Fin p, Fin (sizes i)
   let parent : J → Fin p := Sigma.fst
