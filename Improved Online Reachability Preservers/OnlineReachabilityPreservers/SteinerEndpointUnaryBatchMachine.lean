@@ -410,7 +410,7 @@ def steinerEndpointUnaryBatchMachine_valid {n : ℕ} (words : List (List Bool))
 def steinerRawGraphEndpointWords (rows : List SteinerRangeWordPair) : List (List Bool) :=
   rows.flatMap fun pair => [pair.1,pair.2]
 
-private theorem rawGraphEndpointWords_length (rows : List SteinerRangeWordPair) :
+theorem steinerRawGraphEndpointWords_length (rows : List SteinerRangeWordPair) :
     (steinerRawGraphEndpointWords rows).length = 2*rows.length := by
   induction rows with
   | nil => rfl
@@ -418,7 +418,7 @@ private theorem rawGraphEndpointWords_length (rows : List SteinerRangeWordPair) 
     simp only [steinerRawGraphEndpointWords,List.flatMap_cons,List.length_append,List.length_cons,List.length_nil] at ih ⊢
     omega
 
-private theorem rawGraphEndpointWords_bits (rows : List SteinerRangeWordPair) :
+theorem steinerRawGraphEndpointWords_bits (rows : List SteinerRangeWordPair) :
     ((steinerRawGraphEndpointWords rows).map List.length).sum = binaryEndpointBits rows := by
   induction rows with
   | nil => rfl
@@ -461,7 +461,7 @@ def steinerEndpointUnaryBatchMachine_guardedGraph {n : ℕ} (allowance : ℕ)
   have run := steinerEndpointUnaryBatchMachine_valid (steinerRawGraphEndpointWords rows) endpoints
   rw [exactValues] at run
   refine ⟨run.toEvalsTo,run.steps_le_m.trans ?_⟩
-  rw [encodeSteinerBinaryEndpointWords_length,rawGraphEndpointWords_bits,rawGraphEndpointWords_length]
+  rw [encodeSteinerBinaryEndpointWords_length,steinerRawGraphEndpointWords_bits,steinerRawGraphEndpointWords_length]
   ring_nf
   exact le_rfl
 

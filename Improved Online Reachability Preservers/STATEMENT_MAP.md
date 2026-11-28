@@ -1823,6 +1823,24 @@ at most \(4E+8r+10rn+2\) transitions.
 · [Bound for valid indices](OnlineReachabilityPreservers/SteinerEndpointUnaryBatchMachine.lean#L400)
 · [Agreement with the guarded graph decoder](OnlineReachabilityPreservers/SteinerEndpointUnaryBatchMachine.lean#L441).
 
+The guarded graph machine keeps a copy of its single-bound input
+while running the range checker with an internal empty seed request.
+On acceptance it converts the original endpoint frames to right-tagged
+unary values in row order. The rejection branch clears the saved frame
+and returns a single left-tagged marker.
+The output agrees with the guarded decoder at allowance \(n+E\),
+where \(n\) is the numeric bound and \(E\) counts endpoint bits.
+For \(X\) original framed symbols, the bound for both outcomes is
+\(8X^2+21X+10Xn+19\). A rejected frame takes at most
+\(8X^2+16X+13\) transitions, using only its original frame length.
+[Guarded graph index machine](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphMachine.lean#L131)
+· [One-bound graph encoding](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphMachine.lean#L543)
+· [Exact original frame length](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphMachine.lean#L638)
+· [Exact guarded output](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphMachine.lean#L618)
+· [Accepted finite indices](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphMachine.lean#L554)
+· [Bound using the vertex count](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphMachine.lean#L645)
+· [Quadratic rejection](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphMachine.lean#L668).
+
 
 
 
