@@ -4326,6 +4326,23 @@ three times the vertex count. Full exclusion holds through size three.
 · [Line lengths](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L177)
 · [Exact mass](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L261).
 
+At cutoff three, the original-average form of the literal Lemma 39
+holds for \(0<p\), \(8p\le n\), and \(p(p-1)\le108n\), when an exact
+literal half family is feasible. For its maximum \(M\), if \(M\le8n\),
+use the low-mass literal witness. Otherwise the half degree moment
+implies \(p^2>40n\) and \(M\le12n\). Use width \(w=\lceil M/(4p)\rceil\).
+The moment and budget bounds yield \((2w-1)^2\le n\) and
+\(3(2w-1)\le p\). Pack disjoint grid copies up to the smaller capacity.
+The retained mass is in \([M/8,M]\), all four starting-average caps
+hold, and the output rows are distinct, nonempty and simple. The
+regular-copy argument works for any full-three-free seed family with
+uniform degree, the prescribed length range, and the stated budget
+and original-mass inequalities.
+[Moment estimate](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L14)
+· [Disjoint regular copies](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L69)
+· [Hexagonal witness](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L173)
+· [Literal Lemma 39 in this range](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L186).
+
 At every half cutoff \(k\ge3\), simple indexed families have
 \(M\le8(n+p)\) or \(M^3\le1024(np)^2\), hence mass
 \(O((np)^{2/3}+n+p)\). Later branches cannot share an upstream vertex

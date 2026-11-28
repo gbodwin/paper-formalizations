@@ -2434,6 +2434,17 @@ number of vertices.
 · [Degree and length](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L137)
 · [Budgets and incidence mass](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L252).
 
+At cutoff three, take positive path budget \(p\), \(8p\le n\), and
+\(p(p-1)\le108n\). If the exact-count literal half family is feasible,
+its attained maximum \(M\) has a literal full-three witness within both
+budgets, retaining at least \(M/8\) and meeting all four original-average
+caps. Low mass uses the existing construction. If \(M>8n\), the degree
+moment gives \(M\le12n\) and \(p^2>40n\). A hexagonal grid of width
+\(\lceil M/(4p)\rceil\) fits, and disjoint copies give the retention bound.
+[Copying finite regular witnesses](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L69)
+· [Hexagonal grid witness](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L173)
+· [Literal maximum at large vertex budgets](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L186).
+
 At cutoff three and comparable positive budgets, the witness-average
 form of Lemma 39 holds with its literal half benchmark. For a field of
 size \(q\), the affine lines with directions \((1,s,s^2)\) give \(q^3\)

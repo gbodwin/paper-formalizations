@@ -3125,6 +3125,24 @@ local-order upper bound and recurrence of Theorem 43.
   · [Vertex count](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L252)
   · [Path count](OnlineReachabilityPreservers/FullThreeHexGrid.lean#L258).
 
+  For \(0<p\), \(8p\le n\), and \(p(p-1)\le108n\), split the literal
+  half-three maximum into two mass cases when the exact counts are feasible. Above
+  \(8n\), the moment \(M^2\le n(p(p-1)+3M)\) implies \(p^2>40n\).
+  The budget hypothesis puts \(M\) at most \(12n\), and the ceiling
+  width \(w=\lceil M/(4p)\rceil\) satisfies \(8pw\le25n\). Squaring
+  verifies the hexagonal grid vertex allowance, while \(6w\le p\)
+  verifies the path allowance. Use the smaller of the two integer
+  copy counts. Rounding down keeps at least half of the limiting
+  budget in that coordinate. Uniform degree and the length lower
+  bound give retention of at least \(M/8\). Degree three meets the
+  starting degree caps, and the length interval meets the starting
+  length caps. The output has literal rows and full exclusion through
+  size three. The same disjoint-copy proof accepts other finite
+  full-three families with the appropriate degree and length bounds.
+  [Width and grid witness](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L173)
+  · [Finite copy argument](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L69)
+  · [Exact-count maximum and frozen witness](OnlineReachabilityPreservers/FullThreeHexGridCleaning.lean#L186).
+
   Count all choice sizes together for a sharper constant. For pruned
   mass \(W\), let \(S=(W-n-p)_+\). Encode a three-element subset of
   \(\{0,\ldots,S+1\}\) by its three nonnegative gaps \(a,b,c\) with
