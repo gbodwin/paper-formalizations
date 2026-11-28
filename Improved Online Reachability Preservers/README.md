@@ -3422,6 +3422,21 @@ and regardless of repeated rows. With unary input length \(X\) and
 · [Exact finite arc cardinality](OnlineReachabilityPreservers/SteinerUnaryGraphArcCountMachine.lean#L234)
 · [Polynomial-time machine](OnlineReachabilityPreservers/SteinerUnaryGraphArcCountMachine.lean#L245).
 
+The guarded count-frame adapter saves a copy of the binary vertex
+count while the guarded decoder checks the original graph. On acceptance
+it converts this saved word to a unary count, adds a delimiter and
+preserves the exact decoded row order. The result is the unary graph
+count input with each symbol right-tagged. On rejection it clears
+the saved word and returns one left-tagged marker. For original framed
+length \(X\) and vertex count \(n\), the transition bound is
+\(8X^2+28X+10Xn+6n+31\). The rejection bound \(8X^2+19X+17\)
+depends only on the original length.
+[Guarded count-frame adapter](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphCountFrameMachine.lean#L134)
+· [Exact accepted frame](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphCountFrameMachine.lean#L585)
+· [Quadratic rejection](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphCountFrameMachine.lean#L619)
+· [Both output cases](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphCountFrameMachine.lean#L645)
+· [General transition bound](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphCountFrameMachine.lean#L654).
+
 
 
 
