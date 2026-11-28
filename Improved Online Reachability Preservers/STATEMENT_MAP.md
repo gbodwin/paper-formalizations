@@ -1596,6 +1596,22 @@ vertex budget.
 · [Stack-machine linear time](OnlineReachabilityPreservers/SteinerBinaryComparisonMachine.lean#L245)
 · [Endpoint range check](OnlineReachabilityPreservers/SteinerBinaryComparisonMachine.lean#L265).
 
+For a batch of endpoint checks, the input already pairs the low bits of
+each endpoint word and the supplied bound word, padding the shorter
+side with false and ending each pair with a separator. A single-stack
+machine updates a borrow on each bit pair and combines the comparison
+with the acceptance flag on each separator. It returns the correct
+Boolean flag in at most one transition per supplied symbol plus one.
+For graph rows, Lean bounds the encoding length by the total endpoint
+bits plus twice the row count times one more than the bound-word
+length. When the supplied bound word has value \(n\), the flag agrees
+with the variable-word graph decoder at its actual input width.
+[Batch range machine](OnlineReachabilityPreservers/SteinerBinaryRangeMachine.lean#L80)
+· [Transition certificate](OnlineReachabilityPreservers/SteinerBinaryRangeMachine.lean#L177)
+· [Linear batch polynomial](OnlineReachabilityPreservers/SteinerBinaryRangeMachine.lean#L234)
+· [Exact variable-word graph flag](OnlineReachabilityPreservers/SteinerBinaryRangeMachine.lean#L263).
+
+
 
 
 
