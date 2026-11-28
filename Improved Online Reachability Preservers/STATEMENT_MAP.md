@@ -2218,6 +2218,19 @@ gives the exact candidate of the rectangular hop recurrence.
 · [Exact candidate and transition bound](OnlineReachabilityPreservers/SteinerUnaryHopTransferCandidateMachine.lean#L290)
 · [Exact supplied graph transfer](OnlineReachabilityPreservers/SteinerUnaryHopTransferCandidateMachine.lean#L332).
 
+For an expanded source row, the adapter reads the initial cap and
+runs the transfer machine on each fully supplied cell. It keeps the
+unread cells while archiving each result as a minimum operand, and
+restores the operands in their original order. The native result is
+the exact input of the minimum machine. It has at most \(X\) symbols
+and takes at most \(6X+2\) transitions to prepare, where \(X\) is the
+supplied expanded row length. An empty row supplies the cap alone.
+[Source-row frame adapter](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowFrameMachine.lean#L98)
+· [Expanded input](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowFrameMachine.lean#L411)
+· [Prepared length bound](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowFrameMachine.lean#L429)
+· [Exact prepared frame and time](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowFrameMachine.lean#L454)
+· [Linear transition polynomial](OnlineReachabilityPreservers/SteinerUnaryHopMinimumRowFrameMachine.lean#L500).
+
 
 
 
