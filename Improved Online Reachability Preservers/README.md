@@ -3511,6 +3511,23 @@ forest's bit width for seed decoding.
 · [Magnitude bound](OnlineReachabilityPreservers/SteinerForestScaleDistanceRounds.lean#L102)
 · [Width from the supplied unary scale](OnlineReachabilityPreservers/SteinerForestScaleDistanceRounds.lean#L120).
 
+The row-sum machine reads a field delimiter after each unary operand
+and a separate marker after each row. It drops the field delimiters, retains one marker
+per row and returns the total of each row in order. The transition
+bound is \(2X+2\) for an input of \(X\) symbols. For a forest weight
+round, supply a row per root with two operands per eligible transfer,
+the distance and the previous rooted weight. The machine returns the
+entire next vector in unary row order. At vertex count \(n\) and prior
+depth \(h\), the prepared frame has at most
+\(n\bigl(n(n+B+2)+1\bigr)\) symbols, where \(B\) is the verified
+rooted-weight bound at depth \(h\).
+[Unary row-sum machine](OnlineReachabilityPreservers/SteinerUnaryRowSumsMachine.lean#L48)
+· [Framed operands and rows](OnlineReachabilityPreservers/SteinerUnaryRowSumsMachine.lean#L179)
+· [Exact row totals and transition bound](OnlineReachabilityPreservers/SteinerUnaryRowSumsMachine.lean#L213)
+· [Correspondence to the cached round](OnlineReachabilityPreservers/SteinerUnaryRowSumsMachine.lean#L253)
+· [Prepared frame size](OnlineReachabilityPreservers/SteinerUnaryRowSumsMachine.lean#L299)
+· [Machine round on supplied operands](OnlineReachabilityPreservers/SteinerUnaryRowSumsMachine.lean#L312).
+
 
 
 
