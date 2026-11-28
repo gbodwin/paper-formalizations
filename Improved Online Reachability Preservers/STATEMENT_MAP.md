@@ -1841,6 +1841,20 @@ For \(X\) original framed symbols, the bound for both outcomes is
 · [Bound using the vertex count](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphMachine.lean#L645)
 · [Quadratic rejection](OnlineReachabilityPreservers/SteinerGuardedUnaryGraphMachine.lean#L668).
 
+The unary arc membership machine compares a query with each ordered
+graph row. It restores both query fields between comparisons and
+returns one Boolean. Duplicate rows and loops are allowed.
+The graph frames match the decoder's accepted payload after removing
+the right tags. On finite endpoints the output is exactly membership
+in the set of decoded arcs. For \(X\) framed symbols including the
+query and all graph rows, the machine takes at most \(3X+1\) transitions.
+[Unary arc membership machine](OnlineReachabilityPreservers/SteinerUnaryArcQueryMachine.lean#L95)
+· [Query encoding](OnlineReachabilityPreservers/SteinerUnaryArcQueryMachine.lean#L403)
+· [Accepted graph payload](OnlineReachabilityPreservers/SteinerUnaryArcQueryMachine.lean#L468)
+· [Finite membership](OnlineReachabilityPreservers/SteinerUnaryArcQueryMachine.lean#L483)
+· [Transition bound](OnlineReachabilityPreservers/SteinerUnaryArcQueryMachine.lean#L429)
+· [Polynomial-time machine](OnlineReachabilityPreservers/SteinerUnaryArcQueryMachine.lean#L453).
+
 
 
 
