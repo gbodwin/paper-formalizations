@@ -3604,6 +3604,18 @@ transition bound is \(12C^2+26C+4X^2+7X+11\).
 · [Actual transition polynomial](OnlineReachabilityPreservers/SteinerUnaryDistanceRoundMachine.lean#L212)
 · [Exact next forest vector](OnlineReachabilityPreservers/SteinerUnaryDistanceRoundMachine.lean#L227).
 
+The round output can be archived as the next previous-weight vector.
+A finite-stack machine preserves each unary total, changes its row
+marker to a field delimiter, and stacks the fields in reverse order
+in one transition per input symbol plus the halt. The exact compact
+request separates into one cap, the previous vector, and the ordered
+distance rows. An entry bound of \(B\) gives at most \(n(B+1)\) symbols
+for the previous vector of length \(n\).
+[Prior archive machine](OnlineReachabilityPreservers/SteinerUnaryRoundPriorArchiveMachine.lean#L25)
+· [Vector length bound](OnlineReachabilityPreservers/SteinerUnaryRoundPriorArchiveMachine.lean#L120)
+· [Exact archive transition bound](OnlineReachabilityPreservers/SteinerUnaryRoundPriorArchiveMachine.lean#L169)
+· [Exact compact request components](OnlineReachabilityPreservers/SteinerUnaryRoundPriorArchiveMachine.lean#L197).
+
 
 
 
