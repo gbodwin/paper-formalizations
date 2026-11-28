@@ -3545,6 +3545,23 @@ the preceding vector entries.
 · [Exact supplied table entry](OnlineReachabilityPreservers/SteinerUnaryCappedSumMachine.lean#L492)
 · [Prepared frame bound](OnlineReachabilityPreservers/SteinerUnaryCappedSumMachine.lean#L516).
 
+The capped row machine reads a complete frame of unary cell operands,
+with distinct cell and row delimiters. It runs the capped transfer
+machine on each cell and holds the unread cells and accumulated sums
+on passive stacks. It returns one unary sum and row marker per row,
+including empty rows. For \(X\) input symbols it takes at most
+\(9X+2\) transitions. For a full supplied forest round in one orientation, the
+output is the exact next weight vector, including zero contributions from
+unreachable transfers. On an exact hop table the input has at most
+\(n\bigl(n(2n+B+4)+1\bigr)\) symbols, where \(B\) bounds the previous
+vector at depth \(h\).
+[Capped row machine](OnlineReachabilityPreservers/SteinerUnaryCappedRowsMachine.lean#L93)
+· [Ordered cell input](OnlineReachabilityPreservers/SteinerUnaryCappedRowsMachine.lean#L340)
+· [Exact row sums and linear bound](OnlineReachabilityPreservers/SteinerUnaryCappedRowsMachine.lean#L498)
+· [Full round operand list](OnlineReachabilityPreservers/SteinerUnaryCappedRowsMachine.lean#L534)
+· [Exact-hop frame bound](OnlineReachabilityPreservers/SteinerUnaryCappedRowsMachine.lean#L559)
+· [Machine round on supplied cells](OnlineReachabilityPreservers/SteinerUnaryCappedRowsMachine.lean#L579).
+
 
 
 
