@@ -580,6 +580,22 @@ Lean formalization of [Bodwin–Le, arXiv:2410.20471v1](https://arxiv.org/abs/24
   · [Literal output averages](OnlineReachabilityPreservers/HalfSixProjection.lean#L154)
   · [Indexed starting averages](OnlineReachabilityPreservers/HalfSixProjection.lean#L113)
   · [Literal starting averages](OnlineReachabilityPreservers/HalfSixProjection.lean#L173).
+- In either bridge mode at cutoff \(k\), assume the simple input excludes
+  those bridges and its bipartite incidence graph has girth greater
+  than \(k\). Both width splits preserve the exclusion. A projected
+  bridge gives a closed trail of at most \(2k\) edges, and a repeated
+  incidence-graph vertex would leave two circuits each longer than
+  \(k\). For mass \(M\) at least both positive budgets, the frozen
+  witnesses retain at least \(M/16\). The witnesses
+  with caps at their own averages retain \(M/392\) indexed or
+  \(M/7056\) literal. Both budgets hold in all four results. The
+  literal versions take distinct nonempty simple paths and \(k\ge2\).
+  [Projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L253)
+  · [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L305)
+  · [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L359)
+  · [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L374)
+  · [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L391)
+  · [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L414).
 - At half cutoff six with full-three exclusion and arbitrary
   intersections, fix lower coefficients \(a,b\in[0,1/4]\) with
   \(a+b\le7/15\). A witness meets these lower caps, both original upper

@@ -1748,6 +1748,27 @@ same crop and peel give all four exact caps and at least \(M/288\).
 · [Indexed exact caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L71)
 · [Literal exact caps](OnlineReachabilityPreservers/HalfSixStartingLowerCaps.lean#L98).
 The general cyclic existence claim at half cutoff six remains open.
+
+At any cutoff \(k\) and in either mode, assume simple input with the
+selected bridge exclusion and incidence girth greater than \(k\). A bridge in the width
+blocks projects to a closed trail in the bipartite graph on rows and
+vertices because each original incidence has one retained copy. If
+any interior label repeats, the two circuits on its two sides together
+have length at most \(2k\), although each contains a cycle longer than
+\(k\). Thus row and vertex labels project distinctly, and the half
+mode keeps strict last-arc arrival by the parent order. On positive
+budgets and dense input, the indexed and literal versions give both
+budgets, all four original caps and \(M/16\). With caps at the witness's
+own averages they give \(M/392\) indexed or \(M/7056\) literal.
+The literal results use cutoff at least two and distinct nonempty
+simple paths.
+[Incidence projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L253)
+· [Width splits](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L305)
+· [Indexed starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L359)
+· [Literal starting caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L374)
+· [Indexed output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L391)
+· [Literal output caps](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L414).
+
 The size-seven counterexample below
 applies to the printed midpoint split. The factor-four block split before trimming and peeling also creates
 a full size-seven bridge in the dense branch on a simple input with unique

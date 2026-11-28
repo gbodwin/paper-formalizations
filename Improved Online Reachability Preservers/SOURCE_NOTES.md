@@ -295,6 +295,24 @@ remains a counterexample to using only the opposite-cut constraints.
 · [Six-bridge cleaning with unique intersections](OnlineReachabilityPreservers/ContiguousSixCleaning.lean)
 · [Noncontiguous example](OnlineReachabilityPreservers/CyclicSplitLimits.lean).
 
+An incidence-girth criterion gives a different proof for arbitrary
+cutoffs. For simple rows whose bipartite incidence graph has girth
+greater than \(k\), each of the ordinary width splits
+preserves the input exclusion at cutoff \(k\), in either mode. Each
+bridge of size \(s\le k\) uses exactly \(2s\) incidences. The projection
+is injective on those incidences and gives a closed trail. If a label
+repeats before the trail closes, splitting there leaves two nonempty
+closed trails of total length \(2s\). Each contains a cycle so each
+has length greater than \(k\), which is impossible. Comparisons and
+half-mode arrival therefore transport with the projected labels.
+Forests satisfy the girth bound at every finite cutoff. With both
+positive budgets and enough mass, the same proof supplies indexed and
+literal witnesses at the original or the output averages.
+[Incidence graph](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L65)
+· [Bridge projection](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L253)
+· [Starting-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L359)
+· [Output-average cleaning](OnlineReachabilityPreservers/IncidenceGirthCleaning.lean#L391).
+
 At full cutoff six, opposite-intersection pruning followed by restricting
 to a quarter of each support permits the contiguous construction on an
 unrestricted maximizing family of indexed simple paths. If the quarter
