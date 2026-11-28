@@ -3085,6 +3085,20 @@ Graph rejection takes at most \(7N+4\) transitions.
 · [Guarded decoder and finite sampler](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L476)
 · [Rejection preserves the seed frame](OnlineReachabilityPreservers/SteinerRawRangeSeedMachine.lean#L493).
 
+The range-frame encoder takes one binary bound followed by the
+endpoint words. It retains the bound on a work stack, copies it
+into each endpoint's comparison frame, and restores it for the next
+endpoint. The output has one bound copy and two dividers per
+endpoint. The machine returns exactly the frames consumed by the
+raw range batch checker. For output length \(Y\) and bound length
+\(B\), it uses at most \(3Y+3B+5\) transitions. In the original
+framed input length \(X\), the polynomial bound is \(3X^2+6X+5\).
+[Single-bound encoder](OnlineReachabilityPreservers/SteinerOneBoundRangeMachine.lean#L63)
+· [Exact frame encoding and transitions](OnlineReachabilityPreservers/SteinerOneBoundRangeMachine.lean#L342)
+· [Output length](OnlineReachabilityPreservers/SteinerOneBoundRangeMachine.lean#L384)
+· [Input polynomial](OnlineReachabilityPreservers/SteinerOneBoundRangeMachine.lean#L401)
+· [Graph request correspondence](OnlineReachabilityPreservers/SteinerOneBoundRangeMachine.lean#L437).
+
 
 
 
