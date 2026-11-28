@@ -7,13 +7,13 @@ namespace OnlineReachabilityPreservers
 
 open StateTransition Turing Turing.TM2.Stmt
 
-private def alignBinaryDigits (left right : List Bool) : List (Bool × Bool) :=
+def alignBinaryDigits (left right : List Bool) : List (Bool × Bool) :=
   List.zipWithAll (fun a b => (a.getD false,b.getD false)) left right
 
 private def foldedBorrow (digits : List (Bool × Bool)) (borrow : Bool) : Bool :=
   digits.foldl (fun borrow pair => nextBinaryBorrow pair.1 pair.2 borrow) borrow
 
-private theorem alignBinaryDigits_cons {left right : List Bool} (nonempty : ¬ (left = [] ∧ right = [])) :
+theorem alignBinaryDigits_cons {left right : List Bool} (nonempty : ¬ (left = [] ∧ right = [])) :
     alignBinaryDigits left right =
       (left.headD false,right.headD false) :: alignBinaryDigits left.tail right.tail := by
   cases left <;> cases right
@@ -32,7 +32,7 @@ private theorem alignedBorrow_eq_binaryLess (left right : List Bool) (borrow : B
     rw [alignBinaryDigits_cons empty,foldedBorrow,List.foldl_cons,binaryLessWithWork,dite_eq_right empty]
     exact smaller _ shorter left.tail right.tail _ rfl
 
-private theorem alignBinaryDigits_length_le (left right : List Bool) :
+theorem alignBinaryDigits_length_le (left right : List Bool) :
     (alignBinaryDigits left right).length ≤ left.length+right.length := by
   induction left generalizing right with
   | nil => simp [alignBinaryDigits]

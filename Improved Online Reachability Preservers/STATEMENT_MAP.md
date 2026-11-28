@@ -1611,6 +1611,19 @@ with the variable-word graph decoder at its actual input width.
 · [Linear batch polynomial](OnlineReachabilityPreservers/SteinerBinaryRangeMachine.lean#L234)
 · [Exact variable-word graph flag](OnlineReachabilityPreservers/SteinerBinaryRangeMachine.lean#L263).
 
+The binary addition machine reads a carry-in header and two
+low-bit-first words supplied as padded bit pairs. It returns the bits
+of `addBinaryWordsWithWork` in the same low-bit-first order. The
+decoded output is the sum of both input values and the carry-in. The
+machine takes at most twice the supplied encoding length plus two
+transitions, which is at most twice the sum of the two word lengths
+plus four.
+[Addition machine](OnlineReachabilityPreservers/SteinerBinaryAdditionMachine.lean#L68)
+· [Exact output and transition certificate](OnlineReachabilityPreservers/SteinerBinaryAdditionMachine.lean#L198)
+· [Decoded sum](OnlineReachabilityPreservers/SteinerBinaryAdditionMachine.lean#L228)
+· [Bound in the two word lengths](OnlineReachabilityPreservers/SteinerBinaryAdditionMachine.lean#L234)
+· [Linear input polynomial](OnlineReachabilityPreservers/SteinerBinaryAdditionMachine.lean#L247).
+
 
 
 

@@ -16,9 +16,9 @@ private theorem binaryWordValue_head_tail (word : List Bool) :
     binaryWordValue word = bitDigit (word.headD false)+2*binaryWordValue word.tail := by
   cases word <;> rfl
 
-private def sumBit (x y carry : Bool) : Bool := Bool.xor (Bool.xor x y) carry
+def sumBit (x y carry : Bool) : Bool := Bool.xor (Bool.xor x y) carry
 
-private def carryBit (x y carry : Bool) : Bool := (x && y) || ((x || y) && carry)
+def carryBit (x y carry : Bool) : Bool := (x && y) || ((x || y) && carry)
 
 private theorem fullAdder_value (x y carry : Bool) :
     bitDigit (sumBit x y carry)+2*bitDigit (carryBit x y carry) = bitDigit x+bitDigit y+bitDigit carry := by
