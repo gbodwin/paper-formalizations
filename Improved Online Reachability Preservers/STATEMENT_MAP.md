@@ -1739,6 +1739,21 @@ returns the empty output.
 · [Guarded decoder and finite sampler](OnlineReachabilityPreservers/SteinerSingleBoundStartupMachine.lean#L379)
 · [Rejection with its seed frame](OnlineReachabilityPreservers/SteinerSingleBoundStartupMachine.lean#L406).
 
+The unary arithmetic machine reads framed operand pairs and returns
+one tally per unit of their sum of products. For each tally of the left
+operand, it copies the right operand to the answer and restores the
+right stack. Each pair \((a,b)\) takes exactly \(2ab+4a+2b+4\) transitions.
+One more transition halts with the other stacks empty. The entire
+machine runs within \(X^2+4X+1\) transitions for \(X\) framed input
+symbols. True marks each tally, and one false terminates each operand,
+including zero.
+[Unary sum of products machine](OnlineReachabilityPreservers/SteinerUnaryProductMachine.lean#L67)
+· [Framed operand pairs](OnlineReachabilityPreservers/SteinerUnaryProductMachine.lean#L327)
+· [Transitions per pair](OnlineReachabilityPreservers/SteinerUnaryProductMachine.lean#L309)
+· [Exact unary output](OnlineReachabilityPreservers/SteinerUnaryProductMachine.lean#L371)
+· [Exact total transitions](OnlineReachabilityPreservers/SteinerUnaryProductMachine.lean#L382)
+· [Quadratic input polynomial](OnlineReachabilityPreservers/SteinerUnaryProductMachine.lean#L424).
+
 
 
 
