@@ -3189,6 +3189,20 @@ the forest width, are inputs to this certificate.
 · [Decoder dimensions and arithmetic](OnlineReachabilityPreservers/SteinerScaledProductMachine.lean#L494)
 · [Exact graph-dependent count](OnlineReachabilityPreservers/SteinerScaledProductMachine.lean#L502).
 
+The binary-to-unary endpoint machine reverses the low-bit-first word
+and uses each digit to double its current unary value and add the new
+bit. If the word has length \(W\), value \(V\), and \(J\) true bits, it
+returns \(V\) tallies in exactly \(4W+3V+2-2J\) transitions. The result
+includes empty and zero-padded words. If the range check accepts with
+a supplied bound of value \(n\), the conversion returns exactly the
+numeric endpoint index and uses at most \(4W+3n+2\) transitions.
+[Binary to unary machine](OnlineReachabilityPreservers/SteinerBinaryToUnaryMachine.lean#L57)
+· [Exact tally output](OnlineReachabilityPreservers/SteinerBinaryToUnaryMachine.lean#L293)
+· [Exact transition identity](OnlineReachabilityPreservers/SteinerBinaryToUnaryMachine.lean#L285)
+· [Bound in word length and value](OnlineReachabilityPreservers/SteinerBinaryToUnaryMachine.lean#L311)
+· [Finite endpoint index](OnlineReachabilityPreservers/SteinerBinaryToUnaryMachine.lean#L319)
+· [Accepted range flag](OnlineReachabilityPreservers/SteinerBinaryToUnaryMachine.lean#L328).
+
 
 
 
